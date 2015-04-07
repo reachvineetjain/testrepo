@@ -1,0 +1,22 @@
+# default behaviour - normalize EOLs
+* text=auto
+
+# just in case, to be extra sure
+*.java text
+*.html text
+*.css  text
+*.xml  text
+*.js   text
+
+# these are to be left alone
+*.png binary
+*.jpg binary
+*.gif binary
+*.war binary
+*.jar binary
+*.pdf binary
+*.cab binary
+*.msi binary
+*.lpk binary
+*.zip binary
+*.doc binary

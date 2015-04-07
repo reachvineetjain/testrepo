@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+    xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="cci_gh_go" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <mapping-file>META-INF/orm.xml</mapping-file>
+        <class>com.ccighgo.db.entities.Sysdiagram</class>
+        <class>com.ccighgo.db.entities.CciDepartmentProgram</class>
+        <class>com.ccighgo.db.entities.CciDepartmentalFunction</class>
+        <class>com.ccighgo.db.entities.CciDepartmentalProcess</class>
+        <class>com.ccighgo.db.entities.CciDepartments</class>
+        <class>com.ccighgo.db.entities.CciFieldStaffAgreement</class>
+        <class>com.ccighgo.db.entities.CciPermissionsOption</class>
+        <class>com.ccighgo.db.entities.CciPermissionsProcessGroup</class>
+        <class>com.ccighgo.db.entities.CciProcessPermission</class>
+        <class>com.ccighgo.db.entities.CciProgram</class>
+        <class>com.ccighgo.db.entities.CciRoleDefaultPermission</class>
+        <class>com.ccighgo.db.entities.CciSeasonDocument</class>
+        <class>com.ccighgo.db.entities.CciSeasonDocumentType</class>
+        <class>com.ccighgo.db.entities.CciSeasonNote</class>
+        <class>com.ccighgo.db.entities.CciSeasonProgram</class>
+        <class>com.ccighgo.db.entities.CciSeasonStatus</class>
+        <class>com.ccighgo.db.entities.CciStaff</class>
+        <class>com.ccighgo.db.entities.CciStaffProcessPermission</class>
+        <class>com.ccighgo.db.entities.CciStaffRole</class>
+        <class>com.ccighgo.db.entities.CciStaffStaffRolesMap</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="sunny" />
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.c3p0.min_size" value="5" />
+            <property name="hibernate.c3p0.max_size" value="20" />
+            <!-- <property name="hibernate.c3p0.max_size">1800</property> -->
+            <property name="hibernate.c3p0.max_statements" value="50" />
+
+            <property name="connection.provider_class"
+                value="org.hibernate.connection.C3P0ConnectionProvider" />
+            <property name="c3p0.max_statements" value="0" />
+            <property name="c3p0.maxIdleTimeExcessConnections" value="3600" />
+            <property name="c3p0.idleConnectionTestPeriod" value="3600" />
+            <property name="c3p0.maxIdleTime" value="3600" />
+        </properties>
+    </persistence-unit>
+</persistence>
+
