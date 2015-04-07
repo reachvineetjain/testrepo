@@ -1,6 +1,6 @@
 # CCIGHGO
-Welcome to CCHGHGO
---------------------
+Welcome to CCIGHGO 
+------------------
 
 This readme file's goal is to provide some quick information on the CCIGHGO project. MySQL will be the database for this application.
 
@@ -39,8 +39,6 @@ Project Architecture
 2. This project utilizes Apache CXF as restful interface to provide restful services to UI/UX
 3. Spring is used and dependency and aspect injections.
 4. Hibernate and Springdata jpa will be used in persistence layer for database interaction, connection pooling, dirty checking, caching mechanism.
-5. Mix of Angularjs, reactjs and bootstrap will be used for UI/UX development.
-
-
-
-
+5. Implements Responsive Design for the Layouts using Media Queries using CCS3
+6. Utilizes Javascript Libraries like JQuery, Angular JS and React JS.
+7. Bootstrap is used as the base / platform level CSS which will be used over for themeing the base class using CSS Pre-processor SCSS / SASS.
