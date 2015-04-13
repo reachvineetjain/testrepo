@@ -20,11 +20,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
     SeasonProgramRepository seasonProgramRepository;
 
     SeasonServiceInterfaceImpl() {
-
-    }
-
-    public String getString() {
-        return "funny";
     }
 
     public SeasonSearchResponse createSeason(SeasonProgramDTO dto) {
@@ -41,13 +36,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
         seasonProgramRepository.saveAndFlush(program);
 
         return getAllSeasons();
-    }
-
-    public void deleteSeason(String id) {
-        Integer spID = Integer.valueOf(id);
-        if (spID > 0) {
-            seasonProgramRepository.delete(spID);
-        }
     }
 
     public SeasonSearchResponse getAllSeasons() {
@@ -112,6 +100,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
         program.setModifiedOn(new Timestamp(new Date().getTime()));
         seasonProgramRepository.saveAndFlush(program);
 
+        return getAllSeasons();
+    }
+    
+    public SeasonSearchResponse deleteSeason(String id) {
+        Integer spID = Integer.valueOf(id);
+        if (spID > 0) {
+            seasonProgramRepository.delete(spID);
+        }
         return getAllSeasons();
     }
 
