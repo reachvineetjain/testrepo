@@ -5,13 +5,11 @@ import com.ccighgo.seasons.front.SeasonSearchResponse;
 
 public interface SeasonServiceInterface {
     
-    public String getString();
-    
     public SeasonSearchResponse getAllSeasons();
     
     public SeasonSearchResponse createSeason(SeasonProgramDTO dto);
     
-    public void deleteSeason(String id);
+    public SeasonSearchResponse deleteSeason(String id);
     
     public SeasonProgramDTO editSeason(String id);
     

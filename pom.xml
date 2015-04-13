@@ -125,14 +125,14 @@
             <version>8.0.20</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
             <version>2.1</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl-api</artifactId>
@@ -144,7 +144,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>jstl-impl</artifactId>
@@ -157,10 +157,24 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-all</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+
+
     </dependencies>
-    
+
     <build>
         <finalName>cci_gh_go</finalName>
     </build>
-    
+
 </project>
