@@ -1,9 +1,9 @@
 (function(){
-	var app = angular.module('cciApp');
+  var app = angular.module('ui.seasons');
 	app.controller('ProgramListingCtrl',['$http','$scope','$state',function($http,$scope,$state){
 		var programs = this;
         programs.listing = [];
-        $http.get('././data/programs-listing.json').success(function(data){
+        $http.get('./././data/programs-listing.json').success(function(data){
           $scope.programsList = data;
         })
 

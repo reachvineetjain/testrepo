@@ -1,16 +1,44 @@
+(function(){
+  var app = angular.module('ui', [
+    'ui.router',
+    'ui.todo',
+    'ui.seasons'
+  ]);
+  app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider) {
+    'use strict';
+  	$urlRouterProvider
+  		.otherwise('/home');
 
-angular.module('ui', [
-  'ngRoute',
-  'ui.todo'
-])
-.config(function ($routeProvider) {
-  'use strict';
-  $routeProvider
-    .when('/todo', {
-      controller: 'TodoCtrl',
-      templateUrl: '/ui/todo/todo.html'
-    })
-    .otherwise({
-      redirectTo: '/todo'
-    });
-});
+  	$stateProvider
+  		.state('home',{
+  			url:'/home',
+  			views: {
+          "programListView": {
+            templateUrl: 'seasons/templates/programs-list.html',
+            controller: 'ProgramListingCtrl'
+          },
+          "seasonsListView": {
+            templateUrl: "seasons/templates/seasons-list.html",
+            controller: 'SeasonsListingCtrl'
+          },
+          "seasonsDetailView": {
+            templateUrl: "seasons/templates/seasons-detail.html",
+            controller: 'SeasonDetailsCtrl'
+          }
+  			}
+  		})
+  		.state('program',{
+  			url:'/program/:programId',
+  			views: {
+  				"programListView": {
+  	        templateUrl: 'seasons/templates/programs-list.html',
+  	        controller: 'ProgramListingCtrl'
+  		    },
+  				"seasonsListView" : {
+  					templateUrl: "seasons/templates/seasons-list.html",
+  					controller: 'SeasonsListingCtrl'
+  				}
+  			}
+  		});
+  }]);
+})();

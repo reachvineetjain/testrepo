@@ -1,0 +1,6 @@
+<div class="column-header"> Programs </div>
+<ul class="programs-list">
+    <li ng-repeat="programItem in programsList" >
+    	<a ui-sref="program({ programId: programItem.programId })">{{programItem.programLabel}}</a>
+    </li>
+</ul>
