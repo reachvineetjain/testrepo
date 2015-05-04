@@ -14,15 +14,15 @@
   			url:'/home',
   			views: {
           "programListView": {
-            templateUrl: 'seasons/templates/programs-list.html',
+            templateUrl: '/seasons/templates/programs-list.html',
             controller: 'ProgramListingCtrl'
           },
           "seasonsListView": {
-            templateUrl: "seasons/templates/seasons-list.html",
+            templateUrl: "/seasons/templates/seasons-list.html",
             controller: 'SeasonsListingCtrl'
           },
           "seasonsDetailView": {
-            templateUrl: "seasons/templates/seasons-detail.html",
+            templateUrl: "/seasons/templates/seasons-detail.html",
             controller: 'SeasonDetailsCtrl'
           }
   			}
@@ -31,11 +31,11 @@
   			url:'/program/:programId',
   			views: {
   				"programListView": {
-  	        templateUrl: 'seasons/templates/programs-list.html',
+  	        templateUrl: '/seasons/templates/programs-list.html',
   	        controller: 'ProgramListingCtrl'
   		    },
   				"seasonsListView" : {
-  					templateUrl: "seasons/templates/seasons-list.html",
+  					templateUrl: "/seasons/templates/seasons-list.html",
   					controller: 'SeasonsListingCtrl'
   				}
   			}

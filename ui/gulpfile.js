@@ -109,7 +109,7 @@ function index () {
   return gulp.src('./src/core/index.html')
     .pipe(g.inject(gulp.src(bowerFiles(), opt), {ignorePath: 'bower_components', starttag: '<!-- inject:vendor:{{ext}} -->'}))
     .pipe(g.inject(es.merge(appFiles(), cssFiles(opt)), {ignorePath: ['.tmp', 'src']}))
-    .pipe(gulp.dest('./src/'))
+    .pipe(gulp.dest('./src/core/'))
     .pipe(g.embedlr())
     .pipe(gulp.dest('./.tmp/'))
     .pipe(livereload());

@@ -4,7 +4,7 @@
 		$stateParams.programId;
 		var seasons = this;
         seasons.listing = [];
-        $http.get('./././data/seasons-listing.json').success(function(data){
+        $http.get('/data/seasons-listing.json').success(function(data){
           $scope.programSeasonList = data;
         });
 	}]);
