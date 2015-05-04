@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     lazypipe = require('lazypipe'),
     stylish = require('jshint-stylish'),
     bower = require('./bower'),
+    fileinclude = require('gulp-file-include'),
     isWatching = false;
 
 var htmlminOpts = {
@@ -106,10 +107,14 @@ gulp.task('build-all', ['styles', 'templates'], index);
 
 function index () {
   var opt = {read: false};
-  return gulp.src('./src/core/index.html')
+  return gulp.src('./src/**/*.html')
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: '@root'
+    }))
     .pipe(g.inject(gulp.src(bowerFiles(), opt), {ignorePath: 'bower_components', starttag: '<!-- inject:vendor:{{ext}} -->'}))
     .pipe(g.inject(es.merge(appFiles(), cssFiles(opt)), {ignorePath: ['.tmp', 'src']}))
-    .pipe(gulp.dest('./src/core/'))
+    .pipe(gulp.dest('./.tmp/src/'))
     .pipe(g.embedlr())
     .pipe(gulp.dest('./.tmp/'))
     .pipe(livereload());
@@ -139,7 +144,7 @@ gulp.task('dist', ['vendors', 'assets', 'styles-dist', 'scripts-dist'], function
  */
 gulp.task('statics', g.serve({
   port: 3000,
-  root: ['./.tmp', './.tmp/src', './src', './src/module', './bower_components']
+  root: ['./.tmp', './.tmp/src/module', './src', './bower_components']
 }));
 
 /**
@@ -158,7 +163,7 @@ gulp.task('watch', ['statics', 'default'], function () {
     }
   });
   gulp.watch('./src/core/index.html', ['index']);
-  gulp.watch(['./src/**/*.html', '!./src/core/index.html'], ['templates']);
+  gulp.watch(['./src/**/*.html', '!./src/core/index.html'], ['templates', 'index']);
   gulp.watch(['./src/**/*.scss'], ['csslint']).on('change', function (evt) {
     if (evt.type !== 'changed') {
       gulp.start('index');
