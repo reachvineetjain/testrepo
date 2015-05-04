@@ -27,7 +27,7 @@ var htmlminOpts = {
 gulp.task('jshint', function () {
   return gulp.src([
     './gulpfile.js',
-    './src/**/**/*.js'
+    './src/**/*.js'
   ])
     .pipe(g.cached('jshint'))
     .pipe(jshint('./.jshintrc'))
@@ -43,8 +43,8 @@ gulp.task('clean-css', function (done) {
 
 gulp.task('styles', ['clean-css'], function () {
   return gulp.src([
-    './src/**/**/*.scss',
-    '!./src/**/**/_*.scss'
+    './src/**/*.scss',
+    '!./src/**/_*.scss'
   ])
     .pipe(g.sass())
     .pipe(gulp.dest('./.tmp/css/'))
@@ -108,8 +108,8 @@ function index () {
   var opt = {read: false};
   return gulp.src('./src/core/index.html')
     .pipe(g.inject(gulp.src(bowerFiles(), opt), {ignorePath: 'bower_components', starttag: '<!-- inject:vendor:{{ext}} -->'}))
-    .pipe(g.inject(es.merge(appFiles(), cssFiles(opt)), {ignorePath: ['.tmp', 'src/core']}))
-    .pipe(gulp.dest('./src/core/'))
+    .pipe(g.inject(es.merge(appFiles(), cssFiles(opt)), {ignorePath: ['.tmp', 'src']}))
+    .pipe(gulp.dest('./src/'))
     .pipe(g.embedlr())
     .pipe(gulp.dest('./.tmp/'))
     .pipe(livereload());
@@ -139,7 +139,7 @@ gulp.task('dist', ['vendors', 'assets', 'styles-dist', 'scripts-dist'], function
  */
 gulp.task('statics', g.serve({
   port: 3000,
-  root: ['./.tmp', './.tmp/src/core', './.tmp/src/module', './src/core', './src/module','./bower_components']
+  root: ['./.tmp', './.tmp/src', './src', './src/module', './bower_components']
 }));
 
 /**
@@ -150,7 +150,7 @@ gulp.task('watch', ['statics', 'default'], function () {
   isWatching = true;
   // Initiate livereload server:
   g.livereload.listen();
-  gulp.watch('./src/**/**/*.js', ['jshint']).on('change', function (evt) {
+  gulp.watch('./src/**/*.js', ['jshint']).on('change', function (evt) {
     if (evt.type !== 'changed') {
       gulp.start('index');
     } else {
@@ -158,8 +158,8 @@ gulp.task('watch', ['statics', 'default'], function () {
     }
   });
   gulp.watch('./src/core/index.html', ['index']);
-  gulp.watch(['./src/**/**/*.html', '!./src/core/index.html'], ['templates']);
-  gulp.watch(['./src/**/**/*.scss'], ['csslint']).on('change', function (evt) {
+  gulp.watch(['./src/**/*.html', '!./src/core/index.html'], ['templates']);
+  gulp.watch(['./src/**/*.scss'], ['csslint']).on('change', function (evt) {
     if (evt.type !== 'changed') {
       gulp.start('index');
     } else {
@@ -214,7 +214,7 @@ function testFiles() {
     .queue(gulp.src(fileTypeFilter(bowerFiles(), 'js')))
     .queue(gulp.src('./bower_components/angular-mocks/angular-mocks.js'))
     .queue(appFiles())
-    .queue(gulp.src(['./src/**/**/*_test.js', './.tmp/src/**/**/*_test.js']))
+    .queue(gulp.src(['./src/**/*_test.js', './.tmp/src/**/*_test.js']))
     .done();
 }
 
@@ -256,7 +256,7 @@ function buildTemplates () {
     .pipe(g.ngHtml2js, {
       moduleName: bower.name,
       prefix: '/' + bower.name + '/',
-      stripPrefix: '/src/core'
+      stripPrefix: '/src'
     })
     .pipe(g.concat, bower.name + '-templates.js')
     .pipe(gulp.dest, './.tmp')
