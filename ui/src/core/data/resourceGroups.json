@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "ResourceGroupName": "Seasons",
+    "ResourcePermissions": [
+      {
+        "id": 1,
+        "ResourceLabel": "View Season Information",
+        "ResourceDescription": "What can be viewed for Season"
+      },
+      {
+        "id": 2,
+        "ResourceLabel": "Edit Season Information",
+        "ResourceDescription": "What can be edited for Season"
+      },
+      {
+        "id": 3,
+        "ResourceLabel": "Approve Seasons",
+        "ResourceDescription": "Can Approve a Season"
+      },
+      {
+        "id": 4,
+        "ResourceLabel": "Create Announcements",
+        "ResourceDescription": "Tasks one can perform with Announcements"
+      },
+      {
+        "id": 5,
+        "ResourceActionID": 2,
+        "ResourceLabel": "View Contract Terms",
+        "ResourceDescription": "Task one can perform with Contract Terms"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "ResourceGroupName": "SEVIS",
+    "ResourcePermissions": [
+      {
+        "id": 6,
+        "ResourceLabel": "Edit Sevis Information",
+        "ResourceDescription": "What can be edited for SEVIS"
+      },
+      {
+        "id": 7,
+        "ResourceLabel": "View Sevis Information",
+        "ResourceDescription": "What can be viewed for SEVIS"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "ResourceGroupName": "System Settings"
+  },
+  {
+    "id": 4,
+    "ResourceGroupName": "Partners"
+  },
+  {
+    "id": 5,
+    "ResourceGroupName": "Employers"
+  },
+  {
+    "id": 6,
+    "ResourceGroupName": "Participants"
+  },
+  {
+    "id": 7,
+    "ResourceGroupName": "Field Staff"
+  },
+  {
+    "id": 8,
+    "ResourceGroupName": "Host Families"
+  },
+  {
+    "id": 9,
+    "ResourceGroupName": "Accounting"
+  },
+  {
+    "id": 10,
+    "ResourceGroupName": "Change Q - Employers"
+  },
+  {
+    "id": 11,
+    "ResourceGroupName": "Change Q - Participants"
+  },
+  {
+    "id": 12,
+    "ResourceGroupName": "Background Checks"
+  }
+]
