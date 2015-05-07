@@ -1,0 +1,40 @@
+<h3>Details</h3>
+{{user}}
+<div class="row">
+  <div class="col-sm-3">
+    <label for="">Department:</label>
+
+    <ui-select ng-model="user.department">
+      <ui-select-match placeholder="Select a department">{{$select.selected.DepartmentName}}</ui-select-match>
+      <ui-select-choices repeat="department.id as department in departments">
+        <span ng-bind="department.DepartmentName | highlight: $select.search"></span>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+  <div class="col-sm-3">
+    <label for="">Program:</label>
+
+    <ui-select ng-model="user.department">
+      <ui-select-match placeholder="Select a department">{{$select.selected.DepartmentName}}</ui-select-match>
+      <ui-select-choices repeat="department.id as department in departments">
+        <span ng-bind="department.DepartmentName | highlight: $select.search"></span>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+  <div class="col-sm-3">
+    <label for="">Function:</label>
+  </div>
+  <div class="col-sm-3">
+    <label for="">Role:</label>
+  </div>
+</div>
+
+<h3>Permissions</h3>
+<div ng-repeat="resourceGroup in resourceGroups">
+  <h4>{{resourceGroup.ResourceGroupName}}</h4>
+  <div ng-repeat="permission in resourceGroup.ResourcePermissions">
+    <label>
+      <input type="checkbox"/> {{permission.ResourceLabel}}
+    </label>
+  </div>
+</div>
