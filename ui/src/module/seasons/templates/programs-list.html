@@ -1,6 +1,6 @@
 <div class="column-header"> Programs </div>
 <ul class="programs-list">
     <li ng-repeat="programItem in programsList" >
-    	<a ui-sref="program({ programId: programItem.programId })">{{programItem.programLabel}}</a>
+    	<a ui-sref="home.program({ programId: programItem.programId })" ng-class="{ active: $state.includes('home.program') }">{{programItem.programLabel}}</a>
     </li>
 </ul>
