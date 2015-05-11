@@ -3,8 +3,8 @@ define([
     'angular'
 ],function(angular){
     angular
-        .module('ui.seasons.services',[])
-        .factory('SeasonServices', function SeasonServices($http){
+        .module('ui.seasons.services.program-list-service',[])
+        .factory('ProgramListService', function SeasonServices($http){
             return {
                 gettingProgramList: gettingProgramList
             };

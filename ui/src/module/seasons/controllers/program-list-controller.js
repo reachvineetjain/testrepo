@@ -4,11 +4,12 @@ define([
     '/module/seasons/services/program-list-service.js'
 ], function(angular){
     angular
-        .module('ui.seasons.controller.program-list-controller',['ui.seasons.services'])
-        .controller('ProgramListingCtrl',['$scope','$state','SeasonServices',function($scope,$state,SeasonServices){
-            SeasonServices.gettingProgramList().then(function(data){
-                $scope.programsList = data.data;
+        .module('ui.seasons.controller.program-list-controller',['ui.seasons.services.program-list-service'])
+        .controller('ProgramListingCtrl',['$scope','$state','ProgramListService',function($scope,$state,ProgramListService){
+            ProgramListService.gettingProgramList().then(function(response){
+                $scope.programsList = response.data;
                 //console.log($scope.programsList);
+                //$state.go('home.program.season', { programId: $scope.programsList[0].programId });
             });
             //console.log($state); // returns true
         }]);

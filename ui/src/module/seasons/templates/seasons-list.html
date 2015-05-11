@@ -1,6 +1,6 @@
 <div class="column-header"> Seasons </div>
 <ul class="seasons-list">
-    <li ng-repeat="season in programSeasonList" >
-        <a >{{season.seasonName}}</a>
+    <li ng-repeat="season in seasonsList" >
+        <a ui-sref="home.season.detail({ seasonId: season.seasonId })">{{season.seasonName}}</a>
     </li>
 </ul>

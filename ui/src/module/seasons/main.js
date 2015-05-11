@@ -9,7 +9,8 @@ define([
 ],  function(angular){
     angular.module('ui').requires.push('ui.seasons');
     return angular.module('ui.seasons',[
-        'ui.seasons.services',
+        'ui.seasons.services.program-list-service',
+        'ui.seasons.services.season-list-service',
         'ui.seasons.controller.three-pane-controller',
         'ui.seasons.controller.program-list-controller',
         'ui.seasons.controller.season-list-controller'])
@@ -37,9 +38,13 @@ define([
                         }
                     }
                 })
-                .state('home.seasonsList',{
-                    url:'/program/:programId/season',
+                .state('home.season',{
+                    url:'/season/:programId',
                     views:{
+                        'programListView':{
+                          templateUrl: 'templates/programs-list.html',
+                          controller: 'ProgramListingCtrl'
+                        },
                         'seasonsListView':{
                             templateUrl: 'templates/seasons-list.html',
                             controller: 'SeasonsListingCtrl'
@@ -47,7 +52,7 @@ define([
                     }
                 });
                 /*.state('home.seasonsDetail',{
-                    url:'/program/:programId/season/:seasonId',
+                    url:'/seasonDetail/:seasonId',
                     views:{
                         "seasonsDetail":{
                             templateUrl: 'templates/seasons-detail.html',
