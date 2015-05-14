@@ -290,23 +290,23 @@ body{
 ::-webkit-scrollbar {
     width: 10px;
 }
- 
+
 /* Track */
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: rgba(118, 118, 118, 0.8); 
-    -webkit-box-shadow: inset 0 0 6px rgba(195, 189, 189, 0.5); 
+    background: rgba(118, 118, 118, 0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(195, 189, 189, 0.5);
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-	background: rgba(207, 207, 207, 0.5); 
+	background: rgba(207, 207, 207, 0.5);
 }
 
 .page-container .page-content-holder .page-content > div{
@@ -524,4 +524,18 @@ body{
 .page-title a {
   display: inline-block;
   margin: 5px;
+}
+
+.programs-list li.selected, .seasons-list li.selected{
+  background-color: #E7E7E7;
+}
+.form-group .row {
+  padding: 0px 10px;
+}
+.no-selection {
+  padding: 50px 0px;
+  text-align: center;
+  color: #797979;
+  font-weight: 700;
+  font-size: 16px;
 }

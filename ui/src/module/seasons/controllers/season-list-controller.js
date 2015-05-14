@@ -1,17 +1,29 @@
 'use strict';
 define([
     'angular',
-  '/module/seasons/services/season-list-service.js'
+  '/module/seasons/services/season-list-service.js',
+	'/module/seasons/directive/sticky-active-state.js',
 ], function(angular){
     angular
         .module('ui.seasons.controller.season-list-controller',['ui.seasons.services.season-list-service'])
         .controller('SeasonsListingCtrl',
         ['$http','$scope','$state','$stateParams','SeasonListService',
           function($http,$scope,$state,$stateParams,SeasonListService){
+						//angular.element(".programs-list").find('li').attr('progid',100).addClass('selected');
             var programId = $stateParams.programId;
             SeasonListService.gettingSeasonsList($stateParams.programId).then(function(response) {
               var result = response.data[0].seasonList;
-              $scope.seasonsList = result;
+              if(programId == response.data[0]['seasonProgramID']){
+                $scope.seasonsList = result;
+                $scope.seasonProgramId = response.data[0]['seasonProgramID'];
+              }
+              else{
+                $scope.seasonsList = [];
+                $scope.seasonProgramId = "";
+              }
+              if($state.is('home.season') && $scope.seasonsList.length>0){
+                $state.go('home.seasonsDetail', { programId: $scope.seasonProgramId, seasonId: $scope.seasonsList[0].seasonId });
+              }
             });
             //seasons.listing = [];
         }]);

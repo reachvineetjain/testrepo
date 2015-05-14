@@ -1,16 +1,17 @@
 'use strict';
 define([
-    'angular',
-    '/module/seasons/services/program-list-service.js'
+    'angular'
 ], function(angular){
     angular
         .module('ui.seasons.controller.program-list-controller',['ui.seasons.services.program-list-service'])
         .controller('ProgramListingCtrl',['$scope','$state','ProgramListService',function($scope,$state,ProgramListService){
-            ProgramListService.gettingProgramList().then(function(response){
-                $scope.programsList = response.data;
-                //console.log($scope.programsList);
-                //$state.go('home.program.season', { programId: $scope.programsList[0].programId });
+          //if($state.is('home.season')) {
+            ProgramListService.gettingProgramList().then(function (response) {
+              $scope.programsList = response.data;
+              console.log('Is the current state home.program = ' + $state.is('home.program'));
+              if ($state.is('home.program') && $scope.programsList.length > 0) {
+                $state.go('home.season', {programId: $scope.programsList[0].programId});
+              }
             });
-            //console.log($state); // returns true
         }]);
 });

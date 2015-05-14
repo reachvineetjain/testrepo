@@ -4,9 +4,13 @@ define([
   'angular',
   'ui',
   'uiRouter',
+ 	'uiRouterExtCore',
+	'uiRouterExtSticky',
   'uiSelect'
 ], function(angular) {
   return angular.module('ui', [
-    'ui.router'
+    'ui.router',
+			'ct.ui.router.extras.core',
+		'ct.ui.router.extras.sticky'
   ]);
 });
