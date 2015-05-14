@@ -1,8 +1,7 @@
 'use strict';
 define([
     'angular',
-  '/module/seasons/services/season-list-service.js',
-	'/module/seasons/directive/sticky-active-state.js',
+  '/module/seasons/services/season-list-service.js'
 ], function(angular){
     angular
         .module('ui.seasons.controller.season-list-controller',['ui.seasons.services.season-list-service'])

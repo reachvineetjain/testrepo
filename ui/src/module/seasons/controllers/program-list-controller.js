@@ -1,6 +1,7 @@
 'use strict';
 define([
-    'angular'
+    'angular',
+    '/module/seasons/services/program-list-service.js'
 ], function(angular){
     angular
         .module('ui.seasons.controller.program-list-controller',['ui.seasons.services.program-list-service'])
