@@ -1,40 +1,183 @@
 <h3>Details</h3>
-{{user}}
+<div class="tile">
+  <div class="row">
+    <div class="col-sm-2">
+      <input type="file"/>
+    </div>
+    <div class="col-sm-10">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="FirstName">First Name :</label>
+            <span class="input-wrap">
+              <input type="text" ng-model="user.FirstName" id="FirstName" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="LastName">Last Name :</label>
+            <span class="input-wrap">
+              <input type="text" ng-model="user.LastName" id="LastName" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="Phone">Phone :</label>
+            <span class="input-wrap">
+              <input type="tel" ng-model="user.Phone" id="Phone" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="EmergencyPhone">Emergency Phone :</label>
+            <span class="input-wrap">
+              <input type="tel" ng-model="user.EmergencyPhone" id="EmergencyPhone" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="EmailAddress">Email :</label>
+            <span class="input-wrap">
+              <input type="email" ng-model="user.EmailAddress" id="EmailAddress" />
+            </span>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="CCIStaffUserID">User Name :</label>
+            <span class="input-wrap">
+              <input type="text" ng-model="user.CCIStaffUserID" id="CCIStaffUserID" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="HomeAddressLineOne">Home Address 1 :</label>
+            <span class="input-wrap">
+              <input type="text" ng-model="user.HomeAddressLineOne" id="HomeAddressLineOne" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="HomeAddressLineTwo">Home Address 2 :</label>
+            <span class="input-wrap">
+              <input type="test" ng-model="user.HomeAddressLineTwo" id="HomeAddressLineTwo" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="City">City :</label>
+            <span class="input-wrap">
+              <input type="text" ng-model="user.City" id="City" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="State">State :</label>
+            <ui-select ng-model="user.state">
+              <ui-select-match>{{$select.selected.stateName}}</ui-select-match>
+              <ui-select-choices repeat="state.id as state in states">
+                <span ng-bind="state.stateName | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="Zip">Zipcode :</label>
+            <span class="input-wrap">
+              <input type="text" ng-model="user.Zip" id="Zip" />
+            </span>
+          </div>
+          <use xlink:href="/core/assets/icons/icons.svg#arrow-down">
+          <div class="form-group">
+            <label for="CountryID">Country:</label>
+            <ui-select ng-model="user.country">
+              <ui-select-match>{{$select.selected.countryName}}</ui-select-match>
+              <ui-select-choices repeat="country.id as country in countries">
+                <span ng-bind="country.countryName | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <div class="form-group">
+            <label for="SevisID">SEVIS User ID:</label>
+            <span class="input-wrap">
+              <input type="test" ng-model="user.SevisID" id="SevisID" />
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="SupervisorId">Supervisor:</label>
+            <span class="input-wrap">
+              <input type="text" ng-model="user.SupervisorId" id="SupervisorId" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-sm-3">
-    <label for="">Department:</label>
+    <label for="">Department</label>
 
     <ui-select ng-model="user.department">
-      <ui-select-match placeholder="Select a department">{{$select.selected.DepartmentName}}</ui-select-match>
+      <ui-select-match>{{$select.selected.DepartmentName}}</ui-select-match>
       <ui-select-choices repeat="department.id as department in departments">
         <span ng-bind="department.DepartmentName | highlight: $select.search"></span>
       </ui-select-choices>
     </ui-select>
   </div>
   <div class="col-sm-3">
-    <label for="">Program:</label>
+    <label for="">Program</label>
 
-    <ui-select ng-model="user.department">
-      <ui-select-match placeholder="Select a department">{{$select.selected.DepartmentName}}</ui-select-match>
-      <ui-select-choices repeat="department.id as department in departments">
-        <span ng-bind="department.DepartmentName | highlight: $select.search"></span>
+    <ui-select multiple ng-model="user.program" ng-disabled="!user.department">
+      <ui-select-match>{{$item.Program}}</ui-select-match>
+      <ui-select-choices repeat="program.id as program in programs">
+        {{program.Program}}
       </ui-select-choices>
     </ui-select>
   </div>
   <div class="col-sm-3">
-    <label for="">Function:</label>
+    <label for="">Function</label>
+
+    <ui-select ng-model="user.function" ng-disabled="!user.department">
+      <ui-select-match>{{$select.selected.FunctionName}}</ui-select-match>
+      <ui-select-choices repeat="function.id as function in functions">
+        <span ng-bind="function.FunctionName | highlight: $select.search"></span>
+      </ui-select-choices>
+    </ui-select>
   </div>
   <div class="col-sm-3">
-    <label for="">Role:</label>
+    <label for="">Role</label>
+
+    <ui-select ng-model="user.role" ng-disabled="!user.department">
+      <ui-select-match>{{$select.selected.CCIStaffRole}}</ui-select-match>
+      <ui-select-choices repeat="role.id as role in roles">
+        <span ng-bind="role.CCIStaffRole | highlight: $select.search"></span>
+      </ui-select-choices>
+    </ui-select>
   </div>
 </div>
 
 <h3>Permissions</h3>
-<div ng-repeat="resourceGroup in resourceGroups">
-  <h4>{{resourceGroup.ResourceGroupName}}</h4>
-  <div ng-repeat="permission in resourceGroup.ResourcePermissions">
-    <label>
-      <input type="checkbox"/> {{permission.ResourceLabel}}
-    </label>
+<p ng-hide="user.role">Please choose suitable options <em>in sequence</em> from the above Filters for Permissions to appear here</p>
+<div ng-show="user.role" class="tile-masonry">
+  <div ng-repeat="resourceGroup in resourceGroups" class="tile">
+    <h4>{{resourceGroup.ResourceGroupName}}</h4>
+    <div ng-repeat="permission in resourceGroup.ResourcePermissions">
+      <label>
+        <input type="checkbox" checkbox-group /> {{permission.ResourceLabel}}
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <a href="" class="btn btn-danger pull-left">Cancel</a>
+    <a href="" class="btn btn-success pull-right">Create</a>
   </div>
 </div>

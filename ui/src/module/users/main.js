@@ -18,12 +18,17 @@ define([
         .otherwise('/new-user');
 
       $stateProvider
-        .state('new-user',{
-          url:'',
+        .state('newUser',{
+          url:'/new-user',
+          templateUrl: 'templates/new-user.html',
+          controller: 'UserCtrl'
+        })
+        .state('editUser',{
+          url:'/edit-user/:userId',
           templateUrl: 'templates/new-user.html',
           controller: 'UserCtrl'
         });
 
-      uiSelectConfig.theme = 'bootstrap';
+      uiSelectConfig.theme = '/core/directives/go-select';
     }]);
 });
