@@ -1,0 +1,261 @@
+{
+  "ns3.States": {
+    "states": [
+      {
+        "id": 1,
+        "stateCode": "AL",
+        "stateName": "Alabama"
+      },
+      {
+        "id": 2,
+        "stateCode": "AK",
+        "stateName": "Alaska"
+      },
+      {
+        "id": 3,
+        "stateCode": "AZ",
+        "stateName": "Arizona"
+      },
+      {
+        "id": 4,
+        "stateCode": "AR",
+        "stateName": "Arkansas"
+      },
+      {
+        "id": 5,
+        "stateCode": "CA",
+        "stateName": "California"
+      },
+      {
+        "id": 6,
+        "stateCode": "CO",
+        "stateName": "Colorado"
+      },
+      {
+        "id": 7,
+        "stateCode": "CT",
+        "stateName": "Connecticut"
+      },
+      {
+        "id": 8,
+        "stateCode": "DE",
+        "stateName": "Delaware"
+      },
+      {
+        "id": 9,
+        "stateCode": "DC",
+        "stateName": "District of Columbia"
+      },
+      {
+        "id": 10,
+        "stateCode": "FL",
+        "stateName": "Florida"
+      },
+      {
+        "id": 11,
+        "stateCode": "GA",
+        "stateName": "Georgia"
+      },
+      {
+        "id": 12,
+        "stateCode": "HI",
+        "stateName": "Hawaii"
+      },
+      {
+        "id": 13,
+        "stateCode": "ID",
+        "stateName": "Idaho"
+      },
+      {
+        "id": 14,
+        "stateCode": "IL",
+        "stateName": "Illinois"
+      },
+      {
+        "id": 15,
+        "stateCode": "IN",
+        "stateName": "Indiana"
+      },
+      {
+        "id": 16,
+        "stateCode": "IA",
+        "stateName": "Iowa"
+      },
+      {
+        "id": 17,
+        "stateCode": "KS",
+        "stateName": "Kansas"
+      },
+      {
+        "id": 18,
+        "stateCode": "KY",
+        "stateName": "Kentucky"
+      },
+      {
+        "id": 19,
+        "stateCode": "LA",
+        "stateName": "Louisiana"
+      },
+      {
+        "id": 20,
+        "stateCode": "ME",
+        "stateName": "Maine"
+      },
+      {
+        "id": 21,
+        "stateCode": "MT",
+        "stateName": "Montana"
+      },
+      {
+        "id": 22,
+        "stateCode": "NE",
+        "stateName": "Nebraska"
+      },
+      {
+        "id": 23,
+        "stateCode": "NV",
+        "stateName": "Nevada"
+      },
+      {
+        "id": 24,
+        "stateCode": "NH",
+        "stateName": "New Hampshire"
+      },
+      {
+        "id": 25,
+        "stateCode": "NJ",
+        "stateName": "New Jersey"
+      },
+      {
+        "id": 26,
+        "stateCode": "NM",
+        "stateName": "New Mexico"
+      },
+      {
+        "id": 27,
+        "stateCode": "NY",
+        "stateName": "New York"
+      },
+      {
+        "id": 28,
+        "stateCode": "NC",
+        "stateName": "North Carolina"
+      },
+      {
+        "id": 29,
+        "stateCode": "ND",
+        "stateName": "North Dakota"
+      },
+      {
+        "id": 30,
+        "stateCode": "OH",
+        "stateName": "Ohio"
+      },
+      {
+        "id": 31,
+        "stateCode": "OK",
+        "stateName": "Oklahoma"
+      },
+      {
+        "id": 32,
+        "stateCode": "OR",
+        "stateName": "Oregon"
+      },
+      {
+        "id": 33,
+        "stateCode": "MD",
+        "stateName": "Maryland"
+      },
+      {
+        "id": 34,
+        "stateCode": "MA",
+        "stateName": "Massachusetts"
+      },
+      {
+        "id": 35,
+        "stateCode": "MI",
+        "stateName": "Michigan"
+      },
+      {
+        "id": 36,
+        "stateCode": "MN",
+        "stateName": "Minnesota"
+      },
+      {
+        "id": 37,
+        "stateCode": "MS",
+        "stateName": "Mississippi"
+      },
+      {
+        "id": 38,
+        "stateCode": "MO",
+        "stateName": "Missouri"
+      },
+      {
+        "id": 39,
+        "stateCode": "PA",
+        "stateName": "Pennsylvania"
+      },
+      {
+        "id": 40,
+        "stateCode": "RI",
+        "stateName": "Rhode Island"
+      },
+      {
+        "id": 41,
+        "stateCode": "SC",
+        "stateName": "South Carolina"
+      },
+      {
+        "id": 42,
+        "stateCode": "SD",
+        "stateName": "South Dakota"
+      },
+      {
+        "id": 43,
+        "stateCode": "TN",
+        "stateName": "Tennessee"
+      },
+      {
+        "id": 44,
+        "stateCode": "TX",
+        "stateName": "Texas"
+      },
+      {
+        "id": 45,
+        "stateCode": "UT",
+        "stateName": "Utah"
+      },
+      {
+        "id": 46,
+        "stateCode": "VT",
+        "stateName": "Vermont"
+      },
+      {
+        "id": 47,
+        "stateCode": "VA",
+        "stateName": "Virginia"
+      },
+      {
+        "id": 48,
+        "stateCode": "WA",
+        "stateName": "Washington"
+      },
+      {
+        "id": 49,
+        "stateCode": "WV",
+        "stateName": "West Virginia"
+      },
+      {
+        "id": 50,
+        "stateCode": "WI",
+        "stateName": "Wisconsin"
+      },
+      {
+        "id": 51,
+        "stateCode": "WY",
+        "stateName": "Wyoming"
+      }
+    ]
+  }
+}
