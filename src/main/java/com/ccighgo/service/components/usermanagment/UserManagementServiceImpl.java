@@ -72,6 +72,9 @@ public class UserManagementServiceImpl implements UserManagementService{
                     cciUser.setIsActive(false);
                 }
                 
+                
+                ////////test
+                
                 //update user role for user
                 populateUserRole(cUsr, cciUser);
                 
