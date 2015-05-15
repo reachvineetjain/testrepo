@@ -12,6 +12,7 @@ var gulp = require('gulp'),
     stylish = require('jshint-stylish'),
     bower = require('./bower'),
     fileinclude = require('gulp-file-include'),
+    svgstore = require('gulp-svgstore'),
     isWatching = false;
 
 var htmlminOpts = {
@@ -103,7 +104,7 @@ gulp.task('vendors', function () {
  * Index
  */
 gulp.task('index', index);
-gulp.task('build-all', ['styles', 'templates'], index);
+gulp.task('build-all', ['styles', 'templates', 'svgstore'], index);
 
 function index () {
   var opt = {read: false};
@@ -209,6 +210,17 @@ gulp.task('karma-conf', ['templates'], function () {
       }
     }))
     .pipe(gulp.dest('./'));
+});
+
+
+/**
+ * Merge SVGs into a single file
+ */
+gulp.task('svgstore', function () {
+  return gulp
+    .src('./src/core/assets/icons/*.svg')
+    .pipe(svgstore())
+    .pipe(gulp.dest('.tmp/core/assets/icons'));
 });
 
 /**
