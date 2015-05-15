@@ -1,0 +1,40 @@
+label {
+  color: $label-color;
+  font-weight: normal;
+}
+
+.form-group {
+  label {
+    float: left;
+    margin-right: 5px;
+  }
+}
+
+.input-wrap {
+  display: block;
+  overflow: hidden;
+}
+
+input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  &[type="file"] {
+    border: none;
+  }
+
+  &[type="checkbox"] {
+    width: auto;
+  }
+}
+
+
