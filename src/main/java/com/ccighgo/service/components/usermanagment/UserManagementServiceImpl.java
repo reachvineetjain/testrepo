@@ -273,8 +273,7 @@ public class UserManagementServiceImpl implements UserManagementService{
     @Override
     public CCIUsers createUser(User user) {
         // TODO Auto-generated method stub
-    	// Rakesh made this change for testing
-        return null;
+    	return null;
     }
 
 
