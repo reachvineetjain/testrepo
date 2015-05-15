@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<project name="ServiceFrontBeans" basedir="." default="all">
+	<property name="java.dir" location="src/main/java" />
+	<property name="xsd.dir" location="xsd" />
+	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User" />
+
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="Excurt">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Excurt.xsd" />
+		</java>
+	</target>
+
+	<!-- Auth bean responsible carries user login name and used by shiro interceptor-->
+
+	<target name="Auth">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Auth.xsd" />
+		</java>
+	</target>
+
+	<!-- Countries as a part of common utility services, provides a list of countries-->
+
+	<target name="Countries">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Countries.xsd" />
+		</java>
+	</target>
+
+	<!-- States as a part of utility services, provides list of US states-->
+
+	<target name="States">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/States.xsd" />
+		</java>
+	</target>
+
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="Departments">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Departments.xsd" />
+		</java>
+	</target>
+
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="Programs">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Programs.xsd" />
+		</java>
+	</target>
+
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="Functions">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Functions.xsd" />
+		</java>
+	</target>
+
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="Roles">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Roles.xsd" />
+		</java>
+	</target>
+
+
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="UserDepartments">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/UserDepartments.xsd" />
+		</java>
+	</target>
+	
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="CCIUsers">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/CCIUsers.xsd" />
+		</java>
+	</target>
+	
+	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
+
+		<target name="User">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/User.xsd" />
+			</java>
+		</target>
+
+</project>

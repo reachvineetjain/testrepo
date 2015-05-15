@@ -5,26 +5,35 @@
     <persistence-unit name="cci_gh_go" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <mapping-file>META-INF/orm.xml</mapping-file>
+        <class>com.ccighgo.db.entities.Ccistaffrole</class>
+        <class>com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermission</class>
+        <class>com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermissionPK</class>
+        <class>com.ccighgo.db.entities.CcistaffrolesDepartment</class>
+        <class>com.ccighgo.db.entities.Ccistaffuser</class>
+        <class>com.ccighgo.db.entities.CcistaffusersCcistaffrole</class>
+        <class>com.ccighgo.db.entities.CcistaffusersCcistaffrolePK</class>
+        <class>com.ccighgo.db.entities.CcistaffusersDepartment</class>
+        <class>com.ccighgo.db.entities.CcistaffusersDepartmentPK</class>
+        <class>com.ccighgo.db.entities.CcistaffusersResourcepermission</class>
+        <class>com.ccighgo.db.entities.CcistaffusersResourcepermissionPK</class>
+        <class>com.ccighgo.db.entities.Country</class>
+        <class>com.ccighgo.db.entities.Departmentfunction</class>
+        <class>com.ccighgo.db.entities.Departmentprogramoption</class>
+        <class>com.ccighgo.db.entities.Departmentprogram</class>
+        <class>com.ccighgo.db.entities.Department</class>
+        <class>com.ccighgo.db.entities.History</class>
+        <class>com.ccighgo.db.entities.Login</class>
+        <class>com.ccighgo.db.entities.OauthHistory</class>
+        <class>com.ccighgo.db.entities.OauthHistoryPK</class>
+        <class>com.ccighgo.db.entities.PasswordHistory</class>
+        <class>com.ccighgo.db.entities.Resourceaction</class>
+        <class>com.ccighgo.db.entities.Resourcegroup</class>
+        <class>com.ccighgo.db.entities.Resourcepermission</class>
         <class>com.ccighgo.db.entities.Sysdiagram</class>
-        <class>com.ccighgo.db.entities.CciDepartmentProgram</class>
-        <class>com.ccighgo.db.entities.CciDepartmentalFunction</class>
-        <class>com.ccighgo.db.entities.CciDepartmentalProcess</class>
-        <class>com.ccighgo.db.entities.CciDepartments</class>
-        <class>com.ccighgo.db.entities.CciFieldStaffAgreement</class>
-        <class>com.ccighgo.db.entities.CciPermissionsOption</class>
-        <class>com.ccighgo.db.entities.CciPermissionsProcessGroup</class>
-        <class>com.ccighgo.db.entities.CciProcessPermission</class>
-        <class>com.ccighgo.db.entities.CciProgram</class>
-        <class>com.ccighgo.db.entities.CciRoleDefaultPermission</class>
-        <class>com.ccighgo.db.entities.CciSeasonDocument</class>
-        <class>com.ccighgo.db.entities.CciSeasonDocumentType</class>
-        <class>com.ccighgo.db.entities.CciSeasonNote</class>
-        <class>com.ccighgo.db.entities.CciSeasonProgram</class>
-        <class>com.ccighgo.db.entities.CciSeasonStatus</class>
-        <class>com.ccighgo.db.entities.CciStaff</class>
-        <class>com.ccighgo.db.entities.CciStaffProcessPermission</class>
-        <class>com.ccighgo.db.entities.CciStaffRole</class>
-        <class>com.ccighgo.db.entities.CciStaffStaffRolesMap</class>
+        <class>com.ccighgo.db.entities.UserType</class>
+        <class>com.ccighgo.db.entities.Usstate</class>
+        <class>com.ccighgo.db.entities.DepartmentResourcegroup</class>
+        <class>com.ccighgo.db.entities.DepartmentResourcegroupPK</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go" />

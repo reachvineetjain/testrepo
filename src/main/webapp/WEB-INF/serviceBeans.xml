@@ -34,7 +34,9 @@
 
     <jaxrs:server id="service" address="/">
         <jaxrs:serviceBeans>
-            <bean id="seasons" class="com.ccighgo.services.rest.season.Seasons" />
+            <bean id="seasons" class="com.ccighgo.service.rest.season.Seasons" />
+            <bean id="userManagement" class="com.ccighgo.service.rest.usermanagement.UserManagement" />
+            <bean id="utility" class="com.ccighgo.service.rest.utility.Utility" />
         </jaxrs:serviceBeans>
 
         <jaxrs:providers>

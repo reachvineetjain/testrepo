@@ -15,11 +15,11 @@ public class Sysdiagram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="diagram_id", unique=true, nullable=false)
 	private int diagramId;
 
-	private String definition;
+	@Lob
+	private byte[] definition;
 
 	@Column(nullable=false, length=160)
 	private String name;
@@ -40,11 +40,11 @@ public class Sysdiagram implements Serializable {
 		this.diagramId = diagramId;
 	}
 
-	public String getDefinition() {
+	public byte[] getDefinition() {
 		return this.definition;
 	}
 
-	public void setDefinition(String definition) {
+	public void setDefinition(byte[] definition) {
 		this.definition = definition;
 	}
 
