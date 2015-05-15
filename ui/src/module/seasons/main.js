@@ -19,7 +19,7 @@ define([
         .config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
             'use strict';
             $urlRouterProvider
-                .otherwise('/home/error');
+                .otherwise('/home');
 
             $stateProvider
                 .state('home',{
