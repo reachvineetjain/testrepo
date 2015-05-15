@@ -8,6 +8,8 @@ define([
     .controller('SeasonDetailCtrl',['$http','$scope','$state','$stateParams','SeasonDetailService',
       function($http, $scope, $state, $stateParams, SeasonDetailService){
         var seasonId =  $stateParams.seasonId;
+				
+				// This "seasonId" is required to fetch the details of each of the Season. 
         SeasonDetailService.gettingSeasonDetail(seasonId).then(function(response){
           var result = response.data[0];
           $scope.seasonDetail = result;

@@ -5,12 +5,11 @@ define([
     angular
         .module('ui.seasons.controller.three-pane-controller',[])
         .controller('ThreePaneCtrl',['$http','$scope','$state',function($http, $scope, $state){
-            $scope.viewContext = 'SeasonView';
             $scope.countElem = 1;
             $scope.programsList = [];
-            if($scope.viewContext == 'SeasonView'){
-              $state.go('home.program');
-              //$state.go('home.program',{'referer':'pane-controller'});
-            }
+						
+						// This would trigger the call to the first state in the main.js
+            $state.go('home.program');
         }]);
 });
+// TBD: There should be "link:" function which would essentially handle manipulation of the CSS based on the user-agent for handling the different layouts.
