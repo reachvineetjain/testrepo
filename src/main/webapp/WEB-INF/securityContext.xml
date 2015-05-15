@@ -54,6 +54,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /services/season/** = anon
+                /services/usm/** = anon
                 /services/** = authc
                 
             </value>

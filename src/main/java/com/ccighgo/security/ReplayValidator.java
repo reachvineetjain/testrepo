@@ -1,15 +1,13 @@
 package com.ccighgo.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 
-import com.ccighgo.db.entities.CciOauthHistory;
-import com.ccighgo.db.entities.CciOauthHistoryPK;
+import com.ccighgo.db.entities.OauthHistory;
+import com.ccighgo.db.entities.OauthHistoryPK;
 import com.ccighgo.jpa.repositories.OauthValidatorRepository;
 
 
@@ -45,7 +43,7 @@ public class ReplayValidator {
 		LOGGER.trace("enter ValidateNonce");
 		try {
 			LOGGER.debug("Retrieving OAUTH history entry for the timestamp and nonce");
-			CciOauthHistoryPK pk = new CciOauthHistoryPK();
+			OauthHistoryPK pk = new OauthHistoryPK();
 			pk.setNonce(nonce);
 			pk.setTimevalue(timestamp);
 
@@ -54,7 +52,7 @@ public class ReplayValidator {
 				throw new SecurityException("Potential replay: a request with same timestamp and nonce already served");
 			}
 			LOGGER.debug("DONE: Retrieving OAUTH history entry");
-			CciOauthHistory oh = new CciOauthHistory();
+			OauthHistory oh = new OauthHistory();
 			oh.setId(pk);
 			oaRepository.save(oh);
 		}
