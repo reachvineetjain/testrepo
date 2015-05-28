@@ -1,0 +1,41 @@
+<input type="search" placeholder="ID, Name, User Name, E-mail, Org." ng-model="searchCriteria.searchField" class="search-field" />
+
+<label>Department</label>
+<ui-select ng-model="searchCriteria.department" required>
+  <ui-select-match>{{$select.selected.DepartmentName}}</ui-select-match>
+  <ui-select-choices repeat="department.id as department in departments">
+    <span ng-bind="department.DepartmentName | highlight: $select.search"></span>
+  </ui-select-choices>
+</ui-select>
+
+<label>Program</label>
+<ui-select ng-model="searchCriteria.program">
+  <ui-select-match>{{$select.selected.programName}}</ui-select-match>
+  <ui-select-choices repeat="program.id as program in programs">
+    <span ng-bind="program.programName | highlight: $select.search"></span>
+  </ui-select-choices>
+</ui-select>
+
+<label>Role</label>
+<ui-select ng-model="searchCriteria.role">
+  <ui-select-match>{{$select.selected.CCIStaffRole}}</ui-select-match>
+  <ui-select-choices repeat="role.id as role in roles">
+    <span ng-bind="role.CCIStaffRole | highlight: $select.search"></span>
+  </ui-select-choices>
+</ui-select>
+
+<label>Country</label>
+<ui-select ng-model="searchCriteria.country">
+  <ui-select-match>{{$select.selected.countryName}}</ui-select-match>
+  <ui-select-choices repeat="country.id as country in countries">
+    <span ng-bind="country.countryName | highlight: $select.search"></span>
+  </ui-select-choices>
+</ui-select>
+
+<label>Active</label>
+<input type="radio" ng-model="searchCriteria.active" value="true" />
+<input type="radio" ng-model="searchCriteria.active" value="false" />
+
+<div>{{searchCriteria}}</div>
+
+<input type="submit" class="btn btn-success" />

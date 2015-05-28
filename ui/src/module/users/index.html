@@ -1,12 +1,11 @@
 @@include('src/core/templates/header-partial.html')
 
 <div class="page-content-holder full-height" id="pageHolder">
-	<div class="page-content full-height layout-e">
-    <div class="split-pane-3 inline-holder h-layout tab-hidden">
-      <div ui-view></div>
-    </div>
-	</div>
+  <div ui-view="splitPaneView" class="page-content full-height layout-a">
+
+  </div>
 </div>
+<!-- test -->
 
 @@include('src/core/templates/footer-partial.html', {
   "module": "users"

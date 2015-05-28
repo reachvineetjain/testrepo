@@ -7,11 +7,22 @@ define([
   '/core/services/staff-roles-service.js',
   '/core/services/states-service.js',
   '/core/services/countries-service.js',
+  '/core/services/users-service.js',
   '../directives/checkbox-group-directive.js'
 ], function (angular) {
-  angular.module('ui.userManagement.controller', ['ui.departmentsService','ui.resourceGroupsService', 'ui.staffRolesService', 'ui.statesService', 'ui.countriesService', 'ui.userManagement.directive.checkboxGroup']).controller('UserCtrl', ['$scope', '$filter', 'Departments', 'ResourceGroups', 'StaffRoles', 'States', 'Countries', function($scope, $filter, Departments, ResourceGroups, StaffRoles, States, Countries) {
-    $scope.user = {};
+  angular.module('ui.userManagement.controller.user', ['ui.departmentsService','ui.resourceGroupsService', 'ui.staffRolesService', 'ui.statesService', 'ui.countriesService', 'ui.usersService', 'ui.userManagement.directive.checkboxGroup']).controller('UserCtrl', ['$scope', '$filter', '$stateParams', 'Departments', 'ResourceGroups', 'StaffRoles', 'States', 'Countries', 'Users', function($scope, $filter, $stateParams, Departments, ResourceGroups, StaffRoles, States, Countries, Users) {
     $scope.programs = [];
+
+    console.log($stateParams);
+
+    if ($stateParams.userId) {
+      $scope.user = {};
+      Users.getUserById().then(function(response){
+        console.log(response.data);
+      });
+    } else {
+      $scope.user = {};
+    }
 
     // Get list of resource groups
     ResourceGroups.getResourceGroups().then(function(response){
