@@ -97,24 +97,20 @@ body{
 .logo-holder, .menu-holder{
 	padding: 10px;
 }
-
-.add_new_icon{
-	background-image: url('/core/assets/images/add_new.png');
+.top-header .split-20>div {
 	background-repeat: no-repeat;
 	background-position: center;
-	width: 35px;
-	height: 35px;
+	width: 34px;
+	height: 34px;
 	border: 1px solid;
-	margin: 10px;
+	margin: 10px 5px;
+	border-radius: 18px;
+}
+.add_new_icon{
+	background-image: url('/core/assets/images/add_new.png');
 }
 .search_icon{
 	background-image: url('/core/assets/images/search.png');
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 35px;
-	height: 35px;
-	border: 1px solid;
-	margin: 10px;
 }
 .bottom-header {
 	margin: 0px -20px;
@@ -309,24 +305,12 @@ body{
 	background: rgba(207, 207, 207, 0.5);
 }
 
-.page-container .page-content-holder .page-content > div{
-	/*
-	-webkit-transition: width 0.5s;
-    -moz-transition: width 0.5s;
-    -o-transition: width 0.5s;
-    -ms-transition: width 0.5s;
-    transition: width 0.5s;
-    */
-
-    -webkit-transition:all 0.3s ease;
-    -moz-transition:all 0.3s ease;
-    -o-transition:all 0.3s ease;
-    -ms-transition:all 0.3s ease;
+.page-container .page-content-holder .page-content > div.inline-holder{
     transition:all 0.3s ease;
 }
 
 .page-container .page-content-holder .page-content {
-	-webkit-transform: translate3d(0, 0, 0);
+	/*-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	-o-transform: translate3d(0, 0, 0);
 	-ms-transform: translate3d(0, 0, 0);
@@ -340,7 +324,7 @@ body{
 	-moz-transition: -webkit-transform 0.5s;
 	-o-transition: -webkit-transform 0.5s;
 	-ms-transition: -webkit-transform 0.5s;
-	transition: -webkit-transform 0.5s;
+	transition: -webkit-transform 0.5s;*/
 }
 
 .seasons-detail form .form-group {
@@ -526,11 +510,12 @@ body{
   margin: 5px;
 }
 
-.programs-list li.selected, .seasons-list li.selected{
-  background-color: #E7E7E7;
+.programs-list .selected {
+  background: #FFF;
 }
-.form-group .row {
-  padding: 0px 10px;
+
+.seasons-list .selected {
+	background: #DEEDE9;
 }
 .no-selection {
   padding: 50px 0px;
@@ -538,4 +523,40 @@ body{
   color: #797979;
   font-weight: 700;
   font-size: 16px;
+}
+.split-pane-4 {
+  width: 100%;
+	background-color: #f2f2f2;
+}
+.split-pane-4 .season-selector {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+	margin-top: -90px;
+}
+.split-pane-4 .season-selector h2{
+	margin-top: 10px;
+}
+.new-season-form {
+  margin: 5px 10px;
+}
+.action-holder {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #6D6D6D;
+}
+.season-filter-view{
+	margin: 5px;
+}
+.search-holder {
+	margin: 10px 0px;
+  padding: 10px 5px;
+  background-color: #fff;
+  box-shadow: inset 0 0 8px rgb(216, 216, 216);
+  border: 1px solid #E6E6E6;
+  border-radius: 5px;
+}
+.search-holder > input[type="search"]{
+	border-bottom: 0px;
 }

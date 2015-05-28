@@ -1,9 +1,9 @@
 @@include('src/core/templates/header-partial.html')
 
 <div class="page-content-holder full-height" id="pageHolder">
-	<div ui-view="splitPaneView" class="page-content full-height {{baseLayout}}">
-
-	</div>
+	<div class="split-pane-3 inline-holder h-layout tab-hidden">
+      <div ui-view></div>
+    </div>
 </div>
 
 @@include('src/core/templates/footer-partial.html', {

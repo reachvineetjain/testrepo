@@ -1,0 +1,64 @@
+<div class="new-season-form">
+	<form name="createSeasonForm" ng-submit="seasonCreationForm()">
+	<div>
+		<h3> Details </h3>
+		<div class="form-container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="seasonDepartment">Department :</label>
+						<span class="input-wrap">
+							<input type="text" id="seasonDepartment" required ng-model="season.department"/>
+						</span>
+					</div>
+					<div class="form-group">
+						<label for="seasonName">Season Name :</label>
+						<span class="input-wrap">
+							<input type="text" id="seasonName" required ng-model="season.name"/>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="startDateSeason">Start Date :</label>
+						<span class="input-wrap">
+							<input type="date" id="startDateSeason" required ng-model="season.startDate"/>
+						</span>
+					</div>
+					<div class="form-group">
+						<label for="endDateSeason">End Date :</label>
+						<span class="input-wrap">
+							<input type="date" id="endDateSeason" required ng-model="season.endDate"/>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="seasonCutOff">Cut-off Date :</label>
+						<span class="input-wrap">
+							<input type="date" id="seasonCutOff" required ng-model="season.cutOffDate"/>
+						</span>
+					</div>
+					<div class="form-group">
+						<label for="seasonStatus">Season Status :</label>
+						<span class="input-wrap">
+							<input type="text" id="seasonStatus" required ng-model="season.status"/>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<h3>Documents</h3>
+		<div class="form-container">
+			
+		</div>
+	</div>
+	<div class="action-holder">
+		<button type="button" class="btn btn-success" ui-sref="home.seasonSelect">Cancel</button>
+		<button type="submit" class="btn btn-success pull-right" ng-disabled="createSeasonForm.$invalid">Create</button>
+	</div>
+	
+	</form>
+</div>

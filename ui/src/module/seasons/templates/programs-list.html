@@ -1,5 +1,5 @@
 <ul class="programs-list">
-    <li ng-repeat="programItem in programsList" ui-sref-active="selected" progid="{{programItem.programId}}">
+    <li ng-repeat="programItem in programsList" ui-sref-active="selected" progid="{{programItem.programId}}" class="{{(programItem.programId==selectedProgram) && 'cur-selected' || 'not-selected'}}">
     	<a ui-sref="home.season({ programId: programItem.programId })" >{{programItem.programLabel}}</a>
     </li>
 </ul>

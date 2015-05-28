@@ -10,6 +10,7 @@ define([
           function($http,$scope,$state,$stateParams,SeasonListService){
 						//angular.element(".programs-list").find('li').attr('progid',100).addClass('selected');
             var programId = $stateParams.programId;
+						$scope.selectedProgram = programId;
 						
 						//NOTE: TBU: The REST API Should be able to make a call with ProgramID. Which would give only the required result JSON
             SeasonListService.gettingSeasonsList($stateParams.programId).then(function(response) {

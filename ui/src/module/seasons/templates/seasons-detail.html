@@ -1,34 +1,38 @@
 <div class="seasons-detail">
 <form id="seasonForm" method="post" >
-    <div class="form-group">
-        <div class="row">
-            <div>
-                <label>Season Name</label>
-                <input type="text" name="seasonName" value="{{seasonDetail.seasonName}}"/>
-            </div>
-            <div>
-              <label>Start date</label>
-              <input type="text" name="startDate" value="{{seasonDetail.startDate | date:'MM/dd/yyyy'}}"/>
-            </div>
-            <div>
-              <label class="control-label">End date</label>
-              <input type="text" name="endDate" value="{{seasonDetail.endDate | date:'MM/dd/yyyy'}}"/>
-            </div>
-            <div>
-              <label class="control-label">Is Job Board Open</label>
-              <input type="text" name="isJobBoard" value="{{seasonDetail.isJobBoardOpen}}"/>
-            </div>
-           <!-- <div class="col-xs-4 selectContainer">
-                <label class="control-label">Genre</label>
-                <select class="form-control" name="genre">
-                    <option value="">Choose a genre</option>
-                    <option value="action">Action</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="horror">Horror</option>
-                    <option value="romance">Romance</option>
-                </select>
-            </div> -->
-        </div>
-    </div>
+   <div class="tile">
+  	<div class="row">
+  		<div class="form-group">
+				<label for="seasonName">Season Name :</label>
+				<span class="input-wrap">
+					<input type="text" ng-model="seasonDetail.seasonName" id="seasonName" />
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label for="startDate">Start Date :</label>
+				<span class="input-wrap">
+					<input type="date" ng-model="seasonDetail.startDate" id="startDate" />
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label for="endDate">End Date :</label>
+				<span class="input-wrap">
+					<input type="date" ng-model="seasonDetail.endDate" id="endDate" />
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label for="endDate">Is Job Board Open :</label>
+				<span class="input-wrap">
+					<input type="text" ng-model="seasonDetail.isJobBoardOpen" id="isJobBoard" />
+				</span>
+			</div>
+		</div>
+	</div>
 </form>
 </div>
