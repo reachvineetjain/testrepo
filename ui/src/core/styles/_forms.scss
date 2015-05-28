@@ -1,6 +1,10 @@
 label {
-  color: $label-color;
+  color: #000;
   font-weight: normal;
+
+  &.editable {
+    color: $label-color
+  }
 }
 
 .form-group {
