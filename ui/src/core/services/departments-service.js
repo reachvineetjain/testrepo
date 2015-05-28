@@ -5,7 +5,11 @@ define([
 ], function(angular) {
   angular.module('ui.departmentsService', []).factory('Departments', function Departments($http) {
     var getDepartments = function () {
-      return $http({method: 'GET', url: '/core/data/departments.json'});
+      return $http({
+        method: 'GET',
+        url: '/core/data/departments.json',
+        cache: true
+      });
     };
 
     return {
