@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/department" elementFormDefault="unqualified"
+    attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:dept="http://www.ccighgo.com/department">
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <jaxb:schemaBindings>
+                <jaxb:package name="com.ccighgo.service.transport.utility.beans.department" />
+            </jaxb:schemaBindings>
+        </xsd:appinfo>
+        <xsd:documentation></xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element name="Departments" type="dept:Departments"></xsd:element>
+
+    <xsd:complexType name="Departments">
+        <xsd:sequence>
+            <xsd:element name="departments" type="dept:Department" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Department">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="acronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="isActive" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/auth" elementFormDefault="unqualified"
+    attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:auth="http://www.ccighgo.com/auth">
+    <xsd:annotation>
+        <xsd:appinfo>
+            <jaxb:schemaBindings>
+                <jaxb:package name="com.ccighgo.service.auth.beans" />
+            </jaxb:schemaBindings>
+            <jaxb:globalBindings localScoping="nested">
+                <jaxb:javaType name="java.util.Date" xmlType="xsd:dateTime" parseMethod="com.ccighgo.utils.DateAdapter.parseDate"
+                    printMethod="com.ccighgo.utils.DateAdapter.printDate" />
+            </jaxb:globalBindings>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+    <xsd:element name="Auth" type="auth:Auth"></xsd:element>
+
+    <xsd:complexType name="Auth">
+        <xsd:sequence>
+            <xsd:element name="loginname" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+            <xsd:element name="login_type" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
+

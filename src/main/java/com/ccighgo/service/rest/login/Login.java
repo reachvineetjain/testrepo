@@ -3,58 +3,48 @@
  */
 package com.ccighgo.service.rest.login;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 
-import org.apache.cxf.jaxrs.ext.MessageContext;
+import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ccighgo.service.auth.beans.Auth;
+import com.ccighgo.service.components.login.LoginAction;
 
 /**
  * @author ravimishra
  *
  */
-@Path("/login/")
+@Path("/auth/")
 @Produces("application/json")
 @Consumes("application/json")
 public class Login {
-    
-    @Context
-    MessageContext msgContext;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Login.class); 
+	
+	@Autowired private LoginAction loginAction;
     
     @GET
-    @Path("ping/{input}")
-    @Produces("text/plain")
-    public String ping(@PathParam("input") String input) {
-       return input;
-    }
-    
-    public String login(){
-        //TODO user shiro filter to authenticate user.. waiting for DB design for user
-        HttpSession session = msgContext.getHttpServletRequest().getSession();
-        //this is if user logs out and hits back button
-        if(session == null || session.getAttribute("username") == null){
-            //send user to login page
-        }
-        else{
-            
-        }
-        return null;
-        
-    }
-    
-    public String logout(){
-        HttpServletRequest request = msgContext.getHttpServletRequest();
-        HttpSession session = request.getSession();
-        session.setAttribute("username", null);
-        session.invalidate();
-        //TODO send user back to login page
-        return null;
-        
-    }
+	@Path("login")
+	public Auth login(){
+		String user = SecurityUtils.getSubject().getPrincipal().toString();
+		LOGGER.debug("User '{}' logged in", user);
+		MDC.put("uid", user);
+		return loginAction.login();
+	}
+	
+	@GET
+	@Path("logout")
+	public void logout(){
+		String user = SecurityUtils.getSubject().getPrincipal().toString();
+		SecurityUtils.getSubject().logout();
+		LOGGER.debug("User '{}' logged out", user);
+	}
 
 }
