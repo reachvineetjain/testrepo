@@ -12,8 +12,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="resourceactions")
-@NamedQuery(name="Resourceaction.findAll", query="SELECT r FROM Resourceaction r")
-public class Resourceaction implements Serializable {
+@NamedQuery(name="ResourceActions.findAll", query="SELECT r FROM ResourceActions r")
+public class ResourceActions implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -41,11 +41,11 @@ public class Resourceaction implements Serializable {
 	@Column(nullable=false)
 	private byte visibleToUser;
 
-	//bi-directional many-to-one association to Resourcepermission
+	//bi-directional many-to-one association to ResourcePermission
 	@OneToMany(mappedBy="resourceaction")
-	private List<Resourcepermission> resourcepermissions;
+	private List<ResourcePermission> resourcepermissions;
 
-	public Resourceaction() {
+	public ResourceActions() {
 	}
 
 	public int getId() {
@@ -112,22 +112,22 @@ public class Resourceaction implements Serializable {
 		this.visibleToUser = visibleToUser;
 	}
 
-	public List<Resourcepermission> getResourcepermissions() {
+	public List<ResourcePermission> getResourcepermissions() {
 		return this.resourcepermissions;
 	}
 
-	public void setResourcepermissions(List<Resourcepermission> resourcepermissions) {
+	public void setResourcepermissions(List<ResourcePermission> resourcepermissions) {
 		this.resourcepermissions = resourcepermissions;
 	}
 
-	public Resourcepermission addResourcepermission(Resourcepermission resourcepermission) {
+	public ResourcePermission addResourcepermission(ResourcePermission resourcepermission) {
 		getResourcepermissions().add(resourcepermission);
 		resourcepermission.setResourceaction(this);
 
 		return resourcepermission;
 	}
 
-	public Resourcepermission removeResourcepermission(Resourcepermission resourcepermission) {
+	public ResourcePermission removeResourcepermission(ResourcePermission resourcepermission) {
 		getResourcepermissions().remove(resourcepermission);
 		resourcepermission.setResourceaction(null);
 

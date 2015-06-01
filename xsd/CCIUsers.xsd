@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/cciuser" elementFormDefault="unqualified"
-    attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-    xmlns:cciusr="http://www.ccighgo.com/cciuser">
+<xsd:schema targetNamespace="http://www.ccighgo.com/cciuser" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cciusr="http://www.ccighgo.com/cciuser">
 
-    <xsd:annotation>
-        <xsd:appinfo>
-            <jaxb:schemaBindings>
-                <jaxb:package name="com.ccighgo.service.transport.usermanagement.beans.cciuser" />
-            </jaxb:schemaBindings>
-        </xsd:appinfo>
-        <xsd:documentation></xsd:documentation>
-    </xsd:annotation>
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.usermanagement.beans.cciuser" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
 
-    <xsd:element name="CCIUsers" type="cciusr:CCIUsers"></xsd:element>
+   <xsd:element name="CCIUsers" type="cciusr:CCIUsers"></xsd:element>
 
-    <xsd:complexType name="CCIUsers">
-        <xsd:sequence>
-            <xsd:element name="cciUsers" type="cciusr:CCIUser" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-    </xsd:complexType>
+   <xsd:complexType name="CCIUsers">
+      <xsd:sequence>
+         <xsd:element name="recordCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUsers" type="cciusr:CCIUser" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
 
-    <xsd:complexType name="CCIUser">
-        <xsd:sequence>
-            <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="country" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="state" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="primaryPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="loginName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="isActive" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
-            <xsd:element name="photoPath" type="xsd:string" maxOccurs="1" minOccurs="0" />
-            <xsd:element name="userDepartments" type="cciusr:CCIUserDepartment" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="userDepartmentPrograms" type="cciusr:CCIUserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="userRole" type="cciusr:CCIUserStaffRole" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-    </xsd:complexType>
-    
-    <xsd:complexType name="CCIUserDepartment">
-        <xsd:sequence>
-            <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
-    
-    <xsd:complexType name="CCIUserDepartmentProgram">
-        <xsd:sequence>
-            <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
-    
-     <xsd:complexType name="CCIUserStaffRole">
-        <xsd:sequence>
-            <xsd:element name="roleId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="roleName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
+   <xsd:complexType name="CCIUser">
+      <xsd:sequence>
+         <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="country" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="state" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="primaryPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="loginName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="isActive" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
+         <xsd:element name="photoPath" type="xsd:string" maxOccurs="1" minOccurs="0" />
+         <xsd:element name="userDepartments" type="cciusr:CCIUserDepartment" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="userDepartmentPrograms" type="cciusr:CCIUserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="userRole" type="cciusr:CCIUserStaffRole" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="CCIUserDepartment">
+      <xsd:sequence>
+         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="CCIUserDepartmentProgram">
+      <xsd:sequence>
+         <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="CCIUserStaffRole">
+      <xsd:sequence>
+         <xsd:element name="roleId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="roleName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
 
 </xsd:schema>
 

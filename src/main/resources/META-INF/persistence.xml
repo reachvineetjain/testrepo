@@ -5,35 +5,56 @@
     <persistence-unit name="cci_gh_go" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <mapping-file>META-INF/orm.xml</mapping-file>
-        <class>com.ccighgo.db.entities.Ccistaffrole</class>
-        <class>com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermission</class>
-        <class>com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermissionPK</class>
-        <class>com.ccighgo.db.entities.CcistaffrolesDepartment</class>
-        <class>com.ccighgo.db.entities.Ccistaffuser</class>
-        <class>com.ccighgo.db.entities.CcistaffusersCcistaffrole</class>
-        <class>com.ccighgo.db.entities.CcistaffusersCcistaffrolePK</class>
-        <class>com.ccighgo.db.entities.CcistaffusersDepartment</class>
-        <class>com.ccighgo.db.entities.CcistaffusersDepartmentPK</class>
-        <class>com.ccighgo.db.entities.CcistaffusersResourcepermission</class>
-        <class>com.ccighgo.db.entities.CcistaffusersResourcepermissionPK</class>
-        <class>com.ccighgo.db.entities.Country</class>
-        <class>com.ccighgo.db.entities.Departmentfunction</class>
-        <class>com.ccighgo.db.entities.Departmentprogramoption</class>
-        <class>com.ccighgo.db.entities.Departmentprogram</class>
-        <class>com.ccighgo.db.entities.Department</class>
+        <class>com.ccighgo.db.entities.AnnualSeason</class>
+        <class>com.ccighgo.db.entities.CciStaffRole</class>
+        <class>com.ccighgo.db.entities.CciStaffRolesDefaultResourcePermission</class>
+        <class>com.ccighgo.db.entities.CciStaffRolesDefaultResourcePermissionPK</class>
+        <class>com.ccighgo.db.entities.CciStaffRolesDepartment</class>
+        <class>com.ccighgo.db.entities.CciStaffUserNote</class>
+        <class>com.ccighgo.db.entities.CciStaffUserProgram</class>
+        <class>com.ccighgo.db.entities.CciStaffUserProgramPK</class>
+        <class>com.ccighgo.db.entities.CciStaffUser</class>
+        <class>com.ccighgo.db.entities.CciStaffUsersCciStaffRole</class>
+        <class>com.ccighgo.db.entities.CciStaffUsersCciStaffRolePK</class>
+        <class>com.ccighgo.db.entities.CciStaffUsersResourcePermission</class>
+        <class>com.ccighgo.db.entities.CciStaffUsersResourcePermissionPK</class>
+        <class>com.ccighgo.db.entities.Countries</class>
+        <class>com.ccighgo.db.entities.DepartmentFunction</class>
+        <class>com.ccighgo.db.entities.DepartmentProgramOption</class>
+        <class>com.ccighgo.db.entities.DepartmentProgram</class>
+        <class>com.ccighgo.db.entities.DepartmentResourceGroup</class>
+        <class>com.ccighgo.db.entities.Departments</class>
+        <class>com.ccighgo.db.entities.ExtensionHSP</class>
         <class>com.ccighgo.db.entities.History</class>
         <class>com.ccighgo.db.entities.Login</class>
         <class>com.ccighgo.db.entities.OauthHistory</class>
         <class>com.ccighgo.db.entities.OauthHistoryPK</class>
         <class>com.ccighgo.db.entities.PasswordHistory</class>
-        <class>com.ccighgo.db.entities.Resourceaction</class>
-        <class>com.ccighgo.db.entities.Resourcegroup</class>
-        <class>com.ccighgo.db.entities.Resourcepermission</class>
-        <class>com.ccighgo.db.entities.Sysdiagram</class>
+        <class>com.ccighgo.db.entities.Region</class>
+        <class>com.ccighgo.db.entities.RegionSeason</class>
+        <class>com.ccighgo.db.entities.ResourceActions</class>
+        <class>com.ccighgo.db.entities.ResourcePermission</class>
+        <class>com.ccighgo.db.entities.Season</class>
+        <class>com.ccighgo.db.entities.SeasonCAPDetails</class>
+        <class>com.ccighgo.db.entities.SeasonF1Details</class>
+        <class>com.ccighgo.db.entities.SeasonGHTConfiguration</class>
+        <class>com.ccighgo.db.entities.SeasonHSADetails</class>
+        <class>com.ccighgo.db.entities.SeasonHSPAllocation</class>
+        <class>com.ccighgo.db.entities.SeasonHSPConfiguration</class>
+        <class>com.ccighgo.db.entities.SeasonJ1Details</class>
+        <class>com.ccighgo.db.entities.SeasonLSDetails</class>
+        <class>com.ccighgo.db.entities.SeasonStatus</class>
+        <class>com.ccighgo.db.entities.SeasonTADetails</class>
+        <class>com.ccighgo.db.entities.SeasonVolunteersDetails</class>
+        <class>com.ccighgo.db.entities.SeasonWADetails</class>
+        <class>com.ccighgo.db.entities.SeasonWnTDetails</class>
+        <class>com.ccighgo.db.entities.SeasonWPAllocation</class>
+        <class>com.ccighgo.db.entities.SeasonWPConfiguration</class>
+        <class>com.ccighgo.db.entities.SysDiagram</class>
         <class>com.ccighgo.db.entities.UserType</class>
-        <class>com.ccighgo.db.entities.Usstate</class>
-        <class>com.ccighgo.db.entities.DepartmentResourcegroup</class>
-        <class>com.ccighgo.db.entities.DepartmentResourcegroupPK</class>
+        <class>com.ccighgo.db.entities.USSchool</class>
+        <class>com.ccighgo.db.entities.USSchoolSeason</class>
+        <class>com.ccighgo.db.entities.USState</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go" />

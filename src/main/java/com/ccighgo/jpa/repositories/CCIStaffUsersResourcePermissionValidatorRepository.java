@@ -6,8 +6,8 @@ package com.ccighgo.jpa.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.CcistaffusersResourcepermission;
-import com.ccighgo.db.entities.CcistaffusersResourcepermissionPK;
+import com.ccighgo.db.entities.CciStaffUsersResourcePermission;
+import com.ccighgo.db.entities.CciStaffUsersResourcePermissionPK;
 
 /**
  * @author ravimishra
@@ -15,6 +15,6 @@ import com.ccighgo.db.entities.CcistaffusersResourcepermissionPK;
  */
 @Repository
 public interface CCIStaffUsersResourcePermissionValidatorRepository extends
-		JpaRepository<CcistaffusersResourcepermission, CcistaffusersResourcepermissionPK> {
+		JpaRepository<CciStaffUsersResourcePermission, CciStaffUsersResourcePermissionPK> {
 
 }

@@ -8,7 +8,6 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.seasons.front.SeasonSearchResponse;
 import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.department.Departments;

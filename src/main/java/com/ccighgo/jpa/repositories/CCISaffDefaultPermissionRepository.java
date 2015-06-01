@@ -6,7 +6,7 @@ package com.ccighgo.jpa.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermission;
+import com.ccighgo.db.entities.CciStaffRolesDefaultResourcePermission;
 
 /**
  * @author ravimishra
@@ -14,6 +14,6 @@ import com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermission;
  */
 @Repository
 public interface CCISaffDefaultPermissionRepository extends
-		JpaRepository<CcistaffrolesDefaultresourcepermission, Integer> {
+		JpaRepository<CciStaffRolesDefaultResourcePermission, Integer> {
 
 }
