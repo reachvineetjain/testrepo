@@ -6,6 +6,7 @@ require.config({
     uiRouter: '/angular-ui-router/release/angular-ui-router',
 		uiRouterExtCore: '/ui-router-extras/release/modular/ct-ui-router-extras.core',
 		uiRouterExtSticky: '/ui-router-extras/release/modular/ct-ui-router-extras.sticky',
+		ngTable: '/ng-table/dist/ng-table',
     module: '/module',
     uiSelect: '/angular-ui-select/dist/select',
     coreServices: '/core/services'
@@ -14,6 +15,7 @@ require.config({
     'angular' : {'exports' : 'angular'},
     'ui': ['angular'],
     'uiRouter': ['angular'],
+		'ngTable': ['angular'],
     'module': ['angular']
   },
   priority: [

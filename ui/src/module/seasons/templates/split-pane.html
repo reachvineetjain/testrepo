@@ -1,19 +1,21 @@
 
 <div class="split-pane-1 inline-holder h-layout mob-visible" ng-hide="launchScreen">
  	<div class="column-header"> Refine </div>
-  <div class="panel-handle expand"></div>
+  <!-- <div class="panel-handle expand"></div> -->
   <div ui-view="programListView"></div>
   <div ui-view="seasonsFilterView"></div>
 </div>
 <div class="split-pane-2 inline-holder h-layout" ng-hide="launchScreen">
- 	<div class="column-header"> Programs </div>
-  <div class="panel-handle expand"></div>
+ 	<div class="column-header"> Result </div>
+  <!-- <div class="panel-handle expand"></div> -->
   <div ui-view="seasonsListView"></div>
+  <div ui-view="seasonFilterResult"></div>
 </div>
 <div class="split-pane-3 inline-holder h-layout tab-hidden" ng-hide="launchScreen">
  	<div class="column-header"></div>
-  <div class="panel-handle expand"></div>
+  <!-- <div class="panel-handle expand"></div> --> 
   <div ui-view="seasonsDetailView"></div>
+  <div ui-view="detailedSeasonView"></div>
 </div>
 
 <div class="split-pane-4 inline-holder h-layout tab-hidden" ng-show="launchScreen">

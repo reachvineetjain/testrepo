@@ -6,11 +6,12 @@ define([
   'uiRouter',
  	'uiRouterExtCore',
 	'uiRouterExtSticky',
+	'ngTable',
   'uiSelect'
 ], function(angular) {
   return angular.module('ui', [
     'ui.router',
-			'ct.ui.router.extras.core',
+		'ct.ui.router.extras.core',
 		'ct.ui.router.extras.sticky'
   ]);
 });
