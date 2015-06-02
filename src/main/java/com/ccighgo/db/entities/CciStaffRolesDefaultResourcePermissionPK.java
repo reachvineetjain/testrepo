@@ -4,11 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the ccistaffroles_defaultresourcepermissions database table.
+ * The primary key class for the ccistaffrolesdefaultresourcepermissions database table.
  * 
  */
 @Embeddable
-public class CcistaffrolesDefaultresourcepermissionPK implements Serializable {
+public class CciStaffRolesDefaultResourcePermissionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class CcistaffrolesDefaultresourcepermissionPK implements Serializable {
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
 	private int resourcePermissionsId;
 
-	public CcistaffrolesDefaultresourcepermissionPK() {
+	public CciStaffRolesDefaultResourcePermissionPK() {
 	}
 	public int getCciStaffDepartmentRoleId() {
 		return this.cciStaffDepartmentRoleId;
@@ -37,10 +37,10 @@ public class CcistaffrolesDefaultresourcepermissionPK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof CcistaffrolesDefaultresourcepermissionPK)) {
+		if (!(other instanceof CciStaffRolesDefaultResourcePermissionPK)) {
 			return false;
 		}
-		CcistaffrolesDefaultresourcepermissionPK castOther = (CcistaffrolesDefaultresourcepermissionPK)other;
+		CciStaffRolesDefaultResourcePermissionPK castOther = (CciStaffRolesDefaultResourcePermissionPK)other;
 		return 
 			(this.cciStaffDepartmentRoleId == castOther.cciStaffDepartmentRoleId)
 			&& (this.resourcePermissionsId == castOther.resourcePermissionsId);

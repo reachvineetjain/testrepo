@@ -1,23 +1,21 @@
 package com.ccighgo.service.components.season;
 
-import com.ccighgo.seasons.front.SeasonProgramDTO;
-import com.ccighgo.seasons.front.SeasonSearchResponse;
 
 public interface SeasonServiceInterface {
-    
+    //this interface is a stub
     public String getString();
     
-    public SeasonSearchResponse getAllSeasons();
+    public void getAllSeasons();
     
-    public SeasonSearchResponse createSeason(SeasonProgramDTO dto);
+    public void createSeason();
     
-    public SeasonSearchResponse deleteSeason(String id);
+    public void deleteSeason(String id);
     
-    public SeasonProgramDTO editSeason(String id);
+    public void editSeason(String id);
     
-    public SeasonProgramDTO viewSeason(String id);
+    public void viewSeason(String id);
     
-    public SeasonSearchResponse updateSeason(String id,SeasonProgramDTO dto );
+    public void updateSeason(String id );
     
 
 }

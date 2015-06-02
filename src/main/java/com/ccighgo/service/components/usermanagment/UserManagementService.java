@@ -37,15 +37,39 @@ public interface UserManagementService {
 	 * @param usr
 	 * @return
 	 */
-	public CCIUsers createUser(User user);
+	public User createUser(User user);
 
 	/**
-	 * Updates user with added or removed permissions
+	 * Updates user demographics
 	 * 
 	 * @param usr
 	 * @return
 	 */
-	public CCIUsers updateUser(String id, User user);
+	public User updateUserDemographics(String id, User user);
+	
+	/**
+     * Updates user permissions
+     * 
+     * @param usr
+     * @return
+     */
+    public User updateUserPermissions(String id, User user);
+    
+    /**
+     * Updates user picture
+     * 
+     * @param usr
+     * @return
+     */
+    public User updateUserPicture(String id, User user);
+    
+    /**
+     * Adds user profile picture
+     * 
+     * @param usr
+     * @return
+     */
+    public User addUserPicture(String id, User user);
 
 	/**
 	 * The method will not perform hard delete of user from database. This will
@@ -54,13 +78,13 @@ public interface UserManagementService {
 	 * @param id
 	 * @return
 	 */
-	public void deleteUser(String id);
+	public String deleteUser(String id);
 
 	/**
 	 * Search user based on different parameters
 	 * 
 	 * @return
 	 */
-	public void searchUsers();
+	public CCIUsers searchUsers();
 
 }

@@ -11,13 +11,16 @@ import java.util.List;
  */
 @Entity
 @Table(name="usstates")
-@NamedQuery(name="Usstate.findAll", query="SELECT u FROM Usstate u")
-public class Usstate implements Serializable {
+@NamedQuery(name="USState.findAll", query="SELECT u FROM USState u")
+public class USState implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int id;
+	private int usstatesID;
+
+	@Column(nullable=false)
+	private byte active;
 
 	@Column(nullable=false, length=5)
 	private String stateCode;
@@ -25,19 +28,27 @@ public class Usstate implements Serializable {
 	@Column(nullable=false, length=50)
 	private String stateName;
 
-	//bi-directional many-to-one association to Ccistaffuser
+	//bi-directional many-to-one association to CciStaffUser
 	@OneToMany(mappedBy="usstate")
-	private List<Ccistaffuser> ccistaffusers;
+	private List<CciStaffUser> ccistaffusers;
 
-	public Usstate() {
+	public USState() {
 	}
 
-	public int getId() {
-		return this.id;
+	public int getUsstatesID() {
+		return this.usstatesID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUsstatesID(int usstatesID) {
+		this.usstatesID = usstatesID;
+	}
+
+	public byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(byte active) {
+		this.active = active;
 	}
 
 	public String getStateCode() {
@@ -56,22 +67,22 @@ public class Usstate implements Serializable {
 		this.stateName = stateName;
 	}
 
-	public List<Ccistaffuser> getCcistaffusers() {
+	public List<CciStaffUser> getCcistaffusers() {
 		return this.ccistaffusers;
 	}
 
-	public void setCcistaffusers(List<Ccistaffuser> ccistaffusers) {
+	public void setCcistaffusers(List<CciStaffUser> ccistaffusers) {
 		this.ccistaffusers = ccistaffusers;
 	}
 
-	public Ccistaffuser addCcistaffuser(Ccistaffuser ccistaffuser) {
+	public CciStaffUser addCcistaffuser(CciStaffUser ccistaffuser) {
 		getCcistaffusers().add(ccistaffuser);
 		ccistaffuser.setUsstate(this);
 
 		return ccistaffuser;
 	}
 
-	public Ccistaffuser removeCcistaffuser(Ccistaffuser ccistaffuser) {
+	public CciStaffUser removeCcistaffuser(CciStaffUser ccistaffuser) {
 		getCcistaffusers().remove(ccistaffuser);
 		ccistaffuser.setUsstate(null);
 

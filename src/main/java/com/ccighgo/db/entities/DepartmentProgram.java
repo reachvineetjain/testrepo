@@ -12,13 +12,13 @@ import java.util.List;
  */
 @Entity
 @Table(name="departmentprograms")
-@NamedQuery(name="Departmentprogram.findAll", query="SELECT d FROM Departmentprogram d")
-public class Departmentprogram implements Serializable {
+@NamedQuery(name="DepartmentProgram.findAll", query="SELECT d FROM DepartmentProgram d")
+public class DepartmentProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int id;
+	private int programID;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -38,24 +38,28 @@ public class Departmentprogram implements Serializable {
 	@Column(nullable=false, length=50)
 	private String program;
 
-	//bi-directional many-to-one association to Departmentprogramoption
+	//bi-directional many-to-one association to CciStaffUserProgram
 	@OneToMany(mappedBy="departmentprogram")
-	private List<Departmentprogramoption> departmentprogramoptions;
+	private List<CciStaffUserProgram> ccistaffuserprograms;
 
-	//bi-directional many-to-one association to Department
+	//bi-directional many-to-one association to DepartmentProgramOption
+	@OneToMany(mappedBy="departmentprogram")
+	private List<DepartmentProgramOption> departmentprogramoptions;
+
+	//bi-directional many-to-one association to Departments
 	@ManyToOne
 	@JoinColumn(name="departmentID", nullable=false)
-	private Department department;
+	private Departments department;
 
-	public Departmentprogram() {
+	public DepartmentProgram() {
 	}
 
-	public int getId() {
-		return this.id;
+	public int getProgramID() {
+		return this.programID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setProgramID(int programID) {
+		this.programID = programID;
 	}
 
 	public int getCreatedBy() {
@@ -106,33 +110,55 @@ public class Departmentprogram implements Serializable {
 		this.program = program;
 	}
 
-	public List<Departmentprogramoption> getDepartmentprogramoptions() {
+	public List<CciStaffUserProgram> getCcistaffuserprograms() {
+		return this.ccistaffuserprograms;
+	}
+
+	public void setCcistaffuserprograms(List<CciStaffUserProgram> ccistaffuserprograms) {
+		this.ccistaffuserprograms = ccistaffuserprograms;
+	}
+
+	public CciStaffUserProgram addCcistaffuserprogram(CciStaffUserProgram ccistaffuserprogram) {
+		getCcistaffuserprograms().add(ccistaffuserprogram);
+		ccistaffuserprogram.setDepartmentprogram(this);
+
+		return ccistaffuserprogram;
+	}
+
+	public CciStaffUserProgram removeCcistaffuserprogram(CciStaffUserProgram ccistaffuserprogram) {
+		getCcistaffuserprograms().remove(ccistaffuserprogram);
+		ccistaffuserprogram.setDepartmentprogram(null);
+
+		return ccistaffuserprogram;
+	}
+
+	public List<DepartmentProgramOption> getDepartmentprogramoptions() {
 		return this.departmentprogramoptions;
 	}
 
-	public void setDepartmentprogramoptions(List<Departmentprogramoption> departmentprogramoptions) {
+	public void setDepartmentprogramoptions(List<DepartmentProgramOption> departmentprogramoptions) {
 		this.departmentprogramoptions = departmentprogramoptions;
 	}
 
-	public Departmentprogramoption addDepartmentprogramoption(Departmentprogramoption departmentprogramoption) {
+	public DepartmentProgramOption addDepartmentprogramoption(DepartmentProgramOption departmentprogramoption) {
 		getDepartmentprogramoptions().add(departmentprogramoption);
 		departmentprogramoption.setDepartmentprogram(this);
 
 		return departmentprogramoption;
 	}
 
-	public Departmentprogramoption removeDepartmentprogramoption(Departmentprogramoption departmentprogramoption) {
+	public DepartmentProgramOption removeDepartmentprogramoption(DepartmentProgramOption departmentprogramoption) {
 		getDepartmentprogramoptions().remove(departmentprogramoption);
 		departmentprogramoption.setDepartmentprogram(null);
 
 		return departmentprogramoption;
 	}
 
-	public Department getDepartment() {
+	public Departments getDepartment() {
 		return this.department;
 	}
 
-	public void setDepartment(Department department) {
+	public void setDepartment(Departments department) {
 		this.department = department;
 	}
 

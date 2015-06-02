@@ -6,17 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the ccistaffusers_departments database table.
+ * The persistent class for the ccistaffusersresourcepermissions database table.
  * 
  */
 @Entity
-@Table(name="ccistaffusers_departments")
-@NamedQuery(name="CcistaffusersDepartment.findAll", query="SELECT c FROM CcistaffusersDepartment c")
-public class CcistaffusersDepartment implements Serializable {
+@Table(name="ccistaffusersresourcepermissions")
+@NamedQuery(name="CciStaffUsersResourcePermission.findAll", query="SELECT c FROM CciStaffUsersResourcePermission c")
+public class CciStaffUsersResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private CcistaffusersDepartmentPK id;
+	private CciStaffUsersResourcePermissionPK id;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -30,24 +30,24 @@ public class CcistaffusersDepartment implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to Ccistaffuser
+	//bi-directional many-to-one association to CciStaffUser
 	@ManyToOne
 	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
-	private Ccistaffuser ccistaffuser;
+	private CciStaffUser ccistaffuser;
 
-	//bi-directional many-to-one association to Department
+	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
-	@JoinColumn(name="departmentID", nullable=false, insertable=false, updatable=false)
-	private Department department;
+	@JoinColumn(name="resourcesPermissionsId", nullable=false, insertable=false, updatable=false)
+	private ResourcePermission resourcepermission;
 
-	public CcistaffusersDepartment() {
+	public CciStaffUsersResourcePermission() {
 	}
 
-	public CcistaffusersDepartmentPK getId() {
+	public CciStaffUsersResourcePermissionPK getId() {
 		return this.id;
 	}
 
-	public void setId(CcistaffusersDepartmentPK id) {
+	public void setId(CciStaffUsersResourcePermissionPK id) {
 		this.id = id;
 	}
 
@@ -83,20 +83,20 @@ public class CcistaffusersDepartment implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Ccistaffuser getCcistaffuser() {
+	public CciStaffUser getCcistaffuser() {
 		return this.ccistaffuser;
 	}
 
-	public void setCcistaffuser(Ccistaffuser ccistaffuser) {
+	public void setCcistaffuser(CciStaffUser ccistaffuser) {
 		this.ccistaffuser = ccistaffuser;
 	}
 
-	public Department getDepartment() {
-		return this.department;
+	public ResourcePermission getResourcepermission() {
+		return this.resourcepermission;
 	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setResourcepermission(ResourcePermission resourcepermission) {
+		this.resourcepermission = resourcepermission;
 	}
 
 }

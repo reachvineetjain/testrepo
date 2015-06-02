@@ -17,8 +17,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="ccistaffusers")
-@NamedQuery(name="Ccistaffuser.findAll", query="SELECT c FROM Ccistaffuser c")
-public class Ccistaffuser implements Serializable {
+@NamedQuery(name="CciStaffUser.findAll", query="SELECT c FROM CciStaffUser c")
+public class CciStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -84,37 +84,42 @@ public class Ccistaffuser implements Serializable {
 	@Column(nullable=false, length=50)
 	private String zip;
 
-	//bi-directional many-to-one association to Country
+	//bi-directional many-to-one association to CciStaffUserNote
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+	private List<CciStaffUserNote> ccistaffusernotes;
+
+	//bi-directional many-to-one association to CciStaffUserProgram
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+	private List<CciStaffUserProgram> ccistaffuserprograms;
+
+	//bi-directional many-to-one association to Countries
 	@ManyToOne
 	@JoinColumn(name="countryID", nullable=false)
-	private Country country;
-
-	//bi-directional many-to-one association to Usstate
-	@ManyToOne
-	@JoinColumn(name="stateID", nullable=false)
-	private Usstate usstate;
-
-	//bi-directional many-to-one association to CcistaffusersCcistaffrole
-	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<CcistaffusersCcistaffrole> ccistaffusersCcistaffroles;
-
-	//bi-directional many-to-one association to CcistaffusersDepartment
-	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<CcistaffusersDepartment> ccistaffusersDepartments;
-
-	//bi-directional many-to-one association to CcistaffusersResourcepermission
-	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<CcistaffusersResourcepermission> ccistaffusersResourcepermissions;
+	private Countries country;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
 	@JoinColumn(name="loginID", nullable=false)
 	private Login login;
 
-	public Ccistaffuser() {
+	//bi-directional many-to-one association to USState
+	@ManyToOne
+	@JoinColumn(name="stateID", nullable=false)
+	private USState usstate;
+
+	//bi-directional many-to-one association to CciStaffUsersCciStaffRole
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+	private List<CciStaffUsersCciStaffRole> ccistaffusersccistaffroles;
+
+	//bi-directional many-to-one association to CciStaffUsersResourcePermission
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+	private List<CciStaffUsersResourcePermission> ccistaffusersresourcepermissions;
+
+	public CciStaffUser() {
 	}
 
 	public int getCciStaffUserID() {
@@ -285,86 +290,56 @@ public class Ccistaffuser implements Serializable {
 		this.zip = zip;
 	}
 
-	public Country getCountry() {
+	public List<CciStaffUserNote> getCcistaffusernotes() {
+		return this.ccistaffusernotes;
+	}
+
+	public void setCcistaffusernotes(List<CciStaffUserNote> ccistaffusernotes) {
+		this.ccistaffusernotes = ccistaffusernotes;
+	}
+
+	public CciStaffUserNote addCcistaffusernote(CciStaffUserNote ccistaffusernote) {
+		getCcistaffusernotes().add(ccistaffusernote);
+		ccistaffusernote.setCcistaffuser(this);
+
+		return ccistaffusernote;
+	}
+
+	public CciStaffUserNote removeCcistaffusernote(CciStaffUserNote ccistaffusernote) {
+		getCcistaffusernotes().remove(ccistaffusernote);
+		ccistaffusernote.setCcistaffuser(null);
+
+		return ccistaffusernote;
+	}
+
+	public List<CciStaffUserProgram> getCcistaffuserprograms() {
+		return this.ccistaffuserprograms;
+	}
+
+	public void setCcistaffuserprograms(List<CciStaffUserProgram> ccistaffuserprograms) {
+		this.ccistaffuserprograms = ccistaffuserprograms;
+	}
+
+	public CciStaffUserProgram addCcistaffuserprogram(CciStaffUserProgram ccistaffuserprogram) {
+		getCcistaffuserprograms().add(ccistaffuserprogram);
+		ccistaffuserprogram.setCcistaffuser(this);
+
+		return ccistaffuserprogram;
+	}
+
+	public CciStaffUserProgram removeCcistaffuserprogram(CciStaffUserProgram ccistaffuserprogram) {
+		getCcistaffuserprograms().remove(ccistaffuserprogram);
+		ccistaffuserprogram.setCcistaffuser(null);
+
+		return ccistaffuserprogram;
+	}
+
+	public Countries getCountry() {
 		return this.country;
 	}
 
-	public void setCountry(Country country) {
+	public void setCountry(Countries country) {
 		this.country = country;
-	}
-
-	public Usstate getUsstate() {
-		return this.usstate;
-	}
-
-	public void setUsstate(Usstate usstate) {
-		this.usstate = usstate;
-	}
-
-	public List<CcistaffusersCcistaffrole> getCcistaffusersCcistaffroles() {
-		return this.ccistaffusersCcistaffroles;
-	}
-
-	public void setCcistaffusersCcistaffroles(List<CcistaffusersCcistaffrole> ccistaffusersCcistaffroles) {
-		this.ccistaffusersCcistaffroles = ccistaffusersCcistaffroles;
-	}
-
-	public CcistaffusersCcistaffrole addCcistaffusersCcistaffrole(CcistaffusersCcistaffrole ccistaffusersCcistaffrole) {
-		getCcistaffusersCcistaffroles().add(ccistaffusersCcistaffrole);
-		ccistaffusersCcistaffrole.setCcistaffuser(this);
-
-		return ccistaffusersCcistaffrole;
-	}
-
-	public CcistaffusersCcistaffrole removeCcistaffusersCcistaffrole(CcistaffusersCcistaffrole ccistaffusersCcistaffrole) {
-		getCcistaffusersCcistaffroles().remove(ccistaffusersCcistaffrole);
-		ccistaffusersCcistaffrole.setCcistaffuser(null);
-
-		return ccistaffusersCcistaffrole;
-	}
-
-	public List<CcistaffusersDepartment> getCcistaffusersDepartments() {
-		return this.ccistaffusersDepartments;
-	}
-
-	public void setCcistaffusersDepartments(List<CcistaffusersDepartment> ccistaffusersDepartments) {
-		this.ccistaffusersDepartments = ccistaffusersDepartments;
-	}
-
-	public CcistaffusersDepartment addCcistaffusersDepartment(CcistaffusersDepartment ccistaffusersDepartment) {
-		getCcistaffusersDepartments().add(ccistaffusersDepartment);
-		ccistaffusersDepartment.setCcistaffuser(this);
-
-		return ccistaffusersDepartment;
-	}
-
-	public CcistaffusersDepartment removeCcistaffusersDepartment(CcistaffusersDepartment ccistaffusersDepartment) {
-		getCcistaffusersDepartments().remove(ccistaffusersDepartment);
-		ccistaffusersDepartment.setCcistaffuser(null);
-
-		return ccistaffusersDepartment;
-	}
-
-	public List<CcistaffusersResourcepermission> getCcistaffusersResourcepermissions() {
-		return this.ccistaffusersResourcepermissions;
-	}
-
-	public void setCcistaffusersResourcepermissions(List<CcistaffusersResourcepermission> ccistaffusersResourcepermissions) {
-		this.ccistaffusersResourcepermissions = ccistaffusersResourcepermissions;
-	}
-
-	public CcistaffusersResourcepermission addCcistaffusersResourcepermission(CcistaffusersResourcepermission ccistaffusersResourcepermission) {
-		getCcistaffusersResourcepermissions().add(ccistaffusersResourcepermission);
-		ccistaffusersResourcepermission.setCcistaffuser(this);
-
-		return ccistaffusersResourcepermission;
-	}
-
-	public CcistaffusersResourcepermission removeCcistaffusersResourcepermission(CcistaffusersResourcepermission ccistaffusersResourcepermission) {
-		getCcistaffusersResourcepermissions().remove(ccistaffusersResourcepermission);
-		ccistaffusersResourcepermission.setCcistaffuser(null);
-
-		return ccistaffusersResourcepermission;
 	}
 
 	public Login getLogin() {
@@ -373,6 +348,58 @@ public class Ccistaffuser implements Serializable {
 
 	public void setLogin(Login login) {
 		this.login = login;
+	}
+
+	public USState getUsstate() {
+		return this.usstate;
+	}
+
+	public void setUsstate(USState usstate) {
+		this.usstate = usstate;
+	}
+
+	public List<CciStaffUsersCciStaffRole> getCcistaffusersccistaffroles() {
+		return this.ccistaffusersccistaffroles;
+	}
+
+	public void setCcistaffusersccistaffroles(List<CciStaffUsersCciStaffRole> ccistaffusersccistaffroles) {
+		this.ccistaffusersccistaffroles = ccistaffusersccistaffroles;
+	}
+
+	public CciStaffUsersCciStaffRole addCcistaffusersccistaffrole(CciStaffUsersCciStaffRole ccistaffusersccistaffrole) {
+		getCcistaffusersccistaffroles().add(ccistaffusersccistaffrole);
+		ccistaffusersccistaffrole.setCcistaffuser(this);
+
+		return ccistaffusersccistaffrole;
+	}
+
+	public CciStaffUsersCciStaffRole removeCcistaffusersccistaffrole(CciStaffUsersCciStaffRole ccistaffusersccistaffrole) {
+		getCcistaffusersccistaffroles().remove(ccistaffusersccistaffrole);
+		ccistaffusersccistaffrole.setCcistaffuser(null);
+
+		return ccistaffusersccistaffrole;
+	}
+
+	public List<CciStaffUsersResourcePermission> getCcistaffusersresourcepermissions() {
+		return this.ccistaffusersresourcepermissions;
+	}
+
+	public void setCcistaffusersresourcepermissions(List<CciStaffUsersResourcePermission> ccistaffusersresourcepermissions) {
+		this.ccistaffusersresourcepermissions = ccistaffusersresourcepermissions;
+	}
+
+	public CciStaffUsersResourcePermission addCcistaffusersresourcepermission(CciStaffUsersResourcePermission ccistaffusersresourcepermission) {
+		getCcistaffusersresourcepermissions().add(ccistaffusersresourcepermission);
+		ccistaffusersresourcepermission.setCcistaffuser(this);
+
+		return ccistaffusersresourcepermission;
+	}
+
+	public CciStaffUsersResourcePermission removeCcistaffusersresourcepermission(CciStaffUsersResourcePermission ccistaffusersresourcepermission) {
+		getCcistaffusersresourcepermissions().remove(ccistaffusersresourcepermission);
+		ccistaffusersresourcepermission.setCcistaffuser(null);
+
+		return ccistaffusersresourcepermission;
 	}
 
 }

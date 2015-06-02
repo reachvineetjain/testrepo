@@ -6,13 +6,13 @@ package com.ccighgo.jpa.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.Ccistaffuser;
+import com.ccighgo.db.entities.CciStaffUser;
 
 /**
  * @author ravimishra
  *
  */
 @Repository
-public interface CCIStaffUsersRepository extends JpaRepository<Ccistaffuser, Integer> {
+public interface CCIStaffUsersRepository extends JpaRepository<CciStaffUser, Integer> {
 
 }

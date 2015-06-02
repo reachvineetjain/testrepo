@@ -10,13 +10,13 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="sysdiagrams")
-@NamedQuery(name="Sysdiagram.findAll", query="SELECT s FROM Sysdiagram s")
-public class Sysdiagram implements Serializable {
+@NamedQuery(name="SysDiagram.findAll", query="SELECT s FROM SysDiagram s")
+public class SysDiagram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="diagram_id", unique=true, nullable=false)
-	private int diagramId;
+	@Column(unique=true, nullable=false)
+	private int diagramID;
 
 	@Lob
 	private byte[] definition;
@@ -24,20 +24,20 @@ public class Sysdiagram implements Serializable {
 	@Column(nullable=false, length=160)
 	private String name;
 
-	@Column(name="principal_id", nullable=false)
-	private int principalId;
+	@Column(nullable=false)
+	private int principalID;
 
 	private int version;
 
-	public Sysdiagram() {
+	public SysDiagram() {
 	}
 
-	public int getDiagramId() {
-		return this.diagramId;
+	public int getDiagramID() {
+		return this.diagramID;
 	}
 
-	public void setDiagramId(int diagramId) {
-		this.diagramId = diagramId;
+	public void setDiagramID(int diagramID) {
+		this.diagramID = diagramID;
 	}
 
 	public byte[] getDefinition() {
@@ -56,12 +56,12 @@ public class Sysdiagram implements Serializable {
 		this.name = name;
 	}
 
-	public int getPrincipalId() {
-		return this.principalId;
+	public int getPrincipalID() {
+		return this.principalID;
 	}
 
-	public void setPrincipalId(int principalId) {
-		this.principalId = principalId;
+	public void setPrincipalID(int principalID) {
+		this.principalID = principalID;
 	}
 
 	public int getVersion() {

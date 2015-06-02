@@ -6,8 +6,8 @@ package com.ccighgo.jpa.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermission;
-import com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermissionPK;
+import com.ccighgo.db.entities.CciStaffRolesDefaultResourcePermission;
+import com.ccighgo.db.entities.CciStaffRolesDefaultResourcePermissionPK;
 
 /**
  * @author ravimishra
@@ -15,6 +15,6 @@ import com.ccighgo.db.entities.CcistaffrolesDefaultresourcepermissionPK;
  */
 @Repository
 public interface CCISaffDefaultPermissionValidatorRepository extends
-		JpaRepository<CcistaffrolesDefaultresourcepermission, CcistaffrolesDefaultresourcepermissionPK> {
+		JpaRepository<CciStaffRolesDefaultResourcePermission, CciStaffRolesDefaultResourcePermissionPK> {
 
 }

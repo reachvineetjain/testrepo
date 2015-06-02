@@ -51,7 +51,12 @@ public enum ErrorCode {
 		FAILED_GET_AIRPORTS_NEAR_LOCATION(270),
 		
 		//Activity Service
-		FAILED_LIST_PRIMARY_ACTIVITIES(233001)
+		FAILED_LIST_PRIMARY_ACTIVITIES(233001),
+		
+		
+		
+		//user management(temp code)
+		INVALID_USER_ID(301)
 		;
 		
 		private int itemId;

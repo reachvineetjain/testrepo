@@ -11,13 +11,13 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="departmentfunctions")
-@NamedQuery(name="Departmentfunction.findAll", query="SELECT d FROM Departmentfunction d")
-public class Departmentfunction implements Serializable {
+@NamedQuery(name="DepartmentFunction.findAll", query="SELECT d FROM DepartmentFunction d")
+public class DepartmentFunction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int id;
+	private int deptFunctionID;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -37,20 +37,20 @@ public class Departmentfunction implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to Department
+	//bi-directional many-to-one association to Departments
 	@ManyToOne
 	@JoinColumn(name="departmentID", nullable=false)
-	private Department department;
+	private Departments department;
 
-	public Departmentfunction() {
+	public DepartmentFunction() {
 	}
 
-	public int getId() {
-		return this.id;
+	public int getDeptFunctionID() {
+		return this.deptFunctionID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setDeptFunctionID(int deptFunctionID) {
+		this.deptFunctionID = deptFunctionID;
 	}
 
 	public int getCreatedBy() {
@@ -101,11 +101,11 @@ public class Departmentfunction implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Department getDepartment() {
+	public Departments getDepartment() {
 		return this.department;
 	}
 
-	public void setDepartment(Department department) {
+	public void setDepartment(Departments department) {
 		this.department = department;
 	}
 

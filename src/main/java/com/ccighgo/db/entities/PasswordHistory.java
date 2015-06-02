@@ -5,11 +5,11 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the password_history database table.
+ * The persistent class for the passwordhistory database table.
  * 
  */
 @Entity
-@Table(name="password_history")
+@Table(name="passwordhistory")
 @NamedQuery(name="PasswordHistory.findAll", query="SELECT p FROM PasswordHistory p")
 public class PasswordHistory implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -6,8 +6,8 @@ package com.ccighgo.jpa.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.CcistaffusersCcistaffrolePK;
-import com.ccighgo.db.entities.CcistaffusersCcistaffrole;
+import com.ccighgo.db.entities.CciStaffUsersCciStaffRole;
+import com.ccighgo.db.entities.CciStaffUsersCciStaffRolePK;
 
 /**
  * @author ravimishra
@@ -15,6 +15,6 @@ import com.ccighgo.db.entities.CcistaffusersCcistaffrole;
  */
 @Repository
 public interface CCIStaffUserStaffRoleValidatorRepository extends
-		JpaRepository<CcistaffusersCcistaffrole, CcistaffusersCcistaffrolePK> {
+		JpaRepository<CciStaffUsersCciStaffRole, CciStaffUsersCciStaffRolePK> {
 
 }

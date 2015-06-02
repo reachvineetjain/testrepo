@@ -7,18 +7,18 @@ import java.util.List;
 
 
 /**
- * The persistent class for the resourcegroups database table.
+ * The persistent class for the departmentresourcegroups database table.
  * 
  */
 @Entity
-@Table(name="resourcegroups")
-@NamedQuery(name="Resourcegroup.findAll", query="SELECT r FROM Resourcegroup r")
-public class Resourcegroup implements Serializable {
+@Table(name="departmentresourcegroups")
+@NamedQuery(name="DepartmentResourceGroup.findAll", query="SELECT d FROM DepartmentResourceGroup d")
+public class DepartmentResourceGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int id;
+	private int deptResourceGroupID;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -35,32 +35,24 @@ public class Resourcegroup implements Serializable {
 	@Column(nullable=false, length=50)
 	private String resourceGroupName;
 
-	//bi-directional many-to-many association to Department
-	@ManyToMany
-	@JoinTable(
-		name="department_resourcegroups"
-		, joinColumns={
-			@JoinColumn(name="resourceGroupId", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="departmentId", nullable=false)
-			}
-		)
-	private List<Department> departments;
+	//bi-directional many-to-one association to Departments
+	@ManyToOne
+	@JoinColumn(name="departmentID", nullable=false)
+	private Departments department;
 
-	//bi-directional many-to-one association to Resourcepermission
-	@OneToMany(mappedBy="resourcegroup")
-	private List<Resourcepermission> resourcepermissions;
+	//bi-directional many-to-one association to ResourcePermission
+	@OneToMany(mappedBy="departmentresourcegroup")
+	private List<ResourcePermission> resourcepermissions;
 
-	public Resourcegroup() {
+	public DepartmentResourceGroup() {
 	}
 
-	public int getId() {
-		return this.id;
+	public int getDeptResourceGroupID() {
+		return this.deptResourceGroupID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setDeptResourceGroupID(int deptResourceGroupID) {
+		this.deptResourceGroupID = deptResourceGroupID;
 	}
 
 	public int getCreatedBy() {
@@ -103,32 +95,32 @@ public class Resourcegroup implements Serializable {
 		this.resourceGroupName = resourceGroupName;
 	}
 
-	public List<Department> getDepartments() {
-		return this.departments;
+	public Departments getDepartment() {
+		return this.department;
 	}
 
-	public void setDepartments(List<Department> departments) {
-		this.departments = departments;
+	public void setDepartment(Departments department) {
+		this.department = department;
 	}
 
-	public List<Resourcepermission> getResourcepermissions() {
+	public List<ResourcePermission> getResourcepermissions() {
 		return this.resourcepermissions;
 	}
 
-	public void setResourcepermissions(List<Resourcepermission> resourcepermissions) {
+	public void setResourcepermissions(List<ResourcePermission> resourcepermissions) {
 		this.resourcepermissions = resourcepermissions;
 	}
 
-	public Resourcepermission addResourcepermission(Resourcepermission resourcepermission) {
+	public ResourcePermission addResourcepermission(ResourcePermission resourcepermission) {
 		getResourcepermissions().add(resourcepermission);
-		resourcepermission.setResourcegroup(this);
+		resourcepermission.setDepartmentresourcegroup(this);
 
 		return resourcepermission;
 	}
 
-	public Resourcepermission removeResourcepermission(Resourcepermission resourcepermission) {
+	public ResourcePermission removeResourcepermission(ResourcePermission resourcepermission) {
 		getResourcepermissions().remove(resourcepermission);
-		resourcepermission.setResourcegroup(null);
+		resourcepermission.setDepartmentresourcegroup(null);
 
 		return resourcepermission;
 	}

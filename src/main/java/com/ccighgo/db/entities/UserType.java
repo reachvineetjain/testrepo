@@ -7,11 +7,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the user_type database table.
+ * The persistent class for the usertype database table.
  * 
  */
 @Entity
-@Table(name="user_type")
+@Table(name="usertype")
 @NamedQuery(name="UserType.findAll", query="SELECT u FROM UserType u")
 public class UserType implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ public class UserType implements Serializable {
 	private String userTypeName;
 
 	//bi-directional many-to-one association to Login
-	@OneToMany(mappedBy="userType")
+	@OneToMany(mappedBy="usertype")
 	private List<Login> logins;
 
 	public UserType() {
@@ -111,14 +111,14 @@ public class UserType implements Serializable {
 
 	public Login addLogin(Login login) {
 		getLogins().add(login);
-		login.setUserType(this);
+		login.setUsertype(this);
 
 		return login;
 	}
 
 	public Login removeLogin(Login login) {
 		getLogins().remove(login);
-		login.setUserType(null);
+		login.setUsertype(null);
 
 		return login;
 	}

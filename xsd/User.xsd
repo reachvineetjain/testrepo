@@ -19,8 +19,6 @@
             <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="country" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="state" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="city" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="addressLine1" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="addressLine2" type="xsd:string" minOccurs="0" maxOccurs="1" />
@@ -31,14 +29,46 @@
             <xsd:element name="sevisId" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="supervisorId" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="photoPath" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="loginId" type="xsd:int" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="loginName" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="isActive" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
+            <xsd:element name="userCountry" type="usr:UserCountry" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="userState" type="usr:UserState" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="loginInfo" type="usr:LoginInfo" minOccurs="1" maxOccurs="1" />
             <xsd:element name="departments" type="usr:UserDepartment" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="departmentPrograms" type="usr:UserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="departmentFunctions" type="usr:UserDepartmentFunction" minOccurs="0" maxOccurs="unbounded" />
             <xsd:element name="roles" type="usr:UserRole" minOccurs="0" maxOccurs="unbounded" />
             <xsd:element name="permissions" type="usr:UserPermissions" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="UserCountry">
+        <xsd:sequence>
+            <xsd:element name="countryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="countryCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="countryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="UserState">
+        <xsd:sequence>
+            <xsd:element name="stateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="stateCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="stateName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="LoginInfo">
+        <xsd:sequence>
+            <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="loginName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="password" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="userType" type="usr:UserType" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="UserType">
+        <xsd:sequence>
+            <xsd:element name="userTypeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="userTypeCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="userTypeName" type="xsd:string" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
 
@@ -46,6 +76,7 @@
         <xsd:sequence>
             <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="departmentPrograms" type="usr:UserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
     </xsd:complexType>
 
@@ -53,13 +84,6 @@
         <xsd:sequence>
             <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="UserDepartmentFunction">
-        <xsd:sequence>
-            <xsd:element name="functionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="functionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
 
