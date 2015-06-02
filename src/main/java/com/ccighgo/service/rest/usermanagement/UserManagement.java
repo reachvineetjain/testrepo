@@ -64,13 +64,25 @@ public class UserManagement {
         return userMgmtServices.getAllCCIUsers(pageNo, size);
     }
 
+    /**
+     * RESTFul service gets user by id for edit
+     * 
+     * @param id
+     * @return User by id
+     */
     @GET
     @Path("{id}/edit/")
     @Produces("application/json")
-    public User editSeason(@PathParam("id") String id) {
+    public User editUser(@PathParam("id") String id) {
         return userMgmtServices.getUserById(id);
     }
 
+    /**
+     * RESTFul service: get user details by id
+     * 
+     * @param id
+     * @return User by id
+     */
     @GET
     @Path("view/{id}")
     @Produces("application/json")
@@ -78,6 +90,12 @@ public class UserManagement {
         return userMgmtServices.getUserById(id);
     }
 
+    /**
+     * RESTFul service to create new cci user in system
+     * 
+     * @param user
+     * @return newly created User
+     */
     @POST
     @Path("create/")
     @Consumes("application/json")
@@ -85,6 +103,13 @@ public class UserManagement {
         return userMgmtServices.createUser(user);
     }
 
+    /**
+     * RESTFul service, updates user demographics
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
     @POST
     @Path("{id}/update/demographics")
     @Consumes("application/json")
@@ -92,6 +117,13 @@ public class UserManagement {
         return userMgmtServices.updateUserDemographics(id, user);
     }
 
+    /**
+     * RESTFul service updates user permissions
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
     @POST
     @Path("{id}/update/permissions")
     @Consumes("application/json")
@@ -99,6 +131,13 @@ public class UserManagement {
         return userMgmtServices.updateUserPermissions(id, user);
     }
 
+    /**
+     * RESTFul service updates user's profile picture
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
     @POST
     @Path("{id}/update/picture")
     @Consumes("application/json")
@@ -106,6 +145,11 @@ public class UserManagement {
         return userMgmtServices.updateUserPicture(id, user);
     }
     
+    /**
+     * @param id
+     * @param user
+     * @return
+     */
     @POST
     @Path("{id}/add/picture")
     @Consumes("application/json")
