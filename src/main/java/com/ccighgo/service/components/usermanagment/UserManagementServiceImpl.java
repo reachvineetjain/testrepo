@@ -104,7 +104,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 }
                 // update user role for user
                 populateUserRole(cUsr, cciUser);
-                // update departments and department programs 
+                //TODO update department programs and permissions once clarified by DBA
                 populateDepartmentAndPrograms(cUsr, cciUser);
                 cciUserList.add(cciUser);
             }
@@ -168,8 +168,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (cciUser.getCcistaffusersccistaffroles() != null) {
             updateUserRole(cciUser, user);
         }
-        // populate user department, department programs and department
-        // functions
+        //TODO update department programs and permissions once clarified by DBA
         if (cciUser.getCcistaffuserprograms() != null) {
             updateUserDepartmentProgram(cciUser, user);
         }
