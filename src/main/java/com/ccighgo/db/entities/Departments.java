@@ -57,10 +57,6 @@ public class Departments implements Serializable {
 	@OneToMany(mappedBy="department")
 	private List<DepartmentResourceGroup> departmentresourcegroups;
 
-	//bi-directional many-to-one association to Season
-	@OneToMany(mappedBy="department")
-	private List<Season> seasons;
-
 	public Departments() {
 	}
 
@@ -216,26 +212,5 @@ public class Departments implements Serializable {
 		return departmentresourcegroup;
 	}
 
-	public List<Season> getSeasons() {
-		return this.seasons;
-	}
-
-	public void setSeasons(List<Season> seasons) {
-		this.seasons = seasons;
-	}
-
-	public Season addSeason(Season season) {
-		getSeasons().add(season);
-		season.setDepartment(this);
-
-		return season;
-	}
-
-	public Season removeSeason(Season season) {
-		getSeasons().remove(season);
-		season.setDepartment(null);
-
-		return season;
-	}
 
 }

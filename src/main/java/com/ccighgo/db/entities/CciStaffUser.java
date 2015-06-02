@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -80,11 +85,13 @@ public class CciStaffUser implements Serializable {
 	private String zip;
 
 	//bi-directional many-to-one association to CciStaffUserNote
-	@OneToMany(mappedBy="ccistaffuser")
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CciStaffUserNote> ccistaffusernotes;
 
 	//bi-directional many-to-one association to CciStaffUserProgram
-	@OneToMany(mappedBy="ccistaffuser")
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CciStaffUserProgram> ccistaffuserprograms;
 
 	//bi-directional many-to-one association to Countries
@@ -103,11 +110,13 @@ public class CciStaffUser implements Serializable {
 	private USState usstate;
 
 	//bi-directional many-to-one association to CciStaffUsersCciStaffRole
-	@OneToMany(mappedBy="ccistaffuser")
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CciStaffUsersCciStaffRole> ccistaffusersccistaffroles;
 
 	//bi-directional many-to-one association to CciStaffUsersResourcePermission
-	@OneToMany(mappedBy="ccistaffuser")
+	@OneToMany(mappedBy="ccistaffuser", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CciStaffUsersResourcePermission> ccistaffusersresourcepermissions;
 
 	public CciStaffUser() {

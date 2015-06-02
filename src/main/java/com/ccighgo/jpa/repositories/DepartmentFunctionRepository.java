@@ -19,6 +19,6 @@ import com.ccighgo.db.entities.Departments;
 @Repository
 public interface DepartmentFunctionRepository extends JpaRepository<DepartmentFunction, Integer> {
     
-    @Query("select d from Departmentfunction d where d.department = ?1 ")
+    @Query("select d from DepartmentFunction d where d.department = ?1 ")
     public List<DepartmentFunction> findFunctionsByDepartment(Departments departmentId);
 }
