@@ -8,9 +8,9 @@ define([
             $scope.countElem = 1;
             $scope.programsList = [];
 						$scope.launchScreen = true;
-					  //$scope.showNewSeasonPane = false;
-						console.log('---> Inside Three Pane Controller '+$scope.showNewSeasonPane);
+					  console.log('---> Inside Three Pane Controller '+$scope.showNewSeasonPane);
 						$scope.baseLayout = "layout-a";
+						$scope.query = {};
 						if($scope.launchScreen){
 							$scope.launchPageTitle = "New Season";
 							$state.go('home.seasonSelect');
@@ -18,10 +18,6 @@ define([
 						else{
 							$state.go('home.program');
 						}
-					
-						
-						
-            
         }]);
 });
 // TBD: There should be "link:" function which would essentially handle manipulation of the CSS based on the user-agent for handling the different layouts.

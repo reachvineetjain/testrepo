@@ -8,10 +8,13 @@ define([
 		'./controllers/season-filter-controller.js',
     './controllers/program-list-controller.js',
     './controllers/season-list-controller.js',
-    './controllers/season-detail-controller.js'
+		'./controllers/filter-result-controller.js',
+    './controllers/season-detail-controller.js',
+		'./controllers/new-seasondetail-controller.js'
 ],  function(angular){
     angular.module('ui').requires.push('ui.seasons');
     return angular.module('ui.seasons',[
+				'ngTable',
         'ui.seasons.services.program-list-service',
         'ui.seasons.services.season-list-service',
         'ui.seasons.controller.three-pane-controller',
@@ -19,7 +22,10 @@ define([
 				'ui.seasons.controller.season-filter-controller',
         'ui.seasons.controller.program-list-controller',
         'ui.seasons.controller.season-list-controller',
-        'ui.seasons.controller.season-detail-controller'])
+				'ui.seasons.controller.filter-result-controller',
+        'ui.seasons.controller.season-detail-controller',
+				'ui.seasons.controller.new-seasondetail-controller'
+		])
         .config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
             'use strict';
             $urlRouterProvider
@@ -54,11 +60,33 @@ define([
 								})
 								.state('home.seasonSearch',{
 										url:'/filter',
-										sticky: true,
+										//sticky: true,
 										views:{
 											'seasonsFilterView':{
-													templateUrl: 'templates/season-filter.html',
-													controller: 'SeasonFilterCtrl'
+												templateUrl: 'templates/season-filter.html',
+												controller: 'SeasonFilterCtrl'
+											},
+											'seasonFilterResult':{
+												templateUrl: 'templates/filtered-seasons-list.html',
+												controller: 'FilterResultCtrl'
+											}
+										}
+								})
+								.state('home.detail',{
+										url:'/detail/:seasonId',
+										//sticky: true,
+										views:{
+											'seasonsFilterView':{
+												templateUrl: 'templates/season-filter.html',
+												controller: 'SeasonFilterCtrl'
+											},
+											'seasonFilterResult':{
+												templateUrl: 'templates/filtered-seasons-list.html',
+												controller: 'FilterResultCtrl'
+											},
+											'detailedSeasonView':{
+												templateUrl: 'templates/new-season-detail.html',
+												controller: 'NewSeasonDetailCtrl'
 											}
 										}
 								})

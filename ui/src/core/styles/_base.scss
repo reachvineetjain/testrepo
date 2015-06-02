@@ -52,7 +52,7 @@ body{
 	background-color: inherit;
 }
 
-.header{
+.page-container > .header{
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -67,7 +67,7 @@ body{
 .inline-holder{
 	display: inline-block;
 }
-.header .top-header,.header .bottom-header {
+.page-container > .header .top-header,.page-container > .header .bottom-header {
 	height: 50px;
 }
 
@@ -228,6 +228,21 @@ body{
 .layout-g .split-pane-3{
 	left: 734px;
 }
+.layout-h .split-pane-1{
+	position: absolute;
+  left: 0px;
+  width: 190px;
+	top: 100px;
+}
+.layout-h .split-pane-2{
+	position: absolute;
+	left: 190px;
+	right: 0px;
+	top: 100px;
+}
+.layout-h .split-pane-3{
+	width: 0px;
+}
 .panel-handle{
 	position: absolute;
 	top: 10px;
@@ -310,7 +325,7 @@ body{
 }
 
 .page-container .page-content-holder .page-content {
-	/*-webkit-transform: translate3d(0, 0, 0);
+	-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	-o-transform: translate3d(0, 0, 0);
 	-ms-transform: translate3d(0, 0, 0);
@@ -324,7 +339,8 @@ body{
 	-moz-transition: -webkit-transform 0.5s;
 	-o-transition: -webkit-transform 0.5s;
 	-ms-transition: -webkit-transform 0.5s;
-	transition: -webkit-transform 0.5s;*/
+	transition: -webkit-transform 0.5s;
+	overflow-x: hidden;
 }
 
 .seasons-detail form .form-group {
@@ -559,4 +575,26 @@ body{
 }
 .search-holder > input[type="search"]{
 	border-bottom: 0px;
+	font-size: 12px;
+}
+.season-result table th{
+	text-align: left;
+}
+.season-result tbody tr:hover, .seasonsListView li:hover{
+	background-color: #ececec;
+	cursor: pointer;
+}
+.season-result td {
+  border-right: 1px solid #ddd;
+}
+.season-result table{
+	border-bottom: 1px solid #D2D2D2;
+}
+.seasonsListView{
+	list-style: none;
+	padding: 0px;
+}
+.seasonsListView li {
+  padding: 10px 15px;
+  border-bottom: 1px solid #dedede;
 }
