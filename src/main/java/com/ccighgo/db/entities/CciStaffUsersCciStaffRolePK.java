@@ -4,11 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the ccistaffusersccistaffroles database table.
+ * The primary key class for the CCIStaffUsersCCIStaffRoles database table.
  * 
  */
 @Embeddable
-public class CciStaffUsersCciStaffRolePK implements Serializable {
+public class CCIStaffUsersCCIStaffRolePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class CciStaffUsersCciStaffRolePK implements Serializable {
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
 	private int cciStaffRolesID;
 
-	public CciStaffUsersCciStaffRolePK() {
+	public CCIStaffUsersCCIStaffRolePK() {
 	}
 	public int getCciStaffID() {
 		return this.cciStaffID;
@@ -37,10 +37,10 @@ public class CciStaffUsersCciStaffRolePK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof CciStaffUsersCciStaffRolePK)) {
+		if (!(other instanceof CCIStaffUsersCCIStaffRolePK)) {
 			return false;
 		}
-		CciStaffUsersCciStaffRolePK castOther = (CciStaffUsersCciStaffRolePK)other;
+		CCIStaffUsersCCIStaffRolePK castOther = (CCIStaffUsersCCIStaffRolePK)other;
 		return 
 			(this.cciStaffID == castOther.cciStaffID)
 			&& (this.cciStaffRolesID == castOther.cciStaffRolesID);

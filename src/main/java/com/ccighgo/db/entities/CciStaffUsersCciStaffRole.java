@@ -6,17 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the ccistaffusersccistaffroles database table.
+ * The persistent class for the CCIStaffUsersCCIStaffRoles database table.
  * 
  */
 @Entity
-@Table(name="ccistaffusersccistaffroles")
-@NamedQuery(name="CciStaffUsersCciStaffRole.findAll", query="SELECT c FROM CciStaffUsersCciStaffRole c")
-public class CciStaffUsersCciStaffRole implements Serializable {
+@Table(name="CCIStaffUsersCCIStaffRoles")
+@NamedQuery(name="CCIStaffUsersCCIStaffRole.findAll", query="SELECT c FROM CCIStaffUsersCCIStaffRole c")
+public class CCIStaffUsersCCIStaffRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private CciStaffUsersCciStaffRolePK id;
+	private CCIStaffUsersCCIStaffRolePK id;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -30,24 +30,24 @@ public class CciStaffUsersCciStaffRole implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to CciStaffRole
+	//bi-directional many-to-one association to CCIStaffRole
 	@ManyToOne
 	@JoinColumn(name="cciStaffRolesID", nullable=false, insertable=false, updatable=false)
-	private CciStaffRole ccistaffrole;
+	private CCIStaffRole ccistaffRole;
 
-	//bi-directional many-to-one association to CciStaffUser
+	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
 	@JoinColumn(name="cciStaffID", nullable=false, insertable=false, updatable=false)
-	private CciStaffUser ccistaffuser;
+	private CCIStaffUser ccistaffUser;
 
-	public CciStaffUsersCciStaffRole() {
+	public CCIStaffUsersCCIStaffRole() {
 	}
 
-	public CciStaffUsersCciStaffRolePK getId() {
+	public CCIStaffUsersCCIStaffRolePK getId() {
 		return this.id;
 	}
 
-	public void setId(CciStaffUsersCciStaffRolePK id) {
+	public void setId(CCIStaffUsersCCIStaffRolePK id) {
 		this.id = id;
 	}
 
@@ -83,20 +83,20 @@ public class CciStaffUsersCciStaffRole implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public CciStaffRole getCcistaffrole() {
-		return this.ccistaffrole;
+	public CCIStaffRole getCcistaffRole() {
+		return this.ccistaffRole;
 	}
 
-	public void setCcistaffrole(CciStaffRole ccistaffrole) {
-		this.ccistaffrole = ccistaffrole;
+	public void setCcistaffRole(CCIStaffRole ccistaffRole) {
+		this.ccistaffRole = ccistaffRole;
 	}
 
-	public CciStaffUser getCcistaffuser() {
-		return this.ccistaffuser;
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
 	}
 
-	public void setCcistaffuser(CciStaffUser ccistaffuser) {
-		this.ccistaffuser = ccistaffuser;
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
 	}
 
 }

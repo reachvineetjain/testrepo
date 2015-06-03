@@ -4,11 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the ccistaffuserprogram database table.
+ * The primary key class for the CCIStaffUserProgram database table.
  * 
  */
 @Embeddable
-public class CciStaffUserProgramPK implements Serializable {
+public class CCIStaffUserProgramPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class CciStaffUserProgramPK implements Serializable {
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
 	private int programID;
 
-	public CciStaffUserProgramPK() {
+	public CCIStaffUserProgramPK() {
 	}
 	public int getCciStaffUserID() {
 		return this.cciStaffUserID;
@@ -37,10 +37,10 @@ public class CciStaffUserProgramPK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof CciStaffUserProgramPK)) {
+		if (!(other instanceof CCIStaffUserProgramPK)) {
 			return false;
 		}
-		CciStaffUserProgramPK castOther = (CciStaffUserProgramPK)other;
+		CCIStaffUserProgramPK castOther = (CCIStaffUserProgramPK)other;
 		return 
 			(this.cciStaffUserID == castOther.cciStaffUserID)
 			&& (this.programID == castOther.programID);

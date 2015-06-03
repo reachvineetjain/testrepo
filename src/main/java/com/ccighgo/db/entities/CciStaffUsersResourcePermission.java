@@ -6,17 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the ccistaffusersresourcepermissions database table.
+ * The persistent class for the CCIStaffUsersResourcePermissions database table.
  * 
  */
 @Entity
-@Table(name="ccistaffusersresourcepermissions")
-@NamedQuery(name="CciStaffUsersResourcePermission.findAll", query="SELECT c FROM CciStaffUsersResourcePermission c")
-public class CciStaffUsersResourcePermission implements Serializable {
+@Table(name="CCIStaffUsersResourcePermissions")
+@NamedQuery(name="CCIStaffUsersResourcePermission.findAll", query="SELECT c FROM CCIStaffUsersResourcePermission c")
+public class CCIStaffUsersResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private CciStaffUsersResourcePermissionPK id;
+	private CCIStaffUsersResourcePermissionPK id;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -30,24 +30,24 @@ public class CciStaffUsersResourcePermission implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to CciStaffUser
+	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
 	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
-	private CciStaffUser ccistaffuser;
+	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
 	@JoinColumn(name="resourcesPermissionsId", nullable=false, insertable=false, updatable=false)
-	private ResourcePermission resourcepermission;
+	private ResourcePermission resourcePermission;
 
-	public CciStaffUsersResourcePermission() {
+	public CCIStaffUsersResourcePermission() {
 	}
 
-	public CciStaffUsersResourcePermissionPK getId() {
+	public CCIStaffUsersResourcePermissionPK getId() {
 		return this.id;
 	}
 
-	public void setId(CciStaffUsersResourcePermissionPK id) {
+	public void setId(CCIStaffUsersResourcePermissionPK id) {
 		this.id = id;
 	}
 
@@ -83,20 +83,20 @@ public class CciStaffUsersResourcePermission implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public CciStaffUser getCcistaffuser() {
-		return this.ccistaffuser;
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
 	}
 
-	public void setCcistaffuser(CciStaffUser ccistaffuser) {
-		this.ccistaffuser = ccistaffuser;
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
 	}
 
-	public ResourcePermission getResourcepermission() {
-		return this.resourcepermission;
+	public ResourcePermission getResourcePermission() {
+		return this.resourcePermission;
 	}
 
-	public void setResourcepermission(ResourcePermission resourcepermission) {
-		this.resourcepermission = resourcepermission;
+	public void setResourcePermission(ResourcePermission resourcePermission) {
+		this.resourcePermission = resourcePermission;
 	}
 
 }

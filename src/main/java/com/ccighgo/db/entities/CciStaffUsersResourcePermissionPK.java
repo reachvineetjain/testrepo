@@ -4,11 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the ccistaffusersresourcepermissions database table.
+ * The primary key class for the CCIStaffUsersResourcePermissions database table.
  * 
  */
 @Embeddable
-public class CciStaffUsersResourcePermissionPK implements Serializable {
+public class CCIStaffUsersResourcePermissionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class CciStaffUsersResourcePermissionPK implements Serializable {
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
 	private int resourcesPermissionsId;
 
-	public CciStaffUsersResourcePermissionPK() {
+	public CCIStaffUsersResourcePermissionPK() {
 	}
 	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
@@ -37,10 +37,10 @@ public class CciStaffUsersResourcePermissionPK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof CciStaffUsersResourcePermissionPK)) {
+		if (!(other instanceof CCIStaffUsersResourcePermissionPK)) {
 			return false;
 		}
-		CciStaffUsersResourcePermissionPK castOther = (CciStaffUsersResourcePermissionPK)other;
+		CCIStaffUsersResourcePermissionPK castOther = (CCIStaffUsersResourcePermissionPK)other;
 		return 
 			(this.cciStaffUserId == castOther.cciStaffUserId)
 			&& (this.resourcesPermissionsId == castOther.resourcesPermissionsId);
