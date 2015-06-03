@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the departmentfunctions database table.
+ * The persistent class for the DepartmentFunctions database table.
  * 
  */
 @Entity
-@Table(name="departmentfunctions")
+@Table(name="DepartmentFunctions")
 @NamedQuery(name="DepartmentFunction.findAll", query="SELECT d FROM DepartmentFunction d")
 public class DepartmentFunction implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,10 +37,10 @@ public class DepartmentFunction implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to Departments
+	//bi-directional many-to-one association to Department
 	@ManyToOne
 	@JoinColumn(name="departmentID", nullable=false)
-	private Departments department;
+	private Department department;
 
 	public DepartmentFunction() {
 	}
@@ -101,11 +101,11 @@ public class DepartmentFunction implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Departments getDepartment() {
+	public Department getDepartment() {
 		return this.department;
 	}
 
-	public void setDepartment(Departments department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 

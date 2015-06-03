@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.DepartmentProgram;
-import com.ccighgo.db.entities.Departments;
+import com.ccighgo.db.entities.Department;
 
 /**
  * @author ravimishra
@@ -21,5 +21,5 @@ import com.ccighgo.db.entities.Departments;
 public interface DepartmentProgramRepository extends JpaRepository<DepartmentProgram, Integer> {
 
     @Query("select d from DepartmentProgram d where d.department = ?1 ")
-   public List<DepartmentProgram> findProgramsByDepartment(Departments departmentId);
+   public List<DepartmentProgram> findProgramsByDepartment(Department departmentId);
 }

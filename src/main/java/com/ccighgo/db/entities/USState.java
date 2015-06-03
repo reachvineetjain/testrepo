@@ -6,11 +6,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the usstates database table.
+ * The persistent class for the USStates database table.
  * 
  */
 @Entity
-@Table(name="usstates")
+@Table(name="USStates")
 @NamedQuery(name="USState.findAll", query="SELECT u FROM USState u")
 public class USState implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,9 +28,9 @@ public class USState implements Serializable {
 	@Column(nullable=false, length=50)
 	private String stateName;
 
-	//bi-directional many-to-one association to CciStaffUser
+	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="usstate")
-	private List<CciStaffUser> ccistaffusers;
+	private List<CCIStaffUser> ccistaffUsers;
 
 	public USState() {
 	}
@@ -67,26 +67,26 @@ public class USState implements Serializable {
 		this.stateName = stateName;
 	}
 
-	public List<CciStaffUser> getCcistaffusers() {
-		return this.ccistaffusers;
+	public List<CCIStaffUser> getCcistaffUsers() {
+		return this.ccistaffUsers;
 	}
 
-	public void setCcistaffusers(List<CciStaffUser> ccistaffusers) {
-		this.ccistaffusers = ccistaffusers;
+	public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
+		this.ccistaffUsers = ccistaffUsers;
 	}
 
-	public CciStaffUser addCcistaffuser(CciStaffUser ccistaffuser) {
-		getCcistaffusers().add(ccistaffuser);
-		ccistaffuser.setUsstate(this);
+	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
+		getCcistaffUsers().add(ccistaffUser);
+		ccistaffUser.setUsstate(this);
 
-		return ccistaffuser;
+		return ccistaffUser;
 	}
 
-	public CciStaffUser removeCcistaffuser(CciStaffUser ccistaffuser) {
-		getCcistaffusers().remove(ccistaffuser);
-		ccistaffuser.setUsstate(null);
+	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
+		getCcistaffUsers().remove(ccistaffUser);
+		ccistaffUser.setUsstate(null);
 
-		return ccistaffuser;
+		return ccistaffUser;
 	}
 
 }

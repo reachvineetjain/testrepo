@@ -6,13 +6,13 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the ccistaffusernotes database table.
+ * The persistent class for the CCIStaffUserNotes database table.
  * 
  */
 @Entity
-@Table(name="ccistaffusernotes")
-@NamedQuery(name="CciStaffUserNote.findAll", query="SELECT c FROM CciStaffUserNote c")
-public class CciStaffUserNote implements Serializable {
+@Table(name="CCIStaffUserNotes")
+@NamedQuery(name="CCIStaffUserNote.findAll", query="SELECT c FROM CCIStaffUserNote c")
+public class CCIStaffUserNote implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -34,12 +34,12 @@ public class CciStaffUserNote implements Serializable {
 	@Column(nullable=false, length=1000)
 	private String note;
 
-	//bi-directional many-to-one association to CciStaffUser
+	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
 	@JoinColumn(name="ccistaffuserID", nullable=false)
-	private CciStaffUser ccistaffuser;
+	private CCIStaffUser ccistaffUser;
 
-	public CciStaffUserNote() {
+	public CCIStaffUserNote() {
 	}
 
 	public int getCcistaffusernotesID() {
@@ -90,12 +90,12 @@ public class CciStaffUserNote implements Serializable {
 		this.note = note;
 	}
 
-	public CciStaffUser getCcistaffuser() {
-		return this.ccistaffuser;
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
 	}
 
-	public void setCcistaffuser(CciStaffUser ccistaffuser) {
-		this.ccistaffuser = ccistaffuser;
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
 	}
 
 }

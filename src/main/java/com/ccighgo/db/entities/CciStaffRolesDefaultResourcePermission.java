@@ -6,17 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the ccistaffrolesdefaultresourcepermissions database table.
+ * The persistent class for the CCIStaffRolesDefaultResourcePermissions database table.
  * 
  */
 @Entity
-@Table(name="ccistaffrolesdefaultresourcepermissions")
-@NamedQuery(name="CciStaffRolesDefaultResourcePermission.findAll", query="SELECT c FROM CciStaffRolesDefaultResourcePermission c")
-public class CciStaffRolesDefaultResourcePermission implements Serializable {
+@Table(name="CCIStaffRolesDefaultResourcePermissions")
+@NamedQuery(name="CCIStaffRolesDefaultResourcePermission.findAll", query="SELECT c FROM CCIStaffRolesDefaultResourcePermission c")
+public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private CciStaffRolesDefaultResourcePermissionPK id;
+	private CCIStaffRolesDefaultResourcePermissionPK id;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -30,24 +30,24 @@ public class CciStaffRolesDefaultResourcePermission implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to CciStaffRolesDepartment
+	//bi-directional many-to-one association to CCIStaffRolesDepartment
 	@ManyToOne
 	@JoinColumn(name="cciStaffDepartmentRoleId", nullable=false, insertable=false, updatable=false)
-	private CciStaffRolesDepartment ccistaffrolesdepartment;
+	private CCIStaffRolesDepartment ccistaffRolesDepartment;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
 	@JoinColumn(name="resourcePermissionsId", nullable=false, insertable=false, updatable=false)
-	private ResourcePermission resourcepermission;
+	private ResourcePermission resourcePermission;
 
-	public CciStaffRolesDefaultResourcePermission() {
+	public CCIStaffRolesDefaultResourcePermission() {
 	}
 
-	public CciStaffRolesDefaultResourcePermissionPK getId() {
+	public CCIStaffRolesDefaultResourcePermissionPK getId() {
 		return this.id;
 	}
 
-	public void setId(CciStaffRolesDefaultResourcePermissionPK id) {
+	public void setId(CCIStaffRolesDefaultResourcePermissionPK id) {
 		this.id = id;
 	}
 
@@ -83,20 +83,20 @@ public class CciStaffRolesDefaultResourcePermission implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public CciStaffRolesDepartment getCcistaffrolesdepartment() {
-		return this.ccistaffrolesdepartment;
+	public CCIStaffRolesDepartment getCcistaffRolesDepartment() {
+		return this.ccistaffRolesDepartment;
 	}
 
-	public void setCcistaffrolesdepartment(CciStaffRolesDepartment ccistaffrolesdepartment) {
-		this.ccistaffrolesdepartment = ccistaffrolesdepartment;
+	public void setCcistaffRolesDepartment(CCIStaffRolesDepartment ccistaffRolesDepartment) {
+		this.ccistaffRolesDepartment = ccistaffRolesDepartment;
 	}
 
-	public ResourcePermission getResourcepermission() {
-		return this.resourcepermission;
+	public ResourcePermission getResourcePermission() {
+		return this.resourcePermission;
 	}
 
-	public void setResourcepermission(ResourcePermission resourcepermission) {
-		this.resourcepermission = resourcepermission;
+	public void setResourcePermission(ResourcePermission resourcePermission) {
+		this.resourcePermission = resourcePermission;
 	}
 
 }

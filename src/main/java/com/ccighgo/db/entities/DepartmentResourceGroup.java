@@ -7,11 +7,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the departmentresourcegroups database table.
+ * The persistent class for the DepartmentResourceGroups database table.
  * 
  */
 @Entity
-@Table(name="departmentresourcegroups")
+@Table(name="DepartmentResourceGroups")
 @NamedQuery(name="DepartmentResourceGroup.findAll", query="SELECT d FROM DepartmentResourceGroup d")
 public class DepartmentResourceGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -35,14 +35,14 @@ public class DepartmentResourceGroup implements Serializable {
 	@Column(nullable=false, length=50)
 	private String resourceGroupName;
 
-	//bi-directional many-to-one association to Departments
+	//bi-directional many-to-one association to Department
 	@ManyToOne
 	@JoinColumn(name="departmentID", nullable=false)
-	private Departments department;
+	private Department department;
 
 	//bi-directional many-to-one association to ResourcePermission
-	@OneToMany(mappedBy="departmentresourcegroup")
-	private List<ResourcePermission> resourcepermissions;
+	@OneToMany(mappedBy="departmentResourceGroup")
+	private List<ResourcePermission> resourcePermissions;
 
 	public DepartmentResourceGroup() {
 	}
@@ -95,34 +95,34 @@ public class DepartmentResourceGroup implements Serializable {
 		this.resourceGroupName = resourceGroupName;
 	}
 
-	public Departments getDepartment() {
+	public Department getDepartment() {
 		return this.department;
 	}
 
-	public void setDepartment(Departments department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 
-	public List<ResourcePermission> getResourcepermissions() {
-		return this.resourcepermissions;
+	public List<ResourcePermission> getResourcePermissions() {
+		return this.resourcePermissions;
 	}
 
-	public void setResourcepermissions(List<ResourcePermission> resourcepermissions) {
-		this.resourcepermissions = resourcepermissions;
+	public void setResourcePermissions(List<ResourcePermission> resourcePermissions) {
+		this.resourcePermissions = resourcePermissions;
 	}
 
-	public ResourcePermission addResourcepermission(ResourcePermission resourcepermission) {
-		getResourcepermissions().add(resourcepermission);
-		resourcepermission.setDepartmentresourcegroup(this);
+	public ResourcePermission addResourcePermission(ResourcePermission resourcePermission) {
+		getResourcePermissions().add(resourcePermission);
+		resourcePermission.setDepartmentResourceGroup(this);
 
-		return resourcepermission;
+		return resourcePermission;
 	}
 
-	public ResourcePermission removeResourcepermission(ResourcePermission resourcepermission) {
-		getResourcepermissions().remove(resourcepermission);
-		resourcepermission.setDepartmentresourcegroup(null);
+	public ResourcePermission removeResourcePermission(ResourcePermission resourcePermission) {
+		getResourcePermissions().remove(resourcePermission);
+		resourcePermission.setDepartmentResourceGroup(null);
 
-		return resourcepermission;
+		return resourcePermission;
 	}
 
 }

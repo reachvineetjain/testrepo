@@ -18,8 +18,8 @@ import com.ccighgo.db.entities.DepartmentResourceGroup;
 @Repository
 public interface DepartmentResourceGroupRepository extends JpaRepository<DepartmentResourceGroup, Integer> {
 
-    @Query("select rg from CciStaffUsersResourcePermission cucr INNER JOIN cucr.resourcepermission rp "
-            + " LEFT OUTER JOIN rp.departmentresourcegroup rg where cciStaffUserId= ? group by rg.resourceGroupName order by rg.deptResourceGroupID ")
+    @Query("select rg from CCIStaffUsersResourcePermission cucr INNER JOIN cucr.resourcePermission rp "
+            + " LEFT OUTER JOIN rp.departmentResourceGroup rg where cciStaffUserId= ? group by rg.resourceGroupName order by rg.deptResourceGroupID ")
     public List<DepartmentResourceGroup> findDepartmentResourceGroupByUser(Integer id);
 
 }

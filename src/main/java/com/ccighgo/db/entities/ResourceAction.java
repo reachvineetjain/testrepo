@@ -7,13 +7,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the resourceactions database table.
+ * The persistent class for the ResourceActions database table.
  * 
  */
 @Entity
-@Table(name="resourceactions")
-@NamedQuery(name="ResourceActions.findAll", query="SELECT r FROM ResourceActions r")
-public class ResourceActions implements Serializable {
+@Table(name="ResourceActions")
+@NamedQuery(name="ResourceAction.findAll", query="SELECT r FROM ResourceAction r")
+public class ResourceAction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -42,10 +42,10 @@ public class ResourceActions implements Serializable {
 	private byte visibleToUser;
 
 	//bi-directional many-to-one association to ResourcePermission
-	@OneToMany(mappedBy="resourceaction")
-	private List<ResourcePermission> resourcepermissions;
+	@OneToMany(mappedBy="resourceAction")
+	private List<ResourcePermission> resourcePermissions;
 
-	public ResourceActions() {
+	public ResourceAction() {
 	}
 
 	public int getId() {
@@ -112,26 +112,26 @@ public class ResourceActions implements Serializable {
 		this.visibleToUser = visibleToUser;
 	}
 
-	public List<ResourcePermission> getResourcepermissions() {
-		return this.resourcepermissions;
+	public List<ResourcePermission> getResourcePermissions() {
+		return this.resourcePermissions;
 	}
 
-	public void setResourcepermissions(List<ResourcePermission> resourcepermissions) {
-		this.resourcepermissions = resourcepermissions;
+	public void setResourcePermissions(List<ResourcePermission> resourcePermissions) {
+		this.resourcePermissions = resourcePermissions;
 	}
 
-	public ResourcePermission addResourcepermission(ResourcePermission resourcepermission) {
-		getResourcepermissions().add(resourcepermission);
-		resourcepermission.setResourceaction(this);
+	public ResourcePermission addResourcePermission(ResourcePermission resourcePermission) {
+		getResourcePermissions().add(resourcePermission);
+		resourcePermission.setResourceAction(this);
 
-		return resourcepermission;
+		return resourcePermission;
 	}
 
-	public ResourcePermission removeResourcepermission(ResourcePermission resourcepermission) {
-		getResourcepermissions().remove(resourcepermission);
-		resourcepermission.setResourceaction(null);
+	public ResourcePermission removeResourcePermission(ResourcePermission resourcePermission) {
+		getResourcePermissions().remove(resourcePermission);
+		resourcePermission.setResourceAction(null);
 
-		return resourcepermission;
+		return resourcePermission;
 	}
 
 }

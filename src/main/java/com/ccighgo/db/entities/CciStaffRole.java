@@ -1,19 +1,24 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
 
 
 /**
- * The persistent class for the ccistaffroles database table.
+ * The persistent class for the CCIStaffRoles database table.
  * 
  */
 @Entity
-@Table(name="ccistaffroles")
-@NamedQuery(name="CciStaffRole.findAll", query="SELECT c FROM CciStaffRole c")
-public class CciStaffRole implements Serializable {
+@Table(name="CCIStaffRoles")
+@NamedQuery(name="CCIStaffRole.findAll", query="SELECT c FROM CCIStaffRole c")
+public class CCIStaffRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,15 +42,16 @@ public class CciStaffRole implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to CciStaffRolesDepartment
-	@OneToMany(mappedBy="ccistaffrole")
-	private List<CciStaffRolesDepartment> ccistaffrolesdepartments;
+	//bi-directional many-to-one association to CCIStaffRolesDepartment
+	@OneToMany(mappedBy="ccistaffRole", fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+	private List<CCIStaffRolesDepartment> ccistaffRolesDepartments;
 
-	//bi-directional many-to-one association to CciStaffUsersCciStaffRole
-	@OneToMany(mappedBy="ccistaffrole")
-	private List<CciStaffUsersCciStaffRole> ccistaffusersccistaffroles;
+	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
+	@OneToMany(mappedBy="ccistaffRole")
+	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
-	public CciStaffRole() {
+	public CCIStaffRole() {
 	}
 
 	public int getCciStaffRoleID() {
@@ -104,48 +110,48 @@ public class CciStaffRole implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public List<CciStaffRolesDepartment> getCcistaffrolesdepartments() {
-		return this.ccistaffrolesdepartments;
+	public List<CCIStaffRolesDepartment> getCcistaffRolesDepartments() {
+		return this.ccistaffRolesDepartments;
 	}
 
-	public void setCcistaffrolesdepartments(List<CciStaffRolesDepartment> ccistaffrolesdepartments) {
-		this.ccistaffrolesdepartments = ccistaffrolesdepartments;
+	public void setCcistaffRolesDepartments(List<CCIStaffRolesDepartment> ccistaffRolesDepartments) {
+		this.ccistaffRolesDepartments = ccistaffRolesDepartments;
 	}
 
-	public CciStaffRolesDepartment addCcistaffrolesdepartment(CciStaffRolesDepartment ccistaffrolesdepartment) {
-		getCcistaffrolesdepartments().add(ccistaffrolesdepartment);
-		ccistaffrolesdepartment.setCcistaffrole(this);
+	public CCIStaffRolesDepartment addCcistaffRolesDepartment(CCIStaffRolesDepartment ccistaffRolesDepartment) {
+		getCcistaffRolesDepartments().add(ccistaffRolesDepartment);
+		ccistaffRolesDepartment.setCcistaffRole(this);
 
-		return ccistaffrolesdepartment;
+		return ccistaffRolesDepartment;
 	}
 
-	public CciStaffRolesDepartment removeCcistaffrolesdepartment(CciStaffRolesDepartment ccistaffrolesdepartment) {
-		getCcistaffrolesdepartments().remove(ccistaffrolesdepartment);
-		ccistaffrolesdepartment.setCcistaffrole(null);
+	public CCIStaffRolesDepartment removeCcistaffRolesDepartment(CCIStaffRolesDepartment ccistaffRolesDepartment) {
+		getCcistaffRolesDepartments().remove(ccistaffRolesDepartment);
+		ccistaffRolesDepartment.setCcistaffRole(null);
 
-		return ccistaffrolesdepartment;
+		return ccistaffRolesDepartment;
 	}
 
-	public List<CciStaffUsersCciStaffRole> getCcistaffusersccistaffroles() {
-		return this.ccistaffusersccistaffroles;
+	public List<CCIStaffUsersCCIStaffRole> getCcistaffUsersCcistaffRoles() {
+		return this.ccistaffUsersCcistaffRoles;
 	}
 
-	public void setCcistaffusersccistaffroles(List<CciStaffUsersCciStaffRole> ccistaffusersccistaffroles) {
-		this.ccistaffusersccistaffroles = ccistaffusersccistaffroles;
+	public void setCcistaffUsersCcistaffRoles(List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles) {
+		this.ccistaffUsersCcistaffRoles = ccistaffUsersCcistaffRoles;
 	}
 
-	public CciStaffUsersCciStaffRole addCcistaffusersccistaffrole(CciStaffUsersCciStaffRole ccistaffusersccistaffrole) {
-		getCcistaffusersccistaffroles().add(ccistaffusersccistaffrole);
-		ccistaffusersccistaffrole.setCcistaffrole(this);
+	public CCIStaffUsersCCIStaffRole addCcistaffUsersCcistaffRole(CCIStaffUsersCCIStaffRole ccistaffUsersCcistaffRole) {
+		getCcistaffUsersCcistaffRoles().add(ccistaffUsersCcistaffRole);
+		ccistaffUsersCcistaffRole.setCcistaffRole(this);
 
-		return ccistaffusersccistaffrole;
+		return ccistaffUsersCcistaffRole;
 	}
 
-	public CciStaffUsersCciStaffRole removeCcistaffusersccistaffrole(CciStaffUsersCciStaffRole ccistaffusersccistaffrole) {
-		getCcistaffusersccistaffroles().remove(ccistaffusersccistaffrole);
-		ccistaffusersccistaffrole.setCcistaffrole(null);
+	public CCIStaffUsersCCIStaffRole removeCcistaffUsersCcistaffRole(CCIStaffUsersCCIStaffRole ccistaffUsersCcistaffRole) {
+		getCcistaffUsersCcistaffRoles().remove(ccistaffUsersCcistaffRole);
+		ccistaffUsersCcistaffRole.setCcistaffRole(null);
 
-		return ccistaffusersccistaffrole;
+		return ccistaffUsersCcistaffRole;
 	}
 
 }

@@ -6,17 +6,17 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the ccistaffuserprogram database table.
+ * The persistent class for the CCIStaffUserProgram database table.
  * 
  */
 @Entity
-@Table(name="ccistaffuserprogram")
-@NamedQuery(name="CciStaffUserProgram.findAll", query="SELECT c FROM CciStaffUserProgram c")
-public class CciStaffUserProgram implements Serializable {
+@Table(name="CCIStaffUserProgram")
+@NamedQuery(name="CCIStaffUserProgram.findAll", query="SELECT c FROM CCIStaffUserProgram c")
+public class CCIStaffUserProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private CciStaffUserProgramPK id;
+	private CCIStaffUserProgramPK id;
 
 	private int createdBy;
 
@@ -28,24 +28,24 @@ public class CciStaffUserProgram implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to CciStaffUser
+	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
 	@JoinColumn(name="cciStaffUserID", nullable=false, insertable=false, updatable=false)
-	private CciStaffUser ccistaffuser;
+	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="programID", nullable=false, insertable=false, updatable=false)
-	private DepartmentProgram departmentprogram;
+	private DepartmentProgram departmentProgram;
 
-	public CciStaffUserProgram() {
+	public CCIStaffUserProgram() {
 	}
 
-	public CciStaffUserProgramPK getId() {
+	public CCIStaffUserProgramPK getId() {
 		return this.id;
 	}
 
-	public void setId(CciStaffUserProgramPK id) {
+	public void setId(CCIStaffUserProgramPK id) {
 		this.id = id;
 	}
 
@@ -81,20 +81,20 @@ public class CciStaffUserProgram implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public CciStaffUser getCcistaffuser() {
-		return this.ccistaffuser;
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
 	}
 
-	public void setCcistaffuser(CciStaffUser ccistaffuser) {
-		this.ccistaffuser = ccistaffuser;
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
 	}
 
-	public DepartmentProgram getDepartmentprogram() {
-		return this.departmentprogram;
+	public DepartmentProgram getDepartmentProgram() {
+		return this.departmentProgram;
 	}
 
-	public void setDepartmentprogram(DepartmentProgram departmentprogram) {
-		this.departmentprogram = departmentprogram;
+	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+		this.departmentProgram = departmentProgram;
 	}
 
 }

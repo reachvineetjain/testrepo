@@ -7,11 +7,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the departmentprograms database table.
+ * The persistent class for the DepartmentPrograms database table.
  * 
  */
 @Entity
-@Table(name="departmentprograms")
+@Table(name="DepartmentPrograms")
 @NamedQuery(name="DepartmentProgram.findAll", query="SELECT d FROM DepartmentProgram d")
 public class DepartmentProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,18 +38,18 @@ public class DepartmentProgram implements Serializable {
 	@Column(nullable=false, length=50)
 	private String program;
 
-	//bi-directional many-to-one association to CciStaffUserProgram
-	@OneToMany(mappedBy="departmentprogram")
-	private List<CciStaffUserProgram> ccistaffuserprograms;
+	//bi-directional many-to-one association to CCIStaffUserProgram
+	@OneToMany(mappedBy="departmentProgram")
+	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
-	@OneToMany(mappedBy="departmentprogram")
-	private List<DepartmentProgramOption> departmentprogramoptions;
+	@OneToMany(mappedBy="departmentProgram")
+	private List<DepartmentProgramOption> departmentProgramOptions;
 
-	//bi-directional many-to-one association to Departments
+	//bi-directional many-to-one association to Department
 	@ManyToOne
 	@JoinColumn(name="departmentID", nullable=false)
-	private Departments department;
+	private Department department;
 
 	public DepartmentProgram() {
 	}
@@ -110,55 +110,55 @@ public class DepartmentProgram implements Serializable {
 		this.program = program;
 	}
 
-	public List<CciStaffUserProgram> getCcistaffuserprograms() {
-		return this.ccistaffuserprograms;
+	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
+		return this.ccistaffUserPrograms;
 	}
 
-	public void setCcistaffuserprograms(List<CciStaffUserProgram> ccistaffuserprograms) {
-		this.ccistaffuserprograms = ccistaffuserprograms;
+	public void setCcistaffUserPrograms(List<CCIStaffUserProgram> ccistaffUserPrograms) {
+		this.ccistaffUserPrograms = ccistaffUserPrograms;
 	}
 
-	public CciStaffUserProgram addCcistaffuserprogram(CciStaffUserProgram ccistaffuserprogram) {
-		getCcistaffuserprograms().add(ccistaffuserprogram);
-		ccistaffuserprogram.setDepartmentprogram(this);
+	public CCIStaffUserProgram addCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
+		getCcistaffUserPrograms().add(ccistaffUserProgram);
+		ccistaffUserProgram.setDepartmentProgram(this);
 
-		return ccistaffuserprogram;
+		return ccistaffUserProgram;
 	}
 
-	public CciStaffUserProgram removeCcistaffuserprogram(CciStaffUserProgram ccistaffuserprogram) {
-		getCcistaffuserprograms().remove(ccistaffuserprogram);
-		ccistaffuserprogram.setDepartmentprogram(null);
+	public CCIStaffUserProgram removeCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
+		getCcistaffUserPrograms().remove(ccistaffUserProgram);
+		ccistaffUserProgram.setDepartmentProgram(null);
 
-		return ccistaffuserprogram;
+		return ccistaffUserProgram;
 	}
 
-	public List<DepartmentProgramOption> getDepartmentprogramoptions() {
-		return this.departmentprogramoptions;
+	public List<DepartmentProgramOption> getDepartmentProgramOptions() {
+		return this.departmentProgramOptions;
 	}
 
-	public void setDepartmentprogramoptions(List<DepartmentProgramOption> departmentprogramoptions) {
-		this.departmentprogramoptions = departmentprogramoptions;
+	public void setDepartmentProgramOptions(List<DepartmentProgramOption> departmentProgramOptions) {
+		this.departmentProgramOptions = departmentProgramOptions;
 	}
 
-	public DepartmentProgramOption addDepartmentprogramoption(DepartmentProgramOption departmentprogramoption) {
-		getDepartmentprogramoptions().add(departmentprogramoption);
-		departmentprogramoption.setDepartmentprogram(this);
+	public DepartmentProgramOption addDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+		getDepartmentProgramOptions().add(departmentProgramOption);
+		departmentProgramOption.setDepartmentProgram(this);
 
-		return departmentprogramoption;
+		return departmentProgramOption;
 	}
 
-	public DepartmentProgramOption removeDepartmentprogramoption(DepartmentProgramOption departmentprogramoption) {
-		getDepartmentprogramoptions().remove(departmentprogramoption);
-		departmentprogramoption.setDepartmentprogram(null);
+	public DepartmentProgramOption removeDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+		getDepartmentProgramOptions().remove(departmentProgramOption);
+		departmentProgramOption.setDepartmentProgram(null);
 
-		return departmentprogramoption;
+		return departmentProgramOption;
 	}
 
-	public Departments getDepartment() {
+	public Department getDepartment() {
 		return this.department;
 	}
 
-	public void setDepartment(Departments department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 
