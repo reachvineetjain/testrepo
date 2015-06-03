@@ -9,14 +9,18 @@ require.config({
 		ngTable: '/ng-table/dist/ng-table',
     module: '/module',
     uiSelect: '/angular-ui-select/dist/select',
-    coreServices: '/core/services'
+    coreServices: '/core/services',
+    ngImgCrop: '/ngImgCrop/compile/minified/ng-img-crop',
+    uiBootstrap: '/angular-bootstrap/ui-bootstrap-tpls'
   },
   shim: {
     'angular' : {'exports' : 'angular'},
     'ui': ['angular'],
     'uiRouter': ['angular'],
 		'ngTable': ['angular'],
-    'module': ['angular']
+    'module': ['angular'],
+    'ngImgCrop': ['angular'],
+    'uiBootstrap': ['angular']
   },
   priority: [
     "angular"
