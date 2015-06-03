@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.usermanagment.UserManagementServiceImpl;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
+import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 
 /**
  * <h1>UserManagement</h1> The UserManagement class is the REST service front of
@@ -146,9 +147,11 @@ public class UserManagement {
     }
     
     /**
+     * RESTFul service, add user profile picture
+     * 
      * @param id
      * @param user
-     * @return
+     * @return updated User
      */
     @POST
     @Path("{id}/add/picture")
@@ -157,11 +160,32 @@ public class UserManagement {
         return userMgmtServices.addUserPicture(id, user);
     }
 
+    /**
+     * Deactivates user
+     * 
+     * @param id
+     * @return
+     */
     @DELETE
     @Path("{id}/delete/")
     @Produces("application/json")
     public String deleteUser(@PathParam("id") String id) {
         return userMgmtServices.deleteUser(id);
+    }
+    
+
+    /**
+     * RESTFul service, add user profile picture
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
+    @POST
+    @Path("{id}/add/picture")
+    @Consumes("application/json")
+    public CCIUsers searchUser(UserSearch userSearch) {
+        return userMgmtServices.searchUsers(userSearch);
     }
 
 }

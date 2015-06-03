@@ -5,6 +5,7 @@ package com.ccighgo.service.components.usermanagment;
 
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
+import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 
 /**
  * Service Interface for all user management related operations
@@ -85,6 +86,6 @@ public interface UserManagementService {
 	 * 
 	 * @return
 	 */
-	public CCIUsers searchUsers();
+	public CCIUsers searchUsers(UserSearch userSearch);
 
 }

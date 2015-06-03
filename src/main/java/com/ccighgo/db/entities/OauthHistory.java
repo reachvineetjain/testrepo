@@ -5,11 +5,11 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the oauthhistory database table.
+ * The persistent class for the OauthHistory database table.
  * 
  */
 @Entity
-@Table(name="oauthhistory")
+@Table(name="OauthHistory")
 @NamedQuery(name="OauthHistory.findAll", query="SELECT o FROM OauthHistory o")
 public class OauthHistory implements Serializable {
 	private static final long serialVersionUID = 1L;

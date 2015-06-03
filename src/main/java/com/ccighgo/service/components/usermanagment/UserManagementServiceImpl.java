@@ -12,10 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.CciStaffUser;
-import com.ccighgo.db.entities.CciStaffUserProgram;
-import com.ccighgo.db.entities.CciStaffUsersCciStaffRole;
-import com.ccighgo.db.entities.Countries;
+import com.ccighgo.db.entities.CCIStaffRolesDepartment;
+import com.ccighgo.db.entities.CCIStaffUser;
+import com.ccighgo.db.entities.CCIStaffUserProgram;
+import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
+import com.ccighgo.db.entities.Country;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentResourceGroup;
 import com.ccighgo.db.entities.Login;
@@ -23,7 +24,6 @@ import com.ccighgo.db.entities.ResourcePermission;
 import com.ccighgo.db.entities.USState;
 import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
-import com.ccighgo.jpa.repositories.DepartmentFunctionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentResourceGroupRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
@@ -45,6 +45,7 @@ import com.ccighgo.service.transport.usermanagement.beans.user.UserPermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserRole;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserState;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserType;
+import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.utils.UuidUtils;
 
 /**
@@ -71,21 +72,17 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public CCIUsers getAllCCIUsers(String pageNo, String size) {
-        // this is for pagination of the records. pageNo 0 will be the first
-        // page, size will be the number of records UI wants per page
-        // if information page no and size is missing default will be first page
-        // and list of records shown will be 10 per page
         Pageable page = new PageRequest(Integer.valueOf(pageNo != null ? pageNo : DEFAULT_PAGE), Integer.valueOf(size != null ? size
                 : DEFAULT_NO_OF_RECORDS_SIZE));
         Long numberOfRecords = cciUsersRepository.count();
-        Page<CciStaffUser> cciUserDBList = cciUsersRepository.findAll(page);
+        Page<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(page);
         CCIUsers cciUsers = null;
         List<CCIUser> cciUserList = null;
         if (cciUserDBList.getSize() > 0) {
             cciUsers = new CCIUsers();
             cciUsers.setRecordCount(numberOfRecords.intValue());
             cciUserList = new ArrayList<CCIUser>();
-            for (CciStaffUser cUsr : cciUserDBList) {
+            for (CCIStaffUser cUsr : cciUserDBList) {
                 CCIUser cciUser = new CCIUser();
                 cciUser.setCciUserId(cUsr.getCciStaffUserID());
                 cciUser.setFirstName(cUsr.getFirstName());
@@ -104,8 +101,37 @@ public class UserManagementServiceImpl implements UserManagementService {
                 }
                 // update user role for user
                 populateUserRole(cUsr, cciUser);
-                //TODO update department programs and permissions once clarified by DBA
-                populateDepartmentAndPrograms(cUsr, cciUser);
+                //update department and department programs
+                if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
+                    // front objects lists for department and programs
+                    List<CCIUserDepartment> userDepartmentList = new ArrayList<CCIUserDepartment>();
+                    for (CCIStaffUsersCCIStaffRole staffUserStaffRole : cUsr.getCcistaffUsersCcistaffRoles()) {
+                        if (staffUserStaffRole.getCcistaffRole().getCcistaffRolesDepartments() != null) {
+                            for (CCIStaffRolesDepartment staffRoleDepartment : staffUserStaffRole.getCcistaffRole().getCcistaffRolesDepartments()) {
+                                if (staffUserStaffRole.getCcistaffUser().getCciStaffUserID() == cUsr.getCciStaffUserID()) {
+                                    CCIUserDepartment department = new CCIUserDepartment();
+                                    department.setDepartmentId(staffRoleDepartment.getDepartment().getDepartmentID());
+                                    department.setDepartmentName(staffRoleDepartment.getDepartment().getDepartmentName());
+                                    // update department program for each
+                                    // department
+                                    List<DepartmentProgram> departmentProgramsList = staffRoleDepartment.getDepartment().getDepartmentPrograms();
+                                    if (departmentProgramsList != null) {
+                                        List<CCIUserDepartmentProgram> userDepartmentProgram = new ArrayList<CCIUserDepartmentProgram>();
+                                        for (DepartmentProgram dPrg : departmentProgramsList) {
+                                            CCIUserDepartmentProgram prg = new CCIUserDepartmentProgram();
+                                            prg.setProgramId(dPrg.getProgramID());
+                                            prg.setProgramName(dPrg.getProgram());
+                                            userDepartmentProgram.add(prg);
+                                        }
+                                        department.getUserDepartmentPrograms().addAll(userDepartmentProgram);
+                                    }
+                                    userDepartmentList.add(department);
+                                }
+                            }
+                        }
+                    }
+                    cciUser.getUserDepartments().addAll(userDepartmentList);
+                }
                 cciUserList.add(cciUser);
             }
             cciUsers.getCciUsers().addAll(cciUserList);
@@ -115,7 +141,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public User getUserById(String id) {
-        CciStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
+        CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
         User user = new User();
         user.setCciUserId(cciUser.getCciStaffUserID());
         user.setFirstName(cciUser.getFirstName());
@@ -133,19 +159,14 @@ public class UserManagementServiceImpl implements UserManagementService {
         user.setSevisId(cciUser.getSevisID() != null ? cciUser.getSevisID() : EMPTY_DATA);
         user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : EMPTY_DATA);
         user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : EMPTY_DATA);
-        int flag = cciUser.getActive();
-        if (flag == 1) {
-            user.setIsActive(true);
-        } else {
-            user.setIsActive(false);
-        }
+        user.setActive(cciUser.getActive()==ACTIVE?true:false);
 
         // update user login info
         LoginInfo loginInfo = new LoginInfo();
         UserType userType = new UserType();
-        userType.setUserTypeId(cciUser.getLogin().getUsertype().getUserTypeId());
-        userType.setUserTypeCode(cciUser.getLogin().getUsertype().getUserTypeCode());
-        userType.setUserTypeName(cciUser.getLogin().getUsertype().getUserTypeName());
+        userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
+        userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
+        userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
         loginInfo.setLoginId(cciUser.getLogin().getLoginId());
         loginInfo.setLoginName(cciUser.getLogin().getLoginName());
         loginInfo.setUserType(userType);
@@ -164,78 +185,76 @@ public class UserManagementServiceImpl implements UserManagementService {
         state.setStateName(cciUser.getUsstate().getStateName());
         user.setUserState(state);
 
-        // populate user roles
-        if (cciUser.getCcistaffusersccistaffroles() != null) {
+        // populate user roles, department and department programs
+        if (cciUser.getCcistaffUsersCcistaffRoles() != null) {
             updateUserRole(cciUser, user);
+            // front objects lists for department and programs
+            List<UserDepartment> userDepartmentList = new ArrayList<UserDepartment>();
+            for (CCIStaffUsersCCIStaffRole staffUserStaffRole : cciUser.getCcistaffUsersCcistaffRoles()) {
+                if (staffUserStaffRole.getCcistaffRole().getCcistaffRolesDepartments() != null) {
+                    for (CCIStaffRolesDepartment staffRoleDepartment : staffUserStaffRole.getCcistaffRole().getCcistaffRolesDepartments()) {
+                        if (staffUserStaffRole.getCcistaffUser().getCciStaffUserID() == cciUser.getCciStaffUserID()) {
+                            UserDepartment department = new UserDepartment();
+                            department.setDepartmentId(staffRoleDepartment.getDepartment().getDepartmentID());
+                            department.setDepartmentName(staffRoleDepartment.getDepartment().getDepartmentName());
+                            // update department program for each department
+                            List<DepartmentProgram> departmentProgramsList = staffRoleDepartment.getDepartment().getDepartmentPrograms();
+                            if (departmentProgramsList != null) {
+                                List<UserDepartmentProgram> userDepartmentProgram = new ArrayList<UserDepartmentProgram>();
+                                for (DepartmentProgram dPrg : departmentProgramsList) {
+                                    UserDepartmentProgram prg = new UserDepartmentProgram();
+                                    prg.setProgramId(dPrg.getProgramID());
+                                    prg.setProgramName(dPrg.getProgram());
+                                    userDepartmentProgram.add(prg);
+                                }
+                                department.getDepartmentPrograms().addAll(userDepartmentProgram);
+                            }
+                            userDepartmentList.add(department);
+                        }
+                    }
+                }
+            }
+            user.getDepartments().addAll(userDepartmentList);
         }
-        //TODO update department programs and permissions once clarified by DBA
-        if (cciUser.getCcistaffuserprograms() != null) {
-            updateUserDepartmentProgram(cciUser, user);
-        }
-        if (cciUser.getCcistaffusersresourcepermissions() != null) {
-            updateUserPermissions(cciUser, user);
+        if (cciUser.getCcistaffUsersResourcePermissions() != null) {
+            populateUserPermissions(cciUser, user);
         }
         return user;
     }
 
     @Override
     public User createUser(User user) {
-
-        // TODO remove not null from database columns
-        CciStaffUser cciUser = new CciStaffUser();
-        cciUser.setFirstName(user.getFirstName() != null ? user.getFirstName() : EMPTY_DATA);
-        cciUser.setLastName(user.getLastName() != null ? user.getLastName() : EMPTY_DATA);
-        cciUser.setEmail(user.getEmail() != null ? user.getEmail() : EMPTY_DATA);
-        cciUser.setCciAdminGuid(UuidUtils.nextHexUUID());
-        cciUser.setCity(user.getCity() != null ? user.getCity() : EMPTY_DATA);
-        cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : EMPTY_DATA);
-        cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : EMPTY_DATA);
-        cciUser.setZip(user.getZip() != null ? user.getZip() : EMPTY_DATA);
-        cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : EMPTY_DATA);
-        cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : EMPTY_DATA);
-        cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : EMPTY_DATA);
-        cciUser.setSupervisorId(Integer.valueOf(user.getSupervisorId()) > 0 ? Integer.valueOf(user.getSupervisorId()) : 0);
-        // TODO need to implement file upload
-        cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : EMPTY_DATA);
-        cciUser.setActive(ACTIVE);
-
-        // update country and state and login
-        Countries userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
-        USState userState = stateRepository.findOne(user.getUserState().getStateId());
-        cciUser.setCountry(userCountry);
-        cciUser.setUsstate(userState);
-        com.ccighgo.db.entities.UserType cciUserType = new com.ccighgo.db.entities.UserType();
-        Login login = new Login();
-        cciUserType.setUserTypeId(user.getLoginInfo().getUserType().getUserTypeId());
-        cciUserType.setUserTypeCode(user.getLoginInfo().getUserType().getUserTypeCode());
-        cciUserType.setUserTypeName(user.getLoginInfo().getUserType().getUserTypeName());
-        login.setLoginName(user.getLoginInfo().getLoginName());
-        login.setPassword(user.getLoginInfo().getPassword());
-        login.setUsertype(cciUserType);
-        cciUser.setLogin(login);
-        
-        //TODO update department programs and permissions once clarified by DBA
-        
-        CciStaffUser cUser = cciUsersRepository.saveAndFlush(cciUser);
+        CCIStaffUser cciUser = new CCIStaffUser();
+        updateDemographics(user, cciUser,ACTIVE,true);
+        CCIStaffUser cUser = cciUsersRepository.saveAndFlush(cciUser);
         User usr = getUserById(String.valueOf(cUser.getCciStaffUserID()));
         return usr;
     }
+
+    
     
     @Override
-    public CCIUsers searchUsers() {
+    public CCIUsers searchUsers(UserSearch userSearch) {
         return null;
         // TODO Auto-generated method stub
     }
     
     @Override
     public User updateUserDemographics(String id, User user) {
-        // TODO Auto-generated method stub
-        return null;
+        CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
+        byte active =INACTIVE;
+        if(user.isActive()){
+            active =ACTIVE; 
+        }
+        updateDemographics(user, cciUser,active,false );
+        CCIStaffUser cUser = cciUsersRepository.saveAndFlush(cciUser);
+        User usr = getUserById(String.valueOf(cUser.getCciStaffUserID()));
+        return usr;
     }
 
     @Override
     public User updateUserPermissions(String id, User user) {
-        // TODO Auto-generated method stub
+      //TODO update permissions once clarified by DBA
         return null;
     }
 
@@ -255,7 +274,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     public String deleteUser(String id) {
         String message = null;
         if (Integer.valueOf(id) > 0) {
-            CciStaffUser user = cciUsersRepository.findOne(Integer.valueOf(id));
+            CCIStaffUser user = cciUsersRepository.findOne(Integer.valueOf(id));
             user.setActive(INACTIVE);
             cciUsersRepository.saveAndFlush(user);
             // TODO use message from properties files
@@ -268,11 +287,59 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
     
     /**
+     * Updates user demographics
+     * 
+     * @param user
+     * @param cciUser
+     */
+    private void updateDemographics(User user, CCIStaffUser cciUser, byte active, boolean newUser) {
+        //TODO do validation for mandatory data
+        cciUser.setFirstName(user.getFirstName() != null ? user.getFirstName() : EMPTY_DATA);
+        cciUser.setLastName(user.getLastName() != null ? user.getLastName() : EMPTY_DATA);
+        cciUser.setEmail(user.getEmail() != null ? user.getEmail() : EMPTY_DATA);
+        //we need to create GUID only in case of new user creation
+        if(newUser){
+            cciUser.setCciAdminGuid(UuidUtils.nextHexUUID());
+        }
+        cciUser.setCity(user.getCity() != null ? user.getCity() : null);
+        cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
+        cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
+        cciUser.setZip(user.getZip() != null ? user.getZip() : null);
+        cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+        cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
+        cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
+        cciUser.setSupervisorId(Integer.valueOf(user.getSupervisorId()) > 0 ? Integer.valueOf(user.getSupervisorId()) : 0);
+        // TODO need to implement file upload
+        cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
+        cciUser.setActive(active);
+
+        // update country and state and login
+        Country userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
+        USState userState = stateRepository.findOne(user.getUserState().getStateId());
+        cciUser.setCountry(userCountry);
+        cciUser.setUsstate(userState);
+        com.ccighgo.db.entities.UserType cciUserType = new com.ccighgo.db.entities.UserType();
+        Login login = new Login();
+        cciUserType.setUserTypeId(user.getLoginInfo().getUserType().getUserTypeId());
+        cciUserType.setUserTypeCode(user.getLoginInfo().getUserType().getUserTypeCode());
+        cciUserType.setUserTypeName(user.getLoginInfo().getUserType().getUserTypeName());
+        login.setLoginName(user.getLoginInfo().getLoginName());
+        login.setPassword(user.getLoginInfo().getPassword());
+        login.setUserType(cciUserType);
+        cciUser.setLogin(login);
+        
+        if(user.getDepartments()!=null){
+            
+        }
+       //TODO update department programs and permissions once clarified by DBA
+    }
+    
+    /**
      * 
      * @param cciUser
      * @param user
      */
-    private void updateUserPermissions(CciStaffUser cciUser, User user) {
+    private void populateUserPermissions(CCIStaffUser cciUser, User user) {
         List<DepartmentResourceGroup> userRecGroup = departmentResourceGroupRepository.findDepartmentResourceGroupByUser(cciUser.getCciStaffUserID());
         List<UserPermissions> perms = new ArrayList<UserPermissions>();
         List<PermissionGroupOptions> permsGroupOptions = null;
@@ -310,12 +377,12 @@ public class UserManagementServiceImpl implements UserManagementService {
      * @param cciUser
      * @param user
      */
-    private void updateUserRole(CciStaffUser cciUser, User user) {
+    private void updateUserRole(CCIStaffUser cciUser, User user) {
         List<UserRole> rolesList = new ArrayList<UserRole>();
-        for (CciStaffUsersCciStaffRole sRole : cciUser.getCcistaffusersccistaffroles()) {
+        for (CCIStaffUsersCCIStaffRole sRole : cciUser.getCcistaffUsersCcistaffRoles()) {
             UserRole role = new UserRole();
-            role.setRoleId(sRole.getCcistaffrole().getCciStaffRoleID());
-            role.setRoleName(sRole.getCcistaffrole().getCciStaffRole());
+            role.setRoleId(sRole.getCcistaffRole().getCciStaffRoleID());
+            role.setRoleName(sRole.getCcistaffRole().getCciStaffRole());
             rolesList.add(role);
         }
         user.getRoles().addAll(rolesList);
@@ -325,13 +392,13 @@ public class UserManagementServiceImpl implements UserManagementService {
      * @param cciUser
      * @param user
      */
-    private void updateUserDepartmentProgram(CciStaffUser cciUser, User user) {
+    private void populateUserDepartmentProgram(CCIStaffUser cciUser, User user) {
         List<UserDepartment> userDepartmentList = new ArrayList<UserDepartment>();
         List<UserDepartmentProgram> departmentProgramList = new ArrayList<UserDepartmentProgram>();
-        for (CciStaffUserProgram usrProgram : cciUser.getCcistaffuserprograms()) {
+        for (CCIStaffUserProgram usrProgram : cciUser.getCcistaffUserPrograms()) {
             UserDepartment department = new UserDepartment();
-            department.setDepartmentId(usrProgram.getDepartmentprogram().getDepartment().getDepartmentID());
-            department.setDepartmentName(usrProgram.getDepartmentprogram().getDepartment().getDepartmentName());
+            department.setDepartmentId(usrProgram.getDepartmentProgram().getDepartment().getDepartmentID());
+            department.setDepartmentName(usrProgram.getDepartmentProgram().getDepartment().getDepartmentName());
             getUserDepartmentPrograms(departmentProgramList, usrProgram);
             userDepartmentList.add(department);
         }
@@ -342,8 +409,8 @@ public class UserManagementServiceImpl implements UserManagementService {
      * @param departmentProgramList
      * @param usrDepart
      */
-    private void getUserDepartmentPrograms(List<UserDepartmentProgram> departmentProgramList, CciStaffUserProgram usrProgram) {
-        List<DepartmentProgram> departmentProgramsDBList = departmentProgramRepository.findProgramsByDepartment(usrProgram.getDepartmentprogram()
+    private void getUserDepartmentPrograms(List<UserDepartmentProgram> departmentProgramList, CCIStaffUserProgram usrProgram) {/*
+        List<DepartmentProgram> departmentProgramsDBList = departmentProgramRepository.findProgramsByDepartment(usrProgram.getDepartmentProgram()
                 .getDepartment());
         for (DepartmentProgram d : departmentProgramsDBList) {
             UserDepartmentProgram prg = new UserDepartmentProgram();
@@ -351,19 +418,30 @@ public class UserManagementServiceImpl implements UserManagementService {
             prg.setProgramName(d.getProgram());
             departmentProgramList.add(prg);
         }
-    }
+    */}
 
     /**
      * @param cUsr
      * @param cciUser
      */
-    private void populateDepartmentAndPrograms(CciStaffUser cUsr, CCIUser cciUser) {
-        if (cUsr.getCcistaffusersccistaffroles() != null) {
-            List<CCIUserDepartment> userDepartmentList = new ArrayList<CCIUserDepartment>();
-            List<CCIUserDepartmentProgram> deptList = new ArrayList<CCIUserDepartmentProgram>();
-            for (CciStaffUsersCciStaffRole cciUserRole : cUsr.getCcistaffusersccistaffroles()) {
-                CCIUserDepartment department = new CCIUserDepartment();
+    private void populateDepartmentAndPrograms(CCIStaffUser cUsr, CCIUser cciUser) {
+        if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
+            
+           List<CCIStaffUsersCCIStaffRole> staffUserStaffRoleList =  cUsr.getCcistaffUsersCcistaffRoles();
+           
+            for (CCIStaffUsersCCIStaffRole staffUserStaffRole : staffUserStaffRoleList) {
+                
+                List<CCIStaffRolesDepartment> staffRoleDepartmentList = staffUserStaffRole.getCcistaffRole().getCcistaffRolesDepartments();
+                for(CCIStaffRolesDepartment staffRoleDepartment :staffRoleDepartmentList){
+                    
+                    staffRoleDepartment.getDepartment();
+                }
+                
+                
+                //staffUserStaffRole.getCcistaffUser().getCcistaffUserPrograms();
+                //staffUserStaffRole.getCcistaffRole().getCcistaffRolesDepartments();
                 // TODO need to discuss with DBA
+                
             }
         }
     }
@@ -372,13 +450,13 @@ public class UserManagementServiceImpl implements UserManagementService {
      * @param cUsr
      * @param cciUser
      */
-    private void populateUserRole(CciStaffUser cUsr, CCIUser cciUser) {
-        if (cUsr.getCcistaffusersccistaffroles() != null) {
+    private void populateUserRole(CCIStaffUser cUsr, CCIUser cciUser) {
+        if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
             List<CCIUserStaffRole> staffRolesList = new ArrayList<CCIUserStaffRole>();
-            for (CciStaffUsersCciStaffRole sRole : cUsr.getCcistaffusersccistaffroles()) {
+            for (CCIStaffUsersCCIStaffRole sRole : cUsr.getCcistaffUsersCcistaffRoles()) {
                 CCIUserStaffRole staffRole = new CCIUserStaffRole();
-                staffRole.setRoleId(sRole.getCcistaffrole().getCciStaffRoleID());
-                staffRole.setRoleName(sRole.getCcistaffrole().getCciStaffRole());
+                staffRole.setRoleId(sRole.getCcistaffRole().getCciStaffRoleID());
+                staffRole.setRoleName(sRole.getCcistaffRole().getCciStaffRole());
                 staffRolesList.add(staffRole);
             }
             cciUser.getUserRole().addAll(staffRolesList);

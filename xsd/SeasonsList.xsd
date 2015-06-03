@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasons" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasons="http://www.ccighgo.com/seasons">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.seasons.beans.seasonslist" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
+
+   <xsd:element name="SeasonsList" type="seasons:SeasonsList"></xsd:element>
+
+   <xsd:complexType name="SeasonsList">
+      <xsd:sequence>
+         <xsd:element name="recordCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasons" type="seasons:SeasonListObject" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SeasonListObject">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="startDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="endDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programOptions" type="seasons:ProgramOptions" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="ProgramOptions">
+      <xsd:sequence>
+         <xsd:element name="programOptionsID" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programOptionsCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programOptionsName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>
+

@@ -5,11 +5,11 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the sysdiagrams database table.
+ * The persistent class for the SysDiagrams database table.
  * 
  */
 @Entity
-@Table(name="sysdiagrams")
+@Table(name="SysDiagrams")
 @NamedQuery(name="SysDiagram.findAll", query="SELECT s FROM SysDiagram s")
 public class SysDiagram implements Serializable {
 	private static final long serialVersionUID = 1L;

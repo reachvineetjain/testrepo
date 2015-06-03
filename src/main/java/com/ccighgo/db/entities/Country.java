@@ -6,13 +6,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the countries database table.
+ * The persistent class for the Countries database table.
  * 
  */
 @Entity
-@Table(name="countries")
-@NamedQuery(name="Countries.findAll", query="SELECT c FROM Countries c")
-public class Countries implements Serializable {
+@Table(name="Countries")
+@NamedQuery(name="Country.findAll", query="SELECT c FROM Country c")
+public class Country implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,13 +32,13 @@ public class Countries implements Serializable {
 	private String countryName;
 
 	@Column(nullable=false)
-	private byte isReqFinalSOAonDS;
+	private byte reqFinalSOAonDS;
 
-	//bi-directional many-to-one association to CciStaffUser
+	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="country")
-	private List<CciStaffUser> ccistaffusers;
+	private List<CCIStaffUser> ccistaffUsers;
 
-	public Countries() {
+	public Country() {
 	}
 
 	public int getCountryID() {
@@ -82,33 +82,33 @@ public class Countries implements Serializable {
 	}
 
 	public byte getReqFinalSOAonDS() {
-		return this.isReqFinalSOAonDS;
+		return this.reqFinalSOAonDS;
 	}
 
-	public void setReqFinalSOAonDS(byte isReqFinalSOAonDS) {
-		this.isReqFinalSOAonDS = isReqFinalSOAonDS;
+	public void setReqFinalSOAonDS(byte reqFinalSOAonDS) {
+		this.reqFinalSOAonDS = reqFinalSOAonDS;
 	}
 
-	public List<CciStaffUser> getCcistaffusers() {
-		return this.ccistaffusers;
+	public List<CCIStaffUser> getCcistaffUsers() {
+		return this.ccistaffUsers;
 	}
 
-	public void setCcistaffusers(List<CciStaffUser> ccistaffusers) {
-		this.ccistaffusers = ccistaffusers;
+	public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
+		this.ccistaffUsers = ccistaffUsers;
 	}
 
-	public CciStaffUser addCcistaffuser(CciStaffUser ccistaffuser) {
-		getCcistaffusers().add(ccistaffuser);
-		ccistaffuser.setCountry(this);
+	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
+		getCcistaffUsers().add(ccistaffUser);
+		ccistaffUser.setCountry(this);
 
-		return ccistaffuser;
+		return ccistaffUser;
 	}
 
-	public CciStaffUser removeCcistaffuser(CciStaffUser ccistaffuser) {
-		getCcistaffusers().remove(ccistaffuser);
-		ccistaffuser.setCountry(null);
+	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
+		getCcistaffUsers().remove(ccistaffUser);
+		ccistaffUser.setCountry(null);
 
-		return ccistaffuser;
+		return ccistaffUser;
 	}
 
 }

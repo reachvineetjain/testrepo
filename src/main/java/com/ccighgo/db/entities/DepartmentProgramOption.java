@@ -6,11 +6,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the departmentprogramoptions database table.
+ * The persistent class for the DepartmentProgramOptions database table.
  * 
  */
 @Entity
-@Table(name="departmentprogramoptions")
+@Table(name="DepartmentProgramOptions")
 @NamedQuery(name="DepartmentProgramOption.findAll", query="SELECT d FROM DepartmentProgramOption d")
 public class DepartmentProgramOption implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,15 @@ public class DepartmentProgramOption implements Serializable {
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="programID", nullable=false)
-	private DepartmentProgram departmentprogram;
+	private DepartmentProgram departmentProgram;
+
+	//bi-directional many-to-one association to SeasonHSPAllocatin
+	@OneToMany(mappedBy="departmentProgramOption")
+	private List<SeasonHSPAllocatin> seasonHspallocatins;
+
+	//bi-directional many-to-one association to SeasonWPAllocation
+	@OneToMany(mappedBy="departmentProgramOption")
+	private List<SeasonWPAllocation> seasonWpallocations;
 
 	public DepartmentProgramOption() {
 	}
@@ -57,11 +65,56 @@ public class DepartmentProgramOption implements Serializable {
 		this.programOptionCode = programOptionCode;
 	}
 
-	public DepartmentProgram getDepartmentprogram() {
-		return this.departmentprogram;
+	public DepartmentProgram getDepartmentProgram() {
+		return this.departmentProgram;
 	}
 
-	public void setDepartmentprogram(DepartmentProgram departmentprogram) {
-		this.departmentprogram = departmentprogram;
+	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+		this.departmentProgram = departmentProgram;
 	}
+
+	public List<SeasonHSPAllocatin> getSeasonHspallocatins() {
+		return this.seasonHspallocatins;
+	}
+
+	public void setSeasonHspallocatins(List<SeasonHSPAllocatin> seasonHspallocatins) {
+		this.seasonHspallocatins = seasonHspallocatins;
+	}
+
+	public SeasonHSPAllocatin addSeasonHspallocatin(SeasonHSPAllocatin seasonHspallocatin) {
+		getSeasonHspallocatins().add(seasonHspallocatin);
+		seasonHspallocatin.setDepartmentProgramOption(this);
+
+		return seasonHspallocatin;
+	}
+
+	public SeasonHSPAllocatin removeSeasonHspallocatin(SeasonHSPAllocatin seasonHspallocatin) {
+		getSeasonHspallocatins().remove(seasonHspallocatin);
+		seasonHspallocatin.setDepartmentProgramOption(null);
+
+		return seasonHspallocatin;
+	}
+
+	public List<SeasonWPAllocation> getSeasonWpallocations() {
+		return this.seasonWpallocations;
+	}
+
+	public void setSeasonWpallocations(List<SeasonWPAllocation> seasonWpallocations) {
+		this.seasonWpallocations = seasonWpallocations;
+	}
+
+	public SeasonWPAllocation addSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
+		getSeasonWpallocations().add(seasonWpallocation);
+		seasonWpallocation.setDepartmentProgramOption(this);
+
+		return seasonWpallocation;
+	}
+
+	public SeasonWPAllocation removeSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
+		getSeasonWpallocations().remove(seasonWpallocation);
+		seasonWpallocation.setDepartmentProgramOption(null);
+
+		return seasonWpallocation;
+	}
+
 }

@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the history database table.
+ * The persistent class for the History database table.
  * 
  */
 @Entity
-@Table(name="history")
+@Table(name="History")
 @NamedQuery(name="History.findAll", query="SELECT h FROM History h")
 public class History implements Serializable {
 	private static final long serialVersionUID = 1L;

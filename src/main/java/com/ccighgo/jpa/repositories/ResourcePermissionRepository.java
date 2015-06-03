@@ -18,8 +18,8 @@ import com.ccighgo.db.entities.ResourcePermission;
 @Repository
 public interface ResourcePermissionRepository extends JpaRepository<ResourcePermission, Integer> {
 
-    @Query("select rp from CciStaffUsersResourcePermission cucr INNER JOIN cucr.resourcepermission rp "
-            + " LEFT OUTER JOIN rp.departmentresourcegroup rg LEFT OUTER JOIN rp.resourceaction ra  " + "where cciStaffUserId= ? and rg.resourceGroupName = ? ")
+    @Query("select rp from CCIStaffUsersResourcePermission cucr INNER JOIN cucr.resourcePermission rp "
+            + " LEFT OUTER JOIN rp.departmentResourceGroup rg LEFT OUTER JOIN rp.resourceAction ra  " + "where cciStaffUserId= ? and rg.resourceGroupName = ? ")
     public List<ResourcePermission> findPermsByRsc(Integer id, String name);
 
 }

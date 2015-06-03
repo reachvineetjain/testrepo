@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the oauthhistory database table.
+ * The primary key class for the OauthHistory database table.
  * 
  */
 @Embeddable

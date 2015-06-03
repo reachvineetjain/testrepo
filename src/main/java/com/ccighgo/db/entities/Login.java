@@ -6,11 +6,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the login database table.
+ * The persistent class for the Login database table.
  * 
  */
 @Entity
-@Table(name="login")
+@Table(name="Login")
 @NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
 public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,9 +25,9 @@ public class Login implements Serializable {
 	@Column(nullable=false, length=10)
 	private String password;
 
-	//bi-directional many-to-one association to CciStaffUser
+	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="login")
-	private List<CciStaffUser> ccistaffusers;
+	private List<CCIStaffUser> ccistaffUsers;
 
 	//bi-directional many-to-one association to History
 	@OneToMany(mappedBy="login")
@@ -36,11 +36,11 @@ public class Login implements Serializable {
 	//bi-directional many-to-one association to UserType
 	@ManyToOne
 	@JoinColumn(name="userTypeId", nullable=false)
-	private UserType usertype;
+	private UserType userType;
 
 	//bi-directional many-to-one association to PasswordHistory
 	@OneToMany(mappedBy="login")
-	private List<PasswordHistory> passwordhistories;
+	private List<PasswordHistory> passwordHistories;
 
 	public Login() {
 	}
@@ -69,26 +69,26 @@ public class Login implements Serializable {
 		this.password = password;
 	}
 
-	public List<CciStaffUser> getCcistaffusers() {
-		return this.ccistaffusers;
+	public List<CCIStaffUser> getCcistaffUsers() {
+		return this.ccistaffUsers;
 	}
 
-	public void setCcistaffusers(List<CciStaffUser> ccistaffusers) {
-		this.ccistaffusers = ccistaffusers;
+	public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
+		this.ccistaffUsers = ccistaffUsers;
 	}
 
-	public CciStaffUser addCcistaffuser(CciStaffUser ccistaffuser) {
-		getCcistaffusers().add(ccistaffuser);
-		ccistaffuser.setLogin(this);
+	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
+		getCcistaffUsers().add(ccistaffUser);
+		ccistaffUser.setLogin(this);
 
-		return ccistaffuser;
+		return ccistaffUser;
 	}
 
-	public CciStaffUser removeCcistaffuser(CciStaffUser ccistaffuser) {
-		getCcistaffusers().remove(ccistaffuser);
-		ccistaffuser.setLogin(null);
+	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
+		getCcistaffUsers().remove(ccistaffUser);
+		ccistaffUser.setLogin(null);
 
-		return ccistaffuser;
+		return ccistaffUser;
 	}
 
 	public List<History> getHistories() {
@@ -113,34 +113,34 @@ public class Login implements Serializable {
 		return history;
 	}
 
-	public UserType getUsertype() {
-		return this.usertype;
+	public UserType getUserType() {
+		return this.userType;
 	}
 
-	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
 
-	public List<PasswordHistory> getPasswordhistories() {
-		return this.passwordhistories;
+	public List<PasswordHistory> getPasswordHistories() {
+		return this.passwordHistories;
 	}
 
-	public void setPasswordhistories(List<PasswordHistory> passwordhistories) {
-		this.passwordhistories = passwordhistories;
+	public void setPasswordHistories(List<PasswordHistory> passwordHistories) {
+		this.passwordHistories = passwordHistories;
 	}
 
-	public PasswordHistory addPasswordhistory(PasswordHistory passwordhistory) {
-		getPasswordhistories().add(passwordhistory);
-		passwordhistory.setLogin(this);
+	public PasswordHistory addPasswordHistory(PasswordHistory passwordHistory) {
+		getPasswordHistories().add(passwordHistory);
+		passwordHistory.setLogin(this);
 
-		return passwordhistory;
+		return passwordHistory;
 	}
 
-	public PasswordHistory removePasswordhistory(PasswordHistory passwordhistory) {
-		getPasswordhistories().remove(passwordhistory);
-		passwordhistory.setLogin(null);
+	public PasswordHistory removePasswordHistory(PasswordHistory passwordHistory) {
+		getPasswordHistories().remove(passwordHistory);
+		passwordHistory.setLogin(null);
 
-		return passwordhistory;
+		return passwordHistory;
 	}
 
 }

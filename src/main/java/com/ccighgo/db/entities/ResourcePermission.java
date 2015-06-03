@@ -7,11 +7,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the resourcepermissions database table.
+ * The persistent class for the ResourcePermissions database table.
  * 
  */
 @Entity
-@Table(name="resourcepermissions")
+@Table(name="ResourcePermissions")
 @NamedQuery(name="ResourcePermission.findAll", query="SELECT r FROM ResourcePermission r")
 public class ResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -41,23 +41,23 @@ public class ResourcePermission implements Serializable {
 	@Column(length=50)
 	private String resourceName;
 
-	//bi-directional many-to-one association to CciStaffRolesDefaultResourcePermission
-	@OneToMany(mappedBy="resourcepermission")
-	private List<CciStaffRolesDefaultResourcePermission> ccistaffrolesdefaultresourcepermissions;
+	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
+	@OneToMany(mappedBy="resourcePermission")
+	private List<CCIStaffRolesDefaultResourcePermission> ccistaffRolesDefaultResourcePermissions;
 
-	//bi-directional many-to-one association to CciStaffUsersResourcePermission
-	@OneToMany(mappedBy="resourcepermission")
-	private List<CciStaffUsersResourcePermission> ccistaffusersresourcepermissions;
+	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
+	@OneToMany(mappedBy="resourcePermission")
+	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
 	@JoinColumn(name="deptResourceGroupID", nullable=false)
-	private DepartmentResourceGroup departmentresourcegroup;
+	private DepartmentResourceGroup departmentResourceGroup;
 
-	//bi-directional many-to-one association to ResourceActions
+	//bi-directional many-to-one association to ResourceAction
 	@ManyToOne
 	@JoinColumn(name="resourceActionID", nullable=false)
-	private ResourceActions resourceaction;
+	private ResourceAction resourceAction;
 
 	public ResourcePermission() {
 	}
@@ -126,64 +126,64 @@ public class ResourcePermission implements Serializable {
 		this.resourceName = resourceName;
 	}
 
-	public List<CciStaffRolesDefaultResourcePermission> getCcistaffrolesdefaultresourcepermissions() {
-		return this.ccistaffrolesdefaultresourcepermissions;
+	public List<CCIStaffRolesDefaultResourcePermission> getCcistaffRolesDefaultResourcePermissions() {
+		return this.ccistaffRolesDefaultResourcePermissions;
 	}
 
-	public void setCcistaffrolesdefaultresourcepermissions(List<CciStaffRolesDefaultResourcePermission> ccistaffrolesdefaultresourcepermissions) {
-		this.ccistaffrolesdefaultresourcepermissions = ccistaffrolesdefaultresourcepermissions;
+	public void setCcistaffRolesDefaultResourcePermissions(List<CCIStaffRolesDefaultResourcePermission> ccistaffRolesDefaultResourcePermissions) {
+		this.ccistaffRolesDefaultResourcePermissions = ccistaffRolesDefaultResourcePermissions;
 	}
 
-	public CciStaffRolesDefaultResourcePermission addCcistaffrolesdefaultresourcepermission(CciStaffRolesDefaultResourcePermission ccistaffrolesdefaultresourcepermission) {
-		getCcistaffrolesdefaultresourcepermissions().add(ccistaffrolesdefaultresourcepermission);
-		ccistaffrolesdefaultresourcepermission.setResourcepermission(this);
+	public CCIStaffRolesDefaultResourcePermission addCcistaffRolesDefaultResourcePermission(CCIStaffRolesDefaultResourcePermission ccistaffRolesDefaultResourcePermission) {
+		getCcistaffRolesDefaultResourcePermissions().add(ccistaffRolesDefaultResourcePermission);
+		ccistaffRolesDefaultResourcePermission.setResourcePermission(this);
 
-		return ccistaffrolesdefaultresourcepermission;
+		return ccistaffRolesDefaultResourcePermission;
 	}
 
-	public CciStaffRolesDefaultResourcePermission removeCcistaffrolesdefaultresourcepermission(CciStaffRolesDefaultResourcePermission ccistaffrolesdefaultresourcepermission) {
-		getCcistaffrolesdefaultresourcepermissions().remove(ccistaffrolesdefaultresourcepermission);
-		ccistaffrolesdefaultresourcepermission.setResourcepermission(null);
+	public CCIStaffRolesDefaultResourcePermission removeCcistaffRolesDefaultResourcePermission(CCIStaffRolesDefaultResourcePermission ccistaffRolesDefaultResourcePermission) {
+		getCcistaffRolesDefaultResourcePermissions().remove(ccistaffRolesDefaultResourcePermission);
+		ccistaffRolesDefaultResourcePermission.setResourcePermission(null);
 
-		return ccistaffrolesdefaultresourcepermission;
+		return ccistaffRolesDefaultResourcePermission;
 	}
 
-	public List<CciStaffUsersResourcePermission> getCcistaffusersresourcepermissions() {
-		return this.ccistaffusersresourcepermissions;
+	public List<CCIStaffUsersResourcePermission> getCcistaffUsersResourcePermissions() {
+		return this.ccistaffUsersResourcePermissions;
 	}
 
-	public void setCcistaffusersresourcepermissions(List<CciStaffUsersResourcePermission> ccistaffusersresourcepermissions) {
-		this.ccistaffusersresourcepermissions = ccistaffusersresourcepermissions;
+	public void setCcistaffUsersResourcePermissions(List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions) {
+		this.ccistaffUsersResourcePermissions = ccistaffUsersResourcePermissions;
 	}
 
-	public CciStaffUsersResourcePermission addCcistaffusersresourcepermission(CciStaffUsersResourcePermission ccistaffusersresourcepermission) {
-		getCcistaffusersresourcepermissions().add(ccistaffusersresourcepermission);
-		ccistaffusersresourcepermission.setResourcepermission(this);
+	public CCIStaffUsersResourcePermission addCcistaffUsersResourcePermission(CCIStaffUsersResourcePermission ccistaffUsersResourcePermission) {
+		getCcistaffUsersResourcePermissions().add(ccistaffUsersResourcePermission);
+		ccistaffUsersResourcePermission.setResourcePermission(this);
 
-		return ccistaffusersresourcepermission;
+		return ccistaffUsersResourcePermission;
 	}
 
-	public CciStaffUsersResourcePermission removeCcistaffusersresourcepermission(CciStaffUsersResourcePermission ccistaffusersresourcepermission) {
-		getCcistaffusersresourcepermissions().remove(ccistaffusersresourcepermission);
-		ccistaffusersresourcepermission.setResourcepermission(null);
+	public CCIStaffUsersResourcePermission removeCcistaffUsersResourcePermission(CCIStaffUsersResourcePermission ccistaffUsersResourcePermission) {
+		getCcistaffUsersResourcePermissions().remove(ccistaffUsersResourcePermission);
+		ccistaffUsersResourcePermission.setResourcePermission(null);
 
-		return ccistaffusersresourcepermission;
+		return ccistaffUsersResourcePermission;
 	}
 
-	public DepartmentResourceGroup getDepartmentresourcegroup() {
-		return this.departmentresourcegroup;
+	public DepartmentResourceGroup getDepartmentResourceGroup() {
+		return this.departmentResourceGroup;
 	}
 
-	public void setDepartmentresourcegroup(DepartmentResourceGroup departmentresourcegroup) {
-		this.departmentresourcegroup = departmentresourcegroup;
+	public void setDepartmentResourceGroup(DepartmentResourceGroup departmentResourceGroup) {
+		this.departmentResourceGroup = departmentResourceGroup;
 	}
 
-	public ResourceActions getResourceaction() {
-		return this.resourceaction;
+	public ResourceAction getResourceAction() {
+		return this.resourceAction;
 	}
 
-	public void setResourceaction(ResourceActions resourceaction) {
-		this.resourceaction = resourceaction;
+	public void setResourceAction(ResourceAction resourceAction) {
+		this.resourceAction = resourceAction;
 	}
 
 }

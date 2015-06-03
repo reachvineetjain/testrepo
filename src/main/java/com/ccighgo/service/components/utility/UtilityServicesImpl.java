@@ -9,8 +9,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.CciStaffRole;
-import com.ccighgo.db.entities.Countries;
+import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.Country;
 import com.ccighgo.db.entities.USState;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
@@ -50,13 +50,13 @@ public class UtilityServicesImpl implements UtilityServices {
 
     @Override
     public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
-        List<Countries> countriesDbList = countryRepository.findAll();
+        List<Country> countriesDbList = countryRepository.findAll();
         com.ccighgo.service.transport.utility.beans.country.Countries countries = null;
         List<com.ccighgo.service.transport.utility.beans.country.Country> countriesFrontList = null;
         if (countriesDbList.size() > 0) {
             countries = new com.ccighgo.service.transport.utility.beans.country.Countries();
             countriesFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.country.Country>();
-            for (Countries c : countriesDbList) {
+            for (Country c : countriesDbList) {
                 com.ccighgo.service.transport.utility.beans.country.Country ctr = new com.ccighgo.service.transport.utility.beans.country.Country();
                 ctr.setId(c.getCountryID());
                 ctr.setCountryCode(c.getCountryCode());
@@ -90,13 +90,13 @@ public class UtilityServicesImpl implements UtilityServices {
 
     @Override
     public Departments getAllDepartments() {
-        List<com.ccighgo.db.entities.Departments> departmentsDBList = departmentRepository.findAll();
+        List<com.ccighgo.db.entities.Department> departmentsDBList = departmentRepository.findAll();
         Departments departments = null;
         List<com.ccighgo.service.transport.utility.beans.department.Department> departmentsFrontList = null;
         if (departmentsDBList.size() > 0) {
             departments = new Departments();
             departmentsFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.department.Department>();
-            for (com.ccighgo.db.entities.Departments d : departmentsDBList) {
+            for (com.ccighgo.db.entities.Department d : departmentsDBList) {
                 com.ccighgo.service.transport.utility.beans.department.Department department = new com.ccighgo.service.transport.utility.beans.department.Department();
                 department.setId(d.getDepartmentID());
                 department.setDepartmentName(d.getDepartmentName());
@@ -162,13 +162,13 @@ public class UtilityServicesImpl implements UtilityServices {
 
     @Override
     public Roles getAllRoles() {
-        List<CciStaffRole> staffRolesList = rolesRepository.findAll();
+        List<CCIStaffRole> staffRolesList = rolesRepository.findAll();
         Roles roles = null;
         List<Role> rolesList = null;
         if (staffRolesList.size() > 0) {
             roles = new Roles();
             rolesList = new ArrayList<Role>();
-            for (CciStaffRole cciStaffRole : staffRolesList) {
+            for (CCIStaffRole cciStaffRole : staffRolesList) {
                 Role role = new Role();
                 role.setId(cciStaffRole.getCciStaffRoleID());
                 role.setRole(cciStaffRole.getCciStaffRole());
@@ -231,11 +231,11 @@ public class UtilityServicesImpl implements UtilityServices {
 
     @Override
     public UserDepartments getAllUserDepartments() {
-        List<com.ccighgo.db.entities.Departments> departmentsDBList = departmentRepository.findAll();
+        List<com.ccighgo.db.entities.Department> departmentsDBList = departmentRepository.findAll();
         UserDepartments userDepartments = new UserDepartments();
         List<UserDepartment> departmentsFrontList = new ArrayList<UserDepartment>();
         if (departmentsDBList.size() > 0) {
-            for (com.ccighgo.db.entities.Departments d : departmentsDBList) {
+            for (com.ccighgo.db.entities.Department d : departmentsDBList) {
                 UserDepartment userDepartment = new UserDepartment();
                 userDepartment.setId(d.getDepartmentID());
                 userDepartment.setDepartmentName(d.getDepartmentName());
@@ -258,7 +258,7 @@ public class UtilityServicesImpl implements UtilityServices {
         return userDepartments;
     }
 
-    private void populateDepartmentPrograms(com.ccighgo.db.entities.Departments d, UserDepartment userDepartment) {
+    private void populateDepartmentPrograms(com.ccighgo.db.entities.Department d, UserDepartment userDepartment) {
         List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
         if (departmentProgramsList != null) {
             List<DepartmentProgram> programList = new ArrayList<DepartmentProgram>();
@@ -275,7 +275,7 @@ public class UtilityServicesImpl implements UtilityServices {
         }
     }
 
-    private void populateDepartmentFunctions(com.ccighgo.db.entities.Departments d, UserDepartment userDepartment) {
+    private void populateDepartmentFunctions(com.ccighgo.db.entities.Department d, UserDepartment userDepartment) {
         List<com.ccighgo.db.entities.DepartmentFunction> departmentFunctionsList = departmentFunctionsRepository.findAll();
         if (departmentFunctionsList != null) {
             List<DepartmentFunction> functionList = new ArrayList<DepartmentFunction>();
