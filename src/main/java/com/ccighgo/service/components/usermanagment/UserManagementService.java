@@ -15,10 +15,11 @@ import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
  */
 public interface UserManagementService {
 
+
 	/**
-	 * The 
-	 * 
-	 * @return
+	 * @param pageNo
+	 * @param size
+	 * @return list of CCI Users
 	 */
 	public CCIUsers getAllCCIUsers(String pageNo, String size);
 
@@ -26,7 +27,7 @@ public interface UserManagementService {
 	 * The method will be used by edit calls on user, will return user details
 	 * 
 	 * @param id
-	 * @return
+	 * @return User
 	 */
 
 	public User getUserById(String id);
@@ -36,7 +37,7 @@ public interface UserManagementService {
 	 * external users such as local coordinator, host family etc
 	 * 
 	 * @param usr
-	 * @return
+	 * @return updated User
 	 */
 	public User createUser(User user);
 
@@ -44,7 +45,7 @@ public interface UserManagementService {
 	 * Updates user demographics
 	 * 
 	 * @param usr
-	 * @return
+	 * @return updated User
 	 */
 	public User updateUserDemographics(String id, User user);
 	
@@ -52,7 +53,7 @@ public interface UserManagementService {
      * Updates user permissions
      * 
      * @param usr
-     * @return
+     * @return updated User
      */
     public User updateUserPermissions(String id, User user);
     
@@ -60,7 +61,7 @@ public interface UserManagementService {
      * Updates user picture
      * 
      * @param usr
-     * @return
+     * @return updated User
      */
     public User updateUserPicture(String id, User user);
     
@@ -68,7 +69,7 @@ public interface UserManagementService {
      * Adds user profile picture
      * 
      * @param usr
-     * @return
+     * @return updated User
      */
     public User addUserPicture(String id, User user);
 
@@ -83,9 +84,23 @@ public interface UserManagementService {
 
 	/**
 	 * Search user based on different parameters
-	 * 
-	 * @return
+	 * @param userSearch
+	 * @return list of CCI Users
 	 */
 	public CCIUsers searchUsers(UserSearch userSearch);
+	
+	/**
+     * Get default permissions for cci user role
+     * 
+     * @param roleId
+     * @return
+     */
+    public CCIUsers getDefaultPermissionsbyRole(String roleId);
+    
+    /**
+    * @param userId
+    * @return
+    */
+   public User resetPassword(String userId);
 
 }

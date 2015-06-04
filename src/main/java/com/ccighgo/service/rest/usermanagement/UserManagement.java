@@ -187,5 +187,33 @@ public class UserManagement {
     public CCIUsers searchUser(UserSearch userSearch) {
         return userMgmtServices.searchUsers(userSearch);
     }
+    
+    /**
+     * RESTFul service, add user profile picture
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
+    @POST
+    @Path("default/{roleId}/permission")
+    @Consumes("application/json")
+    public CCIUsers getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
+        return userMgmtServices.getDefaultPermissionsbyRole(roleId);
+    }
+    
+    /**
+     * RESTFul service, add user profile picture
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
+    @POST
+    @Path("default/{roleId}/permission")
+    @Consumes("application/json")
+    public User resetPassword(@PathParam("userId") String userId) {
+        return userMgmtServices.resetPassword(userId);
+    }
 
 }

@@ -108,7 +108,7 @@ public class CCIStaffUser implements Serializable {
 	private USState usstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
-	@OneToMany(mappedBy="ccistaffUser", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="ccistaffUser", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 

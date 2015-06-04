@@ -15,18 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for UserType complex type.
+ * <p>Java class for UserDepartmentProgramOptions complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="UserType">
+ * &lt;complexType name="UserDepartmentProgramOptions">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userTypeId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="userTypeCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userTypeName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="programOptionId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="programOptionCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="programOptionName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,81 +36,81 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UserType", propOrder = {
-    "userTypeId",
-    "userTypeCode",
-    "userTypeName"
+@XmlType(name = "UserDepartmentProgramOptions", propOrder = {
+    "programOptionId",
+    "programOptionCode",
+    "programOptionName"
 })
-public class UserType {
+public class UserDepartmentProgramOptions {
 
-    protected int userTypeId;
+    protected int programOptionId;
     @XmlElement(required = true)
-    protected String userTypeCode;
+    protected String programOptionCode;
     @XmlElement(required = true)
-    protected String userTypeName;
+    protected String programOptionName;
 
     /**
-     * Gets the value of the userTypeId property.
+     * Gets the value of the programOptionId property.
      * 
      */
-    public int getUserTypeId() {
-        return userTypeId;
+    public int getProgramOptionId() {
+        return programOptionId;
     }
 
     /**
-     * Sets the value of the userTypeId property.
+     * Sets the value of the programOptionId property.
      * 
      */
-    public void setUserTypeId(int value) {
-        this.userTypeId = value;
+    public void setProgramOptionId(int value) {
+        this.programOptionId = value;
     }
 
     /**
-     * Gets the value of the userTypeCode property.
+     * Gets the value of the programOptionCode property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserTypeCode() {
-        return userTypeCode;
+    public String getProgramOptionCode() {
+        return programOptionCode;
     }
 
     /**
-     * Sets the value of the userTypeCode property.
+     * Sets the value of the programOptionCode property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserTypeCode(String value) {
-        this.userTypeCode = value;
+    public void setProgramOptionCode(String value) {
+        this.programOptionCode = value;
     }
 
     /**
-     * Gets the value of the userTypeName property.
+     * Gets the value of the programOptionName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserTypeName() {
-        return userTypeName;
+    public String getProgramOptionName() {
+        return programOptionName;
     }
 
     /**
-     * Sets the value of the userTypeName property.
+     * Sets the value of the programOptionName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserTypeName(String value) {
-        this.userTypeName = value;
+    public void setProgramOptionName(String value) {
+        this.programOptionName = value;
     }
 
 }
