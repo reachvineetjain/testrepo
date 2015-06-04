@@ -147,20 +147,6 @@ public class UserManagement {
     }
     
     /**
-     * RESTFul service, add user profile picture
-     * 
-     * @param id
-     * @param user
-     * @return updated User
-     */
-    @POST
-    @Path("{id}/add/picture")
-    @Consumes("application/json")
-    public User addUserPicture(@PathParam("id") String id, User user) {
-        return userMgmtServices.addUserPicture(id, user);
-    }
-
-    /**
      * Deactivates user
      * 
      * @param id

@@ -65,14 +65,6 @@ public interface UserManagementService {
      */
     public User updateUserPicture(String id, User user);
     
-    /**
-     * Adds user profile picture
-     * 
-     * @param usr
-     * @return updated User
-     */
-    public User addUserPicture(String id, User user);
-
 	/**
 	 * The method will not perform hard delete of user from database. This will
 	 * just set the user in inactive state
