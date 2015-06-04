@@ -14,7 +14,7 @@ import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRolePK;
  *
  */
 @Repository
-public interface CCIStaffUserStaffRoleValidatorRepository extends
+public interface CCIStaffUserStaffRolePKRepository extends
 		JpaRepository<CCIStaffUsersCCIStaffRole, CCIStaffUsersCCIStaffRolePK> {
 
 }

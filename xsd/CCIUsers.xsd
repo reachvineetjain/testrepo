@@ -32,25 +32,28 @@
          <xsd:element name="loginName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="isActive" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
          <xsd:element name="photoPath" type="xsd:string" maxOccurs="1" minOccurs="0" />
-         <xsd:element name="userDepartments" type="cciusr:CCIUserDepartment" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="userRole" type="cciusr:CCIUserStaffRole" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="CCIUserDepartment">
-      <xsd:sequence>
-         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="userDepartmentPrograms" type="cciusr:CCIUserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="cciUserDepartmentPrograms" type="cciusr:CCIUserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>
 
    <xsd:complexType name="CCIUserDepartmentProgram">
       <xsd:sequence>
+         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserDepartmentProgramOptions" type="cciusr:CCIUserDepartmentProgramOptions" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>
+   
+   <xsd:complexType name="CCIUserDepartmentProgramOptions">
+        <xsd:sequence>
+            <xsd:element name="programOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="programOptionCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="programOptionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
 
    <xsd:complexType name="CCIUserStaffRole">
       <xsd:sequence>
