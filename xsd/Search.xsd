@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/search"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:search="http://www.ccighgo.com/search">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="com.ccighgo.service.transport.utility.beans.search" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="SearchCriteria" type="search:SeasonsSearch"></xsd:element>
+	
+	<xsd:complexType name="SeasonsSearch">
+		<xsd:sequence>
+		 <xsd:element name="seasonName" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+		 <xsd:element name="seasonDepartment" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
+		 <xsd:element name="seasonProgramType" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
+		 <xsd:element name="seasonProgramOptions" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
+		 <xsd:element name="seasonLoremLpsum" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
+		 <xsd:element name="seasonLorem" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
+		 <xsd:element name="seasonStatus" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+        
+</xsd:schema>
