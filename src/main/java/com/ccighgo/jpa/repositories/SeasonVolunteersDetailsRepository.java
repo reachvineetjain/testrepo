@@ -1,6 +1,7 @@
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.SeasonVolunteersDetail;
 
@@ -9,6 +10,7 @@ import com.ccighgo.db.entities.SeasonVolunteersDetail;
  * @author Ahmed Abdelmaaboud
  *
  */
+@Repository
 public interface SeasonVolunteersDetailsRepository extends
 		JpaRepository<SeasonVolunteersDetail, Integer> {
 
