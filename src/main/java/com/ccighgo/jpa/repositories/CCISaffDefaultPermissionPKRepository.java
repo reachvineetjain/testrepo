@@ -14,7 +14,7 @@ import com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermissionPK;
  *
  */
 @Repository
-public interface CCISaffDefaultPermissionValidatorRepository extends
+public interface CCISaffDefaultPermissionPKRepository extends
 		JpaRepository<CCIStaffRolesDefaultResourcePermission, CCIStaffRolesDefaultResourcePermissionPK> {
 
 }
