@@ -17,7 +17,7 @@ public class USSchoolSeason implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int usSchoolSeasonID;
+	private int usSchoolSeasonId;
 
 	@Column(nullable=false)
 	private Timestamp schoolEndDate;
@@ -29,22 +29,22 @@ public class USSchoolSeason implements Serializable {
 	private Timestamp secondSemStartDate;
 
 	@Column(nullable=false)
-	private int usSchoolID;
+	private int usSchoolId;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public USSchoolSeason() {
 	}
 
-	public int getUsSchoolSeasonID() {
-		return this.usSchoolSeasonID;
+	public int getUsSchoolSeasonId() {
+		return this.usSchoolSeasonId;
 	}
 
-	public void setUsSchoolSeasonID(int usSchoolSeasonID) {
-		this.usSchoolSeasonID = usSchoolSeasonID;
+	public void setUsSchoolSeasonId(int usSchoolSeasonId) {
+		this.usSchoolSeasonId = usSchoolSeasonId;
 	}
 
 	public Timestamp getSchoolEndDate() {
@@ -71,12 +71,12 @@ public class USSchoolSeason implements Serializable {
 		this.secondSemStartDate = secondSemStartDate;
 	}
 
-	public int getUsSchoolID() {
-		return this.usSchoolID;
+	public int getUsSchoolId() {
+		return this.usSchoolId;
 	}
 
-	public void setUsSchoolID(int usSchoolID) {
-		this.usSchoolID = usSchoolID;
+	public void setUsSchoolId(int usSchoolId) {
+		this.usSchoolId = usSchoolId;
 	}
 
 	public Season getSeason() {

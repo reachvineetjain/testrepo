@@ -17,7 +17,7 @@ public class SeasonGHTConfiguration implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonGHTConfigurationID;
+	private int seasonGHTConfigurationId;
 
 	@Column(nullable=false)
 	private int deposite;
@@ -33,18 +33,18 @@ public class SeasonGHTConfiguration implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="SeasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonGHTConfiguration() {
 	}
 
-	public int getSeasonGHTConfigurationID() {
-		return this.seasonGHTConfigurationID;
+	public int getSeasonGHTConfigurationId() {
+		return this.seasonGHTConfigurationId;
 	}
 
-	public void setSeasonGHTConfigurationID(int seasonGHTConfigurationID) {
-		this.seasonGHTConfigurationID = seasonGHTConfigurationID;
+	public void setSeasonGHTConfigurationId(int seasonGHTConfigurationId) {
+		this.seasonGHTConfigurationId = seasonGHTConfigurationId;
 	}
 
 	public int getDeposite() {

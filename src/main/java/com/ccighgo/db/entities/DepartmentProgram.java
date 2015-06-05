@@ -23,7 +23,7 @@ public class DepartmentProgram implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int programID;
+	private int departmentProgramId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -41,7 +41,7 @@ public class DepartmentProgram implements Serializable {
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, length=50)
-	private String program;
+	private String programName;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
 	@OneToMany(mappedBy="departmentProgram")
@@ -49,23 +49,23 @@ public class DepartmentProgram implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@OneToMany(mappedBy="departmentProgram", fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgramOption> departmentProgramOptions;
 
 	//bi-directional many-to-one association to Department
 	@ManyToOne
-	@JoinColumn(name="departmentID", nullable=false)
+	@JoinColumn(name="departmentId", nullable=false)
 	private Department department;
 
 	public DepartmentProgram() {
 	}
 
-	public int getProgramID() {
-		return this.programID;
+	public int getDepartmentProgramId() {
+		return this.departmentProgramId;
 	}
 
-	public void setProgramID(int programID) {
-		this.programID = programID;
+	public void setDepartmentProgramId(int departmentProgramId) {
+		this.departmentProgramId = departmentProgramId;
 	}
 
 	public int getCreatedBy() {
@@ -108,12 +108,12 @@ public class DepartmentProgram implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getProgram() {
-		return this.program;
+	public String getProgramName() {
+		return this.programName;
 	}
 
-	public void setProgram(String program) {
-		this.program = program;
+	public void setProgramName(String programName) {
+		this.programName = programName;
 	}
 
 	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {

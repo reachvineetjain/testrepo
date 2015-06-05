@@ -5,18 +5,18 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the SeasonHSPAllocatin database table.
+ * The persistent class for the SeasonHSPAllocation database table.
  * 
  */
 @Entity
-@Table(name="SeasonHSPAllocatin")
-@NamedQuery(name="SeasonHSPAllocatin.findAll", query="SELECT s FROM SeasonHSPAllocatin s")
-public class SeasonHSPAllocatin implements Serializable {
+@Table(name="SeasonHSPAllocation")
+@NamedQuery(name="SeasonHSPAllocation.findAll", query="SELECT s FROM SeasonHSPAllocation s")
+public class SeasonHSPAllocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonHSPAllocationID;
+	private int seasonHSPAllocationId;
 
 	@Column(nullable=false)
 	private int maxGuaranteedPax;
@@ -26,23 +26,23 @@ public class SeasonHSPAllocatin implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="programOptionID", nullable=false)
+	@JoinColumn(name="departmentProgramOptionId", nullable=false)
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
-	public SeasonHSPAllocatin() {
+	public SeasonHSPAllocation() {
 	}
 
-	public int getSeasonHSPAllocationID() {
-		return this.seasonHSPAllocationID;
+	public int getSeasonHSPAllocationId() {
+		return this.seasonHSPAllocationId;
 	}
 
-	public void setSeasonHSPAllocationID(int seasonHSPAllocationID) {
-		this.seasonHSPAllocationID = seasonHSPAllocationID;
+	public void setSeasonHSPAllocationId(int seasonHSPAllocationId) {
+		this.seasonHSPAllocationId = seasonHSPAllocationId;
 	}
 
 	public int getMaxGuaranteedPax() {

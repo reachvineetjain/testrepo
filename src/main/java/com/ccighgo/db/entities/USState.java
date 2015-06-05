@@ -17,7 +17,7 @@ public class USState implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int usstatesID;
+	private int usStatesId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -35,12 +35,12 @@ public class USState implements Serializable {
 	public USState() {
 	}
 
-	public int getUsstatesID() {
-		return this.usstatesID;
+	public int getUsStatesId() {
+		return this.usStatesId;
 	}
 
-	public void setUsstatesID(int usstatesID) {
-		this.usstatesID = usstatesID;
+	public void setUsStatesId(int usStatesId) {
+		this.usStatesId = usStatesId;
 	}
 
 	public byte getActive() {

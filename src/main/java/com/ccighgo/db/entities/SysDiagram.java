@@ -16,7 +16,7 @@ public class SysDiagram implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int diagramID;
+	private int diagramId;
 
 	@Lob
 	private byte[] definition;
@@ -25,19 +25,19 @@ public class SysDiagram implements Serializable {
 	private String name;
 
 	@Column(nullable=false)
-	private int principalID;
+	private int principalId;
 
 	private int version;
 
 	public SysDiagram() {
 	}
 
-	public int getDiagramID() {
-		return this.diagramID;
+	public int getDiagramId() {
+		return this.diagramId;
 	}
 
-	public void setDiagramID(int diagramID) {
-		this.diagramID = diagramID;
+	public void setDiagramId(int diagramId) {
+		this.diagramId = diagramId;
 	}
 
 	public byte[] getDefinition() {
@@ -56,12 +56,12 @@ public class SysDiagram implements Serializable {
 		this.name = name;
 	}
 
-	public int getPrincipalID() {
-		return this.principalID;
+	public int getPrincipalId() {
+		return this.principalId;
 	}
 
-	public void setPrincipalID(int principalID) {
-		this.principalID = principalID;
+	public void setPrincipalId(int principalId) {
+		this.principalId = principalId;
 	}
 
 	public int getVersion() {

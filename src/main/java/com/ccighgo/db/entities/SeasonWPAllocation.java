@@ -16,29 +16,29 @@ public class SeasonWPAllocation implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonWPAllocationID;
+	private int seasonWPAllocationId;
 
 	private int maxPax;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="programOptionID", nullable=false)
+	@JoinColumn(name="departmentProgramOptionId", nullable=false)
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonWPAllocation() {
 	}
 
-	public int getSeasonWPAllocationID() {
-		return this.seasonWPAllocationID;
+	public int getSeasonWPAllocationId() {
+		return this.seasonWPAllocationId;
 	}
 
-	public void setSeasonWPAllocationID(int seasonWPAllocationID) {
-		this.seasonWPAllocationID = seasonWPAllocationID;
+	public void setSeasonWPAllocationId(int seasonWPAllocationId) {
+		this.seasonWPAllocationId = seasonWPAllocationId;
 	}
 
 	public int getMaxPax() {

@@ -17,7 +17,7 @@ public class SeasonWPConfiguration implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonWPConfigurationID;
+	private int seasonWPConfigurationId;
 
 	@Column(nullable=false)
 	private Timestamp seasonEndDate;
@@ -27,18 +27,18 @@ public class SeasonWPConfiguration implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonWPConfiguration() {
 	}
 
-	public int getSeasonWPConfigurationID() {
-		return this.seasonWPConfigurationID;
+	public int getSeasonWPConfigurationId() {
+		return this.seasonWPConfigurationId;
 	}
 
-	public void setSeasonWPConfigurationID(int seasonWPConfigurationID) {
-		this.seasonWPConfigurationID = seasonWPConfigurationID;
+	public void setSeasonWPConfigurationId(int seasonWPConfigurationId) {
+		this.seasonWPConfigurationId = seasonWPConfigurationId;
 	}
 
 	public Timestamp getSeasonEndDate() {

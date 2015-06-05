@@ -22,7 +22,7 @@ public class Login implements Serializable {
 	@Column(nullable=false, length=50)
 	private String loginName;
 
-	@Column(nullable=false, length=10)
+	@Column(nullable=false, length=50)
 	private String password;
 
 	//bi-directional many-to-one association to CCIStaffUser

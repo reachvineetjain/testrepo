@@ -23,7 +23,7 @@ public class Department implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int departmentID;
+	private int departmentId;
 
 	@Column(length=10)
 	private String acronym;
@@ -56,7 +56,7 @@ public class Department implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@OneToMany(mappedBy="department", fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgram> departmentPrograms;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
@@ -70,12 +70,12 @@ public class Department implements Serializable {
 	public Department() {
 	}
 
-	public int getDepartmentID() {
-		return this.departmentID;
+	public int getDepartmentId() {
+		return this.departmentId;
 	}
 
-	public void setDepartmentID(int departmentID) {
-		this.departmentID = departmentID;
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	public String getAcronym() {

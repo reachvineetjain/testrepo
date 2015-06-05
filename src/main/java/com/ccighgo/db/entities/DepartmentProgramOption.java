@@ -17,44 +17,36 @@ public class DepartmentProgramOption implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int programOptionID;
-
-	@Column(nullable=false, length=50)
-	private String programOption;
+	private int departmentProgramOptionId;
 
 	@Column(nullable=false, length=10)
 	private String programOptionCode;
 
+	@Column(nullable=false, length=50)
+	private String programOptionName;
+
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="programID", nullable=false)
+	@JoinColumn(name="departmentProgramId", nullable=false)
 	private DepartmentProgram departmentProgram;
-
-	//bi-directional many-to-one association to SeasonHSPAllocatin
-	@OneToMany(mappedBy="departmentProgramOption")
-	private List<SeasonHSPAllocatin> seasonHspallocatins;
 
 	//bi-directional many-to-one association to SeasonWPAllocation
 	@OneToMany(mappedBy="departmentProgramOption")
 	private List<SeasonWPAllocation> seasonWpallocations;
 
+	//bi-directional many-to-one association to SeasonHSPAllocation
+	@OneToMany(mappedBy="departmentProgramOption")
+	private List<SeasonHSPAllocation> seasonHspallocations;
+
 	public DepartmentProgramOption() {
 	}
 
-	public int getProgramOptionID() {
-		return this.programOptionID;
+	public int getDepartmentProgramOptionId() {
+		return this.departmentProgramOptionId;
 	}
 
-	public void setProgramOptionID(int programOptionID) {
-		this.programOptionID = programOptionID;
-	}
-
-	public String getProgramOption() {
-		return this.programOption;
-	}
-
-	public void setProgramOption(String programOption) {
-		this.programOption = programOption;
+	public void setDepartmentProgramOptionId(int departmentProgramOptionId) {
+		this.departmentProgramOptionId = departmentProgramOptionId;
 	}
 
 	public String getProgramOptionCode() {
@@ -65,34 +57,20 @@ public class DepartmentProgramOption implements Serializable {
 		this.programOptionCode = programOptionCode;
 	}
 
+	public String getProgramOptionName() {
+		return this.programOptionName;
+	}
+
+	public void setProgramOptionName(String programOptionName) {
+		this.programOptionName = programOptionName;
+	}
+
 	public DepartmentProgram getDepartmentProgram() {
 		return this.departmentProgram;
 	}
 
 	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
 		this.departmentProgram = departmentProgram;
-	}
-
-	public List<SeasonHSPAllocatin> getSeasonHspallocatins() {
-		return this.seasonHspallocatins;
-	}
-
-	public void setSeasonHspallocatins(List<SeasonHSPAllocatin> seasonHspallocatins) {
-		this.seasonHspallocatins = seasonHspallocatins;
-	}
-
-	public SeasonHSPAllocatin addSeasonHspallocatin(SeasonHSPAllocatin seasonHspallocatin) {
-		getSeasonHspallocatins().add(seasonHspallocatin);
-		seasonHspallocatin.setDepartmentProgramOption(this);
-
-		return seasonHspallocatin;
-	}
-
-	public SeasonHSPAllocatin removeSeasonHspallocatin(SeasonHSPAllocatin seasonHspallocatin) {
-		getSeasonHspallocatins().remove(seasonHspallocatin);
-		seasonHspallocatin.setDepartmentProgramOption(null);
-
-		return seasonHspallocatin;
 	}
 
 	public List<SeasonWPAllocation> getSeasonWpallocations() {
@@ -115,6 +93,28 @@ public class DepartmentProgramOption implements Serializable {
 		seasonWpallocation.setDepartmentProgramOption(null);
 
 		return seasonWpallocation;
+	}
+
+	public List<SeasonHSPAllocation> getSeasonHspallocations() {
+		return this.seasonHspallocations;
+	}
+
+	public void setSeasonHspallocations(List<SeasonHSPAllocation> seasonHspallocations) {
+		this.seasonHspallocations = seasonHspallocations;
+	}
+
+	public SeasonHSPAllocation addSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
+		getSeasonHspallocations().add(seasonHspallocation);
+		seasonHspallocation.setDepartmentProgramOption(this);
+
+		return seasonHspallocation;
+	}
+
+	public SeasonHSPAllocation removeSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
+		getSeasonHspallocations().remove(seasonHspallocation);
+		seasonHspallocation.setDepartmentProgramOption(null);
+
+		return seasonHspallocation;
 	}
 
 }

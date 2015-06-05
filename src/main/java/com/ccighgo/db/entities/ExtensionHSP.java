@@ -17,7 +17,7 @@ public class ExtensionHSP implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int extentionID;
+	private int extentionId;
 
 	@Column(nullable=false)
 	private Timestamp extentionEbdDate;
@@ -32,18 +32,18 @@ public class ExtensionHSP implements Serializable {
 
 	//bi-directional many-to-one association to SeasonJ1Detail
 	@ManyToOne
-	@JoinColumn(name="seasonJ1DetailsID", nullable=false)
+	@JoinColumn(name="seasonJ1DetailsId", nullable=false)
 	private SeasonJ1Detail seasonJ1detail;
 
 	public ExtensionHSP() {
 	}
 
-	public int getExtentionID() {
-		return this.extentionID;
+	public int getExtentionId() {
+		return this.extentionId;
 	}
 
-	public void setExtentionID(int extentionID) {
-		this.extentionID = extentionID;
+	public void setExtentionId(int extentionId) {
+		this.extentionId = extentionId;
 	}
 
 	public Timestamp getExtentionEbdDate() {

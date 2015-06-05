@@ -58,7 +58,7 @@ public class UtilityServicesImpl implements UtilityServices {
             countriesFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.country.Country>();
             for (Country c : countriesDbList) {
                 com.ccighgo.service.transport.utility.beans.country.Country ctr = new com.ccighgo.service.transport.utility.beans.country.Country();
-                ctr.setId(c.getCountryID());
+                ctr.setId(c.getCountryId());
                 ctr.setCountryCode(c.getCountryCode());
                 ctr.setCountryName(c.getCountryName());
                 countriesFrontList.add(ctr);
@@ -78,7 +78,7 @@ public class UtilityServicesImpl implements UtilityServices {
             statesFrontList = new ArrayList<State>();
             for (USState st : usStates) {
                 State state = new State();
-                state.setId(st.getUsstatesID());
+                state.setId(st.getUsStatesId());
                 state.setStateCode(st.getStateCode());
                 state.setStateName(st.getStateName());
                 statesFrontList.add(state);
@@ -98,7 +98,7 @@ public class UtilityServicesImpl implements UtilityServices {
             departmentsFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.department.Department>();
             for (com.ccighgo.db.entities.Department d : departmentsDBList) {
                 com.ccighgo.service.transport.utility.beans.department.Department department = new com.ccighgo.service.transport.utility.beans.department.Department();
-                department.setId(d.getDepartmentID());
+                department.setId(d.getDepartmentId());
                 department.setDepartmentName(d.getDepartmentName());
                 department.setAcronym(d.getAcronym());
                 int flag = d.getActive();
@@ -124,11 +124,11 @@ public class UtilityServicesImpl implements UtilityServices {
             programList = new ArrayList<Program>();
             for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
                 Program prg = new Program();
-                prg.setDepartmentId(deptPrg.getDepartment().getDepartmentID());
+                prg.setDepartmentId(deptPrg.getDepartment().getDepartmentId());
                 prg.setDepartmentName(deptPrg.getDepartment().getDepartmentName());
                 prg.setAcronym(deptPrg.getDepartment().getAcronym());
-                prg.setProgramId(deptPrg.getProgramID());
-                prg.setProgramName(deptPrg.getProgram());
+                prg.setProgramId(deptPrg.getDepartmentProgramId());
+                prg.setProgramName(deptPrg.getProgramName());
                 prg.setProgramDescription(deptPrg.getDescription());
                 programList.add(prg);
             }
@@ -147,10 +147,10 @@ public class UtilityServicesImpl implements UtilityServices {
             functionList = new ArrayList<Function>();
             for (com.ccighgo.db.entities.DepartmentFunction deptFunct : departmentFunctionsList) {
                 Function fn = new Function();
-                fn.setDepartmentId(deptFunct.getDepartment().getDepartmentID());
+                fn.setDepartmentId(deptFunct.getDepartment().getDepartmentId());
                 fn.setDepartmentName(deptFunct.getDepartment().getDepartmentName());
                 fn.setAcronym(deptFunct.getDepartment().getAcronym());
-                fn.setFunctionId(deptFunct.getDeptFunctionID());
+                fn.setFunctionId(deptFunct.getDeptFunctionId());
                 fn.setFunctionName(deptFunct.getFunctionName());
                 fn.setFunctionDescription(deptFunct.getFunctionDescription());
                 functionList.add(fn);
@@ -170,8 +170,8 @@ public class UtilityServicesImpl implements UtilityServices {
             rolesList = new ArrayList<Role>();
             for (CCIStaffRole cciStaffRole : staffRolesList) {
                 Role role = new Role();
-                role.setId(cciStaffRole.getCciStaffRoleID());
-                role.setRole(cciStaffRole.getCciStaffRole());
+                role.setId(cciStaffRole.getCciStaffRoleId());
+                role.setRole(cciStaffRole.getCciStaffRoleName());
                 rolesList.add(role);
             }
             roles.getRoles().addAll(rolesList);
@@ -188,13 +188,13 @@ public class UtilityServicesImpl implements UtilityServices {
             programs = new Programs();
             programList = new ArrayList<Program>();
             for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
-                if (deptPrg.getDepartment().getDepartmentID() == Integer.valueOf(id)) {
+                if (deptPrg.getDepartment().getDepartmentId() == Integer.valueOf(id)) {
                     Program prg = new Program();
-                    prg.setDepartmentId(deptPrg.getDepartment().getDepartmentID());
+                    prg.setDepartmentId(deptPrg.getDepartment().getDepartmentId());
                     prg.setDepartmentName(deptPrg.getDepartment().getDepartmentName());
                     prg.setAcronym(deptPrg.getDepartment().getAcronym());
-                    prg.setProgramId(deptPrg.getProgramID());
-                    prg.setProgramName(deptPrg.getProgram());
+                    prg.setProgramId(deptPrg.getDepartmentProgramId());
+                    prg.setProgramName(deptPrg.getProgramName());
                     prg.setProgramDescription(deptPrg.getDescription());
                     programList.add(prg);
                 }
@@ -213,12 +213,12 @@ public class UtilityServicesImpl implements UtilityServices {
             functions = new Functions();
             functionList = new ArrayList<Function>();
             for (com.ccighgo.db.entities.DepartmentFunction deptFunct : departmentFunctionsList) {
-                if (deptFunct.getDepartment().getDepartmentID() == Integer.valueOf(id)) {
+                if (deptFunct.getDepartment().getDepartmentId() == Integer.valueOf(id)) {
                     Function fn = new Function();
-                    fn.setDepartmentId(deptFunct.getDepartment().getDepartmentID());
+                    fn.setDepartmentId(deptFunct.getDepartment().getDepartmentId());
                     fn.setDepartmentName(deptFunct.getDepartment().getDepartmentName());
                     fn.setAcronym(deptFunct.getDepartment().getAcronym());
-                    fn.setFunctionId(deptFunct.getDeptFunctionID());
+                    fn.setFunctionId(deptFunct.getDeptFunctionId());
                     fn.setFunctionName(deptFunct.getFunctionName());
                     fn.setFunctionDescription(deptFunct.getFunctionDescription());
                     functionList.add(fn);
@@ -237,7 +237,7 @@ public class UtilityServicesImpl implements UtilityServices {
         if (departmentsDBList.size() > 0) {
             for (com.ccighgo.db.entities.Department d : departmentsDBList) {
                 UserDepartment userDepartment = new UserDepartment();
-                userDepartment.setId(d.getDepartmentID());
+                userDepartment.setId(d.getDepartmentId());
                 userDepartment.setDepartmentName(d.getDepartmentName());
                 userDepartment.setAcronym(d.getAcronym());
                 int flag = d.getActive();
@@ -263,10 +263,10 @@ public class UtilityServicesImpl implements UtilityServices {
         if (departmentProgramsList != null) {
             List<DepartmentProgram> programList = new ArrayList<DepartmentProgram>();
             for (com.ccighgo.db.entities.DepartmentProgram dPrg : departmentProgramsList) {
-                if (dPrg.getDepartment().getDepartmentID() == d.getDepartmentID()) {
+                if (dPrg.getDepartment().getDepartmentId() == d.getDepartmentId()) {
                     DepartmentProgram deptPrg = new DepartmentProgram();
-                    deptPrg.setDepartmentProgramId(dPrg.getProgramID());
-                    deptPrg.setProgramName(dPrg.getProgram());
+                    deptPrg.setDepartmentProgramId(dPrg.getDepartmentProgramId());
+                    deptPrg.setProgramName(dPrg.getProgramName());
                     deptPrg.setProgramDescription(dPrg.getDescription());
                     programList.add(deptPrg);
                 }
@@ -280,9 +280,9 @@ public class UtilityServicesImpl implements UtilityServices {
         if (departmentFunctionsList != null) {
             List<DepartmentFunction> functionList = new ArrayList<DepartmentFunction>();
             for (com.ccighgo.db.entities.DepartmentFunction dFun : departmentFunctionsList) {
-                if (dFun.getDepartment().getDepartmentID() == d.getDepartmentID()) {
+                if (dFun.getDepartment().getDepartmentId() == d.getDepartmentId()) {
                     DepartmentFunction deptFun = new DepartmentFunction();
-                    deptFun.setDepartmentFunctionId(dFun.getDeptFunctionID());
+                    deptFun.setDepartmentFunctionId(dFun.getDeptFunctionId());
                     deptFun.setFunctionName(dFun.getFunctionName());
                     deptFun.setFunctionDescription(dFun.getFunctionDescription());
                     functionList.add(deptFun);

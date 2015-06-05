@@ -15,8 +15,9 @@ import java.sql.Timestamp;
 public class CCIStaffUsersCCIStaffRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private CCIStaffUsersCCIStaffRolePK id;
+	@Id
+	@Column(unique=true, nullable=false)
+	private int cciStaffUsersCCIStaffRoleId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -32,23 +33,23 @@ public class CCIStaffUsersCCIStaffRole implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffRole
 	@ManyToOne
-	@JoinColumn(name="cciStaffRolesID", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="cciStaffRoleId", nullable=false)
 	private CCIStaffRole ccistaffRole;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffID", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="cciStaffUserId", nullable=false)
 	private CCIStaffUser ccistaffUser;
 
 	public CCIStaffUsersCCIStaffRole() {
 	}
 
-	public CCIStaffUsersCCIStaffRolePK getId() {
-		return this.id;
+	public int getCciStaffUsersCCIStaffRoleId() {
+		return this.cciStaffUsersCCIStaffRoleId;
 	}
 
-	public void setId(CCIStaffUsersCCIStaffRolePK id) {
-		this.id = id;
+	public void setCciStaffUsersCCIStaffRoleId(int cciStaffUsersCCIStaffRoleId) {
+		this.cciStaffUsersCCIStaffRoleId = cciStaffUsersCCIStaffRoleId;
 	}
 
 	public int getCreatedBy() {

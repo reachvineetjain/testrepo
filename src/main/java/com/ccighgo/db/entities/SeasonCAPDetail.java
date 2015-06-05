@@ -17,7 +17,7 @@ public class SeasonCAPDetail implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonCAPDetailsID;
+	private int seasonCAPDetailsId;
 
 	@Column(nullable=false)
 	private Timestamp internCutoffDate;
@@ -42,18 +42,18 @@ public class SeasonCAPDetail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonCAPDetail() {
 	}
 
-	public int getSeasonCAPDetailsID() {
-		return this.seasonCAPDetailsID;
+	public int getSeasonCAPDetailsId() {
+		return this.seasonCAPDetailsId;
 	}
 
-	public void setSeasonCAPDetailsID(int seasonCAPDetailsID) {
-		this.seasonCAPDetailsID = seasonCAPDetailsID;
+	public void setSeasonCAPDetailsId(int seasonCAPDetailsId) {
+		this.seasonCAPDetailsId = seasonCAPDetailsId;
 	}
 
 	public Timestamp getInternCutoffDate() {

@@ -15,8 +15,9 @@ import java.sql.Timestamp;
 public class CCIStaffUsersResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private CCIStaffUsersResourcePermissionPK id;
+	@Id
+	@Column(unique=true, nullable=false)
+	private int cciStaffUsersResourcePermissionID;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -32,23 +33,33 @@ public class CCIStaffUsersResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="cciStaffUserId", nullable=false)
 	private CCIStaffUser ccistaffUser;
+
+	//bi-directional many-to-one association to DepartmentResourceGroup
+	@ManyToOne
+	@JoinColumn(name="departmentResourceGroupId", nullable=false)
+	private DepartmentResourceGroup departmentResourceGroup;
+
+	//bi-directional many-to-one association to ResourceAction
+	@ManyToOne
+	@JoinColumn(name="resourceActionId", nullable=false)
+	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
-	@JoinColumn(name="resourcesPermissionsId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="resourcePermissionId", nullable=false)
 	private ResourcePermission resourcePermission;
 
 	public CCIStaffUsersResourcePermission() {
 	}
 
-	public CCIStaffUsersResourcePermissionPK getId() {
-		return this.id;
+	public int getCciStaffUsersResourcePermissionID() {
+		return this.cciStaffUsersResourcePermissionID;
 	}
 
-	public void setId(CCIStaffUsersResourcePermissionPK id) {
-		this.id = id;
+	public void setCciStaffUsersResourcePermissionID(int cciStaffUsersResourcePermissionID) {
+		this.cciStaffUsersResourcePermissionID = cciStaffUsersResourcePermissionID;
 	}
 
 	public int getCreatedBy() {
@@ -89,6 +100,22 @@ public class CCIStaffUsersResourcePermission implements Serializable {
 
 	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
 		this.ccistaffUser = ccistaffUser;
+	}
+
+	public DepartmentResourceGroup getDepartmentResourceGroup() {
+		return this.departmentResourceGroup;
+	}
+
+	public void setDepartmentResourceGroup(DepartmentResourceGroup departmentResourceGroup) {
+		this.departmentResourceGroup = departmentResourceGroup;
+	}
+
+	public ResourceAction getResourceAction() {
+		return this.resourceAction;
+	}
+
+	public void setResourceAction(ResourceAction resourceAction) {
+		this.resourceAction = resourceAction;
 	}
 
 	public ResourcePermission getResourcePermission() {

@@ -18,7 +18,7 @@ public class Season implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonID;
+	private int seasonId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -47,7 +47,7 @@ public class Season implements Serializable {
 
 	//bi-directional many-to-one association to Department
 	@ManyToOne
-	@JoinColumn(name="departmentID", nullable=false)
+	@JoinColumn(name="departmentId", nullable=false)
 	private Department department;
 
 	//bi-directional many-to-one association to SeasonStatus
@@ -70,10 +70,6 @@ public class Season implements Serializable {
 	//bi-directional many-to-one association to SeasonHSADetail
 	@OneToMany(mappedBy="season")
 	private List<SeasonHSADetail> seasonHsadetails;
-
-	//bi-directional many-to-one association to SeasonHSPAllocatin
-	@OneToMany(mappedBy="season")
-	private List<SeasonHSPAllocatin> seasonHspallocatins;
 
 	//bi-directional many-to-one association to SeasonHSPConfiguration
 	@OneToMany(mappedBy="season")
@@ -115,15 +111,19 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<USSchoolSeason> usschoolSeasons;
 
+	//bi-directional many-to-one association to SeasonHSPAllocation
+	@OneToMany(mappedBy="season")
+	private List<SeasonHSPAllocation> seasonHspallocations;
+
 	public Season() {
 	}
 
-	public int getSeasonID() {
-		return this.seasonID;
+	public int getSeasonId() {
+		return this.seasonId;
 	}
 
-	public void setSeasonID(int seasonID) {
-		this.seasonID = seasonID;
+	public void setSeasonId(int seasonId) {
+		this.seasonId = seasonId;
 	}
 
 	public byte getActive() {
@@ -306,28 +306,6 @@ public class Season implements Serializable {
 		seasonHsadetail.setSeason(null);
 
 		return seasonHsadetail;
-	}
-
-	public List<SeasonHSPAllocatin> getSeasonHspallocatins() {
-		return this.seasonHspallocatins;
-	}
-
-	public void setSeasonHspallocatins(List<SeasonHSPAllocatin> seasonHspallocatins) {
-		this.seasonHspallocatins = seasonHspallocatins;
-	}
-
-	public SeasonHSPAllocatin addSeasonHspallocatin(SeasonHSPAllocatin seasonHspallocatin) {
-		getSeasonHspallocatins().add(seasonHspallocatin);
-		seasonHspallocatin.setSeason(this);
-
-		return seasonHspallocatin;
-	}
-
-	public SeasonHSPAllocatin removeSeasonHspallocatin(SeasonHSPAllocatin seasonHspallocatin) {
-		getSeasonHspallocatins().remove(seasonHspallocatin);
-		seasonHspallocatin.setSeason(null);
-
-		return seasonHspallocatin;
 	}
 
 	public List<SeasonHSPConfiguration> getSeasonHspconfigurations() {
@@ -548,6 +526,28 @@ public class Season implements Serializable {
 		usschoolSeason.setSeason(null);
 
 		return usschoolSeason;
+	}
+
+	public List<SeasonHSPAllocation> getSeasonHspallocations() {
+		return this.seasonHspallocations;
+	}
+
+	public void setSeasonHspallocations(List<SeasonHSPAllocation> seasonHspallocations) {
+		this.seasonHspallocations = seasonHspallocations;
+	}
+
+	public SeasonHSPAllocation addSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
+		getSeasonHspallocations().add(seasonHspallocation);
+		seasonHspallocation.setSeason(this);
+
+		return seasonHspallocation;
+	}
+
+	public SeasonHSPAllocation removeSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
+		getSeasonHspallocations().remove(seasonHspallocation);
+		seasonHspallocation.setSeason(null);
+
+		return seasonHspallocation;
 	}
 
 }

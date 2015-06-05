@@ -17,7 +17,7 @@ public class SeasonStatus implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonStatusID;
+	private int seasonStatusId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -32,12 +32,12 @@ public class SeasonStatus implements Serializable {
 	public SeasonStatus() {
 	}
 
-	public int getSeasonStatusID() {
-		return this.seasonStatusID;
+	public int getSeasonStatusId() {
+		return this.seasonStatusId;
 	}
 
-	public void setSeasonStatusID(int seasonStatusID) {
-		this.seasonStatusID = seasonStatusID;
+	public void setSeasonStatusId(int seasonStatusId) {
+		this.seasonStatusId = seasonStatusId;
 	}
 
 	public byte getActive() {

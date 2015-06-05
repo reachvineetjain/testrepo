@@ -17,7 +17,7 @@ public class AnnualSeason implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int annualSeasonID;
+	private int annualSeasonId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -40,12 +40,12 @@ public class AnnualSeason implements Serializable {
 	public AnnualSeason() {
 	}
 
-	public int getAnnualSeasonID() {
-		return this.annualSeasonID;
+	public int getAnnualSeasonId() {
+		return this.annualSeasonId;
 	}
 
-	public void setAnnualSeasonID(int annualSeasonID) {
-		this.annualSeasonID = annualSeasonID;
+	public void setAnnualSeasonId(int annualSeasonId) {
+		this.annualSeasonId = annualSeasonId;
 	}
 
 	public byte getActive() {

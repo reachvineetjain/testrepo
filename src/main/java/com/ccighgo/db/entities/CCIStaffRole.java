@@ -23,10 +23,10 @@ public class CCIStaffRole implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int cciStaffRoleID;
+	private int cciStaffRoleId;
 
 	@Column(nullable=false, length=50)
-	private String cciStaffRole;
+	private String cciStaffRoleName;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -44,7 +44,7 @@ public class CCIStaffRole implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment
 	@OneToMany(mappedBy="ccistaffRole", fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffRolesDepartment> ccistaffRolesDepartments;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
@@ -54,20 +54,20 @@ public class CCIStaffRole implements Serializable {
 	public CCIStaffRole() {
 	}
 
-	public int getCciStaffRoleID() {
-		return this.cciStaffRoleID;
+	public int getCciStaffRoleId() {
+		return this.cciStaffRoleId;
 	}
 
-	public void setCciStaffRoleID(int cciStaffRoleID) {
-		this.cciStaffRoleID = cciStaffRoleID;
+	public void setCciStaffRoleId(int cciStaffRoleId) {
+		this.cciStaffRoleId = cciStaffRoleId;
 	}
 
-	public String getCciStaffRole() {
-		return this.cciStaffRole;
+	public String getCciStaffRoleName() {
+		return this.cciStaffRoleName;
 	}
 
-	public void setCciStaffRole(String cciStaffRole) {
-		this.cciStaffRole = cciStaffRole;
+	public void setCciStaffRoleName(String cciStaffRoleName) {
+		this.cciStaffRoleName = cciStaffRoleName;
 	}
 
 	public int getCreatedBy() {
