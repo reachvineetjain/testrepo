@@ -18,7 +18,7 @@ public class SeasonJ1Detail implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonJ1DetailsID;
+	private int seasonJ1DetailsId;
 
 	@Column(nullable=false)
 	private Timestamp firstSemEarliestBirthDate;
@@ -57,18 +57,18 @@ public class SeasonJ1Detail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonJ1Detail() {
 	}
 
-	public int getSeasonJ1DetailsID() {
-		return this.seasonJ1DetailsID;
+	public int getSeasonJ1DetailsId() {
+		return this.seasonJ1DetailsId;
 	}
 
-	public void setSeasonJ1DetailsID(int seasonJ1DetailsID) {
-		this.seasonJ1DetailsID = seasonJ1DetailsID;
+	public void setSeasonJ1DetailsId(int seasonJ1DetailsId) {
+		this.seasonJ1DetailsId = seasonJ1DetailsId;
 	}
 
 	public Timestamp getFirstSemEarliestBirthDate() {

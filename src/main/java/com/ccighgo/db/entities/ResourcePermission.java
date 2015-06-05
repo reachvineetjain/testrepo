@@ -18,7 +18,7 @@ public class ResourcePermission implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int id;
+	private int resourcePermissionId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -51,7 +51,7 @@ public class ResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
-	@JoinColumn(name="deptResourceGroupID", nullable=false)
+	@JoinColumn(name="departmentResourceGroupId", nullable=false)
 	private DepartmentResourceGroup departmentResourceGroup;
 
 	//bi-directional many-to-one association to ResourceAction
@@ -62,12 +62,12 @@ public class ResourcePermission implements Serializable {
 	public ResourcePermission() {
 	}
 
-	public int getId() {
-		return this.id;
+	public int getResourcePermissionId() {
+		return this.resourcePermissionId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setResourcePermissionId(int resourcePermissionId) {
+		this.resourcePermissionId = resourcePermissionId;
 	}
 
 	public byte getActive() {

@@ -18,7 +18,7 @@ public class DepartmentResourceGroup implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int deptResourceGroupID;
+	private int departmentResourceGroupId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -35,9 +35,17 @@ public class DepartmentResourceGroup implements Serializable {
 	@Column(nullable=false, length=50)
 	private String resourceGroupName;
 
+	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
+	@OneToMany(mappedBy="departmentResourceGroup")
+	private List<CCIStaffRolesDefaultResourcePermission> ccistaffRolesDefaultResourcePermissions;
+
+	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
+	@OneToMany(mappedBy="departmentResourceGroup")
+	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
+
 	//bi-directional many-to-one association to Department
 	@ManyToOne
-	@JoinColumn(name="departmentID", nullable=false)
+	@JoinColumn(name="departmentId", nullable=false)
 	private Department department;
 
 	//bi-directional many-to-one association to ResourcePermission
@@ -47,12 +55,12 @@ public class DepartmentResourceGroup implements Serializable {
 	public DepartmentResourceGroup() {
 	}
 
-	public int getDeptResourceGroupID() {
-		return this.deptResourceGroupID;
+	public int getDepartmentResourceGroupId() {
+		return this.departmentResourceGroupId;
 	}
 
-	public void setDeptResourceGroupID(int deptResourceGroupID) {
-		this.deptResourceGroupID = deptResourceGroupID;
+	public void setDepartmentResourceGroupId(int departmentResourceGroupId) {
+		this.departmentResourceGroupId = departmentResourceGroupId;
 	}
 
 	public int getCreatedBy() {
@@ -93,6 +101,50 @@ public class DepartmentResourceGroup implements Serializable {
 
 	public void setResourceGroupName(String resourceGroupName) {
 		this.resourceGroupName = resourceGroupName;
+	}
+
+	public List<CCIStaffRolesDefaultResourcePermission> getCcistaffRolesDefaultResourcePermissions() {
+		return this.ccistaffRolesDefaultResourcePermissions;
+	}
+
+	public void setCcistaffRolesDefaultResourcePermissions(List<CCIStaffRolesDefaultResourcePermission> ccistaffRolesDefaultResourcePermissions) {
+		this.ccistaffRolesDefaultResourcePermissions = ccistaffRolesDefaultResourcePermissions;
+	}
+
+	public CCIStaffRolesDefaultResourcePermission addCcistaffRolesDefaultResourcePermission(CCIStaffRolesDefaultResourcePermission ccistaffRolesDefaultResourcePermission) {
+		getCcistaffRolesDefaultResourcePermissions().add(ccistaffRolesDefaultResourcePermission);
+		ccistaffRolesDefaultResourcePermission.setDepartmentResourceGroup(this);
+
+		return ccistaffRolesDefaultResourcePermission;
+	}
+
+	public CCIStaffRolesDefaultResourcePermission removeCcistaffRolesDefaultResourcePermission(CCIStaffRolesDefaultResourcePermission ccistaffRolesDefaultResourcePermission) {
+		getCcistaffRolesDefaultResourcePermissions().remove(ccistaffRolesDefaultResourcePermission);
+		ccistaffRolesDefaultResourcePermission.setDepartmentResourceGroup(null);
+
+		return ccistaffRolesDefaultResourcePermission;
+	}
+
+	public List<CCIStaffUsersResourcePermission> getCcistaffUsersResourcePermissions() {
+		return this.ccistaffUsersResourcePermissions;
+	}
+
+	public void setCcistaffUsersResourcePermissions(List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions) {
+		this.ccistaffUsersResourcePermissions = ccistaffUsersResourcePermissions;
+	}
+
+	public CCIStaffUsersResourcePermission addCcistaffUsersResourcePermission(CCIStaffUsersResourcePermission ccistaffUsersResourcePermission) {
+		getCcistaffUsersResourcePermissions().add(ccistaffUsersResourcePermission);
+		ccistaffUsersResourcePermission.setDepartmentResourceGroup(this);
+
+		return ccistaffUsersResourcePermission;
+	}
+
+	public CCIStaffUsersResourcePermission removeCcistaffUsersResourcePermission(CCIStaffUsersResourcePermission ccistaffUsersResourcePermission) {
+		getCcistaffUsersResourcePermissions().remove(ccistaffUsersResourcePermission);
+		ccistaffUsersResourcePermission.setDepartmentResourceGroup(null);
+
+		return ccistaffUsersResourcePermission;
 	}
 
 	public Department getDepartment() {

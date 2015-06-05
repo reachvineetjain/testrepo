@@ -1,4 +1,4 @@
-INSERT INTO `cci_gh_go`.`Countries` (`countryID`,`countryCode`,`countryName`,`reqFinalSOAonDS`,`active`) 
+INSERT INTO `cci_gh_go`.`Countries` (`countryId`,`countryCode`,`countryName`,`reqFinalSOAonDS`,`active`) 
 VALUES
 (1,'AD','Andorra',1,1),
 (2,'AE','United Arab Emirates',1,1),
@@ -250,7 +250,7 @@ VALUES
 (248,'ZM','Zambia',1,1),
 (249,'ZW','Zimbabwe',1,1);
 
-INSERT INTO cci_gh_go.USStates (usstatesID,stateName,stateCode) 
+INSERT INTO cci_gh_go.USStates (usStatesId,stateName,stateCode) 
 VALUES
 (1,'Alabama','AL'),
 (2,'Alaska','AK'),
@@ -357,7 +357,7 @@ VALUES
 (10,6,'employer1','password');
 
 
-INSERT INTO `cci_gh_go`.`Departments` (`departmentID`,`departmentName`,`acronym`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
+INSERT INTO `cci_gh_go`.`Departments` (`departmentId`,`departmentName`,`acronym`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
 VALUES 
 (1,'High School Programs','HSP', CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
 (2,'Work Programs','WP', CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
@@ -367,7 +367,7 @@ VALUES
 (6,'Accounting','ACC', CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
 (7,'System','SYS', CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1);
 
-INSERT INTO `cci_gh_go`.`DepartmentPrograms`(`programID`,`departmentID`,`program`,`description`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`DepartmentPrograms`(`departmentProgramId`,`departmentId`,`programName`,`description`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
 (1,1,'J-1HS','J1HS visa program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,1,'F-1','F1 visa program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -377,7 +377,7 @@ VALUES
 (6,2,'CAP','CAP program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (7,2,'W&T-DP','Work and Travel',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`DepartmentProgramOptions` (`programOptionID`, `programID`, `programOptionCode`, `programOption`) 
+INSERT INTO `cci_gh_go`.`DepartmentProgramOptions` (`departmentProgramOptionId`, `departmentProgramId`, `programOptionCode`, `programOptionName`) 
 VALUES 
 (1, 1, 'Aug-FY', 'August - Full Year'),
 (2, 1, 'Aug-1Sem', 'August - First Semester'),
@@ -392,14 +392,14 @@ VALUES
 (13, 6, 'Int-SP', 'Internship - Self Placed'),
 (14, 6, 'Trn-SP', 'Trainee - Self Placed');
 
-INSERT INTO `cci_gh_go`.`DepartmentFunctions`(`deptFunctionID`,`departmentID`,`functionName`,`functionDescription`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`DepartmentFunctions`(`deptFunctionID`,`departmentId`,`functionName`,`functionDescription`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
 (1,1,'Operations','Operation Activities for HSP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,2,'Recruitment','Recruitment Activity for WP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (3,2,'Operations','Operations tasks for WP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (4,2,'Services','Service Related activities for WP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`ResourceActions` (`id`, `resourceAction`, `active`, `visibleToUser`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
+INSERT INTO `cci_gh_go`.`ResourceActions` (`resourceActionId`, `resourceAction`, `active`, `visibleToUser`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
 VALUES 
 (1,'Grant', 1, 1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,'View', 1, 1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -409,7 +409,7 @@ VALUES
 (6,'Create', 1, 1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (7,'Delete', 1, 1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`DepartmentResourceGroups` (`deptResourceGroupID`, `departmentID`,`resourceGroupName`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
+INSERT INTO `cci_gh_go`.`DepartmentResourceGroups` (`departmentResourceGroupId`, `departmentId`,`resourceGroupName`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
 VALUES 
 (1,1,'Seasons',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,1,'SEVIS',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -424,7 +424,7 @@ VALUES
 (11,1,'Change Q - Participants',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (12,1,'Background Checks',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`CCIStaffRoles` (`cciStaffRoleID`, `cciStaffRole`, `hierarchy`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
+INSERT INTO `cci_gh_go`.`CCIStaffRoles` (`cciStaffRoleId`, `cciStaffRoleName`, `hierarchy`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
 VALUES 
 (1, 'Program Director', 1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2, 'Program Manager', 2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -435,49 +435,49 @@ VALUES
 (7, 'Temporary Staff', 7,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (8, 'System Administrator', 1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`ResourcePermissions` (`id`, `deptResourceGroupID`, `resourceActionID`, `resourceName`, `resourceDescription`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`) 
+INSERT INTO `cci_gh_go`.`ResourcePermissions` (`resourcePermissionId`, `departmentResourceGroupId`, `resourceActionID`, `resourceName`, `resourceDescription`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`) 
 VALUES 
-(1, 1, 2, 'View Season', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(2, 1, 2, 'Add Season', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(3, 1, 2, 'Edit Season', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(4, 1, 2, 'Delete Season', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(5, 2, 2, 'View SEVIS', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(6, 2, 2, 'Edit SEVIS', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(7, 3, 2, 'User Management', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(8, 4, 2, 'View Partners', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(9, 4, 2, 'Edit Partners', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(10, 4, 2, 'View Partner Season Details', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(11, 4, 2, 'Edit Partner Season Details', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(12, 4, 2, 'Change Status of Partners', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(13, 4, 2, 'Delete Partners', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(14, 4, 2, 'Edit Partner name / Quickbooks Code', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(15, 4, 2, 'Receive Notification of Partner Changes', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(16, 5, 2, 'Approve Employers', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(17, 5, 2, 'Receive Pre-Approval Notifications', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(18, 6, 2, 'View Participants', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(19, 6, 2, 'Edit Participants', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(20, 6, 2, 'View Probation/Repatriation', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(21, 6, 2, 'Edit Probation/Repatriation', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(22, 6, 2, 'Termination Manager Approval', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(23, 7, 2, 'View Field Staff', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(24, 7, 2, 'Edit Field Staff', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(25, 7, 2, 'Complete Field Staff References', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(26, 8, 2, 'View Host Families', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(27, 8, 2, 'Add Host Families', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(28, 8, 2, 'Edit Host Families', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(29, 8, 2, 'Delete Host Families', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(30, 9, 2, 'Release Invoice to Accounting', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(31, 9, 2, 'Access to Invoices and Upload to Quickbooks', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(32, 10, 2, 'Employer Change Queue', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(33, 11, 2, 'SEVIS Change Queue', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(34, 11, 2, 'My Application Change Queue', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(35, 11, 2, 'Flight/Visa Info Change Queue', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(36, 11, 2, 'Documents Change Queue', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(37, 12, 2, 'Complete Employer Background Checks', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(38, 12, 2, 'Complete Field Staff Background Checks', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(39, 12, 2, 'Complete Host Family Background Checks', 'What can be VIEWed for Season',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1);
+(1, 1, 2, 'View Season', 'View seasons permissions',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(2, 1, 2, 'Add Season', 'Add seasons permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(3, 1, 2, 'Edit Season', 'Edit seasons permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(4, 1, 2, 'Delete Season', 'Delete seasons permissions',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(5, 2, 2, 'View SEVIS', 'View SEVIS information',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(6, 2, 2, 'Edit SEVIS', 'Edit SEVIS information',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(7, 3, 2, 'User Management', 'User management permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(8, 4, 2, 'View Partners', 'View partners permissions',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(9, 4, 2, 'Edit Partners', 'Edit partners permissions',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(10, 4, 2, 'View Partner Season Details', 'View partner season permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(11, 4, 2, 'Edit Partner Season Details', 'Edit partner season permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(12, 4, 2, 'Change Status of Partners', 'Change partner status permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(13, 4, 2, 'Delete Partners', 'Delete partners permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(14, 4, 2, 'Edit Partner name / Quickbooks Code', 'Edit partner details permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(15, 4, 2, 'Receive Notification of Partner Changes', 'Email notification permission for change of partners',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(16, 5, 2, 'Approve Employers', 'Approve employers permission',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(17, 5, 2, 'Receive Pre-Approval Notifications', 'Email notification permission for pre-approval',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(18, 6, 2, 'View Participants', 'Permissions to view participants',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(19, 6, 2, 'Edit Participants', 'Permissiions to edit participants',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(20, 6, 2, 'View Probation/Repatriation', 'Permissions to view probation/repatriation',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(21, 6, 2, 'Edit Probation/Repatriation', 'Permissions to edit probation/repatriation',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(22, 6, 2, 'Termination Manager Approval', 'Permissions to approve termination manager',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(23, 7, 2, 'View Field Staff', 'Permissions to view field staff',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(24, 7, 2, 'Edit Field Staff', 'Permissions to edit field staff',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(25, 7, 2, 'Complete Field Staff References', 'Permissions to complete field staff references',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(26, 8, 2, 'View Host Families', 'Permissions to view host families',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(27, 8, 2, 'Add Host Families', 'Permissions to add host families',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(28, 8, 2, 'Edit Host Families', 'Permissions to edit host families',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(29, 8, 2, 'Delete Host Families', 'Permissions to delete host families',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(30, 9, 2, 'Release Invoice to Accounting', 'Permissions to release invoice to accounting department',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(31, 9, 2, 'Access to Invoices and Upload to Quickbooks', 'Permissions for quickbooks',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(32, 10, 2, 'Employer Change Queue', 'Permissions to change employer queue',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(33, 11, 2, 'SEVIS Change Queue', 'Permissions to change SEVIS queue',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(34, 11, 2, 'My Application Change Queue', 'Permissions to application change queue',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(35, 11, 2, 'Flight/Visa Info Change Queue', 'Permissions to flight/visa information queue',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(36, 11, 2, 'Documents Change Queue', 'Permissions to documents change queue',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(37, 12, 2, 'Complete Employer Background Checks', 'Permissions for employer background checks',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(38, 12, 2, 'Complete Field Staff Background Checks', 'Permissions for field staff background checks',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(39, 12, 2, 'Complete Host Family Background Checks', 'Permissions for host family background checks',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1);
 
-INSERT INTO `cci_gh_go`.`CCIStaffUsers`(`cciStaffUserID`,`supervisorId`,`loginID`,`cciAdminGuid`,`firstName`,`lastName`,`phone`,`emergencyPhone`,`email`,`homeAddressLineOne`,`homeAddressLineTwo`,`city`,`stateID`,`zip`,`countryID`,`photo`,`sevisID`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`,`sequenceNo`,`stamp`)
+INSERT INTO `cci_gh_go`.`CCIStaffUsers`(`cciStaffUserId`,`supervisorId`,`loginId`,`cciAdminGuid`,`firstName`,`lastName`,`phone`,`emergencyPhone`,`email`,`homeAddressLineOne`,`homeAddressLineTwo`,`city`,`usStatesId`,`zip`,`countryId`,`photo`,`sevisID`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`,`sequenceNo`,`stamp`)
 VALUES
 (1,1,1,'38F2535A-914C-40CC-BB3A-0881DA588B21','System','Admin','1231231234','911','sysadmin@cci.com','somwhere in the middle of desert','with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS001',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1,1,'dontknow'),
 (2,1,2,'C1B5DEC0-D116-46FD-9B77-848C8514329B','Program','Directory','1112223333','911','prgdirector@cci.com','at the walls in winterfell','jon snow knows nothing','timbaktoo',14,'12345',233,'path/to/photo','SEVIS002',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1,1,'dontknow'),
@@ -486,146 +486,27 @@ VALUES
 (5,1,5,'7CFA58F9-28B2-440D-B649-4919A49D50C6','Temporary','Staff','9898786767','911','tempstaff@cci.com','somwhere in the middle of desert','with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS005',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1,1,'dontknow');
 
 
-INSERT INTO `cci_gh_go`.`CCIStaffUsersCCIStaffRoles`(`cciStaffID`,`cciStaffRolesID`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`CCIStaffUsersCCIStaffRoles`(`cciStaffUsersCCIStaffRoleId`,`cciStaffUserId`,`cciStaffRoleId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
-(1,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,7,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1,1,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(4,4,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(5,5,7,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`CCIStaffUserProgram`(`cciStaffUserId`,`programID`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`CCIStaffUserProgram`(`cciStaffUserProgramId`,`cciStaffUserId`,`departmentProgramId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
-(1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,1,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,1,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(4,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(5,2,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(6,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(7,3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(8,4,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(9,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-
-INSERT INTO `cci_gh_go`.`CCIStaffUsersResourcePermissions`(`cciStaffUserId`,`resourcesPermissionsId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
-VALUES
-(1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,5,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,6,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,7,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,9,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,10,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,11,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,12,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,13,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,14,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,15,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,16,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,17,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,18,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,19,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,20,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,21,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,22,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,23,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,24,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,25,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,26,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,27,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,28,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,29,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,30,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,31,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,32,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,33,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,34,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,35,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,36,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,37,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,38,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,39,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,9,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,10,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,11,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,12,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,13,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,14,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,15,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,16,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,17,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,18,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,19,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,20,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,21,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,23,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,24,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,25,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,26,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,27,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,28,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,33,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,34,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,35,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,9,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,10,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,11,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,14,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,15,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,18,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,19,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,20,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,21,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,23,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,24,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,26,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,27,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,37,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,38,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,39,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,9,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,10,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,11,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,14,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,15,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,18,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,19,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,20,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,21,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,23,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,24,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,26,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,27,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,37,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,38,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,39,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,10,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,15,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,18,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,23,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,26,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,27,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
-
-
-INSERT INTO `cci_gh_go`.`CCIStaffRolesDepartments`(`id`,`cciStaffRoleId`,`departmentId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`CCIStaffRolesDepartments`(`cciStaffRolesDepartmentId`,`cciStaffRoleId`,`departmentId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
 (1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,1,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -644,7 +525,49 @@ VALUES
 (15,8,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (16,8,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`CCIStaffUserNotes`(`ccistaffusernotesID`,`ccistaffuserID`,`note`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`CCIStaffUsersResourcePermissions` (`cciStaffUsersResourcePermissionID`,`cciStaffUserId`,`departmentResourceGroupId`,`resourcePermissionId`,`resourceActionId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES
+(1,1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,1,1,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,1,1,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(4,1,1,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(5,1,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(6,1,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(7,1,3,7,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(8,1,4,8,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(9,1,4,9,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(10,1,4,10,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(11,1,4,11,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(12,1,4,12,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(13,1,4,13,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(14,1,4,14,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(15,1,4,15,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(16,1,5,16,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(17,1,5,17,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(18,1,6,18,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(19,1,6,19,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(20,1,6,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(21,1,6,21,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(22,1,6,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(23,1,7,23,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(24,1,7,24,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(25,1,7,25,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(26,1,8,26,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(27,1,8,27,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(28,1,8,28,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(29,1,8,29,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(30,1,9,30,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(31,1,9,31,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(32,1,10,32,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(33,1,11,33,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(34,1,11,34,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(35,1,11,35,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(36,1,11,36,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(37,1,12,37,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(38,1,12,38,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(39,1,12,39,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+
+INSERT INTO `cci_gh_go`.`CCIStaffUserNotes`(`cciStaffUserNoteId`,`ccistaffuserID`,`note`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
 (1,1,'Added by EN on 1/23',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,2,'Stepped down from the volunteer intern position today, due to paid position elsewhere.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -654,15 +577,12 @@ VALUES
       from Elyse Voyen - "Haldis and Molly would like me to be allowed to log participant notes on the WT participant’s pages. "',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (6,5,'As Business Development Specialist, Katy should be able to change recruitment field contact in order to assign leads to the proper recruiters.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`CCIStaffRolesDefaultResourcePermissions` (`cciStaffDepartmentRoleId`,`resourcePermissionsId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`CCIStaffRolesDefaultResourcePermissions`(`cciStaffRolesDefaultResourcePermissionId`,`cciStaffRolesDepartmentId`,`departmentResourceGroupId`,`resourcePermissionId`,`resourceActionId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
-(1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(7,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1,15,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,15,1,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,15,1,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(4,15,1,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 INSERT INTO `cci_gh_go`.`History` (`historyId`,`loggedOn`,`loginId`,`ipAddress`)
 VALUES

@@ -16,27 +16,27 @@ public class RegionSeason implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int regionSeasonID;
+	private int regionSeasonId;
 
 	//bi-directional many-to-one association to Region
 	@ManyToOne
-	@JoinColumn(name="regionID", nullable=false)
+	@JoinColumn(name="regionId", nullable=false)
 	private Region region;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public RegionSeason() {
 	}
 
-	public int getRegionSeasonID() {
-		return this.regionSeasonID;
+	public int getRegionSeasonId() {
+		return this.regionSeasonId;
 	}
 
-	public void setRegionSeasonID(int regionSeasonID) {
-		this.regionSeasonID = regionSeasonID;
+	public void setRegionSeasonId(int regionSeasonId) {
+		this.regionSeasonId = regionSeasonId;
 	}
 
 	public Region getRegion() {

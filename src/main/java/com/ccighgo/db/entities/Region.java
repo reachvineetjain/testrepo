@@ -17,7 +17,7 @@ public class Region implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int regionID;
+	private int regionId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -32,12 +32,12 @@ public class Region implements Serializable {
 	public Region() {
 	}
 
-	public int getRegionID() {
-		return this.regionID;
+	public int getRegionId() {
+		return this.regionId;
 	}
 
-	public void setRegionID(int regionID) {
-		this.regionID = regionID;
+	public void setRegionId(int regionId) {
+		this.regionId = regionId;
 	}
 
 	public byte getActive() {

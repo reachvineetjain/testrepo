@@ -3,7 +3,7 @@ package com.ccighgo.jpa.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.SeasonHSPAllocatin;
+import com.ccighgo.db.entities.SeasonHSPAllocation;
 
 /**
  * 
@@ -12,6 +12,6 @@ import com.ccighgo.db.entities.SeasonHSPAllocatin;
  */
 @Repository
 public interface SeasonHSPAllocationRepository extends
-		JpaRepository<SeasonHSPAllocatin, Integer> {
+		JpaRepository<SeasonHSPAllocation, Integer> {
 
 }

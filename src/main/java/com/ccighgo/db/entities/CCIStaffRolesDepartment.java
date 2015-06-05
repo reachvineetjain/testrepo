@@ -18,7 +18,7 @@ public class CCIStaffRolesDepartment implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int id;
+	private int cciStaffRolesDepartmentId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -49,12 +49,12 @@ public class CCIStaffRolesDepartment implements Serializable {
 	public CCIStaffRolesDepartment() {
 	}
 
-	public int getId() {
-		return this.id;
+	public int getCciStaffRolesDepartmentId() {
+		return this.cciStaffRolesDepartmentId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCciStaffRolesDepartmentId(int cciStaffRolesDepartmentId) {
+		this.cciStaffRolesDepartmentId = cciStaffRolesDepartmentId;
 	}
 
 	public int getCreatedBy() {

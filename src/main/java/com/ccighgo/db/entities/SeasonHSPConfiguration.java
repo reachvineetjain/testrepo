@@ -18,7 +18,7 @@ public class SeasonHSPConfiguration implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonHSPConfigurationID;
+	private int seasonHSPConfigurationId;
 
 	@Column(nullable=false)
 	private int fieldStaffAgreementID;
@@ -62,18 +62,18 @@ public class SeasonHSPConfiguration implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonHSPConfiguration() {
 	}
 
-	public int getSeasonHSPConfigurationID() {
-		return this.seasonHSPConfigurationID;
+	public int getSeasonHSPConfigurationId() {
+		return this.seasonHSPConfigurationId;
 	}
 
-	public void setSeasonHSPConfigurationID(int seasonHSPConfigurationID) {
-		this.seasonHSPConfigurationID = seasonHSPConfigurationID;
+	public void setSeasonHSPConfigurationId(int seasonHSPConfigurationId) {
+		this.seasonHSPConfigurationId = seasonHSPConfigurationId;
 	}
 
 	public int getFieldStaffAgreementID() {

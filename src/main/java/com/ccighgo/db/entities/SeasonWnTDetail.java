@@ -17,7 +17,7 @@ public class SeasonWnTDetail implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonWnTDetailsID;
+	private int seasonWnTDetailsId;
 
 	@Column(nullable=false)
 	private int annualSeason;
@@ -42,18 +42,18 @@ public class SeasonWnTDetail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonWnTDetail() {
 	}
 
-	public int getSeasonWnTDetailsID() {
-		return this.seasonWnTDetailsID;
+	public int getSeasonWnTDetailsId() {
+		return this.seasonWnTDetailsId;
 	}
 
-	public void setSeasonWnTDetailsID(int seasonWnTDetailsID) {
-		this.seasonWnTDetailsID = seasonWnTDetailsID;
+	public void setSeasonWnTDetailsId(int seasonWnTDetailsId) {
+		this.seasonWnTDetailsId = seasonWnTDetailsId;
 	}
 
 	public int getAnnualSeason() {

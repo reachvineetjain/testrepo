@@ -16,17 +16,17 @@ public class USSchool implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int usschoolID;
+	private int usSchoolId;
 
 	public USSchool() {
 	}
 
-	public int getUsschoolID() {
-		return this.usschoolID;
+	public int getUsSchoolId() {
+		return this.usSchoolId;
 	}
 
-	public void setUsschoolID(int usschoolID) {
-		this.usschoolID = usschoolID;
+	public void setUsSchoolId(int usSchoolId) {
+		this.usSchoolId = usSchoolId;
 	}
 
 }

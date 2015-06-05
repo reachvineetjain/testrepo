@@ -23,7 +23,7 @@ public class CCIStaffUser implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int cciStaffUserID;
+	private int cciStaffUserId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -84,48 +84,48 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy="ccistaffUser", fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
 	@OneToMany(mappedBy="ccistaffUser", fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional many-to-one association to Country
 	@ManyToOne
-	@JoinColumn(name="countryID")
+	@JoinColumn(name="countryId")
 	private Country country;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginID", nullable=false)
+	@JoinColumn(name="loginId", nullable=false)
 	private Login login;
 
 	//bi-directional many-to-one association to USState
 	@ManyToOne
-	@JoinColumn(name="stateID")
+	@JoinColumn(name="usStatesId")
 	private USState usstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
 	@OneToMany(mappedBy="ccistaffUser", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
 	@OneToMany(mappedBy="ccistaffUser", fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
 
 	public CCIStaffUser() {
 	}
 
-	public int getCciStaffUserID() {
-		return this.cciStaffUserID;
+	public int getCciStaffUserId() {
+		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserID(int cciStaffUserID) {
-		this.cciStaffUserID = cciStaffUserID;
+	public void setCciStaffUserId(int cciStaffUserId) {
+		this.cciStaffUserId = cciStaffUserId;
 	}
 
 	public byte getActive() {

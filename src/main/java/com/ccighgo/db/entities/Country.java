@@ -17,7 +17,7 @@ public class Country implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int countryID;
+	private int countryId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -41,12 +41,12 @@ public class Country implements Serializable {
 	public Country() {
 	}
 
-	public int getCountryID() {
-		return this.countryID;
+	public int getCountryId() {
+		return this.countryId;
 	}
 
-	public void setCountryID(int countryID) {
-		this.countryID = countryID;
+	public void setCountryId(int countryId) {
+		this.countryId = countryId;
 	}
 
 	public byte getActive() {

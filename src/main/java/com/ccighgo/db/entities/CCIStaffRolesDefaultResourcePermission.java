@@ -15,8 +15,9 @@ import java.sql.Timestamp;
 public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private CCIStaffRolesDefaultResourcePermissionPK id;
+	@Id
+	@Column(unique=true, nullable=false)
+	private int cciStaffRolesDefaultResourcePermissionId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -32,23 +33,33 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment
 	@ManyToOne
-	@JoinColumn(name="cciStaffDepartmentRoleId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="cciStaffRolesDepartmentId", nullable=false)
 	private CCIStaffRolesDepartment ccistaffRolesDepartment;
+
+	//bi-directional many-to-one association to DepartmentResourceGroup
+	@ManyToOne
+	@JoinColumn(name="departmentResourceGroupId", nullable=false)
+	private DepartmentResourceGroup departmentResourceGroup;
+
+	//bi-directional many-to-one association to ResourceAction
+	@ManyToOne
+	@JoinColumn(name="resourceActionId", nullable=false)
+	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
-	@JoinColumn(name="resourcePermissionsId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="resourcePermissionId", nullable=false)
 	private ResourcePermission resourcePermission;
 
 	public CCIStaffRolesDefaultResourcePermission() {
 	}
 
-	public CCIStaffRolesDefaultResourcePermissionPK getId() {
-		return this.id;
+	public int getCciStaffRolesDefaultResourcePermissionId() {
+		return this.cciStaffRolesDefaultResourcePermissionId;
 	}
 
-	public void setId(CCIStaffRolesDefaultResourcePermissionPK id) {
-		this.id = id;
+	public void setCciStaffRolesDefaultResourcePermissionId(int cciStaffRolesDefaultResourcePermissionId) {
+		this.cciStaffRolesDefaultResourcePermissionId = cciStaffRolesDefaultResourcePermissionId;
 	}
 
 	public int getCreatedBy() {
@@ -89,6 +100,22 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 
 	public void setCcistaffRolesDepartment(CCIStaffRolesDepartment ccistaffRolesDepartment) {
 		this.ccistaffRolesDepartment = ccistaffRolesDepartment;
+	}
+
+	public DepartmentResourceGroup getDepartmentResourceGroup() {
+		return this.departmentResourceGroup;
+	}
+
+	public void setDepartmentResourceGroup(DepartmentResourceGroup departmentResourceGroup) {
+		this.departmentResourceGroup = departmentResourceGroup;
+	}
+
+	public ResourceAction getResourceAction() {
+		return this.resourceAction;
+	}
+
+	public void setResourceAction(ResourceAction resourceAction) {
+		this.resourceAction = resourceAction;
 	}
 
 	public ResourcePermission getResourcePermission() {

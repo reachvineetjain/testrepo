@@ -17,7 +17,7 @@ public class DepartmentFunction implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int deptFunctionID;
+	private int deptFunctionId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -39,18 +39,18 @@ public class DepartmentFunction implements Serializable {
 
 	//bi-directional many-to-one association to Department
 	@ManyToOne
-	@JoinColumn(name="departmentID", nullable=false)
+	@JoinColumn(name="departmentId", nullable=false)
 	private Department department;
 
 	public DepartmentFunction() {
 	}
 
-	public int getDeptFunctionID() {
-		return this.deptFunctionID;
+	public int getDeptFunctionId() {
+		return this.deptFunctionId;
 	}
 
-	public void setDeptFunctionID(int deptFunctionID) {
-		this.deptFunctionID = deptFunctionID;
+	public void setDeptFunctionId(int deptFunctionId) {
+		this.deptFunctionId = deptFunctionId;
 	}
 
 	public int getCreatedBy() {

@@ -17,7 +17,7 @@ public class CCIStaffUserNote implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int ccistaffusernotesID;
+	private int cciStaffUserNoteId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -42,12 +42,12 @@ public class CCIStaffUserNote implements Serializable {
 	public CCIStaffUserNote() {
 	}
 
-	public int getCcistaffusernotesID() {
-		return this.ccistaffusernotesID;
+	public int getCciStaffUserNoteId() {
+		return this.cciStaffUserNoteId;
 	}
 
-	public void setCcistaffusernotesID(int ccistaffusernotesID) {
-		this.ccistaffusernotesID = ccistaffusernotesID;
+	public void setCciStaffUserNoteId(int cciStaffUserNoteId) {
+		this.cciStaffUserNoteId = cciStaffUserNoteId;
 	}
 
 	public int getCreatedBy() {

@@ -17,7 +17,7 @@ public class SeasonVolunteersDetail implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonVolunteersDetailsID;
+	private int seasonVolunteersDetailId;
 
 	@Column(nullable=false)
 	private Timestamp cutOffDate;
@@ -33,18 +33,18 @@ public class SeasonVolunteersDetail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonID", nullable=false)
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonVolunteersDetail() {
 	}
 
-	public int getSeasonVolunteersDetailsID() {
-		return this.seasonVolunteersDetailsID;
+	public int getSeasonVolunteersDetailId() {
+		return this.seasonVolunteersDetailId;
 	}
 
-	public void setSeasonVolunteersDetailsID(int seasonVolunteersDetailsID) {
-		this.seasonVolunteersDetailsID = seasonVolunteersDetailsID;
+	public void setSeasonVolunteersDetailId(int seasonVolunteersDetailId) {
+		this.seasonVolunteersDetailId = seasonVolunteersDetailId;
 	}
 
 	public Timestamp getCutOffDate() {
