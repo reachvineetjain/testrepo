@@ -19,4 +19,11 @@
      <bean id="userManagementService" class="com.ccighgo.service.components.usermanagment.UserManagementServiceImpl" />
      <bean id="utilityServices" class="com.ccighgo.service.components.utility.UtilityServicesImpl" />
      
+     <bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>META-INF\messages</value>
+		</property>
+	</bean>
+	
 </beans>
