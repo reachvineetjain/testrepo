@@ -32,11 +32,13 @@ import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserProgramRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserStaffRoleRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUsersResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DepartmentResourceGroupRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.ResourceActionRepository;
 import com.ccighgo.jpa.repositories.ResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
@@ -79,6 +81,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired DepartmentRepository departmentRepository;
    @Autowired CCIStaffUserProgramRepository cciStaffUserProgramRepository;
    @Autowired CCIStaffRolesRepository cciStaffRolesRepository;
+   @Autowired ResourceActionRepository resourceActionRepository;
+   @Autowired CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository; 
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
    // 2. generate user password(Done) and send via email.
@@ -242,6 +246,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setActive(CCIConstants.ACTIVE);
 
       // update country and state and login
+      //TODO put null check
       Country userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
       USState userState = stateRepository.findOne(user.getUserState().getStateId());
       cciUser.setCountry(userCountry);
@@ -286,7 +291,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciStaffUserProgramRepository.save(userPrograms);
          cciStaffUserProgramRepository.flush();
       }
-      
 
       // update user role
       if (user.getRoles() != null) {
@@ -313,22 +317,30 @@ public class UserManagementServiceImpl implements UserManagementService {
          List<UserPermissions> userPermissionsFrontList = user.getPermissions();
          List<CCIStaffUsersResourcePermission> cciUserPermissionsList = new ArrayList<CCIStaffUsersResourcePermission>();
          for(UserPermissions userPermission:userPermissionsFrontList){
-            CCIStaffUsersResourcePermission cciUserPermission = new CCIStaffUsersResourcePermission();
-            DepartmentResourceGroup departmentResourceGroup = departmentResourceGroupRepository.findOne(userPermission.getPermisstionGroupId());
-            ResourceAction resourceAction = null;
-            ResourcePermission  resourcePermission = null;
-            cciUserPermission.setCcistaffUser(cUser);
-            cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
+            DepartmentResourceGroup departmentResourceGroup = departmentResourceGroupRepository.findOne(userPermission.getPermissionGroupId());
             List<PermissionGroupOptions> permissionGroupOptionsList = userPermission.getPermissionGroupOptions();
             if(permissionGroupOptionsList!=null){
                for(PermissionGroupOptions groupOptions:permissionGroupOptionsList){
-                  resourcePermission = resourcePermissionRepository.findOne(groupOptions.getPermisstionGroupOptionId());
-                  
+                  CCIStaffUsersResourcePermission cciUserPermission = new CCIStaffUsersResourcePermission();
+                  ResourceAction resourceAction = null;
+                  ResourcePermission  resourcePermission = resourcePermissionRepository.findOne(groupOptions.getPermissionGroupOptionId());
+                  if(groupOptions.getPermissionGroupOptionActionId()!=null && !groupOptions.getPermissionGroupOptionActionId().trim().equals(CCIConstants.EMPTY_DATA)){
+                     resourceAction = resourceActionRepository.findOne(Integer.valueOf(groupOptions.getPermissionGroupOptionActionId()));
+                  }
+                  cciUserPermission.setCcistaffUser(cUser);
+                  cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
+                  cciUserPermission.setResourcePermission(resourcePermission);
+                  cciUserPermission.setResourceAction(resourceAction);
+                  cciUserPermission.setCreatedBy(1);
+                  cciUserPermission.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+                  cciUserPermission.setModifiedBy(1);
+                  cciUserPermission.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+                  cciUserPermissionsList.add(cciUserPermission);
                }
             }
-           
-            
          }
+         cciStaffUsersResourcePermissionRepository.save(cciUserPermissionsList);
+         cciStaffUsersResourcePermissionRepository.flush();
       }
       
       User usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
@@ -409,8 +421,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       for (DepartmentResourceGroup rg : userRecGroup) {
          permsGroupOptions = new ArrayList<PermissionGroupOptions>();
          UserPermissions userPerms = new UserPermissions();
-         userPerms.setPermisstionGroupId(rg.getDepartmentResourceGroupId());
-         userPerms.setPermisstionGroupName(rg.getResourceGroupName());
+         userPerms.setPermissionGroupId(rg.getDepartmentResourceGroupId());
+         userPerms.setPermissionGroupName(rg.getResourceGroupName());
          getRscPermissionsList(permsGroupOptions, cciUser.getCciStaffUserId(), rg.getResourceGroupName());
          userPerms.getPermissionGroupOptions().addAll(permsGroupOptions);
          perms.add(userPerms);
@@ -429,9 +441,10 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<ResourcePermission> rscPermsList = resourcePermissionRepository.findPermsByRsc(id, name);
       for (ResourcePermission rp : rscPermsList) {
          PermissionGroupOptions prmsOptions = new PermissionGroupOptions();
-         prmsOptions.setPermisstionGroupOptionId(rp.getResourcePermissionId());
+         prmsOptions.setPermissionGroupOptionId(rp.getResourcePermissionId());
+         prmsOptions.setPermissionGroupOptionActionId(String.valueOf(rp.getResourceAction().getResourceActionId()));
          prmsOptions.setPermissionGroupOptionAction(rp.getResourceAction().getResourceAction());
-         prmsOptions.setPermisstionGroupOptionName(rp.getResourceName());
+         prmsOptions.setPermissionGroupOptionName(rp.getResourceName());
          permsGrpOptions.add(prmsOptions);
       }
    }
