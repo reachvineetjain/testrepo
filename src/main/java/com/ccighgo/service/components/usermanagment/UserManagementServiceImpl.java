@@ -25,6 +25,7 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DepartmentResourceGroup;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
 import com.ccighgo.db.entities.USState;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
@@ -310,7 +311,19 @@ public class UserManagementServiceImpl implements UserManagementService {
          List<CCIStaffUsersResourcePermission> cciUserPermissionsList = new ArrayList<CCIStaffUsersResourcePermission>();
          for(UserPermissions userPermission:userPermissionsFrontList){
             CCIStaffUsersResourcePermission cciUserPermission = new CCIStaffUsersResourcePermission();
-           // cciUserPermission.set
+            DepartmentResourceGroup departmentResourceGroup = departmentResourceGroupRepository.findOne(userPermission.getPermisstionGroupId());
+            ResourceAction resourceAction = null;
+            ResourcePermission  resourcePermission = null;
+            cciUserPermission.setCcistaffUser(cUser);
+            cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
+            List<PermissionGroupOptions> permissionGroupOptionsList = userPermission.getPermissionGroupOptions();
+            if(permissionGroupOptionsList!=null){
+               for(PermissionGroupOptions groupOptions:permissionGroupOptionsList){
+                  resourcePermission = resourcePermissionRepository.findOne(groupOptions.getPermisstionGroupOptionId());
+                  
+               }
+            }
+           
             
          }
       }

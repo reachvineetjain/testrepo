@@ -23,6 +23,6 @@ public interface DepartmentProgramRepository extends JpaRepository<DepartmentPro
    @Query("select d from DepartmentProgram d where d.department = ?1 ")
    public List<DepartmentProgram> findProgramsByDepartment(Department departmentId);
 
-   @Query("select d from DepartmentProgram d where d.department = ?1 and d.programID = ?2")
+   @Query("select d from DepartmentProgram d where d.department = ?1 and d.departmentProgramId = ?2")
    public DepartmentProgram findDepartmentProgramByDepartmentAndProgramId(Department department, Integer ProgramId);
 }
