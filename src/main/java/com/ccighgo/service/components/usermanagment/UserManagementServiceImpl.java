@@ -234,7 +234,10 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
       cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
       cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
-      cciUser.setSupervisorId(Integer.valueOf(user.getSupervisorId()) > 0 ? Integer.valueOf(user.getSupervisorId()) : 0);
+      if(user.getSupervisorId()!=null){
+         Integer supervisorId = Integer.valueOf(user.getSupervisorId());
+         cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
+      }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
       cciUser.setActive(CCIConstants.ACTIVE);
 
