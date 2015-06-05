@@ -145,6 +145,16 @@
 			</java>
 		</target>
 	
+	<!--  HSP -->
+
+		<target name="HSP">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/HSP.xsd" />
+			</java>
+		</target>
+		
 	
 	
 </project>
