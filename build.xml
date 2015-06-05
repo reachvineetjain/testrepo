@@ -2,7 +2,7 @@
 <project name="ServiceFrontBeans" basedir="." default="all">
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
-	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch" />
+	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,AddSeason,SearchSeasons" />
 
 	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
 
@@ -124,5 +124,27 @@
 			<arg value="${xsd.dir}/UserSearch.xsd" />
 		</java>
 	</target>
+	
+	<!-- Add New Season-->
 
+	<target name="AddSeason">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Season.xsd" />
+		</java>
+	</target>
+
+	<!-- Search for Seasons-->
+
+		<target name="SearchSeasons">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/Search.xsd" />
+			</java>
+		</target>
+	
+	
+	
 </project>
