@@ -3,7 +3,9 @@
  */
 package com.ccighgo.service.components.usermanagment;
 
+import com.ccighgo.exception.ValidationException;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 
@@ -87,7 +89,7 @@ public interface UserManagementService {
      * @param roleId
      * @return
      */
-    public CCIUsers getDefaultPermissionsbyRole(String roleId);
+    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId);
     
     /**
     * @param userId

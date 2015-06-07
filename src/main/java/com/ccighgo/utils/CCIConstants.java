@@ -34,5 +34,8 @@ public class CCIConstants {
     public static final Integer MAX_UPPER_CASE = 1;
     public static final Integer MAX_NUMBERS = 1;
     public static final Integer MAX_SPL_CHARS = 1;
+    
+    //user type ids
+    public static final Integer CCI_USER_TYPE = 1;
 
 }

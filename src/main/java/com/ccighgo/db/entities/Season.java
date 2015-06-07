@@ -71,6 +71,10 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<SeasonHSADetail> seasonHsadetails;
 
+	//bi-directional many-to-one association to SeasonHSPAllocation
+	@OneToMany(mappedBy="season")
+	private List<SeasonHSPAllocation> seasonHspallocations;
+
 	//bi-directional many-to-one association to SeasonHSPConfiguration
 	@OneToMany(mappedBy="season")
 	private List<SeasonHSPConfiguration> seasonHspconfigurations;
@@ -110,10 +114,6 @@ public class Season implements Serializable {
 	//bi-directional many-to-one association to USSchoolSeason
 	@OneToMany(mappedBy="season")
 	private List<USSchoolSeason> usschoolSeasons;
-
-	//bi-directional many-to-one association to SeasonHSPAllocation
-	@OneToMany(mappedBy="season")
-	private List<SeasonHSPAllocation> seasonHspallocations;
 
 	public Season() {
 	}
@@ -306,6 +306,28 @@ public class Season implements Serializable {
 		seasonHsadetail.setSeason(null);
 
 		return seasonHsadetail;
+	}
+
+	public List<SeasonHSPAllocation> getSeasonHspallocations() {
+		return this.seasonHspallocations;
+	}
+
+	public void setSeasonHspallocations(List<SeasonHSPAllocation> seasonHspallocations) {
+		this.seasonHspallocations = seasonHspallocations;
+	}
+
+	public SeasonHSPAllocation addSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
+		getSeasonHspallocations().add(seasonHspallocation);
+		seasonHspallocation.setSeason(this);
+
+		return seasonHspallocation;
+	}
+
+	public SeasonHSPAllocation removeSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
+		getSeasonHspallocations().remove(seasonHspallocation);
+		seasonHspallocation.setSeason(null);
+
+		return seasonHspallocation;
 	}
 
 	public List<SeasonHSPConfiguration> getSeasonHspconfigurations() {
@@ -526,28 +548,6 @@ public class Season implements Serializable {
 		usschoolSeason.setSeason(null);
 
 		return usschoolSeason;
-	}
-
-	public List<SeasonHSPAllocation> getSeasonHspallocations() {
-		return this.seasonHspallocations;
-	}
-
-	public void setSeasonHspallocations(List<SeasonHSPAllocation> seasonHspallocations) {
-		this.seasonHspallocations = seasonHspallocations;
-	}
-
-	public SeasonHSPAllocation addSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
-		getSeasonHspallocations().add(seasonHspallocation);
-		seasonHspallocation.setSeason(this);
-
-		return seasonHspallocation;
-	}
-
-	public SeasonHSPAllocation removeSeasonHspallocation(SeasonHSPAllocation seasonHspallocation) {
-		getSeasonHspallocations().remove(seasonHspallocation);
-		seasonHspallocation.setSeason(null);
-
-		return seasonHspallocation;
 	}
 
 }

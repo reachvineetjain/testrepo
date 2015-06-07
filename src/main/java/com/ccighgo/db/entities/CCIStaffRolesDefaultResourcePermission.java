@@ -15,9 +15,8 @@ import java.sql.Timestamp;
 public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(unique=true, nullable=false)
-	private int cciStaffRolesDefaultResourcePermissionId;
+	@EmbeddedId
+	private CCIStaffRolesDefaultResourcePermissionPK id;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -33,7 +32,7 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment
 	@ManyToOne
-	@JoinColumn(name="cciStaffRolesDepartmentId", nullable=false)
+	@JoinColumn(name="cciStaffRolesDepartmentId", nullable=false, insertable=false, updatable=false)
 	private CCIStaffRolesDepartment ccistaffRolesDepartment;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
@@ -48,18 +47,18 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
-	@JoinColumn(name="resourcePermissionId", nullable=false)
+	@JoinColumn(name="resourcePermissionId", nullable=false, insertable=false, updatable=false)
 	private ResourcePermission resourcePermission;
 
 	public CCIStaffRolesDefaultResourcePermission() {
 	}
 
-	public int getCciStaffRolesDefaultResourcePermissionId() {
-		return this.cciStaffRolesDefaultResourcePermissionId;
+	public CCIStaffRolesDefaultResourcePermissionPK getId() {
+		return this.id;
 	}
 
-	public void setCciStaffRolesDefaultResourcePermissionId(int cciStaffRolesDefaultResourcePermissionId) {
-		this.cciStaffRolesDefaultResourcePermissionId = cciStaffRolesDefaultResourcePermissionId;
+	public void setId(CCIStaffRolesDefaultResourcePermissionPK id) {
+		this.id = id;
 	}
 
 	public int getCreatedBy() {

@@ -264,14 +264,13 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
 -- Table cci_gh_go.CCIStaffUsersCCIStaffRoles
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsersCCIStaffRoles` (  
-  `cciStaffUsersCCIStaffRoleId` INT(11) NOT NULL AUTO_INCREMENT,
   `cciStaffUserId` INT(11) NOT NULL,
   `cciStaffRoleId` INT(11) NOT NULL,
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modifiedBy` INT(11) NOT NULL,
-  PRIMARY KEY (`cciStaffUsersCCIStaffRoleId`),
+  PRIMARY KEY (`cciStaffUserId`, `cciStaffRoleId`),
   CONSTRAINT `FK_CCIStaffUsersCCIStaffRoles_CCIStaffRoles`
     FOREIGN KEY (`cciStaffRoleId`)
     REFERENCES `cci_gh_go`.`CCIStaffRoles` (`cciStaffRoleId`)
@@ -283,25 +282,22 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsersCCIStaffRoles` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
-    
+
 -- --------------------------------------------------------------------------------------------------
 -- Creating Table CCIStaffUserProgram
 -- --------------------------------------------------------------------------------------------------
 CREATE TABLE `cci_gh_go`.`CCIStaffUserProgram`( 
-   `cciStaffUserProgramId` INT(11) NOT NULL AUTO_INCREMENT,
-   `cciStaffUserId` INT(11) NOT NULL,
-   `departmentProgramId` INT(11) NOT NULL, 
-   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-   `createdBy` INT(11),
-   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-   `modifiedBy` INT(11),
-   PRIMARY KEY (`cciStaffUserProgramId`), 
-   CONSTRAINT `FK_CCIStaffUserProgram_CciStaffUser` 
+  `cciStaffUserId` INT(11) NOT NULL,
+  `departmentProgramId` INT(11) NOT NULL,  
+  `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) NOT NULL,
+    PRIMARY KEY (`cciStaffUserId`, `departmentProgramId`), 
+    CONSTRAINT `FK_CCIStaffUserProgram_CciStaffUser` 
     FOREIGN KEY (`cciStaffUserId`) 
-    REFERENCES `cci_gh_go`.`CCIStaffUsers`(`cciStaffUserId`) 
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-   CONSTRAINT `FK_CCIStaffUserProgram_DepartmentPrograms` 
+    REFERENCES `cci_gh_go`.`CCIStaffUsers`(`cciStaffUserId`), 
+    CONSTRAINT `FK_CCIStaffUserProgram_DepartmentPrograms` 
     FOREIGN KEY (`departmentProgramId`) 
     REFERENCES `cci_gh_go`.`DepartmentPrograms`(`departmentProgramId`)
     ON DELETE NO ACTION
@@ -358,29 +354,28 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`ResourcePermissions` (
 -- Table cci_gh_go.CCIStaffUsersResourcePermissions
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsersResourcePermissions` (  
-  `cciStaffUsersResourcePermissionID` INT(11) NOT NULL AUTO_INCREMENT,
   `cciStaffUserId` INT(11) NOT NULL,
   `departmentResourceGroupId` INT(11) NOT NULL,
   `resourcePermissionId` INT(11) NOT NULL,  
-  `resourceActionId` INT(11) NOT NULL,
+  `resourceActionId` INT(11),
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modifiedBy` INT(11) NOT NULL,
-  PRIMARY KEY (`cciStaffUsersResourcePermissionID`),
+  PRIMARY KEY (`cciStaffUserId`, `resourcePermissionId`),
   CONSTRAINT `FK_CCIStaffUsersResourcePermissions_CCIStaffUsers`
     FOREIGN KEY (`cciStaffUserId`)
     REFERENCES `cci_gh_go`.`CCIStaffUsers` (`cciStaffUserId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_CCIStaffUsersResourcePermissions_DepartmentResourceGroups`
-    FOREIGN KEY (`departmentResourceGroupId`)
-    REFERENCES `cci_gh_go`.`DepartmentResourceGroups` (`departmentResourceGroupId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffUsersResourcePermissions_ResourcePermissions`
     FOREIGN KEY (`resourcePermissionId`)
     REFERENCES `cci_gh_go`.`ResourcePermissions` (`resourcePermissionId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CCIStaffUsersResourcePermissions_DepartmentResourceGroups`
+    FOREIGN KEY (`departmentResourceGroupId`)
+    REFERENCES `cci_gh_go`.`DepartmentResourceGroups` (`departmentResourceGroupId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffUsersResourcePermissions_ResourceActions`
@@ -418,7 +413,6 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffRolesDepartments` (
 -- Table cci_gh_go.CCIStaffRolesDefaultResourcePermissions
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffRolesDefaultResourcePermissions` (  
-  `cciStaffRolesDefaultResourcePermissionId` INT(11) NOT NULL AUTO_INCREMENT,
   `cciStaffRolesDepartmentId` INT(11) NOT NULL,
   `departmentResourceGroupId` INT(11) NOT NULL,
   `resourcePermissionId` INT(11) NOT NULL,
@@ -427,15 +421,10 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffRolesDefaultResourcePermissions`
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modifiedBy` INT(11) NOT NULL,
-  PRIMARY KEY (`cciStaffRolesDefaultResourcePermissionId`),
-  CONSTRAINT `FK_CCIStaffRolesDefaultPermissions_CCIStaffRolesDepartments`
+  PRIMARY KEY (`cciStaffRolesDepartmentId`, `resourcePermissionId`),
+ CONSTRAINT `FK_CCIStaffRolesDefaultPermissions_CCIStaffRolesDepartments`
     FOREIGN KEY (`cciStaffRolesDepartmentId`)
     REFERENCES `cci_gh_go`.`CCIStaffRolesDepartments` (`cciStaffRolesDepartmentId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_CCIStaffRolesDefaultPermissions_DepartmentResourceGroups`
-    FOREIGN KEY (`departmentResourceGroupId`)
-    REFERENCES `cci_gh_go`.`DepartmentResourceGroups` (`departmentResourceGroupId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffRolesDefaultPermissions_ResourcePermissions`
@@ -443,11 +432,16 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffRolesDefaultResourcePermissions`
     REFERENCES `cci_gh_go`.`ResourcePermissions` (`resourcePermissionId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CCIStaffRolesDefaultPermissions_DepartmentResourceGroups`
+    FOREIGN KEY (`departmentResourceGroupId`)
+    REFERENCES `cci_gh_go`.`DepartmentResourceGroups` (`departmentResourceGroupId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffRolesDefaultPermissions_ResourceActions`
     FOREIGN KEY (`resourceActionId`)
     REFERENCES `cci_gh_go`.`ResourceActions` (`resourceActionId`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION  
+    ON UPDATE NO ACTION
 );
 
 -- ---------------------------------------------------------------------------------------------------

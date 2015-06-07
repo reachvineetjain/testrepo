@@ -15,15 +15,16 @@ import java.sql.Timestamp;
 public class CCIStaffUserProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(unique=true, nullable=false)
-	private int cciStaffUserProgramId;
+	@EmbeddedId
+	private CCIStaffUserProgramPK id;
 
+	@Column(nullable=false)
 	private int createdBy;
 
 	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private int modifiedBy;
 
 	@Column(nullable=false)
@@ -31,23 +32,23 @@ public class CCIStaffUserProgram implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffUserId", nullable=false)
+	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId", nullable=false)
+	@JoinColumn(name="departmentProgramId", nullable=false, insertable=false, updatable=false)
 	private DepartmentProgram departmentProgram;
 
 	public CCIStaffUserProgram() {
 	}
 
-	public int getCciStaffUserProgramId() {
-		return this.cciStaffUserProgramId;
+	public CCIStaffUserProgramPK getId() {
+		return this.id;
 	}
 
-	public void setCciStaffUserProgramId(int cciStaffUserProgramId) {
-		this.cciStaffUserProgramId = cciStaffUserProgramId;
+	public void setId(CCIStaffUserProgramPK id) {
+		this.id = id;
 	}
 
 	public int getCreatedBy() {
