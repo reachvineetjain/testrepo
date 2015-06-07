@@ -2,7 +2,7 @@
 <project name="ServiceFrontBeans" basedir="." default="all">
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
-	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,AddSeason,SearchSeasons,DefaultRolePermissions" />
+	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions" />
 
 	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
 
@@ -125,7 +125,7 @@
 		</java>
 	</target>
 
-	<!-- Add New Season-->
+	<!-- Add New Season
 
 	<target name="AddSeason">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -135,7 +135,7 @@
 		</java>
 	</target>
 
-	<!-- Search for Seasons-->
+	
 
 		<target name="SearchSeasons">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -145,7 +145,7 @@
 			</java>
 		</target>
 	
-	<!--  HSP -->
+	
 
 		<target name="HSP">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -155,7 +155,7 @@
 			</java>
 		</target>
 		
-	
+	-->
 	
 	<target name="DefaultRolePermissions">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">

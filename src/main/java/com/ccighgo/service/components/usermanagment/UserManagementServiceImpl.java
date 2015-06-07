@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.CCIStaffRole;
 import com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission;
+import com.ccighgo.db.entities.CCIStaffRolesDepartment;
 import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.CCIStaffUserNote;
 import com.ccighgo.db.entities.CCIStaffUserProgram;
@@ -30,7 +31,9 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
 import com.ccighgo.db.entities.USState;
+import com.ccighgo.exception.BusinessException;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
+import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserProgramRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserStaffRoleRepository;
@@ -50,6 +53,8 @@ import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartm
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgramOptions;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserStaffRole;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.LoginInfo;
 import com.ccighgo.service.transport.usermanagement.beans.user.PermissionGroupOptions;
@@ -103,6 +108,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    ResourceActionRepository resourceActionRepository;
    @Autowired
    CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository;
+   @Autowired
+   CCISaffDefaultPermissionRepository cciSaffDefaultPermissionRepository;
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
    // 2. generate user password(Done) and send via email.
@@ -209,7 +216,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    public User createUser(User user) {
-      String cciAdminGuid = cresteUserDetails(user);
+      String cciAdminGuid = createUserDetails(user);
       CCIStaffUser cUser = cciUsersRepository.findByGUID(cciAdminGuid);
 
       // create department and programs
@@ -244,19 +251,100 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Override
    public User updateUserDemographics(String id, User user) {
       CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
-      byte active = CCIConstants.INACTIVE;
-      if (user.isActive()) {
-         active = CCIConstants.ACTIVE;
+      ValidationUtils.validateRequired(user.getFirstName());
+      cciUser.setFirstName(user.getFirstName());
+      ValidationUtils.validateRequired(user.getLastName());
+      cciUser.setLastName(user.getLastName());
+      ValidationUtils.validateRequired(user.getEmail());
+      cciUser.setEmail(user.getEmail());
+      cciUser.setCity(user.getCity() != null ? user.getCity() : null);
+      cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
+      cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
+      cciUser.setZip(user.getZip() != null ? user.getZip() : null);
+      cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
+      cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
+      if (user.getSupervisorId() != null) {
+         Integer supervisorId = Integer.valueOf(user.getSupervisorId());
+         cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
-      // updateDemographics(user, cciUser,active,false );
-      CCIStaffUser cUser = cciUsersRepository.saveAndFlush(cciUser);
-      User usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
+      cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
+      cciUser.setActive(user.isActive()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+
+      // update user country
+      if (user.getUserCountry().getCountryId() > 0) {
+         Country userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
+         cciUser.setCountry(userCountry);
+      }
+      // update user state
+      if (user.getUserState().getStateId() > 0) {
+         USState userState = stateRepository.findOne(user.getUserState().getStateId());
+         cciUser.setUsstate(userState);
+      }
+      //TODO need to discuss about updating login info
+      cciUser.setModifiedBy(1);
+      cciUser.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciUsersRepository.saveAndFlush(cciUser);
+      
+      // update user programs
+      if (user.getDepartmentPrograms() != null) {
+         //delete existing programs
+         List<CCIStaffUserProgram> staffUserProgramsList = cciStaffUserProgramRepository.findAllProgramsByUser(cciUser);
+         if(staffUserProgramsList!=null){
+            cciStaffUserProgramRepository.delete(staffUserProgramsList);
+            cciStaffUserProgramRepository.flush();
+         }
+         //update new programs
+         List<CCIStaffUserProgram>  cciStaffUserPrograms = createUserDepartmentAndPrograms(user,cciUser);
+         if(cciStaffUserPrograms!=null){
+            cciStaffUserProgramRepository.save(cciStaffUserPrograms);
+            cciStaffUserProgramRepository.flush();
+         }
+      }
+      
+      //update user role
+      if (user.getRoles() != null) {
+         List<CCIStaffUsersCCIStaffRole> cciStaffUsersStaffRoles = cciStaffUserStaffRoleRepository.findAllStaffRoleByUser(cciUser);
+         if(cciStaffUsersStaffRoles!=null){
+            cciStaffUserStaffRoleRepository.delete(cciStaffUsersStaffRoles);
+            cciStaffUserStaffRoleRepository.flush();
+         }
+         List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = createUserRole(user, cciUser);
+         if(cciStaffUsersCCIStaffRoles!=null){
+            cciStaffUserStaffRoleRepository.save(cciStaffUsersCCIStaffRoles);
+            cciStaffUserStaffRoleRepository.flush(); 
+         }
+      }
+      User usr = getUserById(id);
       return usr;
    }
 
    @Override
    public User updateUserPermissions(String id, User user) {
-      return null;
+      if (id.equals(null) || id.trim().equals(CCIConstants.EMPTY_DATA) || user.equals(null)) {
+         // throw exception
+      }
+      CCIStaffUser cciStaffUser = cciUsersRepository.findOne(Integer.valueOf(id));
+      if (cciStaffUser.equals(null)) {
+         // throw exception(no user found with the id)
+      }
+      // step 1. get list of existing permissions and delete it
+      List<CCIStaffUsersResourcePermission> userResourcePermissionsList = cciStaffUsersResourcePermissionRepository.findAllPermissionsByCCIStaffUser(cciStaffUser);
+      if (userResourcePermissionsList != null) {
+         try {
+            cciStaffUsersResourcePermissionRepository.delete(userResourcePermissionsList);
+            cciStaffUsersResourcePermissionRepository.flush();
+         } catch (BusinessException ex) {
+            // error updating permissions
+         }
+      }
+      // step 2: once permissions are deleted reinsert new permissions
+      List<CCIStaffUsersResourcePermission> newPermissionsList = createUserPermissions(user, cciStaffUser);
+      if (newPermissionsList != null) {
+         cciStaffUsersResourcePermissionRepository.save(newPermissionsList);
+         cciStaffUsersResourcePermissionRepository.flush();
+      }
+      return getUserById(id);
    }
 
    @Override
@@ -267,48 +355,45 @@ public class UserManagementServiceImpl implements UserManagementService {
       User usr = getUserById(String.valueOf(cUsr.getCciStaffUserId()));
       return usr;
    }
-   
-  /* private List<UserPermissions> getUserPermissions(CCIStaffUser cciUser, User user) {
-      List<UserPermissions> userPermissionsFrontList = null;
-      if (cciUser.getCcistaffUsersResourcePermissions() != null) {
-         // get user permissions list from database
-         List<CCIStaffUsersResourcePermission> cciUserPermissionsList = cciUser.getCcistaffUsersResourcePermissions();
-         userPermissionsFrontList = new ArrayList<UserPermissions>();
-         List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
-         for (DepartmentResourceGroup dpRg : departmentResourceGroupList) {
-            UserPermissions userPermission = new UserPermissions();
-            userPermission.setPermissionGroupId(dpRg.getDepartmentResourceGroupId());
-            userPermission.setPermissionGroupName(dpRg.getResourceGroupName());
-            List<PermissionGroupOptions> permissionGroupOptions = new ArrayList<PermissionGroupOptions>();
-            for (CCIStaffUsersResourcePermission cciUserPermission : cciUserPermissionsList) {
-               if (cciUserPermission.getDepartmentResourceGroup().getDepartmentResourceGroupId() == dpRg.getDepartmentResourceGroupId()) {
-                  PermissionGroupOptions groupOptions = new PermissionGroupOptions();
-                  groupOptions.setPermissionGroupOptionId(cciUserPermission.getResourcePermission().getResourcePermissionId());
-                  groupOptions.setPermissionGroupOptionName(cciUserPermission.getResourcePermission().getResourceName());
-                  groupOptions.setPermissionGroupOptionActionId(String.valueOf(cciUserPermission.getResourceAction().getResourceActionId()));
-                  groupOptions.setPermissionGroupOptionAction(cciUserPermission.getResourceAction().getResourceAction());
-                  permissionGroupOptions.add(groupOptions);
-               }
-            }
-            userPermission.getPermissionGroupOptions().addAll(permissionGroupOptions);
-            userPermissionsFrontList.add(userPermission);
-         }
-
-      }
-      return userPermissionsFrontList;
-   }*/
 
    @Override
    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId) {
+      
+      //TODO Please work and fix it
+      
+      
+      StaffUserRolePermissions staffUserRolePermissions = null;
       CCIStaffRole cciStaffRole = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
-      if (cciStaffRole != null) {
-         StaffUserRolePermissions staffUserRolePermissions = new StaffUserRolePermissions();
-         staffUserRolePermissions.setRoleId(cciStaffRole.getCciStaffRoleId());
-         staffUserRolePermissions.setRoleName(cciStaffRole.getCciStaffRoleName());
-         List<CCIStaffRolesDefaultResourcePermission> cciStaffRolesDefaultResourcePermissions = null;
+      List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
+      List<CCIStaffRolesDepartment> cciStaffRolesDepartments = cciStaffRole.getCcistaffRolesDepartments();
+      if (cciStaffRolesDepartments != null) {
+         for (CCIStaffRolesDepartment staffRolesDepartment : cciStaffRolesDepartments) {
+            staffUserRolePermissions = new StaffUserRolePermissions();
+            List<StaffUserDefaultPermissions> staffUserDefaultPermissions = new ArrayList<StaffUserDefaultPermissions>();
+            for (DepartmentResourceGroup dprg : departmentResourceGroupList) {
+               StaffUserDefaultPermissions defaultPermissions = new StaffUserDefaultPermissions();
+               defaultPermissions.setPermissionGroupId(dprg.getDepartmentResourceGroupId());
+               defaultPermissions.setPermissionGroupName(dprg.getResourceGroupName());
+               List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
+               List<CCIStaffRolesDefaultResourcePermission> cciStaffRolesDefaultResourcePermissions = cciSaffDefaultPermissionRepository.findPermissionsByRole(dprg);
+               if (cciStaffRolesDefaultResourcePermissions != null) {
+                  for (CCIStaffRolesDefaultResourcePermission defaultResourcePermission : cciStaffRolesDefaultResourcePermissions) {
+                     StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
+                     options.setPermissionGroupOptionId(defaultResourcePermission.getResourcePermission().getResourcePermissionId());
+                     options.setPermissionGroupOptionName(defaultResourcePermission.getResourcePermission().getResourceName());
+                     options.setPermissionGroupOptionActionId(String.valueOf(defaultResourcePermission.getResourceAction().getResourceActionId()));
+                     options.setPermissionGroupOptionAction(defaultResourcePermission.getResourceAction().getResourceAction());
+                     permissionGroupOptionsList.add(options);
+                  }
+                  cciStaffRolesDefaultResourcePermissions.clear();
+               }
+               defaultPermissions.getPermissionGroupOptions().addAll(permissionGroupOptionsList);
+               staffUserDefaultPermissions.add(defaultPermissions);
+            }
+            staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
+         }
       }
-
-      return null;
+      return staffUserRolePermissions;
    }
 
    @Override
@@ -530,7 +615,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    public User resetPassword(String userId) {
-      // TODO Auto-generated method stub
       return null;
    }
 
@@ -538,7 +622,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     * @param user
     * @return
     */
-   private String cresteUserDetails(User user) {
+   private String createUserDetails(User user) {
       CCIStaffUser cciUser = new CCIStaffUser();
       ValidationUtils.validateRequired(user.getFirstName());
       cciUser.setFirstName(user.getFirstName());

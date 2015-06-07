@@ -127,7 +127,7 @@ public class UserManagement {
      * @return updated User
      */
     @POST
-    @Path("{id}/update/permissions")
+    @Path("{id}/update/permissions/")
     @Consumes("application/json")
     public User updateUserPermissions(@PathParam("id") String id, User user) {
         return userMgmtServices.updateUserPermissions(id, user);
@@ -182,7 +182,7 @@ public class UserManagement {
      * @param user
      * @return updated User
      */
-    @POST
+    @GET
     @Path("default/{roleId}/permission")
     @Consumes("application/json")
     public StaffUserRolePermissions getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
