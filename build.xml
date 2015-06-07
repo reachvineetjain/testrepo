@@ -137,15 +137,25 @@
 
 	<!-- Search for Seasons-->
 
-	<target name="SearchSeasons">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Search.xsd" />
-		</java>
-	</target>
+		<target name="SearchSeasons">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/Search.xsd" />
+			</java>
+		</target>
+	
+	<!--  HSP -->
 
-	<!-- Search for Seasons-->
+		<target name="HSP">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/HSP.xsd" />
+			</java>
+		</target>
+		
+	
 	
 	<target name="DefaultRolePermissions">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
