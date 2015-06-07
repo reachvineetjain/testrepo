@@ -15,8 +15,6 @@
 
    <xsd:complexType name="StaffUserRolePermissions">
       <xsd:sequence>
-            <xsd:element name="roleId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="roleName" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="staffUserDefaultPermissions" type="drp:StaffUserDefaultPermissions" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
    </xsd:complexType>
