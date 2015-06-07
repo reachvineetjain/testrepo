@@ -11,16 +11,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission;
 import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.CCIStaffUserNote;
 import com.ccighgo.db.entities.CCIStaffUserProgram;
+import com.ccighgo.db.entities.CCIStaffUserProgramPK;
 import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
+import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRolePK;
 import com.ccighgo.db.entities.CCIStaffUsersResourcePermission;
+import com.ccighgo.db.entities.CCIStaffUsersResourcePermissionPK;
 import com.ccighgo.db.entities.Country;
-import com.ccighgo.db.entities.Department;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DepartmentResourceGroup;
@@ -28,6 +30,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
 import com.ccighgo.db.entities.USState;
+import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserProgramRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserStaffRoleRepository;
@@ -43,8 +46,11 @@ import com.ccighgo.jpa.repositories.ResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgram;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgramOptions;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserStaffRole;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.LoginInfo;
 import com.ccighgo.service.transport.usermanagement.beans.user.PermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
@@ -69,27 +75,40 @@ import com.ccighgo.utils.ValidationUtils;
 @Component
 public class UserManagementServiceImpl implements UserManagementService {
 
-   @Autowired CCIStaffUsersRepository cciUsersRepository;
-   @Autowired DepartmentProgramRepository departmentProgramRepository;
-   @Autowired DepartmentResourceGroupRepository departmentResourceGroupRepository;
-   @Autowired ResourcePermissionRepository resourcePermissionRepository;
-   @Autowired CountryRepository countryRepository;
-   @Autowired StateRepository stateRepository;
-   @Autowired LoginRepository loginRepository;
-   @Autowired UserTypeRepository userTypeRepository;
-   @Autowired CCIStaffUserStaffRoleRepository cciStaffUserStaffRoleRepository;
-   @Autowired DepartmentRepository departmentRepository;
-   @Autowired CCIStaffUserProgramRepository cciStaffUserProgramRepository;
-   @Autowired CCIStaffRolesRepository cciStaffRolesRepository;
-   @Autowired ResourceActionRepository resourceActionRepository;
-   @Autowired CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository; 
+   @Autowired
+   CCIStaffUsersRepository cciUsersRepository;
+   @Autowired
+   DepartmentProgramRepository departmentProgramRepository;
+   @Autowired
+   DepartmentResourceGroupRepository departmentResourceGroupRepository;
+   @Autowired
+   ResourcePermissionRepository resourcePermissionRepository;
+   @Autowired
+   CountryRepository countryRepository;
+   @Autowired
+   StateRepository stateRepository;
+   @Autowired
+   LoginRepository loginRepository;
+   @Autowired
+   UserTypeRepository userTypeRepository;
+   @Autowired
+   CCIStaffUserStaffRoleRepository cciStaffUserStaffRoleRepository;
+   @Autowired
+   DepartmentRepository departmentRepository;
+   @Autowired
+   CCIStaffUserProgramRepository cciStaffUserProgramRepository;
+   @Autowired
+   CCIStaffRolesRepository cciStaffRolesRepository;
+   @Autowired
+   ResourceActionRepository resourceActionRepository;
+   @Autowired
+   CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository;
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
    // 2. generate user password(Done) and send via email.
    // 3. use message from properties files.
    // 4. Implement exception handling.
    // 5. Failure roll back mechanism.
-   // 6. re-factoring of code
 
    @Override
    public CCIUsers getAllCCIUsers(String pageNo, String size) {
@@ -116,8 +135,14 @@ public class UserManagementServiceImpl implements UserManagementService {
             cciUser.setLoginName(cUsr.getLogin().getLoginName());
             cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
             // update user role for user
-            populateUserRole(cUsr, cciUser);
+            if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
+               populateUserRole(cUsr, cciUser);
+            }
             // update department and department programs
+            if (cUsr.getCcistaffUserPrograms() != null) {
+               List<CCIUserDepartmentProgram> userDepartmentProgramsList = populateUserPrograms(cUsr, cciUser);
+               cciUser.getCciUserDepartmentPrograms().addAll(userDepartmentProgramsList);
+            }
             cciUserList.add(cciUser);
          }
          cciUsers.getCciUsers().addAll(cciUserList);
@@ -127,222 +152,86 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    public User getUserById(String id) {
+      if (id == null || (Integer.valueOf(id)) == 0) {
+         throw new InvalidServiceConfigurationException("Please check user id");
+      }
       CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
-      User user = new User();
-      user.setCciUserId(cciUser.getCciStaffUserId());
-      user.setFirstName(cciUser.getFirstName());
-      user.setLastName(cciUser.getLastName());
-      user.setEmail(cciUser.getEmail());
+      if (cciUser != null) {
+         User user = new User();
+         user.setCciUserId(cciUser.getCciStaffUserId());
+         user.setFirstName(cciUser.getFirstName());
+         user.setLastName(cciUser.getLastName());
+         user.setEmail(cciUser.getEmail());
+         user.setCity(cciUser.getCity() != null ? cciUser.getCity() : CCIConstants.EMPTY_DATA);
+         user.setAddressLine1(cciUser.getHomeAddressLineOne() != null ? cciUser.getHomeAddressLineOne() : CCIConstants.EMPTY_DATA);
+         user.setAddressLine2(cciUser.getHomeAddressLineTwo() != null ? cciUser.getHomeAddressLineTwo() : CCIConstants.EMPTY_DATA);
+         user.setZip(cciUser.getZip() != null ? cciUser.getZip() : CCIConstants.EMPTY_DATA);
+         user.setPrimaryPhone(cciUser.getPhone() != null ? cciUser.getPhone() : CCIConstants.EMPTY_DATA);
+         user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
+         user.setSevisId(cciUser.getSevisID() != null ? cciUser.getSevisID() : CCIConstants.EMPTY_DATA);
+         user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
+         user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
+         user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
 
-      // non mandatory data, can be null/empty at the time of user creation.
-      // Checking if value is present else setting empty string
-      user.setCity(cciUser.getCity() != null ? cciUser.getCity() : CCIConstants.EMPTY_DATA);
-      user.setAddressLine1(cciUser.getHomeAddressLineOne() != null ? cciUser.getHomeAddressLineOne() : CCIConstants.EMPTY_DATA);
-      user.setAddressLine2(cciUser.getHomeAddressLineTwo() != null ? cciUser.getHomeAddressLineTwo() : CCIConstants.EMPTY_DATA);
-      user.setZip(cciUser.getZip() != null ? cciUser.getZip() : CCIConstants.EMPTY_DATA);
-      user.setPrimaryPhone(cciUser.getPhone() != null ? cciUser.getPhone() : CCIConstants.EMPTY_DATA);
-      user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
-      user.setSevisId(cciUser.getSevisID() != null ? cciUser.getSevisID() : CCIConstants.EMPTY_DATA);
-      user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
-      user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
-      user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
-
-      // update user login info
-      LoginInfo loginInfo = new LoginInfo();
-      UserType userType = new UserType();
-      userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
-      userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
-      userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
-      loginInfo.setLoginId(cciUser.getLogin().getLoginId());
-      loginInfo.setLoginName(cciUser.getLogin().getLoginName());
-      loginInfo.setUserType(userType);
-      user.setLoginInfo(loginInfo);
-
-      // update country
-      UserCountry country = new UserCountry();
-      country.setCountryId(cciUser.getCountry().getCountryId());
-      country.setCountryCode(cciUser.getCountry().getCountryCode());
-      country.setCountryName(cciUser.getCountry().getCountryName());
-      user.setUserCountry(country);
-
-      // update state
-      UserState state = new UserState();
-      state.setStateId(cciUser.getUsstate().getUsStatesId());
-      state.setStateCode(cciUser.getUsstate().getStateCode());
-      state.setStateName(cciUser.getUsstate().getStateName());
-      user.setUserState(state);
-
-      // populate user roles, department and department programs
-      if (cciUser.getCcistaffUsersCcistaffRoles() != null) {
-         updateUserRole(cciUser, user);
-      }
-      // populate department and department programs
-      if (cciUser.getCcistaffUserPrograms() != null) {
-         List<CCIStaffUserProgram> userPrograms = cciUser.getCcistaffUserPrograms();
-         List<UserDepartmentProgram> userDepartmentProgramsList = new ArrayList<UserDepartmentProgram>();
-         for (CCIStaffUserProgram userProgram : userPrograms) {
-            UserDepartmentProgram userDepartmentProgram = new UserDepartmentProgram();
-            userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getDepartment().getDepartmentId());
-            userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getDepartment().getDepartmentName());
-            userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getDepartment().getAcronym());
-            userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
-            userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
-            if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
-               List<UserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<UserDepartmentProgramOptions>();
-               for (DepartmentProgramOption departmentProgramOption : userProgram.getDepartmentProgram().getDepartmentProgramOptions()) {
-                  UserDepartmentProgramOptions usrDepartmentProgramOption = new UserDepartmentProgramOptions();
-                  usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
-                  usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
-                  usrDepartmentProgramOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
-                  userDepartmentProgramOptions.add(usrDepartmentProgramOption);
-               }
-               userDepartmentProgram.getUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
-            }
-            userDepartmentProgramsList.add(userDepartmentProgram);
+         // update user login info
+         LoginInfo loginInfo = getLoginInfo(cciUser);
+         user.setLoginInfo(loginInfo);
+         // update country
+         UserCountry country = getUserCountry(cciUser);
+         user.setUserCountry(country);
+         // update state
+         UserState state = getUserState(cciUser);
+         user.setUserState(state);
+         // populate user roles, department and department programs
+         if (cciUser.getCcistaffUsersCcistaffRoles() != null) {
+            List<UserRole> rolesList = getUserRole(cciUser, user);
+            user.getRoles().addAll(rolesList);
          }
-         user.getDepartmentPrograms().addAll(userDepartmentProgramsList);
-      }
-      if (cciUser.getCcistaffUsersResourcePermissions() != null) {
-         populateUserPermissions(cciUser, user);
-      }
-      //user notes
-      if(cciUser.getCcistaffUserNotes()!=null){
-         List<UserNotes> userNotes = new ArrayList<UserNotes>();
-         for(CCIStaffUserNote note:cciUser.getCcistaffUserNotes()){
-            UserNotes uNote = new UserNotes();
-            uNote.setCciUserId(cciUser.getCciStaffUserId());
-            uNote.setUserNotesId(note.getCciStaffUserNoteId());
-            uNote.setUserNote(note.getNote());
-            userNotes.addAll(userNotes);
+         // populate department and department programs
+         if (cciUser.getCcistaffUserPrograms() != null) {
+            List<UserDepartmentProgram> userDepartmentProgramsList = getUserDepartmentAndPrograms(cciUser, user);
+            user.getDepartmentPrograms().addAll(userDepartmentProgramsList);
          }
-         user.getUserNotes().addAll(userNotes);
+         if (cciUser.getCcistaffUsersResourcePermissions() != null) {
+            List<UserPermissions> userPermissionsList = getUserPermissions(cciUser, user);
+            user.getPermissions().addAll(userPermissionsList);
+         }
+         // user notes
+         if (cciUser.getCcistaffUserNotes() != null) {
+            List<UserNotes> userNotes = getUserNotes(cciUser, user);
+            user.getUserNotes().addAll(userNotes);
+         }
+         return user;
       }
-      return user;
+
+      return null;
    }
 
    @Override
-   //@Transactional
    public User createUser(User user) {
-      CCIStaffUser cciUser = new CCIStaffUser();
-      ValidationUtils.validateRequired(user.getFirstName());
-      cciUser.setFirstName(user.getFirstName());
-      ValidationUtils.validateRequired(user.getLastName());
-      cciUser.setLastName(user.getLastName());
-      cciUser.setEmail(user.getEmail());
-      String cciAdminGuid = UuidUtils.nextHexUUID();
-      cciUser.setCciAdminGuid(cciAdminGuid);
-      cciUser.setCity(user.getCity() != null ? user.getCity() : null);
-      cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
-      cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
-      cciUser.setZip(user.getZip() != null ? user.getZip() : null);
-      cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
-      cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
-      cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
-      if(user.getSupervisorId()!=null){
-         Integer supervisorId = Integer.valueOf(user.getSupervisorId());
-         cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
-      }
-      cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(CCIConstants.ACTIVE);
-
-      // update country and state and login
-      //TODO put null check
-      Country userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
-      USState userState = stateRepository.findOne(user.getUserState().getStateId());
-      cciUser.setCountry(userCountry);
-      cciUser.setUsstate(userState);
-      com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(user.getLoginInfo().getUserType().getUserTypeId());
-      Login login = new Login();
-      login.setLoginName(user.getLoginInfo().getLoginName());
-      String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
-            CCIConstants.MAX_SPL_CHARS).toString();
-      login.setPassword(password);
-      login.setUserType(cciUserType);
-
-      loginRepository.save(login);
-      login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
-      cciUser.setLogin(login);
-      cciUser.setCreatedBy(1);
-      cciUser.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-      cciUser.setModifiedBy(1);
-      cciUser.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-      cciUsersRepository.saveAndFlush(cciUser);
-      //somehow returned entity was missing the id so created another method to fetch user by guid
+      String cciAdminGuid = cresteUserDetails(user);
       CCIStaffUser cUser = cciUsersRepository.findByGUID(cciAdminGuid);
 
-      // since CCIStaffUsersCCIStaffRole uses composite key and we do not have ccistaff user id unless the user is
-      // created, we are saving user and then fetching user back and then updating staff roles and permissions
-
+      // create department and programs
       if (user.getDepartmentPrograms() != null) {
-         List<UserDepartmentProgram> userDepartmentProgramsList = user.getDepartmentPrograms();
-         List<CCIStaffUserProgram> userPrograms = new ArrayList<CCIStaffUserProgram>();
-         for (UserDepartmentProgram usrDeptPrg : userDepartmentProgramsList) {
-            CCIStaffUserProgram cciUsrPrg = new CCIStaffUserProgram();
-            Department department = departmentRepository.findOne(usrDeptPrg.getDepartmentId());
-            DepartmentProgram deptProgram = departmentProgramRepository.findDepartmentProgramByDepartmentAndProgramId(department, usrDeptPrg.getProgramId());
-            cciUsrPrg.setDepartmentProgram(deptProgram);
-            cciUsrPrg.setCreatedBy(1);
-            cciUsrPrg.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            cciUsrPrg.setModifiedBy(1);
-            cciUsrPrg.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            cciUsrPrg.setCcistaffUser(cUser);
-            userPrograms.add(cciUsrPrg);
-         }
+         List<CCIStaffUserProgram> userPrograms = createUserDepartmentAndPrograms(user, cUser);
          cciStaffUserProgramRepository.save(userPrograms);
          cciStaffUserProgramRepository.flush();
       }
 
-      // update user role
+      // create user role
       if (user.getRoles() != null) {
-         List<UserRole> rolesList = user.getRoles();
-         List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = new ArrayList<CCIStaffUsersCCIStaffRole>();
-         for (UserRole usrRole : rolesList) {
-            CCIStaffUsersCCIStaffRole staffUsersCCIStaffRole = new CCIStaffUsersCCIStaffRole();
-            CCIStaffRole cciStaffRole = cciStaffRolesRepository.findOne(usrRole.getRoleId());
-            if(cciStaffRole!=null){
-               staffUsersCCIStaffRole.setCcistaffRole(cciStaffRole);
-            }
-            staffUsersCCIStaffRole.setCreatedBy(1);
-            staffUsersCCIStaffRole.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            staffUsersCCIStaffRole.setModifiedBy(1);
-            staffUsersCCIStaffRole.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            cciStaffUsersCCIStaffRoles.add(staffUsersCCIStaffRole);
-         }
+         List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = createUserRole(user, cUser);
          cciStaffUserStaffRoleRepository.save(cciStaffUsersCCIStaffRoles);
          cciStaffUserStaffRoleRepository.flush();
       }
-      
+
       // update user permission
-      if(user.getPermissions()!=null){
-         List<UserPermissions> userPermissionsFrontList = user.getPermissions();
-         List<CCIStaffUsersResourcePermission> cciUserPermissionsList = new ArrayList<CCIStaffUsersResourcePermission>();
-         for(UserPermissions userPermission:userPermissionsFrontList){
-            DepartmentResourceGroup departmentResourceGroup = departmentResourceGroupRepository.findOne(userPermission.getPermissionGroupId());
-            List<PermissionGroupOptions> permissionGroupOptionsList = userPermission.getPermissionGroupOptions();
-            if(permissionGroupOptionsList!=null){
-               for(PermissionGroupOptions groupOptions:permissionGroupOptionsList){
-                  CCIStaffUsersResourcePermission cciUserPermission = new CCIStaffUsersResourcePermission();
-                  ResourceAction resourceAction = null;
-                  ResourcePermission  resourcePermission = resourcePermissionRepository.findOne(groupOptions.getPermissionGroupOptionId());
-                  if(groupOptions.getPermissionGroupOptionActionId()!=null && !groupOptions.getPermissionGroupOptionActionId().trim().equals(CCIConstants.EMPTY_DATA)){
-                     resourceAction = resourceActionRepository.findOne(Integer.valueOf(groupOptions.getPermissionGroupOptionActionId()));
-                  }
-                  cciUserPermission.setCcistaffUser(cUser);
-                  cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
-                  cciUserPermission.setResourcePermission(resourcePermission);
-                  cciUserPermission.setResourceAction(resourceAction);
-                  cciUserPermission.setCreatedBy(1);
-                  cciUserPermission.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  cciUserPermission.setModifiedBy(1);
-                  cciUserPermission.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  cciUserPermissionsList.add(cciUserPermission);
-               }
-            }
-         }
+      if (user.getPermissions() != null) {
+         List<CCIStaffUsersResourcePermission> cciUserPermissionsList = createUserPermissions(user, cUser);
          cciStaffUsersResourcePermissionRepository.save(cciUserPermissionsList);
          cciStaffUsersResourcePermissionRepository.flush();
       }
-      
       User usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
       return usr;
    }
@@ -378,9 +267,47 @@ public class UserManagementServiceImpl implements UserManagementService {
       User usr = getUserById(String.valueOf(cUsr.getCciStaffUserId()));
       return usr;
    }
+   
+  /* private List<UserPermissions> getUserPermissions(CCIStaffUser cciUser, User user) {
+      List<UserPermissions> userPermissionsFrontList = null;
+      if (cciUser.getCcistaffUsersResourcePermissions() != null) {
+         // get user permissions list from database
+         List<CCIStaffUsersResourcePermission> cciUserPermissionsList = cciUser.getCcistaffUsersResourcePermissions();
+         userPermissionsFrontList = new ArrayList<UserPermissions>();
+         List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
+         for (DepartmentResourceGroup dpRg : departmentResourceGroupList) {
+            UserPermissions userPermission = new UserPermissions();
+            userPermission.setPermissionGroupId(dpRg.getDepartmentResourceGroupId());
+            userPermission.setPermissionGroupName(dpRg.getResourceGroupName());
+            List<PermissionGroupOptions> permissionGroupOptions = new ArrayList<PermissionGroupOptions>();
+            for (CCIStaffUsersResourcePermission cciUserPermission : cciUserPermissionsList) {
+               if (cciUserPermission.getDepartmentResourceGroup().getDepartmentResourceGroupId() == dpRg.getDepartmentResourceGroupId()) {
+                  PermissionGroupOptions groupOptions = new PermissionGroupOptions();
+                  groupOptions.setPermissionGroupOptionId(cciUserPermission.getResourcePermission().getResourcePermissionId());
+                  groupOptions.setPermissionGroupOptionName(cciUserPermission.getResourcePermission().getResourceName());
+                  groupOptions.setPermissionGroupOptionActionId(String.valueOf(cciUserPermission.getResourceAction().getResourceActionId()));
+                  groupOptions.setPermissionGroupOptionAction(cciUserPermission.getResourceAction().getResourceAction());
+                  permissionGroupOptions.add(groupOptions);
+               }
+            }
+            userPermission.getPermissionGroupOptions().addAll(permissionGroupOptions);
+            userPermissionsFrontList.add(userPermission);
+         }
+
+      }
+      return userPermissionsFrontList;
+   }*/
 
    @Override
-   public CCIUsers getDefaultPermissionsbyRole(String roleId) {
+   public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId) {
+      CCIStaffRole cciStaffRole = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
+      if (cciStaffRole != null) {
+         StaffUserRolePermissions staffUserRolePermissions = new StaffUserRolePermissions();
+         staffUserRolePermissions.setRoleId(cciStaffRole.getCciStaffRoleId());
+         staffUserRolePermissions.setRoleName(cciStaffRole.getCciStaffRoleName());
+         List<CCIStaffRolesDefaultResourcePermission> cciStaffRolesDefaultResourcePermissions = null;
+      }
+
       return null;
    }
 
@@ -400,60 +327,129 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    /**
+    * Get user country
     * 
     * @param cciUser
-    * @param user
+    * @return user country
     */
-   private void populateUserPermissions(CCIStaffUser cciUser, User user) {
-      if(cciUser.getCcistaffUsersResourcePermissions()!=null){
-         List<UserPermissions> userPermissionsFrontList = new ArrayList<UserPermissions>();
-         
-         
+   private UserCountry getUserCountry(CCIStaffUser cciUser) {
+      UserCountry country = null;
+      if (cciUser.getCountry() != null) {
+         country = new UserCountry();
+         country.setCountryId(cciUser.getCountry().getCountryId());
+         country.setCountryCode(cciUser.getCountry().getCountryCode());
+         country.setCountryName(cciUser.getCountry().getCountryName());
       }
-      
-      
-      
-      
-      
-      List<DepartmentResourceGroup> userRecGroup = departmentResourceGroupRepository.findDepartmentResourceGroupByUser(cciUser.getCciStaffUserId());
-      List<UserPermissions> perms = new ArrayList<UserPermissions>();
-      List<PermissionGroupOptions> permsGroupOptions = null;
-      for (DepartmentResourceGroup rg : userRecGroup) {
-         permsGroupOptions = new ArrayList<PermissionGroupOptions>();
-         UserPermissions userPerms = new UserPermissions();
-         userPerms.setPermissionGroupId(rg.getDepartmentResourceGroupId());
-         userPerms.setPermissionGroupName(rg.getResourceGroupName());
-         getRscPermissionsList(permsGroupOptions, cciUser.getCciStaffUserId(), rg.getResourceGroupName());
-         userPerms.getPermissionGroupOptions().addAll(permsGroupOptions);
-         perms.add(userPerms);
-      }
-      user.getPermissions().addAll(perms);
+      return country;
    }
 
    /**
+    * Get user state
     * 
-    * @param permsGrpOptions
-    * @param id
-    * @param name
+    * @param cciUser
+    * @return user state
     */
+   private UserState getUserState(CCIStaffUser cciUser) {
+      UserState state = new UserState();
+      state.setStateId(cciUser.getUsstate().getUsStatesId());
+      state.setStateCode(cciUser.getUsstate().getStateCode());
+      state.setStateName(cciUser.getUsstate().getStateName());
+      return state;
+   }
 
-   private void getRscPermissionsList(List<PermissionGroupOptions> permsGrpOptions, Integer id, String name) {
-      List<ResourcePermission> rscPermsList = resourcePermissionRepository.findPermsByRsc(id, name);
-      for (ResourcePermission rp : rscPermsList) {
-         PermissionGroupOptions prmsOptions = new PermissionGroupOptions();
-         prmsOptions.setPermissionGroupOptionId(rp.getResourcePermissionId());
-         prmsOptions.setPermissionGroupOptionActionId(String.valueOf(rp.getResourceAction().getResourceActionId()));
-         prmsOptions.setPermissionGroupOptionAction(rp.getResourceAction().getResourceAction());
-         prmsOptions.setPermissionGroupOptionName(rp.getResourceName());
-         permsGrpOptions.add(prmsOptions);
+   /**
+    * get login Info of the user
+    * 
+    * @param cciUser
+    * @return Login details
+    */
+   private LoginInfo getLoginInfo(CCIStaffUser cciUser) {
+      LoginInfo loginInfo = new LoginInfo();
+      UserType userType = new UserType();
+      userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
+      userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
+      userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
+      loginInfo.setLoginId(cciUser.getLogin().getLoginId());
+      loginInfo.setLoginName(cciUser.getLogin().getLoginName());
+      loginInfo.setUserType(userType);
+      return loginInfo;
+   }
+
+   /**
+    * Gets user department and department program
+    * 
+    * @param cciUser
+    * @param user
+    * @return list of user department programs
+    */
+   private List<UserDepartmentProgram> getUserDepartmentAndPrograms(CCIStaffUser cciUser, User user) {
+      List<CCIStaffUserProgram> userPrograms = cciUser.getCcistaffUserPrograms();
+      List<UserDepartmentProgram> userDepartmentProgramsList = new ArrayList<UserDepartmentProgram>();
+      for (CCIStaffUserProgram userProgram : userPrograms) {
+         UserDepartmentProgram userDepartmentProgram = new UserDepartmentProgram();
+         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getDepartment().getAcronym());
+         userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
+         userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
+         if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
+            List<UserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<UserDepartmentProgramOptions>();
+            for (DepartmentProgramOption departmentProgramOption : userProgram.getDepartmentProgram().getDepartmentProgramOptions()) {
+               UserDepartmentProgramOptions usrDepartmentProgramOption = new UserDepartmentProgramOptions();
+               usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
+               usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
+               usrDepartmentProgramOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
+               userDepartmentProgramOptions.add(usrDepartmentProgramOption);
+            }
+            userDepartmentProgram.getUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
+         }
+         userDepartmentProgramsList.add(userDepartmentProgram);
       }
+      return userDepartmentProgramsList;
+   }
+
+   /**
+    * Gets user permissions
+    * 
+    * @param cciUser
+    * @param user
+    * @return list of user permissions
+    */
+   private List<UserPermissions> getUserPermissions(CCIStaffUser cciUser, User user) {
+      List<UserPermissions> userPermissionsFrontList = null;
+      if (cciUser.getCcistaffUsersResourcePermissions() != null) {
+         // get user permissions list from database
+         List<CCIStaffUsersResourcePermission> cciUserPermissionsList = cciUser.getCcistaffUsersResourcePermissions();
+         userPermissionsFrontList = new ArrayList<UserPermissions>();
+         List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
+         for (DepartmentResourceGroup dpRg : departmentResourceGroupList) {
+            UserPermissions userPermission = new UserPermissions();
+            userPermission.setPermissionGroupId(dpRg.getDepartmentResourceGroupId());
+            userPermission.setPermissionGroupName(dpRg.getResourceGroupName());
+            List<PermissionGroupOptions> permissionGroupOptions = new ArrayList<PermissionGroupOptions>();
+            for (CCIStaffUsersResourcePermission cciUserPermission : cciUserPermissionsList) {
+               if (cciUserPermission.getDepartmentResourceGroup().getDepartmentResourceGroupId() == dpRg.getDepartmentResourceGroupId()) {
+                  PermissionGroupOptions groupOptions = new PermissionGroupOptions();
+                  groupOptions.setPermissionGroupOptionId(cciUserPermission.getResourcePermission().getResourcePermissionId());
+                  groupOptions.setPermissionGroupOptionName(cciUserPermission.getResourcePermission().getResourceName());
+                  groupOptions.setPermissionGroupOptionActionId(String.valueOf(cciUserPermission.getResourceAction().getResourceActionId()));
+                  groupOptions.setPermissionGroupOptionAction(cciUserPermission.getResourceAction().getResourceAction());
+                  permissionGroupOptions.add(groupOptions);
+               }
+            }
+            userPermission.getPermissionGroupOptions().addAll(permissionGroupOptions);
+            userPermissionsFrontList.add(userPermission);
+         }
+
+      }
+      return userPermissionsFrontList;
    }
 
    /**
     * @param cciUser
     * @param user
     */
-   private void updateUserRole(CCIStaffUser cciUser, User user) {
+   private List<UserRole> getUserRole(CCIStaffUser cciUser, User user) {
       List<UserRole> rolesList = new ArrayList<UserRole>();
       for (CCIStaffUsersCCIStaffRole sRole : cciUser.getCcistaffUsersCcistaffRoles()) {
          UserRole role = new UserRole();
@@ -461,7 +457,26 @@ public class UserManagementServiceImpl implements UserManagementService {
          role.setRoleName(sRole.getCcistaffRole().getCciStaffRoleName());
          rolesList.add(role);
       }
-      user.getRoles().addAll(rolesList);
+      return rolesList;
+   }
+
+   /**
+    * Get user notes
+    * 
+    * @param cciUser
+    * @param user
+    * @return <code>(List<UserNotes>)</code>
+    */
+   private List<UserNotes> getUserNotes(CCIStaffUser cciUser, User user) {
+      List<UserNotes> userNotes = new ArrayList<UserNotes>();
+      for (CCIStaffUserNote note : cciUser.getCcistaffUserNotes()) {
+         UserNotes uNote = new UserNotes();
+         uNote.setCciUserId(cciUser.getCciStaffUserId());
+         uNote.setUserNotesId(note.getCciStaffUserNoteId());
+         uNote.setUserNote(note.getNote());
+         userNotes.addAll(userNotes);
+      }
+      return userNotes;
    }
 
    /**
@@ -481,11 +496,191 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
    }
 
+   /**
+    * Gets user department and department program
+    * 
+    * @param cciUser
+    * @param user
+    * @return list of user department programs
+    */
+   private List<CCIUserDepartmentProgram> populateUserPrograms(CCIStaffUser cciUser, CCIUser user) {
+      List<CCIStaffUserProgram> userPrograms = cciUser.getCcistaffUserPrograms();
+      List<CCIUserDepartmentProgram> userDepartmentProgramsList = new ArrayList<CCIUserDepartmentProgram>();
+      for (CCIStaffUserProgram userProgram : userPrograms) {
+         CCIUserDepartmentProgram userDepartmentProgram = new CCIUserDepartmentProgram();
+         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getDepartment().getAcronym());
+         userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
+         userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
+         if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
+            List<CCIUserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<CCIUserDepartmentProgramOptions>();
+            for (DepartmentProgramOption departmentProgramOption : userProgram.getDepartmentProgram().getDepartmentProgramOptions()) {
+               CCIUserDepartmentProgramOptions usrDepartmentProgramOption = new CCIUserDepartmentProgramOptions();
+               usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
+               usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
+               usrDepartmentProgramOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
+               userDepartmentProgramOptions.add(usrDepartmentProgramOption);
+            }
+            userDepartmentProgram.getCciUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
+         }
+         userDepartmentProgramsList.add(userDepartmentProgram);
+      }
+      return userDepartmentProgramsList;
+   }
+
    public User resetPassword(String userId) {
       // TODO Auto-generated method stub
       return null;
    }
-   
-   
+
+   /**
+    * @param user
+    * @return
+    */
+   private String cresteUserDetails(User user) {
+      CCIStaffUser cciUser = new CCIStaffUser();
+      ValidationUtils.validateRequired(user.getFirstName());
+      cciUser.setFirstName(user.getFirstName());
+      ValidationUtils.validateRequired(user.getLastName());
+      cciUser.setLastName(user.getLastName());
+      cciUser.setEmail(user.getEmail());
+      String cciAdminGuid = UuidUtils.nextHexUUID();
+      cciUser.setCciAdminGuid(cciAdminGuid);
+      cciUser.setCity(user.getCity() != null ? user.getCity() : null);
+      cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
+      cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
+      cciUser.setZip(user.getZip() != null ? user.getZip() : null);
+      cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
+      cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
+      if (user.getSupervisorId() != null) {
+         Integer supervisorId = Integer.valueOf(user.getSupervisorId());
+         cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
+      }
+      cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
+      cciUser.setActive(CCIConstants.ACTIVE);
+
+      // update user country
+      if (user.getUserCountry().getCountryId() > 0) {
+         Country userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
+         cciUser.setCountry(userCountry);
+      }
+      // update user state
+      if (user.getUserState().getStateId() > 0) {
+         USState userState = stateRepository.findOne(user.getUserState().getStateId());
+         cciUser.setUsstate(userState);
+      }
+      com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(CCIConstants.CCI_USER_TYPE);
+      ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
+      Login login = new Login();
+      login.setLoginName(user.getLoginInfo().getLoginName());
+      String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
+            CCIConstants.MAX_SPL_CHARS).toString();
+      login.setPassword(password);
+      login.setUserType(cciUserType);
+
+      loginRepository.save(login);
+      login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
+      cciUser.setLogin(login);
+      cciUser.setCreatedBy(1);
+      cciUser.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciUser.setModifiedBy(1);
+      cciUser.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciUsersRepository.saveAndFlush(cciUser);
+      return cciAdminGuid;
+   }
+
+   /**
+    * @param user
+    * @param cUser
+    * @return
+    */
+   private List<CCIStaffUserProgram> createUserDepartmentAndPrograms(User user, CCIStaffUser cUser) {
+      List<UserDepartmentProgram> userDepartmentProgramsList = user.getDepartmentPrograms();
+      List<CCIStaffUserProgram> userPrograms = new ArrayList<CCIStaffUserProgram>();
+      for (UserDepartmentProgram usrDeptPrg : userDepartmentProgramsList) {
+         CCIStaffUserProgram cciUsrPrg = new CCIStaffUserProgram();
+         DepartmentProgram deptProgram = departmentProgramRepository.findOne(usrDeptPrg.getProgramId());
+         CCIStaffUserProgramPK staffUserProgramPK = new CCIStaffUserProgramPK();
+         staffUserProgramPK.setCciStaffUserId(cUser.getCciStaffUserId());
+         staffUserProgramPK.setDepartmentProgramId(usrDeptPrg.getProgramId());
+         cciUsrPrg.setId(staffUserProgramPK);
+         cciUsrPrg.setDepartmentProgram(deptProgram);
+         cciUsrPrg.setCreatedBy(1);
+         cciUsrPrg.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         cciUsrPrg.setModifiedBy(1);
+         cciUsrPrg.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         cciUsrPrg.setCcistaffUser(cUser);
+         userPrograms.add(cciUsrPrg);
+      }
+      return userPrograms;
+   }
+
+   /**
+    * @param user
+    * @param cUser
+    * @return
+    */
+   private List<CCIStaffUsersCCIStaffRole> createUserRole(User user, CCIStaffUser cUser) {
+      List<UserRole> rolesList = user.getRoles();
+      List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = new ArrayList<CCIStaffUsersCCIStaffRole>();
+      for (UserRole usrRole : rolesList) {
+         CCIStaffUsersCCIStaffRole staffUsersCCIStaffRole = new CCIStaffUsersCCIStaffRole();
+         CCIStaffRole cciStaffRole = cciStaffRolesRepository.findOne(usrRole.getRoleId());
+         if (cciStaffRole != null) {
+            staffUsersCCIStaffRole.setCcistaffRole(cciStaffRole);
+         }
+         staffUsersCCIStaffRole.setCreatedBy(1);
+         staffUsersCCIStaffRole.setCcistaffUser(cUser);
+         staffUsersCCIStaffRole.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         staffUsersCCIStaffRole.setModifiedBy(1);
+         staffUsersCCIStaffRole.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         CCIStaffUsersCCIStaffRolePK pk = new CCIStaffUsersCCIStaffRolePK();
+         pk.setCciStaffUserId(cUser.getCciStaffUserId());
+         pk.setCciStaffRoleId(usrRole.getRoleId());
+         staffUsersCCIStaffRole.setId(pk);
+         cciStaffUsersCCIStaffRoles.add(staffUsersCCIStaffRole);
+      }
+      return cciStaffUsersCCIStaffRoles;
+   }
+
+   /**
+    * @param user
+    * @param cUser
+    * @return
+    */
+   private List<CCIStaffUsersResourcePermission> createUserPermissions(User user, CCIStaffUser cUser) {
+      List<UserPermissions> userPermissionsFrontList = user.getPermissions();
+      List<CCIStaffUsersResourcePermission> cciUserPermissionsList = new ArrayList<CCIStaffUsersResourcePermission>();
+      for (UserPermissions userPermission : userPermissionsFrontList) {
+         DepartmentResourceGroup departmentResourceGroup = departmentResourceGroupRepository.findOne(userPermission.getPermissionGroupId());
+         List<PermissionGroupOptions> permissionGroupOptionsList = userPermission.getPermissionGroupOptions();
+         if (permissionGroupOptionsList != null) {
+            for (PermissionGroupOptions groupOptions : permissionGroupOptionsList) {
+               CCIStaffUsersResourcePermission cciUserPermission = new CCIStaffUsersResourcePermission();
+               ResourceAction resourceAction = null;
+               ResourcePermission resourcePermission = resourcePermissionRepository.findOne(groupOptions.getPermissionGroupOptionId());
+               if (groupOptions.getPermissionGroupOptionActionId() != null && !groupOptions.getPermissionGroupOptionActionId().trim().equals(CCIConstants.EMPTY_DATA)) {
+                  resourceAction = resourceActionRepository.findOne(Integer.valueOf(groupOptions.getPermissionGroupOptionActionId()));
+               }
+               CCIStaffUsersResourcePermissionPK pk = new CCIStaffUsersResourcePermissionPK();
+               pk.setCciStaffUserId(cUser.getCciStaffUserId());
+               pk.setResourcePermissionId(resourcePermission.getResourcePermissionId());
+               cciUserPermission.setId(pk);
+               cciUserPermission.setCcistaffUser(cUser);
+               cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
+               cciUserPermission.setResourcePermission(resourcePermission);
+               cciUserPermission.setResourceAction(resourceAction);
+               cciUserPermission.setCreatedBy(1);
+               cciUserPermission.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               cciUserPermission.setModifiedBy(1);
+               cciUserPermission.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               cciUserPermissionsList.add(cciUserPermission);
+            }
+         }
+      }
+      return cciUserPermissionsList;
+   }
 
 }

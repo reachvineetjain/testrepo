@@ -8,12 +8,16 @@
         <class>com.ccighgo.db.entities.AnnualSeason</class>
         <class>com.ccighgo.db.entities.CCIStaffRole</class>
         <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission</class>
+        <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermissionPK</class>
         <class>com.ccighgo.db.entities.CCIStaffRolesDepartment</class>
         <class>com.ccighgo.db.entities.CCIStaffUserNote</class>
         <class>com.ccighgo.db.entities.CCIStaffUserProgram</class>
+        <class>com.ccighgo.db.entities.CCIStaffUserProgramPK</class>
         <class>com.ccighgo.db.entities.CCIStaffUser</class>
         <class>com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole</class>
+        <class>com.ccighgo.db.entities.CCIStaffUsersCCIStaffRolePK</class>
         <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermission</class>
+        <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermissionPK</class>
         <class>com.ccighgo.db.entities.Country</class>
         <class>com.ccighgo.db.entities.DepartmentFunction</class>
         <class>com.ccighgo.db.entities.DepartmentProgramOption</class>

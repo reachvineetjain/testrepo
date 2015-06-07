@@ -30,13 +30,13 @@ public class DepartmentProgramOption implements Serializable {
 	@JoinColumn(name="departmentProgramId", nullable=false)
 	private DepartmentProgram departmentProgram;
 
-	//bi-directional many-to-one association to SeasonWPAllocation
-	@OneToMany(mappedBy="departmentProgramOption")
-	private List<SeasonWPAllocation> seasonWpallocations;
-
 	//bi-directional many-to-one association to SeasonHSPAllocation
 	@OneToMany(mappedBy="departmentProgramOption")
 	private List<SeasonHSPAllocation> seasonHspallocations;
+
+	//bi-directional many-to-one association to SeasonWPAllocation
+	@OneToMany(mappedBy="departmentProgramOption")
+	private List<SeasonWPAllocation> seasonWpallocations;
 
 	public DepartmentProgramOption() {
 	}
@@ -73,28 +73,6 @@ public class DepartmentProgramOption implements Serializable {
 		this.departmentProgram = departmentProgram;
 	}
 
-	public List<SeasonWPAllocation> getSeasonWpallocations() {
-		return this.seasonWpallocations;
-	}
-
-	public void setSeasonWpallocations(List<SeasonWPAllocation> seasonWpallocations) {
-		this.seasonWpallocations = seasonWpallocations;
-	}
-
-	public SeasonWPAllocation addSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
-		getSeasonWpallocations().add(seasonWpallocation);
-		seasonWpallocation.setDepartmentProgramOption(this);
-
-		return seasonWpallocation;
-	}
-
-	public SeasonWPAllocation removeSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
-		getSeasonWpallocations().remove(seasonWpallocation);
-		seasonWpallocation.setDepartmentProgramOption(null);
-
-		return seasonWpallocation;
-	}
-
 	public List<SeasonHSPAllocation> getSeasonHspallocations() {
 		return this.seasonHspallocations;
 	}
@@ -115,6 +93,28 @@ public class DepartmentProgramOption implements Serializable {
 		seasonHspallocation.setDepartmentProgramOption(null);
 
 		return seasonHspallocation;
+	}
+
+	public List<SeasonWPAllocation> getSeasonWpallocations() {
+		return this.seasonWpallocations;
+	}
+
+	public void setSeasonWpallocations(List<SeasonWPAllocation> seasonWpallocations) {
+		this.seasonWpallocations = seasonWpallocations;
+	}
+
+	public SeasonWPAllocation addSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
+		getSeasonWpallocations().add(seasonWpallocation);
+		seasonWpallocation.setDepartmentProgramOption(this);
+
+		return seasonWpallocation;
+	}
+
+	public SeasonWPAllocation removeSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
+		getSeasonWpallocations().remove(seasonWpallocation);
+		seasonWpallocation.setDepartmentProgramOption(null);
+
+		return seasonWpallocation;
 	}
 
 }

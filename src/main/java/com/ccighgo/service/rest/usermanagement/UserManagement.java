@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.usermanagment.UserManagementServiceImpl;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 
@@ -184,7 +185,7 @@ public class UserManagement {
     @POST
     @Path("default/{roleId}/permission")
     @Consumes("application/json")
-    public CCIUsers getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
+    public StaffUserRolePermissions getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
         return userMgmtServices.getDefaultPermissionsbyRole(roleId);
     }
     
