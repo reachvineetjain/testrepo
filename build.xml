@@ -125,7 +125,7 @@
 		</java>
 	</target>
 
-	<!-- Add New Season
+	<!-- Add New Season-->
 
 	<target name="AddSeason">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -135,18 +135,16 @@
 		</java>
 	</target>
 
-	
-
+	<!-- Search Seasons-->
 		<target name="SearchSeasons">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
 				<arg value="-d" />
 				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/Search.xsd" />
+				<arg value="${xsd.dir}/SearchSeasons.xsd" />
 			</java>
 		</target>
 	
-	
-
+	<!-- High school programs-->
 		<target name="HSP">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
 				<arg value="-d" />
@@ -155,7 +153,7 @@
 			</java>
 		</target>
 		
-	-->
+	
 	
 	<target name="DefaultRolePermissions">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
