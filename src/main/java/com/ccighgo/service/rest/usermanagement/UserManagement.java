@@ -196,8 +196,8 @@ public class UserManagement {
      * @param user
      * @return updated User
      */
-    @POST
-    @Path("default/{roleId}/permission")
+    @GET
+    @Path("reset/{id}")
     @Consumes("application/json")
     public User resetPassword(@PathParam("userId") String userId) {
         return userMgmtServices.resetPassword(userId);
