@@ -19,11 +19,15 @@
      <bean id="userManagementService" class="com.ccighgo.service.components.usermanagment.UserManagementServiceImpl" />
      <bean id="utilityServices" class="com.ccighgo.service.components.utility.UtilityServicesImpl" />
      
-     <bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
+     <bean id="cciGhGoProps"
+		class="org.springframework.context.support.ResourceBundleMessageSource" autowire-candidate="true">
 		<property name="basename">
-			<value>META-INF\messages</value>
+			<value>META-INF\ccighgomessages</value>
 		</property>
 	</bean>
+   
+   <!-- <bean id="cciGhGoProps" class= "org.springframework.beans.factory.config.PropertiesFactoryBean" autowire-candidate="true">
+      <property name="basename" value ="META-INF\ccighgomessages"/>
+     </bean> -->
 	
 </beans>

@@ -5,6 +5,10 @@ package com.ccighgo.service.components.usermanagment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -110,6 +114,9 @@ public class UserManagementServiceImpl implements UserManagementService {
    CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository;
    @Autowired
    CCISaffDefaultPermissionRepository cciSaffDefaultPermissionRepository;
+   
+   @Autowired EntityManager entityManager;
+   @Autowired Properties cciGhGoProps;
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
    // 2. generate user password(Done) and send via email.
@@ -358,40 +365,32 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId) {
-      
-      //TODO Please work and fix it
-      
-      
+      //0:departmentResourceGroupId, 1:resourceGroupName, 2:resourcePermissionId, 3:resourceName, 4:resourceActionId, 5:resourceAction
       StaffUserRolePermissions staffUserRolePermissions = null;
-      CCIStaffRole cciStaffRole = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
       List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
-      List<CCIStaffRolesDepartment> cciStaffRolesDepartments = cciStaffRole.getCcistaffRolesDepartments();
-      if (cciStaffRolesDepartments != null) {
-         for (CCIStaffRolesDepartment staffRolesDepartment : cciStaffRolesDepartments) {
-            staffUserRolePermissions = new StaffUserRolePermissions();
-            List<StaffUserDefaultPermissions> staffUserDefaultPermissions = new ArrayList<StaffUserDefaultPermissions>();
-            for (DepartmentResourceGroup dprg : departmentResourceGroupList) {
-               StaffUserDefaultPermissions defaultPermissions = new StaffUserDefaultPermissions();
-               defaultPermissions.setPermissionGroupId(dprg.getDepartmentResourceGroupId());
-               defaultPermissions.setPermissionGroupName(dprg.getResourceGroupName());
-               List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
-               List<CCIStaffRolesDefaultResourcePermission> cciStaffRolesDefaultResourcePermissions = cciSaffDefaultPermissionRepository.findPermissionsByRole(dprg);
-               if (cciStaffRolesDefaultResourcePermissions != null) {
-                  for (CCIStaffRolesDefaultResourcePermission defaultResourcePermission : cciStaffRolesDefaultResourcePermissions) {
-                     StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
-                     options.setPermissionGroupOptionId(defaultResourcePermission.getResourcePermission().getResourcePermissionId());
-                     options.setPermissionGroupOptionName(defaultResourcePermission.getResourcePermission().getResourceName());
-                     options.setPermissionGroupOptionActionId(String.valueOf(defaultResourcePermission.getResourceAction().getResourceActionId()));
-                     options.setPermissionGroupOptionAction(defaultResourcePermission.getResourceAction().getResourceAction());
-                     permissionGroupOptionsList.add(options);
-                  }
-                  cciStaffRolesDefaultResourcePermissions.clear();
+      List<Object[]> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(roleId));
+      if (results != null) {
+         staffUserRolePermissions = new StaffUserRolePermissions();
+         List<StaffUserDefaultPermissions> staffUserDefaultPermissions = new ArrayList<StaffUserDefaultPermissions>();
+         for (DepartmentResourceGroup dprg : departmentResourceGroupList) {
+            StaffUserDefaultPermissions defaultPermissions = new StaffUserDefaultPermissions();
+            defaultPermissions.setPermissionGroupId(dprg.getDepartmentResourceGroupId());
+            defaultPermissions.setPermissionGroupName(dprg.getResourceGroupName());
+            List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
+            for (Object[] obj : results) {
+               if(dprg.getDepartmentResourceGroupId()==Integer.valueOf(obj[0].toString())){
+                  StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
+                  options.setPermissionGroupOptionId(Integer.valueOf(obj[2].toString()));
+                  options.setPermissionGroupOptionName(obj[3].toString());
+                  options.setPermissionGroupOptionActionId(obj[4].toString());
+                  options.setPermissionGroupOptionAction(obj[5].toString());
+                  permissionGroupOptionsList.add(options);
                }
-               defaultPermissions.getPermissionGroupOptions().addAll(permissionGroupOptionsList);
-               staffUserDefaultPermissions.add(defaultPermissions);
             }
-            staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
-         }
+            defaultPermissions.getPermissionGroupOptions().addAll(permissionGroupOptionsList);
+            staffUserDefaultPermissions.add(defaultPermissions);
+         } 
+         staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
       }
       return staffUserRolePermissions;
    }
