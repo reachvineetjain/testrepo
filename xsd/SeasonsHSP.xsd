@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/season"
+<xsd:schema targetNamespace="http://www.ccighgo.com/HSP"
 	elementFormDefault="unqualified" attributeFormDefault="unqualified"
 	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:season="http://www.ccighgo.com/season">
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:HSP="http://www.ccighgo.com/HSP">
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.season.beans.season" />
+				<jaxb:package name="com.ccighgo.service.transport.season.beans.hsp" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 		<xsd:documentation></xsd:documentation>
 	</xsd:annotation>
 
-	<xsd:element name="SeasonData" type="season:Season"></xsd:element>
+	<xsd:element name="HSPDetails" type="HSP:Details"></xsd:element>
 	
-	<xsd:complexType name="Season">
+	
+	<xsd:complexType name="Details">
 		<xsd:sequence>
 		 <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
 		 <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -23,7 +24,7 @@
          <xsd:element name="jobBoard" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="notes" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="documents" type="season:Document" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="documents" type="HSP:Document" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -33,6 +34,5 @@
             <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
-    
-    
+        
 </xsd:schema>
