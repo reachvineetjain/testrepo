@@ -169,7 +169,7 @@ public class UserManagement {
      * @return updated User
      */
     @POST
-    @Path("{id}/add/picture")
+    @Path("search/")
     @Consumes("application/json")
     public CCIUsers searchUser(UserSearch userSearch) {
         return userMgmtServices.searchUsers(userSearch);
