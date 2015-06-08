@@ -137,32 +137,15 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUsers.setRecordCount(numberOfRecords.intValue());
          cciUserList = new ArrayList<CCIUser>();
          for (CCIStaffUser cUsr : cciUserDBList) {
-            CCIUser cciUser = new CCIUser();
-            cciUser.setCciUserId(cUsr.getCciStaffUserId());
-            cciUser.setFirstName(cUsr.getFirstName());
-            cciUser.setLastName(cUsr.getLastName());
-            cciUser.setEmail(cUsr.getEmail());
-            cciUser.setPrimaryPhone(cUsr.getPhone() != null ? cUsr.getPhone() : CCIConstants.EMPTY_DATA);
-            cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
-            cciUser.setCountry(cUsr.getCountry() != null ? cUsr.getCountry().getCountryName() : CCIConstants.EMPTY_DATA);
-            cciUser.setState(cUsr.getUsstate() != null ? cUsr.getUsstate().getStateName() : CCIConstants.EMPTY_DATA);
-            cciUser.setLoginName(cUsr.getLogin().getLoginName());
-            cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
-            // update user role for user
-            if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
-               populateUserRole(cUsr, cciUser);
-            }
-            // update department and department programs
-            if (cUsr.getCcistaffUserPrograms() != null) {
-               List<CCIUserDepartmentProgram> userDepartmentProgramsList = populateUserPrograms(cUsr, cciUser);
-               cciUser.getCciUserDepartmentPrograms().addAll(userDepartmentProgramsList);
-            }
+            CCIUser cciUser = getUserDetails(cUsr);
             cciUserList.add(cciUser);
          }
          cciUsers.getCciUsers().addAll(cciUserList);
       }
       return cciUsers;
    }
+
+  
 
    @Override
    public User getUserById(String id) {
@@ -252,7 +235,32 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    public CCIUsers searchUsers(UserSearch userSearch) {
-      return null;
+      CCIUsers cciUsersFront = null;
+      List<Object[]> results = null;
+      Query query = entityManager.createNativeQuery("call GeneralSearch(?,?,?,?,?,?,?,?,?,?)");
+      query.setParameter(1, Integer.valueOf(userSearch.getCciUserId()));
+      query.setParameter(2, userSearch.getFirstName());
+      query.setParameter(3, userSearch.getLastName());
+      query.setParameter(4, userSearch.getLoginName());
+      query.setParameter(5, Integer.valueOf(userSearch.getCountry()));
+      query.setParameter(6, userSearch.getEmail());
+      query.setParameter(7, null);
+      query.setParameter(8, null);
+      query.setParameter(9, null);
+      query.setParameter(10, CCIConstants.ACTIVE_SEARCH);
+      results = query.getResultList();
+      if (results != null) {
+         cciUsersFront = new CCIUsers();
+         List<CCIUser> cciUserList = new ArrayList<CCIUser>();
+         List<Integer> idList = null;// you will get list of cciuser ids in results, set it in list list and pass that list in below repository call
+         List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
+         for (CCIStaffUser cUser : cciUserDBList) {
+            CCIUser cciUser = getUserDetails(cUser);
+            cciUserList.add(cciUser);
+         }
+         cciUsersFront.getCciUsers().addAll(cciUserList);
+      }
+      return cciUsersFront;
    }
 
    @Override
@@ -764,6 +772,34 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
       }
       return cciUserPermissionsList;
+   }
+   
+   /**
+    * @param cUsr
+    * @return
+    */
+   private CCIUser getUserDetails(CCIStaffUser cUsr) {
+      CCIUser cciUser = new CCIUser();
+      cciUser.setCciUserId(cUsr.getCciStaffUserId());
+      cciUser.setFirstName(cUsr.getFirstName());
+      cciUser.setLastName(cUsr.getLastName());
+      cciUser.setEmail(cUsr.getEmail());
+      cciUser.setPrimaryPhone(cUsr.getPhone() != null ? cUsr.getPhone() : CCIConstants.EMPTY_DATA);
+      cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
+      cciUser.setCountry(cUsr.getCountry() != null ? cUsr.getCountry().getCountryName() : CCIConstants.EMPTY_DATA);
+      cciUser.setState(cUsr.getUsstate() != null ? cUsr.getUsstate().getStateName() : CCIConstants.EMPTY_DATA);
+      cciUser.setLoginName(cUsr.getLogin().getLoginName());
+      cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
+      // update user role for user
+      if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
+         populateUserRole(cUsr, cciUser);
+      }
+      // update department and department programs
+      if (cUsr.getCcistaffUserPrograms() != null) {
+         List<CCIUserDepartmentProgram> userDepartmentProgramsList = populateUserPrograms(cUsr, cciUser);
+         cciUser.getCciUserDepartmentPrograms().addAll(userDepartmentProgramsList);
+      }
+      return cciUser;
    }
 
 }
