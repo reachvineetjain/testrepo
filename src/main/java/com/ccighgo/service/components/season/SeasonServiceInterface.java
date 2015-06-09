@@ -1,7 +1,5 @@
 package com.ccighgo.service.components.season;
 
-import java.util.List;
-
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 
@@ -12,7 +10,7 @@ public interface SeasonServiceInterface {
     
     public SeasonsList getAllSeasons();
     
-    public void createSeason();
+    public  SeasonBean createSeason(SeasonBean seasonBean);
     
     public void deleteSeason(String id);
     

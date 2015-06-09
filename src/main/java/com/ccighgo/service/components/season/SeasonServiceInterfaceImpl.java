@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Season;
+import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
@@ -21,7 +22,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 			.getLogger(SeasonServiceInterfaceImpl.class);
 	@Autowired
 	SeasonRepository seasonRepository;
-
+	@Autowired
+	SeasonServiceImplUtil seasonServiceImplUtil;
 	// stub implementation, actual code will vary
 	SeasonServiceInterfaceImpl() {
 
@@ -35,20 +37,19 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
 	@Override
 	public SeasonsList getAllSeasons() {
-		try {
-			List<Season> allseasons = seasonRepository.findAll();
-			SeasonsList seasonsList = new SeasonsList();
-			List<SeasonListObject> seasonsBeans = new ArrayList<SeasonListObject>();
-			if (allseasons != null) {
-				seasonsList.setRecordCount(allseasons.size());
-				for (int i = 0; i < allseasons.size(); i++) {
-					SeasonListObject seasonBean = new SeasonListObject();
-					Season seasonEntity = allseasons.get(i);
-					SeasonServiceImplUtil.convertEntitySeasonToSeasonListObject(seasonBean,seasonEntity);
-					seasonsBeans.add(seasonBean);
-				}
+		try{
+		List<Season> allseasons = seasonRepository.findAll();
+		SeasonsList seasonsList = new SeasonsList();
+		if (allseasons != null) {
+			seasonsList.setRecordCount(allseasons.size());
+			for (int i = 0; i < allseasons.size(); i++) {
+				SeasonListObject seasonBean = new SeasonListObject();
+				Season seasonEntity = allseasons.get(i);
+				seasonServiceImplUtil.convertEntitySeasonToSeasonListObject(seasonBean,seasonEntity);
+				seasonsList.getSeasons().add(seasonBean);
 			}
-			return seasonsList;
+		}
+		return seasonsList;
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage() + " : " + e.getCause());
 			e.printStackTrace();
@@ -57,9 +58,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	@Override
-	public void createSeason() {
-		// TODO Auto-generated method stub
-
+	public SeasonBean createSeason(SeasonBean seasonBean) {
+		try{
+			Season seasonEntity = new Season();
+			seasonServiceImplUtil.convertBeanSeasonToEntitySeason(seasonBean, seasonEntity );
+			seasonRepository.saveAndFlush(seasonEntity);
+			return seasonBean;
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage() + " : " + e.getCause());
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -76,11 +85,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
 	@Override
 	public SeasonBean viewSeason(String id) {
+		if (id == null || (Integer.valueOf(id)) == 0) {
+	         throw new InvalidServiceConfigurationException("Please check Season id");
+	      }
 		try {
 			Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
 			SeasonBean seasonBean = new SeasonBean();
 			if(seasonEntity!=null)
-				SeasonServiceImplUtil.convertEntitySeasonToBeanSeason(seasonBean,seasonEntity);
+				seasonServiceImplUtil.convertEntitySeasonToBeanSeason(seasonBean,seasonEntity);
 			return seasonBean;
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage() + " : " + e.getCause());

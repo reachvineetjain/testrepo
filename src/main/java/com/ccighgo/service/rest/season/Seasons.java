@@ -37,48 +37,36 @@ public class Seasons {
 	@Path("list/")
 	@Produces("application/json")
 	public SeasonsList getAllSeasons() {
-		LOGGER.debug("Calling Get All Seasons.");
-		try {
-			if (seasonServices != null) {
-				SeasonsList result = seasonServices.getAllSeasons();
-				LOGGER.debug("Result Count : " + result.getRecordCount());
-				return result;
-			}
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage() + " : " + e.getCause());
-			e.printStackTrace();
-		}
-		LOGGER.debug("Season Service is Null");
-		return null;
+		LOGGER.debug("Calling Get All Seasons 'getAllSeasons'");
+		SeasonsList result = seasonServices.getAllSeasons();
+		LOGGER.debug("Result Count : " + result.getRecordCount());
+		return result;
 	}
 
 	@GET
 	@Path("edit/{id}")
 	@Produces("application/json")
-	public void editSeason(@PathParam("id") String id) {
+	public SeasonBean editSeason(@PathParam("id") String id) {
+		LOGGER.debug("Calling Edit Season By Id 'editSeason'");
+		SeasonBean result = seasonServices.viewSeason(id);
+		return result;
 	}
 
 	@GET
 	@Path("view/{id}")
 	@Produces("application/json")
 	public SeasonBean view(@PathParam("id") String id) {
-		LOGGER.debug("Calling Get All Seasons.");
-		if (seasonServices != null) {
-			SeasonBean result = seasonServices.viewSeason(id);
-			if (result != null)
-				LOGGER.debug("Result Not Null");
-			else
-				LOGGER.debug("Result is Null");
-			return result;
-		}
-		LOGGER.debug("Season Service is Null");
-		return null;
+		LOGGER.debug("Calling Get Season By Id 'View'");
+		SeasonBean result = seasonServices.viewSeason(id);
+		return result;
 	}
 
 	@POST
-	@Path("create/")
+	@Path("create/{seasonBean}")
 	@Consumes("application/json")
-	public void createSeason() {
+	public SeasonBean createSeason(@PathParam("seasonBean") SeasonBean seasonBean) {
+		LOGGER.debug("Calling Create Season Season 'createSeason'");
+		return seasonServices.createSeason(seasonBean);
 	}
 
 	@POST
