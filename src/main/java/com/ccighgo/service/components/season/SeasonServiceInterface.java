@@ -1,11 +1,16 @@
 package com.ccighgo.service.components.season;
 
+import java.util.List;
+
+import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
+import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+
 
 public interface SeasonServiceInterface {
     //this interface is a stub
     public String getString();
     
-    public void getAllSeasons();
+    public SeasonsList getAllSeasons();
     
     public void createSeason();
     
@@ -13,7 +18,7 @@ public interface SeasonServiceInterface {
     
     public void editSeason(String id);
     
-    public void viewSeason(String id);
+    public SeasonBean viewSeason(String id);
     
     public void updateSeason(String id );
     

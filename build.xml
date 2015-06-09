@@ -135,14 +135,6 @@
 		</java>
 	</target>
 
-	<!-- Search Seasons-->
-		<target name="SearchSeasons">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/SearchSeasons.xsd" />
-			</java>
-		</target>
 	
 	<!-- High school programs-->
 		<target name="HSP">
@@ -152,7 +144,16 @@
 				<arg value="${xsd.dir}/HSP.xsd" />
 			</java>
 		</target>
-		
+
+	<!-- Season List Object-->
+		<target name="SeasonList">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/SeasonsList.xsd" />
+			</java>
+		</target>
+	
 	
 	
 	<target name="DefaultRolePermissions">
