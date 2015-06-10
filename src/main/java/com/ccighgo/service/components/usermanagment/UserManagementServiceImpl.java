@@ -244,9 +244,33 @@ public class UserManagementServiceImpl implements UserManagementService {
       query.setParameter(4, userSearch.getLoginName());
       query.setParameter(5, Integer.valueOf(userSearch.getCountry()));
       query.setParameter(6, userSearch.getEmail());
-      query.setParameter(7, null);
-      query.setParameter(8, null);
-      query.setParameter(9, null);
+    //setting the parameter at position 7 for role
+      List<Integer> roleList = userSearch.getUserRole();
+      if(roleList.size() > 0){
+         String strParam = setParam(roleList);
+          query.setParameter(7, strParam);
+      }else{
+         query.setParameter(7, null);
+      }
+      
+      //setting the parameter at position 8 for dept List
+      List<Integer> deptList = userSearch.getDepartment();
+      if(deptList.size() > 0){
+         String strParam = setParam(deptList);
+          query.setParameter(8, strParam);
+      }else{
+         query.setParameter(8, null);
+      }
+      
+      //setting the parameter at position 9 for program List
+      List<Integer> progList = userSearch.getProgram();
+      if(progList.size() > 0){
+         String strParam = setParam(progList);
+          query.setParameter(9, strParam);
+      }else{
+         query.setParameter(9, null);
+      }
+
       query.setParameter(10, CCIConstants.ACTIVE_SEARCH);
       results = query.getResultList();
       if (results != null) {
@@ -262,6 +286,25 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return cciUsersFront;
    }
+   
+   /**
+    * This method iterate the multiple values from the List and return a single String with all parameters.
+    * 
+    * @param params
+    * @return
+    * 
+    */
+   
+   String setParam(List<Integer> params){
+          String strValue = "";
+          for(Integer role :params){
+                strValue = strValue+role+",";
+          }
+          StringBuilder strRole = new StringBuilder(strValue);
+          strRole.deleteCharAt(strRole.length()-1);
+          return strRole.toString();
+   }
+
 
    @Override
    public User updateUserDemographics(String id, User user) {
