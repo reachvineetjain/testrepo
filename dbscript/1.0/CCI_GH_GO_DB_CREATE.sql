@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Countries` (
   `countryFlag` VARCHAR(300) ,
   `reqFinalSOAonDS` TINYINT(1) NOT NULL,
   `active` TINYINT(1) NOT NULL DEFAULT 1,
+  
+  
    PRIMARY KEY (`countryId`)
 );
 
