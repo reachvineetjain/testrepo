@@ -7,20 +7,20 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 
-import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
+import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
+import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 
 @Path("/season/")
 @Produces("application/json")
 @Consumes("application/json")
 public class Seasons {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(Seasons.class);
 
 	@Autowired
@@ -36,7 +36,20 @@ public class Seasons {
 	@GET
 	@Path("list/")
 	@Produces("application/json")
-	public void getAllSeasons() {
+	public SeasonsList getAllSeasons() {
+		LOGGER.debug("Calling Get All Seasons.");
+		try {
+			if (seasonServices != null) {
+				SeasonsList result = seasonServices.getAllSeasons();
+				LOGGER.debug("Result Count : " + result.getRecordCount());
+				return result;
+			}
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage() + " : " + e.getCause());
+			e.printStackTrace();
+		}
+		LOGGER.debug("Season Service is Null");
+		return null;
 	}
 
 	@GET
@@ -48,7 +61,18 @@ public class Seasons {
 	@GET
 	@Path("view/{id}")
 	@Produces("application/json")
-	public void view(@PathParam("id") String id) {
+	public SeasonBean view(@PathParam("id") String id) {
+		LOGGER.debug("Calling Get All Seasons.");
+		if (seasonServices != null) {
+			SeasonBean result = seasonServices.viewSeason(id);
+			if (result != null)
+				LOGGER.debug("Result Not Null");
+			else
+				LOGGER.debug("Result is Null");
+			return result;
+		}
+		LOGGER.debug("Season Service is Null");
+		return null;
 	}
 
 	@POST

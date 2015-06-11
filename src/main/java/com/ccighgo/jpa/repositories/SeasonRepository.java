@@ -13,4 +13,7 @@ import com.ccighgo.db.entities.Season;
 @Repository
 public interface SeasonRepository extends JpaRepository<Season, Integer> {
 
+//	   @Query("SELECT s FROM Season s")
+//	   public List<Season> getAllSeasons();
+	   
 }
