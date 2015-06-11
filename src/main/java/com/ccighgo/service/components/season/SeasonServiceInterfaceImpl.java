@@ -14,6 +14,8 @@ import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.ValidationUtils;
 
 @Component
 public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
@@ -24,15 +26,13 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	SeasonRepository seasonRepository;
 	@Autowired
 	SeasonServiceImplUtil seasonServiceImplUtil;
-	// stub implementation, actual code will vary
+	
 	SeasonServiceInterfaceImpl() {
-
 	}
 
 	@Override
 	public String getString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "<- Season Service ->";
 	}
 
 	@Override
@@ -51,8 +51,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 		}
 		return seasonsList;
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage() + " : " + e.getCause());
-			e.printStackTrace();
+			ExceptionUtil.logException(e, LOGGER);			
 		}
 		return null;
 	}
@@ -61,12 +60,11 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	public SeasonBean createSeason(SeasonBean seasonBean) {
 		try{
 			Season seasonEntity = new Season();
-			seasonServiceImplUtil.convertBeanSeasonToEntitySeason(seasonBean, seasonEntity );
-			seasonRepository.saveAndFlush(seasonEntity);
-			return seasonBean;
+			seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity );
+			seasonEntity=seasonRepository.saveAndFlush(seasonEntity);
+			return viewSeason(seasonEntity.getSeasonId()+"");
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage() + " : " + e.getCause());
-			e.printStackTrace();
+			ExceptionUtil.logException(e, LOGGER);	
 		}
 		return null;
 	}
@@ -85,18 +83,16 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
 	@Override
 	public SeasonBean viewSeason(String id) {
-		if (id == null || (Integer.valueOf(id)) == 0) {
-	         throw new InvalidServiceConfigurationException("Please check Season id");
-	      }
+		ValidationUtils.isValidSeasonId(id);
 		try {
 			Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
-			SeasonBean seasonBean = new SeasonBean();
-			if(seasonEntity!=null)
+			if(seasonEntity!=null){
+				SeasonBean seasonBean = new SeasonBean();
 				seasonServiceImplUtil.convertEntitySeasonToBeanSeason(seasonBean,seasonEntity);
-			return seasonBean;
+				return seasonBean;
+			}
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage() + " : " + e.getCause());
-			e.printStackTrace();
+			ExceptionUtil.logException(e, LOGGER);	
 		}
 		return null;
 	}
