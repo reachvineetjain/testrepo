@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`USStates` (
 -- Table cci_gh_go.UserType whether cciuser, lc, partner, participant etc
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`UserType` (
-  `userTypeId` INT(3) NOT NULL,
+  `userTypeId` INT(3) NOT NULL AUTO_INCREMENT,
   `userTypeCode` VARCHAR(20) NOT NULL,
   `userTypeName` VARCHAR(50) NOT NULL,
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Login` (
   INDEX `FK_Login_UserType` (`userTypeId` ASC),
   CONSTRAINT `FK_Login_UserType`
     FOREIGN KEY (`userTypeId`)
-    REFERENCES `cci_gh_go_WIP`.`UserType` (`userTypeId`)
+    REFERENCES `cci_gh_go`.`UserType` (`userTypeId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LoginHistory` (
   INDEX `FK_History_Login` (`loginId` ASC),
   CONSTRAINT `FK_History_Login`
     FOREIGN KEY (`loginId`)
-    REFERENCES `cci_gh_go_WIP`.`Login` (`loginId`)
+    REFERENCES `cci_gh_go`.`Login` (`loginId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PasswordHistory` (
   INDEX `FK_PasswordHistory_Login` (`loginId` ASC),
   CONSTRAINT `FK_PasswordHistory_Login`
     FOREIGN KEY (`loginId`)
-    REFERENCES `cci_gh_go_WIP`.`Login` (`loginId`)
+    REFERENCES `cci_gh_go`.`Login` (`loginId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DepartmentPrograms` (
   INDEX `FK_DepartmentPrograms_Departments` (`departmentId` ASC),
   CONSTRAINT `FK_DepartmentPrograms_Departments`
     FOREIGN KEY (`departmentId`)
-    REFERENCES `cci_gh_go_WIP`.`Departments` (`departmentId`)
+    REFERENCES `cci_gh_go`.`Departments` (`departmentId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
