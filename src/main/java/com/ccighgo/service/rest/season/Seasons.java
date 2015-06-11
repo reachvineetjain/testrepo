@@ -30,6 +30,7 @@ public class Seasons {
 	@Path("ping/{input}")
 	@Produces("text/plain")
 	public String ping(@PathParam("input") String input) {
+		LOGGER.debug("Pinging !!");
 		return input;
 	}
 
