@@ -24,9 +24,8 @@
         <class>com.ccighgo.db.entities.DepartmentProgram</class>
         <class>com.ccighgo.db.entities.DepartmentResourceGroup</class>
         <class>com.ccighgo.db.entities.Department</class>
-        <class>com.ccighgo.db.entities.ExtensionHSP</class>
-        <class>com.ccighgo.db.entities.History</class>
         <class>com.ccighgo.db.entities.Login</class>
+        <class>com.ccighgo.db.entities.LoginHistory</class>
         <class>com.ccighgo.db.entities.OauthHistory</class>
         <class>com.ccighgo.db.entities.OauthHistoryPK</class>
         <class>com.ccighgo.db.entities.PasswordHistory</class>
@@ -45,7 +44,7 @@
         <class>com.ccighgo.db.entities.SeasonLSDetail</class>
         <class>com.ccighgo.db.entities.SeasonStatus</class>
         <class>com.ccighgo.db.entities.SeasonTADetail</class>
-        <class>com.ccighgo.db.entities.SeasonVolunteersDetail</class>
+        <class>com.ccighgo.db.entities.SeasonVADetail</class>
         <class>com.ccighgo.db.entities.SeasonWADetail</class>
         <class>com.ccighgo.db.entities.SeasonWPAllocation</class>
         <class>com.ccighgo.db.entities.SeasonWPConfiguration</class>

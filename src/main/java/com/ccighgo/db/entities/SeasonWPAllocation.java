@@ -18,6 +18,7 @@ public class SeasonWPAllocation implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonWPAllocationId;
 
+	@Column(nullable=false)
 	private int maxPax;
 
 	//bi-directional many-to-one association to DepartmentProgramOption

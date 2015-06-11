@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -19,17 +19,13 @@ public class SeasonGHTConfiguration implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonGHTConfigurationId;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private int deposite;
+	private Date seasonEndDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp endDate;
-
-	@Column(nullable=false)
-	private int fieldStaffStipend;
-
-	@Column(nullable=false)
-	private Timestamp startDate;
+	private Date seasonStartDate;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -47,36 +43,20 @@ public class SeasonGHTConfiguration implements Serializable {
 		this.seasonGHTConfigurationId = seasonGHTConfigurationId;
 	}
 
-	public int getDeposite() {
-		return this.deposite;
+	public Date getSeasonEndDate() {
+		return this.seasonEndDate;
 	}
 
-	public void setDeposite(int deposite) {
-		this.deposite = deposite;
+	public void setSeasonEndDate(Date seasonEndDate) {
+		this.seasonEndDate = seasonEndDate;
 	}
 
-	public Timestamp getEndDate() {
-		return this.endDate;
+	public Date getSeasonStartDate() {
+		return this.seasonStartDate;
 	}
 
-	public void setEndDate(Timestamp endDate) {
-		this.endDate = endDate;
-	}
-
-	public int getFieldStaffStipend() {
-		return this.fieldStaffStipend;
-	}
-
-	public void setFieldStaffStipend(int fieldStaffStipend) {
-		this.fieldStaffStipend = fieldStaffStipend;
-	}
-
-	public Timestamp getStartDate() {
-		return this.startDate;
-	}
-
-	public void setStartDate(Timestamp startDate) {
-		this.startDate = startDate;
+	public void setSeasonStartDate(Date seasonStartDate) {
+		this.seasonStartDate = seasonStartDate;
 	}
 
 	public Season getSeason() {

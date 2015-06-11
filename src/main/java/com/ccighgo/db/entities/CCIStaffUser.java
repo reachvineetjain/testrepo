@@ -43,11 +43,14 @@ public class CCIStaffUser implements Serializable {
 	@Column(nullable=false, length=50)
 	private String email;
 
-	@Column(length=50)
+	@Column(length=15)
 	private String emergencyPhone;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable=false, length=30)
 	private String firstName;
+
+	@Column(length=1)
+	private String gender;
 
 	@Column(length=100)
 	private String homeAddressLineOne;
@@ -55,7 +58,7 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=100)
 	private String homeAddressLineTwo;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable=false, length=30)
 	private String lastName;
 
 	@Column(nullable=false)
@@ -64,18 +67,14 @@ public class CCIStaffUser implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=25)
-	private String phone;
-
 	@Column(length=300)
 	private String photo;
 
-	private int sequenceNo;
+	@Column(length=15)
+	private String primaryPhone;
 
 	@Column(length=20)
-	private String sevisID;
-
-	private byte[] stamp;
+	private String sevisId;
 
 	private int supervisorId;
 
@@ -192,6 +191,14 @@ public class CCIStaffUser implements Serializable {
 		this.firstName = firstName;
 	}
 
+	public String getGender() {
+		return this.gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public String getHomeAddressLineOne() {
 		return this.homeAddressLineOne;
 	}
@@ -232,14 +239,6 @@ public class CCIStaffUser implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public String getPhoto() {
 		return this.photo;
 	}
@@ -248,28 +247,20 @@ public class CCIStaffUser implements Serializable {
 		this.photo = photo;
 	}
 
-	public int getSequenceNo() {
-		return this.sequenceNo;
+	public String getPrimaryPhone() {
+		return this.primaryPhone;
 	}
 
-	public void setSequenceNo(int sequenceNo) {
-		this.sequenceNo = sequenceNo;
+	public void setPrimaryPhone(String primaryPhone) {
+		this.primaryPhone = primaryPhone;
 	}
 
-	public String getSevisID() {
-		return this.sevisID;
+	public String getSevisId() {
+		return this.sevisId;
 	}
 
-	public void setSevisID(String sevisID) {
-		this.sevisID = sevisID;
-	}
-
-	public byte[] getStamp() {
-		return this.stamp;
-	}
-
-	public void setStamp(byte[] stamp) {
-		this.stamp = stamp;
+	public void setSevisId(String sevisId) {
+		this.sevisId = sevisId;
 	}
 
 	public int getSupervisorId() {
