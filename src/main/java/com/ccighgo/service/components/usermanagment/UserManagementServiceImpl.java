@@ -163,9 +163,9 @@ public class UserManagementServiceImpl implements UserManagementService {
          user.setAddressLine1(cciUser.getHomeAddressLineOne() != null ? cciUser.getHomeAddressLineOne() : CCIConstants.EMPTY_DATA);
          user.setAddressLine2(cciUser.getHomeAddressLineTwo() != null ? cciUser.getHomeAddressLineTwo() : CCIConstants.EMPTY_DATA);
          user.setZip(cciUser.getZip() != null ? cciUser.getZip() : CCIConstants.EMPTY_DATA);
-         user.setPrimaryPhone(cciUser.getPhone() != null ? cciUser.getPhone() : CCIConstants.EMPTY_DATA);
+         user.setPrimaryPhone(cciUser.getPrimaryPhone() != null ? cciUser.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
          user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
-         user.setSevisId(cciUser.getSevisID() != null ? cciUser.getSevisID() : CCIConstants.EMPTY_DATA);
+         user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
          user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
          user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
          user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
@@ -276,9 +276,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
       cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
       cciUser.setZip(user.getZip() != null ? user.getZip() : null);
-      cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setPrimaryPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
       cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
-      cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
+      cciUser.setSevisId(user.getSevisId() != null ? user.getSevisId() : null);
       if (user.getSupervisorId() != null) {
          Integer supervisorId = Integer.valueOf(user.getSupervisorId());
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
@@ -642,9 +642,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
       cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
       cciUser.setZip(user.getZip() != null ? user.getZip() : null);
-      cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setPrimaryPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
       cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
-      cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
+      cciUser.setSevisId(user.getSevisId() != null ? user.getSevisId() : null);
       if (user.getSupervisorId() != null) {
          Integer supervisorId = Integer.valueOf(user.getSupervisorId());
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
@@ -784,7 +784,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setFirstName(cUsr.getFirstName());
       cciUser.setLastName(cUsr.getLastName());
       cciUser.setEmail(cUsr.getEmail());
-      cciUser.setPrimaryPhone(cUsr.getPhone() != null ? cUsr.getPhone() : CCIConstants.EMPTY_DATA);
+      cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
       cciUser.setCountry(cUsr.getCountry() != null ? cUsr.getCountry().getCountryName() : CCIConstants.EMPTY_DATA);
       cciUser.setState(cUsr.getUsstate() != null ? cUsr.getUsstate().getStateName() : CCIConstants.EMPTY_DATA);

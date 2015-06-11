@@ -45,7 +45,7 @@ public class ReplayValidator {
 			LOGGER.debug("Retrieving OAUTH history entry for the timestamp and nonce");
 			OauthHistoryPK pk = new OauthHistoryPK();
 			pk.setNonce(nonce);
-			pk.setTimevalue(timestamp);
+			pk.setTimeValue(timestamp);
 
 			if(oaRepository.findOne(pk)!=null){
 				LOGGER.debug("DONE: Found OAUTH history entry");

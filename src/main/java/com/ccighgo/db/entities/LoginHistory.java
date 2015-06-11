@@ -6,18 +6,18 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the History database table.
+ * The persistent class for the LoginHistory database table.
  * 
  */
 @Entity
-@Table(name="History")
-@NamedQuery(name="History.findAll", query="SELECT h FROM History h")
-public class History implements Serializable {
+@Table(name="LoginHistory")
+@NamedQuery(name="LoginHistory.findAll", query="SELECT l FROM LoginHistory l")
+public class LoginHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int historyId;
+	private int loginHistoryId;
 
 	@Column(length=20)
 	private String ipAddress;
@@ -30,15 +30,15 @@ public class History implements Serializable {
 	@JoinColumn(name="loginId", nullable=false)
 	private Login login;
 
-	public History() {
+	public LoginHistory() {
 	}
 
-	public int getHistoryId() {
-		return this.historyId;
+	public int getLoginHistoryId() {
+		return this.loginHistoryId;
 	}
 
-	public void setHistoryId(int historyId) {
-		this.historyId = historyId;
+	public void setLoginHistoryId(int loginHistoryId) {
+		this.loginHistoryId = loginHistoryId;
 	}
 
 	public String getIpAddress() {

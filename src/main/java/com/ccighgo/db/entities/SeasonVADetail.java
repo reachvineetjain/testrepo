@@ -6,18 +6,18 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the SeasonTADetails database table.
+ * The persistent class for the SeasonVADetails database table.
  * 
  */
 @Entity
-@Table(name="SeasonTADetails")
-@NamedQuery(name="SeasonTADetail.findAll", query="SELECT s FROM SeasonTADetail s")
-public class SeasonTADetail implements Serializable {
+@Table(name="SeasonVADetails")
+@NamedQuery(name="SeasonVADetail.findAll", query="SELECT s FROM SeasonVADetail s")
+public class SeasonVADetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonTADetailsId;
+	private int seasonVADetailsId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
@@ -37,15 +37,15 @@ public class SeasonTADetail implements Serializable {
 	@JoinColumn(name="programStatusId", nullable=false)
 	private SeasonStatus seasonStatus;
 
-	public SeasonTADetail() {
+	public SeasonVADetail() {
 	}
 
-	public int getSeasonTADetailsId() {
-		return this.seasonTADetailsId;
+	public int getSeasonVADetailsId() {
+		return this.seasonVADetailsId;
 	}
 
-	public void setSeasonTADetailsId(int seasonTADetailsId) {
-		this.seasonTADetailsId = seasonTADetailsId;
+	public void setSeasonVADetailsId(int seasonVADetailsId) {
+		this.seasonVADetailsId = seasonVADetailsId;
 	}
 
 	public Date getEndDate() {

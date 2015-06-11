@@ -3,7 +3,6 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.sql.Timestamp;
 
 
 /**
@@ -20,45 +19,13 @@ public class SeasonHSPConfiguration implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonHSPConfigurationId;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private int fieldStaffAgreementID;
+	private Date seasonEndDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private int fieldStaffHoldLength;
-
-	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
-	private Date hfInquiry;
-
-	@Column(nullable=false)
-	private int hfRequiredReferences;
-
-	@Column(nullable=false)
-	private int hoursBeforeHoldExpirationWarning;
-
-	@Column(nullable=false)
-	private int lcPaymenstSchedule;
-
-	@Column(nullable=false)
-	private Timestamp seasonEndDate;
-
-	@Column(nullable=false)
-	private Timestamp seasonStartDate;
-
-	@Column(nullable=false)
-	private byte showFirstSemToHF;
-
-	@Column(nullable=false)
-	private byte showSeasonToCurrentHF;
-
-	@Column(nullable=false)
-	private byte showSecSemToHF;
-
-	@Column(nullable=false)
-	private byte showSpecialRequestStudent;
-
-	@Column(nullable=false)
-	private byte welComeFamily;
+	private Date seasonStartDate;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -76,108 +43,20 @@ public class SeasonHSPConfiguration implements Serializable {
 		this.seasonHSPConfigurationId = seasonHSPConfigurationId;
 	}
 
-	public int getFieldStaffAgreementID() {
-		return this.fieldStaffAgreementID;
-	}
-
-	public void setFieldStaffAgreementID(int fieldStaffAgreementID) {
-		this.fieldStaffAgreementID = fieldStaffAgreementID;
-	}
-
-	public int getFieldStaffHoldLength() {
-		return this.fieldStaffHoldLength;
-	}
-
-	public void setFieldStaffHoldLength(int fieldStaffHoldLength) {
-		this.fieldStaffHoldLength = fieldStaffHoldLength;
-	}
-
-	public Date getHfInquiry() {
-		return this.hfInquiry;
-	}
-
-	public void setHfInquiry(Date hfInquiry) {
-		this.hfInquiry = hfInquiry;
-	}
-
-	public int getHfRequiredReferences() {
-		return this.hfRequiredReferences;
-	}
-
-	public void setHfRequiredReferences(int hfRequiredReferences) {
-		this.hfRequiredReferences = hfRequiredReferences;
-	}
-
-	public int getHoursBeforeHoldExpirationWarning() {
-		return this.hoursBeforeHoldExpirationWarning;
-	}
-
-	public void setHoursBeforeHoldExpirationWarning(int hoursBeforeHoldExpirationWarning) {
-		this.hoursBeforeHoldExpirationWarning = hoursBeforeHoldExpirationWarning;
-	}
-
-	public int getLcPaymenstSchedule() {
-		return this.lcPaymenstSchedule;
-	}
-
-	public void setLcPaymenstSchedule(int lcPaymenstSchedule) {
-		this.lcPaymenstSchedule = lcPaymenstSchedule;
-	}
-
-	public Timestamp getSeasonEndDate() {
+	public Date getSeasonEndDate() {
 		return this.seasonEndDate;
 	}
 
-	public void setSeasonEndDate(Timestamp seasonEndDate) {
+	public void setSeasonEndDate(Date seasonEndDate) {
 		this.seasonEndDate = seasonEndDate;
 	}
 
-	public Timestamp getSeasonStartDate() {
+	public Date getSeasonStartDate() {
 		return this.seasonStartDate;
 	}
 
-	public void setSeasonStartDate(Timestamp seasonStartDate) {
+	public void setSeasonStartDate(Date seasonStartDate) {
 		this.seasonStartDate = seasonStartDate;
-	}
-
-	public byte getShowFirstSemToHF() {
-		return this.showFirstSemToHF;
-	}
-
-	public void setShowFirstSemToHF(byte showFirstSemToHF) {
-		this.showFirstSemToHF = showFirstSemToHF;
-	}
-
-	public byte getShowSeasonToCurrentHF() {
-		return this.showSeasonToCurrentHF;
-	}
-
-	public void setShowSeasonToCurrentHF(byte showSeasonToCurrentHF) {
-		this.showSeasonToCurrentHF = showSeasonToCurrentHF;
-	}
-
-	public byte getShowSecSemToHF() {
-		return this.showSecSemToHF;
-	}
-
-	public void setShowSecSemToHF(byte showSecSemToHF) {
-		this.showSecSemToHF = showSecSemToHF;
-	}
-
-	public byte getShowSpecialRequestStudent() {
-		return this.showSpecialRequestStudent;
-	}
-
-	public void setShowSpecialRequestStudent(byte showSpecialRequestStudent) {
-		this.showSpecialRequestStudent = showSpecialRequestStudent;
-	}
-
-	public byte getWelComeFamily() {
-		return this.welComeFamily;
-	}
-
-	public void setWelComeFamily(byte welComeFamily) {
-		this.welComeFamily = welComeFamily;
 	}
 
 	public Season getSeason() {
