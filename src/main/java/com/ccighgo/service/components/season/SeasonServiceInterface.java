@@ -16,11 +16,11 @@ public interface SeasonServiceInterface {
     
     public void deleteSeason(String id);
     
-    public void editSeason(String id);
+    public SeasonBean editSeason(String id);
     
     public SeasonBean viewSeason(String id);
     
-    public void updateSeason(String id );
+    public SeasonBean updateSeason(SeasonBean seasonBean );
     
 
 }
