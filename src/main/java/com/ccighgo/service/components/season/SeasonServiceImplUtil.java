@@ -22,6 +22,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.DepartmentObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateAdapter;
+import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ValidationUtils;
 
 /**
@@ -54,8 +55,8 @@ public class SeasonServiceImplUtil {
 			for (SeasonHSPConfiguration seasonconf : seasonEntity.getSeasonHspconfigurations()) {
 				if(seasonconf.getSeason()!=null)
 				if(seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()){
-					seasonBean.setStartDate(formatDate(seasonconf.getSeasonStartDate()));
-					seasonBean.setEndDate(formatDate(seasonconf.getSeasonEndDate()));
+					seasonBean.setStartDate(DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate()));
+					seasonBean.setEndDate(DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate()));
 					seasonBean.setSeasonHSPConfigurationId(seasonconf.getSeasonHSPConfigurationId());
 				}
 			}
@@ -77,17 +78,12 @@ public class SeasonServiceImplUtil {
 			for (SeasonHSPConfiguration seasonconf : seasonEntity.getSeasonHspconfigurations()) {
 				if(seasonconf.getSeason()!=null)
 				if(seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId())
-					seasonBean.setStartDate(formatDate(seasonconf.getSeasonStartDate()));
-					seasonBean.setEndDate(formatDate(seasonconf.getSeasonEndDate()));
+					seasonBean.setStartDate(DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate()));
+					seasonBean.setEndDate(DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate()));
 					seasonBean.setSeasonHSPConfigurationId(seasonconf.getSeasonHSPConfigurationId());
 			}
 	}
 	
-	private String formatDate(Date date) {
-		SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd");
-		return date!=null ? simpleDateFormat.format(date):CCIConstants.EMPTY_DATA;
-
-	}
 	/**
 	 * @param department
 	 * @return
@@ -120,9 +116,19 @@ public class SeasonServiceImplUtil {
 		ValidationUtils.validateRequired(seasonBean.getStatusId()+"");
 		SeasonStatus seasonStatus = seasonStatusRepository.findOne(seasonBean.getStatusId());
 		seasonEntity.setSeasonStatus(seasonStatus);
-		
-		/* TODO start date && End Date from HSP
-		 * Inject HSP and retrieve values from database then assign it to the season entity
-		 */
+		seasonEntity.setCreatedBy(1);
+		seasonEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+		seasonEntity.setModifiedBy(1);
+		seasonEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+		seasonEntity.setSeasonFullName(seasonBean.getSeasonName());
+	}
+
+	public void createSeasonHspConfiguration(SeasonBean seasonBean,
+			Season seasonEntity) {
+		SeasonHSPConfiguration seasonHSPConfiguration  = new SeasonHSPConfiguration();
+		seasonHSPConfiguration.setSeason(seasonEntity);
+		seasonHSPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
+		seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
+//		seasonHSPConfigurationRepsitory.saveAndFlush(seasonHSPConfiguration);
 	}
 }

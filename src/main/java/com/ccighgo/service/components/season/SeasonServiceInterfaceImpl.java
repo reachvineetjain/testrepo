@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Season;
+import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
@@ -61,7 +62,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 		try{
 			Season seasonEntity = new Season();
 			seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity );
-			seasonEntity=seasonRepository.saveAndFlush(seasonEntity);
+			seasonRepository.saveAndFlush(seasonEntity);
+			seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
 			return viewSeason(seasonEntity.getSeasonId()+"");
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);	
