@@ -38,7 +38,7 @@ public class Seasons {
 	@Path("list/")
 	@Produces("application/json")
 	public SeasonsList getAllSeasons() {
-		LOGGER.debug("Calling Get All Seasons 'getAllSeasons'");
+		LOGGER.debug("Calling Get All Seasons 'func:getAllSeasons'");
 		SeasonsList result = seasonServices.getAllSeasons();
 		LOGGER.debug("Result Count : " + result.getRecordCount());
 		return result;
@@ -48,8 +48,8 @@ public class Seasons {
 	@Path("edit/{id}")
 	@Produces("application/json")
 	public SeasonBean editSeason(@PathParam("id") String id) {
-		LOGGER.debug("Calling Edit Season By Id 'editSeason'");
-		SeasonBean result = seasonServices.viewSeason(id);
+		LOGGER.debug("Calling Edit Season By Id 'func:editSeason'");
+		SeasonBean result = seasonServices.editSeason(id);
 		return result;
 	}
 
@@ -57,7 +57,7 @@ public class Seasons {
 	@Path("view/{id}")
 	@Produces("application/json")
 	public SeasonBean view(@PathParam("id") String id) {
-		LOGGER.debug("Calling Get Season By Id 'View'");
+		LOGGER.debug("Calling Get Season By Id 'func:View'");
 		SeasonBean result = seasonServices.viewSeason(id);
 		return result;
 	}
@@ -66,14 +66,16 @@ public class Seasons {
 	@Path("create")
 	@Consumes("application/json")
 	public SeasonBean createSeason(SeasonBean seasonBean) {
-		LOGGER.debug("Calling Create Season Season 'createSeason'");
+		LOGGER.debug("Calling Create Season function 'func:createSeason'");
 		return seasonServices.createSeason(seasonBean);
 	}
 
 	@POST
-	@Path("update/{id}")
+	@Path("update")
 	@Consumes("application/json")
-	public void updateSeason(@PathParam("id") String id) {
+	public SeasonBean updateSeason(SeasonBean seasonBean) {
+		LOGGER.debug("Calling Update Season'func:updateSeason'");
+		return seasonServices.updateSeason(seasonBean);
 	}
 
 	@DELETE

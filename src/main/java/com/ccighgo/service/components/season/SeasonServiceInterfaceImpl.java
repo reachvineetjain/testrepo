@@ -78,9 +78,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	@Override
-	public void editSeason(String id) {
-		// TODO Auto-generated method stub
-
+	public SeasonBean editSeason(String id) {
+		return viewSeason(id);
 	}
 
 	@Override
@@ -100,9 +99,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	@Override
-	public void updateSeason(String id) {
-		// TODO Auto-generated method stub
-
+	public SeasonBean updateSeason(SeasonBean seasonBean) {
+		try{
+			Season seasonEntity = new Season();
+			seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity);
+			seasonRepository.saveAndFlush(seasonEntity);
+			seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
+			return viewSeason(seasonEntity.getSeasonId()+"");
+		} catch (Exception e) {
+			ExceptionUtil.logException(e, LOGGER);	
+		}
+		return null;
 	}
 
 }
