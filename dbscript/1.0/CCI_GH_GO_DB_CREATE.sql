@@ -5,9 +5,9 @@ DROP SCHEMA IF EXISTS `cci_gh_go` ;
 CREATE SCHEMA IF NOT EXISTS `cci_gh_go` ;
 
 -- ----------------------------------------------------------------------------------------------------
--- Table cci_gh_go.Countries
+-- Table cci_gh_go.LookupCountries
 -- ----------------------------------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Countries` (
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupCountries` (
   `countryId` INT(3) NOT NULL AUTO_INCREMENT,
   `countryCode` VARCHAR(5) NOT NULL,
   `countryName` VARCHAR(50) NOT NULL,
@@ -118,9 +118,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PasswordHistory` (
 );
 
 -- ----------------------------------------------------------------------------------------------------
--- Table cci_gh_go.Departments
+-- Table cci_gh_go.LookupDepartments
 -- ----------------------------------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Departments` (
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupDepartments` (
   `departmentId` INT(3) NOT NULL,
   `departmentName` VARCHAR(50) NOT NULL,
   `acronym` VARCHAR(10) NULL DEFAULT NULL,
@@ -146,10 +146,10 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DepartmentPrograms` (
   `modifiedBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`departmentProgramId`),
-  INDEX `FK_DepartmentPrograms_Departments` (`departmentId` ASC),
-  CONSTRAINT `FK_DepartmentPrograms_Departments`
+  INDEX `FK_DepartmentPrograms_LookupDepartments` (`departmentId` ASC),
+  CONSTRAINT `FK_DepartmentPrograms_LookupDepartments`
     FOREIGN KEY (`departmentId`)
-    REFERENCES `cci_gh_go`.`Departments` (`departmentId`)
+    REFERENCES `cci_gh_go`.`LookupDepartments` (`departmentId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
   `cciAdminGuid` VARCHAR(64) UNIQUE NOT NULL,
   `firstName` VARCHAR(30) NOT NULL,
   `lastName` VARCHAR(30) NOT NULL,
-  `gender` VARCHAR(1) NULL,
+  `genderId` INT(3) NULL,
   `primaryPhone` VARCHAR(15) NULL,
   `emergencyPhone` VARCHAR(15) NULL,
   `email` VARCHAR(50) NOT NULL,
@@ -248,9 +248,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
     REFERENCES `cci_gh_go`.`USStates` (`usStatesId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_CCIStaffUsers_countries`
+  CONSTRAINT `FK_CCIStaffUsers_LookupCountries`
     FOREIGN KEY (`countryId`)
-    REFERENCES `cci_gh_go`.`Countries` (`countryId`)
+    REFERENCES `cci_gh_go`.`LookupCountries` (`countryId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffUsers_login`
@@ -258,6 +258,11 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
     REFERENCES `cci_gh_go`.`Login` (`loginId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
+  CONSTRAINT `FK_CCIStaffUsers_LookUpGender`
+    FOREIGN KEY (`genderId`)
+    REFERENCES `cci_gh_go`.`LookUpGender` (`genderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION 	
 );
 
 -- ----------------------------------------------------------------------------------------------------
@@ -316,9 +321,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DepartmentResourceGroups` (
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`departmentResourceGroupId`),
-  CONSTRAINT `FK_DepartmentResourceGroups_Departments` 
+  CONSTRAINT `FK_DepartmentResourceGroups_LookupDepartments` 
    FOREIGN KEY (`departmentId`)
-   REFERENCES `cci_gh_go`.`Departments`(`departmentId`)
+   REFERENCES `cci_gh_go`.`LookupDepartments`(`departmentId`)
    ON DELETE NO ACTION
    ON UPDATE NO ACTION
 );
@@ -402,9 +407,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffRolesDepartments` (
     REFERENCES `cci_gh_go`.`CCIStaffRoles` (`cciStaffRoleId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_CCIStaffRolesDepartments_Departments`
+  CONSTRAINT `FK_CCIStaffRolesDepartments_LookupDepartments`
     FOREIGN KEY (`departmentId`)
-    REFERENCES `cci_gh_go`.`Departments` (`departmentId`)
+    REFERENCES `cci_gh_go`.`LookupDepartments` (`departmentId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -504,15 +509,15 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Season` (
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`seasonId`),
   INDEX `FK_Season_SeasonStatus_idx` (`seasonStatusId` ASC),
-  INDEX `FK_Season_Departments_idx` (`departmentId` ASC),
+  INDEX `FK_Season_LookupDepartments_idx` (`departmentId` ASC),
   CONSTRAINT `FK_Season_SeasonStatus`
     FOREIGN KEY (`seasonStatusId`)
     REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Season_Departments`
+  CONSTRAINT `FK_Season_LookupDepartments`
     FOREIGN KEY (`departmentId`)
-    REFERENCES `cci_gh_go`.`Departments` (`departmentId`)
+    REFERENCES `cci_gh_go`.`LookupDepartments` (`departmentId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -964,4 +969,11 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`USSchoolSeason` (
     REFERENCES `cci_gh_go`.`USSchool` (`usSchoolId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
+);
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookUpGender` (
+	`genderId` INT(3) NOT NULL AUTO_INCREMENT,
+	`genderName` VARCHAR(1) NOT NULL,
+	PRIMARY KEY(`genderId`)
 );
