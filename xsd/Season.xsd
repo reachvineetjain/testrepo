@@ -18,6 +18,7 @@
 		<xsd:sequence>
 		 <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
 		 <xsd:element name="statusId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+		 <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
 		 <xsd:element name="seasonHSPConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
 		 <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="startDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -25,9 +26,16 @@
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="notes" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="documents" type="season:SeasonDocument" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="programOptions" type="season:ProgramOptions" minOccurs="1" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
-
+  <xsd:complexType name="ProgramOptions">
+      <xsd:sequence>
+         <xsd:element name="programOptionsID" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programOptionsCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programOptionsName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
      <xsd:complexType name="SeasonDocument">
         <xsd:sequence>
             <xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1" />
