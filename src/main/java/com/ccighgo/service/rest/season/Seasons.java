@@ -81,7 +81,9 @@ public class Seasons {
 	@DELETE
 	@Path("delete/{id}")
 	@Produces("application/json")
-	public void deleteSeason(@PathParam("id") String id) {
+	public String deleteSeason(@PathParam("id") String id) {
+		LOGGER.debug("Calling Delete Season'func:deleteSeason'");
+		 return seasonServices.deleteSeason(id);	
 	}
 
 }

@@ -30,6 +30,7 @@
         <property name="unmarshallAsJaxbElement" value="true" />
         <property name="produceMediaTypes" ref="jsonTypes" />
         <property name="consumeMediaTypes" ref="jsonTypes" />
+        <property name="ignoreNamespaces" value="true"></property>
     </bean>
 
     <jaxrs:server id="service" address="/">

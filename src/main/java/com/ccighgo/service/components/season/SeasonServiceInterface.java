@@ -14,7 +14,7 @@ public interface SeasonServiceInterface {
     
     public  SeasonBean createSeason(SeasonBean seasonBean);
     
-    public void deleteSeason(String id);
+    public String deleteSeason(String id);
     
     public SeasonBean editSeason(String id);
     

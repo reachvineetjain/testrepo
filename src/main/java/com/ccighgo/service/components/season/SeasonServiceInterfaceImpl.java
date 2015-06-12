@@ -15,6 +15,7 @@ import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.ValidationUtils;
 
@@ -72,9 +73,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	@Override
-	public void deleteSeason(String id) {
-		// TODO Auto-generated method stub
-
+	public String deleteSeason(String id) {
+		Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
+		if(seasonEntity!=null){
+			seasonEntity.setActive(CCIConstants.INACTIVE);
+			seasonRepository.saveAndFlush(seasonEntity);
+			return  "Season Deactivated";
+		}
+		return "Error Deactivating Season";
 	}
 
 	@Override
