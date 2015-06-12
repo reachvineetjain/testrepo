@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.utility;
 
 import com.ccighgo.service.transport.utility.beans.country.Countries;
+import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.funtion.Functions;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
@@ -25,11 +26,29 @@ public interface UtilityServices {
 	 */
 	public Countries getAllCountries();
 
+	
+	/**
+	 * The method will be used by edit calls on Country, will return Country details
+	 * 
+	 * @return Country details by input id.
+	 */
+	
+	public Country getCountryById(String id);
+	
+	/**
+	 * This service can add a new Country in the system
+	 * 
+	 * @param Country
+	 * @return Countries - The list of countries with the new inserted one.
+	 */
+	public Countries addNewCountry(Country Country);
+	
 	/**
 	 * fetches list of all US states and state codes
 	 * 
 	 * @return states list.
 	 */
+	
 	public States getAllStates();
 
 	/**

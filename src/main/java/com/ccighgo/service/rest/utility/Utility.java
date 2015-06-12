@@ -2,14 +2,16 @@ package com.ccighgo.service.rest.utility;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.service.components.utility.UtilityServices;
+import com.ccighgo.service.components.utility.UtilityServicesImpl;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
+import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.funtion.Functions;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
@@ -34,7 +36,7 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
 @Consumes("application/json")
 public class Utility {
 	
-	@Autowired UtilityServices utilityServices;
+	@Autowired UtilityServicesImpl utilityServices;
 
 	/**
 	 * The method {@code ping(@PathParam("input") String input)} returns user
@@ -62,6 +64,46 @@ public class Utility {
 	public Countries getAllCountries() {
 		return utilityServices.getAllCountries();
 	}
+	
+	/**
+     * RESTFul service getCountryById for edit
+     * 
+     * @param id
+     * @return Country by id
+     */
+    @GET
+    @Path("country/{id}/edit/")
+    @Produces("application/json")
+    public Country editCountry(@PathParam("id") String countryId) {
+        return utilityServices.getCountryById(countryId);
+    }
+    
+    /**
+     * RESTFul service: get country details by id
+     * 
+     * @param id
+     * @return Country by id
+     */
+    @GET
+    @Path("view/{id}")
+    @Produces("application/json")
+    public Country view(@PathParam("id") String id) {
+        return utilityServices.getCountryById(id);
+    }
+    
+    /**
+     * RESTFul service: To add new country
+     * 
+     * @param Country - As as Country object
+     * @return Countries - The list of country from DB to UI
+     */
+    @POST
+    @Path("country/add")
+    @Produces("application/json")
+    public Countries addNewCountry(Country country) {
+        return utilityServices.addNewCountry(country);
+    }
+    
 	
 	/**
 	 * RESTful service returns list of states in US

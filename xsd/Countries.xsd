@@ -23,6 +23,9 @@
             <xsd:element name="id" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="countryCode" type="xsd:string" maxOccurs="1" minOccurs="1" />
             <xsd:element name="countryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="countryFlag" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="isReqFinalSOAonDS" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
 

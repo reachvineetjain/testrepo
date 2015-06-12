@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.CCIStaffRole;
 import com.ccighgo.db.entities.Country;
 import com.ccighgo.db.entities.USState;
+import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentFunctionRepository;
@@ -19,6 +20,7 @@ import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.funtion.Function;
 import com.ccighgo.service.transport.utility.beans.funtion.Functions;
@@ -28,10 +30,11 @@ import com.ccighgo.service.transport.utility.beans.role.Role;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.State;
 import com.ccighgo.service.transport.utility.beans.state.States;
-import com.ccighgo.service.transport.utility.beans.userdepartment.DepartmentFunction;
+//import com.ccighgo.service.transport.utility.beans.userdepartment.DepartmentFunction;
 import com.ccighgo.service.transport.utility.beans.userdepartment.DepartmentProgram;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.utils.CCIConstants;
 
 /**
  * @author ravimishra
@@ -61,6 +64,9 @@ public class UtilityServicesImpl implements UtilityServices {
                 ctr.setId(c.getCountryId());
                 ctr.setCountryCode(c.getCountryCode());
                 ctr.setCountryName(c.getCountryName());
+                ctr.setCountryFlag(c.getCountryFlag() != null ? c.getCountryFlag() : CCIConstants.EMPTY_DATA);
+                ctr.setIsReqFinalSOAonDS(c.getReqFinalSOAonDS() == CCIConstants.ACTIVE ? true : false);
+                ctr.setActive(c.getActive() == CCIConstants.ACTIVE ? true : false);
                 countriesFrontList.add(ctr);
             }
             countries.getCountries().addAll(countriesFrontList);
@@ -275,6 +281,7 @@ public class UtilityServicesImpl implements UtilityServices {
         }
     }
 
+    /**
     private void populateDepartmentFunctions(com.ccighgo.db.entities.Department d, UserDepartment userDepartment) {
         List<com.ccighgo.db.entities.DepartmentFunction> departmentFunctionsList = departmentFunctionsRepository.findAll();
         if (departmentFunctionsList != null) {
@@ -290,5 +297,48 @@ public class UtilityServicesImpl implements UtilityServices {
             }
             userDepartment.getDepartmentFunction().addAll(functionList);
         }
-    }
+    }**/
+
+	@Override
+	public com.ccighgo.service.transport.utility.beans.country.Country getCountryById(String id) {
+		
+		com.ccighgo.service.transport.utility.beans.country.Country countryBean = null;
+		if (id == null || (Integer.valueOf(id)) == 0) {
+	         throw new InvalidServiceConfigurationException("Please check Country id");
+	    }
+		
+		com.ccighgo.db.entities.Country country = countryRepository.findOne(Integer.valueOf(id));
+		
+		if(country == null){
+			throw new InvalidServiceConfigurationException("Data not available for this Country id");
+		}
+		if(country != null){
+			countryBean = new com.ccighgo.service.transport.utility.beans.country.Country();
+			countryBean.setId(country.getCountryId());
+			countryBean.setCountryCode(country.getCountryCode());
+			countryBean.setCountryName(country.getCountryName());
+			countryBean.setCountryFlag(country.getCountryFlag() != null ? country.getCountryFlag() : CCIConstants.EMPTY_DATA );
+			countryBean.setIsReqFinalSOAonDS(country.getReqFinalSOAonDS() == CCIConstants.ACTIVE ? true : false);
+			countryBean.setActive(country.getActive() == CCIConstants.ACTIVE ? true : false);
+		}
+		return countryBean;
+	}
+
+	@Override
+	public Countries addNewCountry(com.ccighgo.service.transport.utility.beans.country.Country country) {
+		
+        com.ccighgo.db.entities.Country countryEnt = new com.ccighgo.db.entities.Country();
+        if(country != null){
+        	countryEnt.setCountryId(country.getId());
+        	countryEnt.setCountryCode(country.getCountryCode());
+        	countryEnt.setCountryName(country.getCountryName());
+        	countryEnt.setCountryFlag(country.getCountryFlag() != null ? country.getCountryFlag() : CCIConstants.EMPTY_DATA);
+        	countryEnt.setReqFinalSOAonDS(CCIConstants.ACTIVE);
+        	countryEnt.setActive(CCIConstants.ACTIVE);
+        	countryRepository.saveAndFlush(countryEnt);
+        	countryRepository.flush();
+        }
+		
+		return getAllCountries();
+	}
 }
