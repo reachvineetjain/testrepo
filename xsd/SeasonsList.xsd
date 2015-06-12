@@ -26,7 +26,11 @@
          <xsd:element name="startDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="endDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="programOptions" type="seasons:ProgramOptions" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="statusId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+		 <xsd:element name="seasonHSPConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+         <xsd:element name="department" type="seasons:DepartmentObject" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programOptions" type="seasons:ProgramOptions" minOccurs="1" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>
 
@@ -35,6 +39,14 @@
          <xsd:element name="programOptionsID" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programOptionsCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programOptionsName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="DepartmentObject">
+      <xsd:sequence>
+         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

@@ -15,9 +15,10 @@
         <context:include-filter expression="org.springframework.stereotype.Service" type="annotation" />
     </context:component-scan>
 	
-    <bean id="seasonServiceInterface" class="com.ccighgo.service.components.season.SeasonServiceInterfaceImpl" />
+     <bean id="seasonServiceInterface" class="com.ccighgo.service.components.season.SeasonServiceInterfaceImpl" />
      <bean id="userManagementService" class="com.ccighgo.service.components.usermanagment.UserManagementServiceImpl" />
      <bean id="utilityServices" class="com.ccighgo.service.components.utility.UtilityServicesImpl" />
+     <bean id="seasonServiceImplUtil" class="com.ccighgo.service.components.season.SeasonServiceImplUtil" />
      
      <bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource" autowire-candidate="true" >
