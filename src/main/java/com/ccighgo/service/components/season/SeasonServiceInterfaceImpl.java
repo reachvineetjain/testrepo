@@ -8,10 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.Department;
+import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.SeasonRepository;
+import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
@@ -29,11 +33,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	SeasonServiceImplUtil seasonServiceImplUtil;
 	
 	SeasonServiceInterfaceImpl() {
-	}
-
-	@Override
-	public String getString() {
-		return "<- Season Service ->";
 	}
 
 	@Override
@@ -111,5 +110,26 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 		}
 		return null;
 	}
+
+   public SeasonProgram getSeasonPrograms(String seasonId) {
+      SeasonProgram seasonProgram = null;
+      try {
+         Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
+         if (season != null) {
+            List<String> seasonPrograms = new ArrayList<String>();
+            seasonProgram = new SeasonProgram();
+            Department dept = season.getDepartment();
+            List<DepartmentProgram> departmentPrograms = dept.getDepartmentPrograms();
+            for (DepartmentProgram dPrg : departmentPrograms) {
+               String seasonPrg = season.getSeasonName() + " - " + dPrg.getProgramName();
+               seasonPrograms.add(seasonPrg);
+            }
+            seasonProgram.getSeasonPrograms().addAll(seasonPrograms);
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return seasonProgram;
+   }
 
 }
