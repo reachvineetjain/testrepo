@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -19,31 +19,39 @@ public class SeasonCAPDetail implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonCAPDetailsId;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp internCutoffDate;
+	private Date internAppDeadlineDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp internEndDate;
+	private Date internEndDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp internStartDate;
+	private Date internStartDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private byte programSeasonStatus;
+	private Date traineeAppDeadlineDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp traineeCutOffDate;
+	private Date traineeEndDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp traineeEndDate;
-
-	@Column(nullable=false)
-	private Timestamp traineeStartDate;
+	private Date traineeStartDate;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
+
+	//bi-directional many-to-one association to SeasonStatus
+	@ManyToOne
+	@JoinColumn(name="programStatusId", nullable=false)
+	private SeasonStatus seasonStatus;
 
 	public SeasonCAPDetail() {
 	}
@@ -56,59 +64,51 @@ public class SeasonCAPDetail implements Serializable {
 		this.seasonCAPDetailsId = seasonCAPDetailsId;
 	}
 
-	public Timestamp getInternCutoffDate() {
-		return this.internCutoffDate;
+	public Date getInternAppDeadlineDate() {
+		return this.internAppDeadlineDate;
 	}
 
-	public void setInternCutoffDate(Timestamp internCutoffDate) {
-		this.internCutoffDate = internCutoffDate;
+	public void setInternAppDeadlineDate(Date internAppDeadlineDate) {
+		this.internAppDeadlineDate = internAppDeadlineDate;
 	}
 
-	public Timestamp getInternEndDate() {
+	public Date getInternEndDate() {
 		return this.internEndDate;
 	}
 
-	public void setInternEndDate(Timestamp internEndDate) {
+	public void setInternEndDate(Date internEndDate) {
 		this.internEndDate = internEndDate;
 	}
 
-	public Timestamp getInternStartDate() {
+	public Date getInternStartDate() {
 		return this.internStartDate;
 	}
 
-	public void setInternStartDate(Timestamp internStartDate) {
+	public void setInternStartDate(Date internStartDate) {
 		this.internStartDate = internStartDate;
 	}
 
-	public byte getProgramSeasonStatus() {
-		return this.programSeasonStatus;
+	public Date getTraineeAppDeadlineDate() {
+		return this.traineeAppDeadlineDate;
 	}
 
-	public void setProgramSeasonStatus(byte programSeasonStatus) {
-		this.programSeasonStatus = programSeasonStatus;
+	public void setTraineeAppDeadlineDate(Date traineeAppDeadlineDate) {
+		this.traineeAppDeadlineDate = traineeAppDeadlineDate;
 	}
 
-	public Timestamp getTraineeCutOffDate() {
-		return this.traineeCutOffDate;
-	}
-
-	public void setTraineeCutOffDate(Timestamp traineeCutOffDate) {
-		this.traineeCutOffDate = traineeCutOffDate;
-	}
-
-	public Timestamp getTraineeEndDate() {
+	public Date getTraineeEndDate() {
 		return this.traineeEndDate;
 	}
 
-	public void setTraineeEndDate(Timestamp traineeEndDate) {
+	public void setTraineeEndDate(Date traineeEndDate) {
 		this.traineeEndDate = traineeEndDate;
 	}
 
-	public Timestamp getTraineeStartDate() {
+	public Date getTraineeStartDate() {
 		return this.traineeStartDate;
 	}
 
-	public void setTraineeStartDate(Timestamp traineeStartDate) {
+	public void setTraineeStartDate(Date traineeStartDate) {
 		this.traineeStartDate = traineeStartDate;
 	}
 
@@ -118,6 +118,14 @@ public class SeasonCAPDetail implements Serializable {
 
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	public SeasonStatus getSeasonStatus() {
+		return this.seasonStatus;
+	}
+
+	public void setSeasonStatus(SeasonStatus seasonStatus) {
+		this.seasonStatus = seasonStatus;
 	}
 
 }

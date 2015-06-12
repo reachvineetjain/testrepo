@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -19,11 +19,13 @@ public class SeasonWPConfiguration implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonWPConfigurationId;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp seasonEndDate;
+	private Date seasonEndDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp seasonStartDate;
+	private Date seasonStartDate;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -41,19 +43,19 @@ public class SeasonWPConfiguration implements Serializable {
 		this.seasonWPConfigurationId = seasonWPConfigurationId;
 	}
 
-	public Timestamp getSeasonEndDate() {
+	public Date getSeasonEndDate() {
 		return this.seasonEndDate;
 	}
 
-	public void setSeasonEndDate(Timestamp seasonEndDate) {
+	public void setSeasonEndDate(Date seasonEndDate) {
 		this.seasonEndDate = seasonEndDate;
 	}
 
-	public Timestamp getSeasonStartDate() {
+	public Date getSeasonStartDate() {
 		return this.seasonStartDate;
 	}
 
-	public void setSeasonStartDate(Timestamp seasonStartDate) {
+	public void setSeasonStartDate(Date seasonStartDate) {
 		this.seasonStartDate = seasonStartDate;
 	}
 

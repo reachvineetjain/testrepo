@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -19,22 +19,27 @@ public class USSchoolSeason implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int usSchoolSeasonId;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp schoolEndDate;
+	private Date schoolEndDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp schoolStartDate;
+	private Date schoolStartDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp secondSemStartDate;
-
-	@Column(nullable=false)
-	private int usSchoolId;
+	private Date secondSemStartDate;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
+
+	//bi-directional many-to-one association to USSchool
+	@ManyToOne
+	@JoinColumn(name="usSchoolId", nullable=false)
+	private USSchool usschool;
 
 	public USSchoolSeason() {
 	}
@@ -47,36 +52,28 @@ public class USSchoolSeason implements Serializable {
 		this.usSchoolSeasonId = usSchoolSeasonId;
 	}
 
-	public Timestamp getSchoolEndDate() {
+	public Date getSchoolEndDate() {
 		return this.schoolEndDate;
 	}
 
-	public void setSchoolEndDate(Timestamp schoolEndDate) {
+	public void setSchoolEndDate(Date schoolEndDate) {
 		this.schoolEndDate = schoolEndDate;
 	}
 
-	public Timestamp getSchoolStartDate() {
+	public Date getSchoolStartDate() {
 		return this.schoolStartDate;
 	}
 
-	public void setSchoolStartDate(Timestamp schoolStartDate) {
+	public void setSchoolStartDate(Date schoolStartDate) {
 		this.schoolStartDate = schoolStartDate;
 	}
 
-	public Timestamp getSecondSemStartDate() {
+	public Date getSecondSemStartDate() {
 		return this.secondSemStartDate;
 	}
 
-	public void setSecondSemStartDate(Timestamp secondSemStartDate) {
+	public void setSecondSemStartDate(Date secondSemStartDate) {
 		this.secondSemStartDate = secondSemStartDate;
-	}
-
-	public int getUsSchoolId() {
-		return this.usSchoolId;
-	}
-
-	public void setUsSchoolId(int usSchoolId) {
-		this.usSchoolId = usSchoolId;
 	}
 
 	public Season getSeason() {
@@ -85,6 +82,14 @@ public class USSchoolSeason implements Serializable {
 
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	public USSchool getUsschool() {
+		return this.usschool;
+	}
+
+	public void setUsschool(USSchool usschool) {
+		this.usschool = usschool;
 	}
 
 }

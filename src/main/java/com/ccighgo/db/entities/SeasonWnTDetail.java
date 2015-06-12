@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -17,16 +17,15 @@ public class SeasonWnTDetail implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonWnTDetailsId;
+	private int seasonWTDetailsId;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private int annualSeason;
+	private Date applicationDeadlineDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp cutOffDate;
-
-	@Column(nullable=false)
-	private Timestamp endDate;
+	private Date endDate;
 
 	@Column(nullable=false)
 	private byte isJobBoardOpen;
@@ -34,49 +33,49 @@ public class SeasonWnTDetail implements Serializable {
 	@Column(nullable=false)
 	private int maxPendingJobApps;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private byte programStatus;
+	private Date startDate;
 
-	@Column(nullable=false)
-	private Timestamp startDate;
+	//bi-directional many-to-one association to AnnualSeason
+	@ManyToOne
+	@JoinColumn(name="annualSeasonId", nullable=false)
+	private AnnualSeason annualSeason;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
+	//bi-directional many-to-one association to SeasonStatus
+	@ManyToOne
+	@JoinColumn(name="programStatusId", nullable=false)
+	private SeasonStatus seasonStatus;
+
 	public SeasonWnTDetail() {
 	}
 
-	public int getSeasonWnTDetailsId() {
-		return this.seasonWnTDetailsId;
+	public int getSeasonWTDetailsId() {
+		return this.seasonWTDetailsId;
 	}
 
-	public void setSeasonWnTDetailsId(int seasonWnTDetailsId) {
-		this.seasonWnTDetailsId = seasonWnTDetailsId;
+	public void setSeasonWTDetailsId(int seasonWTDetailsId) {
+		this.seasonWTDetailsId = seasonWTDetailsId;
 	}
 
-	public int getAnnualSeason() {
-		return this.annualSeason;
+	public Date getApplicationDeadlineDate() {
+		return this.applicationDeadlineDate;
 	}
 
-	public void setAnnualSeason(int annualSeason) {
-		this.annualSeason = annualSeason;
+	public void setApplicationDeadlineDate(Date applicationDeadlineDate) {
+		this.applicationDeadlineDate = applicationDeadlineDate;
 	}
 
-	public Timestamp getCutOffDate() {
-		return this.cutOffDate;
-	}
-
-	public void setCutOffDate(Timestamp cutOffDate) {
-		this.cutOffDate = cutOffDate;
-	}
-
-	public Timestamp getEndDate() {
+	public Date getEndDate() {
 		return this.endDate;
 	}
 
-	public void setEndDate(Timestamp endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -96,20 +95,20 @@ public class SeasonWnTDetail implements Serializable {
 		this.maxPendingJobApps = maxPendingJobApps;
 	}
 
-	public byte getProgramStatus() {
-		return this.programStatus;
-	}
-
-	public void setProgramStatus(byte programStatus) {
-		this.programStatus = programStatus;
-	}
-
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+
+	public AnnualSeason getAnnualSeason() {
+		return this.annualSeason;
+	}
+
+	public void setAnnualSeason(AnnualSeason annualSeason) {
+		this.annualSeason = annualSeason;
 	}
 
 	public Season getSeason() {
@@ -118,6 +117,14 @@ public class SeasonWnTDetail implements Serializable {
 
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	public SeasonStatus getSeasonStatus() {
+		return this.seasonStatus;
+	}
+
+	public void setSeasonStatus(SeasonStatus seasonStatus) {
+		this.seasonStatus = seasonStatus;
 	}
 
 }

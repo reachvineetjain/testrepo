@@ -19,9 +19,6 @@ public class USState implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int usStatesId;
 
-	@Column(nullable=false)
-	private byte active;
-
 	@Column(nullable=false, length=5)
 	private String stateCode;
 
@@ -41,14 +38,6 @@ public class USState implements Serializable {
 
 	public void setUsStatesId(int usStatesId) {
 		this.usStatesId = usStatesId;
-	}
-
-	public byte getActive() {
-		return this.active;
-	}
-
-	public void setActive(byte active) {
-		this.active = active;
 	}
 
 	public String getStateCode() {

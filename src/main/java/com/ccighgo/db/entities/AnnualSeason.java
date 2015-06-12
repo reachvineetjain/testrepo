@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -36,6 +37,10 @@ public class AnnualSeason implements Serializable {
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
+
+	//bi-directional many-to-one association to SeasonWnTDetail
+	@OneToMany(mappedBy="annualSeason")
+	private List<SeasonWnTDetail> seasonWnTdetails;
 
 	public AnnualSeason() {
 	}
@@ -94,6 +99,28 @@ public class AnnualSeason implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public List<SeasonWnTDetail> getSeasonWnTdetails() {
+		return this.seasonWnTdetails;
+	}
+
+	public void setSeasonWnTdetails(List<SeasonWnTDetail> seasonWnTdetails) {
+		this.seasonWnTdetails = seasonWnTdetails;
+	}
+
+	public SeasonWnTDetail addSeasonWnTdetail(SeasonWnTDetail seasonWnTdetail) {
+		getSeasonWnTdetails().add(seasonWnTdetail);
+		seasonWnTdetail.setAnnualSeason(this);
+
+		return seasonWnTdetail;
+	}
+
+	public SeasonWnTDetail removeSeasonWnTdetail(SeasonWnTDetail seasonWnTdetail) {
+		getSeasonWnTdetails().remove(seasonWnTdetail);
+		seasonWnTdetail.setAnnualSeason(null);
+
+		return seasonWnTdetail;
 	}
 
 }

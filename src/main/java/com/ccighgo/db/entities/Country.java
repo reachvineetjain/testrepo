@@ -32,7 +32,7 @@ public class Country implements Serializable {
 	private String countryName;
 
 	@Column(nullable=false)
-	private byte reqFinalSOAonDS;
+	private byte isReqFinalSOAonDS;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="country")
@@ -81,12 +81,12 @@ public class Country implements Serializable {
 		this.countryName = countryName;
 	}
 
-	public byte getReqFinalSOAonDS() {
-		return this.reqFinalSOAonDS;
+	public byte getIsReqFinalSOAonDS() {
+		return this.isReqFinalSOAonDS;
 	}
 
-	public void setReqFinalSOAonDS(byte reqFinalSOAonDS) {
-		this.reqFinalSOAonDS = reqFinalSOAonDS;
+	public void setIsReqFinalSOAonDS(byte isReqFinalSOAonDS) {
+		this.isReqFinalSOAonDS = isReqFinalSOAonDS;
 	}
 
 	public List<CCIStaffUser> getCcistaffUsers() {
