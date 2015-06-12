@@ -61,7 +61,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	public SeasonBean createSeason(SeasonBean seasonBean) {
 		try{
 			Season seasonEntity = new Season();
-			seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity );
+			seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false );
 			seasonRepository.saveAndFlush(seasonEntity);
 			seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
 			return viewSeason(seasonEntity.getSeasonId()+"");
@@ -102,9 +102,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	public SeasonBean updateSeason(SeasonBean seasonBean) {
 		try{
 			Season seasonEntity = new Season();
-			seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity);
+			seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity,true);
 			seasonRepository.saveAndFlush(seasonEntity);
-			seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
+			seasonServiceImplUtil.updateSeasonHspConfiguration(seasonBean, seasonEntity);
 			return viewSeason(seasonEntity.getSeasonId()+"");
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);	
