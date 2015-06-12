@@ -199,7 +199,7 @@ public class UserManagement {
     @GET
     @Path("reset/{id}")
     @Consumes("application/json")
-    public User resetPassword(@PathParam("userId") String userId) {
+    public User resetPassword(@PathParam("id") String userId) {
         return userMgmtServices.resetPassword(userId);
     }
 

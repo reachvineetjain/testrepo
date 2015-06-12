@@ -15,18 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ProgramOptions complex type.
+ * <p>Java class for DepartmentObject complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ProgramOptions">
+ * &lt;complexType name="DepartmentObject">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="programOptionsID" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="programOptionsCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="programOptionsName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="departmentId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="departmentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="departmentCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,81 +36,81 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProgramOptions", propOrder = {
-    "programOptionsID",
-    "programOptionsCode",
-    "programOptionsName"
+@XmlType(name = "DepartmentObject", propOrder = {
+    "departmentId",
+    "departmentName",
+    "departmentCode"
 })
-public class ProgramOptions {
+public class DepartmentObject {
 
-    protected int programOptionsID;
+    protected int departmentId;
     @XmlElement(required = true)
-    protected String programOptionsCode;
+    protected String departmentName;
     @XmlElement(required = true)
-    protected String programOptionsName;
+    protected String departmentCode;
 
     /**
-     * Gets the value of the programOptionsID property.
+     * Gets the value of the departmentId property.
      * 
      */
-    public int getProgramOptionsID() {
-        return programOptionsID;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
     /**
-     * Sets the value of the programOptionsID property.
+     * Sets the value of the departmentId property.
      * 
      */
-    public void setProgramOptionsID(int value) {
-        this.programOptionsID = value;
+    public void setDepartmentId(int value) {
+        this.departmentId = value;
     }
 
     /**
-     * Gets the value of the programOptionsCode property.
+     * Gets the value of the departmentName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getProgramOptionsCode() {
-        return programOptionsCode;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
     /**
-     * Sets the value of the programOptionsCode property.
+     * Sets the value of the departmentName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setProgramOptionsCode(String value) {
-        this.programOptionsCode = value;
+    public void setDepartmentName(String value) {
+        this.departmentName = value;
     }
 
     /**
-     * Gets the value of the programOptionsName property.
+     * Gets the value of the departmentCode property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getProgramOptionsName() {
-        return programOptionsName;
+    public String getDepartmentCode() {
+        return departmentCode;
     }
 
     /**
-     * Sets the value of the programOptionsName property.
+     * Sets the value of the departmentCode property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setProgramOptionsName(String value) {
-        this.programOptionsName = value;
+    public void setDepartmentCode(String value) {
+        this.departmentCode = value;
     }
 
 }
