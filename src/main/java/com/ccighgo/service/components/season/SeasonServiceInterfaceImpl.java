@@ -11,11 +11,10 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.Department;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.Season;
-import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.exception.CcighgoException;
-import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
+import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
@@ -136,6 +135,18 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          ExceptionUtil.logException(e, LOGGER);
       }
       return seasonProgram;
+   }
+
+
+   public SeasonStatuses getSeasonStatus() {
+      SeasonStatuses seasonStatuses = null;
+      try{
+         LOGGER.info("SeasonStatus: fetch");
+         seasonStatuses = seasonServiceImplUtil.getSeasonStatus();
+      }catch(CcighgoException e){
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return seasonStatuses;
    }
 
 }
