@@ -35,10 +35,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonServiceInterfaceImpl() {
    }
 
-   @Override
-   public String getString() {
-      return "<- Season Service ->";
-   }
 
    @Override
    public SeasonsList getAllSeasons() {
