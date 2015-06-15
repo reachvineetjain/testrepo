@@ -304,7 +304,7 @@ VALUES
 (50,'Wisconsin','WI'),
 (51,'Wyoming','WY');
 
-INSERT INTO `cci_gh_go`.`LookUpGender` 
+INSERT INTO `cci_gh_go`.`LookupGender` 
  VALUES 
  (1,'M'),
  (2,'F');
