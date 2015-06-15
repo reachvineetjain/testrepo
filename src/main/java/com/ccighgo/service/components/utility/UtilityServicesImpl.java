@@ -329,7 +329,6 @@ public class UtilityServicesImpl implements UtilityServices {
 		
         com.ccighgo.db.entities.Country countryEnt = new com.ccighgo.db.entities.Country();
         if(country != null){
-        	countryEnt.setCountryId(country.getId());
         	countryEnt.setCountryCode(country.getCountryCode());
         	countryEnt.setCountryName(country.getCountryName());
         	countryEnt.setCountryFlag(country.getCountryFlag() != null ? country.getCountryFlag() : CCIConstants.EMPTY_DATA);
