@@ -18,14 +18,25 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupCountries` (
 );
 
 -- ----------------------------------------------------------------------------------------------------
--- Table cci_gh_go.USStates
+-- Table cci_gh_go.LookupUSStates
 -- ----------------------------------------------------------------------------------------------------   
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`USStates` (
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupUSStates` (
   `usStatesId` INT(3) NOT NULL AUTO_INCREMENT,
   `stateName` VARCHAR(50) NOT NULL,
   `stateCode` VARCHAR(5) NOT NULL,
   PRIMARY KEY (`usStatesId`)
 );
+
+-- ----------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.LookupGender
+-- ----------------------------------------------------------------------------------------------------   
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupGender` (
+	`genderId` INT(3) NOT NULL AUTO_INCREMENT,
+	`genderName` VARCHAR(1) NOT NULL,
+	PRIMARY KEY(`genderId`)
+);
+
 
 -- ----------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.UserType whether cciuser, lc, partner, participant etc
@@ -243,9 +254,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
   `modifiedBy` INT(11) NOT NULL,
   `active` TINYINT(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`cciStaffUserId`),
-  CONSTRAINT `FK_CCIStaffUsers_USStates`
+  CONSTRAINT `FK_CCIStaffUsers_LookupUSStates`
     FOREIGN KEY (`usStatesId`)
-    REFERENCES `cci_gh_go`.`USStates` (`usStatesId`)
+    REFERENCES `cci_gh_go`.`LookupUSStates` (`usStatesId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffUsers_LookupCountries`
@@ -257,10 +268,10 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
     FOREIGN KEY (`loginId`)
     REFERENCES `cci_gh_go`.`Login` (`loginId`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-  CONSTRAINT `FK_CCIStaffUsers_LookUpGender`
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CCIStaffUsers_LookupGender`
     FOREIGN KEY (`genderId`)
-    REFERENCES `cci_gh_go`.`LookUpGender` (`genderId`)
+    REFERENCES `cci_gh_go`.`LookupGender` (`genderId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION 	
 );
@@ -972,8 +983,3 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`USSchoolSeason` (
 );
 
 
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookUpGender` (
-	`genderId` INT(3) NOT NULL AUTO_INCREMENT,
-	`genderName` VARCHAR(1) NOT NULL,
-	PRIMARY KEY(`genderId`)
-);

@@ -1,4 +1,4 @@
-INSERT INTO `cci_gh_go`.`Countries` (`countryId`,`countryCode`,`countryName`,`isReqFinalSOAonDS`,`active`) 
+INSERT INTO `cci_gh_go`.`LookupCountries` (`countryId`,`countryCode`,`countryName`,`isReqFinalSOAonDS`,`active`) 
 VALUES
 (1,'AD','Andorra',1,1),
 (2,'AE','United Arab Emirates',1,1),
@@ -250,7 +250,7 @@ VALUES
 (248,'ZM','Zambia',1,1),
 (249,'ZW','Zimbabwe',1,1);
 
-INSERT INTO cci_gh_go.USStates (usStatesId,stateName,stateCode) 
+INSERT INTO cci_gh_go.LookupUSStates (usStatesId,stateName,stateCode) 
 VALUES
 (1,'Alabama','AL'),
 (2,'Alaska','AK'),
@@ -303,6 +303,11 @@ VALUES
 (49,'West Virginia','WV'),
 (50,'Wisconsin','WI'),
 (51,'Wyoming','WY');
+
+INSERT INTO `cci_gh_go`.`LookUpGender` 
+ VALUES 
+ (1,'M'),
+ (2,'F');
 
 INSERT INTO `cci_gh_go`.`UserType`(`userTypeId`,`userTypeCode`,`userTypeName`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
@@ -357,7 +362,7 @@ VALUES
 (10,6,'employer1','password');
 
 
-INSERT INTO `cci_gh_go`.`Departments` (`departmentId`,`departmentName`,`acronym`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
+INSERT INTO `cci_gh_go`.`LookupDepartments` (`departmentId`,`departmentName`,`acronym`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
 VALUES 
 (1,'High School Programs','HSP', CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
 (2,'Work Programs','WP', CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
@@ -477,13 +482,13 @@ VALUES
 (38, 12, 2, 'Complete Field Staff Background Checks', 'Permissions for field staff background checks',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
 (39, 12, 2, 'Complete Host Family Background Checks', 'Permissions for host family background checks',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1);
 
-INSERT INTO `cci_gh_go`.`CCIStaffUsers`(`cciStaffUserId`,`supervisorId`,`loginId`,`cciAdminGuid`,`firstName`,`lastName`,`gender`,`primaryPhone`,`emergencyPhone`,`email`,`homeAddressLineOne`,`homeAddressLineTwo`,`city`,`usStatesId`,`zip`,`countryId`,`photo`,`sevisID`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
+INSERT INTO `cci_gh_go`.`CCIStaffUsers`(`cciStaffUserId`,`supervisorId`,`loginId`,`cciAdminGuid`,`firstName`,`lastName`,`genderId`,`primaryPhone`,`emergencyPhone`,`email`,`homeAddressLineOne`,`homeAddressLineTwo`,`city`,`usStatesId`,`zip`,`countryId`,`photo`,`sevisID`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
 VALUES
-(1,1,1,'38F2535A-914C-40CC-BB3A-0881DA588B21','System','Admin','M','1231231234','911','sysadmin@cci.com','somwhere in the middle of desert','with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS001',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(2,1,2,'C1B5DEC0-D116-46FD-9B77-848C8514329B','Program','Directory','M','1112223333','911','prgdirector@cci.com','at the walls in winterfell','jon snow knows nothing','timbaktoo',14,'12345',233,'path/to/photo','SEVIS002',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(3,1,3,'2C879979-98EC-4B27-9985-59DAD255B89C','Program','Manager','M','7899875678','911','prgmanager@cci.com','cloud nine','','timbaktoo',14,'12345',233,'path/to/photo','SEVIS003',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(4,1,4,'E91DA181-2AB4-4E83-90DF-0623168ABD7B','Recruitment','Manager','M','4445556666','911','recruitmgr@cci.com','on the top of the hill','marshmallows are good','timbaktoo',14,'12345',233,'path/to/photo','SEVIS004',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(5,1,5,'7CFA58F9-28B2-440D-B649-4919A49D50C6','Temporary','Staff','M','9898786767','911','tempstaff@cci.com','somwhere in the middle of desert','with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS005',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1);
+(1,1,1,'38F2535A-914C-40CC-BB3A-0881DA588B21','System','Admin','1','1231231234','911','sysadmin@cci.com','somwhere in the middle of desert','with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS001',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(2,1,2,'C1B5DEC0-D116-46FD-9B77-848C8514329B','Program','Directory','1','1112223333','911','prgdirector@cci.com','at the walls in winterfell','jon snow knows nothing','timbaktoo',14,'12345',233,'path/to/photo','SEVIS002',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(3,1,3,'2C879979-98EC-4B27-9985-59DAD255B89C','Program','Manager','1','7899875678','911','prgmanager@cci.com','cloud nine','','timbaktoo',14,'12345',233,'path/to/photo','SEVIS003',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(4,1,4,'E91DA181-2AB4-4E83-90DF-0623168ABD7B','Recruitment','Manager','1','4445556666','911','recruitmgr@cci.com','on the top of the hill','marshmallows are good','timbaktoo',14,'12345',233,'path/to/photo','SEVIS004',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
+(5,1,5,'7CFA58F9-28B2-440D-B649-4919A49D50C6','Temporary','Staff','1','9898786767','911','tempstaff@cci.com','somwhere in the middle of desert','with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS005',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1);
 
 
 INSERT INTO `cci_gh_go`.`CCIStaffUsersCCIStaffRoles`(`cciStaffUserId`,`cciStaffRoleId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
@@ -567,7 +572,7 @@ VALUES
 (1,12,38,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (1,12,39,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`CCIStaffUserNotes`(`cciStaffUserNoteId`,`ccistaffuserID`,`note`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`CCIStaffUserNotes`(`cciStaffUserNoteId`,`ccistaffuserId`,`note`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
 (1,1,'Added by EN on 1/23',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,2,'Stepped down from the volunteer intern position today, due to paid position elsewhere.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -740,9 +745,7 @@ VALUES (7,'2009-09-01 00:00:00','2011-01-01 00:00:00'),
        (23,'2012-06-25 00:00:00','2013-07-03 00:00:00'),
        (24,'2014-06-01 00:00:00','2015-07-04 00:00:00');
        
-INSERT INTO `cci_gh_go`.`LookUpGender` 
- VALUES (1,'Male'),
-        (2,'Female');
+
 
        
         
