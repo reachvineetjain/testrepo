@@ -73,7 +73,7 @@ public class UserManagement {
      * @return User by id
      */
     @GET
-    @Path("{id}/edit/")
+    @Path("{id}/edit")
     @Produces("application/json")
     public User editUser(@PathParam("id") String id) {
         return userMgmtServices.getUserById(id);
@@ -113,10 +113,10 @@ public class UserManagement {
      * @return updated User
      */
     @POST
-    @Path("{id}/update/demographics")
+    @Path("update/demographics")
     @Consumes("application/json")
-    public User updateUserDemographics(@PathParam("id") String id, User user) {
-        return userMgmtServices.updateUserDemographics(id, user);
+    public User updateUserDemographics(User user) {
+        return userMgmtServices.updateUserDemographics(user);
     }
 
     /**
@@ -127,10 +127,10 @@ public class UserManagement {
      * @return updated User
      */
     @POST
-    @Path("{id}/update/permissions/")
+    @Path("update/permissions")
     @Consumes("application/json")
-    public User updateUserPermissions(@PathParam("id") String id, User user) {
-        return userMgmtServices.updateUserPermissions(id, user);
+    public User updateUserPermissions(User user) {
+        return userMgmtServices.updateUserPermissions(user);
     }
 
     /**
@@ -141,10 +141,10 @@ public class UserManagement {
      * @return updated User
      */
     @POST
-    @Path("{id}/update/picture")
+    @Path("update/picture")
     @Consumes("application/json")
-    public User updateUserPicture(@PathParam("id") String id, User user) {
-        return userMgmtServices.updateUserPicture(id, user);
+    public User updateUserPicture(User user) {
+        return userMgmtServices.updateUserPicture(user);
     }
     
     /**
@@ -153,8 +153,8 @@ public class UserManagement {
      * @param id
      * @return
      */
-    @DELETE
-    @Path("{id}/delete/")
+    @GET
+    @Path("{id}/deactivate")
     @Produces("application/json")
     public String deleteUser(@PathParam("id") String id) {
         return userMgmtServices.deleteUser(id);
@@ -169,7 +169,7 @@ public class UserManagement {
      * @return updated User
      */
     @POST
-    @Path("search/")
+    @Path("search")
     @Consumes("application/json")
     public CCIUsers searchUser(UserSearch userSearch) {
         return userMgmtServices.searchUsers(userSearch);
@@ -197,10 +197,10 @@ public class UserManagement {
      * @return updated User
      */
     @GET
-    @Path("reset/{id}")
+    @Path("reset/auth/{id}")
     @Consumes("application/json")
-    public User resetPassword(@PathParam("id") String userId) {
-        return userMgmtServices.resetPassword(userId);
+    public User resetPassword(@PathParam("id") String id) {
+        return userMgmtServices.resetPassword(id);
     }
 
 }

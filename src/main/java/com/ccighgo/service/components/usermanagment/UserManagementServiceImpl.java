@@ -281,8 +281,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
-   public User updateUserDemographics(String id, User user) {
-      CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
+   public User updateUserDemographics(User user) {
+      CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
       ValidationUtils.validateRequired(user.getFirstName());
       cciUser.setFirstName(user.getFirstName());
       ValidationUtils.validateRequired(user.getLastName());
@@ -347,16 +347,16 @@ public class UserManagementServiceImpl implements UserManagementService {
             cciStaffUserStaffRoleRepository.flush(); 
          }
       }
-      User usr = getUserById(id);
+      User usr = getUserById(String.valueOf(user.getCciUserId()));
       return usr;
    }
 
    @Override
-   public User updateUserPermissions(String id, User user) {
-      if (id.equals(null) || id.trim().equals(CCIConstants.EMPTY_DATA) || user.equals(null)) {
+   public User updateUserPermissions(User user) {
+      if (user.getCciUserId()==0 || user.getCciUserId()<0 || user.equals(null)) {
          // throw exception
       }
-      CCIStaffUser cciStaffUser = cciUsersRepository.findOne(Integer.valueOf(id));
+      CCIStaffUser cciStaffUser = cciUsersRepository.findOne(user.getCciUserId());
       if (cciStaffUser.equals(null)) {
          // throw exception(no user found with the id)
       }
@@ -376,12 +376,12 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciStaffUsersResourcePermissionRepository.save(newPermissionsList);
          cciStaffUsersResourcePermissionRepository.flush();
       }
-      return getUserById(id);
+      return getUserById(String.valueOf(user.getCciUserId()));
    }
 
    @Override
-   public User updateUserPicture(String id, User user) {
-      CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
+   public User updateUserPicture(User user) {
+      CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
       cciUser.setPhoto(user.getPhotoPath());
       CCIStaffUser cUsr = cciUsersRepository.save(cciUser);
       User usr = getUserById(String.valueOf(cUsr.getCciStaffUserId()));

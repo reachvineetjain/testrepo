@@ -49,7 +49,7 @@ public interface UserManagementService {
 	 * @param usr
 	 * @return updated User
 	 */
-	public User updateUserDemographics(String id, User user);
+	public User updateUserDemographics(User user);
 	
 	/**
      * Updates user permissions
@@ -57,7 +57,7 @@ public interface UserManagementService {
      * @param usr
      * @return updated User
      */
-    public User updateUserPermissions(String id, User user);
+    public User updateUserPermissions(User user);
     
     /**
      * Updates user picture
@@ -65,7 +65,7 @@ public interface UserManagementService {
      * @param usr
      * @return updated User
      */
-    public User updateUserPicture(String id, User user);
+    public User updateUserPicture(User user);
     
 	/**
 	 * The method will not perform hard delete of user from database. This will
