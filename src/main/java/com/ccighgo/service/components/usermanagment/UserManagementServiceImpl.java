@@ -117,6 +117,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired EntityManager entityManager;
    @Autowired Properties cciGhGoProps;
+   
+   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
    // 2. generate user password(Done) and send via email.
@@ -237,13 +239,21 @@ public class UserManagementServiceImpl implements UserManagementService {
    public CCIUsers searchUsers(UserSearch userSearch) {
       CCIUsers cciUsersFront = null;
       List<Object[]> results = null;
-      Query query = entityManager.createNativeQuery("call GeneralSearch(?,?,?,?,?,?,?,?,?,?)");
-      query.setParameter(1, Integer.valueOf(userSearch.getCciUserId()));
-      query.setParameter(2, userSearch.getFirstName());
-      query.setParameter(3, userSearch.getLastName());
-      query.setParameter(4, userSearch.getLoginName());
+      Query query = entityManager.createNativeQuery(SP_USER_SEARCH);
+      Integer cciUserId = null;
+      String firstName = null;
+      String lastName = null;
+      String loginName = null;
+      String email = null;
+      if(userSearch.getCciUserId()!=null && !(userSearch.getCciUserId().equals(CCIConstants.EMPTY_DATA))){
+         cciUserId = Integer.valueOf(userSearch.getCciUserId());
+      }
+      query.setParameter(1, cciUserId);
+      query.setParameter(2, nullCheck(firstName,userSearch.getFirstName()));
+      query.setParameter(3, nullCheck(lastName,userSearch.getLastName()));
+      query.setParameter(4, nullCheck(loginName,userSearch.getLoginName()));
       query.setParameter(5, Integer.valueOf(userSearch.getCountry()));
-      query.setParameter(6, userSearch.getEmail());
+      query.setParameter(6, nullCheck(email,userSearch.getEmail()));
       query.setParameter(7, null);
       query.setParameter(8, null);
       query.setParameter(9, null);
@@ -261,6 +271,13 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUsersFront.getCciUsers().addAll(cciUserList);
       }
       return cciUsersFront;
+   }
+   
+   private String nullCheck(String field, String value){
+      if(value!=null && !(value.equals(CCIConstants.EMPTY_DATA))){
+         field = value;
+      }
+      return field;
    }
 
    @Override

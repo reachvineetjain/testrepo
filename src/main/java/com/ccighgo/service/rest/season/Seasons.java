@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
+import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 
@@ -85,5 +86,12 @@ public class Seasons {
 		LOGGER.debug("Calling Delete Season'func:deleteSeason'");
 		 return seasonServices.deleteSeason(id);	
 	}
+	
+	@GET
+   @Path("program/season/{seasonId}")
+   @Produces("application/json")
+   public SeasonProgram getSeasonProgram(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getSeasonPrograms(seasonId);
+   }
 
 }
