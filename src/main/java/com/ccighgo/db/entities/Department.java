@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -50,7 +55,8 @@ public class Department implements Serializable {
 	private List<DepartmentFunction> departmentFunctions;
 
 	//bi-directional many-to-one association to DepartmentProgram
-	@OneToMany(mappedBy="department")
+	@OneToMany(mappedBy="department", fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgram> departmentPrograms;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup

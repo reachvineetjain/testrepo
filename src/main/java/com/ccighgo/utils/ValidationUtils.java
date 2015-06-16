@@ -3,6 +3,7 @@ package com.ccighgo.utils;
 import org.apache.commons.validator.EmailValidator;
 
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.exception.ValidationException;
 
 public class ValidationUtils {
@@ -30,5 +31,13 @@ public class ValidationUtils {
       EmailValidator emailValidator = EmailValidator.getInstance();
       return emailValidator.isValid(emailId);
    }
+   
+   public static boolean isValidSeasonId(String seasonId){
+	   if (seasonId == null || (Integer.valueOf(seasonId)) == 0) {
+	         throw new InvalidServiceConfigurationException("Please check Season id");
+	      }
+	   return true;
+   }
+   
 
 }

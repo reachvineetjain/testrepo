@@ -22,16 +22,12 @@ public class Login implements Serializable {
 	@Column(nullable=false, length=50)
 	private String loginName;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable=false, length=100)
 	private String password;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="login")
 	private List<CCIStaffUser> ccistaffUsers;
-
-	//bi-directional many-to-one association to History
-	@OneToMany(mappedBy="login")
-	private List<History> histories;
 
 	//bi-directional many-to-one association to UserType
 	@ManyToOne
@@ -41,6 +37,10 @@ public class Login implements Serializable {
 	//bi-directional many-to-one association to PasswordHistory
 	@OneToMany(mappedBy="login")
 	private List<PasswordHistory> passwordHistories;
+
+	//bi-directional many-to-one association to LoginHistory
+	@OneToMany(mappedBy="login")
+	private List<LoginHistory> loginHistories;
 
 	public Login() {
 	}
@@ -91,28 +91,6 @@ public class Login implements Serializable {
 		return ccistaffUser;
 	}
 
-	public List<History> getHistories() {
-		return this.histories;
-	}
-
-	public void setHistories(List<History> histories) {
-		this.histories = histories;
-	}
-
-	public History addHistory(History history) {
-		getHistories().add(history);
-		history.setLogin(this);
-
-		return history;
-	}
-
-	public History removeHistory(History history) {
-		getHistories().remove(history);
-		history.setLogin(null);
-
-		return history;
-	}
-
 	public UserType getUserType() {
 		return this.userType;
 	}
@@ -141,6 +119,28 @@ public class Login implements Serializable {
 		passwordHistory.setLogin(null);
 
 		return passwordHistory;
+	}
+
+	public List<LoginHistory> getLoginHistories() {
+		return this.loginHistories;
+	}
+
+	public void setLoginHistories(List<LoginHistory> loginHistories) {
+		this.loginHistories = loginHistories;
+	}
+
+	public LoginHistory addLoginHistory(LoginHistory loginHistory) {
+		getLoginHistories().add(loginHistory);
+		loginHistory.setLogin(this);
+
+		return loginHistory;
+	}
+
+	public LoginHistory removeLoginHistory(LoginHistory loginHistory) {
+		getLoginHistories().remove(loginHistory);
+		loginHistory.setLogin(null);
+
+		return loginHistory;
 	}
 
 }

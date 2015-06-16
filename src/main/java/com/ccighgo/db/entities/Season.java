@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -17,6 +22,7 @@ public class Season implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonId;
 
@@ -52,7 +58,7 @@ public class Season implements Serializable {
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="seasonStatusID", nullable=false)
+	@JoinColumn(name="seasonStatusId", nullable=false)
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonCAPDetail
@@ -76,7 +82,8 @@ public class Season implements Serializable {
 	private List<SeasonHSPAllocation> seasonHspallocations;
 
 	//bi-directional many-to-one association to SeasonHSPConfiguration
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy="season", fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSPConfiguration> seasonHspconfigurations;
 
 	//bi-directional many-to-one association to SeasonJ1Detail
@@ -90,10 +97,6 @@ public class Season implements Serializable {
 	//bi-directional many-to-one association to SeasonTADetail
 	@OneToMany(mappedBy="season")
 	private List<SeasonTADetail> seasonTadetails;
-
-	//bi-directional many-to-one association to SeasonVolunteersDetail
-	@OneToMany(mappedBy="season")
-	private List<SeasonVolunteersDetail> seasonVolunteersDetails;
 
 	//bi-directional many-to-one association to SeasonWADetail
 	@OneToMany(mappedBy="season")
@@ -114,6 +117,10 @@ public class Season implements Serializable {
 	//bi-directional many-to-one association to USSchoolSeason
 	@OneToMany(mappedBy="season")
 	private List<USSchoolSeason> usschoolSeasons;
+
+	//bi-directional many-to-one association to SeasonVADetail
+	@OneToMany(mappedBy="season")
+	private List<SeasonVADetail> seasonVadetails;
 
 	public Season() {
 	}
@@ -418,28 +425,6 @@ public class Season implements Serializable {
 		return seasonTadetail;
 	}
 
-	public List<SeasonVolunteersDetail> getSeasonVolunteersDetails() {
-		return this.seasonVolunteersDetails;
-	}
-
-	public void setSeasonVolunteersDetails(List<SeasonVolunteersDetail> seasonVolunteersDetails) {
-		this.seasonVolunteersDetails = seasonVolunteersDetails;
-	}
-
-	public SeasonVolunteersDetail addSeasonVolunteersDetail(SeasonVolunteersDetail seasonVolunteersDetail) {
-		getSeasonVolunteersDetails().add(seasonVolunteersDetail);
-		seasonVolunteersDetail.setSeason(this);
-
-		return seasonVolunteersDetail;
-	}
-
-	public SeasonVolunteersDetail removeSeasonVolunteersDetail(SeasonVolunteersDetail seasonVolunteersDetail) {
-		getSeasonVolunteersDetails().remove(seasonVolunteersDetail);
-		seasonVolunteersDetail.setSeason(null);
-
-		return seasonVolunteersDetail;
-	}
-
 	public List<SeasonWADetail> getSeasonWadetails() {
 		return this.seasonWadetails;
 	}
@@ -548,6 +533,28 @@ public class Season implements Serializable {
 		usschoolSeason.setSeason(null);
 
 		return usschoolSeason;
+	}
+
+	public List<SeasonVADetail> getSeasonVadetails() {
+		return this.seasonVadetails;
+	}
+
+	public void setSeasonVadetails(List<SeasonVADetail> seasonVadetails) {
+		this.seasonVadetails = seasonVadetails;
+	}
+
+	public SeasonVADetail addSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().add(seasonVadetail);
+		seasonVadetail.setSeason(this);
+
+		return seasonVadetail;
+	}
+
+	public SeasonVADetail removeSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().remove(seasonVadetail);
+		seasonVadetail.setSeason(null);
+
+		return seasonVadetail;
 	}
 
 }

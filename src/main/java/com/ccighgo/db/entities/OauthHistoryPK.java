@@ -16,7 +16,7 @@ public class OauthHistoryPK implements Serializable {
 	private String nonce;
 
 	@Column(unique=true, nullable=false, precision=10)
-	private long timevalue;
+	private long timeValue;
 
 	public OauthHistoryPK() {
 	}
@@ -26,11 +26,11 @@ public class OauthHistoryPK implements Serializable {
 	public void setNonce(String nonce) {
 		this.nonce = nonce;
 	}
-	public long getTimevalue() {
-		return this.timevalue;
+	public long getTimeValue() {
+		return this.timeValue;
 	}
-	public void setTimevalue(long timevalue) {
-		this.timevalue = timevalue;
+	public void setTimeValue(long timeValue) {
+		this.timeValue = timeValue;
 	}
 
 	public boolean equals(Object other) {
@@ -43,14 +43,14 @@ public class OauthHistoryPK implements Serializable {
 		OauthHistoryPK castOther = (OauthHistoryPK)other;
 		return 
 			this.nonce.equals(castOther.nonce)
-			&& (this.timevalue == castOther.timevalue);
+			&& (this.timeValue == castOther.timeValue);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.nonce.hashCode();
-		hash = hash * prime + ((int) (this.timevalue ^ (this.timevalue >>> 32)));
+		hash = hash * prime + ((int) (this.timeValue ^ (this.timeValue >>> 32)));
 		
 		return hash;
 	}

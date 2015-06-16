@@ -38,5 +38,6 @@ public class CCIConstants {
     
     //user type ids
     public static final Integer CCI_USER_TYPE = 1;
+	public static final int EMPTY_INTEGER_FIELD = -1;
 
 }

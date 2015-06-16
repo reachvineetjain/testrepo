@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
+import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
+import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 
@@ -21,76 +23,83 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 @Consumes("application/json")
 public class Seasons {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Seasons.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(Seasons.class);
 
-	@Autowired
-	SeasonServiceInterfaceImpl seasonServices;
+   @Autowired
+   SeasonServiceInterfaceImpl seasonServices;
 
-	@GET
-	@Path("ping/{input}")
-	@Produces("text/plain")
-	public String ping(@PathParam("input") String input) {
-		return input;
-	}
+   @GET
+   @Path("ping/{input}")
+   @Produces("text/plain")
+   public String ping(@PathParam("input") String input) {
+      LOGGER.debug("Pinging !!");
+      return input;
+   }
 
-	@GET
-	@Path("list/")
-	@Produces("application/json")
-	public SeasonsList getAllSeasons() {
-		LOGGER.debug("Calling Get All Seasons.");
-		try {
-			if (seasonServices != null) {
-				SeasonsList result = seasonServices.getAllSeasons();
-				LOGGER.debug("Result Count : " + result.getRecordCount());
-				return result;
-			}
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage() + " : " + e.getCause());
-			e.printStackTrace();
-		}
-		LOGGER.debug("Season Service is Null");
-		return null;
-	}
+   @GET
+   @Path("list/")
+   @Produces("application/json")
+   public SeasonsList getAllSeasons() {
+      LOGGER.debug("Calling Get All Seasons 'func:getAllSeasons'");
+      SeasonsList result = seasonServices.getAllSeasons();
+      LOGGER.debug("Result Count : " + result.getRecordCount());
+      return result;
+   }
 
-	@GET
-	@Path("edit/{id}")
-	@Produces("application/json")
-	public void editSeason(@PathParam("id") String id) {
-	}
+   @GET
+   @Path("edit/{id}")
+   @Produces("application/json")
+   public SeasonBean editSeason(@PathParam("id") String id) {
+      LOGGER.debug("Calling Edit Season By Id 'func:editSeason'");
+      SeasonBean result = seasonServices.editSeason(id);
+      return result;
+   }
 
-	@GET
-	@Path("view/{id}")
-	@Produces("application/json")
-	public SeasonBean view(@PathParam("id") String id) {
-		LOGGER.debug("Calling Get All Seasons.");
-		if (seasonServices != null) {
-			SeasonBean result = seasonServices.viewSeason(id);
-			if (result != null)
-				LOGGER.debug("Result Not Null");
-			else
-				LOGGER.debug("Result is Null");
-			return result;
-		}
-		LOGGER.debug("Season Service is Null");
-		return null;
-	}
+   @GET
+   @Path("view/{id}")
+   @Produces("application/json")
+   public SeasonBean view(@PathParam("id") String id) {
+      LOGGER.debug("Calling Get Season By Id 'func:View'");
+      SeasonBean result = seasonServices.viewSeason(id);
+      return result;
+   }
 
-	@POST
-	@Path("create/")
-	@Consumes("application/json")
-	public void createSeason() {
-	}
+   @POST
+   @Path("create")
+   @Consumes("application/json")
+   public SeasonBean createSeason(SeasonBean seasonBean) {
+      LOGGER.debug("Calling Create Season function 'func:createSeason'");
+      return seasonServices.createSeason(seasonBean);
+   }
 
-	@POST
-	@Path("update/{id}")
-	@Consumes("application/json")
-	public void updateSeason(@PathParam("id") String id) {
-	}
+   @POST
+   @Path("update")
+   @Consumes("application/json")
+   public SeasonBean updateSeason(SeasonBean seasonBean) {
+      LOGGER.debug("Calling Update Season'func:updateSeason'");
+      return seasonServices.updateSeason(seasonBean);
+   }
 
-	@DELETE
-	@Path("delete/{id}")
-	@Produces("application/json")
-	public void deleteSeason(@PathParam("id") String id) {
-	}
+   @GET
+   @Path("deleteSeason/{id}")
+   @Produces("application/json")
+   public String deleteSeason(@PathParam("id") String id) {
+      LOGGER.debug("Calling Delete Season'func:deleteSeason'");
+      return seasonServices.deleteSeason(id);
+   }
+
+   @GET
+   @Path("program/season/{seasonId}")
+   @Produces("application/json")
+   public SeasonProgram getSeasonProgram(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getSeasonPrograms(seasonId);
+   }
+
+   @GET
+   @Path("status")
+   @Produces("application/json")
+   public SeasonStatuses getSeasonStatus() {
+      return seasonServices.getSeasonStatus();
+   }
 
 }
