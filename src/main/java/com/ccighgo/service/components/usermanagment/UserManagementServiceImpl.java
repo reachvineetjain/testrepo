@@ -299,7 +299,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    
    String setParam(List<Integer> params){
-          String strValue = "";
+          String strValue = CCIConstants.EMPTY_DATA;
           for(Integer role :params){
                 strValue = strValue+role+",";
           }
