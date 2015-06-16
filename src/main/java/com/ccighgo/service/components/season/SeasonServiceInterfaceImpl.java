@@ -63,7 +63,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
          seasonRepository.saveAndFlush(seasonEntity);
          seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
-         return viewSeason(seasonEntity.getSeasonId() + "");
+         return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -109,7 +109,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, true);
          seasonRepository.saveAndFlush(seasonEntity);
          seasonServiceImplUtil.updateSeasonHspConfiguration(seasonBean, seasonEntity);
-         return viewSeason(seasonEntity.getSeasonId() + "");
+         return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -126,7 +126,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             Department dept = season.getDepartment();
             List<DepartmentProgram> departmentPrograms = dept.getDepartmentPrograms();
             for (DepartmentProgram dPrg : departmentPrograms) {
-               String seasonPrg = season.getSeasonName() + " - " + dPrg.getProgramName();
+               String seasonPrg = season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName();
                seasonPrograms.add(seasonPrg);
             }
             seasonProgram.getSeasonPrograms().addAll(seasonPrograms);
