@@ -237,7 +237,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public CCIUsers searchUsers(UserSearch userSearch) {
       CCIUsers cciUsersFront = null;
       List<Object[]> results = null;
-      Query query = entityManager.createNativeQuery("call GeneralSearch(?,?,?,?,?,?,?,?,?,?)");
+      Query query = entityManager.createNativeQuery("call SPUserManagementSearch(?,?,?,?,?,?,?,?,?,?)");
       query.setParameter(1, Integer.valueOf(userSearch.getCciUserId()));
       query.setParameter(2, userSearch.getFirstName());
       query.setParameter(3, userSearch.getLastName());
