@@ -117,6 +117,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired EntityManager entityManager;
    @Autowired Properties cciGhGoProps;
+   
+   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
    // 2. generate user password(Done) and send via email.
@@ -163,9 +165,9 @@ public class UserManagementServiceImpl implements UserManagementService {
          user.setAddressLine1(cciUser.getHomeAddressLineOne() != null ? cciUser.getHomeAddressLineOne() : CCIConstants.EMPTY_DATA);
          user.setAddressLine2(cciUser.getHomeAddressLineTwo() != null ? cciUser.getHomeAddressLineTwo() : CCIConstants.EMPTY_DATA);
          user.setZip(cciUser.getZip() != null ? cciUser.getZip() : CCIConstants.EMPTY_DATA);
-         user.setPrimaryPhone(cciUser.getPhone() != null ? cciUser.getPhone() : CCIConstants.EMPTY_DATA);
+         user.setPrimaryPhone(cciUser.getPrimaryPhone() != null ? cciUser.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
          user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
-         user.setSevisId(cciUser.getSevisID() != null ? cciUser.getSevisID() : CCIConstants.EMPTY_DATA);
+         user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
          user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
          user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
          user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
@@ -287,6 +289,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       return cciUsersFront;
    }
    
+
    /**
     * This method iterate the multiple values from the List and return a single String with all parameters.
     * 
@@ -305,10 +308,23 @@ public class UserManagementServiceImpl implements UserManagementService {
           return strRole.toString();
    }
 
+/**
+ * 
+ * @param field
+ * @param value
+ * @return
+ */
+   private String nullCheck(String field, String value){
+      if(value!=null && !(value.equals(CCIConstants.EMPTY_DATA))){
+         field = value;
+      }
+      return field;
+   }
+
 
    @Override
-   public User updateUserDemographics(String id, User user) {
-      CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
+   public User updateUserDemographics(User user) {
+      CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
       ValidationUtils.validateRequired(user.getFirstName());
       cciUser.setFirstName(user.getFirstName());
       ValidationUtils.validateRequired(user.getLastName());
@@ -319,9 +335,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
       cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
       cciUser.setZip(user.getZip() != null ? user.getZip() : null);
-      cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setPrimaryPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
       cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
-      cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
+      cciUser.setSevisId(user.getSevisId() != null ? user.getSevisId() : null);
       if (user.getSupervisorId() != null) {
          Integer supervisorId = Integer.valueOf(user.getSupervisorId());
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
@@ -373,16 +389,16 @@ public class UserManagementServiceImpl implements UserManagementService {
             cciStaffUserStaffRoleRepository.flush(); 
          }
       }
-      User usr = getUserById(id);
+      User usr = getUserById(String.valueOf(user.getCciUserId()));
       return usr;
    }
 
    @Override
-   public User updateUserPermissions(String id, User user) {
-      if (id.equals(null) || id.trim().equals(CCIConstants.EMPTY_DATA) || user.equals(null)) {
+   public User updateUserPermissions(User user) {
+      if (user.getCciUserId()==0 || user.getCciUserId()<0 || user.equals(null)) {
          // throw exception
       }
-      CCIStaffUser cciStaffUser = cciUsersRepository.findOne(Integer.valueOf(id));
+      CCIStaffUser cciStaffUser = cciUsersRepository.findOne(user.getCciUserId());
       if (cciStaffUser.equals(null)) {
          // throw exception(no user found with the id)
       }
@@ -402,12 +418,12 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciStaffUsersResourcePermissionRepository.save(newPermissionsList);
          cciStaffUsersResourcePermissionRepository.flush();
       }
-      return getUserById(id);
+      return getUserById(String.valueOf(user.getCciUserId()));
    }
 
    @Override
-   public User updateUserPicture(String id, User user) {
-      CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
+   public User updateUserPicture(User user) {
+      CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
       cciUser.setPhoto(user.getPhotoPath());
       CCIStaffUser cUsr = cciUsersRepository.save(cciUser);
       User usr = getUserById(String.valueOf(cUsr.getCciStaffUserId()));
@@ -685,9 +701,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
       cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
       cciUser.setZip(user.getZip() != null ? user.getZip() : null);
-      cciUser.setPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setPrimaryPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
       cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
-      cciUser.setSevisID(user.getSevisId() != null ? user.getSevisId() : null);
+      cciUser.setSevisId(user.getSevisId() != null ? user.getSevisId() : null);
       if (user.getSupervisorId() != null) {
          Integer supervisorId = Integer.valueOf(user.getSupervisorId());
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
@@ -827,7 +843,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setFirstName(cUsr.getFirstName());
       cciUser.setLastName(cUsr.getLastName());
       cciUser.setEmail(cUsr.getEmail());
-      cciUser.setPrimaryPhone(cUsr.getPhone() != null ? cUsr.getPhone() : CCIConstants.EMPTY_DATA);
+      cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
       cciUser.setCountry(cUsr.getCountry() != null ? cUsr.getCountry().getCountryName() : CCIConstants.EMPTY_DATA);
       cciUser.setState(cUsr.getUsstate() != null ? cUsr.getUsstate().getStateName() : CCIConstants.EMPTY_DATA);
