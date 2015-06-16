@@ -2,8 +2,8 @@
 <project name="ServiceFrontBeans" basedir="." default="all">
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
-	<target name="all" depends="Countries" />
-	<!--target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions" /-->
+	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions" />
+
 	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
 
 	<target name="Excurt">
@@ -135,7 +135,6 @@
 		</java>
 	</target>
 
-	
 	<!-- High school programs-->
 		<target name="HSP">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -154,8 +153,10 @@
 			</java>
 		</target>
 	
-	
-	
+
+	<!-- Default Role Permissions-->
+
+
 	<target name="DefaultRolePermissions">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
@@ -165,5 +166,23 @@
 	</target>
 
 
+	<!-- Season Program-->
 
+	<target name="SeasonProgram">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonProgram.xsd" />
+		</java>
+	</target>
+
+	<!--Season Status-->
+
+	<target name="SeasonStatus">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonStatus.xsd" />
+		</java>
+	</target>
 </project>

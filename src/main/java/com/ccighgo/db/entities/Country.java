@@ -81,12 +81,13 @@ public class Country implements Serializable {
 		this.countryName = countryName;
 	}
 
-	public byte getReqFinalSOAonDS() {
+
+	public byte getIsReqFinalSOAonDS() {
 		return this.isReqFinalSOAonDS;
 	}
 
-	public void setReqFinalSOAonDS(byte reqFinalSOAonDS) {
-		this.isReqFinalSOAonDS = reqFinalSOAonDS;
+	public void setIsReqFinalSOAonDS(byte isReqFinalSOAonDS) {
+		this.isReqFinalSOAonDS = isReqFinalSOAonDS;
 	}
 
 	public List<CCIStaffUser> getCcistaffUsers() {
