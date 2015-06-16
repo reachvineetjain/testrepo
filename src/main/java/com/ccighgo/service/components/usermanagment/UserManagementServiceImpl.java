@@ -10,6 +10,7 @@ import java.util.Properties;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -73,6 +74,7 @@ import com.ccighgo.service.transport.usermanagement.beans.user.UserState;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserType;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.ValidationUtils;
@@ -114,10 +116,12 @@ public class UserManagementServiceImpl implements UserManagementService {
    CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository;
    @Autowired
    CCISaffDefaultPermissionRepository cciSaffDefaultPermissionRepository;
-   
-   @Autowired EntityManager entityManager;
-   @Autowired Properties cciGhGoProps;
-   
+
+   @Autowired
+   EntityManager entityManager;
+   @Autowired
+   Properties cciGhGoProps;
+
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
@@ -146,8 +150,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return cciUsers;
    }
-
-  
 
    @Override
    public User getUserById(String id) {
@@ -245,24 +247,28 @@ public class UserManagementServiceImpl implements UserManagementService {
       String lastName = null;
       String loginName = null;
       String email = null;
-      if(userSearch.getCciUserId()!=null && !(userSearch.getCciUserId().equals(CCIConstants.EMPTY_DATA))){
+      String roles = null;
+      String departments = null;
+      String programs = null;
+      if (userSearch.getCciUserId() != null && !(userSearch.getCciUserId().equals(CCIConstants.EMPTY_DATA))) {
          cciUserId = Integer.valueOf(userSearch.getCciUserId());
       }
       query.setParameter(1, cciUserId);
-      query.setParameter(2, nullCheck(firstName,userSearch.getFirstName()));
-      query.setParameter(3, nullCheck(lastName,userSearch.getLastName()));
-      query.setParameter(4, nullCheck(loginName,userSearch.getLoginName()));
+      query.setParameter(2, CCIUtils.nullCheck(firstName, userSearch.getFirstName()));
+      query.setParameter(3, CCIUtils.nullCheck(lastName, userSearch.getLastName()));
+      query.setParameter(4, CCIUtils.nullCheck(loginName, userSearch.getLoginName()));
       query.setParameter(5, Integer.valueOf(userSearch.getCountry()));
-      query.setParameter(6, nullCheck(email,userSearch.getEmail()));
-      query.setParameter(7, null);
-      query.setParameter(8, null);
-      query.setParameter(9, null);
+      query.setParameter(6, CCIUtils.nullCheck(email, userSearch.getEmail()));
+      query.setParameter(7, CCIUtils.parseParameter(userSearch.getUserRole(), roles));
+      query.setParameter(8, CCIUtils.parseParameter(userSearch.getDepartment(), departments));
+      query.setParameter(9, CCIUtils.parseParameter(userSearch.getProgram(), programs));
       query.setParameter(10, CCIConstants.ACTIVE_SEARCH);
       results = query.getResultList();
       if (results != null) {
          cciUsersFront = new CCIUsers();
          List<CCIUser> cciUserList = new ArrayList<CCIUser>();
-         List<Integer> idList = null;// you will get list of cciuser ids in results, set it in list list and pass that list in below repository call
+         List<Integer> idList = null;// you will get list of cciuser ids in results, set it in list list and pass that
+                                     // list in below repository call
          List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
          for (CCIStaffUser cUser : cciUserDBList) {
             CCIUser cciUser = getUserDetails(cUser);
@@ -271,13 +277,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUsersFront.getCciUsers().addAll(cciUserList);
       }
       return cciUsersFront;
-   }
-   
-   private String nullCheck(String field, String value){
-      if(value!=null && !(value.equals(CCIConstants.EMPTY_DATA))){
-         field = value;
-      }
-      return field;
    }
 
    @Override
@@ -301,7 +300,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(user.isActive()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+      cciUser.setActive(user.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
 
       // update user country
       if (user.getUserCountry().getCountryId() > 0) {
@@ -313,38 +312,38 @@ public class UserManagementServiceImpl implements UserManagementService {
          USState userState = stateRepository.findOne(user.getUserState().getStateId());
          cciUser.setUsstate(userState);
       }
-      //TODO need to discuss about updating login info
+      // TODO need to discuss about updating login info
       cciUser.setModifiedBy(1);
       cciUser.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       cciUsersRepository.saveAndFlush(cciUser);
-      
+
       // update user programs
       if (user.getDepartmentPrograms() != null) {
-         //delete existing programs
+         // delete existing programs
          List<CCIStaffUserProgram> staffUserProgramsList = cciStaffUserProgramRepository.findAllProgramsByUser(cciUser);
-         if(staffUserProgramsList!=null){
+         if (staffUserProgramsList != null) {
             cciStaffUserProgramRepository.delete(staffUserProgramsList);
             cciStaffUserProgramRepository.flush();
          }
-         //update new programs
-         List<CCIStaffUserProgram>  cciStaffUserPrograms = createUserDepartmentAndPrograms(user,cciUser);
-         if(cciStaffUserPrograms!=null){
+         // update new programs
+         List<CCIStaffUserProgram> cciStaffUserPrograms = createUserDepartmentAndPrograms(user, cciUser);
+         if (cciStaffUserPrograms != null) {
             cciStaffUserProgramRepository.save(cciStaffUserPrograms);
             cciStaffUserProgramRepository.flush();
          }
       }
-      
-      //update user role
+
+      // update user role
       if (user.getRoles() != null) {
          List<CCIStaffUsersCCIStaffRole> cciStaffUsersStaffRoles = cciStaffUserStaffRoleRepository.findAllStaffRoleByUser(cciUser);
-         if(cciStaffUsersStaffRoles!=null){
+         if (cciStaffUsersStaffRoles != null) {
             cciStaffUserStaffRoleRepository.delete(cciStaffUsersStaffRoles);
             cciStaffUserStaffRoleRepository.flush();
          }
          List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = createUserRole(user, cciUser);
-         if(cciStaffUsersCCIStaffRoles!=null){
+         if (cciStaffUsersCCIStaffRoles != null) {
             cciStaffUserStaffRoleRepository.save(cciStaffUsersCCIStaffRoles);
-            cciStaffUserStaffRoleRepository.flush(); 
+            cciStaffUserStaffRoleRepository.flush();
          }
       }
       User usr = getUserById(String.valueOf(user.getCciUserId()));
@@ -353,7 +352,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    public User updateUserPermissions(User user) {
-      if (user.getCciUserId()==0 || user.getCciUserId()<0 || user.equals(null)) {
+      if (user.getCciUserId() == 0 || user.getCciUserId() < 0 || user.equals(null)) {
          // throw exception
       }
       CCIStaffUser cciStaffUser = cciUsersRepository.findOne(user.getCciUserId());
@@ -390,7 +389,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId) {
-      //0:departmentResourceGroupId, 1:resourceGroupName, 2:resourcePermissionId, 3:resourceName, 4:resourceActionId, 5:resourceAction
+      // 0:departmentResourceGroupId, 1:resourceGroupName, 2:resourcePermissionId, 3:resourceName, 4:resourceActionId,
+      // 5:resourceAction
       StaffUserRolePermissions staffUserRolePermissions = null;
       List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
       List<Object[]> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(roleId));
@@ -403,7 +403,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             defaultPermissions.setPermissionGroupName(dprg.getResourceGroupName());
             List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
             for (Object[] obj : results) {
-               if(dprg.getDepartmentResourceGroupId()==Integer.valueOf(obj[0].toString())){
+               if (dprg.getDepartmentResourceGroupId() == Integer.valueOf(obj[0].toString())) {
                   StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
                   options.setPermissionGroupOptionId(Integer.valueOf(obj[2].toString()));
                   options.setPermissionGroupOptionName(obj[3].toString());
@@ -414,7 +414,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             }
             defaultPermissions.getPermissionGroupOptions().addAll(permissionGroupOptionsList);
             staffUserDefaultPermissions.add(defaultPermissions);
-         } 
+         }
          staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
       }
       return staffUserRolePermissions;
@@ -790,7 +790,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return cciUserPermissionsList;
    }
-   
+
    /**
     * @param cUsr
     * @return
