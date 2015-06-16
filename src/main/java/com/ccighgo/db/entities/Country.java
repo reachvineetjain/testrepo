@@ -34,6 +34,10 @@ public class Country implements Serializable {
 	@Column(nullable=false)
 	private byte isReqFinalSOAonDS;
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="country")
 	private List<CCIStaffUser> ccistaffUsers;

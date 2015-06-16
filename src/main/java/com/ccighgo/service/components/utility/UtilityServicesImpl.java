@@ -65,7 +65,7 @@ public class UtilityServicesImpl implements UtilityServices {
                 ctr.setCountryCode(c.getCountryCode());
                 ctr.setCountryName(c.getCountryName());
                 ctr.setCountryFlag(c.getCountryFlag() != null ? c.getCountryFlag() : CCIConstants.EMPTY_DATA);
-                ctr.setIsReqFinalSOAonDS(c.getReqFinalSOAonDS() == CCIConstants.ACTIVE ? true : false);
+                ctr.setIsReqFinalSOAonDS(c.getIsReqFinalSOAonDS() == CCIConstants.ACTIVE ? true : false);
                 ctr.setActive(c.getActive() == CCIConstants.ACTIVE ? true : false);
                 countriesFrontList.add(ctr);
             }
@@ -318,7 +318,7 @@ public class UtilityServicesImpl implements UtilityServices {
 			countryBean.setCountryCode(country.getCountryCode());
 			countryBean.setCountryName(country.getCountryName());
 			countryBean.setCountryFlag(country.getCountryFlag() != null ? country.getCountryFlag() : CCIConstants.EMPTY_DATA );
-			countryBean.setIsReqFinalSOAonDS(country.getReqFinalSOAonDS() == CCIConstants.ACTIVE ? true : false);
+			countryBean.setIsReqFinalSOAonDS(country.getIsReqFinalSOAonDS() == CCIConstants.ACTIVE ? true : false);
 			countryBean.setActive(country.getActive() == CCIConstants.ACTIVE ? true : false);
 		}
 		return countryBean;
@@ -332,7 +332,7 @@ public class UtilityServicesImpl implements UtilityServices {
         	countryEnt.setCountryCode(country.getCountryCode());
         	countryEnt.setCountryName(country.getCountryName());
         	countryEnt.setCountryFlag(country.getCountryFlag() != null ? country.getCountryFlag() : CCIConstants.EMPTY_DATA);
-        	countryEnt.setReqFinalSOAonDS(CCIConstants.ACTIVE);
+        	countryEnt.setIsReqFinalSOAonDS(CCIConstants.ACTIVE);
         	countryEnt.setActive(CCIConstants.ACTIVE);
         	countryRepository.saveAndFlush(countryEnt);
         	countryRepository.flush();
