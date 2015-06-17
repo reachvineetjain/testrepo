@@ -56,7 +56,7 @@
         <class>com.ccighgo.db.entities.UserType</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://54.91.97.22:3306/cci_gh_go_current" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://54.91.97.22:3306/cci_gh_go" />
             <property name="javax.persistence.jdbc.user" value="creomobile" />
             <property name="javax.persistence.jdbc.password" value="creomobile" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

@@ -118,8 +118,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired EntityManager entityManager;
    @Autowired Properties cciGhGoProps;
    
-   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
-
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
    // 2. generate user password(Done) and send via email.
    // 3. use message from properties files.
@@ -237,16 +235,27 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    public CCIUsers searchUsers(UserSearch userSearch) {
-      CCIUsers cciUsersFront = null;
+	  CCIUsers cciUsersFront = null;
       List<Object[]> results = null;
-      Query query = entityManager.createNativeQuery("call SPUserManagementSearch(?,?,?,?,?,?,?,?,?,?)");
-      query.setParameter(1, Integer.valueOf(userSearch.getCciUserId()));
+      Query query = entityManager.createNativeQuery(CCIConstants.SP_USER_SEARCH);
+      
+      if(userSearch.getCciUserId() != null){
+    	  query.setParameter(1, userSearch.getCciUserId());
+      }else{
+    	  query.setParameter(1, null);
+      }
       query.setParameter(2, userSearch.getFirstName());
       query.setParameter(3, userSearch.getLastName());
       query.setParameter(4, userSearch.getLoginName());
-      query.setParameter(5, Integer.valueOf(userSearch.getCountry()));
+      if(userSearch.getCountry() != null){
+    	  query.setParameter(5, userSearch.getCountry());
+      }else{
+    	  query.setParameter(5,null);
+      }
+      
       query.setParameter(6, userSearch.getEmail());
-    //setting the parameter at position 7 for role
+      
+      //setting the parameter at position 7 for role
       List<Integer> roleList = userSearch.getUserRole();
       if(roleList.size() > 0){
          String strParam = setParam(roleList);
@@ -274,11 +283,14 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
 
       query.setParameter(10, CCIConstants.ACTIVE_SEARCH);
-      results = query.getResultList();
+      results = query.getResultList();///
       if (results != null) {
          cciUsersFront = new CCIUsers();
          List<CCIUser> cciUserList = new ArrayList<CCIUser>();
-         List<Integer> idList = null;// you will get list of cciuser ids in results, set it in list list and pass that list in below repository call
+         List<Integer> idList = new ArrayList<Integer>();
+         for (Object obj : results) {
+        	 idList.add((Integer)obj);
+         }
          List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
          for (CCIStaffUser cUser : cciUserDBList) {
             CCIUser cciUser = getUserDetails(cUser);

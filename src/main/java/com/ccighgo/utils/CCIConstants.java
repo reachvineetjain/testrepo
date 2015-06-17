@@ -34,10 +34,13 @@ public class CCIConstants {
     public static final Integer MAX_UPPER_CASE = 1;
     public static final Integer MAX_NUMBERS = 1;
     public static final Integer MAX_SPL_CHARS = 1;
-    public static final String ACTIVE_SEARCH = "'0,1'";
+    public static final String ACTIVE_SEARCH = "0,1";
     
     //user type ids
     public static final Integer CCI_USER_TYPE = 1;
 	public static final int EMPTY_INTEGER_FIELD = -1;
+	
+	//Store procedure
+	public static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
 }
