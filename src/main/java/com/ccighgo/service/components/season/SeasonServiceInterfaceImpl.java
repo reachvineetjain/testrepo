@@ -1,6 +1,5 @@
 package com.ccighgo.service.components.season;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Season;
-import com.ccighgo.db.entities.SeasonHSPConfiguration;
-import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
@@ -26,6 +23,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 			.getLogger(SeasonServiceInterfaceImpl.class);
 	@Autowired
 	SeasonRepository seasonRepository;
+	@Autowired
+	SeasonRepositoryCustomImpl seasonRepositoryService;
 	@Autowired
 	SeasonServiceImplUtil seasonServiceImplUtil;
 	
@@ -114,6 +113,16 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 			return viewSeason(seasonEntity.getSeasonId()+"");
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);	
+		}
+		return null;
+	}
+
+	@Override
+	public String cloneSeason(String id, String newSeasonName) {
+		try {
+			return seasonRepositoryService.cloneSeason(id, newSeasonName);
+		} catch (Exception e) {
+			ExceptionUtil.logException(e, LOGGER);
 		}
 		return null;
 	}

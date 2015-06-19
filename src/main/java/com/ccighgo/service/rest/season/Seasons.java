@@ -85,5 +85,13 @@ public class Seasons {
 		LOGGER.debug("Calling Delete Season'func:deleteSeason'");
 		 return seasonServices.deleteSeason(id);	
 	}
+	
+	@GET
+	@Path("clone/{id}/{newSeasonName}/")
+	@Produces("application/json")
+	public String cloneSeason(@PathParam("id") String id,@PathParam("newSeasonName") String newSeasonName) {
+		LOGGER.debug("Calling clone Season'func:cloneSeason'");
+		 return seasonServices.cloneSeason(id, newSeasonName);	
+	}
 
 }

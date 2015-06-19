@@ -22,5 +22,6 @@ public interface SeasonServiceInterface {
     
     public SeasonBean updateSeason(SeasonBean seasonBean );
     
+    public String cloneSeason(String seasonId, String newSeasonName);
 
 }

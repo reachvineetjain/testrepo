@@ -19,6 +19,7 @@
      <bean id="userManagementService" class="com.ccighgo.service.components.usermanagment.UserManagementServiceImpl" />
      <bean id="utilityServices" class="com.ccighgo.service.components.utility.UtilityServicesImpl" />
      <bean id="seasonServiceImplUtil" class="com.ccighgo.service.components.season.SeasonServiceImplUtil" />
+     <bean id="seasonRepositoryService" class="com.ccighgo.service.components.season.SeasonRepositoryCustomImpl" />
      
      <bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource" autowire-candidate="true" >

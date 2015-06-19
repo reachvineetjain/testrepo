@@ -11,10 +11,12 @@ import org.springframework.stereotype.Component;
  *
  */
 public class ExceptionUtil {
-	
-	public static  void logException(Exception ex, Logger logger){
-		logger.error(ex.getMessage() + " : " + ex.getCause());
-		ex.printStackTrace();	
+
+	public static void logException(Exception ex, Logger logger) {
+		if (logger != null && ex != null) {
+			logger.error(ex.getMessage() + " : " + ex.getCause());
+			ex.printStackTrace();
+		}
 	}
 
 }
