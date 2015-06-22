@@ -53,6 +53,10 @@ public class SeasonStatus implements Serializable {
 	@OneToMany(mappedBy="seasonStatus")
 	private List<SeasonTADetail> seasonTadetails;
 
+	//bi-directional many-to-one association to SeasonVADetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonVADetail> seasonVadetails;
+
 	//bi-directional many-to-one association to SeasonWADetail
 	@OneToMany(mappedBy="seasonStatus")
 	private List<SeasonWADetail> seasonWadetails;
@@ -60,10 +64,6 @@ public class SeasonStatus implements Serializable {
 	//bi-directional many-to-one association to SeasonWnTDetail
 	@OneToMany(mappedBy="seasonStatus")
 	private List<SeasonWnTDetail> seasonWnTdetails;
-
-	//bi-directional many-to-one association to SeasonVADetail
-	@OneToMany(mappedBy="seasonStatus")
-	private List<SeasonVADetail> seasonVadetails;
 
 	public SeasonStatus() {
 	}
@@ -246,6 +246,28 @@ public class SeasonStatus implements Serializable {
 		return seasonTadetail;
 	}
 
+	public List<SeasonVADetail> getSeasonVadetails() {
+		return this.seasonVadetails;
+	}
+
+	public void setSeasonVadetails(List<SeasonVADetail> seasonVadetails) {
+		this.seasonVadetails = seasonVadetails;
+	}
+
+	public SeasonVADetail addSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().add(seasonVadetail);
+		seasonVadetail.setSeasonStatus(this);
+
+		return seasonVadetail;
+	}
+
+	public SeasonVADetail removeSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().remove(seasonVadetail);
+		seasonVadetail.setSeasonStatus(null);
+
+		return seasonVadetail;
+	}
+
 	public List<SeasonWADetail> getSeasonWadetails() {
 		return this.seasonWadetails;
 	}
@@ -288,28 +310,6 @@ public class SeasonStatus implements Serializable {
 		seasonWnTdetail.setSeasonStatus(null);
 
 		return seasonWnTdetail;
-	}
-
-	public List<SeasonVADetail> getSeasonVadetails() {
-		return this.seasonVadetails;
-	}
-
-	public void setSeasonVadetails(List<SeasonVADetail> seasonVadetails) {
-		this.seasonVadetails = seasonVadetails;
-	}
-
-	public SeasonVADetail addSeasonVadetail(SeasonVADetail seasonVadetail) {
-		getSeasonVadetails().add(seasonVadetail);
-		seasonVadetail.setSeasonStatus(this);
-
-		return seasonVadetail;
-	}
-
-	public SeasonVADetail removeSeasonVadetail(SeasonVADetail seasonVadetail) {
-		getSeasonVadetails().remove(seasonVadetail);
-		seasonVadetail.setSeasonStatus(null);
-
-		return seasonVadetail;
 	}
 
 }

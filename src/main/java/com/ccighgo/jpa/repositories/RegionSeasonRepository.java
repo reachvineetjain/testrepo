@@ -11,7 +11,6 @@ import com.ccighgo.db.entities.RegionSeason;
  *
  */
 @Repository
-public interface RegionSeasonRepository extends
-		JpaRepository<RegionSeason, Integer> {
+public interface RegionSeasonRepository extends JpaRepository<RegionSeason, Integer> {
 
 }

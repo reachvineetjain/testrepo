@@ -10,17 +10,13 @@ import java.util.Properties;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
-import com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission;
-import com.ccighgo.db.entities.CCIStaffRolesDepartment;
 import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.CCIStaffUserNote;
 import com.ccighgo.db.entities.CCIStaffUserProgram;
@@ -29,14 +25,14 @@ import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
 import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRolePK;
 import com.ccighgo.db.entities.CCIStaffUsersResourcePermission;
 import com.ccighgo.db.entities.CCIStaffUsersResourcePermissionPK;
-import com.ccighgo.db.entities.Country;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DepartmentResourceGroup;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LookupCountry;
+import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
-import com.ccighgo.db.entities.USState;
 import com.ccighgo.exception.BusinessException;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
@@ -313,13 +309,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 
       // update user country
       if (user.getUserCountry().getCountryId() > 0) {
-         Country userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
-         cciUser.setCountry(userCountry);
+         LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
+         cciUser.setLookupCountry(userCountry);
       }
       // update user state
       if (user.getUserState().getStateId() > 0) {
-         USState userState = stateRepository.findOne(user.getUserState().getStateId());
-         cciUser.setUsstate(userState);
+         LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
+         cciUser.setLookupUsstate(userState);
       }
       // TODO need to discuss about updating login info
       cciUser.setModifiedBy(1);
@@ -452,11 +448,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private UserCountry getUserCountry(CCIStaffUser cciUser) {
       UserCountry country = null;
-      if (cciUser.getCountry() != null) {
+      if (cciUser.getLookupCountry() != null) {
          country = new UserCountry();
-         country.setCountryId(cciUser.getCountry().getCountryId());
-         country.setCountryCode(cciUser.getCountry().getCountryCode());
-         country.setCountryName(cciUser.getCountry().getCountryName());
+         country.setCountryId(cciUser.getLookupCountry().getCountryId());
+         country.setCountryCode(cciUser.getLookupCountry().getCountryCode());
+         country.setCountryName(cciUser.getLookupCountry().getCountryName());
       }
       return country;
    }
@@ -469,9 +465,9 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private UserState getUserState(CCIStaffUser cciUser) {
       UserState state = new UserState();
-      state.setStateId(cciUser.getUsstate().getUsStatesId());
-      state.setStateCode(cciUser.getUsstate().getStateCode());
-      state.setStateName(cciUser.getUsstate().getStateName());
+      state.setStateId(cciUser.getLookupUsstate().getUsStatesId());
+      state.setStateCode(cciUser.getLookupUsstate().getStateCode());
+      state.setStateName(cciUser.getLookupUsstate().getStateName());
       return state;
    }
 
@@ -505,9 +501,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<UserDepartmentProgram> userDepartmentProgramsList = new ArrayList<UserDepartmentProgram>();
       for (CCIStaffUserProgram userProgram : userPrograms) {
          UserDepartmentProgram userDepartmentProgram = new UserDepartmentProgram();
-         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getDepartment().getDepartmentId());
-         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getDepartment().getDepartmentName());
-         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getDepartment().getAcronym());
+         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getLookupDepartment().getAcronym());
          userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
          userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
          if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
@@ -626,9 +622,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<CCIUserDepartmentProgram> userDepartmentProgramsList = new ArrayList<CCIUserDepartmentProgram>();
       for (CCIStaffUserProgram userProgram : userPrograms) {
          CCIUserDepartmentProgram userDepartmentProgram = new CCIUserDepartmentProgram();
-         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getDepartment().getDepartmentId());
-         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getDepartment().getDepartmentName());
-         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getDepartment().getAcronym());
+         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getLookupDepartment().getAcronym());
          userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
          userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
          if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
@@ -680,13 +676,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 
       // update user country
       if (user.getUserCountry().getCountryId() > 0) {
-         Country userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
-         cciUser.setCountry(userCountry);
+         LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
+         cciUser.setLookupCountry(userCountry);
       }
       // update user state
       if (user.getUserState().getStateId() > 0) {
-         USState userState = stateRepository.findOne(user.getUserState().getStateId());
-         cciUser.setUsstate(userState);
+         LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
+         cciUser.setLookupUsstate(userState);
       }
       com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(CCIConstants.CCI_USER_TYPE);
       ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
@@ -812,8 +808,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setEmail(cUsr.getEmail());
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
-      cciUser.setCountry(cUsr.getCountry() != null ? cUsr.getCountry().getCountryName() : CCIConstants.EMPTY_DATA);
-      cciUser.setState(cUsr.getUsstate() != null ? cUsr.getUsstate().getStateName() : CCIConstants.EMPTY_DATA);
+      cciUser.setCountry(cUsr.getLookupCountry() != null ? cUsr.getLookupCountry().getCountryName() : CCIConstants.EMPTY_DATA);
+      cciUser.setState(cUsr.getLookupUsstate() != null ? cUsr.getLookupUsstate().getStateName() : CCIConstants.EMPTY_DATA);
       cciUser.setLoginName(cUsr.getLogin().getLoginName());
       cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
       // update user role for user

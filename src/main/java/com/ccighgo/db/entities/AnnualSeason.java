@@ -38,6 +38,10 @@ public class AnnualSeason implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	//bi-directional many-to-one association to SeasonWPAllocation
+	@OneToMany(mappedBy="annualSeason")
+	private List<SeasonWPAllocation> seasonWpallocations;
+
 	//bi-directional many-to-one association to SeasonWnTDetail
 	@OneToMany(mappedBy="annualSeason")
 	private List<SeasonWnTDetail> seasonWnTdetails;
@@ -99,6 +103,28 @@ public class AnnualSeason implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public List<SeasonWPAllocation> getSeasonWpallocations() {
+		return this.seasonWpallocations;
+	}
+
+	public void setSeasonWpallocations(List<SeasonWPAllocation> seasonWpallocations) {
+		this.seasonWpallocations = seasonWpallocations;
+	}
+
+	public SeasonWPAllocation addSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
+		getSeasonWpallocations().add(seasonWpallocation);
+		seasonWpallocation.setAnnualSeason(this);
+
+		return seasonWpallocation;
+	}
+
+	public SeasonWPAllocation removeSeasonWpallocation(SeasonWPAllocation seasonWpallocation) {
+		getSeasonWpallocations().remove(seasonWpallocation);
+		seasonWpallocation.setAnnualSeason(null);
+
+		return seasonWpallocation;
 	}
 
 	public List<SeasonWnTDetail> getSeasonWnTdetails() {

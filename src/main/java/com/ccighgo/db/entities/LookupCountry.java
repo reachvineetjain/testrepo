@@ -6,13 +6,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Countries database table.
+ * The persistent class for the LookupCountries database table.
  * 
  */
 @Entity
-@Table(name="Countries")
-@NamedQuery(name="Country.findAll", query="SELECT c FROM Country c")
-public class Country implements Serializable {
+@Table(name="LookupCountries")
+@NamedQuery(name="LookupCountry.findAll", query="SELECT l FROM LookupCountry l")
+public class LookupCountry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,10 +35,10 @@ public class Country implements Serializable {
 	private byte isReqFinalSOAonDS;
 
 	//bi-directional many-to-one association to CCIStaffUser
-	@OneToMany(mappedBy="country")
+	@OneToMany(mappedBy="lookupCountry")
 	private List<CCIStaffUser> ccistaffUsers;
 
-	public Country() {
+	public LookupCountry() {
 	}
 
 	public int getCountryId() {
@@ -99,14 +99,14 @@ public class Country implements Serializable {
 
 	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
 		getCcistaffUsers().add(ccistaffUser);
-		ccistaffUser.setCountry(this);
+		ccistaffUser.setLookupCountry(this);
 
 		return ccistaffUser;
 	}
 
 	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
 		getCcistaffUsers().remove(ccistaffUser);
-		ccistaffUser.setCountry(null);
+		ccistaffUser.setLookupCountry(null);
 
 		return ccistaffUser;
 	}

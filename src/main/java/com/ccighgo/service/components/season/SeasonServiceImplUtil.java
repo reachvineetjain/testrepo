@@ -3,18 +3,16 @@
  */
 package com.ccighgo.service.components.season;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.Department;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
+import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonStatus;
@@ -27,7 +25,6 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.DepartmentObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramOptions;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.utils.CCIConstants;
-import com.ccighgo.utils.DateAdapter;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ValidationUtils;
 
@@ -52,7 +49,7 @@ public class SeasonServiceImplUtil {
 	 */
 	public void convertEntitySeasonToBeanSeason(SeasonBean seasonBean,Season seasonEntity) {
 			seasonBean.setSeasonId(seasonEntity.getSeasonId());
-			seasonBean.setDepartmentId(seasonEntity.getDepartment() != null ? seasonEntity.getDepartment().getDepartmentId()  : -1);
+			seasonBean.setDepartmentId(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentId()  : -1);
 			seasonBean.setSeasonName(seasonEntity.getSeasonName() != null? seasonEntity.getSeasonName():CCIConstants.EMPTY_DATA);
 			seasonBean.setStatus(seasonEntity.getSeasonStatus() != null?seasonEntity.getSeasonStatus().getStatus():CCIConstants.EMPTY_DATA);
 			seasonBean.setStatusId(seasonEntity.getSeasonStatus() != null?seasonEntity.getSeasonStatus().getSeasonStatusId():CCIConstants.EMPTY_INTEGER_FIELD);
@@ -73,10 +70,10 @@ public class SeasonServiceImplUtil {
 			seasonBean.setEndDate(endDate);
 			seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
 			
-				if(seasonEntity.getDepartment()!=null){
-					if(seasonEntity.getDepartment().getDepartmentPrograms()!=null){
-						for (DepartmentProgram departmentProgram : seasonEntity.getDepartment().getDepartmentPrograms()) {
-							if(departmentProgram.getDepartment().getDepartmentId()==seasonEntity.getDepartment().getDepartmentId()&&departmentProgram.getDepartmentProgramOptions()!=null){
+				if(seasonEntity.getLookupDepartment()!=null){
+					if(seasonEntity.getLookupDepartment().getDepartmentPrograms()!=null){
+						for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
+							if(departmentProgram.getLookupDepartment().getDepartmentId()==seasonEntity.getLookupDepartment().getDepartmentId()&&departmentProgram.getDepartmentProgramOptions()!=null){
 								for (DepartmentProgramOption departmentProgramOption : departmentProgram.getDepartmentProgramOptions()) {
 									if(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId()==departmentProgram.getDepartmentProgramId())
 										seasonBean.getProgramOptions().add(mapProgramOptionEntityToBean2(departmentProgramOption));
@@ -105,7 +102,7 @@ public class SeasonServiceImplUtil {
 		seasonBean.setSeasonName(seasonEntity.getSeasonName());
 		seasonBean.setStatus(seasonEntity.getSeasonStatus() != null?seasonEntity.getSeasonStatus().getStatus():CCIConstants.EMPTY_DATA);
 		seasonBean.setStatusId(seasonEntity.getSeasonStatus() != null?seasonEntity.getSeasonStatus().getSeasonStatusId():CCIConstants.EMPTY_INTEGER_FIELD);
-		seasonBean.setDepartment(getDepartmentBean(seasonEntity.getDepartment()));
+		seasonBean.setDepartment(getDepartmentBean(seasonEntity.getLookupDepartment()));
 		String startDate =CCIConstants.EMPTY_DATA,endDate =CCIConstants.EMPTY_DATA;
 		Integer seasonHspConfId =CCIConstants.EMPTY_INTEGER_FIELD;
 		
@@ -122,10 +119,10 @@ public class SeasonServiceImplUtil {
 		seasonBean.setEndDate(endDate);
 		seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
 		
-		if(seasonEntity.getDepartment()!=null){
-			if(seasonEntity.getDepartment().getDepartmentPrograms()!=null){
-				for (DepartmentProgram departmentProgram : seasonEntity.getDepartment().getDepartmentPrograms()) {
-					if(departmentProgram.getDepartment().getDepartmentId()==seasonEntity.getDepartment().getDepartmentId()&&departmentProgram.getDepartmentProgramOptions()!=null){
+		if(seasonEntity.getLookupDepartment()!=null){
+			if(seasonEntity.getLookupDepartment().getDepartmentPrograms()!=null){
+				for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
+					if(departmentProgram.getLookupDepartment().getDepartmentId()==seasonEntity.getLookupDepartment().getDepartmentId()&&departmentProgram.getDepartmentProgramOptions()!=null){
 						for (DepartmentProgramOption departmentProgramOption : departmentProgram.getDepartmentProgramOptions()) {
 							if(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId()==departmentProgram.getDepartmentProgramId())
 								seasonBean.getProgramOptions().add(mapProgramOptionEntityToBean(departmentProgramOption));
@@ -150,7 +147,7 @@ public class SeasonServiceImplUtil {
 	 * @param department
 	 * @return
 	 */
-	private DepartmentObject getDepartmentBean(Department department) {
+	private DepartmentObject getDepartmentBean(LookupDepartment department) {
 		if(department!=null){
 			DepartmentObject departmentObject =new DepartmentObject();
 			departmentObject.setDepartmentId(department.getDepartmentId());
@@ -173,8 +170,8 @@ public class SeasonServiceImplUtil {
 			seasonEntity.setSeasonId(seasonBean.getSeasonId());
 		}
 		ValidationUtils.validateRequired(seasonBean.getDepartmentId()+"");
-		Department department = departmentRepository.findOne(seasonBean.getDepartmentId());
-		seasonEntity.setDepartment(department);
+		LookupDepartment department = departmentRepository.findOne(seasonBean.getDepartmentId());
+		seasonEntity.setLookupDepartment(department);
 		
 		ValidationUtils.validateRequired(seasonBean.getSeasonName());
 		seasonEntity.setSeasonName(seasonBean.getSeasonName());

@@ -2,23 +2,24 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the SeasonWPConfiguration database table.
+ * The persistent class for the SeasonProgramNotes database table.
  * 
  */
 @Entity
-@Table(name="SeasonWPConfiguration")
-@NamedQuery(name="SeasonWPConfiguration.findAll", query="SELECT s FROM SeasonWPConfiguration s")
-public class SeasonWPConfiguration implements Serializable {
+@Table(name="SeasonProgramNotes")
+@NamedQuery(name="SeasonProgramNote.findAll", query="SELECT s FROM SeasonProgramNote s")
+public class SeasonProgramNote implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int seasonWPConfigurationId;
+	private int seasonProgramNotesId;
+
+	private byte active;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -32,28 +33,36 @@ public class SeasonWPConfiguration implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
-	private Date seasonEndDate;
+	@Column(length=1000)
+	private String programNote;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
-	private Date seasonStartDate;
+	//bi-directional many-to-one association to DepartmentProgram
+	@ManyToOne
+	@JoinColumn(name="departmentProgramId")
+	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
-	public SeasonWPConfiguration() {
+	public SeasonProgramNote() {
 	}
 
-	public int getSeasonWPConfigurationId() {
-		return this.seasonWPConfigurationId;
+	public int getSeasonProgramNotesId() {
+		return this.seasonProgramNotesId;
 	}
 
-	public void setSeasonWPConfigurationId(int seasonWPConfigurationId) {
-		this.seasonWPConfigurationId = seasonWPConfigurationId;
+	public void setSeasonProgramNotesId(int seasonProgramNotesId) {
+		this.seasonProgramNotesId = seasonProgramNotesId;
+	}
+
+	public byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(byte active) {
+		this.active = active;
 	}
 
 	public int getCreatedBy() {
@@ -88,20 +97,20 @@ public class SeasonWPConfiguration implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Date getSeasonEndDate() {
-		return this.seasonEndDate;
+	public String getProgramNote() {
+		return this.programNote;
 	}
 
-	public void setSeasonEndDate(Date seasonEndDate) {
-		this.seasonEndDate = seasonEndDate;
+	public void setProgramNote(String programNote) {
+		this.programNote = programNote;
 	}
 
-	public Date getSeasonStartDate() {
-		return this.seasonStartDate;
+	public DepartmentProgram getDepartmentProgram() {
+		return this.departmentProgram;
 	}
 
-	public void setSeasonStartDate(Date seasonStartDate) {
-		this.seasonStartDate = seasonStartDate;
+	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+		this.departmentProgram = departmentProgram;
 	}
 
 	public Season getSeason() {

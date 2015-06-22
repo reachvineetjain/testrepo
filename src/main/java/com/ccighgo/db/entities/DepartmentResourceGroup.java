@@ -43,10 +43,10 @@ public class DepartmentResourceGroup implements Serializable {
 	@OneToMany(mappedBy="departmentResourceGroup")
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
 
-	//bi-directional many-to-one association to Department
+	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
 	@JoinColumn(name="departmentId", nullable=false)
-	private Department department;
+	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@OneToMany(mappedBy="departmentResourceGroup")
@@ -147,12 +147,12 @@ public class DepartmentResourceGroup implements Serializable {
 		return ccistaffUsersResourcePermission;
 	}
 
-	public Department getDepartment() {
-		return this.department;
+	public LookupDepartment getLookupDepartment() {
+		return this.lookupDepartment;
 	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setLookupDepartment(LookupDepartment lookupDepartment) {
+		this.lookupDepartment = lookupDepartment;
 	}
 
 	public List<ResourcePermission> getResourcePermissions() {

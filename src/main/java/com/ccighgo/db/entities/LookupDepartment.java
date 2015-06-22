@@ -12,13 +12,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Departments database table.
+ * The persistent class for the LookupDepartments database table.
  * 
  */
 @Entity
-@Table(name="Departments")
-@NamedQuery(name="Department.findAll", query="SELECT d FROM Department d")
-public class Department implements Serializable {
+@Table(name="LookupDepartments")
+@NamedQuery(name="LookupDepartment.findAll", query="SELECT l FROM LookupDepartment l")
+public class LookupDepartment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -47,27 +47,23 @@ public class Department implements Serializable {
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment
-	@OneToMany(mappedBy="department")
+	@OneToMany(mappedBy="lookupDepartment")
 	private List<CCIStaffRolesDepartment> ccistaffRolesDepartments;
 
-	//bi-directional many-to-one association to DepartmentFunction
-	@OneToMany(mappedBy="department")
-	private List<DepartmentFunction> departmentFunctions;
-
 	//bi-directional many-to-one association to DepartmentProgram
-	@OneToMany(mappedBy="department", fetch=FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="lookupDepartment", fetch=FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgram> departmentPrograms;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
-	@OneToMany(mappedBy="department")
+	@OneToMany(mappedBy="lookupDepartment")
 	private List<DepartmentResourceGroup> departmentResourceGroups;
 
 	//bi-directional many-to-one association to Season
-	@OneToMany(mappedBy="department")
+	@OneToMany(mappedBy="lookupDepartment")
 	private List<Season> seasons;
 
-	public Department() {
+	public LookupDepartment() {
 	}
 
 	public int getDepartmentId() {
@@ -144,38 +140,16 @@ public class Department implements Serializable {
 
 	public CCIStaffRolesDepartment addCcistaffRolesDepartment(CCIStaffRolesDepartment ccistaffRolesDepartment) {
 		getCcistaffRolesDepartments().add(ccistaffRolesDepartment);
-		ccistaffRolesDepartment.setDepartment(this);
+		ccistaffRolesDepartment.setLookupDepartment(this);
 
 		return ccistaffRolesDepartment;
 	}
 
 	public CCIStaffRolesDepartment removeCcistaffRolesDepartment(CCIStaffRolesDepartment ccistaffRolesDepartment) {
 		getCcistaffRolesDepartments().remove(ccistaffRolesDepartment);
-		ccistaffRolesDepartment.setDepartment(null);
+		ccistaffRolesDepartment.setLookupDepartment(null);
 
 		return ccistaffRolesDepartment;
-	}
-
-	public List<DepartmentFunction> getDepartmentFunctions() {
-		return this.departmentFunctions;
-	}
-
-	public void setDepartmentFunctions(List<DepartmentFunction> departmentFunctions) {
-		this.departmentFunctions = departmentFunctions;
-	}
-
-	public DepartmentFunction addDepartmentFunction(DepartmentFunction departmentFunction) {
-		getDepartmentFunctions().add(departmentFunction);
-		departmentFunction.setDepartment(this);
-
-		return departmentFunction;
-	}
-
-	public DepartmentFunction removeDepartmentFunction(DepartmentFunction departmentFunction) {
-		getDepartmentFunctions().remove(departmentFunction);
-		departmentFunction.setDepartment(null);
-
-		return departmentFunction;
 	}
 
 	public List<DepartmentProgram> getDepartmentPrograms() {
@@ -188,14 +162,14 @@ public class Department implements Serializable {
 
 	public DepartmentProgram addDepartmentProgram(DepartmentProgram departmentProgram) {
 		getDepartmentPrograms().add(departmentProgram);
-		departmentProgram.setDepartment(this);
+		departmentProgram.setLookupDepartment(this);
 
 		return departmentProgram;
 	}
 
 	public DepartmentProgram removeDepartmentProgram(DepartmentProgram departmentProgram) {
 		getDepartmentPrograms().remove(departmentProgram);
-		departmentProgram.setDepartment(null);
+		departmentProgram.setLookupDepartment(null);
 
 		return departmentProgram;
 	}
@@ -210,14 +184,14 @@ public class Department implements Serializable {
 
 	public DepartmentResourceGroup addDepartmentResourceGroup(DepartmentResourceGroup departmentResourceGroup) {
 		getDepartmentResourceGroups().add(departmentResourceGroup);
-		departmentResourceGroup.setDepartment(this);
+		departmentResourceGroup.setLookupDepartment(this);
 
 		return departmentResourceGroup;
 	}
 
 	public DepartmentResourceGroup removeDepartmentResourceGroup(DepartmentResourceGroup departmentResourceGroup) {
 		getDepartmentResourceGroups().remove(departmentResourceGroup);
-		departmentResourceGroup.setDepartment(null);
+		departmentResourceGroup.setLookupDepartment(null);
 
 		return departmentResourceGroup;
 	}
@@ -232,14 +206,14 @@ public class Department implements Serializable {
 
 	public Season addSeason(Season season) {
 		getSeasons().add(season);
-		season.setDepartment(this);
+		season.setLookupDepartment(this);
 
 		return season;
 	}
 
 	public Season removeSeason(Season season) {
 		getSeasons().remove(season);
-		season.setDepartment(null);
+		season.setLookupDepartment(null);
 
 		return season;
 	}

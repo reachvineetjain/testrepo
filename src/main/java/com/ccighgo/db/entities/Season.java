@@ -22,12 +22,11 @@ public class Season implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonId;
 
-	@Column(nullable=false)
-	private byte active;
+	@Column(length=50)
+	private String clonedSeasonName;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -51,10 +50,10 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<RegionSeason> regionSeasons;
 
-	//bi-directional many-to-one association to Department
+	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
 	@JoinColumn(name="departmentId", nullable=false)
-	private Department department;
+	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
@@ -64,6 +63,10 @@ public class Season implements Serializable {
 	//bi-directional many-to-one association to SeasonCAPDetail
 	@OneToMany(mappedBy="season")
 	private List<SeasonCAPDetail> seasonCapdetails;
+
+	//bi-directional many-to-one association to SeasonDepartmentNote
+	@OneToMany(mappedBy="season")
+	private List<SeasonDepartmentNote> seasonDepartmentNotes;
 
 	//bi-directional many-to-one association to SeasonF1Detail
 	@OneToMany(mappedBy="season")
@@ -83,7 +86,7 @@ public class Season implements Serializable {
 
 	//bi-directional many-to-one association to SeasonHSPConfiguration
 	@OneToMany(mappedBy="season", fetch=FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSPConfiguration> seasonHspconfigurations;
 
 	//bi-directional many-to-one association to SeasonJ1Detail
@@ -94,9 +97,17 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<SeasonLSDetail> seasonLsdetails;
 
+	//bi-directional many-to-one association to SeasonProgramNote
+	@OneToMany(mappedBy="season")
+	private List<SeasonProgramNote> seasonProgramNotes;
+
 	//bi-directional many-to-one association to SeasonTADetail
 	@OneToMany(mappedBy="season")
 	private List<SeasonTADetail> seasonTadetails;
+
+	//bi-directional many-to-one association to SeasonVADetail
+	@OneToMany(mappedBy="season")
+	private List<SeasonVADetail> seasonVadetails;
 
 	//bi-directional many-to-one association to SeasonWADetail
 	@OneToMany(mappedBy="season")
@@ -118,10 +129,6 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<USSchoolSeason> usschoolSeasons;
 
-	//bi-directional many-to-one association to SeasonVADetail
-	@OneToMany(mappedBy="season")
-	private List<SeasonVADetail> seasonVadetails;
-
 	public Season() {
 	}
 
@@ -133,12 +140,12 @@ public class Season implements Serializable {
 		this.seasonId = seasonId;
 	}
 
-	public byte getActive() {
-		return this.active;
+	public String getClonedSeasonName() {
+		return this.clonedSeasonName;
 	}
 
-	public void setActive(byte active) {
-		this.active = active;
+	public void setClonedSeasonName(String clonedSeasonName) {
+		this.clonedSeasonName = clonedSeasonName;
 	}
 
 	public int getCreatedBy() {
@@ -211,12 +218,12 @@ public class Season implements Serializable {
 		return regionSeason;
 	}
 
-	public Department getDepartment() {
-		return this.department;
+	public LookupDepartment getLookupDepartment() {
+		return this.lookupDepartment;
 	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setLookupDepartment(LookupDepartment lookupDepartment) {
+		this.lookupDepartment = lookupDepartment;
 	}
 
 	public SeasonStatus getSeasonStatus() {
@@ -247,6 +254,28 @@ public class Season implements Serializable {
 		seasonCapdetail.setSeason(null);
 
 		return seasonCapdetail;
+	}
+
+	public List<SeasonDepartmentNote> getSeasonDepartmentNotes() {
+		return this.seasonDepartmentNotes;
+	}
+
+	public void setSeasonDepartmentNotes(List<SeasonDepartmentNote> seasonDepartmentNotes) {
+		this.seasonDepartmentNotes = seasonDepartmentNotes;
+	}
+
+	public SeasonDepartmentNote addSeasonDepartmentNote(SeasonDepartmentNote seasonDepartmentNote) {
+		getSeasonDepartmentNotes().add(seasonDepartmentNote);
+		seasonDepartmentNote.setSeason(this);
+
+		return seasonDepartmentNote;
+	}
+
+	public SeasonDepartmentNote removeSeasonDepartmentNote(SeasonDepartmentNote seasonDepartmentNote) {
+		getSeasonDepartmentNotes().remove(seasonDepartmentNote);
+		seasonDepartmentNote.setSeason(null);
+
+		return seasonDepartmentNote;
 	}
 
 	public List<SeasonF1Detail> getSeasonF1details() {
@@ -403,6 +432,28 @@ public class Season implements Serializable {
 		return seasonLsdetail;
 	}
 
+	public List<SeasonProgramNote> getSeasonProgramNotes() {
+		return this.seasonProgramNotes;
+	}
+
+	public void setSeasonProgramNotes(List<SeasonProgramNote> seasonProgramNotes) {
+		this.seasonProgramNotes = seasonProgramNotes;
+	}
+
+	public SeasonProgramNote addSeasonProgramNote(SeasonProgramNote seasonProgramNote) {
+		getSeasonProgramNotes().add(seasonProgramNote);
+		seasonProgramNote.setSeason(this);
+
+		return seasonProgramNote;
+	}
+
+	public SeasonProgramNote removeSeasonProgramNote(SeasonProgramNote seasonProgramNote) {
+		getSeasonProgramNotes().remove(seasonProgramNote);
+		seasonProgramNote.setSeason(null);
+
+		return seasonProgramNote;
+	}
+
 	public List<SeasonTADetail> getSeasonTadetails() {
 		return this.seasonTadetails;
 	}
@@ -423,6 +474,28 @@ public class Season implements Serializable {
 		seasonTadetail.setSeason(null);
 
 		return seasonTadetail;
+	}
+
+	public List<SeasonVADetail> getSeasonVadetails() {
+		return this.seasonVadetails;
+	}
+
+	public void setSeasonVadetails(List<SeasonVADetail> seasonVadetails) {
+		this.seasonVadetails = seasonVadetails;
+	}
+
+	public SeasonVADetail addSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().add(seasonVadetail);
+		seasonVadetail.setSeason(this);
+
+		return seasonVadetail;
+	}
+
+	public SeasonVADetail removeSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().remove(seasonVadetail);
+		seasonVadetail.setSeason(null);
+
+		return seasonVadetail;
 	}
 
 	public List<SeasonWADetail> getSeasonWadetails() {
@@ -533,28 +606,6 @@ public class Season implements Serializable {
 		usschoolSeason.setSeason(null);
 
 		return usschoolSeason;
-	}
-
-	public List<SeasonVADetail> getSeasonVadetails() {
-		return this.seasonVadetails;
-	}
-
-	public void setSeasonVadetails(List<SeasonVADetail> seasonVadetails) {
-		this.seasonVadetails = seasonVadetails;
-	}
-
-	public SeasonVADetail addSeasonVadetail(SeasonVADetail seasonVadetail) {
-		getSeasonVadetails().add(seasonVadetail);
-		seasonVadetail.setSeason(this);
-
-		return seasonVadetail;
-	}
-
-	public SeasonVADetail removeSeasonVadetail(SeasonVADetail seasonVadetail) {
-		getSeasonVadetails().remove(seasonVadetail);
-		seasonVadetail.setSeason(null);
-
-		return seasonVadetail;
 	}
 
 }

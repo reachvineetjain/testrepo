@@ -13,6 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
@@ -100,6 +106,51 @@ public class Seasons {
    @Produces("application/json")
    public SeasonStatuses getSeasonStatus() {
       return seasonServices.getSeasonStatus();
+   }
+   
+   //HSP J1HS services
+   
+   @GET
+   @Path("j1hs/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonHspJ1HSDetails getJ1Details(@PathParam("seasonId") String seasonId){
+      return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
+   }
+   
+   @GET
+   @Path("j1hs/details/{seasonId}")
+   @Produces("application/json")
+   public J1HSBasicDetail getJ1NameAndStatus(@PathParam("seasonId") String seasonId){
+      return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
+   }
+   
+   
+   @GET
+   @Path("j1hs/details/{seasonId}")
+   @Produces("application/json")
+   public J1HSJanStart getJ1JanStartDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
+   }
+   
+   @GET
+   @Path("j1hs/details/{seasonId}")
+   @Produces("application/json")
+   public J1HSAugStart getJ1AugStartDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
+   }
+   
+   @GET
+   @Path("j1hs/details/{seasonId}")
+   @Produces("application/json")
+   public J1HSFieldSettings getJ1FieldSettings(@PathParam("seasonId") String seasonId){
+      return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
+   }
+   
+   @GET
+   @Path("j1hs/details/{seasonId}")
+   @Produces("application/json")
+   public J1HSProgramAllocations getJ1ProgramAllocation(@PathParam("seasonId") String seasonId){
+      return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
    }
 
 }

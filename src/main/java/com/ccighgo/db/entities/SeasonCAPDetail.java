@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -19,28 +20,37 @@ public class SeasonCAPDetail implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonCAPDetailsId;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
+	private int createdBy;
+
+	@Column(nullable=false)
+	private Timestamp createdOn;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date internAppDeadlineDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date internEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date internStartDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
+	private int modifiedBy;
+
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
+
+	@Column(length=45)
+	private String programName;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date traineeAppDeadlineDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date traineeEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date traineeStartDate;
 
 	//bi-directional many-to-one association to Season
@@ -50,7 +60,7 @@ public class SeasonCAPDetail implements Serializable {
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId", nullable=false)
+	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
 	public SeasonCAPDetail() {
@@ -62,6 +72,22 @@ public class SeasonCAPDetail implements Serializable {
 
 	public void setSeasonCAPDetailsId(int seasonCAPDetailsId) {
 		this.seasonCAPDetailsId = seasonCAPDetailsId;
+	}
+
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
 	}
 
 	public Date getInternAppDeadlineDate() {
@@ -86,6 +112,30 @@ public class SeasonCAPDetail implements Serializable {
 
 	public void setInternStartDate(Date internStartDate) {
 		this.internStartDate = internStartDate;
+	}
+
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public String getProgramName() {
+		return this.programName;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
 	}
 
 	public Date getTraineeAppDeadlineDate() {
