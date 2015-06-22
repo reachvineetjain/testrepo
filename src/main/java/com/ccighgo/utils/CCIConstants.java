@@ -44,6 +44,7 @@ public class CCIConstants {
    public static final String HYPHEN_SPACE = " - ";
    public static final String SINGLE_QUOTE = "'";
    public static final String COMMA = ",";
+public static final Integer DRAFT_STATUS_NO = 3;
    
 
 }

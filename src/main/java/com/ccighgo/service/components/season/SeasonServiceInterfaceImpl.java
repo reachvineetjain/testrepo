@@ -41,7 +41,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    public SeasonsList getAllSeasons() {
       try {
-         List<Season> allseasons = seasonRepository.findAll();
+         List<Season> allseasons = seasonRepository.getAllSeasons();
          SeasonsList seasonsList = new SeasonsList();
          if (allseasons != null && !(allseasons.isEmpty())) {
             seasonsList.setRecordCount(allseasons.size());
