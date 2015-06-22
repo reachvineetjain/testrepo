@@ -49,9 +49,6 @@ public class CCIStaffUser implements Serializable {
 	@Column(nullable=false, length=30)
 	private String firstName;
 
-	@Column(length=1)
-	private String gender;
-
 	@Column(length=100)
 	private String homeAddressLineOne;
 
@@ -91,20 +88,25 @@ public class CCIStaffUser implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
-	//bi-directional many-to-one association to Country
-	@ManyToOne
-	@JoinColumn(name="countryId")
-	private Country country;
-
 	//bi-directional many-to-one association to Login
 	@ManyToOne
 	@JoinColumn(name="loginId", nullable=false)
 	private Login login;
 
-	//bi-directional many-to-one association to USState
+	//bi-directional many-to-one association to LookupCountry
+	@ManyToOne
+	@JoinColumn(name="countryId")
+	private LookupCountry lookupCountry;
+
+	//bi-directional many-to-one association to LookupGender
+	@ManyToOne
+	@JoinColumn(name="genderId")
+	private LookupGender lookupGender;
+
+	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
 	@JoinColumn(name="usStatesId")
-	private USState usstate;
+	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
 	@OneToMany(mappedBy="ccistaffUser", fetch=FetchType.EAGER)
@@ -189,14 +191,6 @@ public class CCIStaffUser implements Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-	}
-
-	public String getGender() {
-		return this.gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public String getHomeAddressLineOne() {
@@ -323,14 +317,6 @@ public class CCIStaffUser implements Serializable {
 		return ccistaffUserProgram;
 	}
 
-	public Country getCountry() {
-		return this.country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
 	public Login getLogin() {
 		return this.login;
 	}
@@ -339,12 +325,28 @@ public class CCIStaffUser implements Serializable {
 		this.login = login;
 	}
 
-	public USState getUsstate() {
-		return this.usstate;
+	public LookupCountry getLookupCountry() {
+		return this.lookupCountry;
 	}
 
-	public void setUsstate(USState usstate) {
-		this.usstate = usstate;
+	public void setLookupCountry(LookupCountry lookupCountry) {
+		this.lookupCountry = lookupCountry;
+	}
+
+	public LookupGender getLookupGender() {
+		return this.lookupGender;
+	}
+
+	public void setLookupGender(LookupGender lookupGender) {
+		this.lookupGender = lookupGender;
+	}
+
+	public LookupUSState getLookupUsstate() {
+		return this.lookupUsstate;
+	}
+
+	public void setLookupUsstate(LookupUSState lookupUsstate) {
+		this.lookupUsstate = lookupUsstate;
 	}
 
 	public List<CCIStaffUsersCCIStaffRole> getCcistaffUsersCcistaffRoles() {

@@ -11,7 +11,6 @@ import com.ccighgo.db.entities.SeasonGHTConfiguration;
  *
  */
 @Repository
-public interface SeasonGHTConfigurationRepository extends
-		JpaRepository<SeasonGHTConfiguration, Integer> {
+public interface SeasonGHTConfigurationRepository extends JpaRepository<SeasonGHTConfiguration, Integer> {
 
 }

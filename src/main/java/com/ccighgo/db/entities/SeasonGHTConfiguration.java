@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -18,6 +19,18 @@ public class SeasonGHTConfiguration implements Serializable {
 	@Id
 	@Column(unique=true, nullable=false)
 	private int seasonGHTConfigurationId;
+
+	@Column(nullable=false)
+	private int createdBy;
+
+	@Column(nullable=false)
+	private Timestamp createdOn;
+
+	@Column(nullable=false)
+	private int modifiedBy;
+
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
@@ -41,6 +54,38 @@ public class SeasonGHTConfiguration implements Serializable {
 
 	public void setSeasonGHTConfigurationId(int seasonGHTConfigurationId) {
 		this.seasonGHTConfigurationId = seasonGHTConfigurationId;
+	}
+
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 
 	public Date getSeasonEndDate() {

@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -19,111 +20,97 @@ public class SeasonF1Detail implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonF1DetailsId;
 
-	@Column(nullable=false)
 	private byte activeFullYearJanProgram;
 
-	@Column(nullable=false)
-	private byte allowFieldStafftoStartRenewelProcess;
+	private byte allowFieldStaffToStartRenewalProcess;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
-	private Date applicationDeadlineForFirstSem;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
-	private Date applicationDeadlineForSecSem;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date augFullYearAppDeadlineDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date augFullYearEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date augFullYearStartDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
+	private int createdBy;
+
+	@Column(nullable=false)
+	private Timestamp createdOn;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date firstSemAppDeadlineDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date firstSemEarliestBirthDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date firstSemEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date firstSemLatestBirthDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date firstSemStartDate;
 
-	@Column(nullable=false)
 	private int fsAgreementId;
 
-	@Column(nullable=false)
 	private int greenHeartMargin;
 
 	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
 	private Date hfInquiryDate;
 
-	@Column(nullable=false)
 	private int hfReferences;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date janFullYearAppDeadlineDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date janFullYearEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date janFullYearStartDate;
 
-	@Column(nullable=false)
 	private int lcPaymentScheduleId;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
+	private int modifiedBy;
+
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
+
+	@Column(length=45)
+	private String programName;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date secondSemAppDeadlineDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date secondSemEarliestBirthDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date secondSemEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date secondSemLatestBirthDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date secondSemStartDate;
 
-	@Column(nullable=false)
 	private byte showAugFullYearToNewHF;
 
-	@Column(nullable=false)
 	private byte showFirstSemToNewHF;
 
-	@Column(nullable=false)
-	private byte showJanFullYearToHF;
+	private byte showJanFullYearToNewHF;
 
-	@Column(nullable=false)
 	private byte showSeasonToCurrentHF;
 
-	@Column(nullable=false)
 	private byte showSecSemToNewHF;
 
-	@Column(nullable=false)
-	private byte showSpecialRequstStudent;
+	private byte showSpecialRequestStudent;
 
-	@Column(nullable=false)
-	private byte welcomeFamily;
+	private byte showWelcomeFamily;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -132,7 +119,7 @@ public class SeasonF1Detail implements Serializable {
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId", nullable=false)
+	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
 	public SeasonF1Detail() {
@@ -154,28 +141,12 @@ public class SeasonF1Detail implements Serializable {
 		this.activeFullYearJanProgram = activeFullYearJanProgram;
 	}
 
-	public byte getAllowFieldStafftoStartRenewelProcess() {
-		return this.allowFieldStafftoStartRenewelProcess;
+	public byte getAllowFieldStaffToStartRenewalProcess() {
+		return this.allowFieldStaffToStartRenewalProcess;
 	}
 
-	public void setAllowFieldStafftoStartRenewelProcess(byte allowFieldStafftoStartRenewelProcess) {
-		this.allowFieldStafftoStartRenewelProcess = allowFieldStafftoStartRenewelProcess;
-	}
-
-	public Date getApplicationDeadlineForFirstSem() {
-		return this.applicationDeadlineForFirstSem;
-	}
-
-	public void setApplicationDeadlineForFirstSem(Date applicationDeadlineForFirstSem) {
-		this.applicationDeadlineForFirstSem = applicationDeadlineForFirstSem;
-	}
-
-	public Date getApplicationDeadlineForSecSem() {
-		return this.applicationDeadlineForSecSem;
-	}
-
-	public void setApplicationDeadlineForSecSem(Date applicationDeadlineForSecSem) {
-		this.applicationDeadlineForSecSem = applicationDeadlineForSecSem;
+	public void setAllowFieldStaffToStartRenewalProcess(byte allowFieldStaffToStartRenewalProcess) {
+		this.allowFieldStaffToStartRenewalProcess = allowFieldStaffToStartRenewalProcess;
 	}
 
 	public Date getAugFullYearAppDeadlineDate() {
@@ -200,6 +171,30 @@ public class SeasonF1Detail implements Serializable {
 
 	public void setAugFullYearStartDate(Date augFullYearStartDate) {
 		this.augFullYearStartDate = augFullYearStartDate;
+	}
+
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Date getFirstSemAppDeadlineDate() {
+		return this.firstSemAppDeadlineDate;
+	}
+
+	public void setFirstSemAppDeadlineDate(Date firstSemAppDeadlineDate) {
+		this.firstSemAppDeadlineDate = firstSemAppDeadlineDate;
 	}
 
 	public Date getFirstSemEarliestBirthDate() {
@@ -298,6 +293,38 @@ public class SeasonF1Detail implements Serializable {
 		this.lcPaymentScheduleId = lcPaymentScheduleId;
 	}
 
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public String getProgramName() {
+		return this.programName;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
+
+	public Date getSecondSemAppDeadlineDate() {
+		return this.secondSemAppDeadlineDate;
+	}
+
+	public void setSecondSemAppDeadlineDate(Date secondSemAppDeadlineDate) {
+		this.secondSemAppDeadlineDate = secondSemAppDeadlineDate;
+	}
+
 	public Date getSecondSemEarliestBirthDate() {
 		return this.secondSemEarliestBirthDate;
 	}
@@ -346,12 +373,12 @@ public class SeasonF1Detail implements Serializable {
 		this.showFirstSemToNewHF = showFirstSemToNewHF;
 	}
 
-	public byte getShowJanFullYearToHF() {
-		return this.showJanFullYearToHF;
+	public byte getShowJanFullYearToNewHF() {
+		return this.showJanFullYearToNewHF;
 	}
 
-	public void setShowJanFullYearToHF(byte showJanFullYearToHF) {
-		this.showJanFullYearToHF = showJanFullYearToHF;
+	public void setShowJanFullYearToNewHF(byte showJanFullYearToNewHF) {
+		this.showJanFullYearToNewHF = showJanFullYearToNewHF;
 	}
 
 	public byte getShowSeasonToCurrentHF() {
@@ -370,20 +397,20 @@ public class SeasonF1Detail implements Serializable {
 		this.showSecSemToNewHF = showSecSemToNewHF;
 	}
 
-	public byte getShowSpecialRequstStudent() {
-		return this.showSpecialRequstStudent;
+	public byte getShowSpecialRequestStudent() {
+		return this.showSpecialRequestStudent;
 	}
 
-	public void setShowSpecialRequstStudent(byte showSpecialRequstStudent) {
-		this.showSpecialRequstStudent = showSpecialRequstStudent;
+	public void setShowSpecialRequestStudent(byte showSpecialRequestStudent) {
+		this.showSpecialRequestStudent = showSpecialRequestStudent;
 	}
 
-	public byte getWelcomeFamily() {
-		return this.welcomeFamily;
+	public byte getShowWelcomeFamily() {
+		return this.showWelcomeFamily;
 	}
 
-	public void setWelcomeFamily(byte welcomeFamily) {
-		this.welcomeFamily = welcomeFamily;
+	public void setShowWelcomeFamily(byte showWelcomeFamily) {
+		this.showWelcomeFamily = showWelcomeFamily;
 	}
 
 	public Season getSeason() {

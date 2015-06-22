@@ -114,19 +114,6 @@ public class Utility {
 	}
 	
 	/**
-	 * RESTful service returns list of functions based on department.
-	 * 
-	 * @param id-departmentId
-	 * @return functions in JSON format
-	 */
-	@GET
-	@Path("department/function/{id}")
-	@Produces("application/json")
-	public Functions getFunctionsByDepartment(@PathParam("id") String id) {
-		return utilityServices.getFunctionsByDepartment(id);
-	}
-	
-	/**
 	 * RESTful service returns list of all programs
 	 * 
 	 * @return programs in JSON format.
@@ -136,18 +123,6 @@ public class Utility {
 	@Produces("application/json")
 	public Programs getAllPrograms() {
 		return utilityServices.getAllPrograms();
-	}
-	
-	/**
-	 * RESTful service returns list of all functions
-	 * 
-	 * @return functions in JSON format.
-	 */
-	@GET
-	@Path("functions/")
-	@Produces("application/json")
-	public Functions getAllFunctions() {
-		return utilityServices.getAllFunctions();
 	}
 	
 	/**

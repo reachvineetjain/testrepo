@@ -52,10 +52,14 @@ public class DepartmentProgram implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgramOption> departmentProgramOptions;
 
-	//bi-directional many-to-one association to Department
+	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
 	@JoinColumn(name="departmentId", nullable=false)
-	private Department department;
+	private LookupDepartment lookupDepartment;
+
+	//bi-directional many-to-one association to SeasonProgramNote
+	@OneToMany(mappedBy="departmentProgram")
+	private List<SeasonProgramNote> seasonProgramNotes;
 
 	public DepartmentProgram() {
 	}
@@ -160,12 +164,34 @@ public class DepartmentProgram implements Serializable {
 		return departmentProgramOption;
 	}
 
-	public Department getDepartment() {
-		return this.department;
+	public LookupDepartment getLookupDepartment() {
+		return this.lookupDepartment;
 	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setLookupDepartment(LookupDepartment lookupDepartment) {
+		this.lookupDepartment = lookupDepartment;
+	}
+
+	public List<SeasonProgramNote> getSeasonProgramNotes() {
+		return this.seasonProgramNotes;
+	}
+
+	public void setSeasonProgramNotes(List<SeasonProgramNote> seasonProgramNotes) {
+		this.seasonProgramNotes = seasonProgramNotes;
+	}
+
+	public SeasonProgramNote addSeasonProgramNote(SeasonProgramNote seasonProgramNote) {
+		getSeasonProgramNotes().add(seasonProgramNote);
+		seasonProgramNote.setDepartmentProgram(this);
+
+		return seasonProgramNote;
+	}
+
+	public SeasonProgramNote removeSeasonProgramNote(SeasonProgramNote seasonProgramNote) {
+		getSeasonProgramNotes().remove(seasonProgramNote);
+		seasonProgramNote.setDepartmentProgram(null);
+
+		return seasonProgramNote;
 	}
 
 }

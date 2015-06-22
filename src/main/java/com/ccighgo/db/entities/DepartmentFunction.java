@@ -25,6 +25,9 @@ public class DepartmentFunction implements Serializable {
 	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
+	private int departmentId;
+
 	@Column(length=200)
 	private String functionDescription;
 
@@ -36,11 +39,6 @@ public class DepartmentFunction implements Serializable {
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
-
-	//bi-directional many-to-one association to Department
-	@ManyToOne
-	@JoinColumn(name="departmentId", nullable=false)
-	private Department department;
 
 	public DepartmentFunction() {
 	}
@@ -67,6 +65,14 @@ public class DepartmentFunction implements Serializable {
 
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public int getDepartmentId() {
+		return this.departmentId;
+	}
+
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	public String getFunctionDescription() {
@@ -99,14 +105,6 @@ public class DepartmentFunction implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public Department getDepartment() {
-		return this.department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
 	}
 
 }

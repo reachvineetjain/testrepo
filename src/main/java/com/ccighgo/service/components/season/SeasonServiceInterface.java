@@ -1,5 +1,11 @@
 package com.ccighgo.service.components.season;
 
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
@@ -34,4 +40,49 @@ public interface SeasonServiceInterface {
     */
    public SeasonStatuses getSeasonStatus();
 public String cloneSeason(String seasonId, String newSeasonName);
+ 
+   //HSP J1HS Season methods
+   
+   /**
+    * Method returns complete details for HSP J1HS season program
+    * 
+    * @param seasonId
+    * @return SeasonHspJ1HSDetails
+    */
+   public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonId);
+
+
+   /**
+    * @param seasonId
+    * @return
+    */
+   public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonId); 
+
+
+   /**
+    * @param seasonId
+    * @return
+    */
+   public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonId);
+
+
+   /**
+    * @param seasonId
+    * @return
+    */
+   public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonId);
+
+
+   /**
+    * @param seasonId
+    * @return
+    */
+   public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonId);
+
+
+   /**
+    * @param seasonId
+    * @return
+    */
+   public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonId);
 }

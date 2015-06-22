@@ -8,16 +8,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.Department;
 import com.ccighgo.db.entities.DepartmentProgram;
+import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.jpa.repositories.SeasonRepository;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.utility.beans.department.Department;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.ValidationUtils;
@@ -77,7 +84,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public String deleteSeason(String id) {
       Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
       if (seasonEntity != null) {
-         seasonEntity.setActive(CCIConstants.INACTIVE);
+         //seasonEntity.setActive(CCIConstants.INACTIVE);
          seasonRepository.saveAndFlush(seasonEntity);
          return "Season Deactivated";
       }
@@ -126,7 +133,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          if (season != null) {
             List<String> seasonPrograms = new ArrayList<String>();
             seasonProgram = new SeasonProgram();
-            Department dept = season.getDepartment();
+            LookupDepartment dept = season.getLookupDepartment();
             List<DepartmentProgram> departmentPrograms = dept.getDepartmentPrograms();
             for (DepartmentProgram dPrg : departmentPrograms) {
                String seasonPrg = season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName();
@@ -150,6 +157,41 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          ExceptionUtil.logException(e, LOGGER);
       }
       return seasonStatuses;
+   }
+
+   public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonId) {
+      SeasonHspJ1HSDetails seasonHspJ1HSDetails = null;
+      return seasonHspJ1HSDetails;
+   }
+
+
+   public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
    }
 
 @Override
