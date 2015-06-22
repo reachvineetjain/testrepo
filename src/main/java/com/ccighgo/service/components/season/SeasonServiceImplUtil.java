@@ -191,6 +191,10 @@ public class SeasonServiceImplUtil {
 		seasonHSPConfiguration.setSeason(seasonEntity);
 		seasonHSPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
 		seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
+		seasonHSPConfiguration.setCreatedBy(1);
+		seasonHSPConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+		seasonHSPConfiguration.setModifiedBy(1);
+		seasonHSPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
 		seasonHSPConfigurationRepsitory.saveAndFlush(seasonHSPConfiguration);
 	}
 
