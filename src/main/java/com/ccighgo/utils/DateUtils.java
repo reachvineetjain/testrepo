@@ -21,7 +21,7 @@ public class DateUtils {
     }
 
 	public static Date getDateFromString(String endDate) {
-		DateFormat format = new SimpleDateFormat(MM_dd_yyy, Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat(MM_dd_yyy, Locale.US);
 		Date date = null;
 		try {
 			date = format.parse(endDate);

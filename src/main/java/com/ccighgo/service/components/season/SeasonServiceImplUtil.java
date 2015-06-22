@@ -176,8 +176,7 @@ public class SeasonServiceImplUtil {
 		ValidationUtils.validateRequired(seasonBean.getSeasonName());
 		seasonEntity.setSeasonName(seasonBean.getSeasonName());
 		
-		ValidationUtils.validateRequired(seasonBean.getStatusId()+"");
-		SeasonStatus seasonStatus = seasonStatusRepository.findOne(seasonBean.getStatusId());
+		SeasonStatus seasonStatus = seasonStatusRepository.findOne(CCIConstants.DRAFT_STATUS_NO);
 		seasonEntity.setSeasonStatus(seasonStatus);
 		seasonEntity.setCreatedBy(1);
 		seasonEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
@@ -192,6 +191,10 @@ public class SeasonServiceImplUtil {
 		seasonHSPConfiguration.setSeason(seasonEntity);
 		seasonHSPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
 		seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
+		seasonHSPConfiguration.setCreatedBy(1);
+		seasonHSPConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+		seasonHSPConfiguration.setModifiedBy(1);
+		seasonHSPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
 		seasonHSPConfigurationRepsitory.saveAndFlush(seasonHSPConfiguration);
 	}
 

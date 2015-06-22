@@ -37,6 +37,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonRepository seasonRepository;
    @Autowired
    SeasonServiceImplUtil seasonServiceImplUtil;
+	@Autowired
+	SeasonRepositoryCustomImpl seasonRepositoryService;
+
 
    SeasonServiceInterfaceImpl() {
    }
@@ -45,7 +48,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    public SeasonsList getAllSeasons() {
       try {
-         List<Season> allseasons = seasonRepository.findAll();
+         List<Season> allseasons = seasonRepository.getAllSeasons();
          SeasonsList seasonsList = new SeasonsList();
          if (allseasons != null && !(allseasons.isEmpty())) {
             seasonsList.setRecordCount(allseasons.size());
@@ -68,7 +71,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       try {
          Season seasonEntity = new Season();
          seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
-         seasonRepository.saveAndFlush(seasonEntity);
+         seasonEntity=seasonRepository.saveAndFlush(seasonEntity);
          seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
          return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
@@ -156,7 +159,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return seasonStatuses;
    }
 
-
    public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonId) {
       SeasonHspJ1HSDetails seasonHspJ1HSDetails = null;
       return seasonHspJ1HSDetails;
@@ -191,5 +193,21 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       // TODO Auto-generated method stub
       return null;
    }
+
+@Override
+	public String cloneSeason(String id, String newSeasonName) {
+		try {
+			return seasonRepositoryService.cloneSeason(id, newSeasonName);
+		} catch (Exception e) {
+			ExceptionUtil.logException(e, LOGGER);
+		}
+		return null;
+	}
+
+	public void customService(String id) {
+		seasonRepositoryService.findSeasonByName("CAP-2010");
+//		seasonRepositoryService.findSeasonByDepartment("1");
+		System.out.println("Line for Debug");
+	}
 
 }
