@@ -19,9 +19,9 @@ import com.ccighgo.db.entities.LookupDepartment;
 @Repository
 public interface DepartmentProgramRepository extends JpaRepository<DepartmentProgram, Integer> {
 
-   @Query("select d from DepartmentProgram d where d.department = ?1 ")
+   @Query("select d from DepartmentProgram d where d.lookupDepartment = ?1 ")
    public List<DepartmentProgram> findProgramsByDepartment(LookupDepartment departmentId);
 
-   @Query("select d from DepartmentProgram d where d.department = ?1 and d.departmentProgramId = ?2")
+   @Query("select d from DepartmentProgram d where d.lookupDepartment = ?1 and d.departmentProgramId = ?2")
    public DepartmentProgram findDepartmentProgramByDepartmentAndProgramId(LookupDepartment department, Integer ProgramId);
 }
