@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -19,12 +20,25 @@ public class SeasonVADetail implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int seasonVADetailsId;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Date endDate;
+	private int createdBy;
+
+	@Column(nullable=false)
+	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	private Date endDate;
+
 	@Column(nullable=false)
+	private int modifiedBy;
+
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
+
+	@Column(length=45)
+	private String programName;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
 
 	//bi-directional many-to-one association to Season
@@ -34,7 +48,7 @@ public class SeasonVADetail implements Serializable {
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId", nullable=false)
+	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
 	public SeasonVADetail() {
@@ -48,12 +62,52 @@ public class SeasonVADetail implements Serializable {
 		this.seasonVADetailsId = seasonVADetailsId;
 	}
 
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
 	public Date getEndDate() {
 		return this.endDate;
 	}
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public String getProgramName() {
+		return this.programName;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
 	}
 
 	public Date getStartDate() {

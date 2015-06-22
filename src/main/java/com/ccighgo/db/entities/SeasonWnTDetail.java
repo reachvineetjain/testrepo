@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -20,26 +21,32 @@ public class SeasonWnTDetail implements Serializable {
 	private int seasonWTDetailsId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date applicationDeadlineDate;
 
+	private int createdBy;
+
+	private Timestamp createdOn;
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date endDate;
 
-	@Column(nullable=false)
 	private byte isJobBoardOpen;
 
-	@Column(nullable=false)
 	private int maxPendingJobApps;
 
+	private int modifiedBy;
+
+	private Timestamp modifiedOn;
+
+	@Column(length=45)
+	private String programName;
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date startDate;
 
 	//bi-directional many-to-one association to AnnualSeason
 	@ManyToOne
-	@JoinColumn(name="annualSeasonId", nullable=false)
+	@JoinColumn(name="annualSeasonId")
 	private AnnualSeason annualSeason;
 
 	//bi-directional many-to-one association to Season
@@ -49,7 +56,7 @@ public class SeasonWnTDetail implements Serializable {
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId", nullable=false)
+	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
 	public SeasonWnTDetail() {
@@ -69,6 +76,22 @@ public class SeasonWnTDetail implements Serializable {
 
 	public void setApplicationDeadlineDate(Date applicationDeadlineDate) {
 		this.applicationDeadlineDate = applicationDeadlineDate;
+	}
+
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
 	}
 
 	public Date getEndDate() {
@@ -93,6 +116,30 @@ public class SeasonWnTDetail implements Serializable {
 
 	public void setMaxPendingJobApps(int maxPendingJobApps) {
 		this.maxPendingJobApps = maxPendingJobApps;
+	}
+
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public String getProgramName() {
+		return this.programName;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
 	}
 
 	public Date getStartDate() {

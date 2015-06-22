@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -19,11 +20,27 @@ public class SeasonWPAllocation implements Serializable {
 	private int seasonWPAllocationId;
 
 	@Column(nullable=false)
+	private int createdBy;
+
+	@Column(nullable=false)
+	private Timestamp createdOn;
+
 	private int maxPax;
+
+	@Column(nullable=false)
+	private int modifiedBy;
+
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
+
+	//bi-directional many-to-one association to AnnualSeason
+	@ManyToOne
+	@JoinColumn(name="annualSeasonId")
+	private AnnualSeason annualSeason;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId", nullable=false)
+	@JoinColumn(name="departmentProgramOptionId")
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Season
@@ -42,12 +59,52 @@ public class SeasonWPAllocation implements Serializable {
 		this.seasonWPAllocationId = seasonWPAllocationId;
 	}
 
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
 	public int getMaxPax() {
 		return this.maxPax;
 	}
 
 	public void setMaxPax(int maxPax) {
 		this.maxPax = maxPax;
+	}
+
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public AnnualSeason getAnnualSeason() {
+		return this.annualSeason;
+	}
+
+	public void setAnnualSeason(AnnualSeason annualSeason) {
+		this.annualSeason = annualSeason;
 	}
 
 	public DepartmentProgramOption getDepartmentProgramOption() {

@@ -11,7 +11,6 @@ import com.ccighgo.db.entities.SeasonJ1Detail;
  *
  */
 @Repository
-public interface SeasonJ1DetailsRepository extends
-		JpaRepository<SeasonJ1Detail, Integer> {
+public interface SeasonJ1DetailsRepository extends JpaRepository<SeasonJ1Detail, Integer> {
 
 }

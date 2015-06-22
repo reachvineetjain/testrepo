@@ -11,7 +11,6 @@ import com.ccighgo.db.entities.SeasonHSPAllocation;
  *
  */
 @Repository
-public interface SeasonHSPAllocationRepository extends
-		JpaRepository<SeasonHSPAllocation, Integer> {
+public interface SeasonHSPAllocationRepository extends JpaRepository<SeasonHSPAllocation, Integer> {
 
 }

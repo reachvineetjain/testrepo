@@ -47,13 +47,6 @@ public interface UtilityServices {
 	public Programs getAllPrograms();
 
 	/**
-	 * fetches list of all department functions in the system
-	 * 
-	 * @return functions list
-	 */
-	public Functions getAllFunctions();
-
-	/**
 	 * fetches list of all cci staff roles in the system
 	 * 
 	 * @return cci staff user roles list
@@ -66,13 +59,6 @@ public interface UtilityServices {
 	 * @return programs list
 	 */
 	public Programs getProgramsByDepartment(String id);
-
-	/**
-	 * fetches list of function based on department
-	 * 
-	 * @return functions list
-	 */
-	public Functions getFunctionsByDepartment(String id);
 
 	/**
 	 * fetches list of departments along with programs and functions

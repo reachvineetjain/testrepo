@@ -6,13 +6,13 @@ import java.util.List;
 
 
 /**
- * The persistent class for the USStates database table.
+ * The persistent class for the LookupUSStates database table.
  * 
  */
 @Entity
-@Table(name="USStates")
-@NamedQuery(name="USState.findAll", query="SELECT u FROM USState u")
-public class USState implements Serializable {
+@Table(name="LookupUSStates")
+@NamedQuery(name="LookupUSState.findAll", query="SELECT l FROM LookupUSState l")
+public class LookupUSState implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -26,10 +26,10 @@ public class USState implements Serializable {
 	private String stateName;
 
 	//bi-directional many-to-one association to CCIStaffUser
-	@OneToMany(mappedBy="usstate")
+	@OneToMany(mappedBy="lookupUsstate")
 	private List<CCIStaffUser> ccistaffUsers;
 
-	public USState() {
+	public LookupUSState() {
 	}
 
 	public int getUsStatesId() {
@@ -66,14 +66,14 @@ public class USState implements Serializable {
 
 	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
 		getCcistaffUsers().add(ccistaffUser);
-		ccistaffUser.setUsstate(this);
+		ccistaffUser.setLookupUsstate(this);
 
 		return ccistaffUser;
 	}
 
 	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
 		getCcistaffUsers().remove(ccistaffUser);
-		ccistaffUser.setUsstate(null);
+		ccistaffUser.setLookupUsstate(null);
 
 		return ccistaffUser;
 	}

@@ -11,7 +11,6 @@ import com.ccighgo.db.entities.SeasonWPConfiguration;
  *
  */
 @Repository
-public interface SeasonWPConfigurationRepository extends
-		JpaRepository<SeasonWPConfiguration, Integer> {
+public interface SeasonWPConfigurationRepository extends JpaRepository<SeasonWPConfiguration, Integer> {
 
 }

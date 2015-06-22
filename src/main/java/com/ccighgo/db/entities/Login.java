@@ -34,13 +34,13 @@ public class Login implements Serializable {
 	@JoinColumn(name="userTypeId", nullable=false)
 	private UserType userType;
 
-	//bi-directional many-to-one association to PasswordHistory
-	@OneToMany(mappedBy="login")
-	private List<PasswordHistory> passwordHistories;
-
 	//bi-directional many-to-one association to LoginHistory
 	@OneToMany(mappedBy="login")
 	private List<LoginHistory> loginHistories;
+
+	//bi-directional many-to-one association to PasswordHistory
+	@OneToMany(mappedBy="login")
+	private List<PasswordHistory> passwordHistories;
 
 	public Login() {
 	}
@@ -99,28 +99,6 @@ public class Login implements Serializable {
 		this.userType = userType;
 	}
 
-	public List<PasswordHistory> getPasswordHistories() {
-		return this.passwordHistories;
-	}
-
-	public void setPasswordHistories(List<PasswordHistory> passwordHistories) {
-		this.passwordHistories = passwordHistories;
-	}
-
-	public PasswordHistory addPasswordHistory(PasswordHistory passwordHistory) {
-		getPasswordHistories().add(passwordHistory);
-		passwordHistory.setLogin(this);
-
-		return passwordHistory;
-	}
-
-	public PasswordHistory removePasswordHistory(PasswordHistory passwordHistory) {
-		getPasswordHistories().remove(passwordHistory);
-		passwordHistory.setLogin(null);
-
-		return passwordHistory;
-	}
-
 	public List<LoginHistory> getLoginHistories() {
 		return this.loginHistories;
 	}
@@ -141,6 +119,28 @@ public class Login implements Serializable {
 		loginHistory.setLogin(null);
 
 		return loginHistory;
+	}
+
+	public List<PasswordHistory> getPasswordHistories() {
+		return this.passwordHistories;
+	}
+
+	public void setPasswordHistories(List<PasswordHistory> passwordHistories) {
+		this.passwordHistories = passwordHistories;
+	}
+
+	public PasswordHistory addPasswordHistory(PasswordHistory passwordHistory) {
+		getPasswordHistories().add(passwordHistory);
+		passwordHistory.setLogin(this);
+
+		return passwordHistory;
+	}
+
+	public PasswordHistory removePasswordHistory(PasswordHistory passwordHistory) {
+		getPasswordHistories().remove(passwordHistory);
+		passwordHistory.setLogin(null);
+
+		return passwordHistory;
 	}
 
 }

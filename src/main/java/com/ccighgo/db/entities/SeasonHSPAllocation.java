@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -19,10 +20,20 @@ public class SeasonHSPAllocation implements Serializable {
 	private int seasonHSPAllocationId;
 
 	@Column(nullable=false)
-	private int maxGuaranteedPax;
+	private int createdBy;
 
 	@Column(nullable=false)
+	private Timestamp createdOn;
+
+	private int maxGuaranteedPax;
+
 	private int maxUnguaranteedPax;
+
+	@Column(nullable=false)
+	private int modifiedBy;
+
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
@@ -45,6 +56,22 @@ public class SeasonHSPAllocation implements Serializable {
 		this.seasonHSPAllocationId = seasonHSPAllocationId;
 	}
 
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
 	public int getMaxGuaranteedPax() {
 		return this.maxGuaranteedPax;
 	}
@@ -59,6 +86,22 @@ public class SeasonHSPAllocation implements Serializable {
 
 	public void setMaxUnguaranteedPax(int maxUnguaranteedPax) {
 		this.maxUnguaranteedPax = maxUnguaranteedPax;
+	}
+
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 
 	public DepartmentProgramOption getDepartmentProgramOption() {
