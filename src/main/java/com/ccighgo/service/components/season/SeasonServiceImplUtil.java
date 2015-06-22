@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.season;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.DepartmentObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramOptions;
@@ -203,5 +205,23 @@ public class SeasonServiceImplUtil {
 		seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
 		seasonHSPConfiguration.setSeasonHSPConfigurationId(seasonBean.getSeasonHSPConfigurationId());
 		seasonHSPConfigurationRepsitory.saveAndFlush(seasonHSPConfiguration);
+	}
+	
+	public SeasonStatuses getSeasonStatus(){
+	   SeasonStatuses seasonStatuses = null;
+	   List<SeasonStatus> seasonStatusDBList = seasonStatusRepository.findAll();
+	   if(seasonStatusDBList!=null){
+	      seasonStatuses = new SeasonStatuses();
+	      List<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus> seasonStatusList = new ArrayList<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus>();
+	      for(SeasonStatus ss:seasonStatusDBList){
+	         com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus status = new com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus(); 
+	         status.setSeasonStatusId(ss.getSeasonStatusId());
+	         status.setSeasonStatus(ss.getStatus());
+	         status.setActive(ss.getActive() == CCIConstants.ACTIVE ? true : false);
+	         seasonStatusList.add(status);
+	      }
+	      seasonStatuses.getSeasonStatuses().addAll(seasonStatusList);
+	   }
+      return seasonStatuses;
 	}
 }

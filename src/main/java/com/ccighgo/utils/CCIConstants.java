@@ -23,7 +23,6 @@ public class CCIConstants {
     public static final String NUMBERS = "0123456789";
     public static final String SPECIAL_CHARACTERS = "!@#$^&*_";
     
-    public static final String EMPTY_DATA = "";
     public static final byte ACTIVE = 1;
     public static final byte INACTIVE = 0;
     public static final String DEFAULT_PAGE = "0";
@@ -39,5 +38,12 @@ public class CCIConstants {
     //user type ids
     public static final Integer CCI_USER_TYPE = 1;
 	public static final int EMPTY_INTEGER_FIELD = -1;
+	
+	//spaces, hyphens, literals, commas etc
+	public static final String EMPTY_DATA = "";
+   public static final String HYPHEN_SPACE = " - ";
+   public static final String SINGLE_QUOTE = "'";
+   public static final String COMMA = ",";
+   
 
 }

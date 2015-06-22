@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasonstatus" elementFormDefault="unqualified"
+    attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:ss="http://www.ccighgo.com/seasonstatus">
+
+    <xsd:annotation>
+        <xsd:appinfo>
+            <jaxb:schemaBindings>
+                <jaxb:package name="com.ccighgo.service.transport.season.beans.seasonstatus" />
+            </jaxb:schemaBindings>
+        </xsd:appinfo>
+        <xsd:documentation></xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element name="SeasonStatuses" type="ss:SeasonStatuses"></xsd:element>
+
+    <xsd:complexType name="SeasonStatuses">
+        <xsd:sequence>
+            <xsd:element name="seasonStatuses" type="ss:SeasonStatus" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SeasonStatus">
+        <xsd:sequence>
+            <xsd:element name="seasonStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="seasonStatus" type="xsd:string" maxOccurs="1" minOccurs="1" />
+            <xsd:element name="active" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
+

@@ -2,7 +2,7 @@
 <project name="ServiceFrontBeans" basedir="." default="all">
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
-	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,SeasonHspF1Details" />
+	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,SeasonProgram,SeasonStatus,SeasonHspF1Details" />
 
 	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
 
@@ -135,17 +135,18 @@
 		</java>
 	</target>
 
-	
+
 	<!-- High school programs-->
-		<target name="HSP">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/HSP.xsd" />
-			</java>
-		</target>
+	<target name="HSP">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/HSP.xsd" />
+		</java>
+	</target>
 
 	<!-- Season List Object-->
+	
 		<target name="SeasonList">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
 				<arg value="-d" />
@@ -163,7 +164,10 @@
 			</java>
 		</target>
 	
-	
+
+	<!-- Default Role Permissions-->
+
+
 	<target name="DefaultRolePermissions">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
@@ -172,6 +176,24 @@
 		</java>
 	</target>
 
+	<!-- Season Program-->
 
+	<target name="SeasonProgram">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonProgram.xsd" />
+		</java>
+	</target>
+
+	<!--Season Status-->
+
+	<target name="SeasonStatus">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonStatus.xsd" />
+		</java>
+	</target>
 
 </project>
