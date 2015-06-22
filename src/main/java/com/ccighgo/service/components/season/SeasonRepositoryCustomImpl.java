@@ -23,7 +23,7 @@ public class SeasonRepositoryCustomImpl implements SeasonsRepositoryCustom{
 	EntityManager entityManager;
 	@Override
 	public String cloneSeason(String seasonId, String newSeasonName) {
-		String query = "call SPSeasonClone(?,?,?)";
+		String query = "call SPSeasonClone(?,?)";
 		Connection cc = ((SessionImpl) entityManager.getDelegate()).connection();
 		
 		 Query nq = entityManager.createNativeQuery(query);
@@ -33,5 +33,18 @@ public class SeasonRepositoryCustomImpl implements SeasonsRepositoryCustom{
 		 List<?> result =  entityManager.createNativeQuery(query).getResultList();
 		 return "";
 	}
-
+	
+  
+	
+	public List findSeasonByName(String name) {
+		List seasonsList = entityManager.createQuery(
+		    "SELECT c FROM Season c WHERE c.seasonName LIKE :custName").setParameter("custName", name).getResultList();
+		return seasonsList;
+	}
+//	public List findSeasonByDepartment(String departmentId){
+//		List seasonsList = entityManager.createQuery(
+//			    "SELECT c FROM Season c WHERE c.departmentId LIKE :departmentId").setParameter("departmentId", departmentId).getResultList();
+//		return seasonsList;
+//	}
+	
 }

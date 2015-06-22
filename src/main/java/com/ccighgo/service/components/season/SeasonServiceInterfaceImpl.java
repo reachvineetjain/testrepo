@@ -127,4 +127,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 		return null;
 	}
 
+	public void customService(String id) {
+		seasonRepositoryService.findSeasonByName("CAP-2010");
+//		seasonRepositoryService.findSeasonByDepartment("1");
+		System.out.println("Line for Debug");
+	}
+
 }

@@ -94,4 +94,13 @@ public class Seasons {
 		 return seasonServices.cloneSeason(id, newSeasonName);	
 	}
 
+	@GET
+	@Path("custom/{seasonName}/")
+	@Produces("application/json")
+	public String customService(@PathParam("seasonName") String id) {
+		LOGGER.debug("Calling clone Season'func:'");
+		seasonServices.customService(id);	
+		return "200: OK";
+	}
+	
 }
