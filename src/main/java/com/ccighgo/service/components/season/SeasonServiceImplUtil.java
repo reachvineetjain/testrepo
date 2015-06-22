@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Department;
@@ -209,7 +210,8 @@ public class SeasonServiceImplUtil {
 	
 	public SeasonStatuses getSeasonStatus(){
 	   SeasonStatuses seasonStatuses = null;
-	   List<SeasonStatus> seasonStatusDBList = seasonStatusRepository.findAll();
+	   Sort sort = new Sort(Sort.Direction.ASC, "status");
+	   List<SeasonStatus> seasonStatusDBList = seasonStatusRepository.findAll(sort);
 	   if(seasonStatusDBList!=null){
 	      seasonStatuses = new SeasonStatuses();
 	      List<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus> seasonStatusList = new ArrayList<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus>();
