@@ -40,7 +40,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       try {
          List<Season> allseasons = seasonRepository.findAll();
          SeasonsList seasonsList = new SeasonsList();
-         if (allseasons != null) {
+         if (allseasons != null && !(allseasons.isEmpty())) {
             seasonsList.setRecordCount(allseasons.size());
             for (int i = 0; i < allseasons.size(); i++) {
                SeasonListObject seasonBean = new SeasonListObject();

@@ -29,15 +29,45 @@ public class CCIUtils {
     * @param param
     * @return string
     */
-   public static String parseParameter(List<?> ls, String param){
-      if(ls!=null){
-         StringBuffer sb = new StringBuffer();
-         sb.append(CCIConstants.SINGLE_QUOTE);
-         sb.append(StringUtils.join(ls,CCIConstants.COMMA));
-         sb.append(CCIConstants.SINGLE_QUOTE);
-         param = sb.toString();
+   public static String parseParameter(List<Integer> ls, String param){
+      if(ls!=null && !(ls.isEmpty())){
+         //to check if list is initialized by default and has 0 at first position
+         if(!(ls.get(0)==0)){
+            StringBuffer sb = new StringBuffer();
+            sb.append(CCIConstants.SINGLE_QUOTE);
+            sb.append(StringUtils.join(ls,CCIConstants.COMMA));
+            sb.append(CCIConstants.SINGLE_QUOTE);
+            param = sb.toString();
+         }
       }
       return param;
+   }
+   
+   public static String getActiveValue(Boolean b){
+      String returnVal = null;
+      StringBuffer sb = null;
+      if(b!=null && b.equals(Boolean.TRUE)){
+          sb = new StringBuffer();
+         sb.append(CCIConstants.SINGLE_QUOTE);
+         sb.append(String.valueOf(CCIConstants.ACTIVE));
+         sb.append(CCIConstants.SINGLE_QUOTE);
+         returnVal = sb.toString();
+      }
+      else if(b!=null && b.equals(Boolean.FALSE)){
+         sb = new StringBuffer();
+         sb.append(CCIConstants.SINGLE_QUOTE);
+         sb.append(String.valueOf(CCIConstants.INACTIVE));
+         sb.append(CCIConstants.SINGLE_QUOTE);
+         returnVal = sb.toString();
+      }
+      else{
+         sb = new StringBuffer();
+         sb.append(CCIConstants.SINGLE_QUOTE);
+         sb.append(String.valueOf(CCIConstants.INACTIVE)+CCIConstants.COMMA+String.valueOf(CCIConstants.ACTIVE));
+         sb.append(CCIConstants.SINGLE_QUOTE);
+         returnVal = sb.toString();
+      }
+      return returnVal;
    }
 
 }

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
 import com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission;
@@ -240,9 +241,10 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Override
    public CCIUsers searchUsers(UserSearch userSearch) {
       CCIUsers cciUsersFront = null;
-      List<Object[]> results = null;
+      List<Object> results = null;
       Query query = entityManager.createNativeQuery(SP_USER_SEARCH);
       Integer cciUserId = null;
+      Integer countryId = null;
       String firstName = null;
       String lastName = null;
       String loginName = null;
@@ -250,25 +252,32 @@ public class UserManagementServiceImpl implements UserManagementService {
       String roles = null;
       String departments = null;
       String programs = null;
-      if (userSearch.getCciUserId() != null && !(userSearch.getCciUserId().equals(CCIConstants.EMPTY_DATA))) {
+      if (userSearch.getCciUserId() != null && !(userSearch.getCciUserId().equals(CCIConstants.EMPTY_DATA)) && userSearch.getCciUserId()>0) {
          cciUserId = Integer.valueOf(userSearch.getCciUserId());
       }
+      if (userSearch.getCountry() != null && !(userSearch.getCountry().equals(CCIConstants.EMPTY_DATA))&& userSearch.getCountry()>0) {
+         countryId = Integer.valueOf(userSearch.getCountry());
+      }
+      //1.CCIUserId, 2.FirstName, 3.LastName, 4.LoginName, 5.CountryId, 6.email, 7.user roles, 8.departments, 9.programs, 10. active, inactive
       query.setParameter(1, cciUserId);
       query.setParameter(2, CCIUtils.nullCheck(firstName, userSearch.getFirstName()));
       query.setParameter(3, CCIUtils.nullCheck(lastName, userSearch.getLastName()));
       query.setParameter(4, CCIUtils.nullCheck(loginName, userSearch.getLoginName()));
-      query.setParameter(5, Integer.valueOf(userSearch.getCountry()));
+      query.setParameter(5, countryId);
       query.setParameter(6, CCIUtils.nullCheck(email, userSearch.getEmail()));
       query.setParameter(7, CCIUtils.parseParameter(userSearch.getUserRole(), roles));
       query.setParameter(8, CCIUtils.parseParameter(userSearch.getDepartment(), departments));
       query.setParameter(9, CCIUtils.parseParameter(userSearch.getProgram(), programs));
-      query.setParameter(10, CCIConstants.ACTIVE_SEARCH);
+      query.setParameter(10, CCIUtils.getActiveValue(userSearch.isActive()));
       results = query.getResultList();
       if (results != null) {
          cciUsersFront = new CCIUsers();
          List<CCIUser> cciUserList = new ArrayList<CCIUser>();
-         List<Integer> idList = null;// you will get list of cciuser ids in results, set it in list list and pass that
-                                     // list in below repository call
+         List<Integer> idList = new ArrayList<Integer>();
+         for(Object object:results){
+            Integer id = Integer.valueOf(object.toString());
+            idList.add(id);
+         }
          List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
          for (CCIStaffUser cUser : cciUserDBList) {
             CCIUser cciUser = getUserDetails(cUser);
