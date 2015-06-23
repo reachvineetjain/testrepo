@@ -15,7 +15,7 @@
    <tx:annotation-driven transaction-manager="transactionManager" />
 
    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-      <property name="persistenceUnitName" value="cci_gh_go_current" />
+      <property name="persistenceUnitName" value="cci_gh_go" />
       <property name="jpaVendorAdapter">
          <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
             <property name="generateDdl" value="false" />
