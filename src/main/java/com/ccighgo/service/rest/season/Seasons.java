@@ -214,4 +214,46 @@ public class Seasons {
    }
    
   // HSP J1HS update services
+   
+   @POST
+   @Path("j1hs/details/update")
+   @Consumes("application/json")
+   public SeasonHspJ1HSDetails updateJ1Details(SeasonHspJ1HSDetails seasonHspJ1HSDetails) {
+      return seasonServices.updateHSPJ1HSSeasonDetails(seasonHspJ1HSDetails);
+   }
+
+   @POST
+   @Path("j1hs/base/update")
+   @Consumes("application/json")
+   public J1HSBasicDetail updateJ1NameAndStatus(J1HSBasicDetail j1hsBasicDetail) {
+      return seasonServices.updateHSPJ1HSSeasonNameAndStatus(j1hsBasicDetail);
+   }
+
+   @POST
+   @Path("j1hs/jan/update")
+   @Consumes("application/json")
+   public J1HSJanStart updateJ1JanStartDetails(J1HSJanStart j1hsJanStart) {
+      return seasonServices.updateHSPJ1HSSeasonJanStartDetails(j1hsJanStart);
+   }
+
+   @POST
+   @Path("j1hs/aug/update")
+   @Consumes("application/json")
+   public J1HSAugStart updateJ1AugStartDetails(J1HSAugStart j1hsAugStart) {
+      return seasonServices.updateHSPJ1HSSeasonAugStartDetails(j1hsAugStart);
+   }
+
+   @POST
+   @Path("j1hs/field/settings/update")
+   @Consumes("application/json")
+   public J1HSFieldSettings updateJ1FieldSettings(J1HSFieldSettings j1hsFieldSettings) {
+      return seasonServices.updateHSPJ1HSSeasonFieldSettings(j1hsFieldSettings);
+   }
+
+   @POST
+   @Path("j1hs/program/update/llocation")
+   @Consumes("application/json")
+   public J1HSProgramAllocations updateJ1ProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations) {
+      return seasonServices.updateHSPJ1HSSeasonProgramAllocation(j1hsProgramAllocations);
+   }
 }
