@@ -15,7 +15,7 @@ import com.ccighgo.db.entities.SeasonJ1Detail;
 @Repository
 public interface SeasonJ1DetailsRepository extends JpaRepository<SeasonJ1Detail, Integer> {
 
-   @Query("SELECT s FROM SeasonJ1Detail s WHERE s.season = ?1 ")
-   public SeasonJ1Detail findJ1DetailsBySeasonId(Season seasonId);
+   @Query("SELECT s FROM SeasonJ1Detail s WHERE s.season.seasonId = ?1 ")
+   public SeasonJ1Detail findJ1DetailsBySeasonId(Integer seasonId);
    
 }

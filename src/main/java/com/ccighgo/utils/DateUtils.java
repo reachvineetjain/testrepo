@@ -35,11 +35,34 @@ public class DateUtils {
       return date;
    }
 
+   /**
+    * Method takes input as date and converts into String date in MM-DD-YY format
+    * 
+    * @param inputDate
+    * @return
+    */
    public static String getMMddyyDate(Date inputDate) {
       String date = null;
       try {
          date = DateFormatUtils.format(inputDate, CCIConstants.MM_DD_YY);
       } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return date;
+   }
+   
+   /**
+    * Method takes string date as input and returns date object
+    * 
+    * @param inputString
+    * @return
+    */
+   public static Date getMMddyyDateFromString(String inputString){
+      Date date = null;
+      DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY);
+      try {
+         date = format.parse(inputString);
+      } catch (ParseException e) {
          ExceptionUtil.logException(e, logger);
       }
       return date;
