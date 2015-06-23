@@ -369,4 +369,40 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       System.out.println("Line for Debug");
    }
 
+   @Override
+   public SeasonHspJ1HSDetails updateHSPJ1HSSeasonDetails(SeasonHspJ1HSDetails seasonHspJ1HSDetails) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public J1HSBasicDetail updateHSPJ1HSSeasonNameAndStatus(J1HSBasicDetail j1hsBasicDetail) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public J1HSJanStart updateHSPJ1HSSeasonJanStartDetails(J1HSJanStart j1hsJanStart) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public J1HSAugStart updateHSPJ1HSSeasonAugStartDetails(J1HSAugStart j1hsAugStart) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public J1HSFieldSettings updateHSPJ1HSSeasonFieldSettings(J1HSFieldSettings j1hsFieldSettings) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public J1HSProgramAllocations updateHSPJ1HSSeasonProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
 }
