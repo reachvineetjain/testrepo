@@ -16,6 +16,7 @@ public class CCIConstants {
     public static final String FAILURE = "Failure";
     
     //date utility constants
+    public static final String MM_DD_YY = "MM-dd-yy";
     public static final String MM_dd_yyy = "MM-dd-yyyy";
     
     public static final String ALPHABETS_UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

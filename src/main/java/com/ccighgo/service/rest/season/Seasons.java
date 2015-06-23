@@ -116,8 +116,156 @@ public class Seasons {
    public SeasonStatuses getSeasonStatus() {
       return seasonServices.getSeasonStatus();
    }
+
+   // HSP J1HS view services
+
+   @GET
+   @Path("j1hs/details/view/{seasonId}")
+   @Produces("application/json")
+   public SeasonHspJ1HSDetails getJ1Details(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/base/view/{seasonId}")
+   @Produces("application/json")
+   public J1HSBasicDetail getJ1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/jan/view/{seasonId}")
+   @Produces("application/json")
+   public J1HSJanStart getJ1JanStartDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/aug/view/{seasonId}")
+   @Produces("application/json")
+   public J1HSAugStart getJ1AugStartDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/field/view/{seasonId}/settings")
+   @Produces("application/json")
+   public J1HSFieldSettings getJ1FieldSettings(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/program/view/{seasonId}/allocation")
+   @Produces("application/json")
+   public J1HSProgramAllocations getJ1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
+   }
+
+   @GET
+   @Path("clone/{id}/{newSeasonName}/")
+   @Produces("application/json")
+   public String cloneSeason(@PathParam("id") String id, @PathParam("newSeasonName") String newSeasonName) {
+      LOGGER.debug("Calling clone Season'func:cloneSeason'");
+      return seasonServices.cloneSeason(id, newSeasonName);
+   }
+
+   @GET
+   @Path("custom/{seasonName}/")
+   @Produces("application/json")
+   public String customService(@PathParam("seasonName") String id) {
+      LOGGER.debug("Calling clone Season'func:'");
+      seasonServices.customService(id);
+      return "200: OK";
+   }
+
+   // HSP J1HS edit services
+
+   @GET
+   @Path("j1hs/details/edit/{seasonId}")
+   @Produces("application/json")
+   public SeasonHspJ1HSDetails editJ1Details(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/base/edit/{seasonId}")
+   @Produces("application/json")
+   public J1HSBasicDetail editJ1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/jan/edit/{seasonId}")
+   @Produces("application/json")
+   public J1HSJanStart editJ1JanStartDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/aug/edit/{seasonId}")
+   @Produces("application/json")
+   public J1HSAugStart editJ1AugStartDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/field/edit/{seasonId}/settings")
+   @Produces("application/json")
+   public J1HSFieldSettings editJ1FieldSettings(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
+   }
+
+   @GET
+   @Path("j1hs/program/edit/{seasonId}/allocation")
+   @Produces("application/json")
+   public J1HSProgramAllocations editJ1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
+   }
    
-   // HSP F1 services
+  // HSP J1HS update services
+   
+   @POST
+   @Path("j1hs/details/update")
+   @Consumes("application/json")
+   public SeasonHspJ1HSDetails updateJ1Details(SeasonHspJ1HSDetails seasonHspJ1HSDetails) {
+      return seasonServices.updateHSPJ1HSSeasonDetails(seasonHspJ1HSDetails);
+   }
+
+   @POST
+   @Path("j1hs/base/update")
+   @Consumes("application/json")
+   public J1HSBasicDetail updateJ1NameAndStatus(J1HSBasicDetail j1hsBasicDetail) {
+      return seasonServices.updateHSPJ1HSSeasonNameAndStatus(j1hsBasicDetail);
+   }
+
+   @POST
+   @Path("j1hs/jan/update")
+   @Consumes("application/json")
+   public J1HSJanStart updateJ1JanStartDetails(J1HSJanStart j1hsJanStart) {
+      return seasonServices.updateHSPJ1HSSeasonJanStartDetails(j1hsJanStart);
+   }
+
+   @POST
+   @Path("j1hs/aug/update")
+   @Consumes("application/json")
+   public J1HSAugStart updateJ1AugStartDetails(J1HSAugStart j1hsAugStart) {
+      return seasonServices.updateHSPJ1HSSeasonAugStartDetails(j1hsAugStart);
+   }
+
+   @POST
+   @Path("j1hs/field/settings/update")
+   @Consumes("application/json")
+   public J1HSFieldSettings updateJ1FieldSettings(J1HSFieldSettings j1hsFieldSettings) {
+      return seasonServices.updateHSPJ1HSSeasonFieldSettings(j1hsFieldSettings);
+   }
+
+   @POST
+   @Path("j1hs/program/update/llocation")
+   @Consumes("application/json")
+   public J1HSProgramAllocations updateJ1ProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations) {
+      return seasonServices.updateHSPJ1HSSeasonProgramAllocation(j1hsProgramAllocations);
+   }
+// HSP F1 services
    /**
     * view - Edit- update
     */
@@ -315,65 +463,4 @@ public class Seasons {
    
 // End of HSP F1 services
    
- //HSP J1HS services
-   
-   @GET
-   @Path("j1hs/details/{seasonId}")
-   @Produces("application/json")
-   public SeasonHspJ1HSDetails getJ1Details(@PathParam("seasonId") String seasonId){
-      return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
-   }
-   
-   @GET
-   @Path("j1hs/details/{seasonId}")
-   @Produces("application/json")
-   public J1HSBasicDetail getJ1NameAndStatus(@PathParam("seasonId") String seasonId){
-      return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
-   }
-   
-   
-   @GET
-   @Path("j1hs/details/{seasonId}")
-   @Produces("application/json")
-   public J1HSJanStart getJ1JanStartDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
-   }
-   
-   @GET
-   @Path("j1hs/details/{seasonId}")
-   @Produces("application/json")
-   public J1HSAugStart getJ1AugStartDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
-   }
-   
-   @GET
-   @Path("j1hs/details/{seasonId}")
-   @Produces("application/json")
-   public J1HSFieldSettings getJ1FieldSettings(@PathParam("seasonId") String seasonId){
-      return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
-   }
-   
-   @GET
-   @Path("j1hs/details/{seasonId}")
-   @Produces("application/json")
-   public J1HSProgramAllocations getJ1ProgramAllocation(@PathParam("seasonId") String seasonId){
-      return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
-   }
-   
-	@GET
-	@Path("clone/{id}/{newSeasonName}/")
-	@Produces("application/json")
-	public String cloneSeason(@PathParam("id") String id,@PathParam("newSeasonName") String newSeasonName) {
-		LOGGER.debug("Calling clone Season'func:cloneSeason'");
-		 return seasonServices.cloneSeason(id, newSeasonName);	
-	}
-
-	@GET
-	@Path("custom/{seasonName}/")
-	@Produces("application/json")
-	public String customService(@PathParam("seasonName") String id) {
-		LOGGER.debug("Calling clone Season'func:'");
-		seasonServices.customService(id);	
-		return "200: OK";
-	}
 }
