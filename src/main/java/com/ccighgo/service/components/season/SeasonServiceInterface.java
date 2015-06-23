@@ -39,7 +39,8 @@ public interface SeasonServiceInterface {
     * @return SeasonStatuses
     */
    public SeasonStatuses getSeasonStatus();
-   
+public String cloneSeason(String seasonId, String newSeasonName);
+ 
    //HSP J1HS Season methods
    
    /**

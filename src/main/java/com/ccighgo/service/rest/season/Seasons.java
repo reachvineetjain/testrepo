@@ -153,4 +153,20 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
    }
 
+	@GET
+	@Path("clone/{id}/{newSeasonName}/")
+	@Produces("application/json")
+	public String cloneSeason(@PathParam("id") String id,@PathParam("newSeasonName") String newSeasonName) {
+		LOGGER.debug("Calling clone Season'func:cloneSeason'");
+		 return seasonServices.cloneSeason(id, newSeasonName);	
+	}
+
+	@GET
+	@Path("custom/{seasonName}/")
+	@Produces("application/json")
+	public String customService(@PathParam("seasonName") String id) {
+		LOGGER.debug("Calling clone Season'func:'");
+		seasonServices.customService(id);	
+		return "200: OK";
+	}
 }

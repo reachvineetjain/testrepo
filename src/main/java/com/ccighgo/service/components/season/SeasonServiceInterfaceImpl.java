@@ -3,7 +3,6 @@ package com.ccighgo.service.components.season;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
-import com.ccighgo.service.transport.utility.beans.department.Department;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -41,17 +39,18 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonRepository seasonRepository;
    @Autowired
    SeasonServiceImplUtil seasonServiceImplUtil;
-   
-   @Autowired SeasonJ1DetailsRepository seasonJ1DetailsRepository;
+   @Autowired
+   SeasonRepositoryCustomImpl seasonRepositoryService;
+   @Autowired
+   SeasonJ1DetailsRepository seasonJ1DetailsRepository;
 
    SeasonServiceInterfaceImpl() {
    }
 
-
    @Override
    public SeasonsList getAllSeasons() {
       try {
-         List<Season> allseasons = seasonRepository.findAll();
+         List<Season> allseasons = seasonRepository.getAllSeasons();
          SeasonsList seasonsList = new SeasonsList();
          if (allseasons != null && !(allseasons.isEmpty())) {
             seasonsList.setRecordCount(allseasons.size());
@@ -74,7 +73,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       try {
          Season seasonEntity = new Season();
          seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
-         seasonRepository.saveAndFlush(seasonEntity);
+         seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
          seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
          return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
@@ -87,7 +86,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public String deleteSeason(String id) {
       Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
       if (seasonEntity != null) {
-         //seasonEntity.setActive(CCIConstants.INACTIVE);
+         // seasonEntity.setActive(CCIConstants.INACTIVE);
          seasonRepository.saveAndFlush(seasonEntity);
          return "Season Deactivated";
       }
@@ -150,26 +149,24 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return seasonProgram;
    }
 
-
    public SeasonStatuses getSeasonStatus() {
       SeasonStatuses seasonStatuses = null;
-      try{
+      try {
          LOGGER.info("SeasonStatus: fetch");
          seasonStatuses = seasonServiceImplUtil.getSeasonStatus();
-      }catch(CcighgoException e){
+      } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return seasonStatuses;
    }
 
-
    public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonId) {
       SeasonHspJ1HSDetails seasonHspJ1HSDetails = null;
-      
-      try{
+
+      try {
          Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(season);
-         if(seasonJ1Detail!=null){
+         if (seasonJ1Detail != null) {
             seasonHspJ1HSDetails = new SeasonHspJ1HSDetails();
             seasonHspJ1HSDetails.setSeasonId(season.getSeasonId());
             seasonHspJ1HSDetails.setJ1HsBasicDetail(getJ1HSBasicDetail(seasonJ1Detail));
@@ -177,29 +174,27 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             seasonHspJ1HSDetails.setJ1HsAugStart(getJ1HSAugStart(seasonJ1Detail));
             seasonHspJ1HSDetails.setJ1HsFieldSettings(getJ1HSFieldSettings(seasonJ1Detail));
             seasonHspJ1HSDetails.setJ1HsProgramAllocations(null);
-            //TODO add document and notes
+            // TODO add document and notes
          }
-      }catch(CcighgoException e){
+      } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return seasonHspJ1HSDetails;
    }
 
-
    public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonId) {
       J1HSBasicDetail j1hsBasicDetail = null;
-      try{
+      try {
          Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(season);
-         if(seasonJ1Detail!=null){
+         if (seasonJ1Detail != null) {
             j1hsBasicDetail = getJ1HSBasicDetail(seasonJ1Detail);
          }
-      }catch(CcighgoException e){
+      } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return j1hsBasicDetail;
    }
-
 
    /**
     * @param seasonJ1Detail
@@ -214,7 +209,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsBasicDetail;
    }
 
-
    public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonId) {
       J1HSJanStart j1hsJanStart = null;
       try {
@@ -228,7 +222,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       }
       return j1hsJanStart;
    }
-
 
    /**
     * @param seasonJ1Detail
@@ -252,7 +245,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsJanStart;
    }
 
-
    public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonId) {
       J1HSAugStart j1hsAugStart = null;
       try {
@@ -267,7 +259,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsAugStart;
    }
 
-
    /**
     * @param seasonJ1Detail
     * @return
@@ -281,14 +272,13 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       j1hsAugStart.setAugFirstSemApplDeadlineDate(DateUtils.getMMddyyDate(seasonJ1Detail.getFirstSemAppDeadlineDate()));
       j1hsAugStart.setAugFirstSemEarliestBirthDate(DateUtils.getMMddyyDate(seasonJ1Detail.getFirstSemEarliestBirthDate()));
       j1hsAugStart.setAugFirstSemLatestDate(DateUtils.getMMddyyDate(seasonJ1Detail.getFirstSemLatestBirthDate()));
-      j1hsAugStart.setShowAugFirstSemToNewHF(seasonJ1Detail.getShowFirstSemToNewHF()==CCIConstants.ACTIVE ? true : false);
+      j1hsAugStart.setShowAugFirstSemToNewHF(seasonJ1Detail.getShowFirstSemToNewHF() == CCIConstants.ACTIVE ? true : false);
       j1hsAugStart.setAugFullYrStartDate(DateUtils.getMMddyyDate(seasonJ1Detail.getAugFullYearStartDate()));
       j1hsAugStart.setAugFullYrEndDate(DateUtils.getMMddyyDate(seasonJ1Detail.getAugFullYearEndDate()));
       j1hsAugStart.setAugFulllYrApplDeadlineDate(DateUtils.getMMddyyDate(seasonJ1Detail.getAugFullYearAppDeadlineDate()));
-      j1hsAugStart.setShowAugFullYrToNewHF(seasonJ1Detail.getShowAugFullYearToNewHF()==CCIConstants.ACTIVE ? true : false);
+      j1hsAugStart.setShowAugFullYrToNewHF(seasonJ1Detail.getShowAugFullYearToNewHF() == CCIConstants.ACTIVE ? true : false);
       return j1hsAugStart;
    }
-
 
    public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonId) {
       J1HSFieldSettings j1hsFieldSettings = null;
@@ -304,7 +294,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsFieldSettings;
    }
 
-
    /**
     * @param seasonJ1Detail
     * @return
@@ -313,47 +302,71 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       J1HSFieldSettings j1hsFieldSettings;
       j1hsFieldSettings = new J1HSFieldSettings();
       j1hsFieldSettings.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
-      j1hsFieldSettings.setShowSeasProgToCurrentHF(seasonJ1Detail.getShowSeasonToCurrentHF()==CCIConstants.ACTIVE ? true : false);
+      j1hsFieldSettings.setShowSeasProgToCurrentHF(seasonJ1Detail.getShowSeasonToCurrentHF() == CCIConstants.ACTIVE ? true : false);
       j1hsFieldSettings.setFsHoldDayLength(String.valueOf(seasonJ1Detail.getFieldStaffHoldLength()));
       j1hsFieldSettings.setHoldExpirationWarning(String.valueOf(seasonJ1Detail.getHoursBeforeHoldExpirationWarning()));
       j1hsFieldSettings.setDefaultLCPaymentSchedule(String.valueOf(seasonJ1Detail.getLcPaymentScheduleId()));
       j1hsFieldSettings.setFsAgreement("//TODO fs agreement is missing only id is present leaving it as it is");
       j1hsFieldSettings.setHfReferences(String.valueOf(seasonJ1Detail.getHfReferences()));
       j1hsFieldSettings.setAddStartHFInquiriesDate(DateUtils.getMMddyyDate(seasonJ1Detail.getHfInquiryDate()));
-      j1hsFieldSettings.setShowWelcomeFamilyModal(seasonJ1Detail.getShowWelcomeFamily()==CCIConstants.ACTIVE ? true : false);
-      j1hsFieldSettings.setShowAllGuranteedParticipantsToFS(seasonJ1Detail.getShowGuaranteed()==CCIConstants.ACTIVE ? true : false);
-      j1hsFieldSettings.setShowAllUnGuranteedParticipantsToFS(seasonJ1Detail.getShowUnguaranteed()==CCIConstants.ACTIVE ? true : false);
-      j1hsFieldSettings.setShowSpecialRequestStudentsToRD(seasonJ1Detail.getShowSpecialRequestStudent()==CCIConstants.ACTIVE ? true : false);
+      j1hsFieldSettings.setShowWelcomeFamilyModal(seasonJ1Detail.getShowWelcomeFamily() == CCIConstants.ACTIVE ? true : false);
+      j1hsFieldSettings.setShowAllGuranteedParticipantsToFS(seasonJ1Detail.getShowGuaranteed() == CCIConstants.ACTIVE ? true : false);
+      j1hsFieldSettings.setShowAllUnGuranteedParticipantsToFS(seasonJ1Detail.getShowUnguaranteed() == CCIConstants.ACTIVE ? true : false);
+      j1hsFieldSettings.setShowSpecialRequestStudentsToRD(seasonJ1Detail.getShowSpecialRequestStudent() == CCIConstants.ACTIVE ? true : false);
       return j1hsFieldSettings;
    }
 
-
    public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonId) {
       J1HSProgramAllocations j1hsProgramAllocations = null;
-      
+
       try {
          Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(season);
          if (seasonJ1Detail != null) {
             j1hsProgramAllocations = new J1HSProgramAllocations();
-            //TODO iterate allocations once the accurate values are populated
-            /*j1hsFieldSettings.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
-            j1hsFieldSettings.setShowSeasProgToCurrentHF(seasonJ1Detail.getShowSeasonToCurrentHF()==CCIConstants.ACTIVE ? true : false);
-            j1hsFieldSettings.setFsHoldDayLength(String.valueOf(seasonJ1Detail.getFieldStaffHoldLength()));
-            j1hsFieldSettings.setHoldExpirationWarning(String.valueOf(seasonJ1Detail.getHoursBeforeHoldExpirationWarning()));
-            j1hsFieldSettings.setDefaultLCPaymentSchedule(String.valueOf(seasonJ1Detail.getLcPaymentScheduleId()));
-            j1hsFieldSettings.setFsAgreement("//TODO fs agreement is missing only id is present leaving it as it is");
-            j1hsFieldSettings.setHfReferences(String.valueOf(seasonJ1Detail.getHfReferences()));
-            j1hsFieldSettings.setAddStartHFInquiriesDate(DateUtils.getMMddyyDate(seasonJ1Detail.getHfInquiryDate()));
-            j1hsFieldSettings.setShowWelcomeFamilyModal(seasonJ1Detail.getShowWelcomeFamily()==CCIConstants.ACTIVE ? true : false);
-            j1hsFieldSettings.setShowAllGuranteedParticipantsToFS(seasonJ1Detail.getShowGuaranteed()==CCIConstants.ACTIVE ? true : false);
-            j1hsFieldSettings.setShowAllUnGuranteedParticipantsToFS(seasonJ1Detail.getShowUnguaranteed()==CCIConstants.ACTIVE ? true : false);
-            j1hsFieldSettings.setShowSpecialRequestStudentsToRD(seasonJ1Detail.getShowSpecialRequestStudent()==CCIConstants.ACTIVE ? true : false);*/
+            // TODO iterate allocations once the accurate values are populated
+            /*
+             * j1hsFieldSettings.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
+             * j1hsFieldSettings.setShowSeasProgToCurrentHF
+             * (seasonJ1Detail.getShowSeasonToCurrentHF()==CCIConstants.ACTIVE ? true : false);
+             * j1hsFieldSettings.setFsHoldDayLength(String.valueOf(seasonJ1Detail.getFieldStaffHoldLength()));
+             * j1hsFieldSettings
+             * .setHoldExpirationWarning(String.valueOf(seasonJ1Detail.getHoursBeforeHoldExpirationWarning()));
+             * j1hsFieldSettings.setDefaultLCPaymentSchedule(String.valueOf(seasonJ1Detail.getLcPaymentScheduleId()));
+             * j1hsFieldSettings
+             * .setFsAgreement("//TODO fs agreement is missing only id is present leaving it as it is");
+             * j1hsFieldSettings.setHfReferences(String.valueOf(seasonJ1Detail.getHfReferences()));
+             * j1hsFieldSettings.setAddStartHFInquiriesDate(DateUtils.getMMddyyDate(seasonJ1Detail.getHfInquiryDate()));
+             * j1hsFieldSettings.setShowWelcomeFamilyModal(seasonJ1Detail.getShowWelcomeFamily()==CCIConstants.ACTIVE ?
+             * true : false);
+             * j1hsFieldSettings.setShowAllGuranteedParticipantsToFS(seasonJ1Detail.getShowGuaranteed()==CCIConstants
+             * .ACTIVE ? true : false);
+             * j1hsFieldSettings.setShowAllUnGuranteedParticipantsToFS(seasonJ1Detail.getShowUnguaranteed
+             * ()==CCIConstants.ACTIVE ? true : false);
+             * j1hsFieldSettings.setShowSpecialRequestStudentsToRD(seasonJ1Detail
+             * .getShowSpecialRequestStudent()==CCIConstants.ACTIVE ? true : false);
+             */
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return j1hsProgramAllocations;
+   }
+
+   @Override
+   public String cloneSeason(String id, String newSeasonName) {
+      try {
+         return seasonRepositoryService.cloneSeason(id, newSeasonName);
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return null;
+   }
+
+   public void customService(String id) {
+      seasonRepositoryService.findSeasonByName("CAP-2010");
+      // seasonRepositoryService.findSeasonByDepartment("1");
+      System.out.println("Line for Debug");
    }
 
 }
