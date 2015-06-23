@@ -20,7 +20,6 @@
          <xsd:element name="j1hsJanStart" type="j1hs:J1HSJanStart" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsAugStart" type="j1hs:J1HSAugStart" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsFieldSettings" type="j1hs:J1HSFieldSettings" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="j1hsAccounting" type="j1hs:J1HSAccounting" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsProgramAllocations" type="j1hs:J1HSProgramAllocations" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsDocuments" type="j1hs:J1HSDocuments" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="j1hsNotes" type="j1hs:J1HSNotes" minOccurs="0" maxOccurs="unbounded" />
@@ -47,7 +46,7 @@
          <xsd:element name="ativateJanFullYearProgram" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="janFullYrStartDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="janFullYrEndDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="janFulllYrApplDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="janFullYrApplDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="showJanFullYrToNewHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
@@ -73,20 +72,16 @@
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="showSeasProgToCurrentHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="fsHoldDayLength" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="holdExpirationWarning" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="defaultLCPaymentSchedule" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="fsAgreement" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="hfReferences" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="startHFInquiriesOn" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="showWelcomeModalSubmitPlacement" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="allowFSToRolloverToNewSeasonBasedOnRole" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="showSpecialRequestStuddentToRD" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="J1HSAccounting">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="greenheartMargin" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="addStartHFInquiriesDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="showWelcomeFamilyModal" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="showAllGuranteedParticipantsToFS" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="showAllUnGuranteedParticipantsToFS" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="showSpecialRequestStudentsToRD" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
