@@ -18,22 +18,30 @@ public class DateUtils {
    private static final String MM_dd_yy = "MM-dd-yy";
    private static Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
-   public static String getMMddYyyyString(Date inputDate) {
-      SimpleDateFormat sdf = new SimpleDateFormat(MM_dd_yyy);
-      String date = sdf.format(inputDate);
-      return date;
+   public static String getMMddYyyyString(Date inputDate){
+       SimpleDateFormat sdf = new SimpleDateFormat(MM_dd_yyy);
+       String date = null;
+       if(inputDate!=null)
+       	try {
+       		date =sdf.format(inputDate);
+	    	} catch (Exception e) {
+				ExceptionUtil.logException(e, logger );
+			}
+       return date;
    }
 
-   public static Date getDateFromString(String endDate) {
-      DateFormat format = new SimpleDateFormat(MM_dd_yyy, Locale.US);
-      Date date = null;
-      try {
-         date = format.parse(endDate);
-      } catch (ParseException e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      return date;
-   }
+	public static Date getDateFromString(String endDate) {
+		DateFormat format = new SimpleDateFormat(MM_dd_yyy, Locale.US);
+		Date date = null;
+		if(endDate!=null)
+		try {
+			date = format.parse(endDate);
+		} catch (ParseException e) {
+			ExceptionUtil.logException(e, logger );
+		}
+		return date;
+	}
+	
 
    /**
     * Method takes input as date and converts into String date in MM-DD-YY format

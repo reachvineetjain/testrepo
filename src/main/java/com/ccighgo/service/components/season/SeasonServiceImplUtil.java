@@ -6,6 +6,7 @@ package com.ccighgo.service.components.season;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -14,18 +15,31 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
+import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
+import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStart1StSemesterDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStartFullYearDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1BasicDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1FieldSettings;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1JanuaryStart2NdSemesterDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1JanuaryStartFullYearDetail;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1ProgramAllocationDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1ProgramAllocations;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.SeasonHSPF1Details;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.DepartmentObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramOptions;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.ValidationUtils;
 
 /**
@@ -41,7 +55,9 @@ public class SeasonServiceImplUtil {
 	DepartmentRepository departmentRepository;
 	@Autowired
 	SeasonHSPConfigurationRepsitory seasonHSPConfigurationRepsitory;
-	
+	@Autowired
+	SeasonF1DetailsRepository seasonF1DetailsRepository;
+	private Logger logger;
 	
 	/**
 	 * @param seasonBean
@@ -225,5 +241,289 @@ public class SeasonServiceImplUtil {
 	      seasonStatuses.getSeasonStatuses().addAll(seasonStatusList);
 	   }
       return seasonStatuses;
+	}
+
+	public HSPF1BasicDetails getHSPF1NameAndStatus(
+			SeasonF1Detail allF1Details , String seasonId) {
+		HSPF1BasicDetails hspf1BasicDetails=null ;
+		if(allF1Details!=null){
+			hspf1BasicDetails=new HSPF1BasicDetails();
+			hspf1BasicDetails.setSeasonId(Integer.parseInt(seasonId));
+			hspf1BasicDetails.setProgramName(allF1Details.getProgramName());
+			hspf1BasicDetails.setProgramStatus(allF1Details.getSeasonStatus().getStatus());
+		}
+		
+		return hspf1BasicDetails;
+	}
+
+	public HSPF1Accounting getHSPF1Accounting(SeasonF1Detail allF1Details,String seasonId) {
+		HSPF1Accounting hspf1Accounting = null;
+		if(allF1Details!=null ){
+			hspf1Accounting=new HSPF1Accounting();
+			hspf1Accounting.setSeasonId(Integer.parseInt(seasonId));
+			hspf1Accounting.setGreenHeartMargin(allF1Details.getGreenHeartMargin());
+		}
+		return hspf1Accounting;
+	}
+
+	public HSPF1JanuaryStart2NdSemesterDetails getHSPF1JanuaryStart2NdSemesterDetails(
+			SeasonF1Detail allF1Details, String seasonId) {
+		HSPF1JanuaryStart2NdSemesterDetails hspf1JanuaryStart2NdSemesterDetails =null;
+		if(allF1Details!=null )
+		{
+			hspf1JanuaryStart2NdSemesterDetails = new HSPF1JanuaryStart2NdSemesterDetails();
+			hspf1JanuaryStart2NdSemesterDetails.setSeasonId(Integer.parseInt(seasonId));
+			hspf1JanuaryStart2NdSemesterDetails.setActivateFullYearProgram(allF1Details.getActiveFullYearJanProgram()!=0);
+			hspf1JanuaryStart2NdSemesterDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemAppDeadlineDate()));
+			hspf1JanuaryStart2NdSemesterDetails.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemStartDate()));
+			hspf1JanuaryStart2NdSemesterDetails.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemEndDate()));
+			hspf1JanuaryStart2NdSemesterDetails.setShow2NdSemestertoNewHF(allF1Details.getShowSecSemToNewHF()!=0);
+			hspf1JanuaryStart2NdSemesterDetails.setEarliestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemEarliestBirthDate()));
+			hspf1JanuaryStart2NdSemesterDetails.setLatestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemLatestBirthDate()));
+		}
+		return hspf1JanuaryStart2NdSemesterDetails;
+	}
+
+	public HSPF1AugustStartFullYearDetails getHSPF1AugustStartFullYearDetails(
+			SeasonF1Detail allF1Details, String seasonId) {
+		HSPF1AugustStartFullYearDetails hspAugustStartFullYearDetails =null;
+		if(allF1Details!=null ){
+			hspAugustStartFullYearDetails=new HSPF1AugustStartFullYearDetails();
+			hspAugustStartFullYearDetails.setSeasonId(Integer.parseInt(seasonId));
+			hspAugustStartFullYearDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearAppDeadlineDate()));
+			hspAugustStartFullYearDetails.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearEndDate()));
+			hspAugustStartFullYearDetails.setShowFullYearToNewHF(allF1Details.getShowAugFullYearToNewHF()!=0);
+			hspAugustStartFullYearDetails.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearStartDate()));
+		}
+		return hspAugustStartFullYearDetails;
+	}
+
+	public HSPF1AugustStart1StSemesterDetails getHSPF1AugustStart1StSemesterDetails(
+			SeasonF1Detail allF1Details, String seasonId) {
+		HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails=null;
+		if(allF1Details!=null ){
+			hspf1AugustStart1StSemesterDetails=new HSPF1AugustStart1StSemesterDetails();
+			hspf1AugustStart1StSemesterDetails.setSeasonId(Integer.parseInt(seasonId));
+			hspf1AugustStart1StSemesterDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemAppDeadlineDate()));
+			hspf1AugustStart1StSemesterDetails.setEarliestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemEarliestBirthDate()));
+			hspf1AugustStart1StSemesterDetails.setLatestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemLatestBirthDate()));
+			hspf1AugustStart1StSemesterDetails.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemStartDate()));
+			hspf1AugustStart1StSemesterDetails.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemEndDate()));
+		}
+		return hspf1AugustStart1StSemesterDetails;
+	}
+
+	public HSPF1FieldSettings getHSPF1FieldSettings(
+			SeasonF1Detail allF1Details, String seasonId) {
+		HSPF1FieldSettings hspf1FieldSettings =null;
+		if(allF1Details!=null ){
+			hspf1FieldSettings=new HSPF1FieldSettings();
+			hspf1FieldSettings.setSeasonId(Integer.parseInt(seasonId));		
+			hspf1FieldSettings.setAddOrStartHFInquiriesDate(DateUtils.getMMddYyyyString(allF1Details.getHfInquiryDate()));
+			hspf1FieldSettings.setAllowFSToStartRenewalProcess(allF1Details.getAllowFieldStaffToStartRenewalProcess()!=0);
+			hspf1FieldSettings.setDefaultLcPaymentSchedule(allF1Details.getLcPaymentScheduleId());
+			hspf1FieldSettings.setFsAgreement(allF1Details.getFsAgreementId());
+			hspf1FieldSettings.setHfReferencesNo(allF1Details.getHfReferences());
+			hspf1FieldSettings.setShowSeasonProgramToCurrentHF(allF1Details.getShowSeasonToCurrentHF()!=0);
+			hspf1FieldSettings.setShowSpecialRequestStudentToRD(allF1Details.getShowSpecialRequestStudent()!=0);
+			hspf1FieldSettings.setShowWelcomeFamilyModle(allF1Details.getShowWelcomeFamily()!=0);
+		}
+		return hspf1FieldSettings;
+	}
+
+	public HSPF1ProgramAllocations getHSPF1ProgramAllocations(
+			SeasonF1Detail allF1Details, String seasonId) {
+		HSPF1ProgramAllocations hspf1ProgramAllocations =new HSPF1ProgramAllocations();
+		hspf1ProgramAllocations.setSeasonId(Integer.parseInt(seasonId));
+		HSPF1ProgramAllocationDetails hspf1ProgramAllocationDetails =null;
+		if(allF1Details!=null ){
+			hspf1ProgramAllocationDetails =new HSPF1ProgramAllocationDetails();
+		}
+		// TODO not complete
+		hspf1ProgramAllocations.getProgramAllocationDetails().add(hspf1ProgramAllocationDetails);
+		return hspf1ProgramAllocations;
+	}
+
+	public HSPF1JanuaryStartFullYearDetail getHSPF1JanuaryStartFullYearDetails(
+			SeasonF1Detail allF1Details, String seasonId) {
+		HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail =null;
+		if(allF1Details!=null ){
+			hspf1JanuaryStartFullYearDetail =new HSPF1JanuaryStartFullYearDetail();
+			hspf1JanuaryStartFullYearDetail.setSeasonId(Integer.parseInt(seasonId));
+			hspf1JanuaryStartFullYearDetail.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearAppDeadlineDate()));
+			hspf1JanuaryStartFullYearDetail.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearEndDate()));
+			hspf1JanuaryStartFullYearDetail.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearStartDate()));
+			hspf1JanuaryStartFullYearDetail.setShowFullYearToHF(allF1Details.getShowJanFullYearToNewHF()!=0);
+		}
+		return hspf1JanuaryStartFullYearDetail;
+	}
+
+	public SeasonHSPF1Details updateF1Details(SeasonF1Detail allF1Details,
+			SeasonHSPF1Details seasonHSPF1Details) {
+		try{
+			allF1Details.setSeasonStatus(seasonStatusRepository.getSeasonStatusByName(seasonHSPF1Details.getDetails().getProgramStatus()));
+			allF1Details.setProgramName(seasonHSPF1Details.getDetails().getProgramName());
+			allF1Details.setGreenHeartMargin(seasonHSPF1Details.getAccounting().getGreenHeartMargin());
+			allF1Details.setActiveFullYearJanProgram((byte) (seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().isActivateFullYearProgram()?1:0));
+			 allF1Details.setShowSecSemToNewHF((byte) (seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().isShow2NdSemestertoNewHF()?1:0));
+			 allF1Details.setSecondSemAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getApplicationDeadlineDate()));
+			 allF1Details.setSecondSemEarliestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getEarliestBirthDate()));
+			 allF1Details.setSecondSemEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getEndDate()));
+			 allF1Details.setSecondSemLatestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getLatestBirthDate()));
+			 allF1Details.setSecondSemStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getStartDate()));
+			 allF1Details.setJanFullYearAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStartFullYearDetail().getApplicationDeadlineDate()));
+			 allF1Details.setJanFullYearEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStartFullYearDetail().getEndDate()));
+			 allF1Details.setJanFullYearStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStartFullYearDetail().getStartDate()));
+			 allF1Details.setShowJanFullYearToNewHF((byte) (seasonHSPF1Details.getJanuaryStartFullYearDetail().isShowFullYearToHF()?1:0));
+			 allF1Details.setFirstSemAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getApplicationDeadlineDate()));
+			 allF1Details.setFirstSemEarliestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getEarliestBirthDate()));
+			 allF1Details.setFirstSemLatestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getLatestBirthDate()));
+			 allF1Details.setFirstSemStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getStartDate()));
+			 allF1Details.setFirstSemEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getEndDate()));
+			 allF1Details.setAugFullYearAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStartFullYearDetails().getApplicationDeadlineDate()));
+			 allF1Details.setAugFullYearEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStartFullYearDetails().getEndDate()));
+			 allF1Details.setAugFullYearStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStartFullYearDetails().getStartDate()));
+			 allF1Details.setShowAugFullYearToNewHF((byte) (seasonHSPF1Details.getAugustStartFullYearDetails().isShowFullYearToNewHF()?1:0));
+			 allF1Details.setHfInquiryDate(DateUtils.getDateFromString(seasonHSPF1Details.getFieldSettings().getAddOrStartHFInquiriesDate()));
+			 allF1Details.setAllowFieldStaffToStartRenewalProcess((byte) (seasonHSPF1Details.getFieldSettings().isAllowFSToStartRenewalProcess()?1:0));
+			 allF1Details.setLcPaymentScheduleId(seasonHSPF1Details.getFieldSettings().getDefaultLcPaymentSchedule());
+			 allF1Details.setFsAgreementId(seasonHSPF1Details.getFieldSettings().getFsAgreement());
+			 allF1Details.setHfReferences(seasonHSPF1Details.getFieldSettings().getHfReferencesNo());
+			 allF1Details.setShowSeasonToCurrentHF((byte) (seasonHSPF1Details.getFieldSettings().isShowSeasonProgramToCurrentHF()?1:0));
+			 allF1Details.setShowSpecialRequestStudent((byte) (seasonHSPF1Details.getFieldSettings().isShowSpecialRequestStudentToRD()?1:0));
+			 allF1Details.setShowWelcomeFamily((byte) (seasonHSPF1Details.getFieldSettings().isShowWelcomeFamilyModle()?1:0));
+			 
+ 			seasonF1DetailsRepository.saveAndFlush(allF1Details);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+ 		return seasonHSPF1Details;
+	}
+
+	public HSPF1BasicDetails updateHSPF1NameAndStatus(
+			SeasonF1Detail currentF1Detail, HSPF1BasicDetails hspf1BasicDetails) {
+		try{
+			currentF1Detail.setSeasonStatus(seasonStatusRepository.getSeasonStatusByName(hspf1BasicDetails.getProgramStatus()));
+			currentF1Detail.setProgramName(hspf1BasicDetails.getProgramName());
+			seasonF1DetailsRepository.saveAndFlush(currentF1Detail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+			return hspf1BasicDetails;
+	}
+
+	public HSPF1Accounting updateF1Accounting(SeasonF1Detail currentF1Detail,
+			HSPF1Accounting hspf1Accounting) {
+		try{
+			currentF1Detail.setGreenHeartMargin(hspf1Accounting.getGreenHeartMargin());
+			seasonF1DetailsRepository.saveAndFlush(currentF1Detail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return hspf1Accounting;
+	}
+
+	public HSPF1JanuaryStart2NdSemesterDetails updateF1JanStart2NdSemesterDetails(
+			SeasonF1Detail allF1Details,
+			HSPF1JanuaryStart2NdSemesterDetails hspf1JanuaryStart2NdSemesterDetails) {
+		try{
+			 allF1Details.setActiveFullYearJanProgram((byte) (hspf1JanuaryStart2NdSemesterDetails.isActivateFullYearProgram()?1:0));
+			 allF1Details.setShowSecSemToNewHF((byte) (hspf1JanuaryStart2NdSemesterDetails.isShow2NdSemestertoNewHF()?1:0));
+			 allF1Details.setSecondSemAppDeadlineDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getApplicationDeadlineDate()));
+			 allF1Details.setSecondSemEarliestBirthDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getEarliestBirthDate()));
+			 allF1Details.setSecondSemEndDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getEndDate()));
+			 allF1Details.setSecondSemLatestBirthDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getLatestBirthDate()));
+			 allF1Details.setSecondSemStartDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getStartDate()));
+			seasonF1DetailsRepository.saveAndFlush(allF1Details);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return hspf1JanuaryStart2NdSemesterDetails;
+	}
+
+	public HSPF1JanuaryStartFullYearDetail updateF1JanStartFullYearDetails(
+			SeasonF1Detail allF1Details,
+			HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail) {
+		try{
+			 allF1Details.setJanFullYearAppDeadlineDate(DateUtils.getDateFromString(hspf1JanuaryStartFullYearDetail.getApplicationDeadlineDate()));
+			 allF1Details.setJanFullYearEndDate(DateUtils.getDateFromString(hspf1JanuaryStartFullYearDetail.getEndDate()));
+			 allF1Details.setJanFullYearStartDate(DateUtils.getDateFromString(hspf1JanuaryStartFullYearDetail.getStartDate()));
+			 allF1Details.setShowJanFullYearToNewHF((byte) (hspf1JanuaryStartFullYearDetail.isShowFullYearToHF()?1:0));
+			seasonF1DetailsRepository.saveAndFlush(allF1Details);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return hspf1JanuaryStartFullYearDetail;
+	}
+
+	public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(
+			SeasonF1Detail allF1Details,
+			HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails) {
+		try{
+			 allF1Details.setFirstSemAppDeadlineDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getApplicationDeadlineDate()));
+			 allF1Details.setFirstSemEarliestBirthDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getEarliestBirthDate()));
+			 allF1Details.setFirstSemLatestBirthDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getLatestBirthDate()));
+			 allF1Details.setFirstSemStartDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getStartDate()));
+			 allF1Details.setFirstSemEndDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getEndDate()));
+			seasonF1DetailsRepository.saveAndFlush(allF1Details);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return hspf1AugustStart1StSemesterDetails;
+	}
+
+	public HSPF1AugustStartFullYearDetails updateF1AugStartFullYearDetails(
+			SeasonF1Detail allF1Details,
+			HSPF1AugustStartFullYearDetails hspf1AugustStartFullYearDetails) {
+		try{
+			 allF1Details.setAugFullYearAppDeadlineDate(DateUtils.getDateFromString(hspf1AugustStartFullYearDetails.getApplicationDeadlineDate()));
+			 allF1Details.setAugFullYearEndDate(DateUtils.getDateFromString(hspf1AugustStartFullYearDetails.getEndDate()));
+			 allF1Details.setAugFullYearStartDate(DateUtils.getDateFromString(hspf1AugustStartFullYearDetails.getStartDate()));
+			 allF1Details.setShowAugFullYearToNewHF((byte) (hspf1AugustStartFullYearDetails.isShowFullYearToNewHF()?1:0));
+			 
+			seasonF1DetailsRepository.saveAndFlush(allF1Details);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return hspf1AugustStartFullYearDetails;
+	}
+
+	public HSPF1FieldSettings updateF1FieldSettings(
+			SeasonF1Detail allF1Details, HSPF1FieldSettings hspf1FieldSettings) {
+		try{
+			 allF1Details.setHfInquiryDate(DateUtils.getDateFromString(hspf1FieldSettings.getAddOrStartHFInquiriesDate()));
+			 allF1Details.setAllowFieldStaffToStartRenewalProcess((byte) (hspf1FieldSettings.isAllowFSToStartRenewalProcess()?1:0));
+			 allF1Details.setLcPaymentScheduleId(hspf1FieldSettings.getDefaultLcPaymentSchedule());
+			 allF1Details.setFsAgreementId(hspf1FieldSettings.getFsAgreement());
+			 allF1Details.setHfReferences(hspf1FieldSettings.getHfReferencesNo());
+			 allF1Details.setShowSeasonToCurrentHF((byte) (hspf1FieldSettings.isShowSeasonProgramToCurrentHF()?1:0));
+			 allF1Details.setShowSpecialRequestStudent((byte) (hspf1FieldSettings.isShowSpecialRequestStudentToRD()?1:0));
+			 allF1Details.setShowWelcomeFamily((byte) (hspf1FieldSettings.isShowWelcomeFamilyModle()?1:0));
+			seasonF1DetailsRepository.saveAndFlush(allF1Details);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return hspf1FieldSettings;
+	}
+
+	public HSPF1ProgramAllocations updateF1ProgramAllocation(
+			SeasonF1Detail allF1Details,
+			HSPF1ProgramAllocations hspf1ProgramAllocations) {
+		try{
+			 // TODO Not complete
+			seasonF1DetailsRepository.saveAndFlush(allF1Details);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return hspf1ProgramAllocations;
 	}
 }
