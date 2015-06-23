@@ -4,7 +4,7 @@ USE `cci_gh_go`$$
 
 DROP PROCEDURE IF EXISTS `SPUserManagementSearch`$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SPUserManagementSearch`(IN CCIId INT(11),IN  FName VARCHAR(50), IN LName VARCHAR(50), IN LogName VARCHAR(50),IN CountryId INT(5),IN Mail VARCHAR(100), IN Rolelist VARCHAR(50),IN DepList VARCHAR(50), IN PgmList VARCHAR(50),IN Active TINYINT(1))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPUserManagementSearch`(IN CCIId INT(11),IN  FName VARCHAR(50), IN LName VARCHAR(50), IN LogName VARCHAR(50),IN CountryId INT(5),IN Mail VARCHAR(100), IN Rolelist VARCHAR(50),IN DepList VARCHAR(50), IN PgmList VARCHAR(50),IN Active VARCHAR(10))
 BEGIN
 	DECLARE wher VARCHAR(21845);
 	DECLARE stmt VARCHAR(21845);
@@ -13,7 +13,7 @@ BEGIN
 	DECLARE Email VARCHAR(100);
 	DECLARE CCIStaffUserID INT(11);
 	DECLARE countId INT(5);
-	DECLARE IsActive TINYINT(1);
+	DECLARE IsActive VARCHAR(10);
   
 	SET @FirstName = CONCAT(FName,'%');
 	SET @LastName = CONCAT(LName,'%');
@@ -27,13 +27,13 @@ BEGIN
 	SET @IsActive = Active;
   
 	SET @wher = ' WHERE 1=1';
-	IF (FName IS NOT NULL || FName != '') THEN SET @wher = CONCAT(@wher,' AND lower(cci.firstName) LIKE lower(@FirstName)');
+	IF (FName IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND lower(cci.firstName) LIKE lower(@FirstName)');
 	END IF;
-	IF (LName IS NOT NULL || LName != '') THEN SET @wher = CONCAT(@wher,' AND lower(cci.lastName) LIKE lower(@LastName)');
+	IF (LName IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND lower(cci.lastName) LIKE lower(@LastName)');
 	END IF;
-	IF (LogName IS NOT NULL || LogName != '') THEN SET @wher = CONCAT(@wher,' AND lower(l.loginName) LIKE lower(@LoginName)');
+	IF (LogName IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND lower(l.loginName) LIKE lower(@LoginName)');
 	END IF;
-	IF (mail IS NOT NULL || mail != '') THEN SET @wher = CONCAT(@wher,' AND lower(cci.email) LIKE lower(@Email)');
+	IF (mail IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND lower(cci.email) LIKE lower(@Email)');
 	END IF;
 	IF (RoleList IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND FIND_IN_SET (r.cciStaffRoleId,@RoleId)');
 	END IF;
@@ -45,7 +45,7 @@ BEGIN
 	END IF;
 	IF (CCIId IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND cci.cciStaffUserId = @CCIStaffUserID');
 	END IF;
-	IF (Active IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND cci.active = @IsActive');
+	IF (Active IS NOT NULL) THEN SET @wher = CONCAT(@wher,' AND FIND_IN_SET (cci.active,@IsActive)');
 	END IF;
 	SET @stmt = CONCAT ('SELECT cci.cciStaffUserID
 		FROM CCIStaffUsers cci
