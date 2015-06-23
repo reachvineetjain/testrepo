@@ -118,7 +118,7 @@ public class Seasons {
    }
    
    @GET
-   @Path("j1hs/details/{seasonId}")
+   @Path("j1hs/base/{seasonId}")
    @Produces("application/json")
    public J1HSBasicDetail getJ1NameAndStatus(@PathParam("seasonId") String seasonId){
       return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
@@ -126,28 +126,28 @@ public class Seasons {
    
    
    @GET
-   @Path("j1hs/details/{seasonId}")
+   @Path("j1hs/jan/{seasonId}")
    @Produces("application/json")
    public J1HSJanStart getJ1JanStartDetails(@PathParam("seasonId") String seasonId){
       return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
    }
    
    @GET
-   @Path("j1hs/details/{seasonId}")
+   @Path("j1hs/aug/{seasonId}")
    @Produces("application/json")
    public J1HSAugStart getJ1AugStartDetails(@PathParam("seasonId") String seasonId){
       return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
    }
    
    @GET
-   @Path("j1hs/details/{seasonId}")
+   @Path("j1hs/field/{seasonId}/settings")
    @Produces("application/json")
    public J1HSFieldSettings getJ1FieldSettings(@PathParam("seasonId") String seasonId){
       return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
    }
    
    @GET
-   @Path("j1hs/details/{seasonId}")
+   @Path("j1hs/program/{seasonId}/allocation")
    @Produces("application/json")
    public J1HSProgramAllocations getJ1ProgramAllocation(@PathParam("seasonId") String seasonId){
       return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
