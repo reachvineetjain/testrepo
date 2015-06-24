@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
@@ -464,6 +465,140 @@ public class Seasons {
    
    
 // End of HSP F1 services
+   
+   //GHT Volunteer abroad services
+   
+   @GET
+   @Path("ght/va/details/view/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails getVADetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTVASeasonDetails(seasonId);
+   }
+
+   @GET
+   @Path("ght/va/base/view/{seasonId}")
+   @Produces("application/json")
+   public GHTSection1Base getVANameAndStatus(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTVASeasonNameAndStatus(seasonId);
+   }
+
+   @GET
+   @Path("ght/va/date/section/view/{seasonId}")
+   @Produces("application/json")
+   public GHTSection2Dates getVADateDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTVASeasonDateDetails(seasonId);
+   }
+
+   //edit
+   @GET
+   @Path("ght/va/details/edit/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails editVADetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTVASeasonDetails(seasonId);
+   }
+
+   @GET
+   @Path("ght/va/base/edit/{seasonId}")
+   @Produces("application/json")
+   public GHTSection1Base editVANameAndStatus(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTVASeasonNameAndStatus(seasonId);
+   }
+
+   @GET
+   @Path("ght/va/jan/edit/{seasonId}")
+   @Produces("application/json")
+   public GHTSection2Dates editVADateDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTVASeasonDateDetails(seasonId);
+   }
+   
+   //update
+   @POST
+   @Path("ght/va/details/update")
+   @Consumes("application/json")
+   public SeasonGHTDetails getVADetails(SeasonGHTDetails seasonGHTDetails) {
+      return seasonServices.updateGHTVASeasonDetails(seasonGHTDetails);
+   }
+
+   @POST
+   @Path("ght/va/base/update")
+   @Consumes("application/json")
+   public GHTSection1Base getVANameAndStatus(GHTSection1Base ghtSection1Base) {
+      return seasonServices.updateGHTVASeasonNameAndStatus(ghtSection1Base);
+   }
+
+   @POST
+   @Path("ght/va/jan/update")
+   @Consumes("application/json")
+   public GHTSection2Dates getVADateDetails(GHTSection2Dates ghtSection2Dates) {
+      return seasonServices.updateGHTVASeasonDateDetails(ghtSection2Dates);
+   }
+   
+   //GHT work abroad services
+   
+   @GET
+   @Path("ght/wa/details/view/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails getWADetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTWASeasonDetails(seasonId);
+   }
+
+   @GET
+   @Path("ght/wa/base/view/{seasonId}")
+   @Produces("application/json")
+   public GHTSection1Base getWANameAndStatus(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTWASeasonNameAndStatus(seasonId);
+   }
+
+   @GET
+   @Path("ght/wa/date/section/view/{seasonId}")
+   @Produces("application/json")
+   public GHTSection2Dates getWADateDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTWASeasonDateDetails(seasonId);
+   }
+
+   //edit
+   @GET
+   @Path("ght/wa/details/edit/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails editWADetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTWASeasonDetails(seasonId);
+   }
+
+   @GET
+   @Path("ght/wa/base/edit/{seasonId}")
+   @Produces("application/json")
+   public GHTSection1Base editWANameAndStatus(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTWASeasonNameAndStatus(seasonId);
+   }
+
+   @GET
+   @Path("ght/wa/jan/edit/{seasonId}")
+   @Produces("application/json")
+   public GHTSection2Dates editWADateDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTWASeasonDateDetails(seasonId);
+   }
+   
+   //update
+   @POST
+   @Path("ght/wa/details/update")
+   @Consumes("application/json")
+   public SeasonGHTDetails updateWADetails(SeasonGHTDetails seasonGHTDetails) {
+      return seasonServices.updateGHTWASeasonDetails(seasonGHTDetails);
+   }
+
+   @POST
+   @Path("ght/wa/base/update")
+   @Consumes("application/json")
+   public GHTSection1Base updateWANameAndStatus(GHTSection1Base ghtSection1Base) {
+      return seasonServices.updateGHTWASeasonNameAndStatus(ghtSection1Base);
+   }
+
+   @POST
+   @Path("ght/wa/jan/update")
+   @Consumes("application/json")
+   public GHTSection2Dates updateWADateDetails(GHTSection2Dates ghtSection2Dates) {
+      return seasonServices.updateGHTWASeasonDateDetails(ghtSection2Dates);
+   }
    
    // GHT (HS abroad , Language School, Teach Abroad)
    @GET
