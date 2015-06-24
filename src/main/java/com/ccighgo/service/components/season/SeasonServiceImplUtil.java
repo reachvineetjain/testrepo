@@ -906,5 +906,64 @@ public SeasonGHTDetails getGHTHSAbroad(SeasonHSADetail seasonHSADetail) {
 		}
 		return seasonGHTDetails;
 	}
+
+	public GHTSection1Base getGHTHSSection1BaseAbroad(String seasonId) {
+		SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findGHTHSBySeasonId(Integer.parseInt(seasonId));
+		if(seasonHSADetail==null){
+			return null;
+		}
+		GHTSection1Base ghtSection1Base=new GHTSection1Base();
+		ghtSection1Base.setProgramName(seasonHSADetail.getProgramName());
+		ghtSection1Base.setProgramStatus(seasonHSADetail.getSeasonStatus().getStatus());
+		ghtSection1Base.setSeasonId(Integer.parseInt(seasonId));
+		return ghtSection1Base;
+	}
+
+	public GHTSection1Base updateGHTHSSection1BaseAbroad(
+			GHTSection1Base seasonGhtSection1Base) {
+		try{
+			SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findGHTHSBySeasonId(seasonGhtSection1Base.getSeasonId());
+			if(seasonHSADetail==null){
+				return null;
+			}
+			seasonHSADetail.setProgramName(seasonGhtSection1Base.getProgramName());
+			seasonHSADetail.setSeasonStatus(seasonStatusRepository.getSeasonStatusByName(seasonGhtSection1Base.getProgramStatus()));
+			
+			seasonHSADetailsRepository.saveAndFlush(seasonHSADetail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return seasonGhtSection1Base;
+	}
+
+	public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonId) {
+		SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findGHTHSBySeasonId(Integer.parseInt(seasonId));
+		if(seasonHSADetail==null){
+			return null;
+		}
+		GHTSection2Dates ghtSection2Dates=new GHTSection2Dates();
+		ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonHSADetail.getEndDate()));
+		ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
+		ghtSection2Dates.setSeasonId(Integer.parseInt(seasonId));
+		return ghtSection2Dates;
+ 	}
+
+	public GHTSection2Dates updateGHTHSSection2DatesAbroad(
+			GHTSection2Dates ghtSection2Dates) {
+		try{
+			SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findGHTHSBySeasonId(ghtSection2Dates.getSeasonId());
+			if(seasonHSADetail==null){
+				return null;
+			}
+			seasonHSADetail.setStartDate(DateUtils.getDateFromString(ghtSection2Dates.getStartDate()));
+			seasonHSADetail.setEndDate(DateUtils.getDateFromString(ghtSection2Dates.getEndDate()));
+			seasonHSADetailsRepository.saveAndFlush(seasonHSADetail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return ghtSection2Dates;
+	}
    
 }

@@ -871,4 +871,23 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 		return seasonServiceImplUtil.updateGHTTeachAbroad(seasonGHTDetails);
 	}
 
+	public GHTSection1Base getGHTHSSection1BaseAbroad(String seasonId) {
+		
+		return seasonServiceImplUtil.getGHTHSSection1BaseAbroad(seasonId);
+	}
+
+	public GHTSection1Base updateGHTHSSection1BaseAbroad(
+			GHTSection1Base seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTHSSection1BaseAbroad(seasonGHTDetails);
+	}
+
+	public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonId) {
+		return seasonServiceImplUtil.getGHTHSSection2DatesAbroad(seasonId);
+	}
+
+	public GHTSection2Dates updateGHTHSSection2DatesAbroad(
+			GHTSection2Dates seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTHSSection2DatesAbroad(seasonGHTDetails);
+	}
+
 }
