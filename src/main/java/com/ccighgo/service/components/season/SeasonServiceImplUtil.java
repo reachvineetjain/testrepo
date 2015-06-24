@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -17,10 +18,12 @@ import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
+import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
+import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
@@ -57,7 +60,10 @@ public class SeasonServiceImplUtil {
 	SeasonHSPConfigurationRepsitory seasonHSPConfigurationRepsitory;
 	@Autowired
 	SeasonF1DetailsRepository seasonF1DetailsRepository;
-	private Logger logger;
+	@Autowired
+	SeasonJ1DetailsRepository seasonJ1DetailsRepository;
+	 
+	private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
 	
 	/**
 	 * @param seasonBean
@@ -526,4 +532,41 @@ public class SeasonServiceImplUtil {
 		}
 		return hspf1ProgramAllocations;
 	}
+
+	public void createSeasonProgram(Season seasonEntity, SeasonBean seasonBean) {
+		createHSPF1Season(seasonEntity,seasonBean);
+		createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
+	}
+
+	private void createHSPF1Season(Season seasonEntity, SeasonBean seasonBean) {
+	if(seasonEntity.getSeasonId()>0 && seasonBean.getSeasonName()!=null){
+		SeasonF1Detail seasonF1Detail = new SeasonF1Detail();
+		seasonF1Detail.setSeason(seasonEntity);
+		seasonF1Detail.setProgramName(seasonBean.getSeasonName());
+		seasonF1Detail.setCreatedBy(1);
+		seasonF1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+		seasonF1Detail.setModifiedBy(1);
+		seasonF1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+		seasonF1DetailsRepository.saveAndFlush(seasonF1Detail);
+	  }
+	}
+	
+	/**
+	  * This method creates j1hs season program for HSP high level season
+	  * 
+	  * @param seasonBean
+	  */
+	 private void createHSPJ1HSSeasonProgram(SeasonBean seasonBean, Season season){
+	      if(season.getSeasonId()>0 && seasonBean.getSeasonName()!=null){
+	         SeasonJ1Detail seasonJ1Detail = new SeasonJ1Detail();
+	         seasonJ1Detail.setSeason(season);
+	         seasonJ1Detail.setProgramName(seasonBean.getSeasonName());
+	         seasonJ1Detail.setCreatedBy(1);
+	         seasonJ1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+	         seasonJ1Detail.setModifiedBy(1);
+	         seasonJ1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+	         seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
+	      }
+	   }
+	
 }
