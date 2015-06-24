@@ -45,7 +45,26 @@ public class CCIConstants {
    public static final String HYPHEN_SPACE = " - ";
    public static final String SINGLE_QUOTE = "'";
    public static final String COMMA = ",";
-public static final Integer DRAFT_STATUS_NO = 3;
+   public static final Integer DRAFT_STATUS_NO = 3;
    
+   //constants for department programs
+   public static final String HSP_J1_HS = "J-1HS";
+   public static final String HSP_F1 = "F-1";
+   public static final String HSP_STP_IHP = "STP-IHP";
+   public static final String HSP_STP_GHP = "STP-GHP";
+   public static final String HSP_STP_SSE = "STP-SSE";
+   public static final String WP_WT_SUMMER = "W&T Summer";
+   public static final String WP_WT_WINTER = "W&T Winter";
+   public static final String WP_WT_SPRING = "W&T Spring";
+   public static final String WP_WT_CAP = "W&T CAP";
+   public static final String GHT_HS_ABRD = "HS Abroad";
+   public static final String GHT_LANG_SCL = "Language School";
+   public static final String GHT_TEACH_ABRD = "Teach Abroad";
+   public static final String GHT_VOL_ABRD = "Volunteer Abroad";
+   public static final String GHT_WRK_ABRD = "Work Abroad";
+   
+   //bind urls for season program menu
+   public static final String HSP_J1_URL= "j1hs/details/view/";
+   public static final String HSP_F1_URL = "f1/view/details/";
 
 }

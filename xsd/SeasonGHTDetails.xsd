@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/ght" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:ght="http://www.ccighgo.com/ght">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.season.beans.seasonghtdetails" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
+
+   <xsd:element name="SeasonGHTDetails" type="ght:SeasonGHTDetails"></xsd:element>
+
+   <xsd:complexType name="SeasonGHTDetails">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="ghtBaseDetails" type="ght:GHTSection1Base" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="ghtDates" type="ght:GHTSection2Dates" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="ghtNotes" type="ght:GHTSection3Notes" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="GHTSection1Base">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="programStatus" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="GHTSection2Dates">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="programStatus" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="GHTSection3Notes">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="note" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

@@ -2,7 +2,8 @@
 <project name="ServiceFrontBeans" basedir="." default="all">
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
-	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,SeasonProgram,SeasonStatus,SeasonHspF1Details" />
+	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,
+		SeasonProgram,SeasonStatus,SeasonHspJ1HSDetails,SeasonHspF1Details,SeasonGHTDetails" />
 
 	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
 
@@ -146,24 +147,24 @@
 	</target>
 
 	<!-- Season List Object-->
-	
-		<target name="SeasonList">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/SeasonsList.xsd" />
-			</java>
-		</target>
+
+	<target name="SeasonList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonsList.xsd" />
+		</java>
+	</target>
 
 	<!-- Season HspF1 Details Object -->
-		<target name="SeasonHspF1Details">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/SeasonHspF1Details.xsd" />
-			</java>
-		</target>
-	
+	<target name="SeasonHspF1Details">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonHspF1Details.xsd" />
+		</java>
+	</target>
+
 
 	<!-- Default Role Permissions-->
 
@@ -193,6 +194,24 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/SeasonStatus.xsd" />
+		</java>
+	</target>
+
+	<!-- Season HspJ1 Details Object -->
+	<target name="SeasonHspJ1HSDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonHspJ1HSDetails.xsd" />
+		</java>
+	</target>
+
+	<!-- Season GHT Details Object -->
+	<target name="SeasonGHTDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonGHTDetails.xsd" />
 		</java>
 	</target>
 

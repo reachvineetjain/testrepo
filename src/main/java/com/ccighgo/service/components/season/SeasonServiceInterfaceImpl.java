@@ -25,6 +25,7 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanSt
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
+import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
@@ -147,25 +148,96 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public SeasonProgram getSeasonPrograms(String seasonId) {
-      SeasonProgram seasonProgram = null;
+   public SeasonPrograms getSeasonPrograms(String seasonId) {
+      SeasonPrograms seasonPrograms = null;
       try {
          Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
          if (season != null) {
-            List<String> seasonPrograms = new ArrayList<String>();
-            seasonProgram = new SeasonProgram();
+            List<SeasonProgram> seasonProgramsList = new ArrayList<SeasonProgram>();
+            seasonPrograms = new SeasonPrograms();
             LookupDepartment dept = season.getLookupDepartment();
             List<DepartmentProgram> departmentPrograms = dept.getDepartmentPrograms();
             for (DepartmentProgram dPrg : departmentPrograms) {
-               String seasonPrg = season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName();
-               seasonPrograms.add(seasonPrg);
+               SeasonProgram sprg = new SeasonProgram();
+               //crapy code but no better option
+               if(dPrg.getProgramName().equals(CCIConstants.HSP_J1_HS)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(CCIConstants.HSP_J1_URL);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.HSP_F1)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(CCIConstants.HSP_F1_URL);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.HSP_STP_IHP)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.HSP_STP_GHP)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.HSP_STP_SSE)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.WP_WT_SUMMER)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.WP_WT_WINTER)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.WP_WT_SPRING)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.WP_WT_CAP)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.GHT_HS_ABRD)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.GHT_LANG_SCL)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.GHT_TEACH_ABRD)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.GHT_VOL_ABRD)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               if(dPrg.getProgramName().equals(CCIConstants.GHT_WRK_ABRD)){
+                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
+                  sprg.setUrl(null);
+               }
+               seasonProgramsList.add(sprg);
             }
-            seasonProgram.getSeasonPrograms().addAll(seasonPrograms);
+            seasonPrograms.getSeasonPrograms().addAll(seasonProgramsList);
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
-      return seasonProgram;
+      return seasonPrograms;
    }
 
    public SeasonStatuses getSeasonStatus() {

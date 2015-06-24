@@ -1,16 +1,12 @@
 package com.ccighgo.service.components.season;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
-import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
+import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
@@ -35,7 +31,7 @@ public interface SeasonServiceInterface {
     * @param seasonId
     * @return
     */
-   public SeasonProgram getSeasonPrograms(String seasonId);
+   public SeasonPrograms getSeasonPrograms(String seasonId);
 
    /**
     * Method fetches list of available season status
