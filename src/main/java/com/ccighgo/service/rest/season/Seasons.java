@@ -1,7 +1,6 @@
 package com.ccighgo.service.rest.season;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,7 +18,7 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSField
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
-import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
+import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
@@ -106,7 +105,7 @@ public class Seasons {
    @GET
    @Path("program/season/{seasonId}")
    @Produces("application/json")
-   public SeasonProgram getSeasonProgram(@PathParam("seasonId") String seasonId) {
+   public SeasonPrograms getSeasonProgram(@PathParam("seasonId") String seasonId) {
       return seasonServices.getSeasonPrograms(seasonId);
    }
 
