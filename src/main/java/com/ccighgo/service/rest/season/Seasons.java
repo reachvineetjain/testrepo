@@ -504,7 +504,7 @@ public class Seasons {
    }
 
    @GET
-   @Path("ght/va/jan/edit/{seasonId}")
+   @Path("ght/va/date/section/edit/{seasonId}")
    @Produces("application/json")
    public GHTSection2Dates editVADateDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTVASeasonDateDetails(seasonId);
@@ -526,7 +526,7 @@ public class Seasons {
    }
 
    @POST
-   @Path("ght/va/jan/update")
+   @Path("ght/va/date/section/update")
    @Consumes("application/json")
    public GHTSection2Dates getVADateDetails(GHTSection2Dates ghtSection2Dates) {
       return seasonServices.updateGHTVASeasonDateDetails(ghtSection2Dates);
@@ -571,7 +571,7 @@ public class Seasons {
    }
 
    @GET
-   @Path("ght/wa/jan/edit/{seasonId}")
+   @Path("ght/wa/date/section/edit/{seasonId}")
    @Produces("application/json")
    public GHTSection2Dates editWADateDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTWASeasonDateDetails(seasonId);
@@ -593,7 +593,7 @@ public class Seasons {
    }
 
    @POST
-   @Path("ght/wa/jan/update")
+   @Path("ght/wa/date/section/update")
    @Consumes("application/json")
    public GHTSection2Dates updateWADateDetails(GHTSection2Dates ghtSection2Dates) {
       return seasonServices.updateGHTWASeasonDateDetails(ghtSection2Dates);
