@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
@@ -598,4 +599,111 @@ public class Seasons {
    public GHTSection2Dates updateWADateDetails(GHTSection2Dates ghtSection2Dates) {
       return seasonServices.updateGHTWASeasonDateDetails(ghtSection2Dates);
    }
+   
+   // GHT (HS abroad , Language School, Teach Abroad)
+   @GET
+   @Path("ght/hsa/view/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails getGHTHSAbroad(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getGHTHSAbroad(seasonId);
+   }
+   @GET
+   @Path("ght/hsa/edit/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails editGHTHSAbroad(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getGHTHSAbroad(seasonId);
+   }
+   
+   @POST
+   @Path("ght/hsa/update/details")
+   @Produces("application/json")
+   public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails){
+	   return seasonServices.updateGHTHSAbroad(seasonGHTDetails);
+   }
+   
+// sections
+   @GET
+   @Path("ght/hsa/view/sec1/{seasonId}")
+   @Produces("application/json")
+   public GHTSection1Base getGHTHSSection1BaseAbroad(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTHSSection1BaseAbroad(seasonId);
+   }   
+   @GET
+   @Path("ght/hsa/edit/sec1/{seasonId}")
+   @Produces("application/json")
+   public GHTSection1Base editGHTHSSection1BaseAbroad(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getGHTHSSection1BaseAbroad(seasonId);
+   }
+   
+   @POST
+   @Path("ght/hsa/update/sec1")
+   @Produces("application/json")
+   public GHTSection1Base updateGHTHSSection1BaseAbroad(GHTSection1Base seasonGHTDetails){
+	   return seasonServices.updateGHTHSSection1BaseAbroad(seasonGHTDetails);
+   }
+   
+   @GET
+   @Path("ght/hsa/view/datesec/{seasonId}")
+   @Produces("application/json")
+   public GHTSection2Dates getGHTHSSection2DatesAbroad(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTHSSection2DatesAbroad(seasonId);
+   }
+   @GET
+   @Path("ght/hsa/edit/datesec/{seasonId}")
+   @Produces("application/json")
+   public GHTSection2Dates editGHTHSSection2DatesAbroad(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getGHTHSSection2DatesAbroad(seasonId);
+   }
+   
+   @POST
+   @Path("ght/hsa/update/datesec")
+   @Produces("application/json")
+   public GHTSection2Dates updateGHTHSSection2DatesAbroad(GHTSection2Dates seasonGHTDetails){
+	   return seasonServices.updateGHTHSSection2DatesAbroad(seasonGHTDetails);
+   }
+   
+   // LS 
+   
+   @GET
+   @Path("ght/ls/view/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails getGHTLanguageSchool(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTLanguageSchool(seasonId);
+   }
+   
+   @GET
+   @Path("ght/ls/edit/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails editGHTLanguageSchool(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTLanguageSchool(seasonId);
+   }
+   
+   @POST
+   @Path("ght/ls/update")
+   @Produces("application/json")
+   public SeasonGHTDetails updateGHTLanguageSchool(SeasonGHTDetails seasonGHTDetails){
+      return seasonServices.updateGHTLanguageSchool(seasonGHTDetails);
+   }
+   
+   @GET
+   @Path("ght/ta/view/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails getGHTTeachAbroad(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTTeachAbroad(seasonId);
+   }
+   
+   @GET
+   @Path("ght/ta/edit/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails editGHTTeachAbroad(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTTeachAbroad(seasonId);
+   }
+   
+   @POST
+   @Path("ght/ta/update")
+   @Produces("application/json")
+   public SeasonGHTDetails updateGHTTeachAbroad(SeasonGHTDetails seasonGHTDetails){
+      return seasonServices.updateGHTTeachAbroad(seasonGHTDetails);
+   }
+   
 }
