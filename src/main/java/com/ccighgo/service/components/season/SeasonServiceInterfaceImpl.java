@@ -12,12 +12,15 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonF1Detail;
+import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
@@ -62,6 +65,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Autowired
 	SeasonF1DetailsRepository seasonF1DetailsRepository;
+   @Autowired
+   SeasonHSADetailsRepository seasonHSADetailsRepository;
    
    SeasonServiceInterfaceImpl() {
    }
@@ -756,6 +761,15 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 			hspf1ProgramAllocations= seasonServiceImplUtil.updateF1ProgramAllocation(allF1Details,hspf1ProgramAllocations);
 		}
 		return  hspf1ProgramAllocations;
+	}
+
+	public SeasonGHTDetails getGHTHSAbroad(String seasonId) {
+		SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findOne(Integer.parseInt(seasonId));
+		return seasonServiceImplUtil.getGHTHSAbroad(seasonHSADetail);
+	}
+
+	public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTHSAbroad(seasonGHTDetails);
 	}
 
 }

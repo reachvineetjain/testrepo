@@ -11,7 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
@@ -461,5 +464,26 @@ public class Seasons {
    
    
 // End of HSP F1 services
+   
+   // GHT (HS abroad , Language School, Teach Abroad)
+   @GET
+   @Path("ght/hsa/view/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails getGHTHSAbroad(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTHSAbroad(seasonId);
+   }
+   
+   @GET
+   @Path("ght/hsa/edit/{seasonId}")
+   @Produces("application/json")
+   public SeasonGHTDetails editGHTHSAbroad(@PathParam("seasonId") String seasonId){
+      return seasonServices.getGHTHSAbroad(seasonId);
+   }
+   @POST
+   @Path("ght/hsa/update")
+   @Produces("application/json")
+   public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails){
+      return seasonServices.updateGHTHSAbroad(seasonGHTDetails);
+   }
    
 }

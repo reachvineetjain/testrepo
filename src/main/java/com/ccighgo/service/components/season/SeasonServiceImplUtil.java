@@ -17,6 +17,7 @@ import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonF1Detail;
+import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonStatus;
@@ -24,7 +25,11 @@ import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
@@ -62,7 +67,8 @@ public class SeasonServiceImplUtil {
 	SeasonF1DetailsRepository seasonF1DetailsRepository;
 	@Autowired
 	SeasonJ1DetailsRepository seasonJ1DetailsRepository;
-	 
+	 @Autowired
+	 SeasonRepository seasonRepository;
 	private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
 	
 	/**
@@ -568,5 +574,30 @@ public class SeasonServiceImplUtil {
 	         seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
 	      }
 	   }
+
+	public SeasonGHTDetails getGHTHSAbroad(SeasonHSADetail seasonHSADetail) {
+		SeasonGHTDetails seasonGHTDetails = new SeasonGHTDetails();
+		int seasonId = seasonHSADetail.getSeason().getSeasonId();
+		seasonGHTDetails.setSeasonId(seasonId);
+		GHTSection1Base ghtSection1Base=new GHTSection1Base();
+		ghtSection1Base.setProgramName(seasonHSADetail.getProgramName());
+		ghtSection1Base.setProgramStatus(seasonHSADetail.getSeasonStatus().getStatus());
+		ghtSection1Base.setSeasonId(seasonId);
+		seasonGHTDetails.setGhtBaseDetails(ghtSection1Base);
+		return seasonGHTDetails;
+	}
+
+	public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails) {
+		try{
+			SeasonHSADetail seasonHsaDetail = new SeasonHSADetail();
+			seasonHsaDetail.setSeason(seasonRepository.findOne(seasonGHTDetails.getSeasonId()));
+			seasonHsaDetail.setProgramName(seasonGHTDetails.getGhtBaseDetails().getProgramName());
+			seasonHsaDetail.setSeasonStatus(seasonStatusRepository.getSeasonStatusByName(seasonGHTDetails.getGhtBaseDetails().getProgramStatus()));
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return seasonGHTDetails;
+	}
 	
 }
