@@ -14,12 +14,10 @@ import com.ccighgo.exception.CcighgoException;
 
 public class DateUtils {
 
-   private static final String MM_dd_yyy = "MM-dd-yyyy";
-   private static final String MM_dd_yy = "MM-dd-yy";
    private static Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
    public static String getMMddYyyyString(Date inputDate){
-       SimpleDateFormat sdf = new SimpleDateFormat(MM_dd_yyy);
+       SimpleDateFormat sdf = new SimpleDateFormat(CCIConstants.MM_DD_YY);
        String date = null;
        if(inputDate!=null)
        	try {
@@ -31,7 +29,7 @@ public class DateUtils {
    }
 
 	public static Date getDateFromString(String endDate) {
-		DateFormat format = new SimpleDateFormat(MM_dd_yyy, Locale.US);
+		DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
 		Date date = null;
 		if(endDate!=null)
 		try {

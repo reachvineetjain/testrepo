@@ -14,12 +14,16 @@ import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
+import com.ccighgo.db.entities.SeasonLSDetail;
+import com.ccighgo.db.entities.SeasonTADetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.jpa.repositories.SeasonTADetailsRepository;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
@@ -67,7 +71,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	SeasonF1DetailsRepository seasonF1DetailsRepository;
    @Autowired
    SeasonHSADetailsRepository seasonHSADetailsRepository;
-   
+   @Autowired
+   SeasonLSDetailsRepository seasonLSDetailsRepository;
+   @Autowired
+   SeasonTADetailsRepository seasonTADetailsRepository;
    SeasonServiceInterfaceImpl() {
    }
 
@@ -764,12 +771,40 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	public SeasonGHTDetails getGHTHSAbroad(String seasonId) {
-		SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findOne(Integer.parseInt(seasonId));
+		SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findGHTHSBySeasonId(Integer.parseInt(seasonId));
+		if(seasonHSADetail==null){
+			return null;
+		}
 		return seasonServiceImplUtil.getGHTHSAbroad(seasonHSADetail);
 	}
 
 	public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails) {
 		return seasonServiceImplUtil.updateGHTHSAbroad(seasonGHTDetails);
+	}
+
+	public SeasonGHTDetails getGHTLanguageSchool(String seasonId) {
+		SeasonLSDetail seasonLSDetail = seasonLSDetailsRepository.findGHTLSBySeasonId(Integer.parseInt(seasonId));
+		if(seasonLSDetail==null){
+			return null;
+		}
+		return seasonServiceImplUtil.getGHTLanguageSchool(seasonLSDetail);
+	}
+	public SeasonGHTDetails updateGHTLanguageSchool(
+			SeasonGHTDetails seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTLanguageSchool(seasonGHTDetails);
+	}
+
+	public SeasonGHTDetails getGHTTeachAbroad(String seasonId) {
+		SeasonTADetail seasonTADetail = seasonTADetailsRepository.findGHTTABySeasonId(Integer.parseInt(seasonId));
+		if(seasonTADetail==null){
+			return null;
+		}
+		return seasonServiceImplUtil.getGHTTeachAbroad(seasonTADetail);
+	}
+
+	public SeasonGHTDetails updateGHTTeachAbroad(
+			SeasonGHTDetails seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTTeachAbroad(seasonGHTDetails);
 	}
 
 }
