@@ -515,21 +515,21 @@ public class Seasons {
    @POST
    @Path("ght/va/details/update")
    @Consumes("application/json")
-   public SeasonGHTDetails getVADetails(SeasonGHTDetails seasonGHTDetails) {
+   public SeasonGHTDetails updateVADetails(SeasonGHTDetails seasonGHTDetails) {
       return seasonServices.updateGHTVASeasonDetails(seasonGHTDetails);
    }
 
    @POST
    @Path("ght/va/base/update")
    @Consumes("application/json")
-   public GHTSection1Base getVANameAndStatus(GHTSection1Base ghtSection1Base) {
+   public GHTSection1Base updateVANameAndStatus(GHTSection1Base ghtSection1Base) {
       return seasonServices.updateGHTVASeasonNameAndStatus(ghtSection1Base);
    }
 
    @POST
    @Path("ght/va/date/section/update")
    @Consumes("application/json")
-   public GHTSection2Dates getVADateDetails(GHTSection2Dates ghtSection2Dates) {
+   public GHTSection2Dates updateVADateDetails(GHTSection2Dates ghtSection2Dates) {
       return seasonServices.updateGHTVASeasonDateDetails(ghtSection2Dates);
    }
    
