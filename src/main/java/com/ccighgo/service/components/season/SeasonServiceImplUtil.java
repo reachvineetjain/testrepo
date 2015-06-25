@@ -16,6 +16,7 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
+import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
@@ -26,6 +27,7 @@ import com.ccighgo.db.entities.SeasonTADetail;
 import com.ccighgo.db.entities.SeasonVADetail;
 import com.ccighgo.db.entities.SeasonWADetail;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
+import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
@@ -58,6 +60,11 @@ import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.SeasonHSPF
 import com.ccighgo.service.transport.seasons.beans.seasonslist.DepartmentObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramOptions;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPGeneralSettings;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -92,6 +99,8 @@ public class SeasonServiceImplUtil {
    SeasonVADetailsRepository seasonVADetailsRepository;
    @Autowired
    SeasonWADetailsRepository seasonWADetailsRepository;
+   @Autowired
+   SeasonCAPDetailsRepository seasonCAPDetailsRepository;
    private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
 
    /**
@@ -1173,6 +1182,143 @@ public SeasonGHTDetails getGHTHSAbroad(SeasonHSADetail seasonHSADetail) {
 			return null;
 		}
 		return ghtSection2Dates;
+	}
+
+	public SeasonWPCAPDetails getWPCAPDetails(String seasonId) {
+		int intSeasonId = Integer.parseInt(seasonId);
+		SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findCAPDetailBySeasonId(intSeasonId);
+		SeasonWPCAPDetails seasonWPCAPDetails =new SeasonWPCAPDetails();
+		WPCAPBasicDetails wpcapBasicDetails =new WPCAPBasicDetails();
+		wpcapBasicDetails.setProgramName(seasonWPcap.getProgramName());
+		wpcapBasicDetails.setSeasonId(intSeasonId);
+		wpcapBasicDetails.setProgramStatus(seasonWPcap.getSeasonStatus().getStatus());
+		seasonWPCAPDetails.setDetails(wpcapBasicDetails);
+		
+		WPCAPInternshipDetails wpcapInternshipDetails=new  WPCAPInternshipDetails();
+		wpcapInternshipDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getInternAppDeadlineDate()));
+		wpcapInternshipDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getInternEndDate()));
+		wpcapInternshipDetails.setSeasonId(intSeasonId);
+		wpcapInternshipDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getInternStartDate()));
+		seasonWPCAPDetails.setInternshipDetails(wpcapInternshipDetails);
+		
+		WPCAPTraineeDetails wpcapTraineeDetails =new WPCAPTraineeDetails();
+		wpcapTraineeDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeAppDeadlineDate()));
+		wpcapTraineeDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeEndDate()));
+		wpcapTraineeDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeStartDate()));
+		wpcapTraineeDetails.setSeasonId(intSeasonId);
+		
+		seasonWPCAPDetails.setTraineeDetails(wpcapTraineeDetails);
+		seasonWPCAPDetails.setSeasonId(intSeasonId);
+		// missing program options and general settings
+		return seasonWPCAPDetails;
+	}
+
+	public SeasonWPCAPDetails updateWPCAPDetails(
+			SeasonWPCAPDetails seasonWPCAPDetails) {
+		try{
+			SeasonCAPDetail seasonCAPDetail =seasonCAPDetailsRepository.findCAPDetailBySeasonId(seasonWPCAPDetails.getSeasonId());
+			seasonCAPDetail.setInternAppDeadlineDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getApplicationDeadlineDate()));
+			seasonCAPDetail.setInternEndDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getEndDate()));
+			seasonCAPDetail.setInternStartDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getStartDate()));
+			Season season = seasonRepository.findOne(seasonWPCAPDetails.getSeasonId());
+			seasonCAPDetail.setSeason(season);
+			seasonCAPDetail.setProgramName(seasonWPCAPDetails.getDetails().getProgramName());
+			SeasonStatus seasonStatus = seasonStatusRepository.findSeasonStatusByName(seasonWPCAPDetails.getDetails().getProgramStatus());
+			seasonCAPDetail.setSeasonStatus(seasonStatus);
+			seasonCAPDetail.setTraineeAppDeadlineDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getApplicationDeadlineDate()));
+			seasonCAPDetail.setTraineeEndDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getEndDate()));
+			seasonCAPDetail.setTraineeStartDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getStartDate()));
+			
+			seasonCAPDetail.setCreatedBy(1);
+			seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+			seasonCAPDetail.setModifiedBy(1);
+			seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+			seasonCAPDetailsRepository.saveAndFlush(seasonCAPDetail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return seasonWPCAPDetails;
+
+	}
+
+	public WPCAPBasicDetails getWPCAPBasicDetails(String seasonId) {
+		int intSeasonId = Integer.parseInt(seasonId);
+		SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findCAPDetailBySeasonId(intSeasonId);
+		WPCAPBasicDetails wpcapBasicDetails =new WPCAPBasicDetails();
+		wpcapBasicDetails.setSeasonId(intSeasonId);
+		wpcapBasicDetails.setProgramName(seasonWPcap.getProgramName());
+		wpcapBasicDetails.setProgramStatus(seasonWPcap.getSeasonStatus().getStatus());
+		return wpcapBasicDetails;
+	}
+
+	public WPCAPBasicDetails updateWPCAPBasicDetails(
+			WPCAPBasicDetails wpcapBasicDetails) {
+		try{	
+			SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findCAPDetailBySeasonId(wpcapBasicDetails.getSeasonId());
+			seasonWPcap.setProgramName(wpcapBasicDetails.getProgramName());
+			SeasonStatus seasonStatus = seasonStatusRepository.findSeasonStatusByName(wpcapBasicDetails.getProgramStatus());
+			seasonWPcap.setSeasonStatus(seasonStatus);
+			
+			seasonCAPDetailsRepository.saveAndFlush(seasonWPcap);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return  wpcapBasicDetails;
+	}
+
+	public WPCAPInternshipDetails getWPCAPInternshipDetails(String seasonId) {
+		int intSeasonId = Integer.parseInt(seasonId);
+		SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findCAPDetailBySeasonId(intSeasonId);
+		WPCAPInternshipDetails wpcapInternshipDetails =new WPCAPInternshipDetails();
+		wpcapInternshipDetails.setSeasonId(intSeasonId);
+		wpcapInternshipDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getInternAppDeadlineDate()));
+		wpcapInternshipDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getInternEndDate()));
+		wpcapInternshipDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getInternStartDate()));
+
+		return wpcapInternshipDetails;
+	}
+
+	public WPCAPInternshipDetails updateWPCAPInternshipDetails(
+			WPCAPInternshipDetails wpcapInternshipDetails) {
+		try{	
+			SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findCAPDetailBySeasonId(wpcapInternshipDetails.getSeasonId());
+			seasonWPcap.setInternAppDeadlineDate(DateUtils.getDateFromString(wpcapInternshipDetails.getApplicationDeadlineDate()));
+			seasonWPcap.setInternEndDate(DateUtils.getDateFromString(wpcapInternshipDetails.getEndDate()));
+			seasonWPcap.setInternStartDate(DateUtils.getDateFromString(wpcapInternshipDetails.getStartDate()));
+			seasonCAPDetailsRepository.saveAndFlush(seasonWPcap);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return  wpcapInternshipDetails;
+	}
+
+	public WPCAPTraineeDetails getWPCAPTraineeDetails(String seasonId) {
+		int intSeasonId = Integer.parseInt(seasonId);
+		SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findCAPDetailBySeasonId(intSeasonId);
+		WPCAPTraineeDetails wpcapTraineeDetails =new WPCAPTraineeDetails();
+		wpcapTraineeDetails.setSeasonId(intSeasonId);
+		wpcapTraineeDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeAppDeadlineDate()));
+		wpcapTraineeDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeEndDate()));
+		wpcapTraineeDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeStartDate()));
+		return wpcapTraineeDetails;
+	}
+
+	public WPCAPTraineeDetails updateWPCAPTraineeDetails(
+			WPCAPTraineeDetails wpcapTraineeDetails) {
+		try{	
+			SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findCAPDetailBySeasonId(wpcapTraineeDetails.getSeasonId());
+			seasonWPcap.setTraineeAppDeadlineDate(DateUtils.getDateFromString(wpcapTraineeDetails.getApplicationDeadlineDate()));
+			seasonWPcap.setTraineeEndDate(DateUtils.getDateFromString(wpcapTraineeDetails.getEndDate()));
+			seasonWPcap.setTraineeStartDate(DateUtils.getDateFromString(wpcapTraineeDetails.getStartDate()));
+			seasonCAPDetailsRepository.saveAndFlush(seasonWPcap);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return  wpcapTraineeDetails;
 	}
    
 }
