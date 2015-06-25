@@ -68,5 +68,15 @@ public class CCIConstants {
    public static final String HSP_F1_URL = "f1/view/details/";
    public static final String GHT_VA_URL = "ght/va/details/view/";
    public static final String GHT_WA_URL = "ght/wa/details/view/";
+   
+   public static final String DEPT_HIGH_SCHOOL_PROGRAMS = "High School Programs";
+   public static final String DEPT_WORK_PROGRAMS = "Work Programs";
+   public static final String DEPT_GREEN_HEART_TRAVEL = "Greenheart Travel";
+   public static final String DEPT_GREEN_HEART_CLUB = "Greenheart Club";
+   public static final String DEPT_GREEN_HEART_TRANSFORMS = "Greenheart Transforms";
+   public static final String DEPT_ACCOUNTING = "Accounting";
+   public static final String DEPT_SYSTEM= "System";
+   
+   
 
 }

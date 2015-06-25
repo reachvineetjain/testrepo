@@ -119,7 +119,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
          seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
          seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
-         seasonServiceImplUtil.createSeasonProgram(seasonEntity, seasonBean);
+         seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
          return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
