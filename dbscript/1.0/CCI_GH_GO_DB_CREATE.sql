@@ -490,19 +490,6 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonStatus` (
   PRIMARY KEY (`seasonStatusId`)
 );
 
--- ------------------------------------------------------------------------------------------------------------------------------------
--- Table cci_gh_go.AnnualSeason
--- --------------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`AnnualSeason` (
-  `annualSeasonId` INT(3) NOT NULL AUTO_INCREMENT,
-  `annualSeasonName` VARCHAR(50) NOT NULL,
-  `createdOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `createdBy` INT(11) NOT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modifiedBy` INT(11) NOT NULL,
-  `active` TINYINT(1) NOT NULL,
-  PRIMARY KEY (`annualSeasonId`)
-);
  
 -- -----------------------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.Season
@@ -536,10 +523,10 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Season` (
 -- -------------------------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.SeasonWnTDetails
 -- ----------------------------------------------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWnTDetails` (
-  `seasonWTDetailsId` INT NOT NULL AUTO_INCREMENT,
-  `seasonId` INT NOT NULL,
-  `annualSeasonId` INT(3),
+  CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWnTDetails` (
+  `seasonWTDetailsId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) NOT NULL,
+  `departmentProgramId` INT(3) NOT NULL,
   `programName` VARCHAR(45),
   `startDate` DATETIME,
   `endDate` DATETIME,
@@ -553,16 +540,16 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWnTDetails` (
   `modifiedBy` INT(11) ,
   PRIMARY KEY (`seasonWTDetailsId`),
   INDEX `FK_SeasonWPDetails_Season_idx` (`seasonId` ASC),
-  INDEX `FK_seasonWnTdetails_AnnaulSeason_idx` (`annualSeasonId` ASC),
+  INDEX `FK_SeasonWnTdetails_DepartmentPrograms_idx` (`departmentProgramId` ASC),
   INDEX `FK_SeasonWnTDetails_SeasonStatus_idx` (`programStatusId` ASC),
   CONSTRAINT `FK_SeasonWPDetails_Season`
     FOREIGN KEY (`seasonId`)
     REFERENCES `cci_gh_go`.`Season` (`seasonId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_seasonWnTdetails_AnnualSeason`
-    FOREIGN KEY (`annualSeasonId`)
-    REFERENCES `cci_gh_go`.`AnnualSeason` (`annualSeasonId`)
+  CONSTRAINT `FK_seasonWnTdetails_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_SeasonWnTDetails_SeasonStatus`
@@ -607,10 +594,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonCAPDetails` (
 -- Table cci_gh_go.SeasonWPAllocation
 -- ------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWPAllocation` (
-  `seasonWPAllocationId` INT NOT NULL AUTO_INCREMENT,
-  `seasonId` INT NOT NULL,
+  `seasonWPAllocationId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) NOT NULL,
   `departmentProgramOptionId` INT(3),
-  `annualSeasonId` INT(3),
   `maxPax` INT DEFAULT 0,
   `createdOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` INT(11) NOT NULL,
@@ -618,16 +604,10 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWPAllocation` (
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`seasonWPAllocationId`),
   INDEX `FK_SeasonWPAloocation_Season_idx` (`seasonId` ASC),
-  INDEX `FK_SeasonWPAllocation_AnnaulSeason_idx` (`annualSeasonId` ASC),
   INDEX `FK_SeasonWPAllocation_DepartmentProgramOptions_idx` (`departmentProgramOptionId` ASC),
   CONSTRAINT `FK_SeasonWPAllocation_Season`
     FOREIGN KEY (`seasonId`)
     REFERENCES `cci_gh_go`.`Season` (`seasonId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_SeasonWPAllocation_AnnualSeason`
-    FOREIGN KEY (`annualSeasonId`)
-    REFERENCES `cci_gh_go`.`AnnualSeason` (`annualSeasonId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_SeasonWPAllocation_DepartmentProgramOptions`
@@ -683,8 +663,8 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonHSPConfiguration` (
 -- Table cci_gh_go.SeasonJ1Details
 -- -------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonJ1Details` (
-  `seasonJ1DetailsId` INT NOT NULL AUTO_INCREMENT,
-  `seasonId` INT NOT NULL,
+  `seasonJ1DetailsId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) NOT NULL,
   `programName` VARCHAR(45),
   `programStatusId` INT(3),
   `secondSemStartDate` DATETIME,
@@ -723,27 +703,38 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonJ1Details` (
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modifiedBy` INT(11) NOT NULL,
-  PRIMARY KEY (`seasonJ1DetailsId`),
-  INDEX `FK_J1HSPSeason_Season_idx` (`seasonId` ASC),
-  INDEX `FK_SeasonJ1Details_Status_idx` (`programStatusId` ASC),
-  CONSTRAINT `FK_SeasonJ1Details_Season`
-    FOREIGN KEY (`seasonId`)
-    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_SeasonJ1Details_SeasonStatus`
-    FOREIGN KEY (`programStatusId`)
-    REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-);
+   PRIMARY KEY (`seasonJ1DetailsId`),
+   INDEX `FK_J1HSPSeason_Season_idx` (`seasonId` ASC),
+   INDEX `FK_SeasonJ1Details_Status_idx` (`programStatusId` ASC),
+   INDEX `FK_seasonJ1Details_FieldStaffAgreement_idx` (`fsAgreementId` ASC),
+   INDEX `FK_seasonJ1Details_PaymentSchedule_idx` (`lcPaymentScheduleId` ASC),
+   CONSTRAINT `FK_SeasonJ1Details_Season`
+   FOREIGN KEY (`seasonId`)
+   REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+   ON DELETE NO ACTION
+   ON UPDATE NO ACTION,
+   CONSTRAINT `FK_SeasonJ1Details_SeasonStatus`
+   FOREIGN KEY (`programStatusId`)
+   REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
+   ON DELETE NO ACTION
+   ON UPDATE NO ACTION,
+   CONSTRAINT `FK_seasonJ1Details_FieldStaffAgreement`
+   FOREIGN KEY (`fsAgreementId`)
+   REFERENCES cci_gh_go.FieldStaffAgreement (`fieldStaffAgreementId`)
+   ON UPDATE NO ACTION
+   ON DELETE NO ACTION,
+   CONSTRAINT `FK_seasonJ1Details_PaymentSchedule` 
+   FOREIGN KEY (`lcPaymentScheduleId`)
+   REFERENCES cci_gh_go.PaymentSchedule (`paymentScheduleId`)
+   ON UPDATE NO ACTION
+   ON DELETE NO ACTION);
  
 -- -------------------------------------------------------------------------------------------------------------- 
 -- Table cci_gh_go.SeasonF1Details
 -- ------------------------------------------------------------------------------------------------------------------
  CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonF1Details` (
-  `seasonF1DetailsId` INT NOT NULL AUTO_INCREMENT,
-  `seasonId` INT NOT NULL,
+  `seasonF1DetailsId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) NOT NULL,
   `programName`VARCHAR(45),
   `programStatusId` INT(3),
   `secondSemStartDate` DATETIME,
@@ -768,14 +759,14 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonJ1Details` (
   `augFullYearAppDeadlineDate` DATETIME,
   `showAugFullYearToNewHF` TINYINT(1),
   `showSeasonToCurrentHF` TINYINT(1),
-  `lcPaymentScheduleId` INT,
-  `fsAgreementId` INT,
+  `lcPaymentScheduleId` INT(11),
+  `fsAgreementId` INT(11),
   `hfReferences` INT(3),
   `hfInquiryDate` DATE,
   `showWelcomeFamily` TINYINT(1),
   `allowFieldStaffToStartRenewalProcess` TINYINT(1),
   `showSpecialRequestStudent` TINYINT(1),
-  `greenHeartMargin` INT,
+  `greenHeartMargin` INT(11),
   `createdOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -783,17 +774,28 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonJ1Details` (
   PRIMARY KEY (`seasonF1DetailsId`),
   INDEX `FK_J1HSPSeason_Season_idx` (`seasonId` ASC),
   INDEX `FK_SeasonF1Details_status_idx` (`programStatusId` ASC),
+  INDEX `FK_seasonF1Details_FieldStaffAgreement_idx` (`fsAgreementId` ASC),
+  INDEX `FK_seasonF1Details_PaymentSchedule_idx` (`lcPaymentScheduleId` ASC),
   CONSTRAINT `FK_SeasonF1Details_Season`
-    FOREIGN KEY (`seasonId`)
-    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  FOREIGN KEY (`seasonId`)
+  REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
   CONSTRAINT `FK_SeasonF1Details_SeasonStatus`
-    FOREIGN KEY (`programStatusId`)
-    REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-);
+  FOREIGN KEY (`programStatusId`)
+  REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+  CONSTRAINT `FK_seasonF1Details_FieldStaffAgreement`
+  FOREIGN KEY (`fsAgreementId`)
+  REFERENCES `cci_gh_go`.`FieldStaffAgreement` (`fieldStaffAgreementId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION,
+  CONSTRAINT `FK_seasonF1Details_PaymentSchedule` 
+  FOREIGN KEY (`lcPaymentScheduleId`)
+  REFERENCES `cci_gh_go`.`PaymentSchedule` (`paymentScheduleId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION);
 
 -- --------------------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.SeasonHSPAllocation
@@ -1100,3 +1102,172 @@ CONSTRAINT `FK_SeasonProgramNotes_DepartmentPrograms`
     ON UPDATE NO ACTION	
 );
 
+-- -----------------------------------------------------
+-- Table `cci_gh_go`.`DocumentType`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS `cci_gh_go`.`DocumentType` ;
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentType` (
+  `documentTypeId` INT(11) NOT NULL,
+  `documentTypeName` VARCHAR(50) NULL,
+  PRIMARY KEY (`documentTypeId`))
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `cci_gh_go`.`DocumentCategoryProcess`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cci_gh_go`.`DocumentCategoryProcess` ;
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentCategoryProcess` (
+  `documentCategoryProcessId` INT(11) NOT NULL,
+  `documentCategoryProcessName` VARCHAR(50) NULL,
+  PRIMARY KEY (`documentCategoryProcessId`))
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `cci_gh_go`.`DocumentTypeDocumentCategoryProcess`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cci_gh_go`.`DocumentTypeDocumentCategoryProcess` ;
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentTypeDocumentCategoryProcess` (
+  `documentTypeDocumentCategoryProcessId` INT(11) NOT NULL,
+  `documentTypeId` INT(11) NULL,
+  `documentCategoryProcessId` INT(11) NULL,
+  `documentTypeRole` VARCHAR(50) NULL,
+  PRIMARY KEY (`documentTypeDocumentCategoryProcessId`),
+  INDEX `FK_DocumentTypeDocumentCategoryProcess_DocumentType_idx` (`documentTypeId` ASC),
+  INDEX `FK_DocumentTypeDocumentCategoryProcess_DocumentCateogoryPro_idx` (`documentCategoryProcessId` ASC),
+  CONSTRAINT `FK_DocumentTypeDocumentCategoryProcess_DocumentType`
+    FOREIGN KEY (`documentTypeId`)
+    REFERENCES `cci_gh_go`.`DocumentType` (`documentTypeId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_DocumentTypeDocumentCategoryProcess_DocumentCateogoryProcess`
+    FOREIGN KEY (`documentCategoryProcessId`)
+    REFERENCES `cci_gh_go`.`DocumentCategoryProcess` (`documentCategoryProcessId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `cci_gh_go`.`DocumentInformation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cci_gh_go`.`DocumentInformation` ;
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentInformation` (
+  `documentInformationId` INT(11) NOT NULL,
+  `documentTypeDocumentCategoryProcessId` INT(11) NULL,
+  `documentName` VARCHAR(50) NULL,
+  `fileName` VARCHAR(50) NULL,
+  `url` VARCHAR(1000) NULL,
+  `active` TINYINT(1) NULL,
+  `createdOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) NULL,
+  PRIMARY KEY (`documentInformationId`),
+  INDEX `FK_DocumentInformation_DocumentTypeDocumentCategoryProcess_idx` (`documentTypeDocumentCategoryProcessId` ASC),
+  CONSTRAINT `FK_DocumentInformation_DocumentTypeDocumentCategoryProcess`
+    FOREIGN KEY (`documentTypeDocumentCategoryProcessId`)
+    REFERENCES `cci_gh_go`.`DocumentTypeDocumentCategoryProcess` (`documentTypeDocumentCategoryProcessId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonDepartmentDocument`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cci_gh_go`.`SeasonDepartmentDocument` ;
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonDepartmentDocument` (
+  `seasonDepartmentDocumentID` INT(11) NOT NULL,
+  `seasonId` INT NULL,
+  `documentInformationId` INT(11) NULL,
+  `active` TINYINT(1) NULL,
+  `createdOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) NULL,
+  PRIMARY KEY (`seasonDepartmentDocumentID`),
+  INDEX `FK_SeasonDepartmentDocument_Season_idx` (`seasonId` ASC),  
+  INDEX `FK_SeasonDepartmentDocument_DocumentInformation_idx` (`documentInformationId` ASC),
+  CONSTRAINT `FK_SeasonDepartmentDocument_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,  
+  CONSTRAINT `FK_SeasonDepartmentDocument_DocumentInformation`
+    FOREIGN KEY (`documentInformationId`)
+    REFERENCES `cci_gh_go`.`DocumentInformation` (`documentInformationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonProgramDocument`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cci_gh_go`.`SeasonProgramDocument` ;
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonProgramDocument` (
+  `seasonProgramDocumentId` INT(11) NOT NULL,
+  `seasonId` INT NULL,
+  `departmentProgramId` INT NULL,
+  `documentInformationId` INT(11) NULL,
+  `active` TINYINT(1) NULL,
+  `createdOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) NULL,
+  PRIMARY KEY (`seasonProgramDocumentId`),
+  INDEX `FK_SeasonProgramDocument_Season_idx` (`seasonId` ASC),  
+  INDEX `FK_SeasonProgramDocument_DocumentInformation_idx` (`documentInformationId` ASC),
+  INDEX `FK_SeasonProgramDocument_DepartmentPrograms_idx` (`departmentProgramId` ASC),  
+  CONSTRAINT `FK_SeasonProgramDocument_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,  
+  CONSTRAINT `FK_SeasonProgramDocument_DocumentInformation`
+    FOREIGN KEY (`documentInformationId`)
+    REFERENCES `cci_gh_go`.`DocumentInformation` (`documentInformationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonProgramDocument_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `cci_gh_go`.`AddendumDocumentInformation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cci_gh_go`.`AddendumDocumentInformation` ;
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`AddendumDocumentInformation` (
+  `addendumDocumentInformationId` INT(11) NOT NULL,
+  `documentInformationId` INT(11) NOT NULL,
+  `documentName` VARCHAR(50) NULL,
+  `fileName` VARCHAR(50) NULL,
+  `url` VARCHAR(1000) NULL,
+  `active` TINYINT(1) NULL,
+  `updateDate` DATETIME NULL,
+  `createdOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) NULL,
+  PRIMARY KEY (`addendumDocumentInformationId`),
+  INDEX `FK_AddendumDocumentInformation_DocumentInformation_idx` (`documentInformationId` ASC),
+  CONSTRAINT `FK_AddendumDocumentInformation_DocumentInformation`
+    FOREIGN KEY (`documentInformationId`)
+    REFERENCES `cci_gh_go`.`DocumentInformation` (`documentInformationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;

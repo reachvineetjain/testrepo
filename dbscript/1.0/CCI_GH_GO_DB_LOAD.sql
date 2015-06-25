@@ -379,23 +379,37 @@ VALUES
 (3,1,'STP-IHP','Short term program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (4,1,'STP-GHP','Short term greenheart program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (5,1,'STP-SSE','School to school exchange',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(6,2,'CAP','CAP program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(7,2,'W&T-DP','Work and Travel',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(6,2,'W&T Summer','Work and travel summer program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(7,2,'W&T Winter','Work and travel winter program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(8,2,'W&T Spring','Work and travel spring program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(9,2,'W&T CAP','Work and travel CAP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(10,3,'HS Abroad','Highschool abroad',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(11,3,'Language School','Language School',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(12,3,'Teach Abroad','Teach Abroad',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(13,3,'Volunteer Abroad','Volunteer Abroad',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(14,3,'Work Abroad','Work Abroad',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1); 
 
 INSERT INTO `cci_gh_go`.`DepartmentProgramOptions` (`departmentProgramOptionId`, `departmentProgramId`, `programOptionCode`, `programOptionName`) 
 VALUES 
 (1, 1, 'Aug-FY', 'August - Full Year'),
 (2, 1, 'Aug-1Sem', 'August - First Semester'),
+(3, 1, 'Jan-FY', 'January - Full Year'),
 (4, 1, 'Jan-2Sem', 'January - Second Semester'),
-(5, 1, 'Ext', 'Extended'),
-(6, 7, 'JB', 'Job Board'),
-(7, 7, 'SP', 'Self Placed'),
-(8, 7, 'JF', 'Job Fair'),
-(9, 7, 'DP', 'Direct Placement'),
-(11, 6, 'Int-JB', 'Internship - Job Board'),
-(12, 6, 'Trn-JB', 'Trainee - Job Board'),
-(13, 6, 'Int-SP', 'Internship - Self Placed'),
-(14, 6, 'Trn-SP', 'Trainee - Self Placed');
+(5, 2, 'Aug-FY', 'August - Full Year'),
+(7, 2, 'Aug-1Sem', 'August - First Semester'),
+(8, 2, 'Jan-FY', 'January - Full Year'),
+(9, 2, 'Jan-2Sem', 'January - Second Semester'),
+(10, 6, 'JF', 'Job Fair'),
+(11, 6, 'SP', 'Self Placed'),
+(12, 6, 'DP', 'Direct Placement'),
+(13, 7, 'JF', 'Job Fair'),
+(14, 7, 'SP', 'Self Placed'),
+(15, 7, 'DP', 'Direct Placement'),
+(16, 8, 'JF', 'Job Fair'),
+(17, 8, 'SP', 'Self Placed'),
+(18, 8, 'DP', 'Direct Placement'),
+(19, 9,'Int-SP', 'Internship - Self Placed'),
+(20, 9,'Trn-SP', 'Trainee - Self Placed');
 
 INSERT INTO `cci_gh_go`.`DepartmentFunctions`(`deptFunctionID`,`departmentId`,`functionName`,`functionDescription`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
@@ -604,7 +618,14 @@ INSERT INTO `cci_gh_go`.`SeasonStatus` (`seasonStatusId`,`status`,`active`) VALU
 
 INSERT INTO `cci_gh_go`.`Region` (`regionId`,`regionName`,`active`) VALUES (1,'Atlantic',1),(2,'MidWest',1),(3,'west',1),(4,'California',1),(5,'South',1),(6,'Non-Contiguous',1);
 
-INSERT INTO `cci_gh_go`.`AnnualSeason` (`annualSeasonId`,`annualSeasonName`,`createdBy`,`modifiedBy`,`active`) VALUES (1,'SPRING',0,0,1),(2,'WINTER',0,0,1),(3,'SUMMER',0,0,1);
+INSERT INTO cci_gh_go_WIP.FieldStaffAgreement (fieldStaffAgreementId,agreementName)
+                                       VALUES (1,'2009-2010'),(2,'2010-2011'),(3,'2011-2012'),(4,'2012-2013');
+	
+INSERT INTO cci_gh_go_WIP.PaymentSchedule (paymentScheduleId,scheduleName)
+                                   VALUES (1,'Area Representative Stipend Schedule'),
+                                          (2,'PSPP Area Representative Stipend Schedule'),
+                                          (3,'Field Staff Schedule'),
+                                          (4,'PSPP Field Staff Schedule');	
 
 INSERT INTO `cci_gh_go`.`Season` (`seasonName`,`seasonFullName`,`departmentId`,`seasonStatusId`,`createdBy`,`modifiedBy`)
 VALUES ('Summer 2009','W&T-Summer - 2009',2,1,0,0),
@@ -644,25 +665,41 @@ INSERT INTO `cci_gh_go`.`SeasonCAPDetails` (`seasonId`,`programName`,`internStar
         (28,'CAP-2012','2012-01-01 03:11:22','2012-01-01 03:22:22','2012-01-01 03:11:22','2012-01-01 03:11:22','2012-01-01 03:11:22','2012-01-01 03:11:22',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (29,'CAP-2013','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
-INSERT INTO `cci_gh_go`.`SeasonWnTDetails` (`seasonId`,`annualSeasonId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
- VALUES (1,3,'W&T-Summer - 2009','2010-08-15 03:10:22','2011-04-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (2,1,'W&T - Spring 2009','2010-09-15 03:10:22','2011-05-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (10,2,'W&T-Winter - 2014','2010-10-15 03:10:22','2011-06-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (25,1,'W&T - Spring - 2015','2015-01-02 09:11:33','2015-08-31 04:01:22','2015-01-02 09:11:33',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (26,2,'W&T - Winter - 2016','2015-11-01 00:00:00','2016-04-14 00:09:00','2015-11-01 00:00:00',1,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (27,3,'W&T - Summer - 2016','2016-04-15 09:08:10','2016-11-15 00:10:50','2016-04-15 09:08:10',1,11,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+INSERT INTO `cci_gh_go`.`SeasonWnTDetails` (`seasonId`,`departmentProgramId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+ VALUES (1,6,'W&T-Summer - 2009','2010-08-15 03:10:22','2011-04-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (2,8,'W&T - Spring 2009','2010-09-15 03:10:22','2011-05-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (10,7,'W&T-Winter - 2014','2010-10-15 03:10:22','2011-06-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (25,8,'W&T - Spring - 2015','2015-01-02 09:11:33','2015-08-31 04:01:22','2015-01-02 09:11:33',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (26,7,'W&T - Winter - 2016','2015-11-01 00:00:00','2016-04-14 00:09:00','2015-11-01 00:00:00',1,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (27,6,'W&T - Summer - 2016','2016-04-15 09:08:10','2016-11-15 00:10:50','2016-04-15 09:08:10',1,11,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
 INSERT INTO `cci_gh_go`.`SeasonWPAllocation` (`seasonId`,`departmentProgramOptionId`,`maxPax`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
- VALUES (5,11,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (10,7,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (2,8,90,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (6,12,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (1,9,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (25,6,10,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (26,7,99,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (27,7,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (28,11,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (29,12,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+ VALUES (5,19,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (5,20,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (10,13,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(10,14,500,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(10,15,150,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (2,16,90,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(2,17,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(2,18,500,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (6,19,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(6,20,1000,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (1,10,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(1,11,500,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(1,12,250,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (25,16,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(25,17,110,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(25,18,150,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (26,13,99,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(26,14,990,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(26,15,999,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (27,10,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(27,11,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(27,12,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (28,19,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(28,20,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(28,19,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (29,20,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
 INSERT INTO `cci_gh_go`.`SeasonWPConfiguration` (`seasonId`,`seasonStartDate`,`seasonEndDate`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
  VALUES (1,'2010-08-01 03:10:22','2011-04-14 03:10:22',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -691,9 +728,12 @@ INSERT INTO `cci_gh_go`.`SeasonJ1Details` (`seasonId`,`programName`,`programStat
 
         
 INSERT INTO `cci_gh_go`.`SeasonHSPAllocation` (`seasonId`,`maxGuaranteedPax`,`maxUnguaranteedPax`,`departmentProgramOptionId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
- VALUES (4,100,50,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (11,100,25,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-        (3,200,25,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+ VALUES (4,1000,null,5,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (4,1500,null,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (11,600,null,5,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(11,100,null,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(3,20,225,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+        (3,200,250,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
         
 INSERT INTO `cci_gh_go`.`SeasonHSPConfiguration` (`seasonId`,`seasonStartDate`,`seasonEndDate`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
@@ -746,9 +786,60 @@ VALUES (7,'2009-09-01 00:00:00','2011-01-01 00:00:00',CURRENT_TIMESTAMP,1,CURREN
        (22,'2011-06-25 00:00:00','2012-07-02 00:00:00',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
        (23,'2012-06-25 00:00:00','2013-07-03 00:00:00',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
        (24,'2014-06-01 00:00:00','2015-07-04 00:00:00',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+	   
+	   
+INSERT INTO `cci_gh_go`.`SeasonDepartmentNotes` (`departmentId`,`seasonId`,`departmentNote`,`active`,`createdOn`,`CreatedBy`,`modifiedOn`,`modifiedBy`)
+VALUES (2,1,'This is Work&Program Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (2,2,'This is Work&Program Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (1,3,'This is HSP Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (1,4,'This is HSP Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+
        
-
-
+INSERT INTO `cci_gh_go`.`SeasonProgramNotes` (`departmentProgramId`,`seasonId`,`programNote`,`active`,`createdOn`,`CreatedBy`,`modifiedOn`,`modifiedBy`)
+VALUES (7,1,'This is Work&Program Summer Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (7,2,'This is Work&Program Spring Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (1,3,'This is J1 Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (2,4,'This is F1 Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+	   
+INSERT INTO `cci_gh_go`.`DocumentType` (`documentTypeId`,`documentTypeName`)
+VALUES (1,'Terms and Conditions'),
+	   (2,'Admin Document'),
+	   (3,'Budget Sheet for Participants'),
+	   (4,'General Resources'),
+	   (5,'Images');
        
-        
+INSERT INTO `cci_gh_go`.`DocumentCategoryProcess` (`documentCategoryProcessId`,`documentCategoryProcessName`) 
+VALUES (1,'Application Process'),
+	   (2,'Placement Process'),
+	   (3,'Monitoring');
 
+INSERT INTO `cci_gh_go`.`DocumentTypeDocumentCategoryProcess` (`documentTypeDocumentCategoryProcessId`,`documentTypeId`,`documentCategoryProcessId`,`documentTypeRole`) 
+VALUES (1,1,1,'Local Coordinator'),
+	   (2,2,1,'Host Family'),
+	   (3,3,1,'Participant'),
+	   (4,4,3,'Resource');
+
+	   
+INSERT INTO `cci_gh_go`.`DocumentInformation` (`documentInformationId`,`documentTypeDocumentCategoryProcessId`,`documentName`,`fileName`,`url`,`active`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES (1,1,'Cover_Letter.pdf','1174-2-635108825150918506.pdf','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (2,2,'New Rich Text Document.rtf','1754-Admin Document-634279292914845541.pdf','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (3,3,'4059-634549739946557031.doc','4059-099.doc','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (4,4,'Participant Code of Conduct.pdf','100000000000000000.pdf','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+	
+INSERT INTO `cci_gh_go`.`SeasonDepartmentDocument` (`seasonDepartmentDocumentID`,`seasonId`,`documentInformationId`,`active`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES (1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (2,1,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (3,2,3,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (4,3,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+
+INSERT INTO `cci_gh_go`.`SeasonProgramDocument` ( `seasonProgramDocumentId`,`seasonId`,`departmentProgramId`,`documentInformationId`,`active`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES (1,1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (2,1,2,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (3,2,1,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (4,8,6,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+											   
+INSERT INTO `cci_gh_go`.`AddendumDocumentInformation` (`addendumDocumentInformationId`,`documentInformationId`,`documentName`,`fileName`,`url`,`active`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES (1,1,'Cover_Letter.pdf','1174-2-635108825150918506.pdf','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (2,2,'New Rich Text Document.rtf','1754-Admin Document-634279292914845541.pdf','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (3,3,'4059-634549739946557031.doc','4059-099.doc','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	   (4,4,'Participant Code of Conduct.pdf','100000000000000000.pdf','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
