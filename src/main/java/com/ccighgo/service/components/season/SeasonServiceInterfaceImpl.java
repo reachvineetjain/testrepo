@@ -119,7 +119,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
          seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
          seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
-         seasonServiceImplUtil.createSeasonProgram(seasonEntity, seasonBean);
+         seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
          return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -888,6 +888,43 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	public GHTSection2Dates updateGHTHSSection2DatesAbroad(
 			GHTSection2Dates seasonGHTDetails) {
 		return seasonServiceImplUtil.updateGHTHSSection2DatesAbroad(seasonGHTDetails);
+	}
+
+	public GHTSection1Base getGHTLanguageSchoolSection1(String seasonId) {
+		
+		return seasonServiceImplUtil.getGHTLanguageSchoolSection1(seasonId);
+	}
+
+	public GHTSection1Base updateGHTLanguageSchoolSection1(
+			GHTSection1Base seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTLanguageSchoolSection1(seasonGHTDetails);
+	}
+
+	public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonId) {
+		return seasonServiceImplUtil.getGHTLanguageSchoolSection2Dates(seasonId);
+	}
+
+	public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(
+			GHTSection2Dates seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTLanguageSchoolSection2Dates(seasonGHTDetails);
+	}
+
+	public GHTSection1Base getGHTTeachAbroadSection1(String seasonId) {
+		return seasonServiceImplUtil.getGHTTeachAbroadSection1(seasonId);
+	}
+
+	public GHTSection1Base updateGHTTeachAbroadSection1(
+			GHTSection1Base seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTTeachAbroadSection1(seasonGHTDetails);
+	}
+
+	public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonId) {
+		return seasonServiceImplUtil.getGHTTeachAbroadSection2Dates(seasonId);
+	}
+
+	public GHTSection2Dates updateGHTTeachAbroadSection2Dates(
+			GHTSection2Dates seasonGHTDetails) {
+		return seasonServiceImplUtil.updateGHTTeachAbroadSection2Dates(seasonGHTDetails);
 	}
 
 }

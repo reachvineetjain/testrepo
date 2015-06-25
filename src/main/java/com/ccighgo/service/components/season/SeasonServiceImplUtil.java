@@ -34,6 +34,8 @@ import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonTADetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonVADetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonWADetailsRepository;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -86,6 +88,10 @@ public class SeasonServiceImplUtil {
 	SeasonLSDetailsRepository seasonLSDetailsRepository;
    @Autowired
    SeasonTADetailsRepository seasonTADetailsRepository;
+   @Autowired
+   SeasonVADetailsRepository seasonVADetailsRepository;
+   @Autowired
+   SeasonWADetailsRepository seasonWADetailsRepository;
    private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
 
    /**
@@ -532,12 +538,97 @@ public class SeasonServiceImplUtil {
       return hspf1ProgramAllocations;
    }
 
-   public void createSeasonProgram(Season seasonEntity, SeasonBean seasonBean) {
-      createHSPF1Season(seasonEntity, seasonBean);
-      createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
+   public void createSeasonPrograms(Season seasonEntity, SeasonBean seasonBean) {
+	   LookupDepartment lookupDepartment = seasonEntity.getLookupDepartment();
+	   String departmentName = lookupDepartment.getDepartmentName();
+		if( departmentName.equals(CCIConstants.DEPT_ACCOUNTING)){}
+		else if( departmentName.equals(CCIConstants.DEPT_GREEN_HEART_CLUB)){}
+		else if( departmentName.equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)){
+			createGHTVolunteerAbroad(seasonEntity,seasonBean);
+			createGHTWorkAbroad(seasonEntity,seasonBean);
+			createGHTHSAbroad(seasonEntity,seasonBean);
+			createGHTLanguageSchool(seasonEntity,seasonBean);
+			createGHTTeachAbroad(seasonEntity,seasonBean);
+		}
+		else if( departmentName.equals(CCIConstants.DEPT_GREEN_HEART_TRANSFORMS)){}		
+		else if( departmentName.equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)){
+				createHSPF1Season(seasonEntity, seasonBean);
+				createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);			
+		}
+		else if( departmentName.equals( CCIConstants.DEPT_SYSTEM)){}		
+		else if( departmentName.equals(CCIConstants.DEPT_WORK_PROGRAMS)){}		
    }
 
-   private void createHSPF1Season(Season seasonEntity, SeasonBean seasonBean) {
+	 private void createGHTTeachAbroad(Season seasonEntity, SeasonBean seasonBean) {
+		  if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
+			  SeasonTADetail seasonTADetail =new SeasonTADetail();
+			  seasonTADetail.setSeason(seasonEntity);
+			  seasonTADetail.setProgramName(seasonBean.getSeasonName());
+			  seasonTADetail.setCreatedBy(1);
+			  seasonTADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonTADetail.setModifiedBy(1);
+			  seasonTADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonTADetailsRepository.saveAndFlush(seasonTADetail);
+		  }
+		
+	}
+	
+	private void createGHTLanguageSchool(Season seasonEntity, SeasonBean seasonBean) {
+		  if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
+			  SeasonLSDetail seasonLSDetail =new SeasonLSDetail();
+			  seasonLSDetail.setSeason(seasonEntity);
+			  seasonLSDetail.setProgramName(seasonBean.getSeasonName());
+			  seasonLSDetail.setCreatedBy(1);
+			  seasonLSDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonLSDetail.setModifiedBy(1);
+			  seasonLSDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonLSDetailsRepository.saveAndFlush(seasonLSDetail);
+		  }
+		
+	}
+	
+	private void createGHTHSAbroad(Season seasonEntity, SeasonBean seasonBean) {
+		  if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
+			  SeasonHSADetail seasonHSADetail =new SeasonHSADetail();
+			  seasonHSADetail.setSeason(seasonEntity);
+			  seasonHSADetail.setProgramName(seasonBean.getSeasonName());
+			  seasonHSADetail.setCreatedBy(1);
+			  seasonHSADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonHSADetail.setModifiedBy(1);
+			  seasonHSADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonHSADetailsRepository.saveAndFlush(seasonHSADetail);
+		  }
+		
+	}
+	
+	private void createGHTWorkAbroad(Season seasonEntity, SeasonBean seasonBean) {
+		  if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
+			  SeasonWADetail seasonWADetail =new SeasonWADetail();
+			  seasonWADetail.setSeason(seasonEntity);
+			  seasonWADetail.setProgramName(seasonBean.getSeasonName());
+			  seasonWADetail.setCreatedBy(1);
+			  seasonWADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonWADetail.setModifiedBy(1);
+			  seasonWADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+			  seasonWADetailsRepository.saveAndFlush(seasonWADetail);
+		  }
+		
+	}
+	
+	private void createGHTVolunteerAbroad(Season seasonEntity, SeasonBean seasonBean) {
+	  if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
+		  SeasonVADetail seasonVADetail =new SeasonVADetail();
+		  seasonVADetail.setSeason(seasonEntity);
+		  seasonVADetail.setProgramName(seasonBean.getSeasonName());
+		  seasonVADetail.setCreatedBy(1);
+		  seasonVADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+		  seasonVADetail.setModifiedBy(1);
+		  seasonVADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+		  seasonVADetailsRepository.saveAndFlush(seasonVADetail);
+	  }
+	}
+
+private void createHSPF1Season(Season seasonEntity, SeasonBean seasonBean) {
       if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
          SeasonF1Detail seasonF1Detail = new SeasonF1Detail();
          seasonF1Detail.setSeason(seasonEntity);
@@ -959,6 +1050,124 @@ public SeasonGHTDetails getGHTHSAbroad(SeasonHSADetail seasonHSADetail) {
 			seasonHSADetail.setStartDate(DateUtils.getDateFromString(ghtSection2Dates.getStartDate()));
 			seasonHSADetail.setEndDate(DateUtils.getDateFromString(ghtSection2Dates.getEndDate()));
 			seasonHSADetailsRepository.saveAndFlush(seasonHSADetail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return ghtSection2Dates;
+	}
+
+	public GHTSection1Base getGHTLanguageSchoolSection1(String seasonId) {
+		SeasonLSDetail seasonLSDetail = seasonLSDetailsRepository.findGHTLSBySeasonId(Integer.parseInt(seasonId));
+		if(seasonLSDetail==null){
+			return null;
+		}
+		GHTSection1Base ghtSection1Base=new GHTSection1Base();
+		ghtSection1Base.setProgramName(seasonLSDetail.getProgramName());
+		ghtSection1Base.setProgramStatus(seasonLSDetail.getSeasonStatus().getStatus());
+		ghtSection1Base.setSeasonId(Integer.parseInt(seasonId));
+		return ghtSection1Base;
+	}
+
+	public GHTSection1Base updateGHTLanguageSchoolSection1(
+			GHTSection1Base seasonGHTSection1Base) {
+		try{
+			SeasonLSDetail seasonLsADetail = seasonLSDetailsRepository.findGHTLSBySeasonId(seasonGHTSection1Base.getSeasonId());
+			if(seasonLsADetail==null){
+				return null;
+			}
+			seasonLsADetail.setProgramName(seasonGHTSection1Base.getProgramName());
+			seasonLsADetail.setSeasonStatus(seasonStatusRepository.getSeasonStatusByName(seasonGHTSection1Base.getProgramStatus()));
+			
+			seasonLSDetailsRepository.saveAndFlush(seasonLsADetail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return seasonGHTSection1Base;
+	}
+
+	public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonId) {
+		SeasonLSDetail seasonLsADetail = seasonLSDetailsRepository.findGHTLSBySeasonId(Integer.parseInt(seasonId));		
+		if(seasonLsADetail==null){
+			return null;
+		}
+		GHTSection2Dates ghtSection2Dates=new GHTSection2Dates();
+		ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonLsADetail.getEndDate()));
+		ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonLsADetail.getStartDate()));
+		ghtSection2Dates.setSeasonId(Integer.parseInt(seasonId));
+		return ghtSection2Dates;
+	}
+
+	public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(
+			GHTSection2Dates ghtSection2Dates) {
+		try{
+			SeasonLSDetail seasonLsADetail = seasonLSDetailsRepository.findGHTLSBySeasonId(ghtSection2Dates.getSeasonId());		
+			if(seasonLsADetail==null){
+				return null;
+			}
+			seasonLsADetail.setStartDate(DateUtils.getDateFromString(ghtSection2Dates.getStartDate()));
+			seasonLsADetail.setEndDate(DateUtils.getDateFromString(ghtSection2Dates.getEndDate()));
+			seasonLSDetailsRepository.saveAndFlush(seasonLsADetail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return ghtSection2Dates;
+	}
+
+	public GHTSection1Base getGHTTeachAbroadSection1(String seasonId) {
+		SeasonTADetail seasonTADetail = seasonTADetailsRepository.findGHTTABySeasonId(Integer.parseInt(seasonId));
+		if(seasonTADetail==null){
+			return null;
+		}
+		GHTSection1Base ghtSection1Base=new GHTSection1Base();
+		ghtSection1Base.setProgramName(seasonTADetail.getProgramName());
+		ghtSection1Base.setProgramStatus(seasonTADetail.getSeasonStatus().getStatus());
+		ghtSection1Base.setSeasonId(Integer.parseInt(seasonId));
+		return ghtSection1Base;
+	}
+
+	public GHTSection1Base updateGHTTeachAbroadSection1(
+			GHTSection1Base seasonSection1Base) {
+		try{
+			SeasonTADetail seasonTADetail = seasonTADetailsRepository.findGHTTABySeasonId(seasonSection1Base.getSeasonId());
+			if(seasonTADetail==null){
+				return null;
+			}
+			seasonTADetail.setProgramName(seasonSection1Base.getProgramName());
+			seasonTADetail.setSeasonStatus(seasonStatusRepository.getSeasonStatusByName(seasonSection1Base.getProgramStatus()));
+			
+			seasonTADetailsRepository.saveAndFlush(seasonTADetail);
+		}catch(Exception ex){
+			ExceptionUtil.logException(ex, logger);
+			return null;
+		}
+		return seasonSection1Base;
+	}
+
+	public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonId) {
+		SeasonTADetail seasonTADetail = seasonTADetailsRepository.findGHTTABySeasonId(Integer.parseInt(seasonId));
+		if(seasonTADetail==null){
+			return null;
+		}
+		GHTSection2Dates ghtSection2Dates=new GHTSection2Dates();
+		ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonTADetail.getEndDate()));
+		ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonTADetail.getStartDate()));
+		ghtSection2Dates.setSeasonId(Integer.parseInt(seasonId));
+		return ghtSection2Dates;
+	}
+
+	public GHTSection2Dates updateGHTTeachAbroadSection2Dates(
+			GHTSection2Dates ghtSection2Dates) {
+		try{
+			SeasonTADetail seasonTADetail = seasonTADetailsRepository.findGHTTABySeasonId(ghtSection2Dates.getSeasonId());
+			if(seasonTADetail==null){
+				return null;
+			}
+			seasonTADetail.setStartDate(DateUtils.getDateFromString(ghtSection2Dates.getStartDate()));
+			seasonTADetail.setEndDate(DateUtils.getDateFromString(ghtSection2Dates.getEndDate()));
+			seasonTADetailsRepository.saveAndFlush(seasonTADetail);
 		}catch(Exception ex){
 			ExceptionUtil.logException(ex, logger);
 			return null;
