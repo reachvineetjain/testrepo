@@ -35,6 +35,10 @@ import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Janua
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1ProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.SeasonHSPF1Details;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 
 @Path("/season/")
 @Produces("application/json")
@@ -638,8 +642,8 @@ public class Seasons {
    @POST
    @Path("ght/hsa/update/sec1")
    @Produces("application/json")
-   public GHTSection1Base updateGHTHSSection1BaseAbroad(GHTSection1Base seasonGHTDetails){
-	   return seasonServices.updateGHTHSSection1BaseAbroad(seasonGHTDetails);
+   public GHTSection1Base updateGHTHSSection1BaseAbroad(GHTSection1Base ghtSection1Base){
+	   return seasonServices.updateGHTHSSection1BaseAbroad(ghtSection1Base);
    }
    
    @GET
@@ -658,8 +662,8 @@ public class Seasons {
    @POST
    @Path("ght/hsa/update/datesec")
    @Produces("application/json")
-   public GHTSection2Dates updateGHTHSSection2DatesAbroad(GHTSection2Dates seasonGHTDetails){
-	   return seasonServices.updateGHTHSSection2DatesAbroad(seasonGHTDetails);
+   public GHTSection2Dates updateGHTHSSection2DatesAbroad(GHTSection2Dates ghtSection2Dates){
+	   return seasonServices.updateGHTHSSection2DatesAbroad(ghtSection2Dates);
    }
    
    // LS 
@@ -722,8 +726,8 @@ public class Seasons {
    @POST
    @Path("ght/ls/update/datesec")
    @Produces("application/json")
-   public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(GHTSection2Dates seasonGHTDetails){
-	   return seasonServices.updateGHTLanguageSchoolSection2Dates(seasonGHTDetails);
+   public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(GHTSection2Dates ghtSection2Dates){
+	   return seasonServices.updateGHTLanguageSchoolSection2Dates(ghtSection2Dates);
    }
    
    
@@ -766,8 +770,8 @@ public class Seasons {
    @POST
    @Path("ght/ta/update/sec1")
    @Produces("application/json")
-   public GHTSection1Base updateGHTTeachAbroadSection1(GHTSection1Base seasonGHTDetails){
-	   return seasonServices.updateGHTTeachAbroadSection1(seasonGHTDetails);
+   public GHTSection1Base updateGHTTeachAbroadSection1(GHTSection1Base ghtSection1Base){
+	   return seasonServices.updateGHTTeachAbroadSection1(ghtSection1Base);
    }
    
    @GET
@@ -786,8 +790,93 @@ public class Seasons {
    @POST
    @Path("ght/ta/update/datesec")
    @Produces("application/json")
-   public GHTSection2Dates updateGHTTeachAbroadSection2Dates(GHTSection2Dates seasonGHTDetails){
-	   return seasonServices.updateGHTTeachAbroadSection2Dates(seasonGHTDetails);
+   public GHTSection2Dates updateGHTTeachAbroadSection2Dates(GHTSection2Dates ghtSection2Dates){
+	   return seasonServices.updateGHTTeachAbroadSection2Dates(ghtSection2Dates);
    }
+   
+   // work program --> Cap
+   @GET
+   @Path("wp/cap/view/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPCAPDetails getWPCAPDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPCAPDetails(seasonId);
+   }
+   @GET
+   @Path("wp/cap/edit/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPCAPDetails editWPCAPDetails(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getWPCAPDetails(seasonId);
+   }
+   
+   @POST
+   @Path("wp/cap/update/details")
+   @Produces("application/json")
+   public SeasonWPCAPDetails updateWPCAPDetails(SeasonWPCAPDetails seasonWPCAPDetails){
+	   return seasonServices.updateWPCAPDetails(seasonWPCAPDetails);
+   }
+   //basic
+   @GET
+   @Path("wp/cap/view/basic/details/{seasonId}")
+   @Produces("application/json")
+   public WPCAPBasicDetails getWPCAPBasicDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPCAPBasicDetails(seasonId);
+   }
+   @GET
+   @Path("wp/cap/edit/basic/details/{seasonId}")
+   @Produces("application/json")
+   public WPCAPBasicDetails editWPCAPBasicDetails(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getWPCAPBasicDetails(seasonId);
+   }
+   
+   @POST
+   @Path("wp/cap/update/basic/details")
+   @Produces("application/json")
+   public WPCAPBasicDetails updateWPCAPBasicDetails(WPCAPBasicDetails seasonWpcapBasicDetails){
+	   return seasonServices.updateWPCAPBasicDetails(seasonWpcapBasicDetails);
+   }
+   
+   
+   // internship
+   @GET
+   @Path("wp/cap/view/internship/details/{seasonId}")
+   @Produces("application/json")
+   public WPCAPInternshipDetails getWPCAPInternshipDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPCAPInternshipDetails(seasonId);
+   }
+   @GET
+   @Path("wp/cap/edit/internship/details/{seasonId}")
+   @Produces("application/json")
+   public WPCAPInternshipDetails editWPCAPInternshipDetails(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getWPCAPInternshipDetails(seasonId);
+   }
+   
+   @POST
+   @Path("wp/cap/update/internship/details")
+   @Produces("application/json")
+   public WPCAPInternshipDetails updateWPCAPInternshipDetails(WPCAPInternshipDetails wpcapInternshipDetails){
+	   return seasonServices.updateWPCAPInternshipDetails(wpcapInternshipDetails);
+   }
+   
+   // trainee details
+   @GET
+   @Path("wp/cap/view/trainee/details/{seasonId}")
+   @Produces("application/json")
+   public WPCAPTraineeDetails getWPCAPTraineeDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPCAPTraineeDetails(seasonId);
+   }
+   @GET
+   @Path("wp/cap/edit/trainee/details/{seasonId}")
+   @Produces("application/json")
+   public WPCAPTraineeDetails editWPCAPTraineeDetails(@PathParam("seasonId") String seasonId){
+	   return seasonServices.getWPCAPTraineeDetails(seasonId);
+   }
+   
+   @POST
+   @Path("wp/cap/update/trainee/details")
+   @Produces("application/json")
+   public WPCAPTraineeDetails updateWPCAPTraineeDetails(WPCAPTraineeDetails wpcapTraineeDetails){
+	   return seasonServices.updateWPCAPTraineeDetails(wpcapTraineeDetails);
+   }
+   
    
 }

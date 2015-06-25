@@ -214,5 +214,14 @@
 			<arg value="${xsd.dir}/SeasonGHTDetails.xsd" />
 		</java>
 	</target>
+	
+	<!-- Season WP CAP -->
+	<target name="SeasonWPCAPDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonWPCAPDetails.xsd" />
+		</java>
+	</target>
 
 </project>
