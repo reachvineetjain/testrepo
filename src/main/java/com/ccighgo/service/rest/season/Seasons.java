@@ -24,6 +24,9 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgr
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStart1StSemesterDetails;
@@ -878,5 +881,295 @@ public class Seasons {
 	   return seasonServices.updateWPCAPTraineeDetails(wpcapTraineeDetails);
    }
    
+   
+   //Season WP summer, winter and spring services
+   
+   //wp summer full details
+   
+   @GET
+   @Path("wp/summer/view/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPDetails getWPSumDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSumDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/edit/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPDetails editWPSumDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSumDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/update/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SeasonWPDetails updateWPSumDetails(SeasonWPDetails seasonWPDetails){
+      return seasonServices.updateWPSumDetails(seasonWPDetails);
+   }
+   
+   //wp summer basic details
+   
+   @GET
+   @Path("wp/summer/view/base/details/{seasonId}")
+   @Produces("application/json")
+   public WPBasicDetail getWPSumBaseDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSumBaseDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/edit/base/details/{seasonId}")
+   @Produces("application/json")
+   public WPBasicDetail editWPSumBaseDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSumBaseDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/update/base/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPBasicDetail updateWPSumBaseDetails(WPBasicDetail wpBasicDetail){
+      return seasonServices.updateWPSumBaseDetails(wpBasicDetail);
+   }
+   
+   //wp summer section 1 details
+   
+   @GET
+   @Path("wp/summer/view/section/one/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne getWPSumSectionOneDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSumSectionOneDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/edit/section/one/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne editWPSumSectionOneDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSumSectionOneDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/update/section/one/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne){
+      return seasonServices.updateWPSumSectionOneDetails(wpSectionOne);
+   }
+   
+   //wp summer allocation details
+   
+   @GET
+   @Path("wp/summer/view/allocation/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne getWPSumAllocationDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSumAllocationDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/edit/allocation/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne editWPSumAllocationDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSumAllocationDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/summer/update/allocation/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPSectionOne updateWPSumAllocationDetails(WPSectionOne wpSectionOne){
+      return seasonServices.updateWPSumAllocationDetails(wpSectionOne);
+   }
+   
+   //wp spring full details
+   
+   @GET
+   @Path("wp/spring/view/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPDetails getWPSpringDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSpringDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/edit/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPDetails editWPSpringDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSpringDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/update/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SeasonWPDetails updateWPSpringDetails(SeasonWPDetails seasonWPDetails){
+      return seasonServices.updateWPSpringDetails(seasonWPDetails);
+   }
+   
+   //wp spring basic details
+   
+   @GET
+   @Path("wp/spring/view/base/details/{seasonId}")
+   @Produces("application/json")
+   public WPBasicDetail getWPSpringBaseDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSpringBaseDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/edit/base/details/{seasonId}")
+   @Produces("application/json")
+   public WPBasicDetail editWPSpringBaseDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSpringBaseDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/update/base/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPBasicDetail updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail){
+      return seasonServices.updateWPSpringBaseDetails(wpBasicDetail);
+   }
+   
+   //wp spring section 1 details
+   
+   @GET
+   @Path("wp/spring/view/section/one/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne getWPSpringSectionOneDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSpringSectionOneDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/edit/section/one/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne editWPSpringSectionOneDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSpringSectionOneDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/update/section/one/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPSectionOne updateWPSpringSectionOneDetails(WPSectionOne wpSectionOne){
+      return seasonServices.updateWPSpringSectionOneDetails(wpSectionOne);
+   }
+   
+   //wp spring allocation details
+   
+   @GET
+   @Path("wp/spring/view/allocation/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne getWPSpringAllocationDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPSpringAllocationDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/edit/allocation/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne editWPSpringAllocationDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPSpringAllocationDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/spring/update/allocation/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPSectionOne updateWPSpringAllocationDetails(WPSectionOne wpSectionOne){
+      return seasonServices.updateWPSpringAllocationDetails(wpSectionOne);
+   }
+   
+   //wp winter full details
+   
+   @GET
+   @Path("wp/winter/view/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPDetails getWPWinterDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPWinterDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/edit/details/{seasonId}")
+   @Produces("application/json")
+   public SeasonWPDetails editWPWinterDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPWinterDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/update/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SeasonWPDetails updateWPWinterDetails(SeasonWPDetails seasonWPDetails){
+      return seasonServices.updateWPWinterDetails(seasonWPDetails);
+   }
+   
+   //wp winter basic details
+   
+   @GET
+   @Path("wp/winter/view/base/details/{seasonId}")
+   @Produces("application/json")
+   public WPBasicDetail getWPWinterBaseDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPWinterBaseDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/edit/base/details/{seasonId}")
+   @Produces("application/json")
+   public WPBasicDetail editWPWinterBaseDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPWinterBaseDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/update/base/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPBasicDetail updateWPWinterBaseDetails(WPBasicDetail wpBasicDetail){
+      return seasonServices.updateWPWinterBaseDetails(wpBasicDetail);
+   }
+   
+   //wp winter section 1 details
+   
+   @GET
+   @Path("wp/winter/view/section/one/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne getWPWinterSectionOneDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPWinterSectionOneDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/edit/section/one/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne editWPWinterSectionOneDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPWinterSectionOneDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/update/section/one/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPSectionOne updateWPWinterSectionOneDetails(WPSectionOne wpSectionOne){
+      return seasonServices.updateWPWinterSectionOneDetails(wpSectionOne);
+   }
+   
+   //wp winter allocation details
+   
+   @GET
+   @Path("wp/winter/view/allocation/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne getWPWinterAllocationDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.getWPWinterAllocationDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/edit/allocation/details/{seasonId}")
+   @Produces("application/json")
+   public WPSectionOne editWPWinterAllocationDetails(@PathParam("seasonId") String seasonId){
+      return seasonServices.editWPWinterAllocationDetails(seasonId);
+   }
+   
+   @GET
+   @Path("wp/winter/update/allocation/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne){
+      return seasonServices.updateWPWinterAllocationDetails(wpSectionOne);
+   }
    
 }

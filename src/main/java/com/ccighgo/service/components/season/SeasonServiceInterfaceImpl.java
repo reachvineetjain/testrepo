@@ -40,6 +40,9 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHsp
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStart1StSemesterDetails;
@@ -1415,5 +1418,185 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 		}
 		return null;
 	}
+
+   public SeasonWPDetails getWPSumDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails editWPSumDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails updateWPSumDetails(SeasonWPDetails seasonWPDetails) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail getWPSumBaseDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail editWPSumBaseDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail updateWPSumBaseDetails(WPBasicDetail wpBasicDetail) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne getWPSumSectionOneDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne editWPSumSectionOneDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne getWPSumAllocationDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne editWPSumAllocationDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne updateWPSumAllocationDetails(WPSectionOne wpSectionOne) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails getWPSpringDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails editWPSpringDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails updateWPSpringDetails(SeasonWPDetails seasonWPDetails) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail getWPSpringBaseDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail editWPSpringBaseDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne getWPSpringSectionOneDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne editWPSpringSectionOneDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne updateWPSpringSectionOneDetails(WPSectionOne wpSectionOne) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne getWPSpringAllocationDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne editWPSpringAllocationDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne updateWPSpringAllocationDetails(WPSectionOne wpSectionOne) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails getWPWinterDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails editWPWinterDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public SeasonWPDetails updateWPWinterDetails(SeasonWPDetails seasonWPDetails) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail getWPWinterBaseDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail editWPWinterBaseDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPBasicDetail updateWPWinterBaseDetails(WPBasicDetail wpBasicDetail) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne getWPWinterSectionOneDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne editWPWinterSectionOneDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne updateWPWinterSectionOneDetails(WPSectionOne wpSectionOne) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne getWPWinterAllocationDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne editWPWinterAllocationDetails(String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
 }
