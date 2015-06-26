@@ -6,56 +6,54 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the SeasonProgramNotes database table.
+ * The persistent class for the SeasonProgramDocument database table.
  * 
  */
 @Entity
-@Table(name="SeasonProgramNotes")
-@NamedQuery(name="SeasonProgramNote.findAll", query="SELECT s FROM SeasonProgramNote s")
-public class SeasonProgramNote implements Serializable {
+@Table(name="SeasonProgramDocument")
+@NamedQuery(name="SeasonProgramDocument.findAll", query="SELECT s FROM SeasonProgramDocument s")
+public class SeasonProgramDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	private int seasonProgramNotesId;
+	private int seasonProgramDocumentId;
 
 	private byte active;
 
-	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private int modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
-
-	@Column(length=1000)
-	private String programNote;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
 
+	//bi-directional many-to-one association to DocumentInformation
+	@ManyToOne
+	@JoinColumn(name="documentInformationId")
+	private DocumentInformation documentInformation;
+
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
-	public SeasonProgramNote() {
+	public SeasonProgramDocument() {
 	}
 
-	public int getSeasonProgramNotesId() {
-		return this.seasonProgramNotesId;
+	public int getSeasonProgramDocumentId() {
+		return this.seasonProgramDocumentId;
 	}
 
-	public void setSeasonProgramNotesId(int seasonProgramNotesId) {
-		this.seasonProgramNotesId = seasonProgramNotesId;
+	public void setSeasonProgramDocumentId(int seasonProgramDocumentId) {
+		this.seasonProgramDocumentId = seasonProgramDocumentId;
 	}
 
 	public byte getActive() {
@@ -98,20 +96,20 @@ public class SeasonProgramNote implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getProgramNote() {
-		return this.programNote;
-	}
-
-	public void setProgramNote(String programNote) {
-		this.programNote = programNote;
-	}
-
 	public DepartmentProgram getDepartmentProgram() {
 		return this.departmentProgram;
 	}
 
 	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
 		this.departmentProgram = departmentProgram;
+	}
+
+	public DocumentInformation getDocumentInformation() {
+		return this.documentInformation;
+	}
+
+	public void setDocumentInformation(DocumentInformation documentInformation) {
+		this.documentInformation = documentInformation;
 	}
 
 	public Season getSeason() {

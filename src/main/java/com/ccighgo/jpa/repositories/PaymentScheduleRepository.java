@@ -1,15 +1,18 @@
+/**
+ * 
+ */
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.AnnualSeason;
+import com.ccighgo.db.entities.PaymentSchedule;
 
 /**
- * 
- * @author Ahmed Abdelmaaboud
+ * @author ravi
  *
  */
 @Repository
-public interface AnnualSeasonRepository extends JpaRepository<AnnualSeason, Integer> {
+public interface PaymentScheduleRepository extends JpaRepository<PaymentSchedule, Integer> {
+
 }

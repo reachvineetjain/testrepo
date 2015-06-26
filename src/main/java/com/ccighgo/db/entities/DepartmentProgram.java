@@ -22,6 +22,7 @@ public class DepartmentProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private int departmentProgramId;
 
@@ -56,6 +57,10 @@ public class DepartmentProgram implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="departmentId", nullable=false)
 	private LookupDepartment lookupDepartment;
+
+	//bi-directional many-to-one association to SeasonProgramDocument
+	@OneToMany(mappedBy="departmentProgram")
+	private List<SeasonProgramDocument> seasonProgramDocuments;
 
 	//bi-directional many-to-one association to SeasonProgramNote
 	@OneToMany(mappedBy="departmentProgram")
@@ -170,6 +175,28 @@ public class DepartmentProgram implements Serializable {
 
 	public void setLookupDepartment(LookupDepartment lookupDepartment) {
 		this.lookupDepartment = lookupDepartment;
+	}
+
+	public List<SeasonProgramDocument> getSeasonProgramDocuments() {
+		return this.seasonProgramDocuments;
+	}
+
+	public void setSeasonProgramDocuments(List<SeasonProgramDocument> seasonProgramDocuments) {
+		this.seasonProgramDocuments = seasonProgramDocuments;
+	}
+
+	public SeasonProgramDocument addSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+		getSeasonProgramDocuments().add(seasonProgramDocument);
+		seasonProgramDocument.setDepartmentProgram(this);
+
+		return seasonProgramDocument;
+	}
+
+	public SeasonProgramDocument removeSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+		getSeasonProgramDocuments().remove(seasonProgramDocument);
+		seasonProgramDocument.setDepartmentProgram(null);
+
+		return seasonProgramDocument;
 	}
 
 	public List<SeasonProgramNote> getSeasonProgramNotes() {

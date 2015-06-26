@@ -7,33 +7,36 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the SeasonTADetails database table.
+ * The persistent class for the SeasonWnTSpringDetails database table.
  * 
  */
 @Entity
-@Table(name="SeasonTADetails")
-@NamedQuery(name="SeasonTADetail.findAll", query="SELECT s FROM SeasonTADetail s")
-public class SeasonTADetail implements Serializable {
+@Table(name="SeasonWnTSpringDetails")
+@NamedQuery(name="SeasonWnTSpringDetail.findAll", query="SELECT s FROM SeasonWnTSpringDetail s")
+public class SeasonWnTSpringDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	private int seasonTADetailsId;
+	private int seasonWnTSpringDetailsId;
 
-	@Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date applicationDeadlineDate;
+
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
-	@Column(nullable=false)
+	private byte isJobBoardOpen;
+
+	private int maxPendingJobApps;
+
 	private int modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=45)
@@ -52,15 +55,23 @@ public class SeasonTADetail implements Serializable {
 	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
-	public SeasonTADetail() {
+	public SeasonWnTSpringDetail() {
 	}
 
-	public int getSeasonTADetailsId() {
-		return this.seasonTADetailsId;
+	public int getSeasonWnTSpringDetailsId() {
+		return this.seasonWnTSpringDetailsId;
 	}
 
-	public void setSeasonTADetailsId(int seasonTADetailsId) {
-		this.seasonTADetailsId = seasonTADetailsId;
+	public void setSeasonWnTSpringDetailsId(int seasonWnTSpringDetailsId) {
+		this.seasonWnTSpringDetailsId = seasonWnTSpringDetailsId;
+	}
+
+	public Date getApplicationDeadlineDate() {
+		return this.applicationDeadlineDate;
+	}
+
+	public void setApplicationDeadlineDate(Date applicationDeadlineDate) {
+		this.applicationDeadlineDate = applicationDeadlineDate;
 	}
 
 	public int getCreatedBy() {
@@ -85,6 +96,22 @@ public class SeasonTADetail implements Serializable {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public byte getIsJobBoardOpen() {
+		return this.isJobBoardOpen;
+	}
+
+	public void setIsJobBoardOpen(byte isJobBoardOpen) {
+		this.isJobBoardOpen = isJobBoardOpen;
+	}
+
+	public int getMaxPendingJobApps() {
+		return this.maxPendingJobApps;
+	}
+
+	public void setMaxPendingJobApps(int maxPendingJobApps) {
+		this.maxPendingJobApps = maxPendingJobApps;
 	}
 
 	public int getModifiedBy() {

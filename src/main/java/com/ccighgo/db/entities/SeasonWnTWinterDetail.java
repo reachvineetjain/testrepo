@@ -7,18 +7,19 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the SeasonWnTDetails database table.
+ * The persistent class for the SeasonWnTWinterDetails database table.
  * 
  */
 @Entity
-@Table(name="SeasonWnTDetails")
-@NamedQuery(name="SeasonWnTDetail.findAll", query="SELECT s FROM SeasonWnTDetail s")
-public class SeasonWnTDetail implements Serializable {
+@Table(name="SeasonWnTWinterDetails")
+@NamedQuery(name="SeasonWnTWinterDetail.findAll", query="SELECT s FROM SeasonWnTWinterDetail s")
+public class SeasonWnTWinterDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	private int seasonWTDetailsId;
+	private int seasonWnTWinterDetailsId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date applicationDeadlineDate;
@@ -44,11 +45,6 @@ public class SeasonWnTDetail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
 
-	//bi-directional many-to-one association to AnnualSeason
-	@ManyToOne
-	@JoinColumn(name="annualSeasonId")
-	private AnnualSeason annualSeason;
-
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
@@ -59,15 +55,15 @@ public class SeasonWnTDetail implements Serializable {
 	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
-	public SeasonWnTDetail() {
+	public SeasonWnTWinterDetail() {
 	}
 
-	public int getSeasonWTDetailsId() {
-		return this.seasonWTDetailsId;
+	public int getSeasonWnTWinterDetailsId() {
+		return this.seasonWnTWinterDetailsId;
 	}
 
-	public void setSeasonWTDetailsId(int seasonWTDetailsId) {
-		this.seasonWTDetailsId = seasonWTDetailsId;
+	public void setSeasonWnTWinterDetailsId(int seasonWnTWinterDetailsId) {
+		this.seasonWnTWinterDetailsId = seasonWnTWinterDetailsId;
 	}
 
 	public Date getApplicationDeadlineDate() {
@@ -148,14 +144,6 @@ public class SeasonWnTDetail implements Serializable {
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
-	}
-
-	public AnnualSeason getAnnualSeason() {
-		return this.annualSeason;
-	}
-
-	public void setAnnualSeason(AnnualSeason annualSeason) {
-		this.annualSeason = annualSeason;
 	}
 
 	public Season getSeason() {

@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -19,7 +17,7 @@ public class SeasonF1Detail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private int seasonF1DetailsId;
 
@@ -57,8 +55,6 @@ public class SeasonF1Detail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date firstSemStartDate;
 
-	private int fsAgreementId;
-
 	private int greenHeartMargin;
 
 	@Temporal(TemporalType.DATE)
@@ -74,8 +70,6 @@ public class SeasonF1Detail implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date janFullYearStartDate;
-
-	private int lcPaymentScheduleId;
 
 	@Column(nullable=false)
 	private int modifiedBy;
@@ -114,6 +108,16 @@ public class SeasonF1Detail implements Serializable {
 	private byte showSpecialRequestStudent;
 
 	private byte showWelcomeFamily;
+
+	//bi-directional many-to-one association to FieldStaffAgreement
+	@ManyToOne
+	@JoinColumn(name="fsAgreementId")
+	private FieldStaffAgreement fieldStaffAgreement;
+
+	//bi-directional many-to-one association to PaymentSchedule
+	@ManyToOne
+	@JoinColumn(name="lcPaymentScheduleId")
+	private PaymentSchedule paymentSchedule;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -232,14 +236,6 @@ public class SeasonF1Detail implements Serializable {
 		this.firstSemStartDate = firstSemStartDate;
 	}
 
-	public int getFsAgreementId() {
-		return this.fsAgreementId;
-	}
-
-	public void setFsAgreementId(int fsAgreementId) {
-		this.fsAgreementId = fsAgreementId;
-	}
-
 	public int getGreenHeartMargin() {
 		return this.greenHeartMargin;
 	}
@@ -286,14 +282,6 @@ public class SeasonF1Detail implements Serializable {
 
 	public void setJanFullYearStartDate(Date janFullYearStartDate) {
 		this.janFullYearStartDate = janFullYearStartDate;
-	}
-
-	public int getLcPaymentScheduleId() {
-		return this.lcPaymentScheduleId;
-	}
-
-	public void setLcPaymentScheduleId(int lcPaymentScheduleId) {
-		this.lcPaymentScheduleId = lcPaymentScheduleId;
 	}
 
 	public int getModifiedBy() {
@@ -414,6 +402,22 @@ public class SeasonF1Detail implements Serializable {
 
 	public void setShowWelcomeFamily(byte showWelcomeFamily) {
 		this.showWelcomeFamily = showWelcomeFamily;
+	}
+
+	public FieldStaffAgreement getFieldStaffAgreement() {
+		return this.fieldStaffAgreement;
+	}
+
+	public void setFieldStaffAgreement(FieldStaffAgreement fieldStaffAgreement) {
+		this.fieldStaffAgreement = fieldStaffAgreement;
+	}
+
+	public PaymentSchedule getPaymentSchedule() {
+		return this.paymentSchedule;
+	}
+
+	public void setPaymentSchedule(PaymentSchedule paymentSchedule) {
+		this.paymentSchedule = paymentSchedule;
 	}
 
 	public Season getSeason() {

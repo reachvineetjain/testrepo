@@ -6,51 +6,49 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the SeasonDepartmentNotes database table.
+ * The persistent class for the SeasonDepartmentDocument database table.
  * 
  */
 @Entity
-@Table(name="SeasonDepartmentNotes")
-@NamedQuery(name="SeasonDepartmentNote.findAll", query="SELECT s FROM SeasonDepartmentNote s")
-public class SeasonDepartmentNote implements Serializable {
+@Table(name="SeasonDepartmentDocument")
+@NamedQuery(name="SeasonDepartmentDocument.findAll", query="SELECT s FROM SeasonDepartmentDocument s")
+public class SeasonDepartmentDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	private int seasonDepartmentNotesId;
+	private int seasonDepartmentDocumentID;
 
 	private byte active;
 
-	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(length=1000)
-	private String departmentNote;
-
-	@Column(nullable=false)
 	private int modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
+
+	//bi-directional many-to-one association to DocumentInformation
+	@ManyToOne
+	@JoinColumn(name="documentInformationId")
+	private DocumentInformation documentInformation;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
-	public SeasonDepartmentNote() {
+	public SeasonDepartmentDocument() {
 	}
 
-	public int getSeasonDepartmentNotesId() {
-		return this.seasonDepartmentNotesId;
+	public int getSeasonDepartmentDocumentID() {
+		return this.seasonDepartmentDocumentID;
 	}
 
-	public void setSeasonDepartmentNotesId(int seasonDepartmentNotesId) {
-		this.seasonDepartmentNotesId = seasonDepartmentNotesId;
+	public void setSeasonDepartmentDocumentID(int seasonDepartmentDocumentID) {
+		this.seasonDepartmentDocumentID = seasonDepartmentDocumentID;
 	}
 
 	public byte getActive() {
@@ -77,14 +75,6 @@ public class SeasonDepartmentNote implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public String getDepartmentNote() {
-		return this.departmentNote;
-	}
-
-	public void setDepartmentNote(String departmentNote) {
-		this.departmentNote = departmentNote;
-	}
-
 	public int getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -99,6 +89,14 @@ public class SeasonDepartmentNote implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public DocumentInformation getDocumentInformation() {
+		return this.documentInformation;
+	}
+
+	public void setDocumentInformation(DocumentInformation documentInformation) {
+		this.documentInformation = documentInformation;
 	}
 
 	public Season getSeason() {
