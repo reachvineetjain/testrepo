@@ -485,6 +485,24 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonStatus` (
   `active` TINYINT(1) NOT NULL,
   PRIMARY KEY (`seasonStatusId`)
 );
+
+-- -----------------------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.FieldStaffAgreement
+-- -----------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffAgreement` (
+  `fieldStaffAgreementId` INT(3) NOT NULL AUTO_INCREMENT,
+  `agreementName` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`fieldStaffAgreementId`)
+);
+
+-- -----------------------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.FieldStaffAgreement
+-- -----------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PaymentSchedule` (
+  `paymentScheduleId` INT(3) NOT NULL AUTO_INCREMENT,
+  `scheduleName` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`paymentScheduleId`)
+);
  
 -- -----------------------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.Season
@@ -515,13 +533,13 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Season` (
     ON UPDATE NO ACTION
 );
 
--- -------------------------------------------------------------------------------------------------------------------
--- Table cci_gh_go.SeasonWnTDetails
--- ----------------------------------------------------------------------------------------------------------------
-  CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWnTDetails` (
-  `seasonWTDetailsId` INT(11) NOT NULL AUTO_INCREMENT,
+
+-- ------------------------------------------------------------------------------
+-- Table cci_gh_go.SeasonWnTSummerDetails
+-- ------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWnTSummerDetails` (
+  `seasonWnTSummerDetailsId` INT(11) NOT NULL AUTO_INCREMENT,
   `seasonId` INT(11) NOT NULL,
-  `departmentProgramId` INT(3) NOT NULL,
   `programName` VARCHAR(45),
   `startDate` DATETIME,
   `endDate` DATETIME,
@@ -533,30 +551,88 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Season` (
   `createdBy` INT(11) ,
   `modifiedOn` TIMESTAMP  DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modifiedBy` INT(11) ,
-  PRIMARY KEY (`seasonWTDetailsId`),
-  INDEX `FK_SeasonWPDetails_Season_idx` (`seasonId` ASC),
-  INDEX `FK_SeasonWnTdetails_DepartmentPrograms_idx` (`departmentProgramId` ASC),
-  INDEX `FK_SeasonWnTDetails_SeasonStatus_idx` (`programStatusId` ASC),
-  CONSTRAINT `FK_SeasonWPDetails_Season`
+  PRIMARY KEY (`seasonWnTSummerDetailsId`),
+  INDEX `FK_SeasonWnTSummerDetails_Season_idx` (`seasonId` ASC),
+  INDEX `FK_SeasonWnTSummerDetails_SeasonStatus_idx` (`programStatusId` ASC),
+  CONSTRAINT `FK_seasonWnTSummerDetails_Season`
     FOREIGN KEY (`seasonId`)
     REFERENCES `cci_gh_go`.`Season` (`seasonId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_seasonWnTdetails_DepartmentPrograms`
-    FOREIGN KEY (`departmentProgramId`)
-    REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_SeasonWnTDetails_SeasonStatus`
+  CONSTRAINT `FK_seasonWnTSummerDetails_SeasonStatus`
     FOREIGN KEY (`programStatusId`)
     REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
 
--- ------------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------
+-- Table cci_gh_go.SeasonWnTWinterDetails
+-- -------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWnTWinterDetails` (
+  `seasonWnTWinterDetailsId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) NOT NULL,
+  `programName` VARCHAR(45),
+  `startDate` DATETIME,
+  `endDate` DATETIME,
+  `applicationDeadlineDate` DATETIME,
+  `isJobBoardOpen` TINYINT(1),
+  `maxPendingJobApps` INT,
+  `programStatusId` INT(3),
+  `createdOn` TIMESTAMP  DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) ,
+  `modifiedOn` TIMESTAMP  DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) ,
+  PRIMARY KEY (`seasonWnTWinterDetailsId`),
+  INDEX `FK_seasonWnTWinterDetails_Season_idx` (`seasonId` ASC),
+  INDEX `FK_seasonWnTWinterDetails_SeasonStatus_idx` (`programStatusId` ASC),
+  CONSTRAINT `FK_SeasonWnTWinterDetails_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonWnTWinterDetails_SeasonStatus`
+    FOREIGN KEY (`programStatusId`)
+    REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+-- -------------------------------------------------------------------------------
+-- Table cci_gh_go.SeasonWnTSpringDetails
+-- -------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWnTSpringDetails` (
+  `seasonWnTSpringDetailsId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) NOT NULL,
+  `programName` VARCHAR(45),
+  `startDate` DATETIME,
+  `endDate` DATETIME,
+  `applicationDeadlineDate` DATETIME,
+  `isJobBoardOpen` TINYINT(1),
+  `maxPendingJobApps` INT,
+  `programStatusId` INT(3),
+  `createdOn` TIMESTAMP  DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) ,
+  `modifiedOn` TIMESTAMP  DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) ,
+  PRIMARY KEY (`seasonWnTSpringDetailsId`),
+  INDEX `FK_SeasonWnTSpringDetails_Season_idx` (`seasonId` ASC),
+  INDEX `FK_SeasonWnTSpringDetails_SeasonStatus_idx` (`programStatusId` ASC),
+  CONSTRAINT `FK_seasonWnTSpringDetails_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_seasonWnTSpringDetails_SeasonStatus`
+    FOREIGN KEY (`programStatusId`)
+    REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+-- -------------------------------------------------------------------------------
 -- Table cci_gh_go.SeasonCAPDetails
--- -------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonCAPDetails` (
   `seasonCAPDetailsId` INT NOT NULL AUTO_INCREMENT,
   `seasonId` INT NOT NULL,
@@ -585,9 +661,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonCAPDetails` (
     ON UPDATE NO ACTION
 );
 
--- --------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------
 -- Table cci_gh_go.SeasonWPAllocation
--- ------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonWPAllocation` (
   `seasonWPAllocationId` INT(11) NOT NULL AUTO_INCREMENT,
   `seasonId` INT(11) NOT NULL,
@@ -1166,8 +1242,6 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentInformation` (
 -- -----------------------------------------------------
 -- Table `cci_gh_go`.`SeasonDepartmentDocument`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cci_gh_go`.`SeasonDepartmentDocument` ;
-
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonDepartmentDocument` (
   `seasonDepartmentDocumentID` INT(11) NOT NULL,
   `seasonId` INT NULL,
