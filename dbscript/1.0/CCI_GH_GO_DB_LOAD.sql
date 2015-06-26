@@ -630,14 +630,14 @@ VALUES
 (5,'South',1),
 (6,'Non-Contiguous',1);
 
-INSERT INTO cci_gh_go_WIP.FieldStaffAgreement (fieldStaffAgreementId,agreementName)
+INSERT INTO `cci_gh_go`.`FieldStaffAgreement` (fieldStaffAgreementId,agreementName)
 VALUES 
 (1,'2009-2010'),
 (2,'2010-2011'),
 (3,'2011-2012'),
 (4,'2012-2013');
     
-INSERT INTO cci_gh_go_WIP.PaymentSchedule (paymentScheduleId,scheduleName)
+INSERT INTO `cci_gh_go`.`PaymentSchedule` (paymentScheduleId,scheduleName)
 VALUES 
 (1,'Area Representative Stipend Schedule'),
 (2,'PSPP Area Representative Stipend Schedule'),
@@ -741,10 +741,10 @@ VALUES
 (29,'2012-12-12 00:00:00','2013-07-09 00:00:00',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
 INSERT INTO `cci_gh_go`.`SeasonF1Details` (`seasonId`,`programName`,`programStatusId`,`secondSemStartDate`,`secondSemEndDate`,`secondSemAppDeadlineDate`,`secondSemEarliestBirthDate`,
-						`secondSemLatestBirthDate`,`showSecSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearEndDate`,`janFullYearAppDeadlineDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,
-						`firstSemEndDate`,`firstSemAppDeadlineDate`,`firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,`augFullYearEndDate`,
-						`augFullYearAppDeadlineDate`,`showAugFullYearToNewHF`,`showSeasonToCurrentHF`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,`hfInquiryDate`,`showWelcomeFamily`,
-						`allowFieldStaffToStartRenewalProcess`,`showSpecialRequestStudent`,`greenHeartMargin`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+                        `secondSemLatestBirthDate`,`showSecSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearEndDate`,`janFullYearAppDeadlineDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,
+                        `firstSemEndDate`,`firstSemAppDeadlineDate`,`firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,`augFullYearEndDate`,
+                        `augFullYearAppDeadlineDate`,`showAugFullYearToNewHF`,`showSeasonToCurrentHF`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,`hfInquiryDate`,`showWelcomeFamily`,
+                        `allowFieldStaffToStartRenewalProcess`,`showSpecialRequestStudent`,`greenHeartMargin`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
 (4,'AYP-PSPP 2010-11',1,'1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00',0,1,'2010-01-01 00:00:00','2011-01-01 00:00:00',
 '2009-12-15 00:00:00',1,'1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00',0,'1000-01-01 00:00:00','1000-01-01 00:00:00',
@@ -755,10 +755,10 @@ VALUES
         
        
 INSERT INTO `cci_gh_go`.`SeasonJ1Details` (`seasonId`,`programName`,`programStatusId`,`secondSemStartDate`,`secondSemEndDate`,`secondSemAppDeadlineDate`,`secondSemEarliestBirthDate`,
-						`secondSemLatestBirthDate`,`showSecondSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearEndDate`,`janFullYearAppDeadlineDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,
-						`firstSemEndDate`,`firstSemAppDeadlineDate`,`firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,`augFullYearEndDate`,`augFullYearAppDeadlineDate`,
-						`showAugFullYearToNewHF`,`showSeasonToCurrentHF`,`fieldStaffHoldLength`,`hoursBeforeHoldExpirationWarning`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,`hfInquiryDate`,`showWelcomeFamily`,
-						`showGuaranteed`,`showUnguaranteed`,`showSpecialRequestStudent`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+                        `secondSemLatestBirthDate`,`showSecondSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearEndDate`,`janFullYearAppDeadlineDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,
+                        `firstSemEndDate`,`firstSemAppDeadlineDate`,`firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,`augFullYearEndDate`,`augFullYearAppDeadlineDate`,
+                        `showAugFullYearToNewHF`,`showSeasonToCurrentHF`,`fieldStaffHoldLength`,`hoursBeforeHoldExpirationWarning`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,`hfInquiryDate`,`showWelcomeFamily`,
+                        `showGuaranteed`,`showUnguaranteed`,`showSpecialRequestStudent`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES (3,'AYP-2011-2012',1,'1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00',0,1,'2010-01-01 00:00:00','2011-01-01 00:00:00',
  '2009-12-15 00:00:00',1,'1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00','1000-01-01 00:00:00',0,'1000-01-01 00:00:00','1000-01-01 00:00:00',
  '1000-01-01 00:00:00',0,0,6,36,1,2,2,'2009-12-12',1,0,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
@@ -833,20 +833,18 @@ VALUES
 (24,'2014-06-01 00:00:00','2015-07-04 00:00:00',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
        
        
-INSERT INTO `cci_gh_go`.`SeasonDepartmentNotes` (`departmentId`,`seasonId`,`departmentNote`,`active`,`createdOn`,`CreatedBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`SeasonDepartmentNotes` (`seasonId`,`departmentNote`,`active`,`createdOn`,`CreatedBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
-(2,1,'This is Work&Program Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,2,'This is Work&Program Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,3,'This is HSP Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,'This is HSP Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1,'This is Work&Program Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,'This is Work&Program Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,'This is HSP Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(4,'This is HSP Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
-       
-INSERT INTO `cci_gh_go`.`SeasonProgramNotes` (`departmentProgramId`,`seasonId`,`programNote`,`active`,`createdOn`,`CreatedBy`,`modifiedOn`,`modifiedBy`)
-VALUES 
-(7,1,'This is Work&Program Summer Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(7,2,'This is Work&Program Spring Season',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,3,'This is J1 Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,4,'This is F1 Program',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+
+INSERT INTO `cci_gh_go`.`SeasonProgramNotes`(`seasonProgramNotesId`,`seasonId`,`departmentProgramId`,`programNote`,`active`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES
+(1,3,1,'some notes',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+
        
 INSERT INTO `cci_gh_go`.`DocumentType` (`documentTypeId`,`documentTypeName`)
 VALUES 
