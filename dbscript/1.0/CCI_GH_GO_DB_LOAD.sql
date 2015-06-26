@@ -675,7 +675,21 @@ VALUES
 ('Summer - 2016','W&T - Summer - 2016',2,1,0,0),
 ('CAP-2012','CAP-2012',2,3,0,0),
 ('CAP-2013','CAP-2013',2,3,0,0);
+ 
+INSERT INTO `cci_gh_go`.`SeasonWnTSummerDetails` (`seasonId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES 
+(1,'W&T-Summer - 2009','2010-08-15 03:10:22','2011-04-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(27,'W&T - Summer - 2016','2016-04-15 09:08:10','2016-11-15 00:10:50','2016-04-15 09:08:10',1,11,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
        
+INSERT INTO `cci_gh_go`.`SeasonWnTWinterDetails` (`seasonId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES  
+(10,'W&T-Winter - 2014','2010-10-15 03:10:22','2011-06-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(26,'W&T - Winter - 2016','2015-11-01 00:00:00','2016-04-14 00:09:00','2015-11-01 00:00:00',1,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+       
+INSERT INTO `cci_gh_go`.`SeasonWnTSpringDetails` (`seasonId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES 
+(2,'W&T - Spring 2009','2010-09-15 03:10:22','2011-05-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(25,'W&T - Spring - 2015','2015-01-02 09:11:33','2015-08-31 04:01:22','2015-01-02 09:11:33',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
        
 INSERT INTO `cci_gh_go`.`SeasonCAPDetails` (`seasonId`,`programName`,`internStartDate`,`internEndDate`,`internAppDeadlineDate`,`traineeStartDate`,`traineeEndDate`,`traineeAppDeadlineDate`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
@@ -683,15 +697,6 @@ VALUES
 (6,'CAP-2011','2011-08-15 03:10:22','2011-08-15 03:10:22','2011-08-15 03:10:22','2011-08-15 03:10:22','2011-08-15 03:10:22','2011-08-15 03:10:22',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (28,'CAP-2012','2012-01-01 03:11:22','2012-01-01 03:22:22','2012-01-01 03:11:22','2012-01-01 03:11:22','2012-01-01 03:11:22','2012-01-01 03:11:22',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (29,'CAP-2013','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25','2013-01-01 05:10:25',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
-        
-INSERT INTO `cci_gh_go`.`SeasonWnTDetails` (`seasonId`,`departmentProgramId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
-VALUES 
-(1,6,'W&T-Summer - 2009','2010-08-15 03:10:22','2011-04-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,8,'W&T - Spring 2009','2010-09-15 03:10:22','2011-05-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(10,7,'W&T-Winter - 2014','2010-10-15 03:10:22','2011-06-15 03:10:22','2010-08-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(25,8,'W&T - Spring - 2015','2015-01-02 09:11:33','2015-08-31 04:01:22','2015-01-02 09:11:33',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(26,7,'W&T - Winter - 2016','2015-11-01 00:00:00','2016-04-14 00:09:00','2015-11-01 00:00:00',1,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(27,6,'W&T - Summer - 2016','2016-04-15 09:08:10','2016-11-15 00:10:50','2016-04-15 09:08:10',1,11,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
 INSERT INTO `cci_gh_go`.`SeasonWPAllocation` (`seasonId`,`departmentProgramOptionId`,`maxPax`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
