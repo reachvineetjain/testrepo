@@ -15,7 +15,7 @@ public class SysDiagram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private int diagramId;
 
