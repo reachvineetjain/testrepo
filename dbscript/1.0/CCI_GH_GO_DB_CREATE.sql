@@ -485,6 +485,24 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonStatus` (
   `active` TINYINT(1) NOT NULL,
   PRIMARY KEY (`seasonStatusId`)
 );
+
+-- -----------------------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.FieldStaffAgreement
+-- -----------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffAgreement` (
+  `fieldStaffAgreementId` INT(3) NOT NULL AUTO_INCREMENT,
+  `agreementName` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`fieldStaffAgreementId`)
+);
+
+-- -----------------------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.FieldStaffAgreement
+-- -----------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PaymentSchedule` (
+  `paymentScheduleId` INT(3) NOT NULL AUTO_INCREMENT,
+  `scheduleName` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`paymentScheduleId`)
+);
  
 -- -----------------------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.Season
@@ -514,6 +532,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Season` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
+
 
 -- ------------------------------------------------------------------------------
 -- Table cci_gh_go.SeasonWnTSummerDetails
@@ -1223,8 +1242,6 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentInformation` (
 -- -----------------------------------------------------
 -- Table `cci_gh_go`.`SeasonDepartmentDocument`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cci_gh_go`.`SeasonDepartmentDocument` ;
-
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonDepartmentDocument` (
   `seasonDepartmentDocumentID` INT(11) NOT NULL,
   `seasonId` INT NULL,
