@@ -22,7 +22,7 @@ public class Season implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonId;
 
@@ -65,6 +65,10 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<SeasonCAPDetail> seasonCapdetails;
 
+	//bi-directional many-to-one association to SeasonDepartmentDocument
+	@OneToMany(mappedBy="season")
+	private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
+
 	//bi-directional many-to-one association to SeasonDepartmentNote
 	@OneToMany(mappedBy="season")
 	private List<SeasonDepartmentNote> seasonDepartmentNotes;
@@ -74,7 +78,8 @@ public class Season implements Serializable {
 	private List<SeasonF1Detail> seasonF1details;
 
 	//bi-directional many-to-one association to SeasonGHTConfiguration
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy="season", fetch=FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonGHTConfiguration> seasonGhtconfigurations;
 
 	//bi-directional many-to-one association to SeasonHSADetail
@@ -98,6 +103,10 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<SeasonLSDetail> seasonLsdetails;
 
+	//bi-directional many-to-one association to SeasonProgramDocument
+	@OneToMany(mappedBy="season")
+	private List<SeasonProgramDocument> seasonProgramDocuments;
+
 	//bi-directional many-to-one association to SeasonProgramNote
 	@OneToMany(mappedBy="season")
 	private List<SeasonProgramNote> seasonProgramNotes;
@@ -119,12 +128,21 @@ public class Season implements Serializable {
 	private List<SeasonWPAllocation> seasonWpallocations;
 
 	//bi-directional many-to-one association to SeasonWPConfiguration
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy="season", fetch=FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWPConfiguration> seasonWpconfigurations;
 
-	//bi-directional many-to-one association to SeasonWnTDetail
+	//bi-directional many-to-one association to SeasonWnTSpringDetail
 	@OneToMany(mappedBy="season")
-	private List<SeasonWnTDetail> seasonWnTdetails;
+	private List<SeasonWnTSpringDetail> seasonWnTspringDetails;
+
+	//bi-directional many-to-one association to SeasonWnTSummerDetail
+	@OneToMany(mappedBy="season")
+	private List<SeasonWnTSummerDetail> seasonWnTsummerDetails;
+
+	//bi-directional many-to-one association to SeasonWnTWinterDetail
+	@OneToMany(mappedBy="season")
+	private List<SeasonWnTWinterDetail> seasonWnTwinterDetails;
 
 	//bi-directional many-to-one association to USSchoolSeason
 	@OneToMany(mappedBy="season")
@@ -255,6 +273,28 @@ public class Season implements Serializable {
 		seasonCapdetail.setSeason(null);
 
 		return seasonCapdetail;
+	}
+
+	public List<SeasonDepartmentDocument> getSeasonDepartmentDocuments() {
+		return this.seasonDepartmentDocuments;
+	}
+
+	public void setSeasonDepartmentDocuments(List<SeasonDepartmentDocument> seasonDepartmentDocuments) {
+		this.seasonDepartmentDocuments = seasonDepartmentDocuments;
+	}
+
+	public SeasonDepartmentDocument addSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
+		getSeasonDepartmentDocuments().add(seasonDepartmentDocument);
+		seasonDepartmentDocument.setSeason(this);
+
+		return seasonDepartmentDocument;
+	}
+
+	public SeasonDepartmentDocument removeSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
+		getSeasonDepartmentDocuments().remove(seasonDepartmentDocument);
+		seasonDepartmentDocument.setSeason(null);
+
+		return seasonDepartmentDocument;
 	}
 
 	public List<SeasonDepartmentNote> getSeasonDepartmentNotes() {
@@ -433,6 +473,28 @@ public class Season implements Serializable {
 		return seasonLsdetail;
 	}
 
+	public List<SeasonProgramDocument> getSeasonProgramDocuments() {
+		return this.seasonProgramDocuments;
+	}
+
+	public void setSeasonProgramDocuments(List<SeasonProgramDocument> seasonProgramDocuments) {
+		this.seasonProgramDocuments = seasonProgramDocuments;
+	}
+
+	public SeasonProgramDocument addSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+		getSeasonProgramDocuments().add(seasonProgramDocument);
+		seasonProgramDocument.setSeason(this);
+
+		return seasonProgramDocument;
+	}
+
+	public SeasonProgramDocument removeSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+		getSeasonProgramDocuments().remove(seasonProgramDocument);
+		seasonProgramDocument.setSeason(null);
+
+		return seasonProgramDocument;
+	}
+
 	public List<SeasonProgramNote> getSeasonProgramNotes() {
 		return this.seasonProgramNotes;
 	}
@@ -565,26 +627,70 @@ public class Season implements Serializable {
 		return seasonWpconfiguration;
 	}
 
-	public List<SeasonWnTDetail> getSeasonWnTdetails() {
-		return this.seasonWnTdetails;
+	public List<SeasonWnTSpringDetail> getSeasonWnTspringDetails() {
+		return this.seasonWnTspringDetails;
 	}
 
-	public void setSeasonWnTdetails(List<SeasonWnTDetail> seasonWnTdetails) {
-		this.seasonWnTdetails = seasonWnTdetails;
+	public void setSeasonWnTspringDetails(List<SeasonWnTSpringDetail> seasonWnTspringDetails) {
+		this.seasonWnTspringDetails = seasonWnTspringDetails;
 	}
 
-	public SeasonWnTDetail addSeasonWnTdetail(SeasonWnTDetail seasonWnTdetail) {
-		getSeasonWnTdetails().add(seasonWnTdetail);
-		seasonWnTdetail.setSeason(this);
+	public SeasonWnTSpringDetail addSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
+		getSeasonWnTspringDetails().add(seasonWnTspringDetail);
+		seasonWnTspringDetail.setSeason(this);
 
-		return seasonWnTdetail;
+		return seasonWnTspringDetail;
 	}
 
-	public SeasonWnTDetail removeSeasonWnTdetail(SeasonWnTDetail seasonWnTdetail) {
-		getSeasonWnTdetails().remove(seasonWnTdetail);
-		seasonWnTdetail.setSeason(null);
+	public SeasonWnTSpringDetail removeSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
+		getSeasonWnTspringDetails().remove(seasonWnTspringDetail);
+		seasonWnTspringDetail.setSeason(null);
 
-		return seasonWnTdetail;
+		return seasonWnTspringDetail;
+	}
+
+	public List<SeasonWnTSummerDetail> getSeasonWnTsummerDetails() {
+		return this.seasonWnTsummerDetails;
+	}
+
+	public void setSeasonWnTsummerDetails(List<SeasonWnTSummerDetail> seasonWnTsummerDetails) {
+		this.seasonWnTsummerDetails = seasonWnTsummerDetails;
+	}
+
+	public SeasonWnTSummerDetail addSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
+		getSeasonWnTsummerDetails().add(seasonWnTsummerDetail);
+		seasonWnTsummerDetail.setSeason(this);
+
+		return seasonWnTsummerDetail;
+	}
+
+	public SeasonWnTSummerDetail removeSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
+		getSeasonWnTsummerDetails().remove(seasonWnTsummerDetail);
+		seasonWnTsummerDetail.setSeason(null);
+
+		return seasonWnTsummerDetail;
+	}
+
+	public List<SeasonWnTWinterDetail> getSeasonWnTwinterDetails() {
+		return this.seasonWnTwinterDetails;
+	}
+
+	public void setSeasonWnTwinterDetails(List<SeasonWnTWinterDetail> seasonWnTwinterDetails) {
+		this.seasonWnTwinterDetails = seasonWnTwinterDetails;
+	}
+
+	public SeasonWnTWinterDetail addSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
+		getSeasonWnTwinterDetails().add(seasonWnTwinterDetail);
+		seasonWnTwinterDetail.setSeason(this);
+
+		return seasonWnTwinterDetail;
+	}
+
+	public SeasonWnTWinterDetail removeSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
+		getSeasonWnTwinterDetails().remove(seasonWnTwinterDetail);
+		seasonWnTwinterDetail.setSeason(null);
+
+		return seasonWnTwinterDetail;
 	}
 
 	public List<USSchoolSeason> getUsschoolSeasons() {

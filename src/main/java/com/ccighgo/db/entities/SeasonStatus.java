@@ -16,6 +16,7 @@ public class SeasonStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonStatusId;
 
@@ -61,9 +62,17 @@ public class SeasonStatus implements Serializable {
 	@OneToMany(mappedBy="seasonStatus")
 	private List<SeasonWADetail> seasonWadetails;
 
-	//bi-directional many-to-one association to SeasonWnTDetail
+	//bi-directional many-to-one association to SeasonWnTSpringDetail
 	@OneToMany(mappedBy="seasonStatus")
-	private List<SeasonWnTDetail> seasonWnTdetails;
+	private List<SeasonWnTSpringDetail> seasonWnTspringDetails;
+
+	//bi-directional many-to-one association to SeasonWnTSummerDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonWnTSummerDetail> seasonWnTsummerDetails;
+
+	//bi-directional many-to-one association to SeasonWnTWinterDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonWnTWinterDetail> seasonWnTwinterDetails;
 
 	public SeasonStatus() {
 	}
@@ -290,26 +299,70 @@ public class SeasonStatus implements Serializable {
 		return seasonWadetail;
 	}
 
-	public List<SeasonWnTDetail> getSeasonWnTdetails() {
-		return this.seasonWnTdetails;
+	public List<SeasonWnTSpringDetail> getSeasonWnTspringDetails() {
+		return this.seasonWnTspringDetails;
 	}
 
-	public void setSeasonWnTdetails(List<SeasonWnTDetail> seasonWnTdetails) {
-		this.seasonWnTdetails = seasonWnTdetails;
+	public void setSeasonWnTspringDetails(List<SeasonWnTSpringDetail> seasonWnTspringDetails) {
+		this.seasonWnTspringDetails = seasonWnTspringDetails;
 	}
 
-	public SeasonWnTDetail addSeasonWnTdetail(SeasonWnTDetail seasonWnTdetail) {
-		getSeasonWnTdetails().add(seasonWnTdetail);
-		seasonWnTdetail.setSeasonStatus(this);
+	public SeasonWnTSpringDetail addSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
+		getSeasonWnTspringDetails().add(seasonWnTspringDetail);
+		seasonWnTspringDetail.setSeasonStatus(this);
 
-		return seasonWnTdetail;
+		return seasonWnTspringDetail;
 	}
 
-	public SeasonWnTDetail removeSeasonWnTdetail(SeasonWnTDetail seasonWnTdetail) {
-		getSeasonWnTdetails().remove(seasonWnTdetail);
-		seasonWnTdetail.setSeasonStatus(null);
+	public SeasonWnTSpringDetail removeSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
+		getSeasonWnTspringDetails().remove(seasonWnTspringDetail);
+		seasonWnTspringDetail.setSeasonStatus(null);
 
-		return seasonWnTdetail;
+		return seasonWnTspringDetail;
+	}
+
+	public List<SeasonWnTSummerDetail> getSeasonWnTsummerDetails() {
+		return this.seasonWnTsummerDetails;
+	}
+
+	public void setSeasonWnTsummerDetails(List<SeasonWnTSummerDetail> seasonWnTsummerDetails) {
+		this.seasonWnTsummerDetails = seasonWnTsummerDetails;
+	}
+
+	public SeasonWnTSummerDetail addSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
+		getSeasonWnTsummerDetails().add(seasonWnTsummerDetail);
+		seasonWnTsummerDetail.setSeasonStatus(this);
+
+		return seasonWnTsummerDetail;
+	}
+
+	public SeasonWnTSummerDetail removeSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
+		getSeasonWnTsummerDetails().remove(seasonWnTsummerDetail);
+		seasonWnTsummerDetail.setSeasonStatus(null);
+
+		return seasonWnTsummerDetail;
+	}
+
+	public List<SeasonWnTWinterDetail> getSeasonWnTwinterDetails() {
+		return this.seasonWnTwinterDetails;
+	}
+
+	public void setSeasonWnTwinterDetails(List<SeasonWnTWinterDetail> seasonWnTwinterDetails) {
+		this.seasonWnTwinterDetails = seasonWnTwinterDetails;
+	}
+
+	public SeasonWnTWinterDetail addSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
+		getSeasonWnTwinterDetails().add(seasonWnTwinterDetail);
+		seasonWnTwinterDetail.setSeasonStatus(this);
+
+		return seasonWnTwinterDetail;
+	}
+
+	public SeasonWnTWinterDetail removeSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
+		getSeasonWnTwinterDetails().remove(seasonWnTwinterDetail);
+		seasonWnTwinterDetail.setSeasonStatus(null);
+
+		return seasonWnTwinterDetail;
 	}
 
 }

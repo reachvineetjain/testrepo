@@ -16,6 +16,7 @@ public class SeasonWPAllocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonWPAllocationId;
 
@@ -32,11 +33,6 @@ public class SeasonWPAllocation implements Serializable {
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
-
-	//bi-directional many-to-one association to AnnualSeason
-	@ManyToOne
-	@JoinColumn(name="annualSeasonId")
-	private AnnualSeason annualSeason;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
@@ -97,14 +93,6 @@ public class SeasonWPAllocation implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public AnnualSeason getAnnualSeason() {
-		return this.annualSeason;
-	}
-
-	public void setAnnualSeason(AnnualSeason annualSeason) {
-		this.annualSeason = annualSeason;
 	}
 
 	public DepartmentProgramOption getDepartmentProgramOption() {
