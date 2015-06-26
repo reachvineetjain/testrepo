@@ -52,6 +52,10 @@ import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Progr
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.SeasonHSPF1Details;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -877,8 +881,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	public GHTSection1Base updateGHTHSSection1BaseAbroad(
-			GHTSection1Base seasonGHTDetails) {
-		return seasonServiceImplUtil.updateGHTHSSection1BaseAbroad(seasonGHTDetails);
+			GHTSection1Base ghtSection1Base) {
+		return seasonServiceImplUtil.updateGHTHSSection1BaseAbroad(ghtSection1Base);
 	}
 
 	public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonId) {
@@ -886,8 +890,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	public GHTSection2Dates updateGHTHSSection2DatesAbroad(
-			GHTSection2Dates seasonGHTDetails) {
-		return seasonServiceImplUtil.updateGHTHSSection2DatesAbroad(seasonGHTDetails);
+			GHTSection2Dates ghtSection2Dates) {
+		return seasonServiceImplUtil.updateGHTHSSection2DatesAbroad(ghtSection2Dates);
 	}
 
 	public GHTSection1Base getGHTLanguageSchoolSection1(String seasonId) {
@@ -896,8 +900,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	public GHTSection1Base updateGHTLanguageSchoolSection1(
-			GHTSection1Base seasonGHTDetails) {
-		return seasonServiceImplUtil.updateGHTLanguageSchoolSection1(seasonGHTDetails);
+			GHTSection1Base ghtSection1Base) {
+		return seasonServiceImplUtil.updateGHTLanguageSchoolSection1(ghtSection1Base);
 	}
 
 	public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonId) {
@@ -905,8 +909,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(
-			GHTSection2Dates seasonGHTDetails) {
-		return seasonServiceImplUtil.updateGHTLanguageSchoolSection2Dates(seasonGHTDetails);
+			GHTSection2Dates ghtSection2Dates) {
+		return seasonServiceImplUtil.updateGHTLanguageSchoolSection2Dates(ghtSection2Dates);
 	}
 
 	public GHTSection1Base getGHTTeachAbroadSection1(String seasonId) {
@@ -914,8 +918,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	public GHTSection1Base updateGHTTeachAbroadSection1(
-			GHTSection1Base seasonGHTDetails) {
-		return seasonServiceImplUtil.updateGHTTeachAbroadSection1(seasonGHTDetails);
+			GHTSection1Base ghtSection1Base) {
+		return seasonServiceImplUtil.updateGHTTeachAbroadSection1(ghtSection1Base);
 	}
 
 	public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonId) {
@@ -923,8 +927,44 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 	}
 
 	public GHTSection2Dates updateGHTTeachAbroadSection2Dates(
-			GHTSection2Dates seasonGHTDetails) {
-		return seasonServiceImplUtil.updateGHTTeachAbroadSection2Dates(seasonGHTDetails);
+			GHTSection2Dates ghtSection2Dates) {
+		return seasonServiceImplUtil.updateGHTTeachAbroadSection2Dates(ghtSection2Dates);
+	}
+
+	public SeasonWPCAPDetails getWPCAPDetails(String seasonId) {
+		return seasonServiceImplUtil.getWPCAPDetails(seasonId); 
+	}
+
+	public SeasonWPCAPDetails updateWPCAPDetails(
+			SeasonWPCAPDetails seasonWPCAPDetails) {
+		return seasonServiceImplUtil.updateWPCAPDetails(seasonWPCAPDetails);
+	}
+
+	public WPCAPBasicDetails getWPCAPBasicDetails(String seasonId) {
+		return seasonServiceImplUtil.getWPCAPBasicDetails(seasonId);
+	}
+
+	public WPCAPBasicDetails updateWPCAPBasicDetails(
+			WPCAPBasicDetails wpcapBasicDetails) {
+		return seasonServiceImplUtil.updateWPCAPBasicDetails(wpcapBasicDetails);
+	}
+
+	public WPCAPInternshipDetails getWPCAPInternshipDetails(String seasonId) {
+		return seasonServiceImplUtil.getWPCAPInternshipDetails(seasonId);
+	}
+
+	public WPCAPInternshipDetails updateWPCAPInternshipDetails(
+			WPCAPInternshipDetails wpcapInternshipDetails) {
+		return seasonServiceImplUtil.updateWPCAPInternshipDetails(wpcapInternshipDetails);
+	}
+
+	public WPCAPTraineeDetails getWPCAPTraineeDetails(String seasonId) {
+		return seasonServiceImplUtil.getWPCAPTraineeDetails(seasonId);
+	}
+
+	public WPCAPTraineeDetails updateWPCAPTraineeDetails(
+			WPCAPTraineeDetails wpcapTraineeDetails) {
+		return seasonServiceImplUtil.updateWPCAPTraineeDetails(wpcapTraineeDetails);
 	}
 
 }
