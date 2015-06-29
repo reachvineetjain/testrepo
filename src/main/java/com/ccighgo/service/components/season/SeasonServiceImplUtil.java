@@ -26,6 +26,8 @@ import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.db.entities.SeasonTADetail;
 import com.ccighgo.db.entities.SeasonVADetail;
 import com.ccighgo.db.entities.SeasonWADetail;
+import com.ccighgo.db.entities.SeasonWnTSpringDetail;
+import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
@@ -1407,6 +1409,113 @@ public class SeasonServiceImplUtil {
    public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
       // TODO Auto-generated method stub
       return null;
+   }
+   
+   //WP summer
+   
+   /**
+    * @param seasonWnTSummerDetail
+    * @return
+    */
+   public WPBasicDetail getWPSummerBaseDetails(SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      WPBasicDetail wpBasicDetail = new WPBasicDetail();
+      wpBasicDetail.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
+      wpBasicDetail.setProgramName(seasonWnTSummerDetail.getProgramName() != null ? seasonWnTSummerDetail.getProgramName() : null);
+      wpBasicDetail.setProgramStatus(seasonWnTSummerDetail.getSeasonStatus().getStatus() != null ? seasonWnTSummerDetail.getSeasonStatus().getStatus() : null);
+      return wpBasicDetail;
+   }
+   
+   /**
+    * @param seasonWnTSummerDetail
+    * @return
+    */
+   public WPSectionOne getWPSummerSection1Details(SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      WPSectionOne wpSectionOne;
+      wpSectionOne = new WPSectionOne();
+      wpSectionOne.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
+      wpSectionOne.setStartDate(seasonWnTSummerDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getStartDate()) : null);
+      wpSectionOne.setEndDate(seasonWnTSummerDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getEndDate()) : null);
+      wpSectionOne.setApplicationDeadlineDate(seasonWnTSummerDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail
+            .getApplicationDeadlineDate()) : null);
+      wpSectionOne.setIsJobBoardOpen(seasonWnTSummerDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
+      wpSectionOne.setMaxPendingJobAppls(seasonWnTSummerDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
+      return wpSectionOne;
+   }
+   
+   /**
+    * @param wpBasicDetail
+    * @param seasonWnTSummerDetail
+    */
+   public void updateWPSummerBaseDetails(WPBasicDetail wpBasicDetail, SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      seasonWnTSummerDetail.setProgramName(wpBasicDetail.getProgramName()!=null?wpBasicDetail.getProgramName():null);
+      seasonWnTSummerDetail.setSeasonStatus(wpBasicDetail.getProgramStatus()!=null?seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()):null);
+   }
+   
+   /**
+    * @param wpSectionOne
+    * @param seasonWnTSummerDetail
+    */
+   public void updateWPSummerSection1Details(WPSectionOne wpSectionOne, SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      seasonWnTSummerDetail.setStartDate(wpSectionOne.getStartDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getStartDate()) : null);
+      seasonWnTSummerDetail.setEndDate(wpSectionOne.getEndDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getEndDate()) : null);
+      seasonWnTSummerDetail.setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne
+            .getApplicationDeadlineDate()) : null);
+      seasonWnTSummerDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+      seasonWnTSummerDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
+   }
+   
+ //WP spring
+   
+   /**
+    * @param seasonWnTSpringDetail
+    * @return
+    */
+   public WPBasicDetail getWPSpringBaseDetails(SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      WPBasicDetail wpBasicDetail;
+      wpBasicDetail = new WPBasicDetail();
+      wpBasicDetail.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
+      wpBasicDetail.setProgramName(seasonWnTSpringDetail.getProgramName() != null ? seasonWnTSpringDetail.getProgramName() : null);
+      wpBasicDetail.setProgramStatus(seasonWnTSpringDetail.getSeasonStatus().getStatus() != null ? seasonWnTSpringDetail.getSeasonStatus().getStatus() : null);
+      return wpBasicDetail;
+   }
+   
+   /**
+    * @param seasonWnTSpringDetail
+    * @return
+    */
+   public WPSectionOne getWPSpringSection1Details(SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      WPSectionOne wpSectionOne;
+      wpSectionOne = new WPSectionOne();
+      wpSectionOne.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
+      wpSectionOne.setStartDate(seasonWnTSpringDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getStartDate()) : null);
+      wpSectionOne.setEndDate(seasonWnTSpringDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getEndDate()) : null);
+      wpSectionOne.setApplicationDeadlineDate(seasonWnTSpringDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail
+            .getApplicationDeadlineDate()) : null);
+      wpSectionOne.setIsJobBoardOpen(seasonWnTSpringDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
+      wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : null);
+      return wpSectionOne;
+   }
+   
+   /**
+    * @param wpBasicDetail
+    * @param seasonWnTSpringDetail
+    */
+   public void updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail, SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      seasonWnTSpringDetail.setProgramName(wpBasicDetail.getProgramName()!=null?wpBasicDetail.getProgramName():null);
+      seasonWnTSpringDetail.setSeasonStatus(wpBasicDetail.getProgramStatus()!=null?seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()):null);
+   }
+
+   /**
+    * @param wpSectionOne
+    * @param seasonWnTSpringDetail
+    */
+   public void updateWPSpringSection1Details(WPSectionOne wpSectionOne, SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      seasonWnTSpringDetail.setStartDate(wpSectionOne.getStartDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getStartDate()) : null);
+      seasonWnTSpringDetail.setEndDate(wpSectionOne.getEndDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getEndDate()) : null);
+      seasonWnTSpringDetail.setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne
+            .getApplicationDeadlineDate()) : null);
+      seasonWnTSpringDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+      seasonWnTSpringDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
    }
 
 }
