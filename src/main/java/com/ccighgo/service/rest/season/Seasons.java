@@ -1092,7 +1092,7 @@ public class Seasons {
       return seasonServices.editWPWinterDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/winter/update/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -1116,7 +1116,7 @@ public class Seasons {
       return seasonServices.editWPWinterBaseDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/winter/update/base/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -1140,7 +1140,7 @@ public class Seasons {
       return seasonServices.editWPWinterSectionOneDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/winter/update/section/one/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -1164,7 +1164,7 @@ public class Seasons {
       return seasonServices.editWPWinterAllocationDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/winter/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
