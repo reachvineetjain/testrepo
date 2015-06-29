@@ -1172,4 +1172,13 @@ public class Seasons {
       return seasonServices.updateWPWinterAllocationDetails(wpSectionOne);
    }
    
+   
+   @POST
+   @Path("clone")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public void cloneSeason(WPSectionOne wpSectionOne){
+     // return null;
+   }
+   
 }
