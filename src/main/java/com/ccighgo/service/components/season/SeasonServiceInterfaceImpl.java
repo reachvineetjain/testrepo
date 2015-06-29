@@ -18,6 +18,8 @@ import com.ccighgo.db.entities.SeasonLSDetail;
 import com.ccighgo.db.entities.SeasonTADetail;
 import com.ccighgo.db.entities.SeasonVADetail;
 import com.ccighgo.db.entities.SeasonWADetail;
+import com.ccighgo.db.entities.SeasonWnTSpringDetail;
+import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
@@ -28,6 +30,8 @@ import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonTADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonVADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonWADetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonWTSpringRepository;
+import com.ccighgo.jpa.repositories.SeasonWTSummerRepository;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -94,6 +98,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonVADetailsRepository seasonVADetailsRepository;
    @Autowired
    SeasonWADetailsRepository seasonWADetailsRepository;
+   @Autowired
+   SeasonWTSummerRepository seasonWTSummerRepository;
+   @Autowired
+   SeasonWTSpringRepository seasonWTSpringRepository;
 
    SeasonServiceInterfaceImpl() {
    }
@@ -1175,57 +1183,115 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public SeasonWPDetails getWPSumDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
+   // Work Programs: Work and Travel summer season service implementations
 
-   public SeasonWPDetails editWPSumDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
+   public SeasonWPDetails getWPSumDetails(String seasonId) {
+      SeasonWPDetails seasonWPDetails = null;
+      try {
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonId));
+         if (seasonWnTSummerDetail != null) {
+            seasonWPDetails = new SeasonWPDetails();
+            seasonWPDetails.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
+            seasonWPDetails.setWpBasicDetail(getWPSummerBaseDetails(seasonWnTSummerDetail));
+            seasonWPDetails.setWpSectionOne(getWPSummerSection1Details(seasonWnTSummerDetail));
+            // TODO add notes
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return seasonWPDetails;
    }
 
    public SeasonWPDetails updateWPSumDetails(SeasonWPDetails seasonWPDetails) {
-      // TODO Auto-generated method stub
-      return null;
+      SeasonWPDetails returnObject = null;
+      if (seasonWPDetails == null) {
+         return returnObject;
+      }
+      try {
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonWPDetails.getSeasonId()));
+         if (seasonWnTSummerDetail != null) {
+            if (seasonWPDetails.getWpBasicDetail() != null) {
+               updateWPSummerBaseDetails(seasonWPDetails.getWpBasicDetail(), seasonWnTSummerDetail);
+            }
+            if (seasonWPDetails.getWpSectionOne() != null) {
+               updateWPSummerSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSummerDetail);
+            }
+            seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
+            returnObject = seasonWPDetails;
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return returnObject;
    }
 
    public WPBasicDetail getWPSumBaseDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   public WPBasicDetail editWPSumBaseDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
+      WPBasicDetail wpBasicDetail = null;
+      try {
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonId));
+         if (seasonWnTSummerDetail != null) {
+            wpBasicDetail = getWPSummerBaseDetails(seasonWnTSummerDetail);
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return wpBasicDetail;
    }
 
    public WPBasicDetail updateWPSumBaseDetails(WPBasicDetail wpBasicDetail) {
-      // TODO Auto-generated method stub
-      return null;
+      WPBasicDetail returnObject = null;
+      if (wpBasicDetail == null || wpBasicDetail.getSeasonId() == 0) {
+         return returnObject;
+      }
+      try {
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(wpBasicDetail.getSeasonId()));
+         if (seasonWnTSummerDetail != null) {
+            updateWPSummerBaseDetails(wpBasicDetail, seasonWnTSummerDetail);
+            seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
+            returnObject = wpBasicDetail;
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return returnObject;
    }
 
    public WPSectionOne getWPSumSectionOneDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
+      WPSectionOne wpSectionOne = null;
+      try {
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonId));
+         if (seasonWnTSummerDetail != null) {
+            wpSectionOne = getWPSummerSection1Details(seasonWnTSummerDetail);
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return wpSectionOne;
    }
 
-   public WPSectionOne editWPSumSectionOneDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
+
 
    public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne) {
-      // TODO Auto-generated method stub
-      return null;
+      WPSectionOne returnObject = null;
+      if (wpSectionOne == null || wpSectionOne.getSeasonId() == 0) {
+         return returnObject;
+      }
+      try {
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(wpSectionOne.getSeasonId()));
+         if (seasonWnTSummerDetail != null) {
+            updateWPSummerSection1Details(wpSectionOne, seasonWnTSummerDetail);
+            seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
+            returnObject = wpSectionOne;
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return returnObject;
    }
+
+
 
    public WPSectionOne getWPSumAllocationDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   public WPSectionOne editWPSumAllocationDetails(String seasonId) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -1235,57 +1301,113 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public SeasonWPDetails getWPSpringDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
+   // Work Programs: Work and Travel Spring season service implementations
 
-   public SeasonWPDetails editWPSpringDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
+   public SeasonWPDetails getWPSpringDetails(String seasonId) {
+      SeasonWPDetails seasonWPDetails = null;
+      try {
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonId));
+         if (seasonWnTSpringDetail != null) {
+            seasonWPDetails = new SeasonWPDetails();
+            seasonWPDetails.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
+            seasonWPDetails.setWpBasicDetail(getWPSpringBaseDetails(seasonWnTSpringDetail));
+            seasonWPDetails.setWpSectionOne(getWPSpringSection1Details(seasonWnTSpringDetail));
+            // TODO add notes
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return seasonWPDetails;
    }
 
    public SeasonWPDetails updateWPSpringDetails(SeasonWPDetails seasonWPDetails) {
-      // TODO Auto-generated method stub
-      return null;
+      SeasonWPDetails returnObject = null;
+      if (seasonWPDetails == null) {
+         return returnObject;
+      }
+      try {
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonWPDetails.getSeasonId()));
+         if (seasonWnTSpringDetail != null) {
+            if (seasonWPDetails.getWpBasicDetail() != null) {
+               updateWPSpringBaseDetails(seasonWPDetails.getWpBasicDetail(), seasonWnTSpringDetail);
+            }
+            if (seasonWPDetails.getWpSectionOne() != null) {
+               updateWPSpringSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSpringDetail);
+            }
+            seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
+            returnObject = seasonWPDetails;
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return returnObject;
    }
 
    public WPBasicDetail getWPSpringBaseDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   public WPBasicDetail editWPSpringBaseDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
+      WPBasicDetail wpBasicDetail = null;
+      try {
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonId));
+         if (seasonWnTSpringDetail != null) {
+            wpBasicDetail = getWPSpringBaseDetails(seasonWnTSpringDetail);
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return wpBasicDetail;
    }
 
    public WPBasicDetail updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail) {
-      // TODO Auto-generated method stub
-      return null;
+      WPBasicDetail returnObject = null;
+      if (wpBasicDetail == null || wpBasicDetail.getSeasonId() == 0) {
+         return returnObject;
+      }
+      try {
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(wpBasicDetail.getSeasonId()));
+         if (seasonWnTSpringDetail != null) {
+            updateWPSpringBaseDetails(wpBasicDetail, seasonWnTSpringDetail);
+            seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
+            returnObject = wpBasicDetail;
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return returnObject;
    }
+
+
 
    public WPSectionOne getWPSpringSectionOneDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   public WPSectionOne editWPSpringSectionOneDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
+      WPSectionOne wpSectionOne = null;
+      try {
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonId));
+         if (seasonWnTSpringDetail != null) {
+            wpSectionOne = getWPSpringSection1Details(seasonWnTSpringDetail);
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return wpSectionOne;
    }
 
    public WPSectionOne updateWPSpringSectionOneDetails(WPSectionOne wpSectionOne) {
-      // TODO Auto-generated method stub
-      return null;
+      WPSectionOne returnObject = null;
+      if (wpSectionOne == null || wpSectionOne.getSeasonId() == 0) {
+         return returnObject;
+      }
+      try {
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(wpSectionOne.getSeasonId()));
+         if (seasonWnTSpringDetail != null) {
+            updateWPSpringSection1Details(wpSectionOne, seasonWnTSpringDetail);
+            seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
+            returnObject = wpSectionOne;
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return returnObject;
    }
 
    public WPSectionOne getWPSpringAllocationDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   public WPSectionOne editWPSpringAllocationDetails(String seasonId) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -1354,5 +1476,111 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       // TODO Auto-generated method stub
       return null;
    }
+   
+   //WP summer
+   
+   /**
+    * @param seasonWnTSummerDetail
+    * @return
+    */
+   private WPBasicDetail getWPSummerBaseDetails(SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      WPBasicDetail wpBasicDetail = new WPBasicDetail();
+      wpBasicDetail.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
+      wpBasicDetail.setProgramName(seasonWnTSummerDetail.getProgramName() != null ? seasonWnTSummerDetail.getProgramName() : null);
+      wpBasicDetail.setProgramStatus(seasonWnTSummerDetail.getSeasonStatus().getStatus() != null ? seasonWnTSummerDetail.getSeasonStatus().getStatus() : null);
+      return wpBasicDetail;
+   }
+   
+   /**
+    * @param seasonWnTSummerDetail
+    * @return
+    */
+   private WPSectionOne getWPSummerSection1Details(SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      WPSectionOne wpSectionOne;
+      wpSectionOne = new WPSectionOne();
+      wpSectionOne.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
+      wpSectionOne.setStartDate(seasonWnTSummerDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getStartDate()) : null);
+      wpSectionOne.setEndDate(seasonWnTSummerDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getEndDate()) : null);
+      wpSectionOne.setApplicationDeadlineDate(seasonWnTSummerDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail
+            .getApplicationDeadlineDate()) : null);
+      wpSectionOne.setIsJobBoardOpen(seasonWnTSummerDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
+      wpSectionOne.setMaxPendingJobAppls(seasonWnTSummerDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
+      return wpSectionOne;
+   }
+   
+   /**
+    * @param wpBasicDetail
+    * @param seasonWnTSummerDetail
+    */
+   private void updateWPSummerBaseDetails(WPBasicDetail wpBasicDetail, SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      seasonWnTSummerDetail.setProgramName(wpBasicDetail.getProgramName()!=null?wpBasicDetail.getProgramName():null);
+      seasonWnTSummerDetail.setSeasonStatus(wpBasicDetail.getProgramStatus()!=null?seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()):null);
+   }
+   
+   /**
+    * @param wpSectionOne
+    * @param seasonWnTSummerDetail
+    */
+   private void updateWPSummerSection1Details(WPSectionOne wpSectionOne, SeasonWnTSummerDetail seasonWnTSummerDetail) {
+      seasonWnTSummerDetail.setStartDate(wpSectionOne.getStartDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getStartDate()) : null);
+      seasonWnTSummerDetail.setEndDate(wpSectionOne.getEndDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getEndDate()) : null);
+      seasonWnTSummerDetail.setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne
+            .getApplicationDeadlineDate()) : null);
+      seasonWnTSummerDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+      seasonWnTSummerDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
+   }
+   
+ //WP spring
+   
+   /**
+    * @param seasonWnTSpringDetail
+    * @return
+    */
+   private WPBasicDetail getWPSpringBaseDetails(SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      WPBasicDetail wpBasicDetail;
+      wpBasicDetail = new WPBasicDetail();
+      wpBasicDetail.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
+      wpBasicDetail.setProgramName(seasonWnTSpringDetail.getProgramName() != null ? seasonWnTSpringDetail.getProgramName() : null);
+      wpBasicDetail.setProgramStatus(seasonWnTSpringDetail.getSeasonStatus().getStatus() != null ? seasonWnTSpringDetail.getSeasonStatus().getStatus() : null);
+      return wpBasicDetail;
+   }
+   
+   /**
+    * @param seasonWnTSpringDetail
+    * @return
+    */
+   private WPSectionOne getWPSpringSection1Details(SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      WPSectionOne wpSectionOne;
+      wpSectionOne = new WPSectionOne();
+      wpSectionOne.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
+      wpSectionOne.setStartDate(seasonWnTSpringDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getStartDate()) : null);
+      wpSectionOne.setEndDate(seasonWnTSpringDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getEndDate()) : null);
+      wpSectionOne.setApplicationDeadlineDate(seasonWnTSpringDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail
+            .getApplicationDeadlineDate()) : null);
+      wpSectionOne.setIsJobBoardOpen(seasonWnTSpringDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
+      wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : null);
+      return wpSectionOne;
+   }
+   
+   /**
+    * @param wpBasicDetail
+    * @param seasonWnTSpringDetail
+    */
+   private void updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail, SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      seasonWnTSpringDetail.setProgramName(wpBasicDetail.getProgramName()!=null?wpBasicDetail.getProgramName():null);
+      seasonWnTSpringDetail.setSeasonStatus(wpBasicDetail.getProgramStatus()!=null?seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()):null);
+   }
 
+   /**
+    * @param wpSectionOne
+    * @param seasonWnTSpringDetail
+    */
+   private void updateWPSpringSection1Details(WPSectionOne wpSectionOne, SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      seasonWnTSpringDetail.setStartDate(wpSectionOne.getStartDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getStartDate()) : null);
+      seasonWnTSpringDetail.setEndDate(wpSectionOne.getEndDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getEndDate()) : null);
+      seasonWnTSpringDetail.setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne
+            .getApplicationDeadlineDate()) : null);
+      seasonWnTSpringDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+      seasonWnTSpringDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
+   }
 }

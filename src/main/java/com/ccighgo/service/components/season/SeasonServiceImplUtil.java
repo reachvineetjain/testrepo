@@ -62,7 +62,6 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramOptions;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
-import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPGeneralSettings;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.utils.CCIConstants;

@@ -897,10 +897,10 @@ public class Seasons {
    @Path("wp/summer/edit/details/{seasonId}")
    @Produces("application/json")
    public SeasonWPDetails editWPSumDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSumDetails(seasonId);
+      return seasonServices.getWPSumDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/summer/update/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -921,10 +921,10 @@ public class Seasons {
    @Path("wp/summer/edit/base/details/{seasonId}")
    @Produces("application/json")
    public WPBasicDetail editWPSumBaseDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSumBaseDetails(seasonId);
+      return seasonServices.getWPSumBaseDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/summer/update/base/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -945,10 +945,10 @@ public class Seasons {
    @Path("wp/summer/edit/section/one/details/{seasonId}")
    @Produces("application/json")
    public WPSectionOne editWPSumSectionOneDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSumSectionOneDetails(seasonId);
+      return seasonServices.getWPSumSectionOneDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/summer/update/section/one/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -969,10 +969,10 @@ public class Seasons {
    @Path("wp/summer/edit/allocation/details/{seasonId}")
    @Produces("application/json")
    public WPSectionOne editWPSumAllocationDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSumAllocationDetails(seasonId);
+      return seasonServices.getWPSumAllocationDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/summer/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -993,10 +993,10 @@ public class Seasons {
    @Path("wp/spring/edit/details/{seasonId}")
    @Produces("application/json")
    public SeasonWPDetails editWPSpringDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSpringDetails(seasonId);
+      return seasonServices.getWPSpringDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/spring/update/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -1017,10 +1017,10 @@ public class Seasons {
    @Path("wp/spring/edit/base/details/{seasonId}")
    @Produces("application/json")
    public WPBasicDetail editWPSpringBaseDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSpringBaseDetails(seasonId);
+      return seasonServices.getWPSpringBaseDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/spring/update/base/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -1041,10 +1041,10 @@ public class Seasons {
    @Path("wp/spring/edit/section/one/details/{seasonId}")
    @Produces("application/json")
    public WPSectionOne editWPSpringSectionOneDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSpringSectionOneDetails(seasonId);
+      return seasonServices.getWPSpringSectionOneDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/spring/update/section/one/details")
    @Consumes("application/json")
    @Produces("application/json")
@@ -1065,10 +1065,10 @@ public class Seasons {
    @Path("wp/spring/edit/allocation/details/{seasonId}")
    @Produces("application/json")
    public WPSectionOne editWPSpringAllocationDetails(@PathParam("seasonId") String seasonId){
-      return seasonServices.editWPSpringAllocationDetails(seasonId);
+      return seasonServices.getWPSpringAllocationDetails(seasonId);
    }
    
-   @GET
+   @POST
    @Path("wp/spring/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
