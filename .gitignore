@@ -40,3 +40,4 @@ id_file
 ccighgo.fs
 target
 /.tern-project
+src/main/webapp/WEB-INF/applicationContext.xml
