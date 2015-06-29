@@ -55,7 +55,7 @@ public class Seasons {
    @Path("ping/{input}")
    @Produces("text/plain")
    public String ping(@PathParam("input") String input) {
-      LOGGER.debug("Pinging !!");
+      LOGGER.debug("Pinging !! ( value : " + input + " )");
       return input;
    }
 
@@ -74,6 +74,7 @@ public class Seasons {
    @Produces("application/json")
    public SeasonBean editSeason(@PathParam("id") String id) {
       LOGGER.debug("Calling Edit Season By Id 'func:editSeason'");
+      LOGGER.debug("Season ID  : " + id);
       SeasonBean result = seasonServices.editSeason(id);
       return result;
    }
@@ -83,6 +84,7 @@ public class Seasons {
    @Produces("application/json")
    public SeasonBean view(@PathParam("id") String id) {
       LOGGER.debug("Calling Get Season By Id 'func:View'");
+      LOGGER.debug("Season ID  : " + id);
       SeasonBean result = seasonServices.viewSeason(id);
       return result;
    }
@@ -92,6 +94,10 @@ public class Seasons {
    @Consumes("application/json")
    public SeasonBean createSeason(SeasonBean seasonBean) {
       LOGGER.debug("Calling Create Season function 'func:createSeason'");
+      if (seasonBean != null)
+         LOGGER.debug("Season ID  : " + seasonBean.getSeasonId());
+      else
+         LOGGER.debug("Object SeasonBean is NULL !!");
       return seasonServices.createSeason(seasonBean);
    }
 
@@ -100,6 +106,10 @@ public class Seasons {
    @Consumes("application/json")
    public SeasonBean updateSeason(SeasonBean seasonBean) {
       LOGGER.debug("Calling Update Season'func:updateSeason'");
+      if (seasonBean != null)
+         LOGGER.debug("Season ID  : " + seasonBean.getSeasonId());
+      else
+         LOGGER.debug("Object SeasonBean is NULL !!");
       return seasonServices.updateSeason(seasonBean);
    }
 
@@ -108,6 +118,7 @@ public class Seasons {
    @Produces("application/json")
    public String deleteSeason(@PathParam("id") String id) {
       LOGGER.debug("Calling Delete Season'func:deleteSeason'");
+      LOGGER.debug("Season ID  : " + id);
       return seasonServices.deleteSeason(id);
    }
 
@@ -115,6 +126,8 @@ public class Seasons {
    @Path("program/season/{seasonId}")
    @Produces("application/json")
    public SeasonPrograms getSeasonProgram(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getSeasonProgram' ");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getSeasonPrograms(seasonId);
    }
 
@@ -122,6 +135,7 @@ public class Seasons {
    @Path("status")
    @Produces("application/json")
    public SeasonStatuses getSeasonStatus() {
+      LOGGER.debug("Calling 'fun: getSeasonStatus' ");
       return seasonServices.getSeasonStatus();
    }
 
@@ -131,6 +145,8 @@ public class Seasons {
    @Path("j1hs/details/view/{seasonId}")
    @Produces("application/json")
    public SeasonHspJ1HSDetails getJ1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
    }
 
@@ -138,6 +154,8 @@ public class Seasons {
    @Path("j1hs/base/view/{seasonId}")
    @Produces("application/json")
    public J1HSBasicDetail getJ1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling  'fun:getJ1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
    }
 
@@ -145,6 +163,8 @@ public class Seasons {
    @Path("j1hs/jan/view/{seasonId}")
    @Produces("application/json")
    public J1HSJanStart getJ1JanStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1JanStartDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
    }
 
@@ -152,6 +172,8 @@ public class Seasons {
    @Path("j1hs/aug/view/{seasonId}")
    @Produces("application/json")
    public J1HSAugStart getJ1AugStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1AugStartDetails'");
+      LOGGER.debug("Season ID :" + seasonId);
       return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
    }
 
@@ -159,6 +181,8 @@ public class Seasons {
    @Path("j1hs/field/view/{seasonId}/settings")
    @Produces("application/json")
    public J1HSFieldSettings getJ1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
    }
 
@@ -166,6 +190,8 @@ public class Seasons {
    @Path("j1hs/program/view/{seasonId}/allocation")
    @Produces("application/json")
    public J1HSProgramAllocations getJ1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
    }
 
@@ -174,15 +200,17 @@ public class Seasons {
    @Produces("application/json")
    public String cloneSeason(@PathParam("id") String id, @PathParam("newSeasonName") String newSeasonName) {
       LOGGER.debug("Calling clone Season'func:cloneSeason'");
+      LOGGER.debug("Season ID  : " + id + " and new Season Name : " + newSeasonName);
       return seasonServices.cloneSeason(id, newSeasonName);
    }
 
    @GET
    @Path("custom/{seasonName}/")
    @Produces("application/json")
-   public String customService(@PathParam("seasonName") String id) {
-      LOGGER.debug("Calling clone Season'func:'");
-      seasonServices.customService(id);
+   public String customService(@PathParam("seasonName") String seasonName) {
+      LOGGER.debug("Calling clone Season'func:customService'");
+      LOGGER.debug("Season Name  : " + seasonName);
+      seasonServices.customService(seasonName);
       return "200: OK";
    }
 
@@ -192,6 +220,8 @@ public class Seasons {
    @Path("j1hs/details/edit/{seasonId}")
    @Produces("application/json")
    public SeasonHspJ1HSDetails editJ1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
    }
 
@@ -199,6 +229,8 @@ public class Seasons {
    @Path("j1hs/base/edit/{seasonId}")
    @Produces("application/json")
    public J1HSBasicDetail editJ1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
    }
 
@@ -206,6 +238,8 @@ public class Seasons {
    @Path("j1hs/jan/edit/{seasonId}")
    @Produces("application/json")
    public J1HSJanStart editJ1JanStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1JanStartDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
    }
 
@@ -213,6 +247,8 @@ public class Seasons {
    @Path("j1hs/aug/edit/{seasonId}")
    @Produces("application/json")
    public J1HSAugStart editJ1AugStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1AugStartDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
    }
 
@@ -220,6 +256,8 @@ public class Seasons {
    @Path("j1hs/field/edit/{seasonId}/settings")
    @Produces("application/json")
    public J1HSFieldSettings editJ1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
    }
 
@@ -227,6 +265,8 @@ public class Seasons {
    @Path("j1hs/program/edit/{seasonId}/allocation")
    @Produces("application/json")
    public J1HSProgramAllocations editJ1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
    }
 
@@ -236,6 +276,11 @@ public class Seasons {
    @Path("j1hs/details/update")
    @Consumes("application/json")
    public SeasonHspJ1HSDetails updateJ1Details(SeasonHspJ1HSDetails seasonHspJ1HSDetails) {
+      LOGGER.debug("Calling 'fun:updateJ1Details' ");
+      if (seasonHspJ1HSDetails != null)
+         LOGGER.debug("Season ID  : " + seasonHspJ1HSDetails.getSeasonId());
+      else
+         LOGGER.debug("Object seasonHspJ1HSDetails is Null");
       return seasonServices.updateHSPJ1HSSeasonDetails(seasonHspJ1HSDetails);
    }
 
@@ -243,6 +288,11 @@ public class Seasons {
    @Path("j1hs/base/update")
    @Consumes("application/json")
    public J1HSBasicDetail updateJ1NameAndStatus(J1HSBasicDetail j1hsBasicDetail) {
+      LOGGER.debug("Calling 'fun:updateJ1NameAndStatus'");
+      if (j1hsBasicDetail != null)
+         LOGGER.debug("Season ID  : " + j1hsBasicDetail.getSeasonId());
+      else
+         LOGGER.debug("Object updateJ1NameAndStatus  is Null");
       return seasonServices.updateHSPJ1HSSeasonNameAndStatus(j1hsBasicDetail);
    }
 
@@ -250,6 +300,8 @@ public class Seasons {
    @Path("j1hs/jan/update")
    @Consumes("application/json")
    public J1HSJanStart updateJ1JanStartDetails(J1HSJanStart j1hsJanStart) {
+      LOGGER.debug("Calling 'fun:updateJ1JanStartDetails'");
+      LOGGER.debug("Season ID  : " + j1hsJanStart.getSeasonId());
       return seasonServices.updateHSPJ1HSSeasonJanStartDetails(j1hsJanStart);
    }
 
@@ -257,6 +309,11 @@ public class Seasons {
    @Path("j1hs/aug/update")
    @Consumes("application/json")
    public J1HSAugStart updateJ1AugStartDetails(J1HSAugStart j1hsAugStart) {
+      LOGGER.debug("Calling ");
+      if (j1hsAugStart != null)
+         LOGGER.debug("Season ID  :" + j1hsAugStart.getSeasonId());
+      else
+         LOGGER.debug("Object j1hsAugStart is Null");
       return seasonServices.updateHSPJ1HSSeasonAugStartDetails(j1hsAugStart);
    }
 
@@ -264,6 +321,11 @@ public class Seasons {
    @Path("j1hs/field/settings/update")
    @Consumes("application/json")
    public J1HSFieldSettings updateJ1FieldSettings(J1HSFieldSettings j1hsFieldSettings) {
+      LOGGER.debug("Calling 'fun:updateJ1FieldSettings'");
+      if (j1hsFieldSettings != null)
+         LOGGER.debug("Season ID  : " + j1hsFieldSettings.getSeasonId());
+      else
+         LOGGER.debug("Object j1hsFieldSettings is Null");
       return seasonServices.updateHSPJ1HSSeasonFieldSettings(j1hsFieldSettings);
    }
 
@@ -271,6 +333,12 @@ public class Seasons {
    @Path("j1hs/program/update/llocation")
    @Consumes("application/json")
    public J1HSProgramAllocations updateJ1ProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations) {
+      LOGGER.debug("Calling  'fun:updateJ1ProgramAllocation'");
+      if (j1hsProgramAllocations != null)
+         LOGGER.debug("Season ID  : " + j1hsProgramAllocations.getSeasonId());
+      else
+         LOGGER.debug("Object j1hsProgramAllocations is Null");
+
       return seasonServices.updateHSPJ1HSSeasonProgramAllocation(j1hsProgramAllocations);
    }
 
@@ -283,6 +351,8 @@ public class Seasons {
    @Path("f1/view/details/{seasonId}")
    @Produces("application/json")
    public SeasonHSPF1Details getF1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getSeasonHSPF1Details(seasonId);
    }
 
@@ -290,6 +360,8 @@ public class Seasons {
    @Path("f1/edit/details/{seasonId}")
    @Produces("application/json")
    public SeasonHSPF1Details editF1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getSeasonHSPF1Details(seasonId);
    }
 
@@ -297,6 +369,11 @@ public class Seasons {
    @Path("f1/update/details")
    @Produces("application/json")
    public SeasonHSPF1Details updateF1Details(SeasonHSPF1Details seasonHSPF1Details) {
+      LOGGER.debug("Calling 'fun:updateF1Details'");
+      if (seasonHSPF1Details != null)
+         LOGGER.debug("Season ID  : " + seasonHSPF1Details.getSeasonId());
+      else
+         LOGGER.debug("Object is Null!!");
       return seasonServices.updateF1Details(seasonHSPF1Details);
    }
 
@@ -304,6 +381,8 @@ public class Seasons {
    @Path("f1/view/basicdetails/{seasonId}")
    @Produces("application/json")
    public HSPF1BasicDetails getF1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1NameAndStatus(seasonId);
    }
 
@@ -311,6 +390,8 @@ public class Seasons {
    @Path("f1/edit/basicdetails/{seasonId}")
    @Produces("application/json")
    public HSPF1BasicDetails editF1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1NameAndStatus(seasonId);
    }
 
@@ -318,6 +399,11 @@ public class Seasons {
    @Path("f1/update/basicdetails")
    @Produces("application/json")
    public HSPF1BasicDetails updateF1NameAndStatus(HSPF1BasicDetails hspf1BasicDetails) {
+      LOGGER.debug("Calling 'fun:updateF1NameAndStatus'");
+      if (hspf1BasicDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1BasicDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateHSPF1NameAndStatus(hspf1BasicDetails);
    }
 
@@ -325,6 +411,8 @@ public class Seasons {
    @Path("f1/view/accounting/{seasonId}")
    @Produces("application/json")
    public HSPF1Accounting getF1Accounting(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1Accounting'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1Accounting(seasonId);
    }
 
@@ -332,6 +420,8 @@ public class Seasons {
    @Path("f1/edit/accounting/{seasonId}")
    @Produces("application/json")
    public HSPF1Accounting editF1Accounting(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1Accounting'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1Accounting(seasonId);
    }
 
@@ -339,6 +429,11 @@ public class Seasons {
    @Path("f1/update/accounting")
    @Produces("application/json")
    public HSPF1Accounting updateF1Accounting(HSPF1Accounting hspf1Accounting) {
+      LOGGER.debug("Calling 'fun:updateF1Accounting'");
+      if (hspf1Accounting != null)
+         LOGGER.debug("Season ID  : " + hspf1Accounting.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1Accounting(hspf1Accounting);
    }
 
@@ -346,6 +441,8 @@ public class Seasons {
    @Path("f1/view/jan/startdetails/{seasonId}")
    @Produces("application/json")
    public HSPF1JanuaryStart2NdSemesterDetails getF1JanStart2NdSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1JanStart2NdSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStart2NdSemesterDetails(seasonId);
    }
 
@@ -353,6 +450,8 @@ public class Seasons {
    @Path("f1/edit/jan/startdetails/{seasonId}")
    @Produces("application/json")
    public HSPF1JanuaryStart2NdSemesterDetails editF1JanStart2NdSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1JanStart2NdSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStart2NdSemesterDetails(seasonId);
    }
 
@@ -360,6 +459,11 @@ public class Seasons {
    @Path("f1/update/jan/startdetails")
    @Produces("application/json")
    public HSPF1JanuaryStart2NdSemesterDetails updateF1JanStart2NdSemesterDetails(HSPF1JanuaryStart2NdSemesterDetails hspf1JanuaryStart2NdSemesterDetails) {
+      LOGGER.debug("Calling 'fun:updateF1JanStart2NdSemesterDetails'");
+      if (hspf1JanuaryStart2NdSemesterDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1JanuaryStart2NdSemesterDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1JanStart2NdSemesterDetails(hspf1JanuaryStart2NdSemesterDetails);
    }
 
@@ -367,6 +471,8 @@ public class Seasons {
    @Path("f1/view/jan/fulldetails/{seasonId}")
    @Produces("application/json")
    public HSPF1JanuaryStartFullYearDetail getF1JanStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1JanStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStartFullYearDetails(seasonId);
    }
 
@@ -374,6 +480,8 @@ public class Seasons {
    @Path("f1/edit/jan/fulldetails/{seasonId}")
    @Produces("application/json")
    public HSPF1JanuaryStartFullYearDetail editF1JanStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1JanStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStartFullYearDetails(seasonId);
    }
 
@@ -381,6 +489,11 @@ public class Seasons {
    @Path("f1/update/jan/fulldetails")
    @Produces("application/json")
    public HSPF1JanuaryStartFullYearDetail updateF1JanStartFullYearDetails(HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail) {
+      LOGGER.debug("Calling 'fun:updateF1JanStartFullYearDetails'");
+      if (hspf1JanuaryStartFullYearDetail != null)
+         LOGGER.debug("Season ID  : " + hspf1JanuaryStartFullYearDetail.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1JanStartFullYearDetails(hspf1JanuaryStartFullYearDetail);
    }
 
@@ -388,6 +501,8 @@ public class Seasons {
    @Path("f1/view/august/startdetail/{seasonId}")
    @Produces("application/json")
    public HSPF1AugustStart1StSemesterDetails getF1AugStart1StSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1AugStart1StSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStart1StSemesterDetails(seasonId);
    }
 
@@ -395,6 +510,8 @@ public class Seasons {
    @Path("f1/edit/august/startdetail/{seasonId}")
    @Produces("application/json")
    public HSPF1AugustStart1StSemesterDetails editF1AugStart1StSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1AugStart1StSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStart1StSemesterDetails(seasonId);
    }
 
@@ -402,6 +519,11 @@ public class Seasons {
    @Path("f1/update/august/startdetail")
    @Produces("application/json")
    public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails) {
+      LOGGER.debug("Calling 'fun:updateF1AugStart1StSemesterDetails'");
+      if (hspf1AugustStart1StSemesterDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1AugustStart1StSemesterDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1AugStart1StSemesterDetails(hspf1AugustStart1StSemesterDetails);
    }
 
@@ -409,6 +531,8 @@ public class Seasons {
    @Path("f1/view/august/fulldetail/{seasonId}")
    @Produces("application/json")
    public HSPF1AugustStartFullYearDetails getF1AugStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1AugStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStartFullYearDetails(seasonId);
    }
 
@@ -416,6 +540,8 @@ public class Seasons {
    @Path("f1/edit/august/fulldetail/{seasonId}")
    @Produces("application/json")
    public HSPF1AugustStartFullYearDetails editF1AugStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1AugStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStartFullYearDetails(seasonId);
    }
 
@@ -423,6 +549,11 @@ public class Seasons {
    @Path("f1/update/august/fulldetail")
    @Produces("application/json")
    public HSPF1AugustStartFullYearDetails updateF1AugStartFullYearDetails(HSPF1AugustStartFullYearDetails hspf1AugustStartFullYearDetails) {
+      LOGGER.debug("Calling 'fun:updateF1AugStartFullYearDetails'");
+      if (hspf1AugustStartFullYearDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1AugustStartFullYearDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1AugStartFullYearDetails(hspf1AugustStartFullYearDetails);
    }
 
@@ -430,6 +561,8 @@ public class Seasons {
    @Path("f1/view/fieldsettings/{seasonId}")
    @Produces("application/json")
    public HSPF1FieldSettings getF1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1FieldSettings(seasonId);
    }
 
@@ -437,6 +570,8 @@ public class Seasons {
    @Path("f1/edit/fieldsettings/{seasonId}")
    @Produces("application/json")
    public HSPF1FieldSettings editF1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1FieldSettings(seasonId);
    }
 
@@ -444,6 +579,11 @@ public class Seasons {
    @Path("f1/update/fieldsettings")
    @Produces("application/json")
    public HSPF1FieldSettings updateF1FieldSettings(HSPF1FieldSettings hspf1FieldSettings) {
+      LOGGER.debug("Calling 'fun:updateF1FieldSettings'");
+      if (hspf1FieldSettings != null)
+         LOGGER.debug("Season ID  : " + hspf1FieldSettings.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1FieldSettings(hspf1FieldSettings);
    }
 
@@ -451,6 +591,8 @@ public class Seasons {
    @Path("f1/view/allocation/{seasonId}")
    @Produces("application/json")
    public HSPF1ProgramAllocations getF1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1ProgramAllocations(seasonId);
    }
 
@@ -458,6 +600,8 @@ public class Seasons {
    @Path("f1/edit/allocation/{seasonId}")
    @Produces("application/json")
    public HSPF1ProgramAllocations editF1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1ProgramAllocations(seasonId);
    }
 
@@ -465,6 +609,12 @@ public class Seasons {
    @Path("f1/update/allocation")
    @Produces("application/json")
    public HSPF1ProgramAllocations updateF1ProgramAllocation(HSPF1ProgramAllocations hspf1ProgramAllocations) {
+      LOGGER.debug("Calling 'fun:updateF1ProgramAllocation'");
+      if (hspf1ProgramAllocations != null)
+         LOGGER.debug("Season ID  : " + hspf1ProgramAllocations.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
+
       return seasonServices.updateF1ProgramAllocation(hspf1ProgramAllocations);
    }
 
