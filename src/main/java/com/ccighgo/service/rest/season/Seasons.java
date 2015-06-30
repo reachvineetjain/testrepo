@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
+import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -1333,8 +1334,7 @@ public class Seasons {
    @Path("clone")
    @Consumes("application/json")
    @Produces("application/json")
-   public void cloneSeason(WPSectionOne wpSectionOne) {
-      // return null;
+   public CloneSeason cloneSeason(CloneSeason cloneSeason){
+      return seasonServices.cloneSeason(cloneSeason);
    }
-
 }

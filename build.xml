@@ -3,7 +3,7 @@
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
 	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,
-		SeasonProgram,SeasonStatus,SeasonHspJ1HSDetails,SeasonHspF1Details,SeasonGHTDetails,SeasonWPDetail,SeasonWPCAPDetails" />
+		SeasonProgram,SeasonStatus,SeasonHspJ1HSDetails,SeasonHspF1Details,SeasonGHTDetails,SeasonWPDetail,SeasonWPCAPDetails,CloneSeason" />
 
 	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
 
@@ -214,7 +214,7 @@
 			<arg value="${xsd.dir}/SeasonGHTDetails.xsd" />
 		</java>
 	</target>
-	
+
 	<!-- Season WP CAP -->
 	<target name="SeasonWPCAPDetails">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -223,14 +223,23 @@
 			<arg value="${xsd.dir}/SeasonWPCAPDetails.xsd" />
 		</java>
 	</target>
-	
-	<!-- Season WP CAP -->
-	    <target name="SeasonWPDetail">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/SeasonWPDetail.xsd" />
-	        </java>
-	    </target>
+
+	<!-- Season WP spring, summer, winter -->
+	<target name="SeasonWPDetail">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonWPDetail.xsd" />
+		</java>
+	</target>
+
+	<!-- Season Clone highlevel screen -->
+	<target name="CloneSeason">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/CloneSeason.xsd" />
+		</java>
+	</target>
 
 </project>

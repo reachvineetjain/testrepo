@@ -32,6 +32,7 @@ import com.ccighgo.jpa.repositories.SeasonVADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonWADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSpringRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSummerRepository;
+import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -1523,6 +1524,16 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
+   }
+
+   public CloneSeason cloneSeason(CloneSeason cloneSeason) {
+      if(cloneSeason.getExistingSeasonId()==0||cloneSeason.getExistingSeasonId()<0){
+         
+      }
+      
+      
+      return cloneSeason;
+     
    }
 
 }
