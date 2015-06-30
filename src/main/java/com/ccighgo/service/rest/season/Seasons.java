@@ -7,11 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
@@ -49,7 +47,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTrain
 @Consumes("application/json")
 public class Seasons {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(Seasons.class);
+   private static final Logger LOGGER = Logger.getLogger(Seasons.class);
 
    @Autowired
    SeasonServiceInterfaceImpl seasonServices;
@@ -58,7 +56,7 @@ public class Seasons {
    @Path("ping/{input}")
    @Produces("text/plain")
    public String ping(@PathParam("input") String input) {
-      LOGGER.debug("Pinging !!");
+      LOGGER.debug("Pinging !! ( value : " + input + " )");
       return input;
    }
 
@@ -77,6 +75,7 @@ public class Seasons {
    @Produces("application/json")
    public SeasonBean editSeason(@PathParam("id") String id) {
       LOGGER.debug("Calling Edit Season By Id 'func:editSeason'");
+      LOGGER.debug("Season ID  : " + id);
       SeasonBean result = seasonServices.editSeason(id);
       return result;
    }
@@ -86,6 +85,7 @@ public class Seasons {
    @Produces("application/json")
    public SeasonBean view(@PathParam("id") String id) {
       LOGGER.debug("Calling Get Season By Id 'func:View'");
+      LOGGER.debug("Season ID  : " + id);
       SeasonBean result = seasonServices.viewSeason(id);
       return result;
    }
@@ -95,6 +95,10 @@ public class Seasons {
    @Consumes("application/json")
    public SeasonBean createSeason(SeasonBean seasonBean) {
       LOGGER.debug("Calling Create Season function 'func:createSeason'");
+      if (seasonBean != null)
+         LOGGER.debug("Season ID  : " + seasonBean.getSeasonId());
+      else
+         LOGGER.debug("Object SeasonBean is NULL !!");
       return seasonServices.createSeason(seasonBean);
    }
 
@@ -103,6 +107,10 @@ public class Seasons {
    @Consumes("application/json")
    public SeasonBean updateSeason(SeasonBean seasonBean) {
       LOGGER.debug("Calling Update Season'func:updateSeason'");
+      if (seasonBean != null)
+         LOGGER.debug("Season ID  : " + seasonBean.getSeasonId());
+      else
+         LOGGER.debug("Object SeasonBean is NULL !!");
       return seasonServices.updateSeason(seasonBean);
    }
 
@@ -111,6 +119,7 @@ public class Seasons {
    @Produces("application/json")
    public String deleteSeason(@PathParam("id") String id) {
       LOGGER.debug("Calling Delete Season'func:deleteSeason'");
+      LOGGER.debug("Season ID  : " + id);
       return seasonServices.deleteSeason(id);
    }
 
@@ -118,6 +127,8 @@ public class Seasons {
    @Path("program/season/{seasonId}")
    @Produces("application/json")
    public SeasonPrograms getSeasonProgram(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getSeasonProgram' ");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getSeasonPrograms(seasonId);
    }
 
@@ -125,6 +136,7 @@ public class Seasons {
    @Path("status")
    @Produces("application/json")
    public SeasonStatuses getSeasonStatus() {
+      LOGGER.debug("Calling 'fun: getSeasonStatus' ");
       return seasonServices.getSeasonStatus();
    }
 
@@ -134,6 +146,8 @@ public class Seasons {
    @Path("j1hs/details/view/{seasonId}")
    @Produces("application/json")
    public SeasonHspJ1HSDetails getJ1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
    }
 
@@ -141,6 +155,8 @@ public class Seasons {
    @Path("j1hs/base/view/{seasonId}")
    @Produces("application/json")
    public J1HSBasicDetail getJ1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling  'fun:getJ1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
    }
 
@@ -148,6 +164,8 @@ public class Seasons {
    @Path("j1hs/jan/view/{seasonId}")
    @Produces("application/json")
    public J1HSJanStart getJ1JanStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1JanStartDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
    }
 
@@ -155,6 +173,8 @@ public class Seasons {
    @Path("j1hs/aug/view/{seasonId}")
    @Produces("application/json")
    public J1HSAugStart getJ1AugStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1AugStartDetails'");
+      LOGGER.debug("Season ID :" + seasonId);
       return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
    }
 
@@ -162,6 +182,8 @@ public class Seasons {
    @Path("j1hs/field/view/{seasonId}/settings")
    @Produces("application/json")
    public J1HSFieldSettings getJ1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
    }
 
@@ -169,6 +191,8 @@ public class Seasons {
    @Path("j1hs/program/view/{seasonId}/allocation")
    @Produces("application/json")
    public J1HSProgramAllocations getJ1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getJ1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
    }
 
@@ -177,15 +201,17 @@ public class Seasons {
    @Produces("application/json")
    public String cloneSeason(@PathParam("id") String id, @PathParam("newSeasonName") String newSeasonName) {
       LOGGER.debug("Calling clone Season'func:cloneSeason'");
+      LOGGER.debug("Season ID  : " + id + " and new Season Name : " + newSeasonName);
       return seasonServices.cloneSeason(id, newSeasonName);
    }
 
    @GET
    @Path("custom/{seasonName}/")
    @Produces("application/json")
-   public String customService(@PathParam("seasonName") String id) {
-      LOGGER.debug("Calling clone Season'func:'");
-      seasonServices.customService(id);
+   public String customService(@PathParam("seasonName") String seasonName) {
+      LOGGER.debug("Calling clone Season'func:customService'");
+      LOGGER.debug("Season Name  : " + seasonName);
+      seasonServices.customService(seasonName);
       return "200: OK";
    }
 
@@ -195,6 +221,8 @@ public class Seasons {
    @Path("j1hs/details/edit/{seasonId}")
    @Produces("application/json")
    public SeasonHspJ1HSDetails editJ1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonDetails(seasonId);
    }
 
@@ -202,6 +230,8 @@ public class Seasons {
    @Path("j1hs/base/edit/{seasonId}")
    @Produces("application/json")
    public J1HSBasicDetail editJ1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonId);
    }
 
@@ -209,6 +239,8 @@ public class Seasons {
    @Path("j1hs/jan/edit/{seasonId}")
    @Produces("application/json")
    public J1HSJanStart editJ1JanStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1JanStartDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonId);
    }
 
@@ -216,6 +248,8 @@ public class Seasons {
    @Path("j1hs/aug/edit/{seasonId}")
    @Produces("application/json")
    public J1HSAugStart editJ1AugStartDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1AugStartDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonId);
    }
 
@@ -223,6 +257,8 @@ public class Seasons {
    @Path("j1hs/field/edit/{seasonId}/settings")
    @Produces("application/json")
    public J1HSFieldSettings editJ1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonId);
    }
 
@@ -230,15 +266,22 @@ public class Seasons {
    @Path("j1hs/program/edit/{seasonId}/allocation")
    @Produces("application/json")
    public J1HSProgramAllocations editJ1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editJ1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
    }
-   
-  // HSP J1HS update services
-   
+
+   // HSP J1HS update services
+
    @POST
    @Path("j1hs/details/update")
    @Consumes("application/json")
    public SeasonHspJ1HSDetails updateJ1Details(SeasonHspJ1HSDetails seasonHspJ1HSDetails) {
+      LOGGER.debug("Calling 'fun:updateJ1Details' ");
+      if (seasonHspJ1HSDetails != null)
+         LOGGER.debug("Season ID  : " + seasonHspJ1HSDetails.getSeasonId());
+      else
+         LOGGER.debug("Object seasonHspJ1HSDetails is Null");
       return seasonServices.updateHSPJ1HSSeasonDetails(seasonHspJ1HSDetails);
    }
 
@@ -246,6 +289,11 @@ public class Seasons {
    @Path("j1hs/base/update")
    @Consumes("application/json")
    public J1HSBasicDetail updateJ1NameAndStatus(J1HSBasicDetail j1hsBasicDetail) {
+      LOGGER.debug("Calling 'fun:updateJ1NameAndStatus'");
+      if (j1hsBasicDetail != null)
+         LOGGER.debug("Season ID  : " + j1hsBasicDetail.getSeasonId());
+      else
+         LOGGER.debug("Object updateJ1NameAndStatus  is Null");
       return seasonServices.updateHSPJ1HSSeasonNameAndStatus(j1hsBasicDetail);
    }
 
@@ -253,6 +301,8 @@ public class Seasons {
    @Path("j1hs/jan/update")
    @Consumes("application/json")
    public J1HSJanStart updateJ1JanStartDetails(J1HSJanStart j1hsJanStart) {
+      LOGGER.debug("Calling 'fun:updateJ1JanStartDetails'");
+      LOGGER.debug("Season ID  : " + j1hsJanStart.getSeasonId());
       return seasonServices.updateHSPJ1HSSeasonJanStartDetails(j1hsJanStart);
    }
 
@@ -260,6 +310,11 @@ public class Seasons {
    @Path("j1hs/aug/update")
    @Consumes("application/json")
    public J1HSAugStart updateJ1AugStartDetails(J1HSAugStart j1hsAugStart) {
+      LOGGER.debug("Calling ");
+      if (j1hsAugStart != null)
+         LOGGER.debug("Season ID  :" + j1hsAugStart.getSeasonId());
+      else
+         LOGGER.debug("Object j1hsAugStart is Null");
       return seasonServices.updateHSPJ1HSSeasonAugStartDetails(j1hsAugStart);
    }
 
@@ -267,6 +322,11 @@ public class Seasons {
    @Path("j1hs/field/settings/update")
    @Consumes("application/json")
    public J1HSFieldSettings updateJ1FieldSettings(J1HSFieldSettings j1hsFieldSettings) {
+      LOGGER.debug("Calling 'fun:updateJ1FieldSettings'");
+      if (j1hsFieldSettings != null)
+         LOGGER.debug("Season ID  : " + j1hsFieldSettings.getSeasonId());
+      else
+         LOGGER.debug("Object j1hsFieldSettings is Null");
       return seasonServices.updateHSPJ1HSSeasonFieldSettings(j1hsFieldSettings);
    }
 
@@ -274,208 +334,295 @@ public class Seasons {
    @Path("j1hs/program/update/llocation")
    @Consumes("application/json")
    public J1HSProgramAllocations updateJ1ProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations) {
+      LOGGER.debug("Calling  'fun:updateJ1ProgramAllocation'");
+      if (j1hsProgramAllocations != null)
+         LOGGER.debug("Season ID  : " + j1hsProgramAllocations.getSeasonId());
+      else
+         LOGGER.debug("Object j1hsProgramAllocations is Null");
+
       return seasonServices.updateHSPJ1HSSeasonProgramAllocation(j1hsProgramAllocations);
    }
-// HSP F1 services
+
+   // HSP F1 services
    /**
     * view - Edit- update
     */
-   
+
    @GET
    @Path("f1/view/details/{seasonId}")
    @Produces("application/json")
-   public SeasonHSPF1Details getF1Details(@PathParam("seasonId") String seasonId){
+   public SeasonHSPF1Details getF1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getSeasonHSPF1Details(seasonId);
    }
-   
+
    @GET
    @Path("f1/edit/details/{seasonId}")
    @Produces("application/json")
-   public SeasonHSPF1Details editF1Details(@PathParam("seasonId") String seasonId){
+   public SeasonHSPF1Details editF1Details(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1Details'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getSeasonHSPF1Details(seasonId);
    }
-   
+
    @POST
    @Path("f1/update/details")
    @Produces("application/json")
-   public SeasonHSPF1Details updateF1Details(SeasonHSPF1Details seasonHSPF1Details){
+   public SeasonHSPF1Details updateF1Details(SeasonHSPF1Details seasonHSPF1Details) {
+      LOGGER.debug("Calling 'fun:updateF1Details'");
+      if (seasonHSPF1Details != null)
+         LOGGER.debug("Season ID  : " + seasonHSPF1Details.getSeasonId());
+      else
+         LOGGER.debug("Object is Null!!");
       return seasonServices.updateF1Details(seasonHSPF1Details);
    }
-   
-   
+
    @GET
    @Path("f1/view/basicdetails/{seasonId}")
    @Produces("application/json")
-   public HSPF1BasicDetails getF1NameAndStatus(@PathParam("seasonId") String seasonId){
+   public HSPF1BasicDetails getF1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1NameAndStatus(seasonId);
    }
+
    @GET
    @Path("f1/edit/basicdetails/{seasonId}")
    @Produces("application/json")
-   public HSPF1BasicDetails editF1NameAndStatus(@PathParam("seasonId") String seasonId){
+   public HSPF1BasicDetails editF1NameAndStatus(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1NameAndStatus'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1NameAndStatus(seasonId);
    }
-   
+
    @POST
    @Path("f1/update/basicdetails")
    @Produces("application/json")
-   public HSPF1BasicDetails updateF1NameAndStatus(HSPF1BasicDetails hspf1BasicDetails){
+   public HSPF1BasicDetails updateF1NameAndStatus(HSPF1BasicDetails hspf1BasicDetails) {
+      LOGGER.debug("Calling 'fun:updateF1NameAndStatus'");
+      if (hspf1BasicDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1BasicDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateHSPF1NameAndStatus(hspf1BasicDetails);
    }
-   
-   
+
    @GET
    @Path("f1/view/accounting/{seasonId}")
    @Produces("application/json")
-   public HSPF1Accounting getF1Accounting(@PathParam("seasonId") String seasonId){
+   public HSPF1Accounting getF1Accounting(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1Accounting'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1Accounting(seasonId);
    }
-   
+
    @GET
    @Path("f1/edit/accounting/{seasonId}")
    @Produces("application/json")
-   public HSPF1Accounting editF1Accounting(@PathParam("seasonId") String seasonId){
+   public HSPF1Accounting editF1Accounting(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1Accounting'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1Accounting(seasonId);
    }
-   
+
    @POST
    @Path("f1/update/accounting")
    @Produces("application/json")
-   public HSPF1Accounting updateF1Accounting(HSPF1Accounting hspf1Accounting){
+   public HSPF1Accounting updateF1Accounting(HSPF1Accounting hspf1Accounting) {
+      LOGGER.debug("Calling 'fun:updateF1Accounting'");
+      if (hspf1Accounting != null)
+         LOGGER.debug("Season ID  : " + hspf1Accounting.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1Accounting(hspf1Accounting);
    }
-   
-   
+
    @GET
    @Path("f1/view/jan/startdetails/{seasonId}")
    @Produces("application/json")
-   public HSPF1JanuaryStart2NdSemesterDetails getF1JanStart2NdSemesterDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1JanuaryStart2NdSemesterDetails getF1JanStart2NdSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1JanStart2NdSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStart2NdSemesterDetails(seasonId);
    }
-   
+
    @GET
    @Path("f1/edit/jan/startdetails/{seasonId}")
    @Produces("application/json")
-   public HSPF1JanuaryStart2NdSemesterDetails editF1JanStart2NdSemesterDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1JanuaryStart2NdSemesterDetails editF1JanStart2NdSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1JanStart2NdSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStart2NdSemesterDetails(seasonId);
    }
-   
+
    @POST
    @Path("f1/update/jan/startdetails")
    @Produces("application/json")
-   public HSPF1JanuaryStart2NdSemesterDetails updateF1JanStart2NdSemesterDetails(HSPF1JanuaryStart2NdSemesterDetails hspf1JanuaryStart2NdSemesterDetails){
+   public HSPF1JanuaryStart2NdSemesterDetails updateF1JanStart2NdSemesterDetails(HSPF1JanuaryStart2NdSemesterDetails hspf1JanuaryStart2NdSemesterDetails) {
+      LOGGER.debug("Calling 'fun:updateF1JanStart2NdSemesterDetails'");
+      if (hspf1JanuaryStart2NdSemesterDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1JanuaryStart2NdSemesterDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1JanStart2NdSemesterDetails(hspf1JanuaryStart2NdSemesterDetails);
    }
-   
+
    @GET
    @Path("f1/view/jan/fulldetails/{seasonId}")
    @Produces("application/json")
-   public HSPF1JanuaryStartFullYearDetail getF1JanStartFullYearDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1JanuaryStartFullYearDetail getF1JanStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1JanStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStartFullYearDetails(seasonId);
    }
-   
+
    @GET
    @Path("f1/edit/jan/fulldetails/{seasonId}")
    @Produces("application/json")
-   public HSPF1JanuaryStartFullYearDetail editF1JanStartFullYearDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1JanuaryStartFullYearDetail editF1JanStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1JanStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1JanuaryStartFullYearDetails(seasonId);
    }
-   
+
    @POST
    @Path("f1/update/jan/fulldetails")
    @Produces("application/json")
-   public HSPF1JanuaryStartFullYearDetail updateF1JanStartFullYearDetails(HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail){
+   public HSPF1JanuaryStartFullYearDetail updateF1JanStartFullYearDetails(HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail) {
+      LOGGER.debug("Calling 'fun:updateF1JanStartFullYearDetails'");
+      if (hspf1JanuaryStartFullYearDetail != null)
+         LOGGER.debug("Season ID  : " + hspf1JanuaryStartFullYearDetail.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1JanStartFullYearDetails(hspf1JanuaryStartFullYearDetail);
    }
-   
+
    @GET
    @Path("f1/view/august/startdetail/{seasonId}")
    @Produces("application/json")
-   public HSPF1AugustStart1StSemesterDetails getF1AugStart1StSemesterDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1AugustStart1StSemesterDetails getF1AugStart1StSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1AugStart1StSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStart1StSemesterDetails(seasonId);
    }
+
    @GET
    @Path("f1/edit/august/startdetail/{seasonId}")
    @Produces("application/json")
-   public HSPF1AugustStart1StSemesterDetails editF1AugStart1StSemesterDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1AugustStart1StSemesterDetails editF1AugStart1StSemesterDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1AugStart1StSemesterDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStart1StSemesterDetails(seasonId);
    }
-   
+
    @POST
    @Path("f1/update/august/startdetail")
    @Produces("application/json")
-   public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails){
+   public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails) {
+      LOGGER.debug("Calling 'fun:updateF1AugStart1StSemesterDetails'");
+      if (hspf1AugustStart1StSemesterDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1AugustStart1StSemesterDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1AugStart1StSemesterDetails(hspf1AugustStart1StSemesterDetails);
    }
-   
-   
+
    @GET
    @Path("f1/view/august/fulldetail/{seasonId}")
    @Produces("application/json")
-   public HSPF1AugustStartFullYearDetails getF1AugStartFullYearDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1AugustStartFullYearDetails getF1AugStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1AugStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStartFullYearDetails(seasonId);
    }
-   
+
    @GET
    @Path("f1/edit/august/fulldetail/{seasonId}")
    @Produces("application/json")
-   public HSPF1AugustStartFullYearDetails editF1AugStartFullYearDetails(@PathParam("seasonId") String seasonId){
+   public HSPF1AugustStartFullYearDetails editF1AugStartFullYearDetails(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1AugStartFullYearDetails'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1AugustStartFullYearDetails(seasonId);
    }
-   
+
    @POST
    @Path("f1/update/august/fulldetail")
    @Produces("application/json")
-   public HSPF1AugustStartFullYearDetails updateF1AugStartFullYearDetails(HSPF1AugustStartFullYearDetails hspf1AugustStartFullYearDetails){
+   public HSPF1AugustStartFullYearDetails updateF1AugStartFullYearDetails(HSPF1AugustStartFullYearDetails hspf1AugustStartFullYearDetails) {
+      LOGGER.debug("Calling 'fun:updateF1AugStartFullYearDetails'");
+      if (hspf1AugustStartFullYearDetails != null)
+         LOGGER.debug("Season ID  : " + hspf1AugustStartFullYearDetails.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1AugStartFullYearDetails(hspf1AugustStartFullYearDetails);
    }
-   
+
    @GET
    @Path("f1/view/fieldsettings/{seasonId}")
    @Produces("application/json")
-   public HSPF1FieldSettings getF1FieldSettings(@PathParam("seasonId") String seasonId){
+   public HSPF1FieldSettings getF1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1FieldSettings(seasonId);
    }
+
    @GET
    @Path("f1/edit/fieldsettings/{seasonId}")
    @Produces("application/json")
-   public HSPF1FieldSettings editF1FieldSettings(@PathParam("seasonId") String seasonId){
+   public HSPF1FieldSettings editF1FieldSettings(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1FieldSettings'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1FieldSettings(seasonId);
    }
+
    @POST
    @Path("f1/update/fieldsettings")
    @Produces("application/json")
-   public HSPF1FieldSettings updateF1FieldSettings(HSPF1FieldSettings hspf1FieldSettings){
+   public HSPF1FieldSettings updateF1FieldSettings(HSPF1FieldSettings hspf1FieldSettings) {
+      LOGGER.debug("Calling 'fun:updateF1FieldSettings'");
+      if (hspf1FieldSettings != null)
+         LOGGER.debug("Season ID  : " + hspf1FieldSettings.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
       return seasonServices.updateF1FieldSettings(hspf1FieldSettings);
    }
-   
-   
-   
+
    @GET
    @Path("f1/view/allocation/{seasonId}")
    @Produces("application/json")
-   public HSPF1ProgramAllocations getF1ProgramAllocation(@PathParam("seasonId") String seasonId){
+   public HSPF1ProgramAllocations getF1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:getF1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1ProgramAllocations(seasonId);
    }
-   
+
    @GET
    @Path("f1/edit/allocation/{seasonId}")
    @Produces("application/json")
-   public HSPF1ProgramAllocations editF1ProgramAllocation(@PathParam("seasonId") String seasonId){
+   public HSPF1ProgramAllocations editF1ProgramAllocation(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'fun:editF1ProgramAllocation'");
+      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPF1ProgramAllocations(seasonId);
    }
+
    @POST
    @Path("f1/update/allocation")
    @Produces("application/json")
-   public HSPF1ProgramAllocations updateF1ProgramAllocation(HSPF1ProgramAllocations hspf1ProgramAllocations){
+   public HSPF1ProgramAllocations updateF1ProgramAllocation(HSPF1ProgramAllocations hspf1ProgramAllocations) {
+      LOGGER.debug("Calling 'fun:updateF1ProgramAllocation'");
+      if (hspf1ProgramAllocations != null)
+         LOGGER.debug("Season ID  : " + hspf1ProgramAllocations.getSeasonId());
+      else
+         LOGGER.debug("Object is Null");
+
       return seasonServices.updateF1ProgramAllocation(hspf1ProgramAllocations);
    }
-   
-   
-// End of HSP F1 services
-   
-   //GHT Volunteer abroad services
-   
+
+   // End of HSP F1 services
+
+   // GHT Volunteer abroad services
+
    @GET
    @Path("ght/va/details/view/{seasonId}")
    @Produces("application/json")
@@ -497,7 +644,7 @@ public class Seasons {
       return seasonServices.getGHTVASeasonDateDetails(seasonId);
    }
 
-   //edit
+   // edit
    @GET
    @Path("ght/va/details/edit/{seasonId}")
    @Produces("application/json")
@@ -518,8 +665,8 @@ public class Seasons {
    public GHTSection2Dates editVADateDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTVASeasonDateDetails(seasonId);
    }
-   
-   //update
+
+   // update
    @POST
    @Path("ght/va/details/update")
    @Consumes("application/json")
@@ -540,9 +687,9 @@ public class Seasons {
    public GHTSection2Dates updateVADateDetails(GHTSection2Dates ghtSection2Dates) {
       return seasonServices.updateGHTVASeasonDateDetails(ghtSection2Dates);
    }
-   
-   //GHT work abroad services
-   
+
+   // GHT work abroad services
+
    @GET
    @Path("ght/wa/details/view/{seasonId}")
    @Produces("application/json")
@@ -564,7 +711,7 @@ public class Seasons {
       return seasonServices.getGHTWASeasonDateDetails(seasonId);
    }
 
-   //edit
+   // edit
    @GET
    @Path("ght/wa/details/edit/{seasonId}")
    @Produces("application/json")
@@ -585,8 +732,8 @@ public class Seasons {
    public GHTSection2Dates editWADateDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTWASeasonDateDetails(seasonId);
    }
-   
-   //update
+
+   // update
    @POST
    @Path("ght/wa/details/update")
    @Consumes("application/json")
@@ -607,573 +754,582 @@ public class Seasons {
    public GHTSection2Dates updateWADateDetails(GHTSection2Dates ghtSection2Dates) {
       return seasonServices.updateGHTWASeasonDateDetails(ghtSection2Dates);
    }
-   
+
    // GHT (HS abroad , Language School, Teach Abroad)
    @GET
    @Path("ght/hsa/view/details/{seasonId}")
    @Produces("application/json")
-   public SeasonGHTDetails getGHTHSAbroad(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTHSAbroad(seasonId);
+   public SeasonGHTDetails getGHTHSAbroad(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTHSAbroad(seasonId);
    }
+
    @GET
    @Path("ght/hsa/edit/details/{seasonId}")
    @Produces("application/json")
-   public SeasonGHTDetails editGHTHSAbroad(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTHSAbroad(seasonId);
+   public SeasonGHTDetails editGHTHSAbroad(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTHSAbroad(seasonId);
    }
-   
+
    @POST
    @Path("ght/hsa/update/details")
    @Produces("application/json")
-   public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails){
-	   return seasonServices.updateGHTHSAbroad(seasonGHTDetails);
+   public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails) {
+      return seasonServices.updateGHTHSAbroad(seasonGHTDetails);
    }
-   
-// sections
+
+   // sections
    @GET
    @Path("ght/hsa/view/sec1/{seasonId}")
    @Produces("application/json")
-   public GHTSection1Base getGHTHSSection1BaseAbroad(@PathParam("seasonId") String seasonId){
+   public GHTSection1Base getGHTHSSection1BaseAbroad(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTHSSection1BaseAbroad(seasonId);
-   }   
+   }
+
    @GET
    @Path("ght/hsa/edit/sec1/{seasonId}")
    @Produces("application/json")
-   public GHTSection1Base editGHTHSSection1BaseAbroad(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTHSSection1BaseAbroad(seasonId);
+   public GHTSection1Base editGHTHSSection1BaseAbroad(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTHSSection1BaseAbroad(seasonId);
    }
-   
+
    @POST
    @Path("ght/hsa/update/sec1")
    @Produces("application/json")
-   public GHTSection1Base updateGHTHSSection1BaseAbroad(GHTSection1Base ghtSection1Base){
-	   return seasonServices.updateGHTHSSection1BaseAbroad(ghtSection1Base);
+   public GHTSection1Base updateGHTHSSection1BaseAbroad(GHTSection1Base ghtSection1Base) {
+      return seasonServices.updateGHTHSSection1BaseAbroad(ghtSection1Base);
    }
-   
+
    @GET
    @Path("ght/hsa/view/datesec/{seasonId}")
    @Produces("application/json")
-   public GHTSection2Dates getGHTHSSection2DatesAbroad(@PathParam("seasonId") String seasonId){
+   public GHTSection2Dates getGHTHSSection2DatesAbroad(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTHSSection2DatesAbroad(seasonId);
    }
+
    @GET
    @Path("ght/hsa/edit/datesec/{seasonId}")
    @Produces("application/json")
-   public GHTSection2Dates editGHTHSSection2DatesAbroad(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTHSSection2DatesAbroad(seasonId);
+   public GHTSection2Dates editGHTHSSection2DatesAbroad(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTHSSection2DatesAbroad(seasonId);
    }
-   
+
    @POST
    @Path("ght/hsa/update/datesec")
    @Produces("application/json")
-   public GHTSection2Dates updateGHTHSSection2DatesAbroad(GHTSection2Dates ghtSection2Dates){
-	   return seasonServices.updateGHTHSSection2DatesAbroad(ghtSection2Dates);
+   public GHTSection2Dates updateGHTHSSection2DatesAbroad(GHTSection2Dates ghtSection2Dates) {
+      return seasonServices.updateGHTHSSection2DatesAbroad(ghtSection2Dates);
    }
-   
-   // LS 
-   
+
+   // LS
+
    @GET
    @Path("ght/ls/view/{seasonId}")
    @Produces("application/json")
-   public SeasonGHTDetails getGHTLanguageSchool(@PathParam("seasonId") String seasonId){
+   public SeasonGHTDetails getGHTLanguageSchool(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTLanguageSchool(seasonId);
    }
-   
+
    @GET
    @Path("ght/ls/edit/{seasonId}")
    @Produces("application/json")
-   public SeasonGHTDetails editGHTLanguageSchool(@PathParam("seasonId") String seasonId){
+   public SeasonGHTDetails editGHTLanguageSchool(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTLanguageSchool(seasonId);
    }
-   
+
    @POST
    @Path("ght/ls/update")
    @Produces("application/json")
-   public SeasonGHTDetails updateGHTLanguageSchool(SeasonGHTDetails seasonGHTDetails){
+   public SeasonGHTDetails updateGHTLanguageSchool(SeasonGHTDetails seasonGHTDetails) {
       return seasonServices.updateGHTLanguageSchool(seasonGHTDetails);
    }
-   
-// sections
+
+   // sections
    @GET
    @Path("ght/ls/view/sec1/{seasonId}")
    @Produces("application/json")
-   public GHTSection1Base getGHTLanguageSchoolSection1(@PathParam("seasonId") String seasonId){
+   public GHTSection1Base getGHTLanguageSchoolSection1(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTLanguageSchoolSection1(seasonId);
-   }   
+   }
+
    @GET
    @Path("ght/ls/edit/sec1/{seasonId}")
    @Produces("application/json")
-   public GHTSection1Base editGHTLanguageSchoolSection1(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTLanguageSchoolSection1(seasonId);
+   public GHTSection1Base editGHTLanguageSchoolSection1(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTLanguageSchoolSection1(seasonId);
    }
-   
+
    @POST
    @Path("ght/ls/update/sec1")
    @Produces("application/json")
-   public GHTSection1Base updateGHTLanguageSchoolSection1(GHTSection1Base seasonGHTDetails){
-	   return seasonServices.updateGHTLanguageSchoolSection1(seasonGHTDetails);
+   public GHTSection1Base updateGHTLanguageSchoolSection1(GHTSection1Base seasonGHTDetails) {
+      return seasonServices.updateGHTLanguageSchoolSection1(seasonGHTDetails);
    }
-   
+
    @GET
    @Path("ght/ls/view/datesec/{seasonId}")
    @Produces("application/json")
-   public GHTSection2Dates getGHTLanguageSchoolSection2Dates(@PathParam("seasonId") String seasonId){
+   public GHTSection2Dates getGHTLanguageSchoolSection2Dates(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTLanguageSchoolSection2Dates(seasonId);
    }
+
    @GET
    @Path("ght/ls/edit/datesec/{seasonId}")
    @Produces("application/json")
-   public GHTSection2Dates editGHTLanguageSchoolSection2Dates(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTLanguageSchoolSection2Dates(seasonId);
+   public GHTSection2Dates editGHTLanguageSchoolSection2Dates(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTLanguageSchoolSection2Dates(seasonId);
    }
-   
+
    @POST
    @Path("ght/ls/update/datesec")
    @Produces("application/json")
-   public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(GHTSection2Dates ghtSection2Dates){
-	   return seasonServices.updateGHTLanguageSchoolSection2Dates(ghtSection2Dates);
+   public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(GHTSection2Dates ghtSection2Dates) {
+      return seasonServices.updateGHTLanguageSchoolSection2Dates(ghtSection2Dates);
    }
-   
-   
-   //TA
-   
+
+   // TA
+
    @GET
    @Path("ght/ta/view/{seasonId}")
    @Produces("application/json")
-   public SeasonGHTDetails getGHTTeachAbroad(@PathParam("seasonId") String seasonId){
+   public SeasonGHTDetails getGHTTeachAbroad(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTTeachAbroad(seasonId);
    }
-   
+
    @GET
    @Path("ght/ta/edit/{seasonId}")
    @Produces("application/json")
-   public SeasonGHTDetails editGHTTeachAbroad(@PathParam("seasonId") String seasonId){
+   public SeasonGHTDetails editGHTTeachAbroad(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTTeachAbroad(seasonId);
    }
-   
+
    @POST
    @Path("ght/ta/update")
    @Produces("application/json")
-   public SeasonGHTDetails updateGHTTeachAbroad(SeasonGHTDetails seasonGHTDetails){
+   public SeasonGHTDetails updateGHTTeachAbroad(SeasonGHTDetails seasonGHTDetails) {
       return seasonServices.updateGHTTeachAbroad(seasonGHTDetails);
    }
-// sections
+
+   // sections
    @GET
    @Path("ght/ta/view/sec1/{seasonId}")
    @Produces("application/json")
-   public GHTSection1Base getGHTTeachAbroadSection1(@PathParam("seasonId") String seasonId){
+   public GHTSection1Base getGHTTeachAbroadSection1(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTTeachAbroadSection1(seasonId);
-   }   
+   }
+
    @GET
    @Path("ght/ta/edit/sec1/{seasonId}")
    @Produces("application/json")
-   public GHTSection1Base editGHTTeachAbroadSection1(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTTeachAbroadSection1(seasonId);
+   public GHTSection1Base editGHTTeachAbroadSection1(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTTeachAbroadSection1(seasonId);
    }
-   
+
    @POST
    @Path("ght/ta/update/sec1")
    @Produces("application/json")
-   public GHTSection1Base updateGHTTeachAbroadSection1(GHTSection1Base ghtSection1Base){
-	   return seasonServices.updateGHTTeachAbroadSection1(ghtSection1Base);
+   public GHTSection1Base updateGHTTeachAbroadSection1(GHTSection1Base ghtSection1Base) {
+      return seasonServices.updateGHTTeachAbroadSection1(ghtSection1Base);
    }
-   
+
    @GET
    @Path("ght/ta/view/datesec/{seasonId}")
    @Produces("application/json")
-   public GHTSection2Dates getGHTTeachAbroadSection2Dates(@PathParam("seasonId") String seasonId){
+   public GHTSection2Dates getGHTTeachAbroadSection2Dates(@PathParam("seasonId") String seasonId) {
       return seasonServices.getGHTTeachAbroadSection2Dates(seasonId);
    }
+
    @GET
    @Path("ght/ta/edit/datesec/{seasonId}")
    @Produces("application/json")
-   public GHTSection2Dates editGHTTeachAbroadSection2Dates(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getGHTTeachAbroadSection2Dates(seasonId);
+   public GHTSection2Dates editGHTTeachAbroadSection2Dates(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getGHTTeachAbroadSection2Dates(seasonId);
    }
-   
+
    @POST
    @Path("ght/ta/update/datesec")
    @Produces("application/json")
-   public GHTSection2Dates updateGHTTeachAbroadSection2Dates(GHTSection2Dates ghtSection2Dates){
-	   return seasonServices.updateGHTTeachAbroadSection2Dates(ghtSection2Dates);
+   public GHTSection2Dates updateGHTTeachAbroadSection2Dates(GHTSection2Dates ghtSection2Dates) {
+      return seasonServices.updateGHTTeachAbroadSection2Dates(ghtSection2Dates);
    }
-   
+
    // work program --> Cap
    @GET
    @Path("wp/cap/view/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPCAPDetails getWPCAPDetails(@PathParam("seasonId") String seasonId){
+   public SeasonWPCAPDetails getWPCAPDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPCAPDetails(seasonId);
    }
+
    @GET
    @Path("wp/cap/edit/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPCAPDetails editWPCAPDetails(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getWPCAPDetails(seasonId);
+   public SeasonWPCAPDetails editWPCAPDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getWPCAPDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/cap/update/details")
    @Produces("application/json")
-   public SeasonWPCAPDetails updateWPCAPDetails(SeasonWPCAPDetails seasonWPCAPDetails){
-	   return seasonServices.updateWPCAPDetails(seasonWPCAPDetails);
+   public SeasonWPCAPDetails updateWPCAPDetails(SeasonWPCAPDetails seasonWPCAPDetails) {
+      return seasonServices.updateWPCAPDetails(seasonWPCAPDetails);
    }
-   //basic
+
+   // basic
    @GET
    @Path("wp/cap/view/basic/details/{seasonId}")
    @Produces("application/json")
-   public WPCAPBasicDetails getWPCAPBasicDetails(@PathParam("seasonId") String seasonId){
+   public WPCAPBasicDetails getWPCAPBasicDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPCAPBasicDetails(seasonId);
    }
+
    @GET
    @Path("wp/cap/edit/basic/details/{seasonId}")
    @Produces("application/json")
-   public WPCAPBasicDetails editWPCAPBasicDetails(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getWPCAPBasicDetails(seasonId);
+   public WPCAPBasicDetails editWPCAPBasicDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getWPCAPBasicDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/cap/update/basic/details")
    @Produces("application/json")
-   public WPCAPBasicDetails updateWPCAPBasicDetails(WPCAPBasicDetails seasonWpcapBasicDetails){
-	   return seasonServices.updateWPCAPBasicDetails(seasonWpcapBasicDetails);
+   public WPCAPBasicDetails updateWPCAPBasicDetails(WPCAPBasicDetails seasonWpcapBasicDetails) {
+      return seasonServices.updateWPCAPBasicDetails(seasonWpcapBasicDetails);
    }
-   
-   
+
    // internship
    @GET
    @Path("wp/cap/view/internship/details/{seasonId}")
    @Produces("application/json")
-   public WPCAPInternshipDetails getWPCAPInternshipDetails(@PathParam("seasonId") String seasonId){
+   public WPCAPInternshipDetails getWPCAPInternshipDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPCAPInternshipDetails(seasonId);
    }
+
    @GET
    @Path("wp/cap/edit/internship/details/{seasonId}")
    @Produces("application/json")
-   public WPCAPInternshipDetails editWPCAPInternshipDetails(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getWPCAPInternshipDetails(seasonId);
+   public WPCAPInternshipDetails editWPCAPInternshipDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getWPCAPInternshipDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/cap/update/internship/details")
    @Produces("application/json")
-   public WPCAPInternshipDetails updateWPCAPInternshipDetails(WPCAPInternshipDetails wpcapInternshipDetails){
-	   return seasonServices.updateWPCAPInternshipDetails(wpcapInternshipDetails);
+   public WPCAPInternshipDetails updateWPCAPInternshipDetails(WPCAPInternshipDetails wpcapInternshipDetails) {
+      return seasonServices.updateWPCAPInternshipDetails(wpcapInternshipDetails);
    }
-   
+
    // trainee details
    @GET
    @Path("wp/cap/view/trainee/details/{seasonId}")
    @Produces("application/json")
-   public WPCAPTraineeDetails getWPCAPTraineeDetails(@PathParam("seasonId") String seasonId){
+   public WPCAPTraineeDetails getWPCAPTraineeDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPCAPTraineeDetails(seasonId);
    }
+
    @GET
    @Path("wp/cap/edit/trainee/details/{seasonId}")
    @Produces("application/json")
-   public WPCAPTraineeDetails editWPCAPTraineeDetails(@PathParam("seasonId") String seasonId){
-	   return seasonServices.getWPCAPTraineeDetails(seasonId);
+   public WPCAPTraineeDetails editWPCAPTraineeDetails(@PathParam("seasonId") String seasonId) {
+      return seasonServices.getWPCAPTraineeDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/cap/update/trainee/details")
    @Produces("application/json")
-   public WPCAPTraineeDetails updateWPCAPTraineeDetails(WPCAPTraineeDetails wpcapTraineeDetails){
-	   return seasonServices.updateWPCAPTraineeDetails(wpcapTraineeDetails);
+   public WPCAPTraineeDetails updateWPCAPTraineeDetails(WPCAPTraineeDetails wpcapTraineeDetails) {
+      return seasonServices.updateWPCAPTraineeDetails(wpcapTraineeDetails);
    }
-   
-   
-   //Season WP summer, winter and spring services
-   
-   //wp summer full details
-   
+
+   // Season WP summer, winter and spring services
+
+   // wp summer full details
+
    @GET
    @Path("wp/summer/view/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPDetails getWPSumDetails(@PathParam("seasonId") String seasonId){
+   public SeasonWPDetails getWPSumDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/summer/edit/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPDetails editWPSumDetails(@PathParam("seasonId") String seasonId){
+   public SeasonWPDetails editWPSumDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/summer/update/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public SeasonWPDetails updateWPSumDetails(SeasonWPDetails seasonWPDetails){
+   public SeasonWPDetails updateWPSumDetails(SeasonWPDetails seasonWPDetails) {
       return seasonServices.updateWPSumDetails(seasonWPDetails);
    }
-   
-   //wp summer basic details
-   
+
+   // wp summer basic details
+
    @GET
    @Path("wp/summer/view/base/details/{seasonId}")
    @Produces("application/json")
-   public WPBasicDetail getWPSumBaseDetails(@PathParam("seasonId") String seasonId){
+   public WPBasicDetail getWPSumBaseDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumBaseDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/summer/edit/base/details/{seasonId}")
    @Produces("application/json")
-   public WPBasicDetail editWPSumBaseDetails(@PathParam("seasonId") String seasonId){
+   public WPBasicDetail editWPSumBaseDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumBaseDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/summer/update/base/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPBasicDetail updateWPSumBaseDetails(WPBasicDetail wpBasicDetail){
+   public WPBasicDetail updateWPSumBaseDetails(WPBasicDetail wpBasicDetail) {
       return seasonServices.updateWPSumBaseDetails(wpBasicDetail);
    }
-   
-   //wp summer section 1 details
-   
+
+   // wp summer section 1 details
+
    @GET
    @Path("wp/summer/view/section/one/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne getWPSumSectionOneDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne getWPSumSectionOneDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumSectionOneDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/summer/edit/section/one/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne editWPSumSectionOneDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne editWPSumSectionOneDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumSectionOneDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/summer/update/section/one/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne){
+   public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPSumSectionOneDetails(wpSectionOne);
    }
-   
-   //wp summer allocation details
-   
+
+   // wp summer allocation details
+
    @GET
    @Path("wp/summer/view/allocation/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne getWPSumAllocationDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne getWPSumAllocationDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumAllocationDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/summer/edit/allocation/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne editWPSumAllocationDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne editWPSumAllocationDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSumAllocationDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/summer/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPSumAllocationDetails(WPSectionOne wpSectionOne){
+   public WPSectionOne updateWPSumAllocationDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPSumAllocationDetails(wpSectionOne);
    }
-   
-   //wp spring full details
-   
+
+   // wp spring full details
+
    @GET
    @Path("wp/spring/view/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPDetails getWPSpringDetails(@PathParam("seasonId") String seasonId){
+   public SeasonWPDetails getWPSpringDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/spring/edit/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPDetails editWPSpringDetails(@PathParam("seasonId") String seasonId){
+   public SeasonWPDetails editWPSpringDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/spring/update/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public SeasonWPDetails updateWPSpringDetails(SeasonWPDetails seasonWPDetails){
+   public SeasonWPDetails updateWPSpringDetails(SeasonWPDetails seasonWPDetails) {
       return seasonServices.updateWPSpringDetails(seasonWPDetails);
    }
-   
-   //wp spring basic details
-   
+
+   // wp spring basic details
+
    @GET
    @Path("wp/spring/view/base/details/{seasonId}")
    @Produces("application/json")
-   public WPBasicDetail getWPSpringBaseDetails(@PathParam("seasonId") String seasonId){
+   public WPBasicDetail getWPSpringBaseDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringBaseDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/spring/edit/base/details/{seasonId}")
    @Produces("application/json")
-   public WPBasicDetail editWPSpringBaseDetails(@PathParam("seasonId") String seasonId){
+   public WPBasicDetail editWPSpringBaseDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringBaseDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/spring/update/base/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPBasicDetail updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail){
+   public WPBasicDetail updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail) {
       return seasonServices.updateWPSpringBaseDetails(wpBasicDetail);
    }
-   
-   //wp spring section 1 details
-   
+
+   // wp spring section 1 details
+
    @GET
    @Path("wp/spring/view/section/one/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne getWPSpringSectionOneDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne getWPSpringSectionOneDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringSectionOneDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/spring/edit/section/one/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne editWPSpringSectionOneDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne editWPSpringSectionOneDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringSectionOneDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/spring/update/section/one/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPSpringSectionOneDetails(WPSectionOne wpSectionOne){
+   public WPSectionOne updateWPSpringSectionOneDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPSpringSectionOneDetails(wpSectionOne);
    }
-   
-   //wp spring allocation details
-   
+
+   // wp spring allocation details
+
    @GET
    @Path("wp/spring/view/allocation/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne getWPSpringAllocationDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne getWPSpringAllocationDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringAllocationDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/spring/edit/allocation/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne editWPSpringAllocationDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne editWPSpringAllocationDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPSpringAllocationDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/spring/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPSpringAllocationDetails(WPSectionOne wpSectionOne){
+   public WPSectionOne updateWPSpringAllocationDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPSpringAllocationDetails(wpSectionOne);
    }
-   
-   //wp winter full details
-   
+
+   // wp winter full details
+
    @GET
    @Path("wp/winter/view/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPDetails getWPWinterDetails(@PathParam("seasonId") String seasonId){
+   public SeasonWPDetails getWPWinterDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPWinterDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/winter/edit/details/{seasonId}")
    @Produces("application/json")
-   public SeasonWPDetails editWPWinterDetails(@PathParam("seasonId") String seasonId){
+   public SeasonWPDetails editWPWinterDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.editWPWinterDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/winter/update/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public SeasonWPDetails updateWPWinterDetails(SeasonWPDetails seasonWPDetails){
+   public SeasonWPDetails updateWPWinterDetails(SeasonWPDetails seasonWPDetails) {
       return seasonServices.updateWPWinterDetails(seasonWPDetails);
    }
-   
-   //wp winter basic details
-   
+
+   // wp winter basic details
+
    @GET
    @Path("wp/winter/view/base/details/{seasonId}")
    @Produces("application/json")
-   public WPBasicDetail getWPWinterBaseDetails(@PathParam("seasonId") String seasonId){
+   public WPBasicDetail getWPWinterBaseDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPWinterBaseDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/winter/edit/base/details/{seasonId}")
    @Produces("application/json")
-   public WPBasicDetail editWPWinterBaseDetails(@PathParam("seasonId") String seasonId){
+   public WPBasicDetail editWPWinterBaseDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.editWPWinterBaseDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/winter/update/base/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPBasicDetail updateWPWinterBaseDetails(WPBasicDetail wpBasicDetail){
+   public WPBasicDetail updateWPWinterBaseDetails(WPBasicDetail wpBasicDetail) {
       return seasonServices.updateWPWinterBaseDetails(wpBasicDetail);
    }
-   
-   //wp winter section 1 details
-   
+
+   // wp winter section 1 details
+
    @GET
    @Path("wp/winter/view/section/one/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne getWPWinterSectionOneDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne getWPWinterSectionOneDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPWinterSectionOneDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/winter/edit/section/one/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne editWPWinterSectionOneDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne editWPWinterSectionOneDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.editWPWinterSectionOneDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/winter/update/section/one/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPWinterSectionOneDetails(WPSectionOne wpSectionOne){
+   public WPSectionOne updateWPWinterSectionOneDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPWinterSectionOneDetails(wpSectionOne);
    }
-   
-   //wp winter allocation details
-   
+
+   // wp winter allocation details
+
    @GET
    @Path("wp/winter/view/allocation/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne getWPWinterAllocationDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne getWPWinterAllocationDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.getWPWinterAllocationDetails(seasonId);
    }
-   
+
    @GET
    @Path("wp/winter/edit/allocation/details/{seasonId}")
    @Produces("application/json")
-   public WPSectionOne editWPWinterAllocationDetails(@PathParam("seasonId") String seasonId){
+   public WPSectionOne editWPWinterAllocationDetails(@PathParam("seasonId") String seasonId) {
       return seasonServices.editWPWinterAllocationDetails(seasonId);
    }
-   
+
    @POST
    @Path("wp/winter/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne){
+   public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPWinterAllocationDetails(wpSectionOne);
    }
-   
-   
+
    @POST
    @Path("clone")
    @Consumes("application/json")
@@ -1181,5 +1337,4 @@ public class Seasons {
    public CloneSeason cloneSeason(CloneSeason cloneSeason){
       return seasonServices.cloneSeason(cloneSeason);
    }
-   
 }
