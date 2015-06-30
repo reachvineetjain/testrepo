@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.components.usermanagment;
 
+import org.springframework.stereotype.Service;
+
 import com.ccighgo.exception.ValidationException;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
@@ -15,6 +17,7 @@ import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
  * @author ravimishra
  *
  */
+@Service
 public interface UserManagementService {
 
 
