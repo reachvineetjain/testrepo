@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.service.components.season.SeasonServiceInterface;
 import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
@@ -50,7 +51,7 @@ public class Seasons {
    private static final Logger LOGGER = Logger.getLogger(Seasons.class);
 
    @Autowired
-   SeasonServiceInterfaceImpl seasonServices;
+   SeasonServiceInterface seasonServices;
 
    @GET
    @Path("ping/{input}")
@@ -194,25 +195,6 @@ public class Seasons {
       LOGGER.debug("Calling 'fun:getJ1ProgramAllocation'");
       LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getHSPJ1HSSeasonProgramAllocation(seasonId);
-   }
-
-   @GET
-   @Path("clone/{id}/{newSeasonName}/")
-   @Produces("application/json")
-   public String cloneSeason(@PathParam("id") String id, @PathParam("newSeasonName") String newSeasonName) {
-      LOGGER.debug("Calling clone Season'func:cloneSeason'");
-      LOGGER.debug("Season ID  : " + id + " and new Season Name : " + newSeasonName);
-      return seasonServices.cloneSeason(id, newSeasonName);
-   }
-
-   @GET
-   @Path("custom/{seasonName}/")
-   @Produces("application/json")
-   public String customService(@PathParam("seasonName") String seasonName) {
-      LOGGER.debug("Calling clone Season'func:customService'");
-      LOGGER.debug("Season Name  : " + seasonName);
-      seasonServices.customService(seasonName);
-      return "200: OK";
    }
 
    // HSP J1HS edit services

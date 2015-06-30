@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.service.components.usermanagment.UserManagementService;
 import com.ccighgo.service.components.usermanagment.UserManagementServiceImpl;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
@@ -37,7 +38,7 @@ import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 public class UserManagement {
 
     @Autowired
-    UserManagementServiceImpl userMgmtServices;
+    UserManagementService userMgmtServices;
 
     /**
      * The method {@code ping(@PathParam("input") String input)} returns user

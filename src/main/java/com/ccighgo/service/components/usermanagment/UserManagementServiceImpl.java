@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
 import com.ccighgo.db.entities.CCIStaffUser;
@@ -128,6 +129,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    // 5. Failure roll back mechanism.
 
    @Override
+   @Transactional(readOnly=true)
    public CCIUsers getAllCCIUsers(String pageNo, String size) {
       Pageable page = new PageRequest(Integer.valueOf(pageNo != null ? pageNo : CCIConstants.DEFAULT_PAGE), Integer.valueOf(size != null ? size
             : CCIConstants.DEFAULT_NO_OF_RECORDS_SIZE));
@@ -149,6 +151,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional(readOnly=true)
    public User getUserById(String id) {
       if (id == null || (Integer.valueOf(id)) == 0) {
          throw new InvalidServiceConfigurationException("Please check user id");
@@ -206,6 +209,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional
    public User createUser(User user) {
       String cciAdminGuid = createUserDetails(user);
       CCIStaffUser cUser = cciUsersRepository.findByGUID(cciAdminGuid);
@@ -235,6 +239,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional(readOnly=true)
    public CCIUsers searchUsers(UserSearch userSearch) {
       CCIUsers cciUsersFront = null;
       List<Object> results = null;
@@ -285,6 +290,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional
    public User updateUserDemographics(User user) {
       CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
       ValidationUtils.validateRequired(user.getFirstName());
@@ -356,6 +362,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional
    public User updateUserPermissions(User user) {
       if (user.getCciUserId() == 0 || user.getCciUserId() < 0 || user.equals(null)) {
          // throw exception
@@ -384,6 +391,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional
    public User updateUserPicture(User user) {
       CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
       cciUser.setPhoto(user.getPhotoPath());
@@ -393,6 +401,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional(readOnly=true)
    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId) {
       // 0:departmentResourceGroupId, 1:resourceGroupName, 2:resourcePermissionId, 3:resourceName, 4:resourceActionId,
       // 5:resourceAction
@@ -426,6 +435,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    @Override
+   @Transactional
    public String deleteUser(String id) {
       String message = null;
       if (Integer.valueOf(id) > 0) {

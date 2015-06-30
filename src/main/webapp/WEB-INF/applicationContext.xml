@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-    xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation=" 
+   xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+   xsi:schemaLocation=" 
                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd    
                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd     
                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd     
                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<import resource="persistenceContext.xml" />
-    <!-- <import resource="securityContext.xml" /> -->
-	
-    <context:component-scan base-package="com.ccighgo.service" use-default-filters="false">
-        <context:include-filter expression="org.springframework.stereotype.Service" type="annotation" />
-    </context:component-scan>
-	
-     <bean id="seasonServiceInterface" class="com.ccighgo.service.components.season.SeasonServiceInterfaceImpl" />
-     <bean id="userManagementService" class="com.ccighgo.service.components.usermanagment.UserManagementServiceImpl" />
-     <bean id="utilityServices" class="com.ccighgo.service.components.utility.UtilityServicesImpl" />
-     <bean id="seasonServiceImplUtil" class="com.ccighgo.service.components.season.SeasonServiceImplUtil" />
-     <bean id="seasonRepositoryService" class="com.ccighgo.service.components.season.SeasonRepositoryCustomImpl" />
-     
-     <bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource" autowire-candidate="true" >
-		<property name="basename">
-			<value>META-INF\ccighgomessages</value>
-		</property>
-	</bean>
-	
-	
+   <import resource="persistenceContext.xml" />
+   <!-- <import resource="securityContext.xml" /> -->
+
+   <context:component-scan base-package="com.ccighgo" />
+
+   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" autowire-candidate="true">
+      <property name="basename">
+         <value>META-INF\ccighgomessages</value>
+      </property>
+   </bean>
+
+
 </beans>
