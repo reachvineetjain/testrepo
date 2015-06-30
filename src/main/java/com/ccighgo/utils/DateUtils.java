@@ -4,7 +4,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
@@ -73,5 +78,31 @@ public class DateUtils {
          ExceptionUtil.logException(e, logger);
       }
       return date;
+   }
+
+   public static XMLGregorianCalendar getXMLGregorianCalendar(Date date) {
+      GregorianCalendar c = new GregorianCalendar();
+      try {
+         if (date == null)
+            return null;
+         c.setTime(date);
+         return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+      } catch (DatatypeConfigurationException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+
+      return null;
+   }
+
+   public static Date getXMLGregorianCalendarFromDate(XMLGregorianCalendar xmlGregorianCalendar) {
+      try {
+         if (xmlGregorianCalendar == null)
+            return null;
+
+         return xmlGregorianCalendar.toGregorianCalendar().getTime();
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return null;
    }
 }
