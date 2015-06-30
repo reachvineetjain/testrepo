@@ -43,11 +43,11 @@
      <xsd:complexType name="HSPF1JanuaryStart2ndSemesterDetails">
         <xsd:sequence>
         	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="startDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="endDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="applicationDeadlineDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="earliestBirthDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="latestBirthDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="earliestBirthDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="latestBirthDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="show2ndSemestertoNewHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
             <xsd:element name="activateFullYearProgram" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
             <xsd:element name="januaryStartFullYearDetail" type="seasonhspf1details:HSPF1JanuaryStartFullYearDetail" minOccurs="0" maxOccurs="1" />
@@ -58,9 +58,9 @@
     <xsd:complexType name="HSPF1JanuaryStartFullYearDetail">
         <xsd:sequence>
         	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="startDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="endDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="applicationDeadlineDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="showFullYearToHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
@@ -68,11 +68,11 @@
     <xsd:complexType name="HSPF1AugustStart1stSemesterDetails">
         <xsd:sequence>
         	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="startDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="endDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="applicationDeadlineDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="earliestBirthDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="latestBirthDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="earliestBirthDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="latestBirthDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="show1stSemesterToNewHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>    
@@ -82,9 +82,9 @@
     <xsd:complexType name="HSPF1AugustStartFullYearDetails">
         <xsd:sequence>
         	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="startDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="endDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="applicationDeadlineDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="showFullYearToNewHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
@@ -96,7 +96,7 @@
             <xsd:element name="defaultLcPaymentSchedule" type="xsd:int" minOccurs="0" maxOccurs="1" />
             <xsd:element name="fsAgreement" type="xsd:int" minOccurs="0" maxOccurs="1" />
             <xsd:element name="hfReferencesNo" type="xsd:int" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="addOrStartHFInquiriesDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="addOrStartHFInquiriesDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="showWelcomeFamilyModle" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
             <xsd:element name="allowFSToStartRenewalProcess" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
             <xsd:element name="showSpecialRequestStudentToRD" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
@@ -132,7 +132,7 @@
         <xsd:sequence>
             <xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="uploadDate" type="xsd:date" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="uploadedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
