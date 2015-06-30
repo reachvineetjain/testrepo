@@ -320,12 +320,12 @@ public class SeasonServiceImplUtil {
          hspf1JanuaryStart2NdSemesterDetails = new HSPF1JanuaryStart2NdSemesterDetails();
          hspf1JanuaryStart2NdSemesterDetails.setSeasonId(Integer.parseInt(seasonId));
          hspf1JanuaryStart2NdSemesterDetails.setActivateFullYearProgram(allF1Details.getActiveFullYearJanProgram() != 0);
-         hspf1JanuaryStart2NdSemesterDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemAppDeadlineDate()));
-         hspf1JanuaryStart2NdSemesterDetails.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemStartDate()));
-         hspf1JanuaryStart2NdSemesterDetails.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemEndDate()));
+         hspf1JanuaryStart2NdSemesterDetails.setApplicationDeadlineDate(DateUtils.getXMLGregorianCalendar(allF1Details.getSecondSemAppDeadlineDate()));
+         hspf1JanuaryStart2NdSemesterDetails.setStartDate(DateUtils.getXMLGregorianCalendar(allF1Details.getSecondSemStartDate()));
+         hspf1JanuaryStart2NdSemesterDetails.setEndDate(DateUtils.getXMLGregorianCalendar(allF1Details.getSecondSemEndDate()));
          hspf1JanuaryStart2NdSemesterDetails.setShow2NdSemestertoNewHF(allF1Details.getShowSecSemToNewHF() != 0);
-         hspf1JanuaryStart2NdSemesterDetails.setEarliestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemEarliestBirthDate()));
-         hspf1JanuaryStart2NdSemesterDetails.setLatestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemLatestBirthDate()));
+         hspf1JanuaryStart2NdSemesterDetails.setEarliestBirthDate(DateUtils.getXMLGregorianCalendar(allF1Details.getSecondSemEarliestBirthDate()));
+         hspf1JanuaryStart2NdSemesterDetails.setLatestBirthDate(DateUtils.getXMLGregorianCalendar(allF1Details.getSecondSemLatestBirthDate()));
       }
       return hspf1JanuaryStart2NdSemesterDetails;
    }
@@ -335,10 +335,10 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspAugustStartFullYearDetails = new HSPF1AugustStartFullYearDetails();
          hspAugustStartFullYearDetails.setSeasonId(Integer.parseInt(seasonId));
-         hspAugustStartFullYearDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearAppDeadlineDate()));
-         hspAugustStartFullYearDetails.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearEndDate()));
+         hspAugustStartFullYearDetails.setApplicationDeadlineDate(DateUtils.getXMLGregorianCalendar(allF1Details.getAugFullYearAppDeadlineDate()));
+         hspAugustStartFullYearDetails.setEndDate(DateUtils.getXMLGregorianCalendar(allF1Details.getAugFullYearEndDate()));
          hspAugustStartFullYearDetails.setShowFullYearToNewHF(allF1Details.getShowAugFullYearToNewHF() != 0);
-         hspAugustStartFullYearDetails.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearStartDate()));
+         hspAugustStartFullYearDetails.setStartDate(DateUtils.getXMLGregorianCalendar(allF1Details.getAugFullYearStartDate()));
       }
       return hspAugustStartFullYearDetails;
    }
@@ -348,11 +348,11 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1AugustStart1StSemesterDetails = new HSPF1AugustStart1StSemesterDetails();
          hspf1AugustStart1StSemesterDetails.setSeasonId(Integer.parseInt(seasonId));
-         hspf1AugustStart1StSemesterDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemAppDeadlineDate()));
-         hspf1AugustStart1StSemesterDetails.setEarliestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemEarliestBirthDate()));
-         hspf1AugustStart1StSemesterDetails.setLatestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemLatestBirthDate()));
-         hspf1AugustStart1StSemesterDetails.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemStartDate()));
-         hspf1AugustStart1StSemesterDetails.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemEndDate()));
+         hspf1AugustStart1StSemesterDetails.setApplicationDeadlineDate(DateUtils.getXMLGregorianCalendar(allF1Details.getFirstSemAppDeadlineDate()));
+         hspf1AugustStart1StSemesterDetails.setEarliestBirthDate(DateUtils.getXMLGregorianCalendar(allF1Details.getFirstSemEarliestBirthDate()));
+         hspf1AugustStart1StSemesterDetails.setLatestBirthDate(DateUtils.getXMLGregorianCalendar(allF1Details.getFirstSemLatestBirthDate()));
+         hspf1AugustStart1StSemesterDetails.setStartDate(DateUtils.getXMLGregorianCalendar(allF1Details.getFirstSemStartDate()));
+         hspf1AugustStart1StSemesterDetails.setEndDate(DateUtils.getXMLGregorianCalendar(allF1Details.getFirstSemEndDate()));
       }
       return hspf1AugustStart1StSemesterDetails;
    }
@@ -362,7 +362,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1FieldSettings = new HSPF1FieldSettings();
          hspf1FieldSettings.setSeasonId(Integer.parseInt(seasonId));
-         hspf1FieldSettings.setAddOrStartHFInquiriesDate(DateUtils.getMMddYyyyString(allF1Details.getHfInquiryDate()));
+         hspf1FieldSettings.setAddOrStartHFInquiriesDate(DateUtils.getXMLGregorianCalendar(allF1Details.getHfInquiryDate()));
          hspf1FieldSettings.setAllowFSToStartRenewalProcess(allF1Details.getAllowFieldStaffToStartRenewalProcess() != 0);
          // hspf1FieldSettings.setDefaultLcPaymentSchedule(allF1Details.getLcPaymentScheduleId());
          // hspf1FieldSettings.setFsAgreement(allF1Details.getFsAgreementId());
@@ -391,9 +391,9 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1JanuaryStartFullYearDetail = new HSPF1JanuaryStartFullYearDetail();
          hspf1JanuaryStartFullYearDetail.setSeasonId(Integer.parseInt(seasonId));
-         hspf1JanuaryStartFullYearDetail.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearAppDeadlineDate()));
-         hspf1JanuaryStartFullYearDetail.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearEndDate()));
-         hspf1JanuaryStartFullYearDetail.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearStartDate()));
+         hspf1JanuaryStartFullYearDetail.setApplicationDeadlineDate(DateUtils.getXMLGregorianCalendar(allF1Details.getJanFullYearAppDeadlineDate()));
+         hspf1JanuaryStartFullYearDetail.setEndDate(DateUtils.getXMLGregorianCalendar(allF1Details.getJanFullYearEndDate()));
+         hspf1JanuaryStartFullYearDetail.setStartDate(DateUtils.getXMLGregorianCalendar(allF1Details.getJanFullYearStartDate()));
          hspf1JanuaryStartFullYearDetail.setShowFullYearToHF(allF1Details.getShowJanFullYearToNewHF() != 0);
       }
       return hspf1JanuaryStartFullYearDetail;
@@ -406,25 +406,25 @@ public class SeasonServiceImplUtil {
          allF1Details.setGreenHeartMargin(seasonHSPF1Details.getAccounting().getGreenHeartMargin());
          allF1Details.setActiveFullYearJanProgram((byte) (seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().isActivateFullYearProgram() ? 1 : 0));
          allF1Details.setShowSecSemToNewHF((byte) (seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().isShow2NdSemestertoNewHF() ? 1 : 0));
-         allF1Details.setSecondSemAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getApplicationDeadlineDate()));
-         allF1Details.setSecondSemEarliestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getEarliestBirthDate()));
-         allF1Details.setSecondSemEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getEndDate()));
-         allF1Details.setSecondSemLatestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getLatestBirthDate()));
-         allF1Details.setSecondSemStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getStartDate()));
-         allF1Details.setJanFullYearAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStartFullYearDetail().getApplicationDeadlineDate()));
-         allF1Details.setJanFullYearEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStartFullYearDetail().getEndDate()));
-         allF1Details.setJanFullYearStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStartFullYearDetail().getStartDate()));
+         allF1Details.setSecondSemAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getApplicationDeadlineDate()));
+         allF1Details.setSecondSemEarliestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getEarliestBirthDate()));
+         allF1Details.setSecondSemEndDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getEndDate()));
+         allF1Details.setSecondSemLatestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getLatestBirthDate()));
+         allF1Details.setSecondSemStartDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getStartDate()));
+         allF1Details.setJanFullYearAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStartFullYearDetail().getApplicationDeadlineDate()));
+         allF1Details.setJanFullYearEndDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStartFullYearDetail().getEndDate()));
+         allF1Details.setJanFullYearStartDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getJanuaryStartFullYearDetail().getStartDate()));
          allF1Details.setShowJanFullYearToNewHF((byte) (seasonHSPF1Details.getJanuaryStartFullYearDetail().isShowFullYearToHF() ? 1 : 0));
-         allF1Details.setFirstSemAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getApplicationDeadlineDate()));
-         allF1Details.setFirstSemEarliestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getEarliestBirthDate()));
-         allF1Details.setFirstSemLatestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getLatestBirthDate()));
-         allF1Details.setFirstSemStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getStartDate()));
-         allF1Details.setFirstSemEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStart1StSemesterDetails().getEndDate()));
-         allF1Details.setAugFullYearAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStartFullYearDetails().getApplicationDeadlineDate()));
-         allF1Details.setAugFullYearEndDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStartFullYearDetails().getEndDate()));
-         allF1Details.setAugFullYearStartDate(DateUtils.getDateFromString(seasonHSPF1Details.getAugustStartFullYearDetails().getStartDate()));
+         allF1Details.setFirstSemAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStart1StSemesterDetails().getApplicationDeadlineDate()));
+         allF1Details.setFirstSemEarliestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStart1StSemesterDetails().getEarliestBirthDate()));
+         allF1Details.setFirstSemLatestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStart1StSemesterDetails().getLatestBirthDate()));
+         allF1Details.setFirstSemStartDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStart1StSemesterDetails().getStartDate()));
+         allF1Details.setFirstSemEndDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStart1StSemesterDetails().getEndDate()));
+         allF1Details.setAugFullYearAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStartFullYearDetails().getApplicationDeadlineDate()));
+         allF1Details.setAugFullYearEndDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStartFullYearDetails().getEndDate()));
+         allF1Details.setAugFullYearStartDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getAugustStartFullYearDetails().getStartDate()));
          allF1Details.setShowAugFullYearToNewHF((byte) (seasonHSPF1Details.getAugustStartFullYearDetails().isShowFullYearToNewHF() ? 1 : 0));
-         allF1Details.setHfInquiryDate(DateUtils.getDateFromString(seasonHSPF1Details.getFieldSettings().getAddOrStartHFInquiriesDate()));
+         allF1Details.setHfInquiryDate(DateUtils.getXMLGregorianCalendarFromDate(seasonHSPF1Details.getFieldSettings().getAddOrStartHFInquiriesDate()));
          allF1Details.setAllowFieldStaffToStartRenewalProcess((byte) (seasonHSPF1Details.getFieldSettings().isAllowFSToStartRenewalProcess() ? 1 : 0));
          // allF1Details.setLcPaymentScheduleId(seasonHSPF1Details.getFieldSettings().getDefaultLcPaymentSchedule());
          // allF1Details.setFsAgreementId(seasonHSPF1Details.getFieldSettings().getFsAgreement());
@@ -469,11 +469,11 @@ public class SeasonServiceImplUtil {
       try {
          allF1Details.setActiveFullYearJanProgram((byte) (hspf1JanuaryStart2NdSemesterDetails.isActivateFullYearProgram() ? 1 : 0));
          allF1Details.setShowSecSemToNewHF((byte) (hspf1JanuaryStart2NdSemesterDetails.isShow2NdSemestertoNewHF() ? 1 : 0));
-         allF1Details.setSecondSemAppDeadlineDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getApplicationDeadlineDate()));
-         allF1Details.setSecondSemEarliestBirthDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getEarliestBirthDate()));
-         allF1Details.setSecondSemEndDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getEndDate()));
-         allF1Details.setSecondSemLatestBirthDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getLatestBirthDate()));
-         allF1Details.setSecondSemStartDate(DateUtils.getDateFromString(hspf1JanuaryStart2NdSemesterDetails.getStartDate()));
+         allF1Details.setSecondSemAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStart2NdSemesterDetails.getApplicationDeadlineDate()));
+         allF1Details.setSecondSemEarliestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStart2NdSemesterDetails.getEarliestBirthDate()));
+         allF1Details.setSecondSemEndDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStart2NdSemesterDetails.getEndDate()));
+         allF1Details.setSecondSemLatestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStart2NdSemesterDetails.getLatestBirthDate()));
+         allF1Details.setSecondSemStartDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStart2NdSemesterDetails.getStartDate()));
          seasonF1DetailsRepository.saveAndFlush(allF1Details);
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -484,9 +484,9 @@ public class SeasonServiceImplUtil {
 
    public HSPF1JanuaryStartFullYearDetail updateF1JanStartFullYearDetails(SeasonF1Detail allF1Details, HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail) {
       try {
-         allF1Details.setJanFullYearAppDeadlineDate(DateUtils.getDateFromString(hspf1JanuaryStartFullYearDetail.getApplicationDeadlineDate()));
-         allF1Details.setJanFullYearEndDate(DateUtils.getDateFromString(hspf1JanuaryStartFullYearDetail.getEndDate()));
-         allF1Details.setJanFullYearStartDate(DateUtils.getDateFromString(hspf1JanuaryStartFullYearDetail.getStartDate()));
+         allF1Details.setJanFullYearAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStartFullYearDetail.getApplicationDeadlineDate()));
+         allF1Details.setJanFullYearEndDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStartFullYearDetail.getEndDate()));
+         allF1Details.setJanFullYearStartDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1JanuaryStartFullYearDetail.getStartDate()));
          allF1Details.setShowJanFullYearToNewHF((byte) (hspf1JanuaryStartFullYearDetail.isShowFullYearToHF() ? 1 : 0));
          seasonF1DetailsRepository.saveAndFlush(allF1Details);
       } catch (Exception ex) {
@@ -498,11 +498,11 @@ public class SeasonServiceImplUtil {
 
    public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(SeasonF1Detail allF1Details, HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails) {
       try {
-         allF1Details.setFirstSemAppDeadlineDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getApplicationDeadlineDate()));
-         allF1Details.setFirstSemEarliestBirthDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getEarliestBirthDate()));
-         allF1Details.setFirstSemLatestBirthDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getLatestBirthDate()));
-         allF1Details.setFirstSemStartDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getStartDate()));
-         allF1Details.setFirstSemEndDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getEndDate()));
+         allF1Details.setFirstSemAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStart1StSemesterDetails.getApplicationDeadlineDate()));
+         allF1Details.setFirstSemEarliestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStart1StSemesterDetails.getEarliestBirthDate()));
+         allF1Details.setFirstSemLatestBirthDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStart1StSemesterDetails.getLatestBirthDate()));
+         allF1Details.setFirstSemStartDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStart1StSemesterDetails.getStartDate()));
+         allF1Details.setFirstSemEndDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStart1StSemesterDetails.getEndDate()));
          seasonF1DetailsRepository.saveAndFlush(allF1Details);
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -513,9 +513,9 @@ public class SeasonServiceImplUtil {
 
    public HSPF1AugustStartFullYearDetails updateF1AugStartFullYearDetails(SeasonF1Detail allF1Details, HSPF1AugustStartFullYearDetails hspf1AugustStartFullYearDetails) {
       try {
-         allF1Details.setAugFullYearAppDeadlineDate(DateUtils.getDateFromString(hspf1AugustStartFullYearDetails.getApplicationDeadlineDate()));
-         allF1Details.setAugFullYearEndDate(DateUtils.getDateFromString(hspf1AugustStartFullYearDetails.getEndDate()));
-         allF1Details.setAugFullYearStartDate(DateUtils.getDateFromString(hspf1AugustStartFullYearDetails.getStartDate()));
+         allF1Details.setAugFullYearAppDeadlineDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStartFullYearDetails.getApplicationDeadlineDate()));
+         allF1Details.setAugFullYearEndDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStartFullYearDetails.getEndDate()));
+         allF1Details.setAugFullYearStartDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1AugustStartFullYearDetails.getStartDate()));
          allF1Details.setShowAugFullYearToNewHF((byte) (hspf1AugustStartFullYearDetails.isShowFullYearToNewHF() ? 1 : 0));
 
          seasonF1DetailsRepository.saveAndFlush(allF1Details);
@@ -528,7 +528,7 @@ public class SeasonServiceImplUtil {
 
    public HSPF1FieldSettings updateF1FieldSettings(SeasonF1Detail allF1Details, HSPF1FieldSettings hspf1FieldSettings) {
       try {
-         allF1Details.setHfInquiryDate(DateUtils.getDateFromString(hspf1FieldSettings.getAddOrStartHFInquiriesDate()));
+         allF1Details.setHfInquiryDate(DateUtils.getXMLGregorianCalendarFromDate(hspf1FieldSettings.getAddOrStartHFInquiriesDate()));
          allF1Details.setAllowFieldStaffToStartRenewalProcess((byte) (hspf1FieldSettings.isAllowFSToStartRenewalProcess() ? 1 : 0));
          // allF1Details.setLcPaymentScheduleId(hspf1FieldSettings.getDefaultLcPaymentSchedule());
          // allF1Details.setFsAgreementId(hspf1FieldSettings.getFsAgreement());
@@ -1410,9 +1410,9 @@ public class SeasonServiceImplUtil {
       // TODO Auto-generated method stub
       return null;
    }
-   
-   //WP summer
-   
+
+   // WP summer
+
    /**
     * @param seasonWnTSummerDetail
     * @return
@@ -1424,7 +1424,7 @@ public class SeasonServiceImplUtil {
       wpBasicDetail.setProgramStatus(seasonWnTSummerDetail.getSeasonStatus().getStatus() != null ? seasonWnTSummerDetail.getSeasonStatus().getStatus() : null);
       return wpBasicDetail;
    }
-   
+
    /**
     * @param seasonWnTSummerDetail
     * @return
@@ -1441,16 +1441,16 @@ public class SeasonServiceImplUtil {
       wpSectionOne.setMaxPendingJobAppls(seasonWnTSummerDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
       return wpSectionOne;
    }
-   
+
    /**
     * @param wpBasicDetail
     * @param seasonWnTSummerDetail
     */
    public void updateWPSummerBaseDetails(WPBasicDetail wpBasicDetail, SeasonWnTSummerDetail seasonWnTSummerDetail) {
-      seasonWnTSummerDetail.setProgramName(wpBasicDetail.getProgramName()!=null?wpBasicDetail.getProgramName():null);
-      seasonWnTSummerDetail.setSeasonStatus(wpBasicDetail.getProgramStatus()!=null?seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()):null);
+      seasonWnTSummerDetail.setProgramName(wpBasicDetail.getProgramName() != null ? wpBasicDetail.getProgramName() : null);
+      seasonWnTSummerDetail.setSeasonStatus(wpBasicDetail.getProgramStatus() != null ? seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()) : null);
    }
-   
+
    /**
     * @param wpSectionOne
     * @param seasonWnTSummerDetail
@@ -1463,9 +1463,9 @@ public class SeasonServiceImplUtil {
       seasonWnTSummerDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
       seasonWnTSummerDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
    }
-   
- //WP spring
-   
+
+   // WP spring
+
    /**
     * @param seasonWnTSpringDetail
     * @return
@@ -1478,7 +1478,7 @@ public class SeasonServiceImplUtil {
       wpBasicDetail.setProgramStatus(seasonWnTSpringDetail.getSeasonStatus().getStatus() != null ? seasonWnTSpringDetail.getSeasonStatus().getStatus() : null);
       return wpBasicDetail;
    }
-   
+
    /**
     * @param seasonWnTSpringDetail
     * @return
@@ -1495,14 +1495,14 @@ public class SeasonServiceImplUtil {
       wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : null);
       return wpSectionOne;
    }
-   
+
    /**
     * @param wpBasicDetail
     * @param seasonWnTSpringDetail
     */
    public void updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail, SeasonWnTSpringDetail seasonWnTSpringDetail) {
-      seasonWnTSpringDetail.setProgramName(wpBasicDetail.getProgramName()!=null?wpBasicDetail.getProgramName():null);
-      seasonWnTSpringDetail.setSeasonStatus(wpBasicDetail.getProgramStatus()!=null?seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()):null);
+      seasonWnTSpringDetail.setProgramName(wpBasicDetail.getProgramName() != null ? wpBasicDetail.getProgramName() : null);
+      seasonWnTSpringDetail.setSeasonStatus(wpBasicDetail.getProgramStatus() != null ? seasonStatusRepository.findSeasonStatusByName(wpBasicDetail.getProgramStatus()) : null);
    }
 
    /**
