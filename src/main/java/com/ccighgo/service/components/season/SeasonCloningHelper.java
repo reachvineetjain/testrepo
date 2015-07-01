@@ -13,10 +13,22 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
+import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
+import com.ccighgo.db.entities.SeasonGHTConfiguration;
+import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonJ1Detail;
+import com.ccighgo.db.entities.SeasonLSDetail;
+import com.ccighgo.db.entities.SeasonTADetail;
+import com.ccighgo.db.entities.SeasonVADetail;
+import com.ccighgo.db.entities.SeasonWADetail;
+import com.ccighgo.db.entities.SeasonWPAllocation;
+import com.ccighgo.db.entities.SeasonWPConfiguration;
+import com.ccighgo.db.entities.SeasonWnTSpringDetail;
+import com.ccighgo.db.entities.SeasonWnTSummerDetail;
+import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.utils.CCIConstants;
@@ -198,6 +210,247 @@ public class SeasonCloningHelper {
          seasonF1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       }
       return seasonF1Detail;
+   }
+   
+   
+   /**
+    * @param clonedWPSeason
+    * @param seasonWPAllocations
+    * @return
+    */
+   public List<SeasonWPAllocation> cloneWPAllocations(Season clonedWPSeason, List<SeasonWPAllocation> seasonWPAllocations) {
+      List<SeasonWPAllocation> seasonWPAallocationCloneList;
+      seasonWPAallocationCloneList = new ArrayList<SeasonWPAllocation>();
+      for (SeasonWPAllocation allocation : seasonWPAllocations) {
+         SeasonWPAllocation wpAllocation = new SeasonWPAllocation();
+         wpAllocation.setDepartmentProgramOption(allocation.getDepartmentProgramOption());
+         wpAllocation.setMaxPax(allocation.getMaxPax());
+         wpAllocation.setSeason(clonedWPSeason);
+         wpAllocation.setCreatedBy(1);
+         wpAllocation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         wpAllocation.setModifiedBy(1);
+         wpAllocation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWPAallocationCloneList.add(wpAllocation);
+      }
+      return seasonWPAallocationCloneList;
+   }
+
+   /**
+    * @param cloneSeason
+    * @param clonedWPSeason
+    * @return
+    */
+   public SeasonWPConfiguration cloneWPConfigurations(CloneSeason cloneSeason, Season clonedWPSeason) {
+      SeasonWPConfiguration seasonWPConfiguration = new SeasonWPConfiguration();
+      seasonWPConfiguration.setSeason(clonedWPSeason);
+      seasonWPConfiguration.setSeasonStartDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonStartDate()));
+      seasonWPConfiguration.setSeasonEndDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonEndDate()));
+      seasonWPConfiguration.setCreatedBy(1);
+      seasonWPConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonWPConfiguration.setModifiedBy(1);
+      seasonWPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonWPConfiguration;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedWPSeason
+    * @return
+    */
+   public SeasonWnTSpringDetail cloneWPSprtingProgram(Season existingSeason, Season clonedWPSeason) {
+      SeasonWnTSpringDetail seasonWnTSpringDetail = new SeasonWnTSpringDetail();
+      seasonWnTSpringDetail.setSeason(clonedWPSeason);
+      seasonWnTSpringDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
+      seasonWnTSpringDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SPRING);
+      seasonWnTSpringDetail.setApplicationDeadlineDate(existingSeason.getSeasonWnTspringDetails().get(0).getApplicationDeadlineDate());
+      seasonWnTSpringDetail.setStartDate(existingSeason.getSeasonWnTspringDetails().get(0).getStartDate());
+      seasonWnTSpringDetail.setEndDate(existingSeason.getSeasonWnTspringDetails().get(0).getEndDate());
+      seasonWnTSpringDetail.setIsJobBoardOpen(existingSeason.getSeasonWnTspringDetails().get(0).getIsJobBoardOpen());
+      seasonWnTSpringDetail.setMaxPendingJobApps(existingSeason.getSeasonWnTspringDetails().get(0).getMaxPendingJobApps());
+      seasonWnTSpringDetail.setCreatedBy(1);
+      seasonWnTSpringDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonWnTSpringDetail.setModifiedBy(1);
+      seasonWnTSpringDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonWnTSpringDetail;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedWPSeason
+    * @return
+    */
+   public SeasonWnTSummerDetail cloneWPSummerProgram(Season existingSeason, Season clonedWPSeason) {
+      SeasonWnTSummerDetail seasonWnTSummerDetail = new SeasonWnTSummerDetail();
+      seasonWnTSummerDetail.setSeason(clonedWPSeason);
+      seasonWnTSummerDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
+      seasonWnTSummerDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SUMMER);
+      seasonWnTSummerDetail.setApplicationDeadlineDate(existingSeason.getSeasonWnTsummerDetails().get(0).getApplicationDeadlineDate());
+      seasonWnTSummerDetail.setStartDate(existingSeason.getSeasonWnTsummerDetails().get(0).getStartDate());
+      seasonWnTSummerDetail.setEndDate(existingSeason.getSeasonWnTsummerDetails().get(0).getEndDate());
+      seasonWnTSummerDetail.setIsJobBoardOpen(existingSeason.getSeasonWnTsummerDetails().get(0).getIsJobBoardOpen());
+      seasonWnTSummerDetail.setMaxPendingJobApps(existingSeason.getSeasonWnTsummerDetails().get(0).getMaxPendingJobApps());
+      seasonWnTSummerDetail.setCreatedBy(1);
+      seasonWnTSummerDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonWnTSummerDetail.setModifiedBy(1);
+      seasonWnTSummerDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonWnTSummerDetail;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedWPSeason
+    * @return
+    */
+   public SeasonWnTWinterDetail cloneWPWinterProgram(Season existingSeason, Season clonedWPSeason) {
+      SeasonWnTWinterDetail seasonWnTWinterDetail = new SeasonWnTWinterDetail();
+      seasonWnTWinterDetail.setSeason(clonedWPSeason);
+      seasonWnTWinterDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
+      seasonWnTWinterDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_WINTER);
+      seasonWnTWinterDetail.setApplicationDeadlineDate(existingSeason.getSeasonWnTwinterDetails().get(0).getApplicationDeadlineDate());
+      seasonWnTWinterDetail.setStartDate(existingSeason.getSeasonWnTwinterDetails().get(0).getStartDate());
+      seasonWnTWinterDetail.setEndDate(existingSeason.getSeasonWnTwinterDetails().get(0).getEndDate());
+      seasonWnTWinterDetail.setIsJobBoardOpen(existingSeason.getSeasonWnTwinterDetails().get(0).getIsJobBoardOpen());
+      seasonWnTWinterDetail.setMaxPendingJobApps(existingSeason.getSeasonWnTwinterDetails().get(0).getMaxPendingJobApps());
+      seasonWnTWinterDetail.setCreatedBy(1);
+      seasonWnTWinterDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonWnTWinterDetail.setModifiedBy(1);
+      seasonWnTWinterDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonWnTWinterDetail;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedWPSeason
+    * @return
+    */
+   public SeasonCAPDetail cloneWPCapProgram(Season existingSeason, Season clonedWPSeason) {
+      SeasonCAPDetail seasonCAPDetail = new SeasonCAPDetail();
+      seasonCAPDetail.setSeason(clonedWPSeason);
+      seasonCAPDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
+      seasonCAPDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_CAP);
+      seasonCAPDetail.setInternStartDate(existingSeason.getSeasonCapdetails().get(0).getInternStartDate());
+      seasonCAPDetail.setInternEndDate(existingSeason.getSeasonCapdetails().get(0).getInternEndDate());
+      seasonCAPDetail.setInternAppDeadlineDate(existingSeason.getSeasonCapdetails().get(0).getInternAppDeadlineDate());
+      seasonCAPDetail.setTraineeAppDeadlineDate(existingSeason.getSeasonCapdetails().get(0).getTraineeAppDeadlineDate());
+      seasonCAPDetail.setTraineeStartDate(existingSeason.getSeasonCapdetails().get(0).getTraineeStartDate());
+      seasonCAPDetail.setTraineeEndDate(existingSeason.getSeasonCapdetails().get(0).getTraineeEndDate());
+      seasonCAPDetail.setCreatedBy(1);
+      seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonCAPDetail.setModifiedBy(1);
+      seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonCAPDetail;
+   }
+   
+   /**
+    * @param cloneSeason
+    * @param clonedGHTSeason
+    * @return
+    */
+   public SeasonGHTConfiguration cloneGHTConfiguration(CloneSeason cloneSeason, Season clonedGHTSeason) {
+      SeasonGHTConfiguration seasonGHTConfiguration = new SeasonGHTConfiguration();
+      seasonGHTConfiguration.setSeason(clonedGHTSeason);
+      seasonGHTConfiguration.setSeasonStartDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonStartDate()));
+      seasonGHTConfiguration.setSeasonEndDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonEndDate()));
+      seasonGHTConfiguration.setCreatedBy(1);
+      seasonGHTConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonGHTConfiguration.setModifiedBy(1);
+      seasonGHTConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonGHTConfiguration;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedGHTSeason
+    * @return
+    */
+   public SeasonHSADetail cloneGHTHSAProgram(Season existingSeason, Season clonedGHTSeason) {
+      SeasonHSADetail seasonHSADetail = new SeasonHSADetail();
+      seasonHSADetail.setSeason(clonedGHTSeason);
+      seasonHSADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
+      seasonHSADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+      seasonHSADetail.setStartDate(existingSeason.getSeasonHsadetails().get(0).getStartDate());
+      seasonHSADetail.setEndDate(existingSeason.getSeasonHsadetails().get(0).getEndDate());
+      seasonHSADetail.setCreatedBy(1);
+      seasonHSADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonHSADetail.setModifiedBy(1);
+      seasonHSADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonHSADetail;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedGHTSeason
+    * @return
+    */
+   public SeasonLSDetail cloneGHTLSProgram(Season existingSeason, Season clonedGHTSeason) {
+      SeasonLSDetail seasonLSDetail = new SeasonLSDetail();
+      seasonLSDetail.setSeason(clonedGHTSeason);
+      seasonLSDetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
+      seasonLSDetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+      seasonLSDetail.setStartDate(existingSeason.getSeasonLsdetails().get(0).getStartDate());
+      seasonLSDetail.setEndDate(existingSeason.getSeasonLsdetails().get(0).getEndDate());
+      seasonLSDetail.setCreatedBy(1);
+      seasonLSDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonLSDetail.setModifiedBy(1);
+      seasonLSDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonLSDetail;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedGHTSeason
+    * @return
+    */
+   public SeasonTADetail cloneGHTTAProgram(Season existingSeason, Season clonedGHTSeason) {
+      SeasonTADetail seasonTADetail = new SeasonTADetail();
+      seasonTADetail.setSeason(clonedGHTSeason);
+      seasonTADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
+      seasonTADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+      seasonTADetail.setStartDate(existingSeason.getSeasonTadetails().get(0).getStartDate());
+      seasonTADetail.setEndDate(existingSeason.getSeasonTadetails().get(0).getEndDate());
+      seasonTADetail.setCreatedBy(1);
+      seasonTADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonTADetail.setModifiedBy(1);
+      seasonTADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonTADetail;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedGHTSeason
+    * @return
+    */
+   public SeasonVADetail cloneGHTVAProgram(Season existingSeason, Season clonedGHTSeason) {
+      SeasonVADetail seasonVADetail = new SeasonVADetail();
+      seasonVADetail.setSeason(clonedGHTSeason);
+      seasonVADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
+      seasonVADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+      seasonVADetail.setStartDate(existingSeason.getSeasonVadetails().get(0).getStartDate());
+      seasonVADetail.setEndDate(existingSeason.getSeasonVadetails().get(0).getEndDate());
+      seasonVADetail.setCreatedBy(1);
+      seasonVADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonVADetail.setModifiedBy(1);
+      seasonVADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonVADetail;
+   }
+
+   /**
+    * @param existingSeason
+    * @param clonedGHTSeason
+    * @return
+    */
+   public SeasonWADetail cloneGHTWAProgram(Season existingSeason, Season clonedGHTSeason) {
+      SeasonWADetail seasonWADetail = new SeasonWADetail();
+      seasonWADetail.setSeason(clonedGHTSeason);
+      seasonWADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
+      seasonWADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+      seasonWADetail.setStartDate(existingSeason.getSeasonWadetails().get(0).getStartDate());
+      seasonWADetail.setEndDate(existingSeason.getSeasonWadetails().get(0).getEndDate());
+      seasonWADetail.setCreatedBy(1);
+      seasonWADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonWADetail.setModifiedBy(1);
+      seasonWADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return seasonWADetail;
    }
 
 }

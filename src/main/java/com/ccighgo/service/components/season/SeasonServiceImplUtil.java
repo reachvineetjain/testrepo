@@ -192,6 +192,17 @@ public class SeasonServiceImplUtil {
       seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
 
       if (seasonEntity.getLookupDepartment() != null) {
+         if(seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)){
+            
+            //TODO need to fetch programIds : Important
+            
+         }
+         
+         
+         
+         
+         
+         
          if (seasonEntity.getLookupDepartment().getDepartmentPrograms() != null) {
             for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
                ProgramOptions programOptions = new ProgramOptions();
