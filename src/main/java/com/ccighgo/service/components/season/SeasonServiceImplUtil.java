@@ -194,25 +194,14 @@ public class SeasonServiceImplUtil {
       if (seasonEntity.getLookupDepartment() != null) {
          if (seasonEntity.getLookupDepartment().getDepartmentPrograms() != null) {
             for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
-               if (departmentProgram.getLookupDepartment().getDepartmentId() == seasonEntity.getLookupDepartment().getDepartmentId()
-                     && departmentProgram.getDepartmentProgramOptions() != null) {
-                  for (DepartmentProgramOption departmentProgramOption : departmentProgram.getDepartmentProgramOptions()) {
-                     if (departmentProgramOption.getDepartmentProgram().getDepartmentProgramId() == departmentProgram.getDepartmentProgramId())
-                        seasonBean.getProgramOptions().add(mapProgramOptionEntityToBean(departmentProgramOption));
-                  }
-               }
+               ProgramOptions programOptions = new ProgramOptions();
+               programOptions.setProgramOptionsID(departmentProgram.getDepartmentProgramId());
+               programOptions.setProgramOptionsCode(departmentProgram.getProgramName());
+               programOptions.setProgramOptionsName(departmentProgram.getDescription());
+               seasonBean.getProgramOptions().add(programOptions);
             }
          }
       }
-
-   }
-
-   private ProgramOptions mapProgramOptionEntityToBean(DepartmentProgramOption departmentProgramOption) {
-      ProgramOptions programOptions = new ProgramOptions();
-      programOptions.setProgramOptionsID(departmentProgramOption.getDepartmentProgramOptionId());
-      programOptions.setProgramOptionsCode(departmentProgramOption.getProgramOptionCode() != null ? departmentProgramOption.getProgramOptionCode() : CCIConstants.EMPTY_DATA);
-      programOptions.setProgramOptionsName(departmentProgramOption.getProgramOptionName() != null ? departmentProgramOption.getProgramOptionName() : CCIConstants.EMPTY_DATA);
-      return programOptions;
    }
 
    /**
