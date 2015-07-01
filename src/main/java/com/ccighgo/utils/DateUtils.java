@@ -4,7 +4,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
@@ -17,7 +22,7 @@ public class DateUtils {
    private static Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
    public static String getMMddYyyyString(Date inputDate) {
-      SimpleDateFormat sdf = new SimpleDateFormat(CCIConstants.MM_DD_YY);
+      SimpleDateFormat sdf = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
       String date = null;
       if (inputDate != null)
          try {
@@ -50,7 +55,7 @@ public class DateUtils {
       String date = null;
       try {
          if (inputDate != null)
-            date = DateFormatUtils.format(inputDate, CCIConstants.MM_DD_YY);
+            date = DateFormatUtils.format(inputDate, CCIConstants.MM_DD_YY, Locale.US);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, logger);
       }
@@ -65,7 +70,7 @@ public class DateUtils {
     */
    public static Date getMMddyyDateFromString(String inputString) {
       Date date = null;
-      DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY);
+      DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
       try {
          if (inputString != null && !inputString.isEmpty())
             date = format.parse(inputString);
@@ -73,5 +78,32 @@ public class DateUtils {
          ExceptionUtil.logException(e, logger);
       }
       return date;
+   }
+
+   public static XMLGregorianCalendar getXMLGregorianCalendar(Date date) {
+      GregorianCalendar c = new GregorianCalendar(Locale.US);
+      try {
+         if (date == null)
+            return null;
+         c.setTime(date);
+         return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+      } catch (DatatypeConfigurationException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+
+      return null;
+   }
+
+   public static Date getXMLGregorianCalendarFromDate(XMLGregorianCalendar xmlGregorianCalendar) {
+      try {
+         if (xmlGregorianCalendar == null)
+            return null;
+
+         GregorianCalendar gregorianCalendar = xmlGregorianCalendar.toGregorianCalendar();
+         return gregorianCalendar.getTime();
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return null;
    }
 }

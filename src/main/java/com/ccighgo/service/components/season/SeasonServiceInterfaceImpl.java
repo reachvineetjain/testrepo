@@ -199,6 +199,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public SeasonBean viewSeason(String id) {
       ValidationUtils.isValidSeasonId(id);
       try {
+         seasonRepository.flush();
          Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
          if (seasonEntity != null) {
             SeasonBean seasonBean = new SeasonBean();
@@ -1675,4 +1676,5 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       }
       return cloneSeason;
    }
+   
 }
