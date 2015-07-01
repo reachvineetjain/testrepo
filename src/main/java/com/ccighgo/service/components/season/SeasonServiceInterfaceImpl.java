@@ -106,7 +106,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public SeasonsList getAllSeasons() {
       try {
          List<Season> allseasons = seasonRepository.getAllSeasons();
@@ -156,16 +156,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public SeasonBean editSeason(String id) {
       return viewSeason(id);
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public SeasonBean viewSeason(String id) {
       ValidationUtils.isValidSeasonId(id);
       try {
+         seasonRepository.flush();
          Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
          if (seasonEntity != null) {
             SeasonBean seasonBean = new SeasonBean();
@@ -193,7 +194,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public SeasonPrograms getSeasonPrograms(String seasonId) {
       SeasonPrograms seasonPrograms = null;
       try {
@@ -285,8 +286,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       }
       return seasonPrograms;
    }
-   
-   @Transactional(readOnly=true)
+
+   @Transactional(readOnly = true)
    public SeasonStatuses getSeasonStatus() {
       SeasonStatuses seasonStatuses = null;
       try {
@@ -297,8 +298,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       }
       return seasonStatuses;
    }
-   
-   @Transactional(readOnly=true)
+
+   @Transactional(readOnly = true)
    public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonId) {
       SeasonHspJ1HSDetails seasonHspJ1HSDetails = null;
       try {
@@ -318,8 +319,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       }
       return seasonHspJ1HSDetails;
    }
-   
-   @Transactional(readOnly=true)
+
+   @Transactional(readOnly = true)
    public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonId) {
       J1HSBasicDetail j1hsBasicDetail = null;
       try {
@@ -333,7 +334,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsBasicDetail;
    }
 
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonId) {
       J1HSJanStart j1hsJanStart = null;
       try {
@@ -347,7 +348,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsJanStart;
    }
 
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonId) {
       J1HSAugStart j1hsAugStart = null;
       try {
@@ -361,7 +362,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsAugStart;
    }
 
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonId) {
       J1HSFieldSettings j1hsFieldSettings = null;
       try {
@@ -375,7 +376,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return j1hsFieldSettings;
    }
 
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonId) {
       J1HSProgramAllocations j1hsProgramAllocations = null;
 
@@ -1321,8 +1322,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-
-
    public WPSectionOne getWPSumAllocationDetails(String seasonId) {
       // TODO Auto-generated method stub
       return null;
@@ -1565,19 +1564,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Transactional
    public CloneSeason cloneSeason(CloneSeason cloneSeason) {
-      if(cloneSeason.getExistingSeasonId()==0||cloneSeason.getExistingSeasonId()<0){
-         
+      if (cloneSeason.getExistingSeasonId() == 0 || cloneSeason.getExistingSeasonId() < 0) {
+
       }
-      
+
       Season existingSeason = seasonRepository.findOne(cloneSeason.getExistingSeasonId());
-      if(existingSeason ==null){
-         //throw exception and return
+      if (existingSeason == null) {
+         // throw exception and return
       }
-      
-      
-      
+
       return cloneSeason;
-     
+
    }
 
 }

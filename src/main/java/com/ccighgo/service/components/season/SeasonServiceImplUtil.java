@@ -269,7 +269,7 @@ public class SeasonServiceImplUtil {
    }
 
    public void updateSeasonHspConfiguration(SeasonBean seasonBean, Season seasonEntity) {
-      SeasonHSPConfiguration seasonHSPConfiguration = new SeasonHSPConfiguration();
+      SeasonHSPConfiguration seasonHSPConfiguration = seasonHSPConfigurationRepsitory.getSeasonHSPConfigurationBySeasonId(seasonEntity.getSeasonId());
       seasonHSPConfiguration.setSeason(seasonEntity);
       seasonHSPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
       seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
