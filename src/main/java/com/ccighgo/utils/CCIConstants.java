@@ -48,6 +48,7 @@ public class CCIConstants {
    public static final Integer DRAFT_STATUS_NO = 3;
    
    //constants for department programs
+   //TODO use enums
    public static final String HSP_J1_HS = "J-1HS";
    public static final String HSP_F1 = "F-1";
    public static final String HSP_STP_IHP = "STP-IHP";
@@ -66,9 +67,17 @@ public class CCIConstants {
    //bind urls for season program menu
    public static final String HSP_J1_URL= "j1hs/details/view/";
    public static final String HSP_F1_URL = "f1/view/details/";
+   public static final String WP_SPRING_URL = "wp/spring/view/details/";
+   public static final String WP_SUMM_URL = "wp/summer/view/details/";
+   public static final String WP_WINT_URL = "wp/winter/view/details/";
+   public static final String WP_CAP_URL = "wp/cap/view/details/";
    public static final String GHT_VA_URL = "ght/va/details/view/";
    public static final String GHT_WA_URL = "ght/wa/details/view/";
+   public static final String GHT_TA_URL = "ght/ta/view/";
+   public static final String GHT_LS_URL = "ght/ls/view/";
+   public static final String GHT_HSA_URL = "ght/hsa/view/details/";
    
+   //TODO use enums
    public static final String DEPT_HIGH_SCHOOL_PROGRAMS = "High School Programs";
    public static final String DEPT_WORK_PROGRAMS = "Work Programs";
    public static final String DEPT_GREEN_HEART_TRAVEL = "Greenheart Travel";
