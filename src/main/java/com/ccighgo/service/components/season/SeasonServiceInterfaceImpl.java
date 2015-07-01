@@ -14,6 +14,7 @@ import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
+import com.ccighgo.db.entities.SeasonGHTConfiguration;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
@@ -81,7 +82,6 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasic
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.utils.CCIConstants;
-import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.ValidationUtils;
 
@@ -135,7 +135,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Autowired
    SeasonGHTConfigurationRepository seasonGHTConfigurationRepository;
    @Autowired
-   SeasonCloningHelper seasonCloningHelper;
+   SeasonCloningHelper seasonHelper;
 
    SeasonServiceInterfaceImpl() {
    }
@@ -1611,122 +1611,64 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             LookupDepartment department = existingSeason.getLookupDepartment();
             if (department != null) {
                if (department.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-                  Season season = seasonCloningHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                  Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
                   Season clonedHSPSeason = seasonRepository.saveAndFlush(season);
                   List<SeasonHSPAllocation> seasonHspallocations = existingSeason.getSeasonHspallocations();
                   List<SeasonHSPAllocation> seasonHspallocationNewList = null;
                   if (seasonHspallocations != null && seasonHspallocations.size() > 0) {
-                     seasonHspallocationNewList = seasonCloningHelper.cloneHSPAllocations(clonedHSPSeason, seasonHspallocations);
+                     seasonHspallocationNewList = seasonHelper.cloneHSPAllocations(clonedHSPSeason, seasonHspallocations);
                   }
-                  SeasonHSPConfiguration seasonHSPConfiguration = seasonCloningHelper.cloneHSPConfiguration(cloneSeason, clonedHSPSeason);
-                  SeasonJ1Detail seasonJ1Detail = seasonCloningHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason);
-                  SeasonF1Detail seasonF1Detail = seasonCloningHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason);
-                  if(seasonHspallocationNewList!=null){
+                  SeasonHSPConfiguration seasonHSPConfiguration = seasonHelper.cloneHSPConfiguration(cloneSeason, clonedHSPSeason);
+                  SeasonJ1Detail seasonJ1Detail = seasonHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason);
+                  SeasonF1Detail seasonF1Detail = seasonHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason);
+                  if (seasonHspallocationNewList != null) {
                      seasonHSPAllocationRepository.save(seasonHspallocationNewList);
                   }
                   hspConfigurationRepsitory.save(seasonHSPConfiguration);
-                  if(seasonJ1Detail!=null){
+                  if (seasonJ1Detail != null) {
                      seasonJ1DetailsRepository.save(seasonJ1Detail);
                   }
-                  if(seasonF1Detail!=null){
+                  if (seasonF1Detail != null) {
                      seasonF1DetailsRepository.save(seasonF1Detail);
                   }
                }
                if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
-                  Season season = seasonCloningHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                  Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
                   Season clonedWPSeason = seasonRepository.saveAndFlush(season);
 
                   List<SeasonWPAllocation> seasonWPAllocations = existingSeason.getSeasonWpallocations();
                   List<SeasonWPAllocation> seasonWPAallocationCloneList = null;
                   if (seasonWPAllocations != null && seasonWPAllocations.size() > 0) {
-                     seasonWPAallocationCloneList = new ArrayList<SeasonWPAllocation>();
-                     for (SeasonWPAllocation allocation : seasonWPAllocations) {
-                        SeasonWPAllocation wpAllocation = new SeasonWPAllocation();
-                        wpAllocation.setDepartmentProgramOption(allocation.getDepartmentProgramOption());
-                        wpAllocation.setMaxPax(allocation.getMaxPax());
-                        wpAllocation.setSeason(clonedWPSeason);
-                        wpAllocation.setCreatedBy(1);
-                        wpAllocation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                        wpAllocation.setModifiedBy(1);
-                        wpAllocation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-                        seasonWPAallocationCloneList.add(wpAllocation);
-                     }
-                     seasonWPAllocationRepository.save(seasonWPAallocationCloneList);
+                     seasonWPAallocationCloneList = seasonHelper.cloneWPAllocations(clonedWPSeason, seasonWPAllocations);
                   }
-
-                  SeasonWPConfiguration seasonWPConfiguration = new SeasonWPConfiguration();
-                  seasonWPConfiguration.setSeason(clonedWPSeason);
-                  seasonWPConfiguration.setSeasonStartDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonStartDate()));
-                  seasonWPConfiguration.setSeasonEndDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonEndDate()));
-                  seasonWPConfiguration.setCreatedBy(1);
-                  seasonWPConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  seasonWPConfiguration.setModifiedBy(1);
-                  seasonWPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+                  SeasonWPConfiguration seasonWPConfiguration = seasonHelper.cloneWPConfigurations(cloneSeason, clonedWPSeason);
+                  SeasonWnTSpringDetail seasonWnTSpringDetail = seasonHelper.cloneWPSprtingProgram(existingSeason, clonedWPSeason);
+                  SeasonWnTSummerDetail seasonWnTSummerDetail = seasonHelper.cloneWPSummerProgram(existingSeason, clonedWPSeason);
+                  SeasonWnTWinterDetail seasonWnTWinterDetail = seasonHelper.cloneWPWinterProgram(existingSeason, clonedWPSeason);
+                  SeasonCAPDetail seasonCAPDetail = seasonHelper.cloneWPCapProgram(existingSeason, clonedWPSeason);
+                  seasonWPAllocationRepository.save(seasonWPAallocationCloneList);
                   seasonWPConfigurationRepository.save(seasonWPConfiguration);
-                  
-                  SeasonWnTSpringDetail seasonWnTSpringDetail = new SeasonWnTSpringDetail();
-                  seasonWnTSpringDetail.setSeason(clonedWPSeason);
-                  seasonWnTSpringDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
-                  seasonWnTSpringDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SPRING);
-                  seasonWnTSpringDetail.setApplicationDeadlineDate(clonedWPSeason.getSeasonWnTspringDetails().get(0).getApplicationDeadlineDate());
-                  seasonWnTSpringDetail.setStartDate(clonedWPSeason.getSeasonWnTspringDetails().get(0).getStartDate());
-                  seasonWnTSpringDetail.setEndDate(clonedWPSeason.getSeasonWnTspringDetails().get(0).getEndDate());
-                  seasonWnTSpringDetail.setIsJobBoardOpen(clonedWPSeason.getSeasonWnTspringDetails().get(0).getIsJobBoardOpen());
-                  seasonWnTSpringDetail.setMaxPendingJobApps(clonedWPSeason.getSeasonWnTspringDetails().get(0).getMaxPendingJobApps());
-                  seasonWnTSpringDetail.setCreatedBy(1);
-                  seasonWnTSpringDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  seasonWnTSpringDetail.setModifiedBy(1);
-                  seasonWnTSpringDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
                   seasonWTSpringRepository.save(seasonWnTSpringDetail);
-                  
-                  SeasonWnTSummerDetail seasonWnTSummerDetail = new SeasonWnTSummerDetail();
-                  seasonWnTSummerDetail.setSeason(clonedWPSeason);
-                  seasonWnTSummerDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
-                  seasonWnTSummerDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SUMMER);
-                  seasonWnTSummerDetail.setApplicationDeadlineDate(clonedWPSeason.getSeasonWnTsummerDetails().get(0).getApplicationDeadlineDate());
-                  seasonWnTSummerDetail.setStartDate(clonedWPSeason.getSeasonWnTsummerDetails().get(0).getStartDate());
-                  seasonWnTSummerDetail.setEndDate(clonedWPSeason.getSeasonWnTsummerDetails().get(0).getEndDate());
-                  seasonWnTSummerDetail.setIsJobBoardOpen(clonedWPSeason.getSeasonWnTsummerDetails().get(0).getIsJobBoardOpen());
-                  seasonWnTSummerDetail.setMaxPendingJobApps(clonedWPSeason.getSeasonWnTsummerDetails().get(0).getMaxPendingJobApps());
-                  seasonWnTSummerDetail.setCreatedBy(1);
-                  seasonWnTSummerDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  seasonWnTSummerDetail.setModifiedBy(1);
-                  seasonWnTSummerDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
                   seasonWTSummerRepository.save(seasonWnTSummerDetail);
-                  
-                  SeasonWnTWinterDetail seasonWnTWinterDetail = new SeasonWnTWinterDetail();
-                  seasonWnTWinterDetail.setSeason(clonedWPSeason);
-                  seasonWnTWinterDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
-                  seasonWnTWinterDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_WINTER);
-                  seasonWnTWinterDetail.setApplicationDeadlineDate(clonedWPSeason.getSeasonWnTwinterDetails().get(0).getApplicationDeadlineDate());
-                  seasonWnTWinterDetail.setStartDate(clonedWPSeason.getSeasonWnTwinterDetails().get(0).getStartDate());
-                  seasonWnTWinterDetail.setEndDate(clonedWPSeason.getSeasonWnTwinterDetails().get(0).getEndDate());
-                  seasonWnTWinterDetail.setIsJobBoardOpen(clonedWPSeason.getSeasonWnTwinterDetails().get(0).getIsJobBoardOpen());
-                  seasonWnTWinterDetail.setMaxPendingJobApps(clonedWPSeason.getSeasonWnTwinterDetails().get(0).getMaxPendingJobApps());
-                  seasonWnTWinterDetail.setCreatedBy(1);
-                  seasonWnTWinterDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  seasonWnTWinterDetail.setModifiedBy(1);
-                  seasonWnTWinterDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
                   seasonWTWinterRepository.save(seasonWnTWinterDetail);
-                  
-                  SeasonCAPDetail seasonCAPDetail = new SeasonCAPDetail();
-                  seasonCAPDetail.setSeason(clonedWPSeason);
-                  seasonCAPDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
-                  seasonCAPDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_CAP);
-                  seasonCAPDetail.setInternStartDate(clonedWPSeason.getSeasonCapdetails().get(0).getInternStartDate());
-                  seasonCAPDetail.setInternEndDate(clonedWPSeason.getSeasonCapdetails().get(0).getInternEndDate());
-                  seasonCAPDetail.setInternAppDeadlineDate(clonedWPSeason.getSeasonCapdetails().get(0).getInternAppDeadlineDate());
-                  seasonCAPDetail.setTraineeAppDeadlineDate(clonedWPSeason.getSeasonCapdetails().get(0).getTraineeAppDeadlineDate());
-                  seasonCAPDetail.setTraineeStartDate(clonedWPSeason.getSeasonCapdetails().get(0).getTraineeStartDate());
-                  seasonCAPDetail.setTraineeEndDate(clonedWPSeason.getSeasonCapdetails().get(0).getTraineeEndDate());
-                  seasonCAPDetail.setCreatedBy(1);
-                  seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  seasonCAPDetail.setModifiedBy(1);
-                  seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
                   seasonCAPDetailsRepository.save(seasonCAPDetail);
-                  
+
                }
                if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+                  Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                  Season clonedGHTSeason = seasonRepository.saveAndFlush(season);
+                  SeasonGHTConfiguration seasonGHTConfiguration = seasonHelper.cloneGHTConfiguration(cloneSeason, clonedGHTSeason);
+                  SeasonHSADetail seasonHSADetail = seasonHelper.cloneGHTHSAProgram(existingSeason, clonedGHTSeason);
+                  SeasonLSDetail seasonLSDetail = seasonHelper.cloneGHTLSProgram(existingSeason, clonedGHTSeason);
+                  SeasonTADetail seasonTADetail = seasonHelper.cloneGHTTAProgram(existingSeason, clonedGHTSeason);
+                  SeasonVADetail seasonVADetail = seasonHelper.cloneGHTVAProgram(existingSeason, clonedGHTSeason);
+                  SeasonWADetail seasonWADetail = seasonHelper.cloneGHTWAProgram(existingSeason, clonedGHTSeason);
+                  seasonGHTConfigurationRepository.save(seasonGHTConfiguration);
+                  seasonHSADetailsRepository.save(seasonHSADetail);
+                  seasonLSDetailsRepository.save(seasonLSDetail);
+                  seasonTADetailsRepository.save(seasonTADetail);
+                  seasonVADetailsRepository.save(seasonVADetail);
+                  seasonWADetailsRepository.save(seasonWADetail);
 
                } else {
                   // update header type of department not applicable
@@ -1738,5 +1680,5 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       }
       return cloneSeason;
    }
-   
+
 }
