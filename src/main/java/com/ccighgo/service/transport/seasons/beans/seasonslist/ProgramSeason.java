@@ -15,18 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for DepartmentObject complex type.
+ * <p>Java class for ProgramSeason complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="DepartmentObject">
+ * &lt;complexType name="ProgramSeason">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="departmentId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="departmentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="departmentCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="seasonProgramId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="seasonProgramName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="seasonProgramUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,81 +36,81 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DepartmentObject", propOrder = {
-    "departmentId",
-    "departmentName",
-    "departmentCode"
+@XmlType(name = "ProgramSeason", propOrder = {
+    "seasonProgramId",
+    "seasonProgramName",
+    "seasonProgramUrl"
 })
-public class DepartmentObject {
+public class ProgramSeason {
 
-    protected int departmentId;
+    protected int seasonProgramId;
     @XmlElement(required = true)
-    protected String departmentName;
+    protected String seasonProgramName;
     @XmlElement(required = true)
-    protected String departmentCode;
+    protected String seasonProgramUrl;
 
     /**
-     * Gets the value of the departmentId property.
+     * Gets the value of the seasonProgramId property.
      * 
      */
-    public int getDepartmentId() {
-        return departmentId;
+    public int getSeasonProgramId() {
+        return seasonProgramId;
     }
 
     /**
-     * Sets the value of the departmentId property.
+     * Sets the value of the seasonProgramId property.
      * 
      */
-    public void setDepartmentId(int value) {
-        this.departmentId = value;
+    public void setSeasonProgramId(int value) {
+        this.seasonProgramId = value;
     }
 
     /**
-     * Gets the value of the departmentName property.
+     * Gets the value of the seasonProgramName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDepartmentName() {
-        return departmentName;
+    public String getSeasonProgramName() {
+        return seasonProgramName;
     }
 
     /**
-     * Sets the value of the departmentName property.
+     * Sets the value of the seasonProgramName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDepartmentName(String value) {
-        this.departmentName = value;
+    public void setSeasonProgramName(String value) {
+        this.seasonProgramName = value;
     }
 
     /**
-     * Gets the value of the departmentCode property.
+     * Gets the value of the seasonProgramUrl property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDepartmentCode() {
-        return departmentCode;
+    public String getSeasonProgramUrl() {
+        return seasonProgramUrl;
     }
 
     /**
-     * Sets the value of the departmentCode property.
+     * Sets the value of the seasonProgramUrl property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDepartmentCode(String value) {
-        this.departmentCode = value;
+    public void setSeasonProgramUrl(String value) {
+        this.seasonProgramUrl = value;
     }
 
 }
