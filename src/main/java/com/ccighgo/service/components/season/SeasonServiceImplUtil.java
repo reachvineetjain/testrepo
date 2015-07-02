@@ -49,6 +49,7 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugSt
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
+import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
@@ -65,7 +66,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Progr
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1ProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.SeasonHSPF1Details;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.DepartmentObject;
-import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramOptions;
+import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramSeason;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
@@ -193,18 +194,87 @@ public class SeasonServiceImplUtil {
 
       if (seasonEntity.getLookupDepartment() != null) {
          if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-
-            // TODO need to fetch programIds : Important
-
+            if(seasonEntity.getSeasonJ1details()!=null && seasonEntity.getSeasonJ1details().size()>0){
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonJ1details().get(0).getSeasonJ1DetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonJ1details().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.HSP_J1_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if(seasonEntity.getSeasonF1details()!=null && seasonEntity.getSeasonF1details().size()>0){
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonF1details().get(0).getSeasonF1DetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonF1details().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.HSP_F1_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            //TODO implement when STP tables are available
          }
-
-         if (seasonEntity.getLookupDepartment().getDepartmentPrograms() != null) {
-            for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
-               ProgramOptions programOptions = new ProgramOptions();
-               programOptions.setProgramOptionsID(departmentProgram.getDepartmentProgramId());
-               programOptions.setProgramOptionsCode(departmentProgram.getProgramName());
-               programOptions.setProgramOptionsName(departmentProgram.getDescription());
-               seasonBean.getProgramOptions().add(programOptions);
+         if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
+            if (seasonEntity.getSeasonWnTsummerDetails()!=null && seasonEntity.getSeasonWnTsummerDetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTsummerDetails().get(0).getSeasonWnTSummerDetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTsummerDetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.WP_SUMM_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if (seasonEntity.getSeasonWnTwinterDetails()!=null && seasonEntity.getSeasonWnTwinterDetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTwinterDetails().get(0).getSeasonWnTWinterDetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTwinterDetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.WP_WINT_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if (seasonEntity.getSeasonWnTspringDetails()!=null && seasonEntity.getSeasonWnTspringDetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTspringDetails().get(0).getSeasonWnTSpringDetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTspringDetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.WP_SPRING_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if (seasonEntity.getSeasonCapdetails()!=null && seasonEntity.getSeasonCapdetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonCapdetails().get(0).getSeasonCAPDetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonCapdetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.WP_CAP_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+         }
+         if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+            if (seasonEntity.getSeasonHsadetails()!=null && seasonEntity.getSeasonHsadetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonHsadetails().get(0).getSeasonHSADetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonHsadetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.GHT_HSA_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if (seasonEntity.getSeasonLsdetails()!=null && seasonEntity.getSeasonLsdetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonLsdetails().get(0).getSeasonLSDetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonLsdetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.GHT_LS_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if (seasonEntity.getSeasonTadetails()!=null && seasonEntity.getSeasonTadetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonTadetails().get(0).getSeasonTADetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonTadetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.GHT_TA_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if (seasonEntity.getSeasonVadetails()!=null && seasonEntity.getSeasonVadetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonVadetails().get(0).getSeasonVADetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonVadetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.GHT_VA_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
+            if (seasonEntity.getSeasonWadetails()!=null && seasonEntity.getSeasonWadetails().size()>0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonWadetails().get(0).getSeasonWADetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonWadetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.GHT_WA_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
             }
          }
       }
