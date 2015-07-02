@@ -23,6 +23,7 @@ import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
+import com.ccighgo.db.entities.SeasonProgramDocument;
 import com.ccighgo.db.entities.SeasonProgramNote;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.db.entities.SeasonTADetail;
@@ -39,6 +40,7 @@ import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
@@ -51,6 +53,7 @@ import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Da
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSDocuments;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSNotes;
@@ -121,6 +124,8 @@ public class SeasonServiceImplUtil {
    SeasonDepartmentNotesRepository seasonDepartmentNotesRepository;
    @Autowired
    SeasonProgramNotesRepository seasonProgramNotesRepository;
+   @Autowired
+   SeasonProgramDocumentRepository seasonProgramDocumentRepository;
 
    /**
     * @param seasonBean
@@ -1715,6 +1720,25 @@ public class SeasonServiceImplUtil {
          }
       }
       return j1hsNotes;
+   }
+
+   public List<J1HSDocuments> getJ1Docs(Integer seasonId, Integer seasonProgramId) {
+      List<J1HSDocuments> j1hsDocuments = null;
+      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
+      if (seasonProgramDocuments != null) {
+         j1hsDocuments = new ArrayList<J1HSDocuments>();
+         for (SeasonProgramDocument programDocument : seasonProgramDocuments) {
+            if (programDocument.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
+               J1HSDocuments documents = new J1HSDocuments();
+               documents.setSeasonId(programDocument.getSeason().getSeasonId());
+               documents.setSeasonProgramId(seasonProgramId);
+               documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+               documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+               j1hsDocuments.add(documents);
+            }
+         }
+      }
+      return j1hsDocuments;
    }
 
 }
