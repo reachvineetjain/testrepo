@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
@@ -163,19 +162,25 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Override
-   @Transactional
    public SeasonBean createSeason(SeasonBean seasonBean) {
       try {
-         Season seasonEntity = new Season();
-         seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
-         seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
-         seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
-         seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
-         return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
+         int seasonId = createSeasonLogic(seasonBean);
+         return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
+   }
+
+   @Transactional
+   private int createSeasonLogic(SeasonBean seasonBean) {
+      Season seasonEntity = new Season();
+      seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
+      seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
+      seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
+      seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
+      seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
+      return seasonEntity.getSeasonId();
    }
 
    @Override
@@ -215,18 +220,24 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Override
-   @Transactional
    public SeasonBean updateSeason(SeasonBean seasonBean) {
       try {
-         Season seasonEntity = new Season();
-         seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, true);
-         seasonRepository.saveAndFlush(seasonEntity);
-         seasonServiceImplUtil.updateSeasonHspConfiguration(seasonBean, seasonEntity);
-         return viewSeason(seasonEntity.getSeasonId() + CCIConstants.EMPTY_DATA);
+         int seasonId = updateSeasonLogic(seasonBean);
+         return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
+   }
+
+   @Transactional
+   private int updateSeasonLogic(SeasonBean seasonBean) {
+      Season seasonEntity = new Season();
+      seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, true);
+      seasonRepository.saveAndFlush(seasonEntity);
+      seasonServiceImplUtil.updateSeasonHspConfiguration(seasonBean, seasonEntity);
+      seasonServiceImplUtil.updateSeasonDepartmentNotes(seasonBean, seasonEntity);
+      return seasonEntity.getSeasonId();
    }
 
    @Transactional(readOnly = true)
@@ -238,9 +249,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             List<SeasonProgram> seasonProgramsList = new ArrayList<SeasonProgram>();
             seasonPrograms = new SeasonPrograms();
             LookupDepartment dept = season.getLookupDepartment();
-            if(dept!=null){
-               if(dept.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)){
-                  if(season.getSeasonJ1details()!=null && season.getSeasonJ1details().size()>0){
+            if (dept != null) {
+               if (dept.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
+                  if (season.getSeasonJ1details() != null && season.getSeasonJ1details().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonJ1details().get(0).getSeasonJ1DetailsId());
@@ -248,7 +259,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.HSP_J1_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if(season.getSeasonF1details()!=null && season.getSeasonF1details().size()>0){
+                  if (season.getSeasonF1details() != null && season.getSeasonF1details().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonF1details().get(0).getSeasonF1DetailsId());
@@ -256,10 +267,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.HSP_F1_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  //TODO implement when STP tables are available
+                  // TODO implement when STP tables are available
                }
-               if(dept.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)){
-                  if (season.getSeasonWnTsummerDetails()!=null && season.getSeasonWnTsummerDetails().size()>0) {
+               if (dept.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
+                  if (season.getSeasonWnTsummerDetails() != null && season.getSeasonWnTsummerDetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonWnTsummerDetails().get(0).getSeasonWnTSummerDetailsId());
@@ -267,7 +278,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.WP_SUMM_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if (season.getSeasonWnTwinterDetails()!=null && season.getSeasonWnTwinterDetails().size()>0) {
+                  if (season.getSeasonWnTwinterDetails() != null && season.getSeasonWnTwinterDetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonWnTwinterDetails().get(0).getSeasonWnTWinterDetailsId());
@@ -275,7 +286,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.WP_WINT_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if (season.getSeasonWnTspringDetails()!=null && season.getSeasonWnTspringDetails().size()>0) {
+                  if (season.getSeasonWnTspringDetails() != null && season.getSeasonWnTspringDetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonWnTspringDetails().get(0).getSeasonWnTSpringDetailsId());
@@ -283,7 +294,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.WP_SPRING_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if (season.getSeasonCapdetails()!=null && season.getSeasonCapdetails().size()>0) {
+                  if (season.getSeasonCapdetails() != null && season.getSeasonCapdetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonCapdetails().get(0).getSeasonCAPDetailsId());
@@ -292,8 +303,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      seasonProgramsList.add(sprg);
                   }
                }
-               if(dept.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)){
-                  if (season.getSeasonHsadetails()!=null && season.getSeasonHsadetails().size()>0) {
+               if (dept.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+                  if (season.getSeasonHsadetails() != null && season.getSeasonHsadetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonHsadetails().get(0).getSeasonHSADetailsId());
@@ -301,7 +312,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.GHT_HSA_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if (season.getSeasonLsdetails()!=null && season.getSeasonLsdetails().size()>0) {
+                  if (season.getSeasonLsdetails() != null && season.getSeasonLsdetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonLsdetails().get(0).getSeasonLSDetailsId());
@@ -309,7 +320,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.GHT_LS_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if (season.getSeasonTadetails()!=null && season.getSeasonTadetails().size()>0) {
+                  if (season.getSeasonTadetails() != null && season.getSeasonTadetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonTadetails().get(0).getSeasonTADetailsId());
@@ -317,7 +328,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.GHT_TA_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if (season.getSeasonVadetails()!=null && season.getSeasonVadetails().size()>0) {
+                  if (season.getSeasonVadetails() != null && season.getSeasonVadetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonVadetails().get(0).getSeasonVADetailsId());
@@ -325,7 +336,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.GHT_VA_URL);
                      seasonProgramsList.add(sprg);
                   }
-                  if (season.getSeasonWadetails()!=null && season.getSeasonWadetails().size()>0) {
+                  if (season.getSeasonWadetails() != null && season.getSeasonWadetails().size() > 0) {
                      SeasonProgram sprg = new SeasonProgram();
                      sprg.setSeasonId(Integer.valueOf(seasonId));
                      sprg.setSeasonProgramId(season.getSeasonWadetails().get(0).getSeasonWADetailsId());
