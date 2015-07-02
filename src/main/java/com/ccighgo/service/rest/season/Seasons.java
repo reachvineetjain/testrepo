@@ -363,7 +363,7 @@ public class Seasons {
    @GET
    @Path("f1/view/basicdetails/{seasonProgramId}")
    @Produces("application/json")
-   public HSPF1BasicDetails getF1NameAndStatus(@PathParam("seasonId") String seasonProgramId) {
+   public HSPF1BasicDetails getF1NameAndStatus(@PathParam("seasonProgramId") String seasonProgramId) {
       LOGGER.debug("Calling 'fun:getF1NameAndStatus'");
       LOGGER.debug("seasonProgramId  : " + seasonProgramId);
       return seasonServices.getHSPF1NameAndStatus(seasonProgramId);
@@ -453,7 +453,7 @@ public class Seasons {
    @GET
    @Path("f1/view/jan/fulldetails/{seasonProgramId}")
    @Produces("application/json")
-   public HSPF1JanuaryStartFullYearDetail getF1JanStartFullYearDetails(@PathParam("seasonId") String seasonProgramId) {
+   public HSPF1JanuaryStartFullYearDetail getF1JanStartFullYearDetails(@PathParam("seasonProgramId") String seasonProgramId) {
       LOGGER.debug("Calling 'fun:getF1JanStartFullYearDetails'");
       LOGGER.debug("seasonProgramId  : " + seasonProgramId);
       return seasonServices.getHSPF1JanuaryStartFullYearDetails(seasonProgramId);

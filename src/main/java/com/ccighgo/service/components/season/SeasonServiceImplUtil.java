@@ -296,6 +296,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1BasicDetails = new HSPF1BasicDetails();
          hspf1BasicDetails.setSeasonId(allF1Details.getSeason().getSeasonId());
+         hspf1BasicDetails.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
          hspf1BasicDetails.setProgramName(allF1Details.getProgramName());
          if (allF1Details.getSeasonStatus() != null)
             hspf1BasicDetails.setProgramStatus(allF1Details.getSeasonStatus().getStatus());
@@ -309,6 +310,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1Accounting = new HSPF1Accounting();
          hspf1Accounting.setSeasonId(allF1Details.getSeason().getSeasonId());
+         hspf1Accounting.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
          hspf1Accounting.setGreenHeartMargin(allF1Details.getGreenHeartMargin());
       }
       return hspf1Accounting;
@@ -319,6 +321,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1JanuaryStart2NdSemesterDetails = new HSPF1JanuaryStart2NdSemesterDetails();
          hspf1JanuaryStart2NdSemesterDetails.setSeasonId(allF1Details.getSeason().getSeasonId());
+         hspf1JanuaryStart2NdSemesterDetails.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
          hspf1JanuaryStart2NdSemesterDetails.setActivateFullYearProgram(allF1Details.getActiveFullYearJanProgram() != 0);
          hspf1JanuaryStart2NdSemesterDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemAppDeadlineDate()));
          hspf1JanuaryStart2NdSemesterDetails.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getSecondSemStartDate()));
@@ -335,6 +338,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspAugustStartFullYearDetails = new HSPF1AugustStartFullYearDetails();
          hspAugustStartFullYearDetails.setSeasonId(allF1Details.getSeason().getSeasonId());
+         hspAugustStartFullYearDetails.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
          hspAugustStartFullYearDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearAppDeadlineDate()));
          hspAugustStartFullYearDetails.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getAugFullYearEndDate()));
          hspAugustStartFullYearDetails.setShowFullYearToNewHF(allF1Details.getShowAugFullYearToNewHF() != 0);
@@ -348,6 +352,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1AugustStart1StSemesterDetails = new HSPF1AugustStart1StSemesterDetails();
          hspf1AugustStart1StSemesterDetails.setSeasonId(allF1Details.getSeason().getSeasonId());
+         hspf1AugustStart1StSemesterDetails.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
          hspf1AugustStart1StSemesterDetails.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemAppDeadlineDate()));
          hspf1AugustStart1StSemesterDetails.setEarliestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemEarliestBirthDate()));
          hspf1AugustStart1StSemesterDetails.setLatestBirthDate(DateUtils.getMMddYyyyString(allF1Details.getFirstSemLatestBirthDate()));
@@ -362,6 +367,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1FieldSettings = new HSPF1FieldSettings();
          hspf1FieldSettings.setSeasonId(allF1Details.getSeason().getSeasonId());
+         hspf1FieldSettings.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
          hspf1FieldSettings.setAddOrStartHFInquiriesDate(DateUtils.getMMddYyyyString(allF1Details.getHfInquiryDate()));
          hspf1FieldSettings.setAllowFSToStartRenewalProcess(allF1Details.getAllowFieldStaffToStartRenewalProcess() != 0);
          // hspf1FieldSettings.setDefaultLcPaymentSchedule(allF1Details.getLcPaymentScheduleId());
@@ -377,6 +383,7 @@ public class SeasonServiceImplUtil {
    public HSPF1ProgramAllocations getHSPF1ProgramAllocations(SeasonF1Detail allF1Details) {
       HSPF1ProgramAllocations hspf1ProgramAllocations = new HSPF1ProgramAllocations();
       hspf1ProgramAllocations.setSeasonId(allF1Details.getSeason().getSeasonId());
+      hspf1ProgramAllocations.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
       HSPF1ProgramAllocationDetails hspf1ProgramAllocationDetails = null;
       if (allF1Details != null) {
          hspf1ProgramAllocationDetails = new HSPF1ProgramAllocationDetails();
@@ -391,6 +398,7 @@ public class SeasonServiceImplUtil {
       if (allF1Details != null) {
          hspf1JanuaryStartFullYearDetail = new HSPF1JanuaryStartFullYearDetail();
          hspf1JanuaryStartFullYearDetail.setSeasonId(allF1Details.getSeason().getSeasonId());
+         hspf1JanuaryStartFullYearDetail.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
          hspf1JanuaryStartFullYearDetail.setApplicationDeadlineDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearAppDeadlineDate()));
          hspf1JanuaryStartFullYearDetail.setEndDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearEndDate()));
          hspf1JanuaryStartFullYearDetail.setStartDate(DateUtils.getMMddYyyyString(allF1Details.getJanFullYearStartDate()));
@@ -683,6 +691,7 @@ public class SeasonServiceImplUtil {
       J1HSBasicDetail j1hsBasicDetail;
       j1hsBasicDetail = new J1HSBasicDetail();
       j1hsBasicDetail.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
+      j1hsBasicDetail.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
       j1hsBasicDetail.setProgramName(seasonJ1Detail.getProgramName());
       if (seasonJ1Detail.getSeasonStatus() != null)
          j1hsBasicDetail.setProgramStatus(seasonJ1Detail.getSeasonStatus().getStatus());
@@ -697,6 +706,7 @@ public class SeasonServiceImplUtil {
       J1HSJanStart j1hsJanStart;
       j1hsJanStart = new J1HSJanStart();
       j1hsJanStart.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
+      j1hsJanStart.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
       j1hsJanStart.setJanSecondSemStartDate(DateUtils.getMMddyyDate(seasonJ1Detail.getSecondSemStartDate()));
       j1hsJanStart.setJanSecondSemEndDate(DateUtils.getMMddyyDate(seasonJ1Detail.getSecondSemEndDate()));
       j1hsJanStart.setJanSecondSemApplDeadlineDate(DateUtils.getMMddyyDate(seasonJ1Detail.getSecondSemAppDeadlineDate()));
@@ -719,6 +729,7 @@ public class SeasonServiceImplUtil {
       J1HSAugStart j1hsAugStart;
       j1hsAugStart = new J1HSAugStart();
       j1hsAugStart.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
+      j1hsAugStart.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
       j1hsAugStart.setAugFirstSemStartDate(DateUtils.getMMddyyDate(seasonJ1Detail.getFirstSemStartDate()));
       j1hsAugStart.setAugFirstSemEndDate(DateUtils.getMMddyyDate(seasonJ1Detail.getFirstSemEndDate()));
       j1hsAugStart.setAugFirstSemApplDeadlineDate(DateUtils.getMMddyyDate(seasonJ1Detail.getFirstSemAppDeadlineDate()));
@@ -740,6 +751,7 @@ public class SeasonServiceImplUtil {
       J1HSFieldSettings j1hsFieldSettings;
       j1hsFieldSettings = new J1HSFieldSettings();
       j1hsFieldSettings.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
+      j1hsFieldSettings.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
       j1hsFieldSettings.setShowSeasProgToCurrentHF(seasonJ1Detail.getShowSeasonToCurrentHF() == CCIConstants.ACTIVE ? true : false);
       j1hsFieldSettings.setFsHoldDayLength(String.valueOf(seasonJ1Detail.getFieldStaffHoldLength()));
       j1hsFieldSettings.setHoldExpirationWarning(String.valueOf(seasonJ1Detail.getHoursBeforeHoldExpirationWarning()));
@@ -823,6 +835,7 @@ public class SeasonServiceImplUtil {
    public GHTSection1Base getVABasicDetail(SeasonVADetail seasonVADetail) {
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setSeasonId(seasonVADetail.getSeason().getSeasonId());
+      ghtSection1Base.setSeasonProgramId(seasonVADetail.getSeasonVADetailsId());
       ghtSection1Base.setProgramName(seasonVADetail.getProgramName());
       if (seasonVADetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonVADetail.getSeasonStatus().getStatus());
@@ -836,6 +849,7 @@ public class SeasonServiceImplUtil {
    public GHTSection2Dates getVADates(SeasonVADetail seasonVADetail) {
       GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
       ghtSection2Dates.setSeasonId(seasonVADetail.getSeason().getSeasonId());
+      ghtSection2Dates.setSeasonProgramId(seasonVADetail.getSeasonVADetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonVADetail.getStartDate()));
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonVADetail.getEndDate()));
       return ghtSection2Dates;
@@ -866,6 +880,7 @@ public class SeasonServiceImplUtil {
    public GHTSection1Base getWABasicDetail(SeasonWADetail seasonWADetail) {
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setSeasonId(seasonWADetail.getSeason().getSeasonId());
+      ghtSection1Base.setSeasonProgramId(seasonWADetail.getSeasonWADetailsId());
       ghtSection1Base.setProgramName(seasonWADetail.getProgramName());
       if (seasonWADetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonWADetail.getSeasonStatus().getStatus());
@@ -879,6 +894,7 @@ public class SeasonServiceImplUtil {
    public GHTSection2Dates getWADates(SeasonWADetail seasonWADetail) {
       GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
       ghtSection2Dates.setSeasonId(seasonWADetail.getSeason().getSeasonId());
+      ghtSection2Dates.setSeasonProgramId(seasonWADetail.getSeasonWADetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonWADetail.getStartDate()));
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonWADetail.getEndDate()));
       return ghtSection2Dates;
@@ -906,15 +922,18 @@ public class SeasonServiceImplUtil {
       SeasonGHTDetails seasonGHTDetails = new SeasonGHTDetails();
       int seasonId = seasonHSADetail.getSeason().getSeasonId();
       seasonGHTDetails.setSeasonId(seasonId);
+      seasonGHTDetails.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setProgramName(seasonHSADetail.getProgramName());
       if (seasonHSADetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonHSADetail.getSeasonStatus().getStatus());
       ghtSection1Base.setSeasonId(seasonId);
+      ghtSection1Base.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
       seasonGHTDetails.setGhtBaseDetails(ghtSection1Base);
       GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonHSADetail.getEndDate()));
       ghtSection2Dates.setSeasonId(seasonId);
+      ghtSection2Dates.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
       seasonGHTDetails.setGhtDates(ghtSection2Dates);
 
@@ -944,15 +963,18 @@ public class SeasonServiceImplUtil {
       SeasonGHTDetails seasonGHTDetails = new SeasonGHTDetails();
       int seasonId = seasonLSDetail.getSeason().getSeasonId();
       seasonGHTDetails.setSeasonId(seasonId);
+      seasonGHTDetails.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setProgramName(seasonLSDetail.getProgramName());
       if (seasonLSDetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonLSDetail.getSeasonStatus().getStatus());
       ghtSection1Base.setSeasonId(seasonId);
+      ghtSection1Base.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
       seasonGHTDetails.setGhtBaseDetails(ghtSection1Base);
       GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonLSDetail.getEndDate()));
       ghtSection2Dates.setSeasonId(seasonId);
+      ghtSection2Dates.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonLSDetail.getStartDate()));
       seasonGHTDetails.setGhtDates(ghtSection2Dates);
 
@@ -982,15 +1004,18 @@ public class SeasonServiceImplUtil {
       SeasonGHTDetails seasonGHTDetails = new SeasonGHTDetails();
       int seasonId = seasonTADetail.getSeason().getSeasonId();
       seasonGHTDetails.setSeasonId(seasonId);
+      seasonGHTDetails.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setProgramName(seasonTADetail.getProgramName());
       if (seasonTADetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonTADetail.getSeasonStatus().getStatus());
       ghtSection1Base.setSeasonId(seasonId);
+      ghtSection1Base.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
       seasonGHTDetails.setGhtBaseDetails(ghtSection1Base);
       GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonTADetail.getEndDate()));
       ghtSection2Dates.setSeasonId(seasonId);
+      ghtSection2Dates.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonTADetail.getStartDate()));
       seasonGHTDetails.setGhtDates(ghtSection2Dates);
 
@@ -1025,6 +1050,7 @@ public class SeasonServiceImplUtil {
       if (seasonHSADetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonHSADetail.getSeasonStatus().getStatus());
       ghtSection1Base.setSeasonId(seasonHSADetail.getSeason().getSeasonId());
+      ghtSection1Base.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
       return ghtSection1Base;
    }
 
@@ -1054,6 +1080,7 @@ public class SeasonServiceImplUtil {
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonHSADetail.getEndDate()));
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
       ghtSection2Dates.setSeasonId(seasonHSADetail.getSeason().getSeasonId());
+      ghtSection2Dates.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
       return ghtSection2Dates;
    }
 
@@ -1083,6 +1110,7 @@ public class SeasonServiceImplUtil {
       if (seasonLSDetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonLSDetail.getSeasonStatus().getStatus());
       ghtSection1Base.setSeasonId(seasonLSDetail.getSeason().getSeasonId());
+      ghtSection1Base.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
       return ghtSection1Base;
    }
 
@@ -1112,6 +1140,7 @@ public class SeasonServiceImplUtil {
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonLsADetail.getEndDate()));
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonLsADetail.getStartDate()));
       ghtSection2Dates.setSeasonId(seasonLsADetail.getSeason().getSeasonId());
+      ghtSection2Dates.setSeasonProgramId(seasonLsADetail.getSeasonLSDetailsId());
       return ghtSection2Dates;
    }
 
@@ -1141,6 +1170,7 @@ public class SeasonServiceImplUtil {
       if (seasonTADetail.getSeasonStatus() != null)
          ghtSection1Base.setProgramStatus(seasonTADetail.getSeasonStatus().getStatus());
       ghtSection1Base.setSeasonId(seasonTADetail.getSeason().getSeasonId());
+      ghtSection1Base.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
       return ghtSection1Base;
    }
 
@@ -1170,6 +1200,7 @@ public class SeasonServiceImplUtil {
       ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonTADetail.getEndDate()));
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonTADetail.getStartDate()));
       ghtSection2Dates.setSeasonId(seasonTADetail.getSeason().getSeasonId());
+      ghtSection2Dates.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
       return ghtSection2Dates;
    }
 
@@ -1195,6 +1226,7 @@ public class SeasonServiceImplUtil {
       WPCAPBasicDetails wpcapBasicDetails = new WPCAPBasicDetails();
       wpcapBasicDetails.setProgramName(seasonWPcap.getProgramName());
       wpcapBasicDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
+      wpcapBasicDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       if (seasonWPcap.getSeasonStatus() != null)
          wpcapBasicDetails.setProgramStatus(seasonWPcap.getSeasonStatus().getStatus());
       seasonWPCAPDetails.setDetails(wpcapBasicDetails);
@@ -1203,6 +1235,7 @@ public class SeasonServiceImplUtil {
       wpcapInternshipDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getInternAppDeadlineDate()));
       wpcapInternshipDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getInternEndDate()));
       wpcapInternshipDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
+      wpcapInternshipDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       wpcapInternshipDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getInternStartDate()));
       seasonWPCAPDetails.setInternshipDetails(wpcapInternshipDetails);
 
@@ -1211,9 +1244,10 @@ public class SeasonServiceImplUtil {
       wpcapTraineeDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeEndDate()));
       wpcapTraineeDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeStartDate()));
       wpcapTraineeDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
-
+      wpcapTraineeDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       seasonWPCAPDetails.setTraineeDetails(wpcapTraineeDetails);
       seasonWPCAPDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
+      seasonWPCAPDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       // missing program options and general settings
       return seasonWPCAPDetails;
    }
@@ -1250,6 +1284,7 @@ public class SeasonServiceImplUtil {
       SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
       WPCAPBasicDetails wpcapBasicDetails = new WPCAPBasicDetails();
       wpcapBasicDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
+      wpcapBasicDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       wpcapBasicDetails.setProgramName(seasonWPcap.getProgramName());
       if (seasonWPcap.getSeasonStatus() != null)
          wpcapBasicDetails.setProgramStatus(seasonWPcap.getSeasonStatus().getStatus());
@@ -1275,6 +1310,7 @@ public class SeasonServiceImplUtil {
       SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
       WPCAPInternshipDetails wpcapInternshipDetails = new WPCAPInternshipDetails();
       wpcapInternshipDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
+      wpcapInternshipDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       wpcapInternshipDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getInternAppDeadlineDate()));
       wpcapInternshipDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getInternEndDate()));
       wpcapInternshipDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getInternStartDate()));
@@ -1300,6 +1336,7 @@ public class SeasonServiceImplUtil {
       SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
       WPCAPTraineeDetails wpcapTraineeDetails = new WPCAPTraineeDetails();
       wpcapTraineeDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
+      wpcapTraineeDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       wpcapTraineeDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeAppDeadlineDate()));
       wpcapTraineeDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeEndDate()));
       wpcapTraineeDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeStartDate()));
@@ -1324,11 +1361,13 @@ public class SeasonServiceImplUtil {
       SeasonWnTWinterDetail seasonWnTWinterDetail = seasonWinterRepository.findOne(Integer.parseInt(seasonProgramId));
       SeasonWPDetails seasonWPDetails = new SeasonWPDetails();
       seasonWPDetails.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
+      seasonWPDetails.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
       WPBasicDetail wpBasicDetail = new WPBasicDetail();
       wpBasicDetail.setProgramName(seasonWnTWinterDetail.getProgramName());
       if (seasonWnTWinterDetail.getSeasonStatus() != null)
          wpBasicDetail.setProgramStatus(seasonWnTWinterDetail.getSeasonStatus().getStatus());
       wpBasicDetail.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
+      wpBasicDetail.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
       seasonWPDetails.setWpBasicDetail(wpBasicDetail);
 
       WPSectionOne wpSectionOne = new WPSectionOne();
@@ -1337,6 +1376,7 @@ public class SeasonServiceImplUtil {
       wpSectionOne.setIsJobBoardOpen(seasonWnTWinterDetail.getIsJobBoardOpen() != 0);
       wpSectionOne.setMaxPendingJobAppls(seasonWnTWinterDetail.getMaxPendingJobApps() + "");
       wpSectionOne.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
+      wpSectionOne.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
       wpSectionOne.setStartDate(DateUtils.getMMddyyDate(seasonWnTWinterDetail.getStartDate()));
 
       seasonWPDetails.setWpSectionOne(wpSectionOne);
@@ -1372,6 +1412,7 @@ public class SeasonServiceImplUtil {
       if (seasonWnTWinterDetail.getSeasonStatus() != null)
          wpBasicDetail.setProgramStatus(seasonWnTWinterDetail.getSeasonStatus().getStatus());
       wpBasicDetail.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
+      wpBasicDetail.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
       return wpBasicDetail;
    }
 
@@ -1392,6 +1433,7 @@ public class SeasonServiceImplUtil {
       wpSectionOne.setIsJobBoardOpen(seasonWnTWinterDetail.getIsJobBoardOpen() != 0);
       wpSectionOne.setMaxPendingJobAppls(seasonWnTWinterDetail.getMaxPendingJobApps() + "");
       wpSectionOne.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
+      wpSectionOne.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
       wpSectionOne.setStartDate(DateUtils.getMMddyyDate(seasonWnTWinterDetail.getStartDate()));
       return wpSectionOne;
    }
@@ -1426,6 +1468,7 @@ public class SeasonServiceImplUtil {
    public WPBasicDetail getWPSummerBaseDetails(SeasonWnTSummerDetail seasonWnTSummerDetail) {
       WPBasicDetail wpBasicDetail = new WPBasicDetail();
       wpBasicDetail.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
+      wpBasicDetail.setSeasonProgramId(seasonWnTSummerDetail.getSeasonWnTSummerDetailsId());
       wpBasicDetail.setProgramName(seasonWnTSummerDetail.getProgramName() != null ? seasonWnTSummerDetail.getProgramName() : null);
       if (seasonWnTSummerDetail.getSeasonStatus() != null)
          wpBasicDetail.setProgramStatus(seasonWnTSummerDetail.getSeasonStatus().getStatus() != null ? seasonWnTSummerDetail.getSeasonStatus().getStatus() : null);
@@ -1437,9 +1480,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public WPSectionOne getWPSummerSection1Details(SeasonWnTSummerDetail seasonWnTSummerDetail) {
-      WPSectionOne wpSectionOne;
-      wpSectionOne = new WPSectionOne();
+      WPSectionOne wpSectionOne = new WPSectionOne();
       wpSectionOne.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
+      wpSectionOne.setSeasonProgramId(seasonWnTSummerDetail.getSeasonWnTSummerDetailsId());
       wpSectionOne.setStartDate(seasonWnTSummerDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getStartDate()) : null);
       wpSectionOne.setEndDate(seasonWnTSummerDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getEndDate()) : null);
       wpSectionOne.setApplicationDeadlineDate(seasonWnTSummerDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail
@@ -1481,6 +1524,7 @@ public class SeasonServiceImplUtil {
       WPBasicDetail wpBasicDetail;
       wpBasicDetail = new WPBasicDetail();
       wpBasicDetail.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
+      wpBasicDetail.setSeasonProgramId(seasonWnTSpringDetail.getSeasonWnTSpringDetailsId());
       wpBasicDetail.setProgramName(seasonWnTSpringDetail.getProgramName() != null ? seasonWnTSpringDetail.getProgramName() : null);
       if (seasonWnTSpringDetail.getSeasonStatus() != null)
          wpBasicDetail.setProgramStatus(seasonWnTSpringDetail.getSeasonStatus().getStatus() != null ? seasonWnTSpringDetail.getSeasonStatus().getStatus() : null);
@@ -1495,6 +1539,7 @@ public class SeasonServiceImplUtil {
       WPSectionOne wpSectionOne;
       wpSectionOne = new WPSectionOne();
       wpSectionOne.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
+      wpSectionOne.setSeasonProgramId(seasonWnTSpringDetail.getSeasonWnTSpringDetailsId());
       wpSectionOne.setStartDate(seasonWnTSpringDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getStartDate()) : null);
       wpSectionOne.setEndDate(seasonWnTSpringDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getEndDate()) : null);
       wpSectionOne.setApplicationDeadlineDate(seasonWnTSpringDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail
