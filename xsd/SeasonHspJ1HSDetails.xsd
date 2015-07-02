@@ -16,6 +16,7 @@
    <xsd:complexType name="SeasonHspJ1HSDetails">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsBasicDetail" type="j1hs:J1HSBasicDetail" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsJanStart" type="j1hs:J1HSJanStart" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsAugStart" type="j1hs:J1HSAugStart" minOccurs="1" maxOccurs="1" />
@@ -29,6 +30,7 @@
    <xsd:complexType name="J1HSBasicDetail">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programName" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="programStatus" type="xsd:string" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
@@ -37,6 +39,7 @@
    <xsd:complexType name="J1HSJanStart">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="janSecondSemStartDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="janSecondSemEndDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="janSecondSemApplDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
@@ -54,6 +57,7 @@
    <xsd:complexType name="J1HSAugStart">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="augFirstSemStartDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="augFirstSemEndDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="augFirstSemApplDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
@@ -71,6 +75,7 @@
    <xsd:complexType name="J1HSFieldSettings">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="showSeasProgToCurrentHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="fsHoldDayLength" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="holdExpirationWarning" type="xsd:string" minOccurs="0" maxOccurs="1" />
@@ -88,6 +93,7 @@
    <xsd:complexType name="J1HSProgramAllocations">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="augStartUnGuarnteedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
          <xsd:element name="augStartGuarnteedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
          <xsd:element name="augStartAcceptedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
@@ -106,6 +112,7 @@
    <xsd:complexType name="J1HSDocuments">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -116,6 +123,7 @@
    <xsd:complexType name="J1HSNotes">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="note" type="xsd:string" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>

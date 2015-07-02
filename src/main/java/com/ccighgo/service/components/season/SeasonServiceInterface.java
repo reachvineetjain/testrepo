@@ -91,50 +91,50 @@ public interface SeasonServiceInterface {
    /**
     * Method returns complete details for HSP J1HS season program
     * 
-    * @param seasonId
+    * @param seasonProgramId
     * @return SeasonHspJ1HSDetails
     */
-   public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonId);
+   public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonProgramId);
 
    /**
     * Gets the details of first section in J1HS for name and status
     * 
-    * @param seasonId
+    * @param seasonProgramId
     * @return J1HSBasicDetail
     */
-   public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonId);
+   public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonProgramId);
 
    /**
     * Gets the details of January semester start
     * 
-    * @param seasonId
+    * @param seasonProgramId
     * @return J1HSJanStart
     */
-   public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonId);
+   public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonProgramId);
 
    /**
     * gets details of August semester start
     * 
-    * @param seasonId
+    * @param seasonProgramId
     * @return J1HSAugStart
     */
-   public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonId);
+   public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonProgramId);
 
    /**
     * Gets field setting details of J1HS season
     * 
-    * @param seasonId
+    * @param seasonProgramId
     * @return J1HSFieldSettings
     */
-   public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonId);
+   public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonProgramId);
 
    /**
     * Gets list of program allocation matrix for J1HS season
     * 
-    * @param seasonId
+    * @param seasonProgramId
     * @return J1HSProgramAllocations
     */
-   public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonId);
+   public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonProgramId);
 
    /**
     * Updates complete HSP J1HS details
@@ -185,16 +185,16 @@ public interface SeasonServiceInterface {
    public J1HSProgramAllocations updateHSPJ1HSSeasonProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonHSPF1Details getSeasonHSPF1Details(String seasonId);
+   public SeasonHSPF1Details getSeasonHSPF1Details(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1BasicDetails getHSPF1NameAndStatus(String seasonId);
+   public HSPF1BasicDetails getHSPF1NameAndStatus(String seasonProgramId);
 
    /**
     * @param hspf1BasicDetails
@@ -203,10 +203,10 @@ public interface SeasonServiceInterface {
    public HSPF1BasicDetails updateHSPF1NameAndStatus(HSPF1BasicDetails hspf1BasicDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1Accounting getHSPF1Accounting(String seasonId);
+   public HSPF1Accounting getHSPF1Accounting(String seasonProgramId);
 
    /**
     * @param hspf1Accounting
@@ -215,10 +215,10 @@ public interface SeasonServiceInterface {
    public HSPF1Accounting updateF1Accounting(HSPF1Accounting hspf1Accounting);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1JanuaryStart2NdSemesterDetails getHSPF1JanuaryStart2NdSemesterDetails(String seasonId);
+   public HSPF1JanuaryStart2NdSemesterDetails getHSPF1JanuaryStart2NdSemesterDetails(String seasonProgramId);
 
    /**
     * @param hspf1JanuaryStart2NdSemesterDetails
@@ -227,10 +227,10 @@ public interface SeasonServiceInterface {
    public HSPF1JanuaryStart2NdSemesterDetails updateF1JanStart2NdSemesterDetails(HSPF1JanuaryStart2NdSemesterDetails hspf1JanuaryStart2NdSemesterDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1JanuaryStartFullYearDetail getHSPF1JanuaryStartFullYearDetails(String seasonId);
+   public HSPF1JanuaryStartFullYearDetail getHSPF1JanuaryStartFullYearDetails(String seasonProgramId);
 
    /**
     * @param hspf1JanuaryStartFullYearDetail
@@ -239,10 +239,10 @@ public interface SeasonServiceInterface {
    public HSPF1JanuaryStartFullYearDetail updateF1JanStartFullYearDetails(HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1AugustStart1StSemesterDetails getHSPF1AugustStart1StSemesterDetails(String seasonId);
+   public HSPF1AugustStart1StSemesterDetails getHSPF1AugustStart1StSemesterDetails(String seasonProgramId);
 
    /**
     * @param hspf1AugustStart1StSemesterDetails
@@ -251,10 +251,10 @@ public interface SeasonServiceInterface {
    public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1AugustStartFullYearDetails getHSPF1AugustStartFullYearDetails(String seasonId);
+   public HSPF1AugustStartFullYearDetails getHSPF1AugustStartFullYearDetails(String seasonProgramId);
 
    /**
     * @param hspf1AugustStartFullYearDetails
@@ -263,10 +263,10 @@ public interface SeasonServiceInterface {
    public HSPF1AugustStartFullYearDetails updateF1AugStartFullYearDetails(HSPF1AugustStartFullYearDetails hspf1AugustStartFullYearDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1FieldSettings getHSPF1FieldSettings(String seasonId);
+   public HSPF1FieldSettings getHSPF1FieldSettings(String seasonProgramId);
 
    /**
     * @param hspf1FieldSettings
@@ -275,10 +275,10 @@ public interface SeasonServiceInterface {
    public HSPF1FieldSettings updateF1FieldSettings(HSPF1FieldSettings hspf1FieldSettings);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public HSPF1ProgramAllocations getHSPF1ProgramAllocations(String seasonId);
+   public HSPF1ProgramAllocations getHSPF1ProgramAllocations(String seasonProgramId);
 
    /**
     * @param hspf1ProgramAllocations
@@ -287,22 +287,22 @@ public interface SeasonServiceInterface {
    public HSPF1ProgramAllocations updateF1ProgramAllocation(HSPF1ProgramAllocations hspf1ProgramAllocations);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonGHTDetails getGHTVASeasonDetails(String seasonId);
+   public SeasonGHTDetails getGHTVASeasonDetails(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection1Base getGHTVASeasonNameAndStatus(String seasonId);
+   public GHTSection1Base getGHTVASeasonNameAndStatus(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection2Dates getGHTVASeasonDateDetails(String seasonId);
+   public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId);
 
    /**
     * @param seasonGHTDetails
@@ -323,22 +323,22 @@ public interface SeasonServiceInterface {
    public GHTSection2Dates updateGHTVASeasonDateDetails(GHTSection2Dates ghtSection2Dates);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonGHTDetails getGHTWASeasonDetails(String seasonId);
+   public SeasonGHTDetails getGHTWASeasonDetails(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection1Base getGHTWASeasonNameAndStatus(String seasonId);
+   public GHTSection1Base getGHTWASeasonNameAndStatus(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection2Dates getGHTWASeasonDateDetails(String seasonId);
+   public GHTSection2Dates getGHTWASeasonDateDetails(String seasonProgramId);
 
    /**
     * @param seasonHSPF1Details
@@ -365,10 +365,10 @@ public interface SeasonServiceInterface {
    public GHTSection2Dates updateGHTWASeasonDateDetails(GHTSection2Dates ghtSection2Dates);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonGHTDetails getGHTHSAbroad(String seasonId);
+   public SeasonGHTDetails getGHTHSAbroad(String seasonProgramId);
 
    /**
     * @param seasonGHTDetails
@@ -377,10 +377,10 @@ public interface SeasonServiceInterface {
    public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection1Base getGHTHSSection1BaseAbroad(String seasonId);
+   public GHTSection1Base getGHTHSSection1BaseAbroad(String seasonProgramId);
 
    /**
     * @param ghtSection1Base
@@ -389,10 +389,10 @@ public interface SeasonServiceInterface {
    public GHTSection1Base updateGHTHSSection1BaseAbroad(GHTSection1Base ghtSection1Base);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonId);
+   public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonProgramId);
 
    /**
     * @param ghtSection2Dates
@@ -401,10 +401,10 @@ public interface SeasonServiceInterface {
    public GHTSection2Dates updateGHTHSSection2DatesAbroad(GHTSection2Dates ghtSection2Dates);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonGHTDetails getGHTLanguageSchool(String seasonId);
+   public SeasonGHTDetails getGHTLanguageSchool(String seasonProgramId);
 
    /**
     * @param seasonGHTDetails
@@ -413,10 +413,10 @@ public interface SeasonServiceInterface {
    public SeasonGHTDetails updateGHTLanguageSchool(SeasonGHTDetails seasonGHTDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection1Base getGHTLanguageSchoolSection1(String seasonId);
+   public GHTSection1Base getGHTLanguageSchoolSection1(String seasonProgramId);
 
    /**
     * @param seasonGHTDetails
@@ -425,10 +425,10 @@ public interface SeasonServiceInterface {
    public GHTSection1Base updateGHTLanguageSchoolSection1(GHTSection1Base seasonGHTDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonId);
+   public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonProgramId);
 
    /**
     * @param ghtSection2Dates
@@ -437,10 +437,10 @@ public interface SeasonServiceInterface {
    public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(GHTSection2Dates ghtSection2Dates);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonGHTDetails getGHTTeachAbroad(String seasonId);
+   public SeasonGHTDetails getGHTTeachAbroad(String seasonProgramId);
 
    /**
     * @param seasonGHTDetails
@@ -449,10 +449,10 @@ public interface SeasonServiceInterface {
    public SeasonGHTDetails updateGHTTeachAbroad(SeasonGHTDetails seasonGHTDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection1Base getGHTTeachAbroadSection1(String seasonId);
+   public GHTSection1Base getGHTTeachAbroadSection1(String seasonProgramId);
 
    /**
     * @param ghtSection1Base
@@ -461,10 +461,10 @@ public interface SeasonServiceInterface {
    public GHTSection1Base updateGHTTeachAbroadSection1(GHTSection1Base ghtSection1Base);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonId);
+   public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonProgramId);
 
    /**
     * @param ghtSection2Dates
@@ -473,10 +473,10 @@ public interface SeasonServiceInterface {
    public GHTSection2Dates updateGHTTeachAbroadSection2Dates(GHTSection2Dates ghtSection2Dates);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonWPCAPDetails getWPCAPDetails(String seasonId);
+   public SeasonWPCAPDetails getWPCAPDetails(String seasonProgramId);
 
    /**
     * @param seasonWPCAPDetails
@@ -485,10 +485,10 @@ public interface SeasonServiceInterface {
    public SeasonWPCAPDetails updateWPCAPDetails(SeasonWPCAPDetails seasonWPCAPDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPCAPBasicDetails getWPCAPBasicDetails(String seasonId);
+   public WPCAPBasicDetails getWPCAPBasicDetails(String seasonProgramId);
 
    /**
     * @param seasonWpcapBasicDetails
@@ -497,10 +497,10 @@ public interface SeasonServiceInterface {
    public WPCAPBasicDetails updateWPCAPBasicDetails(WPCAPBasicDetails seasonWpcapBasicDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPCAPInternshipDetails getWPCAPInternshipDetails(String seasonId);
+   public WPCAPInternshipDetails getWPCAPInternshipDetails(String seasonProgramId);
 
    /**
     * @param wpcapInternshipDetails
@@ -509,10 +509,10 @@ public interface SeasonServiceInterface {
    public WPCAPInternshipDetails updateWPCAPInternshipDetails(WPCAPInternshipDetails wpcapInternshipDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPCAPTraineeDetails getWPCAPTraineeDetails(String seasonId);
+   public WPCAPTraineeDetails getWPCAPTraineeDetails(String seasonProgramId);
 
    /**
     * @param wpcapTraineeDetails
@@ -521,10 +521,10 @@ public interface SeasonServiceInterface {
    public WPCAPTraineeDetails updateWPCAPTraineeDetails(WPCAPTraineeDetails wpcapTraineeDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonWPDetails getWPSumDetails(String seasonId);
+   public SeasonWPDetails getWPSumDetails(String seasonProgramId);
 
    /**
     * @param seasonWPDetails
@@ -533,10 +533,10 @@ public interface SeasonServiceInterface {
    public SeasonWPDetails updateWPSumDetails(SeasonWPDetails seasonWPDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPBasicDetail getWPSumBaseDetails(String seasonId);
+   public WPBasicDetail getWPSumBaseDetails(String seasonProgramId);
 
    /**
     * @param wpBasicDetail
@@ -545,10 +545,10 @@ public interface SeasonServiceInterface {
    public WPBasicDetail updateWPSumBaseDetails(WPBasicDetail wpBasicDetail);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPSumSectionOneDetails(String seasonId);
+   public WPSectionOne getWPSumSectionOneDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
@@ -557,10 +557,10 @@ public interface SeasonServiceInterface {
    public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPSumAllocationDetails(String seasonId);
+   public WPSectionOne getWPSumAllocationDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
@@ -569,10 +569,10 @@ public interface SeasonServiceInterface {
    public WPSectionOne updateWPSumAllocationDetails(WPSectionOne wpSectionOne);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonWPDetails getWPSpringDetails(String seasonId);
+   public SeasonWPDetails getWPSpringDetails(String seasonProgramId);
 
    /**
     * @param seasonWPDetails
@@ -581,10 +581,10 @@ public interface SeasonServiceInterface {
    public SeasonWPDetails updateWPSpringDetails(SeasonWPDetails seasonWPDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPBasicDetail getWPSpringBaseDetails(String seasonId);
+   public WPBasicDetail getWPSpringBaseDetails(String seasonProgramId);
 
    /**
     * @param wpBasicDetail
@@ -593,10 +593,10 @@ public interface SeasonServiceInterface {
    public WPBasicDetail updateWPSpringBaseDetails(WPBasicDetail wpBasicDetail);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPSpringSectionOneDetails(String seasonId);
+   public WPSectionOne getWPSpringSectionOneDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
@@ -605,10 +605,10 @@ public interface SeasonServiceInterface {
    public WPSectionOne updateWPSpringSectionOneDetails(WPSectionOne wpSectionOne);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPSpringAllocationDetails(String seasonId);
+   public WPSectionOne getWPSpringAllocationDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
@@ -617,16 +617,16 @@ public interface SeasonServiceInterface {
    public WPSectionOne updateWPSpringAllocationDetails(WPSectionOne wpSectionOne);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonWPDetails getWPWinterDetails(String seasonId);
+   public SeasonWPDetails getWPWinterDetails(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public SeasonWPDetails editWPWinterDetails(String seasonId);
+   public SeasonWPDetails editWPWinterDetails(String seasonProgramId);
 
    /**
     * @param seasonWPDetails
@@ -635,16 +635,16 @@ public interface SeasonServiceInterface {
    public SeasonWPDetails updateWPWinterDetails(SeasonWPDetails seasonWPDetails);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPBasicDetail getWPWinterBaseDetails(String seasonId);
+   public WPBasicDetail getWPWinterBaseDetails(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPBasicDetail editWPWinterBaseDetails(String seasonId);
+   public WPBasicDetail editWPWinterBaseDetails(String seasonProgramId);
 
    /**
     * @param wpBasicDetail
@@ -653,16 +653,16 @@ public interface SeasonServiceInterface {
    public WPBasicDetail updateWPWinterBaseDetails(WPBasicDetail wpBasicDetail);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPWinterSectionOneDetails(String seasonId);
+   public WPSectionOne getWPWinterSectionOneDetails(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne editWPWinterSectionOneDetails(String seasonId);
+   public WPSectionOne editWPWinterSectionOneDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
@@ -671,16 +671,16 @@ public interface SeasonServiceInterface {
    public WPSectionOne updateWPWinterSectionOneDetails(WPSectionOne wpSectionOne);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPWinterAllocationDetails(String seasonId);
+   public WPSectionOne getWPWinterAllocationDetails(String seasonProgramId);
 
    /**
-    * @param seasonId
+    * @param seasonProgramId
     * @return
     */
-   public WPSectionOne editWPWinterAllocationDetails(String seasonId);
+   public WPSectionOne editWPWinterAllocationDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne

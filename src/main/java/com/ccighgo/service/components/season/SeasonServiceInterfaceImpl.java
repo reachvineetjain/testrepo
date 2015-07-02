@@ -238,77 +238,92 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             List<SeasonProgram> seasonProgramsList = new ArrayList<SeasonProgram>();
             seasonPrograms = new SeasonPrograms();
             LookupDepartment dept = season.getLookupDepartment();
+            if(dept!=null){
+               if(dept.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)){
+                  if(season.getSeasonJ1details()!=null && season.getSeasonJ1details().size()>0){
+                     SeasonProgram sprg = new SeasonProgram();
+                     sprg.setSeasonProgramId(season.getSeasonJ1details().get(0).getSeasonJ1DetailsId());
+                     sprg.setProgramName(season.getSeasonJ1details().get(0).getProgramName());
+                     sprg.setUrl(CCIConstants.HSP_J1_URL);
+                     seasonProgramsList.add(sprg);
+                  }
+                  if(season.getSeasonF1details()!=null && season.getSeasonF1details().size()>0){
+                     SeasonProgram sprg = new SeasonProgram();
+                     sprg.setSeasonProgramId(season.getSeasonF1details().get(0).getSeasonF1DetailsId());
+                     sprg.setProgramName(season.getSeasonF1details().get(0).getProgramName());
+                     sprg.setUrl(CCIConstants.HSP_F1_URL);
+                     seasonProgramsList.add(sprg);
+                  }
+                  //TODO implement when STP tables are availble
+               }
+               if(dept.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)){
+                  
+               }
+            }
+            
+            
+            
             List<DepartmentProgram> departmentPrograms = dept.getDepartmentPrograms();
             for (DepartmentProgram dPrg : departmentPrograms) {
                SeasonProgram sprg = new SeasonProgram();
-               // crapy code but no better option
-               if (dPrg.getProgramName().equals(CCIConstants.HSP_J1_HS)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
-                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
-                  sprg.setUrl(CCIConstants.HSP_J1_URL);
-               }
-               if (dPrg.getProgramName().equals(CCIConstants.HSP_F1)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
-                  sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
-                  sprg.setUrl(CCIConstants.HSP_F1_URL);
-               }
+              
                if (dPrg.getProgramName().equals(CCIConstants.HSP_STP_IHP)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(null);
                }
                if (dPrg.getProgramName().equals(CCIConstants.HSP_STP_GHP)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(null);
                }
                if (dPrg.getProgramName().equals(CCIConstants.HSP_STP_SSE)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(null);
                }
                if (dPrg.getProgramName().equals(CCIConstants.WP_WT_SUMMER)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.WP_SUMM_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.WP_WT_WINTER)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.WP_WINT_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.WP_WT_SPRING)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.WP_SPRING_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.WP_WT_CAP)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.WP_CAP_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.GHT_HS_ABRD)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.GHT_HSA_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.GHT_LANG_SCL)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.GHT_LS_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.GHT_TEACH_ABRD)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.GHT_TA_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.GHT_VOL_ABRD)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.GHT_VA_URL);
                }
                if (dPrg.getProgramName().equals(CCIConstants.GHT_WRK_ABRD)) {
-                  sprg.setSeasonId(Integer.valueOf(seasonId));
+                  sprg.setSeasonProgramId(Integer.valueOf(seasonId));
                   sprg.setProgramName(season.getSeasonName() + CCIConstants.HYPHEN_SPACE + dPrg.getProgramName());
                   sprg.setUrl(CCIConstants.GHT_WA_URL);
                }
@@ -335,10 +350,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional(readOnly = true)
-   public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonId) {
+   public SeasonHspJ1HSDetails getHSPJ1HSSeasonDetails(String seasonProgramId) {
       SeasonHspJ1HSDetails seasonHspJ1HSDetails = null;
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonJ1Detail != null) {
             seasonHspJ1HSDetails = new SeasonHspJ1HSDetails();
             seasonHspJ1HSDetails.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
@@ -356,10 +371,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional(readOnly = true)
-   public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonId) {
+   public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonProgramId) {
       J1HSBasicDetail j1hsBasicDetail = null;
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonJ1Detail != null) {
             j1hsBasicDetail = seasonServiceImplUtil.getJ1HSBasicDetail(seasonJ1Detail);
          }
@@ -370,10 +385,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional(readOnly = true)
-   public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonId) {
+   public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonProgramId) {
       J1HSJanStart j1hsJanStart = null;
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonJ1Detail != null) {
             j1hsJanStart = seasonServiceImplUtil.getJ1HSJanStart(seasonJ1Detail);
          }
@@ -384,10 +399,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional(readOnly = true)
-   public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonId) {
+   public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonProgramId) {
       J1HSAugStart j1hsAugStart = null;
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonJ1Detail != null) {
             j1hsAugStart = seasonServiceImplUtil.getJ1HSAugStart(seasonJ1Detail);
          }
@@ -398,10 +413,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional(readOnly = true)
-   public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonId) {
+   public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonProgramId) {
       J1HSFieldSettings j1hsFieldSettings = null;
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonJ1Detail != null) {
             j1hsFieldSettings = seasonServiceImplUtil.getJ1HSFieldSettings(seasonJ1Detail);
          }
@@ -412,11 +427,11 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional(readOnly = true)
-   public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonId) {
+   public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonProgramId) {
       J1HSProgramAllocations j1hsProgramAllocations = null;
 
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonJ1Detail != null) {
             j1hsProgramAllocations = new J1HSProgramAllocations();
             // TODO iterate allocations once the accurate values are
@@ -436,7 +451,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(seasonHspJ1HSDetails.getSeasonId()));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonHspJ1HSDetails.getSeasonProgramId()));
          if (seasonJ1Detail != null) {
             if (seasonHspJ1HSDetails.getJ1HsBasicDetail() != null) {
                seasonServiceImplUtil.updateJ1BasicDetails(seasonHspJ1HSDetails.getJ1HsBasicDetail(), seasonJ1Detail);
@@ -467,7 +482,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(j1hsBasicDetail.getSeasonId()));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsBasicDetail.getSeasonProgramId()));
          if (seasonJ1Detail != null) {
             seasonServiceImplUtil.updateJ1BasicDetails(j1hsBasicDetail, seasonJ1Detail);
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
@@ -487,7 +502,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          // throw exception
       }
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(j1hsJanStart.getSeasonId()));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsJanStart.getSeasonProgramId()));
          if (seasonJ1Detail != null) {
             seasonServiceImplUtil.updateJ1JanStartDetails(j1hsJanStart, seasonJ1Detail);
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
@@ -507,7 +522,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          // throw exception
       }
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(j1hsAugStart.getSeasonId()));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsAugStart.getSeasonProgramId()));
          if (seasonJ1Detail != null) {
             seasonServiceImplUtil.updateJ1AugStartDetails(j1hsAugStart, seasonJ1Detail);
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
@@ -527,7 +542,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          // throw exception
       }
       try {
-         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(Integer.valueOf(j1hsFieldSettings.getSeasonId()));
+         SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsFieldSettings.getSeasonProgramId()));
          if (seasonJ1Detail != null) {
             seasonServiceImplUtil.updateJ1FSSettings(j1hsFieldSettings, seasonJ1Detail);
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
@@ -545,99 +560,99 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public HSPF1ProgramAllocations getHSPF1ProgramAllocations(String seasonId) {
+   public HSPF1ProgramAllocations getHSPF1ProgramAllocations(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1ProgramAllocations(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1ProgramAllocations(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public HSPF1FieldSettings getHSPF1FieldSettings(String seasonId) {
+   public HSPF1FieldSettings getHSPF1FieldSettings(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public HSPF1AugustStart1StSemesterDetails getHSPF1AugustStart1StSemesterDetails(String seasonId) {
+   public HSPF1AugustStart1StSemesterDetails getHSPF1AugustStart1StSemesterDetails(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1AugustStart1StSemesterDetails(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1AugustStart1StSemesterDetails(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public HSPF1AugustStartFullYearDetails getHSPF1AugustStartFullYearDetails(String seasonId) {
+   public HSPF1AugustStartFullYearDetails getHSPF1AugustStartFullYearDetails(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1AugustStartFullYearDetails(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1AugustStartFullYearDetails(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public HSPF1JanuaryStart2NdSemesterDetails getHSPF1JanuaryStart2NdSemesterDetails(String seasonId) {
+   public HSPF1JanuaryStart2NdSemesterDetails getHSPF1JanuaryStart2NdSemesterDetails(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1JanuaryStart2NdSemesterDetails(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1JanuaryStart2NdSemesterDetails(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public HSPF1JanuaryStartFullYearDetail getHSPF1JanuaryStartFullYearDetails(String seasonId) {
+   public HSPF1JanuaryStartFullYearDetail getHSPF1JanuaryStartFullYearDetails(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1JanuaryStartFullYearDetails(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1JanuaryStartFullYearDetails(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public HSPF1BasicDetails getHSPF1NameAndStatus(String seasonId) {
+   public HSPF1BasicDetails getHSPF1NameAndStatus(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1NameAndStatus(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1NameAndStatus(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public HSPF1Accounting getHSPF1Accounting(String seasonId) {
+   public HSPF1Accounting getHSPF1Accounting(String seasonProgramId) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         return seasonServiceImplUtil.getHSPF1Accounting(allF1Details, seasonId);
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         return seasonServiceImplUtil.getHSPF1Accounting(allF1Details);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public SeasonHSPF1Details getSeasonHSPF1Details(String seasonId) {
+   public SeasonHSPF1Details getSeasonHSPF1Details(String seasonProgramId) {
       try {
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          SeasonHSPF1Details seasonHSPF1Details = new SeasonHSPF1Details();
-         seasonHSPF1Details.setSeasonId(Integer.valueOf(seasonId));
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(Integer.valueOf(seasonId));
-         seasonHSPF1Details.setDetails(seasonServiceImplUtil.getHSPF1NameAndStatus(allF1Details, seasonId));
-         seasonHSPF1Details.setJanuaryStart2NdSemesterDetails(seasonServiceImplUtil.getHSPF1JanuaryStart2NdSemesterDetails(allF1Details, seasonId));
-         seasonHSPF1Details.setJanuaryStartFullYearDetail(seasonServiceImplUtil.getHSPF1JanuaryStartFullYearDetails(allF1Details, seasonId));
-         seasonHSPF1Details.setAugustStart1StSemesterDetails(seasonServiceImplUtil.getHSPF1AugustStart1StSemesterDetails(allF1Details, seasonId));
-         seasonHSPF1Details.setAugustStartFullYearDetails(seasonServiceImplUtil.getHSPF1AugustStartFullYearDetails(allF1Details, seasonId));
-         seasonHSPF1Details.setAccounting(seasonServiceImplUtil.getHSPF1Accounting(allF1Details, seasonId));
-         seasonHSPF1Details.setFieldSettings(seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details, seasonId));
-         seasonHSPF1Details.setProgramAllocations(seasonServiceImplUtil.getHSPF1ProgramAllocations(allF1Details, seasonId));
+         seasonHSPF1Details.setSeasonId(allF1Details.getSeason().getSeasonId());
+         seasonHSPF1Details.setDetails(seasonServiceImplUtil.getHSPF1NameAndStatus(allF1Details));
+         seasonHSPF1Details.setJanuaryStart2NdSemesterDetails(seasonServiceImplUtil.getHSPF1JanuaryStart2NdSemesterDetails(allF1Details));
+         seasonHSPF1Details.setJanuaryStartFullYearDetail(seasonServiceImplUtil.getHSPF1JanuaryStartFullYearDetails(allF1Details));
+         seasonHSPF1Details.setAugustStart1StSemesterDetails(seasonServiceImplUtil.getHSPF1AugustStart1StSemesterDetails(allF1Details));
+         seasonHSPF1Details.setAugustStartFullYearDetails(seasonServiceImplUtil.getHSPF1AugustStartFullYearDetails(allF1Details));
+         seasonHSPF1Details.setAccounting(seasonServiceImplUtil.getHSPF1Accounting(allF1Details));
+         seasonHSPF1Details.setFieldSettings(seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details));
+         seasonHSPF1Details.setProgramAllocations(seasonServiceImplUtil.getHSPF1ProgramAllocations(allF1Details));
          return seasonHSPF1Details;
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -648,7 +663,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public SeasonHSPF1Details updateF1Details(SeasonHSPF1Details seasonHSPF1Details) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(seasonHSPF1Details.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(seasonHSPF1Details.getSeasonProgramId());
          if (allF1Details != null) {
             SeasonHSPF1Details updatedSeasonHSPF1Details = seasonServiceImplUtil.updateF1Details(allF1Details, seasonHSPF1Details);
             seasonHSPF1Details = seasonServiceImplUtil.updateF1Details(allF1Details, seasonHSPF1Details);
@@ -664,7 +679,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1BasicDetails updateHSPF1NameAndStatus(HSPF1BasicDetails hspf1BasicDetails) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1BasicDetails.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1BasicDetails.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1BasicDetails = seasonServiceImplUtil.updateHSPF1NameAndStatus(allF1Details, hspf1BasicDetails);
          }
@@ -678,7 +693,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1Accounting updateF1Accounting(HSPF1Accounting hspf1Accounting) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1Accounting.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1Accounting.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1Accounting = seasonServiceImplUtil.updateF1Accounting(allF1Details, hspf1Accounting);
          }
@@ -692,7 +707,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1JanuaryStart2NdSemesterDetails updateF1JanStart2NdSemesterDetails(HSPF1JanuaryStart2NdSemesterDetails hspf1JanuaryStart2NdSemesterDetails) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1JanuaryStart2NdSemesterDetails.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1JanuaryStart2NdSemesterDetails.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1JanuaryStart2NdSemesterDetails = seasonServiceImplUtil.updateF1JanStart2NdSemesterDetails(allF1Details, hspf1JanuaryStart2NdSemesterDetails);
          }
@@ -706,7 +721,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1JanuaryStartFullYearDetail updateF1JanStartFullYearDetails(HSPF1JanuaryStartFullYearDetail hspf1JanuaryStartFullYearDetail) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1JanuaryStartFullYearDetail.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1JanuaryStartFullYearDetail.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1JanuaryStartFullYearDetail = seasonServiceImplUtil.updateF1JanStartFullYearDetails(allF1Details, hspf1JanuaryStartFullYearDetail);
          }
@@ -720,7 +735,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1AugustStart1StSemesterDetails.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1AugustStart1StSemesterDetails.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1AugustStart1StSemesterDetails = seasonServiceImplUtil.updateF1AugStart1StSemesterDetails(allF1Details, hspf1AugustStart1StSemesterDetails);
          }
@@ -734,7 +749,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1AugustStartFullYearDetails updateF1AugStartFullYearDetails(HSPF1AugustStartFullYearDetails hspf1AugustStartFullYearDetails) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1AugustStartFullYearDetails.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1AugustStartFullYearDetails.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1AugustStartFullYearDetails = seasonServiceImplUtil.updateF1AugStartFullYearDetails(allF1Details, hspf1AugustStartFullYearDetails);
          }
@@ -748,7 +763,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1FieldSettings updateF1FieldSettings(HSPF1FieldSettings hspf1FieldSettings) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1FieldSettings.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1FieldSettings.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1FieldSettings = seasonServiceImplUtil.updateF1FieldSettings(allF1Details, hspf1FieldSettings);
          }
@@ -762,7 +777,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public HSPF1ProgramAllocations updateF1ProgramAllocation(HSPF1ProgramAllocations hspf1ProgramAllocations) {
       try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.getAllSeasonF1DetailById(hspf1ProgramAllocations.getSeasonId());
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(hspf1ProgramAllocations.getSeasonProgramId());
          if (allF1Details != null) {
             hspf1ProgramAllocations = seasonServiceImplUtil.updateF1ProgramAllocation(allF1Details, hspf1ProgramAllocations);
          }
@@ -775,10 +790,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    // view, edit GHT Volunteer Abroad season details
 
-   public SeasonGHTDetails getGHTVASeasonDetails(String seasonId) {
+   public SeasonGHTDetails getGHTVASeasonDetails(String seasonProgramId) {
       SeasonGHTDetails seasonGHTDetails = null;
       try {
-         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findGHTVADetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonVADetail != null) {
             seasonGHTDetails = new SeasonGHTDetails();
             seasonGHTDetails.setSeasonId(seasonVADetail.getSeason().getSeasonId());
@@ -792,10 +807,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return seasonGHTDetails;
    }
 
-   public GHTSection1Base getGHTVASeasonNameAndStatus(String seasonId) {
+   public GHTSection1Base getGHTVASeasonNameAndStatus(String seasonProgramId) {
       GHTSection1Base ghtSection1Base = null;
       try {
-         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findGHTVADetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonVADetail != null) {
             ghtSection1Base = seasonServiceImplUtil.getVABasicDetail(seasonVADetail);
          }
@@ -805,10 +820,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return ghtSection1Base;
    }
 
-   public GHTSection2Dates getGHTVASeasonDateDetails(String seasonId) {
+   public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
       GHTSection2Dates ghtSection2Dates = null;
       try {
-         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findGHTVADetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonVADetail != null) {
             ghtSection2Dates = seasonServiceImplUtil.getVADates(seasonVADetail);
          }
@@ -827,7 +842,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findGHTVADetailsBySeasonId(Integer.valueOf(seasonGHTDetails.getSeasonId()));
+         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findOne(Integer.valueOf(seasonGHTDetails.getSeasonProgramId()));
          if (seasonVADetail != null) {
             if (seasonGHTDetails.getGhtBaseDetails() != null) {
                seasonServiceImplUtil.updateVABasicDetails(seasonGHTDetails.getGhtBaseDetails(), seasonVADetail);
@@ -851,7 +866,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findGHTVADetailsBySeasonId(Integer.valueOf(ghtSection1Base.getSeasonId()));
+         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findOne(Integer.valueOf(ghtSection1Base.getSeasonProgramId()));
          if (seasonVADetail != null) {
             seasonServiceImplUtil.updateVABasicDetails(ghtSection1Base, seasonVADetail);
             seasonVADetail = seasonVADetailsRepository.saveAndFlush(seasonVADetail);
@@ -870,7 +885,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findGHTVADetailsBySeasonId(Integer.valueOf(ghtSection2Dates.getSeasonId()));
+         SeasonVADetail seasonVADetail = seasonVADetailsRepository.findOne(Integer.valueOf(ghtSection2Dates.getSeasonProgramId()));
          if (seasonVADetail != null) {
             seasonServiceImplUtil.updateVADates(ghtSection2Dates, seasonVADetail);
             seasonVADetail = seasonVADetailsRepository.saveAndFlush(seasonVADetail);
@@ -884,10 +899,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    // view, edit GHT Work Abroad season details
 
-   public SeasonGHTDetails getGHTWASeasonDetails(String seasonId) {
+   public SeasonGHTDetails getGHTWASeasonDetails(String seasonProgramId) {
       SeasonGHTDetails seasonGHTDetails = null;
       try {
-         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findGHTWADetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWADetail != null) {
             seasonGHTDetails = new SeasonGHTDetails();
             seasonGHTDetails.setSeasonId(seasonWADetail.getSeason().getSeasonId());
@@ -901,10 +916,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return seasonGHTDetails;
    }
 
-   public GHTSection1Base getGHTWASeasonNameAndStatus(String seasonId) {
+   public GHTSection1Base getGHTWASeasonNameAndStatus(String seasonProgramId) {
       GHTSection1Base ghtSection1Base = null;
       try {
-         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findGHTWADetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWADetail != null) {
             ghtSection1Base = seasonServiceImplUtil.getWABasicDetail(seasonWADetail);
          }
@@ -914,10 +929,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return ghtSection1Base;
    }
 
-   public GHTSection2Dates getGHTWASeasonDateDetails(String seasonId) {
+   public GHTSection2Dates getGHTWASeasonDateDetails(String seasonProgramId) {
       GHTSection2Dates ghtSection2Dates = null;
       try {
-         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findGHTWADetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWADetail != null) {
             ghtSection2Dates = seasonServiceImplUtil.getWADates(seasonWADetail);
          }
@@ -936,7 +951,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findGHTWADetailsBySeasonId(Integer.valueOf(seasonGHTDetails.getSeasonId()));
+         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findOne(Integer.valueOf(seasonGHTDetails.getSeasonProgramId()));
          if (seasonWADetail != null) {
             if (seasonGHTDetails.getGhtBaseDetails() != null) {
                seasonServiceImplUtil.updateWABasicDetails(seasonGHTDetails.getGhtBaseDetails(), seasonWADetail);
@@ -960,7 +975,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findGHTWADetailsBySeasonId(Integer.valueOf(ghtSection1Base.getSeasonId()));
+         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findOne(Integer.valueOf(ghtSection1Base.getSeasonProgramId()));
          if (seasonWADetail != null) {
             seasonServiceImplUtil.updateWABasicDetails(ghtSection1Base, seasonWADetail);
             seasonWADetail = seasonWADetailsRepository.saveAndFlush(seasonWADetail);
@@ -979,7 +994,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findGHTWADetailsBySeasonId(Integer.valueOf(ghtSection2Dates.getSeasonId()));
+         SeasonWADetail seasonWADetail = seasonWADetailsRepository.findOne(Integer.valueOf(ghtSection2Dates.getSeasonProgramId()));
          if (seasonWADetail != null) {
             seasonServiceImplUtil.updateWADates(ghtSection2Dates, seasonWADetail);
             seasonWADetail = seasonWADetailsRepository.saveAndFlush(seasonWADetail);
@@ -991,9 +1006,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   public SeasonGHTDetails getGHTHSAbroad(String seasonId) {
+   public SeasonGHTDetails getGHTHSAbroad(String seasonProgramId) {
       try {
-         SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findGHTHSBySeasonId(Integer.parseInt(seasonId));
+         SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonHSADetail == null) {
             return null;
          }
@@ -1014,9 +1029,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public SeasonGHTDetails getGHTLanguageSchool(String seasonId) {
+   public SeasonGHTDetails getGHTLanguageSchool(String seasonProgramId) {
       try {
-         SeasonLSDetail seasonLSDetail = seasonLSDetailsRepository.findGHTLSBySeasonId(Integer.parseInt(seasonId));
+         SeasonLSDetail seasonLSDetail = seasonLSDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonLSDetail == null) {
             return null;
          }
@@ -1037,9 +1052,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public SeasonGHTDetails getGHTTeachAbroad(String seasonId) {
+   public SeasonGHTDetails getGHTTeachAbroad(String seasonProgramId) {
       try {
-         SeasonTADetail seasonTADetail = seasonTADetailsRepository.findGHTTABySeasonId(Integer.parseInt(seasonId));
+         SeasonTADetail seasonTADetail = seasonTADetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonTADetail == null) {
             return null;
          }
@@ -1060,9 +1075,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public GHTSection1Base getGHTHSSection1BaseAbroad(String seasonId) {
+   public GHTSection1Base getGHTHSSection1BaseAbroad(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getGHTHSSection1BaseAbroad(seasonId);
+         return seasonServiceImplUtil.getGHTHSSection1BaseAbroad(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1079,9 +1094,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonId) {
+   public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getGHTHSSection2DatesAbroad(seasonId);
+         return seasonServiceImplUtil.getGHTHSSection2DatesAbroad(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1098,9 +1113,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public GHTSection1Base getGHTLanguageSchoolSection1(String seasonId) {
+   public GHTSection1Base getGHTLanguageSchoolSection1(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getGHTLanguageSchoolSection1(seasonId);
+         return seasonServiceImplUtil.getGHTLanguageSchoolSection1(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1117,9 +1132,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonId) {
+   public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getGHTLanguageSchoolSection2Dates(seasonId);
+         return seasonServiceImplUtil.getGHTLanguageSchoolSection2Dates(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1136,9 +1151,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public GHTSection1Base getGHTTeachAbroadSection1(String seasonId) {
+   public GHTSection1Base getGHTTeachAbroadSection1(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getGHTTeachAbroadSection1(seasonId);
+         return seasonServiceImplUtil.getGHTTeachAbroadSection1(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1155,9 +1170,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonId) {
+   public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getGHTTeachAbroadSection2Dates(seasonId);
+         return seasonServiceImplUtil.getGHTTeachAbroadSection2Dates(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1174,9 +1189,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public SeasonWPCAPDetails getWPCAPDetails(String seasonId) {
+   public SeasonWPCAPDetails getWPCAPDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPCAPDetails(seasonId);
+         return seasonServiceImplUtil.getWPCAPDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1193,9 +1208,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public WPCAPBasicDetails getWPCAPBasicDetails(String seasonId) {
+   public WPCAPBasicDetails getWPCAPBasicDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPCAPBasicDetails(seasonId);
+         return seasonServiceImplUtil.getWPCAPBasicDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1212,9 +1227,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public WPCAPInternshipDetails getWPCAPInternshipDetails(String seasonId) {
+   public WPCAPInternshipDetails getWPCAPInternshipDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPCAPInternshipDetails(seasonId);
+         return seasonServiceImplUtil.getWPCAPInternshipDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1231,9 +1246,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public WPCAPTraineeDetails getWPCAPTraineeDetails(String seasonId) {
+   public WPCAPTraineeDetails getWPCAPTraineeDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPCAPTraineeDetails(seasonId);
+         return seasonServiceImplUtil.getWPCAPTraineeDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1252,10 +1267,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    // Work Programs: Work and Travel summer season service implementations
 
-   public SeasonWPDetails getWPSumDetails(String seasonId) {
+   public SeasonWPDetails getWPSumDetails(String seasonProgramId) {
       SeasonWPDetails seasonWPDetails = null;
       try {
-         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSummerDetail != null) {
             seasonWPDetails = new SeasonWPDetails();
             seasonWPDetails.setSeasonId(seasonWnTSummerDetail.getSeason().getSeasonId());
@@ -1276,7 +1291,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonWPDetails.getSeasonId()));
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonWPDetails.getSeasonProgramId()));
          if (seasonWnTSummerDetail != null) {
             if (seasonWPDetails.getWpBasicDetail() != null) {
                seasonServiceImplUtil.updateWPSummerBaseDetails(seasonWPDetails.getWpBasicDetail(), seasonWnTSummerDetail);
@@ -1293,10 +1308,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   public WPBasicDetail getWPSumBaseDetails(String seasonId) {
+   public WPBasicDetail getWPSumBaseDetails(String seasonProgramId) {
       WPBasicDetail wpBasicDetail = null;
       try {
-         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSummerDetail != null) {
             wpBasicDetail = seasonServiceImplUtil.getWPSummerBaseDetails(seasonWnTSummerDetail);
          }
@@ -1313,7 +1328,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(wpBasicDetail.getSeasonId()));
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(wpBasicDetail.getSeasonProgramId()));
          if (seasonWnTSummerDetail != null) {
             seasonServiceImplUtil.updateWPSummerBaseDetails(wpBasicDetail, seasonWnTSummerDetail);
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
@@ -1325,10 +1340,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   public WPSectionOne getWPSumSectionOneDetails(String seasonId) {
+   public WPSectionOne getWPSumSectionOneDetails(String seasonProgramId) {
       WPSectionOne wpSectionOne = null;
       try {
-         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSummerDetail != null) {
             wpSectionOne = seasonServiceImplUtil.getWPSummerSection1Details(seasonWnTSummerDetail);
          }
@@ -1341,11 +1356,11 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne) {
       WPSectionOne returnObject = null;
-      if (wpSectionOne == null || wpSectionOne.getSeasonId() == 0) {
+      if (wpSectionOne == null || wpSectionOne.getSeasonProgramId() == 0) {
          return returnObject;
       }
       try {
-         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findWASummerDetailsBySeasonId(Integer.valueOf(wpSectionOne.getSeasonId()));
+         SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(wpSectionOne.getSeasonProgramId()));
          if (seasonWnTSummerDetail != null) {
             seasonServiceImplUtil.updateWPSummerSection1Details(wpSectionOne, seasonWnTSummerDetail);
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
@@ -1357,7 +1372,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   public WPSectionOne getWPSumAllocationDetails(String seasonId) {
+   public WPSectionOne getWPSumAllocationDetails(String seasonProgramId) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -1369,10 +1384,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    // Work Programs: Work and Travel Spring season service implementations
 
-   public SeasonWPDetails getWPSpringDetails(String seasonId) {
+   public SeasonWPDetails getWPSpringDetails(String seasonProgramId) {
       SeasonWPDetails seasonWPDetails = null;
       try {
-         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSpringDetail != null) {
             seasonWPDetails = new SeasonWPDetails();
             seasonWPDetails.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
@@ -1393,7 +1408,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonWPDetails.getSeasonId()));
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(seasonWPDetails.getSeasonProgramId()));
          if (seasonWnTSpringDetail != null) {
             if (seasonWPDetails.getWpBasicDetail() != null) {
                seasonServiceImplUtil.updateWPSpringBaseDetails(seasonWPDetails.getWpBasicDetail(), seasonWnTSpringDetail);
@@ -1410,10 +1425,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   public WPBasicDetail getWPSpringBaseDetails(String seasonId) {
+   public WPBasicDetail getWPSpringBaseDetails(String seasonProgramId) {
       WPBasicDetail wpBasicDetail = null;
       try {
-         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSpringDetail != null) {
             wpBasicDetail = seasonServiceImplUtil.getWPSpringBaseDetails(seasonWnTSpringDetail);
          }
@@ -1430,7 +1445,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          return returnObject;
       }
       try {
-         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(wpBasicDetail.getSeasonId()));
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(wpBasicDetail.getSeasonProgramId()));
          if (seasonWnTSpringDetail != null) {
             seasonServiceImplUtil.updateWPSpringBaseDetails(wpBasicDetail, seasonWnTSpringDetail);
             seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
@@ -1442,10 +1457,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   public WPSectionOne getWPSpringSectionOneDetails(String seasonId) {
+   public WPSectionOne getWPSpringSectionOneDetails(String seasonProgramId) {
       WPSectionOne wpSectionOne = null;
       try {
-         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(seasonId));
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSpringDetail != null) {
             wpSectionOne = seasonServiceImplUtil.getWPSpringSection1Details(seasonWnTSpringDetail);
          }
@@ -1458,11 +1473,11 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public WPSectionOne updateWPSpringSectionOneDetails(WPSectionOne wpSectionOne) {
       WPSectionOne returnObject = null;
-      if (wpSectionOne == null || wpSectionOne.getSeasonId() == 0) {
+      if (wpSectionOne == null || wpSectionOne.getSeasonProgramId() == 0) {
          return returnObject;
       }
       try {
-         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findWASpringDetailsBySeasonId(Integer.valueOf(wpSectionOne.getSeasonId()));
+         SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(wpSectionOne.getSeasonProgramId()));
          if (seasonWnTSpringDetail != null) {
             seasonServiceImplUtil.updateWPSpringSection1Details(wpSectionOne, seasonWnTSpringDetail);
             seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
@@ -1474,7 +1489,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   public WPSectionOne getWPSpringAllocationDetails(String seasonId) {
+   public WPSectionOne getWPSpringAllocationDetails(String seasonProgramId) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -1485,18 +1500,18 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public SeasonWPDetails getWPWinterDetails(String seasonId) {
+   public SeasonWPDetails getWPWinterDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public SeasonWPDetails editWPWinterDetails(String seasonId) {
+   public SeasonWPDetails editWPWinterDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1513,18 +1528,18 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public WPBasicDetail getWPWinterBaseDetails(String seasonId) {
+   public WPBasicDetail getWPWinterBaseDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterBaseDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterBaseDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public WPBasicDetail editWPWinterBaseDetails(String seasonId) {
+   public WPBasicDetail editWPWinterBaseDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterBaseDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterBaseDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1541,18 +1556,18 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public WPSectionOne getWPWinterSectionOneDetails(String seasonId) {
+   public WPSectionOne getWPWinterSectionOneDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterSectionOneDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterSectionOneDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public WPSectionOne editWPWinterSectionOneDetails(String seasonId) {
+   public WPSectionOne editWPWinterSectionOneDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterSectionOneDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterSectionOneDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -1569,18 +1584,18 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return null;
    }
 
-   public WPSectionOne getWPWinterAllocationDetails(String seasonId) {
+   public WPSectionOne getWPWinterAllocationDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterAllocationDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterAllocationDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
    }
 
-   public WPSectionOne editWPWinterAllocationDetails(String seasonId) {
+   public WPSectionOne editWPWinterAllocationDetails(String seasonProgramId) {
       try {
-         return seasonServiceImplUtil.getWPWinterAllocationDetails(seasonId);
+         return seasonServiceImplUtil.getWPWinterAllocationDetails(seasonProgramId);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }

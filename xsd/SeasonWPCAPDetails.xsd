@@ -1,80 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/seasonwpcapdetails"
-	elementFormDefault="unqualified" attributeFormDefault="unqualified"
-	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasonwpcapdetails="http://www.ccighgo.com/seasonwpcapdetails">
-	<xsd:annotation>
-		<xsd:appinfo>
-			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails" />
-			</jaxb:schemaBindings>
-		</xsd:appinfo>
-		<xsd:documentation></xsd:documentation>
-	</xsd:annotation>
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasonwpcapdetails" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasonwpcapdetails="http://www.ccighgo.com/seasonwpcapdetails">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
 
-	<xsd:element name="SeasonWPCAPDetails" type="seasonwpcapdetails:SeasonWPCAPDetails"></xsd:element>
-	
-	<xsd:complexType name="SeasonWPCAPDetails">
-		<xsd:sequence>
-		 <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-		 <xsd:element name="details" type="seasonwpcapdetails:WPCAPBasicDetails" minOccurs="0" maxOccurs="1"></xsd:element> 
-		 <xsd:element name="internshipDetails" type="seasonwpcapdetails:WPCAPInternshipDetails" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="traineeDetails" type="seasonwpcapdetails:WPCAPTraineeDetails" minOccurs="0" maxOccurs="1"></xsd:element>
-		 
-		 <xsd:element name="generalSettings" type="seasonwpcapdetails:WPCAPGeneralSettings" minOccurs="0" maxOccurs="1" />
-		 <xsd:element name="programAllocations" type="seasonwpcapdetails:WPCAPProgramAllocations" minOccurs="0" maxOccurs="1" />
-		</xsd:sequence>
-	</xsd:complexType>
-  
-     <xsd:complexType name="WPCAPBasicDetails">
-        <xsd:sequence>
-        	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="programStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
-    
-     <xsd:complexType name="WPCAPInternshipDetails">
-        <xsd:sequence>
-        	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
-    
-    
-    <xsd:complexType name="WPCAPTraineeDetails">
-        <xsd:sequence>
-        	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
+   <xsd:element name="SeasonWPCAPDetails" type="seasonwpcapdetails:SeasonWPCAPDetails"></xsd:element>
 
-    <xsd:complexType name="WPCAPGeneralSettings">
-        <xsd:sequence>
-        	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />	
-        </xsd:sequence>
-    </xsd:complexType>
-    
-     <xsd:complexType name="WPCAPProgramAllocations">
-        <xsd:sequence>
-        	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="programAllocationDetails" type="seasonwpcapdetails:WPCAPProgramAllocationDetails" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-    </xsd:complexType>
-    
-    <xsd:complexType name="WPCAPProgramAllocationDetails">
-        <xsd:sequence>
-            <xsd:element name="typeOrTotal" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="maximumParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="expectedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="acceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="pendingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="cciReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="remainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
+   <xsd:complexType name="SeasonWPCAPDetails">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="details" type="seasonwpcapdetails:WPCAPBasicDetails" minOccurs="0" maxOccurs="1"></xsd:element>
+         <xsd:element name="internshipDetails" type="seasonwpcapdetails:WPCAPInternshipDetails" minOccurs="0" maxOccurs="1"></xsd:element>
+         <xsd:element name="traineeDetails" type="seasonwpcapdetails:WPCAPTraineeDetails" minOccurs="0" maxOccurs="1"></xsd:element>
+         <xsd:element name="generalSettings" type="seasonwpcapdetails:WPCAPGeneralSettings" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="programAllocations" type="seasonwpcapdetails:WPCAPProgramAllocations" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="WPCAPBasicDetails">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="WPCAPInternshipDetails">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+
+   <xsd:complexType name="WPCAPTraineeDetails">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="WPCAPGeneralSettings">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="WPCAPProgramAllocations">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programAllocationDetails" type="seasonwpcapdetails:WPCAPProgramAllocationDetails" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="WPCAPProgramAllocationDetails">
+      <xsd:sequence>
+         <xsd:element name="typeOrTotal" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="maximumParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="expectedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="acceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="pendingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="cciReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="remainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
 </xsd:schema>
