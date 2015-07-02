@@ -23,6 +23,7 @@ import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
+import com.ccighgo.db.entities.SeasonProgramNote;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.db.entities.SeasonTADetail;
 import com.ccighgo.db.entities.SeasonVADetail;
@@ -38,6 +39,7 @@ import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonProgramNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonTADetailsRepository;
@@ -51,6 +53,7 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugSt
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
+import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSNotes;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
@@ -86,6 +89,8 @@ import com.ccighgo.utils.ValidationUtils;
 @Component
 public class SeasonServiceImplUtil {
 
+   private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
+
    @Autowired
    SeasonStatusRepository seasonStatusRepository;
    @Autowired
@@ -114,8 +119,8 @@ public class SeasonServiceImplUtil {
    SeasonWTWinterRepository seasonWinterRepository;
    @Autowired
    SeasonDepartmentNotesRepository seasonDepartmentNotesRepository;
-
-   private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
+   @Autowired
+   SeasonProgramNotesRepository seasonProgramNotesRepository;
 
    /**
     * @param seasonBean
@@ -1684,9 +1689,32 @@ public class SeasonServiceImplUtil {
          currentNote.setDepartmentNote(notes.getNoteValue());
          currentNote.setSeason(seasonEntity);
          seasonDepartmentNotesRepository.saveAndFlush(currentNote);
-
       }
+   }
 
+   /**
+    * gets list of notes for J1 program
+    * 
+    * @param seasonId
+    * @param seasonProgramId
+    * @return
+    */
+   public List<J1HSNotes> getJ1Notes(Integer seasonId, Integer seasonProgramId) {
+      List<J1HSNotes> j1hsNotes = null;
+      List<SeasonProgramNote> j1hsProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+      if (j1hsProgramNotes != null) {
+         j1hsNotes = new ArrayList<J1HSNotes>();
+         for (SeasonProgramNote prgNote : j1hsProgramNotes) {
+            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
+               J1HSNotes note = new J1HSNotes();
+               note.setSeasonId(prgNote.getSeason().getSeasonId());
+               note.setSeasonProgramId(seasonProgramId);
+               note.setNote(prgNote.getProgramNote());
+               j1hsNotes.add(note);
+            }
+         }
+      }
+      return j1hsNotes;
    }
 
 }
