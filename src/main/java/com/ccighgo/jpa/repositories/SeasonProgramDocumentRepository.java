@@ -18,7 +18,7 @@ import com.ccighgo.db.entities.SeasonProgramDocument;
 @Repository
 public interface SeasonProgramDocumentRepository extends JpaRepository<SeasonProgramDocument, Integer> {
 
-   @Query("select s from SeasonProgramDocument s  where s.season.seasonId = ?1 ")
+   @Query("SELECT s FROM SeasonProgramDocument s  WHERE s.season.seasonId = ?1 ")
    List<SeasonProgramDocument> findAllProgramDocsBySeasonId(Integer seasonId);
 
    @Query("select s from SeasonProgramDocument s  where s.season.seasonId = ?1  and s.departmentProgram.departmentProgramId= ?2 ")
