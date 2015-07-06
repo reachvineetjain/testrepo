@@ -33,6 +33,7 @@ import com.ccighgo.db.entities.SeasonWADetail;
 import com.ccighgo.db.entities.SeasonWnTSpringDetail;
 import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
+import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentDocumentRepository;
@@ -132,6 +133,8 @@ public class SeasonServiceImplUtil {
    SeasonProgramDocumentRepository seasonProgramDocumentRepository;
    @Autowired
    SeasonDepartmentDocumentRepository seasonDepartmentDocumentRepository;
+   @Autowired
+   DepartmentProgramRepository departmentProgramRepository;
 
    /**
     * @param seasonBean
@@ -183,6 +186,18 @@ public class SeasonServiceImplUtil {
             seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
             seasonDepartmentNotes.setSeasonDepartmenNotetId(note.getSeasonDepartmentNotesId());
             seasonBean.getNotes().add(seasonDepartmentNotes);
+         }
+      }
+
+      if (seasonEntity.getSeasonDepartmentDocuments() != null && !seasonEntity.getSeasonDepartmentDocuments().isEmpty()) {
+         for (SeasonDepartmentDocument departmentDocument : seasonEntity.getSeasonDepartmentDocuments()) {
+            SeasonDocument document = new SeasonDocument();
+            document.setSeasonId(departmentDocument.getSeason().getSeasonId());
+            if (seasonEntity.getLookupDepartment() != null)
+               document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
+            document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+            document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+            seasonBean.getDocuments().add(document);
          }
       }
    }
@@ -1754,13 +1769,13 @@ public class SeasonServiceImplUtil {
       }
       return j1hsDocuments;
    }
-   
+
    /**
     * @param seasonId
     * @param seasonProgramId
     * @return
     */
-   public List<GHTSection3Notes> getGHTHSAProgramNotes(Integer seasonId, Integer seasonProgramId){
+   public List<GHTSection3Notes> getGHTHSAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       List<GHTSection3Notes> ghtNotes = null;
       List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
       if (ghtProgramNotes != null) {
@@ -1773,13 +1788,13 @@ public class SeasonServiceImplUtil {
       }
       return ghtNotes;
    }
-   
+
    /**
     * @param seasonId
     * @param seasonProgramId
     * @return
     */
-   public List<GHTSection3Notes> getGHTLSProgramNotes(Integer seasonId, Integer seasonProgramId){
+   public List<GHTSection3Notes> getGHTLSProgramNotes(Integer seasonId, Integer seasonProgramId) {
       List<GHTSection3Notes> ghtNotes = null;
       List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
       if (ghtProgramNotes != null) {
@@ -1792,13 +1807,13 @@ public class SeasonServiceImplUtil {
       }
       return ghtNotes;
    }
-   
+
    /**
     * @param seasonId
     * @param seasonProgramId
     * @return
     */
-   public List<GHTSection3Notes> getGHTTAProgramNotes(Integer seasonId, Integer seasonProgramId){
+   public List<GHTSection3Notes> getGHTTAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       List<GHTSection3Notes> ghtNotes = null;
       List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
       if (ghtProgramNotes != null) {
@@ -1811,13 +1826,13 @@ public class SeasonServiceImplUtil {
       }
       return ghtNotes;
    }
-   
+
    /**
     * @param seasonId
     * @param seasonProgramId
     * @return
     */
-   public List<GHTSection3Notes> getGHTVAProgramNotes(Integer seasonId, Integer seasonProgramId){
+   public List<GHTSection3Notes> getGHTVAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       List<GHTSection3Notes> ghtNotes = null;
       List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
       if (ghtProgramNotes != null) {
@@ -1830,13 +1845,13 @@ public class SeasonServiceImplUtil {
       }
       return ghtNotes;
    }
-   
+
    /**
     * @param seasonId
     * @param seasonProgramId
     * @return
     */
-   public List<GHTSection3Notes> getGHTWAProgramNotes(Integer seasonId, Integer seasonProgramId){
+   public List<GHTSection3Notes> getGHTWAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       List<GHTSection3Notes> ghtNotes = null;
       List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
       if (ghtProgramNotes != null) {
@@ -1878,6 +1893,62 @@ public class SeasonServiceImplUtil {
          }
       }
       return seasonDocuments;
+   }
+
+   /**
+    * 
+    * @param departmentId
+    * @param seasonBean
+    * @param seasonEntity
+    */
+   public void createSeasonProgramNotes(CommonNotesObject note) {
+      if (note != null && note.getNotes() != null && !note.getNotes().isEmpty()) {
+         Season season = seasonRepository.findOne(note.getSeasonId());
+         DepartmentProgram departmentProgram = departmentProgramRepository.findOne(note.getDepartmentProgramId());
+
+         for (String noteStr : note.getNotes()) {
+            SeasonProgramNote seasonProgramNote = new SeasonProgramNote();
+            seasonProgramNote.setActive((byte) 1);
+            seasonProgramNote.setProgramNote(noteStr);
+            seasonProgramNote.setSeason(season);
+            seasonProgramNote.setDepartmentProgram(departmentProgram);
+            seasonProgramNote.setCreatedBy(1);
+            seasonProgramNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNote.setModifiedBy(1);
+            seasonProgramNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
+         }
+      }
+   }
+
+   /**
+    * 
+    * @param seasonBean
+    * @param seasonEntity
+    */
+   public void updateSeasonProgramNotes(CommonNotesObject note) {
+      if (note != null && note.getNotes() != null && !note.getNotes().isEmpty()) {
+         List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(note.getSeasonId(),
+               note.getDepartmentProgramId());
+         for (SeasonProgramNote seasonProgramNote : seasonProgramNotes) {
+            seasonProgramNotesRepository.delete(seasonProgramNote.getSeasonProgramNotesId());
+         }
+
+         Season season = seasonRepository.findOne(note.getSeasonId());
+         DepartmentProgram departmentProgram = departmentProgramRepository.findOne(note.getDepartmentProgramId());
+         for (String noteStr : note.getNotes()) {
+            SeasonProgramNote seasonProgramNote = new SeasonProgramNote();
+            seasonProgramNote.setActive((byte) 1);
+            seasonProgramNote.setProgramNote(noteStr);
+            seasonProgramNote.setSeason(season);
+            seasonProgramNote.setDepartmentProgram(departmentProgram);
+            seasonProgramNote.setCreatedBy(1);
+            seasonProgramNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNote.setModifiedBy(1);
+            seasonProgramNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
+         }
+      }
    }
 
 }
