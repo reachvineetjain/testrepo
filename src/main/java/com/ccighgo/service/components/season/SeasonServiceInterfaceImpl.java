@@ -31,6 +31,7 @@ import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.CcighgoServiceException;
+import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
@@ -141,8 +142,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonGHTConfigurationRepository seasonGHTConfigurationRepository;
    @Autowired
    SeasonCloningHelper seasonHelper;
-   
-   
 
    SeasonServiceInterfaceImpl() {
    }
@@ -388,7 +387,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             seasonHspJ1HSDetails.setJ1HsAugStart(seasonServiceImplUtil.getJ1HSAugStart(seasonJ1Detail));
             seasonHspJ1HSDetails.setJ1HsFieldSettings(seasonServiceImplUtil.getJ1HSFieldSettings(seasonJ1Detail));
             seasonHspJ1HSDetails.setJ1HsProgramAllocations(null);
-            seasonHspJ1HSDetails.getJ1HsNotes().addAll(seasonServiceImplUtil.getJ1Notes(seasonJ1Detail.getSeason().getSeasonId(),seasonJ1Detail.getSeasonJ1DetailsId()));
+            seasonHspJ1HSDetails.getJ1HsNotes().addAll(seasonServiceImplUtil.getJ1Notes(seasonJ1Detail.getSeason().getSeasonId(), seasonJ1Detail.getSeasonJ1DetailsId()));
             seasonHspJ1HSDetails.getJ1HsDocuments().addAll(seasonServiceImplUtil.getJ1Docs(seasonJ1Detail.getSeason().getSeasonId(), seasonJ1Detail.getSeasonJ1DetailsId()));
          }
       } catch (CcighgoException e) {
@@ -491,6 +490,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             }
             if (seasonHspJ1HSDetails.getJ1HsFieldSettings() != null) {
                seasonServiceImplUtil.updateJ1FSSettings(seasonHspJ1HSDetails.getJ1HsFieldSettings(), seasonJ1Detail);
+            }
+            if (seasonHspJ1HSDetails.getJ1HsNotes() != null) {
+               seasonServiceImplUtil.updateJ1Notes(seasonHspJ1HSDetails, seasonJ1Detail.getSeason());
             }
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
             returnObject = seasonHspJ1HSDetails;
@@ -879,6 +881,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             if (seasonGHTDetails.getGhtDates() != null) {
                seasonServiceImplUtil.updateVADates(seasonGHTDetails.getGhtDates(), seasonVADetail);
             }
+            if(seasonGHTDetails.getGhtNotes()!=null){
+               seasonServiceImplUtil.updateGHTNotes(seasonGHTDetails, seasonVADetail.getSeason(), CCIConstants.GHT_VOL_ABRD_ID);
+            }
             seasonVADetail = seasonVADetailsRepository.saveAndFlush(seasonVADetail);
             returnObject = seasonGHTDetails;
          }
@@ -988,6 +993,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             }
             if (seasonGHTDetails.getGhtDates() != null) {
                seasonServiceImplUtil.updateWADates(seasonGHTDetails.getGhtDates(), seasonWADetail);
+            }
+            if(seasonGHTDetails.getGhtNotes()!=null){
+               seasonServiceImplUtil.updateGHTNotes(seasonGHTDetails, seasonWADetail.getSeason(), CCIConstants.GHT_WRK_ABRD_ID);
             }
             seasonWADetail = seasonWADetailsRepository.saveAndFlush(seasonWADetail);
             returnObject = seasonGHTDetails;
@@ -1307,7 +1315,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             seasonWPDetails.setSeasonProgramId(seasonWnTSummerDetail.getSeasonWnTSummerDetailsId());
             seasonWPDetails.setWpBasicDetail(seasonServiceImplUtil.getWPSummerBaseDetails(seasonWnTSummerDetail));
             seasonWPDetails.setWpSectionOne(seasonServiceImplUtil.getWPSummerSection1Details(seasonWnTSummerDetail));
-            // TODO add notes
+            seasonWPDetails.getWpNotes().addAll(
+                  seasonServiceImplUtil.getWPSummerNotes(seasonWnTSummerDetail.getSeason().getSeasonId(), seasonWnTSummerDetail.getSeasonWnTSummerDetailsId()));
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -1329,6 +1338,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             }
             if (seasonWPDetails.getWpSectionOne() != null) {
                seasonServiceImplUtil.updateWPSummerSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSummerDetail);
+            }
+            if(seasonWPDetails.getWpNotes()!=null){
+               seasonServiceImplUtil.updateWPNotes(seasonWPDetails, seasonWnTSummerDetail.getSeason(), CCIConstants.WP_WT_SUMMER_ID);
             }
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
             returnObject = seasonWPDetails;
@@ -1425,7 +1437,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             seasonWPDetails.setSeasonProgramId(seasonWnTSpringDetail.getSeasonWnTSpringDetailsId());
             seasonWPDetails.setWpBasicDetail(seasonServiceImplUtil.getWPSpringBaseDetails(seasonWnTSpringDetail));
             seasonWPDetails.setWpSectionOne(seasonServiceImplUtil.getWPSpringSection1Details(seasonWnTSpringDetail));
-            // TODO add notes
+            seasonWPDetails.getWpNotes().addAll(
+                  seasonServiceImplUtil.getWPSpringNotes(seasonWnTSpringDetail.getSeason().getSeasonId(), seasonWnTSpringDetail.getSeasonWnTSpringDetailsId()));
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -1447,6 +1460,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             }
             if (seasonWPDetails.getWpSectionOne() != null) {
                seasonServiceImplUtil.updateWPSpringSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSpringDetail);
+            }
+            if(seasonWPDetails.getWpNotes()!=null){
+               seasonServiceImplUtil.updateWPNotes(seasonWPDetails, seasonWnTSpringDetail.getSeason(), CCIConstants.WP_WT_SPRING_ID);
             }
             seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
             returnObject = seasonWPDetails;
