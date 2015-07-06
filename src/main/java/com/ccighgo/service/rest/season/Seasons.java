@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterface;
-import com.ccighgo.service.components.season.SeasonServiceInterfaceImpl;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
@@ -430,7 +429,7 @@ public class Seasons {
    }
 
    @GET
-   @Path("f1/edit/jan/startdetails/{seasonId}")
+   @Path("f1/edit/jan/startdetails/{seasonProgramId}")
    @Produces("application/json")
    public HSPF1JanuaryStart2NdSemesterDetails editF1JanStart2NdSemesterDetails(@PathParam("seasonProgramId") String seasonProgramId) {
       LOGGER.debug("Calling 'fun:editF1JanStart2NdSemesterDetails'");
@@ -1316,7 +1315,7 @@ public class Seasons {
    @Path("clone")
    @Consumes("application/json")
    @Produces("application/json")
-   public CloneSeason cloneSeason(CloneSeason cloneSeason){
+   public CloneSeason cloneSeason(CloneSeason cloneSeason) {
       return seasonServices.cloneSeason(cloneSeason);
    }
 }

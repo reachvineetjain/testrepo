@@ -17,6 +17,7 @@ import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
+import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
@@ -33,6 +34,7 @@ import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonDepartmentNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
@@ -56,12 +58,12 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSDocum
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSNotes;
-import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonProgram;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
+import com.ccighgo.service.transport.seasons.beans.season.SeasonDepartmentNotes;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStart1StSemesterDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStartFullYearDetails;
@@ -120,6 +122,8 @@ public class SeasonServiceImplUtil {
    @Autowired
    SeasonWTWinterRepository seasonWinterRepository;
    @Autowired
+   SeasonDepartmentNotesRepository seasonDepartmentNotesRepository;
+   @Autowired
    SeasonProgramNotesRepository seasonProgramNotesRepository;
    @Autowired
    SeasonProgramDocumentRepository seasonProgramDocumentRepository;
@@ -164,6 +168,16 @@ public class SeasonServiceImplUtil {
                   }
                }
             }
+         }
+      }
+      if (seasonEntity.getSeasonDepartmentNotes() != null && !seasonEntity.getSeasonDepartmentNotes().isEmpty()) {
+         for (SeasonDepartmentNote note : seasonEntity.getSeasonDepartmentNotes()) {
+            SeasonDepartmentNotes seasonDepartmentNotes = new SeasonDepartmentNotes();
+            seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
+            seasonDepartmentNotes.setActive(note.getActive() == 1);
+            seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
+            seasonDepartmentNotes.setSeasonDepartmenNotetId(note.getSeasonDepartmentNotesId());
+            seasonBean.getNotes().add(seasonDepartmentNotes);
          }
       }
    }
@@ -347,6 +361,8 @@ public class SeasonServiceImplUtil {
 
    public void updateSeasonHspConfiguration(SeasonBean seasonBean, Season seasonEntity) {
       SeasonHSPConfiguration seasonHSPConfiguration = seasonHSPConfigurationRepsitory.getSeasonHSPConfigurationBySeasonId(seasonEntity.getSeasonId());
+      if (seasonHSPConfiguration == null)
+         return;
       seasonHSPConfiguration.setSeason(seasonEntity);
       seasonHSPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
       seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
@@ -1654,6 +1670,35 @@ public class SeasonServiceImplUtil {
             .getApplicationDeadlineDate()) : null);
       seasonWnTSpringDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
       seasonWnTSpringDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
+   }
+
+   public void createSeasonDepartmentNotes(SeasonBean seasonBean, Season seasonEntity) {
+      if (seasonBean.getNotes() != null && !seasonBean.getNotes().isEmpty()) {
+         for (SeasonDepartmentNotes note : seasonBean.getNotes()) {
+            SeasonDepartmentNote seasonDepartmentNote = new SeasonDepartmentNote();
+            seasonDepartmentNote.setDepartmentNote(note.getNoteValue());
+            seasonDepartmentNote.setSeason(seasonEntity);
+            seasonDepartmentNote.setActive((byte) (note.isActive() ? 1 : 0));
+            seasonDepartmentNote.setCreatedBy(1);
+            seasonDepartmentNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonDepartmentNote.setModifiedBy(1);
+            seasonDepartmentNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonDepartmentNotesRepository.saveAndFlush(seasonDepartmentNote);
+         }
+      }
+   }
+
+   public void updateSeasonDepartmentNotes(SeasonBean seasonBean, Season seasonEntity) {
+      List<SeasonDepartmentNote> seasonDepartmentNotes = seasonDepartmentNotesRepository.findAllDepartmentNotesBySeasonId(seasonEntity.getSeasonId());
+      if (seasonDepartmentNotes != null && !seasonDepartmentNotes.isEmpty()) {
+         seasonDepartmentNotesRepository.delete(seasonDepartmentNotes);
+      }
+      for (SeasonDepartmentNotes notes : seasonBean.getNotes()) {
+         SeasonDepartmentNote currentNote = new SeasonDepartmentNote();
+         currentNote.setDepartmentNote(notes.getNoteValue());
+         currentNote.setSeason(seasonEntity);
+         seasonDepartmentNotesRepository.saveAndFlush(currentNote);
+      }
    }
 
    /**
