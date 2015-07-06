@@ -21,5 +21,8 @@ public interface SeasonProgramNotesRepository extends JpaRepository<SeasonProgra
    
    @Query("select s from SeasonProgramNote s  where s.season.seasonId = ?1 ")
    List<SeasonProgramNote> findAllProgramNotesBySeasonId(Integer seasonId);
+   
+   @Query("SELECT s FROM SeasonProgramNote s  WHERE s.season.seasonId = ?1 AND s.departmentProgram.departmentProgramId = ?2")
+   List<SeasonProgramNote> findAllProgramNotesBySeasonIdAndDepartmentProgramId(Integer seasonId, Integer deparmentProgramId);
 
 }
