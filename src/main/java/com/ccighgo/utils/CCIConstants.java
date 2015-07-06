@@ -64,6 +64,21 @@ public class CCIConstants {
    public static final String GHT_VOL_ABRD = "Volunteer Abroad";
    public static final String GHT_WRK_ABRD = "Work Abroad";
    
+   public static final Integer HSP_J1_HS_ID = 1;
+   public static final Integer HSP_F1_ID = 2;
+   public static final Integer HSP_STP_IHP_ID = 3;
+   public static final Integer HSP_STP_GHP_ID = 4;
+   public static final Integer HSP_STP_SSE_ID = 5;
+   public static final Integer WP_WT_SUMMER_ID = 6;
+   public static final Integer WP_WT_WINTER_ID = 7;
+   public static final Integer WP_WT_SPRING_ID = 8;
+   public static final Integer WP_WT_CAP_ID = 9;
+   public static final Integer GHT_HS_ABRD_ID = 10;
+   public static final Integer GHT_LANG_SCL_ID = 11;
+   public static final Integer GHT_TEACH_ABRD_ID = 12;
+   public static final Integer GHT_VOL_ABRD_ID = 13;
+   public static final Integer GHT_WRK_ABRD_ID = 14;
+   
    //bind urls for season program menu
    public static final String HSP_J1_URL= "j1hs/details/view/";
    public static final String HSP_F1_URL = "f1/view/details/";
