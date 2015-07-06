@@ -490,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonStatus` (
 -- Table cci_gh_go.FieldStaffAgreement
 -- -----------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffAgreement` (
-  `fieldStaffAgreementId` INT(3) NOT NULL AUTO_INCREMENT,
+  `fieldStaffAgreementId` INT(3) NOT NULL ,
   `agreementName` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`fieldStaffAgreementId`)
 );
@@ -499,7 +499,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffAgreement` (
 -- Table cci_gh_go.FieldStaffAgreement
 -- -----------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PaymentSchedule` (
-  `paymentScheduleId` INT(3) NOT NULL AUTO_INCREMENT,
+  `paymentScheduleId` INT(3) NOT NULL ,
   `scheduleName` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`paymentScheduleId`)
 );
