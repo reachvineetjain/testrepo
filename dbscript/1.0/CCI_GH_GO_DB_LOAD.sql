@@ -619,7 +619,8 @@ INSERT INTO `cci_gh_go`.`SeasonStatus` (`seasonStatusId`,`status`,`active`) VALU
 INSERT INTO `cci_gh_go`.`Region` (`regionId`,`regionName`,`active`) VALUES (1,'Atlantic',1),(2,'MidWest',1),(3,'west',1),(4,'California',1),(5,'South',1),(6,'Non-Contiguous',1);
 
 INSERT INTO cci_gh_go.FieldStaffAgreement (fieldStaffAgreementId,agreementName)
-                                       VALUES (1,'2009-2010'),
+                                       VALUES 0,0),
+											  (1,'2009-2010'),
 											  (2,'2010-2011'),
 											  (3,'2011-2012'),
 											  (4,'2012-2013'),
@@ -632,12 +633,12 @@ INSERT INTO cci_gh_go.FieldStaffAgreement (fieldStaffAgreementId,agreementName)
 											  (10,'2013-2014');
 											  	
 INSERT INTO cci_gh_go.PaymentSchedule (paymentScheduleId,scheduleName)
-                                   VALUES (1,'Area Representative Stipend Schedule'),
+                                   VALUES  (0,0),
+										  (1,'Area Representative Stipend Schedule'),
                                           (2,'PSPP Area Representative Stipend Schedule'),
                                           (3,'Field Staff Schedule'),
                                           (4,'PSPP Field Staff Schedule'),
 										  (6,'PSPP Field Staff Schedule'),
-										  (0,0),
 										  (21,'PSPP Area Representative Stipend Schedule'),
 										  (24,'PSPP Area Representative Stipend Schedule'),
 										  (30,'PSPP Area Representative Stipend Schedule'),
