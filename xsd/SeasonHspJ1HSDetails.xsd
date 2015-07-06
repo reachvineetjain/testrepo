@@ -114,10 +114,13 @@
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fileType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
