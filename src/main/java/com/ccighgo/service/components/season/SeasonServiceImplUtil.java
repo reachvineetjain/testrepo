@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
@@ -19,6 +20,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
+import com.ccighgo.db.entities.SeasonDepartmentDocument;
 import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSADetail;
@@ -40,6 +42,7 @@ import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonDepartmentDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
@@ -73,6 +76,7 @@ import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPNotes;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonDepartmentNotes;
+import com.ccighgo.service.transport.seasons.beans.season.SeasonDocument;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStart1StSemesterDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStartFullYearDetails;
@@ -82,11 +86,15 @@ import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Janua
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1JanuaryStartFullYearDetail;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1ProgramAllocationDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1ProgramAllocations;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1SeasonHspF1Documents;
+import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1SeasonHspF1Notes;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.SeasonHSPF1Details;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.DepartmentObject;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.ProgramSeason;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonListObject;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDocuments;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPNotes;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
@@ -138,9 +146,14 @@ public class SeasonServiceImplUtil {
    SeasonProgramDocumentRepository seasonProgramDocumentRepository;
    @Autowired
    DepartmentProgramRepository departmentProgramRepository;
-   @Autowired LoginRepository loginRepository;
-   @Autowired DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
-   @Autowired DocumentInformationRepository documentInformationRepository;
+   @Autowired
+   SeasonDepartmentDocumentRepository seasonDepartmentDocumentRepository;
+   @Autowired
+   LoginRepository loginRepository;
+   @Autowired
+   DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
+   @Autowired
+   DocumentInformationRepository documentInformationRepository;
 
    /**
     * @param seasonBean
@@ -192,6 +205,18 @@ public class SeasonServiceImplUtil {
             seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
             seasonDepartmentNotes.setSeasonDepartmenNotetId(note.getSeasonDepartmentNotesId());
             seasonBean.getNotes().add(seasonDepartmentNotes);
+         }
+      }
+
+      if (seasonEntity.getSeasonDepartmentDocuments() != null && !seasonEntity.getSeasonDepartmentDocuments().isEmpty()) {
+         for (SeasonDepartmentDocument departmentDocument : seasonEntity.getSeasonDepartmentDocuments()) {
+            SeasonDocument document = new SeasonDocument();
+            document.setSeasonId(departmentDocument.getSeason().getSeasonId());
+            if (seasonEntity.getLookupDepartment() != null)
+               document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
+            document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+            document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+            seasonBean.getDocuments().add(document);
          }
       }
    }
@@ -553,6 +578,7 @@ public class SeasonServiceImplUtil {
          allF1Details.setShowSpecialRequestStudent((byte) (seasonHSPF1Details.getFieldSettings().isShowSpecialRequestStudentToRD() ? 1 : 0));
          allF1Details.setShowWelcomeFamily((byte) (seasonHSPF1Details.getFieldSettings().isShowWelcomeFamilyModle() ? 1 : 0));
 
+         updateHSPF1Notes(allF1Details, seasonHSPF1Details);
          seasonF1DetailsRepository.saveAndFlush(allF1Details);
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -1373,6 +1399,8 @@ public class SeasonServiceImplUtil {
       seasonWPCAPDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
       seasonWPCAPDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
       // missing program options and general settings
+      seasonWPCAPDetails.getDocuments().addAll(getWPCAPDocuments(seasonWPcap));
+      seasonWPCAPDetails.getNotes().addAll(getWPCAPNotes(seasonWPcap));
       return seasonWPCAPDetails;
    }
 
@@ -1395,6 +1423,7 @@ public class SeasonServiceImplUtil {
          // seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonCAPDetail.setModifiedBy(1);
          seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         updateWPCAPNotes(seasonCAPDetail, seasonWPCAPDetails);
          seasonCAPDetailsRepository.saveAndFlush(seasonCAPDetail);
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -1505,7 +1534,8 @@ public class SeasonServiceImplUtil {
 
       seasonWPDetails.setWpSectionOne(wpSectionOne);
       seasonWPDetails.getWpNotes().addAll(getWPWinterNotes(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId()));
-      seasonWPDetails.getWpDocuments().addAll(getWPDocs(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId(), CCIConstants.WP_WT_WINTER));
+      seasonWPDetails.getWpDocuments().addAll(
+            getWPDocs(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId(), CCIConstants.WP_WT_WINTER));
       // program allocations not complete
 
       return seasonWPDetails;
@@ -1524,7 +1554,7 @@ public class SeasonServiceImplUtil {
       if (seasonWPDetails.getWpNotes() != null) {
          updateWPNotes(seasonWPDetails, seasonWnTWinterDetail.getSeason(), CCIConstants.WP_WT_WINTER_ID);
       }
-      if(seasonWPDetails.getWpDocuments()!=null){
+      if (seasonWPDetails.getWpDocuments() != null) {
          updateWPDocs(seasonWPDetails, seasonWnTWinterDetail.getSeason(), CCIConstants.WP_WT_WINTER_ID);
       }
       seasonWinterRepository.saveAndFlush(seasonWnTWinterDetail);
@@ -1772,8 +1802,8 @@ public class SeasonServiceImplUtil {
                documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
                documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
                documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
-               documents.setActive(programDocument.getActive()==CCIConstants.ACTIVE?true:false);
-               Login login = loginRepository.findOne(1);//TODO find user from session
+               documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+               Login login = loginRepository.findOne(1);// TODO find user from session
                documents.setUploadedBy(login.getLoginName());
                j1hsDocuments.add(documents);
             }
@@ -1976,7 +2006,7 @@ public class SeasonServiceImplUtil {
       sprNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       updatedNotes.add(sprNote);
    }
-   
+
    /**
     * @param seasonId
     * @param seasonProgramId
@@ -1997,8 +2027,8 @@ public class SeasonServiceImplUtil {
                documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
                documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
                documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
-               documents.setActive(programDocument.getActive()==CCIConstants.ACTIVE?true:false);
-               Login login = loginRepository.findOne(1);//TODO find user from session
+               documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+               Login login = loginRepository.findOne(1);// TODO find user from session
                documents.setUploadedBy(login.getLoginName());
                wpDocuments.add(documents);
             }
@@ -2006,12 +2036,13 @@ public class SeasonServiceImplUtil {
       }
       return wpDocuments;
    }
-   
-   public void updateJ1HSDocs(SeasonHspJ1HSDetails seasonHspJ1HSDetails, Season season){
-      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonIdAndDepartmentProgramId(season.getSeasonId(), CCIConstants.HSP_J1_HS_ID);
+
+   public void updateJ1HSDocs(SeasonHspJ1HSDetails seasonHspJ1HSDetails, Season season) {
+      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(season.getSeasonId(),
+            CCIConstants.HSP_J1_HS_ID);
       seasonProgramDocumentRepository.delete(seasonProgramDocuments);
       List<SeasonProgramDocument> newDocList = new ArrayList<SeasonProgramDocument>();
-      for(J1HSDocuments j1hsDocument: seasonHspJ1HSDetails.getJ1HsDocuments()){
+      for (J1HSDocuments j1hsDocument : seasonHspJ1HSDetails.getJ1HsDocuments()) {
          SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
          DocumentInformation documentInformation = new DocumentInformation();
          documentInformation.setFileName(j1hsDocument.getFileName());
@@ -2035,12 +2066,13 @@ public class SeasonServiceImplUtil {
       }
       seasonProgramDocumentRepository.save(newDocList);
    }
-   
-   public void updateWPDocs(SeasonWPDetails seasonWPDetails, Season season, Integer programTypeId){
-      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonIdAndDepartmentProgramId(season.getSeasonId(), programTypeId);
+
+   public void updateWPDocs(SeasonWPDetails seasonWPDetails, Season season, Integer programTypeId) {
+      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(season.getSeasonId(),
+            programTypeId);
       seasonProgramDocumentRepository.delete(seasonProgramDocuments);
       List<SeasonProgramDocument> newDocList = new ArrayList<SeasonProgramDocument>();
-      for(WPDocuments wpDocument: seasonWPDetails.getWpDocuments()){
+      for (WPDocuments wpDocument : seasonWPDetails.getWpDocuments()) {
          SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
          DocumentInformation documentInformation = new DocumentInformation();
          documentInformation.setFileName(wpDocument.getFileName());
@@ -2063,6 +2095,186 @@ public class SeasonServiceImplUtil {
          newDocList.add(sprgDoc);
       }
       seasonProgramDocumentRepository.save(newDocList);
+   }
+
+   public List<SeasonDocument> getHighLevelSeasonDocs(Integer seasonId, Integer departmentId) {
+      List<SeasonDocument> seasonDocuments = null;
+      List<SeasonDepartmentDocument> seasonDepartmentDocuments = seasonDepartmentDocumentRepository.findAllDepartmentDocsBySeasonId(seasonId);
+      if (seasonDepartmentDocuments != null) {
+         seasonDocuments = new ArrayList<SeasonDocument>();
+         for (SeasonDepartmentDocument departmentDocument : seasonDepartmentDocuments) {
+            SeasonDocument document = new SeasonDocument();
+            document.setSeasonId(departmentDocument.getSeason().getSeasonId());
+            document.setDepartmentId(departmentId);
+            document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+            document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+            seasonDocuments.add(document);
+         }
+      }
+      return seasonDocuments;
+   }
+
+   /**
+    * 
+    * @param departmentId
+    * @param seasonBean
+    * @param seasonEntity
+    */
+   public void createSeasonProgramNotes(CommonNotesObject note) {
+      if (note != null && note.getNotes() != null && !note.getNotes().isEmpty()) {
+         Season season = seasonRepository.findOne(note.getSeasonId());
+         DepartmentProgram departmentProgram = departmentProgramRepository.findOne(note.getDepartmentProgramId());
+
+         for (String noteStr : note.getNotes()) {
+            SeasonProgramNote seasonProgramNote = new SeasonProgramNote();
+            seasonProgramNote.setActive((byte) 1);
+            seasonProgramNote.setProgramNote(noteStr);
+            seasonProgramNote.setSeason(season);
+            seasonProgramNote.setDepartmentProgram(departmentProgram);
+            seasonProgramNote.setCreatedBy(1);
+            seasonProgramNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNote.setModifiedBy(1);
+            seasonProgramNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
+         }
+      }
+   }
+
+   /**
+    * 
+    * @param seasonBean
+    * @param seasonEntity
+    */
+   public void updateSeasonProgramNotes(CommonNotesObject note) {
+      if (note != null && note.getNotes() != null && !note.getNotes().isEmpty()) {
+         List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(note.getSeasonId(),
+               note.getDepartmentProgramId());
+         for (SeasonProgramNote seasonProgramNote : seasonProgramNotes) {
+            seasonProgramNotesRepository.delete(seasonProgramNote.getSeasonProgramNotesId());
+         }
+
+         Season season = seasonRepository.findOne(note.getSeasonId());
+         DepartmentProgram departmentProgram = departmentProgramRepository.findOne(note.getDepartmentProgramId());
+         for (String noteStr : note.getNotes()) {
+            SeasonProgramNote seasonProgramNote = new SeasonProgramNote();
+            seasonProgramNote.setActive((byte) 1);
+            seasonProgramNote.setProgramNote(noteStr);
+            seasonProgramNote.setSeason(season);
+            seasonProgramNote.setDepartmentProgram(departmentProgram);
+            seasonProgramNote.setCreatedBy(1);
+            seasonProgramNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNote.setModifiedBy(1);
+            seasonProgramNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
+         }
+      }
+   }
+
+   public List<HSPF1SeasonHspF1Notes> getHSPF1Notes(SeasonF1Detail allF1Details) {
+      int seasonId = allF1Details.getSeason().getSeasonId();
+      List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
+      List<HSPF1SeasonHspF1Notes> hspF1Notes = new ArrayList<HSPF1SeasonHspF1Notes>();
+      if (seasonProgramNotes != null && !seasonProgramNotes.isEmpty()) {
+         for (SeasonProgramNote seasonProgramNote : seasonProgramNotes) {
+            HSPF1SeasonHspF1Notes hspf1SeasonHspF1Note = new HSPF1SeasonHspF1Notes();
+            hspf1SeasonHspF1Note.setSeasonId(seasonId);
+            hspf1SeasonHspF1Note.setNoteValue(seasonProgramNote.getProgramNote());
+            hspF1Notes.add(hspf1SeasonHspF1Note);
+         }
+      }
+      return hspF1Notes;
+   }
+
+   @Transactional
+   private void updateHSPF1Notes(SeasonF1Detail allF1Details, SeasonHSPF1Details seasonHSPF1Details) {
+      int seasonId = allF1Details.getSeason().getSeasonId();
+      List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
+      seasonProgramNotesRepository.delete(seasonProgramNotes);
+      seasonProgramNotes = new ArrayList<SeasonProgramNote>();
+      DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.HSP_F1_ID);
+      for (HSPF1SeasonHspF1Notes hspF1Notes : seasonHSPF1Details.getNotes()) {
+         SeasonProgramNote programNote = new SeasonProgramNote();
+         programNote.setActive((byte) 1);
+         programNote.setDepartmentProgram(departmentProgram);
+         programNote.setProgramNote(hspF1Notes.getNoteValue());
+         programNote.setSeason(allF1Details.getSeason());
+         programNote.setCreatedBy(1);
+         programNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         programNote.setModifiedBy(1);
+         programNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonProgramNotes.add(programNote);
+      }
+      seasonProgramNotesRepository.save(seasonProgramNotes);
+   }
+
+   public List<HSPF1SeasonHspF1Documents> getHSPF1Documents(SeasonF1Detail allF1Details) {
+      int seasonId = allF1Details.getSeason().getSeasonId();
+      List<SeasonProgramDocument> spDocument = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
+      List<HSPF1SeasonHspF1Documents> hspF1Documents = new ArrayList<HSPF1SeasonHspF1Documents>();
+      for (SeasonProgramDocument seasonProgramDocument : spDocument) {
+         HSPF1SeasonHspF1Documents doc = new HSPF1SeasonHspF1Documents();
+         doc.setSeasonProgramId(seasonProgramDocument.getSeasonProgramDocumentId());
+         doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
+         doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+         doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
+         doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
+         hspF1Documents.add(doc);
+      }
+      return hspF1Documents;
+   }
+
+   private List<SeasonWPCAPDocuments> getWPCAPDocuments(SeasonCAPDetail seasonWPcap) {
+      int seasonId = seasonWPcap.getSeason().getSeasonId();
+      List<SeasonProgramDocument> spDocument = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.WP_WT_CAP_ID);
+      List<SeasonWPCAPDocuments> wpcapDocuments = new ArrayList<SeasonWPCAPDocuments>();
+      for (SeasonProgramDocument seasonProgramDocument : spDocument) {
+         SeasonWPCAPDocuments doc = new SeasonWPCAPDocuments();
+         doc.setSeasonProgramId(seasonProgramDocument.getSeasonProgramDocumentId());
+         doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
+         doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+         doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
+         doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
+         wpcapDocuments.add(doc);
+      }
+      return wpcapDocuments;
+   }
+
+   public List<SeasonWPCAPNotes> getWPCAPNotes(SeasonCAPDetail seasonWPcap) {
+      int seasonId = seasonWPcap.getSeason().getSeasonId();
+      List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.WP_WT_CAP_ID);
+      List<SeasonWPCAPNotes> seasonWPCAPNotes = new ArrayList<SeasonWPCAPNotes>();
+      if (seasonProgramNotes != null && !seasonProgramNotes.isEmpty()) {
+         for (SeasonProgramNote seasonProgramNote : seasonProgramNotes) {
+            SeasonWPCAPNotes wpCapNote = new SeasonWPCAPNotes();
+            wpCapNote.setSeasonId(seasonId);
+            wpCapNote.setNoteValue(seasonProgramNote.getProgramNote());
+            seasonWPCAPNotes.add(wpCapNote);
+         }
+      }
+      return seasonWPCAPNotes;
+   }
+
+   @Transactional
+   private void updateWPCAPNotes(SeasonCAPDetail seasonCapDetail, SeasonWPCAPDetails seasonWpcapDetails) {
+      int seasonId = seasonCapDetail.getSeason().getSeasonId();
+      List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.WP_WT_CAP_ID);
+      seasonProgramNotesRepository.delete(seasonProgramNotes);
+      seasonProgramNotes = new ArrayList<SeasonProgramNote>();
+      DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.WP_WT_CAP_ID);
+      for (SeasonWPCAPNotes notes : seasonWpcapDetails.getNotes()) {
+         SeasonProgramNote programNote = new SeasonProgramNote();
+         programNote.setActive((byte) 1);
+         programNote.setDepartmentProgram(departmentProgram);
+         programNote.setProgramNote(notes.getNoteValue());
+         programNote.setSeason(seasonCapDetail.getSeason());
+         programNote.setCreatedBy(1);
+         programNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         programNote.setModifiedBy(1);
+         programNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonProgramNotes.add(programNote);
+
+      }
+      seasonProgramNotesRepository.save(seasonProgramNotes);
    }
 
 }
