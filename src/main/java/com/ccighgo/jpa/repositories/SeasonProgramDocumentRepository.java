@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.SeasonProgramDocument;
-import com.ccighgo.db.entities.SeasonProgramNote;
 
 /**
  * @author ravi
@@ -21,4 +20,7 @@ public interface SeasonProgramDocumentRepository extends JpaRepository<SeasonPro
 
    @Query("select s from SeasonProgramDocument s  where s.season.seasonId = ?1 ")
    List<SeasonProgramDocument> findAllProgramDocsBySeasonId(Integer seasonId);
+
+   @Query("select s from SeasonProgramDocument s  where s.season.seasonId = ?1  and s.departmentProgram.departmentProgramId= ?2 ")
+   List<SeasonProgramDocument> findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(int seasonId, Integer hspF1Id);
 }

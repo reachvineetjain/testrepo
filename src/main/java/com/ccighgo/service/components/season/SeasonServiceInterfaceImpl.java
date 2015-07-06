@@ -29,7 +29,6 @@ import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.CcighgoServiceException;
-import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
@@ -676,6 +675,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          seasonHSPF1Details.setAccounting(seasonServiceImplUtil.getHSPF1Accounting(allF1Details));
          seasonHSPF1Details.setFieldSettings(seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details));
          seasonHSPF1Details.setProgramAllocations(seasonServiceImplUtil.getHSPF1ProgramAllocations(allF1Details));
+         seasonHSPF1Details.getNotes().addAll(seasonServiceImplUtil.getHSPF1Notes(allF1Details));
+         seasonHSPF1Details.getDocuments().addAll(seasonServiceImplUtil.getHSPF1Documents(allF1Details));
          return seasonHSPF1Details;
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -874,7 +875,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             if (seasonGHTDetails.getGhtDates() != null) {
                seasonServiceImplUtil.updateVADates(seasonGHTDetails.getGhtDates(), seasonVADetail);
             }
-            if(seasonGHTDetails.getGhtNotes()!=null){
+            if (seasonGHTDetails.getGhtNotes() != null) {
                seasonServiceImplUtil.updateGHTNotes(seasonGHTDetails, seasonVADetail.getSeason(), CCIConstants.GHT_VOL_ABRD_ID);
             }
             seasonVADetail = seasonVADetailsRepository.saveAndFlush(seasonVADetail);
@@ -987,7 +988,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             if (seasonGHTDetails.getGhtDates() != null) {
                seasonServiceImplUtil.updateWADates(seasonGHTDetails.getGhtDates(), seasonWADetail);
             }
-            if(seasonGHTDetails.getGhtNotes()!=null){
+            if (seasonGHTDetails.getGhtNotes() != null) {
                seasonServiceImplUtil.updateGHTNotes(seasonGHTDetails, seasonWADetail.getSeason(), CCIConstants.GHT_WRK_ABRD_ID);
             }
             seasonWADetail = seasonWADetailsRepository.saveAndFlush(seasonWADetail);
@@ -1332,7 +1333,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             if (seasonWPDetails.getWpSectionOne() != null) {
                seasonServiceImplUtil.updateWPSummerSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSummerDetail);
             }
-            if(seasonWPDetails.getWpNotes()!=null){
+            if (seasonWPDetails.getWpNotes() != null) {
                seasonServiceImplUtil.updateWPNotes(seasonWPDetails, seasonWnTSummerDetail.getSeason(), CCIConstants.WP_WT_SUMMER_ID);
             }
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
@@ -1454,7 +1455,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             if (seasonWPDetails.getWpSectionOne() != null) {
                seasonServiceImplUtil.updateWPSpringSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSpringDetail);
             }
-            if(seasonWPDetails.getWpNotes()!=null){
+            if (seasonWPDetails.getWpNotes() != null) {
                seasonServiceImplUtil.updateWPNotes(seasonWPDetails, seasonWnTSpringDetail.getSeason(), CCIConstants.WP_WT_SPRING_ID);
             }
             seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
