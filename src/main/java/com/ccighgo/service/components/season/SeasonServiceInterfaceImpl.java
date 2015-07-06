@@ -143,7 +143,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Autowired
    SeasonCloningHelper seasonHelper;
    
-   @Autowired SeasonProgramDocumentRepository seasonProgramDocumentRepository;
+   
 
    SeasonServiceInterfaceImpl() {
    }
@@ -378,33 +378,13 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             seasonHspJ1HSDetails.setJ1HsFieldSettings(seasonServiceImplUtil.getJ1HSFieldSettings(seasonJ1Detail));
             seasonHspJ1HSDetails.setJ1HsProgramAllocations(null);
             seasonHspJ1HSDetails.getJ1HsNotes().addAll(seasonServiceImplUtil.getJ1Notes(seasonJ1Detail.getSeason().getSeasonId(),seasonJ1Detail.getSeasonJ1DetailsId()));
-            seasonHspJ1HSDetails.getJ1HsDocuments().addAll(getJ1Docs(seasonJ1Detail.getSeason().getSeasonId(), seasonJ1Detail.getSeasonJ1DetailsId()));
+            seasonHspJ1HSDetails.getJ1HsDocuments().addAll(seasonServiceImplUtil.getJ1Docs(seasonJ1Detail.getSeason().getSeasonId(), seasonJ1Detail.getSeasonJ1DetailsId()));
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return seasonHspJ1HSDetails;
    }
-   
-   public List<J1HSDocuments> getJ1Docs(Integer seasonId, Integer seasonProgramId){
-      List<J1HSDocuments> j1hsDocuments = null;
-      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
-      if(seasonProgramDocuments!=null){
-         j1hsDocuments = new ArrayList<J1HSDocuments>();
-         for(SeasonProgramDocument programDocument:seasonProgramDocuments){
-            if(programDocument.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)){
-               J1HSDocuments documents = new J1HSDocuments();
-               documents.setSeasonId(programDocument.getSeason().getSeasonId());
-               documents.setSeasonProgramId(seasonProgramId);
-               documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-               documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
-               j1hsDocuments.add(documents);
-            }
-         }
-      }
-      return j1hsDocuments;
-   }
-   
 
    @Transactional(readOnly = true)
    public J1HSBasicDetail getHSPJ1HSSeasonNameAndStatus(String seasonProgramId) {
@@ -837,7 +817,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             seasonGHTDetails.setSeasonProgramId(seasonVADetail.getSeasonVADetailsId());
             seasonGHTDetails.setGhtBaseDetails(seasonServiceImplUtil.getVABasicDetail(seasonVADetail));
             seasonGHTDetails.setGhtDates(seasonServiceImplUtil.getVADates(seasonVADetail));
-            // TODO add notes
+            seasonGHTDetails.getGhtNotes().addAll(seasonServiceImplUtil.getGHTVAProgramNotes(seasonVADetail.getSeason().getSeasonId(), seasonVADetail.getSeasonVADetailsId()));
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -947,7 +927,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             seasonGHTDetails.setSeasonProgramId(seasonWADetail.getSeasonWADetailsId());
             seasonGHTDetails.setGhtBaseDetails(seasonServiceImplUtil.getWABasicDetail(seasonWADetail));
             seasonGHTDetails.setGhtDates(seasonServiceImplUtil.getWADates(seasonWADetail));
-            // TODO add notes
+            seasonGHTDetails.getGhtNotes().addAll(seasonServiceImplUtil.getGHTWAProgramNotes(seasonWADetail.getSeason().getSeasonId(), seasonWADetail.getSeasonWADetailsId()));
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
