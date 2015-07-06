@@ -52,6 +52,7 @@ import com.ccighgo.jpa.repositories.SeasonWADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonWTWinterRepository;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
+import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection3Notes;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
@@ -1038,6 +1039,7 @@ public class SeasonServiceImplUtil {
       ghtSection2Dates.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
       seasonGHTDetails.setGhtDates(ghtSection2Dates);
+      seasonGHTDetails.getGhtNotes().addAll(getGHTWAProgramNotes(seasonId, seasonHSADetail.getSeasonHSADetailsId()));
 
       return seasonGHTDetails;
    }
@@ -1079,6 +1081,7 @@ public class SeasonServiceImplUtil {
       ghtSection2Dates.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonLSDetail.getStartDate()));
       seasonGHTDetails.setGhtDates(ghtSection2Dates);
+      seasonGHTDetails.getGhtNotes().addAll(getGHTLSProgramNotes(seasonId, seasonLSDetail.getSeasonLSDetailsId()));
 
       return seasonGHTDetails;
    }
@@ -1120,6 +1123,7 @@ public class SeasonServiceImplUtil {
       ghtSection2Dates.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
       ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonTADetail.getStartDate()));
       seasonGHTDetails.setGhtDates(ghtSection2Dates);
+      seasonGHTDetails.getGhtNotes().addAll(getGHTTAProgramNotes(seasonId, seasonTADetail.getSeasonTADetailsId()));
 
       return seasonGHTDetails;
    }
@@ -1727,6 +1731,11 @@ public class SeasonServiceImplUtil {
       return j1hsNotes;
    }
 
+   /**
+    * @param seasonId
+    * @param seasonProgramId
+    * @return
+    */
    public List<J1HSDocuments> getJ1Docs(Integer seasonId, Integer seasonProgramId) {
       List<J1HSDocuments> j1hsDocuments = null;
       List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
@@ -1744,6 +1753,114 @@ public class SeasonServiceImplUtil {
          }
       }
       return j1hsDocuments;
+   }
+   
+   /**
+    * @param seasonId
+    * @param seasonProgramId
+    * @return
+    */
+   public List<GHTSection3Notes> getGHTHSAProgramNotes(Integer seasonId, Integer seasonProgramId){
+      List<GHTSection3Notes> ghtNotes = null;
+      List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+      if (ghtProgramNotes != null) {
+         ghtNotes = new ArrayList<GHTSection3Notes>();
+         for (SeasonProgramNote prgNote : ghtProgramNotes) {
+            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.GHT_HS_ABRD)) {
+               getGHTNotes(seasonProgramId, ghtNotes, prgNote);
+            }
+         }
+      }
+      return ghtNotes;
+   }
+   
+   /**
+    * @param seasonId
+    * @param seasonProgramId
+    * @return
+    */
+   public List<GHTSection3Notes> getGHTLSProgramNotes(Integer seasonId, Integer seasonProgramId){
+      List<GHTSection3Notes> ghtNotes = null;
+      List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+      if (ghtProgramNotes != null) {
+         ghtNotes = new ArrayList<GHTSection3Notes>();
+         for (SeasonProgramNote prgNote : ghtProgramNotes) {
+            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.GHT_LANG_SCL)) {
+               getGHTNotes(seasonProgramId, ghtNotes, prgNote);
+            }
+         }
+      }
+      return ghtNotes;
+   }
+   
+   /**
+    * @param seasonId
+    * @param seasonProgramId
+    * @return
+    */
+   public List<GHTSection3Notes> getGHTTAProgramNotes(Integer seasonId, Integer seasonProgramId){
+      List<GHTSection3Notes> ghtNotes = null;
+      List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+      if (ghtProgramNotes != null) {
+         ghtNotes = new ArrayList<GHTSection3Notes>();
+         for (SeasonProgramNote prgNote : ghtProgramNotes) {
+            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.GHT_TEACH_ABRD)) {
+               getGHTNotes(seasonProgramId, ghtNotes, prgNote);
+            }
+         }
+      }
+      return ghtNotes;
+   }
+   
+   /**
+    * @param seasonId
+    * @param seasonProgramId
+    * @return
+    */
+   public List<GHTSection3Notes> getGHTVAProgramNotes(Integer seasonId, Integer seasonProgramId){
+      List<GHTSection3Notes> ghtNotes = null;
+      List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+      if (ghtProgramNotes != null) {
+         ghtNotes = new ArrayList<GHTSection3Notes>();
+         for (SeasonProgramNote prgNote : ghtProgramNotes) {
+            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.GHT_VOL_ABRD)) {
+               getGHTNotes(seasonProgramId, ghtNotes, prgNote);
+            }
+         }
+      }
+      return ghtNotes;
+   }
+   
+   /**
+    * @param seasonId
+    * @param seasonProgramId
+    * @return
+    */
+   public List<GHTSection3Notes> getGHTWAProgramNotes(Integer seasonId, Integer seasonProgramId){
+      List<GHTSection3Notes> ghtNotes = null;
+      List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+      if (ghtProgramNotes != null) {
+         ghtNotes = new ArrayList<GHTSection3Notes>();
+         for (SeasonProgramNote prgNote : ghtProgramNotes) {
+            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.GHT_WRK_ABRD)) {
+               getGHTNotes(seasonProgramId, ghtNotes, prgNote);
+            }
+         }
+      }
+      return ghtNotes;
+   }
+
+   /**
+    * @param seasonProgramId
+    * @param ghtNotes
+    * @param prgNote
+    */
+   private void getGHTNotes(Integer seasonProgramId, List<GHTSection3Notes> ghtNotes, SeasonProgramNote prgNote) {
+      GHTSection3Notes note = new GHTSection3Notes();
+      note.setSeasonId(prgNote.getSeason().getSeasonId());
+      note.setSeasonProgramId(seasonProgramId);
+      note.setNote(prgNote.getProgramNote());
+      ghtNotes.add(note);
    }
 
    public List<SeasonDocument> getHighLevelSeasonDocs(Integer seasonId, Integer departmentId) {
