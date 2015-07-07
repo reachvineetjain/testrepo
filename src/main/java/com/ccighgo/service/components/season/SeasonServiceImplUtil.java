@@ -33,9 +33,11 @@ import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.db.entities.SeasonTADetail;
 import com.ccighgo.db.entities.SeasonVADetail;
 import com.ccighgo.db.entities.SeasonWADetail;
+import com.ccighgo.db.entities.SeasonWPAllocation;
 import com.ccighgo.db.entities.SeasonWnTSpringDetail;
 import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
@@ -56,6 +58,7 @@ import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonTADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonVADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonWADetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonWPAllocationRepository;
 import com.ccighgo.jpa.repositories.SeasonWTWinterRepository;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
@@ -73,6 +76,7 @@ import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetail
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPDocuments;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPNotes;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonDepartmentNotes;
@@ -154,6 +158,10 @@ public class SeasonServiceImplUtil {
    DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
    @Autowired
    DocumentInformationRepository documentInformationRepository;
+   @Autowired
+   SeasonWPAllocationRepository seasonWPAllocationRepository;
+   @Autowired
+   SeasonWTWinterRepository seasonWTWinterRepository;
 
    /**
     * @param seasonBean
@@ -1542,6 +1550,7 @@ public class SeasonServiceImplUtil {
             .addAll(
                   getWPDocs(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId(), CCIConstants.WP_WT_WINTER,
                         CCIConstants.WP_WT_WINTER_ID));
+      seasonWPDetails.setWpProgramAllocations(getWPWinterAllocationDetails(seasonProgramId));
       // program allocations not complete
 
       return seasonWPDetails;
@@ -1612,12 +1621,40 @@ public class SeasonServiceImplUtil {
       return wpSectionOne;
    }
 
-   public WPSectionOne getWPWinterAllocationDetails(String seasonId) {
-      // TODO Auto-generated method stub
-      return null;
+   public WPProgramAllocations getWPWinterAllocationDetails(String seasonProgramId) {
+      WPProgramAllocations wpProgramAllocations = null;
+      SeasonWnTWinterDetail seasonWnTWinterDetail = seasonWTWinterRepository.findOne(Integer.valueOf(seasonProgramId));
+      if (seasonWnTWinterDetail != null) {
+         List<SeasonWPAllocation> wpAllocations = seasonWPAllocationRepository.findSeasonWPAllocationBySeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
+         if (wpAllocations != null) {
+            wpProgramAllocations = new WPProgramAllocations();
+            // TODO update other values once participants and partners modules are integrated
+            int totalMaxParticipants = 0;
+            wpProgramAllocations.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
+            wpProgramAllocations.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
+            for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
+               if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_WINTER_ID) {
+                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR)) {
+                     wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax());
+                     totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                  }
+                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED)) {
+                     wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax());
+                     totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                  }
+                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT)) {
+                     wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax());
+                     totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                  }
+               }
+            }
+            wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
+         }
+      }
+      return wpProgramAllocations;
    }
 
-   public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
+   public WPProgramAllocations updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
       // TODO Auto-generated method stub
       return null;
    }

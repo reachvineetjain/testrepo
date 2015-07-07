@@ -19,6 +19,7 @@ import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonDepartmentNotes;
@@ -564,13 +565,13 @@ public interface SeasonServiceInterface {
     * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPSumAllocationDetails(String seasonProgramId);
+   public WPProgramAllocations getWPSumAllocationDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
     * @return
     */
-   public WPSectionOne updateWPSumAllocationDetails(WPSectionOne wpSectionOne);
+   public WPProgramAllocations updateWPSumAllocationDetails(WPSectionOne wpSectionOne);
 
    /**
     * @param seasonProgramId
@@ -612,13 +613,13 @@ public interface SeasonServiceInterface {
     * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPSpringAllocationDetails(String seasonProgramId);
+   public WPProgramAllocations getWPSpringAllocationDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
     * @return
     */
-   public WPSectionOne updateWPSpringAllocationDetails(WPSectionOne wpSectionOne);
+   public WPProgramAllocations updateWPSpringAllocationDetails(WPSectionOne wpSectionOne);
 
    /**
     * @param seasonProgramId
@@ -678,19 +679,19 @@ public interface SeasonServiceInterface {
     * @param seasonProgramId
     * @return
     */
-   public WPSectionOne getWPWinterAllocationDetails(String seasonProgramId);
+   public WPProgramAllocations getWPWinterAllocationDetails(String seasonProgramId);
 
    /**
     * @param seasonProgramId
     * @return
     */
-   public WPSectionOne editWPWinterAllocationDetails(String seasonProgramId);
+   public WPProgramAllocations editWPWinterAllocationDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
     * @return
     */
-   public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne);
+   public WPProgramAllocations updateWPWinterAllocationDetails(WPSectionOne wpSectionOne);
 
    /**
     * @param cloneSeason
