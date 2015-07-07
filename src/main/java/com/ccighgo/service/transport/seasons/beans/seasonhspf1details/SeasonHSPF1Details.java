@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="seasonId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="seasonProgramId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="departmentProgramId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="details" type="{http://www.ccighgo.com/seasonhspf1details}HSPF1BasicDetails" minOccurs="0"/>
  *         &lt;element name="januaryStart2ndSemesterDetails" type="{http://www.ccighgo.com/seasonhspf1details}HSPF1JanuaryStart2ndSemesterDetails" minOccurs="0"/>
  *         &lt;element name="januaryStartFullYearDetail" type="{http://www.ccighgo.com/seasonhspf1details}HSPF1JanuaryStartFullYearDetail" minOccurs="0"/>
@@ -50,6 +51,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SeasonHSPF1Details", propOrder = {
     "seasonId",
     "seasonProgramId",
+    "departmentProgramId",
     "details",
     "januaryStart2NdSemesterDetails",
     "januaryStartFullYearDetail",
@@ -65,6 +67,7 @@ public class SeasonHSPF1Details {
 
     protected int seasonId;
     protected int seasonProgramId;
+    protected int departmentProgramId;
     protected HSPF1BasicDetails details;
     @XmlElement(name = "januaryStart2ndSemesterDetails")
     protected HSPF1JanuaryStart2NdSemesterDetails januaryStart2NdSemesterDetails;
@@ -108,6 +111,22 @@ public class SeasonHSPF1Details {
      */
     public void setSeasonProgramId(int value) {
         this.seasonProgramId = value;
+    }
+
+    /**
+     * Gets the value of the departmentProgramId property.
+     * 
+     */
+    public int getDepartmentProgramId() {
+        return departmentProgramId;
+    }
+
+    /**
+     * Sets the value of the departmentProgramId property.
+     * 
+     */
+    public void setDepartmentProgramId(int value) {
+        this.departmentProgramId = value;
     }
 
     /**

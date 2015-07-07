@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "HSPF1SeasonHspF1Notes", propOrder = {
     "seasonId",
     "seasonProgramId",
+    "departmentProgramId",
     "noteValue"
 })
 public class HSPF1SeasonHspF1Notes {
@@ -76,6 +77,22 @@ public class HSPF1SeasonHspF1Notes {
      */
     public void setSeasonProgramId(int value) {
         this.seasonProgramId = value;
+    }
+
+    /**
+     * Gets the value of the departmentProgramId property.
+     * 
+     */
+    public int getDepartmentProgramId() {
+        return departmentProgramId;
+    }
+
+    /**
+     * Sets the value of the departmentProgramId property.
+     * 
+     */
+    public void setDepartmentProgramId(int value) {
+        this.departmentProgramId = value;
     }
 
     /**

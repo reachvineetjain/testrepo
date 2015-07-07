@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterface;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
+import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -21,12 +22,15 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSField
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
+import com.ccighgo.service.transport.season.beans.seasonprgdoc.SeasonProgramDocument;
+import com.ccighgo.service.transport.season.beans.seasonprgnote.SeasonProgramNote;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
+import com.ccighgo.service.transport.seasons.beans.season.SeasonDepartmentNotes;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStart1StSemesterDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStartFullYearDetails;
@@ -1317,5 +1321,37 @@ public class Seasons {
    @Produces("application/json")
    public CloneSeason cloneSeason(CloneSeason cloneSeason) {
       return seasonServices.cloneSeason(cloneSeason);
+   }
+   
+   @POST
+   @Path("add/department/note")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes){
+      return seasonServices.addSeasonDepartmentNote(seasonDepartmentNotes);
+   }
+   
+   @POST
+   @Path("add/department/doc")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SeasonDepartmentDocument addSeasonDepartmentDoc(SeasonDepartmentDocument seasonDepartmentDocument){
+      return seasonServices.addSeasonDepartmentDoc(seasonDepartmentDocument);
+   }
+   
+   @POST
+   @Path("add/program/note")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SeasonProgramNote addSeasonProgramNote(SeasonProgramNote seasonProgramNote){
+      return seasonServices.addSeasonProgramNote(seasonProgramNote);
+   }
+   
+   @POST
+   @Path("add/program/doc")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument){
+      return seasonServices.addSeasonProgramDoc(seasonProgramDocument);
    }
 }

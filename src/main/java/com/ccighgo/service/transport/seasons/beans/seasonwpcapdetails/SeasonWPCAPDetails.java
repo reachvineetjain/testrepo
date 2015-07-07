@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="seasonId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="seasonProgramId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="departmentProgramId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="details" type="{http://www.ccighgo.com/seasonwpcapdetails}WPCAPBasicDetails" minOccurs="0"/>
  *         &lt;element name="internshipDetails" type="{http://www.ccighgo.com/seasonwpcapdetails}WPCAPInternshipDetails" minOccurs="0"/>
  *         &lt;element name="traineeDetails" type="{http://www.ccighgo.com/seasonwpcapdetails}WPCAPTraineeDetails" minOccurs="0"/>
@@ -46,6 +47,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SeasonWPCAPDetails", propOrder = {
     "seasonId",
     "seasonProgramId",
+    "departmentProgramId",
     "details",
     "internshipDetails",
     "traineeDetails",
@@ -58,6 +60,7 @@ public class SeasonWPCAPDetails {
 
     protected int seasonId;
     protected int seasonProgramId;
+    protected int departmentProgramId;
     protected WPCAPBasicDetails details;
     protected WPCAPInternshipDetails internshipDetails;
     protected WPCAPTraineeDetails traineeDetails;
@@ -96,6 +99,22 @@ public class SeasonWPCAPDetails {
      */
     public void setSeasonProgramId(int value) {
         this.seasonProgramId = value;
+    }
+
+    /**
+     * Gets the value of the departmentProgramId property.
+     * 
+     */
+    public int getDepartmentProgramId() {
+        return departmentProgramId;
+    }
+
+    /**
+     * Sets the value of the departmentProgramId property.
+     * 
+     */
+    public void setDepartmentProgramId(int value) {
+        this.departmentProgramId = value;
     }
 
     /**

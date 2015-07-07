@@ -17,6 +17,7 @@
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="wpBasicDetail" type="wp:WPBasicDetail" minOccurs="1" maxOccurs="1" />
          <xsd:element name="wpSectionOne" type="wp:WPSectionOne" minOccurs="1" maxOccurs="1" />
          <xsd:element name="wpProgramAllocations" type="wp:WPProgramAllocations" minOccurs="1" maxOccurs="1" />
@@ -84,6 +85,7 @@
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="fileType" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -99,7 +101,9 @@
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="note" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

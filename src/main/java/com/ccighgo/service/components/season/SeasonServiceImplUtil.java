@@ -1061,6 +1061,7 @@ public class SeasonServiceImplUtil {
       int seasonId = seasonHSADetail.getSeason().getSeasonId();
       seasonGHTDetails.setSeasonId(seasonId);
       seasonGHTDetails.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
+      seasonGHTDetails.setDepartmentProgramId(CCIConstants.GHT_HS_ABRD_ID);
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setProgramName(seasonHSADetail.getProgramName());
       if (seasonHSADetail.getSeasonStatus() != null)
@@ -1106,6 +1107,7 @@ public class SeasonServiceImplUtil {
       int seasonId = seasonLSDetail.getSeason().getSeasonId();
       seasonGHTDetails.setSeasonId(seasonId);
       seasonGHTDetails.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
+      seasonGHTDetails.setDepartmentProgramId(CCIConstants.GHT_LANG_SCL_ID);
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setProgramName(seasonLSDetail.getProgramName());
       if (seasonLSDetail.getSeasonStatus() != null)
@@ -1151,6 +1153,7 @@ public class SeasonServiceImplUtil {
       int seasonId = seasonTADetail.getSeason().getSeasonId();
       seasonGHTDetails.setSeasonId(seasonId);
       seasonGHTDetails.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
+      seasonGHTDetails.setDepartmentProgramId(CCIConstants.GHT_TEACH_ABRD_ID);
       GHTSection1Base ghtSection1Base = new GHTSection1Base();
       ghtSection1Base.setProgramName(seasonTADetail.getProgramName());
       if (seasonTADetail.getSeasonStatus() != null)
@@ -1515,6 +1518,7 @@ public class SeasonServiceImplUtil {
       SeasonWPDetails seasonWPDetails = new SeasonWPDetails();
       seasonWPDetails.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
       seasonWPDetails.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
+      seasonWPDetails.setDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
       WPBasicDetail wpBasicDetail = new WPBasicDetail();
       wpBasicDetail.setProgramName(seasonWnTWinterDetail.getProgramName());
       if (seasonWnTWinterDetail.getSeasonStatus() != null)
@@ -1534,8 +1538,10 @@ public class SeasonServiceImplUtil {
 
       seasonWPDetails.setWpSectionOne(wpSectionOne);
       seasonWPDetails.getWpNotes().addAll(getWPWinterNotes(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId()));
-      seasonWPDetails.getWpDocuments().addAll(
-            getWPDocs(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId(), CCIConstants.WP_WT_WINTER));
+      seasonWPDetails.getWpDocuments()
+            .addAll(
+                  getWPDocs(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId(), CCIConstants.WP_WT_WINTER,
+                        CCIConstants.WP_WT_WINTER_ID));
       // program allocations not complete
 
       return seasonWPDetails;
@@ -1774,6 +1780,7 @@ public class SeasonServiceImplUtil {
                J1HSNotes note = new J1HSNotes();
                note.setSeasonId(prgNote.getSeason().getSeasonId());
                note.setSeasonProgramId(seasonProgramId);
+               note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                note.setNote(prgNote.getProgramNote());
                j1hsNotes.add(note);
             }
@@ -1797,6 +1804,7 @@ public class SeasonServiceImplUtil {
                J1HSDocuments documents = new J1HSDocuments();
                documents.setSeasonId(programDocument.getSeason().getSeasonId());
                documents.setSeasonProgramId(seasonProgramId);
+               documents.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
                documents.setFileName(programDocument.getDocumentInformation().getFileName());
                documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
@@ -1818,7 +1826,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<GHTSection3Notes> getGHTHSAProgramNotes(Integer seasonId, Integer seasonProgramId) {
-      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_HS_ABRD);
+      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_HS_ABRD, CCIConstants.GHT_HS_ABRD_ID);
    }
 
    /**
@@ -1827,7 +1835,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<GHTSection3Notes> getGHTLSProgramNotes(Integer seasonId, Integer seasonProgramId) {
-      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_LANG_SCL);
+      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_LANG_SCL, CCIConstants.GHT_LANG_SCL_ID);
    }
 
    /**
@@ -1836,7 +1844,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<GHTSection3Notes> getGHTTAProgramNotes(Integer seasonId, Integer seasonProgramId) {
-      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_TEACH_ABRD);
+      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_TEACH_ABRD, CCIConstants.GHT_TEACH_ABRD_ID);
    }
 
    /**
@@ -1845,7 +1853,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<GHTSection3Notes> getGHTVAProgramNotes(Integer seasonId, Integer seasonProgramId) {
-      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_VOL_ABRD);
+      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_VOL_ABRD, CCIConstants.GHT_VOL_ABRD_ID);
    }
 
    /**
@@ -1854,7 +1862,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<GHTSection3Notes> getGHTWAProgramNotes(Integer seasonId, Integer seasonProgramId) {
-      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_WRK_ABRD);
+      return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_WRK_ABRD, CCIConstants.GHT_WRK_ABRD_ID);
    }
 
    /**
@@ -1862,7 +1870,7 @@ public class SeasonServiceImplUtil {
     * @param ghtNotes
     * @param prgNote
     */
-   private List<GHTSection3Notes> getGHTNotes(Integer seasonId, Integer seasonProgramId, String programType) {
+   private List<GHTSection3Notes> getGHTNotes(Integer seasonId, Integer seasonProgramId, String programType, Integer departmentProgramId) {
       List<GHTSection3Notes> ghtNotes = null;
       List<SeasonProgramNote> ghtProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
       if (ghtProgramNotes != null) {
@@ -1872,6 +1880,7 @@ public class SeasonServiceImplUtil {
                GHTSection3Notes notes = new GHTSection3Notes();
                notes.setSeasonId(prgNote.getSeason().getSeasonId());
                notes.setSeasonProgramId(seasonProgramId);
+               notes.setDepartmentProgramId(departmentProgramId);
                notes.setNote(prgNote.getProgramNote());
                ghtNotes.add(notes);
             }
@@ -1886,7 +1895,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<WPNotes> getWPSummerNotes(Integer seasonId, Integer seasonProgramId) {
-      return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_SUMMER);
+      return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_SUMMER, CCIConstants.WP_WT_SUMMER_ID);
    }
 
    /**
@@ -1895,7 +1904,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<WPNotes> getWPSpringNotes(Integer seasonId, Integer seasonProgramId) {
-      return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_SPRING);
+      return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_SPRING, CCIConstants.WP_WT_SPRING_ID);
    }
 
    /**
@@ -1904,7 +1913,7 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public List<WPNotes> getWPWinterNotes(Integer seasonId, Integer seasonProgramId) {
-      return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_WINTER);
+      return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_WINTER, CCIConstants.WP_WT_WINTER_ID);
    }
 
    /**
@@ -1913,7 +1922,7 @@ public class SeasonServiceImplUtil {
     * @param wpNotes
     * @return
     */
-   private List<WPNotes> getWPNotes(Integer seasonId, Integer seasonProgramId, String programType) {
+   private List<WPNotes> getWPNotes(Integer seasonId, Integer seasonProgramId, String programType, Integer departmentProgramId) {
       List<WPNotes> wpNotes = null;
       List<SeasonProgramNote> wpProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
       if (wpProgramNotes != null) {
@@ -1923,6 +1932,7 @@ public class SeasonServiceImplUtil {
                WPNotes notes = new WPNotes();
                notes.setSeasonId(prgNote.getSeason().getSeasonId());
                notes.setSeasonProgramId(seasonProgramId);
+               notes.setDepartmentProgramId(departmentProgramId);
                notes.setNote(prgNote.getProgramNote());
                wpNotes.add(notes);
             }
@@ -2012,7 +2022,7 @@ public class SeasonServiceImplUtil {
     * @param seasonProgramId
     * @return
     */
-   public List<WPDocuments> getWPDocs(Integer seasonId, Integer seasonProgramId, String programType) {
+   public List<WPDocuments> getWPDocs(Integer seasonId, Integer seasonProgramId, String programType, Integer departmentProgramId) {
       List<WPDocuments> wpDocuments = null;
       List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
       if (seasonProgramDocuments != null) {
@@ -2022,6 +2032,7 @@ public class SeasonServiceImplUtil {
                WPDocuments documents = new WPDocuments();
                documents.setSeasonId(programDocument.getSeason().getSeasonId());
                documents.setSeasonProgramId(seasonProgramId);
+               documents.setDepartmentProgramId(departmentProgramId);
                documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
                documents.setFileName(programDocument.getDocumentInformation().getFileName());
                documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
