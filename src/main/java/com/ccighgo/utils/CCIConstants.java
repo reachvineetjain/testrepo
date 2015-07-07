@@ -101,6 +101,11 @@ public class CCIConstants {
    public static final String DEPT_ACCOUNTING = "Accounting";
    public static final String DEPT_SYSTEM= "System";
    
-   
+   //department program options
+   public static final String AUGUST_FY= "Aug-FY";
+   public static final String JANUARY_FY= "Jan-FY";
+   public static final String JOB_FAIR= "JF";
+   public static final String SELF_PLACED= "SF";
+   public static final String DIRECT_PLACEMENT= "DP";
 
 }

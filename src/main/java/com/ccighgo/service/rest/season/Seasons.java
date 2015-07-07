@@ -28,6 +28,7 @@ import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
+import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonDepartmentNotes;
@@ -1104,14 +1105,14 @@ public class Seasons {
    @GET
    @Path("wp/summer/view/allocation/details/{seasonProgramId}")
    @Produces("application/json")
-   public WPSectionOne getWPSumAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+   public WPProgramAllocations getWPSumAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
       return seasonServices.getWPSumAllocationDetails(seasonProgramId);
    }
 
    @GET
    @Path("wp/summer/edit/allocation/details/{seasonProgramId}")
    @Produces("application/json")
-   public WPSectionOne editWPSumAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+   public WPProgramAllocations editWPSumAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
       return seasonServices.getWPSumAllocationDetails(seasonProgramId);
    }
 
@@ -1119,7 +1120,7 @@ public class Seasons {
    @Path("wp/summer/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPSumAllocationDetails(WPSectionOne wpSectionOne) {
+   public WPProgramAllocations updateWPSumAllocationDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPSumAllocationDetails(wpSectionOne);
    }
 
@@ -1200,14 +1201,14 @@ public class Seasons {
    @GET
    @Path("wp/spring/view/allocation/details/{seasonProgramId}")
    @Produces("application/json")
-   public WPSectionOne getWPSpringAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+   public WPProgramAllocations getWPSpringAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
       return seasonServices.getWPSpringAllocationDetails(seasonProgramId);
    }
 
    @GET
    @Path("wp/spring/edit/allocation/details/{seasonProgramId}")
    @Produces("application/json")
-   public WPSectionOne editWPSpringAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+   public WPProgramAllocations editWPSpringAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
       return seasonServices.getWPSpringAllocationDetails(seasonProgramId);
    }
 
@@ -1215,7 +1216,7 @@ public class Seasons {
    @Path("wp/spring/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPSpringAllocationDetails(WPSectionOne wpSectionOne) {
+   public WPProgramAllocations updateWPSpringAllocationDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPSpringAllocationDetails(wpSectionOne);
    }
 
@@ -1296,22 +1297,22 @@ public class Seasons {
    @GET
    @Path("wp/winter/view/allocation/details/{seasonProgramId}")
    @Produces("application/json")
-   public WPSectionOne getWPWinterAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+   public WPProgramAllocations getWPWinterAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
       return seasonServices.getWPWinterAllocationDetails(seasonProgramId);
    }
 
    @GET
    @Path("wp/winter/edit/allocation/details/{seasonProgramId}")
    @Produces("application/json")
-   public WPSectionOne editWPWinterAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
-      return seasonServices.editWPWinterAllocationDetails(seasonProgramId);
+   public WPProgramAllocations editWPWinterAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+      return seasonServices.getWPWinterAllocationDetails(seasonProgramId);
    }
 
    @POST
    @Path("wp/winter/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPSectionOne updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
+   public WPProgramAllocations updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
       return seasonServices.updateWPWinterAllocationDetails(wpSectionOne);
    }
 

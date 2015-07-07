@@ -51,33 +51,33 @@
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="jobFairMaxParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="jobFairExpectedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="jobFairAcceptedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="jobFairPendingVerification" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="jobFairCCIReview" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="jobFairRemainingParticpants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="jobFairMaxParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="jobFairExpectedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="jobFairAcceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="jobFairPendingVerification" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="jobFairCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="jobFairRemainingParticpants" type="xsd:int" minOccurs="0" maxOccurs="1" />
          
-         <xsd:element name="selfPlacedMaxParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="selfPlacedExpectedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="selfPlacedAcceptedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="selfPlacedPendingVerification" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="selfPlacedCCIReview" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="selfPlacedRemainingParticpants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="selfPlacedMaxParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="selfPlacedExpectedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="selfPlacedAcceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="selfPlacedPendingVerification" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="selfPlacedCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="selfPlacedRemainingParticpants" type="xsd:int" minOccurs="0" maxOccurs="1" />
          
-         <xsd:element name="directPlcmntMaxParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="directPlcmntExpectedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="directPlcmntAcceptedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="directPlcmntPendingVerification" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="directPlcmntCCIReview" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="directPlcmntRemainingParticpants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="directPlcmntMaxParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="directPlcmntExpectedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="directPlcmntAcceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="directPlcmntPendingVerification" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="directPlcmntCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="directPlcmntRemainingParticpants" type="xsd:int" minOccurs="0" maxOccurs="1" />
          
-         <xsd:element name="totalMaxParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalExpectedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalAcceptedParticipants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalPendingVerification" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalCCIReview" type="xsd:integer" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalRemainingParticpants" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalMaxParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalExpectedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalAcceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalPendingVerification" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalRemainingParticpants" type="xsd:int" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
