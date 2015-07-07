@@ -8,26 +8,24 @@
 
 package com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for WPCAPProgramAllocations complex type.
+ * <p>Java class for SeasonWPCAPNotes complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="WPCAPProgramAllocations">
+ * &lt;complexType name="SeasonWPCAPNotes">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="seasonId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="seasonProgramId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="programAllocationDetails" type="{http://www.ccighgo.com/seasonwpcapdetails}WPCAPProgramAllocationDetails" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="noteValue" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,16 +35,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "WPCAPProgramAllocations", propOrder = {
+@XmlType(name = "SeasonWPCAPNotes", propOrder = {
     "seasonId",
     "seasonProgramId",
-    "programAllocationDetails"
+    "noteValue"
 })
-public class WPCAPProgramAllocations {
+public class SeasonWPCAPNotes {
 
     protected int seasonId;
     protected int seasonProgramId;
-    protected List<WPCAPProgramAllocationDetails> programAllocationDetails;
+    protected String noteValue;
 
     /**
      * Gets the value of the seasonId property.
@@ -81,32 +79,27 @@ public class WPCAPProgramAllocations {
     }
 
     /**
-     * Gets the value of the programAllocationDetails property.
+     * Gets the value of the noteValue property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the programAllocationDetails property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getProgramAllocationDetails().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link WPCAPProgramAllocationDetails }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public List<WPCAPProgramAllocationDetails> getProgramAllocationDetails() {
-        if (programAllocationDetails == null) {
-            programAllocationDetails = new ArrayList<WPCAPProgramAllocationDetails>();
-        }
-        return this.programAllocationDetails;
+    public String getNoteValue() {
+        return noteValue;
+    }
+
+    /**
+     * Sets the value of the noteValue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNoteValue(String value) {
+        this.noteValue = value;
     }
 
 }

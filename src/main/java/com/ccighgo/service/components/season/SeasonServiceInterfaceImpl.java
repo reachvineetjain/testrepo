@@ -31,7 +31,6 @@ import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.CcighgoServiceException;
-import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
@@ -45,8 +44,6 @@ import com.ccighgo.jpa.repositories.SeasonHSPAllocationRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
-import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
-import com.ccighgo.jpa.repositories.SeasonProgramNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonTADetailsRepository;
@@ -64,10 +61,8 @@ import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Da
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
-import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSDocuments;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
-import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSNotes;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
 import com.ccighgo.service.transport.season.beans.seasonprgdoc.SeasonProgramDocument;
@@ -234,7 +229,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public SeasonBean viewSeason(String id) {
       ValidationUtils.isValidSeasonId(id);
       try {
-         seasonRepository.flush();
          Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
          if (seasonEntity != null) {
             SeasonBean seasonBean = new SeasonBean();
@@ -709,6 +703,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          seasonHSPF1Details.setAccounting(seasonServiceImplUtil.getHSPF1Accounting(allF1Details));
          seasonHSPF1Details.setFieldSettings(seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details));
          seasonHSPF1Details.setProgramAllocations(seasonServiceImplUtil.getHSPF1ProgramAllocations(allF1Details));
+         seasonHSPF1Details.getNotes().addAll(seasonServiceImplUtil.getHSPF1Notes(allF1Details));
+         seasonHSPF1Details.getDocuments().addAll(seasonServiceImplUtil.getHSPF1Documents(allF1Details));
          return seasonHSPF1Details;
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
