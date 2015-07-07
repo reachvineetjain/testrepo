@@ -3,6 +3,7 @@ package com.ccighgo.service.components.season;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
+import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -12,12 +13,15 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSField
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSProgramAllocations;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
+import com.ccighgo.service.transport.season.beans.seasonprgdoc.SeasonProgramDocument;
+import com.ccighgo.service.transport.season.beans.seasonprgnote.SeasonProgramNote;
 import com.ccighgo.service.transport.season.beans.seasonprogram.SeasonPrograms;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPSectionOne;
 import com.ccighgo.service.transport.seasons.beans.season.SeasonBean;
+import com.ccighgo.service.transport.seasons.beans.season.SeasonDepartmentNotes;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1Accounting;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStart1StSemesterDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonhspf1details.HSPF1AugustStartFullYearDetails;
@@ -693,5 +697,37 @@ public interface SeasonServiceInterface {
     * @return
     */
    public CloneSeason cloneSeason(CloneSeason cloneSeason);
+   
+   /**
+    * Method adds notes on high level season
+    * 
+    * @param seasonDepartmentNotes
+    * @return
+    */
+   public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes);
+
+   /**
+    * Method adds document to a high level season
+    * 
+    * @param seasonDepartmentDocument
+    * @return
+    */
+   public SeasonDepartmentDocument addSeasonDepartmentDoc(SeasonDepartmentDocument seasonDepartmentDocument);
+
+   /**
+    * Method adds note to a season program based on season id and program id
+    * 
+    * @param seasonProgramNote
+    * @return
+    */
+   public SeasonProgramNote addSeasonProgramNote(SeasonProgramNote seasonProgramNote);
+
+   /**
+    * Method adds document to a season program based on season id and program id
+    * 
+    * @param seasonProgramDocument
+    * @return
+    */
+   public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument);
 
 }
