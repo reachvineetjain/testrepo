@@ -101,11 +101,38 @@ public class CCIConstants {
    public static final String DEPT_ACCOUNTING = "Accounting";
    public static final String DEPT_SYSTEM= "System";
    
-   //department program options
-   public static final String AUGUST_FY= "Aug-FY";
-   public static final String JANUARY_FY= "Jan-FY";
-   public static final String JOB_FAIR= "JF";
-   public static final String SELF_PLACED= "SF";
-   public static final String DIRECT_PLACEMENT= "DP";
+   //department program options code
+   public static final String AUGUST_FY_J1= "Aug-FY";
+   public static final String JANUARY_FY_J1= "Jan-FY";
+   public static final String AUGUST_FY_F1= "Aug-FY";
+   public static final String JANUARY_FY_F1= "Jan-FY";
+   public static final String JOB_FAIR_SUMMER= "JF";
+   public static final String SELF_PLACED_SUMMER= "SF";
+   public static final String DIRECT_PLACEMENT_SUMMER= "DP";
+   public static final String JOB_FAIR_SPRING= "JF";
+   public static final String SELF_PLACED_SPRING= "SF";
+   public static final String DIRECT_PLACEMENT_SPRING= "DP";
+   public static final String JOB_FAIR_WINTER= "JF";
+   public static final String SELF_PLACED_WINTER= "SF";
+   public static final String DIRECT_PLACEMENT_WINTER= "DP";
+   public static final String CAP_INTERNSHIP= "Int-SP";
+   public static final String CAP_TRAINEE= "Trn-SP";
+   
+   //department program options id
+   public static final Integer AUGUST_FY_J1_ID= 1;
+   public static final Integer AUGUST_FY_F1_ID= 2;
+   public static final Integer JANUARY_FY_J1_ID= 3;
+   public static final Integer JANUARY_FY_F1_ID= 4;
+   public static final Integer JOB_FAIR_SUMMER_ID= 10;
+   public static final Integer SELF_PLACED_SUMMER_ID= 11;
+   public static final Integer DIRECT_PLACEMENT_SUMMER_ID= 12;
+   public static final Integer JOB_FAIR_WINTER_ID= 13;
+   public static final Integer SELF_PLACED_WINTER_ID= 14;
+   public static final Integer DIRECT_PLACEMENT_WINTER_ID= 15;
+   public static final Integer JOB_FAIR_SPRING_ID= 16;
+   public static final Integer SELF_PLACED_SPRING_ID= 17;
+   public static final Integer DIRECT_PLACEMENT_SPRING_ID= 18;
+   public static final Integer CAP_INTERNSHIP_ID= 19;
+   public static final Integer CAP_TRAINEE_ID= 20;
 
 }

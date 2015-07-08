@@ -1120,8 +1120,8 @@ public class Seasons {
    @Path("wp/summer/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPProgramAllocations updateWPSumAllocationDetails(WPSectionOne wpSectionOne) {
-      return seasonServices.updateWPSumAllocationDetails(wpSectionOne);
+   public WPProgramAllocations updateWPSumAllocationDetails(WPProgramAllocations wpProgramAllocations) {
+      return seasonServices.updateWPSumAllocationDetails(wpProgramAllocations);
    }
 
    // wp spring full details
@@ -1216,8 +1216,8 @@ public class Seasons {
    @Path("wp/spring/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPProgramAllocations updateWPSpringAllocationDetails(WPSectionOne wpSectionOne) {
-      return seasonServices.updateWPSpringAllocationDetails(wpSectionOne);
+   public WPProgramAllocations updateWPSpringAllocationDetails(WPProgramAllocations wpProgramAllocations) {
+      return seasonServices.updateWPSpringAllocationDetails(wpProgramAllocations);
    }
 
    // wp winter full details
@@ -1312,8 +1312,8 @@ public class Seasons {
    @Path("wp/winter/update/allocation/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public WPProgramAllocations updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
-      return seasonServices.updateWPWinterAllocationDetails(wpSectionOne);
+   public WPProgramAllocations updateWPWinterAllocationDetails(WPProgramAllocations wpProgramAllocations) {
+      return seasonServices.updateWPWinterAllocationDetails(wpProgramAllocations);
    }
 
    @POST

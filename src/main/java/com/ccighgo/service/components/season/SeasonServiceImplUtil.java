@@ -1566,6 +1566,9 @@ public class SeasonServiceImplUtil {
       seasonWnTWinterDetail.setProgramName(seasonWPDetails.getWpBasicDetail().getProgramName());
       SeasonStatus seasonStatus = seasonStatusRepository.findSeasonStatusByName(seasonWPDetails.getWpBasicDetail().getProgramStatus());
       seasonWnTWinterDetail.setSeasonStatus(seasonStatus);
+      if(seasonWPDetails.getWpProgramAllocations()!=null){
+         updateWPWinterAllocationDetails(seasonWPDetails.getWpProgramAllocations());
+      }
       if (seasonWPDetails.getWpNotes() != null) {
          updateWPNotes(seasonWPDetails, seasonWnTWinterDetail.getSeason(), CCIConstants.WP_WT_WINTER_ID);
       }
@@ -1634,15 +1637,15 @@ public class SeasonServiceImplUtil {
             wpProgramAllocations.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
             for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
                if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_WINTER_ID) {
-                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR)) {
+                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_WINTER)) {
                      wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax());
                      totalMaxParticipants += seasonWPAllocation.getMaxPax();
                   }
-                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED)) {
+                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_WINTER)) {
                      wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax());
                      totalMaxParticipants += seasonWPAllocation.getMaxPax();
                   }
-                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT)) {
+                  if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_WINTER)) {
                      wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax());
                      totalMaxParticipants += seasonWPAllocation.getMaxPax();
                   }
@@ -1673,9 +1676,20 @@ public class SeasonServiceImplUtil {
       return wpProgramAllocations;
    }
 
-   public WPProgramAllocations updateWPWinterAllocationDetails(WPSectionOne wpSectionOne) {
-      // TODO Auto-generated method stub
-      return null;
+   public WPProgramAllocations updateWPWinterAllocationDetails(WPProgramAllocations wpProgramAllocations) {
+      WPProgramAllocations returnObject = null;
+      if (wpProgramAllocations != null && wpProgramAllocations.getSeasonId() > 0 && wpProgramAllocations.getSeasonProgramId() > 0) {
+         List<SeasonWPAllocation> wpAllocations = seasonWPAllocationRepository.findSeasonWPAllocationBySeasonId(wpProgramAllocations.getSeasonId());
+         List<SeasonWPAllocation> updatedList = new ArrayList<SeasonWPAllocation>();
+         for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
+            if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_SPRING_ID) {
+               updateWPProgramAllocation(wpProgramAllocations, updatedList, seasonWPAllocation);
+            }
+         }
+         seasonWPAllocationRepository.save(updatedList);
+         returnObject = getWPWinterAllocationDetails(String.valueOf(wpProgramAllocations.getSeasonProgramId()));
+      }
+      return returnObject;
    }
 
    // WP summer
@@ -2351,6 +2365,32 @@ public class SeasonServiceImplUtil {
 
       }
       seasonProgramNotesRepository.save(seasonProgramNotes);
+   }
+
+   /**
+    * @param wpProgramAllocations
+    * @param updatedList
+    * @param seasonWPAllocation
+    */
+   public void updateWPProgramAllocation(WPProgramAllocations wpProgramAllocations, List<SeasonWPAllocation> updatedList, SeasonWPAllocation seasonWPAllocation) {
+      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_SUMMER)) {
+         SeasonWPAllocation allocation = new SeasonWPAllocation();
+         allocation = seasonWPAllocation;
+         allocation.setMaxPax(wpProgramAllocations.getJobFairMaxParticipants());
+         updatedList.add(allocation);
+      }
+      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_SUMMER)) {
+         SeasonWPAllocation allocation = new SeasonWPAllocation();
+         allocation = seasonWPAllocation;
+         allocation.setMaxPax(wpProgramAllocations.getSelfPlacedMaxParticipants());
+         updatedList.add(allocation);
+      }
+      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_SUMMER)) {
+         SeasonWPAllocation allocation = new SeasonWPAllocation();
+         allocation = seasonWPAllocation;
+         allocation.setMaxPax(wpProgramAllocations.getDirectPlcmntMaxParticipants());
+         updatedList.add(allocation);
+      }
    }
 
 }
