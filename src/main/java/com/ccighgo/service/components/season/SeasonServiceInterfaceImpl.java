@@ -1909,14 +1909,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Transactional
    public CloneSeason cloneSeason(CloneSeason cloneSeason) {
-      if (cloneSeason.getExistingSeasonId() == 0 || cloneSeason.getExistingSeasonId() < 0) {
+      if (cloneSeason.getSeasonId() == 0 || cloneSeason.getSeasonId() < 0) {
          // throw exception
       }
       if (cloneSeason.getDepartmentId() == 0 || cloneSeason.getDepartmentId() < 0) {
          // throw exception
       }
       try {
-         Season existingSeason = seasonRepository.findOne(cloneSeason.getExistingSeasonId());
+         Season existingSeason = seasonRepository.findOne(cloneSeason.getSeasonId());
          if (existingSeason != null) {
             LookupDepartment department = existingSeason.getLookupDepartment();
             if (department != null) {
