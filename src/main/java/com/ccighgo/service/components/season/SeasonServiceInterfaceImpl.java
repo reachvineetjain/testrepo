@@ -491,16 +491,16 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                for (SeasonHSPAllocation hspAllocation : hspAllocations) {
                   if (hspAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                      if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                        j1hsProgramAllocations.setAugStartUnGuarnteedParticipants(hspAllocation.getMaxUnguaranteedPax());
-                        totalUnGuarant += hspAllocation.getMaxUnguaranteedPax();
-                        j1hsProgramAllocations.setAugStartGuarnteedParticipants(hspAllocation.getMaxGuaranteedPax());
-                        totalGurant += hspAllocation.getMaxGuaranteedPax();
+                        j1hsProgramAllocations.setAugStartUnGuarnteedParticipants(hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0);
+                        totalUnGuarant += hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0;
+                        j1hsProgramAllocations.setAugStartGuarnteedParticipants(hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0);
+                        totalGurant += hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0;
                      }
                      if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                        j1hsProgramAllocations.setJanStartUnGuarnteedParticipants(hspAllocation.getMaxUnguaranteedPax());
-                        totalUnGuarant += hspAllocation.getMaxUnguaranteedPax();
-                        j1hsProgramAllocations.setJanStartGuarnteedParticipants(hspAllocation.getMaxGuaranteedPax());
-                        totalGurant += hspAllocation.getMaxGuaranteedPax();
+                        j1hsProgramAllocations.setJanStartUnGuarnteedParticipants(hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0);
+                        totalUnGuarant += hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0;
+                        j1hsProgramAllocations.setJanStartGuarnteedParticipants(hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0);
+                        totalGurant += hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0;
                      }
                   }
                }
@@ -1533,16 +1533,16 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
                   if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_SUMMER_ID) {
                      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_SUMMER)) {
-                        wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax());
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                        wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
                      }
                      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_SUMMER)) {
-                        wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax());
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                        wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
                      }
                      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_SUMMER)) {
-                        wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax());
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                        wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
                      }
                   }
                }
@@ -1733,16 +1733,16 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
                   if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_SPRING_ID) {
                      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_SPRING)) {
-                        wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax());
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                        wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
                      }
                      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_SPRING)) {
-                        wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax());
+                        wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
                         totalMaxParticipants += seasonWPAllocation.getMaxPax();
                      }
                      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_SPRING)) {
-                        wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax());
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax();
+                        wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
                      }
                   }
                }
