@@ -571,7 +571,7 @@ public interface SeasonServiceInterface {
     * @param wpSectionOne
     * @return
     */
-   public WPProgramAllocations updateWPSumAllocationDetails(WPSectionOne wpSectionOne);
+   public WPProgramAllocations updateWPSumAllocationDetails(WPProgramAllocations wpProgramAllocations);
 
    /**
     * @param seasonProgramId
@@ -619,7 +619,7 @@ public interface SeasonServiceInterface {
     * @param wpSectionOne
     * @return
     */
-   public WPProgramAllocations updateWPSpringAllocationDetails(WPSectionOne wpSectionOne);
+   public WPProgramAllocations updateWPSpringAllocationDetails(WPProgramAllocations wpProgramAllocations);
 
    /**
     * @param seasonProgramId
@@ -691,7 +691,7 @@ public interface SeasonServiceInterface {
     * @param wpSectionOne
     * @return
     */
-   public WPProgramAllocations updateWPWinterAllocationDetails(WPSectionOne wpSectionOne);
+   public WPProgramAllocations updateWPWinterAllocationDetails(WPProgramAllocations wpProgramAllocations);
 
    /**
     * @param cloneSeason
