@@ -1909,6 +1909,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Transactional
    public CloneSeason cloneSeason(CloneSeason cloneSeason) {
+      CloneSeason returnObject = null;
       if (cloneSeason.getSeasonId() == 0 || cloneSeason.getSeasonId() < 0) {
          // throw exception
       }
@@ -1941,6 +1942,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   if (seasonF1Detail != null) {
                      seasonF1DetailsRepository.save(seasonF1Detail);
                   }
+                  cloneSeason.setSeasonId(clonedHSPSeason.getSeasonId());
+                  returnObject = cloneSeason;
                }
                if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
                   Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
@@ -1962,6 +1965,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   seasonWTSummerRepository.save(seasonWnTSummerDetail);
                   seasonWTWinterRepository.save(seasonWnTWinterDetail);
                   seasonCAPDetailsRepository.save(seasonCAPDetail);
+                  cloneSeason.setSeasonId(clonedWPSeason.getSeasonId());
+                  returnObject = cloneSeason;
 
                }
                if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
@@ -1979,6 +1984,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   seasonTADetailsRepository.save(seasonTADetail);
                   seasonVADetailsRepository.save(seasonVADetail);
                   seasonWADetailsRepository.save(seasonWADetail);
+                  cloneSeason.setSeasonId(clonedGHTSeason.getSeasonId());
+                  returnObject = cloneSeason;
 
                } else {
                   // update header type of department not applicable
@@ -1988,7 +1995,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       } catch (CcighgoServiceException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
-      return cloneSeason;
+      return returnObject;
    }
 
    @Override
