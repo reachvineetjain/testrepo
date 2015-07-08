@@ -1648,6 +1648,25 @@ public class SeasonServiceImplUtil {
                   }
                }
             }
+            wpProgramAllocations.setDirectPlcmntAcceptedParticipants(0);
+            wpProgramAllocations.setDirectPlcmntCCIReview(0);
+            wpProgramAllocations.setDirectPlcmntExpectedParticipants(0);
+            wpProgramAllocations.setDirectPlcmntPendingVerification(0);
+            wpProgramAllocations.setJobFairAcceptedParticipants(0);
+            wpProgramAllocations.setJobFairCCIReview(0);
+            wpProgramAllocations.setJobFairExpectedParticipants(0);
+            wpProgramAllocations.setJobFairPendingVerification(0);
+            wpProgramAllocations.setJobFairRemainingParticpants(0);
+            wpProgramAllocations.setSelfPlacedAcceptedParticipants(0);
+            wpProgramAllocations.setSelfPlacedCCIReview(0);
+            wpProgramAllocations.setSelfPlacedExpectedParticipants(0);
+            wpProgramAllocations.setSelfPlacedPendingVerification(0);
+            wpProgramAllocations.setSelfPlacedRemainingParticpants(0);
+            wpProgramAllocations.setTotalAcceptedParticipants(0);
+            wpProgramAllocations.setTotalCCIReview(0);
+            wpProgramAllocations.setTotalExpectedParticipants(0);
+            wpProgramAllocations.setTotalPendingVerification(0);
+            wpProgramAllocations.setTotalRemainingParticpants(0);
             wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
          }
       }
@@ -1819,6 +1838,9 @@ public class SeasonServiceImplUtil {
                note.setSeasonProgramId(seasonProgramId);
                note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                note.setNote(prgNote.getProgramNote());
+               note.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               note.setCreatedBy(login.getLoginName());
                j1hsNotes.add(note);
             }
          }
@@ -1919,6 +1941,9 @@ public class SeasonServiceImplUtil {
                notes.setSeasonProgramId(seasonProgramId);
                notes.setDepartmentProgramId(departmentProgramId);
                notes.setNote(prgNote.getProgramNote());
+               notes.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               notes.setCreatedBy(login.getLoginName());
                ghtNotes.add(notes);
             }
          }
@@ -1971,6 +1996,9 @@ public class SeasonServiceImplUtil {
                notes.setSeasonProgramId(seasonProgramId);
                notes.setDepartmentProgramId(departmentProgramId);
                notes.setNote(prgNote.getProgramNote());
+               notes.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               notes.setCreatedBy(login.getLoginName());
                wpNotes.add(notes);
             }
          }

@@ -501,6 +501,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      }
                   }
                }
+               j1hsProgramAllocations.setAugStartAcceptedParticipants(0);
+               j1hsProgramAllocations.setAugStartRemainingParticpants(0);
+               j1hsProgramAllocations.setJanStartAcceptedParticipants(0);
+               j1hsProgramAllocations.setJanStartRemainingParticpants(0);
+               j1hsProgramAllocations.setTotalAcceptedParticipants(0);
+               j1hsProgramAllocations.setTotalRemainingParticpants(0);
                j1hsProgramAllocations.setTotalUnGuarnteedParticipants(totalUnGuarant);
                j1hsProgramAllocations.setTotalGuarnteedParticipants(totalGurant);
             }
@@ -1512,6 +1518,25 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      }
                   }
                }
+               wpProgramAllocations.setDirectPlcmntAcceptedParticipants(0);
+               wpProgramAllocations.setDirectPlcmntCCIReview(0);
+               wpProgramAllocations.setDirectPlcmntExpectedParticipants(0);
+               wpProgramAllocations.setDirectPlcmntPendingVerification(0);
+               wpProgramAllocations.setJobFairAcceptedParticipants(0);
+               wpProgramAllocations.setJobFairCCIReview(0);
+               wpProgramAllocations.setJobFairExpectedParticipants(0);
+               wpProgramAllocations.setJobFairPendingVerification(0);
+               wpProgramAllocations.setJobFairRemainingParticpants(0);
+               wpProgramAllocations.setSelfPlacedAcceptedParticipants(0);
+               wpProgramAllocations.setSelfPlacedCCIReview(0);
+               wpProgramAllocations.setSelfPlacedExpectedParticipants(0);
+               wpProgramAllocations.setSelfPlacedPendingVerification(0);
+               wpProgramAllocations.setSelfPlacedRemainingParticpants(0);
+               wpProgramAllocations.setTotalAcceptedParticipants(0);
+               wpProgramAllocations.setTotalCCIReview(0);
+               wpProgramAllocations.setTotalExpectedParticipants(0);
+               wpProgramAllocations.setTotalPendingVerification(0);
+               wpProgramAllocations.setTotalRemainingParticpants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
             }
          }
@@ -1674,6 +1699,25 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      }
                   }
                }
+               wpProgramAllocations.setDirectPlcmntAcceptedParticipants(0);
+               wpProgramAllocations.setDirectPlcmntCCIReview(0);
+               wpProgramAllocations.setDirectPlcmntExpectedParticipants(0);
+               wpProgramAllocations.setDirectPlcmntPendingVerification(0);
+               wpProgramAllocations.setJobFairAcceptedParticipants(0);
+               wpProgramAllocations.setJobFairCCIReview(0);
+               wpProgramAllocations.setJobFairExpectedParticipants(0);
+               wpProgramAllocations.setJobFairPendingVerification(0);
+               wpProgramAllocations.setJobFairRemainingParticpants(0);
+               wpProgramAllocations.setSelfPlacedAcceptedParticipants(0);
+               wpProgramAllocations.setSelfPlacedCCIReview(0);
+               wpProgramAllocations.setSelfPlacedExpectedParticipants(0);
+               wpProgramAllocations.setSelfPlacedPendingVerification(0);
+               wpProgramAllocations.setSelfPlacedRemainingParticpants(0);
+               wpProgramAllocations.setTotalAcceptedParticipants(0);
+               wpProgramAllocations.setTotalCCIReview(0);
+               wpProgramAllocations.setTotalExpectedParticipants(0);
+               wpProgramAllocations.setTotalPendingVerification(0);
+               wpProgramAllocations.setTotalRemainingParticpants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
             }
          }
