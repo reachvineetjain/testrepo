@@ -1323,3 +1323,28 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`AddendumDocumentInformation` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
  );
+ 
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonUpdateLog`
+-- -----------------------------------------------------
+CREATE TABLE `cci_gh_go`.`SeasonUpdateLog` (
+  `updateLogId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) DEFAULT NULL,
+  `departmentProgramId` INT(11) DEFAULT NULL,
+  `updateLogObject` LONGBLOB,
+  `modifiedBy` INT(11) DEFAULT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`updateLogId`),
+  INDEX `FK_SeasonUpdateLog_Season_idx` (`seasonId` ASC),
+  INDEX `FK_SeasonUpdateLog_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  CONSTRAINT `FK_SeasonUpdateLog_Season` 
+    FOREIGN KEY (`seasonId`) 
+	REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonUpdateLog_DepartmentPrograms` 
+    FOREIGN KEY (`departmentProgramId`) 
+	REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
