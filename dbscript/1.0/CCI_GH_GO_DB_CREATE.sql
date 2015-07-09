@@ -1347,4 +1347,4 @@ CREATE TABLE `cci_gh_go`.`SeasonUpdateLog` (
 	REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
 	ON DELETE NO ACTION
     ON UPDATE NO ACTION
-)
+);
