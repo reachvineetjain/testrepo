@@ -1179,7 +1179,7 @@ CONSTRAINT `FK_SeasonProgramNotes_DepartmentPrograms`
 -- Table `cci_gh_go`.`DocumentType`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentType` (
-  `documentTypeId` INT(11) NOT NULL,
+  `documentTypeId` INT(11) NOT NULL AUTO_INCREMENT,
   `documentTypeName` VARCHAR(50) NULL,
   PRIMARY KEY (`documentTypeId`)
 );
@@ -1188,7 +1188,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentType` (
 -- Table `cci_gh_go`.`DocumentCategoryProcess`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentCategoryProcess` (
-  `documentCategoryProcessId` INT(11) NOT NULL,
+  `documentCategoryProcessId` INT(11) NOT NULL AUTO_INCREMENT,
   `documentCategoryProcessName` VARCHAR(50) NULL,
   PRIMARY KEY (`documentCategoryProcessId`)
 );
@@ -1197,7 +1197,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentCategoryProcess` (
 -- Table `cci_gh_go`.`DocumentTypeDocumentCategoryProcess`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentTypeDocumentCategoryProcess` (
-  `documentTypeDocumentCategoryProcessId` INT(11) NOT NULL,
+  `documentTypeDocumentCategoryProcessId` INT(11) NOT NULL AUTO_INCREMENT,
   `documentTypeId` INT(11) NULL,
   `documentCategoryProcessId` INT(11) NULL,
   `documentTypeRole` VARCHAR(50) NULL,
@@ -1220,7 +1220,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentTypeDocumentCategoryProcess` (
 -- Table `cci_gh_go`.`DocumentInformation`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentInformation` (
-  `documentInformationId` INT(11) NOT NULL,
+  `documentInformationId` INT(11) NOT NULL AUTO_INCREMENT,
   `documentTypeDocumentCategoryProcessId` INT(11) NULL,
   `documentName` VARCHAR(50) NULL,
   `fileName` VARCHAR(50) NULL,
@@ -1243,7 +1243,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`DocumentInformation` (
 -- Table `cci_gh_go`.`SeasonDepartmentDocument`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonDepartmentDocument` (
-  `seasonDepartmentDocumentID` INT(11) NOT NULL,
+  `seasonDepartmentDocumentID` INT(11) NOT NULL AUTO_INCREMENT,
   `seasonId` INT NULL,
   `documentInformationId` INT(11) NULL,
   `active` TINYINT(1) NULL,
@@ -1270,7 +1270,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonDepartmentDocument` (
 -- Table `cci_gh_go`.`SeasonProgramDocument`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonProgramDocument` (
-  `seasonProgramDocumentId` INT(11) NOT NULL,
+  `seasonProgramDocumentId` INT(11) NOT NULL AUTO_INCREMENT,
   `seasonId` INT NULL,
   `departmentProgramId` INT NULL,
   `documentInformationId` INT(11) NULL,
@@ -1304,7 +1304,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonProgramDocument` (
 -- Table `cci_gh_go`.`AddendumDocumentInformation`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`AddendumDocumentInformation` (
-  `addendumDocumentInformationId` INT(11) NOT NULL,
+  `addendumDocumentInformationId` INT(11) NOT NULL AUTO_INCREMENT,
   `documentInformationId` INT(11) NOT NULL,
   `documentName` VARCHAR(50) NULL,
   `fileName` VARCHAR(50) NULL,
