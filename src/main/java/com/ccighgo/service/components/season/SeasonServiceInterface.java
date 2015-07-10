@@ -37,6 +37,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCA
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 
 @Service
 public interface SeasonServiceInterface {
@@ -730,5 +731,10 @@ public interface SeasonServiceInterface {
     * @return
     */
    public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument);
+
+   /**
+    * Util service to get list of document types
+    */
+   public DocumentTypes getDocumentTypes();
 
 }
