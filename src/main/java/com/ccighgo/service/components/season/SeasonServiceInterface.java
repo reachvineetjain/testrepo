@@ -7,6 +7,14 @@ import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartme
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHighSchoolVisit;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHolidayHomeStayProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPLanguageBuddyProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramConfiguration;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramDetail;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPStandardSettings;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPVolunteerHomeStayProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.SeasonHspStpIhpDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
@@ -736,5 +744,101 @@ public interface SeasonServiceInterface {
     * Util service to get list of document types
     */
    public DocumentTypes getDocumentTypes();
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public SeasonHspStpIhpDetails getIHPDetails(String seasonProgramId);
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public IHPProgramDetail getIHPProgramDetails(String seasonProgramId);
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public IHPProgramConfiguration getIHPProgramConfigurationDetails(String seasonProgramId);
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public IHPStandardSettings getIHPStandardSettings(String seasonProgramId);
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public IHPVolunteerHomeStayProgram getVolHSProgram(String seasonProgramId);
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public IHPLanguageBuddyProgram getLangBuddyProgram(String seasonProgramId);
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public IHPHolidayHomeStayProgram getHolidayHSProgram(String seasonProgramId);
+
+   /**
+    * @param seasonProgramId
+    * @return
+    */
+   public IHPHighSchoolVisit getHighSchoolVisitProgram(String seasonProgramId);
+
+   /**
+    * @param seasonHspStpIhpDetails
+    * @return
+    */
+   public SeasonHspStpIhpDetails updateIHPDetails(SeasonHspStpIhpDetails seasonHspStpIhpDetails);
+
+   /**
+    * @param ihpProgramDetail
+    * @return
+    */
+   public IHPProgramDetail updateIHPProgramDetails(IHPProgramDetail ihpProgramDetail);
+
+   /**
+    * @param ihpProgramConfiguration
+    * @return
+    */
+   public IHPProgramConfiguration updateIHPProgramConfigurationDetails(IHPProgramConfiguration ihpProgramConfiguration);
+
+   /**
+    * @param ihpStandardSettings
+    * @return
+    */
+   public IHPStandardSettings updateIHPStandardSettings(IHPStandardSettings ihpStandardSettings);
+
+   /**
+    * @param ihpVolunteerHomeStayProgram
+    * @return
+    */
+   public IHPVolunteerHomeStayProgram updateVolHSProgram(IHPVolunteerHomeStayProgram ihpVolunteerHomeStayProgram);
+
+   /**
+    * @param ihpLanguageBuddyProgram
+    * @return
+    */
+   public IHPLanguageBuddyProgram updateLangBuddyProgram(IHPLanguageBuddyProgram ihpLanguageBuddyProgram);
+
+   /**
+    * @param ihpHolidayHomeStayProgram
+    * @return
+    */
+   public IHPHolidayHomeStayProgram updateHolidayHSProgram(IHPHolidayHomeStayProgram ihpHolidayHomeStayProgram);
+
+   /**
+    * @param ihpHighSchoolVisit
+    * @return
+    */
+   public IHPHighSchoolVisit updateHighSchoolVisitProgram(IHPHighSchoolVisit ihpHighSchoolVisit);
 
 }

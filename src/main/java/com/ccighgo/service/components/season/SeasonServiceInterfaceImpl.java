@@ -65,6 +65,14 @@ import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHighSchoolVisit;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHolidayHomeStayProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPLanguageBuddyProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramConfiguration;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramDetail;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPStandardSettings;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPVolunteerHomeStayProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.SeasonHspStpIhpDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSFieldSettings;
@@ -2293,6 +2301,86 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          }
       }
       return documentType;
+   }
+
+   @Override
+   public SeasonHspStpIhpDetails getIHPDetails(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public IHPProgramDetail getIHPProgramDetails(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public IHPProgramConfiguration getIHPProgramConfigurationDetails(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public IHPStandardSettings getIHPStandardSettings(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public IHPVolunteerHomeStayProgram getVolHSProgram(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public IHPLanguageBuddyProgram getLangBuddyProgram(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public IHPHolidayHomeStayProgram getHolidayHSProgram(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public IHPHighSchoolVisit getHighSchoolVisitProgram(String seasonProgramId) {
+      return null;
+   }
+
+   @Override
+   public SeasonHspStpIhpDetails updateIHPDetails(SeasonHspStpIhpDetails seasonHspStpIhpDetails) {
+      return null;
+   }
+
+   @Override
+   public IHPProgramDetail updateIHPProgramDetails(IHPProgramDetail ihpProgramDetail) {
+      return null;
+   }
+
+   @Override
+   public IHPProgramConfiguration updateIHPProgramConfigurationDetails(IHPProgramConfiguration ihpProgramConfiguration) {
+      return null;
+   }
+
+   @Override
+   public IHPStandardSettings updateIHPStandardSettings(IHPStandardSettings ihpStandardSettings) {
+      return null;
+   }
+
+   @Override
+   public IHPVolunteerHomeStayProgram updateVolHSProgram(IHPVolunteerHomeStayProgram ihpVolunteerHomeStayProgram) {
+      return null;
+   }
+
+   @Override
+   public IHPLanguageBuddyProgram updateLangBuddyProgram(IHPLanguageBuddyProgram ihpLanguageBuddyProgram) {
+      return null;
+   }
+
+   @Override
+   public IHPHolidayHomeStayProgram updateHolidayHSProgram(IHPHolidayHomeStayProgram ihpHolidayHomeStayProgram) {
+      return null;
+   }
+
+   @Override
+   public IHPHighSchoolVisit updateHighSchoolVisitProgram(IHPHighSchoolVisit ihpHighSchoolVisit) {
+      return null;
    }
 
 }
