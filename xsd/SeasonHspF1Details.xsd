@@ -114,19 +114,22 @@
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1ProgramAllocations">
-      <xsd:sequence>
+       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="programAllocationDetails" type="seasonhspf1details:HSPF1ProgramAllocationDetails" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="HSPF1ProgramAllocationDetails">
-      <xsd:sequence>
-         <xsd:element name="semesterOrTotal" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="maximumParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="acceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="remainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         
+         <xsd:element name="augustStartMaximumParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="augustStartAcceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="augustStartRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         
+         <xsd:element name="januaryStartMaximumParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="januaryStartAcceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="januaryStartRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         
+         <xsd:element name="totalMaximumParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalAcceptedParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="totalRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+         
       </xsd:sequence>
    </xsd:complexType>
 
@@ -136,10 +139,14 @@
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+          <xsd:element name="fileType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         
       </xsd:sequence>
    </xsd:complexType>
 
