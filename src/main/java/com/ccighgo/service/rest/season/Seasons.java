@@ -45,6 +45,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 
 @Path("/season/")
@@ -1026,6 +1027,29 @@ public class Seasons {
       return seasonServices.updateWPCAPTraineeDetails(wpcapTraineeDetails);
    }
 
+   // cap allocation
+   @GET
+   @Path("wp/cap/view/allocation/details/{seasonProgramId}")
+   @Produces("application/json")
+   public WPCAPProgramAllocations getWPCAPAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+      return seasonServices.getWPCAPAllocationDetails(seasonProgramId);
+   }
+
+   @GET
+   @Path("wp/cap/edit/allocation/details/{seasonProgramId}")
+   @Produces("application/json")
+   public WPCAPProgramAllocations editWPCAPAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+      return seasonServices.getWPCAPAllocationDetails(seasonProgramId);
+   }
+
+   @POST
+   @Path("wp/cap/update/allocation/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPCAPProgramAllocations updateWPCAPAllocationDetails(WPCAPProgramAllocations wpcapProgramAllocations) {
+      return seasonServices.updateWPCAPAllocationDetails(wpcapProgramAllocations);
+   }
+
    // Season WP summer, winter and spring services
 
    // wp summer full details
@@ -1323,36 +1347,36 @@ public class Seasons {
    public CloneSeason cloneSeason(CloneSeason cloneSeason) {
       return seasonServices.cloneSeason(cloneSeason);
    }
-   
+
    @POST
    @Path("add/department/note")
    @Consumes("application/json")
    @Produces("application/json")
-   public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes){
+   public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes) {
       return seasonServices.addSeasonDepartmentNote(seasonDepartmentNotes);
    }
-   
+
    @POST
    @Path("add/department/doc")
    @Consumes("application/json")
    @Produces("application/json")
-   public SeasonDepartmentDocument addSeasonDepartmentDoc(SeasonDepartmentDocument seasonDepartmentDocument){
+   public SeasonDepartmentDocument addSeasonDepartmentDoc(SeasonDepartmentDocument seasonDepartmentDocument) {
       return seasonServices.addSeasonDepartmentDoc(seasonDepartmentDocument);
    }
-   
+
    @POST
    @Path("add/program/note")
    @Consumes("application/json")
    @Produces("application/json")
-   public SeasonProgramNote addSeasonProgramNote(SeasonProgramNote seasonProgramNote){
+   public SeasonProgramNote addSeasonProgramNote(SeasonProgramNote seasonProgramNote) {
       return seasonServices.addSeasonProgramNote(seasonProgramNote);
    }
-   
+
    @POST
    @Path("add/program/doc")
    @Consumes("application/json")
    @Produces("application/json")
-   public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument){
+   public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument) {
       return seasonServices.addSeasonProgramDoc(seasonProgramDocument);
    }
 }

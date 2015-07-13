@@ -36,6 +36,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 
 @Service
@@ -162,7 +163,7 @@ public interface SeasonServiceInterface {
     * 
     * @param j1hsJanStart
     * @return J1HSJanStart
-    */ 
+    */
    public J1HSJanStart updateHSPJ1HSSeasonJanStartDetails(J1HSJanStart j1hsJanStart);
 
    /**
@@ -698,7 +699,7 @@ public interface SeasonServiceInterface {
     * @return
     */
    public CloneSeason cloneSeason(CloneSeason cloneSeason);
-   
+
    /**
     * Method adds notes on high level season
     * 
@@ -730,5 +731,35 @@ public interface SeasonServiceInterface {
     * @return
     */
    public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument);
+
+   /**
+    * Method to fetch program allocations for WP CAP
+    * 
+    * @param seasonProgramId
+    * @return
+    */
+   public WPCAPProgramAllocations getWPCAPAllocationDetails(String seasonProgramId);
+
+   /**
+    * Method update Program Allocations for WP CAP
+    * 
+    * @param wpcapProgramAllocations
+    * @return
+    */
+   public WPCAPProgramAllocations updateWPCAPAllocationDetails(WPCAPProgramAllocations wpcapProgramAllocations);
+
+   /**
+    * 
+    * @param hspf1ProgramAllocations
+    * @return
+    */
+   public HSPF1ProgramAllocations updateHSPF1AllocationDetails(HSPF1ProgramAllocations hspf1ProgramAllocations);
+
+   /**
+    * 
+    * @param seasonProgramId
+    * @return
+    */
+   public HSPF1ProgramAllocations getHSPF1ProgramAllocationDetails(String seasonProgramId);
 
 }
