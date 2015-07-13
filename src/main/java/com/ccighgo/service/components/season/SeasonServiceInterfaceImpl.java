@@ -13,6 +13,7 @@ import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
+import com.ccighgo.db.entities.SeasonDepartmentDocument;
 import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonGHTConfiguration;
@@ -36,6 +37,7 @@ import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
+import com.ccighgo.jpa.repositories.DocumentTypeRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentNotesRepository;
@@ -58,8 +60,8 @@ import com.ccighgo.jpa.repositories.SeasonWPConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSpringRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSummerRepository;
 import com.ccighgo.jpa.repositories.SeasonWTWinterRepository;
+import com.ccighgo.service.components.fileutils.FileUtilInterface;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
-import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -96,6 +98,8 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasic
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.ValidationUtils;
@@ -166,6 +170,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonProgramDocumentRepository seasonProgramDocumentRepository;
    @Autowired
    DepartmentProgramOptionRepository departmentProgramOptionRepository;
+   @Autowired
+   FileUtilInterface fileUtilInterface;
+   @Autowired
+   DocumentTypeRepository documentTypeRepository;
 
    SeasonServiceInterfaceImpl() {
    }
@@ -1947,19 +1955,48 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Transactional
    public CloneSeason cloneSeason(CloneSeason cloneSeason) {
-      if (cloneSeason.getExistingSeasonId() == 0 || cloneSeason.getExistingSeasonId() < 0) {
+      CloneSeason returnObject = null;
+      if (cloneSeason.getSeasonId() == 0 || cloneSeason.getSeasonId() < 0) {
          // throw exception
       }
       if (cloneSeason.getDepartmentId() == 0 || cloneSeason.getDepartmentId() < 0) {
          // throw exception
       }
       try {
-         Season existingSeason = seasonRepository.findOne(cloneSeason.getExistingSeasonId());
+         Season existingSeason = seasonRepository.findOne(cloneSeason.getSeasonId());
          if (existingSeason != null) {
             LookupDepartment department = existingSeason.getLookupDepartment();
             if (department != null) {
                if (department.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
                   Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                  List<SeasonDepartmentDocument> existingSeasonDocs = existingSeason.getSeasonDepartmentDocuments();
+                  if (existingSeasonDocs != null && existingSeasonDocs.size() > 0) {
+                     List<SeasonDepartmentDocument> clonedSeasonDocs = new ArrayList<SeasonDepartmentDocument>();
+                     for (SeasonDepartmentDocument doc : existingSeasonDocs) {
+                        SeasonDepartmentDocument document = new SeasonDepartmentDocument();
+                        DocumentInformation documentInformation = new DocumentInformation();
+                        documentInformation.setActive(doc.getDocumentInformation().getActive());
+                        documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
+                        documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
+                        documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
+                        documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
+                        documentInformation.setCreatedBy(1);
+                        documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+                        documentInformation.setModifiedBy(1);
+                        documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+
+                        document.setActive(doc.getActive());
+                        document.setSeason(season);
+                        document.setDocumentInformation(documentInformation);
+                        document.setCreatedBy(1);
+                        document.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+                        document.setModifiedBy(1);
+                        document.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+                        clonedSeasonDocs.add(document);
+                     }
+                     seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
+                  }
+
                   Season clonedHSPSeason = seasonRepository.saveAndFlush(season);
                   List<SeasonHSPAllocation> seasonHspallocations = existingSeason.getSeasonHspallocations();
                   List<SeasonHSPAllocation> seasonHspallocationNewList = null;
@@ -1979,6 +2016,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   if (seasonF1Detail != null) {
                      seasonF1DetailsRepository.save(seasonF1Detail);
                   }
+                  cloneSeason.setSeasonId(clonedHSPSeason.getSeasonId());
+                  returnObject = cloneSeason;
                }
                if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
                   Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
@@ -2000,6 +2039,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   seasonWTSummerRepository.save(seasonWnTSummerDetail);
                   seasonWTWinterRepository.save(seasonWnTWinterDetail);
                   seasonCAPDetailsRepository.save(seasonCAPDetail);
+                  cloneSeason.setSeasonId(clonedWPSeason.getSeasonId());
+                  returnObject = cloneSeason;
 
                }
                if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
@@ -2017,6 +2058,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   seasonTADetailsRepository.save(seasonTADetail);
                   seasonVADetailsRepository.save(seasonVADetail);
                   seasonWADetailsRepository.save(seasonWADetail);
+                  cloneSeason.setSeasonId(clonedGHTSeason.getSeasonId());
+                  returnObject = cloneSeason;
 
                } else {
                   // update header type of department not applicable
@@ -2026,7 +2069,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       } catch (CcighgoServiceException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
-      return cloneSeason;
+      return returnObject;
    }
 
    @Override
@@ -2053,8 +2096,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Override
-   public SeasonDepartmentDocument addSeasonDepartmentDoc(SeasonDepartmentDocument seasonDepartmentDocument) {
-      SeasonDepartmentDocument returnObject = null;
+   public com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument addSeasonDepartmentDoc(
+         com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument seasonDepartmentDocument) {
+      com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument returnObject = null;
       if (seasonDepartmentDocument.getSeasonId() > 0 && seasonDepartmentDocument.getDocUrl() != null && seasonDepartmentDocument.getDocName() != null) {
          try {
             DocumentInformation documentInformation = new DocumentInformation();
@@ -2276,4 +2320,21 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       }
       return returnObject;
    }
+
+   @Override
+   public DocumentTypes getDocumentTypes() {
+      DocumentTypes documentType = null;
+      List<com.ccighgo.db.entities.DocumentType> typeList = documentTypeRepository.findAll();
+      if (typeList != null) {
+         documentType = new DocumentTypes();
+         for (com.ccighgo.db.entities.DocumentType docType : typeList) {
+            DocumentType dt = new DocumentType();
+            dt.setDocumentTypeId(docType.getDocumentTypeId());
+            dt.setDocumentTypeName(docType.getDocumentTypeName());
+            documentType.getDocumentTypes().add(dt);
+         }
+      }
+      return documentType;
+   }
+
 }

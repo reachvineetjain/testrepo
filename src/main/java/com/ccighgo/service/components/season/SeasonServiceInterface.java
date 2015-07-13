@@ -38,6 +38,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasic
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 
 @Service
 public interface SeasonServiceInterface {
@@ -733,7 +734,7 @@ public interface SeasonServiceInterface {
    public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument);
 
    /**
-    * Method to fetch program allocations for WP CAP
+    * <<<<<<< HEAD Method to fetch program allocations for WP CAP
     * 
     * @param seasonProgramId
     * @return
@@ -749,6 +750,7 @@ public interface SeasonServiceInterface {
    public WPCAPProgramAllocations updateWPCAPAllocationDetails(WPCAPProgramAllocations wpcapProgramAllocations);
 
    /**
+    * Method to update program allocations for hsp f1
     * 
     * @param hspf1ProgramAllocations
     * @return
@@ -756,10 +758,16 @@ public interface SeasonServiceInterface {
    public HSPF1ProgramAllocations updateHSPF1AllocationDetails(HSPF1ProgramAllocations hspf1ProgramAllocations);
 
    /**
+    * Method to fetch program allocations for HSP f1
     * 
     * @param seasonProgramId
     * @return
     */
    public HSPF1ProgramAllocations getHSPF1ProgramAllocationDetails(String seasonProgramId);
+
+   /**
+    * Util service to get list of document types
+    */
+   public DocumentTypes getDocumentTypes();
 
 }

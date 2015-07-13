@@ -47,6 +47,8 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasic
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 
 @Path("/season/")
 @Produces("application/json")
@@ -1378,5 +1380,12 @@ public class Seasons {
    @Produces("application/json")
    public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument) {
       return seasonServices.addSeasonProgramDoc(seasonProgramDocument);
+   }
+   
+   @GET
+   @Path("doc/type")
+   @Produces("application/json")
+   public DocumentTypes getDocumentTypes(){
+      return seasonServices.getDocumentTypes();
    }
 }

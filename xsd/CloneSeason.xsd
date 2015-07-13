@@ -15,7 +15,7 @@
 
    <xsd:complexType name="CloneSeason">
       <xsd:sequence>
-         <xsd:element name="existingSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="newCloneSeasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="cloneSeasonStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
