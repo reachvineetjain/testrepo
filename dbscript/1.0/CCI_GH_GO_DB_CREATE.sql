@@ -1436,7 +1436,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetailsRegionApplications` (
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modifiedBy` INT(11) NOT NULL,
-  PRIMARY KEY (seasonIHPDetailsRegionApplicationId),
+  PRIMARY KEY (`seasonIHPDetailsRegionApplicationId`),
   INDEX `FK_SeasonIHPDetailsRegionApplications_SeasonIHPDetails_idx` (`seasonIHPDetailsId` ASC),
   INDEX `FK_SeasonIHPDetailsRegionApplications_RegionIHP_idx` (`regionIHPId` ASC),
   CONSTRAINT `FK_SeasonIHPDetailsRegionApplications_SeasonIHPDetails`
