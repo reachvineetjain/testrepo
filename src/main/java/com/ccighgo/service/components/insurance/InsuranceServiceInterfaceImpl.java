@@ -24,7 +24,7 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
    @Override
    public InsurancePlan findPlan(String planId) {
       try {
-         String jsonPlan = InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_FIND_PLAN + planId);
+         String jsonPlan = InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_FIND_PLAN + planId);
          return gson.fromJson(jsonPlan, InsurancePlan.class);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -37,7 +37,7 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
       try {
          Type listType = new TypeToken<ArrayList<InsurancePlan>>() {
          }.getType();
-         String jsonPlan = InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_FIND_ALL_PLANS);
+         String jsonPlan = InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_FIND_ALL_PLANS);
          return gson.fromJson(jsonPlan, listType);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -48,7 +48,7 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
    @Override
    public InsuranceParticipant findParticipant(String particiantHCCID) {
       try {
-         String jsonPlan = InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_FIND_PARTICIPANT + particiantHCCID);
+         String jsonPlan = InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_FIND_PARTICIPANT + particiantHCCID);
          return gson.fromJson(jsonPlan, InsuranceParticipant.class);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -69,7 +69,7 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
    @Override
    public String emailPDFParticipant(String particiantHCCID) {
       try {
-         return InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_EMAIL_PDF_PARTICIPANT + particiantHCCID);
+         return InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_EMAIL_PDF_PARTICIPANT + particiantHCCID);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -79,7 +79,7 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
    @Override
    public String emailVisaPDFParticipant(String particiantHCCID) {
       try {
-         return InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_EMAIL_VISA_PDF_PARTICIPANT + particiantHCCID);
+         return InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_EMAIL_VISA_PDF_PARTICIPANT + particiantHCCID);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -89,7 +89,7 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
    @Override
    public String cancelParticipant(String particiantHCCID) {
       try {
-         return InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_CANCEL_PARTICIPANT + particiantHCCID);
+         return InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_CANCEL_PARTICIPANT + particiantHCCID);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -101,7 +101,7 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
       try {
          Type listType = new TypeToken<ArrayList<InsuranceStates>>() {
          }.getType();
-         String jsonPlan = InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_FIND_ALL_STATES);
+         String jsonPlan = InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_FIND_ALL_STATES);
          return gson.fromJson(jsonPlan, listType);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -114,11 +114,29 @@ public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface 
       try {
          Type listType = new TypeToken<ArrayList<InsuranceCountries>>() {
          }.getType();
-         String jsonPlan = InsuranceServiceUtil.callService(InsuranceServiceUtil.URL_FIND_ALL_COUNTRIES);
+         String jsonPlan = InsuranceServiceUtil.callInsuranceService(InsuranceServiceUtil.URL_FIND_ALL_COUNTRIES);
          return gson.fromJson(jsonPlan, listType);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return null;
+   }
+
+   @Override
+   public void downloadPDFParticipant(String particiantHCCID) {
+      try {
+         InsuranceServiceUtil.downloadService(InsuranceServiceUtil.URL_DOWNLOAD_PDF_PARTICIPANT + particiantHCCID);
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+   }
+
+   @Override
+   public void downloadVisaPDFParticipant(String particiantHCCID) {
+      try {
+         InsuranceServiceUtil.downloadService(InsuranceServiceUtil.URL_DOWNLOAD_VISA_PDF_PARTICIPANT + particiantHCCID);
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
    }
 }
