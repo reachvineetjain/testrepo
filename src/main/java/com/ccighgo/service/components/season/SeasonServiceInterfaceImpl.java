@@ -2177,7 +2177,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-      documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
+     // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(1);
       documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       documentInformation.setModifiedBy(1);
@@ -2205,7 +2205,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-      documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
+     // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(1);
       documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       documentInformation.setModifiedBy(1);
