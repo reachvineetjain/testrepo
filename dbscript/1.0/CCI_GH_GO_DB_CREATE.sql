@@ -1325,26 +1325,128 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`AddendumDocumentInformation` (
  );
  
  -- -----------------------------------------------------
--- Table `cci_gh_go`.`SeasonUpdateLog`
+-- Table `cci_gh_go`.`SeasonDepartmentUpdateLog`
 -- -----------------------------------------------------
-CREATE TABLE `cci_gh_go`.`SeasonUpdateLog` (
-  `updateLogId` INT(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cci_gh_go`.`SeasonDepartmentUpdateLog` (
+  `updateDepartmentLogId` INT(11) NOT NULL AUTO_INCREMENT,
+  `seasonId` INT(11) DEFAULT NULL,
+  `updateLogObject` LONGBLOB,
+  `modifiedBy` INT(11) DEFAULT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`updateDepartmentLogId`),
+  INDEX `FK_SeasonDepartmentUpdateLog_Season_idx` (`seasonId` ASC),
+  CONSTRAINT `FK_SeasonDepartmentUpdateLog_Season` 
+    FOREIGN KEY (`seasonId`) 
+	REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonProgramUpdateLog`
+-- -----------------------------------------------------
+CREATE TABLE `cci_gh_go`.`SeasonProgramUpdateLog` (
+  `updateProgramLogId` INT(11) NOT NULL AUTO_INCREMENT,
   `seasonId` INT(11) DEFAULT NULL,
   `departmentProgramId` INT(11) DEFAULT NULL,
   `updateLogObject` LONGBLOB,
   `modifiedBy` INT(11) DEFAULT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`updateLogId`),
-  INDEX `FK_SeasonUpdateLog_Season_idx` (`seasonId` ASC),
-  INDEX `FK_SeasonUpdateLog_DepartmentPrograms_idx` (`departmentProgramId` ASC),
-  CONSTRAINT `FK_SeasonUpdateLog_Season` 
+  PRIMARY KEY (`updateProgramLogId`),
+  INDEX `FK_SeasonProgramUpdateLog_Season_idx` (`seasonId` ASC),
+  INDEX `FK_SeasonProgramUpdateLog_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  CONSTRAINT `FK_SeasonProgramUpdateLog_Season` 
     FOREIGN KEY (`seasonId`) 
 	REFERENCES `cci_gh_go`.`Season` (`seasonId`)
 	ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_SeasonUpdateLog_DepartmentPrograms` 
+  CONSTRAINT `FK_SeasonProgramUpdateLog_DepartmentPrograms` 
     FOREIGN KEY (`departmentProgramId`) 
 	REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
 	ON DELETE NO ACTION
     ON UPDATE NO ACTION
+);
+
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonIHPDetails`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetails` (
+  `seasonIHPDetailsId` INT NOT NULL AUTO_INCREMENT,
+  `seasonId` INT NOT NULL,
+  `programName` VARCHAR(45),
+  `startDate` DATETIME,
+  `endDate` DATETIME,
+  `programStatusId` INT,
+  `maxParticipants` INT,
+  `lcHoldTime` INT(3),
+  `numberOfLCToRequestHold` INT(3),
+  `splitPlacementPending` INT(3),
+  `stopAcceptingApps` TINYINT(1),
+  `stopAcceptingAppsMale` TINYINT(1),
+  `stopAcceptingAppsFemale` TINYINT(1),
+  `applicationDeadLineWeeks` INT(3),
+  `stopAcceptingAppsStandardIHP`  TINYINT(1),
+  `stopAcceptingAppsVolunteerHomestay`  TINYINT(1),
+  `stopAcceptingAppsLanguageBuddy`  TINYINT(1),
+  `stopAcceptingAppsHolidayHomestay`  TINYINT(1),
+  `stopAcceptingAppsHighSchoolVisits`  TINYINT(1),
+  `createdOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  '0000-00-00 00:00:00',
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`seasonIHPDetailsId`),
+  INDEX `FK_SeasonIHPDetails_Season_idx` (`seasonId` ASC),
+  INDEX `FK_SeasonIHPDetails_Status_idx` (`programStatusId` ASC),
+  CONSTRAINT `FK_SeasonIHPDetails_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonIHPDetails_SeasonStatus`
+    FOREIGN KEY (`programStatusId`)
+    REFERENCES `cci_gh_go`.`SeasonStatus` (`seasonStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+); 
+
+
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`RegionIHP`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`RegionIHP` (
+  `regionIHPId` INT NOT NULL AUTO_INCREMENT,
+  `regionName` VARCHAR(45),
+  `active` TINYINT(1),
+  `createdOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  '0000-00-00 00:00:00',
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`regionIHPId`)
+);
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonIHPDetailsRegionApplications`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetailsRegionApplications` (
+  `seasonIHPDetailsRegionApplicationId` INT NOT NULL AUTO_INCREMENT,  
+  `seasonIHPDetailsId` INT,
+  `regionIHPId` INT,
+  `stopAcceptingApps`  TINYINT(1),
+  `createdOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (seasonIHPDetailsRegionApplicationId),
+  INDEX `FK_SeasonIHPDetailsRegionApplications_SeasonIHPDetails_idx` (`seasonIHPDetailsId` ASC),
+  INDEX `FK_SeasonIHPDetailsRegionApplications_RegionIHP_idx` (`regionIHPId` ASC),
+  CONSTRAINT `FK_SeasonIHPDetailsRegionApplications_SeasonIHPDetails`
+    FOREIGN KEY (`seasonIHPDetailsId`)
+    REFERENCES `cci_gh_go`.`SeasonIHPDetails` (`seasonIHPDetailsId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonIHPDetailsRegionApplications_RegionIHP`
+    FOREIGN KEY (`regionIHPId`)
+    REFERENCES `cci_gh_go`.`RegionIHP` (`regionIHPId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION	
 );
