@@ -16,7 +16,7 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int documentTypeDocumentCategoryProcessId;
 
@@ -27,15 +27,15 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 	@OneToMany(mappedBy="documentTypeDocumentCategoryProcess")
 	private List<DocumentInformation> documentInformations;
 
-	//bi-directional many-to-one association to DocumentCategoryProcess
-	@ManyToOne
-	@JoinColumn(name="documentCategoryProcessId")
-	private DocumentCategoryProcess documentCategoryProcess;
-
 	//bi-directional many-to-one association to DocumentType
 	@ManyToOne
 	@JoinColumn(name="documentTypeId")
 	private DocumentType documentType;
+
+	//bi-directional many-to-one association to DocumentCategoryProcess
+	@ManyToOne
+	@JoinColumn(name="documentCategoryProcessId")
+	private DocumentCategoryProcess documentCategoryProcess;
 
 	public DocumentTypeDocumentCategoryProcess() {
 	}
@@ -78,20 +78,20 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 		return documentInformation;
 	}
 
-	public DocumentCategoryProcess getDocumentCategoryProcess() {
-		return this.documentCategoryProcess;
-	}
-
-	public void setDocumentCategoryProcess(DocumentCategoryProcess documentCategoryProcess) {
-		this.documentCategoryProcess = documentCategoryProcess;
-	}
-
 	public DocumentType getDocumentType() {
 		return this.documentType;
 	}
 
 	public void setDocumentType(DocumentType documentType) {
 		this.documentType = documentType;
+	}
+
+	public DocumentCategoryProcess getDocumentCategoryProcess() {
+		return this.documentCategoryProcess;
+	}
+
+	public void setDocumentCategoryProcess(DocumentCategoryProcess documentCategoryProcess) {
+		this.documentCategoryProcess = documentCategoryProcess;
 	}
 
 }

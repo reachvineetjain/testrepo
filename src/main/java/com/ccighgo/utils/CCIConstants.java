@@ -133,5 +133,9 @@ public class CCIConstants {
    public static final Integer DIRECT_PLACEMENT_SPRING_ID = 18;
    public static final Integer CAP_INTERNSHIP_ID = 19;
    public static final Integer CAP_TRAINEE_ID = 20;
+   
+   public static final String HTTP = "http://";
+   public static final String HTTPS = "https://";
+   public static final String FTP = "ftp://";
 
 }

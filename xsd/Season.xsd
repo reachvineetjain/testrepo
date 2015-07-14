@@ -51,7 +51,7 @@
         <xsd:sequence>
         	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
         	<xsd:element name="seasonDepartmenNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="note" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
             <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />

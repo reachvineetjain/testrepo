@@ -21,7 +21,6 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -35,6 +34,11 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 	@JoinColumn(name="cciStaffRolesDepartmentId", nullable=false, insertable=false, updatable=false)
 	private CCIStaffRolesDepartment ccistaffRolesDepartment;
 
+	//bi-directional many-to-one association to ResourcePermission
+	@ManyToOne
+	@JoinColumn(name="resourcePermissionId", nullable=false, insertable=false, updatable=false)
+	private ResourcePermission resourcePermission;
+
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
 	@JoinColumn(name="departmentResourceGroupId", nullable=false)
@@ -44,11 +48,6 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="resourceActionId", nullable=false)
 	private ResourceAction resourceAction;
-
-	//bi-directional many-to-one association to ResourcePermission
-	@ManyToOne
-	@JoinColumn(name="resourcePermissionId", nullable=false, insertable=false, updatable=false)
-	private ResourcePermission resourcePermission;
 
 	public CCIStaffRolesDefaultResourcePermission() {
 	}
@@ -101,6 +100,14 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 		this.ccistaffRolesDepartment = ccistaffRolesDepartment;
 	}
 
+	public ResourcePermission getResourcePermission() {
+		return this.resourcePermission;
+	}
+
+	public void setResourcePermission(ResourcePermission resourcePermission) {
+		this.resourcePermission = resourcePermission;
+	}
+
 	public DepartmentResourceGroup getDepartmentResourceGroup() {
 		return this.departmentResourceGroup;
 	}
@@ -115,14 +122,6 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 
 	public void setResourceAction(ResourceAction resourceAction) {
 		this.resourceAction = resourceAction;
-	}
-
-	public ResourcePermission getResourcePermission() {
-		return this.resourcePermission;
-	}
-
-	public void setResourcePermission(ResourcePermission resourcePermission) {
-		this.resourcePermission = resourcePermission;
 	}
 
 }
