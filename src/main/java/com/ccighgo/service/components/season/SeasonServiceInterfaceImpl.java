@@ -2217,12 +2217,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes) {
       SeasonDepartmentNotes returnObject = null;
-      if (seasonDepartmentNotes.getSeasonId() > 0 && seasonDepartmentNotes.getNoteValue() != null) {
+      if (seasonDepartmentNotes.getSeasonId() > 0 && seasonDepartmentNotes.getNote() != null) {
          try {
             SeasonDepartmentNote departmentNote = new SeasonDepartmentNote();
             departmentNote.setActive(CCIConstants.ACTIVE);
             departmentNote.setSeason(seasonRepository.findOne(seasonDepartmentNotes.getSeasonId()));
-            departmentNote.setDepartmentNote(seasonDepartmentNotes.getNoteValue());
+            departmentNote.setDepartmentNote(seasonDepartmentNotes.getNote());
             departmentNote.setCreatedBy(1);
             departmentNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
             departmentNote.setModifiedBy(1);

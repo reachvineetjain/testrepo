@@ -211,7 +211,7 @@ public class SeasonServiceImplUtil {
             SeasonDepartmentNotes seasonDepartmentNotes = new SeasonDepartmentNotes();
             seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
             seasonDepartmentNotes.setActive(note.getActive() == 1);
-            seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
+            seasonDepartmentNotes.setNote(note.getDepartmentNote());
             seasonDepartmentNotes.setSeasonDepartmenNotetId(note.getSeasonDepartmentNotesId());
             seasonBean.getNotes().add(seasonDepartmentNotes);
          }
@@ -1883,7 +1883,7 @@ public class SeasonServiceImplUtil {
       if (seasonBean.getNotes() != null && !seasonBean.getNotes().isEmpty()) {
          for (SeasonDepartmentNotes note : seasonBean.getNotes()) {
             SeasonDepartmentNote seasonDepartmentNote = new SeasonDepartmentNote();
-            seasonDepartmentNote.setDepartmentNote(note.getNoteValue());
+            seasonDepartmentNote.setDepartmentNote(note.getNote());
             seasonDepartmentNote.setSeason(seasonEntity);
             seasonDepartmentNote.setActive((byte) (note.isActive() ? 1 : 0));
             seasonDepartmentNote.setCreatedBy(1);
@@ -1902,7 +1902,7 @@ public class SeasonServiceImplUtil {
       }
       for (SeasonDepartmentNotes notes : seasonBean.getNotes()) {
          SeasonDepartmentNote currentNote = new SeasonDepartmentNote();
-         currentNote.setDepartmentNote(notes.getNoteValue());
+         currentNote.setDepartmentNote(notes.getNote());
          currentNote.setSeason(seasonEntity);
          seasonDepartmentNotesRepository.saveAndFlush(currentNote);
       }

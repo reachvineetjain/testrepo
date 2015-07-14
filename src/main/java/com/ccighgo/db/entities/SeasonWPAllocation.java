@@ -25,7 +25,7 @@ public class SeasonWPAllocation implements Serializable {
 
 	private Timestamp createdOn;
 
-	private int maxPax;
+	private Integer maxPax;
 
 	@Column(nullable=false)
 	private int modifiedBy;
@@ -70,11 +70,11 @@ public class SeasonWPAllocation implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getMaxPax() {
+	public Integer getMaxPax() {
 		return this.maxPax;
 	}
 
-	public void setMaxPax(int maxPax) {
+	public void setMaxPax(Integer maxPax) {
 		this.maxPax = maxPax;
 	}
 
