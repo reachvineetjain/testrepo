@@ -276,14 +276,48 @@
 			<arg value="${xsd.dir}/SeasonProgramNote.xsd" />
 		</java>
 	</target>
-	
+
 	<!-- Document type -->
-	    <target name="DocumentType">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/DocumentType.xsd" />
-	        </java>
-	    </target>
+	<target name="DocumentType">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/DocumentType.xsd" />
+		</java>
+	</target>
+	<!-- Insurance Plan -->
+	<target name="InsurancePlan">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/insurance/InsurancePlan.xsd" />
+		</java>
+	</target>
+	<!-- Insurance Participant-->
+	<target name="InsuranceParticipant">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/insurance/InsuranceParticipant.xsd" />
+		</java>
+	</target>
+
+	<!-- Insurance States-->
+		<target name="InsuranceStates">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/insurance/InsuranceStates.xsd" />
+			</java>
+		</target>
+	
+	<!-- Insurance Countries-->
+		<target name="InsuranceCountries">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/insurance/InsuranceCountries.xsd" />
+			</java>
+		</target>
 
 </project>

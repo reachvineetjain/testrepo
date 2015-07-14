@@ -750,22 +750,6 @@ public interface SeasonServiceInterface {
    public WPCAPProgramAllocations updateWPCAPAllocationDetails(WPCAPProgramAllocations wpcapProgramAllocations);
 
    /**
-    * Method to update program allocations for hsp f1
-    * 
-    * @param hspf1ProgramAllocations
-    * @return
-    */
-   public HSPF1ProgramAllocations updateHSPF1AllocationDetails(HSPF1ProgramAllocations hspf1ProgramAllocations);
-
-   /**
-    * Method to fetch program allocations for HSP f1
-    * 
-    * @param seasonProgramId
-    * @return
-    */
-   public HSPF1ProgramAllocations getHSPF1ProgramAllocationDetails(String seasonProgramId);
-
-   /**
     * Util service to get list of document types
     */
    public DocumentTypes getDocumentTypes();
