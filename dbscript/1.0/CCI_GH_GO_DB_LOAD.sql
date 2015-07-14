@@ -976,8 +976,8 @@ VALUES (1,1,'Cover_Letter.pdf','1174-2-635108825150918506.pdf','\\Lisle\CCIDocum
 	   (4,4,'Participant Code of Conduct.pdf','100000000000000000.pdf','\\Lisle\CCIDocuments\FieldStaff',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 	   
 	   
-INSERT INTO SeasonUpdateLog (seasonId,departmentProgramId,updateLogObject,modifiedBy)
-VALUES (1,1,'[
+INSERT INTO `cci_gh_go`.`SeasonDepartmentUpdateLog` (seasonId,updateLogObject,modifiedBy)
+VALUES (1,'[
 	{
     "id": 1,
     "DepartmentName": "High School Programs",
@@ -1061,3 +1061,123 @@ VALUES (1,1,'[
     "Acronym": "Sys"
   }
   ]',1);
+
+
+
+INSERT INTO `cci_gh_go`.`SeasonProgramUpdateLog` (seasonId,departmentProgramId,updateLogObject,modifiedBy)
+VALUES (1,1,'[
+	{
+    "id": 1,
+    "DepartmentName": "High School Programs",
+    "Acronym": "HSP",
+    "DepartmentPrograms": [
+      {
+        "id": 1,
+        "Program": "J-1HS"
+      },
+      {
+        "id": 2,
+        "Program": "F-1"
+      },
+      {
+        "id": 3,
+        "Program": "STP-IHP"
+      },
+      {
+        "id": 4,
+        "Program": "STP-GHP"
+      },
+      {
+        "id": 5,
+        "Program": "STP-SSE"
+      }
+    ],
+    "CCI_Departmental_Functions": [
+      {
+        "id": 1,
+        "FunctionName": "Operations",
+        "FunctionDescription": "Operation Activities for HSP"
+      }
+    ],
+    "Department_ResourceGroups": [1,2,3,4,6,7,8,9,11,12]
+  },
+  {
+    "id": 2,
+    "DepartmentName": "Work Programs",
+    "Acronym": "WP",
+    "CCI_Departmental_Functions": [
+      {
+        "id": 2,
+        "FunctionName": "Recruitment",
+        "FunctionDescription": "Recruitment Activity for WP"
+      },
+      {
+        "id": 3,
+        "FunctionName": "Operations",
+        "FunctionDescription": "Operations tasks for WP"
+      },
+      {
+        "id": 4,
+        "FunctionName": "Services",
+        "FunctionDescription": "Service Related activities for WP"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "DepartmentName": "Greenheart Travel",
+    "Acronym": "GHT"
+  },
+  {
+    "id": 4,
+    "DepartmentName": "Greenheart Club",
+    "Acronym": "GHC"
+  },
+  {
+    "id": 5,
+    "DepartmentName": "Greenheart Transforms",
+    "Acronym": "GT"
+  },
+  {
+    "id": 6,
+    "DepartmentName": "Accounting",
+    "Acronym": "Act"
+  },
+  {
+    "id": 7,
+    "DepartmentName": "System (Tech)",
+    "Acronym": "Sys"
+  }
+  ]',1); 
+  
+INSERT INTO `cci_gh_go`.`RegionIHP` (regionName,active,createdBy,modifiedOn,modifiedBy)
+VALUES   ('Atlantic',1,1,CURRENT_TIMESTAMP,1),
+		 ('Midwest',1,1,CURRENT_TIMESTAMP,1),
+		 ('West',1,1,CURRENT_TIMESTAMP,1),
+		 ('California',1,1,CURRENT_TIMESTAMP,1),
+		 ('South',1,1,CURRENT_TIMESTAMP,1),
+		 ('Non-Contiguous',1,1,CURRENT_TIMESTAMP,1);
+  
+  
+INSERT  INTO `cci_gh_go`.`SeasonIHPDetails`(`seasonIHPDetailsId`,`seasonId`,`programName`,`startDate`,`endDate`,`programStatusId`,`maxParticipants`,`lcHoldTime`,`numberOfLCToRequestHold`,`splitPlacementPending`,`stopAcceptingApps`,`stopAcceptingAppsMale`,`stopAcceptingAppsFemale`,`applicationDeadLineWeeks`,`stopAcceptingAppsStandardIHP`,`stopAcceptingAppsVolunteerHomestay`,`stopAcceptingAppsLanguageBuddy`,`stopAcceptingAppsHolidayHomestay`,`stopAcceptingAppsHighSchoolVisits`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES (1,1,'IHP-2009','2009-01-01 12:33:59','2009-12-31 12:34:14',2,100,4,4,3,0,0,1,8,1,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (2,2,'IHP-2010','2010-01-01 12:35:44','2010-12-31 12:35:52',1,100,3,4,3,0,1,1,7,1,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (3,3,'IHP-2011','2011-01-01 12:35:44','2011-12-31 12:35:52',1,100,3,5,3,0,0,1,1,1,1,1,0,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (4,4,'IHP-2012','2012-01-01 12:35:44','2012-12-31 12:35:52',1,100,3,1,3,0,1,0,1,0,1,0,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (5,5,'IHP-2013','2013-01-01 12:35:44','2013-12-31 12:35:52',1,100,3,4,1,0,0,1,0,1,0,1,0,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+	   
+INSERT  INTO `cci_gh_go`.`SeasonIHPDetailsRegionApplications`(`seasonIHPDetailsRegionApplicationId`,`seasonIHPDetailsId`,`regionIHPId`,`stopAcceptingApps`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
+VALUES  (1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+	    (2,1,2,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(3,1,3,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(4,1,4,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(5,1,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),	
+		(6,1,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(7,2,1,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(8,2,2,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(9,2,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(10,2,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(11,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+		(12,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+	   
+	   
