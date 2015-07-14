@@ -47,7 +47,6 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasic
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
-import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
 import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 
 @Path("/season/")
@@ -616,6 +615,8 @@ public class Seasons {
    @Path("ght/va/details/view/{seasonProgramId}")
    @Produces("application/json")
    public SeasonGHTDetails getVADetails(@PathParam("seasonProgramId") String seasonProgramId) {
+      LOGGER.debug("Calling 'fun:getVADetails'");
+      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
       return seasonServices.getGHTVASeasonDetails(seasonProgramId);
    }
 
@@ -946,6 +947,7 @@ public class Seasons {
    @Path("wp/cap/view/details/{seasonProgramId}")
    @Produces("application/json")
    public SeasonWPCAPDetails getWPCAPDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+
       return seasonServices.getWPCAPDetails(seasonProgramId);
    }
 
@@ -1381,11 +1383,11 @@ public class Seasons {
    public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument) {
       return seasonServices.addSeasonProgramDoc(seasonProgramDocument);
    }
-   
+
    @GET
    @Path("doc/type")
    @Produces("application/json")
-   public DocumentTypes getDocumentTypes(){
+   public DocumentTypes getDocumentTypes() {
       return seasonServices.getDocumentTypes();
    }
 }
