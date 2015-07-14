@@ -37,6 +37,7 @@ public class SeasonWnTSummerDetail implements Serializable {
 
 	private int modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=45)

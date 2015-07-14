@@ -19,15 +19,15 @@ public class RegionSeason implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int regionSeasonId;
 
-	//bi-directional many-to-one association to Region
-	@ManyToOne
-	@JoinColumn(name="regionId", nullable=false)
-	private Region region;
-
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
+
+	//bi-directional many-to-one association to Region
+	@ManyToOne
+	@JoinColumn(name="regionId", nullable=false)
+	private Region region;
 
 	public RegionSeason() {
 	}
@@ -40,20 +40,20 @@ public class RegionSeason implements Serializable {
 		this.regionSeasonId = regionSeasonId;
 	}
 
-	public Region getRegion() {
-		return this.region;
-	}
-
-	public void setRegion(Region region) {
-		this.region = region;
-	}
-
 	public Season getSeason() {
 		return this.season;
 	}
 
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	public Region getRegion() {
+		return this.region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
 	}
 
 }

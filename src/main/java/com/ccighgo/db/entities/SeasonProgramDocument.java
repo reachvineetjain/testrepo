@@ -30,20 +30,20 @@ public class SeasonProgramDocument implements Serializable {
 
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to DepartmentProgram
+	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
-	private DepartmentProgram departmentProgram;
+	@JoinColumn(name="seasonId")
+	private Season season;
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
 	@JoinColumn(name="documentInformationId")
 	private DocumentInformation documentInformation;
 
-	//bi-directional many-to-one association to Season
+	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="seasonId")
-	private Season season;
+	@JoinColumn(name="departmentProgramId")
+	private DepartmentProgram departmentProgram;
 
 	public SeasonProgramDocument() {
 	}
@@ -96,12 +96,12 @@ public class SeasonProgramDocument implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public DepartmentProgram getDepartmentProgram() {
-		return this.departmentProgram;
+	public Season getSeason() {
+		return this.season;
 	}
 
-	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
-		this.departmentProgram = departmentProgram;
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 	public DocumentInformation getDocumentInformation() {
@@ -112,12 +112,12 @@ public class SeasonProgramDocument implements Serializable {
 		this.documentInformation = documentInformation;
 	}
 
-	public Season getSeason() {
-		return this.season;
+	public DepartmentProgram getDepartmentProgram() {
+		return this.departmentProgram;
 	}
 
-	public void setSeason(Season season) {
-		this.season = season;
+	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+		this.departmentProgram = departmentProgram;
 	}
 
 }

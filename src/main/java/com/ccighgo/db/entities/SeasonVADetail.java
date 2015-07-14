@@ -24,7 +24,6 @@ public class SeasonVADetail implements Serializable {
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)

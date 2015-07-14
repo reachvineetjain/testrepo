@@ -32,7 +32,6 @@ public class CCIStaffRole implements Serializable {
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private int hierarchy;

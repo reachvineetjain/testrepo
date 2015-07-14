@@ -24,7 +24,6 @@ public class UserType implements Serializable {
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)

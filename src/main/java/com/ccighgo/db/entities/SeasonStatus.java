@@ -42,6 +42,10 @@ public class SeasonStatus implements Serializable {
 	@OneToMany(mappedBy="seasonStatus")
 	private List<SeasonHSADetail> seasonHsadetails;
 
+	//bi-directional many-to-one association to SeasonIHPDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonIHPDetail> seasonIhpdetails;
+
 	//bi-directional many-to-one association to SeasonJ1Detail
 	@OneToMany(mappedBy="seasonStatus")
 	private List<SeasonJ1Detail> seasonJ1details;
@@ -187,6 +191,28 @@ public class SeasonStatus implements Serializable {
 		seasonHsadetail.setSeasonStatus(null);
 
 		return seasonHsadetail;
+	}
+
+	public List<SeasonIHPDetail> getSeasonIhpdetails() {
+		return this.seasonIhpdetails;
+	}
+
+	public void setSeasonIhpdetails(List<SeasonIHPDetail> seasonIhpdetails) {
+		this.seasonIhpdetails = seasonIhpdetails;
+	}
+
+	public SeasonIHPDetail addSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().add(seasonIhpdetail);
+		seasonIhpdetail.setSeasonStatus(this);
+
+		return seasonIhpdetail;
+	}
+
+	public SeasonIHPDetail removeSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().remove(seasonIhpdetail);
+		seasonIhpdetail.setSeasonStatus(null);
+
+		return seasonIhpdetail;
 	}
 
 	public List<SeasonJ1Detail> getSeasonJ1details() {

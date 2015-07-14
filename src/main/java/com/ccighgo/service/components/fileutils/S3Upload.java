@@ -13,7 +13,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.UploadPartRequest;
 
-public class S3Upload {
+public class S3Upload {/*
 
    public static void main(String[] args) {
       String existingBucketName = "ccighgo";
@@ -58,4 +58,4 @@ public class S3Upload {
 
    }
 
-}
+*/}
