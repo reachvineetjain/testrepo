@@ -17,14 +17,13 @@ public class SeasonHSPConfiguration implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonHSPConfigurationId;
 
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)

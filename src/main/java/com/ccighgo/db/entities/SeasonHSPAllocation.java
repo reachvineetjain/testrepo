@@ -16,52 +16,51 @@ public class SeasonHSPAllocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer seasonHSPAllocationId;
+	private int seasonHSPAllocationId;
 
 	@Column(nullable=false)
-	private Integer createdBy;
+	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	private Integer maxGuaranteedPax;
+	private int maxGuaranteedPax;
 
-	private Integer maxUnguaranteedPax;
+	private int maxUnguaranteedPax;
 
 	@Column(nullable=false)
-	private Integer modifiedBy;
+	private int modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
-
-	//bi-directional many-to-one association to DepartmentProgramOption
-	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId", nullable=false)
-	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
+	//bi-directional many-to-one association to DepartmentProgramOption
+	@ManyToOne
+	@JoinColumn(name="departmentProgramOptionId", nullable=false)
+	private DepartmentProgramOption departmentProgramOption;
+
 	public SeasonHSPAllocation() {
 	}
 
-	public Integer getSeasonHSPAllocationId() {
+	public int getSeasonHSPAllocationId() {
 		return this.seasonHSPAllocationId;
 	}
 
-	public void setSeasonHSPAllocationId(Integer seasonHSPAllocationId) {
+	public void setSeasonHSPAllocationId(int seasonHSPAllocationId) {
 		this.seasonHSPAllocationId = seasonHSPAllocationId;
 	}
 
-	public Integer getCreatedBy() {
+	public int getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -73,27 +72,27 @@ public class SeasonHSPAllocation implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Integer getMaxGuaranteedPax() {
+	public int getMaxGuaranteedPax() {
 		return this.maxGuaranteedPax;
 	}
 
-	public void setMaxGuaranteedPax(Integer maxGuaranteedPax) {
+	public void setMaxGuaranteedPax(int maxGuaranteedPax) {
 		this.maxGuaranteedPax = maxGuaranteedPax;
 	}
 
-	public Integer getMaxUnguaranteedPax() {
+	public int getMaxUnguaranteedPax() {
 		return this.maxUnguaranteedPax;
 	}
 
-	public void setMaxUnguaranteedPax(Integer maxUnguaranteedPax) {
+	public void setMaxUnguaranteedPax(int maxUnguaranteedPax) {
 		this.maxUnguaranteedPax = maxUnguaranteedPax;
 	}
 
-	public Integer getModifiedBy() {
+	public int getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(Integer modifiedBy) {
+	public void setModifiedBy(int modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -105,20 +104,20 @@ public class SeasonHSPAllocation implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public DepartmentProgramOption getDepartmentProgramOption() {
-		return this.departmentProgramOption;
-	}
-
-	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
-		this.departmentProgramOption = departmentProgramOption;
-	}
-
 	public Season getSeason() {
 		return this.season;
 	}
 
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	public DepartmentProgramOption getDepartmentProgramOption() {
+		return this.departmentProgramOption;
+	}
+
+	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+		this.departmentProgramOption = departmentProgramOption;
 	}
 
 }

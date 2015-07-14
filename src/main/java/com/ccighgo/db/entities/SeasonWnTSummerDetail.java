@@ -17,7 +17,7 @@ public class SeasonWnTSummerDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonWnTSummerDetailsId;
 
@@ -37,6 +37,7 @@ public class SeasonWnTSummerDetail implements Serializable {
 
 	private int modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=45)

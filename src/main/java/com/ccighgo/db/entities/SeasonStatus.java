@@ -16,7 +16,7 @@ public class SeasonStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int seasonStatusId;
 
@@ -41,6 +41,10 @@ public class SeasonStatus implements Serializable {
 	//bi-directional many-to-one association to SeasonHSADetail
 	@OneToMany(mappedBy="seasonStatus")
 	private List<SeasonHSADetail> seasonHsadetails;
+
+	//bi-directional many-to-one association to SeasonIHPDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonIHPDetail> seasonIhpdetails;
 
 	//bi-directional many-to-one association to SeasonJ1Detail
 	@OneToMany(mappedBy="seasonStatus")
@@ -187,6 +191,28 @@ public class SeasonStatus implements Serializable {
 		seasonHsadetail.setSeasonStatus(null);
 
 		return seasonHsadetail;
+	}
+
+	public List<SeasonIHPDetail> getSeasonIhpdetails() {
+		return this.seasonIhpdetails;
+	}
+
+	public void setSeasonIhpdetails(List<SeasonIHPDetail> seasonIhpdetails) {
+		this.seasonIhpdetails = seasonIhpdetails;
+	}
+
+	public SeasonIHPDetail addSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().add(seasonIhpdetail);
+		seasonIhpdetail.setSeasonStatus(this);
+
+		return seasonIhpdetail;
+	}
+
+	public SeasonIHPDetail removeSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().remove(seasonIhpdetail);
+		seasonIhpdetail.setSeasonStatus(null);
+
+		return seasonIhpdetail;
 	}
 
 	public List<SeasonJ1Detail> getSeasonJ1details() {

@@ -22,14 +22,13 @@ public class DepartmentProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int departmentProgramId;
 
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=100)
@@ -65,6 +64,10 @@ public class DepartmentProgram implements Serializable {
 	//bi-directional many-to-one association to SeasonProgramNote
 	@OneToMany(mappedBy="departmentProgram")
 	private List<SeasonProgramNote> seasonProgramNotes;
+
+	//bi-directional many-to-one association to SeasonProgramUpdateLog
+	@OneToMany(mappedBy="departmentProgram")
+	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
 	public DepartmentProgram() {
 	}
@@ -219,6 +222,28 @@ public class DepartmentProgram implements Serializable {
 		seasonProgramNote.setDepartmentProgram(null);
 
 		return seasonProgramNote;
+	}
+
+	public List<SeasonProgramUpdateLog> getSeasonProgramUpdateLogs() {
+		return this.seasonProgramUpdateLogs;
+	}
+
+	public void setSeasonProgramUpdateLogs(List<SeasonProgramUpdateLog> seasonProgramUpdateLogs) {
+		this.seasonProgramUpdateLogs = seasonProgramUpdateLogs;
+	}
+
+	public SeasonProgramUpdateLog addSeasonProgramUpdateLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+		getSeasonProgramUpdateLogs().add(seasonProgramUpdateLog);
+		seasonProgramUpdateLog.setDepartmentProgram(this);
+
+		return seasonProgramUpdateLog;
+	}
+
+	public SeasonProgramUpdateLog removeSeasonProgramUpdateLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+		getSeasonProgramUpdateLogs().remove(seasonProgramUpdateLog);
+		seasonProgramUpdateLog.setDepartmentProgram(null);
+
+		return seasonProgramUpdateLog;
 	}
 
 }
