@@ -598,7 +598,7 @@ public class SeasonServiceImplUtil {
             updateHSPF1Documents(seasonHSPF1Details, allF1Details.getSeason());
 
          if (seasonHSPF1Details.getProgramAllocations() != null)
-            seasonServiceInterface.updateHSPF1AllocationDetails(seasonHSPF1Details.getProgramAllocations());
+            seasonServiceInterface.updateF1ProgramAllocation(seasonHSPF1Details.getProgramAllocations());
          seasonF1DetailsRepository.saveAndFlush(allF1Details);
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -2344,6 +2344,8 @@ public class SeasonServiceImplUtil {
             HSPF1SeasonHspF1Notes hspf1SeasonHspF1Note = new HSPF1SeasonHspF1Notes();
             hspf1SeasonHspF1Note.setSeasonId(seasonId);
             hspf1SeasonHspF1Note.setNoteValue(seasonProgramNote.getProgramNote());
+            hspf1SeasonHspF1Note.setCreatedBy(seasonProgramNote.getCreatedBy() + "");
+            hspf1SeasonHspF1Note.setCreatedOn(DateUtils.getMMddyyDate(seasonProgramNote.getCreatedOn()));
             hspF1Notes.add(hspf1SeasonHspF1Note);
          }
       }
@@ -2430,6 +2432,8 @@ public class SeasonServiceImplUtil {
             wpCapNote.setNoteValue(seasonProgramNote.getProgramNote());
             wpCapNote.setSeasonProgramId(seasonProgramId);
             wpCapNote.setDepartmentProgramId(seasonProgramNote.getDepartmentProgram().getDepartmentProgramId());
+            wpCapNote.setCreatedBy(seasonProgramNote.getCreatedBy() + "");
+            wpCapNote.setCreatedOn(DateUtils.getMMddyyDate(seasonProgramNote.getCreatedOn()));
             seasonWPCAPNotes.add(wpCapNote);
          }
       }
