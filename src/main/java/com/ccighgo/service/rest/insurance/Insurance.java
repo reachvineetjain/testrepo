@@ -81,6 +81,7 @@ public class Insurance {
    @Produces("application/json")
    public void downloadPDFParticipant(@PathParam("hccid") String particiantHCCID) {
       LOGGER.debug("");
+      insuranceServiceInterface.downloadPDFParticipant(particiantHCCID);
    }
 
    @GET
@@ -88,6 +89,7 @@ public class Insurance {
    @Produces("application/json")
    public void downloadVisaPDFParticipant(@PathParam("hccid") String particiantHCCID) {
       LOGGER.debug("");
+      insuranceServiceInterface.downloadVisaPDFParticipant(particiantHCCID);
    }
 
    @GET
