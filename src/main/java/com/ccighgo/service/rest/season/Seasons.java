@@ -53,6 +53,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.SeasonWPCAPDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPBasicDetails;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInternshipDetails;
+import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
 import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
@@ -1034,6 +1035,29 @@ public class Seasons {
    @Produces("application/json")
    public WPCAPTraineeDetails updateWPCAPTraineeDetails(WPCAPTraineeDetails wpcapTraineeDetails) {
       return seasonServices.updateWPCAPTraineeDetails(wpcapTraineeDetails);
+   }
+
+   // cap allocation
+   @GET
+   @Path("wp/cap/view/allocation/details/{seasonProgramId}")
+   @Produces("application/json")
+   public WPCAPProgramAllocations getWPCAPAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+      return seasonServices.getWPCAPAllocationDetails(seasonProgramId);
+   }
+
+   @GET
+   @Path("wp/cap/edit/allocation/details/{seasonProgramId}")
+   @Produces("application/json")
+   public WPCAPProgramAllocations editWPCAPAllocationDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+      return seasonServices.getWPCAPAllocationDetails(seasonProgramId);
+   }
+
+   @POST
+   @Path("wp/cap/update/allocation/details")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WPCAPProgramAllocations updateWPCAPAllocationDetails(WPCAPProgramAllocations wpcapProgramAllocations) {
+      return seasonServices.updateWPCAPAllocationDetails(wpcapProgramAllocations);
    }
 
    // Season WP summer, winter and spring services
