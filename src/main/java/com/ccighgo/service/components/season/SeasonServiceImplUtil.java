@@ -1429,7 +1429,8 @@ public class SeasonServiceImplUtil {
       WPCAPBasicDetails wpcapBasicDetails = new WPCAPBasicDetails();
       wpcapBasicDetails.setProgramName(seasonWPcap.getProgramName());
       wpcapBasicDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
-      wpcapBasicDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
+      wpcapBasicDetails.setSeasonProgramId(Integer.parseInt(seasonProgramId));
+      seasonWPCAPDetails.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
       if (seasonWPcap.getSeasonStatus() != null)
          wpcapBasicDetails.setProgramStatus(seasonWPcap.getSeasonStatus().getStatus());
       seasonWPCAPDetails.setDetails(wpcapBasicDetails);

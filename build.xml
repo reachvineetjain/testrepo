@@ -326,4 +326,21 @@
 			</java>
 		</target>
 
+	<!-- Update Log For SeasonDepartment-->
+			<target name="SeasonDepartmentLog">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/updatelog/SeasonDepartmentUpdateLog.xsd" />
+				</java>
+			</target>
+	
+	<!-- Update log for Season Program-->
+			<target name="SeasonProgramLog">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/updatelog/SeasonProgramUpdateLog.xsd" />
+				</java>
+			</target>
 </project>
