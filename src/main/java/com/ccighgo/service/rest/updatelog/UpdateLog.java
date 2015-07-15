@@ -53,4 +53,49 @@ public class UpdateLog {
       return updateLogServiceInterface.saveSeasonProgramLog(seasonProgramUpdateLog);
    }
 
+   @GET
+   @Path("view/log/f1")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewHSPF1SeasonProgramLog() {
+      return updateLogServiceInterface.viewHSPF1SeasonProgramLog();
+   }
+
+   @GET
+   @Path("view/log/cap")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewWPCAPSeasonProgramLog() {
+      return updateLogServiceInterface.viewWPCAPSeasonProgramLog();
+   }
+
+   @GET
+   @Path("view/log/j1")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewHSPJ1SeasonProgramLog() {
+      return updateLogServiceInterface.viewHSPJ1SeasonProgramLog();
+   }
+
+   @POST
+   @Path("save/log/f1")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveHSPF1SeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveHSPF1SeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @POST
+   @Path("save/log/cap")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveWPCAPSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveWPCAPSeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @POST
+   @Path("save/log/j1")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveHSPJ1SeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveHSPJ1SeasonProgramLog(seasonProgramUpdateLog);
+   }
+
 }

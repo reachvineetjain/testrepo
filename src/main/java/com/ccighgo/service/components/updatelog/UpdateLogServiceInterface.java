@@ -18,4 +18,16 @@ public interface UpdateLogServiceInterface {
 
    public List<SeasonProgramUpdateLog> saveSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
 
+   public List<SeasonProgramUpdateLog> viewHSPF1SeasonProgramLog();
+
+   public List<SeasonProgramUpdateLog> viewWPCAPSeasonProgramLog();
+
+   public List<SeasonProgramUpdateLog> viewHSPJ1SeasonProgramLog();
+
+   public List<SeasonProgramUpdateLog> saveHSPF1SeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> saveWPCAPSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> saveHSPJ1SeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
 }
