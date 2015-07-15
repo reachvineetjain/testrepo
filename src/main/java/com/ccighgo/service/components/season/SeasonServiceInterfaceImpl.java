@@ -114,6 +114,7 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.ValidationUtils;
+import com.google.gson.Gson;
 
 /**
  * @author ravi
@@ -121,6 +122,7 @@ import com.ccighgo.utils.ValidationUtils;
  */
 @Component
 public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
+   public static Gson gson = new Gson();
 
    private static final Logger LOGGER = LoggerFactory.getLogger(SeasonServiceInterfaceImpl.class);
    @Autowired
@@ -2226,12 +2228,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes) {
       SeasonDepartmentNotes returnObject = null;
-      if (seasonDepartmentNotes.getSeasonId() > 0 && seasonDepartmentNotes.getNote() != null) {
+      if (seasonDepartmentNotes.getSeasonId() > 0 && seasonDepartmentNotes.getNoteValue() != null) {
          try {
             SeasonDepartmentNote departmentNote = new SeasonDepartmentNote();
             departmentNote.setActive(CCIConstants.ACTIVE);
             departmentNote.setSeason(seasonRepository.findOne(seasonDepartmentNotes.getSeasonId()));
-            departmentNote.setDepartmentNote(seasonDepartmentNotes.getNote());
+            departmentNote.setDepartmentNote(seasonDepartmentNotes.getNoteValue());
             departmentNote.setCreatedBy(1);
             departmentNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
             departmentNote.setModifiedBy(1);
