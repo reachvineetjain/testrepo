@@ -30,4 +30,8 @@ public interface InsuranceServiceInterface {
 
    public List<InsuranceCountries> findAllCountries();
 
+   public void downloadPDFParticipant(String particiantHCCID);
+
+   public void downloadVisaPDFParticipant(String particiantHCCID);
+
 }
