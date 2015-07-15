@@ -56,12 +56,13 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInter
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
+import com.google.gson.Gson;
 
 @Path("/season/")
 @Produces("application/json")
 @Consumes("application/json")
 public class Seasons {
-
+   
    private static final Logger LOGGER = Logger.getLogger(Seasons.class);
 
    @Autowired
