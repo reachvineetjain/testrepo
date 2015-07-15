@@ -23,8 +23,8 @@
          <xsd:element name="j1hsAugStart" type="j1hs:J1HSAugStart" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsFieldSettings" type="j1hs:J1HSFieldSettings" minOccurs="1" maxOccurs="1" />
          <xsd:element name="j1hsProgramAllocations" type="j1hs:J1HSProgramAllocations" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="j1hsDocuments" type="j1hs:J1HSDocuments" minOccurs="0" maxOccurs="unbounded" />
-         <xsd:element name="j1hsNotes" type="j1hs:J1HSNotes" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="j1hsDocuments" type="j1hs:J1HSDocuments" minOccurs="1" maxOccurs="unbounded" />
+         <xsd:element name="j1hsNotes" type="j1hs:J1HSNotes" minOccurs="1" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>
 
