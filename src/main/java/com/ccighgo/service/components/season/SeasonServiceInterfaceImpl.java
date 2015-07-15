@@ -20,6 +20,7 @@ import com.ccighgo.db.entities.SeasonGHTConfiguration;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
+import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
 import com.ccighgo.db.entities.SeasonTADetail;
@@ -32,6 +33,7 @@ import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.CcighgoServiceException;
+import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
@@ -46,6 +48,7 @@ import com.ccighgo.jpa.repositories.SeasonGHTConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPAllocationRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
+import com.ccighgo.jpa.repositories.SeasonIHPDetailRepository;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
@@ -182,6 +185,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    FileUtilInterface fileUtilInterface;
    @Autowired
    DocumentTypeRepository documentTypeRepository;
+   @Autowired
+   SeasonIHPProgramUtil ihpProgramUtil;
+   @Autowired
+   SeasonIHPDetailRepository ihpDetailRepository;
 
    SeasonServiceInterfaceImpl() {
    }
@@ -2177,11 +2184,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-     // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
+      // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(1);
       documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       documentInformation.setModifiedBy(1);
       documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
       return documentInformation;
    }
 
@@ -2205,11 +2213,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-     // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
+      // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(1);
       documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       documentInformation.setModifiedBy(1);
       documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
       return documentInformation;
    }
 
@@ -2417,7 +2426,26 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Override
    public IHPProgramDetail getIHPProgramDetails(String seasonProgramId) {
-      return null;
+      return getIHPProgramDetails(Integer.valueOf(seasonProgramId));
+   }
+
+   public IHPProgramDetail getIHPProgramDetails(Integer seasonProgramId) {
+      if(seasonProgramId==0 ||seasonProgramId<0){
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      }
+      IHPProgramDetail ihpProgramDetail = null;
+      try {
+         SeasonIHPDetail seasonIHPDetail = ihpDetailRepository.findOne(seasonProgramId);
+         if (seasonIHPDetail != null) {
+            ihpProgramDetail = new IHPProgramDetail();
+           // ihpProgramDetail.set
+            
+
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return ihpProgramDetail;
    }
 
    @Override

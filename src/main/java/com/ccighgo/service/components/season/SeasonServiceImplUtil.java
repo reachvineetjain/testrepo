@@ -1956,7 +1956,11 @@ public class SeasonServiceImplUtil {
                documents.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
                documents.setFileName(programDocument.getDocumentInformation().getFileName());
-               documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+               String docType = null;
+               if(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName()!=null){
+                  docType = programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName();
+               }
+               documents.setDocType(docType);
                documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
                documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
