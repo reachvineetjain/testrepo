@@ -211,7 +211,7 @@ public class SeasonServiceImplUtil {
             SeasonDepartmentNotes seasonDepartmentNotes = new SeasonDepartmentNotes();
             seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
             seasonDepartmentNotes.setActive(note.getActive() == 1);
-            seasonDepartmentNotes.setNote(note.getDepartmentNote());
+            seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
             seasonDepartmentNotes.setSeasonDepartmenNotetId(note.getSeasonDepartmentNotesId());
             seasonBean.getNotes().add(seasonDepartmentNotes);
          }
@@ -1883,7 +1883,7 @@ public class SeasonServiceImplUtil {
       if (seasonBean.getNotes() != null && !seasonBean.getNotes().isEmpty()) {
          for (SeasonDepartmentNotes note : seasonBean.getNotes()) {
             SeasonDepartmentNote seasonDepartmentNote = new SeasonDepartmentNote();
-            seasonDepartmentNote.setDepartmentNote(note.getNote());
+            seasonDepartmentNote.setDepartmentNote(note.getNoteValue());
             seasonDepartmentNote.setSeason(seasonEntity);
             seasonDepartmentNote.setActive((byte) (note.isActive() ? 1 : 0));
             seasonDepartmentNote.setCreatedBy(1);
@@ -1902,7 +1902,7 @@ public class SeasonServiceImplUtil {
       }
       for (SeasonDepartmentNotes notes : seasonBean.getNotes()) {
          SeasonDepartmentNote currentNote = new SeasonDepartmentNote();
-         currentNote.setDepartmentNote(notes.getNote());
+         currentNote.setDepartmentNote(notes.getNoteValue());
          currentNote.setSeason(seasonEntity);
          seasonDepartmentNotesRepository.saveAndFlush(currentNote);
       }
@@ -1926,7 +1926,7 @@ public class SeasonServiceImplUtil {
                note.setSeasonId(prgNote.getSeason().getSeasonId());
                note.setSeasonProgramId(seasonProgramId);
                note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
-               note.setNote(prgNote.getProgramNote());
+               note.setNoteValue(prgNote.getProgramNote());
                note.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                note.setCreatedBy(login.getLoginName());
@@ -2033,7 +2033,7 @@ public class SeasonServiceImplUtil {
                notes.setSeasonId(prgNote.getSeason().getSeasonId());
                notes.setSeasonProgramId(seasonProgramId);
                notes.setDepartmentProgramId(departmentProgramId);
-               notes.setNote(prgNote.getProgramNote());
+               notes.setNoteValue(prgNote.getProgramNote());
                notes.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                notes.setCreatedBy(login.getLoginName());
@@ -2088,7 +2088,7 @@ public class SeasonServiceImplUtil {
                notes.setSeasonId(prgNote.getSeason().getSeasonId());
                notes.setSeasonProgramId(seasonProgramId);
                notes.setDepartmentProgramId(departmentProgramId);
-               notes.setNote(prgNote.getProgramNote());
+               notes.setNoteValue(prgNote.getProgramNote());
                notes.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                notes.setCreatedBy(login.getLoginName());
@@ -2110,7 +2110,7 @@ public class SeasonServiceImplUtil {
       for (J1HSNotes j1Note : seasonHspJ1HSDetails.getJ1HsNotes()) {
          SeasonProgramNote sprNote = new SeasonProgramNote();
          sprNote.setSeason(season);
-         sprNote.setProgramNote(j1Note.getNote());
+         sprNote.setProgramNote(j1Note.getNoteValue());
          sprNote.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_J1_HS_ID));
          sprNote.setCreatedBy(1);
          sprNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
@@ -2133,7 +2133,7 @@ public class SeasonServiceImplUtil {
       seasonProgramNotesRepository.delete(programNotes);
       List<SeasonProgramNote> updatedNotes = new ArrayList<SeasonProgramNote>();
       for (GHTSection3Notes ghtSection3Notes : seasonGHTDetails.getGhtNotes()) {
-         String note = ghtSection3Notes.getNote();
+         String note = ghtSection3Notes.getNoteValue();
          updateNotes(season, programTypeId, updatedNotes, note);
       }
       seasonProgramNotesRepository.save(updatedNotes);
@@ -2151,7 +2151,7 @@ public class SeasonServiceImplUtil {
       seasonProgramNotesRepository.delete(programNotes);
       List<SeasonProgramNote> updatedNotes = new ArrayList<SeasonProgramNote>();
       for (WPNotes wpNotes : seasonWPDetails.getWpNotes()) {
-         String note = wpNotes.getNote();
+         String note = wpNotes.getNoteValue();
          updateNotes(season, programTypeId, updatedNotes, note);
       }
       seasonProgramNotesRepository.save(updatedNotes);
