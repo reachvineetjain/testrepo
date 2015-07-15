@@ -17,9 +17,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 @Component
-public class InsuranceServiceInterfaceImpl implements InsuranceServiceInterface {
+public class InsuranceServiceImpl implements InsuranceServiceInterface {
    public static Gson gson = new Gson();
-   private static final Logger LOGGER = Logger.getLogger(InsuranceServiceInterfaceImpl.class);
+   private static final Logger LOGGER = Logger.getLogger(InsuranceServiceImpl.class);
 
    @Override
    public InsurancePlan findPlan(String planId) {

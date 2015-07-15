@@ -3,7 +3,6 @@ package com.ccighgo.service.rest.insurance;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,7 +27,7 @@ public class Insurance {
    @Autowired
    InsuranceServiceInterface insuranceServiceInterface;
 
-   @GET
+   @POST
    @Path("find/plan/{planId}")
    @Produces("application/json")
    public InsurancePlan findPlan(@PathParam("planId") String planId) {
@@ -36,7 +35,7 @@ public class Insurance {
       return insuranceServiceInterface.findPlan(planId);
    }
 
-   @GET
+   @POST
    @Path("find/plan/all")
    @Produces("application/json")
    public List<InsurancePlan> findAllPlans() {
@@ -44,7 +43,7 @@ public class Insurance {
       return insuranceServiceInterface.findAllPlans();
    }
 
-   @GET
+   @POST
    @Path("find/participant/{hccid}")
    @Produces("application/json")
    public InsuranceParticipant findParticipant(@PathParam("hccid") String particiantHCCID) {
@@ -60,7 +59,7 @@ public class Insurance {
       return insuranceServiceInterface.addParticipant(participant);
    }
 
-   @GET
+   @POST
    @Path("email/pdf/Participant/{hccid}")
    @Produces("application/json")
    public String emailPDFParticipant(@PathParam("hccid") String particiantHCCID) {
@@ -68,7 +67,7 @@ public class Insurance {
       return insuranceServiceInterface.emailPDFParticipant(particiantHCCID);
    }
 
-   @GET
+   @POST
    @Path("email/visapdf/Participant/{hccid}")
    @Produces("application/json")
    public String emailVisaPDFParticipant(@PathParam("hccid") String particiantHCCID) {
@@ -76,7 +75,7 @@ public class Insurance {
       return insuranceServiceInterface.emailVisaPDFParticipant(particiantHCCID);
    }
 
-   @GET
+   @POST
    @Path("download/pdf/Participant/{hccid}")
    @Produces("application/json")
    public void downloadPDFParticipant(@PathParam("hccid") String particiantHCCID) {
@@ -84,7 +83,7 @@ public class Insurance {
       insuranceServiceInterface.downloadPDFParticipant(particiantHCCID);
    }
 
-   @GET
+   @POST
    @Path("download/visapdf/Participant/{hccid}")
    @Produces("application/json")
    public void downloadVisaPDFParticipant(@PathParam("hccid") String particiantHCCID) {
@@ -92,7 +91,7 @@ public class Insurance {
       insuranceServiceInterface.downloadVisaPDFParticipant(particiantHCCID);
    }
 
-   @GET
+   @POST
    @Path("cancel/Participant/{hccid}")
    @Produces("application/json")
    public String cancelParticipant(@PathParam("hccid") String particiantHCCID) {
@@ -100,7 +99,7 @@ public class Insurance {
       return insuranceServiceInterface.cancelParticipant(particiantHCCID);
    }
 
-   @GET
+   @POST
    @Path("find/state/all")
    @Produces("application/json")
    public List<InsuranceStates> findAllStates() {
@@ -108,7 +107,7 @@ public class Insurance {
       return insuranceServiceInterface.findAllStates();
    }
 
-   @GET
+   @POST
    @Path("find/country/all")
    @Produces("application/json")
    public List<InsuranceCountries> findAllCountries() {

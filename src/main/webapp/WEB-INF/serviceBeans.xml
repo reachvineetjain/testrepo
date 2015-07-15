@@ -38,6 +38,8 @@
             <bean id="seasons" class="com.ccighgo.service.rest.season.Seasons" />
             <bean id="userManagement" class="com.ccighgo.service.rest.usermanagement.UserManagement" />
             <bean id="utility" class="com.ccighgo.service.rest.utility.Utility" />
+        	<bean id="updateLog" class="com.ccighgo.service.rest.updatelog.UpdateLog" />
+        	<bean id="insurance" class="com.ccighgo.service.rest.insurance.Insurance" />
         </jaxrs:serviceBeans>
 
         <jaxrs:providers>
