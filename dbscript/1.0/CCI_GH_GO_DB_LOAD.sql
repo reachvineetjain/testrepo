@@ -1179,5 +1179,97 @@ VALUES  (1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 		(10,2,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 		(11,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 		(12,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+		
+INSERT INTO `cci_gh_go`.`SuperRegion` (superRegionId,superRegionName,active,createdBy,modifiedOn,modifiedBy)	
+VALUES (1,'West',1,1,CURRENT_TIMESTAMP,1),
+	   (2,'Central',1,1,CURRENT_TIMESTAMP,1),
+	   (3,'East',1,1,CURRENT_TIMESTAMP,1);
+	   
+INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo)
+VALUES (1,'Lori','Tibett','URL'),
+	   (2,'Douglas','Mike','URL'),
+	   (3,'Mike','Procter','URL'),
+	   (4,'John','DSouza','URL'),
+	   (5,'Angela','Mike','URL');
+
+	   
+INSERT INTO `cci_gh_go`.`FieldStaffType` (fieldStaffTypeCode,fieldStaffType)	
+VALUES ('ERD','Executive Regional Director'),
+	   ('RD','Regional Director'),
+	   ('RM','Regional Manager'),
+	   ('RS','Regional Supervisor'),
+	   ('AC','Area Coordinator'),
+	   ('LC','Local Coordinator');
+	   
+INSERT INTO `cci_gh_go`.`SeasonGeographyConfiguration` (superRegionId,regionId,usStatesId,seasonId,createdOn,createdBy,modifiedBy)
+VALUES  (1,NULL,NULL,1,CURRENT_TIMESTAMP,1,1),	
+		(1,1,NULL,1,CURRENT_TIMESTAMP,1,1),  		
+		(1,1,1,1,CURRENT_TIMESTAMP,1,1),			
+		(1,1,2,1,CURRENT_TIMESTAMP,1,1),			
+		(1,1,3,1,CURRENT_TIMESTAMP,1,1),			
+		(1,1,4,1,CURRENT_TIMESTAMP,1,1),			
+		(1,1,5,1,CURRENT_TIMESTAMP,1,1),			
+		(1,2,1,1,CURRENT_TIMESTAMP,1,1),			
+		(1,2,6,1,CURRENT_TIMESTAMP,1,1),			
+		(1,2,7,1,CURRENT_TIMESTAMP,1,1),			
+		(1,2,8,1,CURRENT_TIMESTAMP,1,1),			
+		(1,2,9,1,CURRENT_TIMESTAMP,1,1),			
+		(2,NULL,NULL,1,CURRENT_TIMESTAMP,1,1),	
+		(2,3,NULL,1,CURRENT_TIMESTAMP,1,1),		
+		(2,3,1,1,CURRENT_TIMESTAMP,1,1),			
+		(2,3,11,1,CURRENT_TIMESTAMP,1,1),			
+		(2,3,12,1,CURRENT_TIMESTAMP,1,1),			
+		(2,3,13,1,CURRENT_TIMESTAMP,1,1),			
+		(2,3,14,1,CURRENT_TIMESTAMP,1,1),			
+		(2,4,11,1,CURRENT_TIMESTAMP,1,1),			
+		(2,4,15,1,CURRENT_TIMESTAMP,1,1),			
+		(2,4,16,1,CURRENT_TIMESTAMP,1,1);	
+
+		
+INSERT INTO `cci_gh_go`.`SeasonIHPGeographyConfiguration` (regionIHPId,usStatesId,seasonId,modifiedOn,createdBy,modifiedBy)
+VALUES 	(1,NULL,1,CURRENT_TIMESTAMP,1,1),  		
+		(1,1,1,CURRENT_TIMESTAMP,1,1),			
+		(1,2,1,CURRENT_TIMESTAMP,1,1),			
+		(1,3,1,CURRENT_TIMESTAMP,1,1),			
+		(1,4,1,CURRENT_TIMESTAMP,1,1),			
+		(1,5,1,CURRENT_TIMESTAMP,1,1),			
+		(2,NULL,1,CURRENT_TIMESTAMP,1,1),
+		(2,1,1,CURRENT_TIMESTAMP,1,1),			
+		(2,6,1,CURRENT_TIMESTAMP,1,1),			
+		(2,7,1,CURRENT_TIMESTAMP,1,1),			
+		(2,8,1,CURRENT_TIMESTAMP,1,1),			
+		(2,9,1,CURRENT_TIMESTAMP,1,1),			
+		(3,NULL,1,CURRENT_TIMESTAMP,1,1),		
+		(3,1,1,CURRENT_TIMESTAMP,1,1),			
+		(3,11,1,CURRENT_TIMESTAMP,1,1),			
+		(3,12,1,CURRENT_TIMESTAMP,1,1),			
+		(3,13,1,CURRENT_TIMESTAMP,1,1),			
+		(3,14,1,CURRENT_TIMESTAMP,1,1),			
+		(4,11,1,CURRENT_TIMESTAMP,1,1),			
+		(4,15,1,CURRENT_TIMESTAMP,1,1),			
+		(4,16,1,CURRENT_TIMESTAMP,1,1);	
+		
+INSERT INTO `cci_gh_go`.`FieldStaffLeadershipSeason` (fieldStaffId,fieldStaffTypeId,seasonId,seasonGeographyConfigurationId,erdId,rdId,rmId,createdBy,modifiedOn,modifiedBy)
+VALUES (1,1,1,1,NULL,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (1,1,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (2,2,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (2,2,1,3,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (2,2,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,5,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,6,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,7,1,NULL,NULL,1,CURRENT_TIMESTAMP,1);
+	   
+INSERT INTO `cci_gh_go`.`FieldStaffLCSeason` (fieldStaffId,fieldStaffTypeId,seasonId,departmentProgramId,seasonGeographyConfigurationId,erdId,rdId,rmId,createdBy,modifiedOn,modifiedBy)
+VALUES (1,1,1,1,1,NULL,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (1,1,1,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (2,2,1,2,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (2,2,1,2,3,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (2,2,1,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,2,5,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,2,6,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+	   (3,3,1,2,7,1,NULL,NULL,1,CURRENT_TIMESTAMP,1);
+
 	   
 	   
