@@ -1069,35 +1069,13 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonVADetails` (
 -- ------------------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Region` (
   `regionId` INT(3) NOT NULL AUTO_INCREMENT,
-  `regionName` VARCHAR(50),
-  `active` TINYINT(1),
+  `regionName` VARCHAR(50) NOT NULL,
+  `active` TINYINT(1) NOT NULL,
   `createdOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` INT(11) NOT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT   '0000-00-00 00:00:00',
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`regionId`)
-);
-
--- -----------------------------------------------------------------------------------------------------------------------------------------
--- Table cci_gh_go.RegionSeason
--- -----------------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`RegionSeason` (
-  `regionSeasonId` INT NOT NULL AUTO_INCREMENT,
-  `regionId` INT(3) NOT NULL,
-  `seasonId` INT NOT NULL,
-  PRIMARY KEY (`regionSeasonId`),
-  INDEX `FK_RegionSeason_Season_idx` (`seasonId` ASC),
-  INDEX `FK_RegionSeason_Region_idx` (`regionId` ASC),
-  CONSTRAINT `FK_RegionSeason_Season`
-    FOREIGN KEY (`seasonId`)
-    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_RegionSeason_Region`
-    FOREIGN KEY (`regionId`)
-    REFERENCES `cci_gh_go`.`Region` (`regionId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
 );
 
 -- -----------------------------------------------------------------------------------------------------------------------------------------

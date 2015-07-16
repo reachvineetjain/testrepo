@@ -614,35 +614,45 @@ VALUES
 (1,'password','password1','drowssap','wordpass',1);
 
 
-INSERT INTO `cci_gh_go`.`SeasonStatus` (`seasonStatusId`,`status`,`active`) VALUES (1,'Open',1),(2,'Close',1),(3,'Draft',1),(4,'Archived',1);
+INSERT INTO `cci_gh_go`.`SeasonStatus` (`seasonStatusId`,`status`,`active`) 
+VALUES (1,'Open',1),
+	   (2,'Close',1),
+	   (3,'Draft',1),
+	   (4,'Archived',1);
 
-INSERT INTO `cci_gh_go`.`Region` (`regionId`,`regionName`,`active`) VALUES (1,'Atlantic',1),(2,'MidWest',1),(3,'west',1),(4,'California',1),(5,'South',1),(6,'Non-Contiguous',1);
+INSERT INTO `cci_gh_go`.`Region` (`regionId`,`regionName`,`active`,createdBy,modifiedOn,modifiedBy) 
+VALUES (1,'Atlantic',1,1,CURRENT_TIMESTAMP,1),
+	   (2,'MidWest',1,1,CURRENT_TIMESTAMP,1),
+	   (3,'west',1,1,CURRENT_TIMESTAMP,1),
+	   (4,'California',1,1,CURRENT_TIMESTAMP,1),
+	   (5,'South',1,1,CURRENT_TIMESTAMP,1),
+	   (6,'Non-Contiguous',1,1,CURRENT_TIMESTAMP,1);
 
 INSERT INTO cci_gh_go.FieldStaffAgreement (fieldStaffAgreementId,agreementName)
-                                       VALUES 0,0),
-											  (1,'2009-2010'),
-											  (2,'2010-2011'),
-											  (3,'2011-2012'),
-											  (4,'2012-2013'),
-											  (0,0),
-											  (5,'2013-2014'),
-											  (6,'2014-2015'),
-											  (7,'2015-2016'),
-											  (8,'2013-2014'),
-											  (9,'2013-2014'),
-											  (10,'2013-2014');
+VALUES 	(0,0),
+		(1,'2009-2010'),
+		(2,'2010-2011'),
+		(3,'2011-2012'),
+		(4,'2012-2013'),
+		(0,0),
+		(5,'2013-2014'),
+		(6,'2014-2015'),
+		(7,'2015-2016'),
+		(8,'2013-2014'),
+		(9,'2013-2014'),
+		(10,'2013-2014');
 											  	
 INSERT INTO cci_gh_go.PaymentSchedule (paymentScheduleId,scheduleName)
-                                   VALUES  (0,0),
-										  (1,'Area Representative Stipend Schedule'),
-                                          (2,'PSPP Area Representative Stipend Schedule'),
-                                          (3,'Field Staff Schedule'),
-                                          (4,'PSPP Field Staff Schedule'),
-										  (6,'PSPP Field Staff Schedule'),
-										  (21,'PSPP Area Representative Stipend Schedule'),
-										  (24,'PSPP Area Representative Stipend Schedule'),
-										  (30,'PSPP Area Representative Stipend Schedule'),
-										  (31,'PSPP Area Representative Stipend Schedule'),
+VALUES  (0,0),
+		(1,'Area Representative Stipend Schedule'),
+        (2,'PSPP Area Representative Stipend Schedule'),
+        (3,'Field Staff Schedule'),
+        (4,'PSPP Field Staff Schedule'),
+		(6,'PSPP Field Staff Schedule'),
+		(21,'PSPP Area Representative Stipend Schedule'),
+		(24,'PSPP Area Representative Stipend Schedule'),
+		(30,'PSPP Area Representative Stipend Schedule'),
+		(31,'PSPP Area Representative Stipend Schedule');
 
 										  
 
@@ -675,7 +685,7 @@ VALUES ('WP - 2009','WP - 2009',2,1,0,0),
         (15,'CAP-2015','2015-01-01 03:10:22','2016-01-01 03:10:22','2014-12-15 03:10:22','2015-01-01 03:10:22','2016-01-01 03:10:22','2014-12-15 03:10:22',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (16,'CAP-2016','2016-01-01 03:10:22','2017-01-01 03:10:22','2015-12-15 03:10:22','2016-01-01 03:10:22','2017-01-01 03:10:22','2015-12-15 03:10:22',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
-  INSERT INTO `cci_gh_go`.`SeasonWnTSummerDetails` (`seasonId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `cci_gh_go`.`SeasonWnTSummerDetails` (`seasonId`,`programName`,`startDate`,`endDate`,`applicationDeadlineDate`,`isJobBoardOpen`,`maxPendingJobApps`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES (1,'W&T-Summer - 2009','2009-04-15 03:10:22','2010-08-15 03:10:22','2009-04-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
        (4,'W&T-Summer - 2010','2010-04-15 03:10:22','2011-08-15 03:10:22','2010-04-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
        (5,'W&T-Summer - 2011','2011-04-15 03:10:22','2012-08-15 03:10:22','2011-04-01 03:10:22',1,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -798,8 +808,8 @@ INSERT INTO `cci_gh_go`.`SeasonWPAllocation` (`seasonId`,`departmentProgramOptio
 	(16,19,1000,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (16,20,50,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
- INSERT INTO `cci_gh_go`.`SeasonWPConfiguration` (`seasonId`,`seasonStartDate`,`seasonEndDate`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
- VALUES (1,'2009-01-01 03:10:22','2010-01-01 03:10:22',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+INSERT INTO `cci_gh_go`.`SeasonWPConfiguration` (`seasonId`,`seasonStartDate`,`seasonEndDate`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES (1,'2009-01-01 03:10:22','2010-01-01 03:10:22',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (4,'2010-01-01 03:10:22','2011-01-01 03:10:22',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (5,'2011-01-01 03:10:22','2012-01-01 03:10:22',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (9,'2012-01-01 03:10:22','2013-01-01 03:10:22',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -808,7 +818,7 @@ INSERT INTO `cci_gh_go`.`SeasonWPAllocation` (`seasonId`,`departmentProgramOptio
         (15,'2015-01-01 12:09:56','2016-01-01 12:09:57',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (16,'2016-01-01 12:10:00','2017-01-01 12:10:00',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
- INSERT INTO `cci_gh_go`.`SeasonF1Details` (`seasonId`,`programName`,`programStatusId`,`secondSemStartDate`,`secondSemEndDate`,`secondSemAppDeadlineDate`,`secondSemEarliestBirthDate`,`secondSemLatestBirthDate`,`showSecSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearEndDate`,`janFullYearAppDeadlineDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,`firstSemEndDate`,`firstSemAppDeadlineDate`,
+INSERT INTO `cci_gh_go`.`SeasonF1Details` (`seasonId`,`programName`,`programStatusId`,`secondSemStartDate`,`secondSemEndDate`,`secondSemAppDeadlineDate`,`secondSemEarliestBirthDate`,`secondSemLatestBirthDate`,`showSecSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearEndDate`,`janFullYearAppDeadlineDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,`firstSemEndDate`,`firstSemAppDeadlineDate`,
                                           `firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,`augFullYearEndDate`,`augFullYearAppDeadlineDate`,`showAugFullYearToNewHF`,`showSeasonToCurrentHF`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,`hfInquiryDate`,`showWelcomeFamily`,`allowFieldStaffToStartRenewalProcess`,`showSpecialRequestStudent`,`greenHeartMargin`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
  VALUES                                        (2,'AYP-PSPP 2010-11',1,'2011-01-01 00:00:00','2011-06-01 00:00:00','2009-11-01 00:00:00','1993-01-01 00:00:00','1997-01-01 00:00:00',0,1,NULL,NULL,NULL,1,'2010-08-15 00:00:00','2011-01-30 00:00:00','2010-06-01 00:00:00',
                                            '1992-01-01 00:00:00','1996-01-01 00:00:00',0,'2010-08-15 00:00:00','2011-06-01 00:00:00','2010-06-01 00:00:00',0,1,1,2,2,'2009-12-12',0,1,1,100,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
