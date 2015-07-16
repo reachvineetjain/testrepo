@@ -343,4 +343,25 @@
 					<arg value="${xsd.dir}/updatelog/SeasonProgramUpdateLog.xsd" />
 				</java>
 			</target>
+	
+	<!-- BACKGROUND CHECK ( SCREEN REQUEST) -->
+				<target name="BackgroundCheckScreenRequest">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/backgroundcheck/ScreenRequest.xsd" />
+					</java>
+				</target>
+	
+	<!-- BACKGROUND CHECK (SCREEN RESPONSE)-->
+				<target name="BackgroundCheckScreenResponse">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/backgroundcheck/ScreenResponse.xsd" />
+					</java>
+				</target>
+
+
+
 </project>
