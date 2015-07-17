@@ -1364,8 +1364,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetails` (
   `numberOfLCToRequestHold` INT(3),
   `splitPlacementPending` INT(3),
   `stopAcceptingApps` TINYINT(1),
-  `stopAcceptingAppsMale` TINYINT(1),
-  `stopAcceptingAppsFemale` TINYINT(1),
+  `stopAcceptingAppsByGender` TINYINT(1),
   `applicationDeadLineWeeks` INT(3),
   `stopAcceptingAppsStandardIHP`  TINYINT(1),
   `stopAcceptingAppsVolunteerHomestay`  TINYINT(1),
@@ -1378,10 +1377,16 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetails` (
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`seasonIHPDetailsId`),
   INDEX `FK_SeasonIHPDetails_Season_idx` (`seasonId` ASC),
+  INDEX `FK_SeasonIHPDetails_LookupGender` (`stopAcceptingAppsByGender` ASC),
   INDEX `FK_SeasonIHPDetails_Status_idx` (`programStatusId` ASC),
   CONSTRAINT `FK_SeasonIHPDetails_Season`
     FOREIGN KEY (`seasonId`)
     REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonIHPDetails_LookupGender`
+    FOREIGN KEY (`stopAcceptingAppsByGender`)
+    REFERENCES `cci_gh_go`.`LookupGender` (`genderId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_SeasonIHPDetails_SeasonStatus`
