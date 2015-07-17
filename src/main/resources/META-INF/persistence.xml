@@ -25,7 +25,11 @@
       <class>com.ccighgo.db.entities.DocumentInformation</class>
       <class>com.ccighgo.db.entities.DocumentType</class>
       <class>com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess</class>
+      <class>com.ccighgo.db.entities.FieldStaff</class>
       <class>com.ccighgo.db.entities.FieldStaffAgreement</class>
+      <class>com.ccighgo.db.entities.FieldStaffLCSeason</class>
+      <class>com.ccighgo.db.entities.FieldStaffLeadershipSeason</class>
+      <class>com.ccighgo.db.entities.FieldStaffType</class>
       <class>com.ccighgo.db.entities.Login</class>
       <class>com.ccighgo.db.entities.LoginHistory</class>
       <class>com.ccighgo.db.entities.LookupCountry</class>
@@ -37,31 +41,38 @@
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>
-      <class>com.ccighgo.db.entities.RegionSeason</class>
+      <class>com.ccighgo.db.entities.RegionIHP</class>
       <class>com.ccighgo.db.entities.ResourceAction</class>
       <class>com.ccighgo.db.entities.ResourcePermission</class>
       <class>com.ccighgo.db.entities.Season</class>
       <class>com.ccighgo.db.entities.SeasonCAPDetail</class>
       <class>com.ccighgo.db.entities.SeasonDepartmentDocument</class>
       <class>com.ccighgo.db.entities.SeasonDepartmentNote</class>
+      <class>com.ccighgo.db.entities.SeasonDepartmentUpdateLog</class>
       <class>com.ccighgo.db.entities.SeasonF1Detail</class>
       <class>com.ccighgo.db.entities.SeasonGHTConfiguration</class>
+      <class>com.ccighgo.db.entities.SeasonGeographyConfiguration</class>
       <class>com.ccighgo.db.entities.SeasonHSADetail</class>
       <class>com.ccighgo.db.entities.SeasonHSPAllocation</class>
       <class>com.ccighgo.db.entities.SeasonHSPConfiguration</class>
+      <class>com.ccighgo.db.entities.SeasonIHPDetail</class>
+      <class>com.ccighgo.db.entities.SeasonIHPDetailsRegionApplication</class>
+      <class>com.ccighgo.db.entities.SeasonIHPGeographyConfiguration</class>
       <class>com.ccighgo.db.entities.SeasonJ1Detail</class>
       <class>com.ccighgo.db.entities.SeasonLSDetail</class>
       <class>com.ccighgo.db.entities.SeasonProgramDocument</class>
       <class>com.ccighgo.db.entities.SeasonProgramNote</class>
+      <class>com.ccighgo.db.entities.SeasonProgramUpdateLog</class>
       <class>com.ccighgo.db.entities.SeasonStatus</class>
       <class>com.ccighgo.db.entities.SeasonTADetail</class>
       <class>com.ccighgo.db.entities.SeasonVADetail</class>
       <class>com.ccighgo.db.entities.SeasonWADetail</class>
+      <class>com.ccighgo.db.entities.SeasonWPAllocation</class>
+      <class>com.ccighgo.db.entities.SeasonWPConfiguration</class>
       <class>com.ccighgo.db.entities.SeasonWnTSpringDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTSummerDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTWinterDetail</class>
-      <class>com.ccighgo.db.entities.SeasonWPAllocation</class>
-      <class>com.ccighgo.db.entities.SeasonWPConfiguration</class>
+      <class>com.ccighgo.db.entities.SuperRegion</class>
       <class>com.ccighgo.db.entities.SysDiagram</class>
       <class>com.ccighgo.db.entities.USSchool</class>
       <class>com.ccighgo.db.entities.USSchoolSeason</class>

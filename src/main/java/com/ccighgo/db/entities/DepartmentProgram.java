@@ -69,6 +69,14 @@ public class DepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="departmentProgram")
 	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
+	//bi-directional many-to-one association to FieldStaffLCSeason
+	@OneToMany(mappedBy="departmentProgram")
+	private List<FieldStaffLCSeason> fieldStaffLcseasons;
+
+	//bi-directional many-to-one association to FieldStaffLeadershipSeason
+	@OneToMany(mappedBy="departmentProgram")
+	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
+
 	public DepartmentProgram() {
 	}
 
@@ -244,6 +252,50 @@ public class DepartmentProgram implements Serializable {
 		seasonProgramUpdateLog.setDepartmentProgram(null);
 
 		return seasonProgramUpdateLog;
+	}
+
+	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
+		return this.fieldStaffLcseasons;
+	}
+
+	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
+		this.fieldStaffLcseasons = fieldStaffLcseasons;
+	}
+
+	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+		getFieldStaffLcseasons().add(fieldStaffLcseason);
+		fieldStaffLcseason.setDepartmentProgram(this);
+
+		return fieldStaffLcseason;
+	}
+
+	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+		getFieldStaffLcseasons().remove(fieldStaffLcseason);
+		fieldStaffLcseason.setDepartmentProgram(null);
+
+		return fieldStaffLcseason;
+	}
+
+	public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {
+		return this.fieldStaffLeadershipSeasons;
+	}
+
+	public void setFieldStaffLeadershipSeasons(List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons) {
+		this.fieldStaffLeadershipSeasons = fieldStaffLeadershipSeasons;
+	}
+
+	public FieldStaffLeadershipSeason addFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
+		getFieldStaffLeadershipSeasons().add(fieldStaffLeadershipSeason);
+		fieldStaffLeadershipSeason.setDepartmentProgram(this);
+
+		return fieldStaffLeadershipSeason;
+	}
+
+	public FieldStaffLeadershipSeason removeFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
+		getFieldStaffLeadershipSeasons().remove(fieldStaffLeadershipSeason);
+		fieldStaffLeadershipSeason.setDepartmentProgram(null);
+
+		return fieldStaffLeadershipSeason;
 	}
 
 }
