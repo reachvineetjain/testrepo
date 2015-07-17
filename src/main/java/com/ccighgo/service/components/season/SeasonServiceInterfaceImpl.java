@@ -315,6 +315,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setUrl(CCIConstants.HSP_F1_URL);
                      seasonProgramsList.add(sprg);
                   }
+                  if (season.getSeasonIhpdetails() != null && season.getSeasonIhpdetails().size() > 0) {
+                     SeasonProgram sprg = new SeasonProgram();
+                     sprg.setSeasonId(Integer.valueOf(seasonId));
+                     sprg.setSeasonProgramId(season.getSeasonIhpdetails().get(0).getSeasonIHPDetailsId());
+                     sprg.setProgramName(season.getSeasonIhpdetails().get(0).getProgramName());
+                     sprg.setUrl(CCIConstants.HSP_IHP_URL);
+                     seasonProgramsList.add(sprg);
+                  }
                   // TODO implement when STP tables are available
                }
                if (dept.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {

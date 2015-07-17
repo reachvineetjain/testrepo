@@ -81,6 +81,7 @@ public class CCIConstants {
    // bind urls for season program menu
    public static final String HSP_J1_URL = "j1hs/details/view/";
    public static final String HSP_F1_URL = "f1/view/details/";
+   public static final String HSP_IHP_URL = "ihp/details/view/";
    public static final String WP_SPRING_URL = "wp/spring/view/details/";
    public static final String WP_SUMM_URL = "wp/summer/view/details/";
    public static final String WP_WINT_URL = "wp/winter/view/details/";

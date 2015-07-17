@@ -282,6 +282,13 @@ public class SeasonServiceImplUtil {
                programSeason.setSeasonProgramUrl(CCIConstants.HSP_F1_URL);
                seasonBean.getSeasonPrograms().add(programSeason);
             }
+            if (seasonEntity.getSeasonIhpdetails() != null && seasonEntity.getSeasonIhpdetails().size() > 0) {
+               ProgramSeason programSeason = new ProgramSeason();
+               programSeason.setSeasonProgramId(seasonEntity.getSeasonIhpdetails().get(0).getSeasonIHPDetailsId());
+               programSeason.setSeasonProgramName(seasonEntity.getSeasonIhpdetails().get(0).getProgramName());
+               programSeason.setSeasonProgramUrl(CCIConstants.HSP_IHP_URL);
+               seasonBean.getSeasonPrograms().add(programSeason);
+            }
             // TODO implement when STP tables are available
          }
          if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
