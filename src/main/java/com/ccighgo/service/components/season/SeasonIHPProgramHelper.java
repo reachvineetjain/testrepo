@@ -91,7 +91,7 @@ public class SeasonIHPProgramHelper {
             hspStpIhpDetails = new SeasonHspStpIhpDetails();
             hspStpIhpDetails.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
             hspStpIhpDetails.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
-            hspStpIhpDetails.setDepartmentProgramId(seasonIHPDetail.getSeason().getLookupDepartment().getDepartmentId());
+            hspStpIhpDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
             hspStpIhpDetails.setIhpNameAndStatus(getIHPNameAndStatus(seasonProgramId));
             hspStpIhpDetails.setIhpDates(getIHPDates(seasonProgramId));
             hspStpIhpDetails.setIhpProgramConfiguration(getIHPConfiguration(seasonProgramId));
