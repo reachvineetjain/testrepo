@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -80,7 +85,8 @@ public class SeasonIHPDetail implements Serializable {
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
-	@OneToMany(mappedBy="seasonIhpdetail")
+	@OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
 
 	public SeasonIHPDetail() {

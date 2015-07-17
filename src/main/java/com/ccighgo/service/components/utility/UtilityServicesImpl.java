@@ -6,21 +6,29 @@ package com.ccighgo.service.components.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.CCIStaffRole;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupUSState;
+import com.ccighgo.db.entities.RegionIHP;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
+import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.components.season.SeasonIHPProgramHelper;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.program.Program;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
+import com.ccighgo.service.transport.utility.beans.region.Region;
+import com.ccighgo.service.transport.utility.beans.region.Regions;
 import com.ccighgo.service.transport.utility.beans.role.Role;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.State;
@@ -28,6 +36,7 @@ import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.DepartmentProgram;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.utils.ExceptionUtil;
 
 /**
  * @author ravimishra
@@ -35,6 +44,8 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
  */
 @Component
 public class UtilityServicesImpl implements UtilityServices {
+
+   private static final Logger LOGGER = LoggerFactory.getLogger(UtilityServicesImpl.class);
 
    @Autowired
    CountryRepository countryRepository;
@@ -48,6 +59,8 @@ public class UtilityServicesImpl implements UtilityServices {
    CCIStaffRolesRepository rolesRepository;
    @Autowired
    DepartmentProgramRepository departmentProgramRepository;
+   @Autowired
+   IHPRegionsRepository ihpRegionsRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -222,6 +235,26 @@ public class UtilityServicesImpl implements UtilityServices {
          }
          userDepartment.getDepartmentProgram().addAll(programList);
       }
+   }
+
+   @Override
+   public Regions getAllRegions() {
+      Regions regions = null;
+      try {
+         List<RegionIHP> ihpRegions = ihpRegionsRepository.findAll();
+         if (ihpRegions != null) {
+            regions = new Regions();
+            for (RegionIHP regionIHP : ihpRegions) {
+               Region region = new Region();
+               region.setRegionId(regionIHP.getRegionIHPId());
+               region.setRegionName(regionIHP.getRegionName());
+               regions.getRegions().add(region);
+            }
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return regions;
    }
 
 }

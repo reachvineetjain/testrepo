@@ -18,16 +18,16 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int fieldStaffLeadershipSeasonId;
+	private Integer fieldStaffLeadershipSeasonId;
 
 	@Column(nullable=false)
 	private int createdBy;
 
 	private Timestamp createdOn;
 
-	private int erdId;
+	private Integer erdId;
 
-	private int fieldStaffId;
+	private Integer fieldStaffId;
 
 	@Column(nullable=false)
 	private int modifiedBy;
@@ -35,9 +35,9 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	private int rdId;
+	private Integer rdId;
 
-	private int rmId;
+	private Integer rmId;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -62,19 +62,19 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	public FieldStaffLeadershipSeason() {
 	}
 
-	public int getFieldStaffLeadershipSeasonId() {
+	public Integer getFieldStaffLeadershipSeasonId() {
 		return this.fieldStaffLeadershipSeasonId;
 	}
 
-	public void setFieldStaffLeadershipSeasonId(int fieldStaffLeadershipSeasonId) {
+	public void setFieldStaffLeadershipSeasonId(Integer fieldStaffLeadershipSeasonId) {
 		this.fieldStaffLeadershipSeasonId = fieldStaffLeadershipSeasonId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -86,27 +86,27 @@ public class FieldStaffLeadershipSeason implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getErdId() {
+	public Integer getErdId() {
 		return this.erdId;
 	}
 
-	public void setErdId(int erdId) {
+	public void setErdId(Integer erdId) {
 		this.erdId = erdId;
 	}
 
-	public int getFieldStaffId() {
+	public Integer getFieldStaffId() {
 		return this.fieldStaffId;
 	}
 
-	public void setFieldStaffId(int fieldStaffId) {
+	public void setFieldStaffId(Integer fieldStaffId) {
 		this.fieldStaffId = fieldStaffId;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -118,19 +118,19 @@ public class FieldStaffLeadershipSeason implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public int getRdId() {
+	public Integer getRdId() {
 		return this.rdId;
 	}
 
-	public void setRdId(int rdId) {
+	public void setRdId(Integer rdId) {
 		this.rdId = rdId;
 	}
 
-	public int getRmId() {
+	public Integer getRmId() {
 		return this.rmId;
 	}
 
-	public void setRmId(int rmId) {
+	public void setRmId(Integer rmId) {
 		this.rmId = rmId;
 	}
 
