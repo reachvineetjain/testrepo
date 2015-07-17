@@ -1364,7 +1364,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetails` (
   `numberOfLCToRequestHold` INT(3),
   `splitPlacementPending` INT(3),
   `stopAcceptingApps` TINYINT(1),
-  `stopAcceptingAppsByGender` TINYINT(1),
+  `stopAcceptingAppsByGender` INT(3),
   `applicationDeadLineWeeks` INT(3),
   `stopAcceptingAppsStandardIHP`  TINYINT(1),
   `stopAcceptingAppsVolunteerHomestay`  TINYINT(1),
