@@ -68,13 +68,9 @@ import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHighSchoolVisit;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHolidayHomeStayProgram;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPLanguageBuddyProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDates;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPNameAndStatus;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramConfiguration;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramDetail;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPStandardSettings;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPVolunteerHomeStayProgram;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.SeasonHspStpIhpDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
@@ -114,7 +110,6 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.ValidationUtils;
-import com.google.gson.Gson;
 
 /**
  * @author ravi
@@ -122,7 +117,6 @@ import com.google.gson.Gson;
  */
 @Component
 public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
-   public static Gson gson = new Gson();
 
    private static final Logger LOGGER = LoggerFactory.getLogger(SeasonServiceInterfaceImpl.class);
    @Autowired
@@ -188,9 +182,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Autowired
    DocumentTypeRepository documentTypeRepository;
    @Autowired
-   SeasonIHPProgramUtil ihpProgramUtil;
-   @Autowired
-   SeasonIHPDetailRepository ihpDetailRepository;
+   SeasonIHPProgramHelper ihpProgramHelper;
+   @Autowired SeasonIHPDetailRepository seasonIHPDetailRepository;
 
    SeasonServiceInterfaceImpl() {
    }
@@ -320,6 +313,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                      sprg.setSeasonProgramId(season.getSeasonF1details().get(0).getSeasonF1DetailsId());
                      sprg.setProgramName(season.getSeasonF1details().get(0).getProgramName());
                      sprg.setUrl(CCIConstants.HSP_F1_URL);
+                     seasonProgramsList.add(sprg);
+                  }
+                  if (season.getSeasonIhpdetails() != null && season.getSeasonIhpdetails().size() > 0) {
+                     SeasonProgram sprg = new SeasonProgram();
+                     sprg.setSeasonId(Integer.valueOf(seasonId));
+                     sprg.setSeasonProgramId(season.getSeasonIhpdetails().get(0).getSeasonIHPDetailsId());
+                     sprg.setProgramName(season.getSeasonIhpdetails().get(0).getProgramName());
+                     sprg.setUrl(CCIConstants.HSP_IHP_URL);
                      seasonProgramsList.add(sprg);
                   }
                   // TODO implement when STP tables are available
@@ -2011,6 +2012,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   SeasonHSPConfiguration seasonHSPConfiguration = seasonHelper.cloneHSPConfiguration(cloneSeason, clonedHSPSeason);
                   SeasonJ1Detail seasonJ1Detail = seasonHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason);
                   SeasonF1Detail seasonF1Detail = seasonHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason);
+                  SeasonIHPDetail seasonIHPDetail = seasonHelper.cloneHSPIHPProgram(existingSeason, clonedHSPSeason,cloneSeason);
                   if (seasonHspallocationNewList != null) {
                      seasonHSPAllocationRepository.save(seasonHspallocationNewList);
                   }
@@ -2033,6 +2035,18 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1)) {
+                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedHSPSeason));
+                           }
+                        }
+                        seasonProgramDocumentRepository.save(clonedPrgDocs);
+                     }
+                  }
+                  if(seasonIHPDetail!=null){
+                     seasonIHPDetailRepository.save(seasonIHPDetail);
+                     if (existingDocs != null) {
+                        clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
+                        for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
+                           if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_STP_IHP)) {
                               clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedHSPSeason));
                            }
                         }
@@ -2423,101 +2437,81 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Override
    public SeasonHspStpIhpDetails getIHPDetails(String seasonProgramId) {
-      return null;
+      if (Integer.valueOf(seasonProgramId) == 0 || Integer.valueOf(seasonProgramId) < 0) {
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.getIHPDetails(Integer.valueOf(seasonProgramId));
+      }
    }
 
    @Override
-   public IHPProgramDetail getIHPProgramDetails(String seasonProgramId) {
-      return getIHPProgramDetails(Integer.valueOf(seasonProgramId));
+   public IHPNameAndStatus getIHPNameAndStatus(String seasonProgramId) {
+      if (Integer.valueOf(seasonProgramId) == 0 || Integer.valueOf(seasonProgramId) < 0) {
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.getIHPNameAndStatus(Integer.valueOf(seasonProgramId));
+      }
    }
 
-   public IHPProgramDetail getIHPProgramDetails(Integer seasonProgramId) {
-      if(seasonProgramId==0 ||seasonProgramId<0){
+   @Override
+   public IHPDates getIHPDates(String seasonProgramId) {
+      if (Integer.valueOf(seasonProgramId) == 0 || Integer.valueOf(seasonProgramId) < 0) {
          throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.getIHPDates(Integer.valueOf(seasonProgramId));
       }
-      IHPProgramDetail ihpProgramDetail = null;
-      try {
-         SeasonIHPDetail seasonIHPDetail = ihpDetailRepository.findOne(seasonProgramId);
-         if (seasonIHPDetail != null) {
-            ihpProgramDetail = new IHPProgramDetail();
-           // ihpProgramDetail.set
-            
-
-         }
-      } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
-      }
-      return ihpProgramDetail;
    }
 
    @Override
    public IHPProgramConfiguration getIHPProgramConfigurationDetails(String seasonProgramId) {
-      return null;
-   }
-
-   @Override
-   public IHPStandardSettings getIHPStandardSettings(String seasonProgramId) {
-      return null;
-   }
-
-   @Override
-   public IHPVolunteerHomeStayProgram getVolHSProgram(String seasonProgramId) {
-      return null;
-   }
-
-   @Override
-   public IHPLanguageBuddyProgram getLangBuddyProgram(String seasonProgramId) {
-      return null;
-   }
-
-   @Override
-   public IHPHolidayHomeStayProgram getHolidayHSProgram(String seasonProgramId) {
-      return null;
-   }
-
-   @Override
-   public IHPHighSchoolVisit getHighSchoolVisitProgram(String seasonProgramId) {
-      return null;
+      if (Integer.valueOf(seasonProgramId) == 0 || Integer.valueOf(seasonProgramId) < 0) {
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.getIHPConfiguration(Integer.valueOf(seasonProgramId));
+      }
    }
 
    @Override
    public SeasonHspStpIhpDetails updateIHPDetails(SeasonHspStpIhpDetails seasonHspStpIhpDetails) {
-      return null;
+      if (seasonHspStpIhpDetails == null) {
+         throw new InvalidServiceConfigurationException("Details cannot be null");
+      } else if (seasonHspStpIhpDetails.getSeasonProgramId() == 0 || seasonHspStpIhpDetails.getSeasonProgramId() < 0) {
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.updateIHPDetails(seasonHspStpIhpDetails);
+      }
    }
 
    @Override
-   public IHPProgramDetail updateIHPProgramDetails(IHPProgramDetail ihpProgramDetail) {
-      return null;
+   public IHPNameAndStatus updateIHPNameAndStatus(IHPNameAndStatus ihpNameAndStatus) {
+      if (ihpNameAndStatus == null) {
+         throw new InvalidServiceConfigurationException("Details cannot be null");
+      } else if (ihpNameAndStatus.getSeasonProgramId() == 0 || ihpNameAndStatus.getSeasonProgramId() < 0) {
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.updateIHPNameAndStatus(ihpNameAndStatus);
+      }
+   }
+
+   @Override
+   public IHPDates updateIHPDates(IHPDates ihpDates) {
+      if (ihpDates == null) {
+         throw new InvalidServiceConfigurationException("Details cannot be null");
+      } else if (ihpDates.getSeasonProgramId() == 0 || ihpDates.getSeasonProgramId() < 0) {
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.updateIHPDates(ihpDates);
+      }
    }
 
    @Override
    public IHPProgramConfiguration updateIHPProgramConfigurationDetails(IHPProgramConfiguration ihpProgramConfiguration) {
-      return null;
+      if (ihpProgramConfiguration == null) {
+         throw new InvalidServiceConfigurationException("Details cannot be null");
+      } else if (ihpProgramConfiguration.getSeasonProgramId() == 0 || ihpProgramConfiguration.getSeasonProgramId() < 0) {
+         throw new InvalidServiceConfigurationException("program id must be positive integer");
+      } else {
+         return ihpProgramHelper.updateIHPProgramConfiguration(ihpProgramConfiguration);
+      }
    }
-
-   @Override
-   public IHPStandardSettings updateIHPStandardSettings(IHPStandardSettings ihpStandardSettings) {
-      return null;
-   }
-
-   @Override
-   public IHPVolunteerHomeStayProgram updateVolHSProgram(IHPVolunteerHomeStayProgram ihpVolunteerHomeStayProgram) {
-      return null;
-   }
-
-   @Override
-   public IHPLanguageBuddyProgram updateLangBuddyProgram(IHPLanguageBuddyProgram ihpLanguageBuddyProgram) {
-      return null;
-   }
-
-   @Override
-   public IHPHolidayHomeStayProgram updateHolidayHSProgram(IHPHolidayHomeStayProgram ihpHolidayHomeStayProgram) {
-      return null;
-   }
-
-   @Override
-   public IHPHighSchoolVisit updateHighSchoolVisitProgram(IHPHighSchoolVisit ihpHighSchoolVisit) {
-      return null;
-   }
-
 }

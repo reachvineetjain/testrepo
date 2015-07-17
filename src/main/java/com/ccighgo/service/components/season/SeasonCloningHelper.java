@@ -20,6 +20,7 @@ import com.ccighgo.db.entities.SeasonGHTConfiguration;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
+import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
 import com.ccighgo.db.entities.SeasonTADetail;
@@ -212,6 +213,36 @@ public class SeasonCloningHelper {
       }
       return seasonF1Detail;
    }
+   
+   public SeasonIHPDetail cloneHSPIHPProgram(Season existingSeason, Season clonedHSPSeason,CloneSeason cloneSeason){
+      SeasonIHPDetail seasonIHPDetail = null;
+      if(existingSeason.getSeasonIhpdetails()!=null && existingSeason.getSeasonIhpdetails().size()>0){
+         seasonIHPDetail = new SeasonIHPDetail();
+         seasonIHPDetail.setSeason(clonedHSPSeason);
+         seasonIHPDetail.setSeasonStatus(clonedHSPSeason.getSeasonStatus());
+         seasonIHPDetail.setProgramName(clonedHSPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_STP_IHP);
+         seasonIHPDetail.setStartDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonStartDate()));
+         seasonIHPDetail.setEndDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonEndDate()));
+         seasonIHPDetail.setMaxParticipants(existingSeason.getSeasonIhpdetails().get(0).getMaxParticipants());
+         seasonIHPDetail.setLcHoldTime(existingSeason.getSeasonIhpdetails().get(0).getLcHoldTime());
+         seasonIHPDetail.setNumberOfLCToRequestHold(existingSeason.getSeasonIhpdetails().get(0).getNumberOfLCToRequestHold());
+         seasonIHPDetail.setSplitPlacementPending(existingSeason.getSeasonIhpdetails().get(0).getSplitPlacementPending());
+         seasonIHPDetail.setStopAcceptingApps(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingApps());
+         seasonIHPDetail.setStopAcceptingAppsMale(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsMale());
+         seasonIHPDetail.setStopAcceptingAppsFemale(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsFemale());
+         seasonIHPDetail.setApplicationDeadLineWeeks(existingSeason.getSeasonIhpdetails().get(0).getApplicationDeadLineWeeks());
+         seasonIHPDetail.setStopAcceptingAppsStandardIHP(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsStandardIHP());
+         seasonIHPDetail.setStopAcceptingAppsVolunteerHomestay(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsVolunteerHomestay());
+         seasonIHPDetail.setStopAcceptingAppsLanguageBuddy(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsLanguageBuddy());
+         seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsHolidayHomestay());
+         seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsHighSchoolVisits());
+         seasonIHPDetail.setCreatedBy(1);
+         seasonIHPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonIHPDetail.setModifiedBy(1);
+         seasonIHPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      }
+      return seasonIHPDetail;
+   };
 
    /**
     * @param clonedWPSeason

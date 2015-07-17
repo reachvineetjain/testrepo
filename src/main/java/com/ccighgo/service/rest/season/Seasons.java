@@ -16,13 +16,9 @@ import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartme
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHighSchoolVisit;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPHolidayHomeStayProgram;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPLanguageBuddyProgram;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDates;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPNameAndStatus;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramConfiguration;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPProgramDetail;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPStandardSettings;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPVolunteerHomeStayProgram;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.SeasonHspStpIhpDetails;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSAugStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSBasicDetail;
@@ -56,7 +52,6 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPInter
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgramAllocations;
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
-import com.google.gson.Gson;
 
 @Path("/season/")
 @Produces("application/json")
@@ -1421,12 +1416,21 @@ public class Seasons {
    }
 
    @GET
-   @Path("ihp/program/details/edit/{seasonProgramId}")
+   @Path("ihp/name/details/edit/{seasonProgramId}")
    @Produces("application/json")
-   public IHPProgramDetail editIHPProgramDetails(@PathParam("seasonProgramId") String seasonProgramId) {
+   public IHPNameAndStatus editIHPNameAndStatus(@PathParam("seasonProgramId") String seasonProgramId) {
       LOGGER.debug("Calling  'getIHPProgramDetails'");
       LOGGER.debug("seasonProgramId  : " + seasonProgramId);
-      return seasonServices.getIHPProgramDetails(seasonProgramId);
+      return seasonServices.getIHPNameAndStatus(seasonProgramId);
+   }
+   
+   @GET
+   @Path("ihp/date/details/edit/{seasonProgramId}")
+   @Produces("application/json")
+   public IHPDates editIHPDates(@PathParam("seasonProgramId") String seasonProgramId) {
+      LOGGER.debug("Calling  'getIHPProgramDetails'");
+      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
+      return seasonServices.getIHPDates(seasonProgramId);
    }
 
    @GET
@@ -1438,50 +1442,7 @@ public class Seasons {
       return seasonServices.getIHPProgramConfigurationDetails(seasonProgramId);
    }
 
-   @GET
-   @Path("ihp/std/settings/edit/{seasonProgramId}")
-   @Produces("application/json")
-   public IHPStandardSettings editIHPStandardSettings(@PathParam("seasonProgramId") String seasonProgramId) {
-      LOGGER.debug("Calling 'editIHPStandardSettings'");
-      LOGGER.debug("seasonProgramId :" + seasonProgramId);
-      return seasonServices.getIHPStandardSettings(seasonProgramId);
-   }
 
-   @GET
-   @Path("ihp/vol/hs/edit/{seasonProgramId}")
-   @Produces("application/json")
-   public IHPVolunteerHomeStayProgram editVolHSProgram(@PathParam("seasonProgramId") String seasonProgramId) {
-      LOGGER.debug("Calling 'editVolHSProgram'");
-      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
-      return seasonServices.getVolHSProgram(seasonProgramId);
-   }
-
-   @GET
-   @Path("ihp/lang/buddy/edit/{seasonProgramId}")
-   @Produces("application/json")
-   public IHPLanguageBuddyProgram editLangBuddyProgram(@PathParam("seasonProgramId") String seasonProgramId) {
-      LOGGER.debug("Calling 'editLangBuddyProgram'");
-      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
-      return seasonServices.getLangBuddyProgram(seasonProgramId);
-   }
-
-   @GET
-   @Path("ihp/holiday/hs/edit/{seasonProgramId}")
-   @Produces("application/json")
-   public IHPHolidayHomeStayProgram editHolidayHSProgram(@PathParam("seasonProgramId") String seasonProgramId) {
-      LOGGER.debug("Calling 'editHolidayHSProgram'");
-      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
-      return seasonServices.getHolidayHSProgram(seasonProgramId);
-   }
-
-   @GET
-   @Path("ihp/hisch/vvisit/edit/{seasonProgramId}")
-   @Produces("application/json")
-   public IHPHighSchoolVisit editHighSchoolVisitProgram(@PathParam("seasonProgramId") String seasonProgramId) {
-      LOGGER.debug("Calling 'editHighSchoolVisitProgram'");
-      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
-      return seasonServices.getHighSchoolVisitProgram(seasonProgramId);
-   }
 
    // Update IHP
 
@@ -1494,15 +1455,25 @@ public class Seasons {
       LOGGER.debug("seasonProgramId  : " + seasonHspStpIhpDetails.getSeasonProgramId());
       return seasonServices.updateIHPDetails(seasonHspStpIhpDetails);
    }
-
+   
    @POST
-   @Path("ihp/program/details/update")
+   @Path("ihp/name/details/update")
    @Consumes("application/json")
    @Produces("application/json")
-   public IHPProgramDetail updateIHPProgramDetails(IHPProgramDetail ihpProgramDetail) {
-      LOGGER.debug("Calling  'updateIHPProgramDetails'");
-      LOGGER.debug("seasonProgramId  : " + ihpProgramDetail.getSeasonProgramId());
-      return seasonServices.updateIHPProgramDetails(ihpProgramDetail);
+   public IHPNameAndStatus updateIHPNameAndStatus(IHPNameAndStatus ihpNameAndStatus ) {
+      LOGGER.debug("Calling  'getIHPProgramDetails'");
+      LOGGER.debug("seasonProgramId  : " + ihpNameAndStatus.getSeasonProgramId());
+      return seasonServices.updateIHPNameAndStatus(ihpNameAndStatus);
+   }
+   
+   @POST
+   @Path("ihp/date/details/update")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public IHPDates updateIHPDates(IHPDates ihpDates) {
+      LOGGER.debug("Calling  'getIHPProgramDetails'");
+      LOGGER.debug("seasonProgramId  : " + ihpDates.getSeasonProgramId());
+      return seasonServices.updateIHPDates(ihpDates);
    }
 
    @POST
@@ -1513,56 +1484,6 @@ public class Seasons {
       LOGGER.debug("Calling 'updateIHPProgramConfigurationDetails'");
       LOGGER.debug("seasonProgramId  : " + ihpProgramConfiguration.getSeasonProgramId());
       return seasonServices.updateIHPProgramConfigurationDetails(ihpProgramConfiguration);
-   }
-
-   @POST
-   @Path("ihp/std/settings/update")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public IHPStandardSettings updateIHPStandardSettings(IHPStandardSettings ihpStandardSettings) {
-      LOGGER.debug("Calling 'updateIHPStandardSettings'");
-      LOGGER.debug("seasonProgramId :" + ihpStandardSettings.getSeasonProgramId());
-      return seasonServices.updateIHPStandardSettings(ihpStandardSettings);
-   }
-
-   @POST
-   @Path("ihp/vol/hs/update")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public IHPVolunteerHomeStayProgram updateVolHSProgram(IHPVolunteerHomeStayProgram ihpVolunteerHomeStayProgram) {
-      LOGGER.debug("Calling 'updateVolHSProgram'");
-      LOGGER.debug("seasonProgramId  : " + ihpVolunteerHomeStayProgram.getSeasonProgramId());
-      return seasonServices.updateVolHSProgram(ihpVolunteerHomeStayProgram);
-   }
-
-   @POST
-   @Path("ihp/lang/buddy/update")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public IHPLanguageBuddyProgram updateLangBuddyProgram(IHPLanguageBuddyProgram ihpLanguageBuddyProgram) {
-      LOGGER.debug("Calling 'updateLangBuddyProgram'");
-      LOGGER.debug("seasonProgramId  : " + ihpLanguageBuddyProgram.getSeasonProgramId());
-      return seasonServices.updateLangBuddyProgram(ihpLanguageBuddyProgram);
-   }
-
-   @POST
-   @Path("ihp/holiday/hs/update")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public IHPHolidayHomeStayProgram updateHolidayHSProgram(IHPHolidayHomeStayProgram ihpHolidayHomeStayProgram) {
-      LOGGER.debug("Calling 'updateHolidayHSProgram'");
-      LOGGER.debug("seasonProgramId  : " + ihpHolidayHomeStayProgram.getSeasonProgramId());
-      return seasonServices.updateHolidayHSProgram(ihpHolidayHomeStayProgram);
-   }
-
-   @POST
-   @Path("ihp/hisch/vvisit/update")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public IHPHighSchoolVisit updateHighSchoolVisitProgram(IHPHighSchoolVisit ihpHighSchoolVisit) {
-      LOGGER.debug("Calling 'updateHighSchoolVisitProgram'");
-      LOGGER.debug("seasonProgramId  : " + ihpHighSchoolVisit.getSeasonProgramId());
-      return seasonServices.updateHighSchoolVisitProgram(ihpHighSchoolVisit);
    }
 
 }

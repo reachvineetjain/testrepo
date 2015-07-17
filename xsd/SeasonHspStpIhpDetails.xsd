@@ -18,24 +18,27 @@
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="ihpProgramDetail" type="ihp:IHPProgramDetail" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="ihpNameAndStatus" type="ihp:IHPNameAndStatus" minOccurs="1" maxOccurs="1" />
+          <xsd:element name="ihpDates" type="ihp:IHPDates" minOccurs="1" maxOccurs="1" />
          <xsd:element name="ihpProgramConfiguration" type="ihp:IHPProgramConfiguration" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="ihpstandardSettings" type="ihp:IHPStandardSettings" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="ihpVolunteerHomeStayProgram" type="ihp:IHPVolunteerHomeStayProgram" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="ihpLanguageBuddyProgram" type="ihp:IHPLanguageBuddyProgram" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="ihpHolidayHomeStayProgram" type="ihp:IHPHolidayHomeStayProgram" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="ihpHighSchoolVisit" type="ihp:IHPHighSchoolVisit" minOccurs="1" maxOccurs="1" />
          <xsd:element name="ihpDocuments" type="ihp:IHPDocuments" minOccurs="1" maxOccurs="unbounded" />
          <xsd:element name="ihpNotes" type="ihp:IHPNotes" minOccurs="1" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>
 
-   <xsd:complexType name="IHPProgramDetail">
+   <xsd:complexType name="IHPNameAndStatus">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="IHPDates">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
@@ -53,6 +56,11 @@
          <xsd:element name="stopAceptingApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="stopAcceptingApplicationByGender" type="ihp:IHPApplicationByGender" minOccurs="0" maxOccurs="1" />
          <xsd:element name="stopAcceptingApplicationByRegion" type="ihp:IHPApplicationByRegion" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="stopAcceptingIhpStandardSettings" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stopAcceptingVolunteerHomeStayApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stopAcceptingLanguageBuddyApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stopAcceptingHolidayHomeStayApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stopAcceptingHighSchoolApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
@@ -71,46 +79,6 @@
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="applicationRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="applicationRegionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="IHPStandardSettings">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="ihpStandardSettings" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="IHPVolunteerHomeStayProgram">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stopAcceptingApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="IHPLanguageBuddyProgram">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stopAcceptingApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="IHPHolidayHomeStayProgram">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stopAcceptingApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="IHPHighSchoolVisit">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stopAcceptingApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
