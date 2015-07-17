@@ -45,9 +45,8 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
          }
-         return listSeasonProgramUpdateLog;
       }
-      return null;
+      return listSeasonProgramUpdateLog;
    }
 
    @Override
@@ -63,9 +62,8 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             sdl.setUpdateLogObject(seasonDepartmentUpdateLog2.getUpdateLogObject());
             listSeasonDepartmentUpdateLogBean.add(sdl);
          }
-         return listSeasonDepartmentUpdateLogBean;
       }
-      return null;
+      return listSeasonDepartmentUpdateLogBean;
    }
 
    @Override
@@ -109,9 +107,8 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
          }
-         return listSeasonProgramUpdateLog;
       }
-      return null;
+      return listSeasonProgramUpdateLog;
    }
 
    @Override
@@ -129,9 +126,8 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
          }
-         return listSeasonProgramUpdateLog;
       }
-      return null;
+      return listSeasonProgramUpdateLog;
    }
 
    @Override
@@ -149,9 +145,8 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
          }
-         return listSeasonProgramUpdateLog;
       }
-      return null;
+      return listSeasonProgramUpdateLog;
    }
 
    @Override

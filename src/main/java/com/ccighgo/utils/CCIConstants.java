@@ -134,9 +134,21 @@ public class CCIConstants {
    public static final Integer DIRECT_PLACEMENT_SPRING_ID = 18;
    public static final Integer CAP_INTERNSHIP_ID = 19;
    public static final Integer CAP_TRAINEE_ID = 20;
-   
+
    public static final String HTTP = "http://";
    public static final String HTTPS = "https://";
    public static final String FTP = "ftp://";
+
+   // background check constants
+   // ScreenResponse and Status Response node error codes
+   public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_0000 = "Request processed successfully";
+   public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_1000 = "Invalid XML request";
+   public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_2000 = "No XML request";
+   public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_3000 = "Authorization failure: Password supplied is invalid.";
+   public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_4000 = "Authorization failure: UserID supplied could not be found or is inactive.";
+   public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_5000 = "System error. Call TE Technical Support at 1-952-259-3007 or email RHR-IT@TrustedEmployees.com.";
+
+   // Applicant node error codes
+   public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_1001 = "[element] is invalid/missing. One or many error message node(s) will be present. See sample error messages below.";
 
 }
