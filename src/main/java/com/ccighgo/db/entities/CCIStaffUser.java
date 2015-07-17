@@ -88,25 +88,25 @@ public class CCIStaffUser implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
-	//bi-directional many-to-one association to LookupUSState
+	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="usStatesId")
-	private LookupUSState lookupUsstate;
+	@JoinColumn(name="loginId", nullable=false)
+	private Login login;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
 	@JoinColumn(name="countryId")
 	private LookupCountry lookupCountry;
 
-	//bi-directional many-to-one association to Login
-	@ManyToOne
-	@JoinColumn(name="loginId", nullable=false)
-	private Login login;
-
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
 	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
+
+	//bi-directional many-to-one association to LookupUSState
+	@ManyToOne
+	@JoinColumn(name="usStatesId")
+	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
@@ -317,12 +317,12 @@ public class CCIStaffUser implements Serializable {
 		return ccistaffUserProgram;
 	}
 
-	public LookupUSState getLookupUsstate() {
-		return this.lookupUsstate;
+	public Login getLogin() {
+		return this.login;
 	}
 
-	public void setLookupUsstate(LookupUSState lookupUsstate) {
-		this.lookupUsstate = lookupUsstate;
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	public LookupCountry getLookupCountry() {
@@ -333,20 +333,20 @@ public class CCIStaffUser implements Serializable {
 		this.lookupCountry = lookupCountry;
 	}
 
-	public Login getLogin() {
-		return this.login;
-	}
-
-	public void setLogin(Login login) {
-		this.login = login;
-	}
-
 	public LookupGender getLookupGender() {
 		return this.lookupGender;
 	}
 
 	public void setLookupGender(LookupGender lookupGender) {
 		this.lookupGender = lookupGender;
+	}
+
+	public LookupUSState getLookupUsstate() {
+		return this.lookupUsstate;
+	}
+
+	public void setLookupUsstate(LookupUSState lookupUsstate) {
+		this.lookupUsstate = lookupUsstate;
 	}
 
 	public List<CCIStaffUsersCCIStaffRole> getCcistaffUsersCcistaffRoles() {

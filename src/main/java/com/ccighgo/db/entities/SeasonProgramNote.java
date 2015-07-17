@@ -36,15 +36,15 @@ public class SeasonProgramNote implements Serializable {
 	@Column(length=1000)
 	private String programNote;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
-
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
+
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId", nullable=false)
+	private Season season;
 
 	public SeasonProgramNote() {
 	}
@@ -105,20 +105,20 @@ public class SeasonProgramNote implements Serializable {
 		this.programNote = programNote;
 	}
 
-	public Season getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
 	public DepartmentProgram getDepartmentProgram() {
 		return this.departmentProgram;
 	}
 
 	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
 		this.departmentProgram = departmentProgram;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

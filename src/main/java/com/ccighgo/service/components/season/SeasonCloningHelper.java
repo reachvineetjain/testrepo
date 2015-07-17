@@ -228,8 +228,7 @@ public class SeasonCloningHelper {
          seasonIHPDetail.setNumberOfLCToRequestHold(existingSeason.getSeasonIhpdetails().get(0).getNumberOfLCToRequestHold());
          seasonIHPDetail.setSplitPlacementPending(existingSeason.getSeasonIhpdetails().get(0).getSplitPlacementPending());
          seasonIHPDetail.setStopAcceptingApps(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingApps());
-         seasonIHPDetail.setStopAcceptingAppsMale(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsMale());
-         seasonIHPDetail.setStopAcceptingAppsFemale(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsFemale());
+         seasonIHPDetail.setLookupGender(existingSeason.getSeasonIhpdetails().get(0).getLookupGender());
          seasonIHPDetail.setApplicationDeadLineWeeks(existingSeason.getSeasonIhpdetails().get(0).getApplicationDeadLineWeeks());
          seasonIHPDetail.setStopAcceptingAppsStandardIHP(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsStandardIHP());
          seasonIHPDetail.setStopAcceptingAppsVolunteerHomestay(existingSeason.getSeasonIhpdetails().get(0).getStopAcceptingAppsVolunteerHomestay());

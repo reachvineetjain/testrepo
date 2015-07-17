@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -27,7 +32,6 @@ public class SeasonIHPDetail implements Serializable {
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -55,19 +59,20 @@ public class SeasonIHPDetail implements Serializable {
 
 	private byte stopAcceptingApps;
 
-	private byte stopAcceptingAppsFemale;
-
 	private byte stopAcceptingAppsHighSchoolVisits;
 
 	private byte stopAcceptingAppsHolidayHomestay;
 
 	private byte stopAcceptingAppsLanguageBuddy;
 
-	private byte stopAcceptingAppsMale;
-
 	private byte stopAcceptingAppsStandardIHP;
 
 	private byte stopAcceptingAppsVolunteerHomestay;
+
+	//bi-directional many-to-one association to LookupGender
+	@ManyToOne
+	@JoinColumn(name="stopAcceptingAppsByGender")
+	private LookupGender lookupGender;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -80,7 +85,8 @@ public class SeasonIHPDetail implements Serializable {
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
-	@OneToMany(mappedBy="seasonIhpdetail")
+	@OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
 
 	public SeasonIHPDetail() {
@@ -198,14 +204,6 @@ public class SeasonIHPDetail implements Serializable {
 		this.stopAcceptingApps = stopAcceptingApps;
 	}
 
-	public byte getStopAcceptingAppsFemale() {
-		return this.stopAcceptingAppsFemale;
-	}
-
-	public void setStopAcceptingAppsFemale(byte stopAcceptingAppsFemale) {
-		this.stopAcceptingAppsFemale = stopAcceptingAppsFemale;
-	}
-
 	public byte getStopAcceptingAppsHighSchoolVisits() {
 		return this.stopAcceptingAppsHighSchoolVisits;
 	}
@@ -230,14 +228,6 @@ public class SeasonIHPDetail implements Serializable {
 		this.stopAcceptingAppsLanguageBuddy = stopAcceptingAppsLanguageBuddy;
 	}
 
-	public byte getStopAcceptingAppsMale() {
-		return this.stopAcceptingAppsMale;
-	}
-
-	public void setStopAcceptingAppsMale(byte stopAcceptingAppsMale) {
-		this.stopAcceptingAppsMale = stopAcceptingAppsMale;
-	}
-
 	public byte getStopAcceptingAppsStandardIHP() {
 		return this.stopAcceptingAppsStandardIHP;
 	}
@@ -252,6 +242,14 @@ public class SeasonIHPDetail implements Serializable {
 
 	public void setStopAcceptingAppsVolunteerHomestay(byte stopAcceptingAppsVolunteerHomestay) {
 		this.stopAcceptingAppsVolunteerHomestay = stopAcceptingAppsVolunteerHomestay;
+	}
+
+	public LookupGender getLookupGender() {
+		return this.lookupGender;
+	}
+
+	public void setLookupGender(LookupGender lookupGender) {
+		this.lookupGender = lookupGender;
 	}
 
 	public Season getSeason() {

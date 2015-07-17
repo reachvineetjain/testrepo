@@ -6,19 +6,19 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the SeasonIHPDetailsRegionApplications database table.
+ * The persistent class for the SeasonIHPGeographyConfiguration database table.
  * 
  */
 @Entity
-@Table(name="SeasonIHPDetailsRegionApplications")
-@NamedQuery(name="SeasonIHPDetailsRegionApplication.findAll", query="SELECT s FROM SeasonIHPDetailsRegionApplication s")
-public class SeasonIHPDetailsRegionApplication implements Serializable {
+@Table(name="SeasonIHPGeographyConfiguration")
+@NamedQuery(name="SeasonIHPGeographyConfiguration.findAll", query="SELECT s FROM SeasonIHPGeographyConfiguration s")
+public class SeasonIHPGeographyConfiguration implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonIHPDetailsRegionApplicationId;
+	private int seasonIHPGeographyConfigurationId;
 
 	@Column(nullable=false)
 	private int createdBy;
@@ -31,27 +31,30 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	private byte stopAcceptingApps;
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId")
+	private Season season;
 
 	//bi-directional many-to-one association to RegionIHP
 	@ManyToOne
 	@JoinColumn(name="regionIHPId")
 	private RegionIHP regionIhp;
 
-	//bi-directional many-to-one association to SeasonIHPDetail
+	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="seasonIHPDetailsId")
-	private SeasonIHPDetail seasonIhpdetail;
+	@JoinColumn(name="usStatesId")
+	private LookupUSState lookupUsstate;
 
-	public SeasonIHPDetailsRegionApplication() {
+	public SeasonIHPGeographyConfiguration() {
 	}
 
-	public int getSeasonIHPDetailsRegionApplicationId() {
-		return this.seasonIHPDetailsRegionApplicationId;
+	public int getSeasonIHPGeographyConfigurationId() {
+		return this.seasonIHPGeographyConfigurationId;
 	}
 
-	public void setSeasonIHPDetailsRegionApplicationId(int seasonIHPDetailsRegionApplicationId) {
-		this.seasonIHPDetailsRegionApplicationId = seasonIHPDetailsRegionApplicationId;
+	public void setSeasonIHPGeographyConfigurationId(int seasonIHPGeographyConfigurationId) {
+		this.seasonIHPGeographyConfigurationId = seasonIHPGeographyConfigurationId;
 	}
 
 	public int getCreatedBy() {
@@ -86,12 +89,12 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public byte getStopAcceptingApps() {
-		return this.stopAcceptingApps;
+	public Season getSeason() {
+		return this.season;
 	}
 
-	public void setStopAcceptingApps(byte stopAcceptingApps) {
-		this.stopAcceptingApps = stopAcceptingApps;
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 	public RegionIHP getRegionIhp() {
@@ -102,12 +105,12 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 		this.regionIhp = regionIhp;
 	}
 
-	public SeasonIHPDetail getSeasonIhpdetail() {
-		return this.seasonIhpdetail;
+	public LookupUSState getLookupUsstate() {
+		return this.lookupUsstate;
 	}
 
-	public void setSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
-		this.seasonIhpdetail = seasonIhpdetail;
+	public void setLookupUsstate(LookupUSState lookupUsstate) {
+		this.lookupUsstate = lookupUsstate;
 	}
 
 }

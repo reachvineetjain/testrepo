@@ -26,7 +26,6 @@ public class RegionIHP implements Serializable {
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -41,6 +40,10 @@ public class RegionIHP implements Serializable {
 	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
 	@OneToMany(mappedBy="regionIhp")
 	private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
+
+	//bi-directional many-to-one association to SeasonIHPGeographyConfiguration
+	@OneToMany(mappedBy="regionIhp")
+	private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
 
 	public RegionIHP() {
 	}
@@ -121,6 +124,28 @@ public class RegionIHP implements Serializable {
 		seasonIhpdetailsRegionApplication.setRegionIhp(null);
 
 		return seasonIhpdetailsRegionApplication;
+	}
+
+	public List<SeasonIHPGeographyConfiguration> getSeasonIhpgeographyConfigurations() {
+		return this.seasonIhpgeographyConfigurations;
+	}
+
+	public void setSeasonIhpgeographyConfigurations(List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations) {
+		this.seasonIhpgeographyConfigurations = seasonIhpgeographyConfigurations;
+	}
+
+	public SeasonIHPGeographyConfiguration addSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
+		getSeasonIhpgeographyConfigurations().add(seasonIhpgeographyConfiguration);
+		seasonIhpgeographyConfiguration.setRegionIhp(this);
+
+		return seasonIhpgeographyConfiguration;
+	}
+
+	public SeasonIHPGeographyConfiguration removeSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
+		getSeasonIhpgeographyConfigurations().remove(seasonIhpgeographyConfiguration);
+		seasonIhpgeographyConfiguration.setRegionIhp(null);
+
+		return seasonIhpgeographyConfiguration;
 	}
 
 }

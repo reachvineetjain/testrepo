@@ -7,21 +7,20 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Region database table.
+ * The persistent class for the SuperRegion database table.
  * 
  */
 @Entity
-@Table(name="Region")
-@NamedQuery(name="Region.findAll", query="SELECT r FROM Region r")
-public class Region implements Serializable {
+@Table(name="SuperRegion")
+@NamedQuery(name="SuperRegion.findAll", query="SELECT s FROM SuperRegion s")
+public class SuperRegion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int regionId;
+	private int superRegionId;
 
-	@Column(nullable=false)
 	private byte active;
 
 	@Column(nullable=false)
@@ -35,22 +34,22 @@ public class Region implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=50)
-	private String regionName;
+	@Column(length=45)
+	private String superRegionName;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
-	@OneToMany(mappedBy="region")
+	@OneToMany(mappedBy="superRegion")
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
-	public Region() {
+	public SuperRegion() {
 	}
 
-	public int getRegionId() {
-		return this.regionId;
+	public int getSuperRegionId() {
+		return this.superRegionId;
 	}
 
-	public void setRegionId(int regionId) {
-		this.regionId = regionId;
+	public void setSuperRegionId(int superRegionId) {
+		this.superRegionId = superRegionId;
 	}
 
 	public byte getActive() {
@@ -93,12 +92,12 @@ public class Region implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getRegionName() {
-		return this.regionName;
+	public String getSuperRegionName() {
+		return this.superRegionName;
 	}
 
-	public void setRegionName(String regionName) {
-		this.regionName = regionName;
+	public void setSuperRegionName(String superRegionName) {
+		this.superRegionName = superRegionName;
 	}
 
 	public List<SeasonGeographyConfiguration> getSeasonGeographyConfigurations() {
@@ -111,14 +110,14 @@ public class Region implements Serializable {
 
 	public SeasonGeographyConfiguration addSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
 		getSeasonGeographyConfigurations().add(seasonGeographyConfiguration);
-		seasonGeographyConfiguration.setRegion(this);
+		seasonGeographyConfiguration.setSuperRegion(this);
 
 		return seasonGeographyConfiguration;
 	}
 
 	public SeasonGeographyConfiguration removeSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
 		getSeasonGeographyConfigurations().remove(seasonGeographyConfiguration);
-		seasonGeographyConfiguration.setRegion(null);
+		seasonGeographyConfiguration.setSuperRegion(null);
 
 		return seasonGeographyConfiguration;
 	}

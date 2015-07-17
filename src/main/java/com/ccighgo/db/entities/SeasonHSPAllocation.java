@@ -25,9 +25,9 @@ public class SeasonHSPAllocation implements Serializable {
 
 	private Timestamp createdOn;
 
-	private Integer maxGuaranteedPax;
+	private int maxGuaranteedPax;
 
-	private Integer maxUnguaranteedPax;
+	private int maxUnguaranteedPax;
 
 	@Column(nullable=false)
 	private int modifiedBy;
@@ -35,15 +35,15 @@ public class SeasonHSPAllocation implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
-
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
 	@JoinColumn(name="departmentProgramOptionId", nullable=false)
 	private DepartmentProgramOption departmentProgramOption;
+
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId", nullable=false)
+	private Season season;
 
 	public SeasonHSPAllocation() {
 	}
@@ -72,19 +72,19 @@ public class SeasonHSPAllocation implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Integer getMaxGuaranteedPax() {
+	public int getMaxGuaranteedPax() {
 		return this.maxGuaranteedPax;
 	}
 
-	public void setMaxGuaranteedPax(Integer maxGuaranteedPax) {
+	public void setMaxGuaranteedPax(int maxGuaranteedPax) {
 		this.maxGuaranteedPax = maxGuaranteedPax;
 	}
 
-	public Integer getMaxUnguaranteedPax() {
+	public int getMaxUnguaranteedPax() {
 		return this.maxUnguaranteedPax;
 	}
 
-	public void setMaxUnguaranteedPax(Integer maxUnguaranteedPax) {
+	public void setMaxUnguaranteedPax(int maxUnguaranteedPax) {
 		this.maxUnguaranteedPax = maxUnguaranteedPax;
 	}
 
@@ -104,20 +104,20 @@ public class SeasonHSPAllocation implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Season getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
 	public DepartmentProgramOption getDepartmentProgramOption() {
 		return this.departmentProgramOption;
 	}
 
 	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
 		this.departmentProgramOption = departmentProgramOption;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

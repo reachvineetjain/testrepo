@@ -30,6 +30,14 @@ public class LookupUSState implements Serializable {
 	@OneToMany(mappedBy="lookupUsstate")
 	private List<CCIStaffUser> ccistaffUsers;
 
+	//bi-directional many-to-one association to SeasonGeographyConfiguration
+	@OneToMany(mappedBy="lookupUsstate")
+	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
+
+	//bi-directional many-to-one association to SeasonIHPGeographyConfiguration
+	@OneToMany(mappedBy="lookupUsstate")
+	private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
+
 	public LookupUSState() {
 	}
 
@@ -77,6 +85,50 @@ public class LookupUSState implements Serializable {
 		ccistaffUser.setLookupUsstate(null);
 
 		return ccistaffUser;
+	}
+
+	public List<SeasonGeographyConfiguration> getSeasonGeographyConfigurations() {
+		return this.seasonGeographyConfigurations;
+	}
+
+	public void setSeasonGeographyConfigurations(List<SeasonGeographyConfiguration> seasonGeographyConfigurations) {
+		this.seasonGeographyConfigurations = seasonGeographyConfigurations;
+	}
+
+	public SeasonGeographyConfiguration addSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
+		getSeasonGeographyConfigurations().add(seasonGeographyConfiguration);
+		seasonGeographyConfiguration.setLookupUsstate(this);
+
+		return seasonGeographyConfiguration;
+	}
+
+	public SeasonGeographyConfiguration removeSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
+		getSeasonGeographyConfigurations().remove(seasonGeographyConfiguration);
+		seasonGeographyConfiguration.setLookupUsstate(null);
+
+		return seasonGeographyConfiguration;
+	}
+
+	public List<SeasonIHPGeographyConfiguration> getSeasonIhpgeographyConfigurations() {
+		return this.seasonIhpgeographyConfigurations;
+	}
+
+	public void setSeasonIhpgeographyConfigurations(List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations) {
+		this.seasonIhpgeographyConfigurations = seasonIhpgeographyConfigurations;
+	}
+
+	public SeasonIHPGeographyConfiguration addSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
+		getSeasonIhpgeographyConfigurations().add(seasonIhpgeographyConfiguration);
+		seasonIhpgeographyConfiguration.setLookupUsstate(this);
+
+		return seasonIhpgeographyConfiguration;
+	}
+
+	public SeasonIHPGeographyConfiguration removeSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
+		getSeasonIhpgeographyConfigurations().remove(seasonIhpgeographyConfiguration);
+		seasonIhpgeographyConfiguration.setLookupUsstate(null);
+
+		return seasonIhpgeographyConfiguration;
 	}
 
 }
