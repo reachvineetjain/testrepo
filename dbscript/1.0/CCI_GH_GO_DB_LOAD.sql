@@ -1169,12 +1169,12 @@ VALUES   ('Atlantic',1,1,CURRENT_TIMESTAMP,1),
          ('Non-Contiguous',1,1,CURRENT_TIMESTAMP,1);
   
   
-INSERT  INTO `cci_gh_go`.`SeasonIHPDetails`(`seasonIHPDetailsId`,`seasonId`,`programName`,`startDate`,`endDate`,`programStatusId`,`maxParticipants`,`lcHoldTime`,`numberOfLCToRequestHold`,`splitPlacementPending`,`stopAcceptingApps`,`stopAcceptingAppsMale`,`stopAcceptingAppsFemale`,`applicationDeadLineWeeks`,`stopAcceptingAppsStandardIHP`,`stopAcceptingAppsVolunteerHomestay`,`stopAcceptingAppsLanguageBuddy`,`stopAcceptingAppsHolidayHomestay`,`stopAcceptingAppsHighSchoolVisits`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
-VALUES (1,1,'IHP-2009','2009-01-01 12:33:59','2009-12-31 12:34:14',2,100,4,4,3,0,0,1,8,1,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-       (2,2,'IHP-2010','2010-01-01 12:35:44','2010-12-31 12:35:52',1,100,3,4,3,0,1,1,7,1,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-       (3,3,'IHP-2011','2011-01-01 12:35:44','2011-12-31 12:35:52',1,100,3,5,3,0,0,1,1,1,1,1,0,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-       (4,4,'IHP-2012','2012-01-01 12:35:44','2012-12-31 12:35:52',1,100,3,1,3,0,1,0,1,0,1,0,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-       (5,5,'IHP-2013','2013-01-01 12:35:44','2013-12-31 12:35:52',1,100,3,4,1,0,0,1,0,1,0,1,0,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+INSERT  INTO `cci_gh_go`.`SeasonIHPDetails`(`seasonIHPDetailsId`,`seasonId`,`programName`,`startDate`,`endDate`,`programStatusId`,`maxParticipants`,`lcHoldTime`,`numberOfLCToRequestHold`,`splitPlacementPending`,`stopAcceptingApps`,`stopAcceptingAppsByGender`,`applicationDeadLineWeeks`,`stopAcceptingAppsStandardIHP`,`stopAcceptingAppsVolunteerHomestay`,`stopAcceptingAppsLanguageBuddy`,`stopAcceptingAppsHolidayHomestay`,`stopAcceptingAppsHighSchoolVisits`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES (1,1,'IHP-2009','2009-01-01 12:33:59','2009-12-31 12:34:14',2,100,4,4,3,0,1,8,1,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (2,2,'IHP-2010','2010-01-01 12:35:44','2010-12-31 12:35:52',1,100,3,4,3,0,1,7,1,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (3,3,'IHP-2011','2011-01-01 12:35:44','2011-12-31 12:35:52',1,100,3,5,3,0,1,1,1,1,1,0,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (4,4,'IHP-2012','2012-01-01 12:35:44','2012-12-31 12:35:52',1,100,3,1,3,0,1,1,0,1,0,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+       (5,5,'IHP-2013','2013-01-01 12:35:44','2013-12-31 12:35:52',1,100,3,4,1,0,1,0,1,0,1,0,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
        
 INSERT  INTO `cci_gh_go`.`SeasonIHPDetailsRegionApplications`(`seasonIHPDetailsRegionApplicationId`,`seasonIHPDetailsId`,`regionIHPId`,`stopAcceptingApps`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
 VALUES  (1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -1189,4 +1189,94 @@ VALUES  (1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (10,2,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (11,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (12,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
-     
+        
+INSERT INTO `cci_gh_go`.`SuperRegion` (superRegionId,superRegionName,active,createdBy,modifiedOn,modifiedBy)    
+VALUES (1,'West',1,1,CURRENT_TIMESTAMP,1),
+       (2,'Central',1,1,CURRENT_TIMESTAMP,1),
+       (3,'East',1,1,CURRENT_TIMESTAMP,1);
+       
+INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo)
+VALUES (1,'Lori','Tibett','URL'),
+       (2,'Douglas','Mike','URL'),
+       (3,'Mike','Procter','URL'),
+       (4,'John','DSouza','URL'),
+       (5,'Angela','Mike','URL');
+
+       
+INSERT INTO `cci_gh_go`.`FieldStaffType` (fieldStaffTypeCode,fieldStaffType)    
+VALUES ('ERD','Executive Regional Director'),
+       ('RD','Regional Director'),
+       ('RM','Regional Manager'),
+       ('RS','Regional Supervisor'),
+       ('AC','Area Coordinator'),
+       ('LC','Local Coordinator');
+       
+INSERT INTO `cci_gh_go`.`SeasonGeographyConfiguration` (superRegionId,regionId,usStatesId,seasonId,createdOn,createdBy,modifiedBy)
+VALUES  (1,NULL,NULL,1,CURRENT_TIMESTAMP,1,1),  
+        (1,1,NULL,1,CURRENT_TIMESTAMP,1,1),         
+        (1,1,1,1,CURRENT_TIMESTAMP,1,1),            
+        (1,1,2,1,CURRENT_TIMESTAMP,1,1),            
+        (1,1,3,1,CURRENT_TIMESTAMP,1,1),            
+        (1,1,4,1,CURRENT_TIMESTAMP,1,1),            
+        (1,1,5,1,CURRENT_TIMESTAMP,1,1),            
+        (1,2,1,1,CURRENT_TIMESTAMP,1,1),            
+        (1,2,6,1,CURRENT_TIMESTAMP,1,1),            
+        (1,2,7,1,CURRENT_TIMESTAMP,1,1),            
+        (1,2,8,1,CURRENT_TIMESTAMP,1,1),            
+        (1,2,9,1,CURRENT_TIMESTAMP,1,1),            
+        (2,NULL,NULL,1,CURRENT_TIMESTAMP,1,1),  
+        (2,3,NULL,1,CURRENT_TIMESTAMP,1,1),     
+        (2,3,1,1,CURRENT_TIMESTAMP,1,1),            
+        (2,3,11,1,CURRENT_TIMESTAMP,1,1),           
+        (2,3,12,1,CURRENT_TIMESTAMP,1,1),           
+        (2,3,13,1,CURRENT_TIMESTAMP,1,1),           
+        (2,3,14,1,CURRENT_TIMESTAMP,1,1),           
+        (2,4,11,1,CURRENT_TIMESTAMP,1,1),           
+        (2,4,15,1,CURRENT_TIMESTAMP,1,1),           
+        (2,4,16,1,CURRENT_TIMESTAMP,1,1);   
+
+        
+INSERT INTO `cci_gh_go`.`SeasonIHPGeographyConfiguration` (regionIHPId,usStatesId,seasonId,modifiedOn,createdBy,modifiedBy)
+VALUES  (1,NULL,1,CURRENT_TIMESTAMP,1,1),       
+        (1,1,1,CURRENT_TIMESTAMP,1,1),          
+        (1,2,1,CURRENT_TIMESTAMP,1,1),          
+        (1,3,1,CURRENT_TIMESTAMP,1,1),          
+        (1,4,1,CURRENT_TIMESTAMP,1,1),          
+        (1,5,1,CURRENT_TIMESTAMP,1,1),          
+        (2,NULL,1,CURRENT_TIMESTAMP,1,1),
+        (2,1,1,CURRENT_TIMESTAMP,1,1),          
+        (2,6,1,CURRENT_TIMESTAMP,1,1),          
+        (2,7,1,CURRENT_TIMESTAMP,1,1),          
+        (2,8,1,CURRENT_TIMESTAMP,1,1),          
+        (2,9,1,CURRENT_TIMESTAMP,1,1),          
+        (3,NULL,1,CURRENT_TIMESTAMP,1,1),       
+        (3,1,1,CURRENT_TIMESTAMP,1,1),          
+        (3,11,1,CURRENT_TIMESTAMP,1,1),         
+        (3,12,1,CURRENT_TIMESTAMP,1,1),         
+        (3,13,1,CURRENT_TIMESTAMP,1,1),         
+        (3,14,1,CURRENT_TIMESTAMP,1,1),         
+        (4,11,1,CURRENT_TIMESTAMP,1,1),         
+        (4,15,1,CURRENT_TIMESTAMP,1,1),         
+        (4,16,1,CURRENT_TIMESTAMP,1,1); 
+        
+INSERT INTO `cci_gh_go`.`FieldStaffLeadershipSeason` (fieldStaffId,fieldStaffTypeId,seasonId,seasonGeographyConfigurationId,erdId,rdId,rmId,createdBy,modifiedOn,modifiedBy)
+VALUES (1,1,1,1,NULL,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (1,1,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (2,2,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (2,2,1,3,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (2,2,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,5,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,6,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,7,1,NULL,NULL,1,CURRENT_TIMESTAMP,1);
+       
+INSERT INTO `cci_gh_go`.`FieldStaffLCSeason` (fieldStaffId,fieldStaffTypeId,seasonId,departmentProgramId,seasonGeographyConfigurationId,erdId,rdId,rmId,createdBy,modifiedOn,modifiedBy)
+VALUES (1,1,1,1,1,NULL,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (1,1,1,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (2,2,1,2,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (2,2,1,2,3,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (2,2,1,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,2,5,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,2,6,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
+       (3,3,1,2,7,1,NULL,NULL,1,CURRENT_TIMESTAMP,1);
