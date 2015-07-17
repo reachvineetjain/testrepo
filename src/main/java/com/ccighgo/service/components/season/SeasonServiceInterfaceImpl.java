@@ -211,6 +211,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Override
+   @Transactional
    public SeasonBean createSeason(SeasonBean seasonBean) {
       try {
          int seasonId = createSeasonLogic(seasonBean);

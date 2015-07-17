@@ -164,7 +164,7 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setNoOfLcCanRequestHold(seasonIHPDetail.getNumberOfLCToRequestHold());
             ihpProgramConfiguration.setSplitPlacementInPending(String.valueOf(seasonIHPDetail.getSplitPlacementPending()));
             ihpProgramConfiguration.setStopAcceptingApplications(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
-            ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingAppsStandardIHP()== CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingVolunteerHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingLanguageBuddyApplications(seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
@@ -362,9 +362,8 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setLcHoldTime(ihpProgramConfiguration.getLcHoldTimeDays());
             seasonIHPDetail.setNumberOfLCToRequestHold(ihpProgramConfiguration.getNoOfLcCanRequestHold());
             seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending()));
-            if (ihpProgramConfiguration.isStopAcceptingApplications() && ihpProgramConfiguration.isStopAcceptingIhpStandardSettings()) {
-               seasonIHPDetail.setStopAcceptingApps(ihpProgramConfiguration.isStopAcceptingApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            }
+            seasonIHPDetail.setStopAcceptingApps(ihpProgramConfiguration.isStopAcceptingApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+            seasonIHPDetail.setStopAcceptingAppsStandardIHP(ihpProgramConfiguration.isStopAcceptingIhpStandardSettings() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsVolunteerHomestay(ihpProgramConfiguration.isStopAcceptingVolunteerHomeStayApplications() ? CCIConstants.ACTIVE
                   : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsLanguageBuddy(ihpProgramConfiguration.isStopAcceptingLanguageBuddyApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);

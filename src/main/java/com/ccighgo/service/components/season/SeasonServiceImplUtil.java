@@ -25,6 +25,7 @@ import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
+import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
 import com.ccighgo.db.entities.SeasonProgramDocument;
@@ -48,6 +49,7 @@ import com.ccighgo.jpa.repositories.SeasonDepartmentNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
+import com.ccighgo.jpa.repositories.SeasonIHPDetailRepository;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
@@ -163,6 +165,7 @@ public class SeasonServiceImplUtil {
    SeasonWTWinterRepository seasonWTWinterRepository;
    @Autowired
    SeasonServiceInterface seasonServiceInterface;
+   @Autowired SeasonIHPDetailRepository seasonIHPDetailRepository;
 
    /**
     * @param seasonBean
@@ -773,6 +776,7 @@ public class SeasonServiceImplUtil {
       } else if (departmentName.equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
          createHSPF1Season(seasonEntity, seasonBean);
          createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
+         createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
       } else if (departmentName.equals(CCIConstants.DEPT_SYSTEM)) {
       } else if (departmentName.equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
       }
@@ -851,7 +855,7 @@ public class SeasonServiceImplUtil {
       if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
          SeasonF1Detail seasonF1Detail = new SeasonF1Detail();
          seasonF1Detail.setSeason(seasonEntity);
-         seasonF1Detail.setProgramName(seasonBean.getSeasonName());
+         seasonF1Detail.setProgramName(seasonBean.getSeasonName()+CCIConstants.HYPHEN_SPACE+CCIConstants.HSP_F1);
          seasonF1Detail.setCreatedBy(1);
          seasonF1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonF1Detail.setModifiedBy(1);
@@ -869,12 +873,30 @@ public class SeasonServiceImplUtil {
       if (season.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
          SeasonJ1Detail seasonJ1Detail = new SeasonJ1Detail();
          seasonJ1Detail.setSeason(season);
-         seasonJ1Detail.setProgramName(seasonBean.getSeasonName());
+         seasonJ1Detail.setProgramName(seasonBean.getSeasonName()+CCIConstants.HYPHEN_SPACE+CCIConstants.HSP_J1_HS);
          seasonJ1Detail.setCreatedBy(1);
          seasonJ1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonJ1Detail.setModifiedBy(1);
          seasonJ1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
+      }
+   }
+   
+   /**
+    * This method creates j1hs season program for HSP high level season
+    * 
+    * @param seasonBean
+    */
+   private void createHSPIHPSeasonProgram(SeasonBean seasonBean, Season season) {
+      if (season.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
+         SeasonIHPDetail seasonIHPDetail = new SeasonIHPDetail();
+         seasonIHPDetail.setSeason(season);
+         seasonIHPDetail.setProgramName(seasonBean.getSeasonName()+CCIConstants.HYPHEN_SPACE+CCIConstants.HSP_STP_IHP);
+         seasonIHPDetail.setCreatedBy(1);
+         seasonIHPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonIHPDetail.setModifiedBy(1);
+         seasonIHPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
       }
    }
 
