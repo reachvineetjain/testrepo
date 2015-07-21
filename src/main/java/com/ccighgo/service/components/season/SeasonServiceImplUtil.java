@@ -1957,7 +1957,7 @@ public class SeasonServiceImplUtil {
                note.setSeasonProgramId(seasonProgramId);
                note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                note.setNoteValue(prgNote.getProgramNote());
-               note.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
+               note.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                note.setCreatedBy(login.getLoginName());
                j1hsNotes.add(note);
@@ -2064,7 +2064,7 @@ public class SeasonServiceImplUtil {
                notes.setSeasonProgramId(seasonProgramId);
                notes.setDepartmentProgramId(departmentProgramId);
                notes.setNoteValue(prgNote.getProgramNote());
-               notes.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
+               notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                notes.setCreatedBy(login.getLoginName());
                ghtNotes.add(notes);
@@ -2119,7 +2119,7 @@ public class SeasonServiceImplUtil {
                notes.setSeasonProgramId(seasonProgramId);
                notes.setDepartmentProgramId(departmentProgramId);
                notes.setNoteValue(prgNote.getProgramNote());
-               notes.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
+               notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                notes.setCreatedBy(login.getLoginName());
                wpNotes.add(notes);
@@ -2379,7 +2379,7 @@ public class SeasonServiceImplUtil {
             hspf1SeasonHspF1Note.setSeasonId(seasonId);
             hspf1SeasonHspF1Note.setNoteValue(seasonProgramNote.getProgramNote());
             hspf1SeasonHspF1Note.setCreatedBy(seasonProgramNote.getCreatedBy() + "");
-            hspf1SeasonHspF1Note.setCreatedOn(DateUtils.getMMddyyDate(seasonProgramNote.getCreatedOn()));
+            hspf1SeasonHspF1Note.setCreatedOn(DateUtils.getDateAndTime(seasonProgramNote.getCreatedOn()));
             hspF1Notes.add(hspf1SeasonHspF1Note);
          }
       }
@@ -2445,7 +2445,7 @@ public class SeasonServiceImplUtil {
          doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
          doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
          doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
-         doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
+         doc.setUploadDate(DateUtils.getDateAndTime(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
          doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
          Login login = loginRepository.findOne(1);// TODO find user from session
          doc.setUploadedBy(login.getLoginName());
@@ -2467,7 +2467,7 @@ public class SeasonServiceImplUtil {
             wpCapNote.setSeasonProgramId(seasonProgramId);
             wpCapNote.setDepartmentProgramId(seasonProgramNote.getDepartmentProgram().getDepartmentProgramId());
             wpCapNote.setCreatedBy(seasonProgramNote.getCreatedBy() + "");
-            wpCapNote.setCreatedOn(DateUtils.getMMddyyDate(seasonProgramNote.getCreatedOn()));
+            wpCapNote.setCreatedOn(DateUtils.getDateAndTime(seasonProgramNote.getCreatedOn()));
             seasonWPCAPNotes.add(wpCapNote);
          }
       }

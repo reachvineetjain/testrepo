@@ -53,7 +53,7 @@ public enum ErrorCode {
 		//Activity Service
 		FAILED_LIST_PRIMARY_ACTIVITIES(233001),
 		
-		
+		//Seasons
 		
 		//user management(temp code)
 		INVALID_USER_ID(301)
