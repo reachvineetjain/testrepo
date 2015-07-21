@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.regionmanagement.RegionManagementServices;
+import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionManagementDetails;
 
 /**
  * @author ravi
@@ -33,6 +34,14 @@ public class RegionManagement {
    public String ping(@PathParam("input") String input) {
       LOGGER.debug("Pinging !! ( value : " + input + " )");
       return input;
+   }
+   
+   @GET
+   @Path("list/all/{seasonId}")
+   @Produces("text/plain")
+   public RegionManagementDetails getCompleteRegionDetails(@PathParam("seasonId") String seasonId){
+      LOGGER.debug("Calling 'getCompleteRegionDetails'");
+      return regionManagementServices.getCompleteRegionDetails(seasonId);
    }
 
 }

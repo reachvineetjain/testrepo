@@ -169,13 +169,16 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setStopAcceptingLanguageBuddyApplications(seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingApplicationByGender(false);//TODO fix after DB fix
             //set gender
-            IHPApplicationByGender applicationByGender = new IHPApplicationByGender();
-            applicationByGender.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
-            applicationByGender.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
-            applicationByGender.setGenderId(seasonIHPDetail.getLookupGender().getGenderId());
-            applicationByGender.setGenderCode(seasonIHPDetail.getLookupGender().getGenderName());
-            ihpProgramConfiguration.setStopAcceptingApplicationByGender(applicationByGender);
+            if(seasonIHPDetail.getLookupGender()!=null){
+               IHPApplicationByGender applicationByGender = new IHPApplicationByGender();
+               applicationByGender.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
+               applicationByGender.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
+               applicationByGender.setGenderId(seasonIHPDetail.getLookupGender().getGenderId());
+               applicationByGender.setGenderCode(seasonIHPDetail.getLookupGender().getGenderName());
+               ihpProgramConfiguration.setGender(applicationByGender);
+            }
             //set regions
             if(seasonIHPDetail.getSeasonIhpdetailsRegionApplications()!=null){
                for(SeasonIHPDetailsRegionApplication regionApplication:seasonIHPDetail.getSeasonIhpdetailsRegionApplications()){
@@ -369,25 +372,22 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setStopAcceptingAppsLanguageBuddy(ihpProgramConfiguration.isStopAcceptingLanguageBuddyApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(ihpProgramConfiguration.isStopAcceptingHolidayHomeStayApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(ihpProgramConfiguration.isStopAcceptingHighSchoolApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            if(ihpProgramConfiguration.getStopAcceptingApplicationByGender()!=null){
-               seasonIHPDetail.setLookupGender(genderRepository.findOne(ihpProgramConfiguration.getStopAcceptingApplicationByGender().getGenderId()));
+            //TODO set boolean in DB
+            if(ihpProgramConfiguration.getGender()!=null){
+               seasonIHPDetail.setLookupGender(genderRepository.findOne(ihpProgramConfiguration.getGender().getGenderId()));
             }
             if(ihpProgramConfiguration.getStopAcceptingApplicationByRegion()!=null){
                List<SeasonIHPDetailsRegionApplication> existingList = seasonIHPDetailsRegionApplicationRepository.findBySeasonIHPId(seasonIHPDetail.getSeasonIHPDetailsId());
-               if(existingList!=null){
-                  seasonIHPDetailsRegionApplicationRepository.delete(existingList);
-               }
                List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications = new ArrayList<SeasonIHPDetailsRegionApplication>();
                for(IHPApplicationByRegion applicationByRegion:ihpProgramConfiguration.getStopAcceptingApplicationByRegion()){
-                  SeasonIHPDetailsRegionApplication ihpDetailsRegionApplication = new SeasonIHPDetailsRegionApplication();
-                  ihpDetailsRegionApplication.setRegionIhp(ihpRegionsRepository.findOne(applicationByRegion.getApplicationRegionId()));
-                  ihpDetailsRegionApplication.setSeasonIhpdetail(seasonIHPDetail);
-                  ihpDetailsRegionApplication.setStopAcceptingApps(applicationByRegion.isAcceptApplicationFlag()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
-                  ihpDetailsRegionApplication.setCreatedBy(1);
-                  ihpDetailsRegionApplication.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  ihpDetailsRegionApplication.setModifiedBy(1);
-                  ihpDetailsRegionApplication.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-                  seasonIhpdetailsRegionApplications.add(ihpDetailsRegionApplication);
+                  for(SeasonIHPDetailsRegionApplication application:existingList){
+                     if(applicationByRegion.getApplicationRegionId()==application.getSeasonIHPDetailsRegionApplicationId()){
+                        SeasonIHPDetailsRegionApplication regionApplication = new SeasonIHPDetailsRegionApplication();
+                        regionApplication = application;
+                        regionApplication.setStopAcceptingApps(applicationByRegion.isAcceptApplicationFlag()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+                        seasonIhpdetailsRegionApplications.add(regionApplication);
+                     }
+                  }
                }
                seasonIHPDetailsRegionApplicationRepository.save(seasonIhpdetailsRegionApplications);
             }
