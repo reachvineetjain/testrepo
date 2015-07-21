@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
@@ -31,7 +32,9 @@ import com.ccighgo.db.entities.SeasonWPConfiguration;
 import com.ccighgo.db.entities.SeasonWnTSpringDetail;
 import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
+import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.service.components.fileutils.FileUtilInterface;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
@@ -47,6 +50,10 @@ public class SeasonCloningHelper {
 
    @Autowired
    SeasonStatusRepository seasonStatusRepository;
+   @Autowired
+   DocumentInformationRepository documentInformationRepository;
+   @Autowired
+   FileUtilInterface fileUtilInterface;
 
    /**
     * Method returns deep copy of an existing season
@@ -213,10 +220,10 @@ public class SeasonCloningHelper {
       }
       return seasonF1Detail;
    }
-   
-   public SeasonIHPDetail cloneHSPIHPProgram(Season existingSeason, Season clonedHSPSeason,CloneSeason cloneSeason){
+
+   public SeasonIHPDetail cloneHSPIHPProgram(Season existingSeason, Season clonedHSPSeason, CloneSeason cloneSeason) {
       SeasonIHPDetail seasonIHPDetail = null;
-      if(existingSeason.getSeasonIhpdetails()!=null && existingSeason.getSeasonIhpdetails().size()>0){
+      if (existingSeason.getSeasonIhpdetails() != null && existingSeason.getSeasonIhpdetails().size() > 0) {
          seasonIHPDetail = new SeasonIHPDetail();
          seasonIHPDetail.setSeason(clonedHSPSeason);
          seasonIHPDetail.setSeasonStatus(clonedHSPSeason.getSeasonStatus());
@@ -509,6 +516,80 @@ public class SeasonCloningHelper {
          seasonWADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       }
       return seasonWADetail;
+   }
+
+   /**
+    * @param existingDoc
+    * @param clonedSeason
+    * @return
+    */
+   public SeasonDepartmentDocument getSeasonDepartmentDocument(SeasonDepartmentDocument existingDoc, Season clonedSeason) {
+      SeasonDepartmentDocument document = new SeasonDepartmentDocument();
+      document.setActive(existingDoc.getActive());
+      document.setSeason(clonedSeason);
+      document.setDocumentInformation(getDepartmentDocumentInformation(existingDoc));
+      document.setCreatedBy(1);
+      document.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      document.setModifiedBy(1);
+      document.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return document;
+   }
+
+   /**
+    * @param doc
+    * @return
+    */
+   public DocumentInformation getDepartmentDocumentInformation(com.ccighgo.db.entities.SeasonDepartmentDocument doc) {
+      DocumentInformation documentInformation = new DocumentInformation();
+      documentInformation.setActive(doc.getDocumentInformation().getActive());
+      documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
+      documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
+      documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
+      documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
+      documentInformation.setCreatedBy(1);
+      documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      documentInformation.setModifiedBy(1);
+      documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+      return documentInformation;
+   }
+
+   /**
+    * @param existingDoc
+    * @param clonedSeason
+    * @return
+    */
+   public com.ccighgo.db.entities.SeasonProgramDocument getSeasonProgramDocument(com.ccighgo.db.entities.SeasonProgramDocument existingDoc, Season clonedSeason) {
+      com.ccighgo.db.entities.SeasonProgramDocument sprgDoc = new com.ccighgo.db.entities.SeasonProgramDocument();
+      sprgDoc.setActive(existingDoc.getActive());
+      sprgDoc.setDepartmentProgram(existingDoc.getDepartmentProgram());
+      sprgDoc.setSeason(clonedSeason);
+      sprgDoc.setDocumentInformation(getProgramDocumentInformation(existingDoc));
+      sprgDoc.setCreatedBy(1);
+      sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      sprgDoc.setModifiedBy(1);
+      sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      return sprgDoc;
+
+   }
+
+   /**
+    * @param doc
+    * @return
+    */
+   public DocumentInformation getProgramDocumentInformation(com.ccighgo.db.entities.SeasonProgramDocument doc) {
+      DocumentInformation documentInformation = new DocumentInformation();
+      documentInformation.setActive(doc.getDocumentInformation().getActive());
+      documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
+      documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
+      documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
+      documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
+      documentInformation.setCreatedBy(1);
+      documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      documentInformation.setModifiedBy(1);
+      documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+      return documentInformation;
    }
 
 }
