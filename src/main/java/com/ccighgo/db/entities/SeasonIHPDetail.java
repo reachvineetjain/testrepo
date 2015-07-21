@@ -68,10 +68,12 @@ public class SeasonIHPDetail implements Serializable {
 	private byte stopAcceptingAppsStandardIHP;
 
 	private byte stopAcceptingAppsVolunteerHomestay;
+	
+	private byte stopAcceptingAppsByGender;
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
-	@JoinColumn(name="stopAcceptingAppsByGender")
+	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
 
 	//bi-directional many-to-one association to Season
@@ -289,5 +291,13 @@ public class SeasonIHPDetail implements Serializable {
 
 		return seasonIhpdetailsRegionApplication;
 	}
+
+   public byte getStopAcceptingAppsByGender() {
+      return stopAcceptingAppsByGender;
+   }
+
+   public void setStopAcceptingAppsByGender(byte stopAcceptingAppsByGender) {
+      this.stopAcceptingAppsByGender = stopAcceptingAppsByGender;
+   }
 
 }
