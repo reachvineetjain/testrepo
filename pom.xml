@@ -286,7 +286,7 @@
             <version>2.2</version>
             <configuration>
                <!-- neglect /html below Tomcat7: -->
-               <url>http://localhost:8081/manager/text</url>
+               <url>http://localhost:8086/manager/text</url>
                <!-- Refer to the server settings in your ~/.m2/settings.xml -->
                <server>tomcat</server>
                <path>/${project.build.finalName}</path>
