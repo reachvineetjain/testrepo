@@ -382,10 +382,8 @@ public class SeasonIHPProgramHelper {
                for(IHPApplicationByRegion applicationByRegion:ihpProgramConfiguration.getStopAcceptingApplicationByRegion()){
                   for(SeasonIHPDetailsRegionApplication application:existingList){
                      if(applicationByRegion.getApplicationRegionId()==application.getSeasonIHPDetailsRegionApplicationId()){
-                        SeasonIHPDetailsRegionApplication regionApplication = new SeasonIHPDetailsRegionApplication();
-                        regionApplication = application;
-                        regionApplication.setStopAcceptingApps(applicationByRegion.isAcceptApplicationFlag()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
-                        seasonIhpdetailsRegionApplications.add(regionApplication);
+                        application.setStopAcceptingApps(applicationByRegion.isAcceptApplicationFlag()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+                        seasonIhpdetailsRegionApplications.add(application);
                      }
                   }
                }

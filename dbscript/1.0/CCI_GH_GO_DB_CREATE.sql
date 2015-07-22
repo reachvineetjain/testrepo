@@ -1378,7 +1378,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetails` (
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`seasonIHPDetailsId`),
   INDEX `FK_SeasonIHPDetails_Season_idx` (`seasonId` ASC),
-  INDEX `FK_SeasonIHPDetails_LookupGender` (`stopAcceptingAppsByGender` ASC),
+  INDEX `FK_SeasonIHPDetails_LookupGender` (`genderId` ASC),
   INDEX `FK_SeasonIHPDetails_Status_idx` (`programStatusId` ASC),
   CONSTRAINT `FK_SeasonIHPDetails_Season`
     FOREIGN KEY (`seasonId`)
