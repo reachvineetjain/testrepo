@@ -285,7 +285,7 @@
             <artifactId>tomcat7-maven-plugin</artifactId>
             <version>2.2</version>
             <configuration>
-               <!-- neglect /html below Tomcat7:  -->
+               <!-- neglect /html below Tomcat7:-->
                <url>http://52.2.191.63:8086/manager/text</url>
                <!-- Refer to the server settings in your ~/.m2/settings.xml -->
                <server>tomcat</server>
