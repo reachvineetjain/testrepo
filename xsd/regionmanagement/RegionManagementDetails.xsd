@@ -15,6 +15,7 @@
 
    <xsd:complexType name="RegionManagementDetails">
       <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="superRegions" type="rmd:SuperRegion" minOccurs="1" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>
