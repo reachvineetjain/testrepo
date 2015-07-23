@@ -19,15 +19,15 @@ public class SeasonWPConfiguration implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonWPConfigurationId;
+	private Integer seasonWPConfigurationId;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -48,19 +48,19 @@ public class SeasonWPConfiguration implements Serializable {
 	public SeasonWPConfiguration() {
 	}
 
-	public int getSeasonWPConfigurationId() {
+	public Integer getSeasonWPConfigurationId() {
 		return this.seasonWPConfigurationId;
 	}
 
-	public void setSeasonWPConfigurationId(int seasonWPConfigurationId) {
+	public void setSeasonWPConfigurationId(Integer seasonWPConfigurationId) {
 		this.seasonWPConfigurationId = seasonWPConfigurationId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -72,11 +72,11 @@ public class SeasonWPConfiguration implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

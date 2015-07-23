@@ -18,7 +18,7 @@ public class Login implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int loginId;
+	private Integer loginId;
 
 	@Column(nullable=false, length=50)
 	private String loginName;
@@ -46,11 +46,11 @@ public class Login implements Serializable {
 	public Login() {
 	}
 
-	public int getLoginId() {
+	public Integer getLoginId() {
 		return this.loginId;
 	}
 
-	public void setLoginId(int loginId) {
+	public void setLoginId(Integer loginId) {
 		this.loginId = loginId;
 	}
 

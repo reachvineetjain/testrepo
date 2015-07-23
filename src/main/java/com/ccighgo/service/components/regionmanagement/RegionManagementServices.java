@@ -5,6 +5,7 @@ package com.ccighgo.service.components.regionmanagement;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.season.beans.regionmanagementdetails.Region;
 import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionManagementDetails;
 import com.ccighgo.service.transport.season.beans.regionmanagementdetails.SuperRegion;
 
@@ -29,13 +30,41 @@ public interface RegionManagementServices {
     * @param seasonId
     * @return
     */
-   public SuperRegion getSuperRegion(String superRegionId, String seasonId);
+   public SuperRegion getSuperRegion(String superRegionId);
 
    /**
     * @param superRegion
     * @return
     */
    public SuperRegion addSuperRegion(String seasonId, SuperRegion superRegion);
+
+   /**
+    * @param superRegion
+    * @return
+    */
+   public SuperRegion updateSuperRegion(SuperRegion superRegion);
+
+   /**
+    * @param superRegionId
+    * @return
+    */
+   public String deleteSuperRegion(String superRegionId, String seasonId);
+
+   /**
+    * @param superRegionId
+    * @param regionId
+    * @param seasonId
+    * @return
+    */
+   public Region getRegion(String regionId);
+
+   /**
+    * @param regionId
+    * @param superRegionId
+    * @param seasonId
+    * @return
+    */
+   public String deleteRegion(String regionId, String superRegionId, String seasonId);
 
    
 

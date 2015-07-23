@@ -18,7 +18,7 @@ public class DepartmentProgramOption implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int departmentProgramOptionId;
+	private Integer departmentProgramOptionId;
 
 	@Column(nullable=false, length=10)
 	private String programOptionCode;
@@ -42,11 +42,11 @@ public class DepartmentProgramOption implements Serializable {
 	public DepartmentProgramOption() {
 	}
 
-	public int getDepartmentProgramOptionId() {
+	public Integer getDepartmentProgramOptionId() {
 		return this.departmentProgramOptionId;
 	}
 
-	public void setDepartmentProgramOptionId(int departmentProgramOptionId) {
+	public void setDepartmentProgramOptionId(Integer departmentProgramOptionId) {
 		this.departmentProgramOptionId = departmentProgramOptionId;
 	}
 

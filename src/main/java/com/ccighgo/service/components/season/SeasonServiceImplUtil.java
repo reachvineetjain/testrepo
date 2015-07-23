@@ -175,6 +175,8 @@ public class SeasonServiceImplUtil {
    public void convertEntitySeasonToBeanSeason(SeasonBean seasonBean, Season seasonEntity) {
       seasonBean.setSeasonId(seasonEntity.getSeasonId());
       seasonBean.setDepartmentId(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentId() : -1);
+      seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment()!=null?seasonEntity.getLookupDepartment().getAcronym():null);
+      seasonBean.setDepartmentName(seasonEntity.getLookupDepartment()!=null?seasonEntity.getLookupDepartment().getDepartmentName():null);
       seasonBean.setSeasonName(seasonEntity.getSeasonName() != null ? seasonEntity.getSeasonName() : CCIConstants.EMPTY_DATA);
       if (seasonEntity.getSeasonStatus() != null) {
          seasonBean.setStatus(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getStatus() : CCIConstants.EMPTY_DATA);
@@ -777,7 +779,7 @@ public class SeasonServiceImplUtil {
       } else if (departmentName.equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
          createHSPF1Season(seasonEntity, seasonBean);
          createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
-         createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
+         createHSPIHPSeasonProgram(seasonBean, seasonEntity);
       } else if (departmentName.equals(CCIConstants.DEPT_SYSTEM)) {
       } else if (departmentName.equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
       }

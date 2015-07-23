@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/season"
-	elementFormDefault="unqualified" attributeFormDefault="unqualified"
-	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:season="http://www.ccighgo.com/season">
-	<xsd:annotation>
-		<xsd:appinfo>
-			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.season" />
-			</jaxb:schemaBindings>
-		</xsd:appinfo>
-		<xsd:documentation></xsd:documentation>
-	</xsd:annotation>
+<xsd:schema targetNamespace="http://www.ccighgo.com/season" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:season="http://www.ccighgo.com/season">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.seasons.beans.season" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
 
-	<xsd:element name="SeasonData" type="season:SeasonBean"></xsd:element>
-	
-	<xsd:complexType name="SeasonBean">
-		<xsd:sequence>
-		 <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-		 <xsd:element name="statusId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-		 <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-		 <xsd:element name="seasonHSPConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-		 <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+   <xsd:element name="SeasonData" type="season:SeasonBean"></xsd:element>
+
+   <xsd:complexType name="SeasonBean">
+      <xsd:sequence>
+         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+         <xsd:element name="departmentCode" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+         <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+         <xsd:element name="statusId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+         <xsd:element name="seasonHSPConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="startDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="endDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="notes" type="season:SeasonDepartmentNotes" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="documents" type="season:SeasonDocument" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="programOptions" type="season:ProgramOptions" minOccurs="1" maxOccurs="unbounded" />
-		</xsd:sequence>
-	</xsd:complexType>
-  <xsd:complexType name="ProgramOptions">
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProgramOptions">
       <xsd:sequence>
          <xsd:element name="programOptionsID" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programOptionsCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programOptionsName" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
-     <xsd:complexType name="SeasonDocument">
-        <xsd:sequence>
+   <xsd:complexType name="SeasonDocument">
+      <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
-    
-    <xsd:complexType name="SeasonDepartmentNotes">
-        <xsd:sequence>
-        	<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-        	<xsd:element name="seasonDepartmenNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType> 
-    
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SeasonDepartmentNotes">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonDepartmenNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
 </xsd:schema>

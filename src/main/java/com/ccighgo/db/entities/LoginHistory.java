@@ -18,7 +18,7 @@ public class LoginHistory implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int loginHistoryId;
+	private Integer loginHistoryId;
 
 	@Column(length=20)
 	private String ipAddress;
@@ -34,11 +34,11 @@ public class LoginHistory implements Serializable {
 	public LoginHistory() {
 	}
 
-	public int getLoginHistoryId() {
+	public Integer getLoginHistoryId() {
 		return this.loginHistoryId;
 	}
 
-	public void setLoginHistoryId(int loginHistoryId) {
+	public void setLoginHistoryId(Integer loginHistoryId) {
 		this.loginHistoryId = loginHistoryId;
 	}
 

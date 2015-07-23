@@ -19,10 +19,10 @@ public class SeasonTADetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonTADetailsId;
+	private Integer seasonTADetailsId;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -30,7 +30,7 @@ public class SeasonTADetail implements Serializable {
 	private Date endDate;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -54,19 +54,19 @@ public class SeasonTADetail implements Serializable {
 	public SeasonTADetail() {
 	}
 
-	public int getSeasonTADetailsId() {
+	public Integer getSeasonTADetailsId() {
 		return this.seasonTADetailsId;
 	}
 
-	public void setSeasonTADetailsId(int seasonTADetailsId) {
+	public void setSeasonTADetailsId(Integer seasonTADetailsId) {
 		this.seasonTADetailsId = seasonTADetailsId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -86,11 +86,11 @@ public class SeasonTADetail implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

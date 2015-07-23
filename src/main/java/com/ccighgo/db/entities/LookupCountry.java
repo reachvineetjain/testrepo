@@ -18,7 +18,7 @@ public class LookupCountry implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int countryId;
+	private Integer countryId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -42,11 +42,11 @@ public class LookupCountry implements Serializable {
 	public LookupCountry() {
 	}
 
-	public int getCountryId() {
+	public Integer getCountryId() {
 		return this.countryId;
 	}
 
-	public void setCountryId(int countryId) {
+	public void setCountryId(Integer countryId) {
 		this.countryId = countryId;
 	}
 

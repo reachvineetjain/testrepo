@@ -19,12 +19,12 @@ public class CCIStaffUserProgram implements Serializable {
 	private CCIStaffUserProgramPK id;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -50,11 +50,11 @@ public class CCIStaffUserProgram implements Serializable {
 		this.id = id;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -66,11 +66,11 @@ public class CCIStaffUserProgram implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

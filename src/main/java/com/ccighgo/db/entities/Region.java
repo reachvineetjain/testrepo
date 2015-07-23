@@ -19,18 +19,18 @@ public class Region implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int regionId;
+	private Integer regionId;
 
 	@Column(nullable=false)
 	private byte active;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -45,11 +45,11 @@ public class Region implements Serializable {
 	public Region() {
 	}
 
-	public int getRegionId() {
+	public Integer getRegionId() {
 		return this.regionId;
 	}
 
-	public void setRegionId(int regionId) {
+	public void setRegionId(Integer regionId) {
 		this.regionId = regionId;
 	}
 
@@ -61,11 +61,11 @@ public class Region implements Serializable {
 		this.active = active;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -77,11 +77,11 @@ public class Region implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

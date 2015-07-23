@@ -13,23 +13,23 @@ public class CCIStaffUsersCCIStaffRolePK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private int cciStaffUserId;
+	private Integer cciStaffUserId;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private int cciStaffRoleId;
+	private Integer cciStaffRoleId;
 
 	public CCIStaffUsersCCIStaffRolePK() {
 	}
-	public int getCciStaffUserId() {
+	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
-	public void setCciStaffUserId(int cciStaffUserId) {
+	public void setCciStaffUserId(Integer cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
-	public int getCciStaffRoleId() {
+	public Integer getCciStaffRoleId() {
 		return this.cciStaffRoleId;
 	}
-	public void setCciStaffRoleId(int cciStaffRoleId) {
+	public void setCciStaffRoleId(Integer cciStaffRoleId) {
 		this.cciStaffRoleId = cciStaffRoleId;
 	}
 
@@ -47,8 +47,8 @@ public class CCIStaffUsersCCIStaffRolePK implements Serializable {
 	}
 
 	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
+		final Integer prime = 31;
+		Integer hash = 17;
 		hash = hash * prime + this.cciStaffUserId;
 		hash = hash * prime + this.cciStaffRoleId;
 		

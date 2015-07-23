@@ -17,7 +17,7 @@ public class PasswordHistory implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int passwordHistoryId;
+	private Integer passwordHistoryId;
 
 	@Column(length=40)
 	private String password1;
@@ -39,11 +39,11 @@ public class PasswordHistory implements Serializable {
 	public PasswordHistory() {
 	}
 
-	public int getPasswordHistoryId() {
+	public Integer getPasswordHistoryId() {
 		return this.passwordHistoryId;
 	}
 
-	public void setPasswordHistoryId(int passwordHistoryId) {
+	public void setPasswordHistoryId(Integer passwordHistoryId) {
 		this.passwordHistoryId = passwordHistoryId;
 	}
 

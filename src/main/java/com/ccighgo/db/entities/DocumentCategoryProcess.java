@@ -18,7 +18,7 @@ public class DocumentCategoryProcess implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int documentCategoryProcessId;
+	private Integer documentCategoryProcessId;
 
 	@Column(length=50)
 	private String documentCategoryProcessName;
@@ -30,11 +30,11 @@ public class DocumentCategoryProcess implements Serializable {
 	public DocumentCategoryProcess() {
 	}
 
-	public int getDocumentCategoryProcessId() {
+	public Integer getDocumentCategoryProcessId() {
 		return this.documentCategoryProcessId;
 	}
 
-	public void setDocumentCategoryProcessId(int documentCategoryProcessId) {
+	public void setDocumentCategoryProcessId(Integer documentCategoryProcessId) {
 		this.documentCategoryProcessId = documentCategoryProcessId;
 	}
 

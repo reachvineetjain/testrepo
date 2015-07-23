@@ -18,7 +18,7 @@ public class FieldStaffAgreement implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int fieldStaffAgreementId;
+	private Integer fieldStaffAgreementId;
 
 	@Column(nullable=false, length=50)
 	private String agreementName;
@@ -34,11 +34,11 @@ public class FieldStaffAgreement implements Serializable {
 	public FieldStaffAgreement() {
 	}
 
-	public int getFieldStaffAgreementId() {
+	public Integer getFieldStaffAgreementId() {
 		return this.fieldStaffAgreementId;
 	}
 
-	public void setFieldStaffAgreementId(int fieldStaffAgreementId) {
+	public void setFieldStaffAgreementId(Integer fieldStaffAgreementId) {
 		this.fieldStaffAgreementId = fieldStaffAgreementId;
 	}
 
