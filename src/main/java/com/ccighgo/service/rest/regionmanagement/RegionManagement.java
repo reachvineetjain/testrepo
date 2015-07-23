@@ -75,7 +75,7 @@ public class RegionManagement {
    @Produces("application/json")
    public SuperRegion editSuperRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'editSuperRegion'");
-      return regionManagementServices.getSuperRegion(superRegionId, seasonId);
+      return regionManagementServices.getSuperRegion(superRegionId);
    }
 
    /**
@@ -89,6 +89,27 @@ public class RegionManagement {
    public SuperRegion addSuperRegion(@PathParam("seasonId") String seasonId, SuperRegion superRegion) {
       LOGGER.debug("Calling 'addSuperRegion'");
       return regionManagementServices.addSuperRegion(seasonId,superRegion);
+   }
+   
+   /**
+    * @param superRegion
+    * @return newly added super region
+    */
+   @POST
+   @Path("super/region/update")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SuperRegion updateSuperRegion(SuperRegion superRegion) {
+      LOGGER.debug("Calling 'updateSuperRegion'");
+      return regionManagementServices.updateSuperRegion(superRegion);
+   }
+   
+   @GET
+   @Path("super/region/delete/{superRegionId}")
+   @Produces("application/json")
+   public String deleteSuperRegion(@PathParam("superRegionId") String superRegionId) {
+      LOGGER.debug("Calling 'deleteSuperRegion'");
+      return regionManagementServices.deleteSuperRegion(superRegionId);
    }
 
 }

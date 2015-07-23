@@ -29,13 +29,25 @@ public interface RegionManagementServices {
     * @param seasonId
     * @return
     */
-   public SuperRegion getSuperRegion(String superRegionId, String seasonId);
+   public SuperRegion getSuperRegion(String superRegionId);
 
    /**
     * @param superRegion
     * @return
     */
    public SuperRegion addSuperRegion(String seasonId, SuperRegion superRegion);
+
+   /**
+    * @param superRegion
+    * @return
+    */
+   public SuperRegion updateSuperRegion(SuperRegion superRegion);
+
+   /**
+    * @param superRegionId
+    * @return
+    */
+   public String deleteSuperRegion(String superRegionId);
 
    
 
