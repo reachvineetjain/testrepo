@@ -24,6 +24,7 @@ import com.ccighgo.db.entities.SeasonDepartmentDocument;
 import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonHSADetail;
+import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
@@ -1964,7 +1965,7 @@ public class SeasonServiceImplUtil {
                documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
                documents.setFileName(programDocument.getDocumentInformation().getFileName());
                String docType = null;
-               if(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName()!=null){
+               if (programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
                   docType = programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName();
                }
                documents.setDocType(docType);
@@ -2538,17 +2539,19 @@ public class SeasonServiceImplUtil {
 
    }
 
-   public void updateHSPF1ProgramAllocation(HSPF1ProgramAllocations hspF1ProgramAllocation, List<SeasonWPAllocation> updatedList, SeasonWPAllocation seasonWPAllocation) {
-      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-         SeasonWPAllocation allocation = new SeasonWPAllocation();
-         allocation = seasonWPAllocation;
-         allocation.setMaxPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
+   public void updateHSPF1ProgramAllocation(HSPF1ProgramAllocations hspF1ProgramAllocation, List<SeasonHSPAllocation> updatedList, SeasonHSPAllocation seasonHSPAllocation) {
+      if (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
+         SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+         allocation = seasonHSPAllocation;
+         allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
+         allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
          updatedList.add(allocation);
       }
-      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-         SeasonWPAllocation allocation = new SeasonWPAllocation();
-         allocation = seasonWPAllocation;
-         allocation.setMaxPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
+      if (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+         SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+         allocation = seasonHSPAllocation;
+         allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
+         allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
          updatedList.add(allocation);
       }
    }
