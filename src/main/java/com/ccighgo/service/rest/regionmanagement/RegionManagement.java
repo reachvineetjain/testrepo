@@ -71,7 +71,7 @@ public class RegionManagement {
     * @return
     */
    @GET
-   @Path("super/region/edit/{superRegionId}/{seasonId}")
+   @Path("superregion/edit/{superRegionId}/{seasonId}")
    @Produces("application/json")
    public SuperRegion editSuperRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'editSuperRegion'");
@@ -83,7 +83,7 @@ public class RegionManagement {
     * @return newly added super region
     */
    @POST
-   @Path("super/region/add/{seasonId}")
+   @Path("superregion/add/{seasonId}")
    @Consumes("application/json")
    @Produces("application/json")
    public SuperRegion addSuperRegion(@PathParam("seasonId") String seasonId, SuperRegion superRegion) {
@@ -96,7 +96,7 @@ public class RegionManagement {
     * @return newly added super region
     */
    @POST
-   @Path("super/region/update")
+   @Path("superregion/update")
    @Consumes("application/json")
    @Produces("application/json")
    public SuperRegion updateSuperRegion(SuperRegion superRegion) {
@@ -104,12 +104,29 @@ public class RegionManagement {
       return regionManagementServices.updateSuperRegion(superRegion);
    }
    
+   /**
+    * @param superRegionId
+    * @return
+    */
    @GET
-   @Path("super/region/delete/{superRegionId}")
+   @Path("superregion/delete/{superRegionId}")
    @Produces("application/json")
    public String deleteSuperRegion(@PathParam("superRegionId") String superRegionId) {
       LOGGER.debug("Calling 'deleteSuperRegion'");
       return regionManagementServices.deleteSuperRegion(superRegionId);
+   }
+   
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @return
+    */
+   @GET
+   @Path("region/edit/{superRegionId}/{regionId}/{seasonId}")
+   @Produces("application/json")
+   public SuperRegion editRegion(@PathParam("superRegionId") String superRegionId, @PathParam("regionId") String regionId, @PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'editSuperRegion'");
+      return null;//regionManagementServices.getRegion(superRegionId);
    }
 
 }

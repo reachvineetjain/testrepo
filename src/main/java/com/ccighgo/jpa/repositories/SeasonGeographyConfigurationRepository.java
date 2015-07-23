@@ -38,5 +38,8 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    
    @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId = ?2 AND s.season.seasonId = ?3")
    public List<SeasonGeographyConfiguration> findStatesBySuperRegionRegionAandSeasonId(Integer superRegionId,Integer regionId,Integer seasonId);
+   
+   @Query("DELETE FROM SeasonGeographyConfiguration s WHERE s..superRegion.superRegionId = ?1")
+   public void deleteAllById(Integer superRegionId);
 
 }

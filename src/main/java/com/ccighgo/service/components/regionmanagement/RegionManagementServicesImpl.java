@@ -196,16 +196,20 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    @Override
    @Transactional
    public String deleteSuperRegion(String superRegionId) {
+      String message = null;
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided superRegionId is either zero or less than zero");
       }
       try{
-         //seasonGeographyConfigurationRepository.de
-         
+         //first delete all records from SeasonGeographyConfiguration
+         seasonGeographyConfigurationRepository.deleteAllById(Integer.valueOf(superRegionId));
+         //delete record from SuperRegion table
+         superRegionRepository.delete(Integer.valueOf(superRegionId));
+         message = "deleted successfully";
       }catch (CcighgoServiceException e) {
          throw new CcighgoServiceException(ErrorCode.NOT_ALLOWED_MODIFY, "error deleting super region");
       }
-      return null;
+      return message;
    }
 
 }
