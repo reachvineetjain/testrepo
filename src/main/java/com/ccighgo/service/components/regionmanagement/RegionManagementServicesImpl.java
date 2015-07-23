@@ -195,21 +195,48 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
 
    @Override
    @Transactional
-   public String deleteSuperRegion(String superRegionId) {
+   public String deleteSuperRegion(String superRegionId, String seasonId) {
       String message = null;
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided superRegionId is either zero or less than zero");
       }
       try{
-         //first delete all records from SeasonGeographyConfiguration
-         seasonGeographyConfigurationRepository.deleteAllById(Integer.valueOf(superRegionId));
-         //delete record from SuperRegion table
-         superRegionRepository.delete(Integer.valueOf(superRegionId));
+         seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId),Integer.valueOf(seasonId));
          message = "deleted successfully";
       }catch (CcighgoServiceException e) {
          throw new CcighgoServiceException(ErrorCode.NOT_ALLOWED_MODIFY, "error deleting super region");
       }
       return message;
+   }
+
+   @Override
+   @Transactional(readOnly=true)
+   public Region getRegion(String regionId) {
+      Region region = null;
+      if (regionId == null || regionId.isEmpty()) {
+         throw new ValidationException(ErrorCode.INVALID_REQUEST, "Request is missing regionId");
+      }
+      if (regionId != null && (Integer.valueOf(regionId) == 0 || Integer.valueOf(regionId) < 0)) {
+         throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided regionId is either zero or less than zero");
+      }
+      try{
+         com.ccighgo.db.entities.Region regn = regionRepository.findOne(Integer.valueOf(regionId));
+         if(regn!=null){
+            region = new Region();
+            region.setRegionId(regn.getRegionId());
+            region.setRegionName(regn.getRegionName());
+         }
+      }catch (CcighgoServiceException e) {
+         throw new CcighgoServiceException(ErrorCode.NOT_ALLOWED_MODIFY, "error getting region");
+      }
+      return region;
+   }
+
+   @Override
+   @Transactional
+   public String deleteRegion(String regionId, String superRegionId, String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
    }
 
 }
