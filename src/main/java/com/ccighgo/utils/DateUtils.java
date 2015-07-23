@@ -61,6 +61,23 @@ public class DateUtils {
       }
       return date;
    }
+   
+   /**
+    * Method takes input as date and converts into String date in MM-DD-YY format
+    * 
+    * @param inputDate
+    * @return
+    */
+   public static String getDateAndTime(Date inputDate) {
+      String date = null;
+      try {
+         if (inputDate != null)
+            date = DateFormatUtils.format(inputDate, CCIConstants.DATE_TIME, Locale.US);
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return date;
+   }
 
    /**
     * Method takes string date as input and returns date object

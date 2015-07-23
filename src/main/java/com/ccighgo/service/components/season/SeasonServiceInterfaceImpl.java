@@ -160,7 +160,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Autowired
    SeasonGHTConfigurationRepository seasonGHTConfigurationRepository;
    @Autowired
-   SeasonCloningHelper seasonHelper;
+   SeasonCloningHelper seasonCloningHelper;
    @Autowired
    SeasonDepartmentNotesRepository seasonDepartmentNotesRepository;
    @Autowired
@@ -177,8 +177,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonProgramDocumentRepository seasonProgramDocumentRepository;
    @Autowired
    DepartmentProgramOptionRepository departmentProgramOptionRepository;
-   @Autowired
-   FileUtilInterface fileUtilInterface;
    @Autowired
    DocumentTypeRepository documentTypeRepository;
    @Autowired
@@ -212,6 +210,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Override
+   @Transactional
    public SeasonBean createSeason(SeasonBean seasonBean) {
       try {
          int seasonId = createSeasonLogic(seasonBean);
@@ -1977,10 +1976,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public CloneSeason cloneSeason(CloneSeason cloneSeason) {
       CloneSeason returnObject = null;
       if (cloneSeason.getSeasonId() == 0 || cloneSeason.getSeasonId() < 0) {
-         // throw exception
+         throw new InvalidServiceConfigurationException("season id must be positive integer greater than 0");
       }
       if (cloneSeason.getDepartmentId() == 0 || cloneSeason.getDepartmentId() < 0) {
-         // throw exception
+         throw new InvalidServiceConfigurationException("department id must be positive integer greater than 0");
       }
       try {
          Season existingSeason = seasonRepository.findOne(cloneSeason.getSeasonId());
@@ -1992,14 +1991,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                List<com.ccighgo.db.entities.SeasonProgramDocument> clonedPrgDocs = null;
                List<com.ccighgo.db.entities.SeasonProgramDocument> existingDocs = existingSeason.getSeasonProgramDocuments();
                if (department.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-                  Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                  Season season = seasonCloningHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
                   Season clonedHSPSeason = seasonRepository.saveAndFlush(season);
                   // clone season documents
                   if (existingSeasonDocs != null && existingSeasonDocs.size() > 0) {
                      clonedSeasonDocs = new ArrayList<SeasonDepartmentDocument>();
                      for (SeasonDepartmentDocument doc : existingSeasonDocs) {
                         if (doc.getSeason().getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-                           clonedSeasonDocs.add(getSeasonDepartmentDocument(doc, clonedHSPSeason));
+                           clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedHSPSeason));
                         }
                      }
                      seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
@@ -2008,12 +2007,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   List<SeasonHSPAllocation> seasonHspallocations = existingSeason.getSeasonHspallocations();
                   List<SeasonHSPAllocation> seasonHspallocationNewList = null;
                   if (seasonHspallocations != null && seasonHspallocations.size() > 0) {
-                     seasonHspallocationNewList = seasonHelper.cloneHSPAllocations(clonedHSPSeason, seasonHspallocations);
+                     seasonHspallocationNewList = seasonCloningHelper.cloneHSPAllocations(clonedHSPSeason, seasonHspallocations);
                   }
-                  SeasonHSPConfiguration seasonHSPConfiguration = seasonHelper.cloneHSPConfiguration(cloneSeason, clonedHSPSeason);
-                  SeasonJ1Detail seasonJ1Detail = seasonHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason);
-                  SeasonF1Detail seasonF1Detail = seasonHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason);
-                  SeasonIHPDetail seasonIHPDetail = seasonHelper.cloneHSPIHPProgram(existingSeason, clonedHSPSeason, cloneSeason);
+                  SeasonHSPConfiguration seasonHSPConfiguration = seasonCloningHelper.cloneHSPConfiguration(cloneSeason, clonedHSPSeason);
+                  SeasonJ1Detail seasonJ1Detail = seasonCloningHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason);
+                  SeasonF1Detail seasonF1Detail = seasonCloningHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason);
+                  SeasonIHPDetail seasonIHPDetail = seasonCloningHelper.cloneHSPIHPProgram(existingSeason, clonedHSPSeason,cloneSeason);
                   if (seasonHspallocationNewList != null) {
                      seasonHSPAllocationRepository.save(seasonHspallocationNewList);
                   }
@@ -2024,7 +2023,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
-                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedHSPSeason));
+                              clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason));
                            }
                         }
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -2036,7 +2035,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1)) {
-                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedHSPSeason));
+                              clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason));
                            }
                         }
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -2048,7 +2047,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_STP_IHP)) {
-                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedHSPSeason));
+                              clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason));
                            }
                         }
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -2060,14 +2059,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                // clone WP
                if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
                   // clone high level WP season
-                  Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                  Season season = seasonCloningHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
                   Season clonedWPSeason = seasonRepository.saveAndFlush(season);
                   // clone high level season documents
                   if (existingSeasonDocs != null && existingSeasonDocs.size() > 0) {
                      clonedSeasonDocs = new ArrayList<SeasonDepartmentDocument>();
                      for (SeasonDepartmentDocument doc : existingSeasonDocs) {
                         if (doc.getSeason().getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
-                           clonedSeasonDocs.add(getSeasonDepartmentDocument(doc, clonedWPSeason));
+                           clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedWPSeason));
                         }
                      }
                      seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
@@ -2075,13 +2074,13 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   List<SeasonWPAllocation> seasonWPAllocations = existingSeason.getSeasonWpallocations();
                   List<SeasonWPAllocation> seasonWPAallocationCloneList = null;
                   if (seasonWPAllocations != null && seasonWPAllocations.size() > 0) {
-                     seasonWPAallocationCloneList = seasonHelper.cloneWPAllocations(clonedWPSeason, seasonWPAllocations);
+                     seasonWPAallocationCloneList = seasonCloningHelper.cloneWPAllocations(clonedWPSeason, seasonWPAllocations);
                   }
-                  SeasonWPConfiguration seasonWPConfiguration = seasonHelper.cloneWPConfigurations(cloneSeason, clonedWPSeason);
-                  SeasonWnTSpringDetail seasonWnTSpringDetail = seasonHelper.cloneWPSpringProgram(existingSeason, clonedWPSeason);
-                  SeasonWnTSummerDetail seasonWnTSummerDetail = seasonHelper.cloneWPSummerProgram(existingSeason, clonedWPSeason);
-                  SeasonWnTWinterDetail seasonWnTWinterDetail = seasonHelper.cloneWPWinterProgram(existingSeason, clonedWPSeason);
-                  SeasonCAPDetail seasonCAPDetail = seasonHelper.cloneWPCapProgram(existingSeason, clonedWPSeason);
+                  SeasonWPConfiguration seasonWPConfiguration = seasonCloningHelper.cloneWPConfigurations(cloneSeason, clonedWPSeason);
+                  SeasonWnTSpringDetail seasonWnTSpringDetail = seasonCloningHelper.cloneWPSpringProgram(existingSeason, clonedWPSeason);
+                  SeasonWnTSummerDetail seasonWnTSummerDetail = seasonCloningHelper.cloneWPSummerProgram(existingSeason, clonedWPSeason);
+                  SeasonWnTWinterDetail seasonWnTWinterDetail = seasonCloningHelper.cloneWPWinterProgram(existingSeason, clonedWPSeason);
+                  SeasonCAPDetail seasonCAPDetail = seasonCloningHelper.cloneWPCapProgram(existingSeason, clonedWPSeason);
                   seasonWPAllocationRepository.save(seasonWPAallocationCloneList);
                   seasonWPConfigurationRepository.save(seasonWPConfiguration);
                   if (seasonWnTSpringDetail != null) {
@@ -2090,7 +2089,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SPRING)) {
-                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedWPSeason));
+                              clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
                            }
                         }
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -2102,7 +2101,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SUMMER)) {
-                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedWPSeason));
+                              clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
                            }
                         }
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -2114,7 +2113,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_WINTER)) {
-                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedWPSeason));
+                              clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
                            }
                         }
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -2126,7 +2125,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                         for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                            if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_CAP)) {
-                              clonedPrgDocs.add(getSeasonProgramDocument(doc, clonedWPSeason));
+                              clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
                            }
                         }
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -2136,23 +2135,23 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   returnObject = cloneSeason;
                }
                if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
-                  Season season = seasonHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                  Season season = seasonCloningHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
                   Season clonedGHTSeason = seasonRepository.saveAndFlush(season);
                   if (existingSeasonDocs != null && existingSeasonDocs.size() > 0) {
                      clonedSeasonDocs = new ArrayList<SeasonDepartmentDocument>();
                      for (SeasonDepartmentDocument doc : existingSeasonDocs) {
                         if (doc.getSeason().getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
-                           clonedSeasonDocs.add(getSeasonDepartmentDocument(doc, clonedGHTSeason));
+                           clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedGHTSeason));
                         }
                      }
                      seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
                   }
-                  SeasonGHTConfiguration seasonGHTConfiguration = seasonHelper.cloneGHTConfiguration(cloneSeason, clonedGHTSeason);
-                  SeasonHSADetail seasonHSADetail = seasonHelper.cloneGHTHSAProgram(existingSeason, clonedGHTSeason);
-                  SeasonLSDetail seasonLSDetail = seasonHelper.cloneGHTLSProgram(existingSeason, clonedGHTSeason);
-                  SeasonTADetail seasonTADetail = seasonHelper.cloneGHTTAProgram(existingSeason, clonedGHTSeason);
-                  SeasonVADetail seasonVADetail = seasonHelper.cloneGHTVAProgram(existingSeason, clonedGHTSeason);
-                  SeasonWADetail seasonWADetail = seasonHelper.cloneGHTWAProgram(existingSeason, clonedGHTSeason);
+                  SeasonGHTConfiguration seasonGHTConfiguration = seasonCloningHelper.cloneGHTConfiguration(cloneSeason, clonedGHTSeason);
+                  SeasonHSADetail seasonHSADetail = seasonCloningHelper.cloneGHTHSAProgram(existingSeason, clonedGHTSeason);
+                  SeasonLSDetail seasonLSDetail = seasonCloningHelper.cloneGHTLSProgram(existingSeason, clonedGHTSeason);
+                  SeasonTADetail seasonTADetail = seasonCloningHelper.cloneGHTTAProgram(existingSeason, clonedGHTSeason);
+                  SeasonVADetail seasonVADetail = seasonCloningHelper.cloneGHTVAProgram(existingSeason, clonedGHTSeason);
+                  SeasonWADetail seasonWADetail = seasonCloningHelper.cloneGHTWAProgram(existingSeason, clonedGHTSeason);
                   seasonGHTConfigurationRepository.save(seasonGHTConfiguration);
                   if (seasonHSADetail != null) {
                      seasonHSADetailsRepository.save(seasonHSADetail);
@@ -2177,67 +2176,15 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                }
             }
          }
+         else{
+            throw new InvalidServiceConfigurationException("no season found with the id: "+cloneSeason.getSeasonId());
+         }
       } catch (CcighgoServiceException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return returnObject;
    }
 
-   private SeasonDepartmentDocument getSeasonDepartmentDocument(SeasonDepartmentDocument existingDoc, Season clonedSeason) {
-      SeasonDepartmentDocument document = new SeasonDepartmentDocument();
-      document.setActive(existingDoc.getActive());
-      document.setSeason(clonedSeason);
-      document.setDocumentInformation(getDepartmentDocumentInformation(existingDoc));
-      document.setCreatedBy(1);
-      document.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-      document.setModifiedBy(1);
-      document.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-      return document;
-   }
-
-   private DocumentInformation getDepartmentDocumentInformation(com.ccighgo.db.entities.SeasonDepartmentDocument doc) {
-      DocumentInformation documentInformation = new DocumentInformation();
-      documentInformation.setActive(doc.getDocumentInformation().getActive());
-      documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
-      documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
-      documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-      // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
-      documentInformation.setCreatedBy(1);
-      documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-      documentInformation.setModifiedBy(1);
-      documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-      documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
-      return documentInformation;
-   }
-
-   private com.ccighgo.db.entities.SeasonProgramDocument getSeasonProgramDocument(com.ccighgo.db.entities.SeasonProgramDocument existingDoc, Season clonedSeason) {
-      com.ccighgo.db.entities.SeasonProgramDocument sprgDoc = new com.ccighgo.db.entities.SeasonProgramDocument();
-      sprgDoc.setActive(existingDoc.getActive());
-      sprgDoc.setDepartmentProgram(existingDoc.getDepartmentProgram());
-      sprgDoc.setSeason(clonedSeason);
-      sprgDoc.setDocumentInformation(getProgramDocumentInformation(existingDoc));
-      sprgDoc.setCreatedBy(1);
-      sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-      sprgDoc.setModifiedBy(1);
-      sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-      return sprgDoc;
-
-   }
-
-   private DocumentInformation getProgramDocumentInformation(com.ccighgo.db.entities.SeasonProgramDocument doc) {
-      DocumentInformation documentInformation = new DocumentInformation();
-      documentInformation.setActive(doc.getDocumentInformation().getActive());
-      documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
-      documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
-      documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-      // documentInformation.setUrl(fileUtilInterface.uploadFile(doc.getDocumentInformation().getUrl()));
-      documentInformation.setCreatedBy(1);
-      documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-      documentInformation.setModifiedBy(1);
-      documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-      documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
-      return documentInformation;
-   }
 
    @Override
    @Transactional

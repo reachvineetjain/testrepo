@@ -1071,29 +1071,11 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Region` (
   `regionId` INT(3) NOT NULL AUTO_INCREMENT,
   `regionName` VARCHAR(50) NOT NULL,
   `active` TINYINT(1) NOT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`regionId`)
-);
-
--- -----------------------------------------------------------------------------------------------------------------------------------------
--- Table cci_gh_go.RegionSeason
--- -----------------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`RegionSeason` (
-  `regionSeasonId` INT NOT NULL AUTO_INCREMENT,
-  `regionId` INT(3) NOT NULL,
-  `seasonId` INT NOT NULL,
-  PRIMARY KEY (`regionSeasonId`),
-  INDEX `FK_RegionSeason_Season_idx` (`seasonId` ASC),
-  INDEX `FK_RegionSeason_Region_idx` (`regionId` ASC),
-  CONSTRAINT `FK_RegionSeason_Season`
-    FOREIGN KEY (`seasonId`)
-    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_RegionSeason_Region`
-    FOREIGN KEY (`regionId`)
-    REFERENCES `cci_gh_go`.`Region` (`regionId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
 );
 
 -- -----------------------------------------------------------------------------------------------------------------------------------------
@@ -1332,13 +1314,13 @@ CREATE TABLE `cci_gh_go`.`SeasonDepartmentUpdateLog` (
   `seasonId` INT(11) DEFAULT NULL,
   `updateLogObject` LONGTEXT,
   `modifiedBy` INT(11) DEFAULT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`updateDepartmentLogId`),
   INDEX `FK_SeasonDepartmentUpdateLog_Season_idx` (`seasonId` ASC),
   CONSTRAINT `FK_SeasonDepartmentUpdateLog_Season` 
     FOREIGN KEY (`seasonId`) 
-	REFERENCES `cci_gh_go`.`Season` (`seasonId`)
-	ON DELETE NO ACTION
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
 
@@ -1351,19 +1333,19 @@ CREATE TABLE `cci_gh_go`.`SeasonProgramUpdateLog` (
   `departmentProgramId` INT(11) DEFAULT NULL,
   `updateLogObject` LONGTEXT,
   `modifiedBy` INT(11) DEFAULT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`updateProgramLogId`),
   INDEX `FK_SeasonProgramUpdateLog_Season_idx` (`seasonId` ASC),
   INDEX `FK_SeasonProgramUpdateLog_DepartmentPrograms_idx` (`departmentProgramId` ASC),
   CONSTRAINT `FK_SeasonProgramUpdateLog_Season` 
     FOREIGN KEY (`seasonId`) 
-	REFERENCES `cci_gh_go`.`Season` (`seasonId`)
-	ON DELETE NO ACTION
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_SeasonProgramUpdateLog_DepartmentPrograms` 
     FOREIGN KEY (`departmentProgramId`) 
-	REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
-	ON DELETE NO ACTION
+    REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
 
@@ -1382,24 +1364,30 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetails` (
   `numberOfLCToRequestHold` INT(3),
   `splitPlacementPending` INT(3),
   `stopAcceptingApps` TINYINT(1),
-  `stopAcceptingAppsMale` TINYINT(1),
-  `stopAcceptingAppsFemale` TINYINT(1),
+  `stopAcceptingAppsByGender` TINYINT(1),
+  `genderId` INT(3),
   `applicationDeadLineWeeks` INT(3),
   `stopAcceptingAppsStandardIHP`  TINYINT(1),
   `stopAcceptingAppsVolunteerHomestay`  TINYINT(1),
   `stopAcceptingAppsLanguageBuddy`  TINYINT(1),
   `stopAcceptingAppsHolidayHomestay`  TINYINT(1),
   `stopAcceptingAppsHighSchoolVisits`  TINYINT(1),
-  `createdOn` TIMESTAMP NOT NULL DEFAULT  '0000-00-00 00:00:00',
+  `createdOn` TIMESTAMP  NULL,
   `createdBy` INT(11) NOT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`seasonIHPDetailsId`),
   INDEX `FK_SeasonIHPDetails_Season_idx` (`seasonId` ASC),
+  INDEX `FK_SeasonIHPDetails_LookupGender` (`genderId` ASC),
   INDEX `FK_SeasonIHPDetails_Status_idx` (`programStatusId` ASC),
   CONSTRAINT `FK_SeasonIHPDetails_Season`
     FOREIGN KEY (`seasonId`)
     REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonIHPDetails_LookupGender`
+    FOREIGN KEY (`genderId`)
+    REFERENCES `cci_gh_go`.`LookupGender` (`genderId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_SeasonIHPDetails_SeasonStatus`
@@ -1417,9 +1405,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`RegionIHP` (
   `regionIHPId` INT NOT NULL AUTO_INCREMENT,
   `regionName` VARCHAR(45),
   `active` TINYINT(1),
-  `createdOn` TIMESTAMP NOT NULL DEFAULT  '0000-00-00 00:00:00',
+  `createdOn` TIMESTAMP NULL ,
   `createdBy` INT(11) NOT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`regionIHPId`)
 );
@@ -1432,9 +1420,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetailsRegionApplications` (
   `seasonIHPDetailsId` INT,
   `regionIHPId` INT,
   `stopAcceptingApps`  TINYINT(1),
-  `createdOn` TIMESTAMP NOT NULL DEFAULT  '0000-00-00 00:00:00',
+  `createdOn` TIMESTAMP  NULL ,
   `createdBy` INT(11) NOT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`seasonIHPDetailsRegionApplicationId`),
   INDEX `FK_SeasonIHPDetailsRegionApplications_SeasonIHPDetails_idx` (`seasonIHPDetailsId` ASC),
@@ -1448,5 +1436,211 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPDetailsRegionApplications` (
     FOREIGN KEY (`regionIHPId`)
     REFERENCES `cci_gh_go`.`RegionIHP` (`regionIHPId`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION	
+    ON UPDATE NO ACTION 
+);
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonIHPGeographyConfiguration`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonIHPGeographyConfiguration` (
+  `seasonIHPGeographyConfigurationId` INT NOT NULL AUTO_INCREMENT,
+  `regionIHPId` INT,
+  `usStatesId` INT,
+  `seasonId` INT,
+  `createdOn` TIMESTAMP  NULL ,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`seasonIHPGeographyConfigurationId`),
+  INDEX `FK_SeasonIHPGeographyConfiguration_Season_idx` (`seasonId` ASC), 
+  INDEX `FK_SeasonIHPGeographyConfiguration_RegionIHP_idx` (`regionIHPId` ASC),
+  INDEX `FK_SeasonIHPGeographyConfiguration_LookupUSStates_idx` (`usStatesId` ASC),
+  CONSTRAINT `FK_SeasonIHPGeographyConfiguration_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonIHPGeographyConfiguration_RegionIHP`
+    FOREIGN KEY (`regionIHPId`)
+    REFERENCES `cci_gh_go`.`RegionIHP` (`regionIHPId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonIHPGeographyConfiguration_LookupUSStates`
+    FOREIGN KEY (`usStatesId`)
+    REFERENCES `cci_gh_go`.`LookupUSStates` (`usStatesId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION 
+);
+
+
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`SuperRegion`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SuperRegion` (
+  `superRegionId` INT(3) NOT NULL AUTO_INCREMENT,
+  `superRegionName` VARCHAR(45),
+  `active` TINYINT(1),
+  `createdOn` TIMESTAMP  NULL ,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`superRegionID`)
+);
+
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`SeasonGeographyConfiguration`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonGeographyConfiguration` (
+  `seasonGeographyConfigurationId` INT NOT NULL AUTO_INCREMENT,
+  `superRegionId` INT(3),
+  `regionId` INT(3) DEFAULT NULL,
+  `usStatesId` INT(3) DEFAULT NULL,
+  `seasonId` INT,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`seasonGeographyConfigurationId`),
+  INDEX `FK_SeasonGeographyConfiguration_SuperRegion_idx` (`superRegionId` ASC),
+  INDEX `FK_SeasonGeographyConfiguration_Region_idx` (`regionId` ASC),
+  INDEX `FK_SeasonGeographyConfiguration_LookupUSStates_idx` (`usStatesId` ASC),
+  INDEX `FK_SeasonGeographyConfiguration_Season_idx` (`seasonId` ASC),
+  CONSTRAINT `FK_SeasonGeographyConfiguration_SuperRegion`
+    FOREIGN KEY (`superRegionId`)
+    REFERENCES `cci_gh_go`.`SuperRegion` (`superRegionId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,  
+  CONSTRAINT `FK_SeasonGeographyConfiguration_Region`
+    FOREIGN KEY (`regionId`)
+    REFERENCES `cci_gh_go`.`Region` (`regionId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION, 
+  CONSTRAINT `FK_SeasonGeographyConfiguration_LookupUSStates`
+    FOREIGN KEY (`usStatesId`)
+    REFERENCES `cci_gh_go`.`LookupUSStates` (`usStatesId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SeasonGeographyConfiguration_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`FieldStaff`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaff` (
+  `fieldStaffId` INT NOT NULL AUTO_INCREMENT,
+  `firstName` VARCHAR(45),
+  `lastName` VARCHAR(45),
+  `photo` VARCHAR(100),
+   PRIMARY KEY (`fieldStaffId`)
+   
+   
+);
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`FieldStaffType`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffType` (
+  `fieldStaffTypeId` INT NOT NULL AUTO_INCREMENT,
+  `fieldStaffTypeCode` VARCHAR(10),
+  `fieldStaffType` VARCHAR(50),
+  PRIMARY KEY (`fieldStaffTypeId`)
+ );
+ 
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`FieldStaffLeadershipSeason`
+-- ----------------------------------------------------- 
+ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffLeadershipSeason` (
+  `fieldStaffLeadershipSeasonId` INT NOT NULL AUTO_INCREMENT,
+  `fieldStaffId` INT,
+  `fieldStaffTypeId` INT(3),
+  `seasonId` INT,
+  `departmentProgramId` INT,
+  `seasonGeographyConfigurationId` INT,
+  `erdId` INT,
+  `rdId` INT,
+  `rmId` INT,
+  `createdOn` TIMESTAMP  NULL ,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`fieldStaffLeadershipSeasonId`),
+  INDEX `FK_FieldStaffLeadershipSeason_Season_idx` (`seasonId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_FieldStaff_idx` (`fieldStaffId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_FieldStaffType_idx` (`fieldStaffTypeId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration_idx` (`seasonGeographyConfigurationId` ASC),
+  CONSTRAINT `FK_FieldStaffLeadershipSeason_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLeadershipSeason_FieldStaffType`
+    FOREIGN KEY (`fieldStaffTypeId`)
+    REFERENCES `cci_gh_go`.`FieldStaffType` (`fieldStaffTypeId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLeadershipSeason_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration`
+    FOREIGN KEY (`seasonGeographyConfigurationId`)
+    REFERENCES `cci_gh_go`.`SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+ -- -----------------------------------------------------
+-- Table `cci_gh_go`.`FieldStaffLCSeason`
+-- ----------------------------------------------------- 
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffLCSeason` (
+  `fieldStaffLCSeasonId` INT NOT NULL AUTO_INCREMENT,
+  `fieldStaffId` INT,
+  `fieldStaffTypeId` INT(3),
+  `departmentProgramId` INT(3),
+  `seasonId` INT,
+  `seasonGeographyConfigurationId` INT,
+  `erdId` INT,
+  `rdId` INT,
+  `rmId` INT,
+  `createdOn` TIMESTAMP  NULL,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`fieldStaffLCSeasonId`),
+  INDEX `FK_FieldStaffLCSeason_Season_idx` (`seasonId` ASC),
+  INDEX `FK_FieldStaffLCSeason_FieldStaff_idx` (`fieldStaffId` ASC),
+  INDEX `FK_FieldStaffLCSeason_FieldStaffType_idx` (`fieldStaffTypeId` ASC),
+  INDEX `FK_FieldStaffLCSeason_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  INDEX `FK_FieldStaffLCSeason_SeasonGeographyConfiguration_idx` (`seasonGeographyConfigurationId` ASC),
+  CONSTRAINT `FK_FieldStaffLCSeason_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `cci_gh_go`.`Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLCSeason_FieldStaffType`
+    FOREIGN KEY (`fieldStaffTypeId`)
+    REFERENCES `cci_gh_go`.`FieldStaffType` (`fieldStaffTypeId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLCSeason_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLCSeason_SeasonGeographyConfiguration`
+    FOREIGN KEY (`seasonGeographyConfigurationId`)
+    REFERENCES `cci_gh_go`.`SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 );

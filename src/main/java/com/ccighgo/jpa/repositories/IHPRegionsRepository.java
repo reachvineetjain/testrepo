@@ -1,16 +1,18 @@
+/**
+ * 
+ */
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.RegionSeason;
+import com.ccighgo.db.entities.RegionIHP;
 
 /**
- * 
- * @author Ahmed Abdelmaaboud
+ * @author ravi
  *
  */
 @Repository
-public interface RegionSeasonRepository extends JpaRepository<RegionSeason, Integer> {
+public interface IHPRegionsRepository extends JpaRepository<RegionIHP, Integer> {
 
 }

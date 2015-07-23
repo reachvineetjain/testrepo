@@ -25,7 +25,7 @@ public class SeasonWPAllocation implements Serializable {
 
 	private Timestamp createdOn;
 
-	private Integer maxPax;
+	private int maxPax;
 
 	@Column(nullable=false)
 	private int modifiedBy;
@@ -33,15 +33,15 @@ public class SeasonWPAllocation implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
-
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
 	@JoinColumn(name="departmentProgramOptionId")
 	private DepartmentProgramOption departmentProgramOption;
+
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId", nullable=false)
+	private Season season;
 
 	public SeasonWPAllocation() {
 	}
@@ -70,11 +70,11 @@ public class SeasonWPAllocation implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Integer getMaxPax() {
+	public int getMaxPax() {
 		return this.maxPax;
 	}
 
-	public void setMaxPax(Integer maxPax) {
+	public void setMaxPax(int maxPax) {
 		this.maxPax = maxPax;
 	}
 
@@ -94,20 +94,20 @@ public class SeasonWPAllocation implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Season getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
 	public DepartmentProgramOption getDepartmentProgramOption() {
 		return this.departmentProgramOption;
 	}
 
 	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
 		this.departmentProgramOption = departmentProgramOption;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

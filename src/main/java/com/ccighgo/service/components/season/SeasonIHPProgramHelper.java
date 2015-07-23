@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonIHPDetail;
+import com.ccighgo.db.entities.SeasonIHPDetailsRegionApplication;
 import com.ccighgo.db.entities.SeasonProgramDocument;
 import com.ccighgo.db.entities.SeasonProgramNote;
 import com.ccighgo.exception.CcighgoException;
@@ -23,11 +25,16 @@ import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
+import com.ccighgo.jpa.repositories.GenderRepository;
+import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.SeasonIHPDetailRepository;
+import com.ccighgo.jpa.repositories.SeasonIHPDetailsRegionApplicationRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPApplicationByGender;
+import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPApplicationByRegion;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDates;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDocuments;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPNameAndStatus;
@@ -68,7 +75,10 @@ public class SeasonIHPProgramHelper {
    DocumentInformationRepository documentInformationRepository;
    @Autowired
    DepartmentProgramRepository departmentProgramRepository;
-
+   @Autowired GenderRepository genderRepository;
+   @Autowired SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
+   @Autowired IHPRegionsRepository ihpRegionsRepository;
+ 
    /**
     * @param seasonProgramId
     * @return
@@ -81,7 +91,7 @@ public class SeasonIHPProgramHelper {
             hspStpIhpDetails = new SeasonHspStpIhpDetails();
             hspStpIhpDetails.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
             hspStpIhpDetails.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
-            hspStpIhpDetails.setDepartmentProgramId(seasonIHPDetail.getSeason().getLookupDepartment().getDepartmentId());
+            hspStpIhpDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
             hspStpIhpDetails.setIhpNameAndStatus(getIHPNameAndStatus(seasonProgramId));
             hspStpIhpDetails.setIhpDates(getIHPDates(seasonProgramId));
             hspStpIhpDetails.setIhpProgramConfiguration(getIHPConfiguration(seasonProgramId));
@@ -153,13 +163,34 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setLcHoldTimeDays(seasonIHPDetail.getLcHoldTime());
             ihpProgramConfiguration.setNoOfLcCanRequestHold(seasonIHPDetail.getNumberOfLCToRequestHold());
             ihpProgramConfiguration.setSplitPlacementInPending(String.valueOf(seasonIHPDetail.getSplitPlacementPending()));
-            ihpProgramConfiguration.setStopAceptingApplications(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
-            ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingApplications(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingAppsStandardIHP()== CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingVolunteerHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingLanguageBuddyApplications(seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
-            // TODO add gender and location once DB is fixed
+            ihpProgramConfiguration.setStopAcceptingApplicationByGender(false);//TODO fix after DB fix
+            //set gender
+            if(seasonIHPDetail.getLookupGender()!=null){
+               IHPApplicationByGender applicationByGender = new IHPApplicationByGender();
+               applicationByGender.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
+               applicationByGender.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
+               applicationByGender.setGenderId(seasonIHPDetail.getLookupGender().getGenderId());
+               applicationByGender.setGenderCode(seasonIHPDetail.getLookupGender().getGenderName());
+               ihpProgramConfiguration.setGender(applicationByGender);
+            }
+            //set regions
+            if(seasonIHPDetail.getSeasonIhpdetailsRegionApplications()!=null){
+               for(SeasonIHPDetailsRegionApplication regionApplication:seasonIHPDetail.getSeasonIhpdetailsRegionApplications()){
+                  IHPApplicationByRegion ihpApplicationByRegion = new IHPApplicationByRegion();
+                  ihpApplicationByRegion.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
+                  ihpApplicationByRegion.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
+                  ihpApplicationByRegion.setApplicationRegionId(regionApplication.getRegionIhp().getRegionIHPId());
+                  ihpApplicationByRegion.setApplicationRegionName(regionApplication.getRegionIhp().getRegionName());
+                  ihpApplicationByRegion.setAcceptApplicationFlag(regionApplication.getStopAcceptingApps()==CCIConstants.ACTIVE?true:false);
+                  ihpProgramConfiguration.getStopAcceptingApplicationByRegion().add(ihpApplicationByRegion);
+               } 
+            }
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -334,15 +365,30 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setLcHoldTime(ihpProgramConfiguration.getLcHoldTimeDays());
             seasonIHPDetail.setNumberOfLCToRequestHold(ihpProgramConfiguration.getNoOfLcCanRequestHold());
             seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending()));
-            if (ihpProgramConfiguration.isStopAceptingApplications() && ihpProgramConfiguration.isStopAcceptingIhpStandardSettings()) {
-               seasonIHPDetail.setStopAcceptingApps(ihpProgramConfiguration.isStopAceptingApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            }
+            seasonIHPDetail.setStopAcceptingApps(ihpProgramConfiguration.isStopAcceptingApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+            seasonIHPDetail.setStopAcceptingAppsStandardIHP(ihpProgramConfiguration.isStopAcceptingIhpStandardSettings() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsVolunteerHomestay(ihpProgramConfiguration.isStopAcceptingVolunteerHomeStayApplications() ? CCIConstants.ACTIVE
                   : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsLanguageBuddy(ihpProgramConfiguration.isStopAcceptingLanguageBuddyApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(ihpProgramConfiguration.isStopAcceptingHolidayHomeStayApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(ihpProgramConfiguration.isStopAcceptingHighSchoolApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            // TODO update gender and location once DB is fixed
+            //TODO set boolean in DB
+            if(ihpProgramConfiguration.getGender()!=null){
+               seasonIHPDetail.setLookupGender(genderRepository.findOne(ihpProgramConfiguration.getGender().getGenderId()));
+            }
+            if(ihpProgramConfiguration.getStopAcceptingApplicationByRegion()!=null){
+               List<SeasonIHPDetailsRegionApplication> existingList = seasonIHPDetailsRegionApplicationRepository.findBySeasonIHPId(seasonIHPDetail.getSeasonIHPDetailsId());
+               List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications = new ArrayList<SeasonIHPDetailsRegionApplication>();
+               for(IHPApplicationByRegion applicationByRegion:ihpProgramConfiguration.getStopAcceptingApplicationByRegion()){
+                  for(SeasonIHPDetailsRegionApplication application:existingList){
+                     if(applicationByRegion.getApplicationRegionId()==application.getSeasonIHPDetailsRegionApplicationId()){
+                        application.setStopAcceptingApps(applicationByRegion.isAcceptApplicationFlag()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+                        seasonIhpdetailsRegionApplications.add(application);
+                     }
+                  }
+               }
+               seasonIHPDetailsRegionApplicationRepository.save(seasonIhpdetailsRegionApplications);
+            }
             seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
             returnObject = ihpProgramConfiguration;
          }else{

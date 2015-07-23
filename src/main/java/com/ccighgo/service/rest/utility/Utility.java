@@ -13,6 +13,7 @@ import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.funtion.Functions;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
+import com.ccighgo.service.transport.utility.beans.region.Regions;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
@@ -136,6 +137,16 @@ public class Utility {
 	public Roles getAllRoles() {
 		return utilityServices.getAllRoles();
 	}
+	
+	/**
+	 * @return
+	 */
+	@GET
+   @Path("regions/")
+   @Produces("application/json")
+   public Regions getAllRegions() {
+      return utilityServices.getAllRegions();
+   }
 
 
 }

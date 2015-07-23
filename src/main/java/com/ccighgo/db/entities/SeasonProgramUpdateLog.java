@@ -28,15 +28,15 @@ public class SeasonProgramUpdateLog implements Serializable {
 	@Lob
 	private String updateLogObject;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId")
-	private Season season;
-
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
+
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId")
+	private Season season;
 
 	public SeasonProgramUpdateLog() {
 	}
@@ -73,20 +73,20 @@ public class SeasonProgramUpdateLog implements Serializable {
 		this.updateLogObject = updateLogObject;
 	}
 
-	public Season getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
 	public DepartmentProgram getDepartmentProgram() {
 		return this.departmentProgram;
 	}
 
 	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
 		this.departmentProgram = departmentProgram;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

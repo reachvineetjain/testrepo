@@ -23,7 +23,6 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 	@Column(nullable=false)
 	private int createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -34,15 +33,15 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 
 	private byte stopAcceptingApps;
 
-	//bi-directional many-to-one association to SeasonIHPDetail
-	@ManyToOne
-	@JoinColumn(name="seasonIHPDetailsId")
-	private SeasonIHPDetail seasonIhpdetail;
-
 	//bi-directional many-to-one association to RegionIHP
 	@ManyToOne
 	@JoinColumn(name="regionIHPId")
 	private RegionIHP regionIhp;
+
+	//bi-directional many-to-one association to SeasonIHPDetail
+	@ManyToOne
+	@JoinColumn(name="seasonIHPDetailsId")
+	private SeasonIHPDetail seasonIhpdetail;
 
 	public SeasonIHPDetailsRegionApplication() {
 	}
@@ -95,20 +94,20 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 		this.stopAcceptingApps = stopAcceptingApps;
 	}
 
-	public SeasonIHPDetail getSeasonIhpdetail() {
-		return this.seasonIhpdetail;
-	}
-
-	public void setSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
-		this.seasonIhpdetail = seasonIhpdetail;
-	}
-
 	public RegionIHP getRegionIhp() {
 		return this.regionIhp;
 	}
 
 	public void setRegionIhp(RegionIHP regionIhp) {
 		this.regionIhp = regionIhp;
+	}
+
+	public SeasonIHPDetail getSeasonIhpdetail() {
+		return this.seasonIhpdetail;
+	}
+
+	public void setSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		this.seasonIhpdetail = seasonIhpdetail;
 	}
 
 }

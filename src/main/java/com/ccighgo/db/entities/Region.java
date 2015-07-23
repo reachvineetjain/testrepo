@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -23,12 +24,23 @@ public class Region implements Serializable {
 	@Column(nullable=false)
 	private byte active;
 
+	@Column(nullable=false)
+	private int createdBy;
+
+	private Timestamp createdOn;
+
+	@Column(nullable=false)
+	private int modifiedBy;
+
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
+
 	@Column(nullable=false, length=50)
 	private String regionName;
 
-	//bi-directional many-to-one association to RegionSeason
+	//bi-directional many-to-one association to SeasonGeographyConfiguration
 	@OneToMany(mappedBy="region")
-	private List<RegionSeason> regionSeasons;
+	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
 	public Region() {
 	}
@@ -49,6 +61,38 @@ public class Region implements Serializable {
 		this.active = active;
 	}
 
+	public int getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public int getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(int modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
 	public String getRegionName() {
 		return this.regionName;
 	}
@@ -57,26 +101,26 @@ public class Region implements Serializable {
 		this.regionName = regionName;
 	}
 
-	public List<RegionSeason> getRegionSeasons() {
-		return this.regionSeasons;
+	public List<SeasonGeographyConfiguration> getSeasonGeographyConfigurations() {
+		return this.seasonGeographyConfigurations;
 	}
 
-	public void setRegionSeasons(List<RegionSeason> regionSeasons) {
-		this.regionSeasons = regionSeasons;
+	public void setSeasonGeographyConfigurations(List<SeasonGeographyConfiguration> seasonGeographyConfigurations) {
+		this.seasonGeographyConfigurations = seasonGeographyConfigurations;
 	}
 
-	public RegionSeason addRegionSeason(RegionSeason regionSeason) {
-		getRegionSeasons().add(regionSeason);
-		regionSeason.setRegion(this);
+	public SeasonGeographyConfiguration addSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
+		getSeasonGeographyConfigurations().add(seasonGeographyConfiguration);
+		seasonGeographyConfiguration.setRegion(this);
 
-		return regionSeason;
+		return seasonGeographyConfiguration;
 	}
 
-	public RegionSeason removeRegionSeason(RegionSeason regionSeason) {
-		getRegionSeasons().remove(regionSeason);
-		regionSeason.setRegion(null);
+	public SeasonGeographyConfiguration removeSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
+		getSeasonGeographyConfigurations().remove(seasonGeographyConfiguration);
+		seasonGeographyConfiguration.setRegion(null);
 
-		return regionSeason;
+		return seasonGeographyConfiguration;
 	}
 
 }

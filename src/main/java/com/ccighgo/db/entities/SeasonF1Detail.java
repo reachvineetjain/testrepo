@@ -108,16 +108,6 @@ public class SeasonF1Detail implements Serializable {
 
 	private byte showWelcomeFamily;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
-
-	//bi-directional many-to-one association to SeasonStatus
-	@ManyToOne
-	@JoinColumn(name="programStatusId")
-	private SeasonStatus seasonStatus;
-
 	//bi-directional many-to-one association to FieldStaffAgreement
 	@ManyToOne
 	@JoinColumn(name="fsAgreementId")
@@ -127,6 +117,16 @@ public class SeasonF1Detail implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="lcPaymentScheduleId")
 	private PaymentSchedule paymentSchedule;
+
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId", nullable=false)
+	private Season season;
+
+	//bi-directional many-to-one association to SeasonStatus
+	@ManyToOne
+	@JoinColumn(name="programStatusId")
+	private SeasonStatus seasonStatus;
 
 	public SeasonF1Detail() {
 	}
@@ -403,22 +403,6 @@ public class SeasonF1Detail implements Serializable {
 		this.showWelcomeFamily = showWelcomeFamily;
 	}
 
-	public Season getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
-	public SeasonStatus getSeasonStatus() {
-		return this.seasonStatus;
-	}
-
-	public void setSeasonStatus(SeasonStatus seasonStatus) {
-		this.seasonStatus = seasonStatus;
-	}
-
 	public FieldStaffAgreement getFieldStaffAgreement() {
 		return this.fieldStaffAgreement;
 	}
@@ -433,6 +417,22 @@ public class SeasonF1Detail implements Serializable {
 
 	public void setPaymentSchedule(PaymentSchedule paymentSchedule) {
 		this.paymentSchedule = paymentSchedule;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
+	}
+
+	public SeasonStatus getSeasonStatus() {
+		return this.seasonStatus;
+	}
+
+	public void setSeasonStatus(SeasonStatus seasonStatus) {
+		this.seasonStatus = seasonStatus;
 	}
 
 }

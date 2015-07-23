@@ -27,6 +27,10 @@ public class LookupGender implements Serializable {
 	@OneToMany(mappedBy="lookupGender")
 	private List<CCIStaffUser> ccistaffUsers;
 
+	//bi-directional many-to-one association to SeasonIHPDetail
+	@OneToMany(mappedBy="lookupGender")
+	private List<SeasonIHPDetail> seasonIhpdetails;
+
 	public LookupGender() {
 	}
 
@@ -66,6 +70,28 @@ public class LookupGender implements Serializable {
 		ccistaffUser.setLookupGender(null);
 
 		return ccistaffUser;
+	}
+
+	public List<SeasonIHPDetail> getSeasonIhpdetails() {
+		return this.seasonIhpdetails;
+	}
+
+	public void setSeasonIhpdetails(List<SeasonIHPDetail> seasonIhpdetails) {
+		this.seasonIhpdetails = seasonIhpdetails;
+	}
+
+	public SeasonIHPDetail addSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().add(seasonIhpdetail);
+		seasonIhpdetail.setLookupGender(this);
+
+		return seasonIhpdetail;
+	}
+
+	public SeasonIHPDetail removeSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().remove(seasonIhpdetail);
+		seasonIhpdetail.setLookupGender(null);
+
+		return seasonIhpdetail;
 	}
 
 }

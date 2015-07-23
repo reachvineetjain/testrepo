@@ -53,8 +53,9 @@
          <xsd:element name="noOfLcCanRequestHold" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="splitPlacementInPending" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="applicationCutOffPriorToProgStart" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stopAceptingApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stopAcceptingApplicationByGender" type="ihp:IHPApplicationByGender" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="stopAcceptingApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stopAcceptingApplicationByGender" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="gender" type="ihp:IHPApplicationByGender" minOccurs="0" maxOccurs="1" />
          <xsd:element name="stopAcceptingApplicationByRegion" type="ihp:IHPApplicationByRegion" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="stopAcceptingIhpStandardSettings" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="stopAcceptingVolunteerHomeStayApplications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
@@ -79,6 +80,7 @@
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="applicationRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="applicationRegionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="acceptApplicationFlag" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
