@@ -18,15 +18,15 @@ public class CCIStaffUserNote implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int cciStaffUserNoteId;
+	private Integer cciStaffUserNoteId;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -42,19 +42,19 @@ public class CCIStaffUserNote implements Serializable {
 	public CCIStaffUserNote() {
 	}
 
-	public int getCciStaffUserNoteId() {
+	public Integer getCciStaffUserNoteId() {
 		return this.cciStaffUserNoteId;
 	}
 
-	public void setCciStaffUserNoteId(int cciStaffUserNoteId) {
+	public void setCciStaffUserNoteId(Integer cciStaffUserNoteId) {
 		this.cciStaffUserNoteId = cciStaffUserNoteId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -66,11 +66,11 @@ public class CCIStaffUserNote implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

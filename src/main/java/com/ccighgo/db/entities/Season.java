@@ -24,18 +24,18 @@ public class Season implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonId;
+	private Integer seasonId;
 
 	@Column(length=50)
 	private String clonedSeasonName;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -199,11 +199,11 @@ public class Season implements Serializable {
 	public Season() {
 	}
 
-	public int getSeasonId() {
+	public Integer getSeasonId() {
 		return this.seasonId;
 	}
 
-	public void setSeasonId(int seasonId) {
+	public void setSeasonId(Integer seasonId) {
 		this.seasonId = seasonId;
 	}
 
@@ -215,11 +215,11 @@ public class Season implements Serializable {
 		this.clonedSeasonName = clonedSeasonName;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -231,11 +231,11 @@ public class Season implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

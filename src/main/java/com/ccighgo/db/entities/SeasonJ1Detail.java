@@ -19,7 +19,7 @@ public class SeasonJ1Detail implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonJ1DetailsId;
+	private Integer seasonJ1DetailsId;
 
 	private byte activeFullYearJanProgram;
 
@@ -33,11 +33,11 @@ public class SeasonJ1Detail implements Serializable {
 	private Date augFullYearStartDate;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
-	private int fieldStaffHoldLength;
+	private Integer fieldStaffHoldLength;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date firstSemAppDeadlineDate;
@@ -57,9 +57,9 @@ public class SeasonJ1Detail implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date hfInquiryDate;
 
-	private int hfReferences;
+	private Integer hfReferences;
 
-	private int hoursBeforeHoldExpirationWarning;
+	private Integer hoursBeforeHoldExpirationWarning;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date janFullYearAppDeadlineDate;
@@ -71,7 +71,7 @@ public class SeasonJ1Detail implements Serializable {
 	private Date janFullYearStartDate;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -135,11 +135,11 @@ public class SeasonJ1Detail implements Serializable {
 	public SeasonJ1Detail() {
 	}
 
-	public int getSeasonJ1DetailsId() {
+	public Integer getSeasonJ1DetailsId() {
 		return this.seasonJ1DetailsId;
 	}
 
-	public void setSeasonJ1DetailsId(int seasonJ1DetailsId) {
+	public void setSeasonJ1DetailsId(Integer seasonJ1DetailsId) {
 		this.seasonJ1DetailsId = seasonJ1DetailsId;
 	}
 
@@ -175,11 +175,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.augFullYearStartDate = augFullYearStartDate;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -191,11 +191,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getFieldStaffHoldLength() {
+	public Integer getFieldStaffHoldLength() {
 		return this.fieldStaffHoldLength;
 	}
 
-	public void setFieldStaffHoldLength(int fieldStaffHoldLength) {
+	public void setFieldStaffHoldLength(Integer fieldStaffHoldLength) {
 		this.fieldStaffHoldLength = fieldStaffHoldLength;
 	}
 
@@ -247,19 +247,19 @@ public class SeasonJ1Detail implements Serializable {
 		this.hfInquiryDate = hfInquiryDate;
 	}
 
-	public int getHfReferences() {
+	public Integer getHfReferences() {
 		return this.hfReferences;
 	}
 
-	public void setHfReferences(int hfReferences) {
+	public void setHfReferences(Integer hfReferences) {
 		this.hfReferences = hfReferences;
 	}
 
-	public int getHoursBeforeHoldExpirationWarning() {
+	public Integer getHoursBeforeHoldExpirationWarning() {
 		return this.hoursBeforeHoldExpirationWarning;
 	}
 
-	public void setHoursBeforeHoldExpirationWarning(int hoursBeforeHoldExpirationWarning) {
+	public void setHoursBeforeHoldExpirationWarning(Integer hoursBeforeHoldExpirationWarning) {
 		this.hoursBeforeHoldExpirationWarning = hoursBeforeHoldExpirationWarning;
 	}
 
@@ -287,11 +287,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.janFullYearStartDate = janFullYearStartDate;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

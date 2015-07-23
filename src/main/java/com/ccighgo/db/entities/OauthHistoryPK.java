@@ -46,11 +46,11 @@ public class OauthHistoryPK implements Serializable {
 			&& (this.timeValue == castOther.timeValue);
 	}
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
+	public Integer hashCode() {
+		final Integer prime = 31;
+		Integer hash = 17;
 		hash = hash * prime + this.nonce.hashCode();
-		hash = hash * prime + ((int) (this.timeValue ^ (this.timeValue >>> 32)));
+		hash = hash * prime + ((Integer) (this.timeValue ^ (this.timeValue >>> 32)));
 		
 		return hash;
 	}

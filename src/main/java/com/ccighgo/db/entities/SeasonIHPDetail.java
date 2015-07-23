@@ -25,34 +25,34 @@ public class SeasonIHPDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonIHPDetailsId;
+	private Integer seasonIHPDetailsId;
 
-	private int applicationDeadLineWeeks;
+	private Integer applicationDeadLineWeeks;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
-	private int lcHoldTime;
+	private Integer lcHoldTime;
 
-	private int maxParticipants;
+	private Integer maxParticipants;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	private int numberOfLCToRequestHold;
+	private Integer numberOfLCToRequestHold;
 
 	@Column(length=45)
 	private String programName;
 
-	private int splitPlacementPending;
+	private Integer splitPlacementPending;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
@@ -94,27 +94,27 @@ public class SeasonIHPDetail implements Serializable {
 	public SeasonIHPDetail() {
 	}
 
-	public int getSeasonIHPDetailsId() {
+	public Integer getSeasonIHPDetailsId() {
 		return this.seasonIHPDetailsId;
 	}
 
-	public void setSeasonIHPDetailsId(int seasonIHPDetailsId) {
+	public void setSeasonIHPDetailsId(Integer seasonIHPDetailsId) {
 		this.seasonIHPDetailsId = seasonIHPDetailsId;
 	}
 
-	public int getApplicationDeadLineWeeks() {
+	public Integer getApplicationDeadLineWeeks() {
 		return this.applicationDeadLineWeeks;
 	}
 
-	public void setApplicationDeadLineWeeks(int applicationDeadLineWeeks) {
+	public void setApplicationDeadLineWeeks(Integer applicationDeadLineWeeks) {
 		this.applicationDeadLineWeeks = applicationDeadLineWeeks;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -134,27 +134,27 @@ public class SeasonIHPDetail implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public int getLcHoldTime() {
+	public Integer getLcHoldTime() {
 		return this.lcHoldTime;
 	}
 
-	public void setLcHoldTime(int lcHoldTime) {
+	public void setLcHoldTime(Integer lcHoldTime) {
 		this.lcHoldTime = lcHoldTime;
 	}
 
-	public int getMaxParticipants() {
+	public Integer getMaxParticipants() {
 		return this.maxParticipants;
 	}
 
-	public void setMaxParticipants(int maxParticipants) {
+	public void setMaxParticipants(Integer maxParticipants) {
 		this.maxParticipants = maxParticipants;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -166,11 +166,11 @@ public class SeasonIHPDetail implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public int getNumberOfLCToRequestHold() {
+	public Integer getNumberOfLCToRequestHold() {
 		return this.numberOfLCToRequestHold;
 	}
 
-	public void setNumberOfLCToRequestHold(int numberOfLCToRequestHold) {
+	public void setNumberOfLCToRequestHold(Integer numberOfLCToRequestHold) {
 		this.numberOfLCToRequestHold = numberOfLCToRequestHold;
 	}
 
@@ -182,11 +182,11 @@ public class SeasonIHPDetail implements Serializable {
 		this.programName = programName;
 	}
 
-	public int getSplitPlacementPending() {
+	public Integer getSplitPlacementPending() {
 		return this.splitPlacementPending;
 	}
 
-	public void setSplitPlacementPending(int splitPlacementPending) {
+	public void setSplitPlacementPending(Integer splitPlacementPending) {
 		this.splitPlacementPending = splitPlacementPending;
 	}
 

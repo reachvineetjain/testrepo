@@ -24,20 +24,20 @@ public class CCIStaffRole implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int cciStaffRoleId;
+	private Integer cciStaffRoleId;
 
 	@Column(nullable=false, length=50)
 	private String cciStaffRoleName;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
-	private int hierarchy;
+	private Integer hierarchy;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -54,11 +54,11 @@ public class CCIStaffRole implements Serializable {
 	public CCIStaffRole() {
 	}
 
-	public int getCciStaffRoleId() {
+	public Integer getCciStaffRoleId() {
 		return this.cciStaffRoleId;
 	}
 
-	public void setCciStaffRoleId(int cciStaffRoleId) {
+	public void setCciStaffRoleId(Integer cciStaffRoleId) {
 		this.cciStaffRoleId = cciStaffRoleId;
 	}
 
@@ -70,11 +70,11 @@ public class CCIStaffRole implements Serializable {
 		this.cciStaffRoleName = cciStaffRoleName;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -86,19 +86,19 @@ public class CCIStaffRole implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getHierarchy() {
+	public Integer getHierarchy() {
 		return this.hierarchy;
 	}
 
-	public void setHierarchy(int hierarchy) {
+	public void setHierarchy(Integer hierarchy) {
 		this.hierarchy = hierarchy;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

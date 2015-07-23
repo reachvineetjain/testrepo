@@ -18,15 +18,15 @@ public class SeasonProgramDocument implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonProgramDocumentId;
+	private Integer seasonProgramDocumentId;
 
 	private byte active;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
@@ -48,11 +48,11 @@ public class SeasonProgramDocument implements Serializable {
 	public SeasonProgramDocument() {
 	}
 
-	public int getSeasonProgramDocumentId() {
+	public Integer getSeasonProgramDocumentId() {
 		return this.seasonProgramDocumentId;
 	}
 
-	public void setSeasonProgramDocumentId(int seasonProgramDocumentId) {
+	public void setSeasonProgramDocumentId(Integer seasonProgramDocumentId) {
 		this.seasonProgramDocumentId = seasonProgramDocumentId;
 	}
 
@@ -64,11 +64,11 @@ public class SeasonProgramDocument implements Serializable {
 		this.active = active;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -80,11 +80,11 @@ public class SeasonProgramDocument implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

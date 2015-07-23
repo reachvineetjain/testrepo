@@ -24,10 +24,10 @@ public class DepartmentProgram implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int departmentProgramId;
+	private Integer departmentProgramId;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -35,7 +35,7 @@ public class DepartmentProgram implements Serializable {
 	private String description;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -80,19 +80,19 @@ public class DepartmentProgram implements Serializable {
 	public DepartmentProgram() {
 	}
 
-	public int getDepartmentProgramId() {
+	public Integer getDepartmentProgramId() {
 		return this.departmentProgramId;
 	}
 
-	public void setDepartmentProgramId(int departmentProgramId) {
+	public void setDepartmentProgramId(Integer departmentProgramId) {
 		this.departmentProgramId = departmentProgramId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -112,11 +112,11 @@ public class DepartmentProgram implements Serializable {
 		this.description = description;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

@@ -19,12 +19,12 @@ public class SeasonWnTSummerDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonWnTSummerDetailsId;
+	private Integer seasonWnTSummerDetailsId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date applicationDeadlineDate;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -33,9 +33,9 @@ public class SeasonWnTSummerDetail implements Serializable {
 
 	private byte isJobBoardOpen;
 
-	private int maxPendingJobApps;
+	private Integer maxPendingJobApps;
 
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -59,11 +59,11 @@ public class SeasonWnTSummerDetail implements Serializable {
 	public SeasonWnTSummerDetail() {
 	}
 
-	public int getSeasonWnTSummerDetailsId() {
+	public Integer getSeasonWnTSummerDetailsId() {
 		return this.seasonWnTSummerDetailsId;
 	}
 
-	public void setSeasonWnTSummerDetailsId(int seasonWnTSummerDetailsId) {
+	public void setSeasonWnTSummerDetailsId(Integer seasonWnTSummerDetailsId) {
 		this.seasonWnTSummerDetailsId = seasonWnTSummerDetailsId;
 	}
 
@@ -75,11 +75,11 @@ public class SeasonWnTSummerDetail implements Serializable {
 		this.applicationDeadlineDate = applicationDeadlineDate;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -107,19 +107,19 @@ public class SeasonWnTSummerDetail implements Serializable {
 		this.isJobBoardOpen = isJobBoardOpen;
 	}
 
-	public int getMaxPendingJobApps() {
+	public Integer getMaxPendingJobApps() {
 		return this.maxPendingJobApps;
 	}
 
-	public void setMaxPendingJobApps(int maxPendingJobApps) {
+	public void setMaxPendingJobApps(Integer maxPendingJobApps) {
 		this.maxPendingJobApps = maxPendingJobApps;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

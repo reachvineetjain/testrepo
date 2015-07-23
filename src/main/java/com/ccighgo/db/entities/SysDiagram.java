@@ -17,7 +17,7 @@ public class SysDiagram implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int diagramId;
+	private Integer diagramId;
 
 	@Lob
 	private byte[] definition;
@@ -26,18 +26,18 @@ public class SysDiagram implements Serializable {
 	private String name;
 
 	@Column(nullable=false)
-	private int principalId;
+	private Integer principalId;
 
-	private int version;
+	private Integer version;
 
 	public SysDiagram() {
 	}
 
-	public int getDiagramId() {
+	public Integer getDiagramId() {
 		return this.diagramId;
 	}
 
-	public void setDiagramId(int diagramId) {
+	public void setDiagramId(Integer diagramId) {
 		this.diagramId = diagramId;
 	}
 
@@ -57,19 +57,19 @@ public class SysDiagram implements Serializable {
 		this.name = name;
 	}
 
-	public int getPrincipalId() {
+	public Integer getPrincipalId() {
 		return this.principalId;
 	}
 
-	public void setPrincipalId(int principalId) {
+	public void setPrincipalId(Integer principalId) {
 		this.principalId = principalId;
 	}
 
-	public int getVersion() {
+	public Integer getVersion() {
 		return this.version;
 	}
 
-	public void setVersion(int version) {
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 

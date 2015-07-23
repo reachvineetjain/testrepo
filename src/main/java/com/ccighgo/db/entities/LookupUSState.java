@@ -18,7 +18,7 @@ public class LookupUSState implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int usStatesId;
+	private Integer usStatesId;
 
 	@Column(nullable=false, length=5)
 	private String stateCode;
@@ -41,11 +41,11 @@ public class LookupUSState implements Serializable {
 	public LookupUSState() {
 	}
 
-	public int getUsStatesId() {
+	public Integer getUsStatesId() {
 		return this.usStatesId;
 	}
 
-	public void setUsStatesId(int usStatesId) {
+	public void setUsStatesId(Integer usStatesId) {
 		this.usStatesId = usStatesId;
 	}
 

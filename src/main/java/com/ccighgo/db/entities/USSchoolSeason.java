@@ -18,7 +18,7 @@ public class USSchoolSeason implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int usSchoolSeasonId;
+	private Integer usSchoolSeasonId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
@@ -45,11 +45,11 @@ public class USSchoolSeason implements Serializable {
 	public USSchoolSeason() {
 	}
 
-	public int getUsSchoolSeasonId() {
+	public Integer getUsSchoolSeasonId() {
 		return this.usSchoolSeasonId;
 	}
 
-	public void setUsSchoolSeasonId(int usSchoolSeasonId) {
+	public void setUsSchoolSeasonId(Integer usSchoolSeasonId) {
 		this.usSchoolSeasonId = usSchoolSeasonId;
 	}
 

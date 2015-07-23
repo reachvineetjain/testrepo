@@ -19,7 +19,7 @@ public class SeasonF1Detail implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonF1DetailsId;
+	private Integer seasonF1DetailsId;
 
 	private byte activeFullYearJanProgram;
 
@@ -35,7 +35,7 @@ public class SeasonF1Detail implements Serializable {
 	private Date augFullYearStartDate;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -54,12 +54,12 @@ public class SeasonF1Detail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date firstSemStartDate;
 
-	private int greenHeartMargin;
+	private Integer greenHeartMargin;
 
 	@Temporal(TemporalType.DATE)
 	private Date hfInquiryDate;
 
-	private int hfReferences;
+	private Integer hfReferences;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date janFullYearAppDeadlineDate;
@@ -71,7 +71,7 @@ public class SeasonF1Detail implements Serializable {
 	private Date janFullYearStartDate;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -131,11 +131,11 @@ public class SeasonF1Detail implements Serializable {
 	public SeasonF1Detail() {
 	}
 
-	public int getSeasonF1DetailsId() {
+	public Integer getSeasonF1DetailsId() {
 		return this.seasonF1DetailsId;
 	}
 
-	public void setSeasonF1DetailsId(int seasonF1DetailsId) {
+	public void setSeasonF1DetailsId(Integer seasonF1DetailsId) {
 		this.seasonF1DetailsId = seasonF1DetailsId;
 	}
 
@@ -179,11 +179,11 @@ public class SeasonF1Detail implements Serializable {
 		this.augFullYearStartDate = augFullYearStartDate;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -235,11 +235,11 @@ public class SeasonF1Detail implements Serializable {
 		this.firstSemStartDate = firstSemStartDate;
 	}
 
-	public int getGreenHeartMargin() {
+	public Integer getGreenHeartMargin() {
 		return this.greenHeartMargin;
 	}
 
-	public void setGreenHeartMargin(int greenHeartMargin) {
+	public void setGreenHeartMargin(Integer greenHeartMargin) {
 		this.greenHeartMargin = greenHeartMargin;
 	}
 
@@ -251,11 +251,11 @@ public class SeasonF1Detail implements Serializable {
 		this.hfInquiryDate = hfInquiryDate;
 	}
 
-	public int getHfReferences() {
+	public Integer getHfReferences() {
 		return this.hfReferences;
 	}
 
-	public void setHfReferences(int hfReferences) {
+	public void setHfReferences(Integer hfReferences) {
 		this.hfReferences = hfReferences;
 	}
 
@@ -283,11 +283,11 @@ public class SeasonF1Detail implements Serializable {
 		this.janFullYearStartDate = janFullYearStartDate;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
