@@ -174,6 +174,8 @@ public class SeasonServiceImplUtil {
    public void convertEntitySeasonToBeanSeason(SeasonBean seasonBean, Season seasonEntity) {
       seasonBean.setSeasonId(seasonEntity.getSeasonId());
       seasonBean.setDepartmentId(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentId() : -1);
+      seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment().getAcronym()!=null?seasonEntity.getLookupDepartment().getAcronym():null);
+      seasonBean.setDepartmentName(seasonEntity.getLookupDepartment().getDepartmentName()!=null?seasonEntity.getLookupDepartment().getDepartmentName():null);
       seasonBean.setSeasonName(seasonEntity.getSeasonName() != null ? seasonEntity.getSeasonName() : CCIConstants.EMPTY_DATA);
       if (seasonEntity.getSeasonStatus() != null) {
          seasonBean.setStatus(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getStatus() : CCIConstants.EMPTY_DATA);
