@@ -22,7 +22,7 @@
 
    <xsd:complexType name="SuperRegion">
       <xsd:sequence>
-         <xsd:element name="superregionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="superRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="superRegionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="regions" type="rmd:Region" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>

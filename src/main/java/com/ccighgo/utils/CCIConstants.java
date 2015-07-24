@@ -108,13 +108,13 @@ public class CCIConstants {
    public static final String AUGUST_FY_F1 = "Aug-FY";
    public static final String JANUARY_FY_F1 = "Jan-FY";
    public static final String JOB_FAIR_SUMMER = "JF";
-   public static final String SELF_PLACED_SUMMER = "SF";
+   public static final String SELF_PLACED_SUMMER = "SP";
    public static final String DIRECT_PLACEMENT_SUMMER = "DP";
    public static final String JOB_FAIR_SPRING = "JF";
-   public static final String SELF_PLACED_SPRING = "SF";
+   public static final String SELF_PLACED_SPRING = "SP";
    public static final String DIRECT_PLACEMENT_SPRING = "DP";
    public static final String JOB_FAIR_WINTER = "JF";
-   public static final String SELF_PLACED_WINTER = "SF";
+   public static final String SELF_PLACED_WINTER = "SP";
    public static final String DIRECT_PLACEMENT_WINTER = "DP";
    public static final String CAP_INTERNSHIP = "Int-SP";
    public static final String CAP_TRAINEE = "Trn-SP";

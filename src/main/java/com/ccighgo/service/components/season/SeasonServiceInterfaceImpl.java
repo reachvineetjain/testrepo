@@ -226,7 +226,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       Season seasonEntity = new Season();
       seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
       seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
-      seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
+      seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
       seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
       seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
       return seasonEntity.getSeasonId();
@@ -283,7 +283,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       Season seasonEntity = new Season();
       seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, true);
       seasonRepository.saveAndFlush(seasonEntity);
-      seasonServiceImplUtil.updateSeasonHspConfiguration(seasonBean, seasonEntity);
+      seasonServiceImplUtil.updateSeasonConfiguration(seasonBean, seasonEntity);
       seasonServiceImplUtil.updateSeasonDepartmentNotes(seasonBean, seasonEntity);
       return seasonEntity.getSeasonId();
    }
@@ -1619,17 +1619,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                wpProgramAllocations.setJobFairCCIReview(0);
                wpProgramAllocations.setJobFairExpectedParticipants(0);
                wpProgramAllocations.setJobFairPendingVerification(0);
-               wpProgramAllocations.setJobFairRemainingParticpants(0);
+               wpProgramAllocations.setJobFairRemainingParticipants(0);
                wpProgramAllocations.setSelfPlacedAcceptedParticipants(0);
                wpProgramAllocations.setSelfPlacedCCIReview(0);
                wpProgramAllocations.setSelfPlacedExpectedParticipants(0);
                wpProgramAllocations.setSelfPlacedPendingVerification(0);
-               wpProgramAllocations.setSelfPlacedRemainingParticpants(0);
+               wpProgramAllocations.setSelfPlacedRemainingParticipants(0);
                wpProgramAllocations.setTotalAcceptedParticipants(0);
                wpProgramAllocations.setTotalCCIReview(0);
                wpProgramAllocations.setTotalExpectedParticipants(0);
                wpProgramAllocations.setTotalPendingVerification(0);
-               wpProgramAllocations.setTotalRemainingParticpants(0);
+               wpProgramAllocations.setTotalRemainingParticipants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
             }
          }
@@ -1819,17 +1819,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                wpProgramAllocations.setJobFairCCIReview(0);
                wpProgramAllocations.setJobFairExpectedParticipants(0);
                wpProgramAllocations.setJobFairPendingVerification(0);
-               wpProgramAllocations.setJobFairRemainingParticpants(0);
+               wpProgramAllocations.setJobFairRemainingParticipants(0);
                wpProgramAllocations.setSelfPlacedAcceptedParticipants(0);
                wpProgramAllocations.setSelfPlacedCCIReview(0);
                wpProgramAllocations.setSelfPlacedExpectedParticipants(0);
                wpProgramAllocations.setSelfPlacedPendingVerification(0);
-               wpProgramAllocations.setSelfPlacedRemainingParticpants(0);
+               wpProgramAllocations.setSelfPlacedRemainingParticipants(0);
                wpProgramAllocations.setTotalAcceptedParticipants(0);
                wpProgramAllocations.setTotalCCIReview(0);
                wpProgramAllocations.setTotalExpectedParticipants(0);
                wpProgramAllocations.setTotalPendingVerification(0);
-               wpProgramAllocations.setTotalRemainingParticpants(0);
+               wpProgramAllocations.setTotalRemainingParticipants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
             }
          }
