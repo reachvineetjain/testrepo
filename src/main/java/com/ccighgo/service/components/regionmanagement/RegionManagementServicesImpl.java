@@ -62,7 +62,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             SuperRegion spRegion = new SuperRegion();
             com.ccighgo.db.entities.SuperRegion superRegion = superRegionRepository.findOne(superRegionId);
             if (superRegion != null) {
-               spRegion.setSuperregionId(superRegion.getSuperRegionId());
+               spRegion.setSuperRegionId(superRegion.getSuperRegionId());
                spRegion.setSuperRegionName(superRegion.getSuperRegionName());
                List<Region> regionList = new ArrayList<Region>();
                List<Integer> distinctRegionList = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(superRegionId);
@@ -116,7 +116,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          com.ccighgo.db.entities.SuperRegion supRegion = superRegionRepository.findOne(Integer.valueOf(superRegionId));
          if (supRegion != null) {
             superRegion = new SuperRegion();
-            superRegion.setSuperregionId(supRegion.getSuperRegionId());
+            superRegion.setSuperRegionId(supRegion.getSuperRegionId());
             superRegion.setSuperRegionName(supRegion.getSuperRegionName());
          }
       } catch (CcighgoServiceException e) {
@@ -176,14 +176,14 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       if (superRegion == null) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "super region cannot be null");
       }
-      if (superRegion.getSuperregionId() == 0 || superRegion.getSuperregionId()<0) {
+      if (superRegion.getSuperRegionId() == 0 || superRegion.getSuperRegionId()<0) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided season id is either zero or less than zero");
       }
       if (superRegion.getSuperRegionName() == null || superRegion.getSuperRegionName().isEmpty()) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "super region cannot be updated with null or empty name");
       }
       try{
-         com.ccighgo.db.entities.SuperRegion supRegion = superRegionRepository.findOne(superRegion.getSuperregionId());
+         com.ccighgo.db.entities.SuperRegion supRegion = superRegionRepository.findOne(superRegion.getSuperRegionId());
          supRegion.setSuperRegionName(superRegion.getSuperRegionName());
          supRegion = superRegionRepository.saveAndFlush(supRegion);
          sregion = getSuperRegion(String.valueOf(supRegion.getSuperRegionId()));

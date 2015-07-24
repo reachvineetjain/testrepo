@@ -55,6 +55,7 @@ public enum ErrorCode {
 		FAILED_LIST_PRIMARY_ACTIVITIES(233001),
 		
 		//Seasons
+		DUPLICATE_SEASON_NAME(2140401),
 		
 		//Region
 		INVALID_ID_REGION_ALL(2160101),
