@@ -79,11 +79,11 @@
       <class>com.ccighgo.db.entities.UserType</class>
       <properties>
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://54.91.97.22:3306/cci_gh_go_dev?autoReconnect=true" />
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go_prod?autoReconnect=true" />
          <property name="javax.persistence.jdbc.user" value="creomobile" />
          <property name="javax.persistence.jdbc.password" value="creodev" />
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-         <property name="hibernate.show_sql" value="true" />
+         <property name="hibernate.show_sql" value="false" />
          <property name="hibernate.hbm2ddl.auto" value="update" />
          <property name="hibernate.c3p0.min_size" value="5" />
          <property name="hibernate.c3p0.max_size" value="20" />
