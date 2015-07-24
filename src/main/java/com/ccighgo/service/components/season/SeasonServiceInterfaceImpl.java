@@ -214,7 +214,26 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public SeasonBean createSeason(SeasonBean seasonBean) {
-      try {
+      int seasonId = -1;
+      if(seasonBean.getSeasonName()!=null){
+         Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
+         if(season!=null){
+            LOGGER.error("season with same name already exists");
+         }else{
+            Season seasonEntity = new Season();
+            seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
+            seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
+            seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
+            seasonId= seasonEntity.getSeasonId();
+         }
+      }
+      return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
+      
+      
+      
+     /* try {
          int seasonId = createSeasonLogic(seasonBean);
          if(seasonId==-1){
             throw new ValidationException(ErrorCode.DUPLICATE_SEASON_NAME, "season with same name already exists, please select different name");
@@ -224,7 +243,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
-      return null;
+      return null;*/
    }
 
    @Transactional
