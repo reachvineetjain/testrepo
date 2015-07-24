@@ -2235,6 +2235,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             departmentDocument.setModifiedBy(1);
             departmentDocument.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonDepartmentDocumentRepository.saveAndFlush(departmentDocument);
+            returnObject= seasonDepartmentDocument;
          } catch (CcighgoException e) {
             ExceptionUtil.logException(e, LOGGER);
          }
