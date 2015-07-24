@@ -18,7 +18,7 @@ public class SeasonStatus implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonStatusId;
+	private Integer seasonStatusId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -81,11 +81,11 @@ public class SeasonStatus implements Serializable {
 	public SeasonStatus() {
 	}
 
-	public int getSeasonStatusId() {
+	public Integer getSeasonStatusId() {
 		return this.seasonStatusId;
 	}
 
-	public void setSeasonStatusId(int seasonStatusId) {
+	public void setSeasonStatusId(Integer seasonStatusId) {
 		this.seasonStatusId = seasonStatusId;
 	}
 

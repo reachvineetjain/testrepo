@@ -19,11 +19,11 @@ public class DocumentInformation implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int documentInformationId;
+	private Integer documentInformationId;
 
 	private byte active;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -33,7 +33,7 @@ public class DocumentInformation implements Serializable {
 	@Column(length=50)
 	private String fileName;
 
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
@@ -60,11 +60,11 @@ public class DocumentInformation implements Serializable {
 	public DocumentInformation() {
 	}
 
-	public int getDocumentInformationId() {
+	public Integer getDocumentInformationId() {
 		return this.documentInformationId;
 	}
 
-	public void setDocumentInformationId(int documentInformationId) {
+	public void setDocumentInformationId(Integer documentInformationId) {
 		this.documentInformationId = documentInformationId;
 	}
 
@@ -76,11 +76,11 @@ public class DocumentInformation implements Serializable {
 		this.active = active;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -108,11 +108,11 @@ public class DocumentInformation implements Serializable {
 		this.fileName = fileName;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

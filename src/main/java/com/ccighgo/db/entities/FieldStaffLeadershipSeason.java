@@ -21,7 +21,7 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	private Integer fieldStaffLeadershipSeasonId;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -30,7 +30,7 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	private Integer fieldStaffId;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;

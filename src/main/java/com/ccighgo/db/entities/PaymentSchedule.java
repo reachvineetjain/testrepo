@@ -18,7 +18,7 @@ public class PaymentSchedule implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int paymentScheduleId;
+	private Integer paymentScheduleId;
 
 	@Column(nullable=false, length=50)
 	private String scheduleName;
@@ -34,11 +34,11 @@ public class PaymentSchedule implements Serializable {
 	public PaymentSchedule() {
 	}
 
-	public int getPaymentScheduleId() {
+	public Integer getPaymentScheduleId() {
 		return this.paymentScheduleId;
 	}
 
-	public void setPaymentScheduleId(int paymentScheduleId) {
+	public void setPaymentScheduleId(Integer paymentScheduleId) {
 		this.paymentScheduleId = paymentScheduleId;
 	}
 

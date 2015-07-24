@@ -18,7 +18,7 @@ public class LookupGender implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int genderId;
+	private Integer genderId;
 
 	@Column(nullable=false, length=1)
 	private String genderName;
@@ -34,11 +34,11 @@ public class LookupGender implements Serializable {
 	public LookupGender() {
 	}
 
-	public int getGenderId() {
+	public Integer getGenderId() {
 		return this.genderId;
 	}
 
-	public void setGenderId(int genderId) {
+	public void setGenderId(Integer genderId) {
 		this.genderId = genderId;
 	}
 

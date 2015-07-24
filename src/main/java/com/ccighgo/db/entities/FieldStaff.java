@@ -17,7 +17,7 @@ public class FieldStaff implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int fieldStaffId;
+	private Integer fieldStaffId;
 
 	@Column(length=45)
 	private String firstName;
@@ -31,11 +31,11 @@ public class FieldStaff implements Serializable {
 	public FieldStaff() {
 	}
 
-	public int getFieldStaffId() {
+	public Integer getFieldStaffId() {
 		return this.fieldStaffId;
 	}
 
-	public void setFieldStaffId(int fieldStaffId) {
+	public void setFieldStaffId(Integer fieldStaffId) {
 		this.fieldStaffId = fieldStaffId;
 	}
 

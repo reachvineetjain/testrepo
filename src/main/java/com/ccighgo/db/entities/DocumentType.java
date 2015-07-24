@@ -18,7 +18,7 @@ public class DocumentType implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int documentTypeId;
+	private Integer documentTypeId;
 
 	@Column(length=50)
 	private String documentTypeName;
@@ -30,11 +30,11 @@ public class DocumentType implements Serializable {
 	public DocumentType() {
 	}
 
-	public int getDocumentTypeId() {
+	public Integer getDocumentTypeId() {
 		return this.documentTypeId;
 	}
 
-	public void setDocumentTypeId(int documentTypeId) {
+	public void setDocumentTypeId(Integer documentTypeId) {
 		this.documentTypeId = documentTypeId;
 	}
 

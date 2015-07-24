@@ -18,19 +18,19 @@ public class SeasonHSPAllocation implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonHSPAllocationId;
+	private Integer seasonHSPAllocationId;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
-	private int maxGuaranteedPax;
+	private Integer maxGuaranteedPax;
 
-	private int maxUnguaranteedPax;
+	private Integer maxUnguaranteedPax;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -48,19 +48,19 @@ public class SeasonHSPAllocation implements Serializable {
 	public SeasonHSPAllocation() {
 	}
 
-	public int getSeasonHSPAllocationId() {
+	public Integer getSeasonHSPAllocationId() {
 		return this.seasonHSPAllocationId;
 	}
 
-	public void setSeasonHSPAllocationId(int seasonHSPAllocationId) {
+	public void setSeasonHSPAllocationId(Integer seasonHSPAllocationId) {
 		this.seasonHSPAllocationId = seasonHSPAllocationId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -72,27 +72,27 @@ public class SeasonHSPAllocation implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getMaxGuaranteedPax() {
+	public Integer getMaxGuaranteedPax() {
 		return this.maxGuaranteedPax;
 	}
 
-	public void setMaxGuaranteedPax(int maxGuaranteedPax) {
+	public void setMaxGuaranteedPax(Integer maxGuaranteedPax) {
 		this.maxGuaranteedPax = maxGuaranteedPax;
 	}
 
-	public int getMaxUnguaranteedPax() {
+	public Integer getMaxUnguaranteedPax() {
 		return this.maxUnguaranteedPax;
 	}
 
-	public void setMaxUnguaranteedPax(int maxUnguaranteedPax) {
+	public void setMaxUnguaranteedPax(Integer maxUnguaranteedPax) {
 		this.maxUnguaranteedPax = maxUnguaranteedPax;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

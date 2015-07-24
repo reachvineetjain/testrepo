@@ -18,7 +18,7 @@ public class USSchool implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int usSchoolId;
+	private Integer usSchoolId;
 
 	//bi-directional many-to-one association to USSchoolSeason
 	@OneToMany(mappedBy="usschool")
@@ -27,11 +27,11 @@ public class USSchool implements Serializable {
 	public USSchool() {
 	}
 
-	public int getUsSchoolId() {
+	public Integer getUsSchoolId() {
 		return this.usSchoolId;
 	}
 
-	public void setUsSchoolId(int usSchoolId) {
+	public void setUsSchoolId(Integer usSchoolId) {
 		this.usSchoolId = usSchoolId;
 	}
 

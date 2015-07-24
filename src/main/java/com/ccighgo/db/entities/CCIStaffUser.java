@@ -24,7 +24,7 @@ public class CCIStaffUser implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int cciStaffUserId;
+	private Integer cciStaffUserId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -36,7 +36,7 @@ public class CCIStaffUser implements Serializable {
 	private String city;
 
 	@Column(nullable=false)
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -59,7 +59,7 @@ public class CCIStaffUser implements Serializable {
 	private String lastName;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -73,7 +73,7 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=20)
 	private String sevisId;
 
-	private int supervisorId;
+	private Integer supervisorId;
 
 	@Column(length=50)
 	private String zip;
@@ -121,11 +121,11 @@ public class CCIStaffUser implements Serializable {
 	public CCIStaffUser() {
 	}
 
-	public int getCciStaffUserId() {
+	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(int cciStaffUserId) {
+	public void setCciStaffUserId(Integer cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 
@@ -153,11 +153,11 @@ public class CCIStaffUser implements Serializable {
 		this.city = city;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -217,11 +217,11 @@ public class CCIStaffUser implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -257,11 +257,11 @@ public class CCIStaffUser implements Serializable {
 		this.sevisId = sevisId;
 	}
 
-	public int getSupervisorId() {
+	public Integer getSupervisorId() {
 		return this.supervisorId;
 	}
 
-	public void setSupervisorId(int supervisorId) {
+	public void setSupervisorId(Integer supervisorId) {
 		this.supervisorId = supervisorId;
 	}
 
