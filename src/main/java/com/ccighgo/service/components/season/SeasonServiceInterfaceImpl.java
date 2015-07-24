@@ -33,7 +33,9 @@ import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.CcighgoServiceException;
+import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
+import com.ccighgo.exception.ValidationException;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
@@ -223,13 +225,22 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
 
    @Transactional
    private int createSeasonLogic(SeasonBean seasonBean) {
-      Season seasonEntity = new Season();
-      seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
-      seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
-      seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
-      seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
-      seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
-      return seasonEntity.getSeasonId();
+      int seasonId = -1;
+      if(seasonBean.getSeasonName()!=null){
+         Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
+         if(season!=null){
+            throw new ValidationException(ErrorCode.DUPLICATE_SEASON_NAME, "season with same name already exists, please select different name");
+         }else{
+            Season seasonEntity = new Season();
+            seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
+            seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
+            seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
+            seasonId= seasonEntity.getSeasonId();
+         }
+      }
+      return seasonId;
    }
 
    @Override
