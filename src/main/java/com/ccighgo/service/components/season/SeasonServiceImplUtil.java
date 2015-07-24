@@ -227,7 +227,7 @@ public class SeasonServiceImplUtil {
             seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
             seasonDepartmentNotes.setActive(note.getActive() == 1);
             seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
-            seasonDepartmentNotes.setSeasonDepartmenNotetId(note.getSeasonDepartmentNotesId());
+            seasonDepartmentNotes.setSeasonDepartmentNotetId(note.getSeasonDepartmentNotesId());
             seasonBean.getNotes().add(seasonDepartmentNotes);
          }
       }
@@ -1816,6 +1816,7 @@ public class SeasonServiceImplUtil {
                }
             }
             wpProgramAllocations.setDirectPlcmntAcceptedParticipants(0);
+            wpProgramAllocations.setDirectPlcmntRemainingParticipants(0);
             wpProgramAllocations.setDirectPlcmntCCIReview(0);
             wpProgramAllocations.setDirectPlcmntExpectedParticipants(0);
             wpProgramAllocations.setDirectPlcmntPendingVerification(0);
