@@ -36,7 +36,7 @@ public class DateUtils {
    public static Date getDateFromString(String endDate) {
       DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
       Date date = null;
-      if (endDate != null)
+      if (endDate != null && !endDate.trim().isEmpty())
          try {
             date = format.parse(endDate);
          } catch (ParseException e) {
@@ -61,7 +61,7 @@ public class DateUtils {
       }
       return date;
    }
-   
+
    /**
     * Method takes input as date and converts into String date in MM-DD-YY format
     * 
@@ -89,7 +89,7 @@ public class DateUtils {
       Date date = null;
       DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
       try {
-         if (inputString != null && !inputString.isEmpty())
+         if (inputString != null && !inputString.trim().isEmpty())
             date = format.parse(inputString);
       } catch (ParseException e) {
          ExceptionUtil.logException(e, logger);
