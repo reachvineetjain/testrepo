@@ -216,7 +216,11 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public SeasonBean createSeason(SeasonBean seasonBean) {
       try {
          int seasonId = createSeasonLogic(seasonBean);
-         return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
+         if(seasonId==-1){
+            throw new ValidationException(ErrorCode.DUPLICATE_SEASON_NAME, "season with same name already exists, please select different name");
+         }else{
+            return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
+         }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -229,7 +233,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       if(seasonBean.getSeasonName()!=null){
          Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
          if(season!=null){
-            throw new ValidationException(ErrorCode.DUPLICATE_SEASON_NAME, "season with same name already exists, please select different name");
+            LOGGER.error("season with same name already exists");
          }else{
             Season seasonEntity = new Season();
             seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
