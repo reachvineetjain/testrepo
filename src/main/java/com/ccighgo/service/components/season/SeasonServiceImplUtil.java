@@ -166,7 +166,8 @@ public class SeasonServiceImplUtil {
    SeasonWTWinterRepository seasonWTWinterRepository;
    @Autowired
    SeasonServiceInterface seasonServiceInterface;
-   @Autowired SeasonIHPDetailRepository seasonIHPDetailRepository;
+   @Autowired
+   SeasonIHPDetailRepository seasonIHPDetailRepository;
 
    /**
     * @param seasonBean
@@ -175,8 +176,8 @@ public class SeasonServiceImplUtil {
    public void convertEntitySeasonToBeanSeason(SeasonBean seasonBean, Season seasonEntity) {
       seasonBean.setSeasonId(seasonEntity.getSeasonId());
       seasonBean.setDepartmentId(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentId() : -1);
-      seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment()!=null?seasonEntity.getLookupDepartment().getAcronym():null);
-      seasonBean.setDepartmentName(seasonEntity.getLookupDepartment()!=null?seasonEntity.getLookupDepartment().getDepartmentName():null);
+      seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getAcronym() : null);
+      seasonBean.setDepartmentName(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentName() : null);
       seasonBean.setSeasonName(seasonEntity.getSeasonName() != null ? seasonEntity.getSeasonName() : CCIConstants.EMPTY_DATA);
       if (seasonEntity.getSeasonStatus() != null) {
          seasonBean.setStatus(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getStatus() : CCIConstants.EMPTY_DATA);
@@ -790,6 +791,7 @@ public class SeasonServiceImplUtil {
          SeasonTADetail seasonTADetail = new SeasonTADetail();
          seasonTADetail.setSeason(seasonEntity);
          seasonTADetail.setProgramName(seasonBean.getSeasonName());
+         seasonTADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
          seasonTADetail.setCreatedBy(1);
          seasonTADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonTADetail.setModifiedBy(1);
@@ -804,6 +806,7 @@ public class SeasonServiceImplUtil {
          SeasonLSDetail seasonLSDetail = new SeasonLSDetail();
          seasonLSDetail.setSeason(seasonEntity);
          seasonLSDetail.setProgramName(seasonBean.getSeasonName());
+         seasonLSDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
          seasonLSDetail.setCreatedBy(1);
          seasonLSDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonLSDetail.setModifiedBy(1);
@@ -818,6 +821,7 @@ public class SeasonServiceImplUtil {
          SeasonHSADetail seasonHSADetail = new SeasonHSADetail();
          seasonHSADetail.setSeason(seasonEntity);
          seasonHSADetail.setProgramName(seasonBean.getSeasonName());
+         seasonHSADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
          seasonHSADetail.setCreatedBy(1);
          seasonHSADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonHSADetail.setModifiedBy(1);
@@ -832,6 +836,7 @@ public class SeasonServiceImplUtil {
          SeasonWADetail seasonWADetail = new SeasonWADetail();
          seasonWADetail.setSeason(seasonEntity);
          seasonWADetail.setProgramName(seasonBean.getSeasonName());
+         seasonWADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
          seasonWADetail.setCreatedBy(1);
          seasonWADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWADetail.setModifiedBy(1);
@@ -846,6 +851,7 @@ public class SeasonServiceImplUtil {
          SeasonVADetail seasonVADetail = new SeasonVADetail();
          seasonVADetail.setSeason(seasonEntity);
          seasonVADetail.setProgramName(seasonBean.getSeasonName());
+         seasonVADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
          seasonVADetail.setCreatedBy(1);
          seasonVADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonVADetail.setModifiedBy(1);
@@ -858,7 +864,8 @@ public class SeasonServiceImplUtil {
       if (seasonEntity.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
          SeasonF1Detail seasonF1Detail = new SeasonF1Detail();
          seasonF1Detail.setSeason(seasonEntity);
-         seasonF1Detail.setProgramName(seasonBean.getSeasonName()+CCIConstants.HYPHEN_SPACE+CCIConstants.HSP_F1);
+         seasonF1Detail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_F1);
+         seasonF1Detail.setSeasonStatus(seasonEntity.getSeasonStatus());
          seasonF1Detail.setCreatedBy(1);
          seasonF1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonF1Detail.setModifiedBy(1);
@@ -876,7 +883,8 @@ public class SeasonServiceImplUtil {
       if (season.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
          SeasonJ1Detail seasonJ1Detail = new SeasonJ1Detail();
          seasonJ1Detail.setSeason(season);
-         seasonJ1Detail.setProgramName(seasonBean.getSeasonName()+CCIConstants.HYPHEN_SPACE+CCIConstants.HSP_J1_HS);
+         seasonJ1Detail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_J1_HS);
+         seasonJ1Detail.setSeasonStatus(season.getSeasonStatus());
          seasonJ1Detail.setCreatedBy(1);
          seasonJ1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonJ1Detail.setModifiedBy(1);
@@ -884,7 +892,7 @@ public class SeasonServiceImplUtil {
          seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
       }
    }
-   
+
    /**
     * This method creates j1hs season program for HSP high level season
     * 
@@ -894,7 +902,8 @@ public class SeasonServiceImplUtil {
       if (season.getSeasonId() > 0 && seasonBean.getSeasonName() != null) {
          SeasonIHPDetail seasonIHPDetail = new SeasonIHPDetail();
          seasonIHPDetail.setSeason(season);
-         seasonIHPDetail.setProgramName(seasonBean.getSeasonName()+CCIConstants.HYPHEN_SPACE+CCIConstants.HSP_STP_IHP);
+         seasonIHPDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_STP_IHP);
+         seasonIHPDetail.setSeasonStatus(season.getSeasonStatus());
          seasonIHPDetail.setCreatedBy(1);
          seasonIHPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonIHPDetail.setModifiedBy(1);
