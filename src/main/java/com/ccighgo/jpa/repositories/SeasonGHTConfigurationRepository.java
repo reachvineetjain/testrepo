@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.SeasonGHTConfiguration;
-import com.ccighgo.db.entities.SeasonHSPConfiguration;
-import com.ccighgo.db.entities.SeasonWPConfiguration;
 
 /**
  * 

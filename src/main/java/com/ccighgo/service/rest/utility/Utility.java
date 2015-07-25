@@ -12,7 +12,6 @@ import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
-import com.ccighgo.service.transport.utility.beans.funtion.Functions;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
@@ -158,7 +157,7 @@ public class Utility {
    public SeasonStatuses getSeasonStatus() {
       return utilityServices.getSeasonStatus();
    }
-   
+
    /**
     * @return
     */

@@ -2,9 +2,6 @@ package com.ccighgo.security;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.ccighgo.exception.CcighgoServiceException;
-import com.ccighgo.exception.ErrorCode;
-
 /**
  * 
  * Utility class to perform authorization checks
