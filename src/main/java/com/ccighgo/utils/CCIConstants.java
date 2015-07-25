@@ -139,6 +139,12 @@ public class CCIConstants {
    public static final String HTTP = "http://";
    public static final String HTTPS = "https://";
    public static final String FTP = "ftp://";
+   
+ //Season statuses
+   public static final String STATUS_OPEN = "Open";
+   public static final String STATUS_CLOSE = "Close";
+   public static final String STATUS_DRAFT = "Draft";
+   public static final String STATUS_ARCHIVED = "Archived";
 
    // background check constants
    // ScreenResponse and Status Response node error codes

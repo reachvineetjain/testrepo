@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.utility.UtilityServices;
+import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.funtion.Functions;
@@ -146,6 +147,16 @@ public class Utility {
    @Produces("application/json")
    public Regions getAllRegions() {
       return utilityServices.getAllRegions();
+   }
+	
+	  /**
+    * @return
+    */
+   @GET
+   @Path("season/status")
+   @Produces("application/json")
+   public SeasonStatuses getSeasonStatus(){
+      return utilityServices.getSeasonStatus();
    }
 
 

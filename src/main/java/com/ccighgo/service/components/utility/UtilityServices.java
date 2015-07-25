@@ -3,6 +3,7 @@
  */
 package com.ccighgo.service.components.utility;
 
+import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.funtion.Functions;
@@ -74,5 +75,12 @@ public interface UtilityServices {
     * @return
     */
    public Regions getAllRegions();
+   
+   /**
+    * Gets the list of available season statuses
+    * 
+    * @return
+    */
+   public SeasonStatuses getSeasonStatus();
 
 }
