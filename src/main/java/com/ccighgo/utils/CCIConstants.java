@@ -157,5 +157,7 @@ public class CCIConstants {
 
    // Applicant node error codes
    public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_1001 = "[element] is invalid/missing. One or many error message node(s) will be present. See sample error messages below.";
+   
+   public static final Integer UNDEFINED_GENDER = 3;
 
 }
