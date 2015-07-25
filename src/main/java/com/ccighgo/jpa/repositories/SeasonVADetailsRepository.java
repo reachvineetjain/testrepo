@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.SeasonVADetail;
-import com.ccighgo.db.entities.SeasonWADetail;
 
 /**
  * @author ravi

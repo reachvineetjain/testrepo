@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess;
 import com.ccighgo.db.entities.Login;
-import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonIHPDetailsRegionApplication;

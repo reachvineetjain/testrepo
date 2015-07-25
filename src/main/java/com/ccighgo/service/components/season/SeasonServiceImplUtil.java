@@ -434,6 +434,10 @@ public class SeasonServiceImplUtil {
       if (update) {
          ValidationUtils.validateRequired(seasonBean.getSeasonId() + "");
          seasonEntity.setSeasonId(seasonBean.getSeasonId());
+         seasonEntity.setSeasonStatus(seasonEntity.getSeasonStatus());
+      } else {
+         SeasonStatus seasonStatus = seasonStatusRepository.findOne(CCIConstants.DRAFT_STATUS_NO);
+         seasonEntity.setSeasonStatus(seasonStatus);
       }
       ValidationUtils.validateRequired(seasonBean.getDepartmentId() + "");
       LookupDepartment department = departmentRepository.findOne(seasonBean.getDepartmentId());
@@ -442,8 +446,6 @@ public class SeasonServiceImplUtil {
       ValidationUtils.validateRequired(seasonBean.getSeasonName());
       seasonEntity.setSeasonName(seasonBean.getSeasonName());
 
-      SeasonStatus seasonStatus = seasonStatusRepository.findOne(CCIConstants.DRAFT_STATUS_NO);
-      seasonEntity.setSeasonStatus(seasonStatus);
       seasonEntity.setCreatedBy(1);
       seasonEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       seasonEntity.setModifiedBy(1);
@@ -2788,5 +2790,33 @@ public class SeasonServiceImplUtil {
          allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
          updatedList.add(allocation);
       }
+   }
+
+   public void updateSeasonDocuments(SeasonBean seasonBean, Season seasonEntity) {
+      List<SeasonDepartmentDocument> seasonDepartmentDocuments = seasonDepartmentDocumentRepository.findAllDepartmentDocsBySeasonId(seasonEntity.getSeasonId());
+      seasonDepartmentDocumentRepository.delete(seasonDepartmentDocuments);
+      List<SeasonDepartmentDocument> newDocList = new ArrayList<SeasonDepartmentDocument>();
+      for (SeasonDocument hlsDocuments : seasonBean.getDocuments()) {
+         SeasonDepartmentDocument sprgDoc = new SeasonDepartmentDocument();
+         DocumentInformation documentInformation = new DocumentInformation();
+         documentInformation.setFileName(hlsDocuments.getFileName());
+         documentInformation.setDocumentName(hlsDocuments.getDocName());
+         documentInformation.setUrl(hlsDocuments.getDocUrl());
+         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(hlsDocuments.getDocType()));
+         documentInformation.setCreatedBy(1);
+         documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation.setModifiedBy(1);
+         documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+         sprgDoc.setActive(CCIConstants.ACTIVE);
+         sprgDoc.setSeason(seasonEntity);
+         sprgDoc.setDocumentInformation(documentInformation);
+         sprgDoc.setCreatedBy(1);
+         sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprgDoc.setModifiedBy(1);
+         sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         newDocList.add(sprgDoc);
+      }
+      seasonDepartmentDocumentRepository.save(newDocList);
    }
 }
