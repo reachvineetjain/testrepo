@@ -7,6 +7,7 @@ import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.funtion.Functions;
+import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
@@ -82,5 +83,12 @@ public interface UtilityServices {
     * @return
     */
    public SeasonStatuses getSeasonStatus();
+
+   /**
+    * get list of gender in system
+    * 
+    * @return
+    */
+   public Genders getGenders();
 
 }

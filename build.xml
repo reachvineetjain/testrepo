@@ -2,7 +2,7 @@
 <project name="ServiceFrontBeans" basedir="." default="all">
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
-	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,SeasonList,Season,DocumentType,SeasonHspStpIhpDetails,
+	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,SeasonList,Season,DocumentType,SeasonHspStpIhpDetails,Gender,
 		SeasonProgram,SeasonStatus,SeasonHspJ1HSDetails,SeasonHspF1Details,SeasonGHTDetails,SeasonWPDetail,SeasonWPCAPDetails,CloneSeason,SeasonDepartmentDocument,SeasonProgramDocument,SeasonProgramNote,Regions,RegionManagementDetails" />
 
 	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -370,13 +370,22 @@
 			<arg value="${xsd.dir}/Regions.xsd" />
 		</java>
 	</target>
-	
+
 	<!-- Region Management-->
-	    <target name="RegionManagementDetails">
+	<target name="RegionManagementDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionmanagement/RegionManagementDetails.xsd" />
+		</java>
+	</target>
+	
+	<!-- Gender-->
+	    <target name="Gender">
 	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
 	            <arg value="-d" />
 	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/regionmanagement/RegionManagementDetails.xsd" />
+	            <arg value="${xsd.dir}/utilities/Gender.xsd" />
 	        </java>
 	    </target>
 
