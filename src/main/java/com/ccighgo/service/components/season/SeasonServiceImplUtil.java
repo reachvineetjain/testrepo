@@ -434,7 +434,8 @@ public class SeasonServiceImplUtil {
       if (update) {
          ValidationUtils.validateRequired(seasonBean.getSeasonId() + "");
          seasonEntity.setSeasonId(seasonBean.getSeasonId());
-         seasonEntity.setSeasonStatus(seasonEntity.getSeasonStatus());
+         SeasonStatus seasonStatus = seasonStatusRepository.findSeasonStatusByName(seasonBean.getSeasonStatusValue());
+         seasonEntity.setSeasonStatus(seasonStatus);
       } else {
          SeasonStatus seasonStatus = seasonStatusRepository.findOne(CCIConstants.DRAFT_STATUS_NO);
          seasonEntity.setSeasonStatus(seasonStatus);
