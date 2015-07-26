@@ -272,8 +272,18 @@ public class SeasonServiceImplUtil {
             document.setSeasonId(departmentDocument.getSeason().getSeasonId());
             if (seasonEntity.getLookupDepartment() != null)
                document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
-            document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+            document.setActive(departmentDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+            document.setDocName(departmentDocument.getDocumentInformation().getDocumentName());
+            document.setFileName(departmentDocument.getDocumentInformation().getFileName());
+            String docType = null;
+            if (departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
+               docType = departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName();
+            }
             document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+            document.setDocType(docType);
+            document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
+            Login login = loginRepository.findOne(1);// TODO find user from session
+            document.setUploadedBy(login.getLoginName());
             seasonBean.getDocuments().add(document);
          }
       }
