@@ -258,7 +258,7 @@
    </dependencies>
 
    <build>
-      <finalName>cci_gh_go</finalName>
+      <finalName>cci_gh_go_prod</finalName>
       <plugins>
          <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
