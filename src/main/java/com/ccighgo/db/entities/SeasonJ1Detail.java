@@ -1,458 +1,480 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the SeasonJ1Details database table.
  * 
  */
 @Entity
-@Table(name="SeasonJ1Details")
-@NamedQuery(name="SeasonJ1Detail.findAll", query="SELECT s FROM SeasonJ1Detail s")
+@Table(name = "SeasonJ1Details")
+@NamedQuery(name = "SeasonJ1Detail.findAll", query = "SELECT s FROM SeasonJ1Detail s")
 public class SeasonJ1Detail implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int seasonJ1DetailsId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
+   private Integer seasonJ1DetailsId;
 
-	private byte activeFullYearJanProgram;
+   private byte activeFullYearJanProgram;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date augFullYearAppDeadlineDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date augFullYearAppDeadlineDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date augFullYearEndDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date augFullYearEndDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date augFullYearStartDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date augFullYearStartDate;
 
-	@Column(nullable=false)
-	private int createdBy;
+   @Column(nullable = false)
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	private int fieldStaffHoldLength;
+   private Integer fieldStaffHoldLength;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date firstSemAppDeadlineDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date firstSemAppDeadlineDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date firstSemEarliestBirthDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date firstSemEarliestBirthDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date firstSemEndDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date firstSemEndDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date firstSemLatestBirthDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date firstSemLatestBirthDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date firstSemStartDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date firstSemStartDate;
 
-	@Temporal(TemporalType.DATE)
-	private Date hfInquiryDate;
+   @Temporal(TemporalType.DATE)
+   private Date hfInquiryDate;
 
-	private int hfReferences;
+   private Integer hfReferences;
 
-	private int hoursBeforeHoldExpirationWarning;
+   private Integer hoursBeforeHoldExpirationWarning;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date janFullYearAppDeadlineDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date janFullYearAppDeadlineDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date janFullYearEndDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date janFullYearEndDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date janFullYearStartDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date janFullYearStartDate;
 
-	@Column(nullable=false)
-	private int modifiedBy;
+   @Column(nullable = false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable = false)
+   private Timestamp modifiedOn;
 
-	@Column(length=45)
-	private String programName;
+   @Column(length = 45)
+   private String programName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date secondSemAppDeadlineDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date secondSemAppDeadlineDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date secondSemEarliestBirthDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date secondSemEarliestBirthDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date secondSemEndDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date secondSemEndDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date secondSemLatestBirthDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date secondSemLatestBirthDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date secondSemStartDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date secondSemStartDate;
 
-	private byte showAugFullYearToNewHF;
+   private byte showAugFullYearToNewHF;
 
-	private byte showFirstSemToNewHF;
+   private byte showFirstSemToNewHF;
 
-	private byte showGuaranteed;
+   private byte showGuaranteed;
 
-	private byte showJanFullYearToNewHF;
+   private byte showJanFullYearToNewHF;
 
-	private byte showSeasonToCurrentHF;
+   private byte showSeasonToCurrentHF;
 
-	private byte showSecondSemToNewHF;
+   private byte showSecondSemToNewHF;
 
-	private byte showSpecialRequestStudent;
+   private byte showSpecialRequestStudent;
 
-	private byte showUnguaranteed;
+   private byte showUnguaranteed;
 
-	private byte showWelcomeFamily;
+   private byte showWelcomeFamily;
 
-	//bi-directional many-to-one association to FieldStaffAgreement
-	@ManyToOne
-	@JoinColumn(name="fsAgreementId")
-	private FieldStaffAgreement fieldStaffAgreement;
-
-	//bi-directional many-to-one association to PaymentSchedule
-	@ManyToOne
-	@JoinColumn(name="lcPaymentScheduleId")
-	private PaymentSchedule paymentSchedule;
-
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
-
-	//bi-directional many-to-one association to SeasonStatus
-	@ManyToOne
-	@JoinColumn(name="programStatusId")
-	private SeasonStatus seasonStatus;
-
-	public SeasonJ1Detail() {
-	}
-
-	public int getSeasonJ1DetailsId() {
-		return this.seasonJ1DetailsId;
-	}
-
-	public void setSeasonJ1DetailsId(int seasonJ1DetailsId) {
-		this.seasonJ1DetailsId = seasonJ1DetailsId;
-	}
-
-	public byte getActiveFullYearJanProgram() {
-		return this.activeFullYearJanProgram;
-	}
-
-	public void setActiveFullYearJanProgram(byte activeFullYearJanProgram) {
-		this.activeFullYearJanProgram = activeFullYearJanProgram;
-	}
-
-	public Date getAugFullYearAppDeadlineDate() {
-		return this.augFullYearAppDeadlineDate;
-	}
-
-	public void setAugFullYearAppDeadlineDate(Date augFullYearAppDeadlineDate) {
-		this.augFullYearAppDeadlineDate = augFullYearAppDeadlineDate;
-	}
-
-	public Date getAugFullYearEndDate() {
-		return this.augFullYearEndDate;
-	}
-
-	public void setAugFullYearEndDate(Date augFullYearEndDate) {
-		this.augFullYearEndDate = augFullYearEndDate;
-	}
-
-	public Date getAugFullYearStartDate() {
-		return this.augFullYearStartDate;
-	}
-
-	public void setAugFullYearStartDate(Date augFullYearStartDate) {
-		this.augFullYearStartDate = augFullYearStartDate;
-	}
-
-	public int getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(int createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
-
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public int getFieldStaffHoldLength() {
-		return this.fieldStaffHoldLength;
-	}
-
-	public void setFieldStaffHoldLength(int fieldStaffHoldLength) {
-		this.fieldStaffHoldLength = fieldStaffHoldLength;
-	}
-
-	public Date getFirstSemAppDeadlineDate() {
-		return this.firstSemAppDeadlineDate;
-	}
-
-	public void setFirstSemAppDeadlineDate(Date firstSemAppDeadlineDate) {
-		this.firstSemAppDeadlineDate = firstSemAppDeadlineDate;
-	}
-
-	public Date getFirstSemEarliestBirthDate() {
-		return this.firstSemEarliestBirthDate;
-	}
-
-	public void setFirstSemEarliestBirthDate(Date firstSemEarliestBirthDate) {
-		this.firstSemEarliestBirthDate = firstSemEarliestBirthDate;
-	}
-
-	public Date getFirstSemEndDate() {
-		return this.firstSemEndDate;
-	}
-
-	public void setFirstSemEndDate(Date firstSemEndDate) {
-		this.firstSemEndDate = firstSemEndDate;
-	}
-
-	public Date getFirstSemLatestBirthDate() {
-		return this.firstSemLatestBirthDate;
-	}
-
-	public void setFirstSemLatestBirthDate(Date firstSemLatestBirthDate) {
-		this.firstSemLatestBirthDate = firstSemLatestBirthDate;
-	}
-
-	public Date getFirstSemStartDate() {
-		return this.firstSemStartDate;
-	}
-
-	public void setFirstSemStartDate(Date firstSemStartDate) {
-		this.firstSemStartDate = firstSemStartDate;
-	}
-
-	public Date getHfInquiryDate() {
-		return this.hfInquiryDate;
-	}
-
-	public void setHfInquiryDate(Date hfInquiryDate) {
-		this.hfInquiryDate = hfInquiryDate;
-	}
-
-	public int getHfReferences() {
-		return this.hfReferences;
-	}
-
-	public void setHfReferences(int hfReferences) {
-		this.hfReferences = hfReferences;
-	}
-
-	public int getHoursBeforeHoldExpirationWarning() {
-		return this.hoursBeforeHoldExpirationWarning;
-	}
-
-	public void setHoursBeforeHoldExpirationWarning(int hoursBeforeHoldExpirationWarning) {
-		this.hoursBeforeHoldExpirationWarning = hoursBeforeHoldExpirationWarning;
-	}
-
-	public Date getJanFullYearAppDeadlineDate() {
-		return this.janFullYearAppDeadlineDate;
-	}
-
-	public void setJanFullYearAppDeadlineDate(Date janFullYearAppDeadlineDate) {
-		this.janFullYearAppDeadlineDate = janFullYearAppDeadlineDate;
-	}
-
-	public Date getJanFullYearEndDate() {
-		return this.janFullYearEndDate;
-	}
-
-	public void setJanFullYearEndDate(Date janFullYearEndDate) {
-		this.janFullYearEndDate = janFullYearEndDate;
-	}
-
-	public Date getJanFullYearStartDate() {
-		return this.janFullYearStartDate;
-	}
-
-	public void setJanFullYearStartDate(Date janFullYearStartDate) {
-		this.janFullYearStartDate = janFullYearStartDate;
-	}
-
-	public int getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(int modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
-
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-
-	public String getProgramName() {
-		return this.programName;
-	}
-
-	public void setProgramName(String programName) {
-		this.programName = programName;
-	}
-
-	public Date getSecondSemAppDeadlineDate() {
-		return this.secondSemAppDeadlineDate;
-	}
-
-	public void setSecondSemAppDeadlineDate(Date secondSemAppDeadlineDate) {
-		this.secondSemAppDeadlineDate = secondSemAppDeadlineDate;
-	}
-
-	public Date getSecondSemEarliestBirthDate() {
-		return this.secondSemEarliestBirthDate;
-	}
-
-	public void setSecondSemEarliestBirthDate(Date secondSemEarliestBirthDate) {
-		this.secondSemEarliestBirthDate = secondSemEarliestBirthDate;
-	}
-
-	public Date getSecondSemEndDate() {
-		return this.secondSemEndDate;
-	}
-
-	public void setSecondSemEndDate(Date secondSemEndDate) {
-		this.secondSemEndDate = secondSemEndDate;
-	}
-
-	public Date getSecondSemLatestBirthDate() {
-		return this.secondSemLatestBirthDate;
-	}
-
-	public void setSecondSemLatestBirthDate(Date secondSemLatestBirthDate) {
-		this.secondSemLatestBirthDate = secondSemLatestBirthDate;
-	}
-
-	public Date getSecondSemStartDate() {
-		return this.secondSemStartDate;
-	}
-
-	public void setSecondSemStartDate(Date secondSemStartDate) {
-		this.secondSemStartDate = secondSemStartDate;
-	}
-
-	public byte getShowAugFullYearToNewHF() {
-		return this.showAugFullYearToNewHF;
-	}
-
-	public void setShowAugFullYearToNewHF(byte showAugFullYearToNewHF) {
-		this.showAugFullYearToNewHF = showAugFullYearToNewHF;
-	}
-
-	public byte getShowFirstSemToNewHF() {
-		return this.showFirstSemToNewHF;
-	}
-
-	public void setShowFirstSemToNewHF(byte showFirstSemToNewHF) {
-		this.showFirstSemToNewHF = showFirstSemToNewHF;
-	}
-
-	public byte getShowGuaranteed() {
-		return this.showGuaranteed;
-	}
-
-	public void setShowGuaranteed(byte showGuaranteed) {
-		this.showGuaranteed = showGuaranteed;
-	}
-
-	public byte getShowJanFullYearToNewHF() {
-		return this.showJanFullYearToNewHF;
-	}
-
-	public void setShowJanFullYearToNewHF(byte showJanFullYearToNewHF) {
-		this.showJanFullYearToNewHF = showJanFullYearToNewHF;
-	}
-
-	public byte getShowSeasonToCurrentHF() {
-		return this.showSeasonToCurrentHF;
-	}
-
-	public void setShowSeasonToCurrentHF(byte showSeasonToCurrentHF) {
-		this.showSeasonToCurrentHF = showSeasonToCurrentHF;
-	}
-
-	public byte getShowSecondSemToNewHF() {
-		return this.showSecondSemToNewHF;
-	}
-
-	public void setShowSecondSemToNewHF(byte showSecondSemToNewHF) {
-		this.showSecondSemToNewHF = showSecondSemToNewHF;
-	}
-
-	public byte getShowSpecialRequestStudent() {
-		return this.showSpecialRequestStudent;
-	}
-
-	public void setShowSpecialRequestStudent(byte showSpecialRequestStudent) {
-		this.showSpecialRequestStudent = showSpecialRequestStudent;
-	}
-
-	public byte getShowUnguaranteed() {
-		return this.showUnguaranteed;
-	}
-
-	public void setShowUnguaranteed(byte showUnguaranteed) {
-		this.showUnguaranteed = showUnguaranteed;
-	}
-
-	public byte getShowWelcomeFamily() {
-		return this.showWelcomeFamily;
-	}
-
-	public void setShowWelcomeFamily(byte showWelcomeFamily) {
-		this.showWelcomeFamily = showWelcomeFamily;
-	}
-
-	public FieldStaffAgreement getFieldStaffAgreement() {
-		return this.fieldStaffAgreement;
-	}
-
-	public void setFieldStaffAgreement(FieldStaffAgreement fieldStaffAgreement) {
-		this.fieldStaffAgreement = fieldStaffAgreement;
-	}
-
-	public PaymentSchedule getPaymentSchedule() {
-		return this.paymentSchedule;
-	}
-
-	public void setPaymentSchedule(PaymentSchedule paymentSchedule) {
-		this.paymentSchedule = paymentSchedule;
-	}
-
-	public Season getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
-	public SeasonStatus getSeasonStatus() {
-		return this.seasonStatus;
-	}
-
-	public void setSeasonStatus(SeasonStatus seasonStatus) {
-		this.seasonStatus = seasonStatus;
-	}
+   // bi-directional many-to-one association to FieldStaffAgreement
+   @ManyToOne
+   @JoinColumn(name = "fsAgreementId")
+   private FieldStaffAgreement fieldStaffAgreement;
+
+   // bi-directional many-to-one association to PaymentSchedule
+   @ManyToOne
+   @JoinColumn(name = "lcPaymentScheduleId")
+   private PaymentSchedule paymentSchedule;
+
+   // bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name = "seasonId", nullable = false)
+   private Season season;
+
+   // bi-directional many-to-one association to SeasonStatus
+   @ManyToOne
+   @JoinColumn(name = "programStatusId")
+   private SeasonStatus seasonStatus;
+
+   public SeasonJ1Detail() {
+   }
+
+   public Integer getSeasonJ1DetailsId() {
+      if (this.seasonJ1DetailsId != null)
+         return this.seasonJ1DetailsId;
+      return 0;
+   }
+
+   public void setSeasonJ1DetailsId(Integer seasonJ1DetailsId) {
+      this.seasonJ1DetailsId = seasonJ1DetailsId;
+   }
+
+   public byte getActiveFullYearJanProgram() {
+      return this.activeFullYearJanProgram;
+   }
+
+   public void setActiveFullYearJanProgram(byte activeFullYearJanProgram) {
+      this.activeFullYearJanProgram = activeFullYearJanProgram;
+   }
+
+   public Date getAugFullYearAppDeadlineDate() {
+      return this.augFullYearAppDeadlineDate;
+   }
+
+   public void setAugFullYearAppDeadlineDate(Date augFullYearAppDeadlineDate) {
+      this.augFullYearAppDeadlineDate = augFullYearAppDeadlineDate;
+   }
+
+   public Date getAugFullYearEndDate() {
+      return this.augFullYearEndDate;
+   }
+
+   public void setAugFullYearEndDate(Date augFullYearEndDate) {
+      this.augFullYearEndDate = augFullYearEndDate;
+   }
+
+   public Date getAugFullYearStartDate() {
+      return this.augFullYearStartDate;
+   }
+
+   public void setAugFullYearStartDate(Date augFullYearStartDate) {
+      this.augFullYearStartDate = augFullYearStartDate;
+   }
+
+   public Integer getCreatedBy() {
+      if (this.createdBy != null)
+         return this.createdBy;
+      return 0;
+   }
+
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
+
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
+
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
+
+   public Integer getFieldStaffHoldLength() {
+      if (this.fieldStaffHoldLength != null)
+         return this.fieldStaffHoldLength;
+      return 0;
+   }
+
+   public void setFieldStaffHoldLength(Integer fieldStaffHoldLength) {
+      this.fieldStaffHoldLength = fieldStaffHoldLength;
+   }
+
+   public Date getFirstSemAppDeadlineDate() {
+      return this.firstSemAppDeadlineDate;
+   }
+
+   public void setFirstSemAppDeadlineDate(Date firstSemAppDeadlineDate) {
+      this.firstSemAppDeadlineDate = firstSemAppDeadlineDate;
+   }
+
+   public Date getFirstSemEarliestBirthDate() {
+      return this.firstSemEarliestBirthDate;
+   }
+
+   public void setFirstSemEarliestBirthDate(Date firstSemEarliestBirthDate) {
+      this.firstSemEarliestBirthDate = firstSemEarliestBirthDate;
+   }
+
+   public Date getFirstSemEndDate() {
+      return this.firstSemEndDate;
+   }
+
+   public void setFirstSemEndDate(Date firstSemEndDate) {
+      this.firstSemEndDate = firstSemEndDate;
+   }
+
+   public Date getFirstSemLatestBirthDate() {
+      return this.firstSemLatestBirthDate;
+   }
+
+   public void setFirstSemLatestBirthDate(Date firstSemLatestBirthDate) {
+      this.firstSemLatestBirthDate = firstSemLatestBirthDate;
+   }
+
+   public Date getFirstSemStartDate() {
+      return this.firstSemStartDate;
+   }
+
+   public void setFirstSemStartDate(Date firstSemStartDate) {
+      this.firstSemStartDate = firstSemStartDate;
+   }
+
+   public Date getHfInquiryDate() {
+      return this.hfInquiryDate;
+   }
+
+   public void setHfInquiryDate(Date hfInquiryDate) {
+      this.hfInquiryDate = hfInquiryDate;
+   }
+
+   public Integer getHfReferences() {
+      if (this.hfReferences != null)
+         return this.hfReferences;
+      return 0;
+   }
+
+   public void setHfReferences(Integer hfReferences) {
+      this.hfReferences = hfReferences;
+   }
+
+   public Integer getHoursBeforeHoldExpirationWarning() {
+      if (this.hoursBeforeHoldExpirationWarning != null)
+         return this.hoursBeforeHoldExpirationWarning;
+      return 0;
+   }
+
+   public void setHoursBeforeHoldExpirationWarning(Integer hoursBeforeHoldExpirationWarning) {
+      this.hoursBeforeHoldExpirationWarning = hoursBeforeHoldExpirationWarning;
+   }
+
+   public Date getJanFullYearAppDeadlineDate() {
+      return this.janFullYearAppDeadlineDate;
+   }
+
+   public void setJanFullYearAppDeadlineDate(Date janFullYearAppDeadlineDate) {
+      this.janFullYearAppDeadlineDate = janFullYearAppDeadlineDate;
+   }
+
+   public Date getJanFullYearEndDate() {
+      return this.janFullYearEndDate;
+   }
+
+   public void setJanFullYearEndDate(Date janFullYearEndDate) {
+      this.janFullYearEndDate = janFullYearEndDate;
+   }
+
+   public Date getJanFullYearStartDate() {
+      return this.janFullYearStartDate;
+   }
+
+   public void setJanFullYearStartDate(Date janFullYearStartDate) {
+      this.janFullYearStartDate = janFullYearStartDate;
+   }
+
+   public Integer getModifiedBy() {
+      if (this.modifiedBy != null)
+         return this.modifiedBy;
+      return 0;
+   }
+
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
+
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
+
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
+
+   public String getProgramName() {
+      return this.programName;
+   }
+
+   public void setProgramName(String programName) {
+      this.programName = programName;
+   }
+
+   public Date getSecondSemAppDeadlineDate() {
+      return this.secondSemAppDeadlineDate;
+   }
+
+   public void setSecondSemAppDeadlineDate(Date secondSemAppDeadlineDate) {
+      this.secondSemAppDeadlineDate = secondSemAppDeadlineDate;
+   }
+
+   public Date getSecondSemEarliestBirthDate() {
+      return this.secondSemEarliestBirthDate;
+   }
+
+   public void setSecondSemEarliestBirthDate(Date secondSemEarliestBirthDate) {
+      this.secondSemEarliestBirthDate = secondSemEarliestBirthDate;
+   }
+
+   public Date getSecondSemEndDate() {
+      return this.secondSemEndDate;
+   }
+
+   public void setSecondSemEndDate(Date secondSemEndDate) {
+      this.secondSemEndDate = secondSemEndDate;
+   }
+
+   public Date getSecondSemLatestBirthDate() {
+      return this.secondSemLatestBirthDate;
+   }
+
+   public void setSecondSemLatestBirthDate(Date secondSemLatestBirthDate) {
+      this.secondSemLatestBirthDate = secondSemLatestBirthDate;
+   }
+
+   public Date getSecondSemStartDate() {
+      return this.secondSemStartDate;
+   }
+
+   public void setSecondSemStartDate(Date secondSemStartDate) {
+      this.secondSemStartDate = secondSemStartDate;
+   }
+
+   public byte getShowAugFullYearToNewHF() {
+      return this.showAugFullYearToNewHF;
+   }
+
+   public void setShowAugFullYearToNewHF(byte showAugFullYearToNewHF) {
+      this.showAugFullYearToNewHF = showAugFullYearToNewHF;
+   }
+
+   public byte getShowFirstSemToNewHF() {
+      return this.showFirstSemToNewHF;
+   }
+
+   public void setShowFirstSemToNewHF(byte showFirstSemToNewHF) {
+      this.showFirstSemToNewHF = showFirstSemToNewHF;
+   }
+
+   public byte getShowGuaranteed() {
+      return this.showGuaranteed;
+   }
+
+   public void setShowGuaranteed(byte showGuaranteed) {
+      this.showGuaranteed = showGuaranteed;
+   }
+
+   public byte getShowJanFullYearToNewHF() {
+      return this.showJanFullYearToNewHF;
+   }
+
+   public void setShowJanFullYearToNewHF(byte showJanFullYearToNewHF) {
+      this.showJanFullYearToNewHF = showJanFullYearToNewHF;
+   }
+
+   public byte getShowSeasonToCurrentHF() {
+      return this.showSeasonToCurrentHF;
+   }
+
+   public void setShowSeasonToCurrentHF(byte showSeasonToCurrentHF) {
+      this.showSeasonToCurrentHF = showSeasonToCurrentHF;
+   }
+
+   public byte getShowSecondSemToNewHF() {
+      return this.showSecondSemToNewHF;
+   }
+
+   public void setShowSecondSemToNewHF(byte showSecondSemToNewHF) {
+      this.showSecondSemToNewHF = showSecondSemToNewHF;
+   }
+
+   public byte getShowSpecialRequestStudent() {
+      return this.showSpecialRequestStudent;
+   }
+
+   public void setShowSpecialRequestStudent(byte showSpecialRequestStudent) {
+      this.showSpecialRequestStudent = showSpecialRequestStudent;
+   }
+
+   public byte getShowUnguaranteed() {
+      return this.showUnguaranteed;
+   }
+
+   public void setShowUnguaranteed(byte showUnguaranteed) {
+      this.showUnguaranteed = showUnguaranteed;
+   }
+
+   public byte getShowWelcomeFamily() {
+      return this.showWelcomeFamily;
+   }
+
+   public void setShowWelcomeFamily(byte showWelcomeFamily) {
+      this.showWelcomeFamily = showWelcomeFamily;
+   }
+
+   public FieldStaffAgreement getFieldStaffAgreement() {
+      return this.fieldStaffAgreement;
+   }
+
+   public void setFieldStaffAgreement(FieldStaffAgreement fieldStaffAgreement) {
+      this.fieldStaffAgreement = fieldStaffAgreement;
+   }
+
+   public PaymentSchedule getPaymentSchedule() {
+      return this.paymentSchedule;
+   }
+
+   public void setPaymentSchedule(PaymentSchedule paymentSchedule) {
+      this.paymentSchedule = paymentSchedule;
+   }
+
+   public Season getSeason() {
+      return this.season;
+   }
+
+   public void setSeason(Season season) {
+      this.season = season;
+   }
+
+   public SeasonStatus getSeasonStatus() {
+      return this.seasonStatus;
+   }
+
+   public void setSeasonStatus(SeasonStatus seasonStatus) {
+      this.seasonStatus = seasonStatus;
+   }
 
 }

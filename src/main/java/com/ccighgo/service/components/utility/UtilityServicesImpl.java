@@ -10,21 +10,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
 import com.ccighgo.db.entities.LookupCountry;
+import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.RegionIHP;
+import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
+import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
+import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
-import com.ccighgo.service.components.season.SeasonIHPProgramHelper;
+import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Program;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Region;
@@ -36,6 +43,7 @@ import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.DepartmentProgram;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 
 /**
@@ -61,6 +69,10 @@ public class UtilityServicesImpl implements UtilityServices {
    DepartmentProgramRepository departmentProgramRepository;
    @Autowired
    IHPRegionsRepository ihpRegionsRepository;
+   @Autowired
+   SeasonStatusRepository seasonStatusRepository;
+   @Autowired
+   GenderRepository genderRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -255,6 +267,50 @@ public class UtilityServicesImpl implements UtilityServices {
          ExceptionUtil.logException(e, LOGGER);
       }
       return regions;
+   }
+
+   @Override
+   @Transactional(readOnly = true)
+   public SeasonStatuses getSeasonStatus() {
+      SeasonStatuses seasonStatuses = null;
+      try {
+         List<SeasonStatus> seasonStatusList = seasonStatusRepository.findAll();
+         if (seasonStatusList != null) {
+            seasonStatuses = new SeasonStatuses();
+            for (SeasonStatus status : seasonStatusList) {
+               com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus seasonStatus = new com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus();
+               seasonStatus.setSeasonStatusId(status.getSeasonStatusId());
+               seasonStatus.setSeasonStatus(status.getStatus());
+               seasonStatus.setActive(status.getActive() == 1 ? true : false);
+               seasonStatuses.getSeasonStatuses().add(seasonStatus);
+            }
+         }
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return seasonStatuses;
+   }
+
+   @Override
+   public Genders getGenders() {
+      Genders genders = null;
+      try{
+         List<LookupGender> genderList = genderRepository.findAll();
+         if(genderList!=null){
+            genders = new Genders();
+            for(LookupGender lookupGender:genderList){
+               if(!(lookupGender.getGenderId()==CCIConstants.UNDEFINED_GENDER)){
+                  Gender gender = new Gender();
+                  gender.setGenderId(lookupGender.getGenderId());
+                  gender.setGenderCode(lookupGender.getGenderName());
+                  genders.getGenders().add(gender);
+               }
+            }
+         }
+      }catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return genders;
    }
 
 }

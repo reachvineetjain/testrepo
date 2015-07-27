@@ -1,147 +1,158 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the Login database table.
  * 
  */
 @Entity
-@Table(name="Login")
-@NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
+@Table(name = "Login")
+@NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l")
 public class Login implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int loginId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
+   private Integer loginId;
 
-	@Column(nullable=false, length=50)
-	private String loginName;
+   @Column(nullable = false, length = 50)
+   private String loginName;
 
-	@Column(nullable=false, length=100)
-	private String password;
+   @Column(nullable = false, length = 100)
+   private String password;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@OneToMany(mappedBy="login")
-	private List<CCIStaffUser> ccistaffUsers;
+   // bi-directional many-to-one association to CCIStaffUser
+   @OneToMany(mappedBy = "login")
+   private List<CCIStaffUser> ccistaffUsers;
 
-	//bi-directional many-to-one association to UserType
-	@ManyToOne
-	@JoinColumn(name="userTypeId", nullable=false)
-	private UserType userType;
+   // bi-directional many-to-one association to UserType
+   @ManyToOne
+   @JoinColumn(name = "userTypeId", nullable = false)
+   private UserType userType;
 
-	//bi-directional many-to-one association to LoginHistory
-	@OneToMany(mappedBy="login")
-	private List<LoginHistory> loginHistories;
+   // bi-directional many-to-one association to LoginHistory
+   @OneToMany(mappedBy = "login")
+   private List<LoginHistory> loginHistories;
 
-	//bi-directional many-to-one association to PasswordHistory
-	@OneToMany(mappedBy="login")
-	private List<PasswordHistory> passwordHistories;
+   // bi-directional many-to-one association to PasswordHistory
+   @OneToMany(mappedBy = "login")
+   private List<PasswordHistory> passwordHistories;
 
-	public Login() {
-	}
+   public Login() {
+   }
 
-	public int getLoginId() {
-		return this.loginId;
-	}
+   public Integer getLoginId() {
+      if (this.loginId != null)
+         return this.loginId;
+      return 0;
+   }
 
-	public void setLoginId(int loginId) {
-		this.loginId = loginId;
-	}
+   public void setLoginId(Integer loginId) {
+      this.loginId = loginId;
+   }
 
-	public String getLoginName() {
-		return this.loginName;
-	}
+   public String getLoginName() {
+      return this.loginName;
+   }
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
+   public void setLoginName(String loginName) {
+      this.loginName = loginName;
+   }
 
-	public String getPassword() {
-		return this.password;
-	}
+   public String getPassword() {
+      return this.password;
+   }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+   public void setPassword(String password) {
+      this.password = password;
+   }
 
-	public List<CCIStaffUser> getCcistaffUsers() {
-		return this.ccistaffUsers;
-	}
+   public List<CCIStaffUser> getCcistaffUsers() {
+      return this.ccistaffUsers;
+   }
 
-	public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
-		this.ccistaffUsers = ccistaffUsers;
-	}
+   public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
+      this.ccistaffUsers = ccistaffUsers;
+   }
 
-	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
-		getCcistaffUsers().add(ccistaffUser);
-		ccistaffUser.setLogin(this);
+   public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
+      getCcistaffUsers().add(ccistaffUser);
+      ccistaffUser.setLogin(this);
 
-		return ccistaffUser;
-	}
+      return ccistaffUser;
+   }
 
-	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
-		getCcistaffUsers().remove(ccistaffUser);
-		ccistaffUser.setLogin(null);
+   public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
+      getCcistaffUsers().remove(ccistaffUser);
+      ccistaffUser.setLogin(null);
 
-		return ccistaffUser;
-	}
+      return ccistaffUser;
+   }
 
-	public UserType getUserType() {
-		return this.userType;
-	}
+   public UserType getUserType() {
+      return this.userType;
+   }
 
-	public void setUserType(UserType userType) {
-		this.userType = userType;
-	}
+   public void setUserType(UserType userType) {
+      this.userType = userType;
+   }
 
-	public List<LoginHistory> getLoginHistories() {
-		return this.loginHistories;
-	}
+   public List<LoginHistory> getLoginHistories() {
+      return this.loginHistories;
+   }
 
-	public void setLoginHistories(List<LoginHistory> loginHistories) {
-		this.loginHistories = loginHistories;
-	}
+   public void setLoginHistories(List<LoginHistory> loginHistories) {
+      this.loginHistories = loginHistories;
+   }
 
-	public LoginHistory addLoginHistory(LoginHistory loginHistory) {
-		getLoginHistories().add(loginHistory);
-		loginHistory.setLogin(this);
+   public LoginHistory addLoginHistory(LoginHistory loginHistory) {
+      getLoginHistories().add(loginHistory);
+      loginHistory.setLogin(this);
 
-		return loginHistory;
-	}
+      return loginHistory;
+   }
 
-	public LoginHistory removeLoginHistory(LoginHistory loginHistory) {
-		getLoginHistories().remove(loginHistory);
-		loginHistory.setLogin(null);
+   public LoginHistory removeLoginHistory(LoginHistory loginHistory) {
+      getLoginHistories().remove(loginHistory);
+      loginHistory.setLogin(null);
 
-		return loginHistory;
-	}
+      return loginHistory;
+   }
 
-	public List<PasswordHistory> getPasswordHistories() {
-		return this.passwordHistories;
-	}
+   public List<PasswordHistory> getPasswordHistories() {
+      return this.passwordHistories;
+   }
 
-	public void setPasswordHistories(List<PasswordHistory> passwordHistories) {
-		this.passwordHistories = passwordHistories;
-	}
+   public void setPasswordHistories(List<PasswordHistory> passwordHistories) {
+      this.passwordHistories = passwordHistories;
+   }
 
-	public PasswordHistory addPasswordHistory(PasswordHistory passwordHistory) {
-		getPasswordHistories().add(passwordHistory);
-		passwordHistory.setLogin(this);
+   public PasswordHistory addPasswordHistory(PasswordHistory passwordHistory) {
+      getPasswordHistories().add(passwordHistory);
+      passwordHistory.setLogin(this);
 
-		return passwordHistory;
-	}
+      return passwordHistory;
+   }
 
-	public PasswordHistory removePasswordHistory(PasswordHistory passwordHistory) {
-		getPasswordHistories().remove(passwordHistory);
-		passwordHistory.setLogin(null);
+   public PasswordHistory removePasswordHistory(PasswordHistory passwordHistory) {
+      getPasswordHistories().remove(passwordHistory);
+      passwordHistory.setLogin(null);
 
-		return passwordHistory;
-	}
+      return passwordHistory;
+   }
 
 }

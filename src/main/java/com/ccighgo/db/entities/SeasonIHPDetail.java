@@ -1,296 +1,322 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.util.Date;
-import java.sql.Timestamp;
-import java.util.List;
-
 
 /**
  * The persistent class for the SeasonIHPDetails database table.
  * 
  */
 @Entity
-@Table(name="SeasonIHPDetails")
-@NamedQuery(name="SeasonIHPDetail.findAll", query="SELECT s FROM SeasonIHPDetail s")
+@Table(name = "SeasonIHPDetails")
+@NamedQuery(name = "SeasonIHPDetail.findAll", query = "SELECT s FROM SeasonIHPDetail s")
 public class SeasonIHPDetail implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int seasonIHPDetailsId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
+   private Integer seasonIHPDetailsId;
 
-	private int applicationDeadLineWeeks;
+   private Integer applicationDeadLineWeeks;
 
-	@Column(nullable=false)
-	private int createdBy;
+   @Column(nullable = false)
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date endDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date endDate;
 
-	private int lcHoldTime;
+   private Integer lcHoldTime;
 
-	private int maxParticipants;
+   private Integer maxParticipants;
 
-	@Column(nullable=false)
-	private int modifiedBy;
+   @Column(nullable = false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable = false)
+   private Timestamp modifiedOn;
 
-	private int numberOfLCToRequestHold;
+   private Integer numberOfLCToRequestHold;
 
-	@Column(length=45)
-	private String programName;
+   @Column(length = 45)
+   private String programName;
 
-	private int splitPlacementPending;
+   private Integer splitPlacementPending;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date startDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date startDate;
 
-	private byte stopAcceptingApps;
+   private byte stopAcceptingApps;
 
-	private byte stopAcceptingAppsHighSchoolVisits;
+   private byte stopAcceptingAppsHighSchoolVisits;
 
-	private byte stopAcceptingAppsHolidayHomestay;
+   private byte stopAcceptingAppsHolidayHomestay;
 
-	private byte stopAcceptingAppsLanguageBuddy;
+   private byte stopAcceptingAppsLanguageBuddy;
 
-	private byte stopAcceptingAppsStandardIHP;
+   private byte stopAcceptingAppsStandardIHP;
 
-	private byte stopAcceptingAppsVolunteerHomestay;
-	
-	private byte stopAcceptingAppsByGender;
+   private byte stopAcceptingAppsVolunteerHomestay;
 
-	//bi-directional many-to-one association to LookupGender
-	@ManyToOne
-	@JoinColumn(name="genderId")
-	private LookupGender lookupGender;
+   private byte stopAcceptingAppsByGender;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
+   // bi-directional many-to-one association to LookupGender
+   @ManyToOne
+   @JoinColumn(name = "genderId")
+   private LookupGender lookupGender;
 
-	//bi-directional many-to-one association to SeasonStatus
-	@ManyToOne
-	@JoinColumn(name="programStatusId")
-	private SeasonStatus seasonStatus;
+   // bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name = "seasonId", nullable = false)
+   private Season season;
 
-	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
-	@OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
+   // bi-directional many-to-one association to SeasonStatus
+   @ManyToOne
+   @JoinColumn(name = "programStatusId")
+   private SeasonStatus seasonStatus;
+
+   // bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
+   @OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
    @Fetch(value = FetchMode.SUBSELECT)
-	private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
+   private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
 
-	public SeasonIHPDetail() {
-	}
+   public SeasonIHPDetail() {
+   }
 
-	public int getSeasonIHPDetailsId() {
-		return this.seasonIHPDetailsId;
-	}
+   public Integer getSeasonIHPDetailsId() {
+      if (this.seasonIHPDetailsId != null)
+         return this.seasonIHPDetailsId;
+      return 0;
+   }
 
-	public void setSeasonIHPDetailsId(int seasonIHPDetailsId) {
-		this.seasonIHPDetailsId = seasonIHPDetailsId;
-	}
+   public void setSeasonIHPDetailsId(Integer seasonIHPDetailsId) {
+      this.seasonIHPDetailsId = seasonIHPDetailsId;
+   }
 
-	public int getApplicationDeadLineWeeks() {
-		return this.applicationDeadLineWeeks;
-	}
+   public Integer getApplicationDeadLineWeeks() {
+      if (this.applicationDeadLineWeeks != null)
+         return this.applicationDeadLineWeeks;
+      return 0;
+   }
 
-	public void setApplicationDeadLineWeeks(int applicationDeadLineWeeks) {
-		this.applicationDeadLineWeeks = applicationDeadLineWeeks;
-	}
+   public void setApplicationDeadLineWeeks(Integer applicationDeadLineWeeks) {
+      this.applicationDeadLineWeeks = applicationDeadLineWeeks;
+   }
 
-	public int getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      if (this.createdBy != null)
+         return this.createdBy;
+      return 0;
+   }
 
-	public void setCreatedBy(int createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Date getEndDate() {
-		return this.endDate;
-	}
+   public Date getEndDate() {
+      return this.endDate;
+   }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+   public void setEndDate(Date endDate) {
+      this.endDate = endDate;
+   }
 
-	public int getLcHoldTime() {
-		return this.lcHoldTime;
-	}
+   public Integer getLcHoldTime() {
+      if (this.lcHoldTime != null)
+         return this.lcHoldTime;
+      return 0;
+   }
 
-	public void setLcHoldTime(int lcHoldTime) {
-		this.lcHoldTime = lcHoldTime;
-	}
+   public void setLcHoldTime(Integer lcHoldTime) {
+      this.lcHoldTime = lcHoldTime;
+   }
 
-	public int getMaxParticipants() {
-		return this.maxParticipants;
-	}
+   public Integer getMaxParticipants() {
+      if (this.maxParticipants != null)
+         return this.maxParticipants;
+      return 0;
+   }
 
-	public void setMaxParticipants(int maxParticipants) {
-		this.maxParticipants = maxParticipants;
-	}
+   public void setMaxParticipants(Integer maxParticipants) {
+      this.maxParticipants = maxParticipants;
+   }
 
-	public int getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      if (this.modifiedBy != null)
+         return this.modifiedBy;
+      return 0;
+   }
 
-	public void setModifiedBy(int modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public int getNumberOfLCToRequestHold() {
-		return this.numberOfLCToRequestHold;
-	}
+   public Integer getNumberOfLCToRequestHold() {
+      if (this.numberOfLCToRequestHold != null)
+         return this.numberOfLCToRequestHold;
+      return 0;
+   }
 
-	public void setNumberOfLCToRequestHold(int numberOfLCToRequestHold) {
-		this.numberOfLCToRequestHold = numberOfLCToRequestHold;
-	}
+   public void setNumberOfLCToRequestHold(Integer numberOfLCToRequestHold) {
+      this.numberOfLCToRequestHold = numberOfLCToRequestHold;
+   }
 
-	public String getProgramName() {
-		return this.programName;
-	}
+   public String getProgramName() {
+      return this.programName;
+   }
 
-	public void setProgramName(String programName) {
-		this.programName = programName;
-	}
+   public void setProgramName(String programName) {
+      this.programName = programName;
+   }
 
-	public int getSplitPlacementPending() {
-		return this.splitPlacementPending;
-	}
+   public Integer getSplitPlacementPending() {
+      if (this.splitPlacementPending != null)
+         return this.splitPlacementPending;
+      return 0;
+   }
 
-	public void setSplitPlacementPending(int splitPlacementPending) {
-		this.splitPlacementPending = splitPlacementPending;
-	}
+   public void setSplitPlacementPending(Integer splitPlacementPending) {
+      this.splitPlacementPending = splitPlacementPending;
+   }
 
-	public Date getStartDate() {
-		return this.startDate;
-	}
+   public Date getStartDate() {
+      return this.startDate;
+   }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+   public void setStartDate(Date startDate) {
+      this.startDate = startDate;
+   }
 
-	public byte getStopAcceptingApps() {
-		return this.stopAcceptingApps;
-	}
+   public byte getStopAcceptingApps() {
+      return this.stopAcceptingApps;
+   }
 
-	public void setStopAcceptingApps(byte stopAcceptingApps) {
-		this.stopAcceptingApps = stopAcceptingApps;
-	}
+   public void setStopAcceptingApps(byte stopAcceptingApps) {
+      this.stopAcceptingApps = stopAcceptingApps;
+   }
 
-	public byte getStopAcceptingAppsHighSchoolVisits() {
-		return this.stopAcceptingAppsHighSchoolVisits;
-	}
+   public byte getStopAcceptingAppsHighSchoolVisits() {
+      return this.stopAcceptingAppsHighSchoolVisits;
+   }
 
-	public void setStopAcceptingAppsHighSchoolVisits(byte stopAcceptingAppsHighSchoolVisits) {
-		this.stopAcceptingAppsHighSchoolVisits = stopAcceptingAppsHighSchoolVisits;
-	}
+   public void setStopAcceptingAppsHighSchoolVisits(byte stopAcceptingAppsHighSchoolVisits) {
+      this.stopAcceptingAppsHighSchoolVisits = stopAcceptingAppsHighSchoolVisits;
+   }
 
-	public byte getStopAcceptingAppsHolidayHomestay() {
-		return this.stopAcceptingAppsHolidayHomestay;
-	}
+   public byte getStopAcceptingAppsHolidayHomestay() {
+      return this.stopAcceptingAppsHolidayHomestay;
+   }
 
-	public void setStopAcceptingAppsHolidayHomestay(byte stopAcceptingAppsHolidayHomestay) {
-		this.stopAcceptingAppsHolidayHomestay = stopAcceptingAppsHolidayHomestay;
-	}
+   public void setStopAcceptingAppsHolidayHomestay(byte stopAcceptingAppsHolidayHomestay) {
+      this.stopAcceptingAppsHolidayHomestay = stopAcceptingAppsHolidayHomestay;
+   }
 
-	public byte getStopAcceptingAppsLanguageBuddy() {
-		return this.stopAcceptingAppsLanguageBuddy;
-	}
+   public byte getStopAcceptingAppsLanguageBuddy() {
+      return this.stopAcceptingAppsLanguageBuddy;
+   }
 
-	public void setStopAcceptingAppsLanguageBuddy(byte stopAcceptingAppsLanguageBuddy) {
-		this.stopAcceptingAppsLanguageBuddy = stopAcceptingAppsLanguageBuddy;
-	}
+   public void setStopAcceptingAppsLanguageBuddy(byte stopAcceptingAppsLanguageBuddy) {
+      this.stopAcceptingAppsLanguageBuddy = stopAcceptingAppsLanguageBuddy;
+   }
 
-	public byte getStopAcceptingAppsStandardIHP() {
-		return this.stopAcceptingAppsStandardIHP;
-	}
+   public byte getStopAcceptingAppsStandardIHP() {
+      return this.stopAcceptingAppsStandardIHP;
+   }
 
-	public void setStopAcceptingAppsStandardIHP(byte stopAcceptingAppsStandardIHP) {
-		this.stopAcceptingAppsStandardIHP = stopAcceptingAppsStandardIHP;
-	}
+   public void setStopAcceptingAppsStandardIHP(byte stopAcceptingAppsStandardIHP) {
+      this.stopAcceptingAppsStandardIHP = stopAcceptingAppsStandardIHP;
+   }
 
-	public byte getStopAcceptingAppsVolunteerHomestay() {
-		return this.stopAcceptingAppsVolunteerHomestay;
-	}
+   public byte getStopAcceptingAppsVolunteerHomestay() {
+      return this.stopAcceptingAppsVolunteerHomestay;
+   }
 
-	public void setStopAcceptingAppsVolunteerHomestay(byte stopAcceptingAppsVolunteerHomestay) {
-		this.stopAcceptingAppsVolunteerHomestay = stopAcceptingAppsVolunteerHomestay;
-	}
+   public void setStopAcceptingAppsVolunteerHomestay(byte stopAcceptingAppsVolunteerHomestay) {
+      this.stopAcceptingAppsVolunteerHomestay = stopAcceptingAppsVolunteerHomestay;
+   }
 
-	public LookupGender getLookupGender() {
-		return this.lookupGender;
-	}
+   public LookupGender getLookupGender() {
+      return this.lookupGender;
+   }
 
-	public void setLookupGender(LookupGender lookupGender) {
-		this.lookupGender = lookupGender;
-	}
+   public void setLookupGender(LookupGender lookupGender) {
+      this.lookupGender = lookupGender;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
-	public SeasonStatus getSeasonStatus() {
-		return this.seasonStatus;
-	}
+   public SeasonStatus getSeasonStatus() {
+      return this.seasonStatus;
+   }
 
-	public void setSeasonStatus(SeasonStatus seasonStatus) {
-		this.seasonStatus = seasonStatus;
-	}
+   public void setSeasonStatus(SeasonStatus seasonStatus) {
+      this.seasonStatus = seasonStatus;
+   }
 
-	public List<SeasonIHPDetailsRegionApplication> getSeasonIhpdetailsRegionApplications() {
-		return this.seasonIhpdetailsRegionApplications;
-	}
+   public List<SeasonIHPDetailsRegionApplication> getSeasonIhpdetailsRegionApplications() {
+      return this.seasonIhpdetailsRegionApplications;
+   }
 
-	public void setSeasonIhpdetailsRegionApplications(List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications) {
-		this.seasonIhpdetailsRegionApplications = seasonIhpdetailsRegionApplications;
-	}
+   public void setSeasonIhpdetailsRegionApplications(List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications) {
+      this.seasonIhpdetailsRegionApplications = seasonIhpdetailsRegionApplications;
+   }
 
-	public SeasonIHPDetailsRegionApplication addSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
-		getSeasonIhpdetailsRegionApplications().add(seasonIhpdetailsRegionApplication);
-		seasonIhpdetailsRegionApplication.setSeasonIhpdetail(this);
+   public SeasonIHPDetailsRegionApplication addSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
+      getSeasonIhpdetailsRegionApplications().add(seasonIhpdetailsRegionApplication);
+      seasonIhpdetailsRegionApplication.setSeasonIhpdetail(this);
 
-		return seasonIhpdetailsRegionApplication;
-	}
+      return seasonIhpdetailsRegionApplication;
+   }
 
-	public SeasonIHPDetailsRegionApplication removeSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
-		getSeasonIhpdetailsRegionApplications().remove(seasonIhpdetailsRegionApplication);
-		seasonIhpdetailsRegionApplication.setSeasonIhpdetail(null);
+   public SeasonIHPDetailsRegionApplication removeSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
+      getSeasonIhpdetailsRegionApplications().remove(seasonIhpdetailsRegionApplication);
+      seasonIhpdetailsRegionApplication.setSeasonIhpdetail(null);
 
-		return seasonIhpdetailsRegionApplication;
-	}
+      return seasonIhpdetailsRegionApplication;
+   }
 
    public byte getStopAcceptingAppsByGender() {
       return stopAcceptingAppsByGender;

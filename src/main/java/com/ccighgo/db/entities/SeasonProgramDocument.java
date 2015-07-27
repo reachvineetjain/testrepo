@@ -1,123 +1,137 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the SeasonProgramDocument database table.
  * 
  */
 @Entity
-@Table(name="SeasonProgramDocument")
-@NamedQuery(name="SeasonProgramDocument.findAll", query="SELECT s FROM SeasonProgramDocument s")
+@Table(name = "SeasonProgramDocument")
+@NamedQuery(name = "SeasonProgramDocument.findAll", query = "SELECT s FROM SeasonProgramDocument s")
 public class SeasonProgramDocument implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int seasonProgramDocumentId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
+   private Integer seasonProgramDocumentId;
 
-	private byte active;
+   private byte active;
 
-	private int createdBy;
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	private int modifiedBy;
+   private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+   private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to DepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
-	private DepartmentProgram departmentProgram;
+   // bi-directional many-to-one association to DepartmentProgram
+   @ManyToOne
+   @JoinColumn(name = "departmentProgramId")
+   private DepartmentProgram departmentProgram;
 
-	//bi-directional many-to-one association to DocumentInformation
-	@ManyToOne
-	@JoinColumn(name="documentInformationId")
-	private DocumentInformation documentInformation;
+   // bi-directional many-to-one association to DocumentInformation
+   @ManyToOne
+   @JoinColumn(name = "documentInformationId")
+   private DocumentInformation documentInformation;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId")
-	private Season season;
+   // bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name = "seasonId")
+   private Season season;
 
-	public SeasonProgramDocument() {
-	}
+   public SeasonProgramDocument() {
+   }
 
-	public int getSeasonProgramDocumentId() {
-		return this.seasonProgramDocumentId;
-	}
+   public Integer getSeasonProgramDocumentId() {
+      if (this.seasonProgramDocumentId != null)
+         return this.seasonProgramDocumentId;
+      return 0;
+   }
 
-	public void setSeasonProgramDocumentId(int seasonProgramDocumentId) {
-		this.seasonProgramDocumentId = seasonProgramDocumentId;
-	}
+   public void setSeasonProgramDocumentId(Integer seasonProgramDocumentId) {
+      this.seasonProgramDocumentId = seasonProgramDocumentId;
+   }
 
-	public byte getActive() {
-		return this.active;
-	}
+   public byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(byte active) {
-		this.active = active;
-	}
+   public void setActive(byte active) {
+      this.active = active;
+   }
 
-	public int getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      if (this.createdBy != null)
+         return this.createdBy;
+      return 0;
+   }
 
-	public void setCreatedBy(int createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public int getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      if (this.modifiedBy != null)
+         return this.modifiedBy;
+      return 0;
+   }
 
-	public void setModifiedBy(int modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public DepartmentProgram getDepartmentProgram() {
-		return this.departmentProgram;
-	}
+   public DepartmentProgram getDepartmentProgram() {
+      return this.departmentProgram;
+   }
 
-	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
-		this.departmentProgram = departmentProgram;
-	}
+   public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+      this.departmentProgram = departmentProgram;
+   }
 
-	public DocumentInformation getDocumentInformation() {
-		return this.documentInformation;
-	}
+   public DocumentInformation getDocumentInformation() {
+      return this.documentInformation;
+   }
 
-	public void setDocumentInformation(DocumentInformation documentInformation) {
-		this.documentInformation = documentInformation;
-	}
+   public void setDocumentInformation(DocumentInformation documentInformation) {
+      this.documentInformation = documentInformation;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
 }

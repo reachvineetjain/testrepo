@@ -1,169 +1,191 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the FieldStaffLeadershipSeason database table.
  * 
  */
 @Entity
-@Table(name="FieldStaffLeadershipSeason")
-@NamedQuery(name="FieldStaffLeadershipSeason.findAll", query="SELECT f FROM FieldStaffLeadershipSeason f")
+@Table(name = "FieldStaffLeadershipSeason")
+@NamedQuery(name = "FieldStaffLeadershipSeason.findAll", query = "SELECT f FROM FieldStaffLeadershipSeason f")
 public class FieldStaffLeadershipSeason implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fieldStaffLeadershipSeasonId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
+   private Integer fieldStaffLeadershipSeasonId;
 
-	@Column(nullable=false)
-	private int createdBy;
+   @Column(nullable = false)
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	private Integer erdId;
+   private Integer erdId;
 
-	private Integer fieldStaffId;
+   private Integer fieldStaffId;
 
-	@Column(nullable=false)
-	private int modifiedBy;
+   @Column(nullable = false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable = false)
+   private Timestamp modifiedOn;
 
-	private Integer rdId;
+   private Integer rdId;
 
-	private Integer rmId;
+   private Integer rmId;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId")
-	private Season season;
+   // bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name = "seasonId")
+   private Season season;
 
-	//bi-directional many-to-one association to FieldStaffType
-	@ManyToOne
-	@JoinColumn(name="fieldStaffTypeId")
-	private FieldStaffType fieldStaffType;
+   // bi-directional many-to-one association to FieldStaffType
+   @ManyToOne
+   @JoinColumn(name = "fieldStaffTypeId")
+   private FieldStaffType fieldStaffType;
 
-	//bi-directional many-to-one association to DepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
-	private DepartmentProgram departmentProgram;
+   // bi-directional many-to-one association to DepartmentProgram
+   @ManyToOne
+   @JoinColumn(name = "departmentProgramId")
+   private DepartmentProgram departmentProgram;
 
-	//bi-directional many-to-one association to SeasonGeographyConfiguration
-	@ManyToOne
-	@JoinColumn(name="seasonGeographyConfigurationId")
-	private SeasonGeographyConfiguration seasonGeographyConfiguration;
+   // bi-directional many-to-one association to SeasonGeographyConfiguration
+   @ManyToOne
+   @JoinColumn(name = "seasonGeographyConfigurationId")
+   private SeasonGeographyConfiguration seasonGeographyConfiguration;
 
-	public FieldStaffLeadershipSeason() {
-	}
+   public FieldStaffLeadershipSeason() {
+   }
 
-	public Integer getFieldStaffLeadershipSeasonId() {
-		return this.fieldStaffLeadershipSeasonId;
-	}
+   public Integer getFieldStaffLeadershipSeasonId() {
+      if (this.fieldStaffLeadershipSeasonId != null)
+         return this.fieldStaffLeadershipSeasonId;
+      return 0;
+   }
 
-	public void setFieldStaffLeadershipSeasonId(Integer fieldStaffLeadershipSeasonId) {
-		this.fieldStaffLeadershipSeasonId = fieldStaffLeadershipSeasonId;
-	}
+   public void setFieldStaffLeadershipSeasonId(Integer fieldStaffLeadershipSeasonId) {
+      this.fieldStaffLeadershipSeasonId = fieldStaffLeadershipSeasonId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      if (this.createdBy != null)
+         return this.createdBy;
+      return 0;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getErdId() {
-		return this.erdId;
-	}
+   public Integer getErdId() {
+      if (this.erdId != null)
+         return this.erdId;
+      return 0;
+   }
 
-	public void setErdId(Integer erdId) {
-		this.erdId = erdId;
-	}
+   public void setErdId(Integer erdId) {
+      this.erdId = erdId;
+   }
 
-	public Integer getFieldStaffId() {
-		return this.fieldStaffId;
-	}
+   public Integer getFieldStaffId() {
+      if (this.fieldStaffId != null)
+         return this.fieldStaffId;
+      return 0;
+   }
 
-	public void setFieldStaffId(Integer fieldStaffId) {
-		this.fieldStaffId = fieldStaffId;
-	}
+   public void setFieldStaffId(Integer fieldStaffId) {
+      this.fieldStaffId = fieldStaffId;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      if (this.modifiedBy != null)
+         return this.modifiedBy;
+      return 0;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Integer getRdId() {
-		return this.rdId;
-	}
+   public Integer getRdId() {
+      if (this.rdId != null)
+         return this.rdId;
+      return 0;
+   }
 
-	public void setRdId(Integer rdId) {
-		this.rdId = rdId;
-	}
+   public void setRdId(Integer rdId) {
+      this.rdId = rdId;
+   }
 
-	public Integer getRmId() {
-		return this.rmId;
-	}
+   public Integer getRmId() {
+      if (this.rmId != null)
+         return this.rmId;
+      return 0;
+   }
 
-	public void setRmId(Integer rmId) {
-		this.rmId = rmId;
-	}
+   public void setRmId(Integer rmId) {
+      this.rmId = rmId;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
-	public FieldStaffType getFieldStaffType() {
-		return this.fieldStaffType;
-	}
+   public FieldStaffType getFieldStaffType() {
+      return this.fieldStaffType;
+   }
 
-	public void setFieldStaffType(FieldStaffType fieldStaffType) {
-		this.fieldStaffType = fieldStaffType;
-	}
+   public void setFieldStaffType(FieldStaffType fieldStaffType) {
+      this.fieldStaffType = fieldStaffType;
+   }
 
-	public DepartmentProgram getDepartmentProgram() {
-		return this.departmentProgram;
-	}
+   public DepartmentProgram getDepartmentProgram() {
+      return this.departmentProgram;
+   }
 
-	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
-		this.departmentProgram = departmentProgram;
-	}
+   public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+      this.departmentProgram = departmentProgram;
+   }
 
-	public SeasonGeographyConfiguration getSeasonGeographyConfiguration() {
-		return this.seasonGeographyConfiguration;
-	}
+   public SeasonGeographyConfiguration getSeasonGeographyConfiguration() {
+      return this.seasonGeographyConfiguration;
+   }
 
-	public void setSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
-		this.seasonGeographyConfiguration = seasonGeographyConfiguration;
-	}
+   public void setSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
+      this.seasonGeographyConfiguration = seasonGeographyConfiguration;
+   }
 
 }

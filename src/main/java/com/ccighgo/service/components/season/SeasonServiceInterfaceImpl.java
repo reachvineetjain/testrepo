@@ -63,7 +63,6 @@ import com.ccighgo.jpa.repositories.SeasonWPConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSpringRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSummerRepository;
 import com.ccighgo.jpa.repositories.SeasonWTWinterRepository;
-import com.ccighgo.service.components.fileutils.FileUtilInterface;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
@@ -181,7 +180,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    DocumentTypeRepository documentTypeRepository;
    @Autowired
    SeasonIHPProgramHelper ihpProgramHelper;
-   @Autowired SeasonIHPDetailRepository seasonIHPDetailRepository;
+   @Autowired
+   SeasonIHPDetailRepository seasonIHPDetailRepository;
 
    SeasonServiceInterfaceImpl() {
    }
@@ -211,24 +211,56 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public SeasonBean createSeason(SeasonBean seasonBean) {
-      try {
+      int seasonId = -1;
+      if(seasonBean.getSeasonName()!=null){
+         Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
+         if(season!=null){
+            LOGGER.error("season with same name already exists");
+         }else{
+            Season seasonEntity = new Season();
+            seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
+            seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
+            seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
+            seasonId= seasonEntity.getSeasonId();
+         }
+      }
+      return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
+      
+      
+      
+     /* try {
          int seasonId = createSeasonLogic(seasonBean);
-         return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
+         if(seasonId==-1){
+            throw new ValidationException(ErrorCode.DUPLICATE_SEASON_NAME, "season with same name already exists, please select different name");
+         }else{
+            return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
+         }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
-      return null;
+      return null;*/
    }
 
    @Transactional
    private int createSeasonLogic(SeasonBean seasonBean) {
-      Season seasonEntity = new Season();
-      seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
-      seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
-      seasonServiceImplUtil.createSeasonHspConfiguration(seasonBean, seasonEntity);
-      seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
-      seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
-      return seasonEntity.getSeasonId();
+      int seasonId = -1;
+      if (seasonBean.getSeasonName() != null) {
+         Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
+         if(season!=null){
+            LOGGER.error("season with same name already exists");
+         }else{
+            Season seasonEntity = new Season();
+            seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
+            seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
+            seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
+            seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
+            seasonId = seasonEntity.getSeasonId();
+         }
+      }
+      return seasonId;
    }
 
    @Override
@@ -282,8 +314,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       Season seasonEntity = new Season();
       seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, true);
       seasonRepository.saveAndFlush(seasonEntity);
-      seasonServiceImplUtil.updateSeasonHspConfiguration(seasonBean, seasonEntity);
+      seasonServiceImplUtil.updateSeasonConfiguration(seasonBean, seasonEntity);
       seasonServiceImplUtil.updateSeasonDepartmentNotes(seasonBean, seasonEntity);
+      seasonServiceImplUtil.updateSeasonDocuments(seasonBean, seasonEntity);
       return seasonEntity.getSeasonId();
    }
 
@@ -511,25 +544,34 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             if (hspAllocations != null) {
                int totalUnGuarant = 0;
                int totalGurant = 0;
+               int augStartGuarnteedParticipants = 0;
+               int augStartUnGuarnteedParticipants = 0;
+               int janStartGuarnteedParticipants = 0;
+               int janStartUnGuarnteedParticipants = 0;
+
                j1hsProgramAllocations = new J1HSProgramAllocations();
                j1hsProgramAllocations.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
                j1hsProgramAllocations.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
                for (SeasonHSPAllocation hspAllocation : hspAllocations) {
                   if (hspAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                      if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                        j1hsProgramAllocations.setAugStartUnGuarnteedParticipants(hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0);
-                        totalUnGuarant += hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0;
-                        j1hsProgramAllocations.setAugStartGuarnteedParticipants(hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0);
-                        totalGurant += hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0;
+                        augStartUnGuarnteedParticipants = hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0;
+                        totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
+                        augStartGuarnteedParticipants = hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0;
+                        totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
                      }
                      if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                        j1hsProgramAllocations.setJanStartUnGuarnteedParticipants(hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0);
-                        totalUnGuarant += hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0;
-                        j1hsProgramAllocations.setJanStartGuarnteedParticipants(hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0);
-                        totalGurant += hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0;
+                        janStartGuarnteedParticipants = hspAllocation.getMaxGuaranteedPax() > 0 ? hspAllocation.getMaxGuaranteedPax() : 0;
+                        janStartUnGuarnteedParticipants = hspAllocation.getMaxUnguaranteedPax() > 0 ? hspAllocation.getMaxUnguaranteedPax() : 0;
+                        totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
+                        totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
                      }
                   }
                }
+               j1hsProgramAllocations.setJanStartGuarnteedParticipants(janStartGuarnteedParticipants);
+               j1hsProgramAllocations.setJanStartUnGuarnteedParticipants(janStartUnGuarnteedParticipants);
+               j1hsProgramAllocations.setAugStartGuarnteedParticipants(augStartGuarnteedParticipants);
+               j1hsProgramAllocations.setAugStartUnGuarnteedParticipants(augStartUnGuarnteedParticipants);
                j1hsProgramAllocations.setAugStartAcceptedParticipants(0);
                j1hsProgramAllocations.setAugStartRemainingParticpants(0);
                j1hsProgramAllocations.setJanStartAcceptedParticipants(0);
@@ -578,7 +620,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                seasonServiceImplUtil.updateJ1HSDocs(seasonHspJ1HSDetails, seasonJ1Detail.getSeason());
             }
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
-            returnObject = seasonHspJ1HSDetails;
+            returnObject = getHSPJ1HSSeasonDetails(String.valueOf(seasonJ1Detail.getSeasonJ1DetailsId()));
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -707,24 +749,30 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       try {
          SeasonF1Detail allF1Detail = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (allF1Detail != null) {
-            List<SeasonWPAllocation> wpAllocations = seasonWPAllocationRepository.findSeasonWPAllocationBySeasonId(allF1Detail.getSeason().getSeasonId());
-            if (wpAllocations != null) {
+            List<SeasonHSPAllocation> hspAllocations = seasonHSPAllocationRepository.findSeasonHSPAllocationBySeasonId(allF1Detail.getSeason().getSeasonId());
+            if (hspAllocations != null) {
                hspf1ProgramAllocations = new HSPF1ProgramAllocations();
                // TODO update other values once participants and partners modules are integrated
                int totalMaxParticipants = 0;
+               int januaryStartMaximumParticipants = 0;
+               int augustStartMaximumParticipants = 0;
                hspf1ProgramAllocations.setSeasonId(allF1Detail.getSeason().getSeasonId());
                hspf1ProgramAllocations.setSeasonProgramId(Integer.parseInt(seasonProgramId));
-               for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
+               for (SeasonHSPAllocation seasonWPAllocation : hspAllocations) {
                   if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                      if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
-                        hspf1ProgramAllocations.setAugustStartMaximumParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                        augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
+                        totalMaxParticipants += augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
+
                      } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
-                        hspf1ProgramAllocations.setJanuaryStartMaximumParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                        augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
+                        totalMaxParticipants += augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
                      }
                   }
                }
+
+               hspf1ProgramAllocations.setAugustStartMaximumParticipants(augustStartMaximumParticipants);
+               hspf1ProgramAllocations.setJanuaryStartMaximumParticipants(januaryStartMaximumParticipants);
                hspf1ProgramAllocations.setAugustStartAcceptedParticipants(0);
                hspf1ProgramAllocations.setAugustStartRemainingParticipants(0);
 
@@ -955,14 +1003,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       HSPF1ProgramAllocations returnObject = null;
       try {
          if (hspf1ProgramAllocations != null && hspf1ProgramAllocations.getSeasonId() > 0 && hspf1ProgramAllocations.getSeasonProgramId() > 0) {
-            List<SeasonWPAllocation> wpAllocations = seasonWPAllocationRepository.findSeasonWPAllocationBySeasonId(hspf1ProgramAllocations.getSeasonId());
-            List<SeasonWPAllocation> updatedList = new ArrayList<SeasonWPAllocation>();
-            for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
-               if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
-                  seasonServiceImplUtil.updateWPProgramAllocation(hspf1ProgramAllocations, updatedList, seasonWPAllocation);
+            List<SeasonHSPAllocation> hspAllocations = seasonHSPAllocationRepository.findSeasonHSPAllocationBySeasonId(hspf1ProgramAllocations.getSeasonId());
+            List<SeasonHSPAllocation> updatedList = new ArrayList<SeasonHSPAllocation>();
+            for (SeasonHSPAllocation seasonHSPAllocation : hspAllocations) {
+               if (seasonHSPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                  seasonServiceImplUtil.updateHSPF1ProgramAllocation(hspf1ProgramAllocations, updatedList, seasonHSPAllocation);
                }
             }
-            seasonWPAllocationRepository.save(updatedList);
+            seasonHSPAllocationRepository.save(updatedList);
             returnObject = getHSPF1ProgramAllocations(String.valueOf(hspf1ProgramAllocations.getSeasonProgramId()));
          }
       } catch (CcighgoException e) {
@@ -1611,6 +1659,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   }
                }
                wpProgramAllocations.setDirectPlcmntAcceptedParticipants(0);
+               wpProgramAllocations.setDirectPlcmntRemainingParticipants(0);
                wpProgramAllocations.setDirectPlcmntCCIReview(0);
                wpProgramAllocations.setDirectPlcmntExpectedParticipants(0);
                wpProgramAllocations.setDirectPlcmntPendingVerification(0);
@@ -1618,17 +1667,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                wpProgramAllocations.setJobFairCCIReview(0);
                wpProgramAllocations.setJobFairExpectedParticipants(0);
                wpProgramAllocations.setJobFairPendingVerification(0);
-               wpProgramAllocations.setJobFairRemainingParticpants(0);
+               wpProgramAllocations.setJobFairRemainingParticipants(0);
                wpProgramAllocations.setSelfPlacedAcceptedParticipants(0);
                wpProgramAllocations.setSelfPlacedCCIReview(0);
                wpProgramAllocations.setSelfPlacedExpectedParticipants(0);
                wpProgramAllocations.setSelfPlacedPendingVerification(0);
-               wpProgramAllocations.setSelfPlacedRemainingParticpants(0);
+               wpProgramAllocations.setSelfPlacedRemainingParticipants(0);
                wpProgramAllocations.setTotalAcceptedParticipants(0);
                wpProgramAllocations.setTotalCCIReview(0);
                wpProgramAllocations.setTotalExpectedParticipants(0);
                wpProgramAllocations.setTotalPendingVerification(0);
-               wpProgramAllocations.setTotalRemainingParticpants(0);
+               wpProgramAllocations.setTotalRemainingParticipants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
             }
          }
@@ -1811,6 +1860,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   }
                }
                wpProgramAllocations.setDirectPlcmntAcceptedParticipants(0);
+               wpProgramAllocations.setDirectPlcmntRemainingParticipants(0);
                wpProgramAllocations.setDirectPlcmntCCIReview(0);
                wpProgramAllocations.setDirectPlcmntExpectedParticipants(0);
                wpProgramAllocations.setDirectPlcmntPendingVerification(0);
@@ -1818,17 +1868,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                wpProgramAllocations.setJobFairCCIReview(0);
                wpProgramAllocations.setJobFairExpectedParticipants(0);
                wpProgramAllocations.setJobFairPendingVerification(0);
-               wpProgramAllocations.setJobFairRemainingParticpants(0);
+               wpProgramAllocations.setJobFairRemainingParticipants(0);
                wpProgramAllocations.setSelfPlacedAcceptedParticipants(0);
                wpProgramAllocations.setSelfPlacedCCIReview(0);
                wpProgramAllocations.setSelfPlacedExpectedParticipants(0);
                wpProgramAllocations.setSelfPlacedPendingVerification(0);
-               wpProgramAllocations.setSelfPlacedRemainingParticpants(0);
+               wpProgramAllocations.setSelfPlacedRemainingParticipants(0);
                wpProgramAllocations.setTotalAcceptedParticipants(0);
                wpProgramAllocations.setTotalCCIReview(0);
                wpProgramAllocations.setTotalExpectedParticipants(0);
                wpProgramAllocations.setTotalPendingVerification(0);
-               wpProgramAllocations.setTotalRemainingParticpants(0);
+               wpProgramAllocations.setTotalRemainingParticipants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
             }
          }
@@ -2011,7 +2061,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   SeasonHSPConfiguration seasonHSPConfiguration = seasonCloningHelper.cloneHSPConfiguration(cloneSeason, clonedHSPSeason);
                   SeasonJ1Detail seasonJ1Detail = seasonCloningHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason);
                   SeasonF1Detail seasonF1Detail = seasonCloningHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason);
-                  SeasonIHPDetail seasonIHPDetail = seasonCloningHelper.cloneHSPIHPProgram(existingSeason, clonedHSPSeason,cloneSeason);
+                  SeasonIHPDetail seasonIHPDetail = seasonCloningHelper.cloneHSPIHPProgram(existingSeason, clonedHSPSeason, cloneSeason);
                   if (seasonHspallocationNewList != null) {
                      seasonHSPAllocationRepository.save(seasonHspallocationNewList);
                   }
@@ -2040,7 +2090,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         seasonProgramDocumentRepository.save(clonedPrgDocs);
                      }
                   }
-                  if(seasonIHPDetail!=null){
+                  if (seasonIHPDetail != null) {
                      seasonIHPDetailRepository.save(seasonIHPDetail);
                      if (existingDocs != null) {
                         clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
@@ -2174,16 +2224,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                   // update header type of department not applicable
                }
             }
-         }
-         else{
-            throw new InvalidServiceConfigurationException("no season found with the id: "+cloneSeason.getSeasonId());
+         } else {
+            throw new InvalidServiceConfigurationException("no season found with the id: " + cloneSeason.getSeasonId());
          }
       } catch (CcighgoServiceException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return returnObject;
    }
-
 
    @Override
    @Transactional
@@ -2234,6 +2282,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             departmentDocument.setModifiedBy(1);
             departmentDocument.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonDepartmentDocumentRepository.saveAndFlush(departmentDocument);
+            returnObject = seasonDepartmentDocument;
          } catch (CcighgoException e) {
             ExceptionUtil.logException(e, LOGGER);
          }

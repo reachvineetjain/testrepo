@@ -20,6 +20,7 @@ import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonIHPDetailsRegionApplication;
 import com.ccighgo.db.entities.SeasonProgramDocument;
 import com.ccighgo.db.entities.SeasonProgramNote;
+import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
@@ -32,8 +33,8 @@ import com.ccighgo.jpa.repositories.SeasonIHPDetailRepository;
 import com.ccighgo.jpa.repositories.SeasonIHPDetailsRegionApplicationRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramNotesRepository;
+import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
-import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPApplicationByGender;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPApplicationByRegion;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDates;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDocuments;
@@ -47,6 +48,7 @@ import com.ccighgo.utils.ExceptionUtil;
 
 /**
  * Helper class for Season High School Programs short term independent home stay program(HSP STP-IHP).
+ * 
  * @see
  * 
  * @author ravi
@@ -75,10 +77,15 @@ public class SeasonIHPProgramHelper {
    DocumentInformationRepository documentInformationRepository;
    @Autowired
    DepartmentProgramRepository departmentProgramRepository;
-   @Autowired GenderRepository genderRepository;
-   @Autowired SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
-   @Autowired IHPRegionsRepository ihpRegionsRepository;
- 
+   @Autowired
+   GenderRepository genderRepository;
+   @Autowired
+   SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
+   @Autowired
+   IHPRegionsRepository ihpRegionsRepository;
+   @Autowired
+   SeasonRepository seasonRepository;
+
    /**
     * @param seasonProgramId
     * @return
@@ -117,7 +124,8 @@ public class SeasonIHPProgramHelper {
             ihpNameAndStatus.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
             ihpNameAndStatus.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
             ihpNameAndStatus.setProgramName(seasonIHPDetail.getProgramName() != null ? seasonIHPDetail.getProgramName() : null);
-            ihpNameAndStatus.setProgramStatus(seasonIHPDetail.getSeasonStatus().getStatus());
+            ihpNameAndStatus.setProgramStatusId(seasonIHPDetail.getSeasonStatus().getSeasonStatusId());
+            ihpNameAndStatus.setProgramStatusValue(seasonIHPDetail.getSeasonStatus().getStatus());
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -164,32 +172,34 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setNoOfLcCanRequestHold(seasonIHPDetail.getNumberOfLCToRequestHold());
             ihpProgramConfiguration.setSplitPlacementInPending(String.valueOf(seasonIHPDetail.getSplitPlacementPending()));
             ihpProgramConfiguration.setStopAcceptingApplications(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
-            ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingAppsStandardIHP()== CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingAppsStandardIHP() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingVolunteerHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingLanguageBuddyApplications(seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
-            ihpProgramConfiguration.setStopAcceptingApplicationByGender(false);//TODO fix after DB fix
-            //set gender
-            if(seasonIHPDetail.getLookupGender()!=null){
-               IHPApplicationByGender applicationByGender = new IHPApplicationByGender();
-               applicationByGender.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
-               applicationByGender.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
-               applicationByGender.setGenderId(seasonIHPDetail.getLookupGender().getGenderId());
-               applicationByGender.setGenderCode(seasonIHPDetail.getLookupGender().getGenderName());
-               ihpProgramConfiguration.setGender(applicationByGender);
+            ihpProgramConfiguration.setStopAcceptingApplicationByGender(seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE ? true : false);
+            // set gender
+            LookupGender gender = seasonIHPDetail.getLookupGender();
+            if (gender != null) {
+               if (gender.getGenderId() == 1 || gender.getGenderId() == 2) {
+                  ihpProgramConfiguration.setGenderId(gender.getGenderId());
+                  ihpProgramConfiguration.setGenderCode(gender.getGenderName());
+               } else {
+                  ihpProgramConfiguration.setGenderId(gender.getGenderId());
+                  ihpProgramConfiguration.setGenderCode(gender.getGenderName());
+               }
             }
-            //set regions
-            if(seasonIHPDetail.getSeasonIhpdetailsRegionApplications()!=null){
-               for(SeasonIHPDetailsRegionApplication regionApplication:seasonIHPDetail.getSeasonIhpdetailsRegionApplications()){
+            // set regions
+            if (seasonIHPDetail.getSeasonIhpdetailsRegionApplications() != null) {
+               for (SeasonIHPDetailsRegionApplication regionApplication : seasonIHPDetail.getSeasonIhpdetailsRegionApplications()) {
                   IHPApplicationByRegion ihpApplicationByRegion = new IHPApplicationByRegion();
                   ihpApplicationByRegion.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
                   ihpApplicationByRegion.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
                   ihpApplicationByRegion.setApplicationRegionId(regionApplication.getRegionIhp().getRegionIHPId());
                   ihpApplicationByRegion.setApplicationRegionName(regionApplication.getRegionIhp().getRegionName());
-                  ihpApplicationByRegion.setAcceptApplicationFlag(regionApplication.getStopAcceptingApps()==CCIConstants.ACTIVE?true:false);
+                  ihpApplicationByRegion.setAcceptApplicationFlag(regionApplication.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
                   ihpProgramConfiguration.getStopAcceptingApplicationByRegion().add(ihpApplicationByRegion);
-               } 
+               }
             }
          }
       } catch (CcighgoException e) {
@@ -205,7 +215,8 @@ public class SeasonIHPProgramHelper {
     */
    private List<IHPDocuments> getIHPDocs(Integer seasonId, Integer seasonProgramId) {
       List<IHPDocuments> ihpDocuments = null;
-      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_STP_IHP_ID);
+      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId,
+            CCIConstants.HSP_STP_IHP_ID);
       if (seasonProgramDocuments != null) {
          ihpDocuments = new ArrayList<IHPDocuments>();
          for (SeasonProgramDocument programDocument : seasonProgramDocuments) {
@@ -240,7 +251,7 @@ public class SeasonIHPProgramHelper {
     */
    private List<IHPNotes> getIHPNotes(Integer seasonId, Integer seasonProgramId) {
       List<IHPNotes> ihpNotes = null;
-      List<SeasonProgramNote> programNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId,CCIConstants.HSP_STP_IHP_ID);
+      List<SeasonProgramNote> programNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_STP_IHP_ID);
       if (programNotes != null) {
          ihpNotes = new ArrayList<IHPNotes>();
          for (SeasonProgramNote prgNote : programNotes) {
@@ -259,32 +270,32 @@ public class SeasonIHPProgramHelper {
       }
       return ihpNotes;
    }
-   
-   public SeasonHspStpIhpDetails updateIHPDetails(SeasonHspStpIhpDetails stpIhpDetails){
+
+   public SeasonHspStpIhpDetails updateIHPDetails(SeasonHspStpIhpDetails stpIhpDetails) {
       SeasonHspStpIhpDetails returnObject = null;
-      try{
+      try {
          SeasonIHPDetail seasonIHPDetail = ihpDetailRepository.findOne(stpIhpDetails.getSeasonProgramId());
-         if(seasonIHPDetail!=null){
-            if(stpIhpDetails.getIhpNameAndStatus()!=null){
+         if (seasonIHPDetail != null) {
+            if (stpIhpDetails.getIhpNameAndStatus() != null) {
                updateIHPNameAndStatus(stpIhpDetails.getIhpNameAndStatus());
             }
-            if(stpIhpDetails.getIhpDates()!=null){
+            if (stpIhpDetails.getIhpDates() != null) {
                updateIHPDates(stpIhpDetails.getIhpDates());
             }
-            if(stpIhpDetails.getIhpProgramConfiguration()!=null){
+            if (stpIhpDetails.getIhpProgramConfiguration() != null) {
                updateIHPProgramConfiguration(stpIhpDetails.getIhpProgramConfiguration());
             }
-            if(stpIhpDetails.getIhpDocuments()!=null){
+            if (stpIhpDetails.getIhpDocuments() != null) {
                updateIHPDocs(stpIhpDetails, seasonIHPDetail.getSeason());
             }
-            if(stpIhpDetails.getIhpNotes()!=null){
+            if (stpIhpDetails.getIhpNotes() != null) {
                updateIHPNotes(stpIhpDetails, seasonIHPDetail.getSeason());
             }
             returnObject = stpIhpDetails;
-         }else{
+         } else {
             throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + stpIhpDetails.getSeasonProgramId() + ". Please contact support.");
          }
-      }catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
       return returnObject;
@@ -305,13 +316,17 @@ public class SeasonIHPProgramHelper {
             if (nameAndStatus.getProgramName() != null) {
                seasonIHPDetail.setProgramName(nameAndStatus.getProgramName());
             }
-            if (nameAndStatus.getProgramStatus() != null) {
-               seasonIHPDetail.setSeasonStatus(seasonStatusRepository.findSeasonStatusByName(nameAndStatus.getProgramStatus()));
+            if (nameAndStatus.getProgramStatusId() > 0) {
+               SeasonStatus seasonStatus = seasonStatusRepository.findOne(nameAndStatus.getProgramStatusId());
+               if (seasonStatus.getStatus().equals(CCIConstants.STATUS_OPEN)) {
+                  seasonIHPDetail.getSeason().setSeasonStatus(seasonStatus);
+                  seasonRepository.saveAndFlush(seasonIHPDetail.getSeason());
+               }
+               seasonIHPDetail.setSeasonStatus(seasonStatus);
             }
             seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
             returnObject = nameAndStatus;
-         }
-         else{
+         } else {
             LOGGER.debug("update nameAndStatus HSP_STP_IHP failed because no season program found for the id: " + nameAndStatus.getSeasonProgramId());
             throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + nameAndStatus.getSeasonProgramId() + ". Please contact support.");
          }
@@ -341,7 +356,7 @@ public class SeasonIHPProgramHelper {
             }
             seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
             returnObject = dates;
-         } else{
+         } else {
             LOGGER.debug("update dates HSP_STP_IHP failed because no season program found for the id: " + dates.getSeasonProgramId());
             throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + dates.getSeasonProgramId() + ". Please contact support.");
          }
@@ -372,17 +387,21 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setStopAcceptingAppsLanguageBuddy(ihpProgramConfiguration.isStopAcceptingLanguageBuddyApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(ihpProgramConfiguration.isStopAcceptingHolidayHomeStayApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(ihpProgramConfiguration.isStopAcceptingHighSchoolApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            //TODO set boolean in DB
-            if(ihpProgramConfiguration.getGender()!=null){
-               seasonIHPDetail.setLookupGender(genderRepository.findOne(ihpProgramConfiguration.getGender().getGenderId()));
+            if (ihpProgramConfiguration.getGenderId() > 0 && (ihpProgramConfiguration.getGenderId() == 1 || ihpProgramConfiguration.getGenderId() == 2)) {
+               LookupGender gender = genderRepository.findOne(ihpProgramConfiguration.getGenderId());
+               seasonIHPDetail.setLookupGender(gender);
+            } else {
+               LookupGender gender = genderRepository.findOne(3);// gender id 3 is undefined
+               seasonIHPDetail.setLookupGender(gender);
             }
-            if(ihpProgramConfiguration.getStopAcceptingApplicationByRegion()!=null){
+            if (ihpProgramConfiguration.getStopAcceptingApplicationByRegion() != null) {
+               List<IHPApplicationByRegion> ihpApplicationByRegions = ihpProgramConfiguration.getStopAcceptingApplicationByRegion();
                List<SeasonIHPDetailsRegionApplication> existingList = seasonIHPDetailsRegionApplicationRepository.findBySeasonIHPId(seasonIHPDetail.getSeasonIHPDetailsId());
                List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications = new ArrayList<SeasonIHPDetailsRegionApplication>();
-               for(IHPApplicationByRegion applicationByRegion:ihpProgramConfiguration.getStopAcceptingApplicationByRegion()){
-                  for(SeasonIHPDetailsRegionApplication application:existingList){
-                     if(applicationByRegion.getApplicationRegionId()==application.getSeasonIHPDetailsRegionApplicationId()){
-                        application.setStopAcceptingApps(applicationByRegion.isAcceptApplicationFlag()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+               for (SeasonIHPDetailsRegionApplication application : existingList) {
+                  for (IHPApplicationByRegion applicationByRegion : ihpApplicationByRegions) {
+                     if (application.getRegionIhp().getRegionIHPId() == applicationByRegion.getApplicationRegionId()) {
+                        application.setStopAcceptingApps(applicationByRegion.isAcceptApplicationFlag() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                         seasonIhpdetailsRegionApplications.add(application);
                      }
                   }
@@ -390,10 +409,11 @@ public class SeasonIHPProgramHelper {
                seasonIHPDetailsRegionApplicationRepository.save(seasonIhpdetailsRegionApplications);
             }
             seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
-            returnObject = ihpProgramConfiguration;
-         }else{
+            returnObject = getIHPConfiguration(seasonIHPDetail.getSeasonIHPDetailsId());
+         } else {
             LOGGER.debug("update ihpProgramConfiguration HSP_STP_IHP failed because no season program found for the id: " + ihpProgramConfiguration.getSeasonProgramId());
-            throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + ihpProgramConfiguration.getSeasonProgramId() + ". Please contact support.");
+            throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + ihpProgramConfiguration.getSeasonProgramId()
+                  + ". Please contact support.");
          }
 
       } catch (CcighgoException e) {

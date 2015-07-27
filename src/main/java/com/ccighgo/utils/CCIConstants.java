@@ -108,13 +108,13 @@ public class CCIConstants {
    public static final String AUGUST_FY_F1 = "Aug-FY";
    public static final String JANUARY_FY_F1 = "Jan-FY";
    public static final String JOB_FAIR_SUMMER = "JF";
-   public static final String SELF_PLACED_SUMMER = "SF";
+   public static final String SELF_PLACED_SUMMER = "SP";
    public static final String DIRECT_PLACEMENT_SUMMER = "DP";
    public static final String JOB_FAIR_SPRING = "JF";
-   public static final String SELF_PLACED_SPRING = "SF";
+   public static final String SELF_PLACED_SPRING = "SP";
    public static final String DIRECT_PLACEMENT_SPRING = "DP";
    public static final String JOB_FAIR_WINTER = "JF";
-   public static final String SELF_PLACED_WINTER = "SF";
+   public static final String SELF_PLACED_WINTER = "SP";
    public static final String DIRECT_PLACEMENT_WINTER = "DP";
    public static final String CAP_INTERNSHIP = "Int-SP";
    public static final String CAP_TRAINEE = "Trn-SP";
@@ -139,6 +139,12 @@ public class CCIConstants {
    public static final String HTTP = "http://";
    public static final String HTTPS = "https://";
    public static final String FTP = "ftp://";
+   
+ //Season statuses
+   public static final String STATUS_OPEN = "Open";
+   public static final String STATUS_CLOSE = "Close";
+   public static final String STATUS_DRAFT = "Draft";
+   public static final String STATUS_ARCHIVED = "Archived";
 
    // background check constants
    // ScreenResponse and Status Response node error codes
@@ -151,5 +157,7 @@ public class CCIConstants {
 
    // Applicant node error codes
    public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_1001 = "[element] is invalid/missing. One or many error message node(s) will be present. See sample error messages below.";
+   
+   public static final Integer UNDEFINED_GENDER = 3;
 
 }
