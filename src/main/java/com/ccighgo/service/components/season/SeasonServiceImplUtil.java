@@ -270,24 +270,26 @@ public class SeasonServiceImplUtil {
 
       if (seasonEntity.getSeasonDepartmentDocuments() != null && !seasonEntity.getSeasonDepartmentDocuments().isEmpty()) {
          for (SeasonDepartmentDocument departmentDocument : seasonEntity.getSeasonDepartmentDocuments()) {
-            SeasonDocument document = new SeasonDocument();
             DocumentInformation dInfo = departmentDocument.getDocumentInformation();
-            if(dInfo!=null){
-               if(dInfo.getDocumentTypeDocumentCategoryProcess()!=null){
-                  if(dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType()!=null){
-                     if(dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName()!=null){
+            if (dInfo != null) {
+               SeasonDocument document = new SeasonDocument();
+               if (dInfo.getDocumentTypeDocumentCategoryProcess() != null) {
+                  if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType() != null) {
+                     if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
                         document.setSeasonId(departmentDocument.getSeason().getSeasonId());
-                        if (seasonEntity.getLookupDepartment() != null){
-                           document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId()); 
+                        if (seasonEntity.getLookupDepartment() != null) {
+                           document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
                         }
                         document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
                         document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+                        document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
+                        Login login = loginRepository.findOne(1);// TODO find user from session
+                        document.setUploadedBy(login.getLoginName());
                      }
                   }
                }
-               
+               seasonBean.getDocuments().add(document);
             }
-            seasonBean.getDocuments().add(document);
          }
       }
    }
@@ -447,6 +449,11 @@ public class SeasonServiceImplUtil {
       if (update) {
          ValidationUtils.validateRequired(seasonBean.getSeasonId() + "");
          seasonEntity.setSeasonId(seasonBean.getSeasonId());
+         SeasonStatus seasonStatus = seasonStatusRepository.findOne(seasonBean.getSeasonStatusId());
+         seasonEntity.setSeasonStatus(seasonStatus);
+      } else {
+         SeasonStatus seasonStatus = seasonStatusRepository.findOne(CCIConstants.DRAFT_STATUS_NO);
+         seasonEntity.setSeasonStatus(seasonStatus);
       }
       ValidationUtils.validateRequired(seasonBean.getDepartmentId() + "");
       LookupDepartment department = departmentRepository.findOne(seasonBean.getDepartmentId());
@@ -455,8 +462,6 @@ public class SeasonServiceImplUtil {
       ValidationUtils.validateRequired(seasonBean.getSeasonName());
       seasonEntity.setSeasonName(seasonBean.getSeasonName());
 
-      SeasonStatus seasonStatus = seasonStatusRepository.findOne(CCIConstants.DRAFT_STATUS_NO);
-      seasonEntity.setSeasonStatus(seasonStatus);
       seasonEntity.setCreatedBy(1);
       seasonEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       seasonEntity.setModifiedBy(1);
@@ -1674,7 +1679,7 @@ public class SeasonServiceImplUtil {
    }
 
    public SeasonWPCAPDetails updateWPCAPDetails(SeasonWPCAPDetails seasonWPCAPDetails) {
-      if(seasonWPCAPDetails.getSeasonProgramId()==0 || seasonWPCAPDetails.getSeasonProgramId()<0){
+      if (seasonWPCAPDetails.getSeasonProgramId() == 0 || seasonWPCAPDetails.getSeasonProgramId() < 0) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided season program id is either zero or less than zero");
       }
       try {
@@ -1699,11 +1704,11 @@ public class SeasonServiceImplUtil {
          // seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonCAPDetail.setModifiedBy(1);
          seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-         if(seasonWPCAPDetails.getNotes()!=null){
+         if (seasonWPCAPDetails.getNotes() != null) {
             updateWPCAPNotes(seasonCAPDetail, seasonWPCAPDetails);
          }
-         if(seasonWPCAPDetails.getDocuments()!=null){
-            updateWPCAPDocuments(seasonWPCAPDetails, seasonCAPDetail.getSeason()); 
+         if (seasonWPCAPDetails.getDocuments() != null) {
+            updateWPCAPDocuments(seasonWPCAPDetails, seasonCAPDetail.getSeason());
          }
          seasonServiceInterface.updateWPCAPAllocationDetails(seasonWPCAPDetails.getProgramAllocations());
          seasonCAPDetailsRepository.saveAndFlush(seasonCAPDetail);
@@ -1719,15 +1724,15 @@ public class SeasonServiceImplUtil {
       List<SeasonProgramDocument> newDocList = null;
       List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(season.getSeasonId(),
             CCIConstants.WP_WT_CAP_ID);
-      if(seasonProgramDocuments!=null){
+      if (seasonProgramDocuments != null) {
          seasonProgramDocumentRepository.delete(seasonProgramDocuments);
       }
-      if(seasonWPCAPDetails.getDocuments()!=null){
+      if (seasonWPCAPDetails.getDocuments() != null) {
          newDocList = new ArrayList<SeasonProgramDocument>();
          for (SeasonWPCAPDocuments capDocuments : seasonWPCAPDetails.getDocuments()) {
-            if(capDocuments.getFileName()==null || capDocuments.getDocName()==null || capDocuments.getDocUrl()==null || capDocuments.getDocType()==null){
+            if (capDocuments.getFileName() == null || capDocuments.getDocName() == null || capDocuments.getDocUrl() == null || capDocuments.getDocType() == null) {
                throw new ValidationException(ErrorCode.INVALID_REQUEST, "upload object missing contians null value for either file name, document name , doc type or url");
-            }else{
+            } else {
                SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
                DocumentInformation documentInformation = new DocumentInformation();
                documentInformation.setFileName(capDocuments.getFileName());
@@ -1750,7 +1755,7 @@ public class SeasonServiceImplUtil {
                newDocList.add(sprgDoc);
             }
          }
-         if(newDocList!=null){
+         if (newDocList != null) {
             seasonProgramDocumentRepository.save(newDocList);
          }
       }
@@ -2728,7 +2733,7 @@ public class SeasonServiceImplUtil {
             doc.setUploadDate(DateUtils.getDateAndTime(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
             doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
             Login login = loginRepository.findOne(1);// TODO find user from session
-            if(login!=null){
+            if (login != null) {
                doc.setUploadedBy(login.getLoginName());
             }
             wpcapDocuments.add(doc);
@@ -2741,7 +2746,7 @@ public class SeasonServiceImplUtil {
       int seasonId = seasonWPcap.getSeason().getSeasonId();
       List<SeasonWPCAPNotes> seasonWPCAPNotes = null;
       List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.WP_WT_CAP_ID);
-      if(seasonProgramNotes!=null){
+      if (seasonProgramNotes != null) {
          seasonWPCAPNotes = new ArrayList<SeasonWPCAPNotes>();
          if (seasonProgramNotes != null && !seasonProgramNotes.isEmpty()) {
             for (SeasonProgramNote seasonProgramNote : seasonProgramNotes) {
@@ -2860,5 +2865,33 @@ public class SeasonServiceImplUtil {
          allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
          updatedList.add(allocation);
       }
+   }
+
+   public void updateSeasonDocuments(SeasonBean seasonBean, Season seasonEntity) {
+      List<SeasonDepartmentDocument> seasonDepartmentDocuments = seasonDepartmentDocumentRepository.findAllDepartmentDocsBySeasonId(seasonEntity.getSeasonId());
+      seasonDepartmentDocumentRepository.delete(seasonDepartmentDocuments);
+      List<SeasonDepartmentDocument> newDocList = new ArrayList<SeasonDepartmentDocument>();
+      for (SeasonDocument hlsDocuments : seasonBean.getDocuments()) {
+         SeasonDepartmentDocument sprgDoc = new SeasonDepartmentDocument();
+         DocumentInformation documentInformation = new DocumentInformation();
+         documentInformation.setFileName(hlsDocuments.getFileName());
+         documentInformation.setDocumentName(hlsDocuments.getDocName());
+         documentInformation.setUrl(hlsDocuments.getDocUrl());
+         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(hlsDocuments.getDocType()));
+         documentInformation.setCreatedBy(1);
+         documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation.setModifiedBy(1);
+         documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+         sprgDoc.setActive(CCIConstants.ACTIVE);
+         sprgDoc.setSeason(seasonEntity);
+         sprgDoc.setDocumentInformation(documentInformation);
+         sprgDoc.setCreatedBy(1);
+         sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprgDoc.setModifiedBy(1);
+         sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         newDocList.add(sprgDoc);
+      }
+      seasonDepartmentDocumentRepository.save(newDocList);
    }
 }

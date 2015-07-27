@@ -1,12 +1,8 @@
 package com.ccighgo.service.components.fileutils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +20,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
-import com.ccighgo.service.components.season.SeasonCloningHelper;
 import com.ccighgo.utils.CCIConstants;
 
 @Component
