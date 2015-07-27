@@ -284,7 +284,9 @@ public class SeasonServiceImplUtil {
                         document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
                         document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
                         Login login = loginRepository.findOne(1);// TODO find user from session
-                        document.setUploadedBy(login.getLoginName());
+                        if(login!=null){
+                           document.setUploadedBy(login.getLoginName());
+                        }
                      }
                   }
                }
@@ -2206,7 +2208,9 @@ public class SeasonServiceImplUtil {
                note.setNoteValue(prgNote.getProgramNote());
                note.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
-               note.setCreatedBy(login.getLoginName());
+               if(login!=null){
+                  note.setCreatedBy(login.getLoginName());
+               }
                j1hsNotes.add(note);
             }
          }
@@ -2323,7 +2327,9 @@ public class SeasonServiceImplUtil {
                }
                notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
-               notes.setCreatedBy(login.getLoginName());
+               if(login!=null){
+                  notes.setCreatedBy(login.getLoginName());
+               }
                ghtNotes.add(notes);
             }
          }
@@ -2380,7 +2386,10 @@ public class SeasonServiceImplUtil {
                }
                notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
+               if(login!=null){
                notes.setCreatedBy(login.getLoginName());
+               }
+               
                wpNotes.add(notes);
             }
          }
@@ -2499,7 +2508,7 @@ public class SeasonServiceImplUtil {
                documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
                Login login = loginRepository.findOne(1);// TODO find user from session
-               if (login.getLoginName() != null) {
+               if (login!=null&&login.getLoginName() != null) {
                   documents.setUploadedBy(login.getLoginName());
                }
                wpDocuments.add(documents);
@@ -2708,7 +2717,9 @@ public class SeasonServiceImplUtil {
             doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
             doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
             Login login = loginRepository.findOne(1);// TODO find user from session
+            if(login!=null){
             doc.setUploadedBy(login.getLoginName());
+            }
             hspF1Documents.add(doc);
          }
       }
