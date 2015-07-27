@@ -620,7 +620,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                seasonServiceImplUtil.updateJ1HSDocs(seasonHspJ1HSDetails, seasonJ1Detail.getSeason());
             }
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
-            returnObject = seasonHspJ1HSDetails;
+            returnObject = getHSPJ1HSSeasonDetails(String.valueOf(seasonJ1Detail.getSeasonJ1DetailsId()));
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
