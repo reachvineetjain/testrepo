@@ -288,7 +288,7 @@ public class SeasonServiceImplUtil {
                      }
                   }
                }
-               seasonBean.getDocuments().add(document);
+                seasonBean.getDocuments().add(document);
             }
          }
       }
