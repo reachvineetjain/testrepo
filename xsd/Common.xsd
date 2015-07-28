@@ -27,7 +27,7 @@
 
    <xsd:complexType name="Status">
       <xsd:sequence>
-         <xsd:element name="code" type="xsd:string" />
+         <xsd:element name="statusCode" type="xsd:string" />
          <xsd:element name="messages" type="common:Message" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>
@@ -35,7 +35,7 @@
    <xsd:complexType name="Message">
       <xsd:sequence>
          <xsd:element name="type" type="xsd:string" />
-         <xsd:element name="serviceCode" type="xsd:int" />
+         <xsd:element name="serviceId" type="xsd:int" />
          <xsd:element name="message" type="xsd:string" />
       </xsd:sequence>
    </xsd:complexType>

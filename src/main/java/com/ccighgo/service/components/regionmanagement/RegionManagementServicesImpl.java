@@ -127,7 +127,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             superRegion.setSuperRegionName(supRegion.getSuperRegionName());
             superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoServiceException e) {

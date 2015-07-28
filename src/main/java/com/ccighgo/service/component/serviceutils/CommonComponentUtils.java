@@ -17,10 +17,10 @@ public class CommonComponentUtils {
    
    public Status getStatus(String code, String type, int serviceCode, String message){
       Status status = new Status();
-      status.setCode(code);
+      status.setStatusCode(code);
       Message msg = new Message();
       msg.setType(type);
-      msg.setServiceCode(serviceCode);
+      msg.setServiceId(serviceCode);
       msg.setMessage(message);
       status.getMessages().add(msg);
       return status;
