@@ -236,7 +236,9 @@ public class SeasonIHPProgramHelper {
                documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
                Login login = loginRepository.findOne(1);// TODO find user from session
-               documents.setUploadedBy(login.getLoginName());
+               if(login!=null){
+                  documents.setUploadedBy(login.getLoginName());
+               }
                ihpDocuments.add(documents);
             }
          }
@@ -263,7 +265,9 @@ public class SeasonIHPProgramHelper {
                note.setNoteValue(prgNote.getProgramNote());
                note.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
-               note.setCreatedBy(login.getLoginName());
+               if(login!=null){
+                  note.setCreatedBy(login.getLoginName());
+               }
                ihpNotes.add(note);
             }
          }

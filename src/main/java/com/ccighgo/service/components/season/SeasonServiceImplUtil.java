@@ -311,10 +311,18 @@ public class SeasonServiceImplUtil {
                               }
                            }
                         }
+                        document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                        document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+                        document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
+                        Login login = loginRepository.findOne(1);// TODO find user from session
+                        if(login!=null){
+                           document.setUploadedBy(login.getLoginName());
+                        }
                      }
                      seasonBean.getDocuments().add(document);
                   }
                }
+                seasonBean.getDocuments().add(document);
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -2644,24 +2652,22 @@ public class SeasonServiceImplUtil {
     */
    public List<J1HSNotes> getJ1Notes(Integer seasonId, Integer seasonProgramId) {
       List<J1HSNotes> j1hsNotes = null;
-      try {
-         List<SeasonProgramNote> j1hsProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
-         if (j1hsProgramNotes != null) {
-            j1hsNotes = new ArrayList<J1HSNotes>();
-            for (SeasonProgramNote prgNote : j1hsProgramNotes) {
-               if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
-                  J1HSNotes note = new J1HSNotes();
-                  note.setSeasonId(prgNote.getSeason().getSeasonId());
-                  note.setSeasonProgramId(seasonProgramId);
-                  note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
-                  note.setNoteValue(prgNote.getProgramNote());
-                  note.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
-                  Login login = loginRepository.findOne(1);// TODO find user from session
-                  if (login != null) {
-                     note.setCreatedBy(login.getLoginName());
-                  }
-                  j1hsNotes.add(note);
+      List<SeasonProgramNote> j1hsProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+      if (j1hsProgramNotes != null) {
+         j1hsNotes = new ArrayList<J1HSNotes>();
+         for (SeasonProgramNote prgNote : j1hsProgramNotes) {
+            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
+               J1HSNotes note = new J1HSNotes();
+               note.setSeasonId(prgNote.getSeason().getSeasonId());
+               note.setSeasonProgramId(seasonProgramId);
+               note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
+               note.setNoteValue(prgNote.getProgramNote());
+               note.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               if(login!=null){
+                  note.setCreatedBy(login.getLoginName());
                }
+               j1hsNotes.add(note);
             }
          }
       } catch (Exception e) {
@@ -2814,6 +2820,12 @@ public class SeasonServiceImplUtil {
                   }
                   ghtNotes.add(notes);
                }
+               notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               if(login!=null){
+                  notes.setCreatedBy(login.getLoginName());
+               }
+               ghtNotes.add(notes);
             }
          }
       } catch (Exception e) {
@@ -2893,6 +2905,13 @@ public class SeasonServiceImplUtil {
 
                   wpNotes.add(notes);
                }
+               notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               if(login!=null){
+               notes.setCreatedBy(login.getLoginName());
+               }
+               
+               wpNotes.add(notes);
             }
          }
       } catch (Exception e) {
@@ -3004,35 +3023,32 @@ public class SeasonServiceImplUtil {
     */
    public List<WPDocuments> getWPDocs(Integer seasonId, Integer seasonProgramId, String programType, Integer departmentProgramId) {
       List<WPDocuments> wpDocuments = null;
-      try {
-         List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
-         if (seasonProgramDocuments != null) {
-            wpDocuments = new ArrayList<WPDocuments>();
-            for (SeasonProgramDocument programDocument : seasonProgramDocuments) {
-               if (programDocument.getDepartmentProgram().getProgramName().equals(programType)) {
-                  WPDocuments documents = new WPDocuments();
-                  documents.setSeasonId(programDocument.getSeason().getSeasonId());
-                  documents.setSeasonProgramId(seasonProgramId);
-                  documents.setDepartmentProgramId(departmentProgramId);
-                  if (programDocument.getDocumentInformation().getDocumentName() != null) {
-                     documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
-                  }
-                  if (programDocument.getDocumentInformation().getFileName() != null) {
-                     documents.setFileName(programDocument.getDocumentInformation().getFileName());
-                  }
-                  if (programDocument.getDocumentInformation() != null) {
-                     documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-                  }
-                  if (programDocument.getDocumentInformation().getUrl() != null) {
-                     documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
-                  }
-                  documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
-                  documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-                  Login login = loginRepository.findOne(1);// TODO find user from session
-                  if (login != null && login.getLoginName() != null) {
-                     documents.setUploadedBy(login.getLoginName());
-                  }
-                  wpDocuments.add(documents);
+      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
+      if (seasonProgramDocuments != null) {
+         wpDocuments = new ArrayList<WPDocuments>();
+         for (SeasonProgramDocument programDocument : seasonProgramDocuments) {
+            if (programDocument.getDepartmentProgram().getProgramName().equals(programType)) {
+               WPDocuments documents = new WPDocuments();
+               documents.setSeasonId(programDocument.getSeason().getSeasonId());
+               documents.setSeasonProgramId(seasonProgramId);
+               documents.setDepartmentProgramId(departmentProgramId);
+               if (programDocument.getDocumentInformation().getDocumentName() != null) {
+                  documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+               }
+               if (programDocument.getDocumentInformation().getFileName() != null) {
+                  documents.setFileName(programDocument.getDocumentInformation().getFileName());
+               }
+               if (programDocument.getDocumentInformation() != null) {
+                  documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+               }
+               if (programDocument.getDocumentInformation().getUrl() != null) {
+                  documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+               }
+               documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
+               documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               if (login!=null&&login.getLoginName() != null) {
+                  documents.setUploadedBy(login.getLoginName());
                }
             }
          }
@@ -3253,28 +3269,25 @@ public class SeasonServiceImplUtil {
 
    public List<HSPF1SeasonHspF1Documents> getHSPF1Documents(SeasonF1Detail allF1Details, int seasonProgramId) {
       List<HSPF1SeasonHspF1Documents> hspF1Documents = null;
-      try {
-         int seasonId = allF1Details.getSeason().getSeasonId();
-         List<SeasonProgramDocument> spDocument = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
-         if (spDocument != null) {
-            hspF1Documents = new ArrayList<HSPF1SeasonHspF1Documents>();
-            for (SeasonProgramDocument seasonProgramDocument : spDocument) {
-               HSPF1SeasonHspF1Documents doc = new HSPF1SeasonHspF1Documents();
-               doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
-               doc.setSeasonProgramId(seasonProgramId);
-               doc.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
-               doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
-               doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
-               doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-               doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
-               doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
-               doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-               Login login = loginRepository.findOne(1);// TODO find user from session
-               if (login != null) {
-                  doc.setUploadedBy(login.getLoginName());
-               }
-               hspF1Documents.add(doc);
+      List<SeasonProgramDocument> spDocument = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
+      if (spDocument != null) {
+         hspF1Documents = new ArrayList<HSPF1SeasonHspF1Documents>();
+         for (SeasonProgramDocument seasonProgramDocument : spDocument) {
+            HSPF1SeasonHspF1Documents doc = new HSPF1SeasonHspF1Documents();
+            doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
+            doc.setSeasonProgramId(seasonProgramId);
+            doc.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+            doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
+            doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
+            doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+            doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
+            doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
+            doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+            Login login = loginRepository.findOne(1);// TODO find user from session
+            if(login!=null){
+            doc.setUploadedBy(login.getLoginName());
             }
+            hspF1Documents.add(doc);
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
