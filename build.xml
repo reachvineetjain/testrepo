@@ -2,18 +2,23 @@
 <project name="ServiceFrontBeans" basedir="." default="all">
 	<property name="java.dir" location="src/main/java" />
 	<property name="xsd.dir" location="xsd" />
-	<target name="all" depends="Excurt,Auth,Countries,States,Departments,Programs,Functions,Roles,UserDepartments,CCIUsers,User,UserSearch,DefaultRolePermissions,SeasonList,Season,DocumentType,SeasonHspStpIhpDetails,Gender,
-		SeasonProgram,SeasonStatus,SeasonHspJ1HSDetails,SeasonHspF1Details,SeasonGHTDetails,SeasonWPDetail,SeasonWPCAPDetails,CloneSeason,SeasonDepartmentDocument,SeasonProgramDocument,SeasonProgramNote,Regions,RegionManagementDetails" />
+	<target name="all" depends="Common,Auth,Countries,Departments,DocumentType,Gender,Programs,Regions,Roles,States,CCIUsers,User,UserSearch,UserDepartments,
+		CloneSeason,Season,SeasonDepartmentDocument,SeasonProgram,SeasonProgramDocument,SeasonProgramNote,SeasonList,SeasonStatus,SeasonGHTDetails,SeasonHspF1Details,
+		SeasonHspJ1HSDetails,SeasonHspStpIhpDetails,SeasonWPCAPDetails,SeasonWPDetail,SeasonDepartmentLog,SeasonProgramLog,InsuranceCountries,InsuranceParticipant,
+		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails" />
 
-	<!-- Excurt bean responsible for http header, response and messages will be used by all request and response objects-->
 
-	<target name="Excurt">
+	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
+
+	<target name="Common">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Excurt.xsd" />
+			<arg value="${xsd.dir}/Common.xsd" />
 		</java>
 	</target>
+
+	<!--*************************************************Authentication****************************************************************-->
 
 	<!-- Auth bean responsible carries user login name and used by shiro interceptor-->
 
@@ -25,6 +30,8 @@
 		</java>
 	</target>
 
+	<!--*************************************************Utilities*************************************************************-->
+
 	<!-- Countries as a part of common utility services, provides a list of countries-->
 
 	<target name="Countries">
@@ -32,6 +39,66 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/Countries.xsd" />
+		</java>
+	</target>
+
+	<!-- Departments as a part of common utility services, provides a list of departments-->
+
+	<target name="Departments">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Departments.xsd" />
+		</java>
+	</target>
+
+	<!-- Document type -->
+
+	<target name="DocumentType">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/DocumentType.xsd" />
+		</java>
+	</target>
+
+	<!-- Gender as a part of utility services, provides list of available genders in the system-->
+
+	<target name="Gender">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Gender.xsd" />
+		</java>
+	</target>
+
+	<!-- Programs as a part of utility services, provides list of department programs-->
+
+	<target name="Programs">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Programs.xsd" />
+		</java>
+	</target>
+
+	<!-- IHP Regions-->
+
+	<target name="Regions">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Regions.xsd" />
+		</java>
+	</target>
+
+	<!-- Roles as a part of utility services, provides list of user roles in the system-->
+
+	<target name="Roles">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Roles.xsd" />
 		</java>
 	</target>
 
@@ -45,58 +112,9 @@
 		</java>
 	</target>
 
-	<!-- Departments -->
+	<!-- *************************************************CCI Staff User Management*************************************************-->
 
-	<target name="Departments">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Departments.xsd" />
-		</java>
-	</target>
-
-	<!-- Programs-->
-
-	<target name="Programs">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Programs.xsd" />
-		</java>
-	</target>
-
-	<!-- Functions-->
-
-	<target name="Functions">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Functions.xsd" />
-		</java>
-	</target>
-
-	<!-- Roles-->
-
-	<target name="Roles">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Roles.xsd" />
-		</java>
-	</target>
-
-
-	<!-- User Departments-->
-
-	<target name="UserDepartments">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/UserDepartments.xsd" />
-		</java>
-	</target>
-
-	<!-- CCI users-->
+	<!-- CCI Staff users-->
 
 	<target name="CCIUsers">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -106,7 +124,7 @@
 		</java>
 	</target>
 
-	<!-- CCI user-->
+	<!-- CCI Staff user-->
 
 	<target name="User">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -116,7 +134,7 @@
 		</java>
 	</target>
 
-	<!-- Search CCI users based on parameters-->
+	<!-- CCI User search-->
 
 	<target name="UserSearch">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -126,35 +144,31 @@
 		</java>
 	</target>
 
-	<!-- Add New Season-->
+	<!-- CCI User Departments-->
 
-	<target name="AddSeason">
+	<target name="UserDepartments">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Season.xsd" />
+			<arg value="${xsd.dir}/UserDepartments.xsd" />
 		</java>
 	</target>
 
+	<!-- *************************************************Seasons*************************************************-->
 
-	<!-- High school programs-->
-	<target name="HSP">
+	<!--******High level season and common season methods******-->
+
+	<!--Clone season object request-->
+
+	<target name="CloneSeason">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/HSP.xsd" />
+			<arg value="${xsd.dir}/CloneSeason.xsd" />
 		</java>
 	</target>
 
-	<!-- Season List Object-->
-
-	<target name="SeasonList">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonsList.xsd" />
-		</java>
-	</target>
+	<!--High level Season-->
 
 	<target name="Season">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -164,104 +178,23 @@
 		</java>
 	</target>
 
-	<!-- Default Role Permissions-->
-	<target name="DefaultRolePermissions">
+	<!-- SeasonDepartmentDocument: High level season document -->
+
+	<target name="SeasonDepartmentDocument">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/DefaultRolePermissions.xsd" />
+			<arg value="${xsd.dir}/SeasonDepartmentDocument.xsd" />
 		</java>
 	</target>
 
-	<!-- Season Program-->
+	<!-- Season Program within season-->
 
 	<target name="SeasonProgram">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/SeasonProgram.xsd" />
-		</java>
-	</target>
-
-	<!--Season Status-->
-
-	<target name="SeasonStatus">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonStatus.xsd" />
-		</java>
-	</target>
-
-	<!-- Season HspJ1 Details Object -->
-	<target name="SeasonHspJ1HSDetails">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonHspJ1HSDetails.xsd" />
-		</java>
-	</target>
-
-	<!-- Season HspF1 Details Object -->
-	<target name="SeasonHspF1Details">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonHspF1Details.xsd" />
-		</java>
-	</target>
-
-	<!-- Season HspF1 Details Object -->
-	<target name="SeasonHspStpIhpDetails">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonHspStpIhpDetails.xsd" />
-		</java>
-	</target>
-
-	<!-- Season GHT Details Object -->
-	<target name="SeasonGHTDetails">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonGHTDetails.xsd" />
-		</java>
-	</target>
-
-	<!-- Season WP CAP -->
-	<target name="SeasonWPCAPDetails">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonWPCAPDetails.xsd" />
-		</java>
-	</target>
-
-	<!-- Season WP spring, summer, winter -->
-	<target name="SeasonWPDetail">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonWPDetail.xsd" />
-		</java>
-	</target>
-
-	<!-- Season Clone highlevel screen -->
-	<target name="CloneSeason">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/CloneSeason.xsd" />
-		</java>
-	</target>
-
-	<!-- High level season document -->
-	<target name="SeasonDepartmentDocument">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/SeasonDepartmentDocument.xsd" />
 		</java>
 	</target>
 
@@ -283,110 +216,188 @@
 		</java>
 	</target>
 
-	<!-- Document type -->
-	<target name="DocumentType">
+	<!-- Season List Object-->
+
+	<target name="SeasonList">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/DocumentType.xsd" />
-		</java>
-	</target>
-	<!-- Insurance Plan -->
-	<target name="InsurancePlan">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/insurance/InsurancePlan.xsd" />
-		</java>
-	</target>
-	<!-- Insurance Participant-->
-	<target name="InsuranceParticipant">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/insurance/InsuranceParticipant.xsd" />
+			<arg value="${xsd.dir}/SeasonsList.xsd" />
 		</java>
 	</target>
 
-	<!-- Insurance States-->
-	<target name="InsuranceStates">
+	<!--Season Status-->
+
+	<target name="SeasonStatus">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/insurance/InsuranceStates.xsd" />
+			<arg value="${xsd.dir}/SeasonStatus.xsd" />
 		</java>
 	</target>
 
-	<!-- Insurance Countries-->
-	<target name="InsuranceCountries">
+	<!--********************Season GHT programs*************************-->
+
+	<!-- Season GHT Details Object -->
+
+	<target name="SeasonGHTDetails">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/insurance/InsuranceCountries.xsd" />
+			<arg value="${xsd.dir}/SeasonGHTDetails.xsd" />
 		</java>
 	</target>
+
+	<!--********************Season HSP programs*************************-->
+
+	<!-- Season HspF1 Details  -->
+
+	<target name="SeasonHspF1Details">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonHspF1Details.xsd" />
+		</java>
+	</target>
+
+	<!-- Season HspJ1 Details  -->
+
+	<target name="SeasonHspJ1HSDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonHspJ1HSDetails.xsd" />
+		</java>
+	</target>
+
+	<!-- Season HspIHP Details  -->
+
+	<target name="SeasonHspStpIhpDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonHspStpIhpDetails.xsd" />
+		</java>
+	</target>
+
+	<!--********************Season W&T programs*************************-->
+
+	<!-- Season WP CAP Details -->
+
+	<target name="SeasonWPCAPDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonWPCAPDetails.xsd" />
+		</java>
+	</target>
+
+	<!-- Season WP Spring, Summer, Winter Details -->
+
+	<target name="SeasonWPDetail">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/SeasonWPDetail.xsd" />
+		</java>
+	</target>
+
+	<!--********************Update logs*************************-->
 
 	<!-- Update Log For SeasonDepartment-->
+
 	<target name="SeasonDepartmentLog">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/updatelog/SeasonDepartmentUpdateLog.xsd" />
+			<arg value="${xsd.dir}/SeasonDepartmentUpdateLog.xsd" />
 		</java>
 	</target>
 
 	<!-- Update log for Season Program-->
+
 	<target name="SeasonProgramLog">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/updatelog/SeasonProgramUpdateLog.xsd" />
+			<arg value="${xsd.dir}/SeasonProgramUpdateLog.xsd" />
 		</java>
 	</target>
 
+	<!-- *************************************************CCI_GH_GO 3rd Party Insurance Integration*************************************************-->
+
+	<!-- Insurance Countries-->
+
+	<target name="InsuranceCountries">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/InsuranceCountries.xsd" />
+		</java>
+	</target>
+
+	<!-- Insurance Participant-->
+
+	<target name="InsuranceParticipant">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/InsuranceParticipant.xsd" />
+		</java>
+	</target>
+
+	<!-- Insurance Plan -->
+
+	<target name="InsurancePlan">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/InsurancePlan.xsd" />
+		</java>
+	</target>
+
+	<!-- Insurance States-->
+
+	<target name="InsuranceStates">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/InsuranceStates.xsd" />
+		</java>
+	</target>
+
+	<!-- *************************************************CCI_GH_GO 3rd Party Background Verification*************************************************-->
+
 	<!-- BACKGROUND CHECK ( SCREEN REQUEST) -->
+
 	<target name="BackgroundCheckScreenRequest">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/backgroundcheck/ScreenRequest.xsd" />
+			<arg value="${xsd.dir}/ScreenRequest.xsd" />
 		</java>
 	</target>
 
 	<!-- BACKGROUND CHECK (SCREEN RESPONSE)-->
+
 	<target name="BackgroundCheckScreenResponse">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/backgroundcheck/ScreenResponse.xsd" />
+			<arg value="${xsd.dir}/ScreenResponse.xsd" />
 		</java>
 	</target>
 
-	<!-- IHP Regions-->
-	<target name="Regions">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/Regions.xsd" />
-		</java>
-	</target>
+	<!-- *************************************************Season Region Management*********************************************************************-->
 
 	<!-- Region Management-->
+
 	<target name="RegionManagementDetails">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/regionmanagement/RegionManagementDetails.xsd" />
+			<arg value="${xsd.dir}/RegionManagementDetails.xsd" />
 		</java>
 	</target>
-	
-	<!-- Gender-->
-	    <target name="Gender">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/utilities/Gender.xsd" />
-	        </java>
-	    </target>
 
 </project>

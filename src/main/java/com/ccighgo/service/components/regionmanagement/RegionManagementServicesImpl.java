@@ -5,9 +5,11 @@ package com.ccighgo.service.components.regionmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,12 @@ import com.ccighgo.jpa.repositories.RegionRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SuperRegionRepository;
+import com.ccighgo.service.components.errormessages.constants.CommonMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
+import com.ccighgo.service.transport.common.response.beans.Header;
+import com.ccighgo.service.transport.common.response.beans.Message;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.common.response.beans.Status;
 import com.ccighgo.service.transport.season.beans.regionmanagementdetails.Region;
 import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionManagementDetails;
 import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionState;
@@ -43,6 +51,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    RegionRepository regionRepository;
    @Autowired
    SeasonRepository seasonRepository;
+   @Autowired
+   Properties ccighgoProperties;
 
    @Override
    @Transactional(readOnly = true)
@@ -105,21 +115,38 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    @Override
    @Transactional(readOnly = true)
    public SuperRegion getSuperRegion(String superRegionId) {
-      SuperRegion superRegion = null;
+      SuperRegion superRegion = new SuperRegion();
       if (superRegionId == null || superRegionId.isEmpty()) {
-         throw new ValidationException(ErrorCode.INVALID_REQUEST, "Request is missing superRegionId");
+         superRegion.getStatus().setCode(CCIConstants.FAILURE);
+         Message msg = new Message();
+         msg.setMessage(ErrorCode.INVALID_REQUEST + "Search cannot be performed: Request is missing superRegionId");
+         superRegion.getStatus().getMessages().add(msg);
+         LOGGER.error("No super region id is specified to find object");
       }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided superRegionId is either zero or less than zero");
+         Status status = new Status();
+         status.setCode(CCIConstants.FAILURE);
+         Message msg = new Message();
+         msg.setMessage(ccighgoProperties.getProperty(CommonMessageConstants.ERROR_CODE) + ErrorCode.INVALID_REQUEST.getValue() + ccighgoProperties.getProperty(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
+         status.getMessages().add(msg);
+         superRegion.setStatus(status);
+         LOGGER.error(ccighgoProperties.getProperty(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
+         return superRegion;
       }
       try {
          com.ccighgo.db.entities.SuperRegion supRegion = superRegionRepository.findOne(Integer.valueOf(superRegionId));
          if (supRegion != null) {
-            superRegion = new SuperRegion();
             superRegion.setSuperRegionId(supRegion.getSuperRegionId());
             superRegion.setSuperRegionName(supRegion.getSuperRegionName());
          }
       } catch (CcighgoServiceException e) {
+         /*
+          * superRegion.getStatus().setCode(CCIConstants.FAILURE); Message msg = new Message();
+          * msg.setMessage(ErrorCode.INVALID_REQUEST + "Search cannot be performed: Request is missing superRegionId");
+          * superRegion.getStatus().getMessages().add(msg);
+          * LOGGER.error("No super region id is specified to find object");
+          */
+
          throw new CcighgoServiceException(ErrorCode.INVALID_REQUEST, "provided season id is either zero or less than zero");
       }
       return superRegion;
@@ -176,18 +203,18 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       if (superRegion == null) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "super region cannot be null");
       }
-      if (superRegion.getSuperRegionId() == 0 || superRegion.getSuperRegionId()<0) {
+      if (superRegion.getSuperRegionId() == 0 || superRegion.getSuperRegionId() < 0) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided season id is either zero or less than zero");
       }
       if (superRegion.getSuperRegionName() == null || superRegion.getSuperRegionName().isEmpty()) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "super region cannot be updated with null or empty name");
       }
-      try{
+      try {
          com.ccighgo.db.entities.SuperRegion supRegion = superRegionRepository.findOne(superRegion.getSuperRegionId());
          supRegion.setSuperRegionName(superRegion.getSuperRegionName());
          supRegion = superRegionRepository.saveAndFlush(supRegion);
          sregion = getSuperRegion(String.valueOf(supRegion.getSuperRegionId()));
-      }catch (CcighgoServiceException e) {
+      } catch (CcighgoServiceException e) {
          throw new CcighgoServiceException(ErrorCode.NOT_ALLOWED_MODIFY, "error updating super region");
       }
       return sregion;
@@ -200,17 +227,17 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided superRegionId is either zero or less than zero");
       }
-      try{
-         seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId),Integer.valueOf(seasonId));
+      try {
+         seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
          message = "deleted successfully";
-      }catch (CcighgoServiceException e) {
+      } catch (CcighgoServiceException e) {
          throw new CcighgoServiceException(ErrorCode.NOT_ALLOWED_MODIFY, "error deleting super region");
       }
       return message;
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public Region getRegion(String regionId) {
       Region region = null;
       if (regionId == null || regionId.isEmpty()) {
@@ -219,14 +246,14 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       if (regionId != null && (Integer.valueOf(regionId) == 0 || Integer.valueOf(regionId) < 0)) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided regionId is either zero or less than zero");
       }
-      try{
+      try {
          com.ccighgo.db.entities.Region regn = regionRepository.findOne(Integer.valueOf(regionId));
-         if(regn!=null){
+         if (regn != null) {
             region = new Region();
             region.setRegionId(regn.getRegionId());
             region.setRegionName(regn.getRegionName());
          }
-      }catch (CcighgoServiceException e) {
+      } catch (CcighgoServiceException e) {
          throw new CcighgoServiceException(ErrorCode.NOT_ALLOWED_MODIFY, "error getting region");
       }
       return region;
