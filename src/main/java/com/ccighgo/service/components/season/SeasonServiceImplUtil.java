@@ -2633,19 +2633,35 @@ public class SeasonServiceImplUtil {
                   documents.setSeasonId(programDocument.getSeason().getSeasonId());
                   documents.setSeasonProgramId(seasonProgramId);
                   documents.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
-                  if (programDocument.getDocumentInformation().getDocumentName() != null) {
-                     documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+                  try {
+                     if (programDocument.getDocumentInformation().getDocumentName() != null) {
+                        documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
-                  if (programDocument.getDocumentInformation().getFileName() != null) {
-                     documents.setFileName(programDocument.getDocumentInformation().getFileName());
+                  try {
+                     if (programDocument.getDocumentInformation().getFileName() != null) {
+                        documents.setFileName(programDocument.getDocumentInformation().getFileName());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                   String docType = null;
-                  if (programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
-                     docType = programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName();
+                  try {
+                     if (programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
+                        docType = programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName();
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                   documents.setDocType(docType);
-                  if (programDocument.getDocumentInformation().getUrl() != null) {
-                     documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+                  try {
+                     if (programDocument.getDocumentInformation().getUrl() != null) {
+                        documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                   documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                   documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
