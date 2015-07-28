@@ -968,6 +968,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             SeasonHSPF1Details updatedSeasonHSPF1Details = seasonServiceImplUtil.updateF1Details(allF1Details, seasonHSPF1Details);
             seasonHSPF1Details = seasonServiceImplUtil.updateF1Details(allF1Details, seasonHSPF1Details);
          }
+
          return seasonHSPF1Details;
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -1641,40 +1642,20 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          }
          SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonWPDetails.getSeasonProgramId()));
          if (seasonWnTSummerDetail != null) {
-            try {
-               if (seasonWPDetails.getWpBasicDetail() != null) {
-                  seasonServiceImplUtil.updateWPSummerBaseDetails(seasonWPDetails.getWpBasicDetail(), seasonWnTSummerDetail);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
+            if (seasonWPDetails.getWpBasicDetail() != null) {
+               seasonServiceImplUtil.updateWPSummerBaseDetails(seasonWPDetails.getWpBasicDetail(), seasonWnTSummerDetail);
             }
-            try {
-               if (seasonWPDetails.getWpSectionOne() != null) {
-                  seasonServiceImplUtil.updateWPSummerSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSummerDetail);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
+            if (seasonWPDetails.getWpSectionOne() != null) {
+               seasonServiceImplUtil.updateWPSummerSection1Details(seasonWPDetails.getWpSectionOne(), seasonWnTSummerDetail);
             }
-            try {
-               if (seasonWPDetails.getWpProgramAllocations() != null) {
-                  updateWPSumAllocationDetails(seasonWPDetails.getWpProgramAllocations());
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
+            if (seasonWPDetails.getWpProgramAllocations() != null) {
+               updateWPSumAllocationDetails(seasonWPDetails.getWpProgramAllocations());
             }
-            try {
-               if (seasonWPDetails.getWpNotes() != null) {
-                  seasonServiceImplUtil.updateWPNotes(seasonWPDetails, seasonWnTSummerDetail.getSeason(), CCIConstants.WP_WT_SUMMER_ID);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
+            if (seasonWPDetails.getWpNotes() != null) {
+               seasonServiceImplUtil.updateWPNotes(seasonWPDetails, seasonWnTSummerDetail.getSeason(), CCIConstants.WP_WT_SUMMER_ID);
             }
-            try {
-               if (seasonWPDetails.getWpDocuments() != null) {
-                  seasonServiceImplUtil.updateWPDocs(seasonWPDetails, seasonWnTSummerDetail.getSeason(), CCIConstants.WP_WT_SUMMER_ID);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
+            if (seasonWPDetails.getWpDocuments() != null) {
+               seasonServiceImplUtil.updateWPDocs(seasonWPDetails, seasonWnTSummerDetail.getSeason(), CCIConstants.WP_WT_SUMMER_ID);
             }
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
             returnObject = seasonWPDetails;
@@ -1862,10 +1843,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Transactional
    public SeasonWPDetails updateWPSpringDetails(SeasonWPDetails seasonWPDetails) {
       SeasonWPDetails returnObject = null;
+      if (seasonWPDetails == null) {
+         return returnObject;
+      }
       try {
-         if (seasonWPDetails == null) {
-            return returnObject;
-         }
          SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(seasonWPDetails.getSeasonProgramId()));
          if (seasonWnTSpringDetail != null) {
             try {

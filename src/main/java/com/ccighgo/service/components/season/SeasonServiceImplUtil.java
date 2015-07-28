@@ -197,83 +197,82 @@ public class SeasonServiceImplUtil {
 
          String startDate = CCIConstants.EMPTY_DATA, endDate = CCIConstants.EMPTY_DATA;
          Integer seasonHspConfId = CCIConstants.EMPTY_INTEGER_FIELD;
-
-         LookupDepartment lookupDepartment = seasonEntity.getLookupDepartment();
-         if (lookupDepartment != null) {
-            try {
-               if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-                  if (seasonEntity.getSeasonHspconfigurations() != null)
-                     for (SeasonHSPConfiguration seasonconf : seasonEntity.getSeasonHspconfigurations()) {
-                        if (seasonconf.getSeason() != null)
-                           if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
-                              startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
-                              endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
-                              seasonHspConfId = seasonconf.getSeasonHSPConfigurationId();
-                           }
-                     }
-                  seasonBean.setStartDate(startDate);
-                  seasonBean.setEndDate(endDate);
-                  seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+         try {
+            LookupDepartment lookupDepartment = seasonEntity.getLookupDepartment();
+            if (lookupDepartment != null) {
+               try {
+                  if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
+                     if (seasonEntity.getSeasonHspconfigurations() != null)
+                        for (SeasonHSPConfiguration seasonconf : seasonEntity.getSeasonHspconfigurations()) {
+                           if (seasonconf.getSeason() != null)
+                              if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
+                                 startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
+                                 endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
+                                 seasonHspConfId = seasonconf.getSeasonHSPConfigurationId();
+                              }
+                        }
+                     seasonBean.setStartDate(startDate);
+                     seasonBean.setEndDate(endDate);
+                     seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+                  }
+               } catch (Exception e) {
+                  ExceptionUtil.logException(e, logger);
                }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, logger);
-            }
-
-            try {
-               if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
-                  if (seasonEntity.getSeasonWpconfigurations() != null)
-                     for (SeasonWPConfiguration seasonconf : seasonEntity.getSeasonWpconfigurations()) {
-                        if (seasonconf.getSeason() != null)
-                           if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
-                              startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
-                              endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
-                              seasonHspConfId = seasonconf.getSeasonWPConfigurationId();
-                           }
-                     }
-                  seasonBean.setStartDate(startDate);
-                  seasonBean.setEndDate(endDate);
-                  seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+               try {
+                  if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
+                     if (seasonEntity.getSeasonWpconfigurations() != null)
+                        for (SeasonWPConfiguration seasonconf : seasonEntity.getSeasonWpconfigurations()) {
+                           if (seasonconf.getSeason() != null)
+                              if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
+                                 startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
+                                 endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
+                                 seasonHspConfId = seasonconf.getSeasonWPConfigurationId();
+                              }
+                        }
+                     seasonBean.setStartDate(startDate);
+                     seasonBean.setEndDate(endDate);
+                     seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+                  }
+               } catch (Exception e) {
+                  ExceptionUtil.logException(e, logger);
                }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, logger);
-            }
-
-            try {
-               if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
-                  if (seasonEntity.getSeasonGhtconfigurations() != null)
-                     for (SeasonGHTConfiguration seasonconf : seasonEntity.getSeasonGhtconfigurations()) {
-                        if (seasonconf.getSeason() != null)
-                           if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
-                              startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
-                              endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
-                              seasonHspConfId = seasonconf.getSeasonGHTConfigurationId();
-                           }
-                     }
-                  seasonBean.setStartDate(startDate);
-                  seasonBean.setEndDate(endDate);
-                  seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+               try {
+                  if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+                     if (seasonEntity.getSeasonGhtconfigurations() != null)
+                        for (SeasonGHTConfiguration seasonconf : seasonEntity.getSeasonGhtconfigurations()) {
+                           if (seasonconf.getSeason() != null)
+                              if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
+                                 startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
+                                 endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
+                                 seasonHspConfId = seasonconf.getSeasonGHTConfigurationId();
+                              }
+                        }
+                     seasonBean.setStartDate(startDate);
+                     seasonBean.setEndDate(endDate);
+                     seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+                  }
+               } catch (Exception e) {
+                  ExceptionUtil.logException(e, logger);
                }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, logger);
-            }
-
-            try {
-               if (lookupDepartment.getDepartmentPrograms() != null) {
-                  for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
-                     if (departmentProgram.getLookupDepartment().getDepartmentId() == seasonEntity.getLookupDepartment().getDepartmentId()
-                           && departmentProgram.getDepartmentProgramOptions() != null) {
-                        for (DepartmentProgramOption departmentProgramOption : departmentProgram.getDepartmentProgramOptions()) {
-                           if (departmentProgramOption.getDepartmentProgram().getDepartmentProgramId() == departmentProgram.getDepartmentProgramId())
-                              seasonBean.getProgramOptions().add(mapProgramOptionEntityToBean2(departmentProgramOption));
+               try {
+                  if (lookupDepartment.getDepartmentPrograms() != null) {
+                     for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
+                        if (departmentProgram.getLookupDepartment().getDepartmentId() == seasonEntity.getLookupDepartment().getDepartmentId()
+                              && departmentProgram.getDepartmentProgramOptions() != null) {
+                           for (DepartmentProgramOption departmentProgramOption : departmentProgram.getDepartmentProgramOptions()) {
+                              if (departmentProgramOption.getDepartmentProgram().getDepartmentProgramId() == departmentProgram.getDepartmentProgramId())
+                                 seasonBean.getProgramOptions().add(mapProgramOptionEntityToBean2(departmentProgramOption));
+                           }
                         }
                      }
                   }
+               } catch (Exception e) {
+                  ExceptionUtil.logException(e, logger);
                }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, logger);
             }
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, logger);
          }
-
          try {
             if (seasonEntity.getSeasonDepartmentNotes() != null && !seasonEntity.getSeasonDepartmentNotes().isEmpty()) {
                for (SeasonDepartmentNote note : seasonEntity.getSeasonDepartmentNotes()) {
@@ -288,7 +287,6 @@ public class SeasonServiceImplUtil {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-
          try {
             if (seasonEntity.getSeasonDepartmentDocuments() != null && !seasonEntity.getSeasonDepartmentDocuments().isEmpty()) {
                for (SeasonDepartmentDocument departmentDocument : seasonEntity.getSeasonDepartmentDocuments()) {
@@ -304,6 +302,9 @@ public class SeasonServiceImplUtil {
                               }
                               document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
                               document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+                              document.setDocName(departmentDocument.getDocumentInformation().getDocumentName());
+                              document.setFileName(departmentDocument.getDocumentInformation().getFileName());
+                              document.setActive(departmentDocument.getActive() == CCIConstants.ACTIVE ? true : false);
                               document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
                               Login login = loginRepository.findOne(1);// TODO find user from session
                               if (login != null) {
@@ -311,18 +312,10 @@ public class SeasonServiceImplUtil {
                               }
                            }
                         }
-                        document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-                        document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
-                        document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
-                        Login login = loginRepository.findOne(1);// TODO find user from session
-                        if(login!=null){
-                           document.setUploadedBy(login.getLoginName());
-                        }
                      }
                      seasonBean.getDocuments().add(document);
                   }
                }
-                seasonBean.getDocuments().add(document);
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -377,147 +370,114 @@ public class SeasonServiceImplUtil {
          seasonBean.setStartDate(startDate);
          seasonBean.setEndDate(endDate);
          seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
-
-         if (seasonEntity.getLookupDepartment() != null) {
-            if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
+         try {
+            if (seasonEntity.getLookupDepartment() != null) {
                try {
-                  if (seasonEntity.getSeasonJ1details() != null && seasonEntity.getSeasonJ1details().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonJ1details().get(0).getSeasonJ1DetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonJ1details().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.HSP_J1_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
+                  if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
+                     if (seasonEntity.getSeasonJ1details() != null && seasonEntity.getSeasonJ1details().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonJ1details().get(0).getSeasonJ1DetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonJ1details().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.HSP_J1_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonF1details() != null && seasonEntity.getSeasonF1details().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonF1details().get(0).getSeasonF1DetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonF1details().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.HSP_F1_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonIhpdetails() != null && seasonEntity.getSeasonIhpdetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonIhpdetails().get(0).getSeasonIHPDetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonIhpdetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.HSP_IHP_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     // TODO implement when STP tables are available
                   }
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
                try {
-                  if (seasonEntity.getSeasonF1details() != null && seasonEntity.getSeasonF1details().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonF1details().get(0).getSeasonF1DetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonF1details().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.HSP_F1_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
+                  if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
+                     if (seasonEntity.getSeasonWnTsummerDetails() != null && seasonEntity.getSeasonWnTsummerDetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTsummerDetails().get(0).getSeasonWnTSummerDetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTsummerDetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.WP_SUMM_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonWnTwinterDetails() != null && seasonEntity.getSeasonWnTwinterDetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTwinterDetails().get(0).getSeasonWnTWinterDetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTwinterDetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.WP_WINT_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonWnTspringDetails() != null && seasonEntity.getSeasonWnTspringDetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTspringDetails().get(0).getSeasonWnTSpringDetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTspringDetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.WP_SPRING_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonCapdetails() != null && seasonEntity.getSeasonCapdetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonCapdetails().get(0).getSeasonCAPDetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonCapdetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.WP_CAP_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
                   }
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
                try {
-                  if (seasonEntity.getSeasonIhpdetails() != null && seasonEntity.getSeasonIhpdetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonIhpdetails().get(0).getSeasonIHPDetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonIhpdetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.HSP_IHP_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               // TODO implement when STP tables are available
-            }
-            if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
-               try {
-                  if (seasonEntity.getSeasonWnTsummerDetails() != null && seasonEntity.getSeasonWnTsummerDetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTsummerDetails().get(0).getSeasonWnTSummerDetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTsummerDetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.WP_SUMM_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (seasonEntity.getSeasonWnTwinterDetails() != null && seasonEntity.getSeasonWnTwinterDetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTwinterDetails().get(0).getSeasonWnTWinterDetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTwinterDetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.WP_WINT_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (seasonEntity.getSeasonWnTspringDetails() != null && seasonEntity.getSeasonWnTspringDetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonWnTspringDetails().get(0).getSeasonWnTSpringDetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonWnTspringDetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.WP_SPRING_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (seasonEntity.getSeasonCapdetails() != null && seasonEntity.getSeasonCapdetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonCapdetails().get(0).getSeasonCAPDetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonCapdetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.WP_CAP_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-            }
-            if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
-               try {
-                  if (seasonEntity.getSeasonHsadetails() != null && seasonEntity.getSeasonHsadetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonHsadetails().get(0).getSeasonHSADetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonHsadetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.GHT_HSA_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (seasonEntity.getSeasonLsdetails() != null && seasonEntity.getSeasonLsdetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonLsdetails().get(0).getSeasonLSDetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonLsdetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.GHT_LS_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (seasonEntity.getSeasonTadetails() != null && seasonEntity.getSeasonTadetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonTadetails().get(0).getSeasonTADetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonTadetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.GHT_TA_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (seasonEntity.getSeasonVadetails() != null && seasonEntity.getSeasonVadetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonVadetails().get(0).getSeasonVADetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonVadetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.GHT_VA_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (seasonEntity.getSeasonWadetails() != null && seasonEntity.getSeasonWadetails().size() > 0) {
-                     ProgramSeason programSeason = new ProgramSeason();
-                     programSeason.setSeasonProgramId(seasonEntity.getSeasonWadetails().get(0).getSeasonWADetailsId());
-                     programSeason.setSeasonProgramName(seasonEntity.getSeasonWadetails().get(0).getProgramName());
-                     programSeason.setSeasonProgramUrl(CCIConstants.GHT_WA_URL);
-                     seasonBean.getSeasonPrograms().add(programSeason);
+                  if (seasonEntity.getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+                     if (seasonEntity.getSeasonHsadetails() != null && seasonEntity.getSeasonHsadetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonHsadetails().get(0).getSeasonHSADetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonHsadetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.GHT_HSA_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonLsdetails() != null && seasonEntity.getSeasonLsdetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonLsdetails().get(0).getSeasonLSDetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonLsdetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.GHT_LS_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonTadetails() != null && seasonEntity.getSeasonTadetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonTadetails().get(0).getSeasonTADetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonTadetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.GHT_TA_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonVadetails() != null && seasonEntity.getSeasonVadetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonVadetails().get(0).getSeasonVADetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonVadetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.GHT_VA_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
+                     if (seasonEntity.getSeasonWadetails() != null && seasonEntity.getSeasonWadetails().size() > 0) {
+                        ProgramSeason programSeason = new ProgramSeason();
+                        programSeason.setSeasonProgramId(seasonEntity.getSeasonWadetails().get(0).getSeasonWADetailsId());
+                        programSeason.setSeasonProgramName(seasonEntity.getSeasonWadetails().get(0).getProgramName());
+                        programSeason.setSeasonProgramUrl(CCIConstants.GHT_WA_URL);
+                        seasonBean.getSeasonPrograms().add(programSeason);
+                     }
                   }
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
             }
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, logger);
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
@@ -550,24 +510,16 @@ public class SeasonServiceImplUtil {
     * @param update
     */
    public void convertSeasonBeanToSeasonEntity(SeasonBean seasonBean, Season seasonEntity, boolean update) {
-      if (update) {
-         try {
+      try {
+         if (update) {
             ValidationUtils.validateRequired(seasonBean.getSeasonId() + "");
             seasonEntity.setSeasonId(seasonBean.getSeasonId());
             SeasonStatus seasonStatus = seasonStatusRepository.findOne(seasonBean.getSeasonStatusId());
             seasonEntity.setSeasonStatus(seasonStatus);
-         } catch (ValidationException e) {
-            ExceptionUtil.logException(e, logger);
-         }
-      } else {
-         try {
+         } else {
             SeasonStatus seasonStatus = seasonStatusRepository.findOne(CCIConstants.DRAFT_STATUS_NO);
             seasonEntity.setSeasonStatus(seasonStatus);
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
          }
-      }
-      try {
          ValidationUtils.validateRequired(seasonBean.getDepartmentId() + "");
          LookupDepartment department = departmentRepository.findOne(seasonBean.getDepartmentId());
          seasonEntity.setLookupDepartment(department);
@@ -580,14 +532,14 @@ public class SeasonServiceImplUtil {
          seasonEntity.setModifiedBy(1);
          seasonEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonEntity.setSeasonFullName(seasonBean.getSeasonName());
-      } catch (ValidationException e) {
+      } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
    }
 
    public void createSeasonConfiguration(SeasonBean seasonBean, Season seasonEntity) {
-      LookupDepartment department = seasonEntity.getLookupDepartment();
       try {
+         LookupDepartment department = seasonEntity.getLookupDepartment();
          if (department.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
             SeasonHSPConfiguration seasonHSPConfiguration = new SeasonHSPConfiguration();
             seasonHSPConfiguration.setSeason(seasonEntity);
@@ -598,12 +550,7 @@ public class SeasonServiceImplUtil {
             seasonHSPConfiguration.setModifiedBy(1);
             seasonHSPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonHSPConfigurationRepsitory.saveAndFlush(seasonHSPConfiguration);
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      try {
-         if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
+         } else if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
             SeasonWPConfiguration seasonWPConfiguration = new SeasonWPConfiguration();
             seasonWPConfiguration.setSeason(seasonEntity);
             seasonWPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
@@ -613,12 +560,7 @@ public class SeasonServiceImplUtil {
             seasonWPConfiguration.setModifiedBy(1);
             seasonWPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonWPConfigurationRepository.saveAndFlush(seasonWPConfiguration);
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      try {
-         if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+         } else if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
             SeasonGHTConfiguration seasonGHTConfiguration = new SeasonGHTConfiguration();
             seasonGHTConfiguration.setSeason(seasonEntity);
             seasonGHTConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
@@ -635,8 +577,8 @@ public class SeasonServiceImplUtil {
    }
 
    public void updateSeasonConfiguration(SeasonBean seasonBean, Season seasonEntity) {
-      LookupDepartment department = seasonEntity.getLookupDepartment();
       try {
+         LookupDepartment department = seasonEntity.getLookupDepartment();
          if (department.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
             SeasonHSPConfiguration seasonHSPConfiguration = seasonHSPConfigurationRepsitory.getSeasonHSPConfigurationBySeasonId(seasonEntity.getSeasonId());
             if (seasonHSPConfiguration == null)
@@ -646,12 +588,7 @@ public class SeasonServiceImplUtil {
             seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
             seasonHSPConfiguration.setSeasonHSPConfigurationId(seasonBean.getSeasonHSPConfigurationId());
             seasonHSPConfigurationRepsitory.saveAndFlush(seasonHSPConfiguration);
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      try {
-         if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
+         } else if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
             SeasonWPConfiguration seasonWPConfiguration = seasonWPConfigurationRepository.getSeasonWPConfigurationBySeasonId(seasonEntity.getSeasonId());
             if (seasonWPConfiguration == null)
                return;
@@ -660,12 +597,7 @@ public class SeasonServiceImplUtil {
             seasonWPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
             seasonWPConfigurationRepository.saveAndFlush(seasonWPConfiguration);
 
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      try {
-         if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+         } else if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
             SeasonGHTConfiguration seasonGHTConfiguration = seasonGHTConfigurationRepository.getSeasonGHTConfigurationBySeasonId(seasonEntity.getSeasonId());
             if (seasonGHTConfiguration == null)
                return;
@@ -717,7 +649,6 @@ public class SeasonServiceImplUtil {
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-
       return hspf1BasicDetails;
    }
 
@@ -818,14 +749,14 @@ public class SeasonServiceImplUtil {
    }
 
    public HSPF1ProgramAllocations getHSPF1ProgramAllocations(SeasonF1Detail allF1Details) {
-      HSPF1ProgramAllocations hspf1ProgramAllocations = new HSPF1ProgramAllocations();
+      HSPF1ProgramAllocations hspf1ProgramAllocations = null;
       try {
+         hspf1ProgramAllocations = new HSPF1ProgramAllocations();
          hspf1ProgramAllocations.setSeasonId(allF1Details.getSeason().getSeasonId());
          hspf1ProgramAllocations.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-
       return hspf1ProgramAllocations;
    }
 
@@ -850,14 +781,10 @@ public class SeasonServiceImplUtil {
    public SeasonHSPF1Details updateF1Details(SeasonF1Detail allF1Details, SeasonHSPF1Details seasonHSPF1Details) {
       try {
          SeasonStatus seasonStatus = seasonStatusRepository.findOne(seasonHSPF1Details.getDetails().getProgramStatusId());
-         try {
-            if (seasonStatus.getStatus().equals(CCIConstants.STATUS_OPEN)) {
-               Season season = allF1Details.getSeason();
-               allF1Details.getSeason().setSeasonStatus(seasonStatus);
-               seasonRepository.saveAndFlush(season);
-            }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
+         if (seasonStatus.getStatus().equals(CCIConstants.STATUS_OPEN)) {
+            Season season = allF1Details.getSeason();
+            allF1Details.getSeason().setSeasonStatus(seasonStatus);
+            seasonRepository.saveAndFlush(season);
          }
          allF1Details.setSeasonStatus(seasonStatusRepository.findOne(seasonHSPF1Details.getDetails().getProgramStatusId()));
          allF1Details.setProgramName(seasonHSPF1Details.getDetails().getProgramName());
@@ -933,7 +860,6 @@ public class SeasonServiceImplUtil {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-
          try {
             if (seasonHSPF1Details.getProgramAllocations() != null)
                seasonServiceInterface.updateF1ProgramAllocation(seasonHSPF1Details.getProgramAllocations());
@@ -1086,7 +1012,6 @@ public class SeasonServiceImplUtil {
       return hspf1FieldSettings;
    }
 
-   // duplicated
    public HSPF1ProgramAllocations updateF1ProgramAllocation(SeasonF1Detail allF1Details, HSPF1ProgramAllocations hspf1ProgramAllocations) {
       try {
          // TODO Not complete
@@ -1139,7 +1064,6 @@ public class SeasonServiceImplUtil {
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-
    }
 
    private void createGHTLanguageSchool(Season seasonEntity, SeasonBean seasonBean) {
@@ -1283,8 +1207,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public J1HSBasicDetail getJ1HSBasicDetail(SeasonJ1Detail seasonJ1Detail) {
-      J1HSBasicDetail j1hsBasicDetail = new J1HSBasicDetail();
+      J1HSBasicDetail j1hsBasicDetail = null;
       try {
+         j1hsBasicDetail = new J1HSBasicDetail();
          j1hsBasicDetail.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
          j1hsBasicDetail.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
          j1hsBasicDetail.setProgramName(seasonJ1Detail.getProgramName());
@@ -1303,8 +1228,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public J1HSJanStart getJ1HSJanStart(SeasonJ1Detail seasonJ1Detail) {
-      J1HSJanStart j1hsJanStart = new J1HSJanStart();
+      J1HSJanStart j1hsJanStart = null;
       try {
+         j1hsJanStart = new J1HSJanStart();
          j1hsJanStart.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
          j1hsJanStart.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
          j1hsJanStart.setJanSecondSemStartDate(DateUtils.getMMddyyDate(seasonJ1Detail.getSecondSemStartDate()));
@@ -1329,8 +1255,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public J1HSAugStart getJ1HSAugStart(SeasonJ1Detail seasonJ1Detail) {
-      J1HSAugStart j1hsAugStart = new J1HSAugStart();
+      J1HSAugStart j1hsAugStart = null;
       try {
+         j1hsAugStart = new J1HSAugStart();
          j1hsAugStart.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
          j1hsAugStart.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
          j1hsAugStart.setAugFirstSemStartDate(DateUtils.getMMddyyDate(seasonJ1Detail.getFirstSemStartDate()));
@@ -1343,6 +1270,7 @@ public class SeasonServiceImplUtil {
          j1hsAugStart.setAugFullYrEndDate(DateUtils.getMMddyyDate(seasonJ1Detail.getAugFullYearEndDate()));
          j1hsAugStart.setAugFulllYrApplDeadlineDate(DateUtils.getMMddyyDate(seasonJ1Detail.getAugFullYearAppDeadlineDate()));
          j1hsAugStart.setShowAugFullYrToNewHF(seasonJ1Detail.getShowAugFullYearToNewHF() == CCIConstants.ACTIVE ? true : false);
+
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
@@ -1354,8 +1282,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public J1HSFieldSettings getJ1HSFieldSettings(SeasonJ1Detail seasonJ1Detail) {
-      J1HSFieldSettings j1hsFieldSettings = new J1HSFieldSettings();
+      J1HSFieldSettings j1hsFieldSettings = null;
       try {
+         j1hsFieldSettings = new J1HSFieldSettings();
          j1hsFieldSettings.setSeasonId(seasonJ1Detail.getSeason().getSeasonId());
          j1hsFieldSettings.setSeasonProgramId(seasonJ1Detail.getSeasonJ1DetailsId());
          j1hsFieldSettings.setShowSeasProgToCurrentHF(seasonJ1Detail.getShowSeasonToCurrentHF() == CCIConstants.ACTIVE ? true : false);
@@ -1463,8 +1392,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public GHTSection1Base getVABasicDetail(SeasonVADetail seasonVADetail) {
+      GHTSection1Base ghtSection1Base = null;
       try {
-         GHTSection1Base ghtSection1Base = new GHTSection1Base();
+         ghtSection1Base = new GHTSection1Base();
          ghtSection1Base.setSeasonId(seasonVADetail.getSeason().getSeasonId());
          ghtSection1Base.setSeasonProgramId(seasonVADetail.getSeasonVADetailsId());
          ghtSection1Base.setProgramName(seasonVADetail.getProgramName());
@@ -1472,11 +1402,10 @@ public class SeasonServiceImplUtil {
             ghtSection1Base.setProgramStatusId(seasonVADetail.getSeasonStatus().getSeasonStatusId());
             ghtSection1Base.setProgramStatusValue(seasonVADetail.getSeasonStatus().getStatus());
          }
-         return ghtSection1Base;
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         return null;
       }
+      return ghtSection1Base;
    }
 
    /**
@@ -1484,17 +1413,17 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public GHTSection2Dates getVADates(SeasonVADetail seasonVADetail) {
+      GHTSection2Dates ghtSection2Dates = null;
       try {
-         GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
+         ghtSection2Dates = new GHTSection2Dates();
          ghtSection2Dates.setSeasonId(seasonVADetail.getSeason().getSeasonId());
          ghtSection2Dates.setSeasonProgramId(seasonVADetail.getSeasonVADetailsId());
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonVADetail.getStartDate()));
          ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonVADetail.getEndDate()));
-         return ghtSection2Dates;
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         return null;
       }
+      return ghtSection2Dates;
    }
 
    /**
@@ -1533,8 +1462,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public GHTSection1Base getWABasicDetail(SeasonWADetail seasonWADetail) {
+      GHTSection1Base ghtSection1Base = null;
       try {
-         GHTSection1Base ghtSection1Base = new GHTSection1Base();
+         ghtSection1Base = new GHTSection1Base();
          ghtSection1Base.setSeasonId(seasonWADetail.getSeason().getSeasonId());
          ghtSection1Base.setSeasonProgramId(seasonWADetail.getSeasonWADetailsId());
          ghtSection1Base.setProgramName(seasonWADetail.getProgramName());
@@ -1542,11 +1472,10 @@ public class SeasonServiceImplUtil {
             ghtSection1Base.setProgramStatusId(seasonWADetail.getSeasonStatus().getSeasonStatusId());
             ghtSection1Base.setProgramStatusValue(seasonWADetail.getSeasonStatus().getStatus());
          }
-         return ghtSection1Base;
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         return null;
       }
+      return ghtSection1Base;
    }
 
    /**
@@ -1554,17 +1483,17 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public GHTSection2Dates getWADates(SeasonWADetail seasonWADetail) {
+      GHTSection2Dates ghtSection2Dates = null;
       try {
-         GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
+         ghtSection2Dates = new GHTSection2Dates();
          ghtSection2Dates.setSeasonId(seasonWADetail.getSeason().getSeasonId());
          ghtSection2Dates.setSeasonProgramId(seasonWADetail.getSeasonWADetailsId());
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonWADetail.getStartDate()));
          ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonWADetail.getEndDate()));
-         return ghtSection2Dates;
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         return null;
       }
+      return ghtSection2Dates;
    }
 
    /**
@@ -1599,8 +1528,9 @@ public class SeasonServiceImplUtil {
    }
 
    public SeasonGHTDetails getGHTHSAbroad(SeasonHSADetail seasonHSADetail) {
+      SeasonGHTDetails seasonGHTDetails = null;
       try {
-         SeasonGHTDetails seasonGHTDetails = new SeasonGHTDetails();
+         seasonGHTDetails = new SeasonGHTDetails();
          int seasonId = seasonHSADetail.getSeason().getSeasonId();
          seasonGHTDetails.setSeasonId(seasonId);
          seasonGHTDetails.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
@@ -1621,12 +1551,10 @@ public class SeasonServiceImplUtil {
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
          seasonGHTDetails.setGhtDates(ghtSection2Dates);
          seasonGHTDetails.getGhtNotes().addAll(getGHTWAProgramNotes(seasonId, seasonHSADetail.getSeasonHSADetailsId()));
-         return seasonGHTDetails;
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         return null;
       }
-
+      return seasonGHTDetails;
    }
 
    public SeasonGHTDetails updateGHTHSAbroad(SeasonGHTDetails seasonGHTDetails) {
@@ -1656,8 +1584,9 @@ public class SeasonServiceImplUtil {
    }
 
    public SeasonGHTDetails getGHTLanguageSchool(SeasonLSDetail seasonLSDetail) {
-      SeasonGHTDetails seasonGHTDetails = new SeasonGHTDetails();
+      SeasonGHTDetails seasonGHTDetails = null;
       try {
+         seasonGHTDetails = new SeasonGHTDetails();
          int seasonId = seasonLSDetail.getSeason().getSeasonId();
          seasonGHTDetails.setSeasonId(seasonId);
          seasonGHTDetails.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
@@ -1678,16 +1607,14 @@ public class SeasonServiceImplUtil {
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonLSDetail.getStartDate()));
          seasonGHTDetails.setGhtDates(ghtSection2Dates);
          seasonGHTDetails.getGhtNotes().addAll(getGHTLSProgramNotes(seasonId, seasonLSDetail.getSeasonLSDetailsId()));
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
-
       return seasonGHTDetails;
    }
 
    public SeasonGHTDetails updateGHTLanguageSchool(SeasonGHTDetails seasonGHTDetails) {
       try {
-
          SeasonLSDetail seasonLSDetail = seasonLSDetailsRepository.findOne(seasonGHTDetails.getSeasonProgramId());
          if (seasonLSDetail == null) {
             return null;
@@ -1713,8 +1640,9 @@ public class SeasonServiceImplUtil {
    }
 
    public SeasonGHTDetails getGHTTeachAbroad(SeasonTADetail seasonTADetail) {
-      SeasonGHTDetails seasonGHTDetails = new SeasonGHTDetails();
+      SeasonGHTDetails seasonGHTDetails = null;
       try {
+         seasonGHTDetails = new SeasonGHTDetails();
          int seasonId = seasonTADetail.getSeason().getSeasonId();
          seasonGHTDetails.setSeasonId(seasonId);
          seasonGHTDetails.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
@@ -1735,10 +1663,9 @@ public class SeasonServiceImplUtil {
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonTADetail.getStartDate()));
          seasonGHTDetails.setGhtDates(ghtSection2Dates);
          seasonGHTDetails.getGhtNotes().addAll(getGHTTAProgramNotes(seasonId, seasonTADetail.getSeasonTADetailsId()));
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
-
       return seasonGHTDetails;
    }
 
@@ -1769,13 +1696,12 @@ public class SeasonServiceImplUtil {
    }
 
    public GHTSection1Base getGHTHSSection1BaseAbroad(String seasonProgramId) {
-      GHTSection1Base ghtSection1Base = null;
       try {
          SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonHSADetail == null) {
             return null;
          }
-         ghtSection1Base = new GHTSection1Base();
+         GHTSection1Base ghtSection1Base = new GHTSection1Base();
          ghtSection1Base.setProgramName(seasonHSADetail.getProgramName());
          if (seasonHSADetail.getSeasonStatus() != null) {
             ghtSection1Base.setProgramStatusId(seasonHSADetail.getSeasonStatus().getSeasonStatusId());
@@ -1783,10 +1709,11 @@ public class SeasonServiceImplUtil {
          }
          ghtSection1Base.setSeasonId(seasonHSADetail.getSeason().getSeasonId());
          ghtSection1Base.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return ghtSection1Base;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return ghtSection1Base;
    }
 
    public GHTSection1Base updateGHTHSSection1BaseAbroad(GHTSection1Base seasonGhtSection1Base) {
@@ -1811,21 +1738,21 @@ public class SeasonServiceImplUtil {
    }
 
    public GHTSection2Dates getGHTHSSection2DatesAbroad(String seasonProgramId) {
-      GHTSection2Dates ghtSection2Dates = null;
       try {
          SeasonHSADetail seasonHSADetail = seasonHSADetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonHSADetail == null) {
             return null;
          }
-         ghtSection2Dates = new GHTSection2Dates();
+         GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
          ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonHSADetail.getEndDate()));
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
          ghtSection2Dates.setSeasonId(seasonHSADetail.getSeason().getSeasonId());
          ghtSection2Dates.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return ghtSection2Dates;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return ghtSection2Dates;
    }
 
    public GHTSection2Dates updateGHTHSSection2DatesAbroad(GHTSection2Dates ghtSection2Dates) {
@@ -1845,13 +1772,12 @@ public class SeasonServiceImplUtil {
    }
 
    public GHTSection1Base getGHTLanguageSchoolSection1(String seasonProgramId) {
-      GHTSection1Base ghtSection1Base = null;
       try {
          SeasonLSDetail seasonLSDetail = seasonLSDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonLSDetail == null) {
             return null;
          }
-         ghtSection1Base = new GHTSection1Base();
+         GHTSection1Base ghtSection1Base = new GHTSection1Base();
          ghtSection1Base.setProgramName(seasonLSDetail.getProgramName());
          if (seasonLSDetail.getSeasonStatus() != null) {
             ghtSection1Base.setProgramStatusId(seasonLSDetail.getSeasonStatus().getSeasonStatusId());
@@ -1859,10 +1785,11 @@ public class SeasonServiceImplUtil {
          }
          ghtSection1Base.setSeasonId(seasonLSDetail.getSeason().getSeasonId());
          ghtSection1Base.setSeasonProgramId(seasonLSDetail.getSeasonLSDetailsId());
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return ghtSection1Base;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return ghtSection1Base;
    }
 
    public GHTSection1Base updateGHTLanguageSchoolSection1(GHTSection1Base seasonGHTSection1Base) {
@@ -1887,21 +1814,21 @@ public class SeasonServiceImplUtil {
    }
 
    public GHTSection2Dates getGHTLanguageSchoolSection2Dates(String seasonProgramId) {
-      GHTSection2Dates ghtSection2Dates = null;
       try {
          SeasonLSDetail seasonLsADetail = seasonLSDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonLsADetail == null) {
             return null;
          }
-         ghtSection2Dates = new GHTSection2Dates();
+         GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
          ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonLsADetail.getEndDate()));
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonLsADetail.getStartDate()));
          ghtSection2Dates.setSeasonId(seasonLsADetail.getSeason().getSeasonId());
          ghtSection2Dates.setSeasonProgramId(seasonLsADetail.getSeasonLSDetailsId());
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return ghtSection2Dates;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return ghtSection2Dates;
    }
 
    public GHTSection2Dates updateGHTLanguageSchoolSection2Dates(GHTSection2Dates ghtSection2Dates) {
@@ -1921,13 +1848,12 @@ public class SeasonServiceImplUtil {
    }
 
    public GHTSection1Base getGHTTeachAbroadSection1(String seasonProgramId) {
-      GHTSection1Base ghtSection1Base = null;
       try {
          SeasonTADetail seasonTADetail = seasonTADetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonTADetail == null) {
             return null;
          }
-         ghtSection1Base = new GHTSection1Base();
+         GHTSection1Base ghtSection1Base = new GHTSection1Base();
          ghtSection1Base.setProgramName(seasonTADetail.getProgramName());
          if (seasonTADetail.getSeasonStatus() != null) {
             ghtSection1Base.setProgramStatusId(seasonTADetail.getSeasonStatus().getSeasonStatusId());
@@ -1935,10 +1861,11 @@ public class SeasonServiceImplUtil {
          }
          ghtSection1Base.setSeasonId(seasonTADetail.getSeason().getSeasonId());
          ghtSection1Base.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return ghtSection1Base;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return ghtSection1Base;
    }
 
    public GHTSection1Base updateGHTTeachAbroadSection1(GHTSection1Base seasonSection1Base) {
@@ -1963,21 +1890,21 @@ public class SeasonServiceImplUtil {
    }
 
    public GHTSection2Dates getGHTTeachAbroadSection2Dates(String seasonProgramId) {
-      GHTSection2Dates ghtSection2Dates = null;
       try {
          SeasonTADetail seasonTADetail = seasonTADetailsRepository.findOne(Integer.parseInt(seasonProgramId));
          if (seasonTADetail == null) {
             return null;
          }
-         ghtSection2Dates = new GHTSection2Dates();
+         GHTSection2Dates ghtSection2Dates = new GHTSection2Dates();
          ghtSection2Dates.setEndDate(DateUtils.getMMddyyDate(seasonTADetail.getEndDate()));
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonTADetail.getStartDate()));
          ghtSection2Dates.setSeasonId(seasonTADetail.getSeason().getSeasonId());
          ghtSection2Dates.setSeasonProgramId(seasonTADetail.getSeasonTADetailsId());
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return ghtSection2Dates;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return ghtSection2Dates;
    }
 
    public GHTSection2Dates updateGHTTeachAbroadSection2Dates(GHTSection2Dates ghtSection2Dates) {
@@ -1997,10 +1924,9 @@ public class SeasonServiceImplUtil {
    }
 
    public SeasonWPCAPDetails getWPCAPDetails(String seasonProgramId) {
-      SeasonWPCAPDetails seasonWPCAPDetails = null;
       try {
          SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
-         seasonWPCAPDetails = new SeasonWPCAPDetails();
+         SeasonWPCAPDetails seasonWPCAPDetails = new SeasonWPCAPDetails();
          WPCAPBasicDetails wpcapBasicDetails = new WPCAPBasicDetails();
          wpcapBasicDetails.setProgramName(seasonWPcap.getProgramName());
          wpcapBasicDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
@@ -2032,52 +1958,57 @@ public class SeasonServiceImplUtil {
          seasonWPCAPDetails.getDocuments().addAll(getWPCAPDocuments(seasonWPcap, Integer.parseInt(seasonProgramId)));
          seasonWPCAPDetails.getNotes().addAll(getWPCAPNotes(seasonWPcap, Integer.parseInt(seasonProgramId)));
          seasonWPCAPDetails.setProgramAllocations(seasonServiceInterface.getWPCAPAllocationDetails(seasonProgramId));
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      return seasonWPCAPDetails;
-   }
-
-   public SeasonWPCAPDetails updateWPCAPDetails(SeasonWPCAPDetails seasonWPCAPDetails) {
-      if (seasonWPCAPDetails.getSeasonProgramId() == 0 || seasonWPCAPDetails.getSeasonProgramId() < 0) {
-         throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided season program id is either zero or less than zero");
-      }
-      try {
-         SeasonCAPDetail seasonCAPDetail = seasonCAPDetailsRepository.findOne(seasonWPCAPDetails.getSeasonProgramId());
-         seasonCAPDetail.setInternAppDeadlineDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getApplicationDeadlineDate()));
-         seasonCAPDetail.setInternEndDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getEndDate()));
-         seasonCAPDetail.setInternStartDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getStartDate()));
-         Season season = seasonRepository.findOne(seasonCAPDetail.getSeason().getSeasonId());
-         seasonCAPDetail.setSeason(season);
-         seasonCAPDetail.setProgramName(seasonWPCAPDetails.getDetails().getProgramName());
-         SeasonStatus seasonStatus = seasonStatusRepository.findOne(seasonWPCAPDetails.getDetails().getProgramStatusId());
-         if (seasonStatus.getStatus().equals(CCIConstants.STATUS_OPEN)) {
-            seasonCAPDetail.getSeason().setSeasonStatus(seasonStatus);
-            seasonRepository.saveAndFlush(seasonCAPDetail.getSeason());
-         }
-         seasonCAPDetail.setSeasonStatus(seasonStatus);
-         seasonCAPDetail.setTraineeAppDeadlineDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getApplicationDeadlineDate()));
-         seasonCAPDetail.setTraineeEndDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getEndDate()));
-         seasonCAPDetail.setTraineeStartDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getStartDate()));
-
-         // seasonCAPDetail.setCreatedBy(1);
-         // seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-         seasonCAPDetail.setModifiedBy(1);
-         seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-         if (seasonWPCAPDetails.getNotes() != null) {
-            updateWPCAPNotes(seasonCAPDetail, seasonWPCAPDetails);
-         }
-         if (seasonWPCAPDetails.getDocuments() != null) {
-            updateWPCAPDocuments(seasonWPCAPDetails, seasonCAPDetail.getSeason());
-         }
-         seasonServiceInterface.updateWPCAPAllocationDetails(seasonWPCAPDetails.getProgramAllocations());
-         seasonCAPDetailsRepository.saveAndFlush(seasonCAPDetail);
+         return seasonWPCAPDetails;
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
          return null;
       }
-      return seasonWPCAPDetails;
+   }
 
+   public SeasonWPCAPDetails updateWPCAPDetails(SeasonWPCAPDetails seasonWPCAPDetails) {
+      try {
+         if (seasonWPCAPDetails.getSeasonProgramId() == 0 || seasonWPCAPDetails.getSeasonProgramId() < 0) {
+            throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided season program id is either zero or less than zero");
+         }
+         try {
+            SeasonCAPDetail seasonCAPDetail = seasonCAPDetailsRepository.findOne(seasonWPCAPDetails.getSeasonProgramId());
+            seasonCAPDetail.setInternAppDeadlineDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getApplicationDeadlineDate()));
+            seasonCAPDetail.setInternEndDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getEndDate()));
+            seasonCAPDetail.setInternStartDate(DateUtils.getDateFromString(seasonWPCAPDetails.getInternshipDetails().getStartDate()));
+            Season season = seasonRepository.findOne(seasonCAPDetail.getSeason().getSeasonId());
+            seasonCAPDetail.setSeason(season);
+            seasonCAPDetail.setProgramName(seasonWPCAPDetails.getDetails().getProgramName());
+            SeasonStatus seasonStatus = seasonStatusRepository.findOne(seasonWPCAPDetails.getDetails().getProgramStatusId());
+            if (seasonStatus.getStatus().equals(CCIConstants.STATUS_OPEN)) {
+               seasonCAPDetail.getSeason().setSeasonStatus(seasonStatus);
+               seasonRepository.saveAndFlush(seasonCAPDetail.getSeason());
+            }
+            seasonCAPDetail.setSeasonStatus(seasonStatus);
+            seasonCAPDetail.setTraineeAppDeadlineDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getApplicationDeadlineDate()));
+            seasonCAPDetail.setTraineeEndDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getEndDate()));
+            seasonCAPDetail.setTraineeStartDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getStartDate()));
+
+            // seasonCAPDetail.setCreatedBy(1);
+            // seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonCAPDetail.setModifiedBy(1);
+            seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            if (seasonWPCAPDetails.getNotes() != null) {
+               updateWPCAPNotes(seasonCAPDetail, seasonWPCAPDetails);
+            }
+            if (seasonWPCAPDetails.getDocuments() != null) {
+               updateWPCAPDocuments(seasonWPCAPDetails, seasonCAPDetail.getSeason());
+            }
+            seasonServiceInterface.updateWPCAPAllocationDetails(seasonWPCAPDetails.getProgramAllocations());
+            seasonCAPDetailsRepository.saveAndFlush(seasonCAPDetail);
+         } catch (Exception ex) {
+            ExceptionUtil.logException(ex, logger);
+            return null;
+         }
+         return seasonWPCAPDetails;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
+      }
    }
 
    private void updateWPCAPDocuments(SeasonWPCAPDetails seasonWPCAPDetails, Season season) {
@@ -2120,16 +2051,15 @@ public class SeasonServiceImplUtil {
                seasonProgramDocumentRepository.save(newDocList);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
    public WPCAPBasicDetails getWPCAPBasicDetails(String seasonProgramId) {
-      WPCAPBasicDetails wpcapBasicDetails = null;
       try {
          SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
-         wpcapBasicDetails = new WPCAPBasicDetails();
+         WPCAPBasicDetails wpcapBasicDetails = new WPCAPBasicDetails();
          wpcapBasicDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
          wpcapBasicDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
          wpcapBasicDetails.setProgramName(seasonWPcap.getProgramName());
@@ -2137,10 +2067,11 @@ public class SeasonServiceImplUtil {
             wpcapBasicDetails.setProgramStatusId(seasonWPcap.getSeasonStatus().getSeasonStatusId());
             wpcapBasicDetails.setProgramStatusValue(seasonWPcap.getSeasonStatus().getStatus());
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpcapBasicDetails;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return wpcapBasicDetails;
    }
 
    public WPCAPBasicDetails updateWPCAPBasicDetails(WPCAPBasicDetails wpcapBasicDetails) {
@@ -2162,20 +2093,20 @@ public class SeasonServiceImplUtil {
    }
 
    public WPCAPInternshipDetails getWPCAPInternshipDetails(String seasonProgramId) {
-      WPCAPInternshipDetails wpcapInternshipDetails = null;
       try {
          SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
-         wpcapInternshipDetails = new WPCAPInternshipDetails();
+         WPCAPInternshipDetails wpcapInternshipDetails = new WPCAPInternshipDetails();
          wpcapInternshipDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
          wpcapInternshipDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
          wpcapInternshipDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getInternAppDeadlineDate()));
          wpcapInternshipDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getInternEndDate()));
          wpcapInternshipDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getInternStartDate()));
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
 
-      return wpcapInternshipDetails;
+         return wpcapInternshipDetails;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
+      }
    }
 
    public WPCAPInternshipDetails updateWPCAPInternshipDetails(WPCAPInternshipDetails wpcapInternshipDetails) {
@@ -2193,19 +2124,19 @@ public class SeasonServiceImplUtil {
    }
 
    public WPCAPTraineeDetails getWPCAPTraineeDetails(String seasonProgramId) {
-      WPCAPTraineeDetails wpcapTraineeDetails = null;
       try {
          SeasonCAPDetail seasonWPcap = seasonCAPDetailsRepository.findOne(Integer.parseInt(seasonProgramId));
-         wpcapTraineeDetails = new WPCAPTraineeDetails();
+         WPCAPTraineeDetails wpcapTraineeDetails = new WPCAPTraineeDetails();
          wpcapTraineeDetails.setSeasonId(seasonWPcap.getSeason().getSeasonId());
          wpcapTraineeDetails.setSeasonProgramId(seasonWPcap.getSeasonCAPDetailsId());
          wpcapTraineeDetails.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeAppDeadlineDate()));
          wpcapTraineeDetails.setEndDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeEndDate()));
          wpcapTraineeDetails.setStartDate(DateUtils.getMMddyyDate(seasonWPcap.getTraineeStartDate()));
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpcapTraineeDetails;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return wpcapTraineeDetails;
    }
 
    public WPCAPTraineeDetails updateWPCAPTraineeDetails(WPCAPTraineeDetails wpcapTraineeDetails) {
@@ -2223,10 +2154,9 @@ public class SeasonServiceImplUtil {
    }
 
    public SeasonWPDetails getWPWinterDetails(String seasonProgramId) {
-      SeasonWPDetails seasonWPDetails = null;
       try {
          SeasonWnTWinterDetail seasonWnTWinterDetail = seasonWinterRepository.findOne(Integer.parseInt(seasonProgramId));
-         seasonWPDetails = new SeasonWPDetails();
+         SeasonWPDetails seasonWPDetails = new SeasonWPDetails();
          seasonWPDetails.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
          seasonWPDetails.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
          seasonWPDetails.setDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
@@ -2256,11 +2186,12 @@ public class SeasonServiceImplUtil {
                      CCIConstants.WP_WT_WINTER_ID));
          seasonWPDetails.setWpProgramAllocations(getWPWinterAllocationDetails(seasonProgramId));
          // program allocations not complete
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
 
-      return seasonWPDetails;
+         return seasonWPDetails;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
+      }
    }
 
    public SeasonWPDetails updateWPWinterDetails(SeasonWPDetails seasonWPDetails) {
@@ -2288,18 +2219,17 @@ public class SeasonServiceImplUtil {
             updateWPDocs(seasonWPDetails, seasonWnTWinterDetail.getSeason(), CCIConstants.WP_WT_WINTER_ID);
          }
          seasonWinterRepository.saveAndFlush(seasonWnTWinterDetail);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return seasonWPDetails;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
-      return seasonWPDetails;
    }
 
    public WPBasicDetail getWPWinterBaseDetails(String seasonProgramId) {
-      WPBasicDetail wpBasicDetail = null;
       try {
          SeasonWnTWinterDetail seasonWnTWinterDetail = seasonWinterRepository.findOne(Integer.parseInt(seasonProgramId));
-         wpBasicDetail = new WPBasicDetail();
+         WPBasicDetail wpBasicDetail = new WPBasicDetail();
          wpBasicDetail.setProgramName(seasonWnTWinterDetail.getProgramName());
          if (seasonWnTWinterDetail.getSeasonStatus() != null) {
             wpBasicDetail.setProgramStatusId(seasonWnTWinterDetail.getSeasonStatus().getSeasonStatusId());
@@ -2307,10 +2237,11 @@ public class SeasonServiceImplUtil {
          }
          wpBasicDetail.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
          wpBasicDetail.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpBasicDetail;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return wpBasicDetail;
    }
 
    public WPBasicDetail updateWPWinterBaseDetails(WPBasicDetail wpBasicDetail) {
@@ -2324,18 +2255,17 @@ public class SeasonServiceImplUtil {
          }
          seasonWnTWinterDetail.setSeasonStatus(seasonStatus);
          seasonWinterRepository.saveAndFlush(seasonWnTWinterDetail);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpBasicDetail;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
-      return wpBasicDetail;
    }
 
    public WPSectionOne getWPWinterSectionOneDetails(String seasonProgramId) {
-      WPSectionOne wpSectionOne = null;
       try {
          SeasonWnTWinterDetail seasonWnTWinterDetail = seasonWinterRepository.findOne(Integer.parseInt(seasonProgramId));
-         wpSectionOne = new WPSectionOne();
+         WPSectionOne wpSectionOne = new WPSectionOne();
          wpSectionOne.setApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonWnTWinterDetail.getApplicationDeadlineDate()));
          wpSectionOne.setEndDate(DateUtils.getMMddyyDate(seasonWnTWinterDetail.getEndDate()));
          wpSectionOne.setIsJobBoardOpen(seasonWnTWinterDetail.getIsJobBoardOpen() != 0);
@@ -2343,10 +2273,11 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
          wpSectionOne.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
          wpSectionOne.setStartDate(DateUtils.getMMddyyDate(seasonWnTWinterDetail.getStartDate()));
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpSectionOne;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return wpSectionOne;
    }
 
    public WPSectionOne updateWPWinterSectionOneDetails(WPSectionOne wpSectionOne) {
@@ -2358,16 +2289,16 @@ public class SeasonServiceImplUtil {
          seasonWnTWinterDetail.setMaxPendingJobApps(Integer.parseInt(wpSectionOne.getMaxPendingJobAppls()));
          seasonWnTWinterDetail.setStartDate(DateUtils.getDateFromString(wpSectionOne.getStartDate()));
          seasonWinterRepository.saveAndFlush(seasonWnTWinterDetail);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpSectionOne;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
-      return wpSectionOne;
    }
 
    public WPProgramAllocations getWPWinterAllocationDetails(String seasonProgramId) {
-      WPProgramAllocations wpProgramAllocations = null;
       try {
+         WPProgramAllocations wpProgramAllocations = null;
          SeasonWnTWinterDetail seasonWnTWinterDetail = seasonWTWinterRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTWinterDetail != null) {
             List<SeasonWPAllocation> wpAllocations = seasonWPAllocationRepository.findSeasonWPAllocationBySeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
@@ -2377,21 +2308,26 @@ public class SeasonServiceImplUtil {
                int totalMaxParticipants = 0;
                wpProgramAllocations.setSeasonId(seasonWnTWinterDetail.getSeason().getSeasonId());
                wpProgramAllocations.setSeasonProgramId(seasonWnTWinterDetail.getSeasonWnTWinterDetailsId());
-               for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
-                  if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_WINTER_ID) {
-                     if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_WINTER)) {
-                        wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
-                     }
-                     if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_WINTER)) {
-                        wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax());
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
-                     }
-                     if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_WINTER)) {
-                        wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax());
-                        totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
+               try {
+                  for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
+                     if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_WINTER_ID) {
+                        if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_WINTER)) {
+                           wpProgramAllocations.setJobFairMaxParticipants(seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0);
+                           totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
+                        }
+                        if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_WINTER)) {
+                           wpProgramAllocations.setSelfPlacedMaxParticipants(seasonWPAllocation.getMaxPax());
+                           totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
+                        }
+                        if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_WINTER)) {
+                           wpProgramAllocations.setDirectPlcmntMaxParticipants(seasonWPAllocation.getMaxPax());
+                           totalMaxParticipants += seasonWPAllocation.getMaxPax() > 0 ? seasonWPAllocation.getMaxPax() : 0;
+                        }
                      }
                   }
+               } catch (Exception ex) {
+                  ExceptionUtil.logException(ex, logger);
+                  return null;
                }
                wpProgramAllocations.setDirectPlcmntAcceptedParticipants(0);
                wpProgramAllocations.setDirectPlcmntRemainingParticipants(0);
@@ -2416,15 +2352,16 @@ public class SeasonServiceImplUtil {
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpProgramAllocations;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return wpProgramAllocations;
    }
 
    public WPProgramAllocations updateWPWinterAllocationDetails(WPProgramAllocations wpProgramAllocations) {
-      WPProgramAllocations returnObject = null;
       try {
+         WPProgramAllocations returnObject = null;
          if (wpProgramAllocations != null && wpProgramAllocations.getSeasonId() > 0 && wpProgramAllocations.getSeasonProgramId() > 0) {
             List<SeasonWPAllocation> wpAllocations = seasonWPAllocationRepository.findSeasonWPAllocationBySeasonId(wpProgramAllocations.getSeasonId());
             List<SeasonWPAllocation> updatedList = new ArrayList<SeasonWPAllocation>();
@@ -2436,10 +2373,11 @@ public class SeasonServiceImplUtil {
             seasonWPAllocationRepository.save(updatedList);
             returnObject = getWPWinterAllocationDetails(String.valueOf(wpProgramAllocations.getSeasonProgramId()));
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return returnObject;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return returnObject;
    }
 
    // WP summer
@@ -2459,8 +2397,8 @@ public class SeasonServiceImplUtil {
             wpBasicDetail.setProgramStatusValue(seasonWnTSummerDetail.getSeasonStatus().getStatus());
          }
          return wpBasicDetail;
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2481,8 +2419,8 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setIsJobBoardOpen(seasonWnTSummerDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
          wpSectionOne.setMaxPendingJobAppls(seasonWnTSummerDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
          return wpSectionOne;
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2500,8 +2438,8 @@ public class SeasonServiceImplUtil {
             seasonRepository.saveAndFlush(seasonWnTSummerDetail.getSeason());
          }
          seasonWnTSummerDetail.setSeasonStatus(seasonStatus);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2517,8 +2455,8 @@ public class SeasonServiceImplUtil {
                .getApplicationDeadlineDate()) : null);
          seasonWnTSummerDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          seasonWnTSummerDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2529,8 +2467,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public WPBasicDetail getWPSpringBaseDetails(SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      WPBasicDetail wpBasicDetail = null;
       try {
-         WPBasicDetail wpBasicDetail = new WPBasicDetail();
+         wpBasicDetail = new WPBasicDetail();
          wpBasicDetail.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
          wpBasicDetail.setSeasonProgramId(seasonWnTSpringDetail.getSeasonWnTSpringDetailsId());
          wpBasicDetail.setProgramName(seasonWnTSpringDetail.getProgramName() != null ? seasonWnTSpringDetail.getProgramName() : null);
@@ -2538,11 +2477,10 @@ public class SeasonServiceImplUtil {
             wpBasicDetail.setProgramStatusId(seasonWnTSpringDetail.getSeasonStatus().getSeasonStatusId());
             wpBasicDetail.setProgramStatusValue(seasonWnTSpringDetail.getSeasonStatus().getStatus());
          }
-         return wpBasicDetail;
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-         return null;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
+      return wpBasicDetail;
    }
 
    /**
@@ -2550,8 +2488,9 @@ public class SeasonServiceImplUtil {
     * @return
     */
    public WPSectionOne getWPSpringSection1Details(SeasonWnTSpringDetail seasonWnTSpringDetail) {
+      WPSectionOne wpSectionOne = null;
       try {
-         WPSectionOne wpSectionOne = new WPSectionOne();
+         wpSectionOne = new WPSectionOne();
          wpSectionOne.setSeasonId(seasonWnTSpringDetail.getSeason().getSeasonId());
          wpSectionOne.setSeasonProgramId(seasonWnTSpringDetail.getSeasonWnTSpringDetailsId());
          wpSectionOne.setStartDate(seasonWnTSpringDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getStartDate()) : null);
@@ -2560,11 +2499,10 @@ public class SeasonServiceImplUtil {
                .getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSpringDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
          wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : null);
-         return wpSectionOne;
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-         return null;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
+      return wpSectionOne;
    }
 
    /**
@@ -2580,8 +2518,8 @@ public class SeasonServiceImplUtil {
             seasonRepository.saveAndFlush(seasonWnTSpringDetail.getSeason());
          }
          seasonWnTSpringDetail.setSeasonStatus(seasonStatus);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2597,8 +2535,8 @@ public class SeasonServiceImplUtil {
                .getApplicationDeadlineDate()) : null);
          seasonWnTSpringDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          seasonWnTSpringDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2617,8 +2555,8 @@ public class SeasonServiceImplUtil {
                seasonDepartmentNotesRepository.saveAndFlush(seasonDepartmentNote);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2638,8 +2576,8 @@ public class SeasonServiceImplUtil {
             currentNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonDepartmentNotesRepository.saveAndFlush(currentNote);
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2652,26 +2590,28 @@ public class SeasonServiceImplUtil {
     */
    public List<J1HSNotes> getJ1Notes(Integer seasonId, Integer seasonProgramId) {
       List<J1HSNotes> j1hsNotes = null;
-      List<SeasonProgramNote> j1hsProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
-      if (j1hsProgramNotes != null) {
-         j1hsNotes = new ArrayList<J1HSNotes>();
-         for (SeasonProgramNote prgNote : j1hsProgramNotes) {
-            if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
-               J1HSNotes note = new J1HSNotes();
-               note.setSeasonId(prgNote.getSeason().getSeasonId());
-               note.setSeasonProgramId(seasonProgramId);
-               note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
-               note.setNoteValue(prgNote.getProgramNote());
-               note.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
-               Login login = loginRepository.findOne(1);// TODO find user from session
-               if(login!=null){
-                  note.setCreatedBy(login.getLoginName());
+      try {
+         List<SeasonProgramNote> j1hsProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonId(seasonId);
+         if (j1hsProgramNotes != null) {
+            j1hsNotes = new ArrayList<J1HSNotes>();
+            for (SeasonProgramNote prgNote : j1hsProgramNotes) {
+               if (prgNote.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
+                  J1HSNotes note = new J1HSNotes();
+                  note.setSeasonId(prgNote.getSeason().getSeasonId());
+                  note.setSeasonProgramId(seasonProgramId);
+                  note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
+                  note.setNoteValue(prgNote.getProgramNote());
+                  note.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
+                  Login login = loginRepository.findOne(1);// TODO find user from session
+                  if (login != null) {
+                     note.setCreatedBy(login.getLoginName());
+                  }
+                  j1hsNotes.add(note);
                }
-               j1hsNotes.add(note);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
       return j1hsNotes;
    }
@@ -2717,8 +2657,8 @@ public class SeasonServiceImplUtil {
                }
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
       return j1hsDocuments;
    }
@@ -2731,8 +2671,8 @@ public class SeasonServiceImplUtil {
    public List<GHTSection3Notes> getGHTHSAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_HS_ABRD, CCIConstants.GHT_HS_ABRD_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2745,8 +2685,8 @@ public class SeasonServiceImplUtil {
    public List<GHTSection3Notes> getGHTLSProgramNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_LANG_SCL, CCIConstants.GHT_LANG_SCL_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2759,8 +2699,8 @@ public class SeasonServiceImplUtil {
    public List<GHTSection3Notes> getGHTTAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_TEACH_ABRD, CCIConstants.GHT_TEACH_ABRD_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2773,8 +2713,8 @@ public class SeasonServiceImplUtil {
    public List<GHTSection3Notes> getGHTVAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_VOL_ABRD, CCIConstants.GHT_VOL_ABRD_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2787,8 +2727,8 @@ public class SeasonServiceImplUtil {
    public List<GHTSection3Notes> getGHTWAProgramNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getGHTNotes(seasonId, seasonProgramId, CCIConstants.GHT_WRK_ABRD, CCIConstants.GHT_WRK_ABRD_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2820,16 +2760,10 @@ public class SeasonServiceImplUtil {
                   }
                   ghtNotes.add(notes);
                }
-               notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
-               Login login = loginRepository.findOne(1);// TODO find user from session
-               if(login!=null){
-                  notes.setCreatedBy(login.getLoginName());
-               }
-               ghtNotes.add(notes);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
       return ghtNotes;
    }
@@ -2842,8 +2776,8 @@ public class SeasonServiceImplUtil {
    public List<WPNotes> getWPSummerNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_SUMMER, CCIConstants.WP_WT_SUMMER_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2856,8 +2790,8 @@ public class SeasonServiceImplUtil {
    public List<WPNotes> getWPSpringNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_SPRING, CCIConstants.WP_WT_SPRING_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2870,8 +2804,8 @@ public class SeasonServiceImplUtil {
    public List<WPNotes> getWPWinterNotes(Integer seasonId, Integer seasonProgramId) {
       try {
          return getWPNotes(seasonId, seasonProgramId, CCIConstants.WP_WT_WINTER, CCIConstants.WP_WT_WINTER_ID);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
          return null;
       }
    }
@@ -2905,17 +2839,11 @@ public class SeasonServiceImplUtil {
 
                   wpNotes.add(notes);
                }
-               notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
-               Login login = loginRepository.findOne(1);// TODO find user from session
-               if(login!=null){
-               notes.setCreatedBy(login.getLoginName());
-               }
-               
-               wpNotes.add(notes);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
       return wpNotes;
    }
@@ -2943,8 +2871,8 @@ public class SeasonServiceImplUtil {
             updatedNotes.add(sprNote);
          }
          seasonProgramNotesRepository.save(updatedNotes);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2965,8 +2893,8 @@ public class SeasonServiceImplUtil {
             updateNotes(season, programTypeId, updatedNotes, note);
          }
          seasonProgramNotesRepository.save(updatedNotes);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -2987,8 +2915,8 @@ public class SeasonServiceImplUtil {
             updateNotes(season, programTypeId, updatedNotes, note);
          }
          seasonProgramNotesRepository.save(updatedNotes);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3011,8 +2939,8 @@ public class SeasonServiceImplUtil {
          sprNote.setModifiedBy(1);
          sprNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          updatedNotes.add(sprNote);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3023,37 +2951,41 @@ public class SeasonServiceImplUtil {
     */
    public List<WPDocuments> getWPDocs(Integer seasonId, Integer seasonProgramId, String programType, Integer departmentProgramId) {
       List<WPDocuments> wpDocuments = null;
-      List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
-      if (seasonProgramDocuments != null) {
-         wpDocuments = new ArrayList<WPDocuments>();
-         for (SeasonProgramDocument programDocument : seasonProgramDocuments) {
-            if (programDocument.getDepartmentProgram().getProgramName().equals(programType)) {
-               WPDocuments documents = new WPDocuments();
-               documents.setSeasonId(programDocument.getSeason().getSeasonId());
-               documents.setSeasonProgramId(seasonProgramId);
-               documents.setDepartmentProgramId(departmentProgramId);
-               if (programDocument.getDocumentInformation().getDocumentName() != null) {
-                  documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
-               }
-               if (programDocument.getDocumentInformation().getFileName() != null) {
-                  documents.setFileName(programDocument.getDocumentInformation().getFileName());
-               }
-               if (programDocument.getDocumentInformation() != null) {
-                  documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-               }
-               if (programDocument.getDocumentInformation().getUrl() != null) {
-                  documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
-               }
-               documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
-               documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-               Login login = loginRepository.findOne(1);// TODO find user from session
-               if (login!=null&&login.getLoginName() != null) {
-                  documents.setUploadedBy(login.getLoginName());
+      try {
+         List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocsBySeasonId(seasonId);
+         if (seasonProgramDocuments != null) {
+            wpDocuments = new ArrayList<WPDocuments>();
+            for (SeasonProgramDocument programDocument : seasonProgramDocuments) {
+               if (programDocument.getDepartmentProgram().getProgramName().equals(programType)) {
+                  WPDocuments documents = new WPDocuments();
+                  documents.setSeasonId(programDocument.getSeason().getSeasonId());
+                  documents.setSeasonProgramId(seasonProgramId);
+                  documents.setDepartmentProgramId(departmentProgramId);
+                  if (programDocument.getDocumentInformation().getDocumentName() != null) {
+                     documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+                  }
+                  if (programDocument.getDocumentInformation().getFileName() != null) {
+                     documents.setFileName(programDocument.getDocumentInformation().getFileName());
+                  }
+                  if (programDocument.getDocumentInformation() != null) {
+                     documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                  }
+                  if (programDocument.getDocumentInformation().getUrl() != null) {
+                     documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+                  }
+                  documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
+                  documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+                  Login login = loginRepository.findOne(1);// TODO find user from session
+                  if (login != null && login.getLoginName() != null) {
+                     documents.setUploadedBy(login.getLoginName());
+                  }
+                  wpDocuments.add(documents);
                }
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
       return wpDocuments;
    }
@@ -3087,8 +3019,8 @@ public class SeasonServiceImplUtil {
             newDocList.add(sprgDoc);
          }
          seasonProgramDocumentRepository.save(newDocList);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3125,8 +3057,8 @@ public class SeasonServiceImplUtil {
             }
          }
          seasonProgramDocumentRepository.save(newDocList);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3145,8 +3077,8 @@ public class SeasonServiceImplUtil {
                seasonDocuments.add(document);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
       return seasonDocuments;
    }
@@ -3176,8 +3108,8 @@ public class SeasonServiceImplUtil {
                seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3209,15 +3141,15 @@ public class SeasonServiceImplUtil {
                seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
    public List<HSPF1SeasonHspF1Notes> getHSPF1Notes(SeasonF1Detail allF1Details) {
-      List<HSPF1SeasonHspF1Notes> hspF1Notes = null;
       try {
          int seasonId = allF1Details.getSeason().getSeasonId();
+         List<HSPF1SeasonHspF1Notes> hspF1Notes = null;
          List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
          if (seasonProgramNotes != null) {
             hspF1Notes = new ArrayList<HSPF1SeasonHspF1Notes>();
@@ -3235,10 +3167,11 @@ public class SeasonServiceImplUtil {
                }
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return hspF1Notes;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return hspF1Notes;
    }
 
    @Transactional
@@ -3262,43 +3195,47 @@ public class SeasonServiceImplUtil {
             seasonProgramNotes.add(programNote);
          }
          seasonProgramNotesRepository.save(seasonProgramNotes);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
    public List<HSPF1SeasonHspF1Documents> getHSPF1Documents(SeasonF1Detail allF1Details, int seasonProgramId) {
-      List<HSPF1SeasonHspF1Documents> hspF1Documents = null;
-      List<SeasonProgramDocument> spDocument = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
-      if (spDocument != null) {
-         hspF1Documents = new ArrayList<HSPF1SeasonHspF1Documents>();
-         for (SeasonProgramDocument seasonProgramDocument : spDocument) {
-            HSPF1SeasonHspF1Documents doc = new HSPF1SeasonHspF1Documents();
-            doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
-            doc.setSeasonProgramId(seasonProgramId);
-            doc.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
-            doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
-            doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
-            doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-            doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
-            doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
-            doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-            Login login = loginRepository.findOne(1);// TODO find user from session
-            if(login!=null){
-            doc.setUploadedBy(login.getLoginName());
+      try {
+         int seasonId = allF1Details.getSeason().getSeasonId();
+         List<HSPF1SeasonHspF1Documents> hspF1Documents = null;
+         List<SeasonProgramDocument> spDocument = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
+         if (spDocument != null) {
+            hspF1Documents = new ArrayList<HSPF1SeasonHspF1Documents>();
+            for (SeasonProgramDocument seasonProgramDocument : spDocument) {
+               HSPF1SeasonHspF1Documents doc = new HSPF1SeasonHspF1Documents();
+               doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
+               doc.setSeasonProgramId(seasonProgramId);
+               doc.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+               doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
+               doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
+               doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+               doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
+               doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
+               doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               if (login != null) {
+                  doc.setUploadedBy(login.getLoginName());
+               }
+               hspF1Documents.add(doc);
             }
-            hspF1Documents.add(doc);
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return hspF1Documents;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return hspF1Documents;
    }
 
    private List<SeasonWPCAPDocuments> getWPCAPDocuments(SeasonCAPDetail seasonWPcap, int seasonProgramId) {
-      List<SeasonWPCAPDocuments> wpcapDocuments = null;
       try {
          int seasonId = seasonWPcap.getSeason().getSeasonId();
+         List<SeasonWPCAPDocuments> wpcapDocuments = null;
          List<SeasonProgramDocument> spDocument = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.WP_WT_CAP_ID);
          if (spDocument != null) {
             wpcapDocuments = new ArrayList<SeasonWPCAPDocuments>();
@@ -3320,16 +3257,17 @@ public class SeasonServiceImplUtil {
                wpcapDocuments.add(doc);
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return wpcapDocuments;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return wpcapDocuments;
    }
 
    public List<SeasonWPCAPNotes> getWPCAPNotes(SeasonCAPDetail seasonWPcap, int seasonProgramId) {
-      List<SeasonWPCAPNotes> seasonWPCAPNotes = null;
       try {
          int seasonId = seasonWPcap.getSeason().getSeasonId();
+         List<SeasonWPCAPNotes> seasonWPCAPNotes = null;
          List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.WP_WT_CAP_ID);
          if (seasonProgramNotes != null) {
             seasonWPCAPNotes = new ArrayList<SeasonWPCAPNotes>();
@@ -3346,10 +3284,11 @@ public class SeasonServiceImplUtil {
                }
             }
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+         return seasonWPCAPNotes;
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+         return null;
       }
-      return seasonWPCAPNotes;
    }
 
    @Transactional
@@ -3374,8 +3313,8 @@ public class SeasonServiceImplUtil {
 
          }
          seasonProgramNotesRepository.save(seasonProgramNotes);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3391,21 +3330,19 @@ public class SeasonServiceImplUtil {
             allocation = seasonWPAllocation;
             allocation.setMaxPax(wpProgramAllocations.getJobFairMaxParticipants());
             updatedList.add(allocation);
-         }
-         if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_SUMMER)) {
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_SUMMER)) {
             SeasonWPAllocation allocation = new SeasonWPAllocation();
             allocation = seasonWPAllocation;
             allocation.setMaxPax(wpProgramAllocations.getSelfPlacedMaxParticipants());
             updatedList.add(allocation);
-         }
-         if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_SUMMER)) {
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_SUMMER)) {
             SeasonWPAllocation allocation = new SeasonWPAllocation();
             allocation = seasonWPAllocation;
             allocation.setMaxPax(wpProgramAllocations.getDirectPlcmntMaxParticipants());
             updatedList.add(allocation);
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3422,15 +3359,14 @@ public class SeasonServiceImplUtil {
             allocation = seasonWPAllocation;
             allocation.setMaxPax(wpCapProgramAllocations.getInternshipMaximumParticipant());
             updatedList.add(allocation);
-         }
-         if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.CAP_TRAINEE)) {
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.CAP_TRAINEE)) {
             SeasonWPAllocation allocation = new SeasonWPAllocation();
             allocation = seasonWPAllocation;
             allocation.setMaxPax(wpCapProgramAllocations.getTraineeMaximumParticipant());
             updatedList.add(allocation);
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3441,17 +3377,15 @@ public class SeasonServiceImplUtil {
             allocation = seasonWPAllocation;
             allocation.setMaxPax(hspf1ProgramAllocations.getAugustStartMaximumParticipants());
             updatedList.add(allocation);
-         }
-         if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
             SeasonWPAllocation allocation = new SeasonWPAllocation();
             allocation = seasonWPAllocation;
             allocation.setMaxPax(hspf1ProgramAllocations.getJanuaryStartMaximumParticipants());
             updatedList.add(allocation);
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
-
    }
 
    public void updateHSPF1ProgramAllocation(HSPF1ProgramAllocations hspF1ProgramAllocation, List<SeasonHSPAllocation> updatedList, SeasonHSPAllocation seasonHSPAllocation) {
@@ -3462,16 +3396,15 @@ public class SeasonServiceImplUtil {
             allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
             allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
             updatedList.add(allocation);
-         }
-         if (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+         } else if (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
             SeasonHSPAllocation allocation = new SeasonHSPAllocation();
             allocation = seasonHSPAllocation;
             allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
             allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
             updatedList.add(allocation);
          }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 
@@ -3502,8 +3435,8 @@ public class SeasonServiceImplUtil {
             newDocList.add(sprgDoc);
          }
          seasonDepartmentDocumentRepository.save(newDocList);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
       }
    }
 }
