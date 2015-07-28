@@ -1,31 +1,30 @@
 /**
  * 
  */
-package com.ccighgo.service.component.messagebundle;
+package com.ccighgo.service.component.serviceutils;
 
 import java.util.Locale;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 /**
+ * MessageUtils loads properties file from application context.
+ * 
+ * Autowire this class in your class to get messages from properties file
+ * 
  * @author ravi
  *
  */
 @Component
 @Scope("singleton")
 public class MessageUtils {
-
-   public static String getMessage(String key) {
-
+   public String getMessage(String key) {
       try {
-         ResourceBundleMessageSource bean = new ResourceBundleMessageSource();
-         bean.setBasename("META-INF\\ccighgomessages");
+         MessageSource bean = ApplicationContextProvider.getContext().getBean(MessageSource.class);
          return bean.getMessage(key, null, Locale.getDefault());
       } catch (Exception e) {
          return "Unresolved key: " + key;
       }
-
    }
-
 }

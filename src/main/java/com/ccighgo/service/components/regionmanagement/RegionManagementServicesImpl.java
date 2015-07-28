@@ -5,11 +5,9 @@ package com.ccighgo.service.components.regionmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +20,10 @@ import com.ccighgo.jpa.repositories.RegionRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SuperRegionRepository;
-import com.ccighgo.service.components.errormessages.constants.CommonMessageConstants;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
-import com.ccighgo.service.transport.common.response.beans.Header;
 import com.ccighgo.service.transport.common.response.beans.Message;
-import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.common.response.beans.Status;
 import com.ccighgo.service.transport.season.beans.regionmanagementdetails.Region;
 import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionManagementDetails;
@@ -51,8 +48,9 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    RegionRepository regionRepository;
    @Autowired
    SeasonRepository seasonRepository;
+   @Autowired CommonComponentUtils componentUtils;
    @Autowired
-   Properties ccighgoProperties;
+   MessageUtils messageUtil;
 
    @Override
    @Transactional(readOnly = true)
@@ -116,21 +114,11 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    @Transactional(readOnly = true)
    public SuperRegion getSuperRegion(String superRegionId) {
       SuperRegion superRegion = new SuperRegion();
-      if (superRegionId == null || superRegionId.isEmpty()) {
-         superRegion.getStatus().setCode(CCIConstants.FAILURE);
-         Message msg = new Message();
-         msg.setMessage(ErrorCode.INVALID_REQUEST + "Search cannot be performed: Request is missing superRegionId");
-         superRegion.getStatus().getMessages().add(msg);
-         LOGGER.error("No super region id is specified to find object");
-      }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         Status status = new Status();
-         status.setCode(CCIConstants.FAILURE);
-         Message msg = new Message();
-         msg.setMessage(ccighgoProperties.getProperty(CommonMessageConstants.ERROR_CODE) + ErrorCode.INVALID_REQUEST.getValue() + ccighgoProperties.getProperty(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
-         status.getMessages().add(msg);
-         superRegion.setStatus(status);
-         LOGGER.error(ccighgoProperties.getProperty(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
+         String message =messageUtil.getMessage(CCIConstants.ERROR_CODE) + CCIConstants.HYPHEN_SPACE + ErrorCode.INVALID_REQUEST.getValue() + CCIConstants.HYPHEN_SPACE
+               + messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG);
+         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, message));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return superRegion;
       }
       try {
@@ -138,16 +126,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (supRegion != null) {
             superRegion.setSuperRegionId(supRegion.getSuperRegionId());
             superRegion.setSuperRegionName(supRegion.getSuperRegionName());
+            String message =messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS);
+            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, message));
+         } else {
+            String message =messageUtil.getMessage(CCIConstants.ERROR_CODE) + CCIConstants.HYPHEN_SPACE + ErrorCode.NO_RECORD.getValue() + CCIConstants.HYPHEN_SPACE
+                  + messageUtil.getMessage(CCIConstants.NO_RECORD);
+            superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, message));
+            LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoServiceException e) {
-         /*
-          * superRegion.getStatus().setCode(CCIConstants.FAILURE); Message msg = new Message();
-          * msg.setMessage(ErrorCode.INVALID_REQUEST + "Search cannot be performed: Request is missing superRegionId");
-          * superRegion.getStatus().getMessages().add(msg);
-          * LOGGER.error("No super region id is specified to find object");
-          */
-
-         throw new CcighgoServiceException(ErrorCode.INVALID_REQUEST, "provided season id is either zero or less than zero");
+         String message =messageUtil.getMessage(CCIConstants.ERROR_CODE) + CCIConstants.HYPHEN_SPACE + ErrorCode.FAILED_GET_SUP_REGION.getValue() + CCIConstants.HYPHEN_SPACE
+               + messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR);
+         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, message));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR));
       }
       return superRegion;
    }
