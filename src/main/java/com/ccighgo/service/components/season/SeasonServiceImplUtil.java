@@ -302,6 +302,9 @@ public class SeasonServiceImplUtil {
                               }
                               document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
                               document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+                              document.setDocName(departmentDocument.getDocumentInformation().getDocumentName());
+                              document.setFileName(departmentDocument.getDocumentInformation().getFileName());
+                              document.setActive(departmentDocument.getActive() == CCIConstants.ACTIVE ? true : false);
                               document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
                               Login login = loginRepository.findOne(1);// TODO find user from session
                               if (login != null) {
