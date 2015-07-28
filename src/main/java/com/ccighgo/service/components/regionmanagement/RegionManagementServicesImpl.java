@@ -48,7 +48,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    RegionRepository regionRepository;
    @Autowired
    SeasonRepository seasonRepository;
-   @Autowired CommonComponentUtils componentUtils;
+   @Autowired
+   CommonComponentUtils componentUtils;
    @Autowired
    MessageUtils messageUtil;
 
@@ -115,9 +116,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public SuperRegion getSuperRegion(String superRegionId) {
       SuperRegion superRegion = new SuperRegion();
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         String message =messageUtil.getMessage(CCIConstants.ERROR_CODE) + CCIConstants.HYPHEN_SPACE + ErrorCode.INVALID_REQUEST.getValue() + CCIConstants.HYPHEN_SPACE
-               + messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG);
-         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, message));
+         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(), messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return superRegion;
       }
@@ -126,18 +125,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (supRegion != null) {
             superRegion.setSuperRegionId(supRegion.getSuperRegionId());
             superRegion.setSuperRegionName(supRegion.getSuperRegionName());
-            String message =messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS);
-            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, message));
+            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            String message =messageUtil.getMessage(CCIConstants.ERROR_CODE) + CCIConstants.HYPHEN_SPACE + ErrorCode.NO_RECORD.getValue() + CCIConstants.HYPHEN_SPACE
-                  + messageUtil.getMessage(CCIConstants.NO_RECORD);
-            superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, message));
+            superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoServiceException e) {
-         String message =messageUtil.getMessage(CCIConstants.ERROR_CODE) + CCIConstants.HYPHEN_SPACE + ErrorCode.FAILED_GET_SUP_REGION.getValue() + CCIConstants.HYPHEN_SPACE
-               + messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR);
-         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, message));
+         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REGION.getValue(), messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR));
       }
       return superRegion;
