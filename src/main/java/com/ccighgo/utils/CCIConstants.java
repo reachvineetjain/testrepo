@@ -11,8 +11,15 @@ import java.util.Calendar;
  */
 public class CCIConstants {
 
+   //service status codes
    public static final String SUCCESS = "Success";
    public static final String FAILURE = "Failure";
+   
+   //common service message codes
+   public static final String ERROR_CODE="error.code";
+   public static final String SERVICE_SUCCESS="service.success.message";
+   public static final String NO_RECORD="no.record.found";
+   
 
    // date utility constants
    public static final String MM_DD_YY = "MM/dd/yy";

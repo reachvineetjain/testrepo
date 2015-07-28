@@ -59,6 +59,7 @@ public enum ErrorCode {
 		
 		//Region
 		INVALID_ID_REGION_ALL(2160101),
+		FAILED_GET_SUP_REGION(2160201),
 		
 		//user management(temp code)
 		INVALID_USER_ID(301)
