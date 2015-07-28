@@ -16,7 +16,8 @@ public class CCIConstants {
    public static final String FAILURE = "Failure";
    
    //common service message codes
-   public static final String ERROR_CODE="error.code";
+   public static final String TYPE_ERROR="Error";
+   public static final String TYPE_INFO="Info";
    public static final String SERVICE_SUCCESS="service.success.message";
    public static final String NO_RECORD="no.record.found";
    
