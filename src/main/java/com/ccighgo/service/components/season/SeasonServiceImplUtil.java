@@ -290,30 +290,34 @@ public class SeasonServiceImplUtil {
          try {
             if (seasonEntity.getSeasonDepartmentDocuments() != null && !seasonEntity.getSeasonDepartmentDocuments().isEmpty()) {
                for (SeasonDepartmentDocument departmentDocument : seasonEntity.getSeasonDepartmentDocuments()) {
-                  DocumentInformation dInfo = departmentDocument.getDocumentInformation();
-                  if (dInfo != null) {
-                     SeasonDocument document = new SeasonDocument();
-                     if (dInfo.getDocumentTypeDocumentCategoryProcess() != null) {
-                        if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType() != null) {
-                           if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
-                              document.setSeasonId(departmentDocument.getSeason().getSeasonId());
-                              if (seasonEntity.getLookupDepartment() != null) {
-                                 document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
-                              }
-                              document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-                              document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
-                              document.setDocName(departmentDocument.getDocumentInformation().getDocumentName());
-                              document.setFileName(departmentDocument.getDocumentInformation().getFileName());
-                              document.setActive(departmentDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-                              document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
-                              Login login = loginRepository.findOne(1);// TODO find user from session
-                              if (login != null) {
-                                 document.setUploadedBy(login.getLoginName());
+                  try {
+                     DocumentInformation dInfo = departmentDocument.getDocumentInformation();
+                     if (dInfo != null) {
+                        SeasonDocument document = new SeasonDocument();
+                        if (dInfo.getDocumentTypeDocumentCategoryProcess() != null) {
+                           if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType() != null) {
+                              if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
+                                 document.setSeasonId(departmentDocument.getSeason().getSeasonId());
+                                 if (seasonEntity.getLookupDepartment() != null) {
+                                    document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
+                                 }
+                                 document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                                 document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+                                 document.setDocName(departmentDocument.getDocumentInformation().getDocumentName());
+                                 document.setFileName(departmentDocument.getDocumentInformation().getFileName());
+                                 document.setActive(departmentDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+                                 document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
+                                 Login login = loginRepository.findOne(1);// TODO find user from session
+                                 if (login != null) {
+                                    document.setUploadedBy(login.getLoginName());
+                                 }
                               }
                            }
                         }
+                        seasonBean.getDocuments().add(document);
                      }
-                     seasonBean.getDocuments().add(document);
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                }
             }
@@ -881,26 +885,30 @@ public class SeasonServiceImplUtil {
          seasonProgramDocumentRepository.delete(seasonProgramDocuments);
          List<SeasonProgramDocument> newDocList = new ArrayList<SeasonProgramDocument>();
          for (HSPF1SeasonHspF1Documents f1Documents : seasonHSPF1Details.getDocuments()) {
-            SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
-            DocumentInformation documentInformation = new DocumentInformation();
-            documentInformation.setFileName(f1Documents.getFileName());
-            documentInformation.setDocumentName(f1Documents.getDocName());
-            documentInformation.setUrl(f1Documents.getDocUrl());
-            documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(f1Documents.getDocType()));
-            documentInformation.setCreatedBy(1);
-            documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            documentInformation.setModifiedBy(1);
-            documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
-            sprgDoc.setActive(CCIConstants.ACTIVE);
-            sprgDoc.setSeason(season);
-            sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_F1_ID));
-            sprgDoc.setDocumentInformation(documentInformation);
-            sprgDoc.setCreatedBy(1);
-            sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            sprgDoc.setModifiedBy(1);
-            sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            newDocList.add(sprgDoc);
+            try {
+               SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
+               DocumentInformation documentInformation = new DocumentInformation();
+               documentInformation.setFileName(f1Documents.getFileName());
+               documentInformation.setDocumentName(f1Documents.getDocName());
+               documentInformation.setUrl(f1Documents.getDocUrl());
+               documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(f1Documents.getDocType()));
+               documentInformation.setCreatedBy(1);
+               documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setModifiedBy(1);
+               documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+               sprgDoc.setActive(CCIConstants.ACTIVE);
+               sprgDoc.setSeason(season);
+               sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_F1_ID));
+               sprgDoc.setDocumentInformation(documentInformation);
+               sprgDoc.setCreatedBy(1);
+               sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setModifiedBy(1);
+               sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               newDocList.add(sprgDoc);
+            } catch (Exception ex) {
+               ExceptionUtil.logException(ex, logger);
+            }
          }
          seasonProgramDocumentRepository.save(newDocList);
       } catch (Exception e) {
@@ -2022,9 +2030,7 @@ public class SeasonServiceImplUtil {
          if (seasonWPCAPDetails.getDocuments() != null) {
             newDocList = new ArrayList<SeasonProgramDocument>();
             for (SeasonWPCAPDocuments capDocuments : seasonWPCAPDetails.getDocuments()) {
-               if (capDocuments.getFileName() == null || capDocuments.getDocName() == null || capDocuments.getDocUrl() == null || capDocuments.getDocType() == null) {
-                  throw new ValidationException(ErrorCode.INVALID_REQUEST, "upload object missing contians null value for either file name, document name , doc type or url");
-               } else {
+               try {
                   SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
                   DocumentInformation documentInformation = new DocumentInformation();
                   documentInformation.setFileName(capDocuments.getFileName());
@@ -2045,6 +2051,8 @@ public class SeasonServiceImplUtil {
                   sprgDoc.setModifiedBy(1);
                   sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
                   newDocList.add(sprgDoc);
+               } catch (Exception ex) {
+                  ExceptionUtil.logException(ex, logger);
                }
             }
             if (newDocList != null) {
@@ -2633,19 +2641,35 @@ public class SeasonServiceImplUtil {
                   documents.setSeasonId(programDocument.getSeason().getSeasonId());
                   documents.setSeasonProgramId(seasonProgramId);
                   documents.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
-                  if (programDocument.getDocumentInformation().getDocumentName() != null) {
-                     documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+                  try {
+                     if (programDocument.getDocumentInformation().getDocumentName() != null) {
+                        documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
-                  if (programDocument.getDocumentInformation().getFileName() != null) {
-                     documents.setFileName(programDocument.getDocumentInformation().getFileName());
+                  try {
+                     if (programDocument.getDocumentInformation().getFileName() != null) {
+                        documents.setFileName(programDocument.getDocumentInformation().getFileName());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                   String docType = null;
-                  if (programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
-                     docType = programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName();
+                  try {
+                     if (programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
+                        docType = programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName();
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                   documents.setDocType(docType);
-                  if (programDocument.getDocumentInformation().getUrl() != null) {
-                     documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+                  try {
+                     if (programDocument.getDocumentInformation().getUrl() != null) {
+                        documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                   documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                   documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
@@ -2961,17 +2985,33 @@ public class SeasonServiceImplUtil {
                   documents.setSeasonId(programDocument.getSeason().getSeasonId());
                   documents.setSeasonProgramId(seasonProgramId);
                   documents.setDepartmentProgramId(departmentProgramId);
-                  if (programDocument.getDocumentInformation().getDocumentName() != null) {
-                     documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+                  try {
+                     if (programDocument.getDocumentInformation().getDocumentName() != null) {
+                        documents.setDocName(programDocument.getDocumentInformation().getDocumentName());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
-                  if (programDocument.getDocumentInformation().getFileName() != null) {
-                     documents.setFileName(programDocument.getDocumentInformation().getFileName());
+                  try {
+                     if (programDocument.getDocumentInformation().getFileName() != null) {
+                        documents.setFileName(programDocument.getDocumentInformation().getFileName());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
-                  if (programDocument.getDocumentInformation() != null) {
-                     documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                  try {
+                     if (programDocument.getDocumentInformation() != null) {
+                        documents.setDocType(programDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
-                  if (programDocument.getDocumentInformation().getUrl() != null) {
-                     documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+                  try {
+                     if (programDocument.getDocumentInformation().getUrl() != null) {
+                        documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
+                     }
+                  } catch (Exception ex) {
+                     ExceptionUtil.logException(ex, logger);
                   }
                   documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                   documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
@@ -2997,26 +3037,30 @@ public class SeasonServiceImplUtil {
          seasonProgramDocumentRepository.delete(seasonProgramDocuments);
          List<SeasonProgramDocument> newDocList = new ArrayList<SeasonProgramDocument>();
          for (J1HSDocuments j1hsDocument : seasonHspJ1HSDetails.getJ1HsDocuments()) {
-            SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
-            DocumentInformation documentInformation = new DocumentInformation();
-            documentInformation.setFileName(j1hsDocument.getFileName());
-            documentInformation.setDocumentName(j1hsDocument.getDocName());
-            documentInformation.setUrl(j1hsDocument.getDocUrl());
-            documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(j1hsDocument.getDocType()));
-            documentInformation.setCreatedBy(1);
-            documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            documentInformation.setModifiedBy(1);
-            documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
-            sprgDoc.setActive(CCIConstants.ACTIVE);
-            sprgDoc.setSeason(season);
-            sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_J1_HS_ID));
-            sprgDoc.setDocumentInformation(documentInformation);
-            sprgDoc.setCreatedBy(1);
-            sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            sprgDoc.setModifiedBy(1);
-            sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            newDocList.add(sprgDoc);
+            try {
+               SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
+               DocumentInformation documentInformation = new DocumentInformation();
+               documentInformation.setFileName(j1hsDocument.getFileName());
+               documentInformation.setDocumentName(j1hsDocument.getDocName());
+               documentInformation.setUrl(j1hsDocument.getDocUrl());
+               documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(j1hsDocument.getDocType()));
+               documentInformation.setCreatedBy(1);
+               documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setModifiedBy(1);
+               documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+               sprgDoc.setActive(CCIConstants.ACTIVE);
+               sprgDoc.setSeason(season);
+               sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_J1_HS_ID));
+               sprgDoc.setDocumentInformation(documentInformation);
+               sprgDoc.setCreatedBy(1);
+               sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setModifiedBy(1);
+               sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               newDocList.add(sprgDoc);
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, logger);
+            }
          }
          seasonProgramDocumentRepository.save(newDocList);
       } catch (Exception ex) {
@@ -3031,9 +3075,7 @@ public class SeasonServiceImplUtil {
          seasonProgramDocumentRepository.delete(seasonProgramDocuments);
          List<SeasonProgramDocument> newDocList = new ArrayList<SeasonProgramDocument>();
          for (WPDocuments wpDocument : seasonWPDetails.getWpDocuments()) {
-            if (wpDocument.getFileName() == null || wpDocument.getDocName() == null || wpDocument.getDocUrl() == null || wpDocument.getDocType() == null) {
-               throw new ValidationException(ErrorCode.INVALID_REQUEST, "update objects are missing either file name or url or document type");
-            } else {
+            try {
                SeasonProgramDocument sprgDoc = new SeasonProgramDocument();
                DocumentInformation documentInformation = new DocumentInformation();
                documentInformation.setFileName(wpDocument.getFileName());
@@ -3054,6 +3096,8 @@ public class SeasonServiceImplUtil {
                sprgDoc.setModifiedBy(1);
                sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
                newDocList.add(sprgDoc);
+            } catch (Exception ex) {
+               ExceptionUtil.logException(ex, logger);
             }
          }
          seasonProgramDocumentRepository.save(newDocList);
@@ -3208,21 +3252,25 @@ public class SeasonServiceImplUtil {
          if (spDocument != null) {
             hspF1Documents = new ArrayList<HSPF1SeasonHspF1Documents>();
             for (SeasonProgramDocument seasonProgramDocument : spDocument) {
-               HSPF1SeasonHspF1Documents doc = new HSPF1SeasonHspF1Documents();
-               doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
-               doc.setSeasonProgramId(seasonProgramId);
-               doc.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
-               doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
-               doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
-               doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-               doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
-               doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
-               doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-               Login login = loginRepository.findOne(1);// TODO find user from session
-               if (login != null) {
-                  doc.setUploadedBy(login.getLoginName());
+               try {
+                  HSPF1SeasonHspF1Documents doc = new HSPF1SeasonHspF1Documents();
+                  doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
+                  doc.setSeasonProgramId(seasonProgramId);
+                  doc.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+                  doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
+                  doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
+                  doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                  doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
+                  doc.setUploadDate(DateUtils.getMMddyyDate(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
+                  doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+                  Login login = loginRepository.findOne(1);// TODO find user from session
+                  if (login != null) {
+                     doc.setUploadedBy(login.getLoginName());
+                  }
+                  hspF1Documents.add(doc);
+               } catch (Exception ex) {
+                  ExceptionUtil.logException(ex, logger);
                }
-               hspF1Documents.add(doc);
             }
          }
          return hspF1Documents;
@@ -3240,21 +3288,25 @@ public class SeasonServiceImplUtil {
          if (spDocument != null) {
             wpcapDocuments = new ArrayList<SeasonWPCAPDocuments>();
             for (SeasonProgramDocument seasonProgramDocument : spDocument) {
-               SeasonWPCAPDocuments doc = new SeasonWPCAPDocuments();
-               doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
-               doc.setSeasonProgramId(seasonProgramId);
-               doc.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
-               doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
-               doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
-               doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-               doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
-               doc.setUploadDate(DateUtils.getDateAndTime(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
-               doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-               Login login = loginRepository.findOne(1);// TODO find user from session
-               if (login != null) {
-                  doc.setUploadedBy(login.getLoginName());
+               try {
+                  SeasonWPCAPDocuments doc = new SeasonWPCAPDocuments();
+                  doc.setSeasonId(seasonProgramDocument.getSeason().getSeasonId());
+                  doc.setSeasonProgramId(seasonProgramId);
+                  doc.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
+                  doc.setDocName(seasonProgramDocument.getDocumentInformation().getDocumentName());
+                  doc.setFileName(seasonProgramDocument.getDocumentInformation().getFileName());
+                  doc.setDocType(seasonProgramDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                  doc.setDocUrl(seasonProgramDocument.getDocumentInformation().getUrl());
+                  doc.setUploadDate(DateUtils.getDateAndTime(seasonProgramDocument.getDocumentInformation().getModifiedOn()));
+                  doc.setActive(seasonProgramDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+                  Login login = loginRepository.findOne(1);// TODO find user from session
+                  if (login != null) {
+                     doc.setUploadedBy(login.getLoginName());
+                  }
+                  wpcapDocuments.add(doc);
+               } catch (Exception ex) {
+                  ExceptionUtil.logException(ex, logger);
                }
-               wpcapDocuments.add(doc);
             }
          }
          return wpcapDocuments;
@@ -3414,25 +3466,29 @@ public class SeasonServiceImplUtil {
          seasonDepartmentDocumentRepository.delete(seasonDepartmentDocuments);
          List<SeasonDepartmentDocument> newDocList = new ArrayList<SeasonDepartmentDocument>();
          for (SeasonDocument hlsDocuments : seasonBean.getDocuments()) {
-            SeasonDepartmentDocument sprgDoc = new SeasonDepartmentDocument();
-            DocumentInformation documentInformation = new DocumentInformation();
-            documentInformation.setFileName(hlsDocuments.getFileName());
-            documentInformation.setDocumentName(hlsDocuments.getDocName());
-            documentInformation.setUrl(hlsDocuments.getDocUrl());
-            documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(hlsDocuments.getDocType()));
-            documentInformation.setCreatedBy(1);
-            documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            documentInformation.setModifiedBy(1);
-            documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
-            sprgDoc.setActive(CCIConstants.ACTIVE);
-            sprgDoc.setSeason(seasonEntity);
-            sprgDoc.setDocumentInformation(documentInformation);
-            sprgDoc.setCreatedBy(1);
-            sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-            sprgDoc.setModifiedBy(1);
-            sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-            newDocList.add(sprgDoc);
+            try {
+               SeasonDepartmentDocument sprgDoc = new SeasonDepartmentDocument();
+               DocumentInformation documentInformation = new DocumentInformation();
+               documentInformation.setFileName(hlsDocuments.getFileName());
+               documentInformation.setDocumentName(hlsDocuments.getDocName());
+               documentInformation.setUrl(hlsDocuments.getDocUrl());
+               documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(hlsDocuments.getDocType()));
+               documentInformation.setCreatedBy(1);
+               documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setModifiedBy(1);
+               documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+               sprgDoc.setActive(CCIConstants.ACTIVE);
+               sprgDoc.setSeason(seasonEntity);
+               sprgDoc.setDocumentInformation(documentInformation);
+               sprgDoc.setCreatedBy(1);
+               sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setModifiedBy(1);
+               sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               newDocList.add(sprgDoc);
+            } catch (Exception ex) {
+               ExceptionUtil.logException(ex, logger);
+            }
          }
          seasonDepartmentDocumentRepository.save(newDocList);
       } catch (Exception ex) {
