@@ -1,5 +1,6 @@
 package com.ccighgo.utils;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,7 +69,7 @@ public class DateUtils {
     * @param inputDate
     * @return
     */
-   public static String getTimeStamp(Date inputDate) {
+   public static String getTimeStamp(Timestamp inputDate) {
       String date = null;
       try {
          if (inputDate != null)
