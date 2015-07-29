@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
@@ -815,6 +816,37 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
+   @Transactional
+   public void createJ1ProgramAllocation(Season season) {
+      try {
+         List<SeasonHSPAllocation> seasonhspAllocations = new ArrayList<SeasonHSPAllocation>();
+         SeasonHSPAllocation august_FY = new SeasonHSPAllocation();
+         DepartmentProgramOption departmentProgramOption_AUG = departmentProgramOptionRepository.findOne(CCIConstants.AUGUST_FY_J1_ID);
+         august_FY.setDepartmentProgramOption(departmentProgramOption_AUG);
+         august_FY.setMaxGuaranteedPax(0);
+         august_FY.setMaxUnguaranteedPax(0);
+         august_FY.setSeason(season);
+         august_FY.setCreatedBy(1);
+         august_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonhspAllocations.add(august_FY);
+
+         SeasonHSPAllocation Jan_FY = new SeasonHSPAllocation();
+         DepartmentProgramOption departmentProgramOption_JAN = departmentProgramOptionRepository.findOne(CCIConstants.JANUARY_FY_J1_ID);
+         Jan_FY.setDepartmentProgramOption(departmentProgramOption_JAN);
+         Jan_FY.setMaxGuaranteedPax(0);
+         Jan_FY.setMaxUnguaranteedPax(0);
+         Jan_FY.setSeason(season);
+         Jan_FY.setCreatedBy(1);
+         Jan_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonhspAllocations.add(Jan_FY);
+         seasonHSPAllocationRepository.save(seasonhspAllocations);
+         seasonHSPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+   }
+
    @Transactional(readOnly = true)
    public HSPF1ProgramAllocations getHSPF1ProgramAllocations(String seasonProgramId) {
       HSPF1ProgramAllocations hspf1ProgramAllocations = null;
@@ -1093,6 +1125,37 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          ExceptionUtil.logException(e, LOGGER);
       }
       return returnObject;
+   }
+
+   @Transactional
+   public void createF1ProgramAllocation(Season season) {
+      try {
+         List<SeasonHSPAllocation> seasonhspAllocations = new ArrayList<SeasonHSPAllocation>();
+         SeasonHSPAllocation august_FY = new SeasonHSPAllocation();
+         DepartmentProgramOption departmentProgramOption_AUG = departmentProgramOptionRepository.findOne(CCIConstants.AUGUST_FY_F1_ID);
+         august_FY.setDepartmentProgramOption(departmentProgramOption_AUG);
+         august_FY.setMaxGuaranteedPax(0);
+         august_FY.setMaxUnguaranteedPax(0);
+         august_FY.setSeason(season);
+         august_FY.setCreatedBy(1);
+         august_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonhspAllocations.add(august_FY);
+
+         SeasonHSPAllocation Jan_FY = new SeasonHSPAllocation();
+         DepartmentProgramOption departmentProgramOption_JAN = departmentProgramOptionRepository.findOne(CCIConstants.JANUARY_FY_F1_ID);
+         Jan_FY.setDepartmentProgramOption(departmentProgramOption_JAN);
+         Jan_FY.setMaxGuaranteedPax(0);
+         Jan_FY.setMaxUnguaranteedPax(0);
+         Jan_FY.setSeason(season);
+         Jan_FY.setCreatedBy(1);
+         Jan_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonhspAllocations.add(Jan_FY);
+         seasonHSPAllocationRepository.save(seasonhspAllocations);
+         seasonHSPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
    }
 
    // view, edit GHT Volunteer Abroad season details
@@ -1802,7 +1865,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             List<SeasonWPAllocation> updatedList = new ArrayList<SeasonWPAllocation>();
             for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
                if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_SUMMER_ID) {
-                  seasonServiceImplUtil.updateWPProgramAllocation(wpProgramAllocations, updatedList, seasonWPAllocation);
+                  seasonServiceImplUtil.updateWPSummerProgramAllocation(wpProgramAllocations, updatedList, seasonWPAllocation);
                }
             }
             seasonWPAllocationRepository.save(updatedList);
@@ -1812,6 +1875,45 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          ExceptionUtil.logException(e, LOGGER);
       }
       return returnObject;
+   }
+
+   @Transactional
+   public void createWPSumProgramAllocation(Season season) {
+      try {
+         List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
+         SeasonWPAllocation jobFairSummer = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_JobFair = departmentProgramOptionRepository.findOne(CCIConstants.JOB_FAIR_SUMMER_ID);
+         jobFairSummer.setDepartmentProgramOption(departmentProgramOption_JobFair);
+         jobFairSummer.setMaxPax(0);
+         jobFairSummer.setSeason(season);
+         jobFairSummer.setCreatedBy(1);
+         jobFairSummer.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(jobFairSummer);
+
+         SeasonWPAllocation selfPlacedSummer = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_SelfPlaceSpring = departmentProgramOptionRepository.findOne(CCIConstants.SELF_PLACED_SUMMER_ID);
+         selfPlacedSummer.setDepartmentProgramOption(departmentProgramOption_SelfPlaceSpring);
+         selfPlacedSummer.setMaxPax(0);
+         selfPlacedSummer.setSeason(season);
+         selfPlacedSummer.setCreatedBy(1);
+         selfPlacedSummer.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(selfPlacedSummer);
+
+         SeasonWPAllocation directPlacementSummer = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_DirectPlacementSummer = departmentProgramOptionRepository.findOne(CCIConstants.DIRECT_PLACEMENT_SUMMER_ID);
+         directPlacementSummer.setDepartmentProgramOption(departmentProgramOption_DirectPlacementSummer);
+         directPlacementSummer.setMaxPax(0);
+         directPlacementSummer.setSeason(season);
+         directPlacementSummer.setCreatedBy(1);
+         directPlacementSummer.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(directPlacementSummer);
+
+         seasonWPAllocationRepository.save(seasonWpAllocations);
+         seasonWPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
    }
 
    // Work Programs: Work and Travel Spring season service implementations
@@ -2029,7 +2131,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             List<SeasonWPAllocation> updatedList = new ArrayList<SeasonWPAllocation>();
             for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
                if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_SPRING_ID) {
-                  seasonServiceImplUtil.updateWPProgramAllocation(wpProgramAllocations, updatedList, seasonWPAllocation);
+                  seasonServiceImplUtil.updateWPSpringProgramAllocation(wpProgramAllocations, updatedList, seasonWPAllocation);
                }
             }
             seasonWPAllocationRepository.save(updatedList);
@@ -2039,6 +2141,45 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          ExceptionUtil.logException(e, LOGGER);
       }
       return returnObject;
+   }
+
+   @Transactional
+   public void createWPSpringProgramAllocation(Season season) {
+      try {
+         List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
+         SeasonWPAllocation jobFairSpring = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_JobFair = departmentProgramOptionRepository.findOne(CCIConstants.JOB_FAIR_SPRING_ID);
+         jobFairSpring.setDepartmentProgramOption(departmentProgramOption_JobFair);
+         jobFairSpring.setMaxPax(0);
+         jobFairSpring.setSeason(season);
+         jobFairSpring.setCreatedBy(1);
+         jobFairSpring.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(jobFairSpring);
+
+         SeasonWPAllocation selfPlacedSpring = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_SelfPlaceSpring = departmentProgramOptionRepository.findOne(CCIConstants.SELF_PLACED_SPRING_ID);
+         selfPlacedSpring.setDepartmentProgramOption(departmentProgramOption_SelfPlaceSpring);
+         selfPlacedSpring.setMaxPax(0);
+         selfPlacedSpring.setSeason(season);
+         selfPlacedSpring.setCreatedBy(1);
+         selfPlacedSpring.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(selfPlacedSpring);
+
+         SeasonWPAllocation directPlacementSpring = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_DirectPlacementSpring = departmentProgramOptionRepository.findOne(CCIConstants.DIRECT_PLACEMENT_SPRING_ID);
+         directPlacementSpring.setDepartmentProgramOption(departmentProgramOption_DirectPlacementSpring);
+         directPlacementSpring.setMaxPax(0);
+         directPlacementSpring.setSeason(season);
+         directPlacementSpring.setCreatedBy(1);
+         directPlacementSpring.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(directPlacementSpring);
+
+         seasonWPAllocationRepository.save(seasonWpAllocations);
+         seasonWPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
    }
 
    public SeasonWPDetails getWPWinterDetails(String seasonProgramId) {

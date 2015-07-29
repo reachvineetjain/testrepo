@@ -41,8 +41,10 @@ import com.ccighgo.db.entities.SeasonWPConfiguration;
 import com.ccighgo.db.entities.SeasonWnTSpringDetail;
 import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.ValidationException;
+import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
@@ -178,6 +180,8 @@ public class SeasonServiceImplUtil {
    SeasonWPConfigurationRepository seasonWPConfigurationRepository;
    @Autowired
    SeasonGHTConfigurationRepository seasonGHTConfigurationRepository;
+   @Autowired
+   DepartmentProgramOptionRepository departmentProgramOptionRepository;
 
    /**
     * @param seasonBean
@@ -1158,6 +1162,10 @@ public class SeasonServiceImplUtil {
             seasonF1Detail.setModifiedBy(1);
             seasonF1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonF1DetailsRepository.saveAndFlush(seasonF1Detail);
+            /**
+             * Create F1 Program Allocations Data
+             */
+            seasonServiceInterface.createF1ProgramAllocation(seasonEntity);
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
@@ -1181,6 +1189,10 @@ public class SeasonServiceImplUtil {
             seasonJ1Detail.setModifiedBy(1);
             seasonJ1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
+            /**
+             * create J1 program allocations
+             */
+            seasonServiceInterface.createJ1ProgramAllocation(season);
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
@@ -2375,7 +2387,7 @@ public class SeasonServiceImplUtil {
             List<SeasonWPAllocation> updatedList = new ArrayList<SeasonWPAllocation>();
             for (SeasonWPAllocation seasonWPAllocation : wpAllocations) {
                if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_WINTER_ID) {
-                  updateWPProgramAllocation(wpProgramAllocations, updatedList, seasonWPAllocation);
+                  updateWPWinterProgramAllocation(wpProgramAllocations, updatedList, seasonWPAllocation);
                }
             }
             seasonWPAllocationRepository.save(updatedList);
@@ -2385,6 +2397,45 @@ public class SeasonServiceImplUtil {
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
          return null;
+      }
+   }
+
+   @Transactional
+   public void createWPWinterProgramAllocation(Season season) {
+      try {
+         List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
+         SeasonWPAllocation jobFairWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_JobFair = departmentProgramOptionRepository.findOne(CCIConstants.JOB_FAIR_WINTER_ID);
+         jobFairWinter.setDepartmentProgramOption(departmentProgramOption_JobFair);
+         jobFairWinter.setMaxPax(0);
+         jobFairWinter.setSeason(season);
+         jobFairWinter.setCreatedBy(1);
+         jobFairWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(jobFairWinter);
+
+         SeasonWPAllocation selfPlacedWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_SelfPlaceSpring = departmentProgramOptionRepository.findOne(CCIConstants.SELF_PLACED_WINTER_ID);
+         selfPlacedWinter.setDepartmentProgramOption(departmentProgramOption_SelfPlaceSpring);
+         selfPlacedWinter.setMaxPax(0);
+         selfPlacedWinter.setSeason(season);
+         selfPlacedWinter.setCreatedBy(1);
+         selfPlacedWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(selfPlacedWinter);
+
+         SeasonWPAllocation directPlacementWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_DirectPlacementWinter = departmentProgramOptionRepository.findOne(CCIConstants.DIRECT_PLACEMENT_WINTER_ID);
+         directPlacementWinter.setDepartmentProgramOption(departmentProgramOption_DirectPlacementWinter);
+         directPlacementWinter.setMaxPax(0);
+         directPlacementWinter.setSeason(season);
+         directPlacementWinter.setCreatedBy(1);
+         directPlacementWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(directPlacementWinter);
+
+         seasonWPAllocationRepository.save(seasonWpAllocations);
+         seasonWPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
       }
    }
 
@@ -3375,7 +3426,7 @@ public class SeasonServiceImplUtil {
     * @param updatedList
     * @param seasonWPAllocation
     */
-   public void updateWPProgramAllocation(WPProgramAllocations wpProgramAllocations, List<SeasonWPAllocation> updatedList, SeasonWPAllocation seasonWPAllocation) {
+   public void updateWPSummerProgramAllocation(WPProgramAllocations wpProgramAllocations, List<SeasonWPAllocation> updatedList, SeasonWPAllocation seasonWPAllocation) {
       try {
          if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_SUMMER)) {
             SeasonWPAllocation allocation = new SeasonWPAllocation();
@@ -3388,6 +3439,62 @@ public class SeasonServiceImplUtil {
             allocation.setMaxPax(wpProgramAllocations.getSelfPlacedMaxParticipants());
             updatedList.add(allocation);
          } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_SUMMER)) {
+            SeasonWPAllocation allocation = new SeasonWPAllocation();
+            allocation = seasonWPAllocation;
+            allocation.setMaxPax(wpProgramAllocations.getDirectPlcmntMaxParticipants());
+            updatedList.add(allocation);
+         }
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+      }
+   }
+
+   /**
+    * @param wpProgramAllocations
+    * @param updatedList
+    * @param seasonWPAllocation
+    */
+   public void updateWPSpringProgramAllocation(WPProgramAllocations wpProgramAllocations, List<SeasonWPAllocation> updatedList, SeasonWPAllocation seasonWPAllocation) {
+      try {
+         if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_SPRING)) {
+            SeasonWPAllocation allocation = new SeasonWPAllocation();
+            allocation = seasonWPAllocation;
+            allocation.setMaxPax(wpProgramAllocations.getJobFairMaxParticipants());
+            updatedList.add(allocation);
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_SPRING)) {
+            SeasonWPAllocation allocation = new SeasonWPAllocation();
+            allocation = seasonWPAllocation;
+            allocation.setMaxPax(wpProgramAllocations.getSelfPlacedMaxParticipants());
+            updatedList.add(allocation);
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_SPRING)) {
+            SeasonWPAllocation allocation = new SeasonWPAllocation();
+            allocation = seasonWPAllocation;
+            allocation.setMaxPax(wpProgramAllocations.getDirectPlcmntMaxParticipants());
+            updatedList.add(allocation);
+         }
+      } catch (Exception ex) {
+         ExceptionUtil.logException(ex, logger);
+      }
+   }
+
+   /**
+    * @param wpProgramAllocations
+    * @param updatedList
+    * @param seasonWPAllocation
+    */
+   public void updateWPWinterProgramAllocation(WPProgramAllocations wpProgramAllocations, List<SeasonWPAllocation> updatedList, SeasonWPAllocation seasonWPAllocation) {
+      try {
+         if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JOB_FAIR_WINTER)) {
+            SeasonWPAllocation allocation = new SeasonWPAllocation();
+            allocation = seasonWPAllocation;
+            allocation.setMaxPax(wpProgramAllocations.getJobFairMaxParticipants());
+            updatedList.add(allocation);
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.SELF_PLACED_WINTER)) {
+            SeasonWPAllocation allocation = new SeasonWPAllocation();
+            allocation = seasonWPAllocation;
+            allocation.setMaxPax(wpProgramAllocations.getSelfPlacedMaxParticipants());
+            updatedList.add(allocation);
+         } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.DIRECT_PLACEMENT_WINTER)) {
             SeasonWPAllocation allocation = new SeasonWPAllocation();
             allocation = seasonWPAllocation;
             allocation.setMaxPax(wpProgramAllocations.getDirectPlcmntMaxParticipants());
