@@ -113,6 +113,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                }
             }
             regionManagementDetails.getSuperRegions().addAll(superRegionList);
+            regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
             regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                   messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
