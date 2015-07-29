@@ -929,7 +929,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private User setUserStatus(User user, String code, String type, int serviceCode, String message ) {
 	   if(user==null) user = new User(); 
-	   user.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+	   user.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return user;
 	   
    }
@@ -945,7 +945,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private CCIUser setCCiUserStatus(CCIUser cciUser, String code, String type, int serviceCode, String message ) {
 	   if(cciUser==null) cciUser = new CCIUser(); 
-	   cciUser.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+	   cciUser.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return cciUser;
 	   
    }
@@ -961,14 +961,14 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private CCIUsers setCCiUsersStatus(CCIUsers cciUsers, String code, String type, int serviceCode, String message ) {
 	   if(cciUsers==null) cciUsers = new CCIUsers(); 
-	   cciUsers.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+	   cciUsers.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return cciUsers;
 	   
    }
    
    private StaffUserRolePermissions setStaffUserRolePermissionsStatus(StaffUserRolePermissions staffuserrolePermissions, String code, String type, int serviceCode, String message ) {
 	   if(staffuserrolePermissions==null) staffuserrolePermissions = new StaffUserRolePermissions(); 
-	   staffuserrolePermissions.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+	   staffuserrolePermissions.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return staffuserrolePermissions;
 	   
    }
