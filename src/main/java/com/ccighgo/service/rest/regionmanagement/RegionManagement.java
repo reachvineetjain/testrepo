@@ -113,7 +113,7 @@ public class RegionManagement {
    @GET
    @Path("superregion/delete/{superRegionId}/{seasonId}")
    @Produces("application/json")
-   public String deleteSuperRegion(@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
+   public SuperRegion deleteSuperRegion(@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'deleteSuperRegion'");
       return regionManagementServices.deleteSuperRegion(superRegionId,seasonId);
    }
@@ -138,7 +138,7 @@ public class RegionManagement {
    @GET
    @Path("region/delete/{regionId}/{superRegionId}/{seasonId}")
    @Produces("application/json")
-   public String deleteRegion(@PathParam("regionId") String regionId,@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
+   public Region deleteRegion(@PathParam("regionId") String regionId,@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'deleteSuperRegion'");
       return regionManagementServices.deleteRegion(regionId,superRegionId,seasonId);
    }

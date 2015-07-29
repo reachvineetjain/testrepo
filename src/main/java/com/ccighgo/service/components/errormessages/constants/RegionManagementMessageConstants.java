@@ -13,5 +13,7 @@ public class RegionManagementMessageConstants {
    public static final String REG_GET_ERROR="error.find.region";
    public static final String REG_UPDATE_ERROR="error.update.region";
    public static final String REG_ADD_ERROR="error.add.region";
+   public static final String SEASON_ID_INVALID="season.id.zero.or.negative";
+   public static final String ERROR_GET_SUP_REG_LIST="error.get.super.region.list";
 
 }
