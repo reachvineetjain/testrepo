@@ -828,6 +828,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          august_FY.setSeason(season);
          august_FY.setCreatedBy(1);
          august_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         august_FY.setModifiedBy(1);
+         august_FY.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonhspAllocations.add(august_FY);
 
          SeasonHSPAllocation Jan_FY = new SeasonHSPAllocation();
@@ -838,6 +840,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          Jan_FY.setSeason(season);
          Jan_FY.setCreatedBy(1);
          Jan_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         Jan_FY.setModifiedBy(1);
+         Jan_FY.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonhspAllocations.add(Jan_FY);
          seasonHSPAllocationRepository.save(seasonhspAllocations);
          seasonHSPAllocationRepository.flush();
@@ -1139,6 +1143,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          august_FY.setSeason(season);
          august_FY.setCreatedBy(1);
          august_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         august_FY.setModifiedBy(1);
+         august_FY.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonhspAllocations.add(august_FY);
 
          SeasonHSPAllocation Jan_FY = new SeasonHSPAllocation();
@@ -1149,6 +1155,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          Jan_FY.setSeason(season);
          Jan_FY.setCreatedBy(1);
          Jan_FY.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         Jan_FY.setModifiedBy(1);
+         Jan_FY.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonhspAllocations.add(Jan_FY);
          seasonHSPAllocationRepository.save(seasonhspAllocations);
          seasonHSPAllocationRepository.flush();
@@ -1888,6 +1896,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          jobFairSummer.setSeason(season);
          jobFairSummer.setCreatedBy(1);
          jobFairSummer.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         jobFairSummer.setModifiedBy(1);
+         jobFairSummer.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+
          seasonWpAllocations.add(jobFairSummer);
 
          SeasonWPAllocation selfPlacedSummer = new SeasonWPAllocation();
@@ -1897,6 +1908,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          selfPlacedSummer.setSeason(season);
          selfPlacedSummer.setCreatedBy(1);
          selfPlacedSummer.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         selfPlacedSummer.setModifiedBy(1);
+         selfPlacedSummer.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(selfPlacedSummer);
 
          SeasonWPAllocation directPlacementSummer = new SeasonWPAllocation();
@@ -1906,6 +1919,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          directPlacementSummer.setSeason(season);
          directPlacementSummer.setCreatedBy(1);
          directPlacementSummer.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         directPlacementSummer.setModifiedBy(1);
+         directPlacementSummer.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(directPlacementSummer);
 
          seasonWPAllocationRepository.save(seasonWpAllocations);
@@ -2154,6 +2169,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          jobFairSpring.setSeason(season);
          jobFairSpring.setCreatedBy(1);
          jobFairSpring.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         jobFairSpring.setModifiedBy(1);
+         jobFairSpring.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(jobFairSpring);
 
          SeasonWPAllocation selfPlacedSpring = new SeasonWPAllocation();
@@ -2163,6 +2180,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          selfPlacedSpring.setSeason(season);
          selfPlacedSpring.setCreatedBy(1);
          selfPlacedSpring.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         selfPlacedSpring.setModifiedBy(1);
+         selfPlacedSpring.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(selfPlacedSpring);
 
          SeasonWPAllocation directPlacementSpring = new SeasonWPAllocation();
@@ -2172,6 +2191,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          directPlacementSpring.setSeason(season);
          directPlacementSpring.setCreatedBy(1);
          directPlacementSpring.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         directPlacementSpring.setModifiedBy(1);
+         directPlacementSpring.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(directPlacementSpring);
 
          seasonWPAllocationRepository.save(seasonWpAllocations);

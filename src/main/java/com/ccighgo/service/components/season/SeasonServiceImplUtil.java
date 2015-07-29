@@ -2411,6 +2411,8 @@ public class SeasonServiceImplUtil {
          jobFairWinter.setSeason(season);
          jobFairWinter.setCreatedBy(1);
          jobFairWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         jobFairWinter.setModifiedBy(1);
+         jobFairWinter.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(jobFairWinter);
 
          SeasonWPAllocation selfPlacedWinter = new SeasonWPAllocation();
@@ -2420,6 +2422,8 @@ public class SeasonServiceImplUtil {
          selfPlacedWinter.setSeason(season);
          selfPlacedWinter.setCreatedBy(1);
          selfPlacedWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         selfPlacedWinter.setModifiedBy(1);
+         selfPlacedWinter.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(selfPlacedWinter);
 
          SeasonWPAllocation directPlacementWinter = new SeasonWPAllocation();
@@ -2429,6 +2433,8 @@ public class SeasonServiceImplUtil {
          directPlacementWinter.setSeason(season);
          directPlacementWinter.setCreatedBy(1);
          directPlacementWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         directPlacementWinter.setModifiedBy(1);
+         directPlacementWinter.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          seasonWpAllocations.add(directPlacementWinter);
 
          seasonWPAllocationRepository.save(seasonWpAllocations);
