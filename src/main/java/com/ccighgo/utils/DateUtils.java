@@ -1,5 +1,6 @@
 package com.ccighgo.utils;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,6 +57,23 @@ public class DateUtils {
       try {
          if (inputDate != null)
             date = DateFormatUtils.format(inputDate, CCIConstants.MM_DD_YY, Locale.US);
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return date;
+   }
+
+   /**
+    * Method takes input as date and converts into String date in MM-DD-YY hh:mm:ss format
+    * 
+    * @param inputDate
+    * @return
+    */
+   public static String getTimeStamp(Timestamp inputDate) {
+      String date = null;
+      try {
+         if (inputDate != null)
+            return inputDate.getTime() + "";
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, logger);
       }

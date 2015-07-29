@@ -40,7 +40,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             if (seasonProgramUpdateLog.getDepartmentProgram() != null)
                spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
             spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getMMddyyDate(seasonProgramUpdateLog.getModifiedOn()));
+            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
             spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
@@ -57,7 +57,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
          for (com.ccighgo.db.entities.SeasonDepartmentUpdateLog seasonDepartmentUpdateLog2 : seasonDepartmentUpdateLog) {
             SeasonDepartmentUpdateLog sdl = new SeasonDepartmentUpdateLog();
             sdl.setModifiedBy(seasonDepartmentUpdateLog2.getModifiedBy() + "");
-            sdl.setModifiedOn(DateUtils.getMMddyyDate(seasonDepartmentUpdateLog2.getModifiedOn()));
+            sdl.setModifiedOn(DateUtils.getTimeStamp(seasonDepartmentUpdateLog2.getModifiedOn()));
             sdl.setSeasonId(seasonDepartmentUpdateLog2.getSeason().getSeasonId());
             sdl.setUpdateLogObject(seasonDepartmentUpdateLog2.getUpdateLogObject());
             listSeasonDepartmentUpdateLogBean.add(sdl);
@@ -102,7 +102,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             if (seasonProgramUpdateLog.getDepartmentProgram() != null)
                spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
             spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getMMddyyDate(seasonProgramUpdateLog.getModifiedOn()));
+            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
             spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
@@ -121,7 +121,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             if (seasonProgramUpdateLog.getDepartmentProgram() != null)
                spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
             spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getMMddyyDate(seasonProgramUpdateLog.getModifiedOn()));
+            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
             spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
@@ -140,7 +140,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             if (seasonProgramUpdateLog.getDepartmentProgram() != null)
                spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
             spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getMMddyyDate(seasonProgramUpdateLog.getModifiedOn()));
+            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
             spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
             spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
             listSeasonProgramUpdateLog.add(spu);
