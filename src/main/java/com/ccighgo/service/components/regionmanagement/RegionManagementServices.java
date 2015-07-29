@@ -48,7 +48,7 @@ public interface RegionManagementServices {
     * @param superRegionId
     * @return
     */
-   public String deleteSuperRegion(String superRegionId, String seasonId);
+   public SuperRegion deleteSuperRegion(String superRegionId, String seasonId);
 
    /**
     * @param superRegionId
@@ -64,7 +64,7 @@ public interface RegionManagementServices {
     * @param seasonId
     * @return
     */
-   public String deleteRegion(String regionId, String superRegionId, String seasonId);
+   public Region deleteRegion(String regionId, String superRegionId, String seasonId);
 
    
 

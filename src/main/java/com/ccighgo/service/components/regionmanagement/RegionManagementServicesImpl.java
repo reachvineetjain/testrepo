@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonGeographyConfiguration;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.CcighgoServiceException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.ValidationException;
@@ -56,57 +57,67 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    @Override
    @Transactional(readOnly = true)
    public RegionManagementDetails getCompleteRegionDetails(String seasonId) {
+      RegionManagementDetails regionManagementDetails = new RegionManagementDetails();
       if (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
-         throw new CcighgoServiceException(ErrorCode.INVALID_ID_REGION_ALL, "season id must be positive integer");
+         regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.SEASON_ID_INVALID)));
+         return regionManagementDetails;
       }
-      RegionManagementDetails regionManagementDetails = null;
       List<Integer> distinctSuperRegionList = seasonGeographyConfigurationRepository.findDistinctSuperRegionsBySeasonId(Integer.valueOf(seasonId));
       if (distinctSuperRegionList == null) {
-         throw new CcighgoServiceException(ErrorCode.NO_RECORD, "no region details found");
+         regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+               messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+         return regionManagementDetails;
       } else {
-         regionManagementDetails = new RegionManagementDetails();
-         regionManagementDetails.setSeasonId(Integer.valueOf(seasonId));
-         List<SuperRegion> superRegionList = new ArrayList<SuperRegion>();
-         for (Integer superRegionId : distinctSuperRegionList) {
-            SuperRegion spRegion = new SuperRegion();
-            com.ccighgo.db.entities.SuperRegion superRegion = superRegionRepository.findOne(superRegionId);
-            if (superRegion != null) {
-               spRegion.setSuperRegionId(superRegion.getSuperRegionId());
-               spRegion.setSuperRegionName(superRegion.getSuperRegionName());
-               List<Region> regionList = new ArrayList<Region>();
-               List<Integer> distinctRegionList = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(superRegionId);
-               if (distinctRegionList != null) {
-                  for (Integer regionId : distinctRegionList) {
-                     com.ccighgo.db.entities.Region region = regionRepository.findOne(regionId);
-                     if (region != null) {
-                        Region rgn = new Region();
-                        rgn.setRegionId(region.getRegionId());
-                        rgn.setRegionName(region.getRegionName());
-                        List<RegionState> regionStates = null;
-                        List<SeasonGeographyConfiguration> stateList = seasonGeographyConfigurationRepository.findStatesBySuperRegionRegionAandSeasonId(superRegionId,
-                              region.getRegionId(), Integer.valueOf(seasonId));
-                        if (stateList != null) {
-                           regionStates = new ArrayList<RegionState>();
-                           for (SeasonGeographyConfiguration state : stateList) {
-                              if (state.getSeason().getSeasonId() == Integer.valueOf(seasonId) && state.getRegion().getRegionId() == region.getRegionId()) {
-                                 RegionState rState = new RegionState();
-                                 rState.setStateId(state.getLookupUsstate().getUsStatesId());
-                                 rState.setStateCode(state.getLookupUsstate().getStateCode());
-                                 rState.setStateName(state.getLookupUsstate().getStateName());
-                                 regionStates.add(rState);
+         try {
+            regionManagementDetails.setSeasonId(Integer.valueOf(seasonId));
+            List<SuperRegion> superRegionList = new ArrayList<SuperRegion>();
+            for (Integer superRegionId : distinctSuperRegionList) {
+               SuperRegion spRegion = new SuperRegion();
+               com.ccighgo.db.entities.SuperRegion superRegion = superRegionRepository.findOne(superRegionId);
+               if (superRegion != null) {
+                  spRegion.setSuperRegionId(superRegion.getSuperRegionId());
+                  spRegion.setSuperRegionName(superRegion.getSuperRegionName());
+                  List<Region> regionList = new ArrayList<Region>();
+                  List<Integer> distinctRegionList = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(superRegionId);
+                  if (distinctRegionList != null) {
+                     for (Integer regionId : distinctRegionList) {
+                        com.ccighgo.db.entities.Region region = regionRepository.findOne(regionId);
+                        if (region != null) {
+                           Region rgn = new Region();
+                           rgn.setRegionId(region.getRegionId());
+                           rgn.setRegionName(region.getRegionName());
+                           List<RegionState> regionStates = null;
+                           List<SeasonGeographyConfiguration> stateList = seasonGeographyConfigurationRepository.findStatesBySuperRegionRegionAandSeasonId(superRegionId,
+                                 region.getRegionId(), Integer.valueOf(seasonId));
+                           if (stateList != null) {
+                              regionStates = new ArrayList<RegionState>();
+                              for (SeasonGeographyConfiguration state : stateList) {
+                                 if (state.getSeason().getSeasonId() == Integer.valueOf(seasonId) && state.getRegion().getRegionId() == region.getRegionId()) {
+                                    RegionState rState = new RegionState();
+                                    rState.setStateId(state.getLookupUsstate().getUsStatesId());
+                                    rState.setStateCode(state.getLookupUsstate().getStateCode());
+                                    rState.setStateName(state.getLookupUsstate().getStateName());
+                                    regionStates.add(rState);
+                                 }
                               }
+                              rgn.getRegionStates().addAll(regionStates);
                            }
-                           rgn.getRegionStates().addAll(regionStates);
+                           regionList.add(rgn);
                         }
-                        regionList.add(rgn);
                      }
                   }
+                  spRegion.getRegions().addAll(regionList);
+                  superRegionList.add(spRegion);
                }
-               spRegion.getRegions().addAll(regionList);
-               superRegionList.add(spRegion);
             }
+            regionManagementDetails.getSuperRegions().addAll(superRegionList);
+         } catch (CcighgoException e) {
+            regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
+                  messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
+            LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
          }
-         regionManagementDetails.getSuperRegions().addAll(superRegionList);
       }
       return regionManagementDetails;
    }
@@ -116,7 +127,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public SuperRegion getSuperRegion(String superRegionId) {
       SuperRegion superRegion = new SuperRegion();
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(), messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
+         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return superRegion;
       }
@@ -125,13 +137,16 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (supRegion != null) {
             superRegion.setSuperRegionId(supRegion.getSuperRegionId());
             superRegion.setSuperRegionName(supRegion.getSuperRegionName());
-            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            superRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoServiceException e) {
-         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REGION.getValue(), messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR)));
+         superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REGION.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR));
       }
       return superRegion;
@@ -141,9 +156,6 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    @Transactional
    public SuperRegion addSuperRegion(String seasonId, SuperRegion superRegion) {
       SuperRegion sRegion = null;
-      if (seasonId == null || seasonId.isEmpty()) {
-         throw new ValidationException(ErrorCode.INVALID_REQUEST, "Request is missing season id");
-      }
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided season id is either zero or less than zero");
       }
@@ -207,7 +219,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
 
    @Override
    @Transactional
-   public String deleteSuperRegion(String superRegionId, String seasonId) {
+   public SuperRegion deleteSuperRegion(String superRegionId, String seasonId) {
       String message = null;
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
          throw new ValidationException(ErrorCode.INVALID_REQUEST, "provided superRegionId is either zero or less than zero");
@@ -218,7 +230,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       } catch (CcighgoServiceException e) {
          throw new CcighgoServiceException(ErrorCode.NOT_ALLOWED_MODIFY, "error deleting super region");
       }
-      return message;
+      return null;
    }
 
    @Override
@@ -246,8 +258,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
 
    @Override
    @Transactional
-   public String deleteRegion(String regionId, String superRegionId, String seasonId) {
-      // TODO Auto-generated method stub
+   public Region deleteRegion(String regionId, String superRegionId, String seasonId) {
       return null;
    }
 
