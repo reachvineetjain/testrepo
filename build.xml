@@ -17,6 +17,14 @@
 			<arg value="${xsd.dir}/Common.xsd" />
 		</java>
 	</target>
+	
+	<target name="DeleteRequest">
+	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
+	            <arg value="-d" />
+	            <arg value="${java.dir}" />
+	            <arg value="${xsd.dir}/DeleteRequest.xsd" />
+	        </java>
+	    </target>
 
 	<!--*************************************************Authentication****************************************************************-->
 
@@ -426,5 +434,15 @@
 				<arg value="${xsd.dir}/regionAssignment/AssignedStates.xsd" />
 			</java>
 		</target>
+
+	<!--Region states: returns list of states belonging to each region for a given super region for season-->
+
+	<target name="StateRegion">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/StateRegion.xsd" />
+		</java>
+	</target>
 
 </project>

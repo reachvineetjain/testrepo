@@ -6,7 +6,7 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.season.beans.regionmanagementdetails" />
+            <jaxb:package name="com.ccighgo.service.transport.region.beans.regionmanagementdetails" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
       <xsd:documentation></xsd:documentation>

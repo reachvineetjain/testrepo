@@ -14,9 +14,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.regionmanagement.RegionManagementServices;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.Region;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionManagementDetails;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 
 /**
  * <p>
@@ -84,12 +86,12 @@ public class RegionManagement {
     * @return newly added super region
     */
    @POST
-   @Path("superregion/add/{seasonId}")
+   @Path("add/superregion/{seasonId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public SuperRegion addSuperRegion(@PathParam("seasonId") String seasonId, SuperRegion superRegion) {
+   public SuperRegion addSuperRegionToSeason(@PathParam("seasonId") String seasonId, SuperRegion superRegion) {
       LOGGER.debug("Calling 'addSuperRegion'");
-      return regionManagementServices.addSuperRegion(seasonId,superRegion);
+      return regionManagementServices.addSuperRegionToSeason(seasonId,superRegion);
    }
    
    /**
@@ -113,7 +115,7 @@ public class RegionManagement {
    @GET
    @Path("superregion/delete/{superRegionId}/{seasonId}")
    @Produces("application/json")
-   public SuperRegion deleteSuperRegion(@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
+   public DeleteRequest deleteSuperRegion(@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'deleteSuperRegion'");
       return regionManagementServices.deleteSuperRegion(superRegionId,seasonId);
    }
@@ -123,7 +125,7 @@ public class RegionManagement {
     * @return
     */
    @GET
-   @Path("region/edit/{regionId}")
+   @Path("edit/{regionId}")
    @Produces("application/json")
    public Region editRegion(@PathParam("regionId") String regionId) {
       LOGGER.debug("Calling 'editSuperRegion'");
@@ -136,10 +138,23 @@ public class RegionManagement {
     * @return
     */
    @GET
-   @Path("region/delete/{regionId}/{superRegionId}/{seasonId}")
+   @Path("delete/{regionId}/{superRegionId}/{seasonId}")
    @Produces("application/json")
-   public Region deleteRegion(@PathParam("regionId") String regionId,@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
+   public DeleteRequest deleteRegion(@PathParam("regionId") String regionId,@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'deleteSuperRegion'");
       return regionManagementServices.deleteRegion(regionId,superRegionId,seasonId);
+   }
+   
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @return
+    */
+   @GET
+   @Path("state/region/{superRegionId}/{seasonId}")
+   @Produces("application/json")
+   public StateRegions getStateRegions(@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'getStateRegions'");
+      return regionManagementServices.getStateRegions(superRegionId,seasonId);
    }
 }

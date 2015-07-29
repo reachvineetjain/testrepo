@@ -20,7 +20,7 @@ public class CCIConstants {
    public static final String TYPE_INFO="Info";
    public static final String SERVICE_SUCCESS="service.success.message";
    public static final String NO_RECORD="no.record.found";
-   
+   public static final String SEASON_ID_INVALID="season.id.zero.or.negative";
 
    // date utility constants
    public static final String MM_DD_YY = "MM/dd/yy";
