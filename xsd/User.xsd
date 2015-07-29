@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/user" elementFormDefault="unqualified"
+<xsd:schema targetNamespace="http://www.ccighgo.com/user" elementFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common"
     attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
     xmlns:usr="http://www.ccighgo.com/user">
 
@@ -11,34 +11,60 @@
         </xsd:appinfo>
         <xsd:documentation></xsd:documentation>
     </xsd:annotation>
-
+    <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+    
     <xsd:element name="User" type="usr:User"></xsd:element>
 
-    <xsd:complexType name="User">
-        <xsd:sequence>
-            <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="city" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="addressLine1" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="addressLine2" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="zip" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="primaryPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="emergencyPhone" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="sevisId" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="supervisorId" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="photoPath" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="active" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
-            <xsd:element name="userCountry" type="usr:UserCountry" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="userState" type="usr:UserState" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="loginInfo" type="usr:LoginInfo" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="departmentPrograms" type="usr:UserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="roles" type="usr:UserRole" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="permissions" type="usr:UserPermissions" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="userNotes" type="usr:UserNotes" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-    </xsd:complexType>
+	<xsd:complexType name="User">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="cciUserId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="firstName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="lastName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="city" type="xsd:string" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="addressLine1" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="addressLine2" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="zip" type="xsd:string" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="email" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="primaryPhone" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="emergencyPhone" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="sevisId" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="supervisorId" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="photoPath" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="active" type="xsd:boolean"
+						maxOccurs="1" minOccurs="1" />
+					<xsd:element name="userCountry" type="usr:UserCountry"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="userState" type="usr:UserState"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="loginInfo" type="usr:LoginInfo"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="departmentPrograms" type="usr:UserDepartmentProgram"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="roles" type="usr:UserRole"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="permissions" type="usr:UserPermissions"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="userNotes" type="usr:UserNotes"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
     
     <xsd:complexType name="UserCountry">
         <xsd:sequence>
