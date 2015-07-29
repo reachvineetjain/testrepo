@@ -6,28 +6,26 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.region.beans.stateregion;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 
 
 /**
- * <p>Java class for Response complex type.
+ * <p>Java class for StateRegion complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Response">
+ * &lt;complexType name="StateRegion">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="header" type="{http://www.ccighgo.com/common}Header"/>
- *         &lt;element name="status" type="{http://www.ccighgo.com/common}Status"/>
+ *         &lt;element name="state" type="{http://www.ccighgo.com/stateregion}State"/>
+ *         &lt;element name="region" type="{http://www.ccighgo.com/stateregion}Region"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,66 +35,63 @@ import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Response", propOrder = {
-    "header",
-    "status"
+@XmlType(name = "StateRegion", propOrder = {
+    "state",
+    "region"
 })
-@XmlSeeAlso({
-    StateRegions.class
-})
-public class Response {
+public class StateRegion {
 
     @XmlElement(required = true)
-    protected Header header;
+    protected State state;
     @XmlElement(required = true)
-    protected Status status;
+    protected Region region;
 
     /**
-     * Gets the value of the header property.
+     * Gets the value of the state property.
      * 
      * @return
      *     possible object is
-     *     {@link Header }
+     *     {@link State }
      *     
      */
-    public Header getHeader() {
-        return header;
+    public State getState() {
+        return state;
     }
 
     /**
-     * Sets the value of the header property.
+     * Sets the value of the state property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Header }
+     *     {@link State }
      *     
      */
-    public void setHeader(Header value) {
-        this.header = value;
+    public void setState(State value) {
+        this.state = value;
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the region property.
      * 
      * @return
      *     possible object is
-     *     {@link Status }
+     *     {@link Region }
      *     
      */
-    public Status getStatus() {
-        return status;
+    public Region getRegion() {
+        return region;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the region property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Status }
+     *     {@link Region }
      *     
      */
-    public void setStatus(Status value) {
-        this.status = value;
+    public void setRegion(Region value) {
+        this.region = value;
     }
 
 }
