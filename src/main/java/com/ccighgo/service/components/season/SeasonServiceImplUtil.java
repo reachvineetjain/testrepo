@@ -3535,6 +3535,40 @@ public class SeasonServiceImplUtil {
       }
    }
 
+   @Transactional
+   public void createWPCapProgramAllocation(Season season) {
+      try {
+         List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
+         SeasonWPAllocation capInternship = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOptionCapInternship = departmentProgramOptionRepository.findOne(CCIConstants.CAP_INTERNSHIP_ID);
+         capInternship.setDepartmentProgramOption(departmentProgramOptionCapInternship);
+         capInternship.setMaxPax(0);
+         capInternship.setSeason(season);
+         capInternship.setCreatedBy(1);
+         capInternship.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         capInternship.setModifiedBy(1);
+         capInternship.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(capInternship);
+
+         SeasonWPAllocation capTrainee = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOptionCapTrainee = departmentProgramOptionRepository.findOne(CCIConstants.CAP_TRAINEE_ID);
+         capTrainee.setDepartmentProgramOption(departmentProgramOptionCapTrainee);
+         capTrainee.setMaxPax(0);
+         capTrainee.setSeason(season);
+         capTrainee.setCreatedBy(1);
+         capTrainee.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         capTrainee.setModifiedBy(1);
+         capTrainee.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonWpAllocations.add(capTrainee);
+
+         seasonWPAllocationRepository.save(seasonWpAllocations);
+         seasonWPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+   }
+
    public void updateWPProgramAllocation(HSPF1ProgramAllocations hspf1ProgramAllocations, List<SeasonWPAllocation> updatedList, SeasonWPAllocation seasonWPAllocation) {
       try {
          if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
