@@ -399,5 +399,32 @@
 			<arg value="${xsd.dir}/RegionManagementDetails.xsd" />
 		</java>
 	</target>
+	<!-- Super Region Assignment-->
+
+	<target name="AssignedSuperRegion">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionAssignment/AssignedSuperRegion.xsd" />
+		</java>
+	</target>
+	
+	<!-- Region Assignment -->
+		<target name="AssignedRegion">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/regionAssignment/AssignedRegion.xsd" />
+			</java>
+		</target>
+	
+	<!-- States Assignment -->
+		<target name="AssignedStates">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/regionAssignment/AssignedStates.xsd" />
+			</java>
+		</target>
 
 </project>

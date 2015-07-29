@@ -63,6 +63,23 @@ public class DateUtils {
    }
 
    /**
+    * Method takes input as date and converts into String date in MM-DD-YY hh:mm:ss format
+    * 
+    * @param inputDate
+    * @return
+    */
+   public static String getTimeStamp(Date inputDate) {
+      String date = null;
+      try {
+         if (inputDate != null)
+            return inputDate.getTime() + "";
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return date;
+   }
+
+   /**
     * Method takes input as date and converts into String date in MM-DD-YY format
     * 
     * @param inputDate

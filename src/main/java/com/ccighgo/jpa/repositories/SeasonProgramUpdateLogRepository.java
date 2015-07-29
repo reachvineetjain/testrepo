@@ -18,7 +18,7 @@ import com.ccighgo.db.entities.SeasonProgramUpdateLog;
 @Repository
 public interface SeasonProgramUpdateLogRepository extends JpaRepository<SeasonProgramUpdateLog, Integer> {
 
-   @Query("SELECT s FROM SeasonProgramUpdateLog s WHERE s.departmentProgram.departmentProgramId = ?1")
+   @Query("SELECT s FROM SeasonProgramUpdateLog s WHERE s.departmentProgram.departmentProgramId = ?1 order by modifiedOn desc")
    List<SeasonProgramUpdateLog> findUpdateLogBySeasonIdOne(int departmentProgram);
 
 }
