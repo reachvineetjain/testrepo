@@ -38,7 +38,7 @@
 
    <xsd:complexType name="AssignedStateStaff">
             <xsd:sequence>
-               <xsd:element name="fieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="assignedTo" type="assignedstates:AssignedToStaff" minOccurs="1" maxOccurs="1" />
                <xsd:element name="reportTo" type="assignedstates:ReportToStaff" minOccurs="1" maxOccurs="1" />
@@ -50,7 +50,7 @@
    
   <xsd:complexType name="AssignedToStaff">
             <xsd:sequence>
-               <xsd:element name="fieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -60,7 +60,7 @@
    
     <xsd:complexType name="ReportToStaff">
             <xsd:sequence>
-               <xsd:element name="fieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />

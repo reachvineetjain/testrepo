@@ -36,7 +36,7 @@
 
    <xsd:complexType name="AssignedERDStaff">
             <xsd:sequence>
-               <xsd:element name="fieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="assignedSuperRegion" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
