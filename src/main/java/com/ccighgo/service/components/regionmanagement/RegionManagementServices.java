@@ -91,4 +91,12 @@ public interface RegionManagementServices {
     */
    public Region updateRegion(Region region);
 
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param stateRegions
+    * @return
+    */
+   public StateRegions updateStateRegions(String superRegionId, String seasonId, StateRegions stateRegions);
+
 }

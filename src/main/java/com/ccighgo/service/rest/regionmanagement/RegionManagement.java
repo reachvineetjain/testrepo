@@ -181,4 +181,18 @@ public class RegionManagement {
       LOGGER.debug("Calling 'getStateRegions'");
       return regionManagementServices.getStateRegions(superRegionId, seasonId);
    }
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param stateRegions
+    * @return
+    */
+   @POST
+   @Path("move/state/region/{superRegionId}/{seasonId}")
+   @Produces("application/json")
+   public StateRegions updateStateRegions(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, StateRegions stateRegions) {
+      LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
+      return regionManagementServices.updateStateRegions(superRegionId, seasonId, stateRegions);
+   }
 }

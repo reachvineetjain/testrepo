@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.exception.CcighgoException;
@@ -21,6 +22,7 @@ import com.ccighgo.exception.ValidationException;
 import com.ccighgo.jpa.repositories.RegionRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
+import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.SuperRegionRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
@@ -56,6 +58,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    CommonComponentUtils componentUtils;
    @Autowired
    MessageUtils messageUtil;
+   @Autowired StateRepository stateRepository;
 
    @Override
    @Transactional(readOnly = true)
@@ -93,16 +96,17 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                            rgn.setRegionId(region.getRegionId());
                            rgn.setRegionName(region.getRegionName());
                            List<RegionState> regionStates = null;
-                           List<SeasonGeographyConfiguration> stateList = seasonGeographyConfigurationRepository.findStatesBySuperRegionRegionAandSeasonId(superRegionId,
+                           List<Integer> stateList = seasonGeographyConfigurationRepository.findStatesBySuperRegionRegionAandSeasonId(superRegionId,
                                  region.getRegionId(), Integer.valueOf(seasonId));
-                           if (stateList != null) {
+                           if (stateList != null && stateList.size()>0) {
                               regionStates = new ArrayList<RegionState>();
-                              for (SeasonGeographyConfiguration state : stateList) {
-                                 if (state.getSeason().getSeasonId() == Integer.valueOf(seasonId) && state.getRegion().getRegionId() == region.getRegionId()) {
+                              for (Integer stateId : stateList) {
+                                 if(stateId!=null && stateId>0){
+                                    LookupUSState state = stateRepository.findOne(stateId);
                                     RegionState rState = new RegionState();
-                                    rState.setStateId(state.getLookupUsstate().getUsStatesId());
-                                    rState.setStateCode(state.getLookupUsstate().getStateCode());
-                                    rState.setStateName(state.getLookupUsstate().getStateName());
+                                    rState.setStateId(state.getUsStatesId());
+                                    rState.setStateCode(state.getStateCode());
+                                    rState.setStateName(state.getStateName());
                                     regionStates.add(rState);
                                  }
                               }
@@ -491,6 +495,12 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR));
       }
       return stateRegions;
+   }
+
+   @Override
+   public StateRegions updateStateRegions(String superRegionId, String seasonId, StateRegions stateRegions) {
+      // TODO Auto-generated method stub
+      return null;
    }
 
 }
