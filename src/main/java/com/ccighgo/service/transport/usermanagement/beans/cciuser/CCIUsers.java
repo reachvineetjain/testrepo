@@ -10,9 +10,12 @@ package com.ccighgo.service.transport.usermanagement.beans.cciuser;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -40,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "recordCount",
     "cciUsers"
 })
-public class CCIUsers {
+public class CCIUsers extends Response{
 
     protected Integer recordCount;
     protected List<CCIUser> cciUsers;

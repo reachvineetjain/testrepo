@@ -15,6 +15,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for StaffUserRolePermissions complex type.
@@ -39,7 +41,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "StaffUserRolePermissions", propOrder = {
     "staffUserDefaultPermissions"
 })
-public class StaffUserRolePermissions {
+public class StaffUserRolePermissions extends Response{
 
     protected List<StaffUserDefaultPermissions> staffUserDefaultPermissions;
 

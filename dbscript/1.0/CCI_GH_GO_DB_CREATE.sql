@@ -1562,7 +1562,6 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffType` (
   `fieldStaffId` INT,
   `fieldStaffTypeId` INT(3),
   `seasonId` INT,
-  `departmentProgramId` INT,
   `seasonGeographyConfigurationId` INT,
   `erdId` INT,
   `rdId` INT,
@@ -1573,9 +1572,11 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffType` (
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`fieldStaffLeadershipSeasonId`),
   INDEX `FK_FieldStaffLeadershipSeason_Season_idx` (`seasonId` ASC),
-  INDEX `FK_FieldStaffLeadershipSeason_FieldStaff_idx` (`fieldStaffId` ASC),
   INDEX `FK_FieldStaffLeadershipSeason_FieldStaffType_idx` (`fieldStaffTypeId` ASC),
-  INDEX `FK_FieldStaffLeadershipSeason_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_FieldStaff_1_idx` (`erdId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_FieldStaff_2_idx` (`rdId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_FieldStaff_3_idx` (`rmId` ASC),
+  INDEX `FK_FieldStaffLeadershipSeason_FieldStaff_idx` (`fieldStaffId` ASC),
   INDEX `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration_idx` (`seasonGeographyConfigurationId` ASC),
   CONSTRAINT `FK_FieldStaffLeadershipSeason_Season`
     FOREIGN KEY (`seasonId`)
@@ -1587,12 +1588,27 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffType` (
     REFERENCES `cci_gh_go`.`FieldStaffType` (`fieldStaffTypeId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_FieldStaffLeadershipSeason_DepartmentPrograms`
-    FOREIGN KEY (`departmentProgramId`)
-    REFERENCES `cci_gh_go`.`DepartmentPrograms` (`departmentProgramId`)
-    ON DELETE NO ACTION
+CONSTRAINT `FK_FieldStaffLeadershipSeason_FieldStaff_1`
+    FOREIGN KEY (`erdId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration`
+CONSTRAINT `FK_FieldStaffLeadershipSeason_FieldStaff_2`
+    FOREIGN KEY (`rdId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT `FK_FieldStaffLeadershipSeason_FieldStaff_3`
+    FOREIGN KEY (`rmId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT `FK_FieldStaffLeadershipSeason_FieldStaff`
+    FOREIGN KEY (`fieldStaffId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,	
+CONSTRAINT `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration`
     FOREIGN KEY (`seasonGeographyConfigurationId`)
     REFERENCES `cci_gh_go`.`SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`)
     ON DELETE NO ACTION
@@ -1619,6 +1635,9 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffLCSeason` (
   `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`fieldStaffLCSeasonId`),
   INDEX `FK_FieldStaffLCSeason_Season_idx` (`seasonId` ASC),
+  INDEX `FK_FieldStaffLCSeason_FieldStaff_1_idx` (`erdId` ASC),
+  INDEX `FK_FieldStaffLCSeason_FieldStaff_2_idx` (`rdId` ASC),
+  INDEX `FK_FieldStaffLCSeason_FieldStaff_3_idx` (`rmId` ASC),
   INDEX `FK_FieldStaffLCSeason_FieldStaff_idx` (`fieldStaffId` ASC),
   INDEX `FK_FieldStaffLCSeason_FieldStaffType_idx` (`fieldStaffTypeId` ASC),
   INDEX `FK_FieldStaffLCSeason_DepartmentPrograms_idx` (`departmentProgramId` ASC),
@@ -1632,6 +1651,26 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffLCSeason` (
     FOREIGN KEY (`fieldStaffTypeId`)
     REFERENCES `cci_gh_go`.`FieldStaffType` (`fieldStaffTypeId`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLCSeason_FieldStaff_1`
+    FOREIGN KEY (`erdId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLCSeason_FieldStaff_2`
+    FOREIGN KEY (`rdId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLCSeason_FieldStaff_3`
+    FOREIGN KEY (`rmId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLCSeason_FieldStaff`
+    FOREIGN KEY (`fieldStaffId`)
+	REFERENCES `cci_gh_go`.`FieldStaff`(`fieldStaffId`)
+	ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_FieldStaffLCSeason_DepartmentPrograms`
     FOREIGN KEY (`departmentProgramId`)
