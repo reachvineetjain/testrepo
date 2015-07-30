@@ -30,5 +30,12 @@ public class RegionManagementMessageConstants {
    
    //Region State
    public static final String STATE_REGION_GET_ERROR="error.get.state.region.list";
+   public static final String STATE_REGION_NULL="error.move.state.region";
+   public static final String STATE_REGION_MOVE_ERROR="error.update.state.region";
+   
+   //Add state to a region
+   public static final String STATE_LIST_NULL="state.list.null";
+   public static final String STATE_LIST_ADD_ERROR="error.add.state.region";
+   
 
 }

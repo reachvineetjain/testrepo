@@ -78,6 +78,8 @@ public enum ErrorCode {
 		FAILED_ADD_REGION(2160703),
 		REG_NULL(2160704),
 		FAILED_UPDATE_REGION(2160705),
+		STATE_REG_NULL(2160706),
+		FAILED_ADD_STATES_REG(2160707),
 		
 		//user management(temp code)
 		USER_MANAGEMENT_CODE(220300),
@@ -92,12 +94,10 @@ public enum ErrorCode {
 		;
 		
 		private int itemId;
-
 		
 		public int getValue() {
 			return itemId;
 		}
-
 
 		public Integer itemId(){
 			return itemId;
@@ -117,6 +117,7 @@ public enum ErrorCode {
 			}
 			return null;
 		}
+		
 		public static ErrorCode fromItemId (Integer itemId) {
 			 return fromItemId(itemId.intValue());
 		}

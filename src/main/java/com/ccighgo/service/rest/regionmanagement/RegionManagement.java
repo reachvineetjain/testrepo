@@ -189,10 +189,24 @@ public class RegionManagement {
     * @return
     */
    @POST
-   @Path("move/state/region/{superRegionId}/{seasonId}")
+   @Path("move/state/region/")
    @Produces("application/json")
-   public StateRegions updateStateRegions(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, StateRegions stateRegions) {
+   public StateRegions updateStateRegions(StateRegions stateRegions) {
       LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
-      return regionManagementServices.updateStateRegions(superRegionId, seasonId, stateRegions);
+      return regionManagementServices.updateStateRegions(stateRegions);
+   }
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param region
+    * @return
+    */
+   @POST
+   @Path("add/state/region/{superRegionId}/{seasonId}")
+   @Produces("application/json")
+   public Region addStateRegions(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, Region region) {
+      LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
+      return regionManagementServices.addStateRegions(superRegionId, seasonId, region);
    }
 }
