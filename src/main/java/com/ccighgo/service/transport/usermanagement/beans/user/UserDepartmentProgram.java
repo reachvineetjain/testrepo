@@ -52,7 +52,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "programName",
     "userDepartmentProgramOptions"
 })
-public class UserDepartmentProgram extends Response{
+public class UserDepartmentProgram{
 
     protected int departmentId;
     @XmlElement(required = true)

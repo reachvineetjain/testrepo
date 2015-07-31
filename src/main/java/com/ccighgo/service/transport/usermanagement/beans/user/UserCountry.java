@@ -43,7 +43,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "countryCode",
     "countryName"
 })
-public class UserCountry extends Response{
+public class UserCountry{
 
     protected int countryId;
     @XmlElement(required = true)

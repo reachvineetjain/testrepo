@@ -45,7 +45,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "password",
     "userType"
 })
-public class LoginInfo extends Response{
+public class LoginInfo{
 
     protected int loginId;
     protected String loginName;

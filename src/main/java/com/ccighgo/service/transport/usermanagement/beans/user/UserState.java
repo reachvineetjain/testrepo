@@ -43,7 +43,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "stateCode",
     "stateName"
 })
-public class UserState extends Response{
+public class UserState{
 
     protected int stateId;
     @XmlElement(required = true)
