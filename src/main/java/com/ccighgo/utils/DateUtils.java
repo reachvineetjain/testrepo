@@ -23,7 +23,7 @@ public class DateUtils {
    private static Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
    public static String getMMddYyyyString(Date inputDate) {
-      SimpleDateFormat sdf = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
+      SimpleDateFormat sdf = new SimpleDateFormat(CCIConstants.MM_dd_yyy, Locale.US);
       String date = null;
       if (inputDate != null)
          try {
@@ -35,7 +35,7 @@ public class DateUtils {
    }
 
    public static Date getDateFromString(String endDate) {
-      DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
+      DateFormat format = new SimpleDateFormat(CCIConstants.MM_dd_yyy, Locale.US);
       Date date = null;
       if (endDate != null && !endDate.trim().isEmpty())
          try {
@@ -56,7 +56,7 @@ public class DateUtils {
       String date = null;
       try {
          if (inputDate != null)
-            date = DateFormatUtils.format(inputDate, CCIConstants.MM_DD_YY, Locale.US);
+            date = DateFormatUtils.format(inputDate, CCIConstants.MM_dd_yyy, Locale.US);
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, logger);
       }
@@ -105,7 +105,7 @@ public class DateUtils {
     */
    public static Date getMMddyyDateFromString(String inputString) {
       Date date = null;
-      DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
+      DateFormat format = new SimpleDateFormat(CCIConstants.MM_dd_yyy, Locale.US);
       try {
          if (inputString != null && !inputString.trim().isEmpty())
             date = format.parse(inputString);
