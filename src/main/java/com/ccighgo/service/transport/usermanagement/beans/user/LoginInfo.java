@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for LoginInfo complex type.
@@ -43,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
     "password",
     "userType"
 })
-public class LoginInfo {
+public class LoginInfo extends Response{
 
     protected int loginId;
     protected String loginName;

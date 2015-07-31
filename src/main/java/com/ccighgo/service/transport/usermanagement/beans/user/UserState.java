@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for UserState complex type.
@@ -41,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "stateCode",
     "stateName"
 })
-public class UserState {
+public class UserState extends Response{
 
     protected int stateId;
     @XmlElement(required = true)

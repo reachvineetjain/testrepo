@@ -463,18 +463,19 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Override
    @Transactional
    public User updateUserPicture(User user) {
-	   try{
+	   User usr = null;
+	  try{
       CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
       cciUser.setPhoto(user.getPhotoPath());
       CCIStaffUser cUsr = cciUsersRepository.save(cciUser);
-      User usr = getUserById(String.valueOf(cUsr.getCciStaffUserId()));
+      usr = getUserById(String.valueOf(cUsr.getCciStaffUserId()));
       usr=setUserStatus(usr,CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       return usr;
 	   }
 	   catch (CcighgoServiceException e) {
-		   user=setUserStatus(user,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER_PICTURE.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
+		   usr=setUserStatus(usr,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER_PICTURE.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
 	          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
-	          return user;
+	          return usr;
 	      }
    }
 
@@ -542,13 +543,22 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private UserCountry getUserCountry(CCIStaffUser cciUser) {
       UserCountry country = null;
+      try
+      {
       if (cciUser.getLookupCountry() != null) {
          country = new UserCountry();
          country.setCountryId(cciUser.getLookupCountry().getCountryId());
          country.setCountryCode(cciUser.getLookupCountry().getCountryCode());
          country.setCountryName(cciUser.getLookupCountry().getCountryName());
       }
+      country=setUserCountryStatus(country,CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       return country;
+      }
+      catch (CcighgoServiceException e) {
+    	  country=setUserCountryStatus(country,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_COUNTRY.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_COUNTRY));
+	          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_COUNTRY));
+	          return country;
+	      }
    }
 
    /**
@@ -558,11 +568,25 @@ public class UserManagementServiceImpl implements UserManagementService {
     * @return user state
     */
    private UserState getUserState(CCIStaffUser cciUser) {
-      UserState state = new UserState();
-      state.setStateId(cciUser.getLookupUsstate().getUsStatesId());
-      state.setStateCode(cciUser.getLookupUsstate().getStateCode());
-      state.setStateName(cciUser.getLookupUsstate().getStateName());
+      UserState state = null;
+      try
+      {
+      if(cciUser.getLookupUsstate() != null)
+      {
+				state = new UserState();
+				state.setStateId(cciUser.getLookupUsstate().getUsStatesId());
+				state.setStateCode(cciUser.getLookupUsstate().getStateCode());
+				state.setStateName(cciUser.getLookupUsstate().getStateName());
+      }
+      state=setUserStateStatus(state,CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       return state;
+      }
+      catch (CcighgoServiceException e) {
+    	  state=setUserStateStatus(state,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_STATE.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_STATE));
+	          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_STATE));
+	          return state;
+	      }
+      
    }
 
    /**
@@ -572,15 +596,28 @@ public class UserManagementServiceImpl implements UserManagementService {
     * @return Login details
     */
    private LoginInfo getLoginInfo(CCIStaffUser cciUser) {
-      LoginInfo loginInfo = new LoginInfo();
+	   LoginInfo loginInfo = null;
+	   try
+	   {
+      loginInfo = new LoginInfo();
       UserType userType = new UserType();
+      if(cciUser.getLogin() != null)
+      {
       userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
       userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
       userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
       loginInfo.setLoginId(cciUser.getLogin().getLoginId());
       loginInfo.setLoginName(cciUser.getLogin().getLoginName());
       loginInfo.setUserType(userType);
+      }
+      loginInfo=setLoginInfoStatus(loginInfo,CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       return loginInfo;
+	   }
+	   catch (CcighgoServiceException e) {
+		   loginInfo=setLoginInfoStatus(loginInfo,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_LOGIN_INFO.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_LOGIN_INFO));
+		          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_LOGIN_INFO));
+		          return loginInfo;
+		      }
    }
 
    /**
@@ -592,8 +629,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private List<UserDepartmentProgram> getUserDepartmentAndPrograms(CCIStaffUser cciUser, User user) {
       List<CCIStaffUserProgram> userPrograms = cciUser.getCcistaffUserPrograms();
-      List<UserDepartmentProgram> userDepartmentProgramsList = new ArrayList<UserDepartmentProgram>();
-      for (CCIStaffUserProgram userProgram : userPrograms) {
+      List<UserDepartmentProgram> userDepartmentProgramsList = null;
+      if(userPrograms != null)
+      {
+    	  userDepartmentProgramsList = new ArrayList<UserDepartmentProgram>();
+       for (CCIStaffUserProgram userProgram : userPrograms) {
          UserDepartmentProgram userDepartmentProgram = new UserDepartmentProgram();
          userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentId());
          userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentName());
@@ -612,6 +652,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             userDepartmentProgram.getUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
          }
          userDepartmentProgramsList.add(userDepartmentProgram);
+      }
       }
       return userDepartmentProgramsList;
    }
@@ -738,7 +779,9 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
    public User resetPassword(String userId) {
-      return null;
+	   User usr= new User();
+	   usr = setUserStatus(usr,CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+      return usr;
    }
 
    /**
@@ -895,7 +938,10 @@ public class UserManagementServiceImpl implements UserManagementService {
     * @return
     */
    private CCIUser getUserDetails(CCIStaffUser cUsr) {
-      CCIUser cciUser = new CCIUser();
+	   CCIUser cciUser = null;
+	   try
+	   {
+      cciUser = new CCIUser();
       cciUser.setCciUserId(cUsr.getCciStaffUserId());
       cciUser.setFirstName(cUsr.getFirstName());
       cciUser.setLastName(cUsr.getLastName());
@@ -915,7 +961,15 @@ public class UserManagementServiceImpl implements UserManagementService {
          List<CCIUserDepartmentProgram> userDepartmentProgramsList = populateUserPrograms(cUsr, cciUser);
          cciUser.getCciUserDepartmentPrograms().addAll(userDepartmentProgramsList);
       }
+      cciUser = setCCiUserStatus(cciUser, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       return cciUser;
+	   }
+	   catch (CcighgoServiceException e) {
+		   cciUser=setCCiUserStatus(cciUser,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_DETAILS.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_DETAILS));
+	          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_DETAILS));
+	          return cciUser;
+	      }
+	   
    }
    
    /**
@@ -966,11 +1020,81 @@ public class UserManagementServiceImpl implements UserManagementService {
 	   
    }
    
+   /**
+    * 
+    * @param staffuserrolePermissions
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return staffuserrolePermissions
+    */
+   
    private StaffUserRolePermissions setStaffUserRolePermissionsStatus(StaffUserRolePermissions staffuserrolePermissions, String code, String type, int serviceCode, String message ) {
 	   if(staffuserrolePermissions==null) staffuserrolePermissions = new StaffUserRolePermissions(); 
 	   staffuserrolePermissions.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return staffuserrolePermissions;
 	   
    }
+   
+   /**
+    * 
+    * @param userCountry
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return userCountry
+    */
+   
+   private UserCountry setUserCountryStatus(UserCountry userCountry, String code, String type, int serviceCode, String message ) {
+	   if(userCountry==null) userCountry = new UserCountry(); 
+	   userCountry.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	   return userCountry;
+	   
+   }
+   
+   
+   /**
+    * 
+    * @param userState
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return userState
+    */
+   
+   private UserState setUserStateStatus(UserState userState, String code, String type, int serviceCode, String message ) {
+	   if(userState==null) userState = new UserState(); 
+	   userState.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	   return userState;
+	   
+   }
+   
+   /**
+    * 
+    * @param loginInfo
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return loginInfo
+    */
+   
+   private LoginInfo setLoginInfoStatus(LoginInfo loginInfo, String code, String type, int serviceCode, String message ) {
+	   if(loginInfo==null) loginInfo = new LoginInfo(); 
+	   loginInfo.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	   return loginInfo;
+	   
+   }
+   
+//   private List<UserDepartmentProgram> setUserDepartmentProgramStatus(List<UserDepartmentProgram> userDepartmentProgram, String code, String type, int serviceCode, String message ) {
+//	   if(userDepartmentProgram==null) userDepartmentProgram = new ArrayList<UserDepartmentProgram>();
+//	   
+//	   userDepartmentProgram.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+//	   return userDepartmentProgram;
+//	   
+//   }
 
 }
