@@ -2,6 +2,7 @@ package com.ccighgo.exception;
 
 
 public enum ErrorCode {
+      UTILITY_SERVICE_CODE(290),
 		INVALID_REQUEST(290001),
 		INVALID_LOGINNAME(290002),
 		INVALID_RESULT_ID(290005),

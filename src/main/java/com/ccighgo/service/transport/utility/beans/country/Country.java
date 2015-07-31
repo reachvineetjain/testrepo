@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for Country complex type.
@@ -41,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "countryCode",
     "countryName"
 })
-public class Country {
+public class Country extends Response {
 
     protected int id;
     @XmlElement(required = true)

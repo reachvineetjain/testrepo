@@ -19,6 +19,7 @@ import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.RegionIHP;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
+import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
@@ -28,7 +29,13 @@ import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.usermanagement.beans.user.User;
+import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
@@ -73,6 +80,10 @@ public class UtilityServicesImpl implements UtilityServices {
    SeasonStatusRepository seasonStatusRepository;
    @Autowired
    GenderRepository genderRepository;
+   @Autowired
+   CommonComponentUtils componentUtils;
+   @Autowired
+   MessageUtils messageUtil;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -311,6 +322,38 @@ public class UtilityServicesImpl implements UtilityServices {
          ExceptionUtil.logException(e, LOGGER);
       }
       return genders;
+   }
+
+   
+   
+   @Override
+   public Country getCountryById(int id) {
+
+      Country country = new Country();
+      try {
+         LookupCountry lookupCountry = countryRepository.findOne(Integer.valueOf(id));
+         if (lookupCountry != null) {
+            country.setCountryCode(lookupCountry.getCountryCode());
+            country.setCountryName(lookupCountry.getCountryName());
+            country.setId(lookupCountry.getCountryId());
+            country = setCountryStatus(country, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+
+         }
+      } catch (CcighgoException e) {
+         country = setCountryStatus(country, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_COUNTRY_CODE.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.INVALID_COUNTRY_ID));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.INVALID_COUNTRY_ID));
+      }
+      return country;
+   }
+
+   private Country setCountryStatus(Country country, String code, String type, int serviceCode, String message) {
+      if (country == null)
+         country = new Country();
+      country.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return country;
+
    }
 
 }
