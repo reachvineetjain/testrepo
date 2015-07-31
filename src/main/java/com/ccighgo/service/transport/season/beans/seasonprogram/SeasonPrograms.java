@@ -10,9 +10,12 @@ package com.ccighgo.service.transport.season.beans.seasonprogram;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -38,7 +41,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SeasonPrograms", propOrder = {
     "seasonPrograms"
 })
-public class SeasonPrograms {
+public class SeasonPrograms extends Response{
 
     protected List<SeasonProgram> seasonPrograms;
 

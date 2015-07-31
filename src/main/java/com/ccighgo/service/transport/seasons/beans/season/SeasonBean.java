@@ -10,10 +10,13 @@ package com.ccighgo.service.transport.seasons.beans.season;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -63,7 +66,7 @@ import javax.xml.bind.annotation.XmlType;
     "documents",
     "programOptions"
 })
-public class SeasonBean {
+public class SeasonBean extends Response{
 
     protected int departmentId;
     @XmlElement(required = true)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/seasons" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasons" elementFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common" attributeFormDefault="unqualified" jaxb:version="2.0"
    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasons="http://www.ccighgo.com/seasons">
 
    <xsd:annotation>
@@ -10,14 +10,19 @@
       </xsd:appinfo>
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
+<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
    <xsd:element name="SeasonsList" type="seasons:SeasonsList"></xsd:element>
 
    <xsd:complexType name="SeasonsList">
+   <xsd:complexContent>
+			<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="recordCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasons" type="seasons:SeasonListObject" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
+      </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="SeasonListObject">

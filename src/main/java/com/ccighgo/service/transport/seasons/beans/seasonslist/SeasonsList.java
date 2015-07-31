@@ -10,9 +10,12 @@ package com.ccighgo.service.transport.seasons.beans.seasonslist;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -40,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "recordCount",
     "seasons"
 })
-public class SeasonsList {
+public class SeasonsList extends Response{
 
     protected int recordCount;
     protected List<SeasonListObject> seasons;
