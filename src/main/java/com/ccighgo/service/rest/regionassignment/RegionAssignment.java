@@ -43,9 +43,9 @@ public class RegionAssignment {
    }
 
    @GET
-   @Path("list/assigned/superRegions")
+   @Path("list/assigned/superRegions/{seasonId}")
    @Produces("application/json")
-   public List<AssignedSuperRegion> getAssignedSuperRegionDetails() {
+   public List<AssignedSuperRegion> getAssignedSuperRegionDetails(@PathParam("seasonId") String seasonId) {
       LOGGER.debug("fun: getAssignedSuperRegionDetails");
       return regionAssignmentServices.getAssignedSuperRegionDetails();
    }
