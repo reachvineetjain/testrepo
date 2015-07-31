@@ -1195,12 +1195,12 @@ VALUES (1,'West',1,1,CURRENT_TIMESTAMP,1),
        (2,'Central',1,1,CURRENT_TIMESTAMP,1),
        (3,'East',1,1,CURRENT_TIMESTAMP,1);
        
-INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo)
-VALUES (1,'Lori','Tibett','URL'),
-       (2,'Douglas','Mike','URL'),
-       (3,'Mike','Procter','URL'),
-       (4,'John','DSouza','URL'),
-       (5,'Angela','Mike','URL');
+INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo,fieldStaffTypeId)
+VALUES (1,'Lori','Tibett','URL',1),
+       (2,'Douglas','Mike','URL',1),
+       (3,'Mike','Procter','URL',2),
+       (4,'John','DSouza','URL',2),
+       (5,'Angela','Mike','URL',3);
 
        
 INSERT INTO `cci_gh_go`.`FieldStaffType` (fieldStaffTypeCode,fieldStaffType)    
@@ -1259,24 +1259,24 @@ VALUES  (1,NULL,1,CURRENT_TIMESTAMP,1,1),
         (4,15,1,CURRENT_TIMESTAMP,1,1),         
         (4,16,1,CURRENT_TIMESTAMP,1,1); 
         
-INSERT INTO `cci_gh_go`.`FieldStaffLeadershipSeason` (fieldStaffId,fieldStaffTypeId,seasonId,seasonGeographyConfigurationId,erdId,rdId,rmId,createdBy,modifiedOn,modifiedBy)
-VALUES (1,1,1,1,NULL,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (1,1,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (2,2,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (2,2,1,3,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (2,2,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,5,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,6,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,7,1,NULL,NULL,1,CURRENT_TIMESTAMP,1);
+INSERT INTO `cci_gh_go`.`FieldStaffLeadershipSeason` (fieldStaffId,seasonId,seasonGeographyConfigurationId,createdBy,createdOn,modifiedBy)
+VALUES (1,1,1,1,CURRENT_TIMESTAMP,1),
+       (1,1,2,1,CURRENT_TIMESTAMP,1),
+       (2,1,2,1,CURRENT_TIMESTAMP,1),
+       (2,1,3,1,CURRENT_TIMESTAMP,1),
+       (2,1,4,1,CURRENT_TIMESTAMP,1),
+       (3,1,4,1,CURRENT_TIMESTAMP,1),
+       (3,1,5,1,CURRENT_TIMESTAMP,1),
+       (3,1,6,1,CURRENT_TIMESTAMP,1),
+       (3,1,7,1,CURRENT_TIMESTAMP,1);
        
-INSERT INTO `cci_gh_go`.`FieldStaffLCSeason` (fieldStaffId,fieldStaffTypeId,seasonId,departmentProgramId,seasonGeographyConfigurationId,erdId,rdId,rmId,createdBy,modifiedOn,modifiedBy)
-VALUES (1,1,1,1,1,NULL,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (1,1,1,1,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (2,2,1,2,2,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (2,2,1,2,3,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (2,2,1,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,1,4,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,2,5,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,2,6,1,NULL,NULL,1,CURRENT_TIMESTAMP,1),
-       (3,3,1,2,7,1,NULL,NULL,1,CURRENT_TIMESTAMP,1);
+INSERT INTO `cci_gh_go`.`FieldStaffLCSeason` (fieldStaffId,seasonId,departmentProgramId,seasonGeographyConfigurationId,createdBy,createdOn,modifiedBy)
+VALUES (1,1,1,1,1,CURRENT_TIMESTAMP,1),
+       (1,1,1,2,1,CURRENT_TIMESTAMP,1),
+       (2,1,2,2,1,CURRENT_TIMESTAMP,1),
+       (2,1,2,3,1,CURRENT_TIMESTAMP,1),
+       (2,1,1,4,1,CURRENT_TIMESTAMP,1),
+       (3,1,1,4,1,CURRENT_TIMESTAMP,1),
+       (3,1,2,5,1,CURRENT_TIMESTAMP,1),
+       (3,1,2,6,1,CURRENT_TIMESTAMP,1),
+       (3,1,2,7,1,CURRENT_TIMESTAMP,1);
