@@ -10,51 +10,26 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="FieldStaffLeadershipSeason")
 @NamedQuery(name="FieldStaffLeadershipSeason.findAll", query="SELECT f FROM FieldStaffLeadershipSeason f")
 public class FieldStaffLeadershipSeason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffLeadershipSeasonId;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
 	@JoinColumn(name="fieldStaffId")
-	private FieldStaff fieldStaff1;
-
-	//bi-directional many-to-one association to FieldStaffType
-	@ManyToOne
-	@JoinColumn(name="fieldStaffTypeId")
-	private FieldStaffType fieldStaffType;
-
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="erdId")
-	private FieldStaff fieldStaff2;
-
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="rdId")
-	private FieldStaff fieldStaff3;
-
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="rmId")
-	private FieldStaff fieldStaff4;
+	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -109,44 +84,12 @@ public class FieldStaffLeadershipSeason implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public FieldStaff getFieldStaff1() {
-		return this.fieldStaff1;
+	public FieldStaff getFieldStaff() {
+		return this.fieldStaff;
 	}
 
-	public void setFieldStaff1(FieldStaff fieldStaff1) {
-		this.fieldStaff1 = fieldStaff1;
-	}
-
-	public FieldStaffType getFieldStaffType() {
-		return this.fieldStaffType;
-	}
-
-	public void setFieldStaffType(FieldStaffType fieldStaffType) {
-		this.fieldStaffType = fieldStaffType;
-	}
-
-	public FieldStaff getFieldStaff2() {
-		return this.fieldStaff2;
-	}
-
-	public void setFieldStaff2(FieldStaff fieldStaff2) {
-		this.fieldStaff2 = fieldStaff2;
-	}
-
-	public FieldStaff getFieldStaff3() {
-		return this.fieldStaff3;
-	}
-
-	public void setFieldStaff3(FieldStaff fieldStaff3) {
-		this.fieldStaff3 = fieldStaff3;
-	}
-
-	public FieldStaff getFieldStaff4() {
-		return this.fieldStaff4;
-	}
-
-	public void setFieldStaff4(FieldStaff fieldStaff4) {
-		this.fieldStaff4 = fieldStaff4;
+	public void setFieldStaff(FieldStaff fieldStaff) {
+		this.fieldStaff = fieldStaff;
 	}
 
 	public Season getSeason() {
