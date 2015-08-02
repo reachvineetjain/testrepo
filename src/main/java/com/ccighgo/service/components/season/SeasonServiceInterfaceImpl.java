@@ -1786,18 +1786,22 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             seasonWPDetails.getWpDocuments().addAll(
                   seasonServiceImplUtil.getWPDocs(seasonWnTSummerDetail.getSeason().getSeasonId(), seasonWnTSummerDetail.getSeasonWnTSummerDetailsId(), CCIConstants.WP_WT_SUMMER,
                         CCIConstants.WP_WT_SUMMER_ID));
+            seasonWPDetails = setSeasonWPDetailsStatus(seasonWPDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  seasonWPDetails = setSeasonWPDetailsStatus(seasonWPDetails,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_WP.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_SEASON_WP_SUM_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_SEASON_WP_SUM_DETAILS));
       }
       return seasonWPDetails;
    }
 
-   @Transactional
+@Transactional
    public SeasonWPDetails updateWPSumDetails(SeasonWPDetails seasonWPDetails) {
       SeasonWPDetails returnObject = null;
       try {
          if (seasonWPDetails == null) {
+        	 seasonWPDetails = setSeasonWPDetailsStatus(seasonWPDetails,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_WP.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_SEASON_WP_SUM_DETAILS));
+             LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_SEASON_WP_SUM_DETAILS));
             return returnObject;
          }
          SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonWPDetails.getSeasonProgramId()));
@@ -1819,9 +1823,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             }
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
             returnObject = seasonWPDetails;
+            returnObject = setSeasonWPDetailsStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  seasonWPDetails = setSeasonWPDetailsStatus(seasonWPDetails,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_WP.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_SEASON_WP_SUM_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_SEASON_WP_SUM_DETAILS));
       }
       return returnObject;
    }
@@ -1832,14 +1838,16 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
          SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSummerDetail != null) {
             wpBasicDetail = seasonServiceImplUtil.getWPSummerBaseDetails(seasonWnTSummerDetail);
+            wpBasicDetail = setWPBasicDetailStatus(wpBasicDetail, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpBasicDetail = setWPBasicDetailStatus(wpBasicDetail,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_BASE.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WP_SUM_BASE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WP_SUM_BASE_DETAILS));
       }
       return wpBasicDetail;
    }
 
-   @Transactional
+@Transactional
    public WPBasicDetail updateWPSumBaseDetails(WPBasicDetail wpBasicDetail) {
       WPBasicDetail returnObject = null;
       try {
@@ -1850,10 +1858,12 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
          if (seasonWnTSummerDetail != null) {
             seasonServiceImplUtil.updateWPSummerBaseDetails(wpBasicDetail, seasonWnTSummerDetail);
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
+            returnObject = setWPBasicDetailStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
             returnObject = wpBasicDetail;
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpBasicDetail = setWPBasicDetailStatus(wpBasicDetail,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_BASE.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SUM_BASE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SUM_BASE_DETAILS));
       }
       return returnObject;
    }
@@ -1864,28 +1874,34 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
          SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSummerDetail != null) {
             wpSectionOne = seasonServiceImplUtil.getWPSummerSection1Details(seasonWnTSummerDetail);
+            wpSectionOne = setWPSectionOneStatus(wpSectionOne, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpSectionOne = setWPSectionOneStatus(wpSectionOne,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_SECTION_ONE.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WP_SUM_SECTION_ONE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WP_SUM_SECTION_ONE_DETAILS));
       }
       return wpSectionOne;
    }
 
-   @Transactional
+@Transactional
    public WPSectionOne updateWPSumSectionOneDetails(WPSectionOne wpSectionOne) {
       WPSectionOne returnObject = null;
       try {
          if (wpSectionOne == null || wpSectionOne.getSeasonProgramId() == 0) {
-            return returnObject;
+        	 wpSectionOne = setWPSectionOneStatus(wpSectionOne,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_SECTION_ONE.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WP_SUM_SECTION_ONE_DETAILS));
+             LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WP_SUM_SECTION_ONE_DETAILS));
+        	 return returnObject;
          }
          SeasonWnTSummerDetail seasonWnTSummerDetail = seasonWTSummerRepository.findOne(Integer.valueOf(wpSectionOne.getSeasonProgramId()));
          if (seasonWnTSummerDetail != null) {
             seasonServiceImplUtil.updateWPSummerSection1Details(wpSectionOne, seasonWnTSummerDetail);
             seasonWnTSummerDetail = seasonWTSummerRepository.saveAndFlush(seasonWnTSummerDetail);
             returnObject = wpSectionOne;
+            wpSectionOne = setWPSectionOneStatus(wpSectionOne, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpSectionOne = setWPSectionOneStatus(wpSectionOne,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_SECTION_ONE.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SUM_SECTION_ONE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SUM_SECTION_ONE_DETAILS));
       }
       return returnObject;
    }
@@ -1945,15 +1961,17 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
                wpProgramAllocations.setTotalPendingVerification(0);
                wpProgramAllocations.setTotalRemainingParticipants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
+               wpProgramAllocations = setWPProgramAllocationsStatus(wpProgramAllocations, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
             }
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpProgramAllocations = setWPProgramAllocationsStatus(wpProgramAllocations,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WP_PROGRAM_ALLOCATION));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WP_PROGRAM_ALLOCATION));
       }
       return wpProgramAllocations;
    }
 
-   @Transactional
+@Transactional
    public WPProgramAllocations updateWPSumAllocationDetails(WPProgramAllocations wpProgramAllocations) {
       WPProgramAllocations returnObject = null;
       try {
@@ -1967,9 +1985,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             }
             seasonWPAllocationRepository.save(updatedList);
             returnObject = getWPSumAllocationDetails(String.valueOf(wpProgramAllocations.getSeasonProgramId()));
+            wpProgramAllocations = setWPProgramAllocationsStatus(wpProgramAllocations, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpProgramAllocations = setWPProgramAllocationsStatus(wpProgramAllocations,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_PROGRAM_ALLOCATION));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_PROGRAM_ALLOCATION));
       }
       return returnObject;
    }
@@ -1993,9 +2013,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             seasonWPDetails.getWpDocuments().addAll(
                   seasonServiceImplUtil.getWPDocs(seasonWnTSpringDetail.getSeason().getSeasonId(), seasonWnTSpringDetail.getSeasonWnTSpringDetailsId(), CCIConstants.WP_WT_SPRING,
                         CCIConstants.WP_WT_SPRING_ID));
+            seasonWPDetails = setSeasonWPDetailsStatus(seasonWPDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  seasonWPDetails = setSeasonWPDetailsStatus(seasonWPDetails,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_WP.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_SEASON_WP_SPRING_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_SEASON_WP_SPRING_DETAILS));
       }
       return seasonWPDetails;
    }
@@ -2047,9 +2069,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
 
             seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
             returnObject = seasonWPDetails;
+            returnObject = setSeasonWPDetailsStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  seasonWPDetails = setSeasonWPDetailsStatus(seasonWPDetails,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_WP.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_SEASON_WP_SPRING_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_SEASON_WP_SPRING_DETAILS));
       }
       return returnObject;
    }
@@ -2060,9 +2084,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
          SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSpringDetail != null) {
             wpBasicDetail = seasonServiceImplUtil.getWPSpringBaseDetails(seasonWnTSpringDetail);
+            wpBasicDetail = setWPBasicDetailStatus(wpBasicDetail, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpBasicDetail = setWPBasicDetailStatus(wpBasicDetail,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_BASE.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WP_SPRING_BASE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WP_SPRING_BASE_DETAILS));
       }
       return wpBasicDetail;
    }
@@ -2079,9 +2105,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             seasonServiceImplUtil.updateWPSpringBaseDetails(wpBasicDetail, seasonWnTSpringDetail);
             seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
             returnObject = wpBasicDetail;
+            returnObject = setWPBasicDetailStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpBasicDetail = setWPBasicDetailStatus(wpBasicDetail,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_BASE.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SPRING_BASE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SPRING_BASE_DETAILS));
       }
       return returnObject;
    }
@@ -2092,9 +2120,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
          SeasonWnTSpringDetail seasonWnTSpringDetail = seasonWTSpringRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonWnTSpringDetail != null) {
             wpSectionOne = seasonServiceImplUtil.getWPSpringSection1Details(seasonWnTSpringDetail);
+            wpSectionOne = setWPSectionOneStatus(wpSectionOne, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpSectionOne = setWPSectionOneStatus(wpSectionOne,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_SECTION_ONE.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WP_SPRING_SECTION_ONE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WP_SPRING_SECTION_ONE_DETAILS));
       }
       return wpSectionOne;
    }
@@ -2111,9 +2141,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             seasonServiceImplUtil.updateWPSpringSection1Details(wpSectionOne, seasonWnTSpringDetail);
             seasonWnTSpringDetail = seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
             returnObject = wpSectionOne;
+            returnObject = setWPSectionOneStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  returnObject = setWPSectionOneStatus(returnObject,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_SECTION_ONE.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SPRING_SECTION_ONE_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SPRING_SECTION_ONE_DETAILS));
       }
       return returnObject;
    }
@@ -2172,10 +2204,12 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
                wpProgramAllocations.setTotalPendingVerification(0);
                wpProgramAllocations.setTotalRemainingParticipants(0);
                wpProgramAllocations.setTotalMaxParticipants(totalMaxParticipants);
+               wpProgramAllocations = setWPProgramAllocationsStatus(wpProgramAllocations, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
             }
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpProgramAllocations = setWPProgramAllocationsStatus(wpProgramAllocations,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WP_SPRING_ALLOCATION_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WP_SPRING_ALLOCATION_DETAILS));
       }
       return wpProgramAllocations;
    }
@@ -2194,9 +2228,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             }
             seasonWPAllocationRepository.save(updatedList);
             returnObject = getWPSpringAllocationDetails(String.valueOf(wpProgramAllocations.getSeasonProgramId()));
+            returnObject = setWPProgramAllocationsStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpProgramAllocations = setWPProgramAllocationsStatus(wpProgramAllocations,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WP_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SPRING_ALLOCATION_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_WP_SPRING_ALLOCATION_DETAILS));
       }
       return returnObject;
    }
@@ -2556,14 +2592,16 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             departmentNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonDepartmentNotesRepository.saveAndFlush(departmentNote);
             returnObject = seasonDepartmentNotes;
+            returnObject = setSeasonDepartmentNotesStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  returnObject = setSeasonDepartmentNotesStatus(returnObject,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_DEPT_NOTES.getValue(), messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_DEPT_NOTES));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_DEPT_NOTES));
       }
       return returnObject;
    }
 
-   @Override
+@Override
    public com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument addSeasonDepartmentDoc(
          com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument seasonDepartmentDocument) {
       com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument returnObject = null;
@@ -2590,14 +2628,18 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             departmentDocument.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonDepartmentDocumentRepository.saveAndFlush(departmentDocument);
             returnObject = seasonDepartmentDocument;
+            //returnObject = setSeasonDepartmentDocumentStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  /*returnObject = setSeasonDepartmentDocumentStatus(returnObject,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_DEPT_NOTES.getValue(), messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_DEPT_NOTES));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_DEPT_NOTES));*/
+    	  ExceptionUtil.logException(e, LOGGER);
       }
       return returnObject;
    }
 
-   @Override
+   
+@Override
    public SeasonProgramNote addSeasonProgramNote(SeasonProgramNote seasonProgramNote) {
       SeasonProgramNote returnObject = null;
       try {
@@ -2613,14 +2655,16 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             programNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonProgramNotesRepository.saveAndFlush(programNote);
             returnObject = seasonProgramNote;
+            returnObject = setSeasonProgramNoteStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  returnObject = setSeasonProgramNoteStatus(returnObject,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_PROGRAM_NOTES.getValue(), messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_PROGRAM_NOTES));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_PROGRAM_NOTES));
       }
       return returnObject;
    }
 
-   @Override
+@Override
    public SeasonProgramDocument addSeasonProgramDoc(SeasonProgramDocument seasonProgramDocument) {
       SeasonProgramDocument returnObject = null;
       try {
@@ -2647,14 +2691,16 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             programDocument.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
             seasonProgramDocumentRepository.saveAndFlush(programDocument);
             returnObject = seasonProgramDocument;
+            returnObject = setSeasonProgramDocumentStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  returnObject = setSeasonProgramDocumentStatus(returnObject,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_PROGRAM_DOC.getValue(), messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_PROGRAM_DOC));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ADD_SEASON_PROGRAM_DOC));
       }
       return returnObject;
    }
 
-   @Transactional(readOnly = true)
+@Transactional(readOnly = true)
    public WPCAPProgramAllocations getWPCAPAllocationDetails(String seasonProgramId) {
       WPCAPProgramAllocations wpcapProgramAllocations = null;
       try {
@@ -2698,15 +2744,17 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
                wpcapProgramAllocations.setTraineeRemainingParticipants(0);
 
                wpcapProgramAllocations.setTotalMaximumParticipant(totalMaxParticipants);
+               wpcapProgramAllocations = setWPCAPProgramAllocationsStatus(wpcapProgramAllocations, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
             }
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpcapProgramAllocations = setWPCAPProgramAllocationsStatus(wpcapProgramAllocations,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WPCAP_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.GET_WPCAP_ALLOCATION_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.GET_WPCAP_ALLOCATION_DETAILS));
       }
       return wpcapProgramAllocations;
    }
 
-   @Override
+@Override
    public WPCAPProgramAllocations updateWPCAPAllocationDetails(WPCAPProgramAllocations wpcapProgramAllocations) {
       WPCAPProgramAllocations returnObject = null;
       try {
@@ -2720,9 +2768,11 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
             }
             seasonWPAllocationRepository.save(updatedList);
             returnObject = getWPCAPAllocationDetails(String.valueOf(wpcapProgramAllocations.getSeasonProgramId()));
+            wpcapProgramAllocations = setWPCAPProgramAllocationsStatus(wpcapProgramAllocations, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
+    	  wpcapProgramAllocations = setWPCAPProgramAllocationsStatus(wpcapProgramAllocations,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_WPCAP_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.UPDATE_WPCAP_ALLOCATION_DETAILS));
+          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.UPDATE_WPCAP_ALLOCATION_DETAILS));
       }
       return returnObject;
    }
@@ -3038,12 +3088,12 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
    
    /**
     * 
-    * @param J1HSProgramAllocations
+    * @param HSPF1ProgramAllocations
     * @param code
     * @param type
     * @param serviceCode
     * @param message
-    * @return j1hsProgramAllocations
+    * @return hSPF1ProgramAllocations
     */
    
    private HSPF1ProgramAllocations setHSPF1ProgramAllocationsStatus(HSPF1ProgramAllocations hSPF1ProgramAllocations, String code, String type, int serviceCode, String message ) {
@@ -3051,12 +3101,30 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
 	   hSPF1ProgramAllocations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return hSPF1ProgramAllocations;
    }
+   /**
+    * 
+    * @param HSPF1FieldSettings
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return hSPF1FieldSettings
+    */
    private HSPF1FieldSettings setHSPF1FieldSettingsStatus(
 			HSPF1FieldSettings hSPF1FieldSettings, String code, String type, int serviceCode, String message ) {
 	   if(hSPF1FieldSettings==null) hSPF1FieldSettings = new HSPF1FieldSettings(); 
 	   hSPF1FieldSettings.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return hSPF1FieldSettings;
 	}
+   /**
+    * 
+    * @param HSPF1AugustStart1StSemesterDetails
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return hSPF1AugustStart1StSemesterDetails
+    */
    private HSPF1AugustStart1StSemesterDetails setHSPF1AugustStart1StSemesterDetailsStatus(
 			HSPF1AugustStart1StSemesterDetails hSPF1AugustStart1StSemesterDetails,
 			String code, String type, int serviceCode, String message ) {
@@ -3064,7 +3132,15 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
 	   hSPF1AugustStart1StSemesterDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return hSPF1AugustStart1StSemesterDetails;
 	}
-
+   /**
+    * 
+    * @param HSPF1AugustStartFullYearDetails
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return hSPF1AugustStartFullYearDetails
+    */
    private HSPF1AugustStartFullYearDetails setHSPF1AugustStartFullYearDetailsStatus(
 		HSPF1AugustStartFullYearDetails hSPF1AugustStartFullYearDetails,
 		String code, String type, int serviceCode, String message ) {
@@ -3073,6 +3149,15 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
 	   return hSPF1AugustStartFullYearDetails;
 }
 
+   /**
+    * 
+    * @param HSPF1JanuaryStart2NdSemesterDetails
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return hSPF1JanuaryStart2NdSemesterDetails
+    */
    private HSPF1JanuaryStart2NdSemesterDetails setHSPF1JanuaryStart2NdSemesterDetailsStatus(
 		HSPF1JanuaryStart2NdSemesterDetails hSPF1JanuaryStart2NdSemesterDetails,
 		String code, String type, int serviceCode, String message ) {
@@ -3081,20 +3166,44 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
 	   hSPF1JanuaryStart2NdSemesterDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	return hSPF1JanuaryStart2NdSemesterDetails;
 }
-
+   /**
+    * 
+    * @param SeasonHSPF1Details
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return seasonHSPF1Details
+    */
    private SeasonHSPF1Details setseasonHSPF1DetailsStatus(
 		SeasonHSPF1Details seasonHSPF1Details,String code, String type, int serviceCode, String message ) {
 	   if(seasonHSPF1Details==null) seasonHSPF1Details = new SeasonHSPF1Details(); 
 	   seasonHSPF1Details.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	return seasonHSPF1Details;
 }
-
+   /**
+    * 
+    * @param HSPF1Accounting
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return hSPF1Accounting
+    */
    private HSPF1Accounting setHSPF1AccountingStatus(HSPF1Accounting hSPF1Accounting, String code, String type, int serviceCode, String message ) {
 	   if(hSPF1Accounting==null) hSPF1Accounting = new HSPF1Accounting(); 
 	   hSPF1Accounting.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	return hSPF1Accounting;
 }
-
+   /**
+    * 
+    * @param HSPF1JanuaryStartFullYearDetail
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return hSPF1JanuaryStartFullYearDetail
+    */
    private HSPF1JanuaryStartFullYearDetail setHSPF1JanuaryStartFullYearDetailStatus(
 		HSPF1JanuaryStartFullYearDetail hSPF1JanuaryStartFullYearDetail,
 		String code, String type, int serviceCode, String message ) {
@@ -3102,32 +3211,193 @@ public GHTSection2Dates getGHTVASeasonDateDetails(String seasonProgramId) {
 	   hSPF1JanuaryStartFullYearDetail.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	return hSPF1JanuaryStartFullYearDetail;
 }
-
+   /**
+    * 
+    * @param HSPF1BasicDetails
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return hSPF1BasicDetails
+    */
    private HSPF1BasicDetails setHSPF1BasicDetailsStatus(
 		HSPF1BasicDetails hSPF1BasicDetails, String code, String type, int serviceCode, String message ) {
 		   if(hSPF1BasicDetails==null) hSPF1BasicDetails = new HSPF1BasicDetails(); 
 		   hSPF1BasicDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 		return hSPF1BasicDetails;
 }
-
+   /**
+    * 
+    * @param SeasonGHTDetails
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return seasonGHTDetails
+    */
    private SeasonGHTDetails setSeasonGHTDetailsStatus(SeasonGHTDetails seasonGHTDetails, String code, String type, int serviceCode, String message ) {
 	   if(seasonGHTDetails==null) seasonGHTDetails = new SeasonGHTDetails(); 
 	   seasonGHTDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 		return seasonGHTDetails;
 	}
 
-
+   /**
+    * 
+    * @param GHTSection1Base
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return ghtSection1Base
+    */
    private GHTSection1Base setGHTSection1BaseStatus(GHTSection1Base ghtSection1Base, String code, String type, int serviceCode, String message ) {
 	   if(ghtSection1Base==null) ghtSection1Base = new GHTSection1Base(); 
 	   ghtSection1Base.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 		return ghtSection1Base;
 }
+   /**
+    * 
+    * @param GHTSection2Dates
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return ghtSection2Dates
+    */
 
    private GHTSection2Dates setGHTSection2DatesStatus(GHTSection2Dates ghtSection2Dates, String code, String type, int serviceCode, String message ) {
 	   if(ghtSection2Dates==null) ghtSection2Dates = new GHTSection2Dates(); 
 	   ghtSection2Dates.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	return ghtSection2Dates;
 }
+   /**
+    * 
+    * @param SeasonWPDetails
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return seasonWPDetails
+    */
+   private SeasonWPDetails setSeasonWPDetailsStatus(
+		SeasonWPDetails seasonWPDetails, String code, String type, int serviceCode, String message ) {
+	   if(seasonWPDetails==null) seasonWPDetails = new SeasonWPDetails(); 
+	   seasonWPDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	return seasonWPDetails;
+}
+   /**
+    * 
+    * @param WPBasicDetail
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return wpBasicDetail
+    */
+   private WPBasicDetail setWPBasicDetailStatus(WPBasicDetail wpBasicDetail, String code, String type, int serviceCode, String message ) {
+	   if(wpBasicDetail==null) wpBasicDetail = new WPBasicDetail(); 
+	   wpBasicDetail.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 
+	return wpBasicDetail;
+}
 
+   /**
+    * 
+    * @param WPSectionOne
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return wpSectionOne
+    */
+   private WPSectionOne setWPSectionOneStatus(WPSectionOne wpSectionOne, String code, String type, int serviceCode, String message ) {
+	   if(wpSectionOne==null) wpSectionOne = new WPSectionOne(); 
+	   wpSectionOne.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+
+	return wpSectionOne;
+}
+
+   /**
+    * 
+    * @param WPProgramAllocations
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return wpProgramAllocations
+    */
+   private WPProgramAllocations setWPProgramAllocationsStatus(WPProgramAllocations wpProgramAllocations, String code, String type, int serviceCode, String message ) {
+	   if(wpProgramAllocations==null) wpProgramAllocations = new WPProgramAllocations(); 
+	   wpProgramAllocations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	return wpProgramAllocations;
+}
+   /**
+    * 
+    * @param SeasonDepartmentNotes
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return returnObject
+    */
+   private SeasonDepartmentNotes setSeasonDepartmentNotesStatus(SeasonDepartmentNotes returnObject, String code, String type, int serviceCode, String message ) {
+	   if(returnObject==null) returnObject = new SeasonDepartmentNotes(); 
+	   returnObject.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	return returnObject;
+}
+   /*private com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument setSeasonDepartmentDocumentStatus(
+			com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument returnObject,
+			String code, String type, int serviceCode, String message ) {
+	   if(returnObject==null) returnObject = new com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument(); 
+	   returnObject.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+		return returnObject;
+	}*/
+   /**
+    * 
+    * @param SeasonProgramNote
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return returnObject
+    */
+
+   private SeasonProgramNote setSeasonProgramNoteStatus(
+		SeasonProgramNote returnObject, String code, String type, int serviceCode, String message ) {
+	   if(returnObject==null) returnObject = new SeasonProgramNote(); 
+	   returnObject.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	return returnObject;
+}
+   /**
+    * 
+    * @param SeasonProgramDocument
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return returnObject
+    */
+   private SeasonProgramDocument setSeasonProgramDocumentStatus(
+		SeasonProgramDocument returnObject, String code, String type, int serviceCode, String message ) {
+	   if(returnObject==null) returnObject = new SeasonProgramDocument(); 
+	   returnObject.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+	return returnObject;
+}
+   /**
+    * 
+    * @param WPCAPProgramAllocations
+    * @param code
+    * @param type
+    * @param serviceCode
+    * @param message
+    * @return wpcapProgramAllocations
+    */
+   private WPCAPProgramAllocations setWPCAPProgramAllocationsStatus(
+			WPCAPProgramAllocations wpcapProgramAllocations,String code, String type, int serviceCode, String message ) {
+	   if(wpcapProgramAllocations==null) wpcapProgramAllocations = new WPCAPProgramAllocations(); 
+	   wpcapProgramAllocations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+		return wpcapProgramAllocations;
+	}
+
+   
 }

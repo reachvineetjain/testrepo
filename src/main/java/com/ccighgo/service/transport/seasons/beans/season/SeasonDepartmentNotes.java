@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for SeasonDepartmentNotes complex type.
@@ -47,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
     "createdOn",
     "createdBy"
 })
-public class SeasonDepartmentNotes {
+public class SeasonDepartmentNotes extends Response{
 
     protected int seasonId;
     protected int seasonDepartmentNotetId;

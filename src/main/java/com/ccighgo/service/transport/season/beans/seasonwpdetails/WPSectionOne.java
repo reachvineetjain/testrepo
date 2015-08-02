@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for WPSectionOne complex type.
@@ -48,7 +50,7 @@ import javax.xml.bind.annotation.XmlType;
     "isJobBoardOpen",
     "maxPendingJobAppls"
 })
-public class WPSectionOne {
+public class WPSectionOne extends Response {
 
     protected int seasonId;
     protected int seasonProgramId;

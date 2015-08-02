@@ -77,7 +77,38 @@ public class SeasonMessageConstants {
 	public static final String GET_GHTWA_SEASON_DATE_DEAILS="error.get.ghtwa.season.date.details";
 	
 	
+	public static final String GET_SEASON_WP_SUM_DETAILS="error.get.season.wp.details";
+	public static final String UPDATE_SEASON_WP_SUM_DETAILS="error.update.season.wp.details";
+	public static final String GET_SEASON_WP_SPRING_DETAILS="error.get.season.wp.spring.details";
+	public static final String UPDATE_SEASON_WP_SPRING_DETAILS="error.update.season.wp.spring.details";
 	
+	public static final String GET_SEASON_WP_SPRING_BASE_DETAILS="error.get.season.wp.spring.base.details";
+	public static final String UPDATE_SEASON_WP_SPRING_BASE_DETAILS="error.update.season.wp.spring.base.details";
+	
+	public static final String GET_WP_SPRING_BASE_DETAILS="error.get.wp.spring.base.details";
+	public static final String UPDATE_WP_SPRING_BASE_DETAILS="error.update.wp.spring.base.details";
+	
+	public static final String GET_WP_SPRING_SECTION_ONE_DETAILS="error.get.wp.spring.section.one.details";
+	public static final String UPDATE_WP_SPRING_SECTION_ONE_DETAILS="error.update.wp.spring.section.one.details";
+	
+	public static final String GET_WP_SPRING_ALLOCATION_DETAILS="error.get.wp.spring.allocation.details";
+	public static final String UPDATE_WP_SPRING_ALLOCATION_DETAILS="error.update.wp.spring.allocation.details";
+	
+	public static final String GET_WP_SUM_BASE_DETAILS="error.get.wp.sum.base.details";
+	public static final String UPDATE_WP_SUM_BASE_DETAILS="error.update.wp.sum.base.details";
+	
+	public static final String GET_WP_SUM_SECTION_ONE_DETAILS="error.get.wp.sum.section.one.details";
+	public static final String UPDATE_WP_SUM_SECTION_ONE_DETAILS="error.update.wp.sum.section.one.details";
+	
+	public static final String GET_WP_PROGRAM_ALLOCATION="error.get.wp.program.allocation";
+	public static final String UPDATE_WP_PROGRAM_ALLOCATION="error.update.wp.program.allocation";
+	
+	public static final String ADD_SEASON_DEPT_NOTES="error.add.season.dept.note";
+	public static final String ADD_SEASON_PROGRAM_NOTES="error.add.season.program.note";
+	public static final String ADD_SEASON_PROGRAM_DOC="error.add.season.program.doc";
+	
+	public static final String GET_WPCAP_ALLOCATION_DETAILS="error.get.wpcap.allocation.details";
+	public static final String UPDATE_WPCAP_ALLOCATION_DETAILS="error.update.wpcap.allocation.details";
 	
 	
 	
