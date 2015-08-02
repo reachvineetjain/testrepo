@@ -192,7 +192,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    CommonComponentUtils componentUtils;
    @Autowired
    MessageUtils messageUtil;
-   @Autowired
+   
 
    SeasonServiceInterfaceImpl() {
    }
