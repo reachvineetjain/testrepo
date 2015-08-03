@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * The persistent class for the DepartmentPrograms database table.
@@ -56,14 +52,17 @@ public class DepartmentProgram implements Serializable {
    private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
    // bi-directional many-to-one association to DepartmentProgramOption
-   @OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+   @OneToMany(mappedBy = "departmentProgram")
    private List<DepartmentProgramOption> departmentProgramOptions;
 
    // bi-directional many-to-one association to LookupDepartment
    @ManyToOne
    @JoinColumn(name = "departmentId", nullable = false)
    private LookupDepartment lookupDepartment;
+
+   // bi-directional many-to-one association to FieldStaffLCSeason
+   @OneToMany(mappedBy = "departmentProgram")
+   private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
    // bi-directional many-to-one association to SeasonProgramDocument
    @OneToMany(mappedBy = "departmentProgram")
@@ -77,21 +76,11 @@ public class DepartmentProgram implements Serializable {
    @OneToMany(mappedBy = "departmentProgram")
    private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
-   // bi-directional many-to-one association to FieldStaffLCSeason
-   @OneToMany(mappedBy = "departmentProgram")
-   private List<FieldStaffLCSeason> fieldStaffLcseasons;
-
-   // bi-directional many-to-one association to FieldStaffLeadershipSeason
-   @OneToMany(mappedBy = "departmentProgram")
-   private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
-
    public DepartmentProgram() {
    }
 
    public Integer getDepartmentProgramId() {
-      if (this.departmentProgramId != null)
-         return this.departmentProgramId;
-      return 0;
+      return this.departmentProgramId;
    }
 
    public void setDepartmentProgramId(Integer departmentProgramId) {
@@ -99,9 +88,7 @@ public class DepartmentProgram implements Serializable {
    }
 
    public Integer getCreatedBy() {
-      if (this.createdBy != null)
-         return this.createdBy;
-      return 0;
+      return this.createdBy;
    }
 
    public void setCreatedBy(Integer createdBy) {
@@ -125,9 +112,7 @@ public class DepartmentProgram implements Serializable {
    }
 
    public Integer getModifiedBy() {
-      if (this.modifiedBy != null)
-         return this.modifiedBy;
-      return 0;
+      return this.modifiedBy;
    }
 
    public void setModifiedBy(Integer modifiedBy) {
@@ -202,6 +187,28 @@ public class DepartmentProgram implements Serializable {
       this.lookupDepartment = lookupDepartment;
    }
 
+   public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
+      return this.fieldStaffLcseasons;
+   }
+
+   public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
+      this.fieldStaffLcseasons = fieldStaffLcseasons;
+   }
+
+   public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+      getFieldStaffLcseasons().add(fieldStaffLcseason);
+      fieldStaffLcseason.setDepartmentProgram(this);
+
+      return fieldStaffLcseason;
+   }
+
+   public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+      getFieldStaffLcseasons().remove(fieldStaffLcseason);
+      fieldStaffLcseason.setDepartmentProgram(null);
+
+      return fieldStaffLcseason;
+   }
+
    public List<SeasonProgramDocument> getSeasonProgramDocuments() {
       return this.seasonProgramDocuments;
    }
@@ -266,50 +273,6 @@ public class DepartmentProgram implements Serializable {
       seasonProgramUpdateLog.setDepartmentProgram(null);
 
       return seasonProgramUpdateLog;
-   }
-
-   public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-      return this.fieldStaffLcseasons;
-   }
-
-   public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-      this.fieldStaffLcseasons = fieldStaffLcseasons;
-   }
-
-   public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-      getFieldStaffLcseasons().add(fieldStaffLcseason);
-      fieldStaffLcseason.setDepartmentProgram(this);
-
-      return fieldStaffLcseason;
-   }
-
-   public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-      getFieldStaffLcseasons().remove(fieldStaffLcseason);
-      fieldStaffLcseason.setDepartmentProgram(null);
-
-      return fieldStaffLcseason;
-   }
-
-   public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {
-      return this.fieldStaffLeadershipSeasons;
-   }
-
-   public void setFieldStaffLeadershipSeasons(List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons) {
-      this.fieldStaffLeadershipSeasons = fieldStaffLeadershipSeasons;
-   }
-
-   public FieldStaffLeadershipSeason addFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
-      getFieldStaffLeadershipSeasons().add(fieldStaffLeadershipSeason);
-      fieldStaffLeadershipSeason.setDepartmentProgram(this);
-
-      return fieldStaffLeadershipSeason;
-   }
-
-   public FieldStaffLeadershipSeason removeFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
-      getFieldStaffLeadershipSeasons().remove(fieldStaffLeadershipSeason);
-      fieldStaffLeadershipSeason.setDepartmentProgram(null);
-
-      return fieldStaffLeadershipSeason;
    }
 
 }

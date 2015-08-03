@@ -194,145 +194,145 @@ public class SeasonServiceImplUtil {
     * @param seasonEntity
     */
    public void convertEntitySeasonToBeanSeason(SeasonBean seasonBean, Season seasonEntity) {
-      try {
-         seasonBean.setSeasonId(seasonEntity.getSeasonId());
-         seasonBean.setDepartmentId(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentId() : -1);
-         seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getAcronym() : null);
-         seasonBean.setDepartmentName(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentName() : null);
-         seasonBean.setSeasonName(seasonEntity.getSeasonName() != null ? seasonEntity.getSeasonName() : CCIConstants.EMPTY_DATA);
-         if (seasonEntity.getSeasonStatus() != null) {
-            seasonBean.setSeasonStatusValue(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getStatus() : CCIConstants.EMPTY_DATA);
-            seasonBean.setSeasonStatusId(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getSeasonStatusId() : CCIConstants.EMPTY_INTEGER_FIELD);
-         }
+      seasonBean.setSeasonId(seasonEntity.getSeasonId());
+      seasonBean.setDepartmentId(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentId() : -1);
+      seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getAcronym() : null);
+      seasonBean.setDepartmentName(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentName() : null);
+      seasonBean.setSeasonName(seasonEntity.getSeasonName() != null ? seasonEntity.getSeasonName() : CCIConstants.EMPTY_DATA);
 
-         String startDate = CCIConstants.EMPTY_DATA, endDate = CCIConstants.EMPTY_DATA;
-         Integer seasonHspConfId = CCIConstants.EMPTY_INTEGER_FIELD;
-         try {
-            LookupDepartment lookupDepartment = seasonEntity.getLookupDepartment();
-            if (lookupDepartment != null) {
-               try {
-                  if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-                     if (seasonEntity.getSeasonHspconfigurations() != null)
-                        for (SeasonHSPConfiguration seasonconf : seasonEntity.getSeasonHspconfigurations()) {
-                           if (seasonconf.getSeason() != null)
-                              if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
-                                 startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
-                                 endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
-                                 seasonHspConfId = seasonconf.getSeasonHSPConfigurationId();
-                              }
-                        }
-                     seasonBean.setStartDate(startDate);
-                     seasonBean.setEndDate(endDate);
-                     seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
-                     if (seasonEntity.getSeasonWpconfigurations() != null)
-                        for (SeasonWPConfiguration seasonconf : seasonEntity.getSeasonWpconfigurations()) {
-                           if (seasonconf.getSeason() != null)
-                              if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
-                                 startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
-                                 endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
-                                 seasonHspConfId = seasonconf.getSeasonWPConfigurationId();
-                              }
-                        }
-                     seasonBean.setStartDate(startDate);
-                     seasonBean.setEndDate(endDate);
-                     seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
-                     if (seasonEntity.getSeasonGhtconfigurations() != null)
-                        for (SeasonGHTConfiguration seasonconf : seasonEntity.getSeasonGhtconfigurations()) {
-                           if (seasonconf.getSeason() != null)
-                              if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
-                                 startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
-                                 endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
-                                 seasonHspConfId = seasonconf.getSeasonGHTConfigurationId();
-                              }
-                        }
-                     seasonBean.setStartDate(startDate);
-                     seasonBean.setEndDate(endDate);
-                     seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
-                  }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
-               }
-               try {
-                  if (lookupDepartment.getDepartmentPrograms() != null) {
-                     for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
-                        if (departmentProgram.getLookupDepartment().getDepartmentId() == seasonEntity.getLookupDepartment().getDepartmentId()
-                              && departmentProgram.getDepartmentProgramOptions() != null) {
-                           for (DepartmentProgramOption departmentProgramOption : departmentProgram.getDepartmentProgramOptions()) {
-                              if (departmentProgramOption.getDepartmentProgram().getDepartmentProgramId() == departmentProgram.getDepartmentProgramId())
-                                 seasonBean.getProgramOptions().add(mapProgramOptionEntityToBean2(departmentProgramOption));
+      if (seasonEntity.getSeasonStatus() != null) {
+         seasonBean.setSeasonStatusValue(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getStatus() : CCIConstants.EMPTY_DATA);
+         seasonBean.setSeasonStatusId(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getSeasonStatusId() : CCIConstants.EMPTY_INTEGER_FIELD);
+      }
+
+      String startDate = CCIConstants.EMPTY_DATA, endDate = CCIConstants.EMPTY_DATA;
+      Integer seasonHspConfId = CCIConstants.EMPTY_INTEGER_FIELD;
+
+      try {
+         LookupDepartment lookupDepartment = seasonEntity.getLookupDepartment();
+         if (lookupDepartment != null) {
+            try {
+               if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
+                  if (seasonEntity.getSeasonHspconfigurations() != null)
+                     for (SeasonHSPConfiguration seasonconf : seasonEntity.getSeasonHspconfigurations()) {
+                        if (seasonconf.getSeason() != null)
+                           if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
+                              startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
+                              endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
+                              seasonHspConfId = seasonconf.getSeasonHSPConfigurationId();
                            }
+                     }
+                  seasonBean.setStartDate(startDate);
+                  seasonBean.setEndDate(endDate);
+                  seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+               }
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, logger);
+            }
+            try {
+               if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
+                  if (seasonEntity.getSeasonWpconfigurations() != null)
+                     for (SeasonWPConfiguration seasonconf : seasonEntity.getSeasonWpconfigurations()) {
+                        if (seasonconf.getSeason() != null)
+                           if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
+                              startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
+                              endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
+                              seasonHspConfId = seasonconf.getSeasonWPConfigurationId();
+                           }
+                     }
+                  seasonBean.setStartDate(startDate);
+                  seasonBean.setEndDate(endDate);
+                  seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+               }
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, logger);
+            }
+            try {
+               if (lookupDepartment.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
+                  if (seasonEntity.getSeasonGhtconfigurations() != null)
+                     for (SeasonGHTConfiguration seasonconf : seasonEntity.getSeasonGhtconfigurations()) {
+                        if (seasonconf.getSeason() != null)
+                           if (seasonconf.getSeason().getSeasonId() == seasonEntity.getSeasonId()) {
+                              startDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonStartDate());
+                              endDate = DateUtils.getMMddYyyyString(seasonconf.getSeasonEndDate());
+                              seasonHspConfId = seasonconf.getSeasonGHTConfigurationId();
+                           }
+                     }
+                  seasonBean.setStartDate(startDate);
+                  seasonBean.setEndDate(endDate);
+                  seasonBean.setSeasonHSPConfigurationId(seasonHspConfId);
+               }
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, logger);
+            }
+            try {
+               if (lookupDepartment.getDepartmentPrograms() != null) {
+                  for (DepartmentProgram departmentProgram : seasonEntity.getLookupDepartment().getDepartmentPrograms()) {
+                     if (departmentProgram.getLookupDepartment().getDepartmentId() == seasonEntity.getLookupDepartment().getDepartmentId()
+                           && departmentProgram.getDepartmentProgramOptions() != null) {
+                        for (DepartmentProgramOption departmentProgramOption : departmentProgram.getDepartmentProgramOptions()) {
+                           if (departmentProgramOption.getDepartmentProgram().getDepartmentProgramId() == departmentProgram.getDepartmentProgramId())
+                              seasonBean.getProgramOptions().add(mapProgramOptionEntityToBean2(departmentProgramOption));
                         }
                      }
                   }
-               } catch (Exception e) {
-                  ExceptionUtil.logException(e, logger);
                }
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, logger);
             }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
          }
-         try {
-            if (seasonEntity.getSeasonDepartmentNotes() != null && !seasonEntity.getSeasonDepartmentNotes().isEmpty()) {
-               for (SeasonDepartmentNote note : seasonEntity.getSeasonDepartmentNotes()) {
-                  SeasonDepartmentNotes seasonDepartmentNotes = new SeasonDepartmentNotes();
-                  seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
-                  seasonDepartmentNotes.setActive(note.getActive() == 1);
-                  seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
-                  seasonDepartmentNotes.setSeasonDepartmentNotetId(note.getSeasonDepartmentNotesId());
-                  seasonBean.getNotes().add(seasonDepartmentNotes);
-               }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      try {
+         if (seasonEntity.getSeasonDepartmentNotes() != null && !seasonEntity.getSeasonDepartmentNotes().isEmpty()) {
+            for (SeasonDepartmentNote note : seasonEntity.getSeasonDepartmentNotes()) {
+               SeasonDepartmentNotes seasonDepartmentNotes = new SeasonDepartmentNotes();
+               seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
+               seasonDepartmentNotes.setActive(note.getActive() == 1);
+               seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
+               seasonDepartmentNotes.setCreatedOn(DateUtils.getDateAndTime(note.getCreatedOn()));
+               seasonDepartmentNotes.setCreatedBy(note.getCreatedBy() + "");
+               seasonDepartmentNotes.setSeasonDepartmentNotetId(note.getSeasonDepartmentNotesId());
+               seasonBean.getNotes().add(seasonDepartmentNotes);
             }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
          }
-         try {
-            if (seasonEntity.getSeasonDepartmentDocuments() != null && !seasonEntity.getSeasonDepartmentDocuments().isEmpty()) {
-               for (SeasonDepartmentDocument departmentDocument : seasonEntity.getSeasonDepartmentDocuments()) {
-                  try {
-                     DocumentInformation dInfo = departmentDocument.getDocumentInformation();
-                     if (dInfo != null) {
-                        SeasonDocument document = new SeasonDocument();
-                        if (dInfo.getDocumentTypeDocumentCategoryProcess() != null) {
-                           if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType() != null) {
-                              if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
-                                 document.setSeasonId(departmentDocument.getSeason().getSeasonId());
-                                 if (seasonEntity.getLookupDepartment() != null) {
-                                    document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
-                                 }
-                                 document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-                                 document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
-                                 document.setDocName(departmentDocument.getDocumentInformation().getDocumentName());
-                                 document.setFileName(departmentDocument.getDocumentInformation().getFileName());
-                                 document.setActive(departmentDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-                                 document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
-                                 Login login = loginRepository.findOne(1);// TODO find user from session
-                                 if (login != null) {
-                                    document.setUploadedBy(login.getLoginName());
-                                 }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      try {
+         if (seasonEntity.getSeasonDepartmentDocuments() != null && !seasonEntity.getSeasonDepartmentDocuments().isEmpty()) {
+            for (SeasonDepartmentDocument departmentDocument : seasonEntity.getSeasonDepartmentDocuments()) {
+               try {
+                  DocumentInformation dInfo = departmentDocument.getDocumentInformation();
+                  if (dInfo != null) {
+                     SeasonDocument document = new SeasonDocument();
+                     if (dInfo.getDocumentTypeDocumentCategoryProcess() != null) {
+                        if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType() != null) {
+                           if (dInfo.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName() != null) {
+                              document.setSeasonId(departmentDocument.getSeason().getSeasonId());
+                              if (seasonEntity.getLookupDepartment() != null) {
+                                 document.setDepartmentId(seasonEntity.getLookupDepartment().getDepartmentId());
+                              }
+                              document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                              document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+                              document.setDocName(departmentDocument.getDocumentInformation().getDocumentName());
+                              document.setFileName(departmentDocument.getDocumentInformation().getFileName());
+                              document.setActive(departmentDocument.getActive() == CCIConstants.ACTIVE ? true : false);
+                              document.setUploadDate(DateUtils.getMMddyyDate(departmentDocument.getDocumentInformation().getModifiedOn()));
+                              Login login = loginRepository.findOne(1);// TODO find user from session
+                              if (login != null) {
+                                 document.setUploadedBy(login.getLoginName());
                               }
                            }
                         }
-                        seasonBean.getDocuments().add(document);
                      }
-                  } catch (Exception ex) {
-                     ExceptionUtil.logException(ex, logger);
+                     seasonBean.getDocuments().add(document);
                   }
+               } catch (Exception ex) {
+                  ExceptionUtil.logException(ex, logger);
                }
             }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
