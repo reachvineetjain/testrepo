@@ -19,6 +19,7 @@ import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.RegionIHP;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
+import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
@@ -28,7 +29,12 @@ import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.utility.beans.country.Countries;
+import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
@@ -73,6 +79,10 @@ public class UtilityServicesImpl implements UtilityServices {
    SeasonStatusRepository seasonStatusRepository;
    @Autowired
    GenderRepository genderRepository;
+   @Autowired
+   CommonComponentUtils componentUtils;
+   @Autowired
+   MessageUtils messageUtil;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -313,4 +323,83 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
+   
+   
+   @Override
+   public Country getCountryById(int countryId) {
+
+      Country country = new Country();
+      try {
+         LookupCountry lookupCountry = countryRepository.findOne(Integer.valueOf(countryId));
+         if (lookupCountry != null) {
+            country.setCountryCode(lookupCountry.getCountryCode());
+            country.setCountryName(lookupCountry.getCountryName());
+            country.setId(lookupCountry.getCountryId());
+            country = setCountryStatus(country, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            return country;
+
+         }
+         throw new CcighgoException(UtilityServiceMessageConstants.INVALID_COUNTRY_ID);
+      } catch (CcighgoException e) {
+         country = setCountryStatus(country, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_COUNTRY_CODE.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.INVALID_COUNTRY_ID));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.INVALID_COUNTRY_ID));
+      }
+      return country;
+   }
+   
+   @Override
+   public Countries addCountry(Country country) {
+      LookupCountry lookupCountry = null;
+      Countries countries = null;
+      try {
+         // validate name exist
+         lookupCountry = countryRepository.findByCountryName(country.getCountryName());
+         if (lookupCountry != null) {
+            countries = setCountriesStatus(countries, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DUPLICATE_COUNTRY_NAME.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.DUPLICATE_COUNTRY_NAME));
+            return countries;
+         }
+
+         lookupCountry = countryRepository.findByCountryCode(country.getCountryCode());
+         if (lookupCountry != null) {
+            countries = setCountriesStatus(countries, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DUPLICATE_COUNTRY_NAME.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.DUPLICATE_COUNTRY_NAME));
+            return countries;
+         }
+
+         lookupCountry = new LookupCountry();
+         lookupCountry.setCountryName(country.getCountryName());
+         lookupCountry.setCountryCode(country.getCountryCode());
+         countryRepository.save(lookupCountry);
+         countries = getAllCountries();
+         country = setCountryStatus(country, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+      } catch (CcighgoException e) {
+         countries = setCountriesStatus(countries, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ADD_COUNTRY_SERVICE_ERROR.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.INVALID_COUNTRY_ID));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.ADD_COUNTRY_SERVICE_ERROR));
+      }
+      return countries;
+   }
+
+   private Country setCountryStatus(Country country, String code, String type, int serviceCode, String message) {
+      if (country == null)
+         country = new Country();
+      country.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return country;
+
+   }
+   
+
+   private Countries setCountriesStatus(Countries countries, String code, String type, int serviceCode, String message) {
+      if (countries == null)
+         countries = new Countries();
+      countries.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return countries;
+
+   }
+
+  
 }
