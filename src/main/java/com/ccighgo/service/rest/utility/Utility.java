@@ -2,6 +2,7 @@ package com.ccighgo.service.rest.utility;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
+import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
@@ -62,6 +64,28 @@ public class Utility {
    @Produces("application/json")
    public Countries getAllCountries() {
       return utilityServices.getAllCountries();
+   }
+   
+   /**
+    * RESTful service get country for edit by id
+    * 
+    * @param id
+    * @return
+    */
+   @GET
+   @Path("country/edit/{countryId}")
+   @Produces("application/json")
+   public Country editCountry(@PathParam("countryId") int countryId) {
+      
+      return utilityServices.getCountryById(countryId);      
+   }
+   
+   @POST
+   @Path("country/add")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Countries addCountry(Country country) {
+      return utilityServices.addCountry(country);
    }
 
    /**

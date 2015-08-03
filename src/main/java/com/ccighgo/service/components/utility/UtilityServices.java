@@ -5,6 +5,7 @@ package com.ccighgo.service.components.utility;
 
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
+import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
@@ -26,6 +27,21 @@ public interface UtilityServices {
     * @return list of countries with ISO3166 code and name
     */
    public Countries getAllCountries();
+   
+   /**
+    * This method fatech country by id
+    * 
+    * @param id
+    * @return country
+    */
+   public Country getCountryById(int countryId);
+   
+   /**
+    * Adding new country
+    * @param country
+    * @return
+    */
+   public Countries addCountry(Country country);
 
    /**
     * fetches list of all US states and state codes
