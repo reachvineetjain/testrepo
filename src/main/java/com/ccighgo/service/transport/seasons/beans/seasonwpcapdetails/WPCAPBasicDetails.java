@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for WPCAPBasicDetails complex type.
@@ -45,7 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     "programStatusId",
     "programStatusValue"
 })
-public class WPCAPBasicDetails {
+public class WPCAPBasicDetails extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

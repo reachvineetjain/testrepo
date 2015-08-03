@@ -67,8 +67,29 @@ public class SeasonMessageConstants {
 	public static final String get_GHTWA_SEASON_NAME_STATUS="error.get.ghtwa.season.name.status";
 	public static final String UPDATE_GHTWA_SEASON_NAME_STATUS="error.update.ghtwa.season.name.status";
 	
+	public static final String get_GHTHS_ABROAD="error.get.ghths.abroad";
+	public static final String UPDATE_GHTHS_ABROAD="error.update.ghths.abroad";
 	
+	public static final String get_GHT_TEACH_ABROAD="error.get.ght.teach.abroad";
+   public static final String UPDATE_GHT_TEACH_ABROAD="error.update.ght.teach.abroad";
+   public static final String GET_GHT_TEACH_ABROAD_SECTION_ONE="error.get.ght.teach.abroad.section.one";
+   public static final String UPDATE_GHT_TEACH_ABROAD_SECTION_ONE="error.update.ght.teach.abroad.section.one";
+   public static final String GET_GHT_TEACH_ABROAD_SECTION_2DATES="error.get.ght.teach.abroad.section.2dates";
+   public static final String UPDATE_GHT_TEACH_ABROAD_SECTION_2DATES="error.update.ght.teach.abroad.section.2dates";
+   
+   
+	public static final String get_GHT_LANGUAGE_SCHOOL="error.get.ght.language.school";
+	public static final String UPDATE_GHT_LANGUAGE_SCHOOL="error.update.ght.language.school";
+	public static final String get_GHT_LANGUAGE_SCHOOL_SECTION_ONE="error.get.ght.language.school.section.one";
+	public static final String UPDATE_GHT_LANGUAGE_SCHOOL_SECTION_ONE="error.update.ght.language.school.section.one";
 	
+	public static final String get_GHT_LANGUAGE_SCHOOL_SECTION_2DATES="error.get.ght.language.school.section.2dates";
+   public static final String UPDATE_GHT_LANGUAGE_SCHOOL_SECTION_2DATES="error.update.ght.language.school.section.one.2dates";
+   
+	public static final String GET_GHTHS_SECTION_ONE_BASE_ABROAD="error.get.ghths.section.one.base.abroad";
+	public static final String UPDATE_GHTHS_SECTION_ONE_BASE_ABROAD="error.update.ghths.section.one.base.abroad";
+	public static final String GET_GHTHS_SECTION_TWO_DATES_ABROAD="error.get.ghths.section.two.dates.abroad";
+	public static final String UPDATE_GHTHS_SECTION_TWO_DATES_ABROAD="error.update.ghths.section.two.dates.abroad";
 	
 	public static final String GET_GHTVA_SEASON_DATE_DEAILS="error.get.ghtva.season.date.details";
 	public static final String UPDATE_GHTVA_SEASON_DATE_DEAILS="error.update.ghtva.season.date.details";
@@ -110,6 +131,16 @@ public class SeasonMessageConstants {
 	public static final String GET_WPCAP_ALLOCATION_DETAILS="error.get.wpcap.allocation.details";
 	public static final String UPDATE_WPCAP_ALLOCATION_DETAILS="error.update.wpcap.allocation.details";
 	
-	
-	
+	public static final String GET_WPCAP_DETAILS="error.get.wpcap.details";
+   public static final String UPDATE_WPCAP_DETAILS="error.update.wpcap.details";
+   
+   public static final String GET_WPCAP_BASIC_DETAILS="error.get.wpcap.basic.details";
+   public static final String UPDATE_WPCAP_BASIC_DETAILS="error.update.wpcap.basic.details";
+   
+   public static final String GET_WPCAP_INTERNSHIP_DETAILS="error.get.wpcap.internship.details";
+   public static final String UPDATE_WPCAP_INTERNSHIP_DETAILS="error.update.wpcap.internship.details";
+  
+   public static final String GET_WPCAP_TRAINEE_DETAILS="error.get.wpcap.trainee.details";
+   public static final String UPDATE_WPCAP_TRAINEE_DETAILS="error.update.wpcap.trainee.details";
+  
 }
