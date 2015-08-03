@@ -34,7 +34,14 @@ public interface UtilityServices {
     * @param id
     * @return country
     */
-   public Country getCountryById(int id);
+   public Country getCountryById(int countryId);
+   
+   /**
+    * Adding new country
+    * @param country
+    * @return
+    */
+   public Countries addCountry(Country country);
 
    /**
     * fetches list of all US states and state codes

@@ -14,9 +14,13 @@
     <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
     <xsd:complexType name="Countries">
+    <xsd:complexContent>
+		<xsd:extension base="common:Response">
         <xsd:sequence>
             <xsd:element name="countries" type="country:Country" minOccurs="1" maxOccurs="unbounded" />
         </xsd:sequence>
+        </xsd:extension>
+	</xsd:complexContent>
     </xsd:complexType>
 
     <xsd:complexType name="Country">
@@ -29,10 +33,15 @@
 					maxOccurs="1" minOccurs="1" />
 				<xsd:element name="countryName" type="xsd:string"
 					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="countryFlag" type="xsd:string"
+					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="isReqFinalSOAonDS"
+					type="xsd:boolean" />				
+				<xsd:element name="active" type="xsd:boolean" />
 			</xsd:sequence>
 		</xsd:extension>
 	</xsd:complexContent>
-	</xsd:complexType>
+</xsd:complexType>
 
     <xsd:element name="Countries" type="country:Countries"></xsd:element>
 

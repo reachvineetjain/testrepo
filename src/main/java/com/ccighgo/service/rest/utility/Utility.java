@@ -2,6 +2,7 @@ package com.ccighgo.service.rest.utility;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -72,10 +73,19 @@ public class Utility {
     * @return
     */
    @GET
-   @Path("countries/{id}")
-   public Country editCountry(@PathParam("id") int id) {
+   @Path("country/edit/{countryId}")
+   @Produces("application/json")
+   public Country editCountry(@PathParam("countryId") int countryId) {
       
-      return utilityServices.getCountryById(id);      
+      return utilityServices.getCountryById(countryId);      
+   }
+   
+   @POST
+   @Path("country/add")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Countries addCountry(Country country) {
+      return utilityServices.addCountry(country);
    }
 
    /**
