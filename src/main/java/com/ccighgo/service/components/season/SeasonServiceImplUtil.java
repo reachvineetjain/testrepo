@@ -291,6 +291,8 @@ public class SeasonServiceImplUtil {
                seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
                seasonDepartmentNotes.setActive(note.getActive() == 1);
                seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
+               seasonDepartmentNotes.setCreatedOn(DateUtils.getDateAndTime(note.getCreatedOn()));
+               seasonDepartmentNotes.setCreatedBy(note.getCreatedBy() + "");
                seasonDepartmentNotes.setSeasonDepartmentNotetId(note.getSeasonDepartmentNotesId());
                seasonBean.getNotes().add(seasonDepartmentNotes);
             }
