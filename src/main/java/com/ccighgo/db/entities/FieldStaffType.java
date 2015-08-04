@@ -3,51 +3,39 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the FieldStaffType database table.
  * 
  */
 @Entity
-@Table(name = "FieldStaffType")
 @NamedQuery(name = "FieldStaffType.findAll", query = "SELECT f FROM FieldStaffType f")
 public class FieldStaffType implements Serializable {
    private static final long serialVersionUID = 1L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(unique = true, nullable = false)
    private Integer fieldStaffTypeId;
 
-   @Column(length = 50)
    private String fieldStaffType;
 
-   @Column(length = 10)
    private String fieldStaffTypeCode;
 
-   // bi-directional many-to-one association to FieldStaffLCSeason
+   // bi-directional many-to-one association to FieldStaff
    @OneToMany(mappedBy = "fieldStaffType")
-   private List<FieldStaffLCSeason> fieldStaffLcseasons;
-
-   // bi-directional many-to-one association to FieldStaffLeadershipSeason
-   @OneToMany(mappedBy = "fieldStaffType")
-   private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
+   private List<FieldStaff> fieldStaffs;
 
    public FieldStaffType() {
    }
 
    public Integer getFieldStaffTypeId() {
-      if (this.fieldStaffTypeId != null)
-         return this.fieldStaffTypeId;
-      return 0;
+      return this.fieldStaffTypeId;
    }
 
    public void setFieldStaffTypeId(Integer fieldStaffTypeId) {
@@ -70,48 +58,26 @@ public class FieldStaffType implements Serializable {
       this.fieldStaffTypeCode = fieldStaffTypeCode;
    }
 
-   public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-      return this.fieldStaffLcseasons;
+   public List<FieldStaff> getFieldStaffs() {
+      return this.fieldStaffs;
    }
 
-   public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-      this.fieldStaffLcseasons = fieldStaffLcseasons;
+   public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+      this.fieldStaffs = fieldStaffs;
    }
 
-   public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-      getFieldStaffLcseasons().add(fieldStaffLcseason);
-      fieldStaffLcseason.setFieldStaffType(this);
+   public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().add(fieldStaff);
+      fieldStaff.setFieldStaffType(this);
 
-      return fieldStaffLcseason;
+      return fieldStaff;
    }
 
-   public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-      getFieldStaffLcseasons().remove(fieldStaffLcseason);
-      fieldStaffLcseason.setFieldStaffType(null);
+   public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().remove(fieldStaff);
+      fieldStaff.setFieldStaffType(null);
 
-      return fieldStaffLcseason;
-   }
-
-   public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {
-      return this.fieldStaffLeadershipSeasons;
-   }
-
-   public void setFieldStaffLeadershipSeasons(List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons) {
-      this.fieldStaffLeadershipSeasons = fieldStaffLeadershipSeasons;
-   }
-
-   public FieldStaffLeadershipSeason addFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
-      getFieldStaffLeadershipSeasons().add(fieldStaffLeadershipSeason);
-      fieldStaffLeadershipSeason.setFieldStaffType(this);
-
-      return fieldStaffLeadershipSeason;
-   }
-
-   public FieldStaffLeadershipSeason removeFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
-      getFieldStaffLeadershipSeasons().remove(fieldStaffLeadershipSeason);
-      fieldStaffLeadershipSeason.setFieldStaffType(null);
-
-      return fieldStaffLeadershipSeason;
+      return fieldStaff;
    }
 
 }

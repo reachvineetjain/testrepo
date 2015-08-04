@@ -14,5 +14,8 @@ import com.ccighgo.db.entities.LookupCountry;
  */
 @Repository
 public interface CountryRepository extends JpaRepository<LookupCountry, Integer> {
+   
+   LookupCountry findByCountryName(String CountryName);
+   LookupCountry findByCountryCode(String countryCode);
 
 }

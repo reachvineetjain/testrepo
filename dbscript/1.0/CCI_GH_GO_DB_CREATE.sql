@@ -37,6 +37,15 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupGender` (
 );
 
 -- ----------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.GoIdSequence 
+-- ----------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`GoIdSequence` (
+  `goId` INT(3) NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY (`goId`)
+)AUTO_INCREMENT = 1000;
+
+
+-- ----------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.UserType whether cciuser, lc, partner, participant etc
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`UserType` (
@@ -77,15 +86,19 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SysDiagrams` (
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Login` (
   `loginId` INT(11) NOT NULL AUTO_INCREMENT,
-  `userTypeId` INT(3) NOT NULL,
+  `goId` INT,
   `loginName` VARCHAR(50) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
+  `createdOn` TIMESTAMP  NULL,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `modifiedBy` INT(11) NOT NULL,
   PRIMARY KEY (`loginId`),
   UNIQUE INDEX `loginName` (`loginName` ASC),
-  INDEX `FK_Login_UserType` (`userTypeId` ASC),
-  CONSTRAINT `FK_Login_UserType`
-    FOREIGN KEY (`userTypeId`)
-    REFERENCES `cci_gh_go`.`UserType` (`userTypeId`)
+  INDEX `FK_Login_GoIdSequence_idx` (`goId` ASC),
+  CONSTRAINT `FK_Login_GoIdSequence`
+    FOREIGN KEY (`goId`)
+    REFERENCES `cci_gh_go`.`GoIdSequence` (`goId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -122,6 +135,34 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PasswordHistory` (
   CONSTRAINT `FK_PasswordHistory_Login`
     FOREIGN KEY (`loginId`)
     REFERENCES `cci_gh_go`.`Login` (`loginId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+-- ----------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.LoginUserType
+-- ----------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LoginUserType` (
+  `loginUserTypeId` INT(11) NOT NULL AUTO_INCREMENT,
+  `loginId` INT(11),
+  `userTypeId` INT(3),
+  `defaultUserType` TINYINT(1) DEFAULT 0,
+  `active` TINYINT(1),
+  `createdOn` TIMESTAMP  NULL,
+  `createdBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `modifiedBy` INT(11) NOT NULL,
+  PRIMARY KEY (`loginUserTypeId`),
+  INDEX `FK_LoginUserType_Login_idx` (`loginId` ASC),
+  INDEX `FK_LoginUserType_UserType_idx` (`userTypeId` ASC),
+  CONSTRAINT `FK_LoginUserType_Login`
+    FOREIGN KEY (`loginId`)
+    REFERENCES `cci_gh_go`.`Login` (`loginId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_LoginUserType_UserType`
+    FOREIGN KEY (`userTypeId`)
+    REFERENCES `cci_gh_go`.`UserType` (`userTypeId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -1530,6 +1571,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonGeographyConfiguration` (
     ON UPDATE NO ACTION
 );
 
+
  -- -----------------------------------------------------
 -- Table `cci_gh_go`.`FieldStaffType`
 -- -----------------------------------------------------
@@ -1540,8 +1582,8 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffType` (
   `fieldStaffType` VARCHAR(50),
   PRIMARY KEY (`fieldStaffTypeId`)
  );
-
- -- -----------------------------------------------------
+ 
+  -- -----------------------------------------------------
 -- Table `cci_gh_go`.`FieldStaff`
 -- -----------------------------------------------------
 
@@ -1558,7 +1600,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaff` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION   
 );
- 
+
  -- -----------------------------------------------------
 -- Table `cci_gh_go`.`FieldStaffLeadershipSeason`
 -- ----------------------------------------------------- 

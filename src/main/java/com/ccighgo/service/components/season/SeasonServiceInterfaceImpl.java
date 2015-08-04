@@ -34,6 +34,7 @@ import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.CcighgoServiceException;
+import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
@@ -64,6 +65,9 @@ import com.ccighgo.jpa.repositories.SeasonWPConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSpringRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSummerRepository;
 import com.ccighgo.jpa.repositories.SeasonWTWinterRepository;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.SeasonMessageConstants;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
@@ -109,7 +113,6 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
 import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
-import com.ccighgo.utils.ValidationUtils;
 
 /**
  * @author ravi
@@ -183,6 +186,10 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    SeasonIHPProgramHelper ihpProgramHelper;
    @Autowired
    SeasonIHPDetailRepository seasonIHPDetailRepository;
+   @Autowired
+   CommonComponentUtils componentUtils;
+   @Autowired
+   MessageUtils messageUtil;
 
    SeasonServiceInterfaceImpl() {
    }
@@ -190,9 +197,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional(readOnly = true)
    public SeasonsList getAllSeasons() {
+      SeasonsList seasonsList = new SeasonsList();
       try {
          List<Season> allseasons = seasonRepository.getAllSeasons();
-         SeasonsList seasonsList = new SeasonsList();
          if (allseasons != null && !(allseasons.isEmpty())) {
             seasonsList.setRecordCount(allseasons.size());
             for (int i = 0; i < allseasons.size(); i++) {
@@ -202,11 +209,14 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                seasonsList.getSeasons().add(seasonBean);
             }
          }
-         return seasonsList;
+         seasonsList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
+         seasonsList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.GET_SEASON_LIST_ERROR)));
          ExceptionUtil.logException(e, LOGGER);
-         return null;
       }
+      return seasonsList;
    }
 
    @Override
@@ -286,30 +296,26 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional(readOnly = true)
    public SeasonBean editSeason(String id) {
-      try {
-         return viewSeason(id);
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, LOGGER);
-         return null;
-      }
+      return viewSeason(id);
    }
 
    @Override
    @Transactional(readOnly = true)
    public SeasonBean viewSeason(String id) {
+      SeasonBean seasonBean = new SeasonBean();
       try {
-         ValidationUtils.isValidSeasonId(id);
          Season seasonEntity = seasonRepository.findOne(Integer.parseInt(id));
-         SeasonBean seasonBean = null;
          if (seasonEntity != null) {
-            seasonBean = new SeasonBean();
             seasonServiceImplUtil.convertEntitySeasonToBeanSeason(seasonBean, seasonEntity);
          }
-         return seasonBean;
+         seasonBean.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_SEASON_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
+         seasonBean.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILURE_VIEW_SEASON_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.FAILURE_VIEW_SEASON_SERVICE_CODE)));
          ExceptionUtil.logException(e, LOGGER);
-         return null;
       }
+      return seasonBean;
    }
 
    @Override

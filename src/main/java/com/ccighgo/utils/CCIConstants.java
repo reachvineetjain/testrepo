@@ -11,16 +11,16 @@ import java.util.Calendar;
  */
 public class CCIConstants {
 
-   //service status codes
+   // service status codes
    public static final String SUCCESS = "Success";
    public static final String FAILURE = "Failure";
-   
-   //common service message codes
-   public static final String TYPE_ERROR="Error";
-   public static final String TYPE_INFO="Info";
-   public static final String SERVICE_SUCCESS="service.success.message";
-   public static final String NO_RECORD="no.record.found";
-   public static final String SEASON_ID_INVALID="season.id.zero.or.negative";
+
+   // common service message codes
+   public static final String TYPE_ERROR = "Error";
+   public static final String TYPE_INFO = "Info";
+   public static final String SERVICE_SUCCESS = "service.success.message";
+   public static final String NO_RECORD = "no.record.found";
+   public static final String SEASON_ID_INVALID = "season.id.zero.or.negative";
 
    // date utility constants
    public static final String MM_DD_YY = "MM/dd/yy";
@@ -147,8 +147,8 @@ public class CCIConstants {
    public static final String HTTP = "http://";
    public static final String HTTPS = "https://";
    public static final String FTP = "ftp://";
-   
- //Season statuses
+
+   // Season statuses
    public static final String STATUS_OPEN = "Open";
    public static final String STATUS_CLOSE = "Close";
    public static final String STATUS_DRAFT = "Draft";
@@ -165,7 +165,12 @@ public class CCIConstants {
 
    // Applicant node error codes
    public static final String BACKGROUND_CHECK_RESPONSE_MESSAGE_FOR_CODE_1001 = "[element] is invalid/missing. One or many error message node(s) will be present. See sample error messages below.";
-   
+
    public static final Integer UNDEFINED_GENDER = 3;
+
+   // Field Staff Code
+   public static final Integer FieldStaffTypeCode_ERD = 1;
+   public static final Integer FieldStaffTypeCode_RD = 2;
+   public static final String SERVICE_FAILURE = "Service Failure";
 
 }

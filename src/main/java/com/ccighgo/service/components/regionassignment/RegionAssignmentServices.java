@@ -1,23 +1,29 @@
 package com.ccighgo.service.components.regionassignment;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.season.beans.assignedregion.AssignedRegion;
 import com.ccighgo.service.transport.season.beans.assignedstates.AssignedStateInfo;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSuperRegion;
+import com.ccighgo.utils.WSDefaultResponse;
 
+@Service
 public interface RegionAssignmentServices {
 
-   List<AssignedSuperRegion> getAssignedSuperRegionDetails();
+   AssignedSuperRegion getAssignedSuperRegionDetails(Integer seasonId);
 
-   List<AssignedStateInfo> getAssignedStates(String superRegionId, String regionId);
+   AssignedRegion getAssignedRegions(Integer superRegionId, Integer seasonId);
 
-   List<AssignedRegion> getAssignedRegionsOfSuperRegion(String superRegionId);
+   AssignedStateInfo getAssignedStates(Integer superRegionId, Integer regionId, Integer seasonId);
 
-   String assignFieldStaffToState(String fieldStaffId, String stateId);
+   WSDefaultResponse assignFieldStaffToState(String fieldStaffId, String stateId);
 
-   String assignRDFieldStaffToState(String fieldStaffId, String regionId);
+   WSDefaultResponse assignRDFieldStaffToState(String fieldStaffId, String regionId);
 
-   String assignERDFieldStaffToState(String fieldStaffId, String superRegionId);
+   WSDefaultResponse assignERDFieldStaffToState(String fieldStaffId, String superRegionId);
+
+   SuperRegionsERDs getAllERDsForSuperRegion(Integer superRegion);
+
+   RegionRDs getAllRDsForRegion(Integer superRegionId, Integer seasonId);
 
 }
