@@ -32,6 +32,7 @@ import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DepartmentResourceGroup;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
+import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
@@ -67,6 +68,10 @@ import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
+import com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups.DepartmentResourceGroupTO;
+import com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups.DepartmentResourceGroups;
+import com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups.ResourcePermissionTO;
+import com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups.ResourcePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.LoginInfo;
 import com.ccighgo.service.transport.usermanagement.beans.user.PermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
@@ -79,6 +84,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.UserRole;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserState;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserType;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
+import com.ccighgo.service.transport.utility.beans.department.Department;
+import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasscodeGenerator;
@@ -419,6 +426,15 @@ public class UserManagementServiceImpl implements UserManagementService {
           return usr;
       }
 	  
+   }
+   
+   @Override
+   @Transactional(readOnly=true)
+   public Departments getDepartmentWithPermissions() {
+      List<LookupDepartment>  lookupDepartments =  departmentRepository.findAll();
+      Departments  Departments = getDepartment(lookupDepartments);
+     
+      return Departments;
    }
 
    @Override
@@ -916,6 +932,49 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.getCciUserDepartmentPrograms().addAll(userDepartmentProgramsList);
       }
       return cciUser;
+   }
+   
+   private Departments getDepartment(List<LookupDepartment> lookupDepartmentList) {
+	   Departments departments = new Departments();
+	   for(LookupDepartment lookupDepartment : lookupDepartmentList) {
+	    	  Department department = new Department();
+	   department.setAcronym(lookupDepartment.getAcronym());
+	   department.setDepartmentName(lookupDepartment.getDepartmentName());
+	   department.setId(lookupDepartment.getDepartmentId());
+	   department.setIsActive(lookupDepartment.getActive() ==0 ?false:true);
+	   DepartmentResourceGroups departmentResourceGroups = getDepartmentResourceGroups(lookupDepartment.getDepartmentResourceGroups());	   
+	   department.setDepartmentresourcegroups(departmentResourceGroups);
+	   departments.getDepartments().add(department);
+	   }
+	   return departments;
+   };
+   
+   private DepartmentResourceGroups getDepartmentResourceGroups(List<DepartmentResourceGroup> lookupDepartmentResourceGroupList) {
+	   DepartmentResourceGroups departmentResourceGroups = new DepartmentResourceGroups();
+	   for(DepartmentResourceGroup departmentResourceGroup : lookupDepartmentResourceGroupList) {
+		  DepartmentResourceGroupTO group = new DepartmentResourceGroupTO();
+		   group.setDepartmentResourceGroupId(departmentResourceGroup.getDepartmentResourceGroupId());
+		   group.setResourceGroupName(departmentResourceGroup.getResourceGroupName());
+		   ResourcePermissions permissions = getResourcePermissions(departmentResourceGroup.getResourcePermissions());
+		   group.setResourcePermissions(permissions);
+		   departmentResourceGroups.getDepartmentResourceGroup().add(group);
+		   
+	   }
+	   return departmentResourceGroups;
+   }
+   
+   private ResourcePermissions getResourcePermissions(List<ResourcePermission> permissionsList) {
+	   ResourcePermissions resourcePermissions = new ResourcePermissions();
+	   for(ResourcePermission permission : permissionsList) {
+		   ResourcePermissionTO permissionTO = new ResourcePermissionTO();
+		   permissionTO.setResourceDescription(permission.getResourceDescription());
+		   permissionTO.setResourceName(permission.getResourceName());
+		   permissionTO.setResourcePermissionId(permission.getResourcePermissionId());
+		   resourcePermissions.getResourcePermissions().add(permissionTO);
+	   }
+	   
+	   return resourcePermissions;
+	   
    }
    
    /**

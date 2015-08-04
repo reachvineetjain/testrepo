@@ -6,7 +6,7 @@
 //
 
 
-package com.ccighgo.service.transport.utility.beans.department;
+package com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Departments complex type.
+ * <p>Java class for ResourcePermissions complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Departments">
+ * &lt;complexType name="ResourcePermissions">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="departments" type="{http://www.ccighgo.com/department}Department" maxOccurs="unbounded"/>
+ *         &lt;element name="ResourcePermissions" type="{http://www.ccighgo.com/departmentresourcegroup}ResourcePermissionTO" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,41 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Departments", propOrder = {
-    "departments"
+@XmlType(name = "ResourcePermissions", propOrder = {
+    "resourcePermissions"
 })
-public class Departments {
+public class ResourcePermissions {
 
-    @XmlElement(required = true)
-    protected List<Department> departments;
+    @XmlElement(name = "ResourcePermissions", required = true)
+    protected List<ResourcePermissionTO> resourcePermissions;
 
     /**
-     * Gets the value of the departments property.
+     * Gets the value of the resourcePermissions property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the departments property.
+     * This is why there is not a <CODE>set</CODE> method for the resourcePermissions property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getDepartments().add(newItem);
+     *    getResourcePermissions().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Department }
+     * {@link ResourcePermissionTO }
      * 
      * 
      */
-    public List<Department> getDepartments() {
-        if (departments == null) {
-            departments = new ArrayList<Department>();
+    public List<ResourcePermissionTO> getResourcePermissions() {
+        if (resourcePermissions == null) {
+            resourcePermissions = new ArrayList<ResourcePermissionTO>();
         }
-        return this.departments;
+        return this.resourcePermissions;
     }
 
 }

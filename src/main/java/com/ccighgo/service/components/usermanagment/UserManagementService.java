@@ -9,6 +9,7 @@ import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
+import com.ccighgo.service.transport.utility.beans.department.Departments;
 
 /**
  * Service Interface for all user management related operations
@@ -52,6 +53,12 @@ public interface UserManagementService {
 	 * @return updated User
 	 */
 	public User updateUserDemographics(User user);
+	/**
+	 * get list of departments with available permissions 
+	 * 
+	 * @return list of permissions
+	 */
+	public Departments getDepartmentWithPermissions();
 	
 	/**
      * Updates user permissions

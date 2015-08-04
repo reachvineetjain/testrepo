@@ -5,5 +5,5 @@
 // Generated on: 2015.08.04 at 01:45:15 PM IST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/department")
-package com.ccighgo.service.transport.utility.beans.department;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/departmentresourcegroup")
+package com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups;

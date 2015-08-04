@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/departmentresourcegroup"
+	elementFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common"
+	attributeFormDefault="unqualified" jaxb:version="2.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:dept="http://www.ccighgo.com/departmentresourcegroup">
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+
+	<xsd:element name="DepartmentResourceGroups" type="dept:DepartmentResourceGroups"></xsd:element>
+
+	<xsd:complexType name="DepartmentResourceGroups">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>					<xsd:element name="departmentResourceGroup" type="dept:DepartmentResourceGroupTO"						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="DepartmentResourceGroupTO">
+		<xsd:sequence>
+			<xsd:element name="departmentResourceGroupId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="resourceGroupName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="ResourcePermissions" type="dept:ResourcePermissions"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ResourcePermissions">
+		<xsd:sequence>
+			<xsd:element name="ResourcePermissions" type="dept:ResourcePermissionTO"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="ResourcePermissionTO">
+		<xsd:sequence>
+			<xsd:element name="resourcePermissionId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="resourceName" type="xsd:string"
+				minOccurs="1" />
+			<xsd:element name="resourceDescription" type="xsd:string"
+				minOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>
+    
