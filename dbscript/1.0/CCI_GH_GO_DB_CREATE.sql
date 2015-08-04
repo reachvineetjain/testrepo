@@ -1531,6 +1531,17 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SeasonGeographyConfiguration` (
 );
 
  -- -----------------------------------------------------
+-- Table `cci_gh_go`.`FieldStaffType`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffType` (
+  `fieldStaffTypeId` INT NOT NULL AUTO_INCREMENT,
+  `fieldStaffTypeCode` VARCHAR(10),
+  `fieldStaffType` VARCHAR(50),
+  PRIMARY KEY (`fieldStaffTypeId`)
+ );
+
+ -- -----------------------------------------------------
 -- Table `cci_gh_go`.`FieldStaff`
 -- -----------------------------------------------------
 
@@ -1546,18 +1557,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaff` (
     REFERENCES `cci_gh_go`.`FieldStaffType` (`fieldStaffTypeId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION   
-   
 );
- -- -----------------------------------------------------
--- Table `cci_gh_go`.`FieldStaffType`
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffType` (
-  `fieldStaffTypeId` INT NOT NULL AUTO_INCREMENT,
-  `fieldStaffTypeCode` VARCHAR(10),
-  `fieldStaffType` VARCHAR(50),
-  PRIMARY KEY (`fieldStaffTypeId`)
- );
  
  -- -----------------------------------------------------
 -- Table `cci_gh_go`.`FieldStaffLeadershipSeason`

@@ -5,5 +5,5 @@
 // Generated on: 2015.07.31 at 03:58:58 PM CDT 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/common")
-package com.ccighgo.service.transport.common.response.beans;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/regionsuperregion")
+package com.ccighgo.service.transport.region.beans.regionsuperregion;

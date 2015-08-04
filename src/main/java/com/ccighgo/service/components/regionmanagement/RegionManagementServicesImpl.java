@@ -31,6 +31,8 @@ import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionState;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegion;
+import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegionsMap;
 import com.ccighgo.service.transport.region.beans.stateregion.State;
 import com.ccighgo.service.transport.region.beans.stateregion.StateRegion;
 import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
@@ -628,6 +630,64 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR));
       }
       return rgn;
+   }
+   
+   @Override
+   @Transactional(readOnly=true)
+   public RegionSuperRegionsMap getRegionSuperRegionMap(String seasonId){
+      RegionSuperRegionsMap regionSuperRegionsMap = new RegionSuperRegionsMap();
+      if (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
+         regionSuperRegionsMap.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+               messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
+         return regionSuperRegionsMap;
+      }
+      List<Integer> distinctSuperRegionList = seasonGeographyConfigurationRepository.findDistinctSuperRegionsBySeasonId(Integer.valueOf(seasonId));
+      if (distinctSuperRegionList == null) {
+         regionSuperRegionsMap.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+               messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+         return regionSuperRegionsMap;
+      } else {
+         try {
+            regionSuperRegionsMap.setSeasonId(Integer.valueOf(seasonId));
+            List<RegionSuperRegion> regionSuperRegionList = new ArrayList<RegionSuperRegion>();
+            for (Integer superRegionId : distinctSuperRegionList) {
+               com.ccighgo.db.entities.SuperRegion superRegion = superRegionRepository.findOne(superRegionId);
+               if (superRegion != null) {
+                  List<SeasonGeographyConfiguration> regionList =  seasonGeographyConfigurationRepository.findBySuperRegionIdAndSeasonId(superRegionId, Integer.valueOf(seasonId)) ;
+                  if(regionList!=null){
+                     for(SeasonGeographyConfiguration region:regionList){
+                        if(region.getRegion()!=null){
+                           RegionSuperRegion regionSuperRegion = new RegionSuperRegion();
+                           com.ccighgo.service.transport.region.beans.regionsuperregion.Region reg = new com.ccighgo.service.transport.region.beans.regionsuperregion.Region();
+                           com.ccighgo.service.transport.region.beans.regionsuperregion.SuperRegion sReg = new com.ccighgo.service.transport.region.beans.regionsuperregion.SuperRegion();
+                           sReg.setSuperRegionId(superRegion.getSuperRegionId());
+                           sReg.setSuperRegionName(superRegion.getSuperRegionName());
+                           reg.setRegionId(region.getRegion().getRegionId());
+                           reg.setRegionName(region.getRegion().getRegionName());
+                           regionSuperRegion.setRegion(reg);
+                           regionSuperRegion.setSuperRegion(sReg);
+                           regionSuperRegionList.add(regionSuperRegion);
+                        }
+                     }
+                  }
+               }
+            }
+            regionSuperRegionsMap.getRegionSuperRegion().addAll(regionSuperRegionList);
+            regionSuperRegionsMap.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } catch (CcighgoException e) {
+            regionSuperRegionsMap.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
+                  messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
+            LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
+         }
+      }
+      return regionSuperRegionsMap;
+   }
+   
+   public void moveRegions(){
+      
    }
 
 }

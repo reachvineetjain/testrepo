@@ -6,28 +6,26 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.region.beans.regionsuperregion;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegionsMap;
 
 
 /**
- * <p>Java class for Response complex type.
+ * <p>Java class for RegionSuperRegion complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Response">
+ * &lt;complexType name="RegionSuperRegion">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="header" type="{http://www.ccighgo.com/common}Header"/>
- *         &lt;element name="status" type="{http://www.ccighgo.com/common}Status"/>
+ *         &lt;element name="region" type="{http://www.ccighgo.com/regionsuperregion}Region"/>
+ *         &lt;element name="superRegion" type="{http://www.ccighgo.com/regionsuperregion}SuperRegion"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,66 +35,63 @@ import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperR
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Response", propOrder = {
-    "header",
-    "status"
+@XmlType(name = "RegionSuperRegion", propOrder = {
+    "region",
+    "superRegion"
 })
-@XmlSeeAlso({
-    RegionSuperRegionsMap.class
-})
-public class Response {
+public class RegionSuperRegion {
 
     @XmlElement(required = true)
-    protected Header header;
+    protected Region region;
     @XmlElement(required = true)
-    protected Status status;
+    protected SuperRegion superRegion;
 
     /**
-     * Gets the value of the header property.
+     * Gets the value of the region property.
      * 
      * @return
      *     possible object is
-     *     {@link Header }
+     *     {@link Region }
      *     
      */
-    public Header getHeader() {
-        return header;
+    public Region getRegion() {
+        return region;
     }
 
     /**
-     * Sets the value of the header property.
+     * Sets the value of the region property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Header }
+     *     {@link Region }
      *     
      */
-    public void setHeader(Header value) {
-        this.header = value;
+    public void setRegion(Region value) {
+        this.region = value;
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the superRegion property.
      * 
      * @return
      *     possible object is
-     *     {@link Status }
+     *     {@link SuperRegion }
      *     
      */
-    public Status getStatus() {
-        return status;
+    public SuperRegion getSuperRegion() {
+        return superRegion;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the superRegion property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Status }
+     *     {@link SuperRegion }
      *     
      */
-    public void setStatus(Status value) {
-        this.status = value;
+    public void setSuperRegion(SuperRegion value) {
+        this.superRegion = value;
     }
 
 }

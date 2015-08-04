@@ -11,6 +11,7 @@ import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegionsMap;
 import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 
 /**
@@ -106,5 +107,11 @@ public interface RegionManagementServices {
     * @return
     */
    public Region addStateRegions(String superRegionId, String seasonId, Region region);
+
+   /**
+    * @param seasonId
+    * @return
+    */
+   public RegionSuperRegionsMap getRegionSuperRegionMap(String seasonId);
 
 }
