@@ -71,5 +71,8 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
 
    @Query("SELECT DISTINCT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId =?2 AND s.lookupUsstate.usStatesId =?3 AND s.season.seasonId = ?4 ")
    public SeasonGeographyConfiguration findStateRowBySuperRegionIdRegionIdStateIdSeasonId(Integer superRegionId, Integer regionId, Integer stateId, Integer seasonId);
+   
+   @Query("SELECT DISTINCT s.superRegion.superRegionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
+   public List<Integer> findDistinctSuperRegionsBySeasonIdRM(Integer seasonId);
 
 }

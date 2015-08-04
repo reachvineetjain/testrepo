@@ -1599,7 +1599,6 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaff` (
     REFERENCES `cci_gh_go`.`FieldStaffType` (`fieldStaffTypeId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION   
-   
 );
 
  -- -----------------------------------------------------
