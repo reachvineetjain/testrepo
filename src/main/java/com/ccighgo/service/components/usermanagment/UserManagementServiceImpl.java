@@ -432,9 +432,18 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Transactional(readOnly=true)
    public Departments getDepartmentWithPermissions() {
       List<LookupDepartment>  lookupDepartments =  departmentRepository.findAll();
-      Departments  Departments = getDepartment(lookupDepartments);
-     
-      return Departments;
+      Departments  departments = null;
+      try
+      {
+         departments = getDepartment(lookupDepartments);
+         departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+      return departments;
+      }
+      catch (CcighgoServiceException e) {
+         departments = setDepartmentsStatus(departments,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+           LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+           return departments;
+       }
    }
 
    @Override
@@ -1031,5 +1040,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 	   return staffuserrolePermissions;
 	   
    }
+   
+   private Departments setDepartmentsStatus(Departments departments, String code, String type, int serviceCode, String message ) {
+      if(departments==null) departments = new Departments(); 
+      departments.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return departments;
+      
+   }
+
 
 }
