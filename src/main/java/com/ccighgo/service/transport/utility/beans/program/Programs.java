@@ -10,10 +10,13 @@ package com.ccighgo.service.transport.utility.beans.program;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -39,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Programs", propOrder = {
     "programs"
 })
-public class Programs {
+public class Programs extends Response{
 
     @XmlElement(required = true)
     protected List<Program> programs;
