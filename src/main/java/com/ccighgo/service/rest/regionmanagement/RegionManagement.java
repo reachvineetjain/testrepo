@@ -218,7 +218,7 @@ public class RegionManagement {
    @Produces("application/json")
    public RegionSuperRegionsMap getRegionSuperRegionMap(@PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'getStateRegions'");
-      return regionManagementServices.getRegionSuperRegionMap(seasonId);
+      return null;// regionManagementServices.getRegionSuperRegionMap(seasonId);
    }
    
    @POST

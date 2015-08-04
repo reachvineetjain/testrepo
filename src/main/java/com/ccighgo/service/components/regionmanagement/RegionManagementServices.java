@@ -112,6 +112,6 @@ public interface RegionManagementServices {
     * @param seasonId
     * @return
     */
-   public RegionSuperRegionsMap getRegionSuperRegionMap(String seasonId);
+  // public RegionSuperRegionsMap getRegionSuperRegionMap(String seasonId);
 
 }
