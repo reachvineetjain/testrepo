@@ -58,6 +58,8 @@
    </xsd:complexType>
 
    <xsd:complexType name="SeasonDepartmentNotes">
+    <xsd:complexContent>
+     <xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonDepartmentNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -66,6 +68,8 @@
          <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
    </xsd:complexType>
 
 </xsd:schema>

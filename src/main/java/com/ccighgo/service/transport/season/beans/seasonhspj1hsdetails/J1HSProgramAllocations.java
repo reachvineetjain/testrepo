@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for J1HSProgramAllocations complex type.
@@ -62,7 +64,7 @@ import javax.xml.bind.annotation.XmlType;
     "totalAcceptedParticipants",
     "totalRemainingParticpants"
 })
-public class J1HSProgramAllocations {
+public class J1HSProgramAllocations extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;
