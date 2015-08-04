@@ -236,13 +236,13 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
                seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
                seasonId = seasonEntity.getSeasonId();
+               return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
             }
          }
-         return viewSeason(seasonId + CCIConstants.EMPTY_DATA);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         return null;
       }
+      return null;
 
       /*
        * try { int seasonId = createSeasonLogic(seasonBean); if(seasonId==-1){ throw new
@@ -814,6 +814,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                }
             }
             seasonHSPAllocationRepository.save(updatedList);
+            seasonHSPAllocationRepository.flush();
             returnObject = getHSPJ1HSSeasonProgramAllocation(String.valueOf(j1hsProgramAllocations.getSeasonProgramId()));
          }
       } catch (CcighgoException e) {
@@ -992,7 +993,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          seasonHSPF1Details.setAugustStartFullYearDetails(seasonServiceImplUtil.getHSPF1AugustStartFullYearDetails(allF1Details));
          seasonHSPF1Details.setAccounting(seasonServiceImplUtil.getHSPF1Accounting(allF1Details));
          seasonHSPF1Details.setFieldSettings(seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details));
-         seasonHSPF1Details.setProgramAllocations(getHSPF1ProgramAllocations(allF1Details.getSeason().getSeasonId() + ""));
+         seasonHSPF1Details.setProgramAllocations(getHSPF1ProgramAllocations(allF1Details.getSeasonF1DetailsId() + ""));
          seasonHSPF1Details.getNotes().addAll(seasonServiceImplUtil.getHSPF1Notes(allF1Details));
          seasonHSPF1Details.getDocuments().addAll(seasonServiceImplUtil.getHSPF1Documents(allF1Details, Integer.parseInt(seasonProgramId)));
          return seasonHSPF1Details;
