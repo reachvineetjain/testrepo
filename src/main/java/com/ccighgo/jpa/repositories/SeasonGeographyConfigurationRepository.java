@@ -25,7 +25,7 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    @Query("SELECT DISTINCT s.region.regionId FROM SeasonGeographyConfiguration s")
    public List<Integer> findDistinctRegions();
 
-   @Query("SELECT DISTINCT s.superRegion.superRegionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
+   @Query("SELECT DISTINCT s.superRegion.superRegionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1 AND s.region.regionId IS NULL AND s.lookupUsstate.usStatesId IS NULL ")
    public List<Integer> findDistinctSuperRegionsBySeasonId(Integer seasonId);
 
    @Query("SELECT DISTINCT s.region.regionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
@@ -54,10 +54,22 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId = ?2 AND s.season.seasonId = ?3")
    public List<SeasonGeographyConfiguration> findRegionBySuperRegionRegionAndSeasonId(Integer superRegionId, Integer regionId, Integer seasonId);
 
-   @Query("SELECT DISTINCT s.region.regionId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1  AND s.season.seasonId = ?2 ")
+   @Query("SELECT DISTINCT s.region.regionId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1  AND s.season.seasonId = ?2 AND s.lookupUsstate.usStatesId IS NULL ")
    public List<Integer> findDistinctRegionsBySuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
 
    @Query("SELECT DISTINCT s.lookupUsstate.usStatesId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId = ?2 AND s.season.seasonId = ?3")
    public List<Integer> findDistinctStatesBySuperRegionRegionAandSeasonId(Integer superRegionId, Integer regionId, Integer seasonId);
+
+   @Query("SELECT DISTINCT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId = ?2 AND s.region.regionId IS NULL AND s.lookupUsstate.usStatesId IS NULL")
+   public SeasonGeographyConfiguration findSuperRegionRowBySuperRegionIdSeasonId(Integer superRegionId, Integer seasonId);
+
+   @Query("SELECT DISTINCT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1  AND s.season.seasonId = ?2 ")
+   public List<SeasonGeographyConfiguration> findDistinctRegionsBySuperRegionIdAndSeasonIdObject(Integer superRegionId, Integer seasonId);
+
+   @Query("SELECT DISTINCT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId =?2 AND s.season.seasonId = ?3  AND s.lookupUsstate.usStatesId IS NULL")
+   public SeasonGeographyConfiguration findRegionRowBySuperRegionIdRegionIdSeasonId(Integer superRegionId, Integer regionId, Integer seasonId);
+
+   @Query("SELECT DISTINCT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId =?2 AND s.lookupUsstate.usStatesId =?3 AND s.season.seasonId = ?4 ")
+   public SeasonGeographyConfiguration findStateRowBySuperRegionIdRegionIdStateIdSeasonId(Integer superRegionId, Integer regionId, Integer stateId, Integer seasonId);
 
 }

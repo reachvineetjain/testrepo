@@ -444,5 +444,22 @@
 			<arg value="${xsd.dir}/StateRegion.xsd" />
 		</java>
 	</target>
+	
+	
+	<target name="AssignRDsToRegions">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/regionAssignment/AssignedStaffToState.xsd" />
+			</java>
+		</target>
+	
+	<target name="AssignStaffToState">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/regionAssignment/AssignedRDsToRegion.xsd" />
+			</java>
+		</target>
 
 </project>
