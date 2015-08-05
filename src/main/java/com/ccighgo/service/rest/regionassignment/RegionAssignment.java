@@ -98,19 +98,19 @@ public class RegionAssignment {
    @GET
    @Path("assign/erdFieldStaff/{oldFieldStaffId}/{newFieldStaffId}/{superRegionId}/{seasonId}")
    @Produces("application/json")
-   public WSDefaultResponse assignERDFieldStaffToState(@PathParam("oldFieldStaffId") String oldFieldStaffId, @PathParam("newFieldStaffId") String newFieldStaffId,
+   public WSDefaultResponse assignERDFieldStaffToSuperRegion(@PathParam("oldFieldStaffId") String oldFieldStaffId, @PathParam("newFieldStaffId") String newFieldStaffId,
          @PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
       LOGGER.debug("fun : assignERDFieldStaffToState [" + oldFieldStaffId + "," + newFieldStaffId + "," + superRegionId + "," + seasonId + "]");
-      return regionAssignmentServices.assignERDFieldStaffToState(Integer.parseInt(oldFieldStaffId), Integer.parseInt(newFieldStaffId), Integer.parseInt(superRegionId),
+      return regionAssignmentServices.assignERDFieldStaffToSuperRegion(Integer.parseInt(oldFieldStaffId), Integer.parseInt(newFieldStaffId), Integer.parseInt(superRegionId),
             Integer.parseInt(seasonId));
    }
 
    @POST
    @Path("assign/rdFieldStaff")
    @Produces("application/json")
-   public WSDefaultResponse assignRDFieldStaffToState(AssignedRDToRegion assignedRDsToRegion) {
+   public WSDefaultResponse assignRDFieldStaffToRegion(AssignedRDToRegion assignedRDsToRegion) {
       LOGGER.debug("fun : assignRDFieldStaffToState");
-      return regionAssignmentServices.assignRDFieldStaffToState(assignedRDsToRegion);
+      return regionAssignmentServices.assignRDFieldStaffToRegion(assignedRDsToRegion);
    }
 
    @POST

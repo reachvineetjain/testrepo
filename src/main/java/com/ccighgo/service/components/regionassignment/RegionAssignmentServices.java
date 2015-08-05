@@ -20,9 +20,9 @@ public interface RegionAssignmentServices {
 
    WSDefaultResponse assignFieldStaffToState(AssignedStaffToState assignedStaffToState);
 
-   WSDefaultResponse assignRDFieldStaffToState(AssignedRDToRegion assignedRDsToRegion);
+   WSDefaultResponse assignRDFieldStaffToRegion(AssignedRDToRegion assignedRDsToRegion);
 
-   WSDefaultResponse assignERDFieldStaffToState(Integer oldFieldStaffId, Integer newFieldStaffId, Integer superRegionId, Integer seasonId);
+   WSDefaultResponse assignERDFieldStaffToSuperRegion(Integer oldFieldStaffId, Integer newFieldStaffId, Integer superRegionId, Integer seasonId);
 
    SuperRegionsERDs getAllERDsForSuperRegion(Integer superRegion);
 
