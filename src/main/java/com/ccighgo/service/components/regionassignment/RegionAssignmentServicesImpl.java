@@ -65,7 +65,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    StateRepository stateRepository;
    @Autowired
    SeasonRepository seasonRepository;
-   private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
    @Override
    public AssignedSuperRegion getAssignedSuperRegionDetails(Integer seasonId) {
@@ -200,12 +199,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             fieldStaffLeadershipSeasonRepository.delete(fieldStaffId);
             FieldStaffLeadershipSeason fieldStaffLeadershipSeason = new FieldStaffLeadershipSeason();
             fieldStaffLeadershipSeason.setCreatedBy(1);
-            fieldStaffLeadershipSeason.setCreatedOn(CURRENT_TIMESTAMP);
+            fieldStaffLeadershipSeason.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
             FieldStaff fieldStaff = fieldStaffRepository.findOne(assignedERDToRegion.getNewFieldStaffId());
             fieldStaffLeadershipSeason.setFieldStaff(fieldStaff);
             fieldStaffLeadershipSeason.setModifiedBy(1);
-            fieldStaffLeadershipSeason.setModifiedOn(CURRENT_TIMESTAMP);
+            fieldStaffLeadershipSeason.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
             Season season = seasonRepository.findOne(assignedERDToRegion.getSeasonId());
             fieldStaffLeadershipSeason.setSeason(season);
@@ -487,12 +486,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
                FieldStaffLeadershipSeason fieldStaffLeadershipSeason = new FieldStaffLeadershipSeason();
                fieldStaffLeadershipSeason.setCreatedBy(1);
-               fieldStaffLeadershipSeason.setCreatedOn(CURRENT_TIMESTAMP);
+               fieldStaffLeadershipSeason.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
                FieldStaff fieldStaff = fieldStaffRepository.findOne(staffId);
                fieldStaffLeadershipSeason.setFieldStaff(fieldStaff);
                fieldStaffLeadershipSeason.setModifiedBy(1);
-               fieldStaffLeadershipSeason.setModifiedOn(CURRENT_TIMESTAMP);
+               fieldStaffLeadershipSeason.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
                Season season = seasonRepository.findOne(assignedRDsToRegion.getSeasonId());
                fieldStaffLeadershipSeason.setSeason(season);
@@ -528,12 +527,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
                FieldStaffLeadershipSeason fieldStaffLeadershipSeason = new FieldStaffLeadershipSeason();
                fieldStaffLeadershipSeason.setCreatedBy(1);
-               fieldStaffLeadershipSeason.setCreatedOn(CURRENT_TIMESTAMP);
+               fieldStaffLeadershipSeason.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
                FieldStaff fieldStaff = fieldStaffRepository.findOne(staffId);
                fieldStaffLeadershipSeason.setFieldStaff(fieldStaff);
                fieldStaffLeadershipSeason.setModifiedBy(1);
-               fieldStaffLeadershipSeason.setModifiedOn(CURRENT_TIMESTAMP);
+               fieldStaffLeadershipSeason.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
                Season season = seasonRepository.findOne(assignedStaffToState.getSeasonId());
                fieldStaffLeadershipSeason.setSeason(season);
