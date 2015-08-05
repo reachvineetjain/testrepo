@@ -70,7 +70,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
    public List<SeasonDepartmentUpdateLog> saveSeasonDepartmentLog(SeasonDepartmentUpdateLog seasonDepartmentUpdateLog) {
       com.ccighgo.db.entities.SeasonDepartmentUpdateLog seasonDepartmentUpdateLogEntity = new com.ccighgo.db.entities.SeasonDepartmentUpdateLog();
       seasonDepartmentUpdateLogEntity.setModifiedBy(1);
-      seasonDepartmentUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonDepartmentUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonDepartmentUpdateLog.getSeasonId());
       seasonDepartmentUpdateLogEntity.setSeason(season);
       seasonDepartmentUpdateLogEntity.setUpdateLogObject(seasonDepartmentUpdateLog.getUpdateLogObject());
@@ -84,7 +84,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(seasonProgramUpdateLog.getDepartmentProgramId());
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
       seasonProgramUpdateLogEntity.setModifiedBy(1);
-      seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
       seasonProgramUpdateLogEntity.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
@@ -155,7 +155,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.HSP_F1_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
       seasonProgramUpdateLogEntity.setModifiedBy(1);
-      seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
       seasonProgramUpdateLogEntity.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
@@ -169,7 +169,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.WP_WT_CAP_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
       seasonProgramUpdateLogEntity.setModifiedBy(1);
-      seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
       seasonProgramUpdateLogEntity.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
@@ -183,7 +183,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.HSP_J1_HS_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
       seasonProgramUpdateLogEntity.setModifiedBy(1);
-      seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
       seasonProgramUpdateLogEntity.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());

@@ -134,7 +134,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    EntityManager entityManager;
    @Autowired
    Properties cciGhGoProps;
-   private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
@@ -380,7 +379,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       // TODO need to discuss about updating login info
       cciUser.setModifiedBy(1);
-      cciUser.setModifiedOn(CURRENT_TIMESTAMP);
+      cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUsersRepository.saveAndFlush(cciUser);
 
       // update user programs
@@ -577,9 +576,9 @@ public class UserManagementServiceImpl implements UserManagementService {
    private LoginInfo getLoginInfo(CCIStaffUser cciUser) {
       LoginInfo loginInfo = new LoginInfo();
       UserType userType = new UserType();
-      userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
+      /*userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
       userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
-      userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
+      userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());*/
       loginInfo.setLoginId(cciUser.getLogin().getLoginId());
       loginInfo.setLoginName(cciUser.getLogin().getLoginName());
       loginInfo.setUserType(userType);
@@ -788,15 +787,15 @@ public class UserManagementServiceImpl implements UserManagementService {
       String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
             CCIConstants.MAX_SPL_CHARS).toString();
       login.setPassword(password);
-      login.setUserType(cciUserType);
+      //login.setUserType(cciUserType);
 
       loginRepository.save(login);
       login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
       cciUser.setLogin(login);
       cciUser.setCreatedBy(1);
-      cciUser.setCreatedOn(CURRENT_TIMESTAMP);
+      cciUser.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUser.setModifiedBy(1);
-      cciUser.setModifiedOn(CURRENT_TIMESTAMP);
+      cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUsersRepository.saveAndFlush(cciUser);
       return cciAdminGuid;
    }
@@ -818,9 +817,9 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUsrPrg.setId(staffUserProgramPK);
          cciUsrPrg.setDepartmentProgram(deptProgram);
          cciUsrPrg.setCreatedBy(1);
-         cciUsrPrg.setCreatedOn(CURRENT_TIMESTAMP);
+         cciUsrPrg.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          cciUsrPrg.setModifiedBy(1);
-         cciUsrPrg.setModifiedOn(CURRENT_TIMESTAMP);
+         cciUsrPrg.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          cciUsrPrg.setCcistaffUser(cUser);
          userPrograms.add(cciUsrPrg);
       }
@@ -843,9 +842,9 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          staffUsersCCIStaffRole.setCreatedBy(1);
          staffUsersCCIStaffRole.setCcistaffUser(cUser);
-         staffUsersCCIStaffRole.setCreatedOn(CURRENT_TIMESTAMP);
+         staffUsersCCIStaffRole.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          staffUsersCCIStaffRole.setModifiedBy(1);
-         staffUsersCCIStaffRole.setModifiedOn(CURRENT_TIMESTAMP);
+         staffUsersCCIStaffRole.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          CCIStaffUsersCCIStaffRolePK pk = new CCIStaffUsersCCIStaffRolePK();
          pk.setCciStaffUserId(cUser.getCciStaffUserId());
          pk.setCciStaffRoleId(usrRole.getRoleId());
@@ -883,9 +882,9 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserPermission.setResourcePermission(resourcePermission);
                cciUserPermission.setResourceAction(resourceAction);
                cciUserPermission.setCreatedBy(1);
-               cciUserPermission.setCreatedOn(CURRENT_TIMESTAMP);
+               cciUserPermission.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                cciUserPermission.setModifiedBy(1);
-               cciUserPermission.setModifiedOn(CURRENT_TIMESTAMP);
+               cciUserPermission.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                cciUserPermissionsList.add(cciUserPermission);
             }
          }
