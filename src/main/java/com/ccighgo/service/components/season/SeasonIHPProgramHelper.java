@@ -3,7 +3,9 @@
  */
 package com.ccighgo.service.components.season;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -85,6 +87,7 @@ public class SeasonIHPProgramHelper {
    IHPRegionsRepository ihpRegionsRepository;
    @Autowired
    SeasonRepository seasonRepository;
+   private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
    /**
     * @param seasonProgramId
@@ -463,18 +466,18 @@ public class SeasonIHPProgramHelper {
             }
          }
          documentInformation.setCreatedBy(1);
-         documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
          documentInformation.setModifiedBy(1);
-         documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
          documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
          sprgDoc.setActive(CCIConstants.ACTIVE);
          sprgDoc.setSeason(season);
          sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_STP_IHP_ID));
          sprgDoc.setDocumentInformation(documentInformation);
          sprgDoc.setCreatedBy(1);
-         sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprgDoc.setCreatedOn(CURRENT_TIMESTAMP);
          sprgDoc.setModifiedBy(1);
-         sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprgDoc.setModifiedOn(CURRENT_TIMESTAMP);
          newDocList.add(sprgDoc);
       }
       seasonProgramDocumentRepository.save(newDocList);
@@ -494,9 +497,9 @@ public class SeasonIHPProgramHelper {
          sprNote.setProgramNote(ihpNote.getNoteValue());
          sprNote.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_STP_IHP_ID));
          sprNote.setCreatedBy(1);
-         sprNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprNote.setCreatedOn(CURRENT_TIMESTAMP);
          sprNote.setModifiedBy(1);
-         sprNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprNote.setModifiedOn(CURRENT_TIMESTAMP);
          updatedNotes.add(sprNote);
       }
       seasonProgramNotesRepository.save(updatedNotes);
