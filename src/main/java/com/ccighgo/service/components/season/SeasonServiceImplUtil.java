@@ -3715,6 +3715,18 @@ public class SeasonServiceImplUtil {
             allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
             // allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
             updatedList.add(allocation);
+         } else if (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FSEM_F1)) {
+            SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+            allocation = seasonHSPAllocation;
+            allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
+            // allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
+            updatedList.add(allocation);
+         } else if (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_SSEM_F1)) {
+            SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+            allocation = seasonHSPAllocation;
+            allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
+            // allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
+            updatedList.add(allocation);
          }
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
