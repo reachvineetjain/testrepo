@@ -288,17 +288,24 @@ public class SeasonServiceImplUtil {
          ExceptionUtil.logException(e, logger);
       }
       try {
-         if (seasonEntity.getSeasonDepartmentNotes() != null && !seasonEntity.getSeasonDepartmentNotes().isEmpty()) {
-            for (SeasonDepartmentNote note : seasonEntity.getSeasonDepartmentNotes()) {
+         List<SeasonDepartmentNote> seasonDepartmentNotesList = seasonDepartmentNotesRepository.findAllDepartmentNotesBySeasonIdDateDesc(seasonEntity.getSeasonId());
+         if (seasonDepartmentNotesList != null && !seasonDepartmentNotesList.isEmpty()) {
+            List<SeasonDepartmentNotes> list = new ArrayList<SeasonDepartmentNotes>();
+            for (SeasonDepartmentNote note : seasonDepartmentNotesList) {
                SeasonDepartmentNotes seasonDepartmentNotes = new SeasonDepartmentNotes();
                seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
                seasonDepartmentNotes.setActive(note.getActive() == 1);
                seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
                seasonDepartmentNotes.setCreatedOn(DateUtils.getDateAndTime(note.getCreatedOn()));
-               seasonDepartmentNotes.setCreatedBy(note.getCreatedBy() + "");
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               if (login != null) {
+                  seasonDepartmentNotes.setCreatedBy(login.getLoginName());
+               }
                seasonDepartmentNotes.setSeasonDepartmentNotetId(note.getSeasonDepartmentNotesId());
-               seasonBean.getNotes().add(seasonDepartmentNotes);
+               list.add(seasonDepartmentNotes);
+               
             }
+            seasonBean.getNotes().addAll(list);
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
@@ -3504,7 +3511,10 @@ public class SeasonServiceImplUtil {
                   wpCapNote.setNoteValue(seasonProgramNote.getProgramNote());
                   wpCapNote.setSeasonProgramId(seasonProgramId);
                   wpCapNote.setDepartmentProgramId(seasonProgramNote.getDepartmentProgram().getDepartmentProgramId());
-                  wpCapNote.setCreatedBy(seasonProgramNote.getCreatedBy() + "");
+                  Login login = loginRepository.findOne(1);// TODO find user from session
+                  if (login != null) {
+                     wpCapNote.setCreatedBy(login.getLoginName());
+                  }
                   wpCapNote.setCreatedOn(DateUtils.getDateAndTime(seasonProgramNote.getCreatedOn()));
                   seasonWPCAPNotes.add(wpCapNote);
                }
