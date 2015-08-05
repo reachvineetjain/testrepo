@@ -20,6 +20,7 @@ import com.ccighgo.service.components.regionassignment.SuperRegionsERDs;
 import com.ccighgo.service.transport.season.beans.assignedregion.AssignedRegion;
 import com.ccighgo.service.transport.season.beans.assignedstates.AssignedStateInfo;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSuperRegion;
+import com.ccighgo.service.transport.season.beans.assignerdstoregion.AssignedERDToRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -95,14 +96,12 @@ public class RegionAssignment {
       return regionAssignmentServices.getAssignedStateStaff(Integer.parseInt(superRegionId), Integer.parseInt(regionId), Integer.parseInt(seasonId));
    }
 
-   @GET
-   @Path("assign/erdFieldStaff/{oldFieldStaffId}/{newFieldStaffId}/{superRegionId}/{seasonId}")
+   @POST
+   @Path("assign/erdFieldStaff")
    @Produces("application/json")
-   public WSDefaultResponse assignERDFieldStaffToSuperRegion(@PathParam("oldFieldStaffId") String oldFieldStaffId, @PathParam("newFieldStaffId") String newFieldStaffId,
-         @PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
-      LOGGER.debug("fun : assignERDFieldStaffToState [" + oldFieldStaffId + "," + newFieldStaffId + "," + superRegionId + "," + seasonId + "]");
-      return regionAssignmentServices.assignERDFieldStaffToSuperRegion(Integer.parseInt(oldFieldStaffId), Integer.parseInt(newFieldStaffId), Integer.parseInt(superRegionId),
-            Integer.parseInt(seasonId));
+   public WSDefaultResponse assignERDFieldStaffToSuperRegion(AssignedERDToRegion assignedERDToRegion) {
+      LOGGER.debug("fun : assignERDFieldStaffToState []");
+      return regionAssignmentServices.assignERDFieldStaffToSuperRegion(assignedERDToRegion);
    }
 
    @POST
