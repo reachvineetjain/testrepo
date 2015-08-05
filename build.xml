@@ -478,5 +478,13 @@
 			<arg value="${xsd.dir}/MoveRegions.xsd" />
 		</java>
 	</target>
+	
+	<target name="AssignedERDsToRegion">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/regionAssignment/AssignedERDsToRegion.xsd" />
+			</java>
+		</target>
 
 </project>
