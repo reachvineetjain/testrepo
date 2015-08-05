@@ -136,9 +136,9 @@ public class CCIConstants {
 
    // department program options id
    public static final Integer AUGUST_FY_J1_ID = 1;
-   public static final Integer AUGUST_FY_F1_ID = 2;
+   public static final Integer AUGUST_FY_F1_ID = 5;
    public static final Integer JANUARY_FY_J1_ID = 3;
-   public static final Integer JANUARY_FY_F1_ID = 4;
+   public static final Integer JANUARY_FY_F1_ID = 8;
    public static final Integer JOB_FAIR_SUMMER_ID = 10;
    public static final Integer SELF_PLACED_SUMMER_ID = 11;
    public static final Integer DIRECT_PLACEMENT_SUMMER_ID = 12;
