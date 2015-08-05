@@ -299,7 +299,7 @@ public class SeasonServiceImplUtil {
                seasonDepartmentNotes.setSeasonId(seasonEntity.getSeasonId());
                seasonDepartmentNotes.setActive(note.getActive() == 1);
                seasonDepartmentNotes.setNoteValue(note.getDepartmentNote());
-               seasonDepartmentNotes.setCreatedOn(DateUtils.getDateAndTime(note.getCreatedOn()));
+               seasonDepartmentNotes.setCreatedOn(DateUtils.getTimestamp(note.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                if (login != null) {
                   seasonDepartmentNotes.setCreatedBy(login.getLoginName());
@@ -2793,7 +2793,7 @@ public class SeasonServiceImplUtil {
                   note.setSeasonProgramId(seasonProgramId);
                   note.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                   note.setNoteValue(prgNote.getProgramNote());
-                  note.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
+                  note.setCreatedOn(DateUtils.getTimestamp(prgNote.getCreatedOn()));
                   Login login = loginRepository.findOne(1);// TODO find user from session
                   if (login != null) {
                      note.setCreatedBy(login.getLoginName());
@@ -2961,7 +2961,7 @@ public class SeasonServiceImplUtil {
                   if (prgNote.getProgramNote() != null) {
                      notes.setNoteValue(prgNote.getProgramNote());
                   }
-                  notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
+                  notes.setCreatedOn(DateUtils.getTimestamp(prgNote.getCreatedOn()));
                   Login login = loginRepository.findOne(1);// TODO find user from session
                   if (login != null) {
                      notes.setCreatedBy(login.getLoginName());
@@ -3039,7 +3039,7 @@ public class SeasonServiceImplUtil {
                   if (prgNote.getProgramNote() != null) {
                      notes.setNoteValue(prgNote.getProgramNote());
                   }
-                  notes.setCreatedOn(DateUtils.getDateAndTime(prgNote.getCreatedOn()));
+                  notes.setCreatedOn(DateUtils.getTimestamp(prgNote.getCreatedOn()));
                   Login login = loginRepository.findOne(1);// TODO find user from session
                   if (login != null) {
                      notes.setCreatedBy(login.getLoginName());
@@ -3390,7 +3390,7 @@ public class SeasonServiceImplUtil {
                   hspf1SeasonHspF1Note.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
                   hspf1SeasonHspF1Note.setNoteValue(seasonProgramNote.getProgramNote());
                   hspf1SeasonHspF1Note.setCreatedBy(seasonProgramNote.getCreatedBy() + "");
-                  hspf1SeasonHspF1Note.setCreatedOn(DateUtils.getDateAndTime(seasonProgramNote.getCreatedOn()));
+                  hspf1SeasonHspF1Note.setCreatedOn(DateUtils.getTimestamp(seasonProgramNote.getCreatedOn()));
                   hspF1Notes.add(hspf1SeasonHspF1Note);
                }
             }
@@ -3518,7 +3518,7 @@ public class SeasonServiceImplUtil {
                   if (login != null) {
                      wpCapNote.setCreatedBy(login.getLoginName());
                   }
-                  wpCapNote.setCreatedOn(DateUtils.getDateAndTime(seasonProgramNote.getCreatedOn()));
+                  wpCapNote.setCreatedOn(DateUtils.getTimestamp(seasonProgramNote.getCreatedOn()));
                   seasonWPCAPNotes.add(wpCapNote);
                }
             }

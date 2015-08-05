@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DocumentInformation;
+import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
@@ -20,6 +21,7 @@ import com.ccighgo.db.entities.SeasonDepartmentDocument;
 import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonGHTConfiguration;
+import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
@@ -44,11 +46,13 @@ import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeRepository;
+import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonGHTConfigurationRepository;
+import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPAllocationRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
@@ -192,6 +196,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    CommonComponentUtils componentUtils;
    @Autowired
    MessageUtils messageUtil;
+   @Autowired
+   SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
+   @Autowired FieldStaffLeadershipSeasonRepository fieldStaffLeadershipSeasonRepository;
    
    private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
@@ -2418,6 +2425,27 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                            }
                         }
                         seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
+                     }
+                     //clone regions and assignments
+                     if(existingSeason.getSeasonGeographyConfigurations()!=null){
+                        List<SeasonGeographyConfiguration> existingRegions = existingSeason.getSeasonGeographyConfigurations();
+                        List<SeasonGeographyConfiguration> clonedRegions = new ArrayList<SeasonGeographyConfiguration>();
+                        for(SeasonGeographyConfiguration config:existingRegions){
+                           config.setSeason(clonedHSPSeason);
+                           clonedRegions.add(config);
+                        }
+                        seasonGeographyConfigurationRepository.save(clonedRegions);
+                        seasonGeographyConfigurationRepository.flush();
+                     }
+                     if(existingSeason.getFieldStaffLeadershipSeasons()!=null){
+                        List<FieldStaffLeadershipSeason> existingAssignments = existingSeason.getFieldStaffLeadershipSeasons();
+                        List<FieldStaffLeadershipSeason> clonedAssignments = new ArrayList<FieldStaffLeadershipSeason>();
+                        for(FieldStaffLeadershipSeason fieldStaffLeadershipSeason:existingAssignments){
+                           fieldStaffLeadershipSeason.setSeason(clonedHSPSeason);
+                           clonedAssignments.add(fieldStaffLeadershipSeason);
+                        }
+                        fieldStaffLeadershipSeasonRepository.save(clonedAssignments);
+                        fieldStaffLeadershipSeasonRepository.flush();
                      }
 
                      List<SeasonHSPAllocation> seasonHspallocations = existingSeason.getSeasonHspallocations();
