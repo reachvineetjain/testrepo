@@ -576,9 +576,9 @@ public class UserManagementServiceImpl implements UserManagementService {
    private LoginInfo getLoginInfo(CCIStaffUser cciUser) {
       LoginInfo loginInfo = new LoginInfo();
       UserType userType = new UserType();
-      /*userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
+      userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
       userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
-      userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());*/
+      userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
       loginInfo.setLoginId(cciUser.getLogin().getLoginId());
       loginInfo.setLoginName(cciUser.getLogin().getLoginName());
       loginInfo.setUserType(userType);
@@ -787,7 +787,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
             CCIConstants.MAX_SPL_CHARS).toString();
       login.setPassword(password);
-      //login.setUserType(cciUserType);
+      login.setUserType(cciUserType);
 
       loginRepository.save(login);
       login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
