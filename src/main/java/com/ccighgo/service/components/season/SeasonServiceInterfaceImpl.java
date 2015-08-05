@@ -1125,7 +1125,8 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             List<SeasonHSPAllocation> hspAllocations = seasonHSPAllocationRepository.findSeasonHSPAllocationBySeasonId(hspf1ProgramAllocations.getSeasonId());
             List<SeasonHSPAllocation> updatedList = new ArrayList<SeasonHSPAllocation>();
             for (SeasonHSPAllocation seasonHSPAllocation : hspAllocations) {
-               if (seasonHSPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+               Integer departmentProgramId = seasonHSPAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId();
+               if (departmentProgramId == CCIConstants.HSP_F1_ID) {
                   seasonServiceImplUtil.updateHSPF1ProgramAllocation(hspf1ProgramAllocations, updatedList, seasonHSPAllocation);
                }
             }
