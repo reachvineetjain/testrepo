@@ -14,9 +14,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.regionmanagement.RegionManagementServices;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.Region;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionManagementDetails;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegionsMap;
+import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 
 /**
  * <p>
@@ -84,14 +87,14 @@ public class RegionManagement {
     * @return newly added super region
     */
    @POST
-   @Path("superregion/add/{seasonId}")
+   @Path("add/superregion/{seasonId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public SuperRegion addSuperRegion(@PathParam("seasonId") String seasonId, SuperRegion superRegion) {
+   public SuperRegion addSuperRegionToSeason(@PathParam("seasonId") String seasonId, SuperRegion superRegion) {
       LOGGER.debug("Calling 'addSuperRegion'");
-      return regionManagementServices.addSuperRegion(seasonId,superRegion);
+      return regionManagementServices.addSuperRegionToSeason(seasonId, superRegion);
    }
-   
+
    /**
     * @param superRegion
     * @return newly added super region
@@ -104,7 +107,7 @@ public class RegionManagement {
       LOGGER.debug("Calling 'updateSuperRegion'");
       return regionManagementServices.updateSuperRegion(superRegion);
    }
-  
+
    /**
     * @param superRegionId
     * @param seasonId
@@ -113,33 +116,116 @@ public class RegionManagement {
    @GET
    @Path("superregion/delete/{superRegionId}/{seasonId}")
    @Produces("application/json")
-   public String deleteSuperRegion(@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
+   public DeleteRequest deleteSuperRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'deleteSuperRegion'");
-      return regionManagementServices.deleteSuperRegion(superRegionId,seasonId);
+      return regionManagementServices.deleteSuperRegion(superRegionId, seasonId);
    }
-   
+
    /**
     * @param regionId
     * @return
     */
    @GET
-   @Path("region/edit/{regionId}")
+   @Path("edit/{regionId}")
    @Produces("application/json")
    public Region editRegion(@PathParam("regionId") String regionId) {
       LOGGER.debug("Calling 'editSuperRegion'");
       return regionManagementServices.getRegion(regionId);
    }
-   
+
+   /**
+    * @param region
+    * @return
+    */
+   @POST
+   @Path("add/{superRegionId}/{seasonId}")
+   @Produces("application/json")
+   public Region addRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, Region region) {
+      LOGGER.debug("Calling 'addRegion'");
+      return regionManagementServices.addRegion(superRegionId, seasonId, region);
+   }
+
+   /**
+    * @param region
+    * @return
+    */
+   @POST
+   @Path("update")
+   @Produces("application/json")
+   public Region updateRegion(Region region) {
+      LOGGER.debug("Calling 'updateRegion'");
+      return regionManagementServices.updateRegion(region);
+   }
+
    /**
     * @param superRegionId
     * @param seasonId
     * @return
     */
    @GET
-   @Path("region/delete/{regionId}/{superRegionId}/{seasonId}")
+   @Path("delete/{regionId}/{superRegionId}/{seasonId}")
    @Produces("application/json")
-   public String deleteRegion(@PathParam("regionId") String regionId,@PathParam("superRegionId") String superRegionId,@PathParam("seasonId") String seasonId) {
+   public DeleteRequest deleteRegion(@PathParam("regionId") String regionId, @PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'deleteSuperRegion'");
-      return regionManagementServices.deleteRegion(regionId,superRegionId,seasonId);
+      return regionManagementServices.deleteRegion(regionId, superRegionId, seasonId);
+   }
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @return
+    */
+   @GET
+   @Path("state/region/{superRegionId}/{seasonId}")
+   @Produces("application/json")
+   public StateRegions getStateRegions(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'getStateRegions'");
+      return regionManagementServices.getStateRegions(superRegionId, seasonId);
+   }
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param stateRegions
+    * @return
+    */
+   @POST
+   @Path("move/state/region/")
+   @Produces("application/json")
+   public StateRegions updateStateRegions(StateRegions stateRegions) {
+      LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
+      return regionManagementServices.updateStateRegions(stateRegions);
+   }
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param region
+    * @return
+    */
+   @POST
+   @Path("add/state/region/{superRegionId}/{seasonId}")
+   @Produces("application/json")
+   public Region addStateRegions(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, Region region) {
+      LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
+      return regionManagementServices.addStateRegions(superRegionId, seasonId, region);
+   }
+   
+  
+   
+   @GET
+   @Path("superregion/map/{seasonId}")
+   @Produces("application/json")
+   public RegionSuperRegionsMap getRegionSuperRegionMap(@PathParam("seasonId") String seasonId) {
+      LOGGER.debug("Calling 'getStateRegions'");
+      return null;// regionManagementServices.getRegionSuperRegionMap(seasonId);
+   }
+   
+   @POST
+   @Path("move/region/")
+   @Produces("application/json")
+   public Region moveRegions(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, Region region) {
+      LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
+      return regionManagementServices.addStateRegions(superRegionId, seasonId, region);
    }
 }

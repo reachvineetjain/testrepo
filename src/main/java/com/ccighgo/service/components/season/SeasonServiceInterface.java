@@ -2,6 +2,7 @@ package com.ccighgo.service.components.season;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.db.entities.Season;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
@@ -787,13 +788,13 @@ public interface SeasonServiceInterface {
     * @return
     */
    public SeasonHspStpIhpDetails updateIHPDetails(SeasonHspStpIhpDetails seasonHspStpIhpDetails);
-   
+
    /**
     * @param ihpNameAndStatus
     * @return
     */
    public IHPNameAndStatus updateIHPNameAndStatus(IHPNameAndStatus ihpNameAndStatus);
-   
+
    /**
     * @param ihpDates
     * @return
@@ -806,4 +807,27 @@ public interface SeasonServiceInterface {
     */
    public IHPProgramConfiguration updateIHPProgramConfigurationDetails(IHPProgramConfiguration ihpProgramConfiguration);
 
+   /**
+    * 
+    * @param season
+    */
+   public void createJ1ProgramAllocation(Season season);
+
+   /**
+    * 
+    * @param season
+    */
+   public void createF1ProgramAllocation(Season season);
+
+   /**
+    * 
+    * @param season
+    */
+   public void createWPSumProgramAllocation(Season season);
+
+   /**
+    * 
+    * @param season
+    */
+   public void createWPSpringProgramAllocation(Season season);
 }

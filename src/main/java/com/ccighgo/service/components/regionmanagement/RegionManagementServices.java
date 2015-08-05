@@ -3,11 +3,16 @@
  */
 package com.ccighgo.service.components.regionmanagement;
 
+import javax.ws.rs.PathParam;
+
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.Region;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.RegionManagementDetails;
-import com.ccighgo.service.transport.season.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
+import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
+import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegionsMap;
+import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 
 /**
  * @author ravi
@@ -24,7 +29,7 @@ public interface RegionManagementServices {
     * @return RegionManagementDetails JSON object
     */
    public RegionManagementDetails getCompleteRegionDetails(String seasonId);
-   
+
    /**
     * @param superRegionId
     * @param seasonId
@@ -36,7 +41,7 @@ public interface RegionManagementServices {
     * @param superRegion
     * @return
     */
-   public SuperRegion addSuperRegion(String seasonId, SuperRegion superRegion);
+   public SuperRegion addSuperRegionToSeason(String seasonId, SuperRegion superRegion);
 
    /**
     * @param superRegion
@@ -48,7 +53,7 @@ public interface RegionManagementServices {
     * @param superRegionId
     * @return
     */
-   public String deleteSuperRegion(String superRegionId, String seasonId);
+   public DeleteRequest deleteSuperRegion(String superRegionId, String seasonId);
 
    /**
     * @param superRegionId
@@ -64,8 +69,49 @@ public interface RegionManagementServices {
     * @param seasonId
     * @return
     */
-   public String deleteRegion(String regionId, String superRegionId, String seasonId);
+   public DeleteRequest deleteRegion(String regionId, String superRegionId, String seasonId);
 
-   
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @return
+    */
+   public StateRegions getStateRegions(String superRegionId, String seasonId);
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param region
+    * @return
+    */
+   public Region addRegion(String superRegionId, String seasonId, Region region);
+
+   /**
+    * @param region
+    * @return
+    */
+   public Region updateRegion(Region region);
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param stateRegions
+    * @return
+    */
+   public StateRegions updateStateRegions(StateRegions stateRegions);
+
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param region
+    * @return
+    */
+   public Region addStateRegions(String superRegionId, String seasonId, Region region);
+
+   /**
+    * @param seasonId
+    * @return
+    */
+  // public RegionSuperRegionsMap getRegionSuperRegionMap(String seasonId);
 
 }

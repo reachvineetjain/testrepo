@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/gender" xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:gender="http://www.ccighgo.com/gender">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.utility.beans.gender" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
+   
+   <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+
+   <xsd:element name="Genders" type="gender:Genders"></xsd:element>
+
+   <xsd:complexType name="Genders">
+   <xsd:complexContent>
+		<xsd:extension base="common:Response">
+      <xsd:sequence>
+         <xsd:element name="genders" type="gender:Gender" minOccurs="1" maxOccurs="unbounded" />
+      </xsd:sequence>
+        </xsd:extension>
+	</xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="Gender">
+   <xsd:complexContent>
+		<xsd:extension base="common:Response">
+      <xsd:sequence>
+         <xsd:element name="genderId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="genderCode" type="xsd:string" maxOccurs="1" minOccurs="1" />
+      </xsd:sequence>
+        </xsd:extension>
+	</xsd:complexContent>
+   </xsd:complexType>
+
+</xsd:schema>
+
