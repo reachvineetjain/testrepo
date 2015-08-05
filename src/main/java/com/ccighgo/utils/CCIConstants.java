@@ -113,8 +113,15 @@ public class CCIConstants {
    // department program options code
    public static final String AUGUST_FY_J1 = "Aug-FY";
    public static final String JANUARY_FY_J1 = "Jan-FY";
+   public static final String AUGUST_FSEM_J1 = "Aug-1Sem";
+   public static final String JANUARY_SSEM_J1 = "Jan-2Sem";
+
    public static final String AUGUST_FY_F1 = "Aug-FY";
    public static final String JANUARY_FY_F1 = "Jan-FY";
+
+   public static final String AUGUST_FSEM_F1 = "Aug-1Sem";
+   public static final String JANUARY_SSEM_F1 = "Jan-2Sem";
+
    public static final String JOB_FAIR_SUMMER = "JF";
    public static final String SELF_PLACED_SUMMER = "SP";
    public static final String DIRECT_PLACEMENT_SUMMER = "DP";
