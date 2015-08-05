@@ -794,44 +794,39 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          if (j1hsProgramAllocations != null && j1hsProgramAllocations.getSeasonId() > 0 && j1hsProgramAllocations.getSeasonProgramId() > 0) {
             SeasonHSPAllocation hspAllocation = seasonHSPAllocationRepository.findSeasonHSPAllocationBySeasonIdAndProgramIdForJ1(j1hsProgramAllocations.getSeasonId(),
                   CCIConstants.HSP_J1_HS_ID);
-            List<SeasonHSPAllocation> updatedList = new ArrayList<SeasonHSPAllocation>();
+            SeasonHSPAllocation allocation = null;
             if (hspAllocation != null) {
                try {
                   if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                     SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+                     allocation = new SeasonHSPAllocation();
                      allocation = hspAllocation;
                      allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getAugStartGuarnteedParticipants());
                      allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getAugStartUnGuarnteedParticipants());
-                     updatedList.add(allocation);
-                  }
-
-                  else if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                     SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+                  } else if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                     allocation = new SeasonHSPAllocation();
                      allocation = hspAllocation;
                      allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getJanStartGuarnteedParticipants());
                      allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getJanStartUnGuarnteedParticipants());
-                     updatedList.add(allocation);
                   } else if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_SSEM_J1)) {
-                     SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+                     allocation = new SeasonHSPAllocation();
                      allocation = hspAllocation;
                      allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getJanStartGuarnteedParticipants());
                      allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getJanStartUnGuarnteedParticipants());
-                     updatedList.add(allocation);
                   } else if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FSEM_J1)) {
-                     SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+                     allocation = new SeasonHSPAllocation();
                      allocation = hspAllocation;
                      allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getJanStartGuarnteedParticipants());
                      allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getJanStartUnGuarnteedParticipants());
-                     updatedList.add(allocation);
                   }
                } catch (Exception e) {
                   ExceptionUtil.logException(e, LOGGER);
                }
 
             }
-            seasonHSPAllocationRepository.save(updatedList);
-            seasonHSPAllocationRepository.flush();
-            returnObject = getHSPJ1HSSeasonProgramAllocation(String.valueOf(j1hsProgramAllocations.getSeasonProgramId()));
+            if (allocation != null) {
+               seasonHSPAllocationRepository.saveAndFlush(allocation);
+               returnObject = getHSPJ1HSSeasonProgramAllocation(String.valueOf(j1hsProgramAllocations.getSeasonProgramId()));
+            }
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
