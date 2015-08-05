@@ -3,7 +3,9 @@
  */
 package com.ccighgo.service.components.season;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -191,6 +193,7 @@ public class SeasonServiceImplUtil {
    SeasonWTSummerRepository seasonWTSummerRepository;
    @Autowired
    SeasonHSPAllocationRepository seasonHSPAllocationRepository;
+   private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
    /**
     * @param seasonBean
@@ -579,9 +582,9 @@ public class SeasonServiceImplUtil {
          seasonEntity.setSeasonName(seasonBean.getSeasonName());
 
          seasonEntity.setCreatedBy(1);
-         seasonEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonEntity.setCreatedOn(CURRENT_TIMESTAMP);
          seasonEntity.setModifiedBy(1);
-         seasonEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonEntity.setModifiedOn(CURRENT_TIMESTAMP);
          seasonEntity.setSeasonFullName(seasonBean.getSeasonName());
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
@@ -597,9 +600,9 @@ public class SeasonServiceImplUtil {
             seasonHSPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
             seasonHSPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
             seasonHSPConfiguration.setCreatedBy(1);
-            seasonHSPConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonHSPConfiguration.setCreatedOn(CURRENT_TIMESTAMP);
             seasonHSPConfiguration.setModifiedBy(1);
-            seasonHSPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonHSPConfiguration.setModifiedOn(CURRENT_TIMESTAMP);
             seasonHSPConfigurationRepsitory.saveAndFlush(seasonHSPConfiguration);
          } else if (department.getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
             SeasonWPConfiguration seasonWPConfiguration = new SeasonWPConfiguration();
@@ -607,9 +610,9 @@ public class SeasonServiceImplUtil {
             seasonWPConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
             seasonWPConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
             seasonWPConfiguration.setCreatedBy(1);
-            seasonWPConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWPConfiguration.setCreatedOn(CURRENT_TIMESTAMP);
             seasonWPConfiguration.setModifiedBy(1);
-            seasonWPConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWPConfiguration.setModifiedOn(CURRENT_TIMESTAMP);
             seasonWPConfigurationRepository.saveAndFlush(seasonWPConfiguration);
          } else if (department.getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
             SeasonGHTConfiguration seasonGHTConfiguration = new SeasonGHTConfiguration();
@@ -617,9 +620,9 @@ public class SeasonServiceImplUtil {
             seasonGHTConfiguration.setSeasonEndDate(DateUtils.getDateFromString(seasonBean.getEndDate()));
             seasonGHTConfiguration.setSeasonStartDate(DateUtils.getDateFromString(seasonBean.getStartDate()));
             seasonGHTConfiguration.setCreatedBy(1);
-            seasonGHTConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonGHTConfiguration.setCreatedOn(CURRENT_TIMESTAMP);
             seasonGHTConfiguration.setModifiedBy(1);
-            seasonGHTConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonGHTConfiguration.setModifiedOn(CURRENT_TIMESTAMP);
             seasonGHTConfigurationRepository.saveAndFlush(seasonGHTConfiguration);
          }
       } catch (Exception e) {
@@ -940,18 +943,18 @@ public class SeasonServiceImplUtil {
                documentInformation.setUrl(f1Documents.getDocUrl());
                documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(f1Documents.getDocType()));
                documentInformation.setCreatedBy(1);
-               documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
                documentInformation.setModifiedBy(1);
-               documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
                documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
                sprgDoc.setActive(CCIConstants.ACTIVE);
                sprgDoc.setSeason(season);
                sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_F1_ID));
                sprgDoc.setDocumentInformation(documentInformation);
                sprgDoc.setCreatedBy(1);
-               sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setCreatedOn(CURRENT_TIMESTAMP);
                sprgDoc.setModifiedBy(1);
-               sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setModifiedOn(CURRENT_TIMESTAMP);
                newDocList.add(sprgDoc);
             } catch (Exception ex) {
                ExceptionUtil.logException(ex, logger);
@@ -1115,9 +1118,9 @@ public class SeasonServiceImplUtil {
             seasonCapDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_CAP);
             seasonCapDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonCapDetail.setCreatedBy(1);
-            seasonCapDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonCapDetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonCapDetail.setModifiedBy(1);
-            seasonCapDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonCapDetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonCAPDetailsRepository.saveAndFlush(seasonCapDetail);
             createWPCapProgramAllocation(seasonEntity);
          }
@@ -1134,9 +1137,9 @@ public class SeasonServiceImplUtil {
             seasonWnTSpringDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SPRING);
             seasonWnTSpringDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonWnTSpringDetail.setCreatedBy(1);
-            seasonWnTSpringDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWnTSpringDetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonWnTSpringDetail.setModifiedBy(1);
-            seasonWnTSpringDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWnTSpringDetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonWTSpringRepository.saveAndFlush(seasonWnTSpringDetail);
             seasonServiceInterface.createWPSpringProgramAllocation(seasonEntity);
          }
@@ -1154,9 +1157,9 @@ public class SeasonServiceImplUtil {
             seasonWnTWinterDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_WINTER);
             seasonWnTWinterDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonWnTWinterDetail.setCreatedBy(1);
-            seasonWnTWinterDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWnTWinterDetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonWnTWinterDetail.setModifiedBy(1);
-            seasonWnTWinterDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWnTWinterDetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonWTWinterRepository.saveAndFlush(seasonWnTWinterDetail);
             createWPWinterProgramAllocation(seasonEntity);
          }
@@ -1174,9 +1177,9 @@ public class SeasonServiceImplUtil {
             seasonsummDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SUMMER);
             seasonsummDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonsummDetail.setCreatedBy(1);
-            seasonsummDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonsummDetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonsummDetail.setModifiedBy(1);
-            seasonsummDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonsummDetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonWTSummerRepository.saveAndFlush(seasonsummDetail);
          }
       } catch (Exception e) {
@@ -1192,9 +1195,9 @@ public class SeasonServiceImplUtil {
             seasonTADetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_TEACH_ABRD);
             seasonTADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonTADetail.setCreatedBy(1);
-            seasonTADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonTADetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonTADetail.setModifiedBy(1);
-            seasonTADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonTADetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonTADetailsRepository.saveAndFlush(seasonTADetail);
          }
       } catch (Exception e) {
@@ -1210,9 +1213,9 @@ public class SeasonServiceImplUtil {
             seasonLSDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_LANG_SCL);
             seasonLSDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonLSDetail.setCreatedBy(1);
-            seasonLSDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonLSDetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonLSDetail.setModifiedBy(1);
-            seasonLSDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonLSDetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonLSDetailsRepository.saveAndFlush(seasonLSDetail);
          }
       } catch (Exception e) {
@@ -1228,9 +1231,9 @@ public class SeasonServiceImplUtil {
             seasonHSADetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
             seasonHSADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonHSADetail.setCreatedBy(1);
-            seasonHSADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonHSADetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonHSADetail.setModifiedBy(1);
-            seasonHSADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonHSADetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonHSADetailsRepository.saveAndFlush(seasonHSADetail);
          }
       } catch (Exception e) {
@@ -1246,9 +1249,9 @@ public class SeasonServiceImplUtil {
             seasonWADetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_WRK_ABRD);
             seasonWADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonWADetail.setCreatedBy(1);
-            seasonWADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWADetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonWADetail.setModifiedBy(1);
-            seasonWADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonWADetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonWADetailsRepository.saveAndFlush(seasonWADetail);
          }
       } catch (Exception e) {
@@ -1264,9 +1267,9 @@ public class SeasonServiceImplUtil {
             seasonVADetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_VOL_ABRD);
             seasonVADetail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonVADetail.setCreatedBy(1);
-            seasonVADetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonVADetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonVADetail.setModifiedBy(1);
-            seasonVADetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonVADetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonVADetailsRepository.saveAndFlush(seasonVADetail);
          }
       } catch (Exception e) {
@@ -1282,9 +1285,9 @@ public class SeasonServiceImplUtil {
             seasonF1Detail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_F1);
             seasonF1Detail.setSeasonStatus(seasonEntity.getSeasonStatus());
             seasonF1Detail.setCreatedBy(1);
-            seasonF1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonF1Detail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonF1Detail.setModifiedBy(1);
-            seasonF1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonF1Detail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonF1DetailsRepository.saveAndFlush(seasonF1Detail);
             /**
              * Create F1 Program Allocations Data
@@ -1309,9 +1312,9 @@ public class SeasonServiceImplUtil {
             seasonJ1Detail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_J1_HS);
             seasonJ1Detail.setSeasonStatus(season.getSeasonStatus());
             seasonJ1Detail.setCreatedBy(1);
-            seasonJ1Detail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonJ1Detail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonJ1Detail.setModifiedBy(1);
-            seasonJ1Detail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonJ1Detail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
             /**
              * create J1 program allocations
@@ -1336,9 +1339,9 @@ public class SeasonServiceImplUtil {
             seasonIHPDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_STP_IHP);
             seasonIHPDetail.setSeasonStatus(season.getSeasonStatus());
             seasonIHPDetail.setCreatedBy(1);
-            seasonIHPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonIHPDetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonIHPDetail.setModifiedBy(1);
-            seasonIHPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonIHPDetail.setModifiedOn(CURRENT_TIMESTAMP);
             seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
          }
       } catch (Exception e) {
@@ -2133,9 +2136,9 @@ public class SeasonServiceImplUtil {
             seasonCAPDetail.setTraineeStartDate(DateUtils.getDateFromString(seasonWPCAPDetails.getTraineeDetails().getStartDate()));
 
             // seasonCAPDetail.setCreatedBy(1);
-            // seasonCAPDetail.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            // seasonCAPDetail.setCreatedOn(CURRENT_TIMESTAMP);
             seasonCAPDetail.setModifiedBy(1);
-            seasonCAPDetail.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonCAPDetail.setModifiedOn(CURRENT_TIMESTAMP);
             if (seasonWPCAPDetails.getNotes() != null) {
                updateWPCAPNotes(seasonCAPDetail, seasonWPCAPDetails);
             }
@@ -2174,18 +2177,18 @@ public class SeasonServiceImplUtil {
                   documentInformation.setUrl(capDocuments.getDocUrl());
                   documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(capDocuments.getDocType()));
                   documentInformation.setCreatedBy(1);
-                  documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+                  documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
                   documentInformation.setModifiedBy(1);
-                  documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+                  documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
                   documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
                   sprgDoc.setActive(capDocuments.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                   sprgDoc.setSeason(season);
                   sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.WP_WT_CAP_ID));
                   sprgDoc.setDocumentInformation(documentInformation);
                   sprgDoc.setCreatedBy(1);
-                  sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+                  sprgDoc.setCreatedOn(CURRENT_TIMESTAMP);
                   sprgDoc.setModifiedBy(1);
-                  sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+                  sprgDoc.setModifiedOn(CURRENT_TIMESTAMP);
                   newDocList.add(sprgDoc);
                } catch (Exception ex) {
                   ExceptionUtil.logException(ex, logger);
@@ -2534,9 +2537,9 @@ public class SeasonServiceImplUtil {
          jobFairWinter.setMaxPax(0);
          jobFairWinter.setSeason(season);
          jobFairWinter.setCreatedBy(1);
-         jobFairWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         jobFairWinter.setCreatedOn(CURRENT_TIMESTAMP);
          jobFairWinter.setModifiedBy(1);
-         jobFairWinter.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         jobFairWinter.setModifiedOn(CURRENT_TIMESTAMP);
          seasonWpAllocations.add(jobFairWinter);
 
          SeasonWPAllocation selfPlacedWinter = new SeasonWPAllocation();
@@ -2545,9 +2548,9 @@ public class SeasonServiceImplUtil {
          selfPlacedWinter.setMaxPax(0);
          selfPlacedWinter.setSeason(season);
          selfPlacedWinter.setCreatedBy(1);
-         selfPlacedWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         selfPlacedWinter.setCreatedOn(CURRENT_TIMESTAMP);
          selfPlacedWinter.setModifiedBy(1);
-         selfPlacedWinter.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         selfPlacedWinter.setModifiedOn(CURRENT_TIMESTAMP);
          seasonWpAllocations.add(selfPlacedWinter);
 
          SeasonWPAllocation directPlacementWinter = new SeasonWPAllocation();
@@ -2556,9 +2559,9 @@ public class SeasonServiceImplUtil {
          directPlacementWinter.setMaxPax(0);
          directPlacementWinter.setSeason(season);
          directPlacementWinter.setCreatedBy(1);
-         directPlacementWinter.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         directPlacementWinter.setCreatedOn(CURRENT_TIMESTAMP);
          directPlacementWinter.setModifiedBy(1);
-         directPlacementWinter.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         directPlacementWinter.setModifiedOn(CURRENT_TIMESTAMP);
          seasonWpAllocations.add(directPlacementWinter);
 
          seasonWPAllocationRepository.save(seasonWpAllocations);
@@ -2738,9 +2741,9 @@ public class SeasonServiceImplUtil {
                seasonDepartmentNote.setSeason(seasonEntity);
                seasonDepartmentNote.setActive((byte) (note.isActive() ? 1 : 0));
                seasonDepartmentNote.setCreatedBy(1);
-               seasonDepartmentNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               seasonDepartmentNote.setCreatedOn(CURRENT_TIMESTAMP);
                seasonDepartmentNote.setModifiedBy(1);
-               seasonDepartmentNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               seasonDepartmentNote.setModifiedOn(CURRENT_TIMESTAMP);
                seasonDepartmentNotesRepository.saveAndFlush(seasonDepartmentNote);
             }
          }
@@ -2760,9 +2763,9 @@ public class SeasonServiceImplUtil {
             currentNote.setDepartmentNote(notes.getNoteValue());
             currentNote.setSeason(seasonEntity);
             currentNote.setCreatedBy(1);
-            currentNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            currentNote.setCreatedOn(CURRENT_TIMESTAMP);
             currentNote.setModifiedBy(1);
-            currentNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            currentNote.setModifiedOn(CURRENT_TIMESTAMP);
             seasonDepartmentNotesRepository.saveAndFlush(currentNote);
          }
       } catch (Exception ex) {
@@ -3070,9 +3073,9 @@ public class SeasonServiceImplUtil {
             }
             sprNote.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_J1_HS_ID));
             sprNote.setCreatedBy(1);
-            sprNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            sprNote.setCreatedOn(CURRENT_TIMESTAMP);
             sprNote.setModifiedBy(1);
-            sprNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            sprNote.setModifiedOn(CURRENT_TIMESTAMP);
             updatedNotes.add(sprNote);
          }
          seasonProgramNotesRepository.save(updatedNotes);
@@ -3140,9 +3143,9 @@ public class SeasonServiceImplUtil {
          }
          sprNote.setDepartmentProgram(departmentProgramRepository.findOne(programTypeId));
          sprNote.setCreatedBy(1);
-         sprNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprNote.setCreatedOn(CURRENT_TIMESTAMP);
          sprNote.setModifiedBy(1);
-         sprNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprNote.setModifiedOn(CURRENT_TIMESTAMP);
          updatedNotes.add(sprNote);
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -3226,18 +3229,18 @@ public class SeasonServiceImplUtil {
                documentInformation.setUrl(j1hsDocument.getDocUrl());
                documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(j1hsDocument.getDocType()));
                documentInformation.setCreatedBy(1);
-               documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
                documentInformation.setModifiedBy(1);
-               documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
                documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
                sprgDoc.setActive(CCIConstants.ACTIVE);
                sprgDoc.setSeason(season);
                sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_J1_HS_ID));
                sprgDoc.setDocumentInformation(documentInformation);
                sprgDoc.setCreatedBy(1);
-               sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setCreatedOn(CURRENT_TIMESTAMP);
                sprgDoc.setModifiedBy(1);
-               sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setModifiedOn(CURRENT_TIMESTAMP);
                newDocList.add(sprgDoc);
             } catch (Exception e) {
                ExceptionUtil.logException(e, logger);
@@ -3264,18 +3267,18 @@ public class SeasonServiceImplUtil {
                documentInformation.setUrl(wpDocument.getDocUrl());
                documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(wpDocument.getDocType()));
                documentInformation.setCreatedBy(1);
-               documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
                documentInformation.setModifiedBy(1);
-               documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
                documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
                sprgDoc.setActive(CCIConstants.ACTIVE);
                sprgDoc.setSeason(season);
                sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(programTypeId));
                sprgDoc.setDocumentInformation(documentInformation);
                sprgDoc.setCreatedBy(1);
-               sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setCreatedOn(CURRENT_TIMESTAMP);
                sprgDoc.setModifiedBy(1);
-               sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setModifiedOn(CURRENT_TIMESTAMP);
                newDocList.add(sprgDoc);
             } catch (Exception ex) {
                ExceptionUtil.logException(ex, logger);
@@ -3327,9 +3330,9 @@ public class SeasonServiceImplUtil {
                seasonProgramNote.setSeason(season);
                seasonProgramNote.setDepartmentProgram(departmentProgram);
                seasonProgramNote.setCreatedBy(1);
-               seasonProgramNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               seasonProgramNote.setCreatedOn(CURRENT_TIMESTAMP);
                seasonProgramNote.setModifiedBy(1);
-               seasonProgramNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               seasonProgramNote.setModifiedOn(CURRENT_TIMESTAMP);
                seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
             }
          }
@@ -3360,9 +3363,9 @@ public class SeasonServiceImplUtil {
                seasonProgramNote.setSeason(season);
                seasonProgramNote.setDepartmentProgram(departmentProgram);
                seasonProgramNote.setCreatedBy(1);
-               seasonProgramNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               seasonProgramNote.setCreatedOn(CURRENT_TIMESTAMP);
                seasonProgramNote.setModifiedBy(1);
-               seasonProgramNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               seasonProgramNote.setModifiedOn(CURRENT_TIMESTAMP);
                seasonProgramNotesRepository.saveAndFlush(seasonProgramNote);
             }
          }
@@ -3414,9 +3417,9 @@ public class SeasonServiceImplUtil {
             programNote.setProgramNote(hspF1Notes.getNoteValue());
             programNote.setSeason(allF1Details.getSeason());
             programNote.setCreatedBy(1);
-            programNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            programNote.setCreatedOn(CURRENT_TIMESTAMP);
             programNote.setModifiedBy(1);
-            programNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            programNote.setModifiedOn(CURRENT_TIMESTAMP);
             seasonProgramNotes.add(programNote);
          }
          seasonProgramNotesRepository.save(seasonProgramNotes);
@@ -3542,9 +3545,9 @@ public class SeasonServiceImplUtil {
             programNote.setProgramNote(notes.getNoteValue());
             programNote.setSeason(seasonCapDetail.getSeason());
             programNote.setCreatedBy(1);
-            programNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            programNote.setCreatedOn(CURRENT_TIMESTAMP);
             programNote.setModifiedBy(1);
-            programNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            programNote.setModifiedOn(CURRENT_TIMESTAMP);
             seasonProgramNotes.add(programNote);
 
          }
@@ -3672,9 +3675,9 @@ public class SeasonServiceImplUtil {
          capInternship.setMaxPax(0);
          capInternship.setSeason(season);
          capInternship.setCreatedBy(1);
-         capInternship.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         capInternship.setCreatedOn(CURRENT_TIMESTAMP);
          capInternship.setModifiedBy(1);
-         capInternship.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         capInternship.setModifiedOn(CURRENT_TIMESTAMP);
          seasonWpAllocations.add(capInternship);
 
          SeasonWPAllocation capTrainee = new SeasonWPAllocation();
@@ -3683,9 +3686,9 @@ public class SeasonServiceImplUtil {
          capTrainee.setMaxPax(0);
          capTrainee.setSeason(season);
          capTrainee.setCreatedBy(1);
-         capTrainee.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         capTrainee.setCreatedOn(CURRENT_TIMESTAMP);
          capTrainee.setModifiedBy(1);
-         capTrainee.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         capTrainee.setModifiedOn(CURRENT_TIMESTAMP);
          seasonWpAllocations.add(capTrainee);
 
          seasonWPAllocationRepository.save(seasonWpAllocations);
@@ -3781,17 +3784,17 @@ public class SeasonServiceImplUtil {
                documentInformation.setUrl(hlsDocuments.getDocUrl());
                documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(hlsDocuments.getDocType()));
                documentInformation.setCreatedBy(1);
-               documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
                documentInformation.setModifiedBy(1);
-               documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
                documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
                sprgDoc.setActive(CCIConstants.ACTIVE);
                sprgDoc.setSeason(seasonEntity);
                sprgDoc.setDocumentInformation(documentInformation);
                sprgDoc.setCreatedBy(1);
-               sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setCreatedOn(CURRENT_TIMESTAMP);
                sprgDoc.setModifiedBy(1);
-               sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               sprgDoc.setModifiedOn(CURRENT_TIMESTAMP);
                newDocList.add(sprgDoc);
             } catch (Exception ex) {
                ExceptionUtil.logException(ex, logger);
