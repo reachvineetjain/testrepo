@@ -21,6 +21,7 @@
                <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="stateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="fieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
    </xsd:complexType>
 

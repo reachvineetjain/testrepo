@@ -199,8 +199,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Autowired
    SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
    @Autowired FieldStaffLeadershipSeasonRepository fieldStaffLeadershipSeasonRepository;
-   
-   private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
    SeasonServiceInterfaceImpl() {
    }
@@ -845,9 +843,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          august_FY.setMaxUnguaranteedPax(0);
          august_FY.setSeason(season);
          august_FY.setCreatedBy(1);
-         august_FY.setCreatedOn(CURRENT_TIMESTAMP);
+         august_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          august_FY.setModifiedBy(1);
-         august_FY.setModifiedOn(CURRENT_TIMESTAMP);
+         august_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(august_FY);
 
          SeasonHSPAllocation Jan_FY = new SeasonHSPAllocation();
@@ -857,9 +855,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          Jan_FY.setMaxUnguaranteedPax(0);
          Jan_FY.setSeason(season);
          Jan_FY.setCreatedBy(1);
-         Jan_FY.setCreatedOn(CURRENT_TIMESTAMP);
+         Jan_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Jan_FY.setModifiedBy(1);
-         Jan_FY.setModifiedOn(CURRENT_TIMESTAMP);
+         Jan_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(Jan_FY);
          seasonHSPAllocationRepository.save(seasonhspAllocations);
          seasonHSPAllocationRepository.flush();
@@ -1221,9 +1219,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          august_FY.setMaxUnguaranteedPax(0);
          august_FY.setSeason(season);
          august_FY.setCreatedBy(1);
-         august_FY.setCreatedOn(CURRENT_TIMESTAMP);
+         august_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          august_FY.setModifiedBy(1);
-         august_FY.setModifiedOn(CURRENT_TIMESTAMP);
+         august_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(august_FY);
 
          SeasonHSPAllocation Jan_FY = new SeasonHSPAllocation();
@@ -1233,9 +1231,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          Jan_FY.setMaxUnguaranteedPax(0);
          Jan_FY.setSeason(season);
          Jan_FY.setCreatedBy(1);
-         Jan_FY.setCreatedOn(CURRENT_TIMESTAMP);
+         Jan_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Jan_FY.setModifiedBy(1);
-         Jan_FY.setModifiedOn(CURRENT_TIMESTAMP);
+         Jan_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(Jan_FY);
          seasonHSPAllocationRepository.save(seasonhspAllocations);
          seasonHSPAllocationRepository.flush();
@@ -1974,9 +1972,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          jobFairSummer.setMaxPax(0);
          jobFairSummer.setSeason(season);
          jobFairSummer.setCreatedBy(1);
-         jobFairSummer.setCreatedOn(CURRENT_TIMESTAMP);
+         jobFairSummer.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          jobFairSummer.setModifiedBy(1);
-         jobFairSummer.setModifiedOn(CURRENT_TIMESTAMP);
+         jobFairSummer.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
          seasonWpAllocations.add(jobFairSummer);
 
@@ -1986,9 +1984,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          selfPlacedSummer.setMaxPax(0);
          selfPlacedSummer.setSeason(season);
          selfPlacedSummer.setCreatedBy(1);
-         selfPlacedSummer.setCreatedOn(CURRENT_TIMESTAMP);
+         selfPlacedSummer.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          selfPlacedSummer.setModifiedBy(1);
-         selfPlacedSummer.setModifiedOn(CURRENT_TIMESTAMP);
+         selfPlacedSummer.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(selfPlacedSummer);
 
          SeasonWPAllocation directPlacementSummer = new SeasonWPAllocation();
@@ -1997,9 +1995,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          directPlacementSummer.setMaxPax(0);
          directPlacementSummer.setSeason(season);
          directPlacementSummer.setCreatedBy(1);
-         directPlacementSummer.setCreatedOn(CURRENT_TIMESTAMP);
+         directPlacementSummer.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          directPlacementSummer.setModifiedBy(1);
-         directPlacementSummer.setModifiedOn(CURRENT_TIMESTAMP);
+         directPlacementSummer.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(directPlacementSummer);
 
          seasonWPAllocationRepository.save(seasonWpAllocations);
@@ -2247,9 +2245,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          jobFairSpring.setMaxPax(0);
          jobFairSpring.setSeason(season);
          jobFairSpring.setCreatedBy(1);
-         jobFairSpring.setCreatedOn(CURRENT_TIMESTAMP);
+         jobFairSpring.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          jobFairSpring.setModifiedBy(1);
-         jobFairSpring.setModifiedOn(CURRENT_TIMESTAMP);
+         jobFairSpring.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(jobFairSpring);
 
          SeasonWPAllocation selfPlacedSpring = new SeasonWPAllocation();
@@ -2258,9 +2256,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          selfPlacedSpring.setMaxPax(0);
          selfPlacedSpring.setSeason(season);
          selfPlacedSpring.setCreatedBy(1);
-         selfPlacedSpring.setCreatedOn(CURRENT_TIMESTAMP);
+         selfPlacedSpring.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          selfPlacedSpring.setModifiedBy(1);
-         selfPlacedSpring.setModifiedOn(CURRENT_TIMESTAMP);
+         selfPlacedSpring.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(selfPlacedSpring);
 
          SeasonWPAllocation directPlacementSpring = new SeasonWPAllocation();
@@ -2269,9 +2267,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          directPlacementSpring.setMaxPax(0);
          directPlacementSpring.setSeason(season);
          directPlacementSpring.setCreatedBy(1);
-         directPlacementSpring.setCreatedOn(CURRENT_TIMESTAMP);
+         directPlacementSpring.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          directPlacementSpring.setModifiedBy(1);
-         directPlacementSpring.setModifiedOn(CURRENT_TIMESTAMP);
+         directPlacementSpring.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(directPlacementSpring);
 
          seasonWPAllocationRepository.save(seasonWpAllocations);
@@ -2653,9 +2651,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             departmentNote.setSeason(seasonRepository.findOne(seasonDepartmentNotes.getSeasonId()));
             departmentNote.setDepartmentNote(seasonDepartmentNotes.getNoteValue());
             departmentNote.setCreatedBy(1);
-            departmentNote.setCreatedOn(CURRENT_TIMESTAMP);
+            departmentNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             departmentNote.setModifiedBy(1);
-            departmentNote.setModifiedOn(CURRENT_TIMESTAMP);
+            departmentNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonDepartmentNotesRepository.saveAndFlush(departmentNote);
             returnObject = seasonDepartmentNotes;
          }
@@ -2677,9 +2675,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             documentInformation.setUrl(seasonDepartmentDocument.getDocUrl());
             documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(seasonDepartmentDocument.getDocType()));
             documentInformation.setCreatedBy(1);
-            documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
+            documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation.setModifiedBy(1);
-            documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
+            documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
 
             com.ccighgo.db.entities.SeasonDepartmentDocument departmentDocument = new com.ccighgo.db.entities.SeasonDepartmentDocument();
@@ -2687,9 +2685,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             departmentDocument.setDocumentInformation(documentInformation);
             departmentDocument.setSeason(seasonRepository.findOne(seasonDepartmentDocument.getSeasonId()));
             departmentDocument.setCreatedBy(1);
-            departmentDocument.setCreatedOn(CURRENT_TIMESTAMP);
+            departmentDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             departmentDocument.setModifiedBy(1);
-            departmentDocument.setModifiedOn(CURRENT_TIMESTAMP);
+            departmentDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonDepartmentDocumentRepository.saveAndFlush(departmentDocument);
             returnObject = seasonDepartmentDocument;
          }
@@ -2710,9 +2708,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             programNote.setDepartmentProgram(departmentProgramRepository.findOne(seasonProgramNote.getDepartmentProgramId()));
             programNote.setProgramNote(seasonProgramNote.getNoteValue());
             programNote.setCreatedBy(1);
-            programNote.setCreatedOn(CURRENT_TIMESTAMP);
+            programNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             programNote.setModifiedBy(1);
-            programNote.setModifiedOn(CURRENT_TIMESTAMP);
+            programNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonProgramNotesRepository.saveAndFlush(programNote);
             returnObject = seasonProgramNote;
          }
@@ -2734,9 +2732,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             documentInformation.setUrl(seasonProgramDocument.getDocUrl());
             documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(seasonProgramDocument.getDocType()));
             documentInformation.setCreatedBy(1);
-            documentInformation.setCreatedOn(CURRENT_TIMESTAMP);
+            documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation.setModifiedBy(1);
-            documentInformation.setModifiedOn(CURRENT_TIMESTAMP);
+            documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
 
             programDocument.setActive(CCIConstants.ACTIVE);
@@ -2744,9 +2742,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             programDocument.setDocumentInformation(documentInformation);
             programDocument.setDepartmentProgram(departmentProgramRepository.findOne(seasonProgramDocument.getDepartmentProgramId()));
             programDocument.setCreatedBy(1);
-            programDocument.setCreatedOn(CURRENT_TIMESTAMP);
+            programDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             programDocument.setModifiedBy(1);
-            programDocument.setModifiedOn(CURRENT_TIMESTAMP);
+            programDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonProgramDocumentRepository.saveAndFlush(programDocument);
             returnObject = seasonProgramDocument;
          }

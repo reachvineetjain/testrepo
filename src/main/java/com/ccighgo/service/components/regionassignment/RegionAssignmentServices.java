@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.ccighgo.service.transport.season.beans.assignedregion.AssignedRegion;
 import com.ccighgo.service.transport.season.beans.assignedstates.AssignedStateInfo;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSuperRegion;
+import com.ccighgo.service.transport.season.beans.assignerdstoregion.AssignedERDToRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -20,9 +21,9 @@ public interface RegionAssignmentServices {
 
    WSDefaultResponse assignFieldStaffToState(AssignedStaffToState assignedStaffToState);
 
-   WSDefaultResponse assignRDFieldStaffToState(AssignedRDToRegion assignedRDsToRegion);
+   WSDefaultResponse assignRDFieldStaffToRegion(AssignedRDToRegion assignedRDsToRegion);
 
-   WSDefaultResponse assignERDFieldStaffToState(Integer oldFieldStaffId, Integer newFieldStaffId, Integer superRegionId, Integer seasonId);
+   WSDefaultResponse assignERDFieldStaffToSuperRegion(AssignedERDToRegion assignedERDToRegion);
 
    SuperRegionsERDs getAllERDsForSuperRegion(Integer superRegion);
 
