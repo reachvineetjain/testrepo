@@ -581,10 +581,6 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return rgn;
       }
       try {
-         List<SeasonGeographyConfiguration> stateRegionList = seasonGeographyConfigurationRepository.findRegionBySuperRegionRegionAndSeasonId(Integer.valueOf(superRegionId),
-               region.getRegionId(), Integer.valueOf(seasonId));
-         seasonGeographyConfigurationRepository.delete(stateRegionList);
-         seasonGeographyConfigurationRepository.flush();
          List<SeasonGeographyConfiguration> updateList = new ArrayList<SeasonGeographyConfiguration>();
          for (RegionState regSt : region.getRegionStates()) {
             SeasonGeographyConfiguration config = new SeasonGeographyConfiguration();
@@ -599,7 +595,24 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             updateList.add(config);
          }
          seasonGeographyConfigurationRepository.save(updateList);
-         rgn = updateAndReturnRegion(Integer.valueOf(superRegionId), Integer.valueOf(seasonId), rgn);
+         seasonGeographyConfigurationRepository.flush();
+         rgn.setRegionId(region.getRegionId());
+         rgn.setRegionName(region.getRegionName());
+         List<SeasonGeographyConfiguration> stateRegionList = seasonGeographyConfigurationRepository.findRegionBySuperRegionRegionAndSeasonId(Integer.valueOf(superRegionId),
+               rgn.getRegionId(), Integer.valueOf(seasonId));
+         if (stateRegionList != null) {
+            List<RegionState> regionStates = new ArrayList<RegionState>();
+            for (SeasonGeographyConfiguration config : stateRegionList) {
+               RegionState regionState = new RegionState();
+               regionState.setStateId(config.getLookupUsstate().getUsStatesId());
+               regionState.setStateCode(config.getLookupUsstate().getStateCode());
+               regionState.setStateName(config.getLookupUsstate().getStateName());
+               regionStates.add(regionState);
+            }
+            rgn.getRegionStates().addAll(regionStates);
+            rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
       } catch (CcighgoServiceException e) {
          rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR)));
@@ -613,13 +626,15 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       List<SeasonGeographyConfiguration> stateRegionList = seasonGeographyConfigurationRepository.findRegionBySuperRegionRegionAndSeasonId(Integer.valueOf(superRegionId),
             rgn.getRegionId(), Integer.valueOf(seasonId));
       if (stateRegionList != null) {
+         List<RegionState> regionStates = new ArrayList<RegionState>();
          for (SeasonGeographyConfiguration config : stateRegionList) {
             RegionState regionState = new RegionState();
             regionState.setStateId(config.getLookupUsstate().getUsStatesId());
             regionState.setStateCode(config.getLookupUsstate().getStateCode());
             regionState.setStateName(config.getLookupUsstate().getStateName());
-            rgn.getRegionStates().add(regionState);
+            regionStates.add(regionState);
          }
+         rgn.getRegionStates().addAll(regionStates);
          rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } else {
