@@ -874,34 +874,65 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                hspf1ProgramAllocations.setSeasonId(allF1Detail.getSeason().getSeasonId());
                hspf1ProgramAllocations.setSeasonProgramId(Integer.parseInt(seasonProgramId));
                try {
+
                   for (SeasonHSPAllocation seasonWPAllocation : hspAllocations) {
-                     if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId() == CCIConstants.HSP_F1_ID) {
+                     if (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                         if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
                            augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
                            totalMaxParticipants += augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
                            januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
                            totalMaxParticipants += januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
 
-                        } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-                           januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
-                           totalMaxParticipants += januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
-                           augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
-                           totalMaxParticipants += augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
-                        } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FSEM_F1)) {
-                           januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
-                           totalMaxParticipants += januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
-                           augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
-                           totalMaxParticipants += augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
-
-                        } else if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_SSEM_F1)) {
+                        }
+                        if (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
                            januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
                            totalMaxParticipants += januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
                            augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
                            totalMaxParticipants += augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
                         }
-
                      }
                   }
+
+                  /*
+                   * for (SeasonHSPAllocation seasonWPAllocation : hspAllocations) { if
+                   * (seasonWPAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId() ==
+                   * CCIConstants.HSP_F1_ID) { if
+                   * (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode()
+                   * .equals(CCIConstants.AUGUST_FY_F1)) { augustStartMaximumParticipants =
+                   * seasonWPAllocation.getMaxGuaranteedPax() > 0 ? seasonWPAllocation.getMaxGuaranteedPax() : 0;
+                   * totalMaxParticipants += augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
+                   * januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ?
+                   * seasonWPAllocation.getMaxGuaranteedPax() : 0; totalMaxParticipants +=
+                   * januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
+                   * 
+                   * } else if
+                   * (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants
+                   * .JANUARY_FY_F1)) { januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ?
+                   * seasonWPAllocation.getMaxGuaranteedPax() : 0; totalMaxParticipants +=
+                   * januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
+                   * augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ?
+                   * seasonWPAllocation.getMaxGuaranteedPax() : 0; totalMaxParticipants +=
+                   * augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0; } else if
+                   * (seasonWPAllocation
+                   * .getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FSEM_F1)) {
+                   * januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ?
+                   * seasonWPAllocation.getMaxGuaranteedPax() : 0; totalMaxParticipants +=
+                   * januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
+                   * augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ?
+                   * seasonWPAllocation.getMaxGuaranteedPax() : 0; totalMaxParticipants +=
+                   * augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0;
+                   * 
+                   * } else if
+                   * (seasonWPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants
+                   * .JANUARY_SSEM_F1)) { januaryStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0
+                   * ? seasonWPAllocation.getMaxGuaranteedPax() : 0; totalMaxParticipants +=
+                   * januaryStartMaximumParticipants > 0 ? januaryStartMaximumParticipants : 0;
+                   * augustStartMaximumParticipants = seasonWPAllocation.getMaxGuaranteedPax() > 0 ?
+                   * seasonWPAllocation.getMaxGuaranteedPax() : 0; totalMaxParticipants +=
+                   * augustStartMaximumParticipants > 0 ? augustStartMaximumParticipants : 0; }
+                   * 
+                   * } }
+                   */
                } catch (Exception e) {
                   ExceptionUtil.logException(e, LOGGER);
                }
