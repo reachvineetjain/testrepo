@@ -65,7 +65,7 @@ public class CCIConstants {
    public static final String WP_WT_SUMMER = "W&T Summer";
    public static final String WP_WT_WINTER = "W&T Winter";
    public static final String WP_WT_SPRING = "W&T Spring";
-   public static final String WP_WT_CAP = "W&T CAP";
+   public static final String WP_WT_CAP = "CAP";
    public static final String GHT_HS_ABRD = "HS Abroad";
    public static final String GHT_LANG_SCL = "Language School";
    public static final String GHT_TEACH_ABRD = "Teach Abroad";

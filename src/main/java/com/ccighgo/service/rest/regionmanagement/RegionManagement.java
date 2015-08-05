@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.regionmanagement.RegionManagementServices;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.region.beans.mvregion.MoveRegions;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
@@ -210,22 +211,12 @@ public class RegionManagement {
       LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
       return regionManagementServices.addStateRegions(superRegionId, seasonId, region);
    }
-   
-  
-   
-   @GET
-   @Path("superregion/map/{seasonId}")
-   @Produces("application/json")
-   public RegionSuperRegionsMap getRegionSuperRegionMap(@PathParam("seasonId") String seasonId) {
-      LOGGER.debug("Calling 'getStateRegions'");
-      return null;// regionManagementServices.getRegionSuperRegionMap(seasonId);
-   }
-   
+
    @POST
    @Path("move/region/")
    @Produces("application/json")
-   public Region moveRegions(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, Region region) {
-      LOGGER.debug("Calling 'updateStateRegions' moving states and adding it to different regions");
-      return regionManagementServices.addStateRegions(superRegionId, seasonId, region);
+   public RegionManagementDetails moveRegions(MoveRegions mvRegions) {
+      LOGGER.debug("Calling 'moveRegions' moving region and adding it to different super region");
+      return regionManagementServices.moveRegions(mvRegions);
    }
 }
