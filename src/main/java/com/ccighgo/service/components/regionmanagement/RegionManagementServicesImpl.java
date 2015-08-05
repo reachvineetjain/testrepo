@@ -3,7 +3,9 @@
  */
 package com.ccighgo.service.components.regionmanagement;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -61,6 +63,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    MessageUtils messageUtil;
    @Autowired
    StateRepository stateRepository;
+   private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
    @Override
    @Transactional(readOnly = true)
@@ -198,9 +201,9 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             supRegion.setSuperRegionName(superRegion.getSuperRegionName());
             supRegion.setActive(CCIConstants.ACTIVE);
             supRegion.setCreatedBy(1);
-            supRegion.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            supRegion.setCreatedOn(CURRENT_TIMESTAMP);
             supRegion.setModifiedBy(1);
-            supRegion.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            supRegion.setModifiedOn(CURRENT_TIMESTAMP);
             supRegion = superRegionRepository.saveAndFlush(supRegion);
             LOGGER.info("Super Region added with name: " + supRegion.getSuperRegionName() + " and id: " + supRegion.getSuperRegionId());
             SeasonGeographyConfiguration seasonGeographyConfiguration = new SeasonGeographyConfiguration();
@@ -208,9 +211,9 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
             seasonGeographyConfiguration.setSeason(season);
             seasonGeographyConfiguration.setCreatedBy(1);
-            seasonGeographyConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonGeographyConfiguration.setCreatedOn(CURRENT_TIMESTAMP);
             seasonGeographyConfiguration.setModifiedBy(1);
-            seasonGeographyConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            seasonGeographyConfiguration.setModifiedOn(CURRENT_TIMESTAMP);
             seasonGeographyConfiguration = seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographyConfiguration);
             sRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -348,9 +351,9 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          regn.setActive(CCIConstants.ACTIVE);
          regn.setRegionName(region.getRegionName());
          regn.setCreatedBy(1);
-         regn.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         regn.setCreatedOn(CURRENT_TIMESTAMP);
          regn.setModifiedBy(1);
-         regn.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         regn.setModifiedOn(CURRENT_TIMESTAMP);
          regn = regionRepository.saveAndFlush(regn);
          SeasonGeographyConfiguration seasonGeographyConfiguration = new SeasonGeographyConfiguration();
          seasonGeographyConfiguration.setSuperRegion(superRegionRepository.findOne(Integer.valueOf(superRegionId)));
@@ -358,9 +361,9 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
          seasonGeographyConfiguration.setSeason(season);
          seasonGeographyConfiguration.setCreatedBy(1);
-         seasonGeographyConfiguration.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonGeographyConfiguration.setCreatedOn(CURRENT_TIMESTAMP);
          seasonGeographyConfiguration.setModifiedBy(1);
-         seasonGeographyConfiguration.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         seasonGeographyConfiguration.setModifiedOn(CURRENT_TIMESTAMP);
          seasonGeographyConfiguration = seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographyConfiguration);
          rgn = getRegion(String.valueOf(regn.getRegionId()));
          rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
@@ -536,9 +539,9 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                config.setSuperRegion(superRegionRepository.findOne(stateRegions.getSuperRegionId()));
                config.setSeason(seasonRepository.findOne(stateRegions.getSeasonId()));
                config.setCreatedBy(1);
-               config.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               config.setCreatedOn(CURRENT_TIMESTAMP);
                config.setModifiedBy(1);
-               config.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               config.setModifiedOn(CURRENT_TIMESTAMP);
                updateList.add(config);
             }
             seasonGeographyConfigurationRepository.save(updateList);
@@ -591,9 +594,9 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             config.setSuperRegion(superRegionRepository.findOne(Integer.valueOf(superRegionId)));
             config.setSeason(seasonRepository.findOne(Integer.valueOf(seasonId)));
             config.setCreatedBy(1);
-            config.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            config.setCreatedOn(CURRENT_TIMESTAMP);
             config.setModifiedBy(1);
-            config.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            config.setModifiedOn(CURRENT_TIMESTAMP);
             updateList.add(config);
          }
          seasonGeographyConfigurationRepository.save(updateList);

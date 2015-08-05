@@ -3,7 +3,9 @@
  */
 package com.ccighgo.service.components.usermanagment;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -132,6 +134,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    EntityManager entityManager;
    @Autowired
    Properties cciGhGoProps;
+   private Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
@@ -377,7 +380,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       // TODO need to discuss about updating login info
       cciUser.setModifiedBy(1);
-      cciUser.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciUser.setModifiedOn(CURRENT_TIMESTAMP);
       cciUsersRepository.saveAndFlush(cciUser);
 
       // update user programs
@@ -791,9 +794,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
       cciUser.setLogin(login);
       cciUser.setCreatedBy(1);
-      cciUser.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciUser.setCreatedOn(CURRENT_TIMESTAMP);
       cciUser.setModifiedBy(1);
-      cciUser.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciUser.setModifiedOn(CURRENT_TIMESTAMP);
       cciUsersRepository.saveAndFlush(cciUser);
       return cciAdminGuid;
    }
@@ -815,9 +818,9 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUsrPrg.setId(staffUserProgramPK);
          cciUsrPrg.setDepartmentProgram(deptProgram);
          cciUsrPrg.setCreatedBy(1);
-         cciUsrPrg.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         cciUsrPrg.setCreatedOn(CURRENT_TIMESTAMP);
          cciUsrPrg.setModifiedBy(1);
-         cciUsrPrg.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         cciUsrPrg.setModifiedOn(CURRENT_TIMESTAMP);
          cciUsrPrg.setCcistaffUser(cUser);
          userPrograms.add(cciUsrPrg);
       }
@@ -840,9 +843,9 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          staffUsersCCIStaffRole.setCreatedBy(1);
          staffUsersCCIStaffRole.setCcistaffUser(cUser);
-         staffUsersCCIStaffRole.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         staffUsersCCIStaffRole.setCreatedOn(CURRENT_TIMESTAMP);
          staffUsersCCIStaffRole.setModifiedBy(1);
-         staffUsersCCIStaffRole.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         staffUsersCCIStaffRole.setModifiedOn(CURRENT_TIMESTAMP);
          CCIStaffUsersCCIStaffRolePK pk = new CCIStaffUsersCCIStaffRolePK();
          pk.setCciStaffUserId(cUser.getCciStaffUserId());
          pk.setCciStaffRoleId(usrRole.getRoleId());
@@ -880,9 +883,9 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserPermission.setResourcePermission(resourcePermission);
                cciUserPermission.setResourceAction(resourceAction);
                cciUserPermission.setCreatedBy(1);
-               cciUserPermission.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+               cciUserPermission.setCreatedOn(CURRENT_TIMESTAMP);
                cciUserPermission.setModifiedBy(1);
-               cciUserPermission.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+               cciUserPermission.setModifiedOn(CURRENT_TIMESTAMP);
                cciUserPermissionsList.add(cciUserPermission);
             }
          }
