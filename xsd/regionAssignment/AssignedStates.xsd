@@ -48,6 +48,7 @@
                <xsd:element name="photo" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="assignedArea" type="assignedstates:RegionAssignedArea" minOccurs="1" maxOccurs="unbounded" />
 			   <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			   <xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
             </xsd:sequence>
    </xsd:complexType>
    
@@ -58,7 +59,7 @@
                <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                              <xsd:element name="seasonGeographyConfigurationId" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonGeographyConfigurationId" type="xsd:integer" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
    </xsd:complexType>
    

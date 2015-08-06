@@ -3,9 +3,7 @@
  */
 package com.ccighgo.service.components.season;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -306,7 +304,7 @@ public class SeasonServiceImplUtil {
                }
                seasonDepartmentNotes.setSeasonDepartmentNotetId(note.getSeasonDepartmentNotesId());
                list.add(seasonDepartmentNotes);
-               
+
             }
             seasonBean.getNotes().addAll(list);
          }
@@ -580,6 +578,7 @@ public class SeasonServiceImplUtil {
 
          ValidationUtils.validateRequired(seasonBean.getSeasonName());
          seasonEntity.setSeasonName(seasonBean.getSeasonName());
+         seasonEntity.setClonedSeasonName(seasonBean.getCloneSeasonName());
 
          seasonEntity.setCreatedBy(1);
          seasonEntity.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));

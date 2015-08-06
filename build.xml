@@ -455,7 +455,7 @@
 		</java>
 	</target>
 
-	<target name="AssignRDsToRegions">
+	<target name="AssignStaffToState">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
@@ -463,7 +463,7 @@
 		</java>
 	</target>
 
-	<target name="AssignStaffToState">
+	<target name="AssignRDsToRegions">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
@@ -486,5 +486,13 @@
 				<arg value="${xsd.dir}/regionAssignment/AssignedERDsToRegion.xsd" />
 			</java>
 		</target>
+	<target name="DeleteRegionMember">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/regionAssignment/DeleteRegionMember.xsd" />
+				</java>
+			</target>
+	
 
 </project>

@@ -23,6 +23,7 @@ import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSu
 import com.ccighgo.service.transport.season.beans.assignerdstosuperregion.AssignedERDToSuperRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
+import com.ccighgo.service.transport.season.beans.deleteregionmember.DeleteRegionMember;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -119,6 +120,14 @@ public class RegionAssignment {
    public WSDefaultResponse assignFieldStaffToState(AssignedStaffToState assignedStaffToState) {
       LOGGER.debug("fun : assignFieldStaffToState []");
       return regionAssignmentServices.assignFieldStaffToState(assignedStaffToState);
+   }
+
+   @POST
+   @Path("delete/member")
+   @Produces("application/json")
+   public WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember) {
+      LOGGER.debug("fun : deleteMember");
+      return regionAssignmentServices.deleteMember(deleteRegionMember);
    }
 
 }
