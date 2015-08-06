@@ -310,13 +310,13 @@ INSERT INTO `cci_gh_go`.`LookupGender`
  (2,'F');
  
 INSERT INTO GoIdSequence
-VALUES (),(),();
+VALUES (),(),(),(),(),(),(),(),(),();
 
 INSERT INTO `cci_gh_go`.`UserType`(`userTypeId`,`userTypeCode`,`userTypeName`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
 (1,'CCI','CCI User',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,'PARTNER','Partner login',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,'LC','Local Coordinator',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,'FS','Field Staff',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (4,'HF','Host Family',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (5,'EMP','Employer',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (6,'PARTICIPANT','Participant',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
@@ -351,18 +351,18 @@ VALUES
 ('yKmVMypeizwLB8bFC02n', 1333017588),
 ('yqEBziV6rkQzXlHlZKf4', 1333348807);
 
-INSERT INTO `cci_gh_go`.`Login`(`loginId`,`userTypeId`,`loginName`,`password`,createdOn,createdBy,modifiedBy)
+INSERT INTO `cci_gh_go`.`Login`(`loginId`,`goId`,`loginName`,`password`,createdOn,createdBy,modifiedBy)
 VALUES
-(1,'sysadmin','password',CURRENT_TIMESTAMP,1,1),
-(2,'pdirector','password',CURRENT_TIMESTAMP,1,1),
-(3,'recruiter','password',CURRENT_TIMESTAMP,1,1),
-(4,'pmanager','password',CURRENT_TIMESTAMP,1,1),
-(5,'tempstaff','password',CURRENT_TIMESTAMP,1,1),
-(6,'partner','password',CURRENT_TIMESTAMP,1,1),
-(7,'localcord','password',CURRENT_TIMESTAMP,1,1),
-(8,'hostfamily','password',CURRENT_TIMESTAMP,1,1),
-(9,'employer','password',CURRENT_TIMESTAMP,1,1),
-(10,'employer1','password',CURRENT_TIMESTAMP,1,1);
+(1,1000,'sysadmin','password',CURRENT_TIMESTAMP,1,1),
+(2,1001,'pdirector','password',CURRENT_TIMESTAMP,1,1),
+(3,1002,'recruiter','password',CURRENT_TIMESTAMP,1,1),
+(4,1003,'pmanager','password',CURRENT_TIMESTAMP,1,1),
+(5,1004,'tempstaff','password',CURRENT_TIMESTAMP,1,1),
+(6,1005,'partner','password',CURRENT_TIMESTAMP,1,1),
+(7,1006,'localcord','password',CURRENT_TIMESTAMP,1,1),
+(8,1007,'hostfamily','password',CURRENT_TIMESTAMP,1,1),
+(9,1008,'employer','password',CURRENT_TIMESTAMP,1,1),
+(10,1009,'employer1','password',CURRENT_TIMESTAMP,1,1);
 
 
 INSERT INTO `cci_gh_go`.`LookupDepartments` (`departmentId`,`departmentName`,`acronym`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
@@ -617,11 +617,11 @@ VALUES
 
 INSERT INTO `cci_gh_go`.`LoginUserType` (`loginId`,`userTypeId`,`defaultUserType`,`active`,`createdOn`,`createdBy`,`modifiedBy`)
 VALUES (1,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (1,2,1,1,CURRENT_TIMESTAMP,1,1),
+	   (1,2,0,1,CURRENT_TIMESTAMP,1,1),
 	   (2,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (3,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (4,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (5,1,1,1,CURRENT_TIMESTAMP,1,1);
+	   (3,3,1,1,CURRENT_TIMESTAMP,1,1),
+	   (4,5,1,1,CURRENT_TIMESTAMP,1,1),
+	   (5,4,1,1,CURRENT_TIMESTAMP,1,1);
 
 INSERT INTO `cci_gh_go`.`SeasonStatus` (`seasonStatusId`,`status`,`active`) 
 VALUES 
