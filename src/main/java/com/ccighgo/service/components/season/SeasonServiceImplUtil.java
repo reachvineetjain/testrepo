@@ -204,6 +204,7 @@ public class SeasonServiceImplUtil {
       seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getAcronym() : null);
       seasonBean.setDepartmentName(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentName() : null);
       seasonBean.setSeasonName(seasonEntity.getSeasonName() != null ? seasonEntity.getSeasonName() : CCIConstants.EMPTY_DATA);
+      seasonBean.setCloneSeasonName(seasonEntity.getClonedSeasonName() != null ? seasonEntity.getClonedSeasonName() : null);
 
       if (seasonEntity.getSeasonStatus() != null) {
          seasonBean.setSeasonStatusValue(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getStatus() : CCIConstants.EMPTY_DATA);
