@@ -524,7 +524,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             List<FieldStaff> allRDs = fieldStaffRepository.findAllStaffRatherERDorRD();
             if (allRDs != null) {
                for (FieldStaff fieldStaff : allRDs) {
-                  if (staff.get(fieldStaff.getFieldStaffId()))
+                  if (staff.get(fieldStaff.getFieldStaffId()) != null)
                      continue;
                   AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
                   assignedStateStaff.setFirstName(fieldStaff.getFirstName());
