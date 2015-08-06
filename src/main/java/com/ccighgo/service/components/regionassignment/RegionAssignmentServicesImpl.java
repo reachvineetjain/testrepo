@@ -69,6 +69,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    @Override
    public AssignedSuperRegion getAssignedSuperRegionDetails(Integer seasonId) {
       AssignedSuperRegion assignedSuperRegion = new AssignedSuperRegion();
+      HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       try {
          List<Integer> list = seasonGeographyConfigurationRepository.findDistinctSuperRegionsBySeasonId(seasonId);
          if (list == null) {
@@ -95,7 +96,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedERDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedERDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedERDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
-                        sr.getAssignedERDStaff().add(assignedERDStaff);
+                        if (!staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId())) {
+                           sr.getAssignedERDStaff().add(assignedERDStaff);
+                           staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
+                        }
                      }
                   }
                }
@@ -196,6 +200,9 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             return wsDefaultResponse;
          } else {
 
+            SuperRegion superRegion = superRegionRepository.findOne(assignedERDToSuperRegion.getSuperRegionId());
+            seasonGeographicConfigRow.setSuperRegion(superRegion);
+            seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographicConfigRow);
             Integer fieldStaffId = fieldStaffLeadershipSeasonRepository.findRowByStaffIdAndSeasonIdAndSeasonGeographicId(assignedERDToSuperRegion.getOldFieldStaffId(),
                   assignedERDToSuperRegion.getSeasonId(), seasonGeographicConfigRow.getSeasonGeographyConfigurationId());
             fieldStaffLeadershipSeasonRepository.delete(fieldStaffId);
@@ -228,6 +235,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    @Override
    public AssignedRegion getAssignedRegions(Integer superRegionId, Integer seasonId) {
       AssignedRegion assignedRegion = new AssignedRegion();
+      HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       try {
          List<Integer> list = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionIdAndSeasonId(superRegionId, seasonId);
          if (list == null) {
@@ -256,7 +264,11 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedRDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedRDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedRDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
-                        rd.getAssignedRDStaff().add(assignedRDStaff);
+                        if (!staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId())) {
+                           rd.getAssignedRDStaff().add(assignedRDStaff);
+                           staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
+                        }
+
                      }
                   }
                }
@@ -484,6 +496,9 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       try {
          for (RDFieldStaff staffId : assignedRDsToRegion.getRDFieldStaff()) {
             SeasonGeographyConfiguration seasonGeographicConfigRow = seasonGeographyConfigurationRepository.findOne(staffId.getSeasonGeographyConfigurationId());
+            Region region = regionRepository.findOne(assignedRDsToRegion.getRegionId());
+            seasonGeographicConfigRow.setRegion(region);
+            seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographicConfigRow);
             FieldStaffLeadershipSeason fieldStaffLeadershipSeason = new FieldStaffLeadershipSeason();
             fieldStaffLeadershipSeason.setCreatedBy(1);
             fieldStaffLeadershipSeason.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
@@ -517,6 +532,9 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
          for (StateFieldStaff staffMembers : assignedStaffToState.getStateFieldStaff()) {
             SeasonGeographyConfiguration seasonGeographicConfigRow = seasonGeographyConfigurationRepository.findOne(staffMembers.getSeasonGeographyConfigurationId());
+            LookupUSState lookupUsstate = stateRepository.findOne(assignedStaffToState.getStateId());
+            seasonGeographicConfigRow.setLookupUsstate(lookupUsstate);
+            seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographicConfigRow);
             FieldStaffLeadershipSeason fieldStaffLeadershipSeason = new FieldStaffLeadershipSeason();
             fieldStaffLeadershipSeason.setCreatedBy(1);
             fieldStaffLeadershipSeason.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
