@@ -44,6 +44,7 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUserNoteRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserProgramRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserStaffRoleRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
@@ -103,6 +104,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 	private static final Logger LOGGER = Logger.getLogger(UserManagementServiceImpl.class);
 	
+	@Autowired
+	CCIStaffUserNoteRepository cciUserNoteRepository;
    @Autowired
    CCIStaffUsersRepository cciUsersRepository;
    @Autowired
@@ -560,7 +563,63 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return message;
    }
-
+   
+   @Override
+   @Transactional
+   public List<UserNotes> getUserNotesById(String id){
+      CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
+      User user = new User();
+      List<UserNotes> userNotes =null;
+      if (cciUser.getCcistaffUserNotes() != null) {
+        userNotes = getUserNotes(cciUser, user);
+         user.getUserNotes().addAll(userNotes);
+      }
+     
+      return userNotes;
+   }
+   
+   @Override
+   @Transactional
+   public List<UserNotes> addUserNote(UserNotes userNotes){
+     
+      CCIStaffUserNote cciStaffUserNote=new CCIStaffUserNote();
+      
+      cciStaffUserNote.setNote(userNotes.getUserNote());
+      cciStaffUserNote.setCreatedBy(userNotes.getCciUserId());
+      cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
+      cciStaffUserNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciStaffUserNote.setModifiedBy(userNotes.getCciUserId());
+      cciStaffUserNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      
+      
+      cciUserNoteRepository.save(cciStaffUserNote);
+      List<UserNotes> usr=getUserNotesById(userNotes.getCciUserId()+"");
+      
+      return usr;
+   }
+   
+   
+   @Override
+   @Transactional
+   public UserNotes updateUserNote(UserNotes userNotes){
+      
+      CCIStaffUserNote cciUserNote = cciUserNoteRepository.findOne(Integer.valueOf(userNotes.getUserNotesId()));
+    
+         if(cciUserNote.getCcistaffUser().getCciStaffUserId().equals(userNotes.getCciUserId()))
+         {
+           
+            cciUserNote.setNote(userNotes.getUserNote());   
+            cciUserNote.setModifiedBy(userNotes.getCciUserId());
+            cciUserNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            cciUserNote.setCciStaffUserNoteId(userNotes.getUserNotesId());
+         }
+             
+         cciUserNote = cciUserNoteRepository.save(cciUserNote);
+         UserNotes note = new UserNotes();
+         note = getCCIStaffUserNoteTO(cciUserNote, note);
+         
+      return note;
+   }
    /**
     * Get user country
     * 
@@ -705,13 +764,26 @@ public class UserManagementServiceImpl implements UserManagementService {
    private List<UserNotes> getUserNotes(CCIStaffUser cciUser, User user) {
       List<UserNotes> userNotes = new ArrayList<UserNotes>();
       for (CCIStaffUserNote note : cciUser.getCcistaffUserNotes()) {
-         UserNotes uNote = new UserNotes();
-         uNote.setCciUserId(cciUser.getCciStaffUserId());
-         uNote.setUserNotesId(note.getCciStaffUserNoteId());
-         uNote.setUserNote(note.getNote());
-         userNotes.addAll(userNotes);
+         UserNotes uNote = new UserNotes();        
+         userNotes.add(getCCIStaffUserNoteTO(note,uNote));
       }
       return userNotes;
+   }
+   
+   /**
+    * @description converting CCIStaffUserNote object to TO object
+    * 
+    * @param cciStaffUserNote
+    * @param uNote
+    * @return 
+    */
+   private UserNotes getCCIStaffUserNoteTO(CCIStaffUserNote cciStaffUserNote,UserNotes uNote) {
+      if(uNote==null)
+      uNote = new UserNotes();
+      uNote.setCciUserId(cciStaffUserNote.getCcistaffUser().getCciStaffUserId());
+      uNote.setUserNotesId(cciStaffUserNote.getCciStaffUserNoteId());
+      uNote.setUserNote(cciStaffUserNote.getNote());
+      return uNote;
    }
 
    /**

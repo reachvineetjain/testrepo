@@ -128,6 +128,10 @@ public class CCIStaffUser implements Serializable {
 
    public CCIStaffUser() {
    }
+   
+   public CCIStaffUser(int cciStaffUserId ) {
+      this.cciStaffUserId = cciStaffUserId;
+   }
 
    public Integer getCciStaffUserId() {
       if (this.cciStaffUserId != null)
