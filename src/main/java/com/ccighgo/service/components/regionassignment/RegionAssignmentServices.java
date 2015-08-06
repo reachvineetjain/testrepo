@@ -25,10 +25,10 @@ public interface RegionAssignmentServices {
 
    WSDefaultResponse assignERDFieldStaffToSuperRegion(AssignedERDToSuperRegion assignedERDToRegion);
 
-   SuperRegionsERDs getAllERDsForSuperRegion(Integer superRegion);
+   SuperRegionsERDs getAllERDsForSuperRegion(Integer seasonId, Integer superRegionId);
 
-   RegionRDs getAllRDsForRegion(Integer superRegionId, Integer seasonId);
+   RegionRDs getAllRDsForRegion(Integer superRegionId, Integer seasonId, Integer regionId);
 
-   StatesStaff getAssignedStateStaff(Integer superRegionId, Integer regionId, Integer seasonId);
+   StatesStaff getAssignedStateStaff(Integer superRegionId, Integer regionId, Integer seasonId, Integer stateId);
 
 }

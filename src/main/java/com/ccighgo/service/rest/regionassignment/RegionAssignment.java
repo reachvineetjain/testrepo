@@ -57,11 +57,11 @@ public class RegionAssignment {
    }
 
    @GET
-   @Path("list/assigned/superRegionsERDs/{seasonId}")
+   @Path("list/assigned/superRegionsERDs/{seasonId}/{superRegionId}")
    @Produces("application/json")
-   public SuperRegionsERDs getAllERDsForSuperRegion(@PathParam("seasonId") String seasonId) {
+   public SuperRegionsERDs getAllERDsForSuperRegion(@PathParam("seasonId") String seasonId, @PathParam("superRegionId") String superRegionId) {
       LOGGER.debug("fun: getAllERDsForSuperRegion");
-      return regionAssignmentServices.getAllERDsForSuperRegion(Integer.parseInt(seasonId));
+      return regionAssignmentServices.getAllERDsForSuperRegion(Integer.parseInt(seasonId), Integer.parseInt(superRegionId));
    }
 
    @GET
@@ -73,11 +73,11 @@ public class RegionAssignment {
    }
 
    @GET
-   @Path("list/assigned/regionsRDs/{superRegionId}/{seasonId}")
+   @Path("list/assigned/regionsRDs/{superRegionId}/{seasonId}/{regionId}")
    @Produces("application/json")
-   public RegionRDs getAllRDsForRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
+   public RegionRDs getAllRDsForRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, @PathParam("regionId") String regionId) {
       LOGGER.debug("fun: getAllERDsForSuperRegion [" + superRegionId + "," + seasonId + "]");
-      return regionAssignmentServices.getAllRDsForRegion(Integer.parseInt(superRegionId), Integer.parseInt(seasonId));
+      return regionAssignmentServices.getAllRDsForRegion(Integer.parseInt(superRegionId), Integer.parseInt(seasonId), Integer.parseInt(regionId));
    }
 
    @GET
@@ -89,11 +89,12 @@ public class RegionAssignment {
    }
 
    @GET
-   @Path("list/assigned/state/staff/{superRegionId}/{regionId}/{seasonId}")
+   @Path("list/assigned/state/staff/{superRegionId}/{regionId}/{seasonId}/{stateId}")
    @Produces("application/json")
-   public StatesStaff getAssignedStateStaff(@PathParam("superRegionId") String superRegionId, @PathParam("regionId") String regionId, @PathParam("seasonId") String seasonId) {
+   public StatesStaff getAssignedStateStaff(@PathParam("superRegionId") String superRegionId, @PathParam("regionId") String regionId, @PathParam("seasonId") String seasonId,
+         @PathParam("stateId") String stateId) {
       LOGGER.debug("fun : getAssignedStateStaff [" + superRegionId + "," + regionId + "," + seasonId + "]");
-      return regionAssignmentServices.getAssignedStateStaff(Integer.parseInt(superRegionId), Integer.parseInt(regionId), Integer.parseInt(seasonId));
+      return regionAssignmentServices.getAssignedStateStaff(Integer.parseInt(superRegionId), Integer.parseInt(regionId), Integer.parseInt(seasonId), Integer.parseInt(stateId));
    }
 
    @POST
