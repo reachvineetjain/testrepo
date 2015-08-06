@@ -146,7 +146,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedERDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedERDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedERDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
-                        if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null || staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
+                        if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
                            if (superRegionId != null && superRegionId.equals(pk))
                               continue;
@@ -264,7 +264,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedRDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedRDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedRDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
-                        if (!staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId())) {
+                        if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
                            rd.getAssignedRDStaff().add(assignedRDStaff);
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
                         }
