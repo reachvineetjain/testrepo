@@ -8,6 +8,7 @@ import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSu
 import com.ccighgo.service.transport.season.beans.assignerdstosuperregion.AssignedERDToSuperRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
+import com.ccighgo.service.transport.season.beans.deleteregionmember.DeleteRegionMember;
 import com.ccighgo.utils.WSDefaultResponse;
 
 @Service
@@ -30,5 +31,7 @@ public interface RegionAssignmentServices {
    RegionRDs getAllRDsForRegion(Integer superRegionId, Integer seasonId, Integer regionId);
 
    StatesStaff getAssignedStateStaff(Integer superRegionId, Integer regionId, Integer seasonId, Integer stateId);
+
+   WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember);
 
 }

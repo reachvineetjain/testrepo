@@ -39,6 +39,7 @@ import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDTo
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.RDFieldStaff;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.StateFieldStaff;
+import com.ccighgo.service.transport.season.beans.deleteregionmember.DeleteRegionMember;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -147,6 +148,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedERDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedERDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedERDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
+                        assignedERDStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
                            if (superRegionId != null && superRegionId.equals(pk))
@@ -319,6 +321,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedRDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedRDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedRDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
+                        assignedRDStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
                            rd.getAssignedRDStaff().add(assignedRDStaff);
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
@@ -369,6 +372,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedRDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedRDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedRDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
+                        assignedRDStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
                         com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea regionAssignedArea = new com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea();
                         regionAssignedArea.setRegionArea(region.getRegionName());
                         if (sgc.getLookupUsstate() != null)
@@ -449,6 +453,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedStateStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedStateStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedStateStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
+                        assignedStateStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
                            sInfo.getAssignedStateStaff().add(assignedStateStaff);
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
@@ -500,6 +505,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedStateStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedStateStaff.setRole(fieldStaff.getFieldStaff().getFieldStaffType().getFieldStaffType());
                         assignedStateStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
+                        assignedStateStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
                         RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
                         if (region != null)
                            regionAssignedArea.setRegionArea(region.getRegionName());
@@ -677,6 +683,25 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
          LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
       }
       return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         seasonGeographyConfigurationRepository.delete(deleteRegionMember.getSeasonGeographyConfigurationId());
+         fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
+
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+      }
+      return wsDefaultResponse;
+
    }
 
 }
