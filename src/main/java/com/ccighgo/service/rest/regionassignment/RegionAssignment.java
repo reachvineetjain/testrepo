@@ -20,7 +20,7 @@ import com.ccighgo.service.components.regionassignment.SuperRegionsERDs;
 import com.ccighgo.service.transport.season.beans.assignedregion.AssignedRegion;
 import com.ccighgo.service.transport.season.beans.assignedstates.AssignedStateInfo;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSuperRegion;
-import com.ccighgo.service.transport.season.beans.assignerdstoregion.AssignedERDToSuperRegion;
+import com.ccighgo.service.transport.season.beans.assignerdstosuperregion.AssignedERDToSuperRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
 import com.ccighgo.utils.WSDefaultResponse;

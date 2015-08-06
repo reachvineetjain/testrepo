@@ -34,7 +34,7 @@ import com.ccighgo.service.transport.season.beans.assignedstates.RegionAssignedA
 import com.ccighgo.service.transport.season.beans.assignedstates.StateInfo;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedERDStaff;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSuperRegion;
-import com.ccighgo.service.transport.season.beans.assignerdstoregion.AssignedERDToSuperRegion;
+import com.ccighgo.service.transport.season.beans.assignerdstosuperregion.AssignedERDToSuperRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.RDFieldStaff;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
@@ -96,6 +96,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedERDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedERDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedERDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
+                        assignedERDStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null || !staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId())) {
                            sr.getAssignedERDStaff().add(assignedERDStaff);
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
@@ -210,10 +211,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
             seasonGeographyConfigurationRepository.save(seasonGeographicConfigRow);
 
-            Integer fieldStaffId = fieldStaffLeadershipSeasonRepository.findRowByStaffIdAndSeasonIdAndSeasonGeographicId(assignedERDToSuperRegion.getOldFieldStaffId(),
-                  assignedERDToSuperRegion.getSeasonId(), seasonGeographicConfigRow.getSeasonGeographyConfigurationId());
-            fieldStaffLeadershipSeasonRepository.delete(fieldStaffId);
-            FieldStaffLeadershipSeason fieldStaffLeadershipSeason = new FieldStaffLeadershipSeason();
+            FieldStaffLeadershipSeason fieldStaffLeadershipSeason = fieldStaffLeadershipSeasonRepository.findOne(assignedERDToSuperRegion.getFieldStaffLeadershipSeasonId());
+
             fieldStaffLeadershipSeason.setCreatedBy(1);
             fieldStaffLeadershipSeason.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 

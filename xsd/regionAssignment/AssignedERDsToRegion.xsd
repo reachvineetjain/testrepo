@@ -6,7 +6,7 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.season.beans.assignerdstoregion" />
+            <jaxb:package name="com.ccighgo.service.transport.season.beans.assignerdstosuperregion" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
       <xsd:documentation></xsd:documentation>
@@ -21,6 +21,8 @@
                <xsd:element name="superRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               
                </xsd:sequence>  
   </xsd:complexType>
 
