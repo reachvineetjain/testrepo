@@ -479,7 +479,7 @@
 		</java>
 	</target>
 	
-	<target name="AssignedERDsToRegion">
+	<target name="AssignedERDsToSuperRegion">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
 				<arg value="-d" />
 				<arg value="${java.dir}" />

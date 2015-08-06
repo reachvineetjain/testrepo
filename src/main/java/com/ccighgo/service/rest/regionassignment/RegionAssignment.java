@@ -20,7 +20,7 @@ import com.ccighgo.service.components.regionassignment.SuperRegionsERDs;
 import com.ccighgo.service.transport.season.beans.assignedregion.AssignedRegion;
 import com.ccighgo.service.transport.season.beans.assignedstates.AssignedStateInfo;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSuperRegion;
-import com.ccighgo.service.transport.season.beans.assignerdstoregion.AssignedERDToRegion;
+import com.ccighgo.service.transport.season.beans.assignerdstoregion.AssignedERDToSuperRegion;
 import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
 import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -99,9 +99,9 @@ public class RegionAssignment {
    @POST
    @Path("assign/erdFieldStaff")
    @Produces("application/json")
-   public WSDefaultResponse assignERDFieldStaffToSuperRegion(AssignedERDToRegion assignedERDToRegion) {
+   public WSDefaultResponse assignERDFieldStaffToSuperRegion(AssignedERDToSuperRegion assignedERDToSuperRegion) {
       LOGGER.debug("fun : assignERDFieldStaffToState []");
-      return regionAssignmentServices.assignERDFieldStaffToSuperRegion(assignedERDToRegion);
+      return regionAssignmentServices.assignERDFieldStaffToSuperRegion(assignedERDToSuperRegion);
    }
 
    @POST
