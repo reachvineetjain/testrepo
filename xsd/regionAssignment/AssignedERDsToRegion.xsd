@@ -12,9 +12,9 @@
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
 
-   <xsd:element name="AssignedERDsToRegion" type="erdstoregion:AssignedERDToRegion"></xsd:element>
+   <xsd:element name="AssignedERDsToSuperRegion" type="erdstoregion:AssignedERDToSuperRegion"></xsd:element>
 
-   <xsd:complexType name="AssignedERDToRegion">
+   <xsd:complexType name="AssignedERDToSuperRegion">
             <xsd:sequence>
                <xsd:element name="oldFieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="newFieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
