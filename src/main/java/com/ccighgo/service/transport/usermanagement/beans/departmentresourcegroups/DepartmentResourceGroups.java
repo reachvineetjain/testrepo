@@ -6,32 +6,30 @@
 //
 
 
-package com.ccighgo.service.transport.utility.beans.department;
+package com.ccighgo.service.transport.usermanagement.beans.departmentresourcegroups;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
- * <p>Java class for Departments complex type.
+ * <p>Java class for DepartmentResourceGroups complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Departments">
+ * &lt;complexType name="DepartmentResourceGroups">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{http://www.ccighgo.com/common}Response">
  *       &lt;sequence>
- *         &lt;element name="departments" type="{http://www.ccighgo.com/department}Department" maxOccurs="unbounded"/>
+ *         &lt;element name="departmentResourceGroup" type="{http://www.ccighgo.com/departmentresourcegroup}DepartmentResourceGroupTO" maxOccurs="unbounded"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -39,41 +37,43 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Departments", propOrder = {
-    "departments"
+@XmlType(name = "DepartmentResourceGroups", propOrder = {
+    "departmentResourceGroup"
 })
-public class Departments extends Response{
+public class DepartmentResourceGroups
+    extends Response
+{
 
     @XmlElement(required = true)
-    protected List<Department> departments;
+    protected List<DepartmentResourceGroupTO> departmentResourceGroup;
 
     /**
-     * Gets the value of the departments property.
+     * Gets the value of the departmentResourceGroup property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the departments property.
+     * This is why there is not a <CODE>set</CODE> method for the departmentResourceGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getDepartments().add(newItem);
+     *    getDepartmentResourceGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Department }
+     * {@link DepartmentResourceGroupTO }
      * 
      * 
      */
-    public List<Department> getDepartments() {
-        if (departments == null) {
-            departments = new ArrayList<Department>();
+    public List<DepartmentResourceGroupTO> getDepartmentResourceGroup() {
+        if (departmentResourceGroup == null) {
+            departmentResourceGroup = new ArrayList<DepartmentResourceGroupTO>();
         }
-        return this.departments;
+        return this.departmentResourceGroup;
     }
 
 }

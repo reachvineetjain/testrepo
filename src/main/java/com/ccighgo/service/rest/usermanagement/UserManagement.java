@@ -17,6 +17,7 @@ import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
+import com.ccighgo.service.transport.utility.beans.department.Departments;
 
 /**
  * <h1>UserManagement</h1> The UserManagement class is the REST service front of
@@ -117,6 +118,14 @@ public class UserManagement {
     public User updateUserDemographics(User user) {
         return userMgmtServices.updateUserDemographics(user);
     }
+    
+    @GET
+    @Path("department-with-permissions")
+    @Produces("application/json")
+    public Departments getStaffUserRolePermissions() {
+       
+       return userMgmtServices.getDepartmentWithPermissions();
+    }
 
     /**
      * RESTFul service updates user permissions
@@ -131,6 +140,8 @@ public class UserManagement {
     public User updateUserPermissions(User user) {
         return userMgmtServices.updateUserPermissions(user);
     }
+    
+    
 
     /**
      * RESTFul service updates user's profile picture
