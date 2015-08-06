@@ -69,7 +69,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    @Override
    public AssignedSuperRegion getAssignedSuperRegionDetails(Integer seasonId) {
       AssignedSuperRegion assignedSuperRegion = new AssignedSuperRegion();
-      HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       try {
          List<Integer> list = seasonGeographyConfigurationRepository.findDistinctSuperRegionsBySeasonId(seasonId);
          if (list == null) {
@@ -79,6 +78,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
          } else {
             assignedSuperRegion.setSeasonId(seasonId);
             for (Integer pk : list) {
+               HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
                com.ccighgo.service.transport.season.beans.assignedsuperregion.SuperRegion sr = new com.ccighgo.service.transport.season.beans.assignedsuperregion.SuperRegion();
 
                SuperRegion superRegion = superRegionRepository.findOne(pk);
@@ -265,7 +265,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    @Override
    public AssignedRegion getAssignedRegions(Integer superRegionId, Integer seasonId) {
       AssignedRegion assignedRegion = new AssignedRegion();
-      HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       try {
          List<Integer> list = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionIdAndSeasonId(superRegionId, seasonId);
          if (list == null) {
@@ -278,6 +277,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             for (Integer rId : list) {
                if (rId == null)
                   continue;
+               HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
                RegionDetail rd = new RegionDetail();
 
                Region region = regionRepository.findOne(rId);
@@ -392,7 +392,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    @Override
    public AssignedStateInfo getAssignedStates(Integer superRegionId, Integer regionId, Integer seasonId) {
       AssignedStateInfo assignedStateInfo = new AssignedStateInfo();
-      HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       try {
          List<Integer> list = seasonGeographyConfigurationRepository.findDistinctStatesBySuperRegionRegionAandSeasonId(superRegionId, regionId, seasonId);
          if (list == null) {
@@ -406,6 +405,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             for (Integer sId : list) {
                if (sId == null)
                   continue;
+               HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
                StateInfo sInfo = new StateInfo();
 
                LookupUSState state = stateRepository.findOne(sId);
