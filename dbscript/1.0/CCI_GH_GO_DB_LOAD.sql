@@ -1206,14 +1206,6 @@ VALUES (1,'West',1,1,CURRENT_TIMESTAMP,1),
        (2,'Central',1,1,CURRENT_TIMESTAMP,1),
        (3,'East',1,1,CURRENT_TIMESTAMP,1);
        
-INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo,fieldStaffTypeId)
-VALUES (1,'Lori','Tibett','URL',1),
-       (2,'Douglas','Mike','URL',1),
-       (3,'Mike','Procter','URL',2),
-       (4,'John','DSouza','URL',2),
-       (5,'Angela','Mike','URL',3);
-
-       
 INSERT INTO `cci_gh_go`.`FieldStaffType` (fieldStaffTypeCode,fieldStaffType)    
 VALUES ('ERD','Executive Regional Director'),
        ('RD','Regional Director'),
@@ -1221,6 +1213,14 @@ VALUES ('ERD','Executive Regional Director'),
        ('RS','Regional Supervisor'),
        ('AC','Area Coordinator'),
        ('LC','Local Coordinator');
+       
+INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo,fieldStaffTypeId)
+VALUES (1,'Lori','Tibett','URL',1),
+       (2,'Douglas','Mike','URL',1),
+       (3,'Mike','Procter','URL',2),
+       (4,'John','DSouza','URL',2),
+       (5,'Angela','Mike','URL',3);       
+
        
 INSERT INTO `cci_gh_go`.`SeasonGeographyConfiguration` (superRegionId,regionId,usStatesId,seasonId,createdOn,createdBy,modifiedBy)
 VALUES  (1,NULL,NULL,1,CURRENT_TIMESTAMP,1,1),  
