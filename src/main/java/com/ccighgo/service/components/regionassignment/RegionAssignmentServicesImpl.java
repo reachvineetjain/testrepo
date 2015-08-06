@@ -114,7 +114,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    }
 
    @Override
-   public SuperRegionsERDs getAllERDsForSuperRegion(Integer seasonId) {
+   public SuperRegionsERDs getAllERDsForSuperRegion(Integer seasonId, Integer superRegionId) {
       HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       SuperRegionsERDs superRegionsERDs = new SuperRegionsERDs();
       try {
@@ -143,8 +143,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedERDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
                         assignedERDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
-                           superRegionsERDs.getAssignedERDStaffs().add(assignedERDStaff);
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
+                           if (superRegionId != null && superRegionId.equals(pk))
+                              continue;
+                           superRegionsERDs.getAssignedERDStaffs().add(assignedERDStaff);
                         }
 
                      }
@@ -273,7 +275,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    }
 
    @Override
-   public RegionRDs getAllRDsForRegion(Integer superRegionId, Integer seasonId) {
+   public RegionRDs getAllRDsForRegion(Integer superRegionId, Integer seasonId, Integer regionId) {
       HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       RegionRDs regionsRDs = new RegionRDs();
       try {
@@ -306,8 +308,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                            regionAssignedArea.setStateCode(sgc.getLookupUsstate().getStateCode());
                         assignedRDStaff.getAssignedArea().add(regionAssignedArea);
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
-                           regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
+                           if (regionId != null && regionId.equals(rId))
+                              continue;
+                           regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
                         }
                      }
                   }
@@ -396,10 +400,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    }
 
    @Override
-   public StatesStaff getAssignedStateStaff(Integer superRegionId, Integer regionId, Integer seasonId) {
+   public StatesStaff getAssignedStateStaff(Integer superRegionId, Integer regionId, Integer seasonId, Integer stateId) {
       HashMap<Integer, AssignedStateStaff> staffExist = new HashMap<Integer, AssignedStateStaff>();
       HashMap<String, Boolean> staffAndAreaExist = new HashMap<String, Boolean>();
-
+      HashMap<Integer, Boolean> staff = new HashMap<Integer, Boolean>();
       StatesStaff stateStaff = new StatesStaff();
       try {
          List<Integer> list = seasonGeographyConfigurationRepository.findDistinctStatesBySuperRegionRegionAandSeasonId(superRegionId, regionId, seasonId);
@@ -431,14 +435,16 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         regionAssignedArea.setStateCode(state.getStateCode());
                         assignedStateStaff.getAssignedArea().add(regionAssignedArea);
                         String staffIdAndStateCode = fieldStaff.getFieldStaff().getFieldStaffId() + "|" + state.getStateCode();
-                        if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
-                           staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), assignedStateStaff);
-                           staffAndAreaExist.put(staffIdAndStateCode, true);
-                        } else {
-                           if (staffAndAreaExist.get(staffIdAndStateCode) != null && !staffAndAreaExist.get(staffIdAndStateCode)) {
-                              staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()).getAssignedArea().add(regionAssignedArea);
+                        staff.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
+                        if (!state.getUsStatesId().equals(stateId))
+                           if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
+                              staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), assignedStateStaff);
+                              staffAndAreaExist.put(staffIdAndStateCode, true);
+                           } else {
+                              if (staffAndAreaExist.get(staffIdAndStateCode) != null && !staffAndAreaExist.get(staffIdAndStateCode)) {
+                                 staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()).getAssignedArea().add(regionAssignedArea);
+                              }
                            }
-                        }
                      }
                   }
                }
@@ -447,6 +453,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             List<FieldStaff> allRDs = fieldStaffRepository.findAllStaffRatherERDorRD();
             if (allRDs != null) {
                for (FieldStaff fieldStaff : allRDs) {
+                  if (staff.get(fieldStaff.getFieldStaffId()))
+                     continue;
                   AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
                   assignedStateStaff.setFirstName(fieldStaff.getFirstName());
                   assignedStateStaff.setLastName(fieldStaff.getLastName());
