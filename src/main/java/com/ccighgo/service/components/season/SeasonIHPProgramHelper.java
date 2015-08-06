@@ -3,7 +3,9 @@
  */
 package com.ccighgo.service.components.season;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -463,18 +465,18 @@ public class SeasonIHPProgramHelper {
             }
          }
          documentInformation.setCreatedBy(1);
-         documentInformation.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation.setModifiedBy(1);
-         documentInformation.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
          sprgDoc.setActive(CCIConstants.ACTIVE);
          sprgDoc.setSeason(season);
          sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_STP_IHP_ID));
          sprgDoc.setDocumentInformation(documentInformation);
          sprgDoc.setCreatedBy(1);
-         sprgDoc.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprgDoc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          sprgDoc.setModifiedBy(1);
-         sprgDoc.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprgDoc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          newDocList.add(sprgDoc);
       }
       seasonProgramDocumentRepository.save(newDocList);
@@ -494,9 +496,9 @@ public class SeasonIHPProgramHelper {
          sprNote.setProgramNote(ihpNote.getNoteValue());
          sprNote.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_STP_IHP_ID));
          sprNote.setCreatedBy(1);
-         sprNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          sprNote.setModifiedBy(1);
-         sprNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         sprNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          updatedNotes.add(sprNote);
       }
       seasonProgramNotesRepository.save(updatedNotes);

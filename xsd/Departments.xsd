@@ -19,7 +19,7 @@
 	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
 	<xsd:element name="Departments" type="dept:Departments"></xsd:element>
-
+	
 	<xsd:complexType name="Departments">
 	 <xsd:complexContent>
          <xsd:extension base="common:Response">
@@ -44,6 +44,5 @@
 			<xsd:element name="departmentresourcegroups" type="pref:DepartmentResourceGroups" minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
-
 </xsd:schema>
 

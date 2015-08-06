@@ -36,7 +36,7 @@ public class CCIConstants {
    public static final byte INACTIVE = 0;
    public static final String DEFAULT_PAGE = "0";
    public static final String DEFAULT_NO_OF_RECORDS_SIZE = "10";
-   public static final Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+   public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
    public static final Integer MIN_PASS_LEN = 8;
    public static final Integer MAX_PASS_LEN = 8;
    public static final Integer MAX_UPPER_CASE = 1;
@@ -65,7 +65,7 @@ public class CCIConstants {
    public static final String WP_WT_SUMMER = "W&T Summer";
    public static final String WP_WT_WINTER = "W&T Winter";
    public static final String WP_WT_SPRING = "W&T Spring";
-   public static final String WP_WT_CAP = "W&T CAP";
+   public static final String WP_WT_CAP = "CAP";
    public static final String GHT_HS_ABRD = "HS Abroad";
    public static final String GHT_LANG_SCL = "Language School";
    public static final String GHT_TEACH_ABRD = "Teach Abroad";
@@ -113,8 +113,15 @@ public class CCIConstants {
    // department program options code
    public static final String AUGUST_FY_J1 = "Aug-FY";
    public static final String JANUARY_FY_J1 = "Jan-FY";
+   public static final String AUGUST_FSEM_J1 = "Aug-1Sem";
+   public static final String JANUARY_SSEM_J1 = "Jan-2Sem";
+
    public static final String AUGUST_FY_F1 = "Aug-FY";
    public static final String JANUARY_FY_F1 = "Jan-FY";
+
+   public static final String AUGUST_FSEM_F1 = "Aug-1Sem";
+   public static final String JANUARY_SSEM_F1 = "Jan-2Sem";
+
    public static final String JOB_FAIR_SUMMER = "JF";
    public static final String SELF_PLACED_SUMMER = "SP";
    public static final String DIRECT_PLACEMENT_SUMMER = "DP";
@@ -129,9 +136,9 @@ public class CCIConstants {
 
    // department program options id
    public static final Integer AUGUST_FY_J1_ID = 1;
-   public static final Integer AUGUST_FY_F1_ID = 2;
+   public static final Integer AUGUST_FY_F1_ID = 5;
    public static final Integer JANUARY_FY_J1_ID = 3;
-   public static final Integer JANUARY_FY_F1_ID = 4;
+   public static final Integer JANUARY_FY_F1_ID = 8;
    public static final Integer JOB_FAIR_SUMMER_ID = 10;
    public static final Integer SELF_PLACED_SUMMER_ID = 11;
    public static final Integer DIRECT_PLACEMENT_SUMMER_ID = 12;
