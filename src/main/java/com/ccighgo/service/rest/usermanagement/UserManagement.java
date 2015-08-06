@@ -234,5 +234,11 @@ public class UserManagement {
        return userMgmtServices.addUserNote(userNotes);
     }
     
-    
+    @POST
+    @Path("updatenote/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public UserNotes updateUserNote(UserNotes userNotes){
+       return userMgmtServices.updateUserNote(userNotes);
+    }
 }

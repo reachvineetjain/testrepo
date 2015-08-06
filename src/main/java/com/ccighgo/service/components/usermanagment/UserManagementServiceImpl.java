@@ -570,7 +570,29 @@ public class UserManagementServiceImpl implements UserManagementService {
       
       return usr;
    }
-
+   
+   
+   @Override
+   @Transactional
+   public UserNotes updateUserNote(UserNotes userNotes){
+      
+      CCIStaffUserNote cciUserNote = cciUserNoteRepository.findOne(Integer.valueOf(userNotes.getUserNotesId()));
+    
+         if(cciUserNote.getCcistaffUser().getCciStaffUserId().equals(userNotes.getCciUserId()))
+         {
+           
+            cciUserNote.setNote(userNotes.getUserNote());   
+            cciUserNote.setModifiedBy(userNotes.getCciUserId());
+            cciUserNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+            cciUserNote.setCciStaffUserNoteId(userNotes.getUserNotesId());
+         }
+             
+         cciUserNote = cciUserNoteRepository.save(cciUserNote);
+         UserNotes note = new UserNotes();
+         note = getCCIStaffUserNoteTO(cciUserNote, note);
+         
+      return note;
+   }
    /**
     * Get user country
     * 
@@ -715,13 +737,26 @@ public class UserManagementServiceImpl implements UserManagementService {
    private List<UserNotes> getUserNotes(CCIStaffUser cciUser, User user) {
       List<UserNotes> userNotes = new ArrayList<UserNotes>();
       for (CCIStaffUserNote note : cciUser.getCcistaffUserNotes()) {
-         UserNotes uNote = new UserNotes();
-         uNote.setCciUserId(cciUser.getCciStaffUserId());
-         uNote.setUserNotesId(note.getCciStaffUserNoteId());
-         uNote.setUserNote(note.getNote());
-         userNotes.add(uNote);
+         UserNotes uNote = new UserNotes();        
+         userNotes.add(getCCIStaffUserNoteTO(note,uNote));
       }
       return userNotes;
+   }
+   
+   /**
+    * @description converting CCIStaffUserNote object to TO object
+    * 
+    * @param cciStaffUserNote
+    * @param uNote
+    * @return 
+    */
+   private UserNotes getCCIStaffUserNoteTO(CCIStaffUserNote cciStaffUserNote,UserNotes uNote) {
+      if(uNote==null)
+      uNote = new UserNotes();
+      uNote.setCciUserId(cciStaffUserNote.getCcistaffUser().getCciStaffUserId());
+      uNote.setUserNotesId(cciStaffUserNote.getCciStaffUserNoteId());
+      uNote.setUserNote(cciStaffUserNote.getNote());
+      return uNote;
    }
 
    /**

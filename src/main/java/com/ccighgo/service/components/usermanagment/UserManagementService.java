@@ -112,5 +112,11 @@ public interface UserManagementService {
      * @return
      */
     public List<UserNotes> addUserNote(UserNotes userNotes);
+    /**
+     * @param userNotes
+     * @return
+     */
+    public UserNotes updateUserNote(UserNotes userNotes);
+    
 
 }
