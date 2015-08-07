@@ -20,7 +20,10 @@
         <xsd:sequence>
             <xsd:element name="loginname" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
             <xsd:element name="login_type" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+            <!-- <xsd:element name="user" type="auth:LoginUser" maxOccurs="1" minOccurs="1"></xsd:element> -->
         </xsd:sequence>
     </xsd:complexType>
+    
+    
 </xsd:schema>
 
