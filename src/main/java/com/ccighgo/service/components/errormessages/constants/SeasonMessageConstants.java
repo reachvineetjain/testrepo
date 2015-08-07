@@ -115,5 +115,24 @@ public class SeasonMessageConstants {
    public static final String FAILED_UPDATE_WP_WINTER_ALLOCATION_DETAILS="error.update.wp.winter.allocatio.details";
    public static final String FAILED_EDIT_WP_WINTER_ALLOCATION_DETAILS="error.edit.wp.winter.allocatio.details";
    public static final String FAILED_CLONE_SEASON="error.clone.season";
+   public static final String FAILED_CREATE_SEASON_BEAN="error.create.season.bean";
+   public static final String FAILED_UPDATE_SEASON="error.update.season.bean";
+   public static final String FAILED_ADD_SEASON_DEPARTMENT_NOTE="error.add.season.department.note";
+   public static final String FAILED_ADD_SEASON_DEPARTMENT_DOC="error.add.season.department.doc";
+   public static final String FAILED_ADD_SEASON_PROGRAM_NOTE="error.add.season.program.note";
+   public static final String FAILED_ADD_SEASON_PROGRAM_DOC="error.add.season.program.doc";
+   public static final String FAILED_GET_DOCUMENT_TYPES="error.get.document.types";
+   public static final String FAILED_GET_IHP_DETAILS="error.get.ihp.details";
+   public static final String INVALID_PROGRAM_ID="error.invalid.program.id";
+   public static final String FAILED_GET_IHP_NAME_AND_STATUS="error.get.ihp.name.and.status";
+   public static final String FAILED_GET_IHP_DATES="error.get.ihp.dates";
+   public static final String FAILED_GET_IHP_PROGRAM_CONFIGURATION_DETAIL="error.get.ihp.program.configuration.details";
+   public static final String FAILED_UPDATE_IHP_DETAILS="error.update.ihp.details";
+   public static final String DETAILS_NOT_NULL="error.not.null";
+   public static final String FAILED_UPDATE_IHP_NAME_AND_STATUS="error.update.ihp.name.and.status";
+   public static final String FAILED_UPDATE_DATES="error.update.ihp.dates";
+   public static final String FAILED_UPDATE_IHP_PROGRAM_CONFIGURATION_DETAILS="error.update.ihp.program.configuration.details";
+   
+   
    
 }
