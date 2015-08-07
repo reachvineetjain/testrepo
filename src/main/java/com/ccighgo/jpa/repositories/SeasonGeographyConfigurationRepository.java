@@ -75,4 +75,10 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    @Query("SELECT DISTINCT s.superRegion.superRegionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
    public List<Integer> findDistinctSuperRegionsBySeasonIdRM(Integer seasonId);
 
+   @Query(value = "SELECT MAX(s.seasonId) FROM SeasonGeographyConfiguration s", nativeQuery = true)
+   public Integer findMaxSeasonId();
+
+   @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
+   public List<SeasonGeographyConfiguration> findPreviousRecordsByMaxSeeasonId(Integer seasonId);
+
 }
