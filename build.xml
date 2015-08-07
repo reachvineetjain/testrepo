@@ -494,5 +494,14 @@
 				</java>
 			</target>
 	
+	<!-- Third Party Integration -->
+	<target name="InternationPartner">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/thirdparty/wordpress/InternationalPartners.xsd" />
+		</java>
+	</target>
+		
 
 </project>
