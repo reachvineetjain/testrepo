@@ -18,16 +18,20 @@ import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupDepartment;
+import com.ccighgo.db.entities.RegionIHP;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonDepartmentDocument;
 import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonGHTConfiguration;
+import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
 import com.ccighgo.db.entities.SeasonIHPDetail;
+import com.ccighgo.db.entities.SeasonIHPDetailsRegionApplication;
+import com.ccighgo.db.entities.SeasonIHPGeographyConfiguration;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
 import com.ccighgo.db.entities.SeasonProgramDocument;
@@ -50,15 +54,19 @@ import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.RegionIHPRepository;
 import com.ccighgo.jpa.repositories.SeasonCAPDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonDepartmentNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonGHTConfigurationRepository;
+import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonHSADetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPAllocationRepository;
 import com.ccighgo.jpa.repositories.SeasonHSPConfigurationRepsitory;
 import com.ccighgo.jpa.repositories.SeasonIHPDetailRepository;
+import com.ccighgo.jpa.repositories.SeasonIHPDetailsRegionApplicationRepository;
+import com.ccighgo.jpa.repositories.SeasonIHPGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonLSDetailsRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
@@ -191,6 +199,14 @@ public class SeasonServiceImplUtil {
    SeasonWTSummerRepository seasonWTSummerRepository;
    @Autowired
    SeasonHSPAllocationRepository seasonHSPAllocationRepository;
+   @Autowired
+   RegionIHPRepository regionIHPRepository;
+   @Autowired
+   SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
+   @Autowired
+   SeasonIHPGeographyConfigurationRepository seasonIHPGeographyConfigurationRepository;
+   @Autowired
+   SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
 
    /**
     * @param seasonBean
@@ -1094,6 +1110,7 @@ public class SeasonServiceImplUtil {
             createGHTTeachAbroad(seasonEntity, seasonBean);
          } else if (departmentName.equals(CCIConstants.DEPT_GREEN_HEART_TRANSFORMS)) {
          } else if (departmentName.equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
+            createHSPRegionManagement(seasonEntity);
             createHSPF1Season(seasonEntity, seasonBean);
             createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
             createHSPIHPSeasonProgram(seasonBean, seasonEntity);
@@ -1106,6 +1123,22 @@ public class SeasonServiceImplUtil {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+      }
+   }
+
+   private void createHSPRegionManagement(Season seasonEntity) {
+      Integer maxSeasonId = seasonGeographyConfigurationRepository.findMaxSeasonId();
+      if (maxSeasonId > 0) {
+         List<SeasonGeographyConfiguration> previousRecordsToCopy = seasonGeographyConfigurationRepository.findPreviousRecordsByMaxSeeasonId(maxSeasonId);
+         if (previousRecordsToCopy != null) {
+            List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
+            for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
+               config.setSeason(seasonEntity);
+               newList.add(config);
+            }
+            seasonGeographyConfigurationRepository.save(newList);
+            seasonGeographyConfigurationRepository.flush();
+         }
       }
    }
 
@@ -1341,7 +1374,37 @@ public class SeasonServiceImplUtil {
             seasonIHPDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonIHPDetail.setModifiedBy(1);
             seasonIHPDetail.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
+            seasonIHPDetail = seasonIHPDetailRepository.saveAndFlush(seasonIHPDetail);
+            // create region configuration for IHP
+            Integer maxSeasonId = seasonIHPGeographyConfigurationRepository.findMaxIHPSeasonId();
+            if (maxSeasonId > 0) {
+               List<SeasonIHPGeographyConfiguration> previousRecordsToCopy = seasonIHPGeographyConfigurationRepository.findPreviousRecordsByMaxSeeasonId(maxSeasonId);
+               if (previousRecordsToCopy != null) {
+                  List<SeasonIHPGeographyConfiguration> newList = new ArrayList<SeasonIHPGeographyConfiguration>();
+                  for (SeasonIHPGeographyConfiguration config : previousRecordsToCopy) {
+                     config.setSeason(season);
+                     newList.add(config);
+                  }
+                  seasonIHPGeographyConfigurationRepository.save(newList);
+                  seasonIHPGeographyConfigurationRepository.flush();
+               }
+            }
+            List<RegionIHP> ihpRegions = regionIHPRepository.findAll();
+            if (ihpRegions != null) {
+               List<SeasonIHPDetailsRegionApplication> locationList = new ArrayList<SeasonIHPDetailsRegionApplication>();
+               for (RegionIHP ihp : ihpRegions) {
+                  SeasonIHPDetailsRegionApplication detailsRegionApplication = new SeasonIHPDetailsRegionApplication();
+                  detailsRegionApplication.setRegionIhp(ihp);
+                  detailsRegionApplication.setStopAcceptingApps(CCIConstants.INACTIVE);
+                  detailsRegionApplication.setSeasonIhpdetail(seasonIHPDetail);
+                  detailsRegionApplication.setCreatedBy(1);
+                  detailsRegionApplication.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                  detailsRegionApplication.setModifiedBy(1);
+                  detailsRegionApplication.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                  locationList.add(detailsRegionApplication);
+               }
+               seasonIHPDetailsRegionApplicationRepository.save(locationList);
+            }
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
