@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for HSPF1FieldSettings complex type.
@@ -54,7 +56,7 @@ import javax.xml.bind.annotation.XmlType;
     "allowFSToStartRenewalProcess",
     "showSpecialRequestStudentToRD"
 })
-public class HSPF1FieldSettings {
+public class HSPF1FieldSettings extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

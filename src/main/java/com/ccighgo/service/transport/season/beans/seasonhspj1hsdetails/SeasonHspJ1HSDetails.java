@@ -10,10 +10,13 @@ package com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -57,7 +60,7 @@ import javax.xml.bind.annotation.XmlType;
     "j1HsDocuments",
     "j1HsNotes"
 })
-public class SeasonHspJ1HSDetails {
+public class SeasonHspJ1HSDetails extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

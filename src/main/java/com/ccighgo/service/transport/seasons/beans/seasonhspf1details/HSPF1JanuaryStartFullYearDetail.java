@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for HSPF1JanuaryStartFullYearDetail complex type.
@@ -46,7 +48,7 @@ import javax.xml.bind.annotation.XmlType;
     "applicationDeadlineDate",
     "showFullYearToHF"
 })
-public class HSPF1JanuaryStartFullYearDetail {
+public class HSPF1JanuaryStartFullYearDetail extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

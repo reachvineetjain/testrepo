@@ -10,10 +10,13 @@ package com.ccighgo.service.transport.season.beans.cloneseason;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -51,7 +54,7 @@ import javax.xml.bind.annotation.XmlType;
     "cloneSeasonStatusId",
     "clonedDocuments"
 })
-public class CloneSeason {
+public class CloneSeason extends Response{
 
     protected int seasonId;
     protected int departmentId;

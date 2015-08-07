@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/wp" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+<xsd:schema targetNamespace="http://www.ccighgo.com/wp" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common" jaxb:version="2.0"
    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:wp="http://www.ccighgo.com/wp">
 
    <xsd:annotation>
@@ -10,10 +10,13 @@
       </xsd:appinfo>
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
+<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
    <xsd:element name="SeasonWPDetails" type="wp:SeasonWPDetails"></xsd:element>
 
    <xsd:complexType name="SeasonWPDetails">
+   <xsd:complexContent>
+			<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -24,9 +27,13 @@
          <xsd:element name="wpDocuments" type="wp:WPDocuments" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="wpNotes" type="wp:WPNotes" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
+      </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="WPBasicDetail">
+   <xsd:complexContent>
+			<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -34,9 +41,13 @@
          <xsd:element name="programStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programStatusValue" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
+         </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="WPSectionOne">
+   <xsd:complexContent>
+			<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -46,9 +57,13 @@
          <xsd:element name="isJobBoardOpen" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="maxPendingJobAppls" type="xsd:string" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+      </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="WPProgramAllocations">
+   <xsd:complexContent>
+			<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -80,6 +95,8 @@
          <xsd:element name="totalCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
          <xsd:element name="totalRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+       </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="WPDocuments">

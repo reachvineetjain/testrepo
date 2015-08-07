@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for SeasonDepartmentDocument complex type.
@@ -53,7 +55,7 @@ import javax.xml.bind.annotation.XmlType;
     "uploadedBy",
     "active"
 })
-public class SeasonDepartmentDocument {
+public class SeasonDepartmentDocument extends Response{
 
     protected int seasonId;
     @XmlElement(required = true)
