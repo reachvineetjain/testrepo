@@ -60,7 +60,8 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 public class Seasons {
 
    private static final Logger LOGGER = Logger.getLogger(Seasons.class);
-   PublishWordPressForms publishWordPressForms = new PublishWordPressForms();
+   @Autowired
+   PublishWordPressForms publishWordPressForms;
 
    @Autowired
    SeasonServiceInterface seasonServices;
