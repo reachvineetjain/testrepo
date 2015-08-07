@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for HSPF1ProgramAllocations complex type.
@@ -56,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
     "totalAcceptedParticipants",
     "totalRemainingParticipants"
 })
-public class HSPF1ProgramAllocations {
+public class HSPF1ProgramAllocations extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

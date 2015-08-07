@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/seasonstatus" xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasonstatus" elementFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common"
     attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
     xmlns:ss="http://www.ccighgo.com/seasonstatus">
 
@@ -11,20 +11,22 @@
         </xsd:appinfo>
         <xsd:documentation></xsd:documentation>
     </xsd:annotation>
-    
+
     <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
     <xsd:element name="SeasonStatuses" type="ss:SeasonStatuses"></xsd:element>
 
     <xsd:complexType name="SeasonStatuses">
-    <xsd:complexContent>
+	<xsd:complexContent>
 		<xsd:extension base="common:Response">
-        <xsd:sequence>
-            <xsd:element name="seasonStatuses" type="ss:SeasonStatus" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-        </xsd:extension>
+			<xsd:sequence>
+				<xsd:element name="seasonStatuses" type="ss:SeasonStatus"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:extension>
 	</xsd:complexContent>
-    </xsd:complexType>
+</xsd:complexType>
+
 
     <xsd:complexType name="SeasonStatus">
     <xsd:complexContent>

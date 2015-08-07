@@ -3,9 +3,7 @@
  */
 package com.ccighgo.service.components.season;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -204,6 +202,7 @@ public class SeasonServiceImplUtil {
       seasonBean.setDepartmentCode(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getAcronym() : null);
       seasonBean.setDepartmentName(seasonEntity.getLookupDepartment() != null ? seasonEntity.getLookupDepartment().getDepartmentName() : null);
       seasonBean.setSeasonName(seasonEntity.getSeasonName() != null ? seasonEntity.getSeasonName() : CCIConstants.EMPTY_DATA);
+      seasonBean.setCloneSeasonName(seasonEntity.getClonedSeasonName() != null ? seasonEntity.getClonedSeasonName() : null);
 
       if (seasonEntity.getSeasonStatus() != null) {
          seasonBean.setSeasonStatusValue(seasonEntity.getSeasonStatus() != null ? seasonEntity.getSeasonStatus().getStatus() : CCIConstants.EMPTY_DATA);
@@ -305,7 +304,7 @@ public class SeasonServiceImplUtil {
                }
                seasonDepartmentNotes.setSeasonDepartmentNotetId(note.getSeasonDepartmentNotesId());
                list.add(seasonDepartmentNotes);
-               
+
             }
             seasonBean.getNotes().addAll(list);
          }
@@ -579,6 +578,7 @@ public class SeasonServiceImplUtil {
 
          ValidationUtils.validateRequired(seasonBean.getSeasonName());
          seasonEntity.setSeasonName(seasonBean.getSeasonName());
+         seasonEntity.setClonedSeasonName(seasonBean.getCloneSeasonName());
 
          seasonEntity.setCreatedBy(1);
          seasonEntity.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));

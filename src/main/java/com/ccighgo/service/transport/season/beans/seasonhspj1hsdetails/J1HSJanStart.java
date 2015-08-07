@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for J1HSJanStart complex type.
@@ -60,7 +62,7 @@ import javax.xml.bind.annotation.XmlType;
     "janFullYrApplDeadlineDate",
     "showJanFullYrToNewHF"
 })
-public class J1HSJanStart {
+public class J1HSJanStart extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

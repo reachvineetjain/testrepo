@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/seasonhspf1details" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasonhspf1details" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common"
    jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasonhspf1details="http://www.ccighgo.com/seasonhspf1details">
    <xsd:annotation>
       <xsd:appinfo>
@@ -9,10 +9,13 @@
       </xsd:appinfo>
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
+   <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
    <xsd:element name="SeasonHSPF1Details" type="seasonhspf1details:SeasonHSPF1Details"></xsd:element>
 
    <xsd:complexType name="SeasonHSPF1Details">
+   <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -29,9 +32,13 @@
          <xsd:element name="documents" type="seasonhspf1details:HSPF1SeasonHspF1Documents" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="notes" type="seasonhspf1details:HSPF1SeasonHspF1Notes" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
+      </xsd:extension>
+	</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1BasicDetails">
+    <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -39,9 +46,13 @@
          <xsd:element name="programStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programStatusValue" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
+       </xsd:extension>
+	</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1JanuaryStart2ndSemesterDetails">
+   <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -54,9 +65,13 @@
          <xsd:element name="activateFullYearProgram" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="januaryStartFullYearDetail" type="seasonhspf1details:HSPF1JanuaryStartFullYearDetail" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+      </xsd:extension>
+	</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1JanuaryStartFullYearDetail">
+   <xsd:complexContent>
+   <xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -65,9 +80,13 @@
          <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="showFullYearToHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+       </xsd:extension>
+	</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1AugustStart1stSemesterDetails">
+   <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -78,9 +97,13 @@
          <xsd:element name="latestBirthDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="show1stSemesterToNewHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+       </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1AugustStartFullYearDetails">
+   <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -89,9 +112,13 @@
          <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="showFullYearToNewHF" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+      </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1FieldSettings">
+   <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -104,17 +131,25 @@
          <xsd:element name="allowFSToStartRenewalProcess" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="showSpecialRequestStudentToRD" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+      </xsd:extension>
+		</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1Accounting">
+   <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="greenHeartMargin" type="xsd:int" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
+      </xsd:extension>
+	</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1ProgramAllocations">
+   <xsd:complexContent>
+	<xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -132,6 +167,9 @@
          <xsd:element name="totalRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
 
       </xsd:sequence>
+      
+        </xsd:extension>
+	</xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="HSPF1SeasonHspF1Documents">
