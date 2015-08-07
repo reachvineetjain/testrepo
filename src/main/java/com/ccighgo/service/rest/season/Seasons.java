@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterface;
-import com.ccighgo.service.components.wordpress.forms.PublishWordPressForms;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
@@ -60,7 +59,6 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 public class Seasons {
 
    private static final Logger LOGGER = Logger.getLogger(Seasons.class);
-
 
    @Autowired
    SeasonServiceInterface seasonServices;
