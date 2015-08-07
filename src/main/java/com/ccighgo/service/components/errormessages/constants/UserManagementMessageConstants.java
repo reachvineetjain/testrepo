@@ -11,6 +11,8 @@ public class UserManagementMessageConstants {
 	   public static final String FAILED_UPDATE_USER_PICTURE="error.update.user.picture";
 	   public static final String USR_MGMT_SEARCH_USER="error.search.user";
 	   public static final String FAILED_DEFAULT_PERMISSIONS_BY_ROLE="error.default.permission.by.role";
+	   public static final String FAILED_GET_DEPARTMENT_WITH_PERMISSIONS="error.get.department.with.permissions";
+	   
 	  
 	   
 

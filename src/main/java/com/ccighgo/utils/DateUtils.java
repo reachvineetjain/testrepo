@@ -96,6 +96,17 @@ public class DateUtils {
       }
       return date;
    }
+   
+   public static String getTimestamp(Date inputDate) {
+      String date = null;
+      try {
+         if (inputDate != null)
+            date = String.valueOf(inputDate.getTime());
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return date;
+   }
 
    /**
     * Method takes string date as input and returns date object

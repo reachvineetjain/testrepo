@@ -10,10 +10,13 @@ package com.ccighgo.service.transport.utility.beans.gender;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -39,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Genders", propOrder = {
     "genders"
 })
-public class Genders {
+public class Genders extends Response{
 
     @XmlElement(required = true)
     protected List<Gender> genders;

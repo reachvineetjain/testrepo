@@ -11,6 +11,7 @@
         </xsd:appinfo>
         <xsd:documentation></xsd:documentation>
     </xsd:annotation>
+
     <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
     <xsd:element name="SeasonStatuses" type="ss:SeasonStatuses"></xsd:element>
@@ -26,12 +27,17 @@
 	</xsd:complexContent>
 </xsd:complexType>
 
+
     <xsd:complexType name="SeasonStatus">
+    <xsd:complexContent>
+		<xsd:extension base="common:Response">
         <xsd:sequence>
             <xsd:element name="seasonStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="seasonStatus" type="xsd:string" maxOccurs="1" minOccurs="1" />
             <xsd:element name="active" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
         </xsd:sequence>
+        </xsd:extension>
+	</xsd:complexContent>
     </xsd:complexType>
 
 </xsd:schema>

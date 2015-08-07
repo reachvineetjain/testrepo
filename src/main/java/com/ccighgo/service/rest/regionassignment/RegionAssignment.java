@@ -5,6 +5,7 @@ package com.ccighgo.service.rest.regionassignment;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,10 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.regionassignment.RegionAssignmentServices;
 import com.ccighgo.service.components.regionassignment.RegionRDs;
+import com.ccighgo.service.components.regionassignment.StatesStaff;
 import com.ccighgo.service.components.regionassignment.SuperRegionsERDs;
 import com.ccighgo.service.transport.season.beans.assignedregion.AssignedRegion;
 import com.ccighgo.service.transport.season.beans.assignedstates.AssignedStateInfo;
 import com.ccighgo.service.transport.season.beans.assignedsuperregion.AssignedSuperRegion;
+import com.ccighgo.service.transport.season.beans.assignerdstosuperregion.AssignedERDToSuperRegion;
+import com.ccighgo.service.transport.season.beans.assignrdstoregion.AssignedRDToRegion;
+import com.ccighgo.service.transport.season.beans.assignstafftostate.AssignedStaffToState;
+import com.ccighgo.service.transport.season.beans.deleteregionmember.DeleteRegionMember;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -52,27 +58,27 @@ public class RegionAssignment {
    }
 
    @GET
-   @Path("list/assigned/superRegionsERDs/{seasonId}")
+   @Path("list/assigned/superRegionsERDs/{seasonId}/{superRegionId}")
    @Produces("application/json")
-   public SuperRegionsERDs getAllERDsForSuperRegion(@PathParam("seasonId") String seasonId) {
+   public SuperRegionsERDs getAllERDsForSuperRegion(@PathParam("seasonId") String seasonId, @PathParam("superRegionId") String superRegionId) {
       LOGGER.debug("fun: getAllERDsForSuperRegion");
-      return regionAssignmentServices.getAllERDsForSuperRegion(Integer.parseInt(seasonId));
+      return regionAssignmentServices.getAllERDsForSuperRegion(Integer.parseInt(seasonId), Integer.parseInt(superRegionId));
    }
 
    @GET
    @Path("list/assigned/regions/{superRegionId}/{seasonId}")
    @Produces("application/json")
    public AssignedRegion getAssignedRegionsDetails(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
-      LOGGER.debug("fun :getAssignedRegionsOfSuperRegion  [" + superRegionId + "]");
+      LOGGER.debug("fun :getAssignedRegionsOfSuperRegion  [" + superRegionId + "," + seasonId + "]");
       return regionAssignmentServices.getAssignedRegions(Integer.parseInt(superRegionId), Integer.parseInt(seasonId));
    }
 
    @GET
-   @Path("list/assigned/regionsRDs/{superRegionId}/{seasonId}")
+   @Path("list/assigned/regionsRDs/{superRegionId}/{seasonId}/{regionId}")
    @Produces("application/json")
-   public RegionRDs getAllRDsForRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
-      LOGGER.debug("fun: getAllERDsForSuperRegion");
-      return regionAssignmentServices.getAllRDsForRegion(Integer.parseInt(superRegionId), Integer.parseInt(seasonId));
+   public RegionRDs getAllRDsForRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, @PathParam("regionId") String regionId) {
+      LOGGER.debug("fun: getAllERDsForSuperRegion [" + superRegionId + "," + seasonId + "]");
+      return regionAssignmentServices.getAllRDsForRegion(Integer.parseInt(superRegionId), Integer.parseInt(seasonId), Integer.parseInt(regionId));
    }
 
    @GET
@@ -83,36 +89,45 @@ public class RegionAssignment {
       return regionAssignmentServices.getAssignedStates(Integer.parseInt(superRegionId), Integer.parseInt(regionId), Integer.parseInt(seasonId));
    }
 
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-
    @GET
-   @Path("assign/erdFieldStaff/{fieldStaffId}/{superRegionId}")
+   @Path("list/assigned/state/staff/{superRegionId}/{regionId}/{seasonId}/{stateId}")
    @Produces("application/json")
-   public WSDefaultResponse assignERDFieldStaffToState(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("superRegionId") String superRegionId) {
-      LOGGER.debug("fun : assignERDFieldStaffToState [" + fieldStaffId + "," + superRegionId + "]");
-      return regionAssignmentServices.assignERDFieldStaffToState(fieldStaffId, superRegionId);
+   public StatesStaff getAssignedStateStaff(@PathParam("superRegionId") String superRegionId, @PathParam("regionId") String regionId, @PathParam("seasonId") String seasonId,
+         @PathParam("stateId") String stateId) {
+      LOGGER.debug("fun : getAssignedStateStaff [" + superRegionId + "," + regionId + "," + seasonId + "]");
+      return regionAssignmentServices.getAssignedStateStaff(Integer.parseInt(superRegionId), Integer.parseInt(regionId), Integer.parseInt(seasonId), Integer.parseInt(stateId));
    }
 
-   @GET
-   @Path("assign/rdFieldStaff/{fieldStaffId}/{regionId}")
+   @POST
+   @Path("assign/erdFieldStaff")
    @Produces("application/json")
-   public WSDefaultResponse assignRDFieldStaffToState(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("regionId") String regionId) {
-      LOGGER.debug("fun : assignRDFieldStaffToState[ " + fieldStaffId + "," + regionId + "]");
-      return regionAssignmentServices.assignRDFieldStaffToState(fieldStaffId, regionId);
+   public WSDefaultResponse assignERDFieldStaffToSuperRegion(AssignedERDToSuperRegion assignedERDToSuperRegion) {
+      LOGGER.debug("fun : assignERDFieldStaffToState []");
+      return regionAssignmentServices.assignERDFieldStaffToSuperRegion(assignedERDToSuperRegion);
    }
 
-   @GET
-   @Path("assign/fieldStaff/{fieldStaffId}/{stateId}")
+   @POST
+   @Path("assign/rdFieldStaff")
    @Produces("application/json")
-   public WSDefaultResponse assignFieldStaffToState(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("stateId") String stateId) {
-      LOGGER.debug("fun : assignFieldStaffToState [" + fieldStaffId + "," + stateId + "]");
-      return regionAssignmentServices.assignFieldStaffToState(fieldStaffId, stateId);
+   public WSDefaultResponse assignRDFieldStaffToRegion(AssignedRDToRegion assignedRDsToRegion) {
+      LOGGER.debug("fun : assignRDFieldStaffToState");
+      return regionAssignmentServices.assignRDFieldStaffToRegion(assignedRDsToRegion);
+   }
+
+   @POST
+   @Path("assign/fieldStaffToState")
+   @Produces("application/json")
+   public WSDefaultResponse assignFieldStaffToState(AssignedStaffToState assignedStaffToState) {
+      LOGGER.debug("fun : assignFieldStaffToState []");
+      return regionAssignmentServices.assignFieldStaffToState(assignedStaffToState);
+   }
+
+   @POST
+   @Path("delete/member")
+   @Produces("application/json")
+   public WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember) {
+      LOGGER.debug("fun : deleteMember");
+      return regionAssignmentServices.deleteMember(deleteRegionMember);
    }
 
 }
