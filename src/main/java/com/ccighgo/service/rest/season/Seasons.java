@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterface;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
@@ -57,7 +58,7 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 @Produces("application/json")
 @Consumes("application/json")
 public class Seasons {
-   
+
    private static final Logger LOGGER = Logger.getLogger(Seasons.class);
 
    @Autowired
@@ -128,7 +129,7 @@ public class Seasons {
    @GET
    @Path("deleteSeason/{id}")
    @Produces("application/json")
-   public String deleteSeason(@PathParam("id") String id) {
+   public DeleteRequest deleteSeason(@PathParam("id") String id) {
       LOGGER.debug("Calling Delete Season'func:deleteSeason'");
       LOGGER.debug("Season ID  : " + id);
       return seasonServices.deleteSeason(id);
@@ -1423,7 +1424,7 @@ public class Seasons {
       LOGGER.debug("seasonProgramId  : " + seasonProgramId);
       return seasonServices.getIHPNameAndStatus(seasonProgramId);
    }
-   
+
    @GET
    @Path("ihp/date/details/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -1442,8 +1443,6 @@ public class Seasons {
       return seasonServices.getIHPProgramConfigurationDetails(seasonProgramId);
    }
 
-
-
    // Update IHP
 
    @POST
@@ -1455,17 +1454,17 @@ public class Seasons {
       LOGGER.debug("seasonProgramId  : " + seasonHspStpIhpDetails.getSeasonProgramId());
       return seasonServices.updateIHPDetails(seasonHspStpIhpDetails);
    }
-   
+
    @POST
    @Path("ihp/name/details/update")
    @Consumes("application/json")
    @Produces("application/json")
-   public IHPNameAndStatus updateIHPNameAndStatus(IHPNameAndStatus ihpNameAndStatus ) {
+   public IHPNameAndStatus updateIHPNameAndStatus(IHPNameAndStatus ihpNameAndStatus) {
       LOGGER.debug("Calling  'getIHPProgramDetails'");
       LOGGER.debug("seasonProgramId  : " + ihpNameAndStatus.getSeasonProgramId());
       return seasonServices.updateIHPNameAndStatus(ihpNameAndStatus);
    }
-   
+
    @POST
    @Path("ihp/date/details/update")
    @Consumes("application/json")

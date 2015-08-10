@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for HSPF1JanuaryStart2ndSemesterDetails complex type.
@@ -55,7 +57,7 @@ import javax.xml.bind.annotation.XmlType;
     "activateFullYearProgram",
     "januaryStartFullYearDetail"
 })
-public class HSPF1JanuaryStart2NdSemesterDetails {
+public class HSPF1JanuaryStart2NdSemesterDetails extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;
