@@ -133,6 +133,18 @@ public class SeasonMessageConstants {
    public static final String FAILED_UPDATE_DATES="error.update.ihp.dates";
    public static final String FAILED_UPDATE_IHP_PROGRAM_CONFIGURATION_DETAILS="error.update.ihp.program.configuration.details";
    
-   
+   public static final String FAILED_SEASON_NAME_ALREADY_EXIST="error.season.name.already.exist";
+   public static final String FAILED_J1HS_AUG_START_NOT_NULL="error.j1hs.aug.start.not.null";
+   public static final String FAILED_J1HS_FIELD_SETTINGS_NOT_NULL="error.j1hs.field.settings.not.null";
+   public static final String FAILED_WP_BASIC_DETAILS="error.get.wp.basic.details";
+   public static final String FAILED_GET_WP_SECTION_ONE_DETAILS="error.get.wp.section.one.details";
+   public static final String FAILED_GET_SEASON_WP_DETAILS="error.get.wp.section.details";
+   public static final String INVALID_SEASON_ID="error.invalid.season.id";
+   public static final String INVALID_DEPARTMENT_ID="error.invalid.department.id";
+   public static final String NO_SEASON_FOUND="error.no.season.found";
+   public static final String FAILED_TO_GET_J1_HS_JAN_START="error.get.j1.hs.jan.start";
+   public static final String SEASON_ID_ZERO_OR_NEG="error.seasonid.zero.or.negative";
+   public static final String FAILED_TO_GET_J1_HS_BASIC_DETAILS="error.get.j1.hs.basic.detils";
+   public static final String INVALID_SEASON_GHT_DETAILS="error.invalid.season.ght.details";
    
 }
