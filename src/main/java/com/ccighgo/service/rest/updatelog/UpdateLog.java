@@ -218,4 +218,18 @@ public class UpdateLog {
       return updateLogServiceInterface.viewGHTWorkAbroadSeasonProgramLog(seasonId);
    }
 
+   @POST
+   @Path("save/log/ihp")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveIHPSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveIHPSeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @GET
+   @Path("view/log/ihp/{seasonId}")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewIHPSeasonProgramLog(@PathParam("seasonId") String seasonId) {
+      return updateLogServiceInterface.viewIHPSeasonProgramLog(seasonId);
+   }
 }
