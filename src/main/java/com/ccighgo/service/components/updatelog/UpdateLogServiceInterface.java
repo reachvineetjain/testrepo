@@ -62,4 +62,8 @@ public interface UpdateLogServiceInterface {
 
    public List<SeasonProgramUpdateLog> viewGHTWorkAbroadSeasonProgramLog(String seasonId);
 
+   public List<SeasonProgramUpdateLog> saveIHPSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> viewIHPSeasonProgramLog(String seasonId);
+
 }
