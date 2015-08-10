@@ -23,6 +23,6 @@ ALTER TABLE `cci_gh_go`.`CCIStaffUsers`
   DROP PRIMARY KEY,
   ADD PRIMARY KEY (`id`),
   ADD  UNIQUE INDEX `IND_cciStaffUserId` (`cciStaffUserId`),
-  ADD CONSTRAINT `FK_CCIStaffUsers_GoIdSequence` FOREIGN KEY (`cciStaffUserId`) REFERENCES `cci_gh_go_WIP`.`GoIdSequence`(`goId`) ON UPDATE NO ACTION
+  ADD CONSTRAINT `FK_CCIStaffUsers_GoIdSequence` FOREIGN KEY (`cciStaffUserId`) REFERENCES `cci_gh_go_WIP`.`GoIdSequence`(`goId`) ON UPDATE NO ACTION;
 
 
