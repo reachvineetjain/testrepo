@@ -79,22 +79,22 @@
       <class>com.ccighgo.db.entities.UserType</class>
       <properties>
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go_prod?autoReconnect=true" />
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go?autoReconnect=true" />
          <property name="javax.persistence.jdbc.user" value="creomobile" />
          <property name="javax.persistence.jdbc.password" value="creodev" />
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-         <property name="hibernate.show_sql" value="false" />
+         <property name="hibernate.show_sql" value="true" />
          <property name="hibernate.hbm2ddl.auto" value="update" />
-         <property name="hibernate.c3p0.min_size" value="5" />
-         <property name="hibernate.c3p0.max_size" value="20" />
+         <property name="hibernate.c3p0.min_size" value="50" />
+         <property name="hibernate.c3p0.max_size" value="100" />
          <!-- <property name="hibernate.c3p0.max_size">1800</property> -->
-         <property name="hibernate.c3p0.max_statements" value="50" />
+         <property name="hibernate.c3p0.max_statements" value="100" />
 
          <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="c3p0.max_statements" value="0" />
-         <property name="c3p0.maxIdleTimeExcessConnections" value="3600" />
-         <property name="c3p0.idleConnectionTestPeriod" value="3600" />
-         <property name="c3p0.maxIdleTime" value="3600" />
+         <property name="c3p0.maxIdleTimeExcessConnections" value="36000" />
+         <property name="c3p0.idleConnectionTestPeriod" value="36000" />
+         <property name="c3p0.maxIdleTime" value="36000" />
       </properties>
    </persistence-unit>
 </persistence>
