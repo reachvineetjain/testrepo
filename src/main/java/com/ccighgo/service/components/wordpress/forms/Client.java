@@ -10,8 +10,7 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.internationalP
 public class Client {
 
    public static void main(String[] args) throws Exception {
-
-      URL url = new URL("http://localhost:8085/cci_gh_go/wordpressforms?wsdl");
+      URL url = new URL("http://52.2.191.63:9999/cci_gh_go/wordpressforms?wsdl");
       QName qname = new QName("http://forms.wordpress.components.service.ccighgo.com/", "WordPressFormsImplService");
 
       Service service = Service.create(url, qname);

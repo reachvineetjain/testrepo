@@ -4,7 +4,7 @@ import javax.xml.ws.Endpoint;
 
 public class PublishWordPressForms {
 
-   public static void main(String[] args) {
-      Endpoint.publish("http://localhost:8085/cci_gh_go/wordpressforms", new WordPressFormsImpl());
+   static {
+      Endpoint.publish("http://localhost:9999/cci_gh_go_test/wordpressforms", new WordPressFormsImpl());
    }
 }

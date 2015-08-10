@@ -10,7 +10,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.ccighgo.db.entities.LookupUSState;
+import com.ccighgo.db.entities.Region;
 import com.ccighgo.db.entities.SeasonGeographyConfiguration;
+import com.ccighgo.db.entities.SuperRegion;
 
 /**
  * @author ravi
@@ -27,6 +30,9 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
 
    @Query("SELECT DISTINCT s.superRegion.superRegionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1  ")
    public List<Integer> findDistinctSuperRegionsBySeasonId(Integer seasonId);
+
+   @Query("SELECT DISTINCT s.superRegion FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1  ")
+   public List<SuperRegion> findDistinctSuperRegionObjectBySeasonId(Integer seasonId);
 
    @Query("SELECT DISTINCT s.region.regionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
    public List<Integer> findDistinctRegionsBySeasonId(Integer seasonId);
@@ -57,8 +63,14 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    @Query("SELECT DISTINCT s.region.regionId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1  AND s.season.seasonId = ?2 ")
    public List<Integer> findDistinctRegionsBySuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
 
+   @Query("SELECT DISTINCT s.region FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1  AND s.season.seasonId = ?2 ")
+   public List<Region> findDistinctRegionsObjectBySuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
+
    @Query("SELECT DISTINCT s.lookupUsstate.usStatesId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId = ?2 AND s.season.seasonId = ?3")
    public List<Integer> findDistinctStatesBySuperRegionRegionAandSeasonId(Integer superRegionId, Integer regionId, Integer seasonId);
+
+   @Query("SELECT DISTINCT s.lookupUsstate FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId = ?2 AND s.season.seasonId = ?3")
+   public List<LookupUSState> findDistinctStatesObjectBySuperRegionRegionAandSeasonId(Integer superRegionId, Integer regionId, Integer seasonId);
 
    @Query("SELECT DISTINCT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId = ?2 AND s.region.regionId IS NULL AND s.lookupUsstate.usStatesId IS NULL")
    public SeasonGeographyConfiguration findSuperRegionRowBySuperRegionIdSeasonId(Integer superRegionId, Integer seasonId);
