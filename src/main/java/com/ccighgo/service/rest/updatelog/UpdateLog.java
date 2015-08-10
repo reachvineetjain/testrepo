@@ -143,4 +143,79 @@ public class UpdateLog {
       return updateLogServiceInterface.saveWPSpringSeasonProgramLog(seasonProgramUpdateLog);
    }
 
+   @POST
+   @Path("save/log/ght/ls")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveGHTLanguageSchoolSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveGHTLanguageSchoolSeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @GET
+   @Path("view/log/ght/ls/{seasonId}")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewGHTLanguageSchoolSeasonProgramLog(@PathParam("seasonId") String seasonId) {
+      return updateLogServiceInterface.viewGHTLanguageSchoolSeasonProgramLog(seasonId);
+   }
+
+   @POST
+   @Path("save/log/ght/ta")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveGHTTeachAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveGHTTeachAbroadSeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @GET
+   @Path("view/log/ght/ta/{seasonId}")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewGHTTeachAbroadSeasonProgramLog(@PathParam("seasonId") String seasonId) {
+      return updateLogServiceInterface.viewGHTTeachAbroadSeasonProgramLog(seasonId);
+   }
+
+   @POST
+   @Path("save/log/ght/hsa")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveGHTHSAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveGHTHSAbroadSeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @GET
+   @Path("view/log/ght/hsa/{seasonId}")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewGHTHSAbroadSeasonProgramLog(@PathParam("seasonId") String seasonId) {
+      return updateLogServiceInterface.viewGHTHSAbroadSeasonProgramLog(seasonId);
+   }
+
+   @POST
+   @Path("save/log/ght/va")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveGHTVOLAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveGHTVOLAbroadSeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @GET
+   @Path("view/log/ght/va/{seasonId}")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewGHTVOLAbroadSeasonProgramLog(@PathParam("seasonId") String seasonId) {
+      return updateLogServiceInterface.viewGHTVOLAbroadSeasonProgramLog(seasonId);
+   }
+
+   @POST
+   @Path("save/log/ght/wa")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public List<SeasonProgramUpdateLog> saveGHTWorkAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog) {
+      return updateLogServiceInterface.saveGHTWorkAbroadSeasonProgramLog(seasonProgramUpdateLog);
+   }
+
+   @GET
+   @Path("view/log/ght/wa/{seasonId}")
+   @Produces("application/json")
+   public List<SeasonProgramUpdateLog> viewGHTWorkAbroadSeasonProgramLog(@PathParam("seasonId") String seasonId) {
+      return updateLogServiceInterface.viewGHTWorkAbroadSeasonProgramLog(seasonId);
+   }
+
 }
