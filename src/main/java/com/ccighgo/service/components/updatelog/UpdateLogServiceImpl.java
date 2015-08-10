@@ -22,6 +22,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
 
    @Autowired
    SeasonProgramUpdateLogRepository seasonProgramUpdateLogRepository;
+   @Autowired
    SeasonDepartmentUpdateLogRepository seasonDepartmentUpdateLogRepository;
    @Autowired
    SeasonRepository seasonRepository;
