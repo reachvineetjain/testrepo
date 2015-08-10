@@ -3345,6 +3345,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                wpcapProgramAllocations.setTraineePendingVerification(0);
                wpcapProgramAllocations.setTraineeRemainingParticipants(0);
 
+               wpcapProgramAllocations.setTotalAcceptedParticipant(0);
+               wpcapProgramAllocations.setTotalCCIReview(0);
+               wpcapProgramAllocations.setTotalExpectedParticipant(0);
+               wpcapProgramAllocations.setTotalPendingVerification(0);
+               wpcapProgramAllocations.setTotalRemainingParticipants(0);
+
                wpcapProgramAllocations.setTotalMaximumParticipant(totalMaxParticipants);
                wpcapProgramAllocations = setWPCAPProgramAllocationsStatus(wpcapProgramAllocations, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
                      ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
