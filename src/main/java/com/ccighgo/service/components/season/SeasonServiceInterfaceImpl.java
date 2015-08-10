@@ -1,8 +1,6 @@
 package com.ccighgo.service.components.season;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -74,7 +72,6 @@ import com.ccighgo.jpa.repositories.SeasonWTWinterRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.SeasonMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
@@ -2719,6 +2716,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                try {
                   if (department.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
                      Season season = seasonCloningHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                   /*  if(cloneSeason.getClonedSeasonNotes()!=null && !(cloneSeason.getClonedSeasonNotes().isEmpty())){
+                        //create notes for newly cloned season
+                     }*/
                      Season clonedHSPSeason = seasonRepository.saveAndFlush(season);
                      // clone season documents
                      if (existingSeasonDocs != null && existingSeasonDocs.size() > 0) {

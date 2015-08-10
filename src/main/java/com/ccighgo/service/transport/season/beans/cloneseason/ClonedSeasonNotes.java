@@ -15,20 +15,21 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ClonedDocuments complex type.
+ * <p>Java class for ClonedSeasonNotes complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ClonedDocuments">
+ * &lt;complexType name="ClonedSeasonNotes">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="seasonId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="docType" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="docUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="uploadDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="uploadedBy" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="seasonDepartmentNotetId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="noteValue" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="active" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="createdOn" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="createdBy" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,24 +39,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ClonedDocuments", propOrder = {
+@XmlType(name = "ClonedSeasonNotes", propOrder = {
     "seasonId",
-    "docType",
-    "docUrl",
-    "uploadDate",
-    "uploadedBy"
+    "seasonDepartmentNotetId",
+    "noteValue",
+    "active",
+    "createdOn",
+    "createdBy"
 })
-public class ClonedDocuments {
+public class ClonedSeasonNotes {
 
     protected int seasonId;
+    protected int seasonDepartmentNotetId;
+    protected String noteValue;
+    protected Boolean active;
     @XmlElement(required = true)
-    protected String docType;
+    protected String createdOn;
     @XmlElement(required = true)
-    protected String docUrl;
-    @XmlElement(required = true)
-    protected String uploadDate;
-    @XmlElement(required = true)
-    protected String uploadedBy;
+    protected String createdBy;
 
     /**
      * Gets the value of the seasonId property.
@@ -74,99 +75,115 @@ public class ClonedDocuments {
     }
 
     /**
-     * Gets the value of the docType property.
+     * Gets the value of the seasonDepartmentNotetId property.
+     * 
+     */
+    public int getSeasonDepartmentNotetId() {
+        return seasonDepartmentNotetId;
+    }
+
+    /**
+     * Sets the value of the seasonDepartmentNotetId property.
+     * 
+     */
+    public void setSeasonDepartmentNotetId(int value) {
+        this.seasonDepartmentNotetId = value;
+    }
+
+    /**
+     * Gets the value of the noteValue property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDocType() {
-        return docType;
+    public String getNoteValue() {
+        return noteValue;
     }
 
     /**
-     * Sets the value of the docType property.
+     * Sets the value of the noteValue property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDocType(String value) {
-        this.docType = value;
+    public void setNoteValue(String value) {
+        this.noteValue = value;
     }
 
     /**
-     * Gets the value of the docUrl property.
+     * Gets the value of the active property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Sets the value of the active property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setActive(Boolean value) {
+        this.active = value;
+    }
+
+    /**
+     * Gets the value of the createdOn property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDocUrl() {
-        return docUrl;
+    public String getCreatedOn() {
+        return createdOn;
     }
 
     /**
-     * Sets the value of the docUrl property.
+     * Sets the value of the createdOn property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDocUrl(String value) {
-        this.docUrl = value;
+    public void setCreatedOn(String value) {
+        this.createdOn = value;
     }
 
     /**
-     * Gets the value of the uploadDate property.
+     * Gets the value of the createdBy property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUploadDate() {
-        return uploadDate;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
     /**
-     * Sets the value of the uploadDate property.
+     * Sets the value of the createdBy property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUploadDate(String value) {
-        this.uploadDate = value;
-    }
-
-    /**
-     * Gets the value of the uploadedBy property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUploadedBy() {
-        return uploadedBy;
-    }
-
-    /**
-     * Sets the value of the uploadedBy property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUploadedBy(String value) {
-        this.uploadedBy = value;
+    public void setCreatedBy(String value) {
+        this.createdBy = value;
     }
 
 }
