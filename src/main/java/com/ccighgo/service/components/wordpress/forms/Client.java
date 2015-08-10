@@ -5,8 +5,6 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import com.ccighgo.service.transport.integration.thirdparty.beans.internationalPartners.InternationalPartners;
-
 public class Client {
 
    public static void main(String[] args) throws Exception {
@@ -15,9 +13,9 @@ public class Client {
 
       Service service = Service.create(url, qname);
 
-      WordPressFormsInterface result = service.getPort(WordPressFormsInterface.class);
+      IWordPressForms result = service.getPort(IWordPressForms.class);
 
-      System.out.println(result.inquiryPartner(new InternationalPartners()));
+      // System.out.println(result.inquiryPartner(new InternationalPartners()));
 
    }
 

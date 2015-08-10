@@ -9,8 +9,8 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.internationalP
 
 @WebService
 @SOAPBinding(style = Style.DOCUMENT)
-public interface WordPressFormsInterface {
+public interface IWordPressForms {
 
    @WebMethod
-   String inquiryPartner(InternationalPartners data);
+   String inquiryPartner(InternationalPartners inerInternationalPartners);
 }
