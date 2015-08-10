@@ -1178,7 +1178,6 @@ public class SeasonServiceImplUtil {
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-
    }
 
    private void createWPWinterSeasonProgram(SeasonBean seasonBean, Season seasonEntity) {
@@ -1198,7 +1197,6 @@ public class SeasonServiceImplUtil {
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-
    }
 
    private void createWPSummerSeasonProgram(SeasonBean seasonBean, Season seasonEntity) {
