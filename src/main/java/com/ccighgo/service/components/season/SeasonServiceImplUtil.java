@@ -1133,8 +1133,20 @@ public class SeasonServiceImplUtil {
          if (previousRecordsToCopy != null) {
             List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
             for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
-               config.setSeason(seasonEntity);
-               newList.add(config);
+               SeasonGeographyConfiguration newConfig = new SeasonGeographyConfiguration();
+               if(config.getRegion()!=null){
+                  newConfig.setRegion(config.getRegion()); 
+               }
+               if(config.getLookupUsstate()!=null){
+                  newConfig.setLookupUsstate(config.getLookupUsstate());
+               }
+               newConfig.setSuperRegion(config.getSuperRegion());
+               newConfig.setCreatedBy(1);
+               newConfig.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               newConfig.setModifiedBy(1);
+               newConfig.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               newConfig.setSeason(seasonEntity);
+               newList.add(newConfig);
             }
             seasonGeographyConfigurationRepository.save(newList);
             seasonGeographyConfigurationRepository.flush();
@@ -1380,8 +1392,19 @@ public class SeasonServiceImplUtil {
                if (previousRecordsToCopy != null) {
                   List<SeasonIHPGeographyConfiguration> newList = new ArrayList<SeasonIHPGeographyConfiguration>();
                   for (SeasonIHPGeographyConfiguration config : previousRecordsToCopy) {
-                     config.setSeason(season);
-                     newList.add(config);
+                     SeasonIHPGeographyConfiguration newConfig = new SeasonIHPGeographyConfiguration();
+                     if(config.getRegionIhp()!=null){
+                        newConfig.setRegionIhp(config.getRegionIhp()); 
+                     }
+                     if(config.getLookupUsstate()!=null){
+                        newConfig.setLookupUsstate(config.getLookupUsstate());
+                     }
+                     newConfig.setCreatedBy(1);
+                     newConfig.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                     newConfig.setModifiedBy(1);
+                     newConfig.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                     newConfig.setSeason(season);
+                     newList.add(newConfig);
                   }
                   seasonIHPGeographyConfigurationRepository.save(newList);
                   seasonIHPGeographyConfigurationRepository.flush();

@@ -73,6 +73,8 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.SeasonMessageConstants;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
+import com.ccighgo.service.transport.season.beans.cloneseason.ClonedDocuments;
+import com.ccighgo.service.transport.season.beans.cloneseason.ClonedSeasonNotes;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.SeasonGHTDetails;
@@ -2890,6 +2892,49 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                try {
                   if (department.getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
                      Season season = seasonCloningHelper.cloneHighLevelSeason(cloneSeason, existingSeason, department);
+                     if (cloneSeason.getClonedSeasonNotes() != null && !(cloneSeason.getClonedSeasonNotes().isEmpty())) {
+                        // create notes for newly cloned season
+                        List<SeasonDepartmentNote> notesList = new ArrayList<SeasonDepartmentNote>();
+                        for (ClonedSeasonNotes notes : cloneSeason.getClonedSeasonNotes()) {
+                           SeasonDepartmentNote seasonNote = new SeasonDepartmentNote();
+                           seasonNote.setDepartmentNote(notes.getNoteValue());
+                           seasonNote.setActive(CCIConstants.ACTIVE);
+                           seasonNote.setSeason(season);
+                           seasonNote.setCreatedBy(1);
+                           seasonNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                           seasonNote.setModifiedBy(1);
+                           seasonNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                           notesList.add(seasonNote);
+                        }
+                        seasonDepartmentNotesRepository.save(notesList);
+                        seasonDepartmentNotesRepository.flush();
+                     }
+                     if(cloneSeason.getClonedDocuments()!=null && !(cloneSeason.getClonedDocuments().isEmpty())){
+                        List<SeasonDepartmentDocument> newDocList = new ArrayList<SeasonDepartmentDocument>();
+                        for(ClonedDocuments doc:cloneSeason.getClonedDocuments()){
+                           SeasonDepartmentDocument sprgDoc = new SeasonDepartmentDocument();
+                           DocumentInformation documentInformation = new DocumentInformation();
+                           documentInformation.setFileName(doc.getFileName());
+                           documentInformation.setDocumentName(doc.getDocName());
+                           documentInformation.setUrl(doc.getDocUrl());
+                           documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(doc.getDocType()));
+                           documentInformation.setCreatedBy(1);
+                           documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                           documentInformation.setModifiedBy(1);
+                           documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                           documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+                           sprgDoc.setActive(CCIConstants.ACTIVE);
+                           sprgDoc.setSeason(season);
+                           sprgDoc.setDocumentInformation(documentInformation);
+                           sprgDoc.setCreatedBy(1);
+                           sprgDoc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                           sprgDoc.setModifiedBy(1);
+                           sprgDoc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                           newDocList.add(sprgDoc);
+                        }
+                        seasonDepartmentDocumentRepository.save(newDocList);
+                        seasonDepartmentDocumentRepository.flush();
+                     }
                      Season clonedHSPSeason = seasonRepository.saveAndFlush(season);
                      // clone season documents
                      if (existingSeasonDocs != null && existingSeasonDocs.size() > 0) {
