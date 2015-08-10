@@ -265,7 +265,7 @@ public class SeasonIHPProgramHelper {
                note.setSeasonProgramId(seasonProgramId);
                note.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
                note.setNoteValue(prgNote.getProgramNote());
-               note.setCreatedOn(DateUtils.getMMddyyDate(prgNote.getCreatedOn()));
+               note.setCreatedOn(DateUtils.getTimestamp(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
                if(login!=null){
                   note.setCreatedBy(login.getLoginName());
