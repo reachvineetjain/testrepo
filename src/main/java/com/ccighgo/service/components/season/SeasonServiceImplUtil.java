@@ -1133,8 +1133,10 @@ public class SeasonServiceImplUtil {
          if (previousRecordsToCopy != null) {
             List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
             for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
-               config.setSeason(seasonEntity);
-               newList.add(config);
+               SeasonGeographyConfiguration newConfig = new SeasonGeographyConfiguration();
+               newConfig = config;
+               newConfig.setSeason(seasonEntity);
+               newList.add(newConfig);
             }
             seasonGeographyConfigurationRepository.save(newList);
             seasonGeographyConfigurationRepository.flush();
@@ -1380,8 +1382,10 @@ public class SeasonServiceImplUtil {
                if (previousRecordsToCopy != null) {
                   List<SeasonIHPGeographyConfiguration> newList = new ArrayList<SeasonIHPGeographyConfiguration>();
                   for (SeasonIHPGeographyConfiguration config : previousRecordsToCopy) {
-                     config.setSeason(season);
-                     newList.add(config);
+                     SeasonIHPGeographyConfiguration newConfig = new SeasonIHPGeographyConfiguration();
+                     newConfig = config;
+                     newConfig.setSeason(season);
+                     newList.add(newConfig);
                   }
                   seasonIHPGeographyConfigurationRepository.save(newList);
                   seasonIHPGeographyConfigurationRepository.flush();
