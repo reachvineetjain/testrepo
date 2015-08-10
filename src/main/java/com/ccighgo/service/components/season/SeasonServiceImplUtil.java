@@ -1134,7 +1134,17 @@ public class SeasonServiceImplUtil {
             List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
             for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
                SeasonGeographyConfiguration newConfig = new SeasonGeographyConfiguration();
-               newConfig = config;
+               if(config.getRegion()!=null){
+                  newConfig.setRegion(config.getRegion()); 
+               }
+               if(config.getLookupUsstate()!=null){
+                  newConfig.setLookupUsstate(config.getLookupUsstate());
+               }
+               newConfig.setSuperRegion(config.getSuperRegion());
+               newConfig.setCreatedBy(1);
+               newConfig.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               newConfig.setModifiedBy(1);
+               newConfig.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                newConfig.setSeason(seasonEntity);
                newList.add(newConfig);
             }
@@ -1383,7 +1393,16 @@ public class SeasonServiceImplUtil {
                   List<SeasonIHPGeographyConfiguration> newList = new ArrayList<SeasonIHPGeographyConfiguration>();
                   for (SeasonIHPGeographyConfiguration config : previousRecordsToCopy) {
                      SeasonIHPGeographyConfiguration newConfig = new SeasonIHPGeographyConfiguration();
-                     newConfig = config;
+                     if(config.getRegionIhp()!=null){
+                        newConfig.setRegionIhp(config.getRegionIhp()); 
+                     }
+                     if(config.getLookupUsstate()!=null){
+                        newConfig.setLookupUsstate(config.getLookupUsstate());
+                     }
+                     newConfig.setCreatedBy(1);
+                     newConfig.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                     newConfig.setModifiedBy(1);
+                     newConfig.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                      newConfig.setSeason(season);
                      newList.add(newConfig);
                   }
