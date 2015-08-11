@@ -1,20 +1,14 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
+import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the DepartmentPrograms database table.
@@ -28,24 +22,18 @@ public class DepartmentProgram implements Serializable {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(unique = true, nullable = false)
    private Integer departmentProgramId;
 
-   @Column(nullable = false)
    private Integer createdBy;
 
    private Timestamp createdOn;
 
-   @Column(length = 100)
    private String description;
 
-   @Column(nullable = false)
    private Integer modifiedBy;
 
-   @Column(nullable = false)
    private Timestamp modifiedOn;
 
-   @Column(nullable = false, length = 50)
    private String programName;
 
    // bi-directional many-to-one association to CCIStaffUserProgram
@@ -53,12 +41,13 @@ public class DepartmentProgram implements Serializable {
    private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
    // bi-directional many-to-one association to DepartmentProgramOption
-   @OneToMany(mappedBy = "departmentProgram" ,fetch=FetchType.EAGER)
+   @OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
    private List<DepartmentProgramOption> departmentProgramOptions;
 
    // bi-directional many-to-one association to LookupDepartment
    @ManyToOne
-   @JoinColumn(name = "departmentId", nullable = false)
+   @JoinColumn(name = "departmentId")
    private LookupDepartment lookupDepartment;
 
    // bi-directional many-to-one association to FieldStaffLCSeason

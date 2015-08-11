@@ -1,6 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -24,14 +25,12 @@ import org.hibernate.annotations.FetchMode;
  * 
  */
 @Entity
-@Table(name = "SeasonGeographyConfiguration")
 @NamedQuery(name = "SeasonGeographyConfiguration.findAll", query = "SELECT s FROM SeasonGeographyConfiguration s")
 public class SeasonGeographyConfiguration implements Serializable {
    private static final long serialVersionUID = 1L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(unique = true, nullable = false)
    private Integer seasonGeographyConfigurationId;
 
    @Column(nullable = false)
@@ -79,9 +78,7 @@ public class SeasonGeographyConfiguration implements Serializable {
    }
 
    public Integer getSeasonGeographyConfigurationId() {
-      if (this.seasonGeographyConfigurationId != null)
-         return this.seasonGeographyConfigurationId;
-      return 0;
+      return this.seasonGeographyConfigurationId;
    }
 
    public void setSeasonGeographyConfigurationId(Integer seasonGeographyConfigurationId) {
@@ -89,9 +86,7 @@ public class SeasonGeographyConfiguration implements Serializable {
    }
 
    public Integer getCreatedBy() {
-      if (this.createdBy != null)
-         return this.createdBy;
-      return 0;
+      return this.createdBy;
    }
 
    public void setCreatedBy(Integer createdBy) {
@@ -107,9 +102,7 @@ public class SeasonGeographyConfiguration implements Serializable {
    }
 
    public Integer getModifiedBy() {
-      if (this.modifiedBy != null)
-         return this.modifiedBy;
-      return 0;
+      return this.modifiedBy;
    }
 
    public void setModifiedBy(Integer modifiedBy) {
@@ -168,12 +161,12 @@ public class SeasonGeographyConfiguration implements Serializable {
       return fieldStaffLeadershipSeason;
    }
 
-   public SuperRegion getSuperRegion() {
-      return this.superRegion;
+   public LookupUSState getLookupUsstate() {
+      return this.lookupUsstate;
    }
 
-   public void setSuperRegion(SuperRegion superRegion) {
-      this.superRegion = superRegion;
+   public void setLookupUsstate(LookupUSState lookupUsstate) {
+      this.lookupUsstate = lookupUsstate;
    }
 
    public Region getRegion() {
@@ -184,20 +177,20 @@ public class SeasonGeographyConfiguration implements Serializable {
       this.region = region;
    }
 
-   public LookupUSState getLookupUsstate() {
-      return this.lookupUsstate;
-   }
-
-   public void setLookupUsstate(LookupUSState lookupUsstate) {
-      this.lookupUsstate = lookupUsstate;
-   }
-
    public Season getSeason() {
       return this.season;
    }
 
    public void setSeason(Season season) {
       this.season = season;
+   }
+
+   public SuperRegion getSuperRegion() {
+      return this.superRegion;
+   }
+
+   public void setSuperRegion(SuperRegion superRegion) {
+      this.superRegion = superRegion;
    }
 
 }
