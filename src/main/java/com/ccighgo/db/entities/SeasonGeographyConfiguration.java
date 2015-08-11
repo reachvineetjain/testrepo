@@ -25,17 +25,24 @@ import org.hibernate.annotations.FetchMode;
  * 
  */
 @Entity
-@NamedQuery(name="SeasonGeographyConfiguration.findAll", query="SELECT s FROM SeasonGeographyConfiguration s")
+@NamedQuery(name = "SeasonGeographyConfiguration.findAll", query = "SELECT s FROM SeasonGeographyConfiguration s")
 public class SeasonGeographyConfiguration implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer seasonGeographyConfigurationId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Integer seasonGeographyConfigurationId;
 
-	private Integer createdBy;
+   @Column(nullable = false)
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
+
+   @Column(nullable = false)
+   private Integer modifiedBy;
+
+   @Column(nullable = false)
+   private Timestamp modifiedOn;
 
    // bi-directional many-to-one association to FieldStaffLCSeason
    @OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
@@ -67,133 +74,123 @@ public class SeasonGeographyConfiguration implements Serializable {
    @JoinColumn(name = "seasonId")
    private Season season;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId")
-	private Season season;
+   public SeasonGeographyConfiguration() {
+   }
 
-	//bi-directional many-to-one association to SuperRegion
-	@ManyToOne
-	@JoinColumn(name="superRegionId")
-	private SuperRegion superRegion;
+   public Integer getSeasonGeographyConfigurationId() {
+      return this.seasonGeographyConfigurationId;
+   }
 
-	public SeasonGeographyConfiguration() {
-	}
+   public void setSeasonGeographyConfigurationId(Integer seasonGeographyConfigurationId) {
+      this.seasonGeographyConfigurationId = seasonGeographyConfigurationId;
+   }
 
-	public Integer getSeasonGeographyConfigurationId() {
-		return this.seasonGeographyConfigurationId;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setSeasonGeographyConfigurationId(Integer seasonGeographyConfigurationId) {
-		this.seasonGeographyConfigurationId = seasonGeographyConfigurationId;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
+      return this.fieldStaffLcseasons;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
+      this.fieldStaffLcseasons = fieldStaffLcseasons;
+   }
 
-	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-		return this.fieldStaffLcseasons;
-	}
+   public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+      getFieldStaffLcseasons().add(fieldStaffLcseason);
+      fieldStaffLcseason.setSeasonGeographyConfiguration(this);
 
-	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-		this.fieldStaffLcseasons = fieldStaffLcseasons;
-	}
+      return fieldStaffLcseason;
+   }
 
-	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().add(fieldStaffLcseason);
-		fieldStaffLcseason.setSeasonGeographyConfiguration(this);
+   public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+      getFieldStaffLcseasons().remove(fieldStaffLcseason);
+      fieldStaffLcseason.setSeasonGeographyConfiguration(null);
 
-		return fieldStaffLcseason;
-	}
+      return fieldStaffLcseason;
+   }
 
-	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().remove(fieldStaffLcseason);
-		fieldStaffLcseason.setSeasonGeographyConfiguration(null);
+   public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {
+      return this.fieldStaffLeadershipSeasons;
+   }
 
-		return fieldStaffLcseason;
-	}
+   public void setFieldStaffLeadershipSeasons(List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons) {
+      this.fieldStaffLeadershipSeasons = fieldStaffLeadershipSeasons;
+   }
 
-	public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {
-		return this.fieldStaffLeadershipSeasons;
-	}
+   public FieldStaffLeadershipSeason addFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
+      getFieldStaffLeadershipSeasons().add(fieldStaffLeadershipSeason);
+      fieldStaffLeadershipSeason.setSeasonGeographyConfiguration(this);
 
-	public void setFieldStaffLeadershipSeasons(List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons) {
-		this.fieldStaffLeadershipSeasons = fieldStaffLeadershipSeasons;
-	}
+      return fieldStaffLeadershipSeason;
+   }
 
-	public FieldStaffLeadershipSeason addFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
-		getFieldStaffLeadershipSeasons().add(fieldStaffLeadershipSeason);
-		fieldStaffLeadershipSeason.setSeasonGeographyConfiguration(this);
+   public FieldStaffLeadershipSeason removeFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
+      getFieldStaffLeadershipSeasons().remove(fieldStaffLeadershipSeason);
+      fieldStaffLeadershipSeason.setSeasonGeographyConfiguration(null);
 
-		return fieldStaffLeadershipSeason;
-	}
+      return fieldStaffLeadershipSeason;
+   }
 
-	public FieldStaffLeadershipSeason removeFieldStaffLeadershipSeason(FieldStaffLeadershipSeason fieldStaffLeadershipSeason) {
-		getFieldStaffLeadershipSeasons().remove(fieldStaffLeadershipSeason);
-		fieldStaffLeadershipSeason.setSeasonGeographyConfiguration(null);
+   public LookupUSState getLookupUsstate() {
+      return this.lookupUsstate;
+   }
 
-		return fieldStaffLeadershipSeason;
-	}
+   public void setLookupUsstate(LookupUSState lookupUsstate) {
+      this.lookupUsstate = lookupUsstate;
+   }
 
-	public LookupUSState getLookupUsstate() {
-		return this.lookupUsstate;
-	}
+   public Region getRegion() {
+      return this.region;
+   }
 
-	public void setLookupUsstate(LookupUSState lookupUsstate) {
-		this.lookupUsstate = lookupUsstate;
-	}
+   public void setRegion(Region region) {
+      this.region = region;
+   }
 
-	public Region getRegion() {
-		return this.region;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setRegion(Region region) {
-		this.region = region;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public SuperRegion getSuperRegion() {
+      return this.superRegion;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
-	public SuperRegion getSuperRegion() {
-		return this.superRegion;
-	}
-
-	public void setSuperRegion(SuperRegion superRegion) {
-		this.superRegion = superRegion;
-	}
+   public void setSuperRegion(SuperRegion superRegion) {
+      this.superRegion = superRegion;
+   }
 
 }
