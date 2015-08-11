@@ -14,8 +14,10 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
@@ -252,4 +254,30 @@ public class UserManagement {
     public UserNotes updateUserNote(UserNotes userNotes){
        return userMgmtServices.updateUserNote(userNotes);
     }
+    
+    @GET
+    @Path("resourceaction/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public List<StaffUserDefaultPermissionGroupOptions> getResourceAction(){
+       return userMgmtServices.getResourceAction();
+    }
+    
+    @POST
+    @Path("update-user-details/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public User updateUserDetails(User usr){
+       return userMgmtServices.updateUserDetails(usr);
+    }
+    
+    
+    @POST
+    @Path("update-user/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public User updateUser(User usr){
+       return userMgmtServices.updateUser(usr);
+    }
+    
 }
