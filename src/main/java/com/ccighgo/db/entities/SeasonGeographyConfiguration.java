@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * The persistent class for the SeasonGeographyConfiguration database table.
@@ -42,30 +46,32 @@ public class SeasonGeographyConfiguration implements Serializable {
    private Timestamp modifiedOn;
 
    // bi-directional many-to-one association to FieldStaffLCSeason
-   @OneToMany(mappedBy = "seasonGeographyConfiguration")
+   @OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
+   @Fetch(value = FetchMode.SUBSELECT)
    private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
    // bi-directional many-to-one association to FieldStaffLeadershipSeason
-   @OneToMany(mappedBy = "seasonGeographyConfiguration")
+   @OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
+   @Fetch(value = FetchMode.SUBSELECT)
    private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
    // bi-directional many-to-one association to SuperRegion
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "superRegionId")
    private SuperRegion superRegion;
 
    // bi-directional many-to-one association to Region
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "regionId")
    private Region region;
 
    // bi-directional many-to-one association to LookupUSState
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "usStatesId")
    private LookupUSState lookupUsstate;
 
    // bi-directional many-to-one association to Season
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "seasonId")
    private Season season;
 
