@@ -1,94 +1,106 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the PaymentSchedule database table.
  * 
  */
 @Entity
-@NamedQuery(name="PaymentSchedule.findAll", query="SELECT p FROM PaymentSchedule p")
+@Table(name = "PaymentSchedule")
+@NamedQuery(name = "PaymentSchedule.findAll", query = "SELECT p FROM PaymentSchedule p")
 public class PaymentSchedule implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer paymentScheduleId;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
+   private Integer paymentScheduleId;
 
-	private String scheduleName;
+   @Column(nullable = false, length = 50)
+   private String scheduleName;
 
-	//bi-directional many-to-one association to SeasonF1Detail
-	@OneToMany(mappedBy="paymentSchedule")
-	private List<SeasonF1Detail> seasonF1details;
+   // bi-directional many-to-one association to SeasonF1Detail
+   @OneToMany(mappedBy = "paymentSchedule")
+   private List<SeasonF1Detail> seasonF1details;
 
-	//bi-directional many-to-one association to SeasonJ1Detail
-	@OneToMany(mappedBy="paymentSchedule")
-	private List<SeasonJ1Detail> seasonJ1details;
+   // bi-directional many-to-one association to SeasonJ1Detail
+   @OneToMany(mappedBy = "paymentSchedule")
+   private List<SeasonJ1Detail> seasonJ1details;
 
-	public PaymentSchedule() {
-	}
+   public PaymentSchedule() {
+   }
 
-	public Integer getPaymentScheduleId() {
-		return this.paymentScheduleId;
-	}
+   public Integer getPaymentScheduleId() {
+      if (this.paymentScheduleId != null)
+         return this.paymentScheduleId;
+      return 0;
+   }
 
-	public void setPaymentScheduleId(Integer paymentScheduleId) {
-		this.paymentScheduleId = paymentScheduleId;
-	}
+   public void setPaymentScheduleId(Integer paymentScheduleId) {
+      this.paymentScheduleId = paymentScheduleId;
+   }
 
-	public String getScheduleName() {
-		return this.scheduleName;
-	}
+   public String getScheduleName() {
+      return this.scheduleName;
+   }
 
-	public void setScheduleName(String scheduleName) {
-		this.scheduleName = scheduleName;
-	}
+   public void setScheduleName(String scheduleName) {
+      this.scheduleName = scheduleName;
+   }
 
-	public List<SeasonF1Detail> getSeasonF1details() {
-		return this.seasonF1details;
-	}
+   public List<SeasonF1Detail> getSeasonF1details() {
+      return this.seasonF1details;
+   }
 
-	public void setSeasonF1details(List<SeasonF1Detail> seasonF1details) {
-		this.seasonF1details = seasonF1details;
-	}
+   public void setSeasonF1details(List<SeasonF1Detail> seasonF1details) {
+      this.seasonF1details = seasonF1details;
+   }
 
-	public SeasonF1Detail addSeasonF1detail(SeasonF1Detail seasonF1detail) {
-		getSeasonF1details().add(seasonF1detail);
-		seasonF1detail.setPaymentSchedule(this);
+   public SeasonF1Detail addSeasonF1detail(SeasonF1Detail seasonF1detail) {
+      getSeasonF1details().add(seasonF1detail);
+      seasonF1detail.setPaymentSchedule(this);
 
-		return seasonF1detail;
-	}
+      return seasonF1detail;
+   }
 
-	public SeasonF1Detail removeSeasonF1detail(SeasonF1Detail seasonF1detail) {
-		getSeasonF1details().remove(seasonF1detail);
-		seasonF1detail.setPaymentSchedule(null);
+   public SeasonF1Detail removeSeasonF1detail(SeasonF1Detail seasonF1detail) {
+      getSeasonF1details().remove(seasonF1detail);
+      seasonF1detail.setPaymentSchedule(null);
 
-		return seasonF1detail;
-	}
+      return seasonF1detail;
+   }
 
-	public List<SeasonJ1Detail> getSeasonJ1details() {
-		return this.seasonJ1details;
-	}
+   public List<SeasonJ1Detail> getSeasonJ1details() {
+      return this.seasonJ1details;
+   }
 
-	public void setSeasonJ1details(List<SeasonJ1Detail> seasonJ1details) {
-		this.seasonJ1details = seasonJ1details;
-	}
+   public void setSeasonJ1details(List<SeasonJ1Detail> seasonJ1details) {
+      this.seasonJ1details = seasonJ1details;
+   }
 
-	public SeasonJ1Detail addSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
-		getSeasonJ1details().add(seasonJ1detail);
-		seasonJ1detail.setPaymentSchedule(this);
+   public SeasonJ1Detail addSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
+      getSeasonJ1details().add(seasonJ1detail);
+      seasonJ1detail.setPaymentSchedule(this);
 
-		return seasonJ1detail;
-	}
+      return seasonJ1detail;
+   }
 
-	public SeasonJ1Detail removeSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
-		getSeasonJ1details().remove(seasonJ1detail);
-		seasonJ1detail.setPaymentSchedule(null);
+   public SeasonJ1Detail removeSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
+      getSeasonJ1details().remove(seasonJ1detail);
+      seasonJ1detail.setPaymentSchedule(null);
 
-		return seasonJ1detail;
-	}
+      return seasonJ1detail;
+   }
 
 }

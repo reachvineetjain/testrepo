@@ -1,14 +1,21 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * The persistent class for the CCIStaffRoles database table.
@@ -22,18 +29,23 @@ public class CCIStaffRole implements Serializable {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
    private Integer cciStaffRoleId;
 
+   @Column(nullable = false, length = 50)
    private String cciStaffRoleName;
 
+   @Column(nullable = false)
    private Integer createdBy;
 
    private Timestamp createdOn;
 
    private Integer hierarchy;
 
+   @Column(nullable = false)
    private Integer modifiedBy;
 
+   @Column(nullable = false)
    private Timestamp modifiedOn;
 
    // bi-directional many-to-one association to CCIStaffRolesDepartment
@@ -49,7 +61,9 @@ public class CCIStaffRole implements Serializable {
    }
 
    public Integer getCciStaffRoleId() {
-      return this.cciStaffRoleId;
+      if (this.cciStaffRoleId != null)
+         return this.cciStaffRoleId;
+      return 0;
    }
 
    public void setCciStaffRoleId(Integer cciStaffRoleId) {
@@ -65,7 +79,9 @@ public class CCIStaffRole implements Serializable {
    }
 
    public Integer getCreatedBy() {
-      return this.createdBy;
+      if (this.createdBy != null)
+         return this.createdBy;
+      return 0;
    }
 
    public void setCreatedBy(Integer createdBy) {
@@ -81,7 +97,9 @@ public class CCIStaffRole implements Serializable {
    }
 
    public Integer getHierarchy() {
-      return this.hierarchy;
+      if (this.hierarchy != null)
+         return this.hierarchy;
+      return 0;
    }
 
    public void setHierarchy(Integer hierarchy) {
@@ -89,7 +107,9 @@ public class CCIStaffRole implements Serializable {
    }
 
    public Integer getModifiedBy() {
-      return this.modifiedBy;
+      if (this.modifiedBy != null)
+         return this.modifiedBy;
+      return 0;
    }
 
    public void setModifiedBy(Integer modifiedBy) {
