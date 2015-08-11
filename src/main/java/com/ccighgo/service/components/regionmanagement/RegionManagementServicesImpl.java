@@ -607,11 +607,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (stateRegionList != null) {
             List<RegionState> regionStates = new ArrayList<RegionState>();
             for (SeasonGeographyConfiguration config : stateRegionList) {
-               RegionState regionState = new RegionState();
-               regionState.setStateId(config.getLookupUsstate().getUsStatesId());
-               regionState.setStateCode(config.getLookupUsstate().getStateCode());
-               regionState.setStateName(config.getLookupUsstate().getStateName());
-               regionStates.add(regionState);
+               if(config.getLookupUsstate()!=null){
+                  RegionState regionState = new RegionState();
+                  regionState.setStateId(config.getLookupUsstate().getUsStatesId());
+                  regionState.setStateCode(config.getLookupUsstate().getStateCode());
+                  regionState.setStateName(config.getLookupUsstate().getStateName());
+                  regionStates.add(regionState);
+               }
             }
             rgn.getRegionStates().addAll(regionStates);
             rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),

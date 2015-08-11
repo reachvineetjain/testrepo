@@ -42,4 +42,28 @@ public interface UpdateLogServiceInterface {
 
    public List<SeasonProgramUpdateLog> saveWPSpringSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
 
+   public List<SeasonProgramUpdateLog> saveGHTLanguageSchoolSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> saveGHTTeachAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> saveGHTHSAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> saveGHTVOLAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> saveGHTWorkAbroadSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> viewGHTHSAbroadSeasonProgramLog(String seasonId);
+
+   public List<SeasonProgramUpdateLog> viewGHTLanguageSchoolSeasonProgramLog(String seasonId);
+
+   public List<SeasonProgramUpdateLog> viewGHTTeachAbroadSeasonProgramLog(String seasonId);
+
+   public List<SeasonProgramUpdateLog> viewGHTVOLAbroadSeasonProgramLog(String seasonId);
+
+   public List<SeasonProgramUpdateLog> viewGHTWorkAbroadSeasonProgramLog(String seasonId);
+
+   public List<SeasonProgramUpdateLog> saveIHPSeasonProgramLog(SeasonProgramUpdateLog seasonProgramUpdateLog);
+
+   public List<SeasonProgramUpdateLog> viewIHPSeasonProgramLog(String seasonId);
+
 }
