@@ -23,7 +23,11 @@ public class WordPressFormsImpl implements IWordPressForms {
    @Override
    public boolean GenerateNewHostFamily(HostFamilyData HostFamilyData) {
       LOGGER.info("Generate New Host Family");
+
       System.out.println("Generate New Host Family");
+      System.out.println("Email :" + HostFamilyData.getEmail());
+      System.out.println("City :" + HostFamilyData.getCity());
+      System.out.println("State : " + HostFamilyData.getState());
       return true;
    }
 
