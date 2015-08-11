@@ -279,6 +279,12 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciStaffUsersResourcePermissionRepository.save(cciUserPermissionsList);
          cciStaffUsersResourcePermissionRepository.flush();
       }
+      
+      // create user notes
+      if (user.getUserNotes() != null){
+         addUserNote(user.getUserNotes().get(0));
+      }
+      
       usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
       usr =  setUserStatus(usr ,CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       return usr;
