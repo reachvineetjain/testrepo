@@ -733,8 +733,10 @@ public class UserManagementServiceImpl implements UserManagementService {
                   PermissionGroupOptions groupOptions = new PermissionGroupOptions();
                   groupOptions.setPermissionGroupOptionId(cciUserPermission.getResourcePermission().getResourcePermissionId());
                   groupOptions.setPermissionGroupOptionName(cciUserPermission.getResourcePermission().getResourceName());
-                  groupOptions.setPermissionGroupOptionActionId(String.valueOf(cciUserPermission.getResourceAction().getResourceActionId()));
-                  groupOptions.setPermissionGroupOptionAction(cciUserPermission.getResourceAction().getResourceAction());
+                  if(cciUserPermission.getResourceAction()!=null && cciUserPermission.getResourceAction().getResourceActionId()!=null) {
+                	  groupOptions.setPermissionGroupOptionActionId(String.valueOf(cciUserPermission.getResourceAction().getResourceActionId()));
+                	  groupOptions.setPermissionGroupOptionAction(cciUserPermission.getResourceAction().getResourceAction());
+                  }
                   permissionGroupOptions.add(groupOptions);
                }
             }
