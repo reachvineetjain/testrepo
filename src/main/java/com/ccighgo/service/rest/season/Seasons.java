@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.season.SeasonServiceInterface;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.season.beans.cloneseason.CloneSeason;
 import com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
@@ -128,7 +129,7 @@ public class Seasons {
    @GET
    @Path("deleteSeason/{id}")
    @Produces("application/json")
-   public String deleteSeason(@PathParam("id") String id) {
+   public DeleteRequest deleteSeason(@PathParam("id") String id) {
       LOGGER.debug("Calling Delete Season'func:deleteSeason'");
       LOGGER.debug("Season ID  : " + id);
       return seasonServices.deleteSeason(id);

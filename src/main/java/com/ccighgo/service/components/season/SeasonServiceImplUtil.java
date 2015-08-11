@@ -1133,8 +1133,20 @@ public class SeasonServiceImplUtil {
          if (previousRecordsToCopy != null) {
             List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
             for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
-               config.setSeason(seasonEntity);
-               newList.add(config);
+               SeasonGeographyConfiguration newConfig = new SeasonGeographyConfiguration();
+               if(config.getRegion()!=null){
+                  newConfig.setRegion(config.getRegion()); 
+               }
+               if(config.getLookupUsstate()!=null){
+                  newConfig.setLookupUsstate(config.getLookupUsstate());
+               }
+               newConfig.setSuperRegion(config.getSuperRegion());
+               newConfig.setCreatedBy(1);
+               newConfig.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               newConfig.setModifiedBy(1);
+               newConfig.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               newConfig.setSeason(seasonEntity);
+               newList.add(newConfig);
             }
             seasonGeographyConfigurationRepository.save(newList);
             seasonGeographyConfigurationRepository.flush();
@@ -1178,7 +1190,6 @@ public class SeasonServiceImplUtil {
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-
    }
 
    private void createWPWinterSeasonProgram(SeasonBean seasonBean, Season seasonEntity) {
@@ -1198,7 +1209,6 @@ public class SeasonServiceImplUtil {
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-
    }
 
    private void createWPSummerSeasonProgram(SeasonBean seasonBean, Season seasonEntity) {
@@ -1382,8 +1392,19 @@ public class SeasonServiceImplUtil {
                if (previousRecordsToCopy != null) {
                   List<SeasonIHPGeographyConfiguration> newList = new ArrayList<SeasonIHPGeographyConfiguration>();
                   for (SeasonIHPGeographyConfiguration config : previousRecordsToCopy) {
-                     config.setSeason(season);
-                     newList.add(config);
+                     SeasonIHPGeographyConfiguration newConfig = new SeasonIHPGeographyConfiguration();
+                     if(config.getRegionIhp()!=null){
+                        newConfig.setRegionIhp(config.getRegionIhp()); 
+                     }
+                     if(config.getLookupUsstate()!=null){
+                        newConfig.setLookupUsstate(config.getLookupUsstate());
+                     }
+                     newConfig.setCreatedBy(1);
+                     newConfig.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                     newConfig.setModifiedBy(1);
+                     newConfig.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                     newConfig.setSeason(season);
+                     newList.add(newConfig);
                   }
                   seasonIHPGeographyConfigurationRepository.save(newList);
                   seasonIHPGeographyConfigurationRepository.flush();
@@ -3364,6 +3385,11 @@ public class SeasonServiceImplUtil {
                document.setDepartmentId(departmentId);
                document.setDocType(departmentDocument.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
                document.setDocUrl(departmentDocument.getDocumentInformation().getUrl());
+               document.setUploadDate(DateUtils.getTimestamp(departmentDocument.getModifiedOn()));
+               Login login = loginRepository.findOne(1);// TODO find user from session
+               if (login != null) {
+                  document.setUploadedBy(login.getLoginName());
+               }
                seasonDocuments.add(document);
             }
          }
@@ -3451,8 +3477,11 @@ public class SeasonServiceImplUtil {
                   hspf1SeasonHspF1Note.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
                   hspf1SeasonHspF1Note.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
                   hspf1SeasonHspF1Note.setNoteValue(seasonProgramNote.getProgramNote());
-                  hspf1SeasonHspF1Note.setCreatedBy(seasonProgramNote.getCreatedBy() + "");
                   hspf1SeasonHspF1Note.setCreatedOn(DateUtils.getTimestamp(seasonProgramNote.getCreatedOn()));
+                  Login login = loginRepository.findOne(1);// TODO find user from session
+                  if (login != null) {
+                     hspf1SeasonHspF1Note.setCreatedBy(login.getLoginName());
+                  }
                   hspF1Notes.add(hspf1SeasonHspF1Note);
                }
             }
