@@ -309,7 +309,7 @@ INSERT INTO `cci_gh_go`.`LookupGender`
  (1,'M'),
  (2,'F');
  
-INSERT INTO GoIdSequence
+INSERT INTO `cci_gh_go`.`GoIdSequence`
 VALUES (),(),(),(),(),(),(),(),(),();
 
 INSERT INTO `cci_gh_go`.`UserType`(`userTypeId`,`userTypeCode`,`userTypeName`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
@@ -617,11 +617,11 @@ VALUES
 
 INSERT INTO `cci_gh_go`.`LoginUserType` (`loginId`,`userTypeId`,`defaultUserType`,`active`,`createdOn`,`createdBy`,`modifiedBy`)
 VALUES (1,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (1,2,0,1,CURRENT_TIMESTAMP,1,1),
-	   (2,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (3,3,1,1,CURRENT_TIMESTAMP,1,1),
-	   (4,5,1,1,CURRENT_TIMESTAMP,1,1),
-	   (5,4,1,1,CURRENT_TIMESTAMP,1,1);
+       (1,2,0,1,CURRENT_TIMESTAMP,1,1),
+       (2,1,1,1,CURRENT_TIMESTAMP,1,1),
+       (3,3,1,1,CURRENT_TIMESTAMP,1,1),
+       (4,5,1,1,CURRENT_TIMESTAMP,1,1),
+       (5,4,1,1,CURRENT_TIMESTAMP,1,1);
 
 INSERT INTO `cci_gh_go`.`SeasonStatus` (`seasonStatusId`,`status`,`active`) 
 VALUES 
@@ -630,7 +630,7 @@ VALUES
 (3,'Draft',1),
 (4,'Archived',1);
 
-INSERT INTO `Region` (`regionId`, `regionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+INSERT INTO `cci_gh_go`.`Region` (`regionId`, `regionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
 VALUES
 ('1','Region Leah','1','2015-07-17 14:42:15','1','2015-07-21 15:22:05','1'),
 ('2','Region Kendra','1','2015-07-17 14:42:17','1','2015-07-21 15:22:06','1'),
@@ -1205,7 +1205,7 @@ VALUES  (1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (11,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (12,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
-INSERT INTO `SuperRegion` (`superRegionId`, `superRegionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+INSERT INTO `cci_gh_go`.`SuperRegion` (`superRegionId`, `superRegionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
 VALUES
 ('1','West','1','2015-07-17 15:39:48','1','2015-07-17 16:43:04','1'),
 ('2','Central','1','2015-07-17 15:39:50','1','2015-07-17 16:43:04','1'),
@@ -1226,7 +1226,7 @@ VALUES (1,'Lori','Tibett','URL',1),
        (4,'John','DSouza','URL',2),
        (5,'Angela','Mike','URL',3);       
 
-INSERT INTO `SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`, `superRegionId`, `regionId`, `usStatesId`, `seasonId`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+INSERT INTO `cci_gh_go`.`SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`, `superRegionId`, `regionId`, `usStatesId`, `seasonId`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
 VALUES
 ('1','1','1','48','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
 ('2','1','1','32','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
