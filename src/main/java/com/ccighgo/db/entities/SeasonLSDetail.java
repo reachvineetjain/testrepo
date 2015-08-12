@@ -1,153 +1,137 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the SeasonLSDetails database table.
  * 
  */
 @Entity
-@Table(name = "SeasonLSDetails")
-@NamedQuery(name = "SeasonLSDetail.findAll", query = "SELECT s FROM SeasonLSDetail s")
+@Table(name="SeasonLSDetails")
+@NamedQuery(name="SeasonLSDetail.findAll", query="SELECT s FROM SeasonLSDetail s")
 public class SeasonLSDetail implements Serializable {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(unique = true, nullable = false)
-   private Integer seasonLSDetailsId;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Integer seasonLSDetailsId;
 
-   @Column(nullable = false)
-   private Integer createdBy;
+	@Column(nullable=false)
+	private Integer createdBy;
 
-   private Timestamp createdOn;
+	private Timestamp createdOn;
 
-   @Temporal(TemporalType.TIMESTAMP)
-   private Date endDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date endDate;
 
-   @Column(nullable = false)
-   private Integer modifiedBy;
+	@Column(nullable=false)
+	private Integer modifiedBy;
 
-   @Column(nullable = false)
-   private Timestamp modifiedOn;
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
 
-   @Column(length = 45)
-   private String programName;
+	@Column(length=45)
+	private String programName;
 
-   @Temporal(TemporalType.TIMESTAMP)
-   private Date startDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date startDate;
 
-   // bi-directional many-to-one association to Season
-   @ManyToOne
-   @JoinColumn(name = "seasonId", nullable = false)
-   private Season season;
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId", nullable=false)
+	private Season season;
 
-   // bi-directional many-to-one association to SeasonStatus
-   @ManyToOne
-   @JoinColumn(name = "programStatusId")
-   private SeasonStatus seasonStatus;
+	//bi-directional many-to-one association to SeasonStatus
+	@ManyToOne
+	@JoinColumn(name="programStatusId")
+	private SeasonStatus seasonStatus;
 
-   public SeasonLSDetail() {
-   }
+	public SeasonLSDetail() {
+	}
 
-   public Integer getSeasonLSDetailsId() {
-      if (this.seasonLSDetailsId != null)
-         return this.seasonLSDetailsId;
-      return 0;
-   }
+	public Integer getSeasonLSDetailsId() {
+		return this.seasonLSDetailsId;
+	}
 
-   public void setSeasonLSDetailsId(Integer seasonLSDetailsId) {
-      this.seasonLSDetailsId = seasonLSDetailsId;
-   }
+	public void setSeasonLSDetailsId(Integer seasonLSDetailsId) {
+		this.seasonLSDetailsId = seasonLSDetailsId;
+	}
 
-   public Integer getCreatedBy() {
-      if (this.createdBy != null)
-         return this.createdBy;
-      return 0;
-   }
+	public Integer getCreatedBy() {
+		return this.createdBy;
+	}
 
-   public void setCreatedBy(Integer createdBy) {
-      this.createdBy = createdBy;
-   }
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
 
-   public Timestamp getCreatedOn() {
-      return this.createdOn;
-   }
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
 
-   public void setCreatedOn(Timestamp createdOn) {
-      this.createdOn = createdOn;
-   }
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
 
-   public Date getEndDate() {
-      return this.endDate;
-   }
+	public Date getEndDate() {
+		return this.endDate;
+	}
 
-   public void setEndDate(Date endDate) {
-      this.endDate = endDate;
-   }
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-   public Integer getModifiedBy() {
-      if (this.modifiedBy != null)
-         return this.modifiedBy;
-      return 0;
-   }
+	public Integer getModifiedBy() {
+		return this.modifiedBy;
+	}
 
-   public void setModifiedBy(Integer modifiedBy) {
-      this.modifiedBy = modifiedBy;
-   }
+	public void setModifiedBy(Integer modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 
-   public Timestamp getModifiedOn() {
-      return this.modifiedOn;
-   }
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
 
-   public void setModifiedOn(Timestamp modifiedOn) {
-      this.modifiedOn = modifiedOn;
-   }
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 
-   public String getProgramName() {
-      return this.programName;
-   }
+	public String getProgramName() {
+		return this.programName;
+	}
 
-   public void setProgramName(String programName) {
-      this.programName = programName;
-   }
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
 
-   public Date getStartDate() {
-      return this.startDate;
-   }
+	public Date getStartDate() {
+		return this.startDate;
+	}
 
-   public void setStartDate(Date startDate) {
-      this.startDate = startDate;
-   }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-   public Season getSeason() {
-      return this.season;
-   }
+	public Season getSeason() {
+		return this.season;
+	}
 
-   public void setSeason(Season season) {
-      this.season = season;
-   }
+	public void setSeason(Season season) {
+		this.season = season;
+	}
 
-   public SeasonStatus getSeasonStatus() {
-      return this.seasonStatus;
-   }
+	public SeasonStatus getSeasonStatus() {
+		return this.seasonStatus;
+	}
 
-   public void setSeasonStatus(SeasonStatus seasonStatus) {
-      this.seasonStatus = seasonStatus;
-   }
+	public void setSeasonStatus(SeasonStatus seasonStatus) {
+		this.seasonStatus = seasonStatus;
+	}
 
 }

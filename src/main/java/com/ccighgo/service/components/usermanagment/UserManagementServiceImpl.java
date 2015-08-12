@@ -592,7 +592,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       
       cciStaffUserNote.setNote(userNotes.getUserNote());
       cciStaffUserNote.setCreatedBy(userNotes.getCciUserId());
-      cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
+      //cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
       cciStaffUserNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       cciStaffUserNote.setModifiedBy(userNotes.getCciUserId());
       cciStaffUserNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
@@ -666,11 +666,11 @@ public class UserManagementServiceImpl implements UserManagementService {
    private LoginInfo getLoginInfo(CCIStaffUser cciUser) {
       LoginInfo loginInfo = new LoginInfo();
       UserType userType = new UserType();
-      userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
+      /*userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
       userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
       userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
       loginInfo.setLoginId(cciUser.getLogin().getLoginId());
-      loginInfo.setLoginName(cciUser.getLogin().getLoginName());
+      loginInfo.setLoginName(cciUser.getLogin().getLoginName());*/
       loginInfo.setUserType(userType);
       return loginInfo;
    }
@@ -851,7 +851,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 //
 //      loginRepository.save(login);
       login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
-      cciUser.setLogin(login);
+      //cciUser.setLogin(login);
       cciUser.setCreatedBy(1);
       cciUser.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUser.setModifiedBy(1);
@@ -1012,11 +1012,11 @@ public class UserManagementServiceImpl implements UserManagementService {
       String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
             CCIConstants.MAX_SPL_CHARS).toString();
       login.setPassword(password);
-      login.setUserType(cciUserType);
+      //login.setUserType(cciUserType);
 
       loginRepository.save(login);
       login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
-      cciUser.setLogin(login);
+      //cciUser.setLogin(login);
       cciUser.setCreatedBy(1);
       cciUser.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUser.setModifiedBy(1);
@@ -1194,7 +1194,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
       cciUser.setCountry(cUsr.getLookupCountry() != null ? cUsr.getLookupCountry().getCountryName() : CCIConstants.EMPTY_DATA);
       cciUser.setState(cUsr.getLookupUsstate() != null ? cUsr.getLookupUsstate().getStateName() : CCIConstants.EMPTY_DATA);
-      cciUser.setLoginName(cUsr.getLogin().getLoginName());
+     // cciUser.setLoginName(cUsr.getLogin().getLoginName());
       cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
       // update user role for user
       if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
