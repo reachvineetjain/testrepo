@@ -362,11 +362,11 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             for (SeasonGeographyConfiguration sgc : list) {
                if (sgc == null || sgc.getRegion() == null)
                   continue;
-               Integer rId = sgc.getRegion().getRegionId();
-               Region region = regionRepository.findOne(rId);
+               Region region = sgc.getRegion();
+               // Region region = regionRepository.findOne(rId);
                if (region != null) {
                   List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findAllFieldStaffBySeasonIdSuperRegionIdRegionIdAndFieldStaffType(seasonId,
-                        superRegionId, rId, CCIConstants.FieldStaffTypeCode_RD);
+                        superRegionId, region.getRegionId(), CCIConstants.FieldStaffTypeCode_RD);
                   if (assignedUsers != null) {
                      for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
                         AssignedRDStaff assignedRDStaff = new AssignedRDStaff();
@@ -383,7 +383,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedRDStaff.getAssignedArea().add(regionAssignedArea);
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()) == null) {
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), true);
-                           if (regionId != null && regionId.equals(rId))
+                           if (regionId != null && regionId.equals(region.getRegionId()))
                               continue;
                            regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
                         }
