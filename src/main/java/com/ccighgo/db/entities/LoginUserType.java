@@ -6,19 +6,19 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the SeasonDepartmentNotes database table.
+ * The persistent class for the LoginUserType database table.
  * 
  */
 @Entity
-@Table(name="SeasonDepartmentNotes")
-@NamedQuery(name="SeasonDepartmentNote.findAll", query="SELECT s FROM SeasonDepartmentNote s")
-public class SeasonDepartmentNote implements Serializable {
+@Table(name="LoginUserType")
+@NamedQuery(name="LoginUserType.findAll", query="SELECT l FROM LoginUserType l")
+public class LoginUserType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer seasonDepartmentNotesId;
+	private Integer loginUserTypeId;
 
 	private byte active;
 
@@ -27,8 +27,7 @@ public class SeasonDepartmentNote implements Serializable {
 
 	private Timestamp createdOn;
 
-	@Column(length=1000)
-	private String departmentNote;
+	private byte defaultUserType;
 
 	@Column(nullable=false)
 	private Integer modifiedBy;
@@ -36,20 +35,25 @@ public class SeasonDepartmentNote implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to Season
+	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
+	@JoinColumn(name="loginId")
+	private Login login;
 
-	public SeasonDepartmentNote() {
+	//bi-directional many-to-one association to UserType
+	@ManyToOne
+	@JoinColumn(name="userTypeId")
+	private UserType userType;
+
+	public LoginUserType() {
 	}
 
-	public Integer getSeasonDepartmentNotesId() {
-		return this.seasonDepartmentNotesId;
+	public Integer getLoginUserTypeId() {
+		return this.loginUserTypeId;
 	}
 
-	public void setSeasonDepartmentNotesId(Integer seasonDepartmentNotesId) {
-		this.seasonDepartmentNotesId = seasonDepartmentNotesId;
+	public void setLoginUserTypeId(Integer loginUserTypeId) {
+		this.loginUserTypeId = loginUserTypeId;
 	}
 
 	public byte getActive() {
@@ -76,12 +80,12 @@ public class SeasonDepartmentNote implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public String getDepartmentNote() {
-		return this.departmentNote;
+	public byte getDefaultUserType() {
+		return this.defaultUserType;
 	}
 
-	public void setDepartmentNote(String departmentNote) {
-		this.departmentNote = departmentNote;
+	public void setDefaultUserType(byte defaultUserType) {
+		this.defaultUserType = defaultUserType;
 	}
 
 	public Integer getModifiedBy() {
@@ -100,12 +104,20 @@ public class SeasonDepartmentNote implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Season getSeason() {
-		return this.season;
+	public Login getLogin() {
+		return this.login;
 	}
 
-	public void setSeason(Season season) {
-		this.season = season;
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
+	public UserType getUserType() {
+		return this.userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
 
 }

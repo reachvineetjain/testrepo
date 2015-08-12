@@ -86,9 +86,10 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SysDiagrams` (
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Login` (
   `loginId` INT(11) NOT NULL AUTO_INCREMENT,
-  `goId` INT,
+  `goId` INT NOT NULL,
   `loginName` VARCHAR(50) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
+  `passwordSalt` VARCHAR(200) NOT NULL,
   `createdOn` TIMESTAMP  NULL,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -174,6 +175,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupDepartments` (
   `departmentId` INT(3) NOT NULL,
   `departmentName` VARCHAR(50) NOT NULL,
   `acronym` VARCHAR(10) NULL DEFAULT NULL,
+  `isVisibleToSeason` TINYINT(1) DEFAULT 0,
   `createdOn` TIMESTAMP NULL,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP DEFAULT NOW(),
@@ -268,9 +270,8 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffRoles` (
 -- Table cci_gh_go.CCIStaffUsers
 -- ---------------------------------------------------------------------------------------------------- 
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
-  `cciStaffUserId` INT(11) NOT NULL AUTO_INCREMENT,
+  `cciStaffUserId` INT(11) NOT NULL,
   `supervisorId` INT(11) NULL,
-  `loginId` INT(11) NOT NULL,
   `cciAdminGuid` VARCHAR(64) UNIQUE NOT NULL,
   `firstName` VARCHAR(30) NOT NULL,
   `lastName` VARCHAR(30) NOT NULL,
@@ -302,16 +303,17 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
     REFERENCES `cci_gh_go`.`LookupCountries` (`countryId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_CCIStaffUsers_login`
-    FOREIGN KEY (`loginId`)
-    REFERENCES `cci_gh_go`.`Login` (`loginId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffUsers_LookupGender`
     FOREIGN KEY (`genderId`)
     REFERENCES `cci_gh_go`.`LookupGender` (`genderId`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION     
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CCIStaffUsers_GoIdSequence`
+    FOREIGN KEY (`cciStaffUserId`)
+    REFERENCES `cci_gh_go`.`GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+    
 );
 
 -- ----------------------------------------------------------------------------------------------------
