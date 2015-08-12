@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for HSPF1AugustStart1stSemesterDetails complex type.
@@ -51,7 +53,7 @@ import javax.xml.bind.annotation.XmlType;
     "latestBirthDate",
     "show1StSemesterToNewHF"
 })
-public class HSPF1AugustStart1StSemesterDetails {
+public class HSPF1AugustStart1StSemesterDetails extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

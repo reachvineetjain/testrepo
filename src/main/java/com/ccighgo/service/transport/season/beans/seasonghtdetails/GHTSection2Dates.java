@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for GHTSection2Dates complex type.
@@ -42,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
     "startDate",
     "endDate"
 })
-public class GHTSection2Dates {
+public class GHTSection2Dates extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

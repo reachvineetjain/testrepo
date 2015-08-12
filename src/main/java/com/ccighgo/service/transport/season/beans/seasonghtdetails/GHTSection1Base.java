@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for GHTSection1Base complex type.
@@ -45,7 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     "programStatusId",
     "programStatusValue"
 })
-public class GHTSection1Base {
+public class GHTSection1Base extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

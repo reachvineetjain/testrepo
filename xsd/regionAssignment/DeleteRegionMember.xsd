@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/deleteregionmember" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:deleteregionmember="http://www.ccighgo.com/deleteregionmember" xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
+   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.season.beans.deleteregionmember" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
+
+   <xsd:element name="DeleteRegionMember" type="deleteregionmember:DeleteRegionMember"></xsd:element>
+
+   <xsd:complexType name="DeleteRegionMember">
+            <xsd:sequence>
+               <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+   </xsd:complexType>
+   
+   
+
+ 
+
+</xsd:schema>

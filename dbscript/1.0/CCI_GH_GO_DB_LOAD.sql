@@ -309,14 +309,14 @@ INSERT INTO `cci_gh_go`.`LookupGender`
  (1,'M'),
  (2,'F');
  
-INSERT INTO GoIdSequence
-VALUES (),(),();
+INSERT INTO `cci_gh_go`.`GoIdSequence`
+VALUES (),(),(),(),(),(),(),(),(),();
 
 INSERT INTO `cci_gh_go`.`UserType`(`userTypeId`,`userTypeCode`,`userTypeName`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
 (1,'CCI','CCI User',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,'PARTNER','Partner login',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,'LC','Local Coordinator',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,'FS','Field Staff',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (4,'HF','Host Family',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (5,'EMP','Employer',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (6,'PARTICIPANT','Participant',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
@@ -351,18 +351,18 @@ VALUES
 ('yKmVMypeizwLB8bFC02n', 1333017588),
 ('yqEBziV6rkQzXlHlZKf4', 1333348807);
 
-INSERT INTO `cci_gh_go`.`Login`(`loginId`,`userTypeId`,`loginName`,`password`,createdOn,createdBy,modifiedBy)
+INSERT INTO `cci_gh_go`.`Login`(`loginId`,`goId`,`loginName`,`password`,createdOn,createdBy,modifiedBy)
 VALUES
-(1,'sysadmin','password',CURRENT_TIMESTAMP,1,1),
-(2,'pdirector','password',CURRENT_TIMESTAMP,1,1),
-(3,'recruiter','password',CURRENT_TIMESTAMP,1,1),
-(4,'pmanager','password',CURRENT_TIMESTAMP,1,1),
-(5,'tempstaff','password',CURRENT_TIMESTAMP,1,1),
-(6,'partner','password',CURRENT_TIMESTAMP,1,1),
-(7,'localcord','password',CURRENT_TIMESTAMP,1,1),
-(8,'hostfamily','password',CURRENT_TIMESTAMP,1,1),
-(9,'employer','password',CURRENT_TIMESTAMP,1,1),
-(10,'employer1','password',CURRENT_TIMESTAMP,1,1);
+(1,1000,'sysadmin','password',CURRENT_TIMESTAMP,1,1),
+(2,1001,'pdirector','password',CURRENT_TIMESTAMP,1,1),
+(3,1002,'recruiter','password',CURRENT_TIMESTAMP,1,1),
+(4,1003,'pmanager','password',CURRENT_TIMESTAMP,1,1),
+(5,1004,'tempstaff','password',CURRENT_TIMESTAMP,1,1),
+(6,1005,'partner','password',CURRENT_TIMESTAMP,1,1),
+(7,1006,'localcord','password',CURRENT_TIMESTAMP,1,1),
+(8,1007,'hostfamily','password',CURRENT_TIMESTAMP,1,1),
+(9,1008,'employer','password',CURRENT_TIMESTAMP,1,1),
+(10,1009,'employer1','password',CURRENT_TIMESTAMP,1,1);
 
 
 INSERT INTO `cci_gh_go`.`LookupDepartments` (`departmentId`,`departmentName`,`acronym`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
@@ -617,11 +617,11 @@ VALUES
 
 INSERT INTO `cci_gh_go`.`LoginUserType` (`loginId`,`userTypeId`,`defaultUserType`,`active`,`createdOn`,`createdBy`,`modifiedBy`)
 VALUES (1,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (1,2,1,1,CURRENT_TIMESTAMP,1,1),
-	   (2,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (3,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (4,1,1,1,CURRENT_TIMESTAMP,1,1),
-	   (5,1,1,1,CURRENT_TIMESTAMP,1,1);
+       (1,2,0,1,CURRENT_TIMESTAMP,1,1),
+       (2,1,1,1,CURRENT_TIMESTAMP,1,1),
+       (3,3,1,1,CURRENT_TIMESTAMP,1,1),
+       (4,5,1,1,CURRENT_TIMESTAMP,1,1),
+       (5,4,1,1,CURRENT_TIMESTAMP,1,1);
 
 INSERT INTO `cci_gh_go`.`SeasonStatus` (`seasonStatusId`,`status`,`active`) 
 VALUES 
@@ -630,14 +630,18 @@ VALUES
 (3,'Draft',1),
 (4,'Archived',1);
 
-INSERT INTO `cci_gh_go`.`Region` (`regionId`,`regionName`,`active`) 
-VALUES 
-(1,'Atlantic',1),
-(2,'MidWest',1),
-(3,'west',1),
-(4,'California',1),
-(5,'South',1),
-(6,'Non-Contiguous',1);
+INSERT INTO `cci_gh_go`.`Region` (`regionId`, `regionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+VALUES
+('1','Region Leah','1','2015-07-17 14:42:15','1','2015-07-21 15:22:05','1'),
+('2','Region Kendra','1','2015-07-17 14:42:17','1','2015-07-21 15:22:06','1'),
+('3','Region Leah','1','2015-07-17 14:42:19','1','2015-07-21 15:22:07','1'),
+('4','Region Sally','1','2015-07-17 14:42:22','1','2015-07-21 15:22:08','1'),
+('5','Region Connie','1','2015-07-17 14:42:24','1','2015-07-21 15:22:08','1'),
+('6','Region Angela','1','2015-07-17 14:42:26','1','2015-07-21 15:22:09','1'),
+('7','Region Emma','1','2015-07-21 10:20:21','1','2015-07-21 15:22:14','1'),
+('8','Region Jennifer','1','2015-07-21 10:20:51','1','2015-07-21 10:20:58','1'),
+('9','Region Rob','1','2015-07-21 10:21:35','1','2015-07-21 10:21:38','1'),
+('10','Region Kathy','1','2015-07-21 10:21:57','1','2015-07-21 10:22:01','1'); 
 
 INSERT INTO `cci_gh_go`.`FieldStaffAgreement` (`fieldStaffAgreementId`,`agreementName`)
 VALUES
@@ -1201,18 +1205,11 @@ VALUES  (1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (11,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
         (12,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
         
-INSERT INTO `cci_gh_go`.`SuperRegion` (superRegionId,superRegionName,active,createdBy,modifiedOn,modifiedBy)    
-VALUES (1,'West',1,1,CURRENT_TIMESTAMP,1),
-       (2,'Central',1,1,CURRENT_TIMESTAMP,1),
-       (3,'East',1,1,CURRENT_TIMESTAMP,1);
-       
-INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo,fieldStaffTypeId)
-VALUES (1,'Lori','Tibett','URL',1),
-       (2,'Douglas','Mike','URL',1),
-       (3,'Mike','Procter','URL',2),
-       (4,'John','DSouza','URL',2),
-       (5,'Angela','Mike','URL',3);
-
+INSERT INTO `cci_gh_go`.`SuperRegion` (`superRegionId`, `superRegionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+VALUES
+('1','West','1','2015-07-17 15:39:48','1','2015-07-17 16:43:04','1'),
+('2','Central','1','2015-07-17 15:39:50','1','2015-07-17 16:43:04','1'),
+('3','East','1','2015-07-17 15:39:51','1','2015-07-17 16:43:04','1');
        
 INSERT INTO `cci_gh_go`.`FieldStaffType` (fieldStaffTypeCode,fieldStaffType)    
 VALUES ('ERD','Executive Regional Director'),
@@ -1222,29 +1219,59 @@ VALUES ('ERD','Executive Regional Director'),
        ('AC','Area Coordinator'),
        ('LC','Local Coordinator');
        
-INSERT INTO `cci_gh_go`.`SeasonGeographyConfiguration` (superRegionId,regionId,usStatesId,seasonId,createdOn,createdBy,modifiedBy)
-VALUES  (1,NULL,NULL,1,CURRENT_TIMESTAMP,1,1),  
-        (1,1,NULL,1,CURRENT_TIMESTAMP,1,1),         
-        (1,1,1,1,CURRENT_TIMESTAMP,1,1),            
-        (1,1,2,1,CURRENT_TIMESTAMP,1,1),            
-        (1,1,3,1,CURRENT_TIMESTAMP,1,1),            
-        (1,1,4,1,CURRENT_TIMESTAMP,1,1),            
-        (1,1,5,1,CURRENT_TIMESTAMP,1,1),            
-        (1,2,1,1,CURRENT_TIMESTAMP,1,1),            
-        (1,2,6,1,CURRENT_TIMESTAMP,1,1),            
-        (1,2,7,1,CURRENT_TIMESTAMP,1,1),            
-        (1,2,8,1,CURRENT_TIMESTAMP,1,1),            
-        (1,2,9,1,CURRENT_TIMESTAMP,1,1),            
-        (2,NULL,NULL,1,CURRENT_TIMESTAMP,1,1),  
-        (2,3,NULL,1,CURRENT_TIMESTAMP,1,1),     
-        (2,3,1,1,CURRENT_TIMESTAMP,1,1),            
-        (2,3,11,1,CURRENT_TIMESTAMP,1,1),           
-        (2,3,12,1,CURRENT_TIMESTAMP,1,1),           
-        (2,3,13,1,CURRENT_TIMESTAMP,1,1),           
-        (2,3,14,1,CURRENT_TIMESTAMP,1,1),           
-        (2,4,11,1,CURRENT_TIMESTAMP,1,1),           
-        (2,4,15,1,CURRENT_TIMESTAMP,1,1),           
-        (2,4,16,1,CURRENT_TIMESTAMP,1,1);   
+INSERT INTO `cci_gh_go`.`FieldStaff` (fieldStaffId,firstName,lastName,photo,fieldStaffTypeId)
+VALUES (1,'Lori','Tibett','URL',1),
+       (2,'Douglas','Mike','URL',1),
+       (3,'Mike','Procter','URL',2),
+       (4,'John','DSouza','URL',2),
+       (5,'Angela','Mike','URL',3);       
+
+INSERT INTO `cci_gh_go`.`SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`, `superRegionId`, `regionId`, `usStatesId`, `seasonId`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+VALUES
+('1','1','1','48','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('2','1','1','32','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('3','1','1','13','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('4','1','1','21','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('5','1','2','5','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('6','1','2','51','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('7','1','2','6','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('8','1','2','22','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('9','1','2','17','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('10','1','2','2','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('11','1','2','12','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('16','2','4','29','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('17','2','4','42','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('18','2','4','36','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('19','2','4','16','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('20','2','4','50','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('21','2','4','14','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('22','2','5','38','1','2015-07-17 16:43:04','1','2015-07-17 16:43:04','1'),
+('23','2','5','31','1','2015-07-21 10:35:27','1','2015-07-21 10:35:31','1'),
+('25','2','5','44','1','2015-07-21 10:36:58','1','2015-07-21 10:37:02','1'),
+('26','2','5','1','1','2015-07-21 10:37:21','1','2015-07-21 10:37:24','1'),
+('27','2','6','18','1','2015-07-21 10:37:51','1','2015-07-21 10:37:54','1'),
+('28','2','6','43','1','2015-07-21 10:38:17','1','2015-07-21 10:38:20','1'),
+('29','2','6','3','1','2015-07-21 10:38:46','1','2015-07-21 10:38:49','1'),
+('30','2','6','37','1','2015-07-21 10:39:14','1','2015-07-21 10:39:18','1'),
+('31','2','6','19','1','2015-07-21 10:40:04','1','2015-07-21 10:40:07','1'),
+('32','3','7','35','1','2015-07-21 10:41:08','1','2015-07-21 10:41:11','1'),
+('33','3','7','15','1','2015-07-21 10:41:33','1','2015-07-21 10:41:37','1'),
+('34','3','7','30','1','2015-07-21 10:42:10','1','2015-07-21 10:42:13','1'),
+('35','3','7','49','1','2015-07-21 10:42:40','1','2015-07-21 10:42:43','1'),
+('36','3','8','27','1','2015-07-21 10:47:05','1','2015-07-21 10:47:09','1'),
+('37','3','8','39','1','2015-07-21 10:47:33','1','2015-07-21 10:47:36','1'),
+('38','3','8','25','1','2015-07-21 10:48:00','1','2015-07-21 10:48:03','1'),
+('39','3','8','33','1','2015-07-21 10:48:31','1','2015-07-21 10:48:35','1'),
+('40','3','8','8','1','2015-07-21 10:48:55','1','2015-07-21 10:48:58','1'),
+('41','3','8','47','1','2015-07-21 10:49:29','1','2015-07-21 10:49:33','1'),
+('42','3','8','28','1','2015-07-21 10:49:58','1','2015-07-21 10:50:01','1'),
+('43','3','8','41','1','2015-07-21 10:50:25','1','2015-07-21 10:50:29','1'),
+('44','3','8','11','1','2015-07-21 10:50:51','1','2015-07-21 10:50:54','1'),
+('45','3','8','10','1','2015-07-21 11:05:42','1','2015-07-21 11:05:48','1'),
+('46','3','9','20','1','2015-07-21 11:06:23','1','2015-07-21 11:06:28','1'),
+('47','3','9','46','1','2015-07-21 11:06:50','1','2015-07-21 11:06:53','1'),
+('48','3','9','24','1','2015-07-21 11:07:19','1','2015-07-21 11:07:22','1'),
+('49','3','9','34','1','2015-07-21 11:08:14','1','2015-07-21 11:08:18','1');       
 
         
 INSERT INTO `cci_gh_go`.`SeasonIHPGeographyConfiguration` (regionIHPId,usStatesId,seasonId,modifiedOn,createdBy,modifiedBy)
@@ -1291,3 +1318,4 @@ VALUES (1,1,1,1,1,CURRENT_TIMESTAMP,1),
        (3,1,2,5,1,CURRENT_TIMESTAMP,1),
        (3,1,2,6,1,CURRENT_TIMESTAMP,1),
        (3,1,2,7,1,CURRENT_TIMESTAMP,1);
+       

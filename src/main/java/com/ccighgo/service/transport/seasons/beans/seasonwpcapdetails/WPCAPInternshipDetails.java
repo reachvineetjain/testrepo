@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for WPCAPInternshipDetails complex type.
@@ -44,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     "endDate",
     "applicationDeadlineDate"
 })
-public class WPCAPInternshipDetails {
+public class WPCAPInternshipDetails extends Response{
 
     protected int seasonId;
     protected int seasonProgramId;

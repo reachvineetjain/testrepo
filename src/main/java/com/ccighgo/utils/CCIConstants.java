@@ -36,7 +36,7 @@ public class CCIConstants {
    public static final byte INACTIVE = 0;
    public static final String DEFAULT_PAGE = "0";
    public static final String DEFAULT_NO_OF_RECORDS_SIZE = "10";
-   public static final Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+   public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
    public static final Integer MIN_PASS_LEN = 8;
    public static final Integer MAX_PASS_LEN = 8;
    public static final Integer MAX_UPPER_CASE = 1;
@@ -65,7 +65,7 @@ public class CCIConstants {
    public static final String WP_WT_SUMMER = "W&T Summer";
    public static final String WP_WT_WINTER = "W&T Winter";
    public static final String WP_WT_SPRING = "W&T Spring";
-   public static final String WP_WT_CAP = "W&T CAP";
+   public static final String WP_WT_CAP = "CAP";
    public static final String GHT_HS_ABRD = "HS Abroad";
    public static final String GHT_LANG_SCL = "Language School";
    public static final String GHT_TEACH_ABRD = "Teach Abroad";

@@ -3,12 +3,18 @@
  */
 package com.ccighgo.service.components.usermanagment;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
+import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
+import com.ccighgo.service.transport.utility.beans.department.Departments;
 
 /**
  * Service Interface for all user management related operations
@@ -52,6 +58,12 @@ public interface UserManagementService {
 	 * @return updated User
 	 */
 	public User updateUserDemographics(User user);
+	/**
+	 * get list of departments with available permissions 
+	 * 
+	 * @return list of permissions
+	 */
+	public Departments getDepartmentWithPermissions();
 	
 	/**
      * Updates user permissions
@@ -98,5 +110,32 @@ public interface UserManagementService {
     * @return
     */
    public User resetPassword(String userId);
+   /**
+    * @param userId
+    * @return
+    */
+
+    public List<UserNotes> getUserNotesById(String userId);
+    /**
+     * @param userNotes
+     * @return
+     */
+    public List<UserNotes> addUserNote(UserNotes userNotes);
+    /**
+     * @param userNotes
+     * @return
+     */
+    public UserNotes updateUserNote(UserNotes userNotes);
+    
+    
+    public List<StaffUserDefaultPermissionGroupOptions> getResourceAction();
+    
+    
+    public User updateUserDetails(User user);
+    
+  
+    public User updateUser(User user);
+    
+    
 
 }

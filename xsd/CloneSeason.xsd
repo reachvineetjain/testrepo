@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/clone" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:clone="http://www.ccighgo.com/clone">
+<xsd:schema targetNamespace="http://www.ccighgo.com/clone" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:clone="http://www.ccighgo.com/clone">
 
    <xsd:annotation>
       <xsd:appinfo>
@@ -10,18 +10,35 @@
       </xsd:appinfo>
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
+   <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
    <xsd:element name="CloneSeason" type="clone:CloneSeason"></xsd:element>
 
    <xsd:complexType name="CloneSeason">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="newCloneSeasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="cloneSeasonStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="cloneSeasonEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="cloneSeasonStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="clonedSeasonNotes" type="clone:ClonedSeasonNotes" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="clonedDocuments" type="clone:ClonedDocuments" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="ClonedSeasonNotes">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="newCloneSeasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="cloneSeasonStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="cloneSeasonEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="cloneSeasonStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="clonedDocuments" type="clone:ClonedDocuments" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="seasonDepartmentNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
@@ -29,9 +46,13 @@
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fileType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

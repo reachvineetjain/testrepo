@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.rest.usermanagement;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,11 +14,15 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
+import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
+import com.ccighgo.service.transport.utility.beans.department.Departments;
 
 /**
  * <h1>UserManagement</h1> The UserManagement class is the REST service front of
@@ -117,6 +123,14 @@ public class UserManagement {
     public User updateUserDemographics(User user) {
         return userMgmtServices.updateUserDemographics(user);
     }
+    
+    @GET
+    @Path("department-with-permissions")
+    @Produces("application/json")
+    public Departments getStaffUserRolePermissions() {
+       
+       return userMgmtServices.getDepartmentWithPermissions();
+    }
 
     /**
      * RESTFul service updates user permissions
@@ -131,6 +145,8 @@ public class UserManagement {
     public User updateUserPermissions(User user) {
         return userMgmtServices.updateUserPermissions(user);
     }
+    
+    
 
     /**
      * RESTFul service updates user's profile picture
@@ -201,5 +217,67 @@ public class UserManagement {
     public User resetPassword(@PathParam("id") String id) {
         return userMgmtServices.resetPassword(id);
     }
-
+    /**
+     * RESTFul service, add user profile picture
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
+    @GET
+    @Path("note/{id}")
+    @Consumes("application/json")
+    
+    public List<UserNotes> getUserNotesById(@PathParam("id") String id){
+       return userMgmtServices.getUserNotesById(id);
+    }
+    
+    /**
+     * RESTFul service, add User Note 
+     * 
+     * @param id
+     * @param user
+     * @return updated User
+     */
+    @POST
+    @Path("addnote/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public List<UserNotes> addUserNote(UserNotes userNotes){
+       return userMgmtServices.addUserNote(userNotes);
+    }
+    
+    @POST
+    @Path("updatenote/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public UserNotes updateUserNote(UserNotes userNotes){
+       return userMgmtServices.updateUserNote(userNotes);
+    }
+    
+    @GET
+    @Path("resourceaction/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public List<StaffUserDefaultPermissionGroupOptions> getResourceAction(){
+       return userMgmtServices.getResourceAction();
+    }
+    
+    @POST
+    @Path("update-user-details/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public User updateUserDetails(User usr){
+       return userMgmtServices.updateUserDetails(usr);
+    }
+    
+    
+    @POST
+    @Path("update-user/")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public User updateUser(User usr){
+       return userMgmtServices.updateUser(usr);
+    }
+    
 }

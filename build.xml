@@ -5,7 +5,7 @@
 	<target name="all" depends="Common,Auth,Countries,Departments,DocumentType,Gender,Programs,Regions,Roles,States,CCIUsers,User,UserSearch,UserDepartments,
 		CloneSeason,Season,SeasonDepartmentDocument,SeasonProgram,SeasonProgramDocument,SeasonProgramNote,SeasonList,SeasonStatus,SeasonGHTDetails,SeasonHspF1Details,
 		SeasonHspJ1HSDetails,SeasonHspStpIhpDetails,SeasonWPCAPDetails,SeasonWPDetail,SeasonDepartmentLog,SeasonProgramLog,InsuranceCountries,InsuranceParticipant,
-		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion" />
+		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -17,14 +17,14 @@
 			<arg value="${xsd.dir}/Common.xsd" />
 		</java>
 	</target>
-	
+
 	<target name="DeleteRequest">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/DeleteRequest.xsd" />
-	        </java>
-	    </target>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/DeleteRequest.xsd" />
+		</java>
+	</target>
 
 	<!--*************************************************Authentication****************************************************************-->
 
@@ -416,24 +416,24 @@
 			<arg value="${xsd.dir}/regionAssignment/AssignedSuperRegion.xsd" />
 		</java>
 	</target>
-	
+
 	<!-- Region Assignment -->
-		<target name="AssignedRegion">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/regionAssignment/AssignedRegion.xsd" />
-			</java>
-		</target>
-	
+	<target name="AssignedRegion">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionAssignment/AssignedRegion.xsd" />
+		</java>
+	</target>
+
 	<!-- States Assignment -->
-		<target name="AssignedStates">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/regionAssignment/AssignedStates.xsd" />
-			</java>
-		</target>
+	<target name="AssignedStates">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionAssignment/AssignedStates.xsd" />
+		</java>
+	</target>
 
 	<!--Region states: returns list of states belonging to each region for a given super region for season-->
 
@@ -444,31 +444,64 @@
 			<arg value="${xsd.dir}/StateRegion.xsd" />
 		</java>
 	</target>
-	
+
 	<!--Region Super Regions map: returns list of region belonging to each super region for a given season-->
 
-	    <target name="RegionSuperRegion">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/RegionSuperRegion.xsd" />
-	        </java>
-	    </target>
-	
-	<target name="AssignRDsToRegions">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/regionAssignment/AssignedStaffToState.xsd" />
-			</java>
-		</target>
-	
+	<target name="RegionSuperRegion">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/RegionSuperRegion.xsd" />
+		</java>
+	</target>
+
 	<target name="AssignStaffToState">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionAssignment/AssignedStaffToState.xsd" />
+		</java>
+	</target>
+
+	<target name="AssignRDsToRegions">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionAssignment/AssignedRDsToRegion.xsd" />
+		</java>
+	</target>
+
+	<target name="MoveRegions">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/MoveRegions.xsd" />
+		</java>
+	</target>
+	
+	<target name="AssignedERDsToSuperRegion">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
 				<arg value="-d" />
 				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/regionAssignment/AssignedRDsToRegion.xsd" />
+				<arg value="${xsd.dir}/regionAssignment/AssignedERDsToRegion.xsd" />
 			</java>
 		</target>
+	<target name="DeleteRegionMember">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/regionAssignment/DeleteRegionMember.xsd" />
+				</java>
+			</target>
+	
+	<!-- Third Party Integration -->
+	<target name="InternationPartner">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/thirdparty/wordpress/InternationalPartners.xsd" />
+		</java>
+	</target>
+		
 
 </project>
