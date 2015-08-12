@@ -15,4 +15,8 @@ public interface IWordPressForms {
 
    @WebMethod
    boolean GenerateNewHostFamily(@WebParam(name = "data") HostFamilyData HostFamilyData);
+
+   @WebMethod
+   boolean GenerateNewAreaRepresentative(@WebParam(name = "data") AreaRepresentativeData AreaRepresentativeData);
+
 }
