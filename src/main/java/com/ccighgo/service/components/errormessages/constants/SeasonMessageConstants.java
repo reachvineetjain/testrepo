@@ -155,4 +155,5 @@ public class SeasonMessageConstants {
    public static final String FAILED_GET_SEASON_F1_DETAILS="error.get.season.f1.detals";
    public static final String FAILED_SEASON_HSP_F1_DETAILS="error.get.season.hsp.f1.details";
    public static final String FAILED_GET_SEASON_WP_CAP_DETAILS="error.get.season.wp.cap.details";
+   public static final String FAILED_GET_SEASON_DETAILS="error.get.season.details";
 }

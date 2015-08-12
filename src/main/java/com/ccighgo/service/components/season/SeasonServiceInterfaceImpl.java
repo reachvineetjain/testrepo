@@ -242,30 +242,41 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       try {
          int seasonId = -1;
          if (seasonBean.getSeasonName() != null) {
+            returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_SEASON_NAME.getValue(),
+                  messageUtil.getMessage(SeasonMessageConstants.FAILED_CREATE_SEASON_NAME));
+            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_CREATE_SEASON_NAME));
+            return returnObject; 
+         }
             Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
             if (season == null) {
-               returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SEASON_NAME_ALREADY_EXIST.getValue(),
-                     messageUtil.getMessage(SeasonMessageConstants.FAILED_SEASON_NAME_ALREADY_EXIST));
-               LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_SEASON_NAME_ALREADY_EXIST));
-            } else {
+               returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_DETAILS.getValue(),
+                     messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_DETAILS));
+               LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_DETAILS));
+               return returnObject; 
+            }
+           
                Season seasonEntity = new Season();
                seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
                seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
                seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
                seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
                seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
+               if(seasonEntity.getSeasonId() == null || seasonEntity.getSeasonId() < 0){
+                  returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+                        messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID));
+                  LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID));
+                  return returnObject; 
+               }
                seasonId = seasonEntity.getSeasonId();
                returnObject = viewSeason(seasonId + CCIConstants.EMPTY_DATA);
+               if(returnObject == null){
+                  returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILURE_VIEW_SEASON_SERVICE_CODE.getValue(),
+                        messageUtil.getMessage(SeasonMessageConstants.FAILURE_VIEW_SEASON_SERVICE_CODE));
+                  LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILURE_VIEW_SEASON_SERVICE_CODE));
+               }
                returnObject = setSeasonBeanStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_BEAN_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-            }
-
-         }
-         else{
-            returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_SEASON_NAME.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_CREATE_SEASON_NAME));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_CREATE_SEASON_NAME));
-         }
+           
       } catch (CcighgoException e) {
          returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_SEASON_BEAN.getValue(),
                messageUtil.getMessage(SeasonMessageConstants.FAILED_CREATE_SEASON_BEAN));
