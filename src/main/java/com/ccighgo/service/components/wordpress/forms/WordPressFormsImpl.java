@@ -29,4 +29,15 @@ public class WordPressFormsImpl implements IWordPressForms {
       return true;
    }
 
+   @Override
+   public boolean GenerateNewAreaRepresentative(AreaRepresentativeData AreaRepresentativeData) {
+      LOGGER.info("Generate New Area Representative");
+
+      System.out.println("Generate New Area Representative");
+      System.out.println("Email :" + AreaRepresentativeData.getEmail());
+      System.out.println("City :" + AreaRepresentativeData.getCity());
+      System.out.println("State : " + AreaRepresentativeData.getState());
+      return true;
+   }
+
 }
