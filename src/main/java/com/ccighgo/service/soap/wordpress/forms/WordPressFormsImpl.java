@@ -1,6 +1,10 @@
-package com.ccighgo.service.components.wordpress.forms;
+package com.ccighgo.service.soap.wordpress.forms;
 
 import org.apache.log4j.Logger;
+
+import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
+import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
+import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;
 
 public class WordPressFormsImpl implements IWordPressForms {
 
