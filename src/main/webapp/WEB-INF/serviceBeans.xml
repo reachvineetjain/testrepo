@@ -44,7 +44,7 @@
          <bean id="insurance" class="com.ccighgo.service.rest.insurance.Insurance" />
          <bean id="regionManagement" class="com.ccighgo.service.rest.regionmanagement.RegionManagement" />
          <bean id="regionAssignment" class="com.ccighgo.service.rest.regionassignment.RegionAssignment" />
-         
+         <bean id="gciapi" class="com.ccighgo.service.rest.wordpress.forms.GCIAPI" />
       </jaxrs:serviceBeans>
 
       <jaxrs:providers>
