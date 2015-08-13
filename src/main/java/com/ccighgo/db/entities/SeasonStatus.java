@@ -1,403 +1,394 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the SeasonStatus database table.
  * 
  */
 @Entity
-@Table(name = "SeasonStatus")
-@NamedQuery(name = "SeasonStatus.findAll", query = "SELECT s FROM SeasonStatus s")
+@Table(name="SeasonStatus")
+@NamedQuery(name="SeasonStatus.findAll", query="SELECT s FROM SeasonStatus s")
 public class SeasonStatus implements Serializable {
-   private static final long serialVersionUID = 1L;
-
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(unique = true, nullable = false)
-   private Integer seasonStatusId;
+	private static final long serialVersionUID = 1L;
 
-   @Column(nullable = false)
-   private byte active;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Integer seasonStatusId;
 
-   @Column(nullable = false, length = 50)
-   private String status;
+	@Column(nullable=false)
+	private byte active;
 
-   // bi-directional many-to-one association to Season
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<Season> seasons;
+	@Column(nullable=false, length=50)
+	private String status;
 
-   // bi-directional many-to-one association to SeasonCAPDetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonCAPDetail> seasonCapdetails;
+	//bi-directional many-to-one association to Season
+	@OneToMany(mappedBy="seasonStatus")
+	private List<Season> seasons;
 
-   // bi-directional many-to-one association to SeasonF1Detail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonF1Detail> seasonF1details;
+	//bi-directional many-to-one association to SeasonCAPDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonCAPDetail> seasonCapdetails;
 
-   // bi-directional many-to-one association to SeasonHSADetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonHSADetail> seasonHsadetails;
+	//bi-directional many-to-one association to SeasonF1Detail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonF1Detail> seasonF1details;
 
-   // bi-directional many-to-one association to SeasonIHPDetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonIHPDetail> seasonIhpdetails;
+	//bi-directional many-to-one association to SeasonHSADetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonHSADetail> seasonHsadetails;
 
-   // bi-directional many-to-one association to SeasonJ1Detail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonJ1Detail> seasonJ1details;
+	//bi-directional many-to-one association to SeasonIHPDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonIHPDetail> seasonIhpdetails;
 
-   // bi-directional many-to-one association to SeasonLSDetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonLSDetail> seasonLsdetails;
+	//bi-directional many-to-one association to SeasonJ1Detail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonJ1Detail> seasonJ1details;
 
-   // bi-directional many-to-one association to SeasonTADetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonTADetail> seasonTadetails;
+	//bi-directional many-to-one association to SeasonLSDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonLSDetail> seasonLsdetails;
 
-   // bi-directional many-to-one association to SeasonVADetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonVADetail> seasonVadetails;
+	//bi-directional many-to-one association to SeasonTADetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonTADetail> seasonTadetails;
 
-   // bi-directional many-to-one association to SeasonWADetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonWADetail> seasonWadetails;
+	//bi-directional many-to-one association to SeasonVADetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonVADetail> seasonVadetails;
 
-   // bi-directional many-to-one association to SeasonWnTSpringDetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonWnTSpringDetail> seasonWnTspringDetails;
+	//bi-directional many-to-one association to SeasonWADetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonWADetail> seasonWadetails;
 
-   // bi-directional many-to-one association to SeasonWnTSummerDetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonWnTSummerDetail> seasonWnTsummerDetails;
+	//bi-directional many-to-one association to SeasonWnTSpringDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonWnTSpringDetail> seasonWnTspringDetails;
 
-   // bi-directional many-to-one association to SeasonWnTWinterDetail
-   @OneToMany(mappedBy = "seasonStatus")
-   private List<SeasonWnTWinterDetail> seasonWnTwinterDetails;
+	//bi-directional many-to-one association to SeasonWnTSummerDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonWnTSummerDetail> seasonWnTsummerDetails;
 
-   public SeasonStatus() {
-   }
+	//bi-directional many-to-one association to SeasonWnTWinterDetail
+	@OneToMany(mappedBy="seasonStatus")
+	private List<SeasonWnTWinterDetail> seasonWnTwinterDetails;
 
-   public Integer getSeasonStatusId() {
-      if (this.seasonStatusId != null)
-         return this.seasonStatusId;
-      return 0;
-   }
+	public SeasonStatus() {
+	}
 
-   public void setSeasonStatusId(Integer seasonStatusId) {
-      this.seasonStatusId = seasonStatusId;
-   }
+	public Integer getSeasonStatusId() {
+		return this.seasonStatusId;
+	}
 
-   public byte getActive() {
-      return this.active;
-   }
+	public void setSeasonStatusId(Integer seasonStatusId) {
+		this.seasonStatusId = seasonStatusId;
+	}
 
-   public void setActive(byte active) {
-      this.active = active;
-   }
+	public byte getActive() {
+		return this.active;
+	}
 
-   public String getStatus() {
-      return this.status;
-   }
+	public void setActive(byte active) {
+		this.active = active;
+	}
 
-   public void setStatus(String status) {
-      this.status = status;
-   }
+	public String getStatus() {
+		return this.status;
+	}
 
-   public List<Season> getSeasons() {
-      return this.seasons;
-   }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-   public void setSeasons(List<Season> seasons) {
-      this.seasons = seasons;
-   }
+	public List<Season> getSeasons() {
+		return this.seasons;
+	}
 
-   public Season addSeason(Season season) {
-      getSeasons().add(season);
-      season.setSeasonStatus(this);
+	public void setSeasons(List<Season> seasons) {
+		this.seasons = seasons;
+	}
 
-      return season;
-   }
+	public Season addSeason(Season season) {
+		getSeasons().add(season);
+		season.setSeasonStatus(this);
 
-   public Season removeSeason(Season season) {
-      getSeasons().remove(season);
-      season.setSeasonStatus(null);
+		return season;
+	}
 
-      return season;
-   }
+	public Season removeSeason(Season season) {
+		getSeasons().remove(season);
+		season.setSeasonStatus(null);
 
-   public List<SeasonCAPDetail> getSeasonCapdetails() {
-      return this.seasonCapdetails;
-   }
+		return season;
+	}
 
-   public void setSeasonCapdetails(List<SeasonCAPDetail> seasonCapdetails) {
-      this.seasonCapdetails = seasonCapdetails;
-   }
+	public List<SeasonCAPDetail> getSeasonCapdetails() {
+		return this.seasonCapdetails;
+	}
 
-   public SeasonCAPDetail addSeasonCapdetail(SeasonCAPDetail seasonCapdetail) {
-      getSeasonCapdetails().add(seasonCapdetail);
-      seasonCapdetail.setSeasonStatus(this);
+	public void setSeasonCapdetails(List<SeasonCAPDetail> seasonCapdetails) {
+		this.seasonCapdetails = seasonCapdetails;
+	}
 
-      return seasonCapdetail;
-   }
+	public SeasonCAPDetail addSeasonCapdetail(SeasonCAPDetail seasonCapdetail) {
+		getSeasonCapdetails().add(seasonCapdetail);
+		seasonCapdetail.setSeasonStatus(this);
 
-   public SeasonCAPDetail removeSeasonCapdetail(SeasonCAPDetail seasonCapdetail) {
-      getSeasonCapdetails().remove(seasonCapdetail);
-      seasonCapdetail.setSeasonStatus(null);
+		return seasonCapdetail;
+	}
 
-      return seasonCapdetail;
-   }
+	public SeasonCAPDetail removeSeasonCapdetail(SeasonCAPDetail seasonCapdetail) {
+		getSeasonCapdetails().remove(seasonCapdetail);
+		seasonCapdetail.setSeasonStatus(null);
 
-   public List<SeasonF1Detail> getSeasonF1details() {
-      return this.seasonF1details;
-   }
+		return seasonCapdetail;
+	}
 
-   public void setSeasonF1details(List<SeasonF1Detail> seasonF1details) {
-      this.seasonF1details = seasonF1details;
-   }
+	public List<SeasonF1Detail> getSeasonF1details() {
+		return this.seasonF1details;
+	}
 
-   public SeasonF1Detail addSeasonF1detail(SeasonF1Detail seasonF1detail) {
-      getSeasonF1details().add(seasonF1detail);
-      seasonF1detail.setSeasonStatus(this);
+	public void setSeasonF1details(List<SeasonF1Detail> seasonF1details) {
+		this.seasonF1details = seasonF1details;
+	}
 
-      return seasonF1detail;
-   }
+	public SeasonF1Detail addSeasonF1detail(SeasonF1Detail seasonF1detail) {
+		getSeasonF1details().add(seasonF1detail);
+		seasonF1detail.setSeasonStatus(this);
 
-   public SeasonF1Detail removeSeasonF1detail(SeasonF1Detail seasonF1detail) {
-      getSeasonF1details().remove(seasonF1detail);
-      seasonF1detail.setSeasonStatus(null);
+		return seasonF1detail;
+	}
 
-      return seasonF1detail;
-   }
+	public SeasonF1Detail removeSeasonF1detail(SeasonF1Detail seasonF1detail) {
+		getSeasonF1details().remove(seasonF1detail);
+		seasonF1detail.setSeasonStatus(null);
 
-   public List<SeasonHSADetail> getSeasonHsadetails() {
-      return this.seasonHsadetails;
-   }
+		return seasonF1detail;
+	}
 
-   public void setSeasonHsadetails(List<SeasonHSADetail> seasonHsadetails) {
-      this.seasonHsadetails = seasonHsadetails;
-   }
+	public List<SeasonHSADetail> getSeasonHsadetails() {
+		return this.seasonHsadetails;
+	}
 
-   public SeasonHSADetail addSeasonHsadetail(SeasonHSADetail seasonHsadetail) {
-      getSeasonHsadetails().add(seasonHsadetail);
-      seasonHsadetail.setSeasonStatus(this);
+	public void setSeasonHsadetails(List<SeasonHSADetail> seasonHsadetails) {
+		this.seasonHsadetails = seasonHsadetails;
+	}
 
-      return seasonHsadetail;
-   }
+	public SeasonHSADetail addSeasonHsadetail(SeasonHSADetail seasonHsadetail) {
+		getSeasonHsadetails().add(seasonHsadetail);
+		seasonHsadetail.setSeasonStatus(this);
 
-   public SeasonHSADetail removeSeasonHsadetail(SeasonHSADetail seasonHsadetail) {
-      getSeasonHsadetails().remove(seasonHsadetail);
-      seasonHsadetail.setSeasonStatus(null);
+		return seasonHsadetail;
+	}
 
-      return seasonHsadetail;
-   }
+	public SeasonHSADetail removeSeasonHsadetail(SeasonHSADetail seasonHsadetail) {
+		getSeasonHsadetails().remove(seasonHsadetail);
+		seasonHsadetail.setSeasonStatus(null);
 
-   public List<SeasonIHPDetail> getSeasonIhpdetails() {
-      return this.seasonIhpdetails;
-   }
+		return seasonHsadetail;
+	}
 
-   public void setSeasonIhpdetails(List<SeasonIHPDetail> seasonIhpdetails) {
-      this.seasonIhpdetails = seasonIhpdetails;
-   }
+	public List<SeasonIHPDetail> getSeasonIhpdetails() {
+		return this.seasonIhpdetails;
+	}
 
-   public SeasonIHPDetail addSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
-      getSeasonIhpdetails().add(seasonIhpdetail);
-      seasonIhpdetail.setSeasonStatus(this);
+	public void setSeasonIhpdetails(List<SeasonIHPDetail> seasonIhpdetails) {
+		this.seasonIhpdetails = seasonIhpdetails;
+	}
 
-      return seasonIhpdetail;
-   }
+	public SeasonIHPDetail addSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().add(seasonIhpdetail);
+		seasonIhpdetail.setSeasonStatus(this);
 
-   public SeasonIHPDetail removeSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
-      getSeasonIhpdetails().remove(seasonIhpdetail);
-      seasonIhpdetail.setSeasonStatus(null);
+		return seasonIhpdetail;
+	}
 
-      return seasonIhpdetail;
-   }
+	public SeasonIHPDetail removeSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+		getSeasonIhpdetails().remove(seasonIhpdetail);
+		seasonIhpdetail.setSeasonStatus(null);
 
-   public List<SeasonJ1Detail> getSeasonJ1details() {
-      return this.seasonJ1details;
-   }
+		return seasonIhpdetail;
+	}
 
-   public void setSeasonJ1details(List<SeasonJ1Detail> seasonJ1details) {
-      this.seasonJ1details = seasonJ1details;
-   }
+	public List<SeasonJ1Detail> getSeasonJ1details() {
+		return this.seasonJ1details;
+	}
 
-   public SeasonJ1Detail addSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
-      getSeasonJ1details().add(seasonJ1detail);
-      seasonJ1detail.setSeasonStatus(this);
+	public void setSeasonJ1details(List<SeasonJ1Detail> seasonJ1details) {
+		this.seasonJ1details = seasonJ1details;
+	}
 
-      return seasonJ1detail;
-   }
+	public SeasonJ1Detail addSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
+		getSeasonJ1details().add(seasonJ1detail);
+		seasonJ1detail.setSeasonStatus(this);
 
-   public SeasonJ1Detail removeSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
-      getSeasonJ1details().remove(seasonJ1detail);
-      seasonJ1detail.setSeasonStatus(null);
+		return seasonJ1detail;
+	}
 
-      return seasonJ1detail;
-   }
+	public SeasonJ1Detail removeSeasonJ1detail(SeasonJ1Detail seasonJ1detail) {
+		getSeasonJ1details().remove(seasonJ1detail);
+		seasonJ1detail.setSeasonStatus(null);
 
-   public List<SeasonLSDetail> getSeasonLsdetails() {
-      return this.seasonLsdetails;
-   }
+		return seasonJ1detail;
+	}
 
-   public void setSeasonLsdetails(List<SeasonLSDetail> seasonLsdetails) {
-      this.seasonLsdetails = seasonLsdetails;
-   }
+	public List<SeasonLSDetail> getSeasonLsdetails() {
+		return this.seasonLsdetails;
+	}
 
-   public SeasonLSDetail addSeasonLsdetail(SeasonLSDetail seasonLsdetail) {
-      getSeasonLsdetails().add(seasonLsdetail);
-      seasonLsdetail.setSeasonStatus(this);
+	public void setSeasonLsdetails(List<SeasonLSDetail> seasonLsdetails) {
+		this.seasonLsdetails = seasonLsdetails;
+	}
 
-      return seasonLsdetail;
-   }
+	public SeasonLSDetail addSeasonLsdetail(SeasonLSDetail seasonLsdetail) {
+		getSeasonLsdetails().add(seasonLsdetail);
+		seasonLsdetail.setSeasonStatus(this);
 
-   public SeasonLSDetail removeSeasonLsdetail(SeasonLSDetail seasonLsdetail) {
-      getSeasonLsdetails().remove(seasonLsdetail);
-      seasonLsdetail.setSeasonStatus(null);
+		return seasonLsdetail;
+	}
 
-      return seasonLsdetail;
-   }
+	public SeasonLSDetail removeSeasonLsdetail(SeasonLSDetail seasonLsdetail) {
+		getSeasonLsdetails().remove(seasonLsdetail);
+		seasonLsdetail.setSeasonStatus(null);
 
-   public List<SeasonTADetail> getSeasonTadetails() {
-      return this.seasonTadetails;
-   }
+		return seasonLsdetail;
+	}
 
-   public void setSeasonTadetails(List<SeasonTADetail> seasonTadetails) {
-      this.seasonTadetails = seasonTadetails;
-   }
+	public List<SeasonTADetail> getSeasonTadetails() {
+		return this.seasonTadetails;
+	}
 
-   public SeasonTADetail addSeasonTadetail(SeasonTADetail seasonTadetail) {
-      getSeasonTadetails().add(seasonTadetail);
-      seasonTadetail.setSeasonStatus(this);
+	public void setSeasonTadetails(List<SeasonTADetail> seasonTadetails) {
+		this.seasonTadetails = seasonTadetails;
+	}
 
-      return seasonTadetail;
-   }
+	public SeasonTADetail addSeasonTadetail(SeasonTADetail seasonTadetail) {
+		getSeasonTadetails().add(seasonTadetail);
+		seasonTadetail.setSeasonStatus(this);
 
-   public SeasonTADetail removeSeasonTadetail(SeasonTADetail seasonTadetail) {
-      getSeasonTadetails().remove(seasonTadetail);
-      seasonTadetail.setSeasonStatus(null);
+		return seasonTadetail;
+	}
 
-      return seasonTadetail;
-   }
+	public SeasonTADetail removeSeasonTadetail(SeasonTADetail seasonTadetail) {
+		getSeasonTadetails().remove(seasonTadetail);
+		seasonTadetail.setSeasonStatus(null);
 
-   public List<SeasonVADetail> getSeasonVadetails() {
-      return this.seasonVadetails;
-   }
+		return seasonTadetail;
+	}
 
-   public void setSeasonVadetails(List<SeasonVADetail> seasonVadetails) {
-      this.seasonVadetails = seasonVadetails;
-   }
+	public List<SeasonVADetail> getSeasonVadetails() {
+		return this.seasonVadetails;
+	}
 
-   public SeasonVADetail addSeasonVadetail(SeasonVADetail seasonVadetail) {
-      getSeasonVadetails().add(seasonVadetail);
-      seasonVadetail.setSeasonStatus(this);
+	public void setSeasonVadetails(List<SeasonVADetail> seasonVadetails) {
+		this.seasonVadetails = seasonVadetails;
+	}
 
-      return seasonVadetail;
-   }
+	public SeasonVADetail addSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().add(seasonVadetail);
+		seasonVadetail.setSeasonStatus(this);
 
-   public SeasonVADetail removeSeasonVadetail(SeasonVADetail seasonVadetail) {
-      getSeasonVadetails().remove(seasonVadetail);
-      seasonVadetail.setSeasonStatus(null);
+		return seasonVadetail;
+	}
 
-      return seasonVadetail;
-   }
+	public SeasonVADetail removeSeasonVadetail(SeasonVADetail seasonVadetail) {
+		getSeasonVadetails().remove(seasonVadetail);
+		seasonVadetail.setSeasonStatus(null);
 
-   public List<SeasonWADetail> getSeasonWadetails() {
-      return this.seasonWadetails;
-   }
+		return seasonVadetail;
+	}
 
-   public void setSeasonWadetails(List<SeasonWADetail> seasonWadetails) {
-      this.seasonWadetails = seasonWadetails;
-   }
+	public List<SeasonWADetail> getSeasonWadetails() {
+		return this.seasonWadetails;
+	}
 
-   public SeasonWADetail addSeasonWadetail(SeasonWADetail seasonWadetail) {
-      getSeasonWadetails().add(seasonWadetail);
-      seasonWadetail.setSeasonStatus(this);
+	public void setSeasonWadetails(List<SeasonWADetail> seasonWadetails) {
+		this.seasonWadetails = seasonWadetails;
+	}
 
-      return seasonWadetail;
-   }
+	public SeasonWADetail addSeasonWadetail(SeasonWADetail seasonWadetail) {
+		getSeasonWadetails().add(seasonWadetail);
+		seasonWadetail.setSeasonStatus(this);
 
-   public SeasonWADetail removeSeasonWadetail(SeasonWADetail seasonWadetail) {
-      getSeasonWadetails().remove(seasonWadetail);
-      seasonWadetail.setSeasonStatus(null);
+		return seasonWadetail;
+	}
 
-      return seasonWadetail;
-   }
+	public SeasonWADetail removeSeasonWadetail(SeasonWADetail seasonWadetail) {
+		getSeasonWadetails().remove(seasonWadetail);
+		seasonWadetail.setSeasonStatus(null);
 
-   public List<SeasonWnTSpringDetail> getSeasonWnTspringDetails() {
-      return this.seasonWnTspringDetails;
-   }
+		return seasonWadetail;
+	}
 
-   public void setSeasonWnTspringDetails(List<SeasonWnTSpringDetail> seasonWnTspringDetails) {
-      this.seasonWnTspringDetails = seasonWnTspringDetails;
-   }
+	public List<SeasonWnTSpringDetail> getSeasonWnTspringDetails() {
+		return this.seasonWnTspringDetails;
+	}
 
-   public SeasonWnTSpringDetail addSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
-      getSeasonWnTspringDetails().add(seasonWnTspringDetail);
-      seasonWnTspringDetail.setSeasonStatus(this);
+	public void setSeasonWnTspringDetails(List<SeasonWnTSpringDetail> seasonWnTspringDetails) {
+		this.seasonWnTspringDetails = seasonWnTspringDetails;
+	}
 
-      return seasonWnTspringDetail;
-   }
+	public SeasonWnTSpringDetail addSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
+		getSeasonWnTspringDetails().add(seasonWnTspringDetail);
+		seasonWnTspringDetail.setSeasonStatus(this);
 
-   public SeasonWnTSpringDetail removeSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
-      getSeasonWnTspringDetails().remove(seasonWnTspringDetail);
-      seasonWnTspringDetail.setSeasonStatus(null);
+		return seasonWnTspringDetail;
+	}
 
-      return seasonWnTspringDetail;
-   }
+	public SeasonWnTSpringDetail removeSeasonWnTspringDetail(SeasonWnTSpringDetail seasonWnTspringDetail) {
+		getSeasonWnTspringDetails().remove(seasonWnTspringDetail);
+		seasonWnTspringDetail.setSeasonStatus(null);
 
-   public List<SeasonWnTSummerDetail> getSeasonWnTsummerDetails() {
-      return this.seasonWnTsummerDetails;
-   }
+		return seasonWnTspringDetail;
+	}
 
-   public void setSeasonWnTsummerDetails(List<SeasonWnTSummerDetail> seasonWnTsummerDetails) {
-      this.seasonWnTsummerDetails = seasonWnTsummerDetails;
-   }
+	public List<SeasonWnTSummerDetail> getSeasonWnTsummerDetails() {
+		return this.seasonWnTsummerDetails;
+	}
 
-   public SeasonWnTSummerDetail addSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
-      getSeasonWnTsummerDetails().add(seasonWnTsummerDetail);
-      seasonWnTsummerDetail.setSeasonStatus(this);
+	public void setSeasonWnTsummerDetails(List<SeasonWnTSummerDetail> seasonWnTsummerDetails) {
+		this.seasonWnTsummerDetails = seasonWnTsummerDetails;
+	}
 
-      return seasonWnTsummerDetail;
-   }
+	public SeasonWnTSummerDetail addSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
+		getSeasonWnTsummerDetails().add(seasonWnTsummerDetail);
+		seasonWnTsummerDetail.setSeasonStatus(this);
 
-   public SeasonWnTSummerDetail removeSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
-      getSeasonWnTsummerDetails().remove(seasonWnTsummerDetail);
-      seasonWnTsummerDetail.setSeasonStatus(null);
+		return seasonWnTsummerDetail;
+	}
 
-      return seasonWnTsummerDetail;
-   }
+	public SeasonWnTSummerDetail removeSeasonWnTsummerDetail(SeasonWnTSummerDetail seasonWnTsummerDetail) {
+		getSeasonWnTsummerDetails().remove(seasonWnTsummerDetail);
+		seasonWnTsummerDetail.setSeasonStatus(null);
 
-   public List<SeasonWnTWinterDetail> getSeasonWnTwinterDetails() {
-      return this.seasonWnTwinterDetails;
-   }
+		return seasonWnTsummerDetail;
+	}
 
-   public void setSeasonWnTwinterDetails(List<SeasonWnTWinterDetail> seasonWnTwinterDetails) {
-      this.seasonWnTwinterDetails = seasonWnTwinterDetails;
-   }
+	public List<SeasonWnTWinterDetail> getSeasonWnTwinterDetails() {
+		return this.seasonWnTwinterDetails;
+	}
 
-   public SeasonWnTWinterDetail addSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
-      getSeasonWnTwinterDetails().add(seasonWnTwinterDetail);
-      seasonWnTwinterDetail.setSeasonStatus(this);
+	public void setSeasonWnTwinterDetails(List<SeasonWnTWinterDetail> seasonWnTwinterDetails) {
+		this.seasonWnTwinterDetails = seasonWnTwinterDetails;
+	}
 
-      return seasonWnTwinterDetail;
-   }
+	public SeasonWnTWinterDetail addSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
+		getSeasonWnTwinterDetails().add(seasonWnTwinterDetail);
+		seasonWnTwinterDetail.setSeasonStatus(this);
 
-   public SeasonWnTWinterDetail removeSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
-      getSeasonWnTwinterDetails().remove(seasonWnTwinterDetail);
-      seasonWnTwinterDetail.setSeasonStatus(null);
+		return seasonWnTwinterDetail;
+	}
 
-      return seasonWnTwinterDetail;
-   }
+	public SeasonWnTWinterDetail removeSeasonWnTwinterDetail(SeasonWnTWinterDetail seasonWnTwinterDetail) {
+		getSeasonWnTwinterDetails().remove(seasonWnTwinterDetail);
+		seasonWnTwinterDetail.setSeasonStatus(null);
+
+		return seasonWnTwinterDetail;
+	}
 
 }
