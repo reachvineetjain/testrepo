@@ -1,10 +1,14 @@
-package com.ccighgo.service.components.wordpress.forms;
+package com.ccighgo.service.soap.wordpress.forms;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
+
+import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
+import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
+import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;
 
 @WebService
 @SOAPBinding(style = Style.DOCUMENT)

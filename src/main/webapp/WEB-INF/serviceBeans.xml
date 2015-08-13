@@ -52,6 +52,6 @@
       </jaxrs:providers>
    </jaxrs:server>
        <!--  SOAP configuration -->
-	<jaxws:endpoint implementor="com.ccighgo.service.components.wordpress.forms.WordPressFormsImpl" address="/findForm" />
+	<jaxws:endpoint implementor="com.ccighgo.service.soap.wordpress.forms.WordPressFormsImpl" address="/findForm" />
 
 </beans>

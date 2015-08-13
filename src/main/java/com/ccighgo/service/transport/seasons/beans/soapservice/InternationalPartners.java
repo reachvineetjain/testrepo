@@ -5,7 +5,7 @@
 // Generated on: 2015.08.07 at 10:48:02 AM CDT 
 //
 
-package com.ccighgo.service.components.wordpress.forms;
+package com.ccighgo.service.transport.seasons.beans.soapservice;
 
 import java.util.List;
 
