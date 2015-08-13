@@ -346,27 +346,35 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return rgn;
       }
       try {
-         com.ccighgo.db.entities.Region regn = new com.ccighgo.db.entities.Region();
-         regn.setActive(CCIConstants.ACTIVE);
-         regn.setRegionName(region.getRegionName());
-         regn.setCreatedBy(1);
-         regn.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         regn.setModifiedBy(1);
-         regn.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         regn = regionRepository.saveAndFlush(regn);
-         SeasonGeographyConfiguration seasonGeographyConfiguration = new SeasonGeographyConfiguration();
-         seasonGeographyConfiguration.setSuperRegion(superRegionRepository.findOne(Integer.valueOf(superRegionId)));
-         seasonGeographyConfiguration.setRegion(regn);
-         Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
-         seasonGeographyConfiguration.setSeason(season);
-         seasonGeographyConfiguration.setCreatedBy(1);
-         seasonGeographyConfiguration.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         seasonGeographyConfiguration.setModifiedBy(1);
-         seasonGeographyConfiguration.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         seasonGeographyConfiguration = seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographyConfiguration);
-         rgn = getRegion(String.valueOf(regn.getRegionId()));
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         com.ccighgo.db.entities.Region regionExist = regionRepository.findByRegionName(region.getRegionName());
+         if(regionExist!=null){
+            rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_ALREADY_EXIST.getValue(),
+                  messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUPLICATE)));
+            LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUPLICATE));
+            return rgn;
+         }else{
+            com.ccighgo.db.entities.Region regn = new com.ccighgo.db.entities.Region();
+            regn.setActive(CCIConstants.ACTIVE);
+            regn.setRegionName(region.getRegionName());
+            regn.setCreatedBy(1);
+            regn.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            regn.setModifiedBy(1);
+            regn.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            regn = regionRepository.saveAndFlush(regn);
+            SeasonGeographyConfiguration seasonGeographyConfiguration = new SeasonGeographyConfiguration();
+            seasonGeographyConfiguration.setSuperRegion(superRegionRepository.findOne(Integer.valueOf(superRegionId)));
+            seasonGeographyConfiguration.setRegion(regn);
+            Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
+            seasonGeographyConfiguration.setSeason(season);
+            seasonGeographyConfiguration.setCreatedBy(1);
+            seasonGeographyConfiguration.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            seasonGeographyConfiguration.setModifiedBy(1);
+            seasonGeographyConfiguration.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            seasonGeographyConfiguration = seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographyConfiguration);
+            rgn = getRegion(String.valueOf(regn.getRegionId()));
+            rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
       } catch (CcighgoServiceException e) {
          rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_ADD_ERROR)));
