@@ -1389,4 +1389,75 @@ VALUES
 (3,1,2,5,1,CURRENT_TIMESTAMP,1),
 (3,1,2,6,1,CURRENT_TIMESTAMP,1),
 (3,1,2,7,1,CURRENT_TIMESTAMP,1);
+
+INSERT INTO `cci_gh_go`.`Partner` (partnerGoId,partnerStatusId,isSubPartner)
+VALUES   
+(1500,1,1),
+(1501,1,0),
+(1502,2,1),
+(1503,1,1),
+(1504,1,0),
+(1505,1,0),
+(1506,1,0),
+(1507,2,0);
+
+INSERT INTO `cci_gh_go`. `PartnerPermissions` (partnerPermissionsId,partnerGoId,viewParticipants,editParticipants,viewPrograms,editPrograms,viewResources,addUsers,viewHelp)
+VALUES   
+(1500,1,1,1,1,1,1,1),
+(1501,1,1,1,1,1,1,1),
+(1502,1,1,1,1,1,1,1),
+(1503,1,1,1,1,1,1,1),
+(1504,1,1,1,1,1,1,1),
+(1505,1,1,1,1,1,1,1),
+(1506,1,1,1,1,1,1,1),
+(1507,1,1,1,1,1,1,1);
+		 
+INSERT INTO `cci_gh_go`. `HostFamily` (hostFamilyGoId,hostFamilyStatusId)
+VALUES   
+(1600,1),
+(1601,1),
+(1602,1),
+(1603,1),
+(1604,1),
+(1605,1),
+(1606,1);
+		 
+INSERT INTO `cci_gh_go`. `HostFamilyPermissions` (hostFamilyGoId)
+VALUES   
+(1600),
+(1601),
+(1602),
+(1603),
+(1604),
+(1605),
+(1606);
+		 
+
+INSERT INTO `cci_gh_go`. `FieldStaffPermissions` (fieldStaffGoId)
+VALUES   
+(1),
+(2),
+(3),
+(4),
+(5);
+		 
+INSERT INTO `cci_gh_go`. `Participant` (participantGoId,participantStatusId)
+VALUES   
+(1800,1),
+(1801,1),
+(1802,1),
+(1803,1),
+(1804,1),
+(1805,1),
+(1806,1);
+		 
+INSERT INTO `cci_gh_go`. `ParticipantPermissions` (participantGoId)
+VALUES  
+(1800),
+(1801),
+(1802),
+(1803),
+(1804),
+(1805),
+(1806);
        
