@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.wordpress.forms;
+package com.ccighgo.service.transport.seasons.beans.soapservice;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
