@@ -1,10 +1,11 @@
 package com.ccighgo.service.transport.seasons.beans.gciapi;
 
+import com.ccighgo.service.components.gciapi.GCIAPI_Util;
+
 public class GCIAPI_SetUser_Param {
 
    private String token;
    private String u_key;
-   private String option;
    private String username;
 
    public String getToken() {
@@ -24,11 +25,7 @@ public class GCIAPI_SetUser_Param {
    }
 
    public String getOption() {
-      return option;
-   }
-
-   public void setOption(String option) {
-      this.option = option;
+      return GCIAPI_Util.DN_SET_USER;
    }
 
    public String getUsername() {

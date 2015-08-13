@@ -1,10 +1,11 @@
 package com.ccighgo.service.transport.seasons.beans.gciapi;
 
+import com.ccighgo.service.components.gciapi.GCIAPI_Util;
+
 public class GCIAPI_UserExist_Param {
 
    private String token;
    private String u_key;
-   private String option;
 
    public String getToken() {
       return token;
@@ -23,11 +24,7 @@ public class GCIAPI_UserExist_Param {
    }
 
    public String getOption() {
-      return option;
-   }
-
-   public void setOption(String option) {
-      this.option = option;
+      return GCIAPI_Util.DN_USER_EXISTS;
    }
 
 }

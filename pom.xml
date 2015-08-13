@@ -259,7 +259,11 @@
          <version>1.10.4</version>
       </dependency>
 
-   </dependencies>
+   </dependencies><dependency>
+	<groupId>com.google.code.gson</groupId>
+	<artifactId>gson</artifactId>
+	<version>1.7.1</version>
+  </dependency>
 
    <build>
       <finalName>cci_gh_go</finalName>

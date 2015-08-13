@@ -5,7 +5,6 @@ import com.ccighgo.service.components.gciapi.GCIAPI_Util;
 public class GCIAPI_GetAllVolunteerHours_Param {
 
    private String token;
-   private String option;
    private String program;
    private String datetime; // YYYY-MM-DD -> optional
 

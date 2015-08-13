@@ -6,7 +6,6 @@ public class GCIAPI_AddUser_Param {
 
    private String token;
    private String u_key;
-   private String option;
    private String username;
    private String password;
    private String email;

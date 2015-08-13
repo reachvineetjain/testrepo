@@ -1,9 +1,10 @@
 package com.ccighgo.service.transport.seasons.beans.gciapi;
 
+import com.ccighgo.service.components.gciapi.GCIAPI_Util;
+
 public class GCIAPI_SetProgram_Param {
 
    private String token;
-   private String option;
    private String u_key;
    private String program;
 
@@ -16,11 +17,7 @@ public class GCIAPI_SetProgram_Param {
    }
 
    public String getOption() {
-      return option;
-   }
-
-   public void setOption(String option) {
-      this.option = option;
+      return GCIAPI_Util.DN_SET_PROGRAM;
    }
 
    public String getU_key() {

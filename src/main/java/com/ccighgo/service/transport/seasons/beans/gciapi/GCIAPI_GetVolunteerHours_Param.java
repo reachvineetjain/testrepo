@@ -6,7 +6,6 @@ public class GCIAPI_GetVolunteerHours_Param {
 
    private String token;
    private String u_key;
-   private String option;
 
    public String getToken() {
       return token;
