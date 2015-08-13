@@ -91,7 +91,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                   spRegion.setSuperRegionId(superRegion.getSuperRegionId());
                   spRegion.setSuperRegionName(superRegion.getSuperRegionName());
                   List<Region> regionList = new ArrayList<Region>();
-                  List<Integer> distinctRegionList = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(superRegionId);
+                  List<Integer> distinctRegionList = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(superRegionId, Integer.valueOf(seasonId));
                   if (distinctRegionList != null) {
                      for (Integer regionId : distinctRegionList) {
                         com.ccighgo.db.entities.Region region = regionRepository.findOne(regionId);
@@ -444,6 +444,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       }
       try {
          seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId), Integer.valueOf(regionId));
+         seasonGeographyConfigurationRepository.flush();
          request.setObjectName(RegionManagementMessageConstants.REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
