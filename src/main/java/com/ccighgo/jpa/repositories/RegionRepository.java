@@ -16,5 +16,4 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
    
    @Query("SELECT r FROM Region r WHERE r.regionName = ?1")
    public Region findByRegionName(String name);
-   
 }
