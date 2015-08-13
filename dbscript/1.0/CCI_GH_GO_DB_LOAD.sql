@@ -14,7 +14,7 @@ VALUES
 (12,'AT','Austria',1,1),
 (13,'AU','Australia',1,1),
 (14,'AW','Aruba',1,1),
-(15,'AX','Åland Islands',1,1),
+(15,'AX','ï¿½land Islands',1,1),
 (16,'AZ','Azerbaijan',1,1),
 (17,'BA','Bosnia and Herzegovina',1,1),
 (18,'BB','Barbados',1,1),
@@ -25,7 +25,7 @@ VALUES
 (23,'BH','Bahrain',1,1),
 (24,'BI','Burundi',1,1),
 (25,'BJ','Benin',1,1),
-(26,'BL','Saint Barthélemy',1,1),
+(26,'BL','Saint Barthï¿½lemy',1,1),
 (27,'BM','Bermuda',1,1),
 (28,'BN','Brunei Darussalam',1,1),
 (29,'BO','Bolivia',1,1),
@@ -52,7 +52,7 @@ VALUES
 (50,'CR','Costa Rica',1,1),
 (51,'CU','Cuba',1,1),
 (52,'CV','Cape Verde',1,1),
-(53,'CW','Curaçao',1,1),
+(53,'CW','Curaï¿½ao',1,1),
 (54,'CX','Christmas Island',1,1),
 (55,'CY','Cyprus',1,1),
 (56,'CZ','Czech Republic',1,1),
@@ -187,7 +187,7 @@ VALUES
 (185,'PW','Palau',1,1),
 (186,'PY','Paraguay',1,1),
 (187,'QA','Qatar',1,1),
-(188,'RE','Réunion',1,1),
+(188,'RE','Rï¿½union',1,1),
 (189,'RO','Romania',1,1),
 (190,'RS','Serbia',1,1),
 (191,'RU','Russian Federation',1,1),
@@ -512,37 +512,37 @@ VALUES
 INSERT INTO `cci_gh_go`.`CCIStaffUsers`(`cciStaffUserId`,`supervisorId`,`cciAdminGuid`,`firstName`,`lastName`,`genderId`,`primaryPhone`,`emergencyPhone`,`email`,`homeAddressLineOne`,
 `homeAddressLineTwo`,`city`,`usStatesId`,`zip`,`countryId`,`photo`,`sevisID`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`)
 VALUES
-(1,1,'38F2535A-914C-40CC-BB3A-0881DA588B21','System','Admin','1','1231231234','911','sysadmin@cci.com','somwhere in the middle of desert',
+(1000,1,'38F2535A-914C-40CC-BB3A-0881DA588B21','System','Admin','1','1231231234','911','sysadmin@cci.com','somwhere in the middle of desert',
 'with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS001',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(2,1,'C1B5DEC0-D116-46FD-9B77-848C8514329B','Program','Directory','1','1112223333','911','prgdirector@cci.com','at the walls in winterfell',
+(1001,1,'C1B5DEC0-D116-46FD-9B77-848C8514329B','Program','Directory','1','1112223333','911','prgdirector@cci.com','at the walls in winterfell',
 'jon snow knows nothing','timbaktoo',14,'12345',233,'path/to/photo','SEVIS002',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(3,1,'2C879979-98EC-4B27-9985-59DAD255B89C','Program','Manager','1','7899875678','911','prgmanager@cci.com','cloud nine',
+(1002,1,'2C879979-98EC-4B27-9985-59DAD255B89C','Program','Manager','1','7899875678','911','prgmanager@cci.com','cloud nine',
 '','timbaktoo',14,'12345',233,'path/to/photo','SEVIS003',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(4,1,'E91DA181-2AB4-4E83-90DF-0623168ABD7B','Recruitment','Manager','1','4445556666','911','recruitmgr@cci.com','on the top of the hill',
+(1003,1,'E91DA181-2AB4-4E83-90DF-0623168ABD7B','Recruitment','Manager','1','4445556666','911','recruitmgr@cci.com','on the top of the hill',
 'marshmallows are good','timbaktoo',14,'12345',233,'path/to/photo','SEVIS004',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1),
-(5,1,'7CFA58F9-28B2-440D-B649-4919A49D50C6','Temporary','Staff','1','9898786767','911','tempstaff@cci.com','somwhere in the middle of desert',
+(1004,1,'7CFA58F9-28B2-440D-B649-4919A49D50C6','Temporary','Staff','1','9898786767','911','tempstaff@cci.com','somwhere in the middle of desert',
 'with snow fall','timbaktoo',14,'12345',233,'path/to/photo','SEVIS005',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1,1);
 
 
 INSERT INTO `cci_gh_go`.`CCIStaffUsersCCIStaffRoles`(`cciStaffUserId`,`cciStaffRoleId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
-(1,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,7,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1000,8,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1001,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1002,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1003,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1004,7,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 INSERT INTO `cci_gh_go`.`CCIStaffUserProgram`(`cciStaffUserId`,`departmentProgramId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
-(1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1000,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,3,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1001,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1001,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1002,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1002,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1003,2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1004,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 INSERT INTO `cci_gh_go`.`CCIStaffRolesDepartments`(`cciStaffRolesDepartmentId`,`cciStaffRoleId`,`departmentId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
@@ -565,55 +565,55 @@ VALUES
 
 INSERT INTO `cci_gh_go`.`CCIStaffUsersResourcePermissions` (`cciStaffUserId`,`departmentResourceGroupId`,`resourcePermissionId`,`resourceActionId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
-(1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,1,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,1,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,1,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,3,7,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,8,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,9,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,10,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,11,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,12,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,13,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,14,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,4,15,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,5,16,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,5,17,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,6,18,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,6,19,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,6,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,6,21,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,6,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,7,23,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,7,24,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,7,25,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,8,26,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,8,27,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,8,28,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,8,29,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,9,30,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,9,31,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,10,32,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,11,33,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,11,34,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,11,35,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,11,36,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,12,37,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,12,38,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(1,12,39,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1000,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,1,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,1,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,1,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,2,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,2,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,3,7,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,8,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,9,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,10,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,11,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,12,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,13,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,14,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,4,15,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,5,16,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,5,17,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,6,18,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,6,19,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,6,20,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,6,21,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,6,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,7,23,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,7,24,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,7,25,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,8,26,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,8,27,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,8,28,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,8,29,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,9,30,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,9,31,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,10,32,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,11,33,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,11,34,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,11,35,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,11,36,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,12,37,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,12,38,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(1000,12,39,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 INSERT INTO `cci_gh_go`.`CCIStaffUserNotes`(`cciStaffUserNoteId`,`ccistaffuserId`,`note`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
-(1,1,'Added by EN on 1/23',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,2,'Stepped down from the volunteer intern position today, due to paid position elsewhere.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,3,'No longer with CCI. Reset login.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,4,'Going through to reset passwords, just to ensure old ex-employees cant login.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(5,5,'User account previously created. On 6/24 - Give user permissons to Edit Participants per emial received on 6/23
-      from Elyse Voyen - "Haldis and Molly would like me to be allowed to log participant notes on the WT participant’s pages. "',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(6,5,'As Business Development Specialist, Katy should be able to change recruitment field contact in order to assign leads to the proper recruiters.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1,1000,'Added by EN on 1/23',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,1001,'Stepped down from the volunteer intern position today, due to paid position elsewhere.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,1002,'No longer with CCI. Reset login.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(4,1003,'Going through to reset passwords, just to ensure old ex-employees cant login.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(5,1004,'User account previously created. On 6/24 - Give user permissons to Edit Participants per emial received on 6/23
+      from Elyse Voyen - "Haldis and Molly would like me to be allowed to log participant notes on the WT participantï¿½s pages. "',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(6,1004,'As Business Development Specialist, Katy should be able to change recruitment field contact in order to assign leads to the proper recruiters.',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 INSERT INTO `cci_gh_go`.`CCIStaffRolesDefaultResourcePermissions`(`cciStaffRolesDepartmentId`,`departmentResourceGroupId`,`resourcePermissionId`,`resourceActionId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES
@@ -1311,7 +1311,7 @@ VALUES
 ('48','3','9','24','1','2015-07-21 11:07:19','1','2015-07-21 11:07:22','1'),
 ('49','3','9','34','1','2015-07-21 11:08:14','1','2015-07-21 11:08:18','1');       
         
-INSERT INTO `SeasonIHPGeographyConfiguration` (`seasonIHPGeographyConfigurationId`, `regionIHPId`, `usStatesId`, `seasonId`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+INSERT INTO `cci_gh_go`.`SeasonIHPGeographyConfiguration` (`seasonIHPGeographyConfigurationId`, `regionIHPId`, `usStatesId`, `seasonId`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
 VALUES
 ('1','1','7','58','2015-08-07 14:55:01','1','2015-08-07 14:55:05','1'),
 ('2','1','8','58','2015-08-07 14:56:09','1','2015-08-07 14:56:13','1'), 
