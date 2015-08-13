@@ -1134,10 +1134,10 @@ public class SeasonServiceImplUtil {
             List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
             for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
                SeasonGeographyConfiguration newConfig = new SeasonGeographyConfiguration();
-               if(config.getRegion()!=null){
-                  newConfig.setRegion(config.getRegion()); 
+               if (config.getRegion() != null) {
+                  newConfig.setRegion(config.getRegion());
                }
-               if(config.getLookupUsstate()!=null){
+               if (config.getLookupUsstate() != null) {
                   newConfig.setLookupUsstate(config.getLookupUsstate());
                }
                newConfig.setSuperRegion(config.getSuperRegion());
@@ -1393,10 +1393,10 @@ public class SeasonServiceImplUtil {
                   List<SeasonIHPGeographyConfiguration> newList = new ArrayList<SeasonIHPGeographyConfiguration>();
                   for (SeasonIHPGeographyConfiguration config : previousRecordsToCopy) {
                      SeasonIHPGeographyConfiguration newConfig = new SeasonIHPGeographyConfiguration();
-                     if(config.getRegionIhp()!=null){
-                        newConfig.setRegionIhp(config.getRegionIhp()); 
+                     if (config.getRegionIhp() != null) {
+                        newConfig.setRegionIhp(config.getRegionIhp());
                      }
-                     if(config.getLookupUsstate()!=null){
+                     if (config.getLookupUsstate() != null) {
                         newConfig.setLookupUsstate(config.getLookupUsstate());
                      }
                      newConfig.setCreatedBy(1);
@@ -1780,7 +1780,7 @@ public class SeasonServiceImplUtil {
          ghtSection2Dates.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
          seasonGHTDetails.setGhtDates(ghtSection2Dates);
-         seasonGHTDetails.getGhtNotes().addAll(getGHTWAProgramNotes(seasonId, seasonHSADetail.getSeasonHSADetailsId()));
+         seasonGHTDetails.getGhtNotes().addAll(getGHTHSAProgramNotes(seasonId, seasonHSADetail.getSeasonHSADetailsId()));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }

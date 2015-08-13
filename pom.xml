@@ -6,9 +6,13 @@
    <version>0.0.1-SNAPSHOT</version>
    <name>cci_gh_go_qa</name>
    <url>http://maven.apache.org</url>
+   
+   <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+   </properties>
 
    <dependencies>
-
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-context-support</artifactId>
@@ -38,8 +42,6 @@
          </exclusions>
       </dependency>
 
-      <!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId> <version>4.3.8.Final</version> </dependency> -->
-
       <dependency>
          <groupId>org.hibernate</groupId>
          <artifactId>hibernate-entitymanager</artifactId>
@@ -54,54 +56,40 @@
       </dependency>
 
       <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-c3p0</artifactId>
+         <version>4.1.9.Final</version>
+      </dependency>
+
+      <dependency>
          <groupId>org.hibernate.javax.persistence</groupId>
          <artifactId>hibernate-jpa-2.0-api</artifactId>
          <version>1.0.1.Final</version>
       </dependency>
 
-      <!-- <dependency> <groupId>javax</groupId> <artifactId>javaee-api</artifactId> <version>6.0</version> </dependency> -->
-
-     <!--  <dependency>
-         <groupId>com.fasterxml.jackson.core</groupId>
-         <artifactId>jackson-core</artifactId>
-         <version>2.5.1</version>
+      <dependency>
+         <groupId>org.codehaus.jackson</groupId>
+         <artifactId>jackson-core-asl</artifactId>
+         <version>1.9.11</version>
       </dependency>
 
       <dependency>
-         <groupId>com.fasterxml.jackson.core</groupId>
-         <artifactId>jackson-annotations</artifactId>
-         <version>2.5.1</version>
-      </dependency> -->
-      
+         <groupId>org.codehaus.jackson</groupId>
+         <artifactId>jackson-mapper-asl</artifactId>
+         <version>1.9.11</version>
+      </dependency>
+
       <dependency>
-    <!-- <groupId>com.fasterxml.jackson.jaxrs</groupId>
-    <artifactId>jackson-jaxrs-json-provider</artifactId>
-    <version>2.5.4</version>
-</dependency> -->
+         <groupId>org.codehaus.jackson</groupId>
+         <artifactId>jackson-jaxrs</artifactId>
+         <version>1.9.11</version>
+      </dependency>
 
-
-<groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-jaxrs</artifactId>
-            <version>1.9.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-xc</artifactId>
-            <version>1.9.11</version>
-        </dependency>
-
-
-
+      <dependency>
+         <groupId>org.codehaus.jackson</groupId>
+         <artifactId>jackson-xc</artifactId>
+         <version>1.9.11</version>
+      </dependency>
 
       <dependency>
          <groupId>mysql</groupId>
@@ -120,11 +108,13 @@
          <artifactId>cxf-rt-frontend-jaxrs</artifactId>
          <version>3.0.4</version>
       </dependency>
-		 <dependency>
-		<groupId>org.apache.cxf</groupId>
-		<artifactId>cxf-rt-frontend-jaxws</artifactId>
-		<version>2.6.0</version>
-		</dependency>
+
+      <dependency>
+         <groupId>org.apache.cxf</groupId>
+         <artifactId>cxf-rt-frontend-jaxws</artifactId>
+         <version>2.6.0</version>
+      </dependency>
+
       <dependency>
          <groupId>org.apache.cxf</groupId>
          <artifactId>cxf-bundle-jaxrs</artifactId>
@@ -241,6 +231,7 @@
          <artifactId>log4j</artifactId>
          <version>1.2.17</version>
       </dependency>
+
       <dependency>
          <groupId>com.google.code.gson</groupId>
          <artifactId>gson</artifactId>
@@ -259,6 +250,12 @@
          <version>1.10.4</version>
       </dependency>
 
+  <dependency>
+	<groupId>com.google.code.gson</groupId>
+	<artifactId>gson</artifactId>
+	<version>1.7.1</version>
+  </dependency>
+
    </dependencies>
 
    <build>
@@ -266,7 +263,7 @@
       <plugins>
          <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.2</version>
+            <version>3.3</version>
             <configuration>
                <source>1.8</source>
                <target>1.8</target>

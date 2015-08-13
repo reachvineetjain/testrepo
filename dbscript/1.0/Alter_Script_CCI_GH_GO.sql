@@ -18,11 +18,11 @@ ADD COLUMN `isVisibleToSeason` TINYINT(1) DEFAULT 0 AFTER `acronym`;
 ALTER TABLE `cci_gh_go`.`CCIStaffUsers`   
   ADD COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT FIRST,
   CHANGE `cciStaffUserId` `cciStaffUserId` INT(11) NOT NULL, 
-  DROP FOREIGN KEY FK_CCIStaffUsers_login,
-  DROP COLUMN loginId,
+  DROP FOREIGN KEY `FK_CCIStaffUsers_login`,
+  DROP COLUMN `loginId`,
   DROP PRIMARY KEY,
   ADD PRIMARY KEY (`id`),
   ADD  UNIQUE INDEX `IND_cciStaffUserId` (`cciStaffUserId`),
-  ADD CONSTRAINT `FK_CCIStaffUsers_GoIdSequence` FOREIGN KEY (`cciStaffUserId`) REFERENCES `cci_gh_go_WIP`.`GoIdSequence`(`goId`) ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_CCIStaffUsers_GoIdSequence` FOREIGN KEY (`cciStaffUserId`) REFERENCES `cci_gh_go`.`GoIdSequence`(`goId`) ON UPDATE NO ACTION;
 
 
