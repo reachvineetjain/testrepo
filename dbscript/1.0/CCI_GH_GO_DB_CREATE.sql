@@ -1800,3 +1800,31 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`. `ParticipantPermissions` (
     REFERENCES `Participant` (`participantGoId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+-- -----------------------------------------------------
+-- Table `Employer`
+-- -----------------------------------------------------
+	
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `Employer` (
+  `employerGoId` INT NOT NULL,
+  `employerStatusId` INT(3) NULL,
+  PRIMARY KEY (`employerGoId`),
+  CONSTRAINT `FK_Employer_GoIdSequence`
+    FOREIGN KEY (`employerGoId`)
+    REFERENCES `GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+	
+-- -----------------------------------------------------
+-- Table `EmployerPermissions`
+-- -----------------------------------------------------	
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `EmployerPermissions` (
+  `empolyerPermissionsId` INT NOT NULL AUTO_INCREMENT,
+  `employerGoId` INT NULL,
+  PRIMARY KEY (`empolyerPermissionsId`),
+  INDEX `FK_EmployerPermissions_Employer_idx` (`employerGoId` ASC),
+  CONSTRAINT `FK_EmployerPermissions_Employer`
+    FOREIGN KEY (`employerGoId`)
+    REFERENCES `Employer` (`employerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

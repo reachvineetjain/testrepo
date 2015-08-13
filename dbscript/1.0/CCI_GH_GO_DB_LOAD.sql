@@ -1460,4 +1460,19 @@ VALUES
 (1804),
 (1805),
 (1806);
-       
+ 
+INSERT INTO `cci_gh_go`. `Employer` (employerGoId,employerStatusId)
+VALUES  
+(1900,1),
+(1901,1),
+(1902,1),
+(1903,1),
+(1904,1);
+		
+INSERT INTO `cci_gh_go`. `EmployerPermissions` (employerGoId)
+VALUES 
+(1900),
+(1901),
+(1902),
+(1903),
+(1904); 
