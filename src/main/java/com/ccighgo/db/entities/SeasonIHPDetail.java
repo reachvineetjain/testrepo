@@ -27,7 +27,7 @@ public class SeasonIHPDetail implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer seasonIHPDetailsId;
 
-	private int applicationDeadLineWeeks;
+	private Integer applicationDeadLineWeeks;
 
 	@Column(nullable=false)
 	private Integer createdBy;
@@ -102,11 +102,11 @@ public class SeasonIHPDetail implements Serializable {
 		this.seasonIHPDetailsId = seasonIHPDetailsId;
 	}
 
-	public int getApplicationDeadLineWeeks() {
+	public Integer getApplicationDeadLineWeeks() {
 		return this.applicationDeadLineWeeks;
 	}
 
-	public void setApplicationDeadLineWeeks(int applicationDeadLineWeeks) {
+	public void setApplicationDeadLineWeeks(Integer applicationDeadLineWeeks) {
 		this.applicationDeadLineWeeks = applicationDeadLineWeeks;
 	}
 
@@ -198,7 +198,7 @@ public class SeasonIHPDetail implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public byte getStopAcceptingApps() {
+	public Byte getStopAcceptingApps() {
 		return this.stopAcceptingApps;
 	}
 
