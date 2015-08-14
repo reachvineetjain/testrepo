@@ -3,9 +3,7 @@
  */
 package com.ccighgo.service.components.season;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -169,6 +167,17 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
             ihpProgramConfiguration.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
             ihpProgramConfiguration.setMaxNoOfParticipants(seasonIHPDetail.getMaxParticipants() != null ? seasonIHPDetail.getMaxParticipants() : 0);
+            ihpProgramConfiguration.setApplicationCutOffPriorToProgStart(String.valueOf(seasonIHPDetail.getApplicationDeadLineWeeks()));
+            ihpProgramConfiguration.setLcHoldTimeDays(seasonIHPDetail.getLcHoldTime() != null ? seasonIHPDetail.getLcHoldTime() : 0);
+            ihpProgramConfiguration.setNoOfLcCanRequestHold(seasonIHPDetail.getNumberOfLCToRequestHold() != null ? seasonIHPDetail.getNumberOfLCToRequestHold() : 0);
+            ihpProgramConfiguration.setSplitPlacementInPending(String.valueOf(seasonIHPDetail.getSplitPlacementPending() != null ? seasonIHPDetail.getSplitPlacementPending() : 0));
+            ihpProgramConfiguration.setStopAcceptingApplications(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingAppsStandardIHP() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingVolunteerHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingLanguageBuddyApplications(seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
+            ihpProgramConfiguration.setStopAcceptingApplicationByGender(seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE ? true : false);
             if (seasonIHPDetail.getApplicationDeadLineWeeks() != null && seasonIHPDetail.getApplicationDeadLineWeeks() > 0) {
                ihpProgramConfiguration.setApplicationCutOffPriorToProgStart(String.valueOf(seasonIHPDetail.getApplicationDeadLineWeeks()));
             }
@@ -202,6 +211,7 @@ public class SeasonIHPProgramHelper {
             if (seasonIHPDetail.getStopAcceptingAppsByGender() == 0 || seasonIHPDetail.getStopAcceptingAppsByGender() == 1) {
                ihpProgramConfiguration.setStopAcceptingApplicationByGender(seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE ? true : false);
             }
+
             // set gender
             LookupGender gender = seasonIHPDetail.getLookupGender();
             if (gender != null) {
