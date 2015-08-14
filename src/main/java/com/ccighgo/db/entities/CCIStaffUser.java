@@ -22,7 +22,7 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer cciStaffUserId;
 
@@ -89,7 +89,7 @@ public class CCIStaffUser implements Serializable {
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional many-to-one association to GoIdSequence
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
 	private GoIdSequence goIdSequence;
 
@@ -120,6 +120,10 @@ public class CCIStaffUser implements Serializable {
 
 	public CCIStaffUser() {
 	}
+	
+	public CCIStaffUser(Integer cciStaffUserId) {
+	   this.cciStaffUserId = cciStaffUserId;
+   }
 
 	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
