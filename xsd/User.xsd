@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/user" elementFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common"
+<xsd:schema targetNamespace="http://www.ccighgo.com/user" elementFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common" xmlns:gender="http://www.ccighgo.com/gender"
     attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
     xmlns:usr="http://www.ccighgo.com/user">
 
@@ -12,6 +12,7 @@
         <xsd:documentation></xsd:documentation>
     </xsd:annotation>
     <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+    <xsd:import schemaLocation="Gender.xsd" namespace="http://www.ccighgo.com/gender"></xsd:import>
     
     <xsd:element name="User" type="usr:User"></xsd:element>
 
@@ -61,6 +62,8 @@
 						minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="userNotes" type="usr:UserNotes"
 						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="gender" type="gender:Gender"
+						minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -71,6 +74,7 @@
             <xsd:element name="countryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="countryCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="countryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="countryFlag" type="xsd:string" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
     
