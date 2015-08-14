@@ -1180,6 +1180,7 @@ public class SeasonServiceImplUtil {
             seasonWnTSpringDetail.setSeason(seasonEntity);
             seasonWnTSpringDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SPRING);
             seasonWnTSpringDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
+            seasonWnTSpringDetail.setMaxPendingJobApps(0);
             seasonWnTSpringDetail.setCreatedBy(1);
             seasonWnTSpringDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonWnTSpringDetail.setModifiedBy(1);
@@ -1199,6 +1200,7 @@ public class SeasonServiceImplUtil {
             seasonWnTWinterDetail.setSeason(seasonEntity);
             seasonWnTWinterDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_WINTER);
             seasonWnTWinterDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
+            seasonWnTWinterDetail.setMaxPendingJobApps(0);
             seasonWnTWinterDetail.setCreatedBy(1);
             seasonWnTWinterDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonWnTWinterDetail.setModifiedBy(1);
@@ -1218,6 +1220,7 @@ public class SeasonServiceImplUtil {
             seasonsummDetail.setSeason(seasonEntity);
             seasonsummDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SUMMER);
             seasonsummDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
+            seasonsummDetail.setMaxPendingJobApps(0);
             seasonsummDetail.setCreatedBy(1);
             seasonsummDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonsummDetail.setModifiedBy(1);
@@ -2737,7 +2740,8 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setApplicationDeadlineDate(seasonWnTSummerDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail
                .getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSummerDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
-         wpSectionOne.setMaxPendingJobAppls(seasonWnTSummerDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
+         wpSectionOne.setMaxPendingJobAppls((seasonWnTSummerDetail.getMaxPendingJobApps() != null && seasonWnTSummerDetail.getMaxPendingJobApps() > 0) ? String
+               .valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
          return wpSectionOne;
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
