@@ -45,6 +45,7 @@ import com.ccighgo.exception.BusinessException;
 import com.ccighgo.exception.CcighgoServiceException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.InvalidServiceConfigurationException;
+import com.ccighgo.exception.ValidationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserNoteRepository;
@@ -267,58 +268,72 @@ public class UserManagementServiceImpl implements UserManagementService {
       return user;
    }
 
-   @Override
-   @Transactional
-   public User createUser(User user) {
-	   
-      User usr = new User();
-	   
-	   try{
-      String cciAdminGuid = createUserDetails(user);
-      CCIStaffUser cUser = cciUsersRepository.findByGUID(cciAdminGuid);
+    @Override
+    @Transactional
+    public User createUser(User user) {
 
-      // create department and programs
-      if (user.getDepartmentPrograms() != null) {
-         List<CCIStaffUserProgram> userPrograms = createUserDepartmentAndPrograms(user, cUser);
-         cciStaffUserProgramRepository.save(userPrograms);
-         cciStaffUserProgramRepository.flush();
-      }
+        User usr = new User();
 
-      // create user role
-      if (user.getRoles() != null) {
-         List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = createUserRole(user, cUser);
-         cciStaffUserStaffRoleRepository.save(cciStaffUsersCCIStaffRoles);
-         cciStaffUserStaffRoleRepository.flush();
-      }
+        try {
+            CCIStaffUser cciUser = new CCIStaffUser();
+            ValidationUtils.validateRequired(user.getFirstName());
+            cciUser.setFirstName(user.getFirstName());
+            ValidationUtils.validateRequired(user.getLastName());
+            // validate username
+            if (loginRepository.findByLoginName(user.getLoginInfo().getLoginName()) != null) {
+                //return username already exsist
+                usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_USER.getValue(), messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
+                LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
+                return usr;
+            }
+            String cciAdminGuid = createUserDetails(user);
+            CCIStaffUser cUser = cciUsersRepository.findByGUID(cciAdminGuid);
 
-      // update user permission
-      if (user.getPermissions() != null) {
-         List<CCIStaffUsersResourcePermission> cciUserPermissionsList = createUserPermissions(user, cUser);
-         cciStaffUsersResourcePermissionRepository.save(cciUserPermissionsList);
-         cciStaffUsersResourcePermissionRepository.flush();
-      }
-      
-      // create user notes
-      if (user.getUserNotes() != null){
-        user.setCciUserId(cUser.getCciStaffUserId());
-         for(UserNotes usrnote: user.getUserNotes())
-         {
-            usrnote.setCciUserId(cUser.getCciStaffUserId());
-            addUserNote(usrnote);
-         }
-         
-      }
-      
-      usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
-      usr =  setUserStatus(usr ,CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return usr;
-   }
-	   catch (CcighgoServiceException e) {
-	    	  usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_USER.getValue(), messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER));
-	          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER));
-	      }
-	      return usr;
-   }
+            // create department and programs
+            if (user.getDepartmentPrograms() != null) {
+                List<CCIStaffUserProgram> userPrograms = createUserDepartmentAndPrograms(user, cUser);
+                cciStaffUserProgramRepository.save(userPrograms);
+                cciStaffUserProgramRepository.flush();
+            }
+
+            // create user role
+            if (user.getRoles() != null) {
+                List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = createUserRole(user, cUser);
+                cciStaffUserStaffRoleRepository.save(cciStaffUsersCCIStaffRoles);
+                cciStaffUserStaffRoleRepository.flush();
+            }
+
+            // update user permission
+            if (user.getPermissions() != null) {
+                List<CCIStaffUsersResourcePermission> cciUserPermissionsList = createUserPermissions(user, cUser);
+                cciStaffUsersResourcePermissionRepository.save(cciUserPermissionsList);
+                cciStaffUsersResourcePermissionRepository.flush();
+            }
+
+            // create user notes
+            if (user.getUserNotes() != null) {
+                user.setCciUserId(cUser.getCciStaffUserId());
+                for (UserNotes usrnote : user.getUserNotes()) {
+                    if(usrnote.getUserNote()!=null && !usrnote.getUserNote().isEmpty()) {
+                    usrnote.setCciUserId(cUser.getCciStaffUserId());
+                    addUserNote(usrnote);
+                    }
+                }
+
+            }
+
+            usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
+            usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            return usr;
+        } catch (ValidationException e) {
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.MISSING_REQUIRED_VALUE.getValue(), messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_PARAM_REQUIRED));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_PARAM_REQUIRED));
+        } catch (CcighgoServiceException e) {
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_USER.getValue(), messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER));
+        }
+        return usr;
+    }
 
 
    @Override

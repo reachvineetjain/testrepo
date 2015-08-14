@@ -6,6 +6,8 @@ public class UserManagementMessageConstants {
 	   public static final String USR_MGMT_GET_ERROR="error.get.user";
 	   public static final String USR_MGMT_GET_ALL_USERS="error.get.all.user";
 	   public static final String USR_MGMT_CREATE_USER="error.create.user";
+	   public static final String USR_MGMT_CREATE_USER_USERNAME_EXIST="error.create.user.username.exist";
+	   public static final String USR_MGMT_CREATE_USER_PARAM_REQUIRED="error.create.user.param.required";
 	   public static final String USR_MGMT_UPDATE_USER="error.update.user";
 	   public static final String USR_MGMT_UPDATE_USER_PERMISSIONS="error.update.user.permissions";
 	   public static final String FAILED_UPDATE_USER_PICTURE="error.update.user.picture";
