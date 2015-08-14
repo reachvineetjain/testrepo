@@ -8,10 +8,14 @@
 
 package com.ccighgo.service.transport.usermanagement.beans.user;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.ccighgo.db.entities.LoginUserType;
 
 
 /**
@@ -41,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
     "loginId",
     "loginName",
     "password",
-    "userType"
+    
 })
 public class LoginInfo {
 
@@ -49,7 +53,7 @@ public class LoginInfo {
     protected String loginName;
     protected String password;
     @XmlElement(required = true)
-    protected UserType userType;
+    protected List<LoginUserType> loginUserTypes;
 
     /**
      * Gets the value of the loginId property.
@@ -116,27 +120,27 @@ public class LoginInfo {
     }
 
     /**
-     * Gets the value of the userType property.
+     * Gets the value of the loginUserTypes property.
      * 
      * @return
      *     possible object is
      *     {@link UserType }
      *     
      */
-    public UserType getUserType() {
-        return userType;
+    public List<LoginUserType> getLoginUserTypes() {
+        return loginUserTypes;
     }
 
     /**
-     * Sets the value of the userType property.
+     * Sets the value of the loginUserTypes property.
      * 
      * @param value
      *     allowed object is
      *     {@link UserType }
      *     
      */
-    public void setUserType(UserType value) {
-        this.userType = value;
+    public void setLoginUserTypes(List<LoginUserType> value) {
+        this.loginUserTypes = value;
     }
 
 }

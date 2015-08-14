@@ -37,11 +37,20 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  * 
  * 
  */
+/**
+ * @author User
+ *
+ */
+/**
+ * @author User
+ *
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Country", propOrder = {
     "id",
     "countryCode",
-    "countryName"
+    "countryName",
+    "url"
 })
 public class Country extends Response {
 
@@ -50,6 +59,8 @@ public class Country extends Response {
     protected String countryCode;
     @XmlElement(required = true)
     protected String countryName;
+    @XmlElement(required = true)
+    protected String url;
 
     /**
      * Gets the value of the id property.
@@ -114,5 +125,16 @@ public class Country extends Response {
     public void setCountryName(String value) {
         this.countryName = value;
     }
+
+   /**
+    * @return url
+    */
+   public String getUrl() {
+      return url;
+   }
+
+   public void setUrl(String url) {
+      this.url = url;
+   }
 
 }
