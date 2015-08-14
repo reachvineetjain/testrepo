@@ -21,12 +21,12 @@ public class GoIdSequence implements Serializable {
 	private Integer goId;
 
 	//bi-directional many-to-one association to CCIStaffUser
-	@OneToMany(mappedBy="goIdSequence")
-	private List<CCIStaffUser> ccistaffUsers;
+	@OneToOne(mappedBy="goIdSequence")
+	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to Login
-	@OneToMany(mappedBy="goIdSequence")
-	private List<Login> logins;
+	@OneToOne(mappedBy="goIdSequence")
+	private Login login;
 
 	public GoIdSequence() {
 	}
@@ -39,45 +39,45 @@ public class GoIdSequence implements Serializable {
 		this.goId = goId;
 	}
 
-	public List<CCIStaffUser> getCcistaffUsers() {
-		return this.ccistaffUsers;
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
 	}
 
-	public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
-		this.ccistaffUsers = ccistaffUsers;
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
 	}
 
 	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
-		getCcistaffUsers().add(ccistaffUser);
+		//getCcistaffUsers().add(ccistaffUser);
 		ccistaffUser.setGoIdSequence(this);
 
 		return ccistaffUser;
 	}
 
 	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
-		getCcistaffUsers().remove(ccistaffUser);
+//		getCcistaffUsers().remove(ccistaffUser);
 		ccistaffUser.setGoIdSequence(null);
 
 		return ccistaffUser;
 	}
 
-	public List<Login> getLogins() {
-		return this.logins;
+	public Login getLogin() {
+		return this.login;
 	}
 
-	public void setLogins(List<Login> logins) {
-		this.logins = logins;
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	public Login addLogin(Login login) {
-		getLogins().add(login);
+//		getLogins().add(login);
 		login.setGoIdSequence(this);
 
 		return login;
 	}
 
 	public Login removeLogin(Login login) {
-		getLogins().remove(login);
+//		getLogins().remove(login);
 		login.setGoIdSequence(null);
 
 		return login;
