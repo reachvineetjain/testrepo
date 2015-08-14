@@ -45,6 +45,7 @@
          <bean id="regionManagement" class="com.ccighgo.service.rest.regionmanagement.RegionManagement" />
          <bean id="regionAssignment" class="com.ccighgo.service.rest.regionassignment.RegionAssignment" />
          <bean id="gciapi" class="com.ccighgo.service.rest.wordpress.forms.GCIAPI" />
+         <bean id="cciResources"  class="com.ccighgo.service.rest.cciresources.CCIResources" />
       </jaxrs:serviceBeans>
 
       <jaxrs:providers>
