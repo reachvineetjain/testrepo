@@ -443,7 +443,7 @@ public class SeasonCloningHelper {
          seasonLSDetail = new SeasonLSDetail();
          seasonLSDetail.setSeason(clonedGHTSeason);
          seasonLSDetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
-         seasonLSDetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+         seasonLSDetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_LANG_SCL);
          //seasonLSDetail.setStartDate(existingSeason.getSeasonLsdetails().get(0).getStartDate());
          //seasonLSDetail.setEndDate(existingSeason.getSeasonLsdetails().get(0).getEndDate());
          seasonLSDetail.setCreatedBy(1);
@@ -465,7 +465,7 @@ public class SeasonCloningHelper {
          seasonTADetail = new SeasonTADetail();
          seasonTADetail.setSeason(clonedGHTSeason);
          seasonTADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
-         seasonTADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+         seasonTADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_TEACH_ABRD);
          //seasonTADetail.setStartDate(existingSeason.getSeasonTadetails().get(0).getStartDate());
          //seasonTADetail.setEndDate(existingSeason.getSeasonTadetails().get(0).getEndDate());
          seasonTADetail.setCreatedBy(1);
@@ -487,7 +487,7 @@ public class SeasonCloningHelper {
          seasonVADetail = new SeasonVADetail();
          seasonVADetail.setSeason(clonedGHTSeason);
          seasonVADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
-         seasonVADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+         seasonVADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_VOL_ABRD);
          //seasonVADetail.setStartDate(existingSeason.getSeasonVadetails().get(0).getStartDate());
          //seasonVADetail.setEndDate(existingSeason.getSeasonVadetails().get(0).getEndDate());
          seasonVADetail.setCreatedBy(1);
@@ -509,7 +509,7 @@ public class SeasonCloningHelper {
          seasonWADetail = new SeasonWADetail();
          seasonWADetail.setSeason(clonedGHTSeason);
          seasonWADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
-         seasonWADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
+         seasonWADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_WRK_ABRD);
          //seasonWADetail.setStartDate(existingSeason.getSeasonWadetails().get(0).getStartDate());
          //seasonWADetail.setEndDate(existingSeason.getSeasonWadetails().get(0).getEndDate());
          seasonWADetail.setCreatedBy(1);

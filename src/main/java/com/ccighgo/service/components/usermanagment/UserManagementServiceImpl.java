@@ -3,9 +3,7 @@
  */
 package com.ccighgo.service.components.usermanagment;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -32,16 +30,16 @@ import com.ccighgo.db.entities.CCIStaffUsersResourcePermissionPK;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.DepartmentResourceGroup;
+import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
-import com.ccighgo.exception.BusinessException;
 import com.ccighgo.exception.CcighgoServiceException;
 import com.ccighgo.exception.ErrorCode;
-import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserNoteRepository;
@@ -53,16 +51,16 @@ import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DepartmentResourceGroupRepository;
+import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.ResourceActionRepository;
 import com.ccighgo.jpa.repositories.ResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
-import com.ccighgo.service.components.regionmanagement.RegionManagementServicesImpl;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgram;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgramOptions;
@@ -85,7 +83,6 @@ import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserPermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserRole;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserState;
-import com.ccighgo.service.transport.usermanagement.beans.user.UserType;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Department;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
@@ -123,6 +120,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired
    UserTypeRepository userTypeRepository;
    @Autowired
+   LoginUserTypeRepository loginUserTypeRepository;
+   @Autowired
    CCIStaffUserStaffRoleRepository cciStaffUserStaffRoleRepository;
    @Autowired
    DepartmentRepository departmentRepository;
@@ -144,14 +143,12 @@ public class UserManagementServiceImpl implements UserManagementService {
    EntityManager entityManager;
    @Autowired
    Properties cciGhGoProps;
+   @Autowired
+   GoIdSequenceRepository goIdSequenceRepository;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
-   // 2. generate user password(Done) and send via email.
-   // 3. use message from properties files.
-   // 4. Implement exception handling.
-   // 5. Failure roll back mechanism.
 
    @Override
    @Transactional(readOnly=true)
@@ -282,7 +279,13 @@ public class UserManagementServiceImpl implements UserManagementService {
       
       // create user notes
       if (user.getUserNotes() != null){
-         addUserNote(user.getUserNotes().get(0));
+        user.setCciUserId(cUser.getCciStaffUserId());
+         for(UserNotes usrnote: user.getUserNotes())
+         {
+            usrnote.setCciUserId(cUser.getCciStaffUserId());
+            addUserNote(usrnote);
+         }
+         
       }
       
       usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
@@ -297,6 +300,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
 
+   @SuppressWarnings("unchecked")
    @Override
    @Transactional(readOnly=true)
    public CCIUsers searchUsers(UserSearch userSearch) {
@@ -393,7 +397,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
          cciUser.setLookupUsstate(userState);
       }
-      // TODO need to discuss about updating login info
       cciUser.setModifiedBy(1);
       cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUsersRepository.saveAndFlush(cciUser);
@@ -592,7 +595,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       
       cciStaffUserNote.setNote(userNotes.getUserNote());
       cciStaffUserNote.setCreatedBy(userNotes.getCciUserId());
-      //cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
+      cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
       cciStaffUserNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
       cciStaffUserNote.setModifiedBy(userNotes.getCciUserId());
       cciStaffUserNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
@@ -665,13 +668,12 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private LoginInfo getLoginInfo(CCIStaffUser cciUser) {
       LoginInfo loginInfo = new LoginInfo();
-      UserType userType = new UserType();
-      /*userType.setUserTypeId(cciUser.getLogin().getUserType().getUserTypeId());
-      userType.setUserTypeCode(cciUser.getLogin().getUserType().getUserTypeCode());
-      userType.setUserTypeName(cciUser.getLogin().getUserType().getUserTypeName());
-      loginInfo.setLoginId(cciUser.getLogin().getLoginId());
-      loginInfo.setLoginName(cciUser.getLogin().getLoginName());*/
-      loginInfo.setUserType(userType);
+      GoIdSequence goIdSequence = new GoIdSequence();
+      goIdSequence = goIdSequenceRepository.findOne(cciUser.getCciStaffUserId());
+     
+      loginInfo.setLoginId(goIdSequence.getLogin().getLoginId());
+      loginInfo.setLoginName(goIdSequence.getLogin().getLoginName());
+      //loginInfo.setLoginUserTypes(login.getLoginUserTypes());
       return loginInfo;
    }
 
@@ -782,21 +784,15 @@ public class UserManagementServiceImpl implements UserManagementService {
    public List<StaffUserDefaultPermissionGroupOptions> getResourceAction(){
       
       List<ResourceAction> resourceActionList = resourceActionRepository.getAllResourceAction();
-      List<ResourceAction> resource=new ArrayList<ResourceAction>();
       List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
       if (resourceActionList != null && !(resourceActionList.isEmpty())) {
-        
          for (ResourceAction resourceAction : resourceActionList) {
-            
             StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
-           
             options.setPermissionGroupOptionActionId(resourceAction.getResourceActionId()+"");
             options.setPermissionGroupOptionAction(resourceAction.getResourceAction());
             permissionGroupOptionsList.add(options);
-        
          }
       }
-     
       return permissionGroupOptionsList;
    }
    
@@ -840,24 +836,29 @@ public class UserManagementServiceImpl implements UserManagementService {
          LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
          cciUser.setLookupUsstate(userState);
       }
-      //com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(CCIConstants.CCI_USER_TYPE);
+      
       ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
+      GoIdSequence goIdSequence=new GoIdSequence();
+      goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
+      cciUser.setGoIdSequence(goIdSequence);
+      cciUser.setCciStaffUserId(user.getCciUserId());
+      
       Login login = new Login();
-//      login.setLoginName(user.getLoginInfo().getLoginName());
-//      String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
-//            CCIConstants.MAX_SPL_CHARS).toString();
-//      login.setPassword(password);
-//      login.setUserType(cciUserType);
-//
-//      loginRepository.save(login);
-      login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
-      //cciUser.setLogin(login);
-      cciUser.setCreatedBy(1);
+      login.setLoginName(user.getLoginInfo().getLoginName());
+      login.setLoginId(goIdSequence.getLogin().getLoginId());
+      login.setPassword(goIdSequence.getLogin().getPassword());
+      login.setPasswordSalt(goIdSequence.getLogin().getPasswordSalt());
+      login.setCreatedBy(goIdSequence.getGoId());
+      login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      login.setModifiedBy(goIdSequence.getGoId());
+      login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      login.setGoIdSequence(goIdSequence);  
+      login.setLoginUserTypes(goIdSequence.getLogin().getLoginUserTypes());
+      login = loginRepository.save(login);
+      cciUser.setCreatedBy(user.getCciUserId());
       cciUser.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      cciUser.setModifiedBy(1);
+      cciUser.setModifiedBy(user.getCciUserId());
       cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-     // cciUsersRepository.saveAndFlush(cciUser);
-      //CCIStaffUser cUsr = cciUsersRepository.save(cciUser);
       
       if (user.getDepartmentPrograms() != null) {
          List<CCIStaffUserProgram> userPrograms = updateUserDepartmentAndPrograms(user, tempCCIUser);
@@ -866,7 +867,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciStaffUserProgramRepository.flush();
       }
       
-
       // create user role
       if (user.getRoles() != null) {
          List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = updateUserRole(user, tempCCIUser);
@@ -879,10 +879,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUsersRepository.save(cciUser);
       cciUsersRepository.flush();
       User usr = getUserById(String.valueOf(tempCCIUser.getCciStaffUserId()));
-//      User usr= new User();
-//      usr= setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-//      
-     // User usr = getUserById(cciUserTemp.getCciStaffUserId().toString());
       return usr;
    }
    
@@ -1000,26 +996,55 @@ public class UserManagementServiceImpl implements UserManagementService {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
          cciUser.setLookupCountry(userCountry);
       }
+      
+      
       // update user state
       if (user.getUserState().getStateId() > 0) {
          LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
          cciUser.setLookupUsstate(userState);
       }
+      
+      
+      GoIdSequence goIdSequence=new GoIdSequence();
+      goIdSequence = goIdSequenceRepository.save(goIdSequence);
+      
+     // goIdSequence.setLogin(login);
+      cciUser.setGoIdSequence(goIdSequence);
+      cciUser.setCciStaffUserId(goIdSequence.getGoId());
       com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(CCIConstants.CCI_USER_TYPE);
-      ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
+      
       Login login = new Login();
       login.setLoginName(user.getLoginInfo().getLoginName());
       String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
             CCIConstants.MAX_SPL_CHARS).toString();
       login.setPassword(password);
-      //login.setUserType(cciUserType);
-
-      loginRepository.save(login);
-      login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());
-      //cciUser.setLogin(login);
-      cciUser.setCreatedBy(1);
+      login.setPasswordSalt(password);
+      login.setCreatedBy(goIdSequence.getGoId());
+      login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      login.setModifiedBy(goIdSequence.getGoId());
+      login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      login.setGoIdSequence(goIdSequence);   
+      //login.setUserTypeId(1);
+      login = loginRepository.save(login);
+      //byte active = 1;
+      LoginUserType loginUserType= new LoginUserType();
+      loginUserType.setUserType(cciUserType);      
+      loginUserType.setCreatedBy(goIdSequence.getGoId());
+      loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      loginUserType.setModifiedBy(goIdSequence.getGoId());
+      loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      loginUserType.setLogin(login);   
+      loginUserType = loginUserTypeRepository.save(loginUserType);     
+   
+      
+     
+      ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
+//      login = loginRepository.findByLoginName(user.getLoginInfo().getLoginName());     
+      
+      //cciUser.setLoginId(login.getLoginId());
+      cciUser.setCreatedBy(goIdSequence.getGoId());
       cciUser.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      cciUser.setModifiedBy(1);
+      cciUser.setModifiedBy(goIdSequence.getGoId());
       cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUsersRepository.saveAndFlush(cciUser);
       return cciAdminGuid;
@@ -1276,7 +1301,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     * @param message
     * @return cciUser
     */
-   private CCIUser setCCiUserStatus(CCIUser cciUser, String code, String type, int serviceCode, String message ) {
+   private CCIUser setCCiUserStatus(CCIUser cciUser, String code, String type, int serviceCode, String message) {
 	   if(cciUser==null) cciUser = new CCIUser(); 
 	   cciUser.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return cciUser;

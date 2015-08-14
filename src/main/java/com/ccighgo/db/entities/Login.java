@@ -42,7 +42,7 @@ public class Login implements Serializable {
 	private String passwordSalt;
 
 	//bi-directional many-to-one association to GoIdSequence
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="goId", nullable=false)
 	private GoIdSequence goIdSequence;
 
