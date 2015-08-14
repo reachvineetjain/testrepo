@@ -1,8 +1,10 @@
 package com.ccighgo.service.rest.wordpress.forms;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,18 @@ public class GCIAPI {
    @Autowired
    IGCIAPI gciApi;
 
+   @GET
+   @Path("ping/{pingValue}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public String ping(@PathParam("pingValue") String pingValue) {
+      return pingValue;
+   }
+
    @POST
    @Path("addUser")
    @Consumes("application/json")
+   @Produces("application/json")
    public GCIAPI_Response addUser(GCIAPI_AddUser_Param userParam) {
       return gciApi.addUser(userParam);
    }

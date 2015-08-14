@@ -47,50 +47,144 @@ public class GCIAPIImpl implements IGCIAPI {
 
    @Override
    public GCIAPI_Response userExists(GCIAPI_UserExist_Param userExistParam) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(userExistParam.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("u_key").append(CCIConstants.EQUAL).append(userExistParam.getU_key()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(userExistParam.getOption());
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
    @Override
    public GCIAPI_Response loginUser(GCIAPI_LoginUser_Param loginUserParam) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(loginUserParam.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("u_key").append(CCIConstants.EQUAL).append(loginUserParam.getU_key()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(loginUserParam.getOption()).append(CCIConstants.BITWISE_AND);
+         url.append("password").append(CCIConstants.EQUAL).append(loginUserParam.getPassword());
+
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
    @Override
    public GCIAPI_Response setKey(GCIAPI_SetKey_Param setKeyParam) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(setKeyParam.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("u_key_new").append(CCIConstants.EQUAL).append(setKeyParam.getU_key_new()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(setKeyParam.getOption()).append(CCIConstants.BITWISE_AND);
+         url.append("password").append(CCIConstants.EQUAL).append(setKeyParam.getPassword()).append(CCIConstants.BITWISE_AND);
+         url.append("username").append(CCIConstants.EQUAL).append(setKeyParam.getUsername());
+
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
    @Override
    public GCIAPI_Response setProgram(GCIAPI_SetProgram_Param setProgramParam) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(setProgramParam.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("program").append(CCIConstants.EQUAL).append(setProgramParam.getProgram()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(setProgramParam.getOption()).append(CCIConstants.BITWISE_AND);
+         url.append("u_key").append(CCIConstants.EQUAL).append(setProgramParam.getU_key());
+
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
    @Override
    public GCIAPI_Response setUser(GCIAPI_SetUser_Param userParam) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(userParam.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("username").append(CCIConstants.EQUAL).append(userParam.getUsername()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(userParam.getOption()).append(CCIConstants.BITWISE_AND);
+         url.append("u_key").append(CCIConstants.EQUAL).append(userParam.getU_key());
+
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
    @Override
    public GCIAPI_Response setPassword(GCIAPI_SetPassword_Param setPasswordParam) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(setPasswordParam.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("password").append(CCIConstants.EQUAL).append(setPasswordParam.getPassword()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(setPasswordParam.getOption()).append(CCIConstants.BITWISE_AND);
+         url.append("u_key").append(CCIConstants.EQUAL).append(setPasswordParam.getU_key());
+
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
    @Override
    public GCIAPI_Response getVolunteerHours(GCIAPI_GetVolunteerHours_Param volunteerHours_Param) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(volunteerHours_Param.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(volunteerHours_Param.getOption()).append(CCIConstants.BITWISE_AND);
+         url.append("u_key").append(CCIConstants.EQUAL).append(volunteerHours_Param.getU_key());
+
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
    @Override
    public GCIAPI_Response getAllVolunteerHours(GCIAPI_GetAllVolunteerHours_Param allVolunteerHours_Param) {
-      // TODO Auto-generated method stub
-      return null;
+      try {
+         StringBuilder url = new StringBuilder();
+         url.append(GCIAPI_Util.API_BASE).append("?");
+         url.append("token").append(CCIConstants.EQUAL).append(allVolunteerHours_Param.getToken()).append(CCIConstants.BITWISE_AND);
+         url.append("datetime").append(CCIConstants.EQUAL).append(allVolunteerHours_Param.getDatetime()).append(CCIConstants.BITWISE_AND);
+         url.append("option").append(CCIConstants.EQUAL).append(allVolunteerHours_Param.getOption()).append(CCIConstants.BITWISE_AND);
+         url.append("program").append(CCIConstants.EQUAL).append(allVolunteerHours_Param.getProgram());
+
+         LOGGER.info("URL : " + url.toString());
+         return GCIAPI_Util.parseGCIAPIResult(GCIAPI_Util.executeURL(url.toString()));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return null;
+      }
    }
 
 }
