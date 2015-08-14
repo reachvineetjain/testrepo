@@ -1223,8 +1223,53 @@ public class SeasonServiceImplUtil {
             seasonsummDetail.setModifiedBy(1);
             seasonsummDetail.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonWTSummerRepository.saveAndFlush(seasonsummDetail);
+            createWPSummerProgramAllocation(seasonEntity);
          }
       } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+   }
+
+   private void createWPSummerProgramAllocation(Season season) {
+      try {
+         List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
+         SeasonWPAllocation jobFairWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_JobFair = departmentProgramOptionRepository.findOne(CCIConstants.JOB_FAIR_SUMMER_ID);
+         jobFairWinter.setDepartmentProgramOption(departmentProgramOption_JobFair);
+         jobFairWinter.setMaxPax(0);
+         jobFairWinter.setSeason(season);
+         jobFairWinter.setCreatedBy(1);
+         jobFairWinter.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         jobFairWinter.setModifiedBy(1);
+         jobFairWinter.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         seasonWpAllocations.add(jobFairWinter);
+
+         SeasonWPAllocation selfPlacedWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_SelfPlaceSpring = departmentProgramOptionRepository.findOne(CCIConstants.SELF_PLACED_SUMMER_ID);
+         selfPlacedWinter.setDepartmentProgramOption(departmentProgramOption_SelfPlaceSpring);
+         selfPlacedWinter.setMaxPax(0);
+         selfPlacedWinter.setSeason(season);
+         selfPlacedWinter.setCreatedBy(1);
+         selfPlacedWinter.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         selfPlacedWinter.setModifiedBy(1);
+         selfPlacedWinter.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         seasonWpAllocations.add(selfPlacedWinter);
+
+         SeasonWPAllocation directPlacementWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_DirectPlacementWinter = departmentProgramOptionRepository.findOne(CCIConstants.DIRECT_PLACEMENT_SUMMER_ID);
+         directPlacementWinter.setDepartmentProgramOption(departmentProgramOption_DirectPlacementWinter);
+         directPlacementWinter.setMaxPax(0);
+         directPlacementWinter.setSeason(season);
+         directPlacementWinter.setCreatedBy(1);
+         directPlacementWinter.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         directPlacementWinter.setModifiedBy(1);
+         directPlacementWinter.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         seasonWpAllocations.add(directPlacementWinter);
+
+         seasonWPAllocationRepository.save(seasonWpAllocations);
+         seasonWPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
          ExceptionUtil.logException(e, logger);
       }
    }
