@@ -36,7 +36,7 @@
             <filter-name>CorsFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-
+	
 	<!-- <filter>
 		<filter-name>SecureApiFilter</filter-name>
 		<filter-class>com.excurt.security.SecureApiFilter</filter-class>

@@ -87,7 +87,6 @@
             <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="loginName" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="password" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="userType" type="usr:UserType" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
     </xsd:complexType>
     

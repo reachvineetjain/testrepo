@@ -30,8 +30,10 @@
       <class>com.ccighgo.db.entities.FieldStaffLCSeason</class>
       <class>com.ccighgo.db.entities.FieldStaffLeadershipSeason</class>
       <class>com.ccighgo.db.entities.FieldStaffType</class>
+      <class>com.ccighgo.db.entities.GoIdSequence</class>
       <class>com.ccighgo.db.entities.Login</class>
       <class>com.ccighgo.db.entities.LoginHistory</class>
+      <class>com.ccighgo.db.entities.LoginUserType</class>
       <class>com.ccighgo.db.entities.LookupCountry</class>
       <class>com.ccighgo.db.entities.LookupDepartment</class>
       <class>com.ccighgo.db.entities.LookupGender</class>
@@ -78,25 +80,29 @@
       <class>com.ccighgo.db.entities.USSchoolSeason</class>
       <class>com.ccighgo.db.entities.UserType</class>
       <properties>
+         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 
         <!--  <property name="javax.persistence.jdbc.url" value="jdbc:mysql://54.91.97.22:3306/cci_gh_go_dev?autoReconnect=true" /> 
-        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/cci_gh_go_dev?autoReconnect=true" />
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/cci_gh_go_dev?autoReconnect=true" /> -->
+
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://52.2.191.63:3306/cci_gh_go_login?autoReconnect=true" />
+
          <property name="javax.persistence.jdbc.user" value="creomobile" />
          <property name="javax.persistence.jdbc.password" value="creodev" />
-         -->
-         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/cci_gh_go_dev?autoReconnect=true" />
+<!--         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/cci_gh_go_dev?autoReconnect=true" />
          <property name="javax.persistence.jdbc.user" value="root" />
-         <property name="javax.persistence.jdbc.password" value="root" />
+         <property name="javax.persistence.jdbc.password" value="root" />-->
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-         <property name="hibernate.show_sql" value="true" />
+         <property name="hibernate.show_sql" value="false" />
          <property name="hibernate.hbm2ddl.auto" value="update" />
-         <property name="hibernate.c3p0.min_size" value="50" />
+         <property name="hibernate.c3p0.min_size" value="5" />
          <property name="hibernate.c3p0.max_size" value="100" />
-         <!-- <property name="hibernate.c3p0.max_size">1800</property> -->
+         <property name="hibernate.c3p0.acquireIncrement " value="5" />
          <property name="hibernate.c3p0.max_statements" value="100" />
-
-         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
+         <property name="hibernate.c3p0.timeout" value="100"/>
+		 <property name="hibernate.enable_lazy_load_no_trans" value="true" />
+         
          <property name="c3p0.max_statements" value="0" />
          <property name="c3p0.maxIdleTimeExcessConnections" value="36000" />
          <property name="c3p0.idleConnectionTestPeriod" value="36000" />
