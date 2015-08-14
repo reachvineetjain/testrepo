@@ -168,11 +168,11 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration = new IHPProgramConfiguration();
             ihpProgramConfiguration.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
             ihpProgramConfiguration.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
-            ihpProgramConfiguration.setMaxNoOfParticipants(seasonIHPDetail.getMaxParticipants());
+            ihpProgramConfiguration.setMaxNoOfParticipants(seasonIHPDetail.getMaxParticipants() != null ? seasonIHPDetail.getMaxParticipants() : 0);
             ihpProgramConfiguration.setApplicationCutOffPriorToProgStart(String.valueOf(seasonIHPDetail.getApplicationDeadLineWeeks()));
-            ihpProgramConfiguration.setLcHoldTimeDays(seasonIHPDetail.getLcHoldTime());
-            ihpProgramConfiguration.setNoOfLcCanRequestHold(seasonIHPDetail.getNumberOfLCToRequestHold());
-            ihpProgramConfiguration.setSplitPlacementInPending(String.valueOf(seasonIHPDetail.getSplitPlacementPending()));
+            ihpProgramConfiguration.setLcHoldTimeDays(seasonIHPDetail.getLcHoldTime() != null ? seasonIHPDetail.getLcHoldTime() : 0);
+            ihpProgramConfiguration.setNoOfLcCanRequestHold(seasonIHPDetail.getNumberOfLCToRequestHold() != null ? seasonIHPDetail.getNumberOfLCToRequestHold() : 0);
+            ihpProgramConfiguration.setSplitPlacementInPending(String.valueOf(seasonIHPDetail.getSplitPlacementPending() != null ? seasonIHPDetail.getSplitPlacementPending() : 0));
             ihpProgramConfiguration.setStopAcceptingApplications(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingAppsStandardIHP() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingVolunteerHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.ACTIVE ? true : false);
@@ -238,7 +238,7 @@ public class SeasonIHPProgramHelper {
                documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
                Login login = loginRepository.findOne(1);// TODO find user from session
-               if(login!=null){
+               if (login != null) {
                   documents.setUploadedBy(login.getLoginName());
                }
                ihpDocuments.add(documents);
@@ -267,7 +267,7 @@ public class SeasonIHPProgramHelper {
                note.setNoteValue(prgNote.getProgramNote());
                note.setCreatedOn(DateUtils.getTimestamp(prgNote.getCreatedOn()));
                Login login = loginRepository.findOne(1);// TODO find user from session
-               if(login!=null){
+               if (login != null) {
                   note.setCreatedBy(login.getLoginName());
                }
                ihpNotes.add(note);
