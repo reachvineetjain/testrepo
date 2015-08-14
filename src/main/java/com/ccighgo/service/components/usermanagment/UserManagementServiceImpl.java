@@ -3,9 +3,7 @@
  */
 package com.ccighgo.service.components.usermanagment;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -40,10 +38,8 @@ import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
-import com.ccighgo.exception.BusinessException;
 import com.ccighgo.exception.CcighgoServiceException;
 import com.ccighgo.exception.ErrorCode;
-import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserNoteRepository;
@@ -64,9 +60,7 @@ import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
-import com.ccighgo.service.components.regionmanagement.RegionManagementServicesImpl;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgram;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgramOptions;
@@ -89,7 +83,6 @@ import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserPermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserRole;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserState;
-import com.ccighgo.service.transport.usermanagement.beans.user.UserType;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Department;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
@@ -156,10 +149,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
-   // 2. generate user password(Done) and send via email.
-   // 3. use message from properties files.
-   // 4. Implement exception handling.
-   // 5. Failure roll back mechanism.
 
    @Override
    @Transactional(readOnly=true)
@@ -311,6 +300,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
 
 
+   @SuppressWarnings("unchecked")
    @Override
    @Transactional(readOnly=true)
    public CCIUsers searchUsers(UserSearch userSearch) {
@@ -407,7 +397,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
          cciUser.setLookupUsstate(userState);
       }
-      // TODO need to discuss about updating login info
       cciUser.setModifiedBy(1);
       cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUsersRepository.saveAndFlush(cciUser);
@@ -795,21 +784,15 @@ public class UserManagementServiceImpl implements UserManagementService {
    public List<StaffUserDefaultPermissionGroupOptions> getResourceAction(){
       
       List<ResourceAction> resourceActionList = resourceActionRepository.getAllResourceAction();
-      List<ResourceAction> resource=new ArrayList<ResourceAction>();
       List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
       if (resourceActionList != null && !(resourceActionList.isEmpty())) {
-        
          for (ResourceAction resourceAction : resourceActionList) {
-            
             StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
-           
             options.setPermissionGroupOptionActionId(resourceAction.getResourceActionId()+"");
             options.setPermissionGroupOptionAction(resourceAction.getResourceAction());
             permissionGroupOptionsList.add(options);
-        
          }
       }
-     
       return permissionGroupOptionsList;
    }
    
@@ -1318,7 +1301,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     * @param message
     * @return cciUser
     */
-   private CCIUser setCCiUserStatus(CCIUser cciUser, String code, String type, int serviceCode, String message ) {
+   private CCIUser setCCiUserStatus(CCIUser cciUser, String code, String type, int serviceCode, String message) {
 	   if(cciUser==null) cciUser = new CCIUser(); 
 	   cciUser.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
 	   return cciUser;
