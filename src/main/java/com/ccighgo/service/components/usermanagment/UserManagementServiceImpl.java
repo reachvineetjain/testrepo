@@ -37,6 +37,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupDepartment;
+import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
@@ -55,6 +56,7 @@ import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.DepartmentResourceGroupRepository;
+import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
@@ -91,8 +93,10 @@ import com.ccighgo.service.transport.usermanagement.beans.user.UserRole;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserState;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserType;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
+import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Department;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasscodeGenerator;
@@ -152,6 +156,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    Properties cciGhGoProps;
    @Autowired
    GoIdSequenceRepository goIdSequenceRepository;
+   @Autowired
+   GenderRepository  genderRepository;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
@@ -218,6 +224,10 @@ public class UserManagementServiceImpl implements UserManagementService {
          user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
          user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
          user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
+         Gender gender = new Gender();
+         gender.setGenderId(cciUser.getLookupGender().getGenderId());
+         gender.setGenderCode(cciUser.getLookupGender().getGenderName());
+         user.setGender(gender);
 
          // update user login info
          LoginInfo loginInfo = getLoginInfo(cciUser);
@@ -653,7 +663,31 @@ public class UserManagementServiceImpl implements UserManagementService {
          country.setCountryId(cciUser.getLookupCountry().getCountryId());
          country.setCountryCode(cciUser.getLookupCountry().getCountryCode());
          country.setCountryName(cciUser.getLookupCountry().getCountryName());
+         country.setCountryFlag(cciUser.getLookupCountry().getCountryFlag());
       }
+      return country;
+   }
+   
+   /**
+    * Get user country
+    * 
+    * @param cciUser
+    * @return user country
+    */
+   private Country getCountryFromCCIStaffUser(CCIStaffUser cciUser) {
+      Country country = null;
+      try {
+      if (cciUser.getLookupCountry() != null) {
+         country = new Country();
+         country.setId(cciUser.getLookupCountry().getCountryId());
+         country.setCountryCode(cciUser.getLookupCountry().getCountryCode());
+         country.setCountryName(cciUser.getLookupCountry().getCountryName());
+         country.setCountryFlag(cciUser.getLookupCountry().getCountryFlag());
+      }
+      }
+      catch (Exception e) {
+              
+             }
       return country;
    }
 
@@ -679,12 +713,17 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private LoginInfo getLoginInfo(CCIStaffUser cciUser) {
       LoginInfo loginInfo = new LoginInfo();
+      try {
       GoIdSequence goIdSequence = new GoIdSequence();
       goIdSequence = goIdSequenceRepository.findOne(cciUser.getCciStaffUserId());
      
       loginInfo.setLoginId(goIdSequence.getLogin().getLoginId());
       loginInfo.setLoginName(goIdSequence.getLogin().getLoginName());
       //loginInfo.setLoginUserTypes(login.getLoginUserTypes());
+      
+      }
+      catch(Exception e) {
+      }
       return loginInfo;
    }
 
@@ -853,6 +892,12 @@ public class UserManagementServiceImpl implements UserManagementService {
          LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
          cciUser.setLookupUsstate(userState);
       }
+      //update gender 
+      if(user.getGender()!=null) {
+          LookupGender gender = genderRepository.findOne(user.getGender().getGenderId());
+          if(gender!=null)
+          cciUser.setLookupGender(gender);
+      }
       
       ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
       GoIdSequence goIdSequence=new GoIdSequence();
@@ -1019,6 +1064,13 @@ public class UserManagementServiceImpl implements UserManagementService {
       if (user.getUserState().getStateId() > 0) {
          LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
          cciUser.setLookupUsstate(userState);
+      }
+      
+      //update gender 
+      if(user.getGender()!=null) {
+          LookupGender gender = genderRepository.findOne(user.getGender().getGenderId());
+          if(gender!=null)
+          cciUser.setLookupGender(gender);
       }
       
       
@@ -1234,7 +1286,12 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setEmail(cUsr.getEmail());
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
-      cciUser.setCountry(cUsr.getLookupCountry() != null ? cUsr.getLookupCountry().getCountryName() : CCIConstants.EMPTY_DATA);
+//      cciUser.setCountry(cUsr.getLookupCountry() != null ? cUsr.getLookupCountry().getCountryName() : CCIConstants.EMPTY_DATA);
+//      update country 
+      Country country = new Country();
+      country = getCountryFromCCIStaffUser(cUsr);
+      cciUser.setCountry(country);
+      
       cciUser.setState(cUsr.getLookupUsstate() != null ? cUsr.getLookupUsstate().getStateName() : CCIConstants.EMPTY_DATA);
      // cciUser.setLoginName(cUsr.getLogin().getLoginName());
       cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
@@ -1246,6 +1303,13 @@ public class UserManagementServiceImpl implements UserManagementService {
       if (cUsr.getCcistaffUserPrograms() != null) {
          List<CCIUserDepartmentProgram> userDepartmentProgramsList = populateUserPrograms(cUsr, cciUser);
          cciUser.getCciUserDepartmentPrograms().addAll(userDepartmentProgramsList);
+      }
+      //update gender
+      Gender gender = new Gender();
+      if(cUsr.getLookupGender()!=null) {
+         gender.setGenderId(cUsr.getLookupGender().getGenderId());
+         gender.setGenderCode(cUsr.getLookupGender().getGenderName());
+         cciUser.setGender(gender);
       }
       return cciUser;
    }
