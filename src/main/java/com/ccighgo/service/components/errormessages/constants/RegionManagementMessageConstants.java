@@ -20,6 +20,7 @@ public class RegionManagementMessageConstants {
    
    //Region
    public static final String REGION="Region";
+   public static final String STATE="State";
    public static final String REG_ID_ZERO_OR_NEG="region.id.zero.or.negative";
    public static final String REG_GET_ERROR="error.get.region";
    public static final String REG_UPDATE_ERROR="error.update.region";

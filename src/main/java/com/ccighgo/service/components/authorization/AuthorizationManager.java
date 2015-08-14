@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ccighgo.service.components.login;
+package com.ccighgo.service.components.authorization;
 
 import org.springframework.stereotype.Component;
 
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class LoginManager {
+public class AuthorizationManager {
 
 }
