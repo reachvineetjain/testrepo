@@ -212,12 +212,14 @@ public class UserManagementServiceImpl implements UserManagementService {
          user.setPrimaryPhone(cciUser.getPrimaryPhone() != null ? cciUser.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
          user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
          user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
-         user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
+         user.setSupervisorId(cciUser.getSupervisorId()!=null && cciUser.getSupervisorId() > 0  ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
          user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
          user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
          Gender gender = new Gender();
+         if(cciUser.getLookupGender()!=null) {
          gender.setGenderId(cciUser.getLookupGender().getGenderId());
          gender.setGenderCode(cciUser.getLookupGender().getGenderName());
+         }
          user.setGender(gender);
 
          // update user login info
@@ -704,9 +706,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     */
    private UserState getUserState(CCIStaffUser cciUser) {
       UserState state = new UserState();
+      if(cciUser.getLookupUsstate()!=null) {
       state.setStateId(cciUser.getLookupUsstate().getUsStatesId());
       state.setStateCode(cciUser.getLookupUsstate().getStateCode());
       state.setStateName(cciUser.getLookupUsstate().getStateName());
+      }
       return state;
    }
 
