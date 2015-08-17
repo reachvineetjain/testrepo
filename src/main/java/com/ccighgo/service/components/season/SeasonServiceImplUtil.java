@@ -2741,7 +2741,7 @@ public class SeasonServiceImplUtil {
                .getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSummerDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
          wpSectionOne.setMaxPendingJobAppls((seasonWnTSummerDetail.getMaxPendingJobApps() != null && seasonWnTSummerDetail.getMaxPendingJobApps() > 0) ? String
-               .valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
+               .valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : "0");
          return wpSectionOne;
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -2822,7 +2822,7 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setApplicationDeadlineDate(seasonWnTSpringDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail
                .getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSpringDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
-         wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : null);
+         wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : "0");
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
       }
