@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ccighgo.service.components.login;
+package com.ccighgo.service.components.authentication;
 
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import com.ccighgo.service.auth.beans.Auth;
  *
  */
 @Service
-public interface LoginAction {
+public interface AuthenticationService {
 	
 	public Auth login();
 

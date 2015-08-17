@@ -219,4 +219,20 @@ public class RegionManagement {
       LOGGER.debug("Calling 'moveRegions' moving region and adding it to different super region");
       return regionManagementServices.moveRegions(mvRegions);
    }
+   
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @return
+    */
+   @GET
+   @Path("delete/state/{seasonId}/{superRegionId}/{regionId}/{stateId}")
+   @Produces("application/json")
+   public DeleteRequest deleteState(@PathParam("seasonId") String seasonId, @PathParam("superRegionId") String superRegionId, @PathParam("regionId") String regionId,@PathParam("stateId") String stateId) {
+      LOGGER.debug("Calling 'deleteState'");
+      return regionManagementServices.deleteState(seasonId, superRegionId, regionId,stateId);
+   }
+
+   
+   
 }
