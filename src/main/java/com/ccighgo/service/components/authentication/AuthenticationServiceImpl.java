@@ -5,6 +5,7 @@ package com.ccighgo.service.components.authentication;
 
 import java.sql.Timestamp;
 
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import com.ccighgo.db.entities.LoginHistory;
 import com.ccighgo.jpa.repositories.LoginHistoryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.service.auth.beans.Auth;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.authorization.AuthorizationManager;
 
 /**
@@ -29,6 +31,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
    @Autowired LoginRepository loginRepository;
    
    @Autowired LoginHistoryRepository loginHistoryRepository;
+   
+   @Autowired MessageUtils messageUtil;
 
 	@Override
 	public Auth login() {
@@ -48,5 +52,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       history.setLogin(loggedInUser);
       loginHistoryRepository.save(history);
    }
+	
+	private static final Logger LOGGER = Logger.getLogger(AuthenticationServiceImpl.class);
 
 }

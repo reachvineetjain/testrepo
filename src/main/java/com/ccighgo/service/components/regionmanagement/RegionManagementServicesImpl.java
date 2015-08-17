@@ -6,6 +6,8 @@ package com.ccighgo.service.components.regionmanagement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -83,7 +85,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       } else {
          try {
             regionManagementDetails.setSeasonId(Integer.valueOf(seasonId));
-            List<SuperRegion> superRegionList = new ArrayList<SuperRegion>();
+            List<SuperRegion> superRegionList = new ArrayList<SuperRegion>(); 
+            Collections.sort(distinctSuperRegionList);
             for (Integer superRegionId : distinctSuperRegionList) {
                SuperRegion spRegion = new SuperRegion();
                com.ccighgo.db.entities.SuperRegion superRegion = superRegionRepository.findOne(superRegionId);
