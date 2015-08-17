@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
@@ -171,7 +172,7 @@ public class UserManagement {
     @GET
     @Path("{id}/deactivate")
     @Produces("application/json")
-    public String deleteUser(@PathParam("id") String id) {
+    public DeleteRequest deleteUser(@PathParam("id") String id) {
         return userMgmtServices.deleteUser(id);
     }
     

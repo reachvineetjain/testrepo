@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.db.entities.ResourceAction;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
@@ -88,7 +89,7 @@ public interface UserManagementService {
 	 * @param id
 	 * @return
 	 */
-	public String deleteUser(String id);
+	public DeleteRequest deleteUser(String id);
 
 	/**
 	 * Search user based on different parameters
