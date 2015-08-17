@@ -96,6 +96,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                   List<Region> regionList = new ArrayList<Region>();
                   List<Integer> distinctRegionList = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(superRegionId, Integer.valueOf(seasonId));
                   if (distinctRegionList != null) {
+                     Collections.sort(distinctRegionList);
                      for (Integer regionId : distinctRegionList) {
                         com.ccighgo.db.entities.Region region = regionRepository.findOne(regionId);
                         if (region != null) {
@@ -106,6 +107,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                            List<Integer> stateList = seasonGeographyConfigurationRepository.findStatesBySuperRegionRegionAandSeasonId(superRegionId, region.getRegionId(),
                                  Integer.valueOf(seasonId));
                            if (stateList != null && stateList.size() > 0) {
+                              Collections.sort(stateList);
                               regionStates = new ArrayList<RegionState>();
                               for (Integer stateId : stateList) {
                                  if (stateId != null && stateId > 0) {
