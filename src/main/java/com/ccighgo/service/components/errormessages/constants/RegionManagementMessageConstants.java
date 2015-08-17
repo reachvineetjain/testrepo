@@ -20,6 +20,7 @@ public class RegionManagementMessageConstants {
    
    //Region
    public static final String REGION="Region";
+   public static final String STATE="State";
    public static final String REG_ID_ZERO_OR_NEG="region.id.zero.or.negative";
    public static final String REG_GET_ERROR="error.get.region";
    public static final String REG_UPDATE_ERROR="error.update.region";
@@ -27,6 +28,7 @@ public class RegionManagementMessageConstants {
    public static final String REG_DELETE_ERROR="error.super.region";
    public static final String REG_NULL="error.add.region.null";
    public static final String REG_NAME_NULL="error.add.region.name.null";
+   public static final String REG_NAME_DUPLICATE="error.add.region.name.already.exists";
    
    //Region State
    public static final String STATE_REGION_GET_ERROR="error.get.state.region.list";

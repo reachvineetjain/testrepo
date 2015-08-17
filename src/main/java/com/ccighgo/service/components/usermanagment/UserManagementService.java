@@ -7,7 +7,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.db.entities.ResourceAction;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
@@ -86,7 +89,7 @@ public interface UserManagementService {
 	 * @param id
 	 * @return
 	 */
-	public String deleteUser(String id);
+	public DeleteRequest deleteUser(String id);
 
 	/**
 	 * Search user based on different parameters
@@ -124,6 +127,16 @@ public interface UserManagementService {
      * @return
      */
     public UserNotes updateUserNote(UserNotes userNotes);
+    
+    
+    public List<StaffUserDefaultPermissionGroupOptions> getResourceAction();
+    
+    
+    public User updateUserDetails(User user);
+    
+  
+    public User updateUser(User user);
+    
     
 
 }
