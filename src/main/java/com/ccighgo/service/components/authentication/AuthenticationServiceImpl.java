@@ -33,12 +33,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public Auth login() {
 		String userName = SecurityUtils.getSubject().getPrincipal().toString();
-		Auth auth = new Auth();
-      auth.setLoginname(userName);
-     /* UserInfo userInfo = userManager.getUserInfo(traveller);
-      auth.setTravelerType(userInfo.getUsrTypeCode());
-      auth.setTravelerLoginname(traveller);*/
-      updateHistory(userName);
+		Auth auth = authorizationManager.getUserLogin(userName);
+		if(auth.getLoginname()!=null){
+		   updateHistory(userName); 
+		}
       return auth;
 	}
 	
