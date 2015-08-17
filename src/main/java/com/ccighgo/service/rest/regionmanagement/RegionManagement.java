@@ -19,7 +19,6 @@ import com.ccighgo.service.transport.region.beans.mvregion.MoveRegions;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
-import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegionsMap;
 import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 
 /**
@@ -212,6 +211,10 @@ public class RegionManagement {
       return regionManagementServices.addStateRegions(superRegionId, seasonId, region);
    }
 
+   /**
+    * @param mvRegions
+    * @return
+    */
    @POST
    @Path("move/region/")
    @Produces("application/json")
