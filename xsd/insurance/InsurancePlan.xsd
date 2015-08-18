@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/insuranceplan"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:insuranceplan="http://www.ccighgo.com/insuranceplan">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.insuranceplan" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="InsurancePlan" type="insuranceplan:InsurancePlan"></xsd:element>
+
+	<xsd:complexType name="InsurancePlan">
+		<xsd:sequence>
+		 <xsd:element name="statusCode" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+		 <xsd:element name="success" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+		 <xsd:element name="response" type="insuranceplan:Response" minOccurs="1" maxOccurs="unbounded"></xsd:element>
+	  </xsd:sequence>
+   </xsd:complexType>	
+		 
+	<xsd:complexType name="Response">
+		<xsd:sequence>
+		 <xsd:element name="id" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+		 <xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="deductible" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="policy_max" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="er_fee" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="policy_number" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="underwriter_id" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="status_id" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="has_id_card" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="card_url" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="card_username" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="card_password" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="id_card_url" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="price" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="medical_expenses" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="emergency_medical_evacuation" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="emergency_reunion" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="repatriation" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="trip_interuption" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="card_template" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="deductible_type" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="has_visa_letter" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="visa_template" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="brochure_url" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="has_trip_can_option" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="max_effective_date" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="min_effective_date" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="renewable_days" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="max_policy_length" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="backdate_length" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="group_id" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="nonUSA_price" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="plan_updated_date" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="plan_created_date" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="plan_updated_by" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="plan_created_by" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="certificate_url" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="use_brochure_link" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="min_age" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="max_age" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="coverage_start_template" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 <xsd:element name="renewal_template" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		 
+		 
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

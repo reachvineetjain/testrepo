@@ -42,7 +42,7 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="seasonGeographyConfigurationId")
 	private SeasonGeographyConfiguration seasonGeographyConfiguration;
 
