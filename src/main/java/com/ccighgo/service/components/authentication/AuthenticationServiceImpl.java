@@ -3,21 +3,13 @@
  */
 package com.ccighgo.service.components.authentication;
 
-import java.sql.Timestamp;
-
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.Login;
-import com.ccighgo.db.entities.LoginHistory;
-import com.ccighgo.jpa.repositories.LoginHistoryRepository;
-import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.service.auth.beans.Auth;
-import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.authorization.AuthorizationManager;
+import com.ccighgo.service.components.authorization.AuthorizationManagerInterface;
 
 /**
  * @author ravimishra
@@ -26,32 +18,14 @@ import com.ccighgo.service.components.authorization.AuthorizationManager;
 @Component
 public class AuthenticationServiceImpl implements AuthenticationService {
    
-   @Autowired AuthorizationManager authorizationManager;
-   
-   @Autowired LoginRepository loginRepository;
-   
-   @Autowired LoginHistoryRepository loginHistoryRepository;
-   
-   @Autowired MessageUtils messageUtil;
+   @Autowired AuthorizationManagerInterface authorizationManager;
 
 	@Override
 	public Auth login() {
 		String userName = SecurityUtils.getSubject().getPrincipal().toString();
-		Auth auth = authorizationManager.getUserLogin(userName);
-		if(auth.getLoginname()!=null){
-		   updateHistory(userName); 
-		}
-      return auth;
+		LOGGER.info("User with login name :"+userName+" attempting login");
+      return authorizationManager.getUserLogin(userName);
 	}
-	
-	@Transactional
-   private void updateHistory(String userName) {
-      LoginHistory history = new LoginHistory();
-      history.setLoggedOn(new Timestamp(System.currentTimeMillis()));
-      Login loggedInUser = loginRepository.findByLoginName(userName);
-      history.setLogin(loggedInUser);
-      loginHistoryRepository.save(history);
-   }
 	
 	private static final Logger LOGGER = Logger.getLogger(AuthenticationServiceImpl.class);
 
