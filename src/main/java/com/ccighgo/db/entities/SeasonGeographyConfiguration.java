@@ -52,7 +52,7 @@ public class SeasonGeographyConfiguration implements Serializable {
    private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
    // bi-directional many-to-one association to FieldStaffLeadershipSeason
-   @OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
+   @OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY,cascade = { CascadeType.REMOVE })
    @Fetch(value = FetchMode.SUBSELECT)
    private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
