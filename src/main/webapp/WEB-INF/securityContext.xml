@@ -21,7 +21,7 @@
       <property name="tolerance" value="300" />
    </bean>
 
-   <bean id="excurtRealm" class="com.ccighgo.security.ExcurtOauthRealm" depends-on="usrRepository,oauthValidatorRepository" />
+   <bean id="excurtRealm" class="com.ccighgo.security.ExcurtOauthRealm" depends-on="loginRepository,oauthValidatorRepository" />
    
    <bean id="defaultSessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
       <property name="globalSessionTimeout" value="43200000" />
@@ -42,9 +42,8 @@
       <property name="filters">
          <util:map>
             <entry key="authc">
-               <!-- <bean class="org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter"/> -->
-               <bean class="com.ccighgo.security.ExcurtAuthenticationFilter">
-               </bean>
+               <!--  <bean class="org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter"/>  -->
+                <bean class="com.ccighgo.security.ExcurtAuthenticationFilter"/> 
             </entry>
          </util:map>
       </property>
@@ -52,6 +51,8 @@
          <value>
             /services/season/** = anon
             /services/usm/** = anon
+            /services/region/** = anon
+            /services/regionAssignment/**= anon
             /services/** = authc
 
          </value>
