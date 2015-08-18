@@ -51,7 +51,7 @@ public class FieldStaffLeadershipSeason implements Serializable {
    private Season season;
 
    // bi-directional many-to-one association to SeasonGeographyConfiguration
-   @ManyToOne(cascade = { CascadeType.REMOVE })
+   @ManyToOne
    @JoinColumn(name = "seasonGeographyConfigurationId")
    private SeasonGeographyConfiguration seasonGeographyConfiguration;
 
