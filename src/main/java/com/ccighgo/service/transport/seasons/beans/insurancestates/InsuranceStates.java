@@ -5,47 +5,485 @@
 // Generated on: 2015.07.27 at 05:47:51 PM CDT 
 //
 
-package com.ccighgo.service.transport.seasons.beans.insurancestates;
 
-import java.util.List;
+package com.ccighgo.service.transport.seasons.beans.insurancestates;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+
+/**
+ * <p>Java class for InsuranceStates complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="InsuranceStates">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="CountryId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Country" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="FIPS104" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ISO2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ISO3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ISON" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Internet" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="Capital" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="MapReference" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="NationalitySingular" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="NationalityPlural" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Currency" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="CurrencyCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Population" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InsuranceStates")
+@XmlType(name = "InsuranceStates", propOrder = {
+    "countryId",
+    "country",
+    "fips104",
+    "iso2",
+    "iso3",
+    "ison",
+    "internet",
+    "capital",
+    "mapReference",
+    "nationalitySingular",
+    "nationalityPlural",
+    "currency",
+    "currencyCode",
+    "population",
+    "title",
+    "comment"
+})
 public class InsuranceStates {
-   @XmlElement(required = true)
-   protected String statusCode;
-   @XmlElement(required = true)
-   protected String success;
-   @XmlElement(required = true)
-   protected List<Response> response;
 
-   public String getStatusCode() {
-      return statusCode;
-   }
+    @XmlElement(name = "CountryId")
+    protected String countryId;
+    @XmlElement(name = "Country")
+    protected String country;
+    @XmlElement(name = "FIPS104")
+    protected String fips104;
+    @XmlElement(name = "ISO2")
+    protected String iso2;
+    @XmlElement(name = "ISO3")
+    protected String iso3;
+    @XmlElement(name = "ISON")
+    protected String ison;
+    @XmlElement(name = "Internet")
+    protected Integer internet;
+    @XmlElement(name = "Capital")
+    protected String capital;
+    @XmlElement(name = "MapReference")
+    protected Integer mapReference;
+    @XmlElement(name = "NationalitySingular")
+    protected String nationalitySingular;
+    @XmlElement(name = "NationalityPlural")
+    protected String nationalityPlural;
+    @XmlElement(name = "Currency")
+    protected Integer currency;
+    @XmlElement(name = "CurrencyCode")
+    protected String currencyCode;
+    @XmlElement(name = "Population")
+    protected String population;
+    @XmlElement(name = "Title")
+    protected String title;
+    @XmlElement(name = "Comment")
+    protected String comment;
 
-   public void setStatusCode(String statusCode) {
-      this.statusCode = statusCode;
-   }
+    /**
+     * Gets the value of the countryId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCountryId() {
+        return countryId;
+    }
 
-   public String getSuccess() {
-      return success;
-   }
+    /**
+     * Sets the value of the countryId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCountryId(String value) {
+        this.countryId = value;
+    }
 
-   public void setSuccess(String success) {
-      this.success = success;
-   }
+    /**
+     * Gets the value of the country property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCountry() {
+        return country;
+    }
 
-   public List<Response> getResponse() {
-      return response;
-   }
+    /**
+     * Sets the value of the country property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCountry(String value) {
+        this.country = value;
+    }
 
-   public void setResponse(List<Response> response) {
-      this.response = response;
-   }
+    /**
+     * Gets the value of the fips104 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFIPS104() {
+        return fips104;
+    }
+
+    /**
+     * Sets the value of the fips104 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFIPS104(String value) {
+        this.fips104 = value;
+    }
+
+    /**
+     * Gets the value of the iso2 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getISO2() {
+        return iso2;
+    }
+
+    /**
+     * Sets the value of the iso2 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setISO2(String value) {
+        this.iso2 = value;
+    }
+
+    /**
+     * Gets the value of the iso3 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getISO3() {
+        return iso3;
+    }
+
+    /**
+     * Sets the value of the iso3 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setISO3(String value) {
+        this.iso3 = value;
+    }
+
+    /**
+     * Gets the value of the ison property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getISON() {
+        return ison;
+    }
+
+    /**
+     * Sets the value of the ison property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setISON(String value) {
+        this.ison = value;
+    }
+
+    /**
+     * Gets the value of the internet property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getInternet() {
+        return internet;
+    }
+
+    /**
+     * Sets the value of the internet property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setInternet(Integer value) {
+        this.internet = value;
+    }
+
+    /**
+     * Gets the value of the capital property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCapital() {
+        return capital;
+    }
+
+    /**
+     * Sets the value of the capital property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCapital(String value) {
+        this.capital = value;
+    }
+
+    /**
+     * Gets the value of the mapReference property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getMapReference() {
+        return mapReference;
+    }
+
+    /**
+     * Sets the value of the mapReference property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setMapReference(Integer value) {
+        this.mapReference = value;
+    }
+
+    /**
+     * Gets the value of the nationalitySingular property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNationalitySingular() {
+        return nationalitySingular;
+    }
+
+    /**
+     * Sets the value of the nationalitySingular property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNationalitySingular(String value) {
+        this.nationalitySingular = value;
+    }
+
+    /**
+     * Gets the value of the nationalityPlural property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNationalityPlural() {
+        return nationalityPlural;
+    }
+
+    /**
+     * Sets the value of the nationalityPlural property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNationalityPlural(String value) {
+        this.nationalityPlural = value;
+    }
+
+    /**
+     * Gets the value of the currency property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getCurrency() {
+        return currency;
+    }
+
+    /**
+     * Sets the value of the currency property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setCurrency(Integer value) {
+        this.currency = value;
+    }
+
+    /**
+     * Gets the value of the currencyCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    /**
+     * Sets the value of the currencyCode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCurrencyCode(String value) {
+        this.currencyCode = value;
+    }
+
+    /**
+     * Gets the value of the population property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPopulation() {
+        return population;
+    }
+
+    /**
+     * Sets the value of the population property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPopulation(String value) {
+        this.population = value;
+    }
+
+    /**
+     * Gets the value of the title property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Sets the value of the title property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTitle(String value) {
+        this.title = value;
+    }
+
+    /**
+     * Gets the value of the comment property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Sets the value of the comment property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setComment(String value) {
+        this.comment = value;
+    }
 
 }

@@ -5,47 +5,772 @@
 // Generated on: 2015.07.27 at 05:47:50 PM CDT 
 //
 
-package com.ccighgo.service.transport.seasons.beans.insuranceparticipant;
 
-import java.util.List;
+package com.ccighgo.service.transport.seasons.beans.insuranceparticipant;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+
+/**
+ * <p>Java class for InsuranceParticipant complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="InsuranceParticipant">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="first_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="middle_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="last_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="address1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="address2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="state_id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="stateName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="country_id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="countryName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="zip" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="home_country_id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="homeCountryName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="dob" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="tele" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="secondaryEmail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="gender" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="us_citizen" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="us_destination" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="sports_rider" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="plan_id" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="trip_can" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="start_date" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="end_date" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="labelList" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="internal_id" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InsuranceParticipant")
+@XmlType(name = "InsuranceParticipant", propOrder = {
+    "firstName",
+    "middleName",
+    "lastName",
+    "address1",
+    "address2",
+    "city",
+    "stateId",
+    "stateName",
+    "countryId",
+    "countryName",
+    "zip",
+    "homeCountryId",
+    "homeCountryName",
+    "dob",
+    "tele",
+    "email",
+    "secondaryEmail",
+    "gender",
+    "usCitizen",
+    "usDestination",
+    "sportsRider",
+    "planId",
+    "tripCan",
+    "startDate",
+    "endDate",
+    "labelList",
+    "internalId"
+})
 public class InsuranceParticipant {
-   @XmlElement(required = true)
-   protected String statusCode;
-   @XmlElement(required = true)
-   protected String success;
-   @XmlElement(required = true)
-   protected List<Response> response;
 
-   public String getStatusCode() {
-      return statusCode;
-   }
+    @XmlElement(name = "first_name")
+    protected String firstName;
+    @XmlElement(name = "middle_name")
+    protected String middleName;
+    @XmlElement(name = "last_name")
+    protected String lastName;
+    protected String address1;
+    protected String address2;
+    protected String city;
+    @XmlElement(name = "state_id")
+    protected Integer stateId;
+    protected String stateName;
+    @XmlElement(name = "country_id")
+    protected Integer countryId;
+    protected String countryName;
+    protected String zip;
+    @XmlElement(name = "home_country_id")
+    protected Integer homeCountryId;
+    protected String homeCountryName;
+    protected String dob;
+    protected String tele;
+    protected String email;
+    protected String secondaryEmail;
+    protected String gender;
+    @XmlElement(name = "us_citizen")
+    protected String usCitizen;
+    @XmlElement(name = "us_destination")
+    protected String usDestination;
+    @XmlElement(name = "sports_rider")
+    protected String sportsRider;
+    @XmlElement(name = "plan_id")
+    protected int planId;
+    @XmlElement(name = "trip_can")
+    protected Integer tripCan;
+    @XmlElement(name = "start_date")
+    protected String startDate;
+    @XmlElement(name = "end_date")
+    protected String endDate;
+    protected String labelList;
+    @XmlElement(name = "internal_id")
+    protected String internalId;
 
-   public void setStatusCode(String statusCode) {
-      this.statusCode = statusCode;
-   }
+    /**
+     * Gets the value of the firstName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFirstName() {
+        return firstName;
+    }
 
-   public String getSuccess() {
-      return success;
-   }
+    /**
+     * Sets the value of the firstName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFirstName(String value) {
+        this.firstName = value;
+    }
 
-   public void setSuccess(String success) {
-      this.success = success;
-   }
+    /**
+     * Gets the value of the middleName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getMiddleName() {
+        return middleName;
+    }
 
-   public List<Response> getResponse() {
-      return response;
-   }
+    /**
+     * Sets the value of the middleName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setMiddleName(String value) {
+        this.middleName = value;
+    }
 
-   public void setResponse(List<Response> response) {
-      this.response = response;
-   }
+    /**
+     * Gets the value of the lastName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Sets the value of the lastName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLastName(String value) {
+        this.lastName = value;
+    }
+
+    /**
+     * Gets the value of the address1 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAddress1() {
+        return address1;
+    }
+
+    /**
+     * Sets the value of the address1 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAddress1(String value) {
+        this.address1 = value;
+    }
+
+    /**
+     * Gets the value of the address2 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAddress2() {
+        return address2;
+    }
+
+    /**
+     * Sets the value of the address2 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAddress2(String value) {
+        this.address2 = value;
+    }
+
+    /**
+     * Gets the value of the city property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Sets the value of the city property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCity(String value) {
+        this.city = value;
+    }
+
+    /**
+     * Gets the value of the stateId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getStateId() {
+        return stateId;
+    }
+
+    /**
+     * Sets the value of the stateId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setStateId(Integer value) {
+        this.stateId = value;
+    }
+
+    /**
+     * Gets the value of the stateName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStateName() {
+        return stateName;
+    }
+
+    /**
+     * Sets the value of the stateName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStateName(String value) {
+        this.stateName = value;
+    }
+
+    /**
+     * Gets the value of the countryId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    /**
+     * Sets the value of the countryId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setCountryId(Integer value) {
+        this.countryId = value;
+    }
+
+    /**
+     * Gets the value of the countryName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCountryName() {
+        return countryName;
+    }
+
+    /**
+     * Sets the value of the countryName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCountryName(String value) {
+        this.countryName = value;
+    }
+
+    /**
+     * Gets the value of the zip property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getZip() {
+        return zip;
+    }
+
+    /**
+     * Sets the value of the zip property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setZip(String value) {
+        this.zip = value;
+    }
+
+    /**
+     * Gets the value of the homeCountryId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getHomeCountryId() {
+        return homeCountryId;
+    }
+
+    /**
+     * Sets the value of the homeCountryId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setHomeCountryId(Integer value) {
+        this.homeCountryId = value;
+    }
+
+    /**
+     * Gets the value of the homeCountryName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getHomeCountryName() {
+        return homeCountryName;
+    }
+
+    /**
+     * Sets the value of the homeCountryName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHomeCountryName(String value) {
+        this.homeCountryName = value;
+    }
+
+    /**
+     * Gets the value of the dob property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDob() {
+        return dob;
+    }
+
+    /**
+     * Sets the value of the dob property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDob(String value) {
+        this.dob = value;
+    }
+
+    /**
+     * Gets the value of the tele property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTele() {
+        return tele;
+    }
+
+    /**
+     * Sets the value of the tele property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTele(String value) {
+        this.tele = value;
+    }
+
+    /**
+     * Gets the value of the email property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the value of the email property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEmail(String value) {
+        this.email = value;
+    }
+
+    /**
+     * Gets the value of the secondaryEmail property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSecondaryEmail() {
+        return secondaryEmail;
+    }
+
+    /**
+     * Sets the value of the secondaryEmail property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSecondaryEmail(String value) {
+        this.secondaryEmail = value;
+    }
+
+    /**
+     * Gets the value of the gender property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * Sets the value of the gender property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGender(String value) {
+        this.gender = value;
+    }
+
+    /**
+     * Gets the value of the usCitizen property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUsCitizen() {
+        return usCitizen;
+    }
+
+    /**
+     * Sets the value of the usCitizen property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUsCitizen(String value) {
+        this.usCitizen = value;
+    }
+
+    /**
+     * Gets the value of the usDestination property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUsDestination() {
+        return usDestination;
+    }
+
+    /**
+     * Sets the value of the usDestination property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUsDestination(String value) {
+        this.usDestination = value;
+    }
+
+    /**
+     * Gets the value of the sportsRider property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSportsRider() {
+        return sportsRider;
+    }
+
+    /**
+     * Sets the value of the sportsRider property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSportsRider(String value) {
+        this.sportsRider = value;
+    }
+
+    /**
+     * Gets the value of the planId property.
+     * 
+     */
+    public int getPlanId() {
+        return planId;
+    }
+
+    /**
+     * Sets the value of the planId property.
+     * 
+     */
+    public void setPlanId(int value) {
+        this.planId = value;
+    }
+
+    /**
+     * Gets the value of the tripCan property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getTripCan() {
+        return tripCan;
+    }
+
+    /**
+     * Sets the value of the tripCan property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setTripCan(Integer value) {
+        this.tripCan = value;
+    }
+
+    /**
+     * Gets the value of the startDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * Sets the value of the startDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStartDate(String value) {
+        this.startDate = value;
+    }
+
+    /**
+     * Gets the value of the endDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * Sets the value of the endDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEndDate(String value) {
+        this.endDate = value;
+    }
+
+    /**
+     * Gets the value of the labelList property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLabelList() {
+        return labelList;
+    }
+
+    /**
+     * Sets the value of the labelList property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLabelList(String value) {
+        this.labelList = value;
+    }
+
+    /**
+     * Gets the value of the internalId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getInternalId() {
+        return internalId;
+    }
+
+    /**
+     * Sets the value of the internalId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInternalId(String value) {
+        this.internalId = value;
+    }
 
 }
