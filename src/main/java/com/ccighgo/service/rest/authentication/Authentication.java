@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.ccighgo.service.rest.login;
+package com.ccighgo.service.rest.authentication;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,20 +14,19 @@ import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.auth.beans.Auth;
-import com.ccighgo.service.components.login.LoginAction;
+import com.ccighgo.service.components.authentication.AuthenticationService;
 
 /**
  * @author ravimishra
  *
  */
-@Path("/auth/")
+@Path("/authenticate/")
 @Produces("application/json")
-@Consumes("application/json")
-public class Login {
+public class Authentication {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(Login.class); 
+	private static final Logger LOGGER = LoggerFactory.getLogger(Authentication.class); 
 	
-	@Autowired private LoginAction loginAction;
+	@Autowired private AuthenticationService loginAction;
     
     @GET
 	@Path("login")

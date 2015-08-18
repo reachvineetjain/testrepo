@@ -115,4 +115,13 @@ public interface RegionManagementServices {
     */
    public RegionManagementDetails moveRegions(MoveRegions mvRegions);
 
+   /**
+    * @param seasonId
+    * @param superRegionId
+    * @param regionId
+    * @param stateId
+    * @return
+    */
+   public DeleteRequest deleteState(String seasonId, String superRegionId, String regionId, String stateId);
+
 }
