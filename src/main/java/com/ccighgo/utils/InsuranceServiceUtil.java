@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +18,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -126,14 +128,16 @@ public class InsuranceServiceUtil {
          List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
          urlParameters.add(new BasicNameValuePair("key", TOKEN_VALUE));
          urlParameters.add(new BasicNameValuePair("user", USERNAME));
-         String json = gson.toJson(participant);
-         urlParameters.add(new BasicNameValuePair("participant", json));
+         // String json = gson.toJson(participant);
+         urlParameters.add(new BasicNameValuePair("participant", Arrays.toString(getParticipantQuery(participant).toArray())));
          // urlParameters.add(new BasicNameValuePair("address1", participant.getAddress1()));
          // urlParameters.add(new BasicNameValuePair("city", participant.getCity()));
          // urlParameters.add(new BasicNameValuePair("email", participant.getEmail()));
          // urlParameters.add(new BasicNameValuePair("first_name", participant.getFirst_name()));
          // System.out.println("JSON OBject : " + json);
-
+         // post.getParams().setParameter("key", TOKEN_KEY);
+         // post.getParams().setParameter("user", USERNAME);
+         // post.getParams().setParameter("participant", getParticipantQuery(participant));
          post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
          org.apache.http.HttpResponse response = client.execute(post);
@@ -151,6 +155,52 @@ public class InsuranceServiceUtil {
          ExceptionUtil.logException(e, LOGGER);
       }
       return authResponse;
+   }
+
+   protected static String httpBuildQuery(List<? extends NameValuePair> parameters, String encoding) {
+      return URLEncodedUtils.format(parameters, encoding).replace("*", "%2A");
+   }
+
+   public static String getParticipantQuery2(Participant participant) {
+      List<NameValuePair> params = new ArrayList<NameValuePair>();
+      params.add(new BasicNameValuePair("first_name", participant.getFirst_name()));
+      params.add(new BasicNameValuePair("last_name", participant.getLast_name()));
+      params.add(new BasicNameValuePair("address1", participant.getAddress1()));
+      params.add(new BasicNameValuePair("email", participant.getEmail()));
+      params.add(new BasicNameValuePair("gender", participant.getGender()));
+      params.add(new BasicNameValuePair("dob", participant.getDateOfBirth()));
+      params.add(new BasicNameValuePair("city", participant.getCity()));
+      params.add(new BasicNameValuePair("zip", participant.getZip()));
+      params.add(new BasicNameValuePair("countryName", participant.getCountry()));
+      params.add(new BasicNameValuePair("homeCountryName", participant.getHomeCountryName()));
+      params.add(new BasicNameValuePair("us_destination", "Y"));
+      params.add(new BasicNameValuePair("us_citizen", "N"));
+      params.add(new BasicNameValuePair("start_date", participant.getStart_date()));
+      params.add(new BasicNameValuePair("end_date", participant.getEnd_date()));
+      params.add(new BasicNameValuePair("plan_id", participant.getPlan_id() + ""));
+
+      return httpBuildQuery(params, "UTF-8");
+   }
+
+   public static List<NameValuePair> getParticipantQuery(Participant participant) {
+      List<NameValuePair> params = new ArrayList<NameValuePair>();
+      params.add(new BasicNameValuePair("first_name", participant.getFirst_name()));
+      params.add(new BasicNameValuePair("last_name", participant.getLast_name()));
+      params.add(new BasicNameValuePair("address1", participant.getAddress1()));
+      params.add(new BasicNameValuePair("email", participant.getEmail()));
+      params.add(new BasicNameValuePair("gender", participant.getGender()));
+      params.add(new BasicNameValuePair("dob", participant.getDateOfBirth()));
+      params.add(new BasicNameValuePair("city", participant.getCity()));
+      params.add(new BasicNameValuePair("zip", participant.getZip()));
+      params.add(new BasicNameValuePair("countryName", participant.getCountry()));
+      params.add(new BasicNameValuePair("homeCountryName", participant.getHomeCountryName()));
+      params.add(new BasicNameValuePair("us_destination", "Y"));
+      params.add(new BasicNameValuePair("us_citizen", "N"));
+      params.add(new BasicNameValuePair("start_date", participant.getStart_date()));
+      params.add(new BasicNameValuePair("end_date", participant.getEnd_date()));
+      params.add(new BasicNameValuePair("plan_id", participant.getPlan_id() + ""));
+
+      return params;
    }
 
    public static void downloadService(String URL) {
