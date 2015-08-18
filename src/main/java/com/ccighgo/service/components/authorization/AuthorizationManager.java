@@ -20,6 +20,9 @@ import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.service.auth.beans.Auth;
 import com.ccighgo.service.auth.beans.LoginType;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.usermanagment.UserManagementService;
+import com.ccighgo.service.transport.usermanagement.beans.user.User;
+import com.ccighgo.utils.CCIConstants;
 
 /**
  * @author ravi
@@ -27,12 +30,16 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
  */
 @Component
 public class AuthorizationManager implements AuthorizationManagerInterface {
+   
+   private static final Logger LOGGER = Logger.getLogger(AuthorizationManager.class);
 
    @Autowired LoginRepository loginRepository;
 
    @Autowired LoginHistoryRepository loginHistoryRepository;
 
    @Autowired MessageUtils messageUtil;
+   
+   @Autowired UserManagementService userManagementService;
 
    @Override
    @Transactional(readOnly = true)
@@ -49,6 +56,24 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
             List<LoginType> loginTypeList = new ArrayList<LoginType>();
             for (LoginUserType loginUsrType : login.getLoginUserTypes()) {
                LoginType lt = new LoginType();
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
+                  lt.setUserDetailUrl("/authorize/cciusr/");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
+                  lt.setUserDetailUrl("coming soon");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.FIELD_STAFF_USER)) {
+                  lt.setUserDetailUrl("coming soon");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.HOST_FAMILY_USER)) {
+                  lt.setUserDetailUrl("coming soon");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.EMPLOYEE_USER)) {
+                  lt.setUserDetailUrl("coming soon");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTICPANT_USER)) {
+                  lt.setUserDetailUrl("coming soon");
+               }
                lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
                lt.setLoginType(loginUsrType.getUserType().getUserTypeName());
                lt.setDefault(loginUsrType.getDefaultUserType() == 0 ? false : true);
@@ -70,6 +95,9 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
       loginHistoryRepository.save(history);
    }
 
-   private static final Logger LOGGER = Logger.getLogger(AuthorizationManager.class);
+   @Override
+   public User getCCIUserDetails(String userId) {
+      return userManagementService.getUserById(userId);
+   }
 
 }
