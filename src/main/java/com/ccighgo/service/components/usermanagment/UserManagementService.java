@@ -137,7 +137,5 @@ public interface UserManagementService {
     
   
     public User updateUser(User user);
-    
-    public List<Gender> getGender();
 
 }

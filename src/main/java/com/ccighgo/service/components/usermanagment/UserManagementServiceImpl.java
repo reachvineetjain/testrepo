@@ -1212,30 +1212,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       
    }
    
-   public List<Gender> getGender() {
-      List<Gender> genderList = null;
-      try{
-      List<LookupGender> lookupGender = genderRepository.findAll();
-      if(lookupGender == null){
-         genderList=setGenderStatus(genderList,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_GENDER_LIST.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_GENDER_LIST));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_GENDER_LIST));
-         return genderList;
-      }
-
-      genderList = new ArrayList<Gender>();
-      for (LookupGender gender : lookupGender) {
-         Gender genderTO = new Gender();
-         genderTO.setGenderId(gender.getGenderId());
-         genderTO.setGenderCode(gender.getGenderName());
-         genderList.add(genderTO);
-      }
-      genderList = setGenderStatus(genderList, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      }catch (CcighgoServiceException e) {
-         genderList=setGenderStatus(genderList,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_GENDER_LIST.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_GENDER_LIST));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_GENDER_LIST));
-      }
-      return genderList;
-   }
+   
    
    /**
     * @description converting CCIStaffUserNote object to TO object

@@ -281,11 +281,4 @@ public class UserManagement {
     public User updateUser(User usr){
        return userMgmtServices.updateUser(usr);
     }
-    @GET
-    @Path("gender")
-    @Produces("application/json")
-    public List<Gender> getGender() {
-       
-       return userMgmtServices.getGender();
-    }
 }
