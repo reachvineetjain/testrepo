@@ -20,13 +20,13 @@ import com.ccighgo.service.components.authentication.AuthenticationService;
  * @author ravimishra
  *
  */
-@Path("/authenticate/")
+@Path("/auth/")
 @Produces("application/json")
 public class Authentication {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(Authentication.class); 
 	
-	@Autowired private AuthenticationService loginAction;
+	@Autowired private AuthenticationService authAction;
     
     @GET
 	@Path("login")
@@ -34,7 +34,7 @@ public class Authentication {
 		String user = SecurityUtils.getSubject().getPrincipal().toString();
 		LOGGER.debug("User '{}' logged in", user);
 		MDC.put("uid", user);
-		return loginAction.login();
+		return authAction.login();
 	}
 	
 	@GET
