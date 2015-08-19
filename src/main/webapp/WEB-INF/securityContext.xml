@@ -52,6 +52,7 @@
             /services/season/** = anon
             /services/usm/** = anon
             /services/region/** = anon
+            /services/utility/** = anon
             /services/regionAssignment/**= anon
             /services/** = authc
 
