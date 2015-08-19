@@ -24,6 +24,7 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
 
 /**
  * <h1>UserManagement</h1> The UserManagement class is the REST service front of
@@ -280,5 +281,4 @@ public class UserManagement {
     public User updateUser(User usr){
        return userMgmtServices.updateUser(usr);
     }
-    
 }
