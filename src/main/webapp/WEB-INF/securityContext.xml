@@ -43,6 +43,7 @@
             /services/utility/** = anon
             /services/regionAssignment/**= anon
             /services/findForm/**=anon
+            /services/updateLog/**=anon
             /services/** = authc
          </value>
       </property>
