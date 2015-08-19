@@ -1,7 +1,7 @@
 package com.ccighgo.service.rest.backgroundcheck;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -22,7 +22,7 @@ public class BackgroundCheck {
    @Autowired
    BackgroundServiceInterface backgroundServiceInterface;
 
-   @GET
+   @POST
    @Path("requestScreen")
    @Produces("application/json")
    public ScreenResponse requestScreen(ScreenRequest screenRequest) {
