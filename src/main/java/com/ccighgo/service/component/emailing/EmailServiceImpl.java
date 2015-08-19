@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.amazonaws.services.simpleemail.AWSJavaMailTransport;
-import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 
 /**
@@ -31,16 +30,15 @@ public class EmailServiceImpl implements EmailService {
    private String fromAddress;
    private Properties mailProperties;
 
-   @Autowired private transient Properties wuhuProps;
-
-   @Autowired private CommonComponentUtils componentUtils;
-   
    @Autowired private MessageUtils messageUtil;
 
    public void init() throws IOException {
 
       mailProperties = new Properties();
-     
+      mailProperties.setProperty("mail.transport.protocol", messageUtil.getMessage("mail.transport.protocol"));
+      mailProperties.setProperty("mail.aws.user", messageUtil.getMessage("mail.aws.user"));
+      mailProperties.setProperty("mail.aws.password", messageUtil.getMessage("mail.aws.password"));
+      fromAddress = messageUtil.getMessage("mail.from.address");
    }
 
    public void send(String toAddress, String subject, String content, boolean isHtml) {
@@ -50,7 +48,7 @@ public class EmailServiceImpl implements EmailService {
          // Create a new Message
          Session session = Session.getInstance(mailProperties);
          MimeMessage msg = new MimeMessage(session);
-         msg.setFrom(new InternetAddress(fromAddress, "Team Wuhu"));
+         msg.setFrom(new InternetAddress(fromAddress, "Admin"));
          msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
          msg.setSubject(subject);
          if (isHtml)
