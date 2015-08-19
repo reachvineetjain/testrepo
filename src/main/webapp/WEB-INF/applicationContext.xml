@@ -15,7 +15,7 @@
 
    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" autowire-candidate="true">
       <property name="basename">
-         <value>META-INF\ccighgomessages</value>
+         <value>/META-INF/ccighgomessages</value>
       </property>
    </bean>
 
