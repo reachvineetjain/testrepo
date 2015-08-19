@@ -39,7 +39,7 @@ public class Login implements Serializable {
 	private String password;
 
 	@Column(nullable=false, length=200)
-	private String key;
+	private String keyValue;
 
 	//bi-directional many-to-one association to GoIdSequence
 	@OneToOne
@@ -117,12 +117,12 @@ public class Login implements Serializable {
 		this.password = password;
 	}
 
-	public String getKey() {
-		return this.key;
+	public String getKeyValue() {
+		return this.keyValue;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setKeyValue(String keyValue) {
+		this.keyValue = keyValue;
 	}
 
 	public GoIdSequence getGoIdSequence() {
