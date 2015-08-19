@@ -1129,7 +1129,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginName(user.getLoginInfo().getLoginName());
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().getPassword());
-      login.setPasswordSalt(goIdSequence.getLogin().getPasswordSalt());
+      login.setKeyValue(goIdSequence.getLogin().getKeyValue());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setModifiedBy(goIdSequence.getGoId());
@@ -1343,7 +1343,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       String password = PasscodeGenerator.generateRandomPasscode(CCIConstants.MIN_PASS_LEN, CCIConstants.MAX_PASS_LEN, CCIConstants.MAX_UPPER_CASE, CCIConstants.MAX_NUMBERS,
             CCIConstants.MAX_SPL_CHARS).toString();
       login.setPassword(password);
-      login.setPasswordSalt(password);
+      login.setKeyValue(UuidUtils.nextHexUUID());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setModifiedBy(goIdSequence.getGoId());
