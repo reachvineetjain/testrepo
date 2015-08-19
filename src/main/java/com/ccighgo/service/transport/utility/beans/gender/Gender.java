@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**
@@ -41,7 +40,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "genderId",
     "genderCode"
 })
-public class Gender extends Response {
+public class Gender {
 
     protected int genderId;
     @XmlElement(required = true)

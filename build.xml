@@ -340,7 +340,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsuranceCountries.xsd" />
+			<arg value="${xsd.dir}/insurance/InsuranceCountries.xsd" />
 		</java>
 	</target>
 
@@ -350,7 +350,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsuranceParticipant.xsd" />
+			<arg value="${xsd.dir}/insurance/InsuranceParticipant.xsd" />
 		</java>
 	</target>
 
@@ -360,7 +360,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsurancePlan.xsd" />
+			<arg value="${xsd.dir}/insurance/InsurancePlan.xsd" />
 		</java>
 	</target>
 
@@ -370,7 +370,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsuranceStates.xsd" />
+			<arg value="${xsd.dir}/insurance/InsuranceStates.xsd" />
 		</java>
 	</target>
 

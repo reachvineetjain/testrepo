@@ -181,5 +181,13 @@ public class CCIConstants {
    public static final String SERVICE_FAILURE = "Service Failure";
    public static final String EQUAL = "=";
    public static final String BITWISE_AND = "&";
+   
+   // User Login
+   public static final String CCI_USR = "CCI";
+   public static final String PARTNER_USER = "PARTNER";
+   public static final String FIELD_STAFF_USER = "FS";
+   public static final String HOST_FAMILY_USER = "HF";
+   public static final String EMPLOYEE_USER = "EMP";
+   public static final String PARTICPANT_USER = "PARTICIPANT";
 
 }
