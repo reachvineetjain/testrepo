@@ -23,13 +23,14 @@ TRUNCATE `SeasonIHPGeographyConfiguration`;
 /*  Remove NOT NULL for seasonStatusId column in Season table */
 
 INSERT INTO Season (seasonId,seasonName,seasonFullName,departmentId,createdBy,modifiedBy) 
-VALUES  (1,'HSP AYP 2009-2010','HSP AYP 2009-2010',1,1,1),
-		(2,'HSP AYP 2010-2011','HSP AYP 2010-2011',1,1,1),
-		(3,'HSP AYP 2011-2012','HSP AYP 2011-2012',1,1,1),
-		(4,'HSP AYP 2012-2013','HSP AYP 2012-2013',1,1,1),
-		(5,'HSP AYP 2013-2014','HSP AYP 2013-2014',1,1,1),
-		(6,'HSP AYP 2014-2015','HSP AYP 2014-2015',1,1,1),
-		(7,'HSP AYP 2015-2016','HSP AYP 2015-2016',1,1,1);
+VALUES  
+(1,'HSP AYP 2009-2010','HSP AYP 2009-2010',1,1,1),
+(2,'HSP AYP 2010-2011','HSP AYP 2010-2011',1,1,1),
+(3,'HSP AYP 2011-2012','HSP AYP 2011-2012',1,1,1),
+(4,'HSP AYP 2012-2013','HSP AYP 2012-2013',1,1,1),
+(5,'HSP AYP 2013-2014','HSP AYP 2013-2014',1,1,1),
+(6,'HSP AYP 2014-2015','HSP AYP 2014-2015',1,1,1),
+(7,'HSP AYP 2015-2016','HSP AYP 2015-2016',1,1,1);
 		
 
 UPDATE `Season`
@@ -60,13 +61,14 @@ WHERE seasonId= 7;
 /*  Remove NOT NULL for seasonStartDate, seasonEndDate column in Season table */
 
 INSERT INTO SeasonHSPConfiguration (seasonId,createdBy,modifiedBy) 
-VALUES (1,1,1),
-		(2,1,1),
-		(3,1,1),
-		(4,1,1),
-		(5,1,1),
-		(6,1,1),
-		(7,1,1);
+VALUES
+(1,1,1),
+(2,1,1),
+(3,1,1),
+(4,1,1),
+(5,1,1),
+(6,1,1),
+(7,1,1);
 		
 UPDATE SeasonHSPConfiguration 
 SET seasonStartDate = (SELECT StartDate FROM `cci_go`.`season` WHERE SeasonID IN (37)),
@@ -112,7 +114,8 @@ WHERE seasonId = 7;
 -- Remove NOT NULL for seasonId in SeasonF1Details
 -- Make sure data is populated in PaymentSchedule and FieldStaffAgreement tables.
 INSERT INTO `SeasonF1Details`(`seasonF1DetailsId`,`seasonId`,`programName`,`programStatusId`,`secondSemStartDate`,`secondSemEndDate`,`secondSemAppDeadlineDate`,`secondSemEarliestBirthDate`,`secondSemLatestBirthDate`,`showSecSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearAppDeadlineDate`,`janFullYearEndDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,`firstSemEndDate`,`firstSemAppDeadlineDate`,`firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,`augFullYearEndDate`,`augFullYearAppDeadlineDate`,`showAugFullYearToNewHF`,`showSeasonToCurrentHF`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,`hfInquiryDate`,`showWelcomeFamily`,`allowFieldStaffToStartRenewalProcess`,`showSpecialRequestStudent`,`greenHeartMargin`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
-VALUES (37,1,'AYP-PSPP 2009-10',2,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,0,1,1,0,'9999-09-09',0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+VALUES 
+(37,1,'AYP-PSPP 2009-10',2,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,0,1,1,0,'9999-09-09',0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 
 
@@ -456,6 +459,28 @@ WHERE fsAgreementId = 0;
 UPDATE `SeasonJ1Details`
 SET lcPaymentScheduleId = 32
 WHERE lcPaymentScheduleId = 0;
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------
+          SeasonIHPDetails Migration
+------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+INSERT  INTO `SeasonIHPDetails`(`seasonIHPDetailsId`,`seasonId`,`programName`,`startDate`,`endDate`,`programStatusId`,`maxParticipants`,`lcHoldTime`,`numberOfLCToRequestHold`,`splitPlacementPending`,`stopAcceptingApps`,`stopAcceptingAppsByGender`,`genderId`,`applicationDeadLineWeeks`,`stopAcceptingAppsStandardIHP`,`stopAcceptingAppsVolunteerHomestay`,`stopAcceptingAppsLanguageBuddy`,`stopAcceptingAppsHolidayHomestay`,`stopAcceptingAppsHighSchoolVisits`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES 
+(1,7,'IHP-2015','9999-09-09 00:00:00','9999-09-09 00:00:00',2,0,0,0,0,0,0,1,0,0,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------
+          SeasonIHPDetailsRegionApplications Migration
+------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+INSERT  INTO `SeasonIHPDetailsRegionApplications`(`seasonIHPDetailsRegionApplicationId`,`seasonIHPDetailsId`,`regionIHPId`,`stopAcceptingApps`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
+VALUES  
+(1,1,1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,1,2,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,1,3,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(4,1,4,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(5,1,5,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),  
+(6,1,6,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
      
 
 
@@ -466,41 +491,48 @@ WHERE lcPaymentScheduleId = 0;
 
 
 INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
-VALUES (1,1,1,1), 
-       (1,3,1,1),
-       (1,5,1,1), 
-       (1,8,1,1);
+VALUES 
+(1,1,1,1), 
+(1,3,1,1),
+(1,5,1,1), 
+(1,8,1,1);
 INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
-VALUES (2,1,1,1), 
-       (2,3,1,1),
-       (2,5,1,1), 
-       (2,8,1,1);
+VALUES 
+(2,1,1,1), 
+(2,3,1,1),
+(2,5,1,1), 
+(2,8,1,1);
 INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
-VALUES (3,1,1,1), 
-       (3,3,1,1),
-       (3,5,1,1), 
-       (3,8,1,1);
+VALUES 
+(3,1,1,1), 
+(3,3,1,1),
+(3,5,1,1), 
+(3,8,1,1);
 INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
-VALUES (4,1,1,1), 
-       (4,3,1,1),
-       (4,5,1,1), 
-       (4,8,1,1);
+VALUES 
+(4,1,1,1), 
+(4,3,1,1),
+(4,5,1,1), 
+(4,8,1,1);
 INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
-VALUES (5,1,1,1), 
-       (5,3,1,1),
-       (5,5,1,1), 
-       (5,8,1,1);
+VALUES 
+(5,1,1,1), 
+(5,3,1,1),
+(5,5,1,1), 
+(5,8,1,1);
 INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
-VALUES (6,1,1,1), 
-       (6,3,1,1),
-       (6,5,1,1), 
-       (6,8,1,1);
+VALUES 
+(6,1,1,1), 
+(6,3,1,1),
+(6,5,1,1), 
+(6,8,1,1);
 
 INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
-VALUES (7,1,1,1), 
-       (7,3,1,1),
-       (7,5,1,1), 
-       (7,8,1,1);
+VALUES 
+(7,1,1,1), 
+(7,3,1,1),
+(7,5,1,1), 
+(7,8,1,1);
        
 --  J1  Allocations
     
@@ -658,26 +690,146 @@ WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=7 AND so.`SeasonI
 -------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-INSERT INTO `SeasonGeographyConfiguration` (superRegionId,regionId,usStatesId,seasonId,createdOn,createdBy,modifiedBy)
-VALUES  (1,NULL,NULL,7,CURRENT_TIMESTAMP,1,1),  
-        (1,1,NULL,7,CURRENT_TIMESTAMP,1,1),         
-        (1,1,1,7,CURRENT_TIMESTAMP,1,1),            
-        (1,1,2,7,CURRENT_TIMESTAMP,1,1),            
-        (1,1,3,7,CURRENT_TIMESTAMP,1,1),            
-        (1,1,4,7,CURRENT_TIMESTAMP,1,1),            
-        (1,1,5,7,CURRENT_TIMESTAMP,1,1),            
-        (1,2,1,7,CURRENT_TIMESTAMP,1,1),            
-        (1,2,6,7,CURRENT_TIMESTAMP,1,1),            
-        (1,2,7,7,CURRENT_TIMESTAMP,1,1),            
-        (1,2,8,7,CURRENT_TIMESTAMP,1,1),            
-        (1,2,9,7,CURRENT_TIMESTAMP,1,1),            
-        (2,NULL,NULL,7,CURRENT_TIMESTAMP,1,1),  
-        (2,3,NULL,7,CURRENT_TIMESTAMP,1,1),     
-        (2,3,1,7,CURRENT_TIMESTAMP,1,1),            
-        (2,3,11,7,CURRENT_TIMESTAMP,1,1),           
-        (2,3,12,7,CURRENT_TIMESTAMP,1,1),           
-        (2,3,13,7,CURRENT_TIMESTAMP,1,1),           
-        (2,3,14,7,CURRENT_TIMESTAMP,1,1),           
-        (2,4,11,7,CURRENT_TIMESTAMP,1,1),           
-        (2,4,15,7,CURRENT_TIMESTAMP,1,1),           
-        (2,4,16,7,CURRENT_TIMESTAMP,1,1);                                      
+INSERT INTO `SeasonGeographyConfiguration` (superRegionId,regionId,usStatesId,seasonId)
+VALUES
+(1,NULL,NULL,7),
+(1,1,NULL,7),
+(1,1,48,7),
+(1,1,32,7),
+(1,1,13,7),
+(1,1,21,7),
+(1,2,NULL,7),
+(1,2,23,7),
+(1,2,45,7),
+(1,2,3,7),
+(1,2,26,7),
+(1,3,NULL,7),
+(1,3,5,7),
+(1,3,51,7),
+(1,3,6,7),
+(1,3,22,7),
+(1,3,17,7),
+(1,3,2,7),
+(1,3,12,7),
+(2,NULL,NULL,7),
+(2,4,NULL,7),
+(2,4,29,7),
+(2,4,42,7),
+(2,4,36,7),
+(2,4,16,7),
+(2,4,50,7),
+(2,4,14,7),
+(2,5,NULL,7),
+(2,5,38,7),
+(2,5,31,7),
+(2,5,44,7),
+(2,5,1,7),
+(2,6,NULL,7),
+(2,6,18,7),
+(2,6,43,7),
+(2,6,4,7),
+(2,6,37,7),
+(2,6,19,7),
+(2,7,NULL,7),
+(3,NULL,NULL,7),
+(3,8,NULL,7),
+(3,8,35,7),
+(3,8,15,7),
+(3,8,30,7),
+(3,8,49,7),
+(3,9,NULL,7),
+(3,9,27,7),
+(3,9,39,7),
+(3,9,25,7),
+(3,9,33,7),
+(3,9,8,7),
+(3,9,47,7),
+(3,9,28,7),
+(3,9,41,7),
+(3,9,11,7),
+(3,9,10,7),
+(3,10,NULL,7),
+(3,10,20,7),
+(3,10,46,7),
+(3,10,24,7),
+(3,10,34,7),
+(3,10,7,7),
+(3,10,40,7);
+
+UPDATE SeasonGeographyConfiguration SET createdBy = 1,modifiedBy = 1;   
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Insert data for SeasonIHPGeographyConfiguration table 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+INSERT INTO SeasonIHPGeographyConfiguration (regionIHPId,usStatesId,seasonId)
+VALUES 
+(1,NULL,7),
+(1,7,7),
+(1,9,7),
+(1,22,7),
+(1,21,7),
+(1,20,7),
+(1,31,7),
+(1,32,7),
+(1,35,7),
+(1,39,7),
+(1,40,7),
+(1,47,7),
+(1,46,7),
+(1,48,7),
+(2,NULL,7),
+(2,15,7),
+(2,16,7),
+(2,13,7),
+(2,23,7),
+(2,24,7),
+(2,25,7),
+(2,36,7),
+(2,50,7),
+(2,49,7),
+(2,30,7),
+(2,17,7),
+(3,NULL,7),
+(3,6,7),
+(3,4,7),
+(3,14,7),
+(3,27,7),
+(3,33,7),
+(3,34,7),
+(3,42,7),
+(3,29,7),
+(3,45,7),
+(3,51,7),
+(3,48,7),
+(3,38,7),
+(4,NULL,7),
+(4,5,7),
+(5,NULL,7),
+(5,2,7),
+(5,3,7),
+(5,10,7),
+(5,11,7),
+(5,18,7),
+(5,19,7),
+(5,26,7),
+(5,28,7),
+(5,41,7),
+(5,43,7),
+(5,44,7),
+(5,37,7),
+(5,50,7),
+(6,NULL,7),
+(6,12,7),
+(6,1,7);
+
+UPDATE SeasonIHPGeographyConfiguration
+SET createdOn = CURRENT_TIMESTAMP,
+createdBy = 1,
+modifiedOn = CURRENT_TIMESTAMP,
+modifiedBy = 1;
+
+
+
+		
