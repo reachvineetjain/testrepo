@@ -16,6 +16,7 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
 
 /**
  * Service Interface for all user management related operations
@@ -136,7 +137,5 @@ public interface UserManagementService {
     
   
     public User updateUser(User user);
-    
-    
 
 }

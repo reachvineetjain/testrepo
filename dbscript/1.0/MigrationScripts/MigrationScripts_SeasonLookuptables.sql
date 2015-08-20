@@ -21,6 +21,9 @@ TRUNCATE `SeasonDepartmentUpdateLog` ;
 TRUNCATE `SeasonProgramDocument`;
 TRUNCATE `SeasonProgramNotes`;
 TRUNCATE `SeasonProgramUpdateLog`;
+TRUNCATE `Region` ;
+TRUNCATE `RegionIHP` ;
+TRUNCATE `SuperRegion`;
 
 
 
@@ -49,7 +52,7 @@ VALUES
 (6,2,'W&T Summer','Work and travel summer program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (7,2,'W&T Winter','Work and travel winter program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (8,2,'W&T Spring','Work and travel spring program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(9,2,'W&T CAP','Work and travel CAP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(9,2,'CAP','Career Advancement Program',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (10,3,'HS Abroad','Highschool abroad',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (11,3,'Language School','Language School',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (12,3,'Teach Abroad','Teach Abroad',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -110,3 +113,31 @@ VALUES
 (30,'PSPP Area Representative Stipend Schedule'),
 (31,'PSPP Area Representative Stipend Schedule'),
 (32,'Undefined');
+
+INSERT INTO `RegionIHP` (regionName,active,createdBy,modifiedOn,modifiedBy)
+VALUES   
+('Atlantic',1,1,CURRENT_TIMESTAMP,1),
+('Midwest',1,1,CURRENT_TIMESTAMP,1),
+('West',1,1,CURRENT_TIMESTAMP,1),
+('California',1,1,CURRENT_TIMESTAMP,1),
+('South',1,1,CURRENT_TIMESTAMP,1),
+('Non-Contiguous',1,1,CURRENT_TIMESTAMP,1);
+
+INSERT INTO `SuperRegion` (`superRegionId`, `superRegionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+VALUES
+(1,'West',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(2,'Central',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
+(3,'East',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+
+INSERT INTO `Region` (`regionId`, `regionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
+VALUES
+( 1 ,'Region Leah', 1 , CURRENT_TIMESTAMP, 1 , CURRENT_TIMESTAMP , 1 ),
+( 2 ,'Region Kendra', 1 , CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 3 ,'Region Lori', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 4 ,'Region Sally', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 5 ,'Region Connie', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 6 ,'Region Angela', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 7 ,'Region Emma', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 8 ,'Region Jennifer', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 9 ,'Region Rob', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ),
+( 10 ,'Region Kathy', 1 ,CURRENT_TIMESTAMP, 1 ,CURRENT_TIMESTAMP, 1 ); 
