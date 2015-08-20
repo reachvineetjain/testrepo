@@ -36,12 +36,14 @@ import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Program;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Region;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
+import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Role;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.State;
@@ -562,6 +564,15 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
+   @Override
+   public void forgotPassword(ForgotRequest req) {
+      // TODO Auto-generated method stub
+      
+   }
 
+   @Override
+   public void resetPassword(ResetRequest req) {
+      // TODO Auto-generated method stub
+   }
    
 }

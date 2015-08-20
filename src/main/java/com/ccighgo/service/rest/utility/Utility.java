@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.utility.UtilityServices;
@@ -14,9 +15,11 @@ import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
+import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
@@ -190,6 +193,24 @@ public class Utility {
    @Produces("application/json")
    public Genders getGenders() {
       return utilityServices.getGenders();
+   }
+   
+   /**
+    * @param req
+    */
+   @POST
+   @Path("forgot/access/request")
+   public void forgotPassword(ForgotRequest req){
+      utilityServices.forgotPassword(req);
+   }
+   
+   /**
+    * @param req
+    */
+   @POST
+   @Path("reset/access/request")
+   public void resetPassword(ResetRequest req){
+      utilityServices.resetPassword(req);
    }
 
 }
