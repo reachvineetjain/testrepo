@@ -540,6 +540,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   assignedStateStaff.setLastName(fieldStaff.getLastName());
                   assignedStateStaff.setPhoto(fieldStaff.getPhoto());
                   assignedStateStaff.setStaffId(fieldStaff.getFieldStaffId());
+                  assignedStateStaff.setRole(fieldStaff.getFieldStaffType().getFieldStaffType());
                   if (staffExist.get(fieldStaff.getFieldStaffId()) == null) {
                      staffExist.put(fieldStaff.getFieldStaffId(), assignedStateStaff);
                   }
