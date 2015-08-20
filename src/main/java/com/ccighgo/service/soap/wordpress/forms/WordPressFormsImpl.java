@@ -1,5 +1,7 @@
 package com.ccighgo.service.soap.wordpress.forms;
 
+import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
@@ -11,15 +13,42 @@ public class WordPressFormsImpl implements IWordPressForms {
    public static final Logger LOGGER = Logger.getLogger(WordPressFormsImpl.class);
 
    @Override
-   public boolean InquiryPartner(InternationalPartners InternationalPartners) {
-      LOGGER.info("Inquiry partner Is Called !!!");
+   public String InquiryPartner(InternationalPartners InternationalPartners) {
+      LOGGER.info("Inquiry partner Is Called !!d!");
       System.out.println("Inquiry partner Is Called !!!");
       if (InternationalPartners != null) {
          LOGGER.info("Name " + InternationalPartners.getLegalBusinessName());
          System.out.println("Name :" + InternationalPartners.getLegalBusinessName());
+         System.out.println("Address :" + InternationalPartners.getAddress());
+         System.out.println("FName :" + InternationalPartners.getFirstName());
+         System.out.println("LName :" + InternationalPartners.getLastName());
+         System.out.println("Email :" + InternationalPartners.getEmail());
+         System.out.println("Phone :" + InternationalPartners.getPhone());
+         System.out.println("Prefix :" + InternationalPartners.getPrefix());
+         System.out.println("Years In Business :" + InternationalPartners.getYearsInBusiness());
+         System.out.println("Country :" + InternationalPartners.getCounrty());
+         System.out.println("City :" + InternationalPartners.getCity());
+         if (InternationalPartners.getPrograms() != null) {
+            System.out.println("Programs :" + Arrays.toString(InternationalPartners.getPrograms().toArray()));
+         }
       }
-
-      return true;
+      if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
+         String string = "200 : Success";
+         System.out.println(string);
+         return string;
+      } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
+         String string = "400 : Duplicate Row";
+         System.out.println(string);
+         return string;
+      } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
+         String string = "500 : Failed To Process Record ! Contact Admin";
+         System.out.println(string);
+         return string;
+      } else {
+         String string = "300 : Missing Information";
+         System.out.println(string);
+         return string;
+      }
    }
 
    @Override

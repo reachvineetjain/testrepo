@@ -25,9 +25,19 @@ public class BackgroundCheck {
    @POST
    @Path("requestScreen")
    @Produces("application/json")
+   @Consumes("application/json")
    public ScreenResponse requestScreen(ScreenRequest screenRequest) {
       LOGGER.debug("Calling func:requestScreen");
       return backgroundServiceInterface.requestScreen(screenRequest);
+   }
+
+   @POST
+   @Path("response")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public String test(ScreenResponse screenRequest) {
+      LOGGER.debug("TEST");
+      return backgroundServiceInterface.test(screenRequest);
    }
 
 }

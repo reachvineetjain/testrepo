@@ -31,8 +31,8 @@ public class InternationalPartners {
    protected String website;
    protected List<String> programs;
    protected List<String> typeOfPrograms;
-   protected boolean currentlySendingParticipant;
-   protected int yearsInBusiness;
+   protected Boolean currentlySendingParticipant;
+   protected Integer yearsInBusiness;
    protected String descriptionOfPrograms;
    protected String hearedAboutUs;
 
@@ -148,24 +148,24 @@ public class InternationalPartners {
       this.typeOfPrograms = typeOfPrograms;
    }
 
-   public boolean isCurrentlySendingParticipant() {
+   public String getDescriptionOfPrograms() {
+      return descriptionOfPrograms;
+   }
+
+   public Boolean getCurrentlySendingParticipant() {
       return currentlySendingParticipant;
    }
 
-   public void setCurrentlySendingParticipant(boolean currentlySendingParticipant) {
+   public void setCurrentlySendingParticipant(Boolean currentlySendingParticipant) {
       this.currentlySendingParticipant = currentlySendingParticipant;
    }
 
-   public int getYearsInBusiness() {
+   public Integer getYearsInBusiness() {
       return yearsInBusiness;
    }
 
-   public void setYearsInBusiness(int yearsInBusiness) {
+   public void setYearsInBusiness(Integer yearsInBusiness) {
       this.yearsInBusiness = yearsInBusiness;
-   }
-
-   public String getDescriptionOfPrograms() {
-      return descriptionOfPrograms;
    }
 
    public void setDescriptionOfPrograms(String descriptionOfPrograms) {
