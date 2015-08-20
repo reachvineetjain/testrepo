@@ -44,6 +44,7 @@
             /services/regionAssignment/**= anon
             /services/findForm/**=anon
             /services/updateLog/**=anon
+            /services/backgroundcheck/**=anon
             /services/** = authc
          </value>
       </property>
