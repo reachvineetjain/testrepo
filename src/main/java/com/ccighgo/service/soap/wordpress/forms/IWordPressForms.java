@@ -15,7 +15,7 @@ import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPart
 public interface IWordPressForms {
 
    @WebMethod
-   boolean InquiryPartner(@WebParam(name = "data") InternationalPartners InternationalPartners);
+   String InquiryPartner(@WebParam(name = "data") InternationalPartners InternationalPartners);
 
    @WebMethod
    boolean GenerateNewHostFamily(@WebParam(name = "data") HostFamilyData HostFamilyData);
