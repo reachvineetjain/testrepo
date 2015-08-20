@@ -37,6 +37,9 @@ public class Login implements Serializable {
 
 	@Column(nullable=false, length=100)
 	private String password;
+	
+	@Column(nullable=false, length=100)
+   private String passwordSalt;
 
 	@Column(nullable=false, length=200)
 	private String keyValue;
@@ -198,5 +201,13 @@ public class Login implements Serializable {
 
 		return passwordHistory;
 	}
+
+   public String getPasswordSalt() {
+      return passwordSalt;
+   }
+
+   public void setPasswordSalt(String passwordSalt) {
+      this.passwordSalt = passwordSalt;
+   }
 
 }

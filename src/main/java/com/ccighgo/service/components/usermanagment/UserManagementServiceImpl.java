@@ -317,6 +317,16 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
             return usr;
          }
+         //findByemail
+         
+         if (cciUsersRepository.findByemail(user.getEmail()) != null) {
+            // return username already exsist
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_CREATE_USER_EMAIL_EXIST.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
+            return usr;
+         }
+         
          String cciAdminGuid = createUserDetails(user);
          if (cciAdminGuid == null) {
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_DETAILS_CREATION.getValue(),
@@ -1129,6 +1139,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginName(user.getLoginInfo().getLoginName());
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().getPassword());
+      login.setPasswordSalt(goIdSequence.getLogin().getPasswordSalt());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1349,6 +1360,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setModifiedBy(goIdSequence.getGoId());
       login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setGoIdSequence(goIdSequence);
+      login.setPasswordSalt("");
       // login.setUserTypeId(1);
       login = loginRepository.save(login);
       // byte active = 1;
