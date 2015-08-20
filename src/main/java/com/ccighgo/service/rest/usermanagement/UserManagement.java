@@ -72,6 +72,13 @@ public class UserManagement {
     public CCIUsers getAllUsers(@PathParam("pageNo") String pageNo, @PathParam("size") String size) {
         return userMgmtServices.getAllCCIUsers(pageNo, size);
     }
+    
+    @GET
+    @Path("get-all-users")
+    @Produces("application/json")
+    public CCIUsers findAllUsers() {
+        return userMgmtServices.findAllUsers();
+    }
 
     /**
      * RESTFul service gets user by id for edit
