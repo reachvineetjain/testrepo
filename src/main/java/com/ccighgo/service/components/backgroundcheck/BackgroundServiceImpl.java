@@ -14,6 +14,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import com.ccighgo.service.rest.backgroundcheck.BackgroundCheck;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ObjectFactory;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ScreenRequest;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Account;
+import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Applicant;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;
 import com.ccighgo.utils.ExceptionUtil;
 import com.google.gson.Gson;
@@ -52,19 +54,76 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          System.out.println(responseString);
          JSONObject xmlJSONObj = XML.toJSONObject(responseString);
          ScreenResponse screenResponse = new ScreenResponse();
-         JSONObject screenResObject = xmlJSONObj.getJSONObject("ScreenResponse");
-         JSONObject jsonAccountObject = screenResObject.getJSONObject("Account");
-
-         screenResponse.setDateTime(String.valueOf(screenResObject.get("DateTime")));
-         screenResponse.setResponseCode(String.valueOf(screenResObject.get("ResponseCode")));
-         Account account = new Account();
-         account.setAcctNbr(String.valueOf(jsonAccountObject.getString("AcctNbr")));
-         screenResponse.setAccount(account);
+         parseResult(xmlJSONObj, screenResponse);
          return screenResponse;
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          return null;
       }
+   }
+
+   private void parseResult(JSONObject xmlJSONObj, ScreenResponse screenResponse) {
+      JSONObject screenResObject = xmlJSONObj.getJSONObject("ScreenResponse");
+      JSONObject jsonAccountObject = screenResObject.getJSONObject("Account");
+      try {
+         screenResponse.setDateTime(String.valueOf(screenResObject.get("DateTime")));
+      } catch (Exception e) {
+      }
+
+      try {
+         screenResponse.setResponseCode(String.valueOf(screenResObject.get("ResponseCode")));
+      } catch (Exception e) {
+      }
+      Account account = new Account();
+      try {
+         account.setAcctNbr(String.valueOf(jsonAccountObject.get("AcctNbr")));
+      } catch (Exception e) {
+      }
+      try {
+         account.setBatchNo(String.valueOf(jsonAccountObject.get("BatchNo")));
+      } catch (Exception e) {
+      }
+      try {
+         account.setResponseCode(String.valueOf(jsonAccountObject.get("ResponseCode")));
+      } catch (Exception e) {
+      }
+      try {
+         JSONArray applicants = jsonAccountObject.getJSONArray("Applicant");
+         for (int i = 0; i < applicants.length(); i++) {
+            try {
+               Object obj = applicants.get(i);
+               if (obj != null) {
+                  JSONObject applicantJsonObject = (JSONObject) obj;
+                  Applicant applicant = new Applicant();
+                  try {
+                     applicant.setApplicantID(String.valueOf(applicantJsonObject.get("ApplicantID")));
+                  } catch (Exception e) {
+                  }
+                  try {
+                     applicant.setErrorMessage(String.valueOf(applicantJsonObject.get("ErrorMessage")));
+                  } catch (Exception e) {
+                  }
+                  try {
+                     applicant.setFileNo(String.valueOf(applicantJsonObject.get("FileNo")));
+                  } catch (Exception e) {
+                  }
+                  try {
+                     applicant.setFileURL(String.valueOf(applicantJsonObject.get("FileURL")));
+                  } catch (Exception e) {
+                  }
+                  try {
+                     applicant.setResponseCode(String.valueOf(applicantJsonObject.get("ResponseCode")));
+                  } catch (Exception e) {
+                  }
+                  account.getApplicant().add(applicant);
+               }
+            } catch (Exception e) {
+            }
+         }
+      } catch (Exception e) {
+      }
+
+      screenResponse.setAccount(account);
    }
 
    public static void main(String[] args) {
