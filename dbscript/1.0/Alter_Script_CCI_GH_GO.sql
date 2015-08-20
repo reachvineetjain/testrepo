@@ -25,3 +25,8 @@ ALTER TABLE `cci_gh_go`.`CCIStaffUsers`
 SET FOREIGN_KEY_CHECKS = 1;
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--- Alter script for adding Unique Key to sesaonName column in Season table on 20th Aug 2015------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `cci_gh_go`.`Season` ADD UNIQUE INDEX IND_seasonName(seasonName);
