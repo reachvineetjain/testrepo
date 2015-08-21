@@ -134,15 +134,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             return superRegionsERDs;
          } else {
-            int listSize = list.size();
-            for(int i =0 ; i< listSize;i++) {
-                 if(list.get(i).getSuperRegionId().equals(superRegionId)){
-                    if(i==0)
-                       break;
-                    list.add(0,list.remove(i));
-                    break;
-                 }
-            }
             for (SuperRegion superRegion : list) {
                com.ccighgo.service.transport.season.beans.assignedsuperregion.SuperRegion sr = new com.ccighgo.service.transport.season.beans.assignedsuperregion.SuperRegion();
 
@@ -167,6 +158,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                            if (superRegionId != null && superRegionId.equals(superRegion.getSuperRegionId()))
                               continue;
                            superRegionsERDs.getAssignedERDStaffs().add(assignedERDStaff);
+                        }else{
+                           if (superRegionId != null && superRegionId.equals(superRegion.getSuperRegionId()))
+                              try {
+                                 superRegionsERDs.getAssignedERDStaffs().remove(assignedERDStaff);
+                              } catch (Exception e) {
+                              }
                         }
 
                      }
@@ -362,6 +359,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                            if (regionId != null && regionId.equals(region.getRegionId()))
                               continue;
                            regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
+                        }else{
+                           if (regionId != null && regionId.equals(region.getRegionId()))
+                              try {
+                                 regionsRDs.getAssignedRDStaffs().remove(assignedRDStaff);
+                              } catch (Exception e) {
+                              }
                         }
                      }
                   }
