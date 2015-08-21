@@ -215,6 +215,57 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return cciUsers;
    }
+   
+   @Override
+   @Transactional(readOnly = true)
+   public CCIUsers findAllUsers()
+   {
+      CCIUsers cciUsers = null;
+      Long numberOfRecords =0L;
+      List<CCIStaffUser> cciUserDBList = null;
+      try{
+         numberOfRecords = cciUsersRepository.count();
+         cciUserDBList = cciUsersRepository.findAll();
+         
+         if(cciUserDBList == null){
+            cciUsers = setCCiUsersStatus(cciUsers,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+            return cciUsers;
+         }
+
+            List<CCIUser> cciUserList = null;
+            if (cciUserDBList.size() > 0) {
+               cciUsers = new CCIUsers();
+               cciUsers.setRecordCount(numberOfRecords.intValue());
+               cciUserList = new ArrayList<CCIUser>();
+               for (CCIStaffUser cUsr : cciUserDBList) {
+                  CCIUser cciUser = getUserDetails(cUsr);
+                  if (cciUser == null) {
+                     cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+                           messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
+                     LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
+                     return cciUsers;
+                  }
+                  cciUserList.add(cciUser);
+               }
+               cciUsers.getCciUsers().addAll(cciUserList);
+               cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            } else {
+               cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+                     messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+               LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+            }
+         
+         
+      }
+      catch (CcighgoServiceException e) {
+         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_USERS.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
+      }
+      return cciUsers;
+   }
 
    @Override
    @Transactional(readOnly = true)
@@ -317,6 +368,16 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
             return usr;
          }
+         //findByemail
+         
+         if (cciUsersRepository.findByemail(user.getEmail()) != null) {
+            // return username already exsist
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_CREATE_USER_EMAIL_EXIST.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
+            return usr;
+         }
+         
          String cciAdminGuid = createUserDetails(user);
          if (cciAdminGuid == null) {
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_DETAILS_CREATION.getValue(),
@@ -780,7 +841,6 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    @Transactional
-
    public List<UserNotes> getUserNotesById(String id){
       List<UserNotes> userNotes =null;
       try{
@@ -1033,6 +1093,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<UserNotes> userNotes = new ArrayList<UserNotes>();
       for (CCIStaffUserNote note : cciUser.getCcistaffUserNotes()) {
          UserNotes uNote = new UserNotes();
+         note.setCcistaffUser(cciUser);
          userNotes.add(getCCIStaffUserNoteTO(note, uNote));
       }
       return userNotes;
@@ -1229,6 +1290,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       uNote.setCciUserId(cciStaffUserNote.getCcistaffUser().getCciStaffUserId());
       uNote.setUserNotesId(cciStaffUserNote.getCciStaffUserNoteId());
       uNote.setUserNote(cciStaffUserNote.getNote());
+      uNote.setCreatedBy(cciStaffUserNote.getCcistaffUser().getGoIdSequence().getLogin().getLoginName());
+      uNote.setCreatedOn(cciStaffUserNote.getCreatedOn().toString());
       return uNote;
    }
 
@@ -1536,6 +1599,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setFirstName(cUsr.getFirstName());
       cciUser.setLastName(cUsr.getLastName());
       cciUser.setEmail(cUsr.getEmail());
+      cciUser.setLoginName(cUsr.getGoIdSequence().getLogin().getLoginName());
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
       // update country
