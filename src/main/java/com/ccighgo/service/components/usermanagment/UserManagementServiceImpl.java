@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.CCIStaffRolesDepartment;
 import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.CCIStaffUserNote;
 import com.ccighgo.db.entities.CCIStaffUserProgram;
@@ -624,11 +625,61 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
 
    }
-
+   
    @Override
    @Transactional(readOnly = true)
    public Departments getDepartmentWithPermissions() {
       List<LookupDepartment> lookupDepartments = departmentRepository.findAll();
+      Departments departments = null;
+      if (lookupDepartments == null) {
+         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+         return departments;
+      }
+      try {
+         departments = getDepartment(lookupDepartments);
+         if (departments == null) {
+            departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+            return departments;
+         }
+         departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return departments;
+      } catch (CcighgoServiceException e) {
+         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
+         return departments;
+      }
+   }
+   
+   
+
+   @Override
+   @Transactional(readOnly = true)
+   public Departments getDepartmentWithPermissionsByRole(String roleId) {
+      List<LookupDepartment> lookupDepartments = null;
+      if(roleId==null){
+     lookupDepartments = departmentRepository.findAll();
+      }else {
+         CCIStaffRole role = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
+         lookupDepartments = new ArrayList<LookupDepartment>();
+         for(CCIStaffRolesDepartment roleDepartment : role.getCcistaffRolesDepartments()) {            
+            boolean isDublicate = false;
+            //need to validate is it unique 
+            for(LookupDepartment department : lookupDepartments) { 
+               if(department.getDepartmentId()== roleDepartment.getLookupDepartment().getDepartmentId()) {
+                  isDublicate = true;
+               }     
+            }
+            if(!isDublicate)
+            lookupDepartments.add(roleDepartment.getLookupDepartment());         
+         }         
+      }
+            
       Departments departments = null;
       if (lookupDepartments == null) {
          departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
@@ -1162,7 +1213,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(CCIConstants.ACTIVE);
+      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1191,6 +1242,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().getPassword());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
+      login.setEmail(goIdSequence.getLogin().getEmail());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setModifiedBy(goIdSequence.getGoId());
@@ -1375,7 +1427,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(CCIConstants.ACTIVE);
+      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       // update user country
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1412,6 +1464,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setModifiedBy(goIdSequence.getGoId());
       login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setGoIdSequence(goIdSequence);
+      login.setEmail(user.getEmail());
       // login.setUserTypeId(1);
       login = loginRepository.save(login);
       // byte active = 1;

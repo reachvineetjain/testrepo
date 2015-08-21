@@ -69,6 +69,8 @@ public interface UserManagementService {
 	 */
 	public Departments getDepartmentWithPermissions();
 	
+	public Departments getDepartmentWithPermissionsByRole(String roleId);
+	
 	/**
      * Updates user permissions
      * 

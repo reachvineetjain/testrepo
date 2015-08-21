@@ -140,6 +140,13 @@ public class UserManagement {
        
        return userMgmtServices.getDepartmentWithPermissions();
     }
+    
+    @GET
+    @Path("department-with-permissions-by-role/{roleId}")
+    @Produces("application/json")
+    public Departments getStaffUserDepartmentPermissionsByRole(@PathParam("roleId")String roleId) {
+       return userMgmtServices.getDepartmentWithPermissionsByRole(roleId);
+    }
 
     /**
      * RESTFul service updates user permissions
