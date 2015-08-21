@@ -371,7 +371,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
          } else {
             int listSize = list.size();
             for(int i =0 ; i< listSize;i++) {
-                 if(list.get(i).getRegion().getRegionId().equals(superRegionId)){
+                 if(list.get(i).getRegion().getRegionId().equals(regionId)){
                     if(i==0)
                        break;
                     list.add(0,list.remove(i));
