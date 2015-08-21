@@ -575,10 +575,10 @@ public class UtilityServicesImpl implements UtilityServices {
       if(req.getEmail() == null){
          
       }
-     /* Login loginUser = loginRepository.findByEmail(req.getEmail());*/
+      Login loginUser = loginRepository.findByEmail(req.getEmail());
       EmailServiceImpl email = new EmailServiceImpl();
-      //email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginUser.getKeyValue()), false);
-      email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK, false);
+      email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginUser.getKeyValue()), false);
+      //email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK, false);
 
    }
 
@@ -591,6 +591,7 @@ public class UtilityServicesImpl implements UtilityServices {
             Login tempLogin = new Login();
             tempLogin.setLoginId(login.getLoginId());
             tempLogin.setLoginName(login.getLoginName());
+            tempLogin.setEmail(login.getEmail());
             tempLogin.setKeyValue(UuidUtils.nextHexUUID());
             tempLogin.setPassword(req.getPasskey());
             tempLogin.setCreatedBy(login.getCreatedBy());

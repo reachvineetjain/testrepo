@@ -25,8 +25,8 @@ public interface LoginRepository extends JpaRepository<Login, Integer> {
     public Login findByGoId(GoIdSequence goIdSequence);
     
    
-    @Query("SELECT l FROM Login l where l.goIdSequence = ?1")
-    public Login findByEmail(GoIdSequence goIdSequence);
+    @Query("SELECT l FROM Login l where l.email = ?1")
+    public Login findByEmail(String email);
     
     
     @Query("SELECT l FROM Login l where l.keyValue = ?1")

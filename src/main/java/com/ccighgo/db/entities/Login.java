@@ -40,6 +40,9 @@ public class Login implements Serializable {
 
 	@Column(nullable=false, length=200)
 	private String keyValue;
+	
+	@Column(nullable=false, length=50)
+   private String email;
 
 	//bi-directional many-to-one association to GoIdSequence
 	@OneToOne
@@ -125,7 +128,15 @@ public class Login implements Serializable {
 		this.keyValue = keyValue;
 	}
 
-	public GoIdSequence getGoIdSequence() {
+	public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+   public GoIdSequence getGoIdSequence() {
 		return this.goIdSequence;
 	}
 
