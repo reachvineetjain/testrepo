@@ -34,6 +34,8 @@ public interface UserManagementService {
 	 * @return list of CCI Users
 	 */
 	public CCIUsers getAllCCIUsers(String pageNo, String size);
+	
+	public CCIUsers findAllUsers();
 
 	/**
 	 * The method will be used by edit calls on user, will return user details
@@ -66,6 +68,8 @@ public interface UserManagementService {
 	 * @return list of permissions
 	 */
 	public Departments getDepartmentWithPermissions();
+	
+	public Departments getDepartmentWithPermissionsByRole(String roleId);
 	
 	/**
      * Updates user permissions

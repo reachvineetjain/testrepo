@@ -41,7 +41,9 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @XmlType(name = "UserNotes", propOrder = {
     "cciUserId",
     "userNotesId",
-    "userNote"
+    "userNote",
+    "createdOn",
+    "createdBy"
 })
 public class UserNotes extends Response {
 
@@ -49,6 +51,10 @@ public class UserNotes extends Response {
     protected int userNotesId;
     @XmlElement(required = true)
     protected String userNote;
+    @XmlElement(required = true)
+    protected String createdOn;
+    @XmlElement(required = true)
+    protected String createdBy;
 
     /**
      * Gets the value of the cciUserId property.
@@ -104,6 +110,22 @@ public class UserNotes extends Response {
      */
     public void setUserNote(String value) {
         this.userNote = value;
+    }
+
+    public String getCreatedOn() {
+       return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+       this.createdOn = createdOn;
+    }
+
+    public String getCreatedBy() {
+       return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+       this.createdBy = createdBy;
     }
 
 }

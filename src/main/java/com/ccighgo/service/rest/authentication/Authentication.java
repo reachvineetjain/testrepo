@@ -44,13 +44,5 @@ public class Authentication {
 		SecurityUtils.getSubject().logout();
 		LOGGER.debug("User '{}' logged out", user);
 	}
-	
-	@GET
-   @Path("reset/password")
-   public void resetPassword(){
-      String user = SecurityUtils.getSubject().getPrincipal().toString();
-      SecurityUtils.getSubject().logout();
-      LOGGER.debug("User '{}' logged out", user);
-   }
 
 }

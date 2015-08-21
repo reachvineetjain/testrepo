@@ -27,4 +27,6 @@ public class UserManagementMessageConstants {
 	   public static final String FAILED_USER_NOTES_NULL="error.get.user.notes.null";
 	   public static final String FAILED_GET_USER_NOTES="error.get.user.notes";
 	   public static final String FAILED_GET_GENDER_LIST="error.get.gender.list";
+	   public static final String USR_MGMT_CREATE_USER_EMAIL_EXIST="error.create.user.email.exist";
+	   
 }
