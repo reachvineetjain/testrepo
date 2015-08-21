@@ -1190,7 +1190,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginName(user.getLoginInfo().getLoginName());
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().getPassword());
-      login.setPasswordSalt(goIdSequence.getLogin().getPasswordSalt());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1413,7 +1412,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setModifiedBy(goIdSequence.getGoId());
       login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setGoIdSequence(goIdSequence);
-      login.setPasswordSalt("");
       // login.setUserTypeId(1);
       login = loginRepository.save(login);
       // byte active = 1;
