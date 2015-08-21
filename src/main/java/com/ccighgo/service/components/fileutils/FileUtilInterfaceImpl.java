@@ -19,7 +19,6 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.utils.CCIConstants;
 
 @Component
@@ -39,7 +38,7 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
    @Override
    public String cloneUploadedFile(String filePath) {
       if(filePath==null || filePath.isEmpty()){
-         throw new InvalidServiceConfigurationException("Please check your upload path/url. It cannot be null or malformed");
+        //throw exception
       }
       String returnUrl = null;
       if (filePath.startsWith(CCIConstants.HTTP) || filePath.startsWith(CCIConstants.HTTPS) || filePath.startsWith(CCIConstants.FTP)) {
@@ -54,7 +53,7 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
    @Override
    public String uploadFile(String filePath) {
       if(filePath==null || filePath.isEmpty()){
-         throw new InvalidServiceConfigurationException("Please check your upload path/url. It cannot be null or malformed");
+         //throw exception
       }
       String returnUrl = null;
       if (filePath.startsWith(CCIConstants.HTTP) || filePath.startsWith(CCIConstants.HTTPS) || filePath.startsWith(CCIConstants.FTP)) {

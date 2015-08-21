@@ -22,7 +22,6 @@ import com.ccighgo.db.entities.SeasonProgramDocument;
 import com.ccighgo.db.entities.SeasonProgramNote;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
-import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
@@ -331,7 +330,7 @@ public class SeasonIHPProgramHelper {
             }
             returnObject = stpIhpDetails;
          } else {
-            throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + stpIhpDetails.getSeasonProgramId() + ". Please contact support.");
+            LOGGER.debug("we cannot find the program for the id: " + stpIhpDetails.getSeasonProgramId() + ". Please contact support.");
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -366,7 +365,6 @@ public class SeasonIHPProgramHelper {
             returnObject = nameAndStatus;
          } else {
             LOGGER.debug("update nameAndStatus HSP_STP_IHP failed because no season program found for the id: " + nameAndStatus.getSeasonProgramId());
-            throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + nameAndStatus.getSeasonProgramId() + ". Please contact support.");
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -396,7 +394,6 @@ public class SeasonIHPProgramHelper {
             returnObject = dates;
          } else {
             LOGGER.debug("update dates HSP_STP_IHP failed because no season program found for the id: " + dates.getSeasonProgramId());
-            throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + dates.getSeasonProgramId() + ". Please contact support.");
          }
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -450,8 +447,6 @@ public class SeasonIHPProgramHelper {
             returnObject = getIHPConfiguration(seasonIHPDetail.getSeasonIHPDetailsId());
          } else {
             LOGGER.debug("update ihpProgramConfiguration HSP_STP_IHP failed because no season program found for the id: " + ihpProgramConfiguration.getSeasonProgramId());
-            throw new InvalidServiceConfigurationException("oops.. we cannot find the program for the id: " + ihpProgramConfiguration.getSeasonProgramId()
-                  + ". Please contact support.");
          }
 
       } catch (CcighgoException e) {
@@ -479,13 +474,11 @@ public class SeasonIHPProgramHelper {
             documentInformation.setDocumentName(ihpDocument.getDocName());
          } else {
             LOGGER.debug("update HSP_STP_IHP documents failed because document name cannot be null: " + ihpDocument.getSeasonProgramId());
-            throw new InvalidServiceConfigurationException("Document name cannot be null");
          }
          if (ihpDocument.getDocUrl() != null) {
             documentInformation.setUrl(ihpDocument.getDocUrl());
          } else {
             LOGGER.debug("update HSP_STP_IHP documents failed because document url cannot be null:" + ihpDocument.getSeasonProgramId());
-            throw new InvalidServiceConfigurationException("Document url cannot be null");
          }
          if (ihpDocument.getDocType() != null) {
             DocumentTypeDocumentCategoryProcess categoryProcess = documentTypeDocumentCategoryProcessRepository.findByDocumentType(ihpDocument.getDocType());
@@ -493,7 +486,6 @@ public class SeasonIHPProgramHelper {
                documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(ihpDocument.getDocType()));
             } else {
                LOGGER.debug("update HSP_STP_IHP documents failed because document type selected is not found in system: " + ihpDocument.getDocType());
-               throw new InvalidServiceConfigurationException("Invalid document type, you selected " + ihpDocument.getDocType() + ". Please select a valid document type");
             }
          }
          documentInformation.setCreatedBy(1);
