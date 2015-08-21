@@ -189,5 +189,7 @@ public class CCIConstants {
    public static final String HOST_FAMILY_USER = "HF";
    public static final String EMPLOYEE_USER = "EMP";
    public static final String PARTICPANT_USER = "PARTICIPANT";
+   public static final String RESET_PASSWORD_LINK = "";
+   public static final String RESET_PASSWORD_SUBJECT = "Reset Password";
 
 }

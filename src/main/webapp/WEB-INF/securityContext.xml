@@ -38,6 +38,7 @@
             /services/findForm/**=anon
             /services/updateLog/**=anon
             /services/backgroundcheck/**=anon
+            /services/gciapi/**=anon
             /services/** = authc
          </value>
       </property>
