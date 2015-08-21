@@ -1,5 +1,6 @@
 package com.ccighgo.service.components.regionassignment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -133,6 +134,15 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             return superRegionsERDs;
          } else {
+            int listSize = list.size();
+            for(int i =0 ; i< listSize;i++) {
+                 if(list.get(i).getSuperRegionId().equals(superRegionId)){
+                    if(i==0)
+                       break;
+                    list.add(0,list.remove(i));
+                    break;
+                 }
+            }
             for (SuperRegion superRegion : list) {
                com.ccighgo.service.transport.season.beans.assignedsuperregion.SuperRegion sr = new com.ccighgo.service.transport.season.beans.assignedsuperregion.SuperRegion();
 
@@ -359,6 +369,15 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             return regionsRDs;
          } else {
+            int listSize = list.size();
+            for(int i =0 ; i< listSize;i++) {
+                 if(list.get(i).getRegion().getRegionId().equals(superRegionId)){
+                    if(i==0)
+                       break;
+                    list.add(0,list.remove(i));
+                    break;
+                 }
+            }
             for (SeasonGeographyConfiguration sgc : list) {
                if (sgc == null || sgc.getRegion() == null)
                   continue;
