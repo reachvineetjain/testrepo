@@ -261,7 +261,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          
          
       }
-      catch (CcighgoServiceException e) {
+      catch (CcighgoException e) {
          cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_USERS.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
@@ -699,7 +699,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return departments;
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
