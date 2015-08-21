@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
@@ -26,9 +27,11 @@ import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
+import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
@@ -53,6 +56,7 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.UuidUtils;
 
 /**
  * @author ravimishra
@@ -85,6 +89,8 @@ public class UtilityServicesImpl implements UtilityServices {
    CommonComponentUtils componentUtils;
    @Autowired
    MessageUtils messageUtil;
+   @Autowired
+   LoginRepository loginRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -566,13 +572,38 @@ public class UtilityServicesImpl implements UtilityServices {
 
    @Override
    public void forgotPassword(ForgotRequest req) {
-      // TODO Auto-generated method stub
-      
+      if(req.getEmail() == null){
+         
+      }
+     /* Login loginUser = loginRepository.findByEmail(req.getEmail());*/
+      EmailServiceImpl email = new EmailServiceImpl();
+      //email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginUser.getKeyValue()), false);
+      email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK, false);
+
    }
 
    @Override
    public void resetPassword(ResetRequest req) {
-      // TODO Auto-generated method stub
+      try {
+         Login login = loginRepository.findByKeyValue(req.getUniquekey());
+         if (login != null) {
+
+            Login tempLogin = new Login();
+            tempLogin.setLoginId(login.getLoginId());
+            tempLogin.setLoginName(login.getLoginName());
+            tempLogin.setKeyValue(UuidUtils.nextHexUUID());
+            tempLogin.setPassword(req.getPasskey());
+            tempLogin.setCreatedBy(login.getCreatedBy());
+            tempLogin.setCreatedOn(login.getCreatedOn());
+            tempLogin.setModifiedBy(login.getGoIdSequence().getGoId());
+            tempLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            tempLogin.setGoIdSequence(login.getGoIdSequence());
+            login = loginRepository.save(tempLogin);
+         }
+      } catch (CcighgoException e) {
+
+      }
+
    }
    
 }
