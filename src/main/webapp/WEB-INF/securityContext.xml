@@ -39,6 +39,7 @@
             /services/updateLog/**=anon
             /services/backgroundcheck/**=anon
             /services/gciapi/**=anon
+            /services/auth/logout=anon
             /services/** = authc
          </value>
       </property>
