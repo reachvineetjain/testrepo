@@ -1,9 +1,5 @@
 package com.ccighgo.security;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -23,24 +19,21 @@ import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.utils.CCIConstants;
 
 @Component
-public class ExcurtOauthRealm extends AuthorizingRealm {
+public class CciRealm extends AuthorizingRealm {
 
    @Autowired private LoginRepository loginRepository;
 
-   @Autowired private EncryptionService encryptionService;
-
-   public ExcurtOauthRealm() {
-      setName("ExcurtOauthRealm");
+   public CciRealm() {
+      setName("CciRealm");
    }
 
    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
-      HMACSignatureToken token = (HMACSignatureToken) authcToken;
-      LOGGER.debug("received signature: {}", token.getOauthSignature());
+      CciToken token = (CciToken) authcToken;
+      LOGGER.debug("received signature: {}", token.getCredentials());
       try {
-         Login user = loginRepository.findByLoginName(token.getLoginId());
-         if (user != null && user.getLoginName().equals(token.getLoginId())) {
-            return new SimpleAuthenticationInfo(user.getLoginName(), makeSignature(token.getUri(), token.getLoginId(), token.getTimeStamp(), token.getNonce(), user.getPassword()),
-                  getName());
+         Login user = loginRepository.findByLoginName(token.getPrincipal());
+         if (user != null && user.getLoginName().equals(token.getPrincipal())) {
+            return new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
          }
       } catch (AuthenticationException e) {
          LOGGER.error("Authentication error", e);
@@ -50,25 +43,6 @@ public class ExcurtOauthRealm extends AuthorizingRealm {
          throw new AuthenticationException("Unexpected error", e);
       }
       return null;
-   }
-
-   private String makeSignature(String uri, String login, String timestamp, String nonce, String password) {
-      String source = uri + "&" + login + "&" + timestamp + "&" + nonce;
-      try {
-         String hashString = encryptionService.encryptAndBase64Encode(source, password);
-         String hashEncoded = java.net.URLEncoder.encode(hashString, "UTF-8");
-         LOGGER.debug("original signature: {}", hashEncoded);
-         return hashEncoded;
-      } catch (UnsupportedEncodingException e) {
-         LOGGER.error("Error while creating signature", e);
-         throw new AuthenticationException(e);
-      } catch (InvalidKeyException e) {
-         LOGGER.error("Error while creating signature", e);
-         throw new AuthenticationException(e);
-      } catch (NoSuchAlgorithmException e) {
-         LOGGER.error("Error while creating signature", e);
-         throw new AuthenticationException(e);
-      }
    }
 
    /**
@@ -81,10 +55,10 @@ public class ExcurtOauthRealm extends AuthorizingRealm {
          Login user = loginRepository.findByLoginName(loginId);
          if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            if (user.getLoginUserTypes() != null){
-               if(user.getLoginUserTypes().size()>1)
-                  for(LoginUserType luType:user.getLoginUserTypes()){
-                     if(luType.getDefaultUserType()==CCIConstants.ACTIVE){
+            if (user.getLoginUserTypes() != null) {
+               if (user.getLoginUserTypes().size() > 1)
+                  for (LoginUserType luType : user.getLoginUserTypes()) {
+                     if (luType.getDefaultUserType() == CCIConstants.ACTIVE) {
                         info.addRole(luType.getUserType().getUserTypeCode());
                      }
                   }
@@ -97,8 +71,8 @@ public class ExcurtOauthRealm extends AuthorizingRealm {
 
    @Override
    public boolean supports(AuthenticationToken token) {
-      return token != null && token.getClass().equals(HMACSignatureToken.class);
+      return token != null && token.getClass().equals(CciToken.class);
    }
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(ExcurtOauthRealm.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(CciRealm.class);
 }

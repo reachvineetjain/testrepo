@@ -8,7 +8,6 @@
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
    default-autowire="byName">
 
-
    <context:annotation-config />
 
    <jpa:repositories base-package="com.ccighgo.jpa.repositories" entity-manager-factory-ref="entityManagerFactory" />
@@ -22,15 +21,12 @@
          </bean>
       </property>
    </bean>
-   
+
    <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
-    <property name="entityManagerFactory" ref="entityManagerFactory"/>
-</bean>
+      <property name="entityManagerFactory" ref="entityManagerFactory" />
+   </bean>
 
    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
       <property name="entityManagerFactory" ref="entityManagerFactory" />
    </bean>
-
-
-
 </beans>
