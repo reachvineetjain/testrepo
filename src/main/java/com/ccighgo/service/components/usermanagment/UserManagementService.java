@@ -17,6 +17,7 @@ import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 
 /**
  * Service Interface for all user management related operations
@@ -70,6 +71,8 @@ public interface UserManagementService {
 	public Departments getDepartmentWithPermissions();
 	
 	public Departments getDepartmentWithPermissionsByRole(String roleId);
+	
+	public Roles getRoleByDepartment(String departmentId);
 	
 	/**
      * Updates user permissions

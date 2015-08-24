@@ -6,6 +6,9 @@ package com.ccighgo.service.components.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,9 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
@@ -569,25 +574,54 @@ public class UtilityServicesImpl implements UtilityServices {
       genders.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return genders;
    }
-
-   @Override
-   public void forgotPassword(ForgotRequest req) {
-      if(req.getEmail() == null){
-         
+   
+   private String formResetURL(HttpServletRequest request) {
+      String protocol;
+      if (request.getProtocol().contains("https")) {
+         protocol = "HTTPS";
+      } else {
+         protocol = "HTTP";
       }
-      Login loginUser = loginRepository.findByEmail(req.getEmail());
-      EmailServiceImpl email = new EmailServiceImpl();
-      email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginUser.getKeyValue()), false);
-      //email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK, false);
-
+      String url = protocol + "://" + request.getServerName() + ":" + request.getServerPort() + CCIConstants.RESET_PASSWORD_LINK;
+      return url;
    }
 
    @Override
-   public void resetPassword(ResetRequest req) {
+   public Response forgotPassword(ForgotRequest req, HttpServletRequest request) {
+      Response response = new Response();
+      try {
+         if (req.getEmail() == null) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
+            return response;
+         }
+         Login loginUser = loginRepository.findByEmail(req.getEmail());
+         EmailServiceImpl email = new EmailServiceImpl();
+         
+         email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginUser.getKeyValue()), false);
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+         // email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK, false);
+      } catch (CcighgoException e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
+      }
+      return response;
+   }
+
+   @Override
+   public Response resetPassword(ResetRequest req) {
+      Response response = new Response();
       try {
          Login login = loginRepository.findByKeyValue(req.getUniquekey());
-         if (login != null) {
-
+         if (login == null) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
+            return response;
+         }
             Login tempLogin = new Login();
             tempLogin.setLoginId(login.getLoginId());
             tempLogin.setLoginName(login.getLoginName());
@@ -600,11 +634,15 @@ public class UtilityServicesImpl implements UtilityServices {
             tempLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             tempLogin.setGoIdSequence(login.getGoIdSequence());
             login = loginRepository.save(tempLogin);
-         }
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+         
       } catch (CcighgoException e) {
-
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
       }
-
+      return response;
    }
    
 }

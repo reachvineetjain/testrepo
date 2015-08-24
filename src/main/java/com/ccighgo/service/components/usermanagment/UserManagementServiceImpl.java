@@ -44,6 +44,7 @@ import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.ValidationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
+import com.ccighgo.jpa.repositories.CCIStaffRolesDepartmentRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserNoteRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserProgramRepository;
@@ -62,6 +63,7 @@ import com.ccighgo.jpa.repositories.ResourceActionRepository;
 import com.ccighgo.jpa.repositories.ResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
@@ -94,6 +96,8 @@ import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Department;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.role.Role;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasscodeGenerator;
@@ -155,6 +159,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired GoIdSequenceRepository goIdSequenceRepository;
    
    @Autowired GenderRepository genderRepository;
+   
+   @Autowired CCIStaffRolesDepartmentRepository cciStaffRolesDepartmentRepository;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
@@ -380,7 +386,9 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          
+         
          String cciAdminGuid = createUserDetails(user);
+         
          if (cciAdminGuid == null) {
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_DETAILS_CREATION.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_DETAILS_CREATION));
@@ -442,6 +450,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                }
             }
          }
+        
          usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
          if (usr == null) {
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
@@ -449,6 +458,9 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
          }
+         Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
+         EmailServiceImpl email = new EmailServiceImpl();
+         email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginEmail.getKeyValue()),false);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
@@ -802,6 +814,24 @@ public class UserManagementServiceImpl implements UserManagementService {
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
          return usr;
       }
+   }
+   
+   
+   @Override
+   @Transactional(readOnly = true)
+   public Roles getRoleByDepartment(String departmentId) {
+      Roles roles = new Roles();
+      List<CCIStaffRolesDepartment> staffRolesDepartments = cciStaffRolesDepartmentRepository.findAll();
+      for (CCIStaffRolesDepartment cciStaffRolesDepartment : staffRolesDepartments) {
+         if (cciStaffRolesDepartment.getLookupDepartment().getDepartmentId() == Integer.valueOf(departmentId)) {
+            CCIStaffRole staffRole = cciStaffRolesDepartment.getCcistaffRole();
+            Role role = new Role();
+            role.setId(staffRole.getCciStaffRoleId());
+            role.setRole(staffRole.getCciStaffRoleName());
+            roles.getRoles().add(role);
+         }
+      }
+      return roles;
    }
 
    @Override
