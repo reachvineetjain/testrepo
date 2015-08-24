@@ -3,11 +3,8 @@
  */
 package com.ccighgo.service.components.regionmanagement;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -20,7 +17,6 @@ import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.exception.CcighgoException;
-import com.ccighgo.exception.CcighgoServiceException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.RegionRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
@@ -166,7 +162,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          superRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_GET_ERROR));
@@ -228,7 +224,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                   + seasonGeographyConfiguration.getSuperRegion().getSuperRegionId() + " for season :" + season.getSeasonFullName() + " and season id: " + season.getSeasonId());
             sRegion = getSuperRegion(String.valueOf(supRegion.getSuperRegionId()));
          }
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_ADD.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ADD_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ADD_ERROR));
@@ -265,7 +261,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          sRegion = getSuperRegion(String.valueOf(supRegion.getSuperRegionId()));
          sRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_UPDATE.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_UPDATE_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_UPDATE_ERROR));
@@ -289,7 +285,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_DELETE.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_DELETE_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_DELETE_ERROR));
@@ -318,7 +314,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             region.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          region.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_GET_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_GET_ERROR));
@@ -383,7 +379,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_ADD_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_ADD_ERROR) + ":" + e);
@@ -420,7 +416,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          rgn = getRegion(String.valueOf(regn.getRegionId()));
          rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_UPDATE_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_UPDATE_ERROR) + ":" + e);
@@ -456,7 +452,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          request.setObjectName(RegionManagementMessageConstants.REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_DELETE_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_DELETE_ERROR));
@@ -510,7 +506,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.info(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR));
@@ -570,7 +566,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_MOVE_ERROR));
             return stRegions;
          }
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR));
@@ -636,7 +632,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_GET_ERROR));
@@ -712,7 +708,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          request.setObjectName(RegionManagementMessageConstants.STATE);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (CcighgoServiceException e) {
+      } catch (CcighgoException e) {
          request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_DELETE_ERROR)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_DELETE_ERROR));

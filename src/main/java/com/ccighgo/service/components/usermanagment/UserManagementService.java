@@ -16,6 +16,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 
 /**
  * Service Interface for all user management related operations
@@ -33,6 +35,8 @@ public interface UserManagementService {
 	 * @return list of CCI Users
 	 */
 	public CCIUsers getAllCCIUsers(String pageNo, String size);
+	
+	public CCIUsers findAllUsers();
 
 	/**
 	 * The method will be used by edit calls on user, will return user details
@@ -65,6 +69,10 @@ public interface UserManagementService {
 	 * @return list of permissions
 	 */
 	public Departments getDepartmentWithPermissions();
+	
+	public Departments getDepartmentWithPermissionsByRole(String roleId);
+	
+	public Roles getRoleByDepartment(String departmentId);
 	
 	/**
      * Updates user permissions
@@ -136,7 +144,5 @@ public interface UserManagementService {
     
   
     public User updateUser(User user);
-    
-    
 
 }

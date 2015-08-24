@@ -4,6 +4,7 @@
 package com.ccighgo.service.component.serviceutils;
 
 import java.util.Locale;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -22,8 +23,9 @@ public class MessageUtils {
    public String getMessage(String key) {
       try {
          MessageSource bean = ApplicationContextProvider.getContext().getBean(MessageSource.class);
-         return bean.getMessage(key, null, Locale.getDefault());
+         return bean.getMessage(key, null, Locale.US);
       } catch (Exception e) {
+         e.printStackTrace();
          return "Unresolved key: " + key;
       }
    }

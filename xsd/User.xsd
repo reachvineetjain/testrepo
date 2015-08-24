@@ -147,11 +147,17 @@
     </xsd:complexType>
     
     <xsd:complexType name="UserNotes">
+    <xsd:complexContent>
+			<xsd:extension base="common:Response">
         <xsd:sequence>
             <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="userNotesId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="userNote" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
         </xsd:sequence>
+        </xsd:extension>
+		</xsd:complexContent>
     </xsd:complexType>
 
 </xsd:schema>

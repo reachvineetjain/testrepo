@@ -33,12 +33,16 @@
     </xsd:complexType>
    
    <xsd:complexType name="StaffUserDefaultPermissionGroupOptions">
+   <xsd:complexContent>
+			<xsd:extension base="common:Response">
         <xsd:sequence>
             <xsd:element name="permissionGroupOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="permissionGroupOptionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="permissionGroupOptionActionId" type="xsd:string" minOccurs="0" maxOccurs="1" />
             <xsd:element name="permissionGroupOptionAction" type="xsd:string" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
+        </xsd:extension>
+		</xsd:complexContent>
     </xsd:complexType>
 
 </xsd:schema>

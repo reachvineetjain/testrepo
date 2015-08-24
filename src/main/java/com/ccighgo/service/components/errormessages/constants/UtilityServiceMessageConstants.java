@@ -16,6 +16,7 @@ public class UtilityServiceMessageConstants {
    public static final String FAILED_GET_ALL_REGIONS = "error.get.all.regions";
    public static final String FAILED_GET_SEASON_STATUS = "error.get.season.status";
    public static final String FAILED_GET_GENDERS = "error.get.genders";
+   public static final String FAILED_RESET_PASSWORD = "error.reset.password";
    
    
 }

@@ -23,5 +23,10 @@ public class UserManagementMessageConstants {
 	   public static final String FAILED_USER_ROLE_CREATION="error.user.role.creation";
 	   public static final String FAILED_USER_PERMISSIONS_CREATION="error.user.permissions.creation";
 	   public static final String FAILED_UPDATE_PERMISSIONS="error.update.permission";
-
+	   public static final String FAILED_GET_RESOURCE_ACTION_LIST="error.get.resource.action.list";
+	   public static final String FAILED_USER_NOTES_NULL="error.get.user.notes.null";
+	   public static final String FAILED_GET_USER_NOTES="error.get.user.notes";
+	   public static final String FAILED_GET_GENDER_LIST="error.get.gender.list";
+	   public static final String USR_MGMT_CREATE_USER_EMAIL_EXIST="error.create.user.email.exist";
+	   
 }

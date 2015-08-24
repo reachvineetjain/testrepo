@@ -24,6 +24,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 
 /**
  * <h1>UserManagement</h1> The UserManagement class is the REST service front of
@@ -70,6 +72,13 @@ public class UserManagement {
     @Produces("application/json")
     public CCIUsers getAllUsers(@PathParam("pageNo") String pageNo, @PathParam("size") String size) {
         return userMgmtServices.getAllCCIUsers(pageNo, size);
+    }
+    
+    @GET
+    @Path("get-all-users")
+    @Produces("application/json")
+    public CCIUsers findAllUsers() {
+        return userMgmtServices.findAllUsers();
     }
 
     /**
@@ -131,6 +140,20 @@ public class UserManagement {
     public Departments getStaffUserRolePermissions() {
        
        return userMgmtServices.getDepartmentWithPermissions();
+    }
+    
+    @GET
+    @Path("department-with-permissions-by-role/{roleId}")
+    @Produces("application/json")
+    public Departments getStaffUserDepartmentPermissionsByRole(@PathParam("roleId")String roleId) {
+       return userMgmtServices.getDepartmentWithPermissionsByRole(roleId);
+    }
+    
+    @GET
+    @Path("get-role-by-department/{departmentId}")
+    @Produces("application/json")
+    public Roles getRoleByDepartment(@PathParam("departmentId")String departmentId) {
+       return userMgmtServices.getRoleByDepartment(departmentId);
     }
 
     /**
@@ -280,5 +303,4 @@ public class UserManagement {
     public User updateUser(User usr){
        return userMgmtServices.updateUser(usr);
     }
-    
 }
