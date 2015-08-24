@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission;
 import com.ccighgo.db.entities.CCIStaffRolesDepartment;
 import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.CCIStaffUserNote;
@@ -671,9 +672,9 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    
 
-   @Override
+  /* @Override
    @Transactional(readOnly = true)
-   public Departments getDepartmentWithPermissionsByRole(String roleId) {
+   public Departments getDepartmentWithPermissionsByRole1(String roleId) {
       List<LookupDepartment> lookupDepartments = null;
       if(roleId==null){
      lookupDepartments = departmentRepository.findAll();
@@ -717,8 +718,36 @@ public class UserManagementServiceImpl implements UserManagementService {
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
          return departments;
       }
-   }
+   }*/
 
+   
+  /* @Override
+   @Transactional(readOnly = true)
+   public Departments getDepartmentWithPermissionsByRole(String roleId) {
+      DepartmentResourceGroups departmentResourceGroups=null;
+      Departments departments = new Departments();
+      Department department= new Department();
+      List<DepartmentResourceGroup> departmentResourceGroupList= new ArrayList<DepartmentResourceGroup>(); 
+      CCIStaffRole role = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
+      for(CCIStaffRolesDepartment roleDepartment : role.getCcistaffRolesDepartments()) { 
+         List<CCIStaffRolesDefaultResourcePermission> staffRolesDefResPermissions = roleDepartment.getCcistaffRolesDefaultResourcePermissions();
+         List<ResourcePermission> resourcePermissionList = new ArrayList<ResourcePermission>();
+         for (CCIStaffRolesDefaultResourcePermission cciStaffRolesDefaultResourcePermission : staffRolesDefResPermissions) {
+            ResourcePermission resourcePermission=cciStaffRolesDefaultResourcePermission.getResourcePermission();
+            resourcePermissionList.add(resourcePermission);
+            }
+         DepartmentResourceGroup departmentResourceGroup = new DepartmentResourceGroup();
+         departmentResourceGroup.setResourcePermissions(resourcePermissionList);
+         //departmentResourceGroup.setResourceGroupName(roleDepartment.get);
+         //departmentResourceGroup.setDepartmentResourceGroupId(departmentResourceGroupId);
+         departmentResourceGroupList.add(departmentResourceGroup);
+      }
+      departmentResourceGroups=getDepartmentResourceGroups(departmentResourceGroupList);
+      department.setDepartmentresourcegroups(departmentResourceGroups);
+      departments.getDepartments().add(department);
+      return departments;
+   }
+   */
    @Override
    @Transactional
    public User updateUserPermissions(User user) {
@@ -833,7 +862,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return roles;
    }
-
+  
+   
    @Override
    @Transactional(readOnly = true)
    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId) {
@@ -853,6 +883,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          staffUserRolePermissions = new StaffUserRolePermissions();
          List<StaffUserDefaultPermissions> staffUserDefaultPermissions = new ArrayList<StaffUserDefaultPermissions>();
          for (DepartmentResourceGroup dprg : departmentResourceGroupList) {
+            
             StaffUserDefaultPermissions defaultPermissions = new StaffUserDefaultPermissions();
             defaultPermissions.setPermissionGroupId(dprg.getDepartmentResourceGroupId());
             defaultPermissions.setPermissionGroupName(dprg.getResourceGroupName());
@@ -865,14 +896,14 @@ public class UserManagementServiceImpl implements UserManagementService {
                   options.setPermissionGroupOptionActionId(obj[4].toString());
                   options.setPermissionGroupOptionAction(obj[5].toString());
                   permissionGroupOptionsList.add(options);
-               }else{
+               }/*else{
                   staffUserRolePermissions=setStaffUserRolePermissionsStatus(staffUserRolePermissions,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
                   LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
-               }
-               defaultPermissions.getPermissionGroupOptions().addAll(permissionGroupOptionsList);
-               staffUserDefaultPermissions.add(defaultPermissions);
+               }*/ 
             }
-            staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
+            defaultPermissions.getPermissionGroupOptions().addAll(permissionGroupOptionsList);
+            staffUserDefaultPermissions.add(defaultPermissions);
+            //staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
             staffUserRolePermissions = setStaffUserRolePermissionsStatus(staffUserRolePermissions, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
                   ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
@@ -1747,6 +1778,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          permissionTO.setResourceName(permission.getResourceName());
          permissionTO.setResourcePermissionId(permission.getResourcePermissionId());
          resourcePermissions.getResourcePermissions().add(permissionTO);
+         
       }
       return resourcePermissions;
    }

@@ -70,7 +70,7 @@ public interface UserManagementService {
 	 */
 	public Departments getDepartmentWithPermissions();
 	
-	public Departments getDepartmentWithPermissionsByRole(String roleId);
+	//public Departments getDepartmentWithPermissionsByRole(String roleId);
 	
 	public Roles getRoleByDepartment(String departmentId);
 	
