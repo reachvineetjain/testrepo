@@ -36,50 +36,106 @@ public class WordPressFormsImpl implements IWordPressForms {
             }
          }
          if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
-            String string = "200 : Success";
+            String string = "200:Success";
             System.out.println(string);
             return string;
          } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-            String string = "400 : Duplicate Row";
+            String string = "400:Duplicate Row";
             System.out.println(string);
             return string;
          } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-            String string = "500 : Failed To Process Record ! Contact Admin";
+            String string = "500:Failed To Process Record ! Contact Admin";
             System.out.println(string);
             return string;
          } else {
-            String string = "300 : Missing Information";
+            String string = "300:Missing Information";
             System.out.println(string);
             return string;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         String string = "700 : Internal Error";
+         String string = "700:Internal Error";
          System.out.println(string);
          return string;
       }
    }
 
    @Override
-   public boolean GenerateNewHostFamily(HostFamilyData HostFamilyData) {
-      LOGGER.info("Generate New Host Family");
+   public String GenerateNewHostFamily(HostFamilyData HostFamilyData) {
+      try {
+         LOGGER.info("Generate New Host Family");
 
-      System.out.println("Generate New Host Family");
-      System.out.println("Email :" + HostFamilyData.getEmail());
-      System.out.println("City :" + HostFamilyData.getCity());
-      System.out.println("State : " + HostFamilyData.getState());
-      return true;
+         System.out.println("Generate New Host Family");
+
+         if (HostFamilyData != null) {
+            System.out.println("FName :" + HostFamilyData.getFirstName());
+            System.out.println("LName :" + HostFamilyData.getLastName());
+            System.out.println("Email :" + HostFamilyData.getEmail());
+            System.out.println("City :" + HostFamilyData.getCity());
+            System.out.println("State : " + HostFamilyData.getState());
+         }
+         if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {
+            String string = "200:Success";
+            System.out.println(string);
+            return string;
+         } else if (HostFamilyData.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
+            String string = "400:Duplicate Row";
+            System.out.println(string);
+            return string;
+         } else if (HostFamilyData.getEmail().equalsIgnoreCase("failed@gmail.com")) {
+            String string = "500:Failed To Process Record ! Contact Admin";
+            System.out.println(string);
+            return string;
+         } else {
+            String string = "300:Missing Information";
+            System.out.println(string);
+            return string;
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         String string = "700:Internal Error";
+         System.out.println(string);
+         return string;
+      }
+
    }
 
    @Override
-   public boolean GenerateNewAreaRepresentative(AreaRepresentativeData AreaRepresentativeData) {
-      LOGGER.info("Generate New Area Representative");
+   public String GenerateNewAreaRepresentative(AreaRepresentativeData AreaRepresentativeData) {
+      try {
+         LOGGER.info("Generate New Area Representative");
+         System.out.println("Generate New Area Representative");
 
-      System.out.println("Generate New Area Representative");
-      System.out.println("Email :" + AreaRepresentativeData.getEmail());
-      System.out.println("City :" + AreaRepresentativeData.getCity());
-      System.out.println("State : " + AreaRepresentativeData.getState());
-      return true;
+         if (AreaRepresentativeData != null) {
+            System.out.println("FName :"  + AreaRepresentativeData.getFirstName());
+            System.out.println("LName :"  + AreaRepresentativeData.getLastName());
+            System.out.println("Email :"  + AreaRepresentativeData.getEmail());
+            System.out.println("City :"   + AreaRepresentativeData.getCity());
+            System.out.println("State : " + AreaRepresentativeData.getState());
+         }
+         if (AreaRepresentativeData.getEmail().equalsIgnoreCase("success@gmail.com")) {
+            String string = "200:Success";
+            System.out.println(string);
+            return string;
+         } else if (AreaRepresentativeData.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
+            String string = "400:Duplicate Row";
+            System.out.println(string);
+            return string;
+         } else if (AreaRepresentativeData.getEmail().equalsIgnoreCase("failed@gmail.com")) {
+            String string = "500:Failed To Process Record ! Contact Admin";
+            System.out.println(string);
+            return string;
+         } else {
+            String string = "300:Missing Information";
+            System.out.println(string);
+            return string;
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         String string = "700:Internal Error";
+         System.out.println(string);
+         return string;
+      }
    }
 
 }
