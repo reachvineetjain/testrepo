@@ -3,6 +3,10 @@
  */
 package com.ccighgo.service.components.utility;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
@@ -111,11 +115,11 @@ public interface UtilityServices {
    /**
     * @param req
     */
-   public void forgotPassword(ForgotRequest req);
+   public Response forgotPassword(ForgotRequest req, HttpServletRequest request);
    
    /**
     * @param req
     */
-   public void resetPassword(ResetRequest req);
+   public  Response resetPassword(ResetRequest req);
 
 }

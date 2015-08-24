@@ -44,6 +44,7 @@ import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.ValidationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
+import com.ccighgo.jpa.repositories.CCIStaffRolesDepartmentRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserNoteRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUserProgramRepository;
@@ -95,6 +96,8 @@ import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Department;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.role.Role;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasscodeGenerator;
@@ -156,6 +159,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired GoIdSequenceRepository goIdSequenceRepository;
    
    @Autowired GenderRepository genderRepository;
+   
+   @Autowired CCIStaffRolesDepartmentRepository cciStaffRolesDepartmentRepository;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
@@ -809,6 +814,24 @@ public class UserManagementServiceImpl implements UserManagementService {
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
          return usr;
       }
+   }
+   
+   
+   @Override
+   @Transactional(readOnly = true)
+   public Roles getRoleByDepartment(String departmentId) {
+      Roles roles = new Roles();
+      List<CCIStaffRolesDepartment> staffRolesDepartments = cciStaffRolesDepartmentRepository.findAll();
+      for (CCIStaffRolesDepartment cciStaffRolesDepartment : staffRolesDepartments) {
+         if (cciStaffRolesDepartment.getLookupDepartment().getDepartmentId() == Integer.valueOf(departmentId)) {
+            CCIStaffRole staffRole = cciStaffRolesDepartment.getCcistaffRole();
+            Role role = new Role();
+            role.setId(staffRole.getCciStaffRoleId());
+            role.setRole(staffRole.getCciStaffRoleName());
+            roles.getRoles().add(role);
+         }
+      }
+      return roles;
    }
 
    @Override

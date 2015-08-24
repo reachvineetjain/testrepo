@@ -1,16 +1,19 @@
 package com.ccighgo.service.rest.utility;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.utility.UtilityServices;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
@@ -200,8 +203,8 @@ public class Utility {
     */
    @POST
    @Path("forgot/access/request")
-   public void forgotPassword(ForgotRequest req){
-      utilityServices.forgotPassword(req);
+   public Response forgotPassword(ForgotRequest req, @Context HttpServletRequest request){
+      return utilityServices.forgotPassword(req, request);
    }
    
    /**
@@ -209,8 +212,8 @@ public class Utility {
     */
    @POST
    @Path("reset/access/request")
-   public void resetPassword(ResetRequest req){
-      utilityServices.resetPassword(req);
+   public  Response resetPassword(ResetRequest req){
+      return utilityServices.resetPassword(req);
    }
 
 }
