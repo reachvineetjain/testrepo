@@ -16,27 +16,27 @@
 	
 	<xsd:complexType name="ScreenResponse">
 		<xsd:sequence>
-			 <xsd:element name="DateTime" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
-			 <xsd:element name="ResponseCode" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+			 <xsd:element name="DateTime" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="ResponseCode" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 			 <xsd:element name="Account" type="backgroundscreenresponse:Account" minOccurs="0" maxOccurs="1"></xsd:element>
 			 
 		</xsd:sequence>
 	</xsd:complexType>
 		<xsd:complexType name="Account">
 		<xsd:sequence>
-			 <xsd:element name="AcctNbr" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
-  			 <xsd:element name="BatchNo" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-			 <xsd:element name="ResponseCode" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+			 <xsd:element name="AcctNbr" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+  			 <xsd:element name="BatchNo" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="ResponseCode" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 			 <xsd:element name="Applicant" type="backgroundscreenresponse:Applicant" minOccurs="0" maxOccurs="unbounded"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 	
 	<xsd:complexType name="Applicant">
 		<xsd:sequence>
-			 <xsd:element name="ApplicantID" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+			 <xsd:element name="ApplicantID" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 			 <xsd:element name="FileNo" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 			 <xsd:element name="FileURL" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-			 <xsd:element name="ResponseCode" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
+			 <xsd:element name="ResponseCode" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 			 <xsd:element name="ErrorMessage" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>

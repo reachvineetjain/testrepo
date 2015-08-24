@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Login` (
   `goId` INT NOT NULL,
   `loginName` VARCHAR(50) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
-  `passwordSalt` VARCHAR(200) NOT NULL,
+  `keyValue` VARCHAR(200) NOT NULL,
   `createdOn` TIMESTAMP  NULL,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -552,7 +552,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PaymentSchedule` (
 -- --------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Season` (
   `seasonId` INT NOT NULL AUTO_INCREMENT,
-  `seasonName` VARCHAR(50) NOT NULL,
+  `seasonName` VARCHAR(50) UNIQUE NOT NULL,
   `seasonFullName` VARCHAR(50) NOT NULL,
   `departmentId` INT(3) NOT NULL,
   `seasonStatusId` INT(3) NOT NULL,

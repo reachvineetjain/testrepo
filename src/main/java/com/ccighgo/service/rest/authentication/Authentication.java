@@ -33,24 +33,14 @@ public class Authentication {
 	public Auth login(){
 		String user = SecurityUtils.getSubject().getPrincipal().toString();
 		LOGGER.debug("User '{}' logged in", user);
-		MDC.put("uid", user);
 		return authAction.login();
 	}
 	
 	@GET
 	@Path("logout")
 	public void logout(){
-		String user = SecurityUtils.getSubject().getPrincipal().toString();
 		SecurityUtils.getSubject().logout();
-		LOGGER.debug("User '{}' logged out", user);
+		LOGGER.debug("User logged out");
 	}
-	
-	@GET
-   @Path("reset/password")
-   public void resetPassword(){
-      String user = SecurityUtils.getSubject().getPrincipal().toString();
-      SecurityUtils.getSubject().logout();
-      LOGGER.debug("User '{}' logged out", user);
-   }
 
 }

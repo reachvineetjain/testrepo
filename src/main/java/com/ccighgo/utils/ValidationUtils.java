@@ -3,7 +3,6 @@ package com.ccighgo.utils;
 import org.apache.commons.validator.EmailValidator;
 
 import com.ccighgo.exception.ErrorCode;
-import com.ccighgo.exception.InvalidServiceConfigurationException;
 import com.ccighgo.exception.ValidationException;
 
 public class ValidationUtils {
@@ -33,7 +32,7 @@ public class ValidationUtils {
 
    public static boolean isValidSeasonId(String seasonId) {
       if (seasonId == null || (!seasonId.isEmpty() && Integer.valueOf(seasonId) == 0)) {
-         throw new InvalidServiceConfigurationException("Please check Season id");
+         throw new ValidationException(ErrorCode.INVALID_SEASON_ID, "season id missing or zero");
       }
       if(seasonId!=null && Integer.valueOf(seasonId)==-1){
          throw new ValidationException(ErrorCode.DUPLICATE_SEASON_NAME, "season with same name already exists, please select different name");
