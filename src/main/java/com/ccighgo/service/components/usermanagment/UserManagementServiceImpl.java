@@ -62,6 +62,7 @@ import com.ccighgo.jpa.repositories.ResourceActionRepository;
 import com.ccighgo.jpa.repositories.ResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
@@ -380,7 +381,9 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          
+         
          String cciAdminGuid = createUserDetails(user);
+         
          if (cciAdminGuid == null) {
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_DETAILS_CREATION.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_DETAILS_CREATION));
@@ -442,6 +445,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                }
             }
          }
+        
          usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
          if (usr == null) {
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
@@ -449,6 +453,9 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
          }
+         Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
+         EmailServiceImpl email = new EmailServiceImpl();
+         email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginEmail.getKeyValue()),false);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
