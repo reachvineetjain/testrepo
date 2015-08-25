@@ -23,7 +23,7 @@ public interface CCISaffDefaultPermissionRepository extends JpaRepository<CCISta
    public List<CCIStaffRolesDefaultResourcePermission> findPermissionsByRole(DepartmentResourceGroup departmentResourceGroup);
    
    @Query( value = "SELECT dg.`departmentResourceGroupId`,dg.`resourceGroupName`,rp.`resourcePermissionId` "
-            + " ,rp.`resourceName`, ra.`resourceActionId`, ra.resourceAction "
+            + " ,rp.`resourceName`, ra.`resourceActionId`, ra.resourceAction , rp.resourceDescription "
             + " FROM `CCIStaffRoles` cr "
             + " INNER JOIN `CCIStaffRolesDepartments` rd ON rd.`cciStaffRoleId`=cr.`cciStaffRoleId` "
             + " INNER JOIN `DepartmentResourceGroups` dg ON dg.`departmentID`=rd.`departmentId` "

@@ -224,7 +224,7 @@ public class UserManagement {
     @GET
     @Path("default/{roleId}/permission")
     @Consumes("application/json")
-    public StaffUserRolePermissions getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
+    public Departments getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
         return userMgmtServices.getDefaultPermissionsbyRole(roleId);
     }
     

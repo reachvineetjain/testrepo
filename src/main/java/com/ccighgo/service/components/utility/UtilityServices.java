@@ -121,5 +121,8 @@ public interface UtilityServices {
     * @param req
     */
    public  Response resetPassword(ResetRequest req);
-
+   
+   public  boolean checkUserName(String userName);
+  
+   public  boolean checkEmail(String email);
 }
