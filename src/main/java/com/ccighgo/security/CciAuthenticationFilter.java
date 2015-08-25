@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,15 @@ public class CciAuthenticationFilter extends AuthenticatingFilter {
          throw new SecurityException("Request does not contain required authentication data");
       }
       LOGGER.trace("exit validateAuthData");
+   }
+   
+   @Override
+   protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+       HttpServletRequest httpRequest = WebUtils.toHttp(request);
+       if ("OPTIONS".equals(httpRequest.getMethod())) {
+           return true;
+       }
+       return super.isAccessAllowed(request, response, mappedValue);
    }
 
    @Override
