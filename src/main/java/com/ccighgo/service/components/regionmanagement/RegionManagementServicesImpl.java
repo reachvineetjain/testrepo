@@ -47,20 +47,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
 
    private static final Logger LOGGER = Logger.getLogger(RegionManagementServicesImpl.class);
 
-   @Autowired
-   SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
-   @Autowired
-   SuperRegionRepository superRegionRepository;
-   @Autowired
-   RegionRepository regionRepository;
-   @Autowired
-   SeasonRepository seasonRepository;
-   @Autowired
-   CommonComponentUtils componentUtils;
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   StateRepository stateRepository;
+   @Autowired SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
+   @Autowired SuperRegionRepository superRegionRepository;
+   @Autowired RegionRepository regionRepository;
+   @Autowired SeasonRepository seasonRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired StateRepository stateRepository;
 
    @Override
    @Transactional(readOnly = true)
@@ -81,7 +74,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       } else {
          try {
             regionManagementDetails.setSeasonId(Integer.valueOf(seasonId));
-            List<SuperRegion> superRegionList = new ArrayList<SuperRegion>(); 
+            List<SuperRegion> superRegionList = new ArrayList<SuperRegion>();
             distinctSuperRegionList.removeAll(Collections.singleton(null));
             Collections.sort(distinctSuperRegionList);
             for (Integer superRegionId : distinctSuperRegionList) {
@@ -282,6 +275,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       try {
          seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
          seasonGeographyConfigurationRepository.flush();
+         // Bugzilla 341: change request: If a Super Region is deleted from a season and that Super Region is not
+         // associated to any other season; then it should be removed from the SR lookup table.
+         List<Integer> distinctSeasonIds = seasonGeographyConfigurationRepository.findDistinctSeasons();
+         if(distinctSeasonIds!=null){
+            
+         }
+         
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

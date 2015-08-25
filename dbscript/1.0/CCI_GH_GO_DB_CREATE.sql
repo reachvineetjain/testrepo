@@ -90,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Login` (
   `loginName` VARCHAR(50) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `keyValue` VARCHAR(200) NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `createdOn` TIMESTAMP  NULL,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),

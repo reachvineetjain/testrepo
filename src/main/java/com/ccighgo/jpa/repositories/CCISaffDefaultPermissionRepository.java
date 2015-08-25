@@ -23,11 +23,11 @@ public interface CCISaffDefaultPermissionRepository extends JpaRepository<CCISta
    public List<CCIStaffRolesDefaultResourcePermission> findPermissionsByRole(DepartmentResourceGroup departmentResourceGroup);
    
    @Query( value = "SELECT dg.`departmentResourceGroupId`,dg.`resourceGroupName`,rp.`resourcePermissionId` "
-            + " ,rp.`resourceName`, ra.`resourceActionId`, ra.resourceAction "
+            + " ,rp.`resourceName`, ra.`resourceActionId`, ra.resourceAction , rp.resourceDescription "
             + " FROM `CCIStaffRoles` cr "
             + " INNER JOIN `CCIStaffRolesDepartments` rd ON rd.`cciStaffRoleId`=cr.`cciStaffRoleId` "
             + " INNER JOIN `DepartmentResourceGroups` dg ON dg.`departmentID`=rd.`departmentId` "
-            + " INNER JOIN `Departments` d ON d.`departmentId`=rd.`departmentId` AND d.`departmentID`=dg.`departmentId` "
+            + " INNER JOIN `LookupDepartments` d ON d.`departmentId`=rd.`departmentId` AND d.`departmentID`=dg.`departmentId` "
             + " INNER JOIN `ResourcePermissions` rp ON rp.`departmentResourceGroupId`=dg.`departmentResourceGroupId` "
             + " INNER JOIN `ResourceActions` ra ON ra.`resourceActionId` = rp.`resourceActionId` "
             + " INNER JOIN `CCIStaffRolesDefaultResourcePermissions` dp ON dp.`resourcePermissionId`=rp.`resourcePermissionId` AND dp.`cciStaffRolesDepartmentId`=rd.`cciStaffRolesDepartmentId` "
