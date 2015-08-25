@@ -96,5 +96,8 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    @Modifying
    @Query(value = "DELETE s FROM SeasonGeographyConfiguration s WHERE s.seasonId = ?1 AND s.superRegionId = ?2 AND s.regionId = ?3 AND s.usStatesId = ?4", nativeQuery = true)
    public void deleteRegionByIdSeasonIdAndSupRegIdAndStateId(Integer seasonId, Integer superRegionId, Integer regionId, Integer stateId);
+   
+   @Query("SELECT DISTINCT s.season.seasonId FROM SeasonGeographyConfiguration s")
+   public List<Integer> findDistinctSeasons();
 
 }
