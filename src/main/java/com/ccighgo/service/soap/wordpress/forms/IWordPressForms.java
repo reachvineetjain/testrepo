@@ -18,9 +18,9 @@ public interface IWordPressForms {
    String InquiryPartner(@WebParam(name = "data") InternationalPartners InternationalPartners);
 
    @WebMethod
-   boolean GenerateNewHostFamily(@WebParam(name = "data") HostFamilyData HostFamilyData);
+   String GenerateNewHostFamily(@WebParam(name = "data") HostFamilyData HostFamilyData);
 
    @WebMethod
-   boolean GenerateNewAreaRepresentative(@WebParam(name = "data") AreaRepresentativeData AreaRepresentativeData);
+   String GenerateNewAreaRepresentative(@WebParam(name = "data") AreaRepresentativeData AreaRepresentativeData);
 
 }

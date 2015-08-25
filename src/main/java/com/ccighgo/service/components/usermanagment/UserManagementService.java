@@ -70,7 +70,7 @@ public interface UserManagementService {
 	 */
 	public Departments getDepartmentWithPermissions();
 	
-	public Departments getDepartmentWithPermissionsByRole(String roleId);
+	//public Departments getDepartmentWithPermissionsByRole(String roleId);
 	
 	public Roles getRoleByDepartment(String departmentId);
 	
@@ -112,7 +112,7 @@ public interface UserManagementService {
      * @param roleId
      * @return
      */
-    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId);
+    public Departments getDefaultPermissionsbyRole(String roleId);
     
     /**
     * @param userId

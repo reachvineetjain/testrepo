@@ -36,7 +36,7 @@ public class CCIConstants {
    public static final byte INACTIVE = 0;
    public static final String DEFAULT_PAGE = "0";
    public static final String DEFAULT_NO_OF_RECORDS_SIZE = "10";
-   public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+   public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(System.currentTimeMillis());
    public static final Integer MIN_PASS_LEN = 8;
    public static final Integer MAX_PASS_LEN = 8;
    public static final Integer MAX_UPPER_CASE = 1;

@@ -30,3 +30,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 ALTER TABLE `cci_gh_go`.`Season` ADD UNIQUE INDEX IND_seasonName(seasonName);
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--- Alter script for adding email column and changing passwordSalt column to keyValue in Login table on 24th Aug 2015 ----------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `Login` CHANGE `passwordSalt` `keyValue` VARCHAR(200) NOT NULL; 
+
+ALTER TABLE `Login` ADD COLUMN `email` VARCHAR(50) NOT NULL AFTER `keyValue`;

@@ -40,9 +40,14 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StaffUserDefaultPermissions", propOrder = {
-    "permissionGroupId",
-    "permissionGroupName",
-    "permissionGroupOptions"
+      "departmentId",
+      "acronym",
+      "departmentName",
+      "active",
+      "permissionGroupId",
+      "permissionGroupName",
+      "permissionGroupOptions"
+    
 })
 public class StaffUserDefaultPermissions {
 
@@ -51,7 +56,14 @@ public class StaffUserDefaultPermissions {
     protected String permissionGroupName;
     @XmlElement(required = true)
     protected List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptions;
-
+    @XmlElement(required = true)
+    protected int departmentId;
+    @XmlElement(required = true)
+    protected String acronym;
+    @XmlElement(required = true)
+    protected String departmentName;
+    @XmlElement(required = true)
+    protected boolean active;
     /**
      * Gets the value of the permissionGroupId property.
      * 
@@ -120,5 +132,37 @@ public class StaffUserDefaultPermissions {
         }
         return this.permissionGroupOptions;
     }
+
+   public int getDepartmentId() {
+      return departmentId;
+   }
+
+   public void setDepartmentId(int departmentId) {
+      this.departmentId = departmentId;
+   }
+
+   public String getAcronym() {
+      return acronym;
+   }
+
+   public void setAcronym(String acronym) {
+      this.acronym = acronym;
+   }
+
+   public String getDepartmentName() {
+      return departmentName;
+   }
+
+   public void setDepartmentName(String departmentName) {
+      this.departmentName = departmentName;
+   }
+
+   public boolean isActive() {
+      return active;
+   }
+
+   public void setActive(boolean active) {
+      this.active = active;
+   }
 
 }

@@ -42,16 +42,18 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @XmlType(name = "StaffUserDefaultPermissionGroupOptions", propOrder = {
     "permissionGroupOptionId",
     "permissionGroupOptionName",
-    "permissionGroupOptionActionId",
-    "permissionGroupOptionAction"
+    "resourceDescription"
+    /*"permissionGroupOptionActionId",
+    "permissionGroupOptionAction"*/
 })
 public class StaffUserDefaultPermissionGroupOptions extends Response{
 
     protected int permissionGroupOptionId;
     @XmlElement(required = true)
     protected String permissionGroupOptionName;
-    protected String permissionGroupOptionActionId;
-    protected String permissionGroupOptionAction;
+   /* protected String permissionGroupOptionActionId;
+    protected String permissionGroupOptionAction;*/
+    protected String resourceDescription;
 
     /**
      * Gets the value of the permissionGroupOptionId property.
@@ -93,6 +95,14 @@ public class StaffUserDefaultPermissionGroupOptions extends Response{
         this.permissionGroupOptionName = value;
     }
 
+   public String getResourceDescription() {
+      return resourceDescription;
+   }
+
+   public void setResourceDescription(String resourceDescription) {
+      this.resourceDescription = resourceDescription;
+   }
+
     /**
      * Gets the value of the permissionGroupOptionActionId property.
      * 
@@ -101,9 +111,9 @@ public class StaffUserDefaultPermissionGroupOptions extends Response{
      *     {@link String }
      *     
      */
-    public String getPermissionGroupOptionActionId() {
+   /* public String getPermissionGroupOptionActionId() {
         return permissionGroupOptionActionId;
-    }
+    }*/
 
     /**
      * Sets the value of the permissionGroupOptionActionId property.
@@ -113,9 +123,9 @@ public class StaffUserDefaultPermissionGroupOptions extends Response{
      *     {@link String }
      *     
      */
-    public void setPermissionGroupOptionActionId(String value) {
+    /*public void setPermissionGroupOptionActionId(String value) {
         this.permissionGroupOptionActionId = value;
-    }
+    }*/
 
     /**
      * Gets the value of the permissionGroupOptionAction property.
@@ -125,9 +135,12 @@ public class StaffUserDefaultPermissionGroupOptions extends Response{
      *     {@link String }
      *     
      */
-    public String getPermissionGroupOptionAction() {
+    /**
+    * @return
+    */
+  /* public String getPermissionGroupOptionAction() {
         return permissionGroupOptionAction;
-    }
+    }*/
 
     /**
      * Sets the value of the permissionGroupOptionAction property.
@@ -137,8 +150,8 @@ public class StaffUserDefaultPermissionGroupOptions extends Response{
      *     {@link String }
      *     
      */
-    public void setPermissionGroupOptionAction(String value) {
+   /* public void setPermissionGroupOptionAction(String value) {
         this.permissionGroupOptionAction = value;
-    }
+    }*/
 
 }
