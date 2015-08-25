@@ -645,4 +645,22 @@ public class UtilityServicesImpl implements UtilityServices {
       return response;
    }
    
+   @Override
+   public  boolean checkUserName(String userName){
+      if(loginRepository.findByLoginName(userName) !=null){
+         return true;
+      }
+      else
+      return false;
+   }
+   
+   @Override
+   public  boolean checkEmail(String email){
+      if(loginRepository.findByEmail(email) !=null){
+         return true;
+      }
+      else
+      return false;
+   }
+   
 }

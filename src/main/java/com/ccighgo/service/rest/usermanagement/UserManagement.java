@@ -142,12 +142,12 @@ public class UserManagement {
        return userMgmtServices.getDepartmentWithPermissions();
     }
     
-    @GET
+    /*@GET
     @Path("department-with-permissions-by-role/{roleId}")
     @Produces("application/json")
     public Departments getStaffUserDepartmentPermissionsByRole(@PathParam("roleId")String roleId) {
        return userMgmtServices.getDepartmentWithPermissionsByRole(roleId);
-    }
+    }*/
     
     @GET
     @Path("get-role-by-department/{departmentId}")
@@ -224,7 +224,7 @@ public class UserManagement {
     @GET
     @Path("default/{roleId}/permission")
     @Consumes("application/json")
-    public StaffUserRolePermissions getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
+    public Departments getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
         return userMgmtServices.getDefaultPermissionsbyRole(roleId);
     }
     
