@@ -38,6 +38,10 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
  * @version 1.0
  *
  */
+/**
+ * @author User
+ *
+ */
 @Path("/utility/")
 @Produces("application/json")
 @Consumes("application/json")
@@ -215,5 +219,24 @@ public class Utility {
    public  Response resetPassword(ResetRequest req){
       return utilityServices.resetPassword(req);
    }
+   
+   /**
+    * @param userName
+    * @return
+    */
+   @GET
+   @Path("duplicate-username/{userName}")
+   public  boolean checkUserName(@PathParam("userName") String userName){
+      return utilityServices.checkUserName(userName);
+   }
 
+   /**
+    * @param email
+    * @return
+    */
+   @GET
+   @Path("duplicate-email/{email}")
+   public  boolean checkEmail(@PathParam("email") String email){
+      return utilityServices.checkEmail(email);
+   }
 }

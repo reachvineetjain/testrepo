@@ -112,7 +112,7 @@ public interface UserManagementService {
      * @param roleId
      * @return
      */
-    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId);
+    public Departments getDefaultPermissionsbyRole(String roleId);
     
     /**
     * @param userId
