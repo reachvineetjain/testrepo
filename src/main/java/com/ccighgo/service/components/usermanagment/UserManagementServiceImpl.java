@@ -105,6 +105,7 @@ import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.ValidationUtils;
+import java.sql.Timestamp;
 
 /**
  * @author ravimishra
@@ -1091,9 +1092,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciStaffUserNote.setNote(userNotes.getUserNote());
       cciStaffUserNote.setCreatedBy(userNotes.getCciUserId());
       cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
-      cciStaffUserNote.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciStaffUserNote.setCreatedOn(new Timestamp(System.currentTimeMillis()));
       cciStaffUserNote.setModifiedBy(userNotes.getCciUserId());
-      cciStaffUserNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+      cciStaffUserNote.setModifiedOn(new Timestamp(System.currentTimeMillis()));
       cciUserNoteRepository.save(cciStaffUserNote);
       usr=getUserNotesById(userNotes.getCciUserId()+"");
       if(usr == null){
@@ -1116,7 +1117,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       if (cciUserNote.getCcistaffUser().getCciStaffUserId().equals(userNotes.getCciUserId())) {
          cciUserNote.setNote(userNotes.getUserNote());
          cciUserNote.setModifiedBy(userNotes.getCciUserId());
-         cciUserNote.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         cciUserNote.setModifiedOn(new Timestamp(System.currentTimeMillis()));
          cciUserNote.setCciStaffUserNoteId(userNotes.getUserNotesId());
       }
       cciUserNote = cciUserNoteRepository.save(cciUserNote);
