@@ -43,7 +43,7 @@ public class CciAuthenticationFilter extends AuthenticatingFilter {
    @Override
    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
        HttpServletRequest httpRequest = WebUtils.toHttp(request);
-       if ("OPTIONS".equals(httpRequest.getMethod()) || "GET".equals(httpRequest.getMethod())||"POST".equals(httpRequest.getMethod()) ||"PUT".equals(httpRequest.getMethod()) ||"HEAD".equals(httpRequest.getMethod())) {
+       if ("OPTIONS".equals(httpRequest.getMethod())) {
            return true;
        }
        return super.isAccessAllowed(request, response, mappedValue);
