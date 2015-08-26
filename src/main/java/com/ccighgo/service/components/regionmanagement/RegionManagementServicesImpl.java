@@ -263,6 +263,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    }
 
    @Override
+   @Modifying
    @Transactional
    public DeleteRequest deleteSuperRegion(String superRegionId, String seasonId) {
       DeleteRequest request = new DeleteRequest();
@@ -277,11 +278,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          seasonGeographyConfigurationRepository.flush();
          // Bugzilla 341: change request: If a Super Region is deleted from a season and that Super Region is not
          // associated to any other season; then it should be removed from the SR lookup table.
-         List<Integer> distinctSeasonIds = seasonGeographyConfigurationRepository.findDistinctSeasons();
-         if(distinctSeasonIds!=null){
-            
+         boolean superRegionAssociated = false;
+         List<Integer> distinctIds = seasonGeographyConfigurationRepository.findDistinctSeasons();
+         if(distinctIds!=null){
+            for(int id:distinctIds){
+               SeasonGeographyConfiguration config = seasonGeographyConfigurationRepository.findOne(id);
+               if(config.getSeason()!=null){
+                  superRegionAssociated = true;
+               }
+            }
          }
-         
+         if(!superRegionAssociated){
+            superRegionRepository.delete(Integer.valueOf(superRegionId));
+         }
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
