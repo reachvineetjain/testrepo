@@ -2,6 +2,7 @@ package com.ccighgo.service.components.backgroundcheck;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ScreenRequest;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;
 
@@ -9,6 +10,8 @@ import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Scre
 public interface BackgroundServiceInterface {
    ScreenResponse requestScreen(ScreenRequest screenRequest);
 
-   String test(ScreenResponse screenRequest);
+   BackgroundCheck applyNow();
 
+    
+ 
 }

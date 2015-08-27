@@ -523,5 +523,13 @@
 		</java>
 	</target>
 		
+	<!-- Apply Now TE-->
+		<target name="ApplyNow">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/thirdparty/background_check/BackgroundCheck.xsd" />
+			</java>
+		</target>
 
 </project>

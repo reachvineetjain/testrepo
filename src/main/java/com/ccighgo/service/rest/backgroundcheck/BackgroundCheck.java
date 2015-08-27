@@ -1,6 +1,7 @@
 package com.ccighgo.service.rest.backgroundcheck;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -31,13 +32,12 @@ public class BackgroundCheck {
       return backgroundServiceInterface.requestScreen(screenRequest);
    }
 
-   @POST
-   @Path("response")
-   @Produces("application/json")
-   @Consumes("application/json")
-   public String test(ScreenResponse screenRequest) {
-      LOGGER.debug("TEST");
-      return backgroundServiceInterface.test(screenRequest);
+   @GET
+   @Path("applyNow")
+   @Produces("application/xml")
+    public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
+      LOGGER.debug("Calling func: applyNow");
+      return backgroundServiceInterface.applyNow();
    }
 
 }
