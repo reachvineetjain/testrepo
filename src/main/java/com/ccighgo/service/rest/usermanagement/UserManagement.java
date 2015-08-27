@@ -222,10 +222,10 @@ public class UserManagement {
      * @return updated User
      */
     @GET
-    @Path("default/{roleId}/permission")
+    @Path("default/{roleId}/{departmentId}/permission")
     @Consumes("application/json")
-    public Departments getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
-        return userMgmtServices.getDefaultPermissionsbyRole(roleId);
+    public Departments getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId,@PathParam("departmentId")String departmentId) {
+        return userMgmtServices.getDefaultPermissionsbyRole(roleId,departmentId);
     }
     
     /**
