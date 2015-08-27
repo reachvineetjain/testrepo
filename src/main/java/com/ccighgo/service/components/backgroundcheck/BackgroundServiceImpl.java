@@ -167,7 +167,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
       com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
       try {
          backgroundCheck.setAccount("0300S");
-         backgroundCheck.setPackageNbr((byte) 1);
+         backgroundCheck.setPackageNbr("1");
          PostBackURL postBackURL = new PostBackURL();
          postBackURL.setCredentialType("CCIGreen");
          postBackURL.setValue("https://www.domain.com/postfile.cfm");
@@ -184,7 +184,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
 
          PersonalData personalData = new PersonalData();
          DemographicDetail demographicDetail = new DemographicDetail();
-         demographicDetail.setDateOfBirth(XMLGregorianCalendarImpl.createDateTime(1964, 01, 14, 2, 2, 2));
+         demographicDetail.setDateOfBirth("1964/01/14");
          demographicDetail.setDLNumber("");
          demographicDetail.setDLState("");
          GovernmentId governmentId = new GovernmentId();
@@ -231,7 +231,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          ContactMethod contackMethod1 = new ContactMethod();
          contackMethod1.setInternetEmailAddress("");
          Telephone telephone = new Telephone();
-         telephone.setFormattedNumber(4192242462L);
+         telephone.setFormattedNumber("4192242462");
          contackMethod1.setTelephone(telephone);
          contackMethod1.setUse("personal");
          personalData.getContactMethod().add(contackMethod1);
@@ -239,7 +239,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          ContactMethod contackMethod2 = new ContactMethod();
          contackMethod2.setInternetEmailAddress("test@gmail.com");
          Telephone telephone1 = new Telephone();
-         telephone1.setFormattedNumber(4192242462L);
+         telephone1.setFormattedNumber("4192242462");
          contackMethod2.setTelephone(telephone1);
          contackMethod2.setUse("personal");
          personalData.getContactMethod().add(contackMethod2);
