@@ -5,5 +5,6 @@
 // Generated on: 2015.08.27 at 03:59:04 PM CDT 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/backgroundcheck")
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/backgroundcheck", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED, xmlns = { @javax.xml.bind.annotation.XmlNs(namespaceURI = "http://www.ccighgo.com/backgroundcheck", prefix = "") })
+
 package com.ccighgo.service.transport.seasons.beans.backgroundcheck;
