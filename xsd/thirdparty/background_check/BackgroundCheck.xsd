@@ -13,7 +13,7 @@
 		<xsd:documentation></xsd:documentation>
 	</xsd:annotation>
 
-	 <xsd:element name="BackgroundCheck">
+	   <xsd:element name="BackgroundCheck">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="PostBackURL">
@@ -90,7 +90,7 @@
                           <xsd:element name="Telephone" minOccurs="0">
                             <xsd:complexType>
                               <xsd:sequence>
-                                <xsd:element type="xsd:long" name="FormattedNumber"/>
+                                <xsd:element type="xsd:string" name="FormattedNumber"/>
                               </xsd:sequence>
                             </xsd:complexType>
                           </xsd:element>
@@ -112,7 +112,7 @@
                               </xsd:simpleContent>
                             </xsd:complexType>
                           </xsd:element>
-                          <xsd:element type="xsd:date" name="DateOfBirth"/>
+                          <xsd:element type="xsd:string" name="DateOfBirth"/>
                           <xsd:element type="xsd:string" name="DLState"/>
                           <xsd:element type="xsd:string" name="DLNumber"/>
                         </xsd:sequence>
@@ -132,6 +132,263 @@
                         <xsd:attribute type="xsd:string" name="qualifier"/>
                       </xsd:complexType>
                     </xsd:element>
+                    <xsd:element name="Screening" maxOccurs="unbounded" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="SearchCriminal" minOccurs="0">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="AdmittedCharges">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="CriminalCase">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element type="xsd:string" name="ArrestingAgency"/>
+                                            <xsd:element type="xsd:string" name="Region"/>
+                                            <xsd:element type="xsd:string" name="County"/>
+                                            <xsd:element type="xsd:string" name="Municipality"/>
+                                            <xsd:element name="Charges">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element type="xsd:string" name="ChargeOrComplaint"/>
+                                                  <xsd:element type="xsd:string" name="Disposition"/>
+                                                  <xsd:element name="DispositionDate">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="AnyDate"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="SearchLicense" minOccurs="0">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="License">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element type="xsd:string" name="LicenseNumber"/>
+                                      <xsd:element type="xsd:string" name="LicensingAgency"/>
+                                      <xsd:element type="xsd:string" name="LicenseName"/>
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="SearchEmployment" minOccurs="0">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="EmploymentHistory">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="EmployerOrg">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element type="xsd:string" name="EmployerOrgName"/>
+                                            <xsd:element name="EmployerContactInfo">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="PersonName">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="FormattedName"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="ContactMethod">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Telephone">
+                                                          <xsd:complexType>
+                                                            <xsd:sequence>
+                                                              <xsd:element type="xsd:string" name="FormattedNumber"/>
+                                                            </xsd:sequence>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="LocationSummary">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="Municipality"/>
+                                                        <xsd:element type="xsd:string" name="Region"/>
+                                                        <xsd:element type="xsd:string" name="CountryCode"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="PositionHistory">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element type="xsd:string" name="Title"/>
+                                                  <xsd:element name="OrgName">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="OrganizationName"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element type="xsd:string" name="Description"/>
+                                                  <xsd:element name="StartDate">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="AnyDate"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="EndDate">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="AnyDate"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="Compensation">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="EndingCompensation">
+                                                          <xsd:complexType>
+                                                            <xsd:simpleContent>
+                                                              <xsd:extension base="xsd:string">
+                                                                <xsd:attribute type="xsd:string" name="currency"/>
+                                                                <xsd:attribute type="xsd:string" name="intervalType"/>
+                                                              </xsd:extension>
+                                                            </xsd:simpleContent>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="Verification">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="ContactInfo">
+                                                          <xsd:complexType>
+                                                            <xsd:sequence>
+                                                              <xsd:element name="PersonName">
+                                                                <xsd:complexType>
+                                                                  <xsd:sequence>
+                                                                    <xsd:element type="xsd:string" name="FormattedName"/>
+                                                                  </xsd:sequence>
+                                                                </xsd:complexType>
+                                                              </xsd:element>
+                                                            </xsd:sequence>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                        <xsd:element type="xsd:string" name="ReasonForLeaving"/>
+                                                        <xsd:element type="xsd:string" name="PermissionToContact"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                                <xsd:attribute type="xsd:string" name="positionType"/>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="SearchEducation" minOccurs="0">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="EducationHistory">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="SchoolOrInstitution">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="School">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element type="xsd:string" name="SchoolName"/>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="LocationSummary">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element type="xsd:string" name="Municipality"/>
+                                                  <xsd:element type="xsd:string" name="Region"/>
+                                                  <xsd:element type="xsd:string" name="CountryCode"/>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="Degree">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element type="xsd:string" name="DegreeName"/>
+                                                  <xsd:element name="DegreeDate">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="AnyDate"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="DegreeMajor">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="Name"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element name="DatesOfAttendance">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="StartDate">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="AnyDate"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                  <xsd:element name="EndDate">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element type="xsd:string" name="Year"/>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                          <xsd:attribute type="xsd:string" name="schoolType"/>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element type="xsd:string" name="Comments"/>
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="type" use="optional"/>
+                      </xsd:complexType>
+                    </xsd:element>
                   </xsd:sequence>
                 </xsd:complexType>
               </xsd:element>
@@ -141,7 +398,7 @@
         </xsd:element>
       </xsd:sequence>
       <xsd:attribute type="xsd:string" name="account"/>
-      <xsd:attribute type="xsd:byte" name="PackageNbr"/>
+      <xsd:attribute type="xsd:string" name="PackageNbr"/>
     </xsd:complexType>
   </xsd:element>
  
