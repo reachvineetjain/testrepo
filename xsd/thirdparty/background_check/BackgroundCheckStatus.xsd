@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/backgroundcheckstatus"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:backgroundcheckstatus="http://www.ccighgo.com/backgroundcheckstatus">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+
+<xsd:element name="BackgroundReports">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="BackgroundReportPackage">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ProviderReferenceId">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element type="xsd:string" name="IdValue"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ClientReferenceId">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element type="xsd:string" name="IdValue"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ScreeningStatus">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element type="xsd:string" name="DateOrderReceived"/>
+                    <xsd:element type="xsd:string" name="OrderStatus"/>
+                    <xsd:element name="AdditionalItems" maxOccurs="unbounded" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element type="xsd:string" name="Text"/>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="qualifier" use="optional"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ScreeningsSummary">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalItems">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element type="xsd:string" name="Text"/>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="qualifier"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute type="xsd:string" name="type"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute type="xsd:string" name="userId"/>
+      <xsd:attribute type="xsd:string" name="password"/>
+      <xsd:attribute type="xsd:string" name="account"/>
+    </xsd:complexType>
+  </xsd:element>
+	 
+ 
+
+</xsd:schema>

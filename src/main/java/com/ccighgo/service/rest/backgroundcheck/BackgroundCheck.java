@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.backgroundcheck.BackgroundServiceInterface;
+import com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ScreenRequest;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;
 
@@ -38,6 +39,15 @@ public class BackgroundCheck {
     public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
       LOGGER.debug("Calling func: applyNow");
       return backgroundServiceInterface.applyNow();
+   }
+   
+   @POST
+   @Path("sendReport")
+   @Produces("application/xml")
+   @Consumes("application/xml")
+    public String sendReport(BackgroundReports backgroundReports) {
+      LOGGER.debug("Calling func: sendReport");
+      return backgroundServiceInterface.sendReport(backgroundReports);
    }
 
 }
