@@ -1,0 +1,174 @@
+<BackgroundCheck xmlns="http://ns.hr-xml.org/2007-04-15" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ns.hr-xml.org/2007-04-15 BackgroundCheck.xsd"
+   account="0300S" PackageNbr="1">
+   <!--- CredentialType is set to ‘None’ if there is no credentials to the interface. This will send blank userId, password, and account - -->
+   <!--- CredentialType is set to ‘OnAccount’ if each client has their own interface login, but this requires TE to enter the password for each account integrating 
+      with TE. If TE does not have this information for the account, then there will be no return of status. - -->
+   <!--- CredentialType is set to ‘CCIGreen’ if there is one login for the entire interface regardless of client involved. Credentials will need to be provided to 
+      TE. If TE does not have this information, then there will be no return of status. - -->
+   <!--- Certificate errors will prevent return of status. - -->
+   <PostBackURL CredentialType="CCIGreen">https://www.domain.com/postfile.cfm</PostBackURL>
+   <BackgroundSearchPackage action="CreateApplicantAccount">
+      <ReferenceId>
+         <!-- Alphanumeric value that will be returned in ClientReferenceId -->
+         <IdValue name="AssignmentID">8804060</IdValue>
+      </ReferenceId>
+      <PersonalData>
+         <PersonName type="Legal">
+            <GivenName>Mia</GivenName>
+            <MiddleName>K</MiddleName>
+            <FamilyName>Julianne</FamilyName>
+            <Affix type="generation">Jr</Affix>
+         </PersonName>
+         <PersonName type="Alias">
+            <GivenName>Mia</GivenName>
+            <MiddleName>K</MiddleName>
+            <FamilyName>Sepien</FamilyName>
+         </PersonName>
+         <PostalAddress type="streetAddress">
+            <CountryCode>US</CountryCode>
+            <PostalCode>45802</PostalCode>
+            <Region>OH</Region>
+            <Municipality>Lima</Municipality>
+            <DeliveryAddress>
+               <StreetName>123 Main St</StreetName>
+            </DeliveryAddress>
+         </PostalAddress>
+         <ContactMethod>
+            <Use>personal</Use>
+            <Telephone>
+               <FormattedNumber>4192242462</FormattedNumber>
+            </Telephone>
+         </ContactMethod>
+         <ContactMethod>
+            <InternetEmailAddress>test@email.com</InternetEmailAddress>
+         </ContactMethod>
+         <DemographicDetail>
+            <GovernmentId countryCode="US" issuingAuthority="SSA" documentType="SSN">100010001</GovernmentId>
+            <DateOfBirth>1964-01-14</DateOfBirth>
+            <DLState>MN</DLState>
+            <DLNumber>Q123456789</DLNumber>
+         </DemographicDetail>
+      </PersonalData>
+      <Screenings>
+         <AdditionalItems qualifier="PositionTitle">
+            <Text>Office Manager</Text>
+         </AdditionalItems>
+         <Screening type="criminal">
+            <SearchCriminal>
+               <AdmittedCharges>
+                  <CriminalCase>
+                     <ArrestingAgency>Mentor Law Agency</ArrestingAgency>
+                     <Region>OH</Region>
+                     <County>Lake</County>
+                     <Municipality>Mentor</Municipality>
+                     <Charges>
+                        <ChargeOrComplaint>Robbery</ChargeOrComplaint>
+                        <Disposition>Pled Guilty</Disposition>
+                        <DispositionDate>
+                           <AnyDate>2008-01-01</AnyDate>
+                        </DispositionDate>
+                     </Charges>
+                  </CriminalCase>
+               </AdmittedCharges>
+            </SearchCriminal>
+         </Screening>
+         <Screening type="license">
+            <SearchLicense>
+               <License>
+                  <LicenseNumber>2123645843</LicenseNumber>
+                  <LicensingAgency>NV</LicensingAgency>
+                  <LicenseName>mvPersonal</LicenseName>
+               </License>
+            </SearchLicense>
+         </Screening>
+         <Screening type="employment">
+            <SearchEmployment>
+               <EmploymentHistory>
+                  <EmployerOrg>
+                     <EmployerOrgName>CATAMOUNT COMMUNICATIONS</EmployerOrgName>
+                     <EmployerContactInfo>
+                        <PersonName>
+                           <FormattedName>John Peters</FormattedName>
+                        </PersonName>
+                        <ContactMethod>
+                           <Telephone>
+                              <FormattedNumber>5555558457</FormattedNumber>
+                           </Telephone>
+                        </ContactMethod>
+                        <LocationSummary>
+                           <Municipality>Tallahassee</Municipality>
+                           <Region>FL</Region>
+                           <CountryCode>US</CountryCode>
+                        </LocationSummary>
+                     </EmployerContactInfo>
+                     <PositionHistory positionType="directHire">
+                        <Title>President</Title>
+                        <OrgName>
+                           <OrganizationName>CATAMOUNT COMMUNICATIONS</OrganizationName>
+                        </OrgName>
+                        <Description>CATAMOUNT COMMUNICATIONS 1993 - present
+                           Tallahassee, Florida
+                           President
+                        </Description>
+                        <StartDate>
+                           <AnyDate>1993-01-01</AnyDate>
+                        </StartDate>
+                        <EndDate>
+                           <AnyDate>2007-08-01</AnyDate>
+                        </EndDate>
+                        <Compensation>
+                           <EndingCompensation currency="USD" intervalType="">120000</EndingCompensation>
+                        </Compensation>
+                        <Verification>
+                           <ContactInfo>
+                              <PersonName>
+                                 <FormattedName>John Peters</FormattedName>
+                              </PersonName>
+                           </ContactInfo>
+                           <ReasonForLeaving>cooler wheather</ReasonForLeaving>
+                           <PermissionToContact>false</PermissionToContact>
+                        </Verification>
+                     </PositionHistory>
+                  </EmployerOrg>
+               </EmploymentHistory>
+            </SearchEmployment>
+         </Screening>
+         <Screening type="education">
+            <SearchEducation>
+               <EducationHistory>
+                  <SchoolOrInstitution schoolType="secondary">
+                     <School>
+                        <SchoolName>UNIVERSITY OF TEXAS</SchoolName>
+                     </School>
+                     <LocationSummary>
+                        <Municipality>Austin</Municipality>
+                        <Region>TX</Region>
+                        <CountryCode>US</CountryCode>
+                     </LocationSummary>
+                     <Degree>
+                        <DegreeName>MASTER</DegreeName>
+                        <DegreeDate>
+                           <AnyDate>1990-01-01</AnyDate>
+                        </DegreeDate>
+                        <DegreeMajor>
+                           <Name>BUSINESS ADMINISTRATION</Name>
+                        </DegreeMajor>
+                     </Degree>
+                     <DatesOfAttendance>
+                        <StartDate>
+                           <AnyDate>notKnown</AnyDate>
+                        </StartDate>
+                        <EndDate>
+                           <Year>1978</Year>
+                        </EndDate>
+                     </DatesOfAttendance>
+                  </SchoolOrInstitution>
+                  <Comments>This is the description of education field.</Comments>
+               </EducationHistory>
+            </SearchEducation>
+         </Screening>
+      </Screenings>
+   </BackgroundSearchPackage>
+</BackgroundCheck> 
+ 
+

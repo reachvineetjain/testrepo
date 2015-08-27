@@ -4,7 +4,6 @@
 package com.ccighgo.service.components.authentication;
 
 import org.apache.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public Auth login() {
-		String userName = SecurityUtils.getSubject().getPrincipal().toString();
-		LOGGER.info("User with login name :"+userName+" attempting login");
-      return authorizationManager.getUserLogin(userName);
+      return authorizationManager.getUserLogin("");
 	}
 	
 	private static final Logger LOGGER = Logger.getLogger(AuthenticationServiceImpl.class);
