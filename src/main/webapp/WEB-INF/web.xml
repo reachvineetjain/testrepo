@@ -5,7 +5,7 @@
 
    <context-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>WEB-INF/applicationContext.xml, WEB-INF/serviceBeans.xml,WEB-INF/securityContext.xml</param-value>
+      <param-value>WEB-INF/applicationContext.xml</param-value>
    </context-param>
 
    <listener>
@@ -23,17 +23,8 @@
       <url-pattern>/services/*</url-pattern>
    </servlet-mapping>
 
-   <filter>
-      <filter-name>shiroFilter</filter-name>
-      <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-   </filter>
-
-   <filter-mapping>
-      <filter-name>shiroFilter</filter-name>
-      <servlet-name>CXFServlet</servlet-name>
-   </filter-mapping>
-
    <session-config>
-      <session-timeout>120</session-timeout>
+      <session-timeout>60</session-timeout>
    </session-config>
+
 </web-app>

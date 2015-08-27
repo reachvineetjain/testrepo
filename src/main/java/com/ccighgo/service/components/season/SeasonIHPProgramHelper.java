@@ -448,7 +448,6 @@ public class SeasonIHPProgramHelper {
          } else {
             LOGGER.debug("update ihpProgramConfiguration HSP_STP_IHP failed because no season program found for the id: " + ihpProgramConfiguration.getSeasonProgramId());
          }
-
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
