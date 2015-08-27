@@ -875,7 +875,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Override
    @Transactional(readOnly = true)
-   public Departments getDefaultPermissionsbyRole(String roleId) {
+   public Departments getDefaultPermissionsbyRole(String roleId,String deptId) {
       // 0:departmentResourceGroupId, 1:resourceGroupName, 2:resourcePermissionId, 3:resourceName, 4:resourceActionId,
       // 5:resourceAction 6:resourceDescription
       Departments departments = null;
@@ -889,7 +889,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       try {
          List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
          
-         List<Object[]> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(roleId));
+         List<Object[]> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(roleId),Integer.valueOf(deptId));
          if (results != null) {
             staffUserRolePermissions = new StaffUserRolePermissions();
             List<StaffUserDefaultPermissions> staffUserDefaultPermissions = new ArrayList<StaffUserDefaultPermissions>();

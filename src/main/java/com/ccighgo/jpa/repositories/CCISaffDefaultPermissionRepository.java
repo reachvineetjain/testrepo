@@ -31,7 +31,7 @@ public interface CCISaffDefaultPermissionRepository extends JpaRepository<CCISta
             + " INNER JOIN `ResourcePermissions` rp ON rp.`departmentResourceGroupId`=dg.`departmentResourceGroupId` "
             + " INNER JOIN `ResourceActions` ra ON ra.`resourceActionId` = rp.`resourceActionId` "
             + " INNER JOIN `CCIStaffRolesDefaultResourcePermissions` dp ON dp.`resourcePermissionId`=rp.`resourcePermissionId` AND dp.`cciStaffRolesDepartmentId`=rd.`cciStaffRolesDepartmentId` "
-            + " WHERE cr.`cciStaffRoleId`= ?1", nativeQuery = true)
-   List<Object []> getDefaultPermissions(Integer id);
+            + " WHERE cr.`cciStaffRoleId`= ?1 AND dg.`departmentId`=?2 ", nativeQuery = true)
+   List<Object []> getDefaultPermissions(Integer id,Integer deptId);
 
 }
