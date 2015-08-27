@@ -38,6 +38,7 @@ import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundChe
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage.Screenings;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage.Screenings.AdditionalItems;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.PostBackURL;
+import com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ObjectFactory;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ScreenRequest;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Account;
@@ -161,99 +162,106 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
 
    }
 
-  
-
    @Override
    public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
-      com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck =new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
-      backgroundCheck.setAccount("0300S");
-      backgroundCheck.setPackageNbr((byte)1);
-      PostBackURL postBackURL = new PostBackURL();
-      postBackURL.setCredentialType("CCIGreen");
-      postBackURL.setValue("https://www.domain.com/postfile.cfm");
-      backgroundCheck.setPostBackURL(postBackURL);
+      com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
+      try {
+         backgroundCheck.setAccount("0300S");
+         backgroundCheck.setPackageNbr((byte) 1);
+         PostBackURL postBackURL = new PostBackURL();
+         postBackURL.setCredentialType("CCIGreen");
+         postBackURL.setValue("https://www.domain.com/postfile.cfm");
+         backgroundCheck.setPostBackURL(postBackURL);
 
-      BackgroundSearchPackage backgroundSearchPackage=new BackgroundSearchPackage();
-      backgroundSearchPackage.setAction("CreateApplicantAccount");
-      ReferenceId referenceId=new ReferenceId();
-      IdValue idValue= new IdValue();
-      idValue.setName("AssignmentID");
-      idValue.setValue("8804060");
-      referenceId.setIdValue(idValue);
-      backgroundSearchPackage.setReferenceId(referenceId);
+         BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
+         backgroundSearchPackage.setAction("CreateApplicantAccount");
+         ReferenceId referenceId = new ReferenceId();
+         IdValue idValue = new IdValue();
+         idValue.setName("AssignmentID");
+         idValue.setValue("8804060");
+         referenceId.setIdValue(idValue);
+         backgroundSearchPackage.setReferenceId(referenceId);
 
-      PersonalData personalData= new PersonalData();
-      DemographicDetail demographicDetail=new DemographicDetail();
-      demographicDetail.setDateOfBirth(XMLGregorianCalendarImpl.createDateTime(1964, 01, 14, 2, 2, 2));
-      demographicDetail.setDLNumber("");
-      demographicDetail.setDLState("");
-      GovernmentId governmentId=new GovernmentId();
-      governmentId.setCountryCode("US");
-      governmentId.setDocumentType("SSN");
-      governmentId.setIssuingAuthority("SSA");
-      governmentId.setValue("100010001");
-      demographicDetail.setGovernmentId(governmentId);
-      personalData.setDemographicDetail(demographicDetail);
-      PostalAddress postalAddress=new PostalAddress();
-      postalAddress.setCountryCode("US");
-      DeliveryAddress deliveryAddress=new DeliveryAddress();
-      deliveryAddress.setStreetName("123 Main St");
-      postalAddress.setDeliveryAddress(deliveryAddress);
-      postalAddress.setMunicipality("Lima");
-      postalAddress.setPostalCode("45802");
-      postalAddress.setRegion("OH");
-      postalAddress.setType("streetAddress");
-      
-      personalData.setPostalAddress(postalAddress);
-      
-      PersonName personName1 =new PersonName();
-      Affix affixe=new Affix();
-      affixe.setType("generation");
-      affixe.setValue("Jr");
-      personName1.setAffix(affixe);
-      personName1.setFamilyName("Julianne");
-      personName1.setGivenName("Mia");
-      personName1.setMiddleName("K");
-      personName1.setType("Legal");
-      personalData.getPersonName().add(personName1);
-      
-      PersonName personName2 =new PersonName();
-      Affix affixe1=new Affix();
-      affixe1.setType("generation");
-      affixe1.setValue("Jr");
-      personName2.setAffix(affixe1);
-      personName2.setFamilyName("Julianne");
-      personName2.setGivenName("Mia");
-      personName2.setMiddleName("K");
-      personName2.setType("Legal");
-      personalData.getPersonName().add(personName2);
-      
-      
-      ContactMethod contackMethod1 = new ContactMethod();
-      contackMethod1.setInternetEmailAddress("");
-      Telephone telephone=new Telephone();
-      telephone.setFormattedNumber(4192242462L);
-      contackMethod1.setTelephone(telephone);
-      contackMethod1.setUse("personal");
-      personalData.getContactMethod().add(contackMethod1 );
-      
-      ContactMethod contackMethod2 = new ContactMethod();
-      contackMethod2.setInternetEmailAddress("test@gmail.com");
-      Telephone telephone1=new Telephone();
-      telephone1.setFormattedNumber(4192242462L);
-      contackMethod2.setTelephone(telephone1);
-      contackMethod2.setUse("personal");
-      personalData.getContactMethod().add(contackMethod2 );
-      
-      
-      backgroundSearchPackage.setPersonalData(personalData);
-      Screenings screening = new Screenings();
-      AdditionalItems additionalItems=new AdditionalItems();
-      additionalItems.setQualifier("PositionTitle");
-      additionalItems.setText("Local Coordinator");
-      screening.setAdditionalItems(additionalItems);
-      backgroundSearchPackage.setScreenings(screening);
-      backgroundCheck.setBackgroundSearchPackage(backgroundSearchPackage);
+         PersonalData personalData = new PersonalData();
+         DemographicDetail demographicDetail = new DemographicDetail();
+         demographicDetail.setDateOfBirth(XMLGregorianCalendarImpl.createDateTime(1964, 01, 14, 2, 2, 2));
+         demographicDetail.setDLNumber("");
+         demographicDetail.setDLState("");
+         GovernmentId governmentId = new GovernmentId();
+         governmentId.setCountryCode("US");
+         governmentId.setDocumentType("SSN");
+         governmentId.setIssuingAuthority("SSA");
+         governmentId.setValue("100010001");
+         demographicDetail.setGovernmentId(governmentId);
+         personalData.setDemographicDetail(demographicDetail);
+         PostalAddress postalAddress = new PostalAddress();
+         postalAddress.setCountryCode("US");
+         DeliveryAddress deliveryAddress = new DeliveryAddress();
+         deliveryAddress.setStreetName("123 Main St");
+         postalAddress.setDeliveryAddress(deliveryAddress);
+         postalAddress.setMunicipality("Lima");
+         postalAddress.setPostalCode("45802");
+         postalAddress.setRegion("OH");
+         postalAddress.setType("streetAddress");
+
+         personalData.setPostalAddress(postalAddress);
+
+         PersonName personName1 = new PersonName();
+         Affix affixe = new Affix();
+         affixe.setType("generation");
+         affixe.setValue("Jr");
+         personName1.setAffix(affixe);
+         personName1.setFamilyName("Julianne");
+         personName1.setGivenName("Mia");
+         personName1.setMiddleName("K");
+         personName1.setType("Legal");
+         personalData.getPersonName().add(personName1);
+
+         PersonName personName2 = new PersonName();
+         Affix affixe1 = new Affix();
+         affixe1.setType("generation");
+         affixe1.setValue("Jr");
+         personName2.setAffix(affixe1);
+         personName2.setFamilyName("Julianne");
+         personName2.setGivenName("Mia");
+         personName2.setMiddleName("K");
+         personName2.setType("Legal");
+         personalData.getPersonName().add(personName2);
+
+         ContactMethod contackMethod1 = new ContactMethod();
+         contackMethod1.setInternetEmailAddress("");
+         Telephone telephone = new Telephone();
+         telephone.setFormattedNumber(4192242462L);
+         contackMethod1.setTelephone(telephone);
+         contackMethod1.setUse("personal");
+         personalData.getContactMethod().add(contackMethod1);
+
+         ContactMethod contackMethod2 = new ContactMethod();
+         contackMethod2.setInternetEmailAddress("test@gmail.com");
+         Telephone telephone1 = new Telephone();
+         telephone1.setFormattedNumber(4192242462L);
+         contackMethod2.setTelephone(telephone1);
+         contackMethod2.setUse("personal");
+         personalData.getContactMethod().add(contackMethod2);
+
+         backgroundSearchPackage.setPersonalData(personalData);
+         Screenings screening = new Screenings();
+         AdditionalItems additionalItems = new AdditionalItems();
+         additionalItems.setQualifier("PositionTitle");
+         additionalItems.setText("Local Coordinator");
+         screening.setAdditionalItems(additionalItems);
+         backgroundSearchPackage.setScreenings(screening);
+         backgroundCheck.setBackgroundSearchPackage(backgroundSearchPackage);
+      } catch (Exception e) {
+        ExceptionUtil.logException(e, LOGGER);
+      }
       return backgroundCheck;
+   }
+
+   @Override
+   public String sendReport(BackgroundReports backgroundReports) {
+      if (backgroundReports.getUserId() != null)
+         System.out.println(backgroundReports.getUserId());
+      return "200 : Received !";
    }
 }
