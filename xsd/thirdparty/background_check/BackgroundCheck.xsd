@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/backgroundcheck"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:backgroundcheck="http://www.ccighgo.com/backgroundcheck">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.backgroundcheck" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+
+	 <xsd:element name="BackgroundCheck">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="PostBackURL">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="xsd:string">
+                <xsd:attribute type="xsd:string" name="CredentialType"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="BackgroundSearchPackage">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ReferenceId">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="IdValue">
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:extension base="xsd:string">
+                            <xsd:attribute type="xsd:string" name="name"/>
+                          </xsd:extension>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="PersonalData">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="PersonName" maxOccurs="unbounded" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element type="xsd:string" name="GivenName"/>
+                          <xsd:element type="xsd:string" name="MiddleName"/>
+                          <xsd:element type="xsd:string" name="FamilyName"/>
+                          <xsd:element name="Affix" minOccurs="0">
+                            <xsd:complexType>
+                              <xsd:simpleContent>
+                                <xsd:extension base="xsd:string">
+                                  <xsd:attribute type="xsd:string" name="type"/>
+                                </xsd:extension>
+                              </xsd:simpleContent>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="type" use="optional"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="PostalAddress">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element type="xsd:string" name="CountryCode"/>
+                          <xsd:element type="xsd:string" name="PostalCode"/>
+                          <xsd:element type="xsd:string" name="Region"/>
+                          <xsd:element type="xsd:string" name="Municipality"/>
+                          <xsd:element name="DeliveryAddress">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element type="xsd:string" name="StreetName"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="type"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="ContactMethod" maxOccurs="unbounded" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element type="xsd:string" name="Use" minOccurs="0"/>
+                          <xsd:element name="Telephone" minOccurs="0">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element type="xsd:long" name="FormattedNumber"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element type="xsd:string" name="InternetEmailAddress" minOccurs="0"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="DemographicDetail">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="GovernmentId">
+                            <xsd:complexType>
+                              <xsd:simpleContent>
+                                <xsd:extension base="xsd:string">
+                                  <xsd:attribute type="xsd:string" name="countryCode"/>
+                                  <xsd:attribute type="xsd:string" name="issuingAuthority"/>
+                                  <xsd:attribute type="xsd:string" name="documentType"/>
+                                </xsd:extension>
+                              </xsd:simpleContent>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element type="xsd:date" name="DateOfBirth"/>
+                          <xsd:element type="xsd:string" name="DLState"/>
+                          <xsd:element type="xsd:string" name="DLNumber"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="Screenings">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalItems">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element type="xsd:string" name="Text"/>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="qualifier"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute type="xsd:string" name="action"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute type="xsd:string" name="account"/>
+      <xsd:attribute type="xsd:byte" name="PackageNbr"/>
+    </xsd:complexType>
+  </xsd:element>
+ 
+
+</xsd:schema>

@@ -30,11 +30,11 @@ public class AreaRepresentativeData {
    @XmlElement(name = "Comments")
    private String Comments;
    @XmlElement(name = "InterestedInLocalCoordinatorForYear")
-   private int InterestedInLocalCoordinatorForYear;
+   private Integer InterestedInLocalCoordinatorForYear;
    @XmlElement(name = "InterestedInLocalCoordinatorForSummer")
-   private int InterestedInLocalCoordinatorForSummer;
+   private Integer InterestedInLocalCoordinatorForSummer;
    @XmlElement(name = "CurrentCommunityVolunteer")
-   private boolean CurrentCommunityVolunteer;
+   private Boolean CurrentCommunityVolunteer;
    @XmlElement(name = "CurrentCommunityVolunteerDetails")
    private String CurrentCommunityVolunteerDetails;
    @XmlElement(name = "FieldStaffWillingToHost")
@@ -120,27 +120,27 @@ public class AreaRepresentativeData {
       Comments = comments;
    }
 
-   public int getInterestedInLocalCoordinatorForYear() {
+   public Integer getInterestedInLocalCoordinatorForYear() {
       return InterestedInLocalCoordinatorForYear;
    }
 
-   public void setInterestedInLocalCoordinatorForYear(int interestedInLocalCoordinatorForYear) {
+   public void setInterestedInLocalCoordinatorForYear(Integer interestedInLocalCoordinatorForYear) {
       InterestedInLocalCoordinatorForYear = interestedInLocalCoordinatorForYear;
    }
 
-   public int getInterestedInLocalCoordinatorForSummer() {
+   public Integer getInterestedInLocalCoordinatorForSummer() {
       return InterestedInLocalCoordinatorForSummer;
    }
 
-   public void setInterestedInLocalCoordinatorForSummer(int interestedInLocalCoordinatorForSummer) {
+   public void setInterestedInLocalCoordinatorForSummer(Integer interestedInLocalCoordinatorForSummer) {
       InterestedInLocalCoordinatorForSummer = interestedInLocalCoordinatorForSummer;
    }
 
-   public boolean isCurrentCommunityVolunteer() {
+   public Boolean isCurrentCommunityVolunteer() {
       return CurrentCommunityVolunteer;
    }
 
-   public void setCurrentCommunityVolunteer(boolean currentCommunityVolunteer) {
+   public void setCurrentCommunityVolunteer(Boolean currentCommunityVolunteer) {
       CurrentCommunityVolunteer = currentCommunityVolunteer;
    }
 
