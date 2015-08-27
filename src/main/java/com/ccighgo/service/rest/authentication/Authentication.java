@@ -4,12 +4,13 @@
 package com.ccighgo.service.rest.authentication;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.auth.beans.Auth;
@@ -27,16 +28,18 @@ public class Authentication {
 	
 	@Autowired private AuthenticationService authAction;
     
-   @POST
+    @GET
 	@Path("login")
 	public Auth login(){
+		String user = SecurityUtils.getSubject().getPrincipal().toString();
+		LOGGER.debug("User '{}' logged in", user);
 		return authAction.login();
 	}
 	
 	@GET
 	@Path("logout")
 	public void logout(){
-	   //TODO clear session
+		SecurityUtils.getSubject().logout();
 		LOGGER.debug("User logged out");
 	}
 
