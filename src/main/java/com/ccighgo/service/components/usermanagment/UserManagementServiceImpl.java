@@ -4,7 +4,9 @@
 package com.ccighgo.service.components.usermanagment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.persistence.EntityManager;
@@ -105,6 +107,7 @@ import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.ValidationUtils;
+
 import java.sql.Timestamp;
 
 /**
@@ -367,6 +370,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       try {
          CCIStaffUser cciUser = new CCIStaffUser();
+         boolean programCheck = true;
          ValidationUtils.validateRequired(user.getFirstName());
          cciUser.setFirstName(user.getFirstName());
          ValidationUtils.validateRequired(user.getLastName());
@@ -407,6 +411,16 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          // create department and programs
          if (user.getDepartmentPrograms() != null) {
+            List<UserDepartmentProgram> userDeptPrograms = user.getDepartmentPrograms();
+            for (UserDepartmentProgram userDepartmentProgram : userDeptPrograms) {
+               if (userDepartmentProgram.getProgramId() <= 0)
+               {
+                  programCheck = false;
+                  break;
+               }
+            }
+            if(programCheck)
+            {
             List<CCIStaffUserProgram> userPrograms = createUserDepartmentAndPrograms(user, cUser);
             if (userPrograms == null) {
                usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_DEPT_PROGRAM_CREATION.getValue(),
@@ -416,6 +430,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             }
             cciStaffUserProgramRepository.save(userPrograms);
             cciStaffUserProgramRepository.flush();
+            }
          }
          // create user role
          if (user.getRoles() != null) {
@@ -888,14 +903,12 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       try {
          List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
-         
-         List<Object[]> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(roleId),Integer.valueOf(deptId));
+         //List<Object[]> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(roleId),Integer.valueOf(deptId));
+         List<CCIStaffRolesDefaultResourcePermission> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(deptId),Integer.valueOf(roleId));
          if (results != null) {
             staffUserRolePermissions = new StaffUserRolePermissions();
             List<StaffUserDefaultPermissions> staffUserDefaultPermissions = new ArrayList<StaffUserDefaultPermissions>();
-
             for (DepartmentResourceGroup dprg : departmentResourceGroupList) {
-
                StaffUserDefaultPermissions defaultPermissions = new StaffUserDefaultPermissions();
                defaultPermissions.setPermissionGroupId(dprg.getDepartmentResourceGroupId());
                defaultPermissions.setPermissionGroupName(dprg.getResourceGroupName());
@@ -904,30 +917,17 @@ public class UserManagementServiceImpl implements UserManagementService {
                defaultPermissions.setDepartmentName(dprg.getLookupDepartment().getDepartmentName());
                defaultPermissions.setActive(dprg.getLookupDepartment().getActive() == 0 ? false : true);
                List<StaffUserDefaultPermissionGroupOptions> permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
-               for (Object[] obj : results) {
-                  if (dprg.getDepartmentResourceGroupId() == Integer.valueOf(obj[0].toString())) {
+               for (CCIStaffRolesDefaultResourcePermission obj : results) {
+                  if (dprg.getDepartmentResourceGroupId() == obj.getDepartmentResourceGroup().getDepartmentResourceGroupId()) {
                      StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
-                     options.setPermissionGroupOptionId(Integer.valueOf(obj[2].toString()));
-                     options.setPermissionGroupOptionName(obj[3].toString());
-                     /*
-                      * options.setPermissionGroupOptionActionId(obj[4].toString());
-                      * options.setPermissionGroupOptionAction(obj[5].toString());
-                      */
-                     options.setResourceDescription(obj[6].toString());
+                     options.setPermissionGroupOptionId(obj.getResourcePermission().getResourcePermissionId());
+                     options.setPermissionGroupOptionName(obj.getResourcePermission().getResourceName());
+                     options.setResourceDescription(obj.getResourcePermission().getResourceDescription());
                      permissionGroupOptionsList.add(options);
-                  }/*
-                    * else{
-                    * staffUserRolePermissions=setStaffUserRolePermissionsStatus(staffUserRolePermissions,CCIConstants
-                    * .FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
-                    * messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
-                    * LOGGER.
-                    * error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
-                    * }
-                    */
+                  }
                }
                defaultPermissions.getPermissionGroupOptions().addAll(permissionGroupOptionsList);
                staffUserDefaultPermissions.add(defaultPermissions);
-               // staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
             }
             staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
             departments = ConvertStaffUserDefaultPermissionsTODepartments(staffUserRolePermissions, departments);
@@ -1340,7 +1340,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          return usr;
       }
       try{
-         
+         boolean programCheck = true;
       CCIStaffUser tempCCIUser=cciUsersRepository.findOne(user.getCciUserId());
       if(tempCCIUser == null){
          usr=setUserStatus(usr,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(), messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
@@ -1412,10 +1412,21 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       
       if (user.getDepartmentPrograms() != null) {
+         List<UserDepartmentProgram> userDeptPrograms = user.getDepartmentPrograms();
+         for (UserDepartmentProgram userDepartmentProgram : userDeptPrograms) {
+            if (userDepartmentProgram.getProgramId() <= 0)
+            {
+               programCheck = false;
+               break;
+            }
+         }
+         if(programCheck)
+         {
          List<CCIStaffUserProgram> userPrograms = updateUserDepartmentAndPrograms(user, tempCCIUser);
          cciUser.setCcistaffUserPrograms(userPrograms);
          cciStaffUserProgramRepository.save(userPrograms);
          cciStaffUserProgramRepository.flush();
+         }
       }
       
       // create user role
