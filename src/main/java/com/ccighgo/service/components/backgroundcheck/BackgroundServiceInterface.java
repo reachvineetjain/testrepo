@@ -12,9 +12,6 @@ public interface BackgroundServiceInterface {
    ScreenResponse requestScreen(ScreenRequest screenRequest);
 
    BackgroundCheck applyNow();
-
    String sendReport(BackgroundReports backgroundReports);
-
-    
  
 }
