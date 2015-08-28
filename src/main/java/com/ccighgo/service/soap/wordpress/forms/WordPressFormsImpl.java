@@ -34,6 +34,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
+            partnerAgentInquiry.setPartnerAgentGoId(5);
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          }
          if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
