@@ -16,7 +16,6 @@ public class WordPressFormsImpl implements IWordPressForms {
    @Override
    public String InquiryPartner(InternationalPartners InternationalPartners) {
       try {
-
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
          if (InternationalPartners != null) {
