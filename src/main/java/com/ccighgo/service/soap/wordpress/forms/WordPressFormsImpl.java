@@ -1,9 +1,10 @@
 package com.ccighgo.service.soap.wordpress.forms;
 
-import java.util.Arrays;
-
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.db.entities.PartnerAgentInquiry;
+import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;
@@ -13,26 +14,27 @@ public class WordPressFormsImpl implements IWordPressForms {
 
    public static final Logger LOGGER = Logger.getLogger(WordPressFormsImpl.class);
 
+   @Autowired
+   PartnerAgentInquiryRepository partnerAgentInquiryRepository;
+
    @Override
    public String InquiryPartner(InternationalPartners InternationalPartners) {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
          if (InternationalPartners != null) {
-            LOGGER.info("Name " + InternationalPartners.getLegalBusinessName());
-            System.out.println("Name :" + InternationalPartners.getLegalBusinessName());
-            System.out.println("Address :" + InternationalPartners.getAddress());
-            System.out.println("FName :" + InternationalPartners.getFirstName());
-            System.out.println("LName :" + InternationalPartners.getLastName());
-            System.out.println("Email :" + InternationalPartners.getEmail());
-            System.out.println("Phone :" + InternationalPartners.getPhone());
-            System.out.println("Prefix :" + InternationalPartners.getPrefix());
-            System.out.println("Years In Business :" + InternationalPartners.getYearsInBusiness());
-            System.out.println("Country :" + InternationalPartners.getCounrty());
-            System.out.println("City :" + InternationalPartners.getCity());
-            if (InternationalPartners.getPrograms() != null) {
-               System.out.println("Programs :" + Arrays.toString(InternationalPartners.getPrograms().toArray()));
-            }
+            PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
+            partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
+            partnerAgentInquiry.setAdressLineTwo(InternationalPartners.getAddress2());
+            partnerAgentInquiry.setBusinessName(InternationalPartners.getLegalBusinessName());
+            partnerAgentInquiry.setBusinessYears(InternationalPartners.getYearsInBusiness()+"");
+            partnerAgentInquiry.setCity(InternationalPartners.getCity());
+            partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
+            partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
+            partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
+            partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
+            partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
+            partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          }
          if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
             String string = "200:Success";
@@ -106,10 +108,10 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println("Generate New Area Representative");
 
          if (AreaRepresentativeData != null) {
-            System.out.println("FName :"  + AreaRepresentativeData.getFirstName());
-            System.out.println("LName :"  + AreaRepresentativeData.getLastName());
-            System.out.println("Email :"  + AreaRepresentativeData.getEmail());
-            System.out.println("City :"   + AreaRepresentativeData.getCity());
+            System.out.println("FName :" + AreaRepresentativeData.getFirstName());
+            System.out.println("LName :" + AreaRepresentativeData.getLastName());
+            System.out.println("Email :" + AreaRepresentativeData.getEmail());
+            System.out.println("City :" + AreaRepresentativeData.getCity());
             System.out.println("State : " + AreaRepresentativeData.getState());
          }
          if (AreaRepresentativeData.getEmail().equalsIgnoreCase("success@gmail.com")) {
