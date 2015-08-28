@@ -1,5 +1,7 @@
 package com.ccighgo.service.soap.wordpress.forms;
 
+import java.util.Random;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +36,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
-            partnerAgentInquiry.setPartnerAgentGoId(5);
+            partnerAgentInquiry.setPartnerAgentGoId(new Random().nextInt());
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          }
          if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
