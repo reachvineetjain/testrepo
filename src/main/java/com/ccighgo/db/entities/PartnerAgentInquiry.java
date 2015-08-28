@@ -1,7 +1,9 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class PartnerAgentInquiry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer partnerAgentGoId;
 
 	private String adressLineOne;
