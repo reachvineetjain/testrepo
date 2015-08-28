@@ -22,7 +22,7 @@ public interface CCISaffDefaultPermissionRepository extends JpaRepository<CCISta
    @Query("SELECT c FROM CCIStaffRolesDefaultResourcePermission c WHERE c.departmentResourceGroup = ?1 ")
    public List<CCIStaffRolesDefaultResourcePermission> findPermissionsByRole(DepartmentResourceGroup departmentResourceGroup);
    
-   @Query( value = "SELECT dg.`departmentResourceGroupId`,dg.`resourceGroupName`,rp.`resourcePermissionId` "
+  /* @Query( value = "SELECT dg.`departmentResourceGroupId`,dg.`resourceGroupName`,rp.`resourcePermissionId` "
             + " ,rp.`resourceName`, ra.`resourceActionId`, ra.resourceAction , rp.resourceDescription "
             + " FROM `CCIStaffRoles` cr "
             + " INNER JOIN `CCIStaffRolesDepartments` rd ON rd.`cciStaffRoleId`=cr.`cciStaffRoleId` "
@@ -32,6 +32,9 @@ public interface CCISaffDefaultPermissionRepository extends JpaRepository<CCISta
             + " INNER JOIN `ResourceActions` ra ON ra.`resourceActionId` = rp.`resourceActionId` "
             + " INNER JOIN `CCIStaffRolesDefaultResourcePermissions` dp ON dp.`resourcePermissionId`=rp.`resourcePermissionId` AND dp.`cciStaffRolesDepartmentId`=rd.`cciStaffRolesDepartmentId` "
             + " WHERE cr.`cciStaffRoleId`= ?1 AND dg.`departmentId`=?2 ", nativeQuery = true)
-   List<Object []> getDefaultPermissions(Integer id,Integer deptId);
+   List<Object []> getDefaultPermissions(Integer id,Integer deptId);*/
+   
+   @Query("select rd from CCIStaffRolesDefaultResourcePermission rd where rd.departmentResourceGroup.lookupDepartment.departmentId = ?1 and rd.ccistaffRolesDepartment.ccistaffRole.cciStaffRoleId = ?2")
+   List<CCIStaffRolesDefaultResourcePermission> getDefaultPermissions(Integer deptId, Integer roleId);
 
 }
