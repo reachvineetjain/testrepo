@@ -422,6 +422,7 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setStopAcceptingAppsLanguageBuddy(ihpProgramConfiguration.isStopAcceptingLanguageBuddyApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(ihpProgramConfiguration.isStopAcceptingHolidayHomeStayApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(ihpProgramConfiguration.isStopAcceptingHighSchoolApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+            seasonIHPDetail.setStopAcceptingAppsByGender(ihpProgramConfiguration.isStopAcceptingApplicationByGender() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             if (ihpProgramConfiguration.getGenderId() > 0 && (ihpProgramConfiguration.getGenderId() == 1 || ihpProgramConfiguration.getGenderId() == 2)) {
                LookupGender gender = genderRepository.findOne(ihpProgramConfiguration.getGenderId());
                seasonIHPDetail.setLookupGender(gender);
