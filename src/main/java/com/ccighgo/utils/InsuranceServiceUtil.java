@@ -129,7 +129,20 @@ public class InsuranceServiceUtil {
          urlParameters.add(new BasicNameValuePair("key", TOKEN_VALUE));
          urlParameters.add(new BasicNameValuePair("user", USERNAME));
          // String json = gson.toJson(participant);
-         urlParameters.add(new BasicNameValuePair("participant", Arrays.toString(getParticipantQuery(participant).toArray())));
+         urlParameters.add(new BasicNameValuePair("Participant['first_name']", participant.getFirst_name()));
+         urlParameters.add(new BasicNameValuePair("Participant['last_name']", participant.getLast_name()));
+         urlParameters.add(new BasicNameValuePair("Participant['address1']", participant.getAddress1()));
+         urlParameters.add(new BasicNameValuePair("Participant['email']", participant.getEmail()));
+         urlParameters.add(new BasicNameValuePair("Participant['gender']", participant.getGender()));
+         urlParameters.add(new BasicNameValuePair("Participant['dob']", participant.getDateOfBirth()));
+         urlParameters.add(new BasicNameValuePair("Participant['city']", participant.getCity()));
+         urlParameters.add(new BasicNameValuePair("Participant['zip']", participant.getZip()));
+         urlParameters.add(new BasicNameValuePair("Participant['countryName']", participant.getCountry()));
+         urlParameters.add(new BasicNameValuePair("Participant['homeCountryName']", participant.getHomeCountryName()));
+         urlParameters.add(new BasicNameValuePair("Participant['start_date']", participant.getStart_date()));
+         urlParameters.add(new BasicNameValuePair("Participant['end_date']", participant.getEnd_date()));
+         urlParameters.add(new BasicNameValuePair("Participant['plan_id']", participant.getPlan_id()+""));
+         
          // urlParameters.add(new BasicNameValuePair("address1", participant.getAddress1()));
          // urlParameters.add(new BasicNameValuePair("city", participant.getCity()));
          // urlParameters.add(new BasicNameValuePair("email", participant.getEmail()));

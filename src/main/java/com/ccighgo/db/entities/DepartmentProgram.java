@@ -73,6 +73,11 @@ public class DepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="departmentProgram")
 	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
+	  //bi-directional many-to-one association to PartnerAgentProgram
+   @OneToMany(mappedBy="departmentProgram")
+   private List<PartnerAgentProgram> partnerAgentPrograms;
+   
+   
 	public DepartmentProgram() {
 	}
 
@@ -271,5 +276,12 @@ public class DepartmentProgram implements Serializable {
 
 		return seasonProgramUpdateLog;
 	}
+	public List<PartnerAgentProgram> getPartnerAgentPrograms() {
+      return this.partnerAgentPrograms;
+   }
+
+   public void setPartnerAgentPrograms(List<PartnerAgentProgram> partnerAgentPrograms) {
+      this.partnerAgentPrograms = partnerAgentPrograms;
+   }
 
 }

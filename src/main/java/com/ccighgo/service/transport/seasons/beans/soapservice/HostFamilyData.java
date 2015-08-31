@@ -33,7 +33,7 @@ public class HostFamilyData {
    @XmlElement(name = "Email")
    private String Email;
    @XmlElement(name = "IsAdult")
-   private boolean IsAdult;
+   private Boolean IsAdult;
    @XmlElement(name = "SchoolName")
    private String SchoolName;
    @XmlElement(name = "SchoolCity")
@@ -51,7 +51,7 @@ public class HostFamilyData {
    @XmlElement(name = "HostingExperience")
    private String HostingExperience;
    @XmlElement(name = "IsLCApplicant")
-   private boolean IsLCApplicant;
+   private Boolean IsLCApplicant;
    @XmlElement(name = "LCEmailAddress")
    private String LCEmailAddress;
 
@@ -143,11 +143,11 @@ public class HostFamilyData {
       Email = email;
    }
 
-   public boolean isIsAdult() {
+   public Boolean isIsAdult() {
       return IsAdult;
    }
 
-   public void setIsAdult(boolean isAdult) {
+   public void setIsAdult(Boolean isAdult) {
       IsAdult = isAdult;
    }
 
@@ -215,11 +215,11 @@ public class HostFamilyData {
       HostingExperience = hostingExperience;
    }
 
-   public boolean isIsLCApplicant() {
+   public Boolean isIsLCApplicant() {
       return IsLCApplicant;
    }
 
-   public void setIsLCApplicant(boolean isLCApplicant) {
+   public void setIsLCApplicant(Boolean isLCApplicant) {
       IsLCApplicant = isLCApplicant;
    }
 

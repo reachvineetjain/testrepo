@@ -1,6 +1,7 @@
 package com.ccighgo.service.rest.backgroundcheck;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.backgroundcheck.BackgroundServiceInterface;
+import com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ScreenRequest;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;
 
@@ -31,13 +33,21 @@ public class BackgroundCheck {
       return backgroundServiceInterface.requestScreen(screenRequest);
    }
 
+   @GET
+   @Path("applyNow")
+   @Produces("application/xml")
+    public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
+      LOGGER.debug("Calling func: applyNow");
+      return backgroundServiceInterface.applyNow();
+   }
+   
    @POST
-   @Path("response")
-   @Produces("application/json")
-   @Consumes("application/json")
-   public String test(ScreenResponse screenRequest) {
-      LOGGER.debug("TEST");
-      return backgroundServiceInterface.test(screenRequest);
+   @Path("sendReport")
+   @Produces("application/xml")
+   @Consumes("application/xml")
+    public String sendReport(BackgroundReports backgroundReports) {
+      LOGGER.debug("Calling func: sendReport");
+      return backgroundServiceInterface.sendReport(backgroundReports);
    }
 
 }
