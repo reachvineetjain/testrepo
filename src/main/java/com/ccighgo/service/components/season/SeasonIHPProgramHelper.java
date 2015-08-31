@@ -411,10 +411,10 @@ public class SeasonIHPProgramHelper {
          SeasonIHPDetail seasonIHPDetail = ihpDetailRepository.findOne(ihpProgramConfiguration.getSeasonProgramId());
          if (seasonIHPDetail != null) {
             seasonIHPDetail.setMaxParticipants(ihpProgramConfiguration.getMaxNoOfParticipants());
-            seasonIHPDetail.setApplicationDeadLineWeeks(Integer.valueOf(ihpProgramConfiguration.getApplicationCutOffPriorToProgStart()));
+            seasonIHPDetail.setApplicationDeadLineWeeks(Integer.valueOf(ihpProgramConfiguration.getApplicationCutOffPriorToProgStart()!=null?ihpProgramConfiguration.getApplicationCutOffPriorToProgStart():"0"));
             seasonIHPDetail.setLcHoldTime(ihpProgramConfiguration.getLcHoldTimeDays());
             seasonIHPDetail.setNumberOfLCToRequestHold(ihpProgramConfiguration.getNoOfLcCanRequestHold());
-            seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending()));
+            seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending()!=null?ihpProgramConfiguration.getSplitPlacementInPending():"0"));
             seasonIHPDetail.setStopAcceptingApps(ihpProgramConfiguration.isStopAcceptingApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsStandardIHP(ihpProgramConfiguration.isStopAcceptingIhpStandardSettings() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsVolunteerHomestay(ihpProgramConfiguration.isStopAcceptingVolunteerHomeStayApplications() ? CCIConstants.ACTIVE
