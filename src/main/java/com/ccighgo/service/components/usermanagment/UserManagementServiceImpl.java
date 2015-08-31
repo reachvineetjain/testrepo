@@ -1430,11 +1430,22 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       
       // create user role
-      if (user.getRoles() != null) {
+      if (user.getRoles() != null && !user.getRoles().isEmpty()) {
          List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = updateUserRole(user, tempCCIUser);
          cciUser.setCcistaffUsersCcistaffRoles(cciStaffUsersCCIStaffRoles);
          cciStaffUserStaffRoleRepository.save(cciStaffUsersCCIStaffRoles);
          cciStaffUserStaffRoleRepository.flush();
+      }
+      else
+      {
+         //deleting if already existing role
+         if(tempCCIUser.getCcistaffUsersCcistaffRoles() != null && !tempCCIUser.getCcistaffUsersCcistaffRoles().isEmpty())
+         {
+            for (CCIStaffUsersCCIStaffRole role : tempCCIUser.getCcistaffUsersCcistaffRoles()) {
+               cciStaffUserStaffRoleRepository.delete(role);
+               cciStaffUserStaffRoleRepository.flush();
+            }
+         }
       }
       cciUser.setCcistaffUsersResourcePermissions(tempCCIUser.getCcistaffUsersResourcePermissions());
       cciUser.setCcistaffUserNotes(tempCCIUser.getCcistaffUserNotes());
