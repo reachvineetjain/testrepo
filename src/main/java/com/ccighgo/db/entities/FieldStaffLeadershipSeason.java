@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,26 +12,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the FieldStaffLeadershipSeason database table.
  * 
  */
 @Entity
+@Table(name = "FieldStaffLeadershipSeason")
 @NamedQuery(name = "FieldStaffLeadershipSeason.findAll", query = "SELECT f FROM FieldStaffLeadershipSeason f")
 public class FieldStaffLeadershipSeason implements Serializable {
    private static final long serialVersionUID = 1L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(unique = true, nullable = false)
    private Integer fieldStaffLeadershipSeasonId;
 
+   @Column(nullable = false)
    private Integer createdBy;
 
    private Timestamp createdOn;
 
+   @Column(nullable = false)
    private Integer modifiedBy;
 
+   @Column(nullable = false)
    private Timestamp modifiedOn;
 
    // bi-directional many-to-one association to FieldStaff
@@ -44,7 +51,7 @@ public class FieldStaffLeadershipSeason implements Serializable {
    private Season season;
 
    // bi-directional many-to-one association to SeasonGeographyConfiguration
-   @ManyToOne(cascade = { CascadeType.ALL })
+   @ManyToOne
    @JoinColumn(name = "seasonGeographyConfigurationId")
    private SeasonGeographyConfiguration seasonGeographyConfiguration;
 

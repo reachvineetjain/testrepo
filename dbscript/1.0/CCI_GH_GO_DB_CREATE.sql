@@ -86,9 +86,11 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`SysDiagrams` (
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Login` (
   `loginId` INT(11) NOT NULL AUTO_INCREMENT,
-  `goId` INT,
+  `goId` INT NOT NULL,
   `loginName` VARCHAR(50) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
+  `keyValue` VARCHAR(200) NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `createdOn` TIMESTAMP  NULL,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -174,6 +176,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupDepartments` (
   `departmentId` INT(3) NOT NULL,
   `departmentName` VARCHAR(50) NOT NULL,
   `acronym` VARCHAR(10) NULL DEFAULT NULL,
+  `isVisibleToSeason` TINYINT(1) DEFAULT 0,
   `createdOn` TIMESTAMP NULL,
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP DEFAULT NOW(),
@@ -268,9 +271,8 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffRoles` (
 -- Table cci_gh_go.CCIStaffUsers
 -- ---------------------------------------------------------------------------------------------------- 
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
-  `cciStaffUserId` INT(11) NOT NULL AUTO_INCREMENT,
+  `cciStaffUserId` INT(11) NOT NULL,
   `supervisorId` INT(11) NULL,
-  `loginId` INT(11) NOT NULL,
   `cciAdminGuid` VARCHAR(64) UNIQUE NOT NULL,
   `firstName` VARCHAR(30) NOT NULL,
   `lastName` VARCHAR(30) NOT NULL,
@@ -302,16 +304,17 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
     REFERENCES `cci_gh_go`.`LookupCountries` (`countryId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_CCIStaffUsers_login`
-    FOREIGN KEY (`loginId`)
-    REFERENCES `cci_gh_go`.`Login` (`loginId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `FK_CCIStaffUsers_LookupGender`
     FOREIGN KEY (`genderId`)
     REFERENCES `cci_gh_go`.`LookupGender` (`genderId`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION     
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CCIStaffUsers_GoIdSequence`
+    FOREIGN KEY (`cciStaffUserId`)
+    REFERENCES `cci_gh_go`.`GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+    
 );
 
 -- ----------------------------------------------------------------------------------------------------
@@ -550,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`PaymentSchedule` (
 -- --------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Season` (
   `seasonId` INT NOT NULL AUTO_INCREMENT,
-  `seasonName` VARCHAR(50) NOT NULL,
+  `seasonName` VARCHAR(50) UNIQUE NOT NULL,
   `seasonFullName` VARCHAR(50) NOT NULL,
   `departmentId` INT(3) NOT NULL,
   `seasonStatusId` INT(3) NOT NULL,
@@ -1675,3 +1678,154 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffLCSeason` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
+
+
+-- -----------------------------------------------------
+-- Table `Partner`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Partner` (
+  `partnerGoId` INT NOT NULL,
+  `partnerStatusId` INT NULL,
+  `isSubPartner` TINYINT(1) NULL,
+  PRIMARY KEY (`partnerGoId`),
+  CONSTRAINT `FK_Partner_GoIdSequence`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+-- -----------------------------------------------------
+-- Table `PartnerPermissions`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerPermissions` (
+  `partnerPermissionsId` INT(11) NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT(11) NULL,
+  `viewParticipants` TINYINT(1) NULL,
+  `editParticipants` TINYINT(1) NULL,
+  `viewPrograms` TINYINT(1) NULL,
+  `editPrograms` TINYINT(1) NULL,
+  `viewResources` TINYINT(1) NULL,
+  `addUsers` TINYINT(1) NULL,
+  `viewHelp` TINYINT(1) NULL,
+  PRIMARY KEY (`partnerPermissionsId`),
+  INDEX `FK_PartnerPermissions_Partner_idx` (`partnerGoId` ASC),
+  CONSTRAINT `FK_PartnerPermissions_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+-- -----------------------------------------------------
+-- Table `HostFamily`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `HostFamily` (
+  `hostFamilyGoId` INT NOT NULL,
+  `hostFamilyStatusId` INT(3) NULL,
+  PRIMARY KEY (`hostFamilyGoId`),
+  CONSTRAINT `FK_HostFamily_GoIdSequence`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyPermissions`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `HostFamilyPermissions` (
+  `hostFamilyPermissionsId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilyGoId` INT NULL,
+  PRIMARY KEY (`hostFamilyPermissionsId`),
+  INDEX `FK_HostFamilyPermissions_HostFamily_idx` (`hostFamilyGoId` ASC),
+  CONSTRAINT `FK_HostFamilyPermissions_HostFamily`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+-- -----------------------------------------------------
+-- Table `FieldStaffPermissions`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`.`FieldStaffPermissions` (
+  `fieldStaffPermissionsId` INT NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` INT NULL,
+  PRIMARY KEY (`fieldStaffPermissionsId`),
+  INDEX `FK_FieldStaffPermission_FieldStaff_idx` (`fieldStaffGoId` ASC),
+  CONSTRAINT `FK_FieldStaffPermission_FieldStaff`
+    FOREIGN KEY (`fieldStaffGoId`)
+    REFERENCES `FieldStaff` (`fieldStaffId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+-- -----------------------------------------------------
+-- Table `Participant`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `Participant` (
+  `participantGoId` INT NOT NULL,
+  `participantStatusId` INT(3) NULL,
+  PRIMARY KEY (`participantGoId`),
+  CONSTRAINT `FK_Participant_GoIdSequence`
+    FOREIGN KEY (`participantGoId`)
+    REFERENCES `GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+-- -----------------------------------------------------
+-- Table `ParticipantPermissions`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `ParticipantPermissions` (
+  `participantPermissionsId` INT NOT NULL AUTO_INCREMENT,
+  `participantGoId` INT NULL,
+  PRIMARY KEY (`participantPermissionsId`),
+  INDEX `FK_ParticipantPermissions_Participant_idx` (`participantGoId` ASC),
+  CONSTRAINT `FK_ParticipantPermissions_Participant`
+    FOREIGN KEY (`participantGoId`)
+    REFERENCES `Participant` (`participantGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+-- -----------------------------------------------------
+-- Table `Employer`
+-- -----------------------------------------------------
+	
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `Employer` (
+  `employerGoId` INT NOT NULL,
+  `employerStatusId` INT(3) NULL,
+  PRIMARY KEY (`employerGoId`),
+  CONSTRAINT `FK_Employer_GoIdSequence`
+    FOREIGN KEY (`employerGoId`)
+    REFERENCES `GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+	
+-- -----------------------------------------------------
+-- Table `EmployerPermissions`
+-- -----------------------------------------------------	
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `EmployerPermissions` (
+  `empolyerPermissionsId` INT NOT NULL AUTO_INCREMENT,
+  `employerGoId` INT NULL,
+  PRIMARY KEY (`empolyerPermissionsId`),
+  INDEX `FK_EmployerPermissions_Employer_idx` (`employerGoId` ASC),
+  CONSTRAINT `FK_EmployerPermissions_Employer`
+    FOREIGN KEY (`employerGoId`)
+    REFERENCES `Employer` (`employerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

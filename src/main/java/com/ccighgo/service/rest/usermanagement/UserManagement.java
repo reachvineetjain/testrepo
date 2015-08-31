@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
@@ -23,6 +24,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 
 /**
  * <h1>UserManagement</h1> The UserManagement class is the REST service front of
@@ -69,6 +72,13 @@ public class UserManagement {
     @Produces("application/json")
     public CCIUsers getAllUsers(@PathParam("pageNo") String pageNo, @PathParam("size") String size) {
         return userMgmtServices.getAllCCIUsers(pageNo, size);
+    }
+    
+    @GET
+    @Path("get-all-users")
+    @Produces("application/json")
+    public CCIUsers findAllUsers() {
+        return userMgmtServices.findAllUsers();
     }
 
     /**
@@ -131,6 +141,20 @@ public class UserManagement {
        
        return userMgmtServices.getDepartmentWithPermissions();
     }
+    
+    /*@GET
+    @Path("department-with-permissions-by-role/{roleId}")
+    @Produces("application/json")
+    public Departments getStaffUserDepartmentPermissionsByRole(@PathParam("roleId")String roleId) {
+       return userMgmtServices.getDepartmentWithPermissionsByRole(roleId);
+    }*/
+    
+    @GET
+    @Path("get-role-by-department/{departmentId}")
+    @Produces("application/json")
+    public Roles getRoleByDepartment(@PathParam("departmentId")String departmentId) {
+       return userMgmtServices.getRoleByDepartment(departmentId);
+    }
 
     /**
      * RESTFul service updates user permissions
@@ -171,7 +195,7 @@ public class UserManagement {
     @GET
     @Path("{id}/deactivate")
     @Produces("application/json")
-    public String deleteUser(@PathParam("id") String id) {
+    public DeleteRequest deleteUser(@PathParam("id") String id) {
         return userMgmtServices.deleteUser(id);
     }
     
@@ -198,10 +222,10 @@ public class UserManagement {
      * @return updated User
      */
     @GET
-    @Path("default/{roleId}/permission")
+    @Path("default/{roleId}/{departmentId}/permission")
     @Consumes("application/json")
-    public StaffUserRolePermissions getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId) {
-        return userMgmtServices.getDefaultPermissionsbyRole(roleId);
+    public Departments getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId,@PathParam("departmentId")String departmentId) {
+        return userMgmtServices.getDefaultPermissionsbyRole(roleId,departmentId);
     }
     
     /**
@@ -279,5 +303,4 @@ public class UserManagement {
     public User updateUser(User usr){
        return userMgmtServices.updateUser(usr);
     }
-    
 }

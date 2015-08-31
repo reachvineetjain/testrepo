@@ -26,6 +26,10 @@
    
    <xsd:complexType name="StaffUserDefaultPermissions">
         <xsd:sequence>
+        	<xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+        	<xsd:element name="acronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        	<xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        	<xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
             <xsd:element name="permissionGroupId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="permissionGroupName" type="xsd:string" minOccurs="1" maxOccurs="1" />
              <xsd:element name="permissionGroupOptions" type="drp:StaffUserDefaultPermissionGroupOptions" minOccurs="1" maxOccurs="unbounded" />
@@ -33,12 +37,15 @@
     </xsd:complexType>
    
    <xsd:complexType name="StaffUserDefaultPermissionGroupOptions">
+   <xsd:complexContent>
+			<xsd:extension base="common:Response">
         <xsd:sequence>
             <xsd:element name="permissionGroupOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="permissionGroupOptionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="permissionGroupOptionActionId" type="xsd:string" minOccurs="0" maxOccurs="1" />
-            <xsd:element name="permissionGroupOptionAction" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="resourceDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
         </xsd:sequence>
+        </xsd:extension>
+		</xsd:complexContent>
     </xsd:complexType>
 
 </xsd:schema>

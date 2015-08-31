@@ -36,7 +36,7 @@ public class CCIConstants {
    public static final byte INACTIVE = 0;
    public static final String DEFAULT_PAGE = "0";
    public static final String DEFAULT_NO_OF_RECORDS_SIZE = "10";
-   public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+   public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(System.currentTimeMillis());
    public static final Integer MIN_PASS_LEN = 8;
    public static final Integer MAX_PASS_LEN = 8;
    public static final Integer MAX_UPPER_CASE = 1;
@@ -179,5 +179,17 @@ public class CCIConstants {
    public static final Integer FieldStaffTypeCode_ERD = 1;
    public static final Integer FieldStaffTypeCode_RD = 2;
    public static final String SERVICE_FAILURE = "Service Failure";
+   public static final String EQUAL = "=";
+   public static final String BITWISE_AND = "&";
+   
+   // User Login
+   public static final String CCI_USR = "CCI";
+   public static final String PARTNER_USER = "PARTNER";
+   public static final String FIELD_STAFF_USER = "FS";
+   public static final String HOST_FAMILY_USER = "HF";
+   public static final String EMPLOYEE_USER = "EMP";
+   public static final String PARTICPANT_USER = "PARTICIPANT";
+   public static final String RESET_PASSWORD_LINK = "/module/login/#/reset/";
+   public static final String RESET_PASSWORD_SUBJECT = "Reset Password";
 
 }

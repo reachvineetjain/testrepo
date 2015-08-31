@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/backgroundscreenrequest"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:backgroundscreenrequest="http://www.ccighgo.com/backgroundscreenrequest">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="ScreenRequest" type="backgroundscreenrequest:ScreenRequest"></xsd:element>
+	
+	<xsd:complexType name="ScreenRequest">
+		<xsd:sequence>
+			 <xsd:element name="PartnerInfo" type="backgroundscreenrequest:PartnerInfo" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Account" type="backgroundscreenrequest:Account" minOccurs="0" maxOccurs="1"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PartnerInfo">
+		<xsd:sequence>
+			 <xsd:element name="UserID" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Password" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	<xsd:complexType name="Account">
+		<xsd:sequence>
+			 <xsd:element name="AcctNbr" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Applicant" type="backgroundscreenrequest:Applicant" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="Applicant">
+		<xsd:sequence>
+			 <xsd:element name="ApplicantID" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Package" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="ReportCopy" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="FirstName" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+			 <xsd:element name="MiddleName" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="LastName" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="BirthDate" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="SSN" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Phone" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Email" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Street" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Unit" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="City" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="State" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Zip" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="RequestedBy" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="Reference" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="PriorReport" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="DLState" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="DLNumber" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			 <xsd:element name="WorkState" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	
+	
+  
+</xsd:schema>

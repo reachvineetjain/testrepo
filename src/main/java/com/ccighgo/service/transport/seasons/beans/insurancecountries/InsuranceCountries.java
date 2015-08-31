@@ -5,177 +5,46 @@
 // Generated on: 2015.07.27 at 05:47:50 PM CDT 
 //
 
-
 package com.ccighgo.service.transport.seasons.beans.insurancecountries;
+
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for InsuranceCountries complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="InsuranceCountries">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="RegionID" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="CountryID" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Region" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="Code" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="ADM1Code" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "InsuranceCountries", propOrder = {
-    "regionID",
-    "countryID",
-    "region",
-    "code",
-    "adm1Code"
-})
+@XmlType(name = "InsuranceCountries")
 public class InsuranceCountries {
+   @XmlElement(required = true)
+   protected String statusCode;
+   @XmlElement(required = true)
+   protected String success;
+   @XmlElement(required = true)
+   protected List<Response> response;
 
-    @XmlElement(name = "RegionID")
-    protected String regionID;
-    @XmlElement(name = "CountryID", required = true)
-    protected String countryID;
-    @XmlElement(name = "Region")
-    protected String region;
-    @XmlElement(name = "Code")
-    protected String code;
-    @XmlElement(name = "ADM1Code")
-    protected String adm1Code;
+   public String getStatusCode() {
+      return statusCode;
+   }
 
-    /**
-     * Gets the value of the regionID property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRegionID() {
-        return regionID;
-    }
+   public void setStatusCode(String statusCode) {
+      this.statusCode = statusCode;
+   }
 
-    /**
-     * Sets the value of the regionID property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRegionID(String value) {
-        this.regionID = value;
-    }
+   public String getSuccess() {
+      return success;
+   }
 
-    /**
-     * Gets the value of the countryID property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCountryID() {
-        return countryID;
-    }
+   public void setSuccess(String success) {
+      this.success = success;
+   }
 
-    /**
-     * Sets the value of the countryID property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCountryID(String value) {
-        this.countryID = value;
-    }
+   public List<Response> getResponse() {
+      return response;
+   }
 
-    /**
-     * Gets the value of the region property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRegion() {
-        return region;
-    }
-
-    /**
-     * Sets the value of the region property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRegion(String value) {
-        this.region = value;
-    }
-
-    /**
-     * Gets the value of the code property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Sets the value of the code property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCode(String value) {
-        this.code = value;
-    }
-
-    /**
-     * Gets the value of the adm1Code property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getADM1Code() {
-        return adm1Code;
-    }
-
-    /**
-     * Sets the value of the adm1Code property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setADM1Code(String value) {
-        this.adm1Code = value;
-    }
-
+   public void setResponse(List<Response> response) {
+      this.response = response;
+   }
 }

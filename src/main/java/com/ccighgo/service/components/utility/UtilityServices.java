@@ -3,13 +3,19 @@
  */
 package com.ccighgo.service.components.utility;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
+import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
@@ -105,5 +111,18 @@ public interface UtilityServices {
     * @return
     */
    public Genders getGenders();
-
+   
+   /**
+    * @param req
+    */
+   public Response forgotPassword(ForgotRequest req, HttpServletRequest request);
+   
+   /**
+    * @param req
+    */
+   public  Response resetPassword(ResetRequest req);
+   
+   public  boolean checkUserName(String userName);
+  
+   public  boolean checkEmail(String email);
 }

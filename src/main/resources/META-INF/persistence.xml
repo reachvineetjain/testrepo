@@ -30,14 +30,22 @@
       <class>com.ccighgo.db.entities.FieldStaffLCSeason</class>
       <class>com.ccighgo.db.entities.FieldStaffLeadershipSeason</class>
       <class>com.ccighgo.db.entities.FieldStaffType</class>
+      <class>com.ccighgo.db.entities.GoIdSequence</class>
       <class>com.ccighgo.db.entities.Login</class>
       <class>com.ccighgo.db.entities.LoginHistory</class>
+      <class>com.ccighgo.db.entities.LoginUserType</class>
       <class>com.ccighgo.db.entities.LookupCountry</class>
       <class>com.ccighgo.db.entities.LookupDepartment</class>
       <class>com.ccighgo.db.entities.LookupGender</class>
       <class>com.ccighgo.db.entities.LookupUSState</class>
       <class>com.ccighgo.db.entities.OauthHistory</class>
       <class>com.ccighgo.db.entities.OauthHistoryPK</class>
+      <class>com.ccighgo.db.entities.PartnerAgentInquiry</class>
+      <class>com.ccighgo.db.entities.PartnerAgentInquiryDocument</class>
+      <class>com.ccighgo.db.entities.PartnerAgentInquiryNote</class>
+      <class>com.ccighgo.db.entities.PartnerAgentInquiryStatus</class>
+      <class>com.ccighgo.db.entities.PartnerAgentProgram</class>
+      <class>com.ccighgo.db.entities.PartnerAgentReview</class>
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>
@@ -78,6 +86,7 @@
       <class>com.ccighgo.db.entities.USSchoolSeason</class>
       <class>com.ccighgo.db.entities.UserType</class>
       <properties>
+        <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
          <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go_qa?autoReconnect=true" />
          <property name="javax.persistence.jdbc.user" value="creomobile" />
@@ -85,17 +94,12 @@
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
          <property name="hibernate.show_sql" value="false" />
          <property name="hibernate.hbm2ddl.auto" value="update" />
-         <property name="hibernate.c3p0.min_size" value="50" />
+         <property name="hibernate.c3p0.min_size" value="5" />
          <property name="hibernate.c3p0.max_size" value="100" />
-         <!-- <property name="hibernate.c3p0.max_size">1800</property> -->
+         <property name="hibernate.c3p0.acquireIncrement " value="5" />
          <property name="hibernate.c3p0.max_statements" value="100" />
-		<property name="hibernate.enable_lazy_load_no_trans" value="true" />
-         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
-         <property name="c3p0.max_statements" value="0" />
-         <property name="c3p0.maxIdleTimeExcessConnections" value="36000" />
-         <property name="c3p0.idleConnectionTestPeriod" value="36000" />
-         <property name="c3p0.maxIdleTime" value="36000" />
+         <property name="hibernate.c3p0.timeout" value="100"/>
+         <property name="hibernate.enable_lazy_load_no_trans" value="true" />
       </properties>
    </persistence-unit>
 </persistence>
-

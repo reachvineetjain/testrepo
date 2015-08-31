@@ -1,22 +1,28 @@
 package com.ccighgo.service.rest.utility;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.utility.UtilityServices;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
+import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
@@ -30,6 +36,10 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
  * @author ravimishra
  * 
  * @version 1.0
+ *
+ */
+/**
+ * @author User
  *
  */
 @Path("/utility/")
@@ -191,5 +201,42 @@ public class Utility {
    public Genders getGenders() {
       return utilityServices.getGenders();
    }
+   
+   /**
+    * @param req
+    */
+   @POST
+   @Path("forgot/access/request")
+   public Response forgotPassword(ForgotRequest req, @Context HttpServletRequest request){
+      return utilityServices.forgotPassword(req, request);
+   }
+   
+   /**
+    * @param req
+    */
+   @POST
+   @Path("reset/access/request")
+   public  Response resetPassword(ResetRequest req){
+      return utilityServices.resetPassword(req);
+   }
+   
+   /**
+    * @param userName
+    * @return
+    */
+   @GET
+   @Path("duplicate-username/{userName}")
+   public  boolean checkUserName(@PathParam("userName") String userName){
+      return utilityServices.checkUserName(userName);
+   }
 
+   /**
+    * @param email
+    * @return
+    */
+   @GET
+   @Path("duplicate-email/{email}")
+   public  boolean checkEmail(@PathParam("email") String email){
+      return utilityServices.checkEmail(email);
+   }
 }

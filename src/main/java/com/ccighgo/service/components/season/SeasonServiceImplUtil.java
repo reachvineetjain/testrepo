@@ -1134,10 +1134,10 @@ public class SeasonServiceImplUtil {
             List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
             for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
                SeasonGeographyConfiguration newConfig = new SeasonGeographyConfiguration();
-               if(config.getRegion()!=null){
-                  newConfig.setRegion(config.getRegion()); 
+               if (config.getRegion() != null) {
+                  newConfig.setRegion(config.getRegion());
                }
-               if(config.getLookupUsstate()!=null){
+               if (config.getLookupUsstate() != null) {
                   newConfig.setLookupUsstate(config.getLookupUsstate());
                }
                newConfig.setSuperRegion(config.getSuperRegion());
@@ -1180,6 +1180,7 @@ public class SeasonServiceImplUtil {
             seasonWnTSpringDetail.setSeason(seasonEntity);
             seasonWnTSpringDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SPRING);
             seasonWnTSpringDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
+            seasonWnTSpringDetail.setMaxPendingJobApps(0);
             seasonWnTSpringDetail.setCreatedBy(1);
             seasonWnTSpringDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonWnTSpringDetail.setModifiedBy(1);
@@ -1199,6 +1200,7 @@ public class SeasonServiceImplUtil {
             seasonWnTWinterDetail.setSeason(seasonEntity);
             seasonWnTWinterDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_WINTER);
             seasonWnTWinterDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
+            seasonWnTWinterDetail.setMaxPendingJobApps(0);
             seasonWnTWinterDetail.setCreatedBy(1);
             seasonWnTWinterDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonWnTWinterDetail.setModifiedBy(1);
@@ -1218,13 +1220,59 @@ public class SeasonServiceImplUtil {
             seasonsummDetail.setSeason(seasonEntity);
             seasonsummDetail.setProgramName(seasonBean.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SUMMER);
             seasonsummDetail.setSeasonStatus(seasonEntity.getSeasonStatus());
+            seasonsummDetail.setMaxPendingJobApps(0);
             seasonsummDetail.setCreatedBy(1);
             seasonsummDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonsummDetail.setModifiedBy(1);
             seasonsummDetail.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonWTSummerRepository.saveAndFlush(seasonsummDetail);
+            createWPSummerProgramAllocation(seasonEntity);
          }
       } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+   }
+
+   private void createWPSummerProgramAllocation(Season season) {
+      try {
+         List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
+         SeasonWPAllocation jobFairWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_JobFair = departmentProgramOptionRepository.findOne(CCIConstants.JOB_FAIR_SUMMER_ID);
+         jobFairWinter.setDepartmentProgramOption(departmentProgramOption_JobFair);
+         jobFairWinter.setMaxPax(0);
+         jobFairWinter.setSeason(season);
+         jobFairWinter.setCreatedBy(1);
+         jobFairWinter.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         jobFairWinter.setModifiedBy(1);
+         jobFairWinter.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         seasonWpAllocations.add(jobFairWinter);
+
+         SeasonWPAllocation selfPlacedWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_SelfPlaceSpring = departmentProgramOptionRepository.findOne(CCIConstants.SELF_PLACED_SUMMER_ID);
+         selfPlacedWinter.setDepartmentProgramOption(departmentProgramOption_SelfPlaceSpring);
+         selfPlacedWinter.setMaxPax(0);
+         selfPlacedWinter.setSeason(season);
+         selfPlacedWinter.setCreatedBy(1);
+         selfPlacedWinter.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         selfPlacedWinter.setModifiedBy(1);
+         selfPlacedWinter.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         seasonWpAllocations.add(selfPlacedWinter);
+
+         SeasonWPAllocation directPlacementWinter = new SeasonWPAllocation();
+         DepartmentProgramOption departmentProgramOption_DirectPlacementWinter = departmentProgramOptionRepository.findOne(CCIConstants.DIRECT_PLACEMENT_SUMMER_ID);
+         directPlacementWinter.setDepartmentProgramOption(departmentProgramOption_DirectPlacementWinter);
+         directPlacementWinter.setMaxPax(0);
+         directPlacementWinter.setSeason(season);
+         directPlacementWinter.setCreatedBy(1);
+         directPlacementWinter.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         directPlacementWinter.setModifiedBy(1);
+         directPlacementWinter.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         seasonWpAllocations.add(directPlacementWinter);
+
+         seasonWPAllocationRepository.save(seasonWpAllocations);
+         seasonWPAllocationRepository.flush();
+
+      } catch (CcighgoException e) {
          ExceptionUtil.logException(e, logger);
       }
    }
@@ -1393,10 +1441,10 @@ public class SeasonServiceImplUtil {
                   List<SeasonIHPGeographyConfiguration> newList = new ArrayList<SeasonIHPGeographyConfiguration>();
                   for (SeasonIHPGeographyConfiguration config : previousRecordsToCopy) {
                      SeasonIHPGeographyConfiguration newConfig = new SeasonIHPGeographyConfiguration();
-                     if(config.getRegionIhp()!=null){
-                        newConfig.setRegionIhp(config.getRegionIhp()); 
+                     if (config.getRegionIhp() != null) {
+                        newConfig.setRegionIhp(config.getRegionIhp());
                      }
-                     if(config.getLookupUsstate()!=null){
+                     if (config.getLookupUsstate() != null) {
                         newConfig.setLookupUsstate(config.getLookupUsstate());
                      }
                      newConfig.setCreatedBy(1);
@@ -1780,7 +1828,7 @@ public class SeasonServiceImplUtil {
          ghtSection2Dates.setSeasonProgramId(seasonHSADetail.getSeasonHSADetailsId());
          ghtSection2Dates.setStartDate(DateUtils.getMMddyyDate(seasonHSADetail.getStartDate()));
          seasonGHTDetails.setGhtDates(ghtSection2Dates);
-         seasonGHTDetails.getGhtNotes().addAll(getGHTWAProgramNotes(seasonId, seasonHSADetail.getSeasonHSADetailsId()));
+         seasonGHTDetails.getGhtNotes().addAll(getGHTHSAProgramNotes(seasonId, seasonHSADetail.getSeasonHSADetailsId()));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
@@ -2692,7 +2740,8 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setApplicationDeadlineDate(seasonWnTSummerDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail
                .getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSummerDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
-         wpSectionOne.setMaxPendingJobAppls(seasonWnTSummerDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : null);
+         wpSectionOne.setMaxPendingJobAppls((seasonWnTSummerDetail.getMaxPendingJobApps() != null && seasonWnTSummerDetail.getMaxPendingJobApps() > 0) ? String
+               .valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : "0");
          return wpSectionOne;
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -2773,7 +2822,7 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setApplicationDeadlineDate(seasonWnTSpringDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail
                .getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSpringDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
-         wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : null);
+         wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : "0");
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
       }

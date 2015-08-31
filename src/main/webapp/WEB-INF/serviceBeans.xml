@@ -21,17 +21,6 @@
       <value>messages</value>
    </util:list>
 
-   <!-- Jettison was giving problem with arrays with only one element, changed it to use custom json provider 
-   <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider">
-      <property name="serializeAsArray" value="true" />
-      <property name="arrayKeys" ref="jsonKeys" />
-      <property name="marshallAsJaxbElement" value="true" />
-      <property name="unmarshallAsJaxbElement" value="true" />
-      <property name="produceMediaTypes" ref="jsonTypes" />
-      <property name="consumeMediaTypes" ref="jsonTypes" />
-      <property name="ignoreNamespaces" value="true"></property>
-   </bean>-->
-
    <bean id="jsonProvider" class="com.ccighgo.custom.utilities.CustomJSONProvider">
    </bean>
 
@@ -44,14 +33,17 @@
          <bean id="insurance" class="com.ccighgo.service.rest.insurance.Insurance" />
          <bean id="regionManagement" class="com.ccighgo.service.rest.regionmanagement.RegionManagement" />
          <bean id="regionAssignment" class="com.ccighgo.service.rest.regionassignment.RegionAssignment" />
-         
+         <bean id="gciapi" class="com.ccighgo.service.rest.wordpress.forms.GCIAPI" />
+         <bean id="cciResources"  class="com.ccighgo.service.rest.cciresources.CCIResources" />
+         <bean id="authentication" class="com.ccighgo.service.rest.authentication.Authentication" />
+         <bean id="authorization" class="com.ccighgo.service.rest.authorization.Authorization" />
+         <bean id="backgroundcheck" class="com.ccighgo.service.rest.backgroundcheck.BackgroundCheck" />
       </jaxrs:serviceBeans>
-
       <jaxrs:providers>
          <ref bean="jsonProvider" />
       </jaxrs:providers>
    </jaxrs:server>
-       <!--  SOAP configuration -->
-	<jaxws:endpoint implementor="com.ccighgo.service.components.wordpress.forms.WordPressFormsImpl" address="/findForm" />
+   <!-- SOAP configuration -->
+   <jaxws:endpoint implementor="com.ccighgo.service.soap.wordpress.forms.WordPressFormsImpl" address="/findForm" />
 
 </beans>

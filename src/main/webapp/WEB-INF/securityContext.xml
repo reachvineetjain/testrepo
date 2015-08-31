@@ -8,43 +8,23 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-   <!-- Enable annotation configuration -->
-   <!-- <context:annotation-config/> -->
+   <bean id="cciRealm" class="com.ccighgo.security.CciRealm" depends-on="loginRepository" />
 
-   <!-- Scan sample packages for Spring annotations -->
-   <!-- <context:component-scan base-package="com.excurt"/> -->
-
-   <!-- Spring AOP auto-proxy creation (required to support Shiro annotations) -->
-   <!-- <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/> -->
-
-   <bean id="replayValidator" class="com.ccighgo.security.ReplayValidator">
-      <property name="tolerance" value="300" />
-   </bean>
-
-   <bean id="excurtRealm" class="com.ccighgo.security.ExcurtOauthRealm" depends-on="usrRepository,oauthValidatorRepository" />
-   
    <bean id="defaultSessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
       <property name="globalSessionTimeout" value="43200000" />
    </bean>
-   
+
    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-      <property name="realm" ref="excurtRealm" />
+      <property name="realm" ref="cciRealm" />
       <property name="sessionManager" ref="defaultSessionManager"></property>
-      <!-- Uncomment this next property if you want heterogenous session access or clusterable/distributable sessions. The default value is 'http' which uses the 
-         Servlet container's HttpSession as the underlying Session implementation. <property name="sessionMode" value="native"/> -->
    </bean>
-   
-   <bean id="encryptionService" class="com.ccighgo.security.EncryptionService" />
-   <!-- <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/> -->
 
    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
       <property name="securityManager" ref="securityManager" />
       <property name="filters">
          <util:map>
             <entry key="authc">
-               <!-- <bean class="org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter"/> -->
-               <bean class="com.ccighgo.security.ExcurtAuthenticationFilter">
-               </bean>
+               <bean class="com.ccighgo.security.CciAuthenticationFilter" />
             </entry>
          </util:map>
       </property>
@@ -52,8 +32,16 @@
          <value>
             /services/season/** = anon
             /services/usm/** = anon
+            /services/region/** = anon
+            /services/utility/** = anon
+            /services/regionAssignment/**= anon
+            /services/findForm/**=anon
+            /services/updateLog/**=anon
+            /services/backgroundcheck/**=anon
+            /services/gciapi/**=anon
+            /services/auth/logout=anon
+            /services/authorize/**=anon
             /services/** = authc
-
          </value>
       </property>
    </bean>

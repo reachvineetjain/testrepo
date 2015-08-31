@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -51,37 +52,35 @@ public class SeasonGeographyConfiguration implements Serializable {
    private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
    // bi-directional many-to-one association to FieldStaffLeadershipSeason
-   @OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
+   @OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY,cascade = { CascadeType.REMOVE })
    @Fetch(value = FetchMode.SUBSELECT)
    private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
-
-   // bi-directional many-to-one association to SuperRegion
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "superRegionId")
-   private SuperRegion superRegion;
-
-   // bi-directional many-to-one association to Region
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "regionId")
-   private Region region;
 
    // bi-directional many-to-one association to LookupUSState
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "usStatesId")
    private LookupUSState lookupUsstate;
 
+   // bi-directional many-to-one association to Region
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "regionId")
+   private Region region;
+
    // bi-directional many-to-one association to Season
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "seasonId")
    private Season season;
 
+   // bi-directional many-to-one association to SuperRegion
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "superRegionId")
+   private SuperRegion superRegion;
+
    public SeasonGeographyConfiguration() {
    }
 
    public Integer getSeasonGeographyConfigurationId() {
-      if (this.seasonGeographyConfigurationId != null)
-         return this.seasonGeographyConfigurationId;
-      return 0;
+      return this.seasonGeographyConfigurationId;
    }
 
    public void setSeasonGeographyConfigurationId(Integer seasonGeographyConfigurationId) {
@@ -89,9 +88,7 @@ public class SeasonGeographyConfiguration implements Serializable {
    }
 
    public Integer getCreatedBy() {
-      if (this.createdBy != null)
-         return this.createdBy;
-      return 0;
+      return this.createdBy;
    }
 
    public void setCreatedBy(Integer createdBy) {
@@ -107,9 +104,7 @@ public class SeasonGeographyConfiguration implements Serializable {
    }
 
    public Integer getModifiedBy() {
-      if (this.modifiedBy != null)
-         return this.modifiedBy;
-      return 0;
+      return this.modifiedBy;
    }
 
    public void setModifiedBy(Integer modifiedBy) {
@@ -168,12 +163,12 @@ public class SeasonGeographyConfiguration implements Serializable {
       return fieldStaffLeadershipSeason;
    }
 
-   public SuperRegion getSuperRegion() {
-      return this.superRegion;
+   public LookupUSState getLookupUsstate() {
+      return this.lookupUsstate;
    }
 
-   public void setSuperRegion(SuperRegion superRegion) {
-      this.superRegion = superRegion;
+   public void setLookupUsstate(LookupUSState lookupUsstate) {
+      this.lookupUsstate = lookupUsstate;
    }
 
    public Region getRegion() {
@@ -184,20 +179,20 @@ public class SeasonGeographyConfiguration implements Serializable {
       this.region = region;
    }
 
-   public LookupUSState getLookupUsstate() {
-      return this.lookupUsstate;
-   }
-
-   public void setLookupUsstate(LookupUSState lookupUsstate) {
-      this.lookupUsstate = lookupUsstate;
-   }
-
    public Season getSeason() {
       return this.season;
    }
 
    public void setSeason(Season season) {
       this.season = season;
+   }
+
+   public SuperRegion getSuperRegion() {
+      return this.superRegion;
+   }
+
+   public void setSuperRegion(SuperRegion superRegion) {
+      this.superRegion = superRegion;
    }
 
 }

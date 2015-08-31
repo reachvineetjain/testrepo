@@ -5,7 +5,7 @@
 	<target name="all" depends="Common,Auth,Countries,Departments,DocumentType,Gender,Programs,Regions,Roles,States,CCIUsers,User,UserSearch,UserDepartments,
 		CloneSeason,Season,SeasonDepartmentDocument,SeasonProgram,SeasonProgramDocument,SeasonProgramNote,SeasonList,SeasonStatus,SeasonGHTDetails,SeasonHspF1Details,
 		SeasonHspJ1HSDetails,SeasonHspStpIhpDetails,SeasonWPCAPDetails,SeasonWPDetail,SeasonDepartmentLog,SeasonProgramLog,InsuranceCountries,InsuranceParticipant,
-		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions" />
+		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions,ForgotRequest,ResetRequest" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -119,6 +119,26 @@
 			<arg value="${xsd.dir}/States.xsd" />
 		</java>
 	</target>
+	
+	<!-- forgot password-->
+
+	    <target name="ForgotRequest">
+	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
+	            <arg value="-d" />
+	            <arg value="${java.dir}" />
+	            <arg value="${xsd.dir}/ForgotRequest.xsd" />
+	        </java>
+	    </target>
+	
+	<!-- reset password-->
+
+	    <target name="ResetRequest">
+	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
+	            <arg value="-d" />
+	            <arg value="${java.dir}" />
+	            <arg value="${xsd.dir}/ResetRequest.xsd" />
+	        </java>
+	    </target>
 
 	<!-- *************************************************CCI Staff User Management*************************************************-->
 
@@ -340,7 +360,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsuranceCountries.xsd" />
+			<arg value="${xsd.dir}/insurance/InsuranceCountries.xsd" />
 		</java>
 	</target>
 
@@ -350,7 +370,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsuranceParticipant.xsd" />
+			<arg value="${xsd.dir}/insurance/InsuranceParticipant.xsd" />
 		</java>
 	</target>
 
@@ -360,7 +380,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsurancePlan.xsd" />
+			<arg value="${xsd.dir}/insurance/InsurancePlan.xsd" />
 		</java>
 	</target>
 
@@ -370,7 +390,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/InsuranceStates.xsd" />
+			<arg value="${xsd.dir}/insurance/InsuranceStates.xsd" />
 		</java>
 	</target>
 
@@ -503,5 +523,22 @@
 		</java>
 	</target>
 		
+	<!-- Apply Now TE-->
+		<target name="ApplyNow">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/thirdparty/background_check/BackgroundCheck.xsd" />
+			</java>
+		</target>
 
+	<!-- Background Check Status -->
+			<target name="BackgroundStatusPush">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/thirdparty/background_check/BackgroundCheckStatus.xsd" />
+				</java>
+			</target>
+	
 </project>

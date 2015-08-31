@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.db.entities.ResourceAction;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
@@ -15,6 +16,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.service.transport.usermanagement.beans.usersearch.UserSearch;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 
 /**
  * Service Interface for all user management related operations
@@ -32,6 +35,8 @@ public interface UserManagementService {
 	 * @return list of CCI Users
 	 */
 	public CCIUsers getAllCCIUsers(String pageNo, String size);
+	
+	public CCIUsers findAllUsers();
 
 	/**
 	 * The method will be used by edit calls on user, will return user details
@@ -65,6 +70,10 @@ public interface UserManagementService {
 	 */
 	public Departments getDepartmentWithPermissions();
 	
+	//public Departments getDepartmentWithPermissionsByRole(String roleId);
+	
+	public Roles getRoleByDepartment(String departmentId);
+	
 	/**
      * Updates user permissions
      * 
@@ -88,7 +97,7 @@ public interface UserManagementService {
 	 * @param id
 	 * @return
 	 */
-	public String deleteUser(String id);
+	public DeleteRequest deleteUser(String id);
 
 	/**
 	 * Search user based on different parameters
@@ -103,7 +112,7 @@ public interface UserManagementService {
      * @param roleId
      * @return
      */
-    public StaffUserRolePermissions getDefaultPermissionsbyRole(String roleId);
+    public Departments getDefaultPermissionsbyRole(String roleId,String deptId);
     
     /**
     * @param userId
@@ -135,7 +144,5 @@ public interface UserManagementService {
     
   
     public User updateUser(User user);
-    
-    
 
 }

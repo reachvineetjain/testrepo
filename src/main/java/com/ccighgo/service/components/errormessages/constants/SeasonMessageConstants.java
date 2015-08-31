@@ -146,5 +146,14 @@ public class SeasonMessageConstants {
    public static final String SEASON_ID_ZERO_OR_NEG="error.seasonid.zero.or.negative";
    public static final String FAILED_TO_GET_J1_HS_BASIC_DETAILS="error.get.j1.hs.basic.detils";
    public static final String INVALID_SEASON_GHT_DETAILS="error.invalid.season.ght.details";
-   
+   public static final String FAILED_GET_SEASON_BEAN_DETAILS="error.get.season.bean.details";
+   public static final String FAILED_TO_GET_DEPT_DETAILS ="error.get.dept.details";
+   public static final String INVALID_SEASON_ID_AND_PROGRAM_ID="invalid.season.id.and.program.id";
+   public static final String FAILED_GET_SEASON_GHT_DETAILS="error.get.season.ght.details";
+   public static final String FAILED_CREATE_SEASON_NAME="error.create.season.name";
+   public static final String FAILED_GET_SEASSON_J1_DETAILS="error.get.season.j1.detals";
+   public static final String FAILED_GET_SEASON_F1_DETAILS="error.get.season.f1.detals";
+   public static final String FAILED_SEASON_HSP_F1_DETAILS="error.get.season.hsp.f1.details";
+   public static final String FAILED_GET_SEASON_WP_CAP_DETAILS="error.get.season.wp.cap.details";
+   public static final String FAILED_GET_SEASON_DETAILS="error.get.season.details";
 }
