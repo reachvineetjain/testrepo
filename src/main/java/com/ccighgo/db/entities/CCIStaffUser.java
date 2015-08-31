@@ -118,6 +118,9 @@ public class CCIStaffUser implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
 
+	  //bi-directional many-to-one association to PartnerAgentReview
+   @OneToMany(mappedBy="ccistaffUser")
+   private List<PartnerAgentReview> partnerAgentReviews;
 	public CCIStaffUser() {
 	}
 	
@@ -396,5 +399,13 @@ public class CCIStaffUser implements Serializable {
 
 		return ccistaffUsersResourcePermission;
 	}
+	
+	public List<PartnerAgentReview> getPartnerAgentReviews() {
+      return this.partnerAgentReviews;
+   }
+
+   public void setPartnerAgentReviews(List<PartnerAgentReview> partnerAgentReviews) {
+      this.partnerAgentReviews = partnerAgentReviews;
+   }
 
 }
