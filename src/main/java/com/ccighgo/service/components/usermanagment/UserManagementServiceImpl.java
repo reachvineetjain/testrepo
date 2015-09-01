@@ -168,6 +168,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired GenderRepository genderRepository;
    
    @Autowired CCIStaffRolesDepartmentRepository cciStaffRolesDepartmentRepository;
+   @Autowired EmailServiceImpl email;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
@@ -527,7 +528,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
-         EmailServiceImpl email = new EmailServiceImpl();
+//         EmailServiceImpl email = new EmailServiceImpl();
          email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginEmail.getKeyValue()),false);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;

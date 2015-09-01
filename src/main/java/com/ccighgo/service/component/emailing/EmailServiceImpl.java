@@ -38,9 +38,9 @@ public class EmailServiceImpl implements EmailService {
    public void init() throws IOException {
       
       mailProperties = new Properties();
-      mailProperties.setProperty("mail.transport.protocol", messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_TRANSPORT_PROTOCOL));
-      mailProperties.setProperty("mail.aws.user", messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_AWS_USER));
-      mailProperties.setProperty("mail.aws.password", messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_AWS_PASSWORD));
+      mailProperties.setProperty(UtilityServiceMessageConstants.MAIL_TRANSPORT_PROTOCOL, messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_TRANSPORT_PROTOCOL));
+      mailProperties.setProperty(UtilityServiceMessageConstants.MAIL_AWS_USER, messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_AWS_USER));
+      mailProperties.setProperty(UtilityServiceMessageConstants.MAIL_AWS_PASSWORD, messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_AWS_PASSWORD));
       fromAddress = messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_FROM_ADDRESS);
    }
 
