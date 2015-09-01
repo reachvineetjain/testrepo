@@ -41,6 +41,7 @@
             /services/gciapi/**=anon
             /services/auth/logout=anon
             /services/authorize/**=anon
+            /services/insurance/**=anon
             /services/** = authc
          </value>
       </property>
