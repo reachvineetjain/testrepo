@@ -96,6 +96,8 @@ public class UtilityServicesImpl implements UtilityServices {
    MessageUtils messageUtil;
    @Autowired
    LoginRepository loginRepository;
+   @Autowired
+   EmailServiceImpl email;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -597,7 +599,7 @@ public class UtilityServicesImpl implements UtilityServices {
             return response;
          }
          Login loginUser = loginRepository.findByEmail(req.getEmail());
-         EmailServiceImpl email = new EmailServiceImpl();
+//         EmailServiceImpl email = new EmailServiceImpl();
          
          email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginUser.getKeyValue()), false);
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
