@@ -374,11 +374,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                                     boolean exist = false;
                                     for (com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea ra : regionsRDs.getAssignedRDStaffs().get(i)
                                           .getAssignedArea()) {
-                                       if (ra.getStateCode().equalsIgnoreCase(regionAssignedArea.getStateCode())
-                                             && ra.getRegionArea().equalsIgnoreCase(regionAssignedArea.getRegionArea())) {
+                                       if (ra.getRegionArea().equals(regionAssignedArea.getRegionArea())) {
                                           exist = true;
                                           break;
                                        }
+                                       if(exist)
+                                          break;
                                     }
                                     if (!exist)
                                        regionsRDs.getAssignedRDStaffs().get(i).getAssignedArea().add(regionAssignedArea);
