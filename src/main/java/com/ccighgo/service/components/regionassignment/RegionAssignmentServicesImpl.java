@@ -521,7 +521,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                               staffExist.put(fieldStaff.getFieldStaff().getFieldStaffId(), assignedStateStaff);
                               staffAndAreaExist.put(staffIdAndStateCode, true);
                            } else {
-                              if (staffAndAreaExist.get(staffIdAndStateCode) != null && !staffAndAreaExist.get(staffIdAndStateCode)) {
+                              if (staffAndAreaExist.get(staffIdAndStateCode) == null) {
                                  staffExist.get(fieldStaff.getFieldStaff().getFieldStaffId()).getAssignedArea().add(regionAssignedArea);
                               }
                            }
