@@ -17,28 +17,31 @@ import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.amazonaws.services.simpleemail.AWSJavaMailTransport;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 
 /**
  * @author ravi
  *
  */
+@Component
 public class EmailServiceImpl implements EmailService {
 
    private String fromAddress;
    private Properties mailProperties;
 
-   @Autowired private MessageUtils messageUtil;
+   @Autowired MessageUtils messageUtil;
 
    public void init() throws IOException {
-
+      
       mailProperties = new Properties();
-      mailProperties.setProperty("mail.transport.protocol", messageUtil.getMessage("mail.transport.protocol"));
-      mailProperties.setProperty("mail.aws.user", messageUtil.getMessage("mail.aws.user"));
-      mailProperties.setProperty("mail.aws.password", messageUtil.getMessage("mail.aws.password"));
-      fromAddress = messageUtil.getMessage("mail.from.address");
+      mailProperties.setProperty("mail.transport.protocol", messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_TRANSPORT_PROTOCOL));
+      mailProperties.setProperty("mail.aws.user", messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_AWS_USER));
+      mailProperties.setProperty("mail.aws.password", messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_AWS_PASSWORD));
+      fromAddress = messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_FROM_ADDRESS);
    }
 
    public void send(String toAddress, String subject, String content, boolean isHtml) {
