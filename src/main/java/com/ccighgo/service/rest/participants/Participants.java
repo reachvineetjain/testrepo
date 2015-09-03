@@ -4,6 +4,7 @@
 package com.ccighgo.service.rest.participants;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.participants.ParticipantsInterface;
+import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
+import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 
 /**
  * @author ravi
@@ -25,5 +28,21 @@ public class Participants {
    private static final Logger LOGGER = LoggerFactory.getLogger(Participants.class);
 
    @Autowired ParticipantsInterface participantsInterface;
+   
+   @GET
+   @Path("active/list")
+   @Produces("application/json")
+   public ParticipantsActiveList getActiveParticipantsList(){
+      return null;
+      
+   }
+   
+   @GET
+   @Path("lead/list")
+   @Produces("application/json")
+   public ParticipantsLeadList getLeadParticipantsList(){
+      return null;
+      
+   }
 
 }

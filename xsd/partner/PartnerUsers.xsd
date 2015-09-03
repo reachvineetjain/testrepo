@@ -27,7 +27,6 @@
 
    <xsd:complexType name="PartnerUser">
       <xsd:sequence>
-         <xsd:element name="partnerUserCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerUserFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerUserLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />

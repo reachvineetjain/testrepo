@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerquickstats" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partnerquickstats" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partnerquickstats" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common"/>
+
+   <xsd:element name="PartnerQuickStats" type="pdl:PartnerQuickStats"/>
+
+   <xsd:complexType name="PartnerQuickStats">
+     <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="partnerQuickStatTypes" type="pdl:PartnerQuickStatType" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   
+  <xsd:complexType name="PartnerQuickStatType">
+      <xsd:sequence>
+         <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="partnerQuickStatTypeName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerQuickStatTypeNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerQuickStatCategories" type="pdl:PartnerQuickStatCategory" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerQuickStatCategory">
+      <xsd:sequence>
+         <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="partnerQuickStatCategoryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerQuickStatCategoryNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>
