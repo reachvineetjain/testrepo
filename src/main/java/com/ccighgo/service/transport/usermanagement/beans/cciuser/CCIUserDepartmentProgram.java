@@ -56,7 +56,6 @@ public class CCIUserDepartmentProgram {
     protected Integer programId;
     protected String programName;
     //Commented due to not using Program options
-   // protected List<CCIUserDepartmentProgramOptions> cciUserDepartmentProgramOptions;
 
     /**
      * Gets the value of the departmentId property.
@@ -200,11 +199,5 @@ public class CCIUserDepartmentProgram {
      * 
      * 
      */
-    /*public List<CCIUserDepartmentProgramOptions> getCciUserDepartmentProgramOptions() {
-        if (cciUserDepartmentProgramOptions == null) {
-            cciUserDepartmentProgramOptions = new ArrayList<CCIUserDepartmentProgramOptions>();
-        }
-        return this.cciUserDepartmentProgramOptions;
-    }*/
-
+   
 }

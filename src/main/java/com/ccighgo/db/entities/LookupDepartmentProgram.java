@@ -56,11 +56,6 @@ public class LookupDepartmentProgram  implements Serializable{
    @OneToMany(mappedBy="lookupDepartmentProgram")
    private List<CCIStaffUserProgram> ccistaffUserPrograms;
    
-   // bi-directional many-to-one association to DepartmentProgramOption
-   /*@OneToMany(mappedBy = "lookupDepartmentProgram", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
-   private List<DepartmentProgramOption> departmentProgramOptions;*/
-
    // bi-directional many-to-one association to LookupDepartment
    @ManyToOne
    @JoinColumn(name = "departmentId", nullable = false)
@@ -145,29 +140,7 @@ public class LookupDepartmentProgram  implements Serializable{
       ccistaffUserProgram.setLookupDepartmentProgram(null);
 
       return ccistaffUserProgram;
-   }
-
-  /* public List<DepartmentProgramOption> getDepartmentProgramOptions() {
-      return this.departmentProgramOptions;
-   }
-
-   public void setDepartmentProgramOptions(List<DepartmentProgramOption> departmentProgramOptions) {
-      this.departmentProgramOptions = departmentProgramOptions;
-   }
-
-   public DepartmentProgramOption addDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
-      getDepartmentProgramOptions().add(departmentProgramOption);
-      departmentProgramOption.setLookupDepartmentProgram(this);
-
-      return departmentProgramOption;
-   }
-
-   public DepartmentProgramOption removeDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
-      getDepartmentProgramOptions().remove(departmentProgramOption);
-      departmentProgramOption.setLookupDepartmentProgram(null);
-
-      return departmentProgramOption;
-   }*/
+   }  
 
    public LookupDepartment getLookupDepartment() {
       return this.lookupDepartment;

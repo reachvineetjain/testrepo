@@ -743,83 +743,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
    
    
-
-  /* @Override
-   @Transactional(readOnly = true)
-   public Departments getDepartmentWithPermissionsByRole1(String roleId) {
-      List<LookupDepartment> lookupDepartments = null;
-      if(roleId==null){
-     lookupDepartments = departmentRepository.findAll();
-      }else {
-         CCIStaffRole role = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
-         lookupDepartments = new ArrayList<LookupDepartment>();
-         for(CCIStaffRolesDepartment roleDepartment : role.getCcistaffRolesDepartments()) {            
-            boolean isDublicate = false;
-            //need to validate is it unique 
-            for(LookupDepartment department : lookupDepartments) { 
-               if(department.getDepartmentId()== roleDepartment.getLookupDepartment().getDepartmentId()) {
-                  isDublicate = true;
-               }     
-            }
-            if(!isDublicate)
-            lookupDepartments.add(roleDepartment.getLookupDepartment());         
-         }         
-      }
-            
-      Departments departments = null;
-      if (lookupDepartments == null) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         return departments;
-      }
-      try {
-         departments = getDepartment(lookupDepartments);
-         if (departments == null) {
-            departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
-                  messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-            return departments;
-         }
-         departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-         return departments;
-      } catch (CcighgoException e) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         return departments;
-      }
-   }*/
-
-   
-  /* @Override
-   @Transactional(readOnly = true)
-   public Departments getDepartmentWithPermissionsByRole(String roleId) {
-      DepartmentResourceGroups departmentResourceGroups=null;
-      Departments departments = new Departments();
-      Department department= new Department();
-      List<DepartmentResourceGroup> departmentResourceGroupList= new ArrayList<DepartmentResourceGroup>(); 
-      CCIStaffRole role = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
-      for(CCIStaffRolesDepartment roleDepartment : role.getCcistaffRolesDepartments()) { 
-         List<CCIStaffRolesDefaultResourcePermission> staffRolesDefResPermissions = roleDepartment.getCcistaffRolesDefaultResourcePermissions();
-         List<ResourcePermission> resourcePermissionList = new ArrayList<ResourcePermission>();
-         for (CCIStaffRolesDefaultResourcePermission cciStaffRolesDefaultResourcePermission : staffRolesDefResPermissions) {
-            ResourcePermission resourcePermission=cciStaffRolesDefaultResourcePermission.getResourcePermission();
-            resourcePermissionList.add(resourcePermission);
-            }
-         DepartmentResourceGroup departmentResourceGroup = new DepartmentResourceGroup();
-         departmentResourceGroup.setResourcePermissions(resourcePermissionList);
-         //departmentResourceGroup.setResourceGroupName(roleDepartment.get);
-         //departmentResourceGroup.setDepartmentResourceGroupId(departmentResourceGroupId);
-         departmentResourceGroupList.add(departmentResourceGroup);
-      }
-      departmentResourceGroups=getDepartmentResourceGroups(departmentResourceGroupList);
-      department.setDepartmentresourcegroups(departmentResourceGroups);
-      departments.getDepartments().add(department);
-      return departments;
-   }
-   */
    @Override
    @Transactional
    public User updateUserPermissions(User user) {
@@ -1275,19 +1198,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          userDepartmentProgram.setDepartmentName(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentName());
          userDepartmentProgram.setDepartmentAcronym(userProgram.getLookupDepartmentProgram().getLookupDepartment().getAcronym());
          userDepartmentProgram.setProgramId(userProgram.getLookupDepartmentProgram().getLookupDepartmentProgramId());
-         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());
-         //not using in User Management by Program Options
-         /*if (userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions() != null) {
-            List<UserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<UserDepartmentProgramOptions>();
-            for (DepartmentProgramOption departmentProgramOption : userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions()) {
-               UserDepartmentProgramOptions usrDepartmentProgramOption = new UserDepartmentProgramOptions();
-               usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
-               usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
-               usrDepartmentProgramOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
-               userDepartmentProgramOptions.add(usrDepartmentProgramOption);
-            }
-            userDepartmentProgram.getUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
-         }*/
+         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());        
          userDepartmentProgramsList.add(userDepartmentProgram);
       }
       return userDepartmentProgramsList;
@@ -1370,9 +1281,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
       if (resourceActionList != null && !(resourceActionList.isEmpty())) {
          for (ResourceAction resourceAction : resourceActionList) {
-            StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
-           /* options.setPermissionGroupOptionActionId(resourceAction.getResourceActionId() + "");
-            options.setPermissionGroupOptionAction(resourceAction.getResourceAction());*/
+            StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();          
             permissionGroupOptionsList.add(options);
          }
       }else{
@@ -1657,21 +1566,8 @@ public class UserManagementServiceImpl implements UserManagementService {
          userDepartmentProgram.setDepartmentName(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentName());
          userDepartmentProgram.setDepartmentAcronym(userProgram.getLookupDepartmentProgram().getLookupDepartment().getAcronym());
          userDepartmentProgram.setProgramId(userProgram.getLookupDepartmentProgram().getLookupDepartmentProgramId());
-         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());
-         
-         //We are not using Department Program Options in Usermanagement
-         
-        /* if (userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions() != null) {
-            List<CCIUserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<CCIUserDepartmentProgramOptions>();
-            for (DepartmentProgramOption departmentProgramOption : userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions()) {
-               CCIUserDepartmentProgramOptions usrDepartmentProgramOption = new CCIUserDepartmentProgramOptions();
-               usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
-               usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
-               usrDepartmentProgramOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
-               userDepartmentProgramOptions.add(usrDepartmentProgramOption);
-            }
-            userDepartmentProgram.getCciUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
-         }*/
+         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());        
+        
          userDepartmentProgramsList.add(userDepartmentProgram);
       }
       return userDepartmentProgramsList;
