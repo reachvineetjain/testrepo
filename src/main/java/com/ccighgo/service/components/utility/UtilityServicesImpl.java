@@ -31,6 +31,7 @@ import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
@@ -86,6 +87,8 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired
    DepartmentProgramRepository departmentProgramRepository;
    @Autowired
+   LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
+   @Autowired
    IHPRegionsRepository ihpRegionsRepository;
    @Autowired
    SeasonStatusRepository seasonStatusRepository;
@@ -97,6 +100,8 @@ public class UtilityServicesImpl implements UtilityServices {
    MessageUtils messageUtil;
    @Autowired
    LoginRepository loginRepository;
+   @Autowired
+   EmailServiceImpl email;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -202,20 +207,20 @@ public class UtilityServicesImpl implements UtilityServices {
 
    @Override
    public Programs getAllPrograms() {
-      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
+      List<com.ccighgo.db.entities.LookupDepartmentProgram> lookupDepartmentProgramsList = lookupDepartmentProgramRepository.findAll();
       Programs programs = null;
       List<Program> programList = null;
       try
       {
-      if (departmentProgramsList.size() > 0) {
+      if (lookupDepartmentProgramsList.size() > 0) {
          programs = new Programs();
          programList = new ArrayList<Program>();
-         for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
+         for (com.ccighgo.db.entities.LookupDepartmentProgram deptPrg : lookupDepartmentProgramsList) {
             Program prg = new Program();
             prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
             prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
             prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
-            prg.setProgramId(deptPrg.getDepartmentProgramId());
+            prg.setProgramId(deptPrg.getLookupDepartmentProgramId());
             prg.setProgramName(deptPrg.getProgramName());
             prg.setProgramDescription(deptPrg.getDescription());
             programList.add(prg);
@@ -266,21 +271,21 @@ public class UtilityServicesImpl implements UtilityServices {
 
    @Override
    public Programs getProgramsByDepartment(String id) {
-      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
+      List<com.ccighgo.db.entities.LookupDepartmentProgram> lookupDepartmentProgramsList = lookupDepartmentProgramRepository.findAll();
       Programs programs = null;
       List<Program> programList = null;
       try
       {
-      if (departmentProgramsList.size() > 0) {
+      if (lookupDepartmentProgramsList.size() > 0) {
          programs = new Programs();
          programList = new ArrayList<Program>();
-         for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
+         for (com.ccighgo.db.entities.LookupDepartmentProgram deptPrg : lookupDepartmentProgramsList) {
             if (deptPrg.getLookupDepartment().getDepartmentId() == Integer.valueOf(id)) {
                Program prg = new Program();
                prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
                prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
                prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
-               prg.setProgramId(deptPrg.getDepartmentProgramId());
+               prg.setProgramId(deptPrg.getLookupDepartmentProgramId());
                prg.setProgramName(deptPrg.getProgramName());
                prg.setProgramDescription(deptPrg.getDescription());
                programList.add(prg);
@@ -340,13 +345,13 @@ public class UtilityServicesImpl implements UtilityServices {
    }
 
    private void populateDepartmentPrograms(com.ccighgo.db.entities.LookupDepartment d, UserDepartment userDepartment) {
-      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
-      if (departmentProgramsList != null) {
+      List<com.ccighgo.db.entities.LookupDepartmentProgram> lookupDepartmentProgramsList = lookupDepartmentProgramRepository.findAll();
+      if (lookupDepartmentProgramsList != null) {
          List<DepartmentProgram> programList = new ArrayList<DepartmentProgram>();
-         for (com.ccighgo.db.entities.DepartmentProgram dPrg : departmentProgramsList) {
+         for (com.ccighgo.db.entities.LookupDepartmentProgram dPrg : lookupDepartmentProgramsList) {
             if (dPrg.getLookupDepartment().getDepartmentId() == d.getDepartmentId()) {
                DepartmentProgram deptPrg = new DepartmentProgram();
-               deptPrg.setDepartmentProgramId(dPrg.getDepartmentProgramId());
+               deptPrg.setDepartmentProgramId(dPrg.getLookupDepartmentProgramId());
                deptPrg.setProgramName(dPrg.getProgramName());
                deptPrg.setProgramDescription(dPrg.getDescription());
                programList.add(deptPrg);
@@ -598,7 +603,7 @@ public class UtilityServicesImpl implements UtilityServices {
             return response;
          }
          Login loginUser = loginRepository.findByEmail(req.getEmail());
-         EmailServiceImpl email = new EmailServiceImpl();
+//         EmailServiceImpl email = new EmailServiceImpl();
          
          email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginUser.getKeyValue()), false);
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),

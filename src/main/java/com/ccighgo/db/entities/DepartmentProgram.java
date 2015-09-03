@@ -15,6 +15,14 @@ import java.util.List;
  * The persistent class for the DepartmentPrograms database table.
  * 
  */
+/**
+ * @author User
+ *
+ */
+/**
+ * @author User
+ *
+ */
 @Entity
 @Table(name="DepartmentPrograms")
 @NamedQuery(name="DepartmentProgram.findAll", query="SELECT d FROM DepartmentProgram d")
@@ -41,11 +49,7 @@ public class DepartmentProgram implements Serializable {
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, length=50)
-	private String programName;
-
-	//bi-directional many-to-one association to CCIStaffUserProgram
-	@OneToMany(mappedBy="departmentProgram")
-	private List<CCIStaffUserProgram> ccistaffUserPrograms;
+	private String programName;	
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
@@ -136,29 +140,7 @@ public class DepartmentProgram implements Serializable {
 	public void setProgramName(String programName) {
 		this.programName = programName;
 	}
-
-	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
-		return this.ccistaffUserPrograms;
-	}
-
-	public void setCcistaffUserPrograms(List<CCIStaffUserProgram> ccistaffUserPrograms) {
-		this.ccistaffUserPrograms = ccistaffUserPrograms;
-	}
-
-	public CCIStaffUserProgram addCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-		getCcistaffUserPrograms().add(ccistaffUserProgram);
-		ccistaffUserProgram.setDepartmentProgram(this);
-
-		return ccistaffUserProgram;
-	}
-
-	public CCIStaffUserProgram removeCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-		getCcistaffUserPrograms().remove(ccistaffUserProgram);
-		ccistaffUserProgram.setDepartmentProgram(null);
-
-		return ccistaffUserProgram;
-	}
-
+	
 	public List<DepartmentProgramOption> getDepartmentProgramOptions() {
 		return this.departmentProgramOptions;
 	}

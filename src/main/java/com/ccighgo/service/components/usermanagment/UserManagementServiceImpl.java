@@ -39,6 +39,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupDepartment;
+import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.ResourceAction;
@@ -62,6 +63,7 @@ import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
+import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.ResourceActionRepository;
 import com.ccighgo.jpa.repositories.ResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
@@ -77,6 +79,8 @@ import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartm
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgramOptions;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserStaffRole;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.SupervisorDetail;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.SupervisorDetails;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
@@ -123,7 +127,9 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired CCIStaffUsersRepository cciUsersRepository;
    
-   @Autowired DepartmentProgramRepository departmentProgramRepository;
+   //@Autowired DepartmentProgramRepository departmentProgramRepository;
+   
+   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
    
    @Autowired DepartmentResourceGroupRepository departmentResourceGroupRepository;
    
@@ -166,6 +172,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired GenderRepository genderRepository;
    
    @Autowired CCIStaffRolesDepartmentRepository cciStaffRolesDepartmentRepository;
+   @Autowired EmailServiceImpl email;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
@@ -279,6 +286,55 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return cciUsers;
    }
+   
+   @Override
+   @Transactional(readOnly = true)
+   public SupervisorDetails findAllSupervisors()
+ {
+      SupervisorDetails supervisorDetails = null;
+      Long numberOfRecords = 0L;
+      List<CCIStaffUser> cciUserDBList = null;
+      try {
+         numberOfRecords = cciUsersRepository.count();
+         cciUserDBList = cciUsersRepository.findAll();
+
+         if (cciUserDBList == null) {
+            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+            return supervisorDetails;
+         }
+
+         List<SupervisorDetail> supervisorDetailList = null;
+         if (cciUserDBList.size() > 0) {
+            supervisorDetails = new SupervisorDetails();
+            supervisorDetails.setRecordCount(numberOfRecords.intValue());
+            supervisorDetailList = new ArrayList<SupervisorDetail>();
+            for (CCIStaffUser cUsr : cciUserDBList) {
+               SupervisorDetail supervisorDetail = getSupervisorDetails(cUsr);
+               if (supervisorDetail == null) {
+                  supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+                        messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
+                  LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
+                  return supervisorDetails;
+               }
+               supervisorDetailList.add(supervisorDetail);
+            }
+            supervisorDetails.getSupervisorDetails().addAll(supervisorDetailList);
+            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         } else {
+            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
+         }
+      } catch (CcighgoException e) {
+         supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_SUPERVISORS.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_SUPERVISORS));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_SUPERVISORS));
+      }
+      return supervisorDetails;
+   }
 
    @Override
    @Transactional(readOnly = true)
@@ -377,7 +433,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          // validate username
          if (loginRepository.findByLoginName(user.getLoginInfo().getLoginName()) != null) {
             // return username already exsist
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_USER.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_CREATE_USER_NAME_EXIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
             return usr;
@@ -476,7 +532,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
-         EmailServiceImpl email = new EmailServiceImpl();
+//         EmailServiceImpl email = new EmailServiceImpl();
          email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginEmail.getKeyValue()),false);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
@@ -687,83 +743,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    }
    
    
-
-  /* @Override
-   @Transactional(readOnly = true)
-   public Departments getDepartmentWithPermissionsByRole1(String roleId) {
-      List<LookupDepartment> lookupDepartments = null;
-      if(roleId==null){
-     lookupDepartments = departmentRepository.findAll();
-      }else {
-         CCIStaffRole role = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
-         lookupDepartments = new ArrayList<LookupDepartment>();
-         for(CCIStaffRolesDepartment roleDepartment : role.getCcistaffRolesDepartments()) {            
-            boolean isDublicate = false;
-            //need to validate is it unique 
-            for(LookupDepartment department : lookupDepartments) { 
-               if(department.getDepartmentId()== roleDepartment.getLookupDepartment().getDepartmentId()) {
-                  isDublicate = true;
-               }     
-            }
-            if(!isDublicate)
-            lookupDepartments.add(roleDepartment.getLookupDepartment());         
-         }         
-      }
-            
-      Departments departments = null;
-      if (lookupDepartments == null) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         return departments;
-      }
-      try {
-         departments = getDepartment(lookupDepartments);
-         if (departments == null) {
-            departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
-                  messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-            return departments;
-         }
-         departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-         return departments;
-      } catch (CcighgoException e) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
-         return departments;
-      }
-   }*/
-
-   
-  /* @Override
-   @Transactional(readOnly = true)
-   public Departments getDepartmentWithPermissionsByRole(String roleId) {
-      DepartmentResourceGroups departmentResourceGroups=null;
-      Departments departments = new Departments();
-      Department department= new Department();
-      List<DepartmentResourceGroup> departmentResourceGroupList= new ArrayList<DepartmentResourceGroup>(); 
-      CCIStaffRole role = cciStaffRolesRepository.findOne(Integer.valueOf(roleId));
-      for(CCIStaffRolesDepartment roleDepartment : role.getCcistaffRolesDepartments()) { 
-         List<CCIStaffRolesDefaultResourcePermission> staffRolesDefResPermissions = roleDepartment.getCcistaffRolesDefaultResourcePermissions();
-         List<ResourcePermission> resourcePermissionList = new ArrayList<ResourcePermission>();
-         for (CCIStaffRolesDefaultResourcePermission cciStaffRolesDefaultResourcePermission : staffRolesDefResPermissions) {
-            ResourcePermission resourcePermission=cciStaffRolesDefaultResourcePermission.getResourcePermission();
-            resourcePermissionList.add(resourcePermission);
-            }
-         DepartmentResourceGroup departmentResourceGroup = new DepartmentResourceGroup();
-         departmentResourceGroup.setResourcePermissions(resourcePermissionList);
-         //departmentResourceGroup.setResourceGroupName(roleDepartment.get);
-         //departmentResourceGroup.setDepartmentResourceGroupId(departmentResourceGroupId);
-         departmentResourceGroupList.add(departmentResourceGroup);
-      }
-      departmentResourceGroups=getDepartmentResourceGroups(departmentResourceGroupList);
-      department.setDepartmentresourcegroups(departmentResourceGroups);
-      departments.getDepartments().add(department);
-      return departments;
-   }
-   */
    @Override
    @Transactional
    public User updateUserPermissions(User user) {
@@ -1215,22 +1194,11 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<UserDepartmentProgram> userDepartmentProgramsList = new ArrayList<UserDepartmentProgram>();
       for (CCIStaffUserProgram userProgram : userPrograms) {
          UserDepartmentProgram userDepartmentProgram = new UserDepartmentProgram();
-         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentId());
-         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentName());
-         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getLookupDepartment().getAcronym());
-         userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
-         userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
-         if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
-            List<UserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<UserDepartmentProgramOptions>();
-            for (DepartmentProgramOption departmentProgramOption : userProgram.getDepartmentProgram().getDepartmentProgramOptions()) {
-               UserDepartmentProgramOptions usrDepartmentProgramOption = new UserDepartmentProgramOptions();
-               usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
-               usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
-               usrDepartmentProgramOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
-               userDepartmentProgramOptions.add(usrDepartmentProgramOption);
-            }
-            userDepartmentProgram.getUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
-         }
+         userDepartmentProgram.setDepartmentId(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getLookupDepartmentProgram().getLookupDepartment().getAcronym());
+         userDepartmentProgram.setProgramId(userProgram.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());        
          userDepartmentProgramsList.add(userDepartmentProgram);
       }
       return userDepartmentProgramsList;
@@ -1313,9 +1281,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       permissionGroupOptionsList = new ArrayList<StaffUserDefaultPermissionGroupOptions>();
       if (resourceActionList != null && !(resourceActionList.isEmpty())) {
          for (ResourceAction resourceAction : resourceActionList) {
-            StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();
-           /* options.setPermissionGroupOptionActionId(resourceAction.getResourceActionId() + "");
-            options.setPermissionGroupOptionAction(resourceAction.getResourceAction());*/
+            StaffUserDefaultPermissionGroupOptions options = new StaffUserDefaultPermissionGroupOptions();          
             permissionGroupOptionsList.add(options);
          }
       }else{
@@ -1346,6 +1312,27 @@ public class UserManagementServiceImpl implements UserManagementService {
          usr=setUserStatus(usr,CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(), messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
          return usr;
+      }
+      if(!user.getLoginInfo().getLoginName().equals(tempCCIUser.getGoIdSequence().getLogin().getLoginName()))
+      {
+      if (loginRepository.findByLoginName(user.getLoginInfo().getLoginName()) != null) {
+         // return username already exsist
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_UPDATE_USER_NAME_EXIST.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_NAME_EXIST));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_NAME_EXIST));
+         return usr;
+      }
+      }
+      //findByemail
+      if(!user.getEmail().equals(tempCCIUser.getEmail()))
+      {
+      if (cciUsersRepository.findByemail(user.getEmail()) != null) {
+         // return username already exsist
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_UPDATE_USER_EMAIL_EXIST.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_EMAIL_EXIST));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_EMAIL_EXIST));
+         return usr;
+      }
       }
       CCIStaffUser cciUser = new CCIStaffUser();
       cciUser.setCciStaffUserId(user.getCciUserId());
@@ -1430,11 +1417,22 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       
       // create user role
-      if (user.getRoles() != null) {
+      if (user.getRoles() != null && !user.getRoles().isEmpty()) {
          List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = updateUserRole(user, tempCCIUser);
          cciUser.setCcistaffUsersCcistaffRoles(cciStaffUsersCCIStaffRoles);
          cciStaffUserStaffRoleRepository.save(cciStaffUsersCCIStaffRoles);
          cciStaffUserStaffRoleRepository.flush();
+      }
+      else
+      {
+         //deleting if already existing role
+         if(tempCCIUser.getCcistaffUsersCcistaffRoles() != null && !tempCCIUser.getCcistaffUsersCcistaffRoles().isEmpty())
+         {
+            for (CCIStaffUsersCCIStaffRole role : tempCCIUser.getCcistaffUsersCcistaffRoles()) {
+               cciStaffUserStaffRoleRepository.delete(role);
+               cciStaffUserStaffRoleRepository.flush();
+            }
+         }
       }
       cciUser.setCcistaffUsersResourcePermissions(tempCCIUser.getCcistaffUsersResourcePermissions());
       cciUser.setCcistaffUserNotes(tempCCIUser.getCcistaffUserNotes());
@@ -1469,8 +1467,16 @@ public class UserManagementServiceImpl implements UserManagementService {
          return usr;
       }
       try {
-         updateUserDetails(user);
-         updateUserPermissions(user);
+         usr=updateUserDetails(user);
+         if(usr.getStatus().getStatusCode().equalsIgnoreCase(CCIConstants.FAILURE))
+         {
+            return usr;
+         }
+         usr=updateUserPermissions(user);
+         if(usr.getStatus().getStatusCode().equalsIgnoreCase(CCIConstants.FAILURE))
+         {
+            return usr;
+         }
          if (user.getUserNotes() != null) {
             for (UserNotes userNotes : user.getUserNotes()) {
                userNotes.setCciUserId(user.getCciUserId());
@@ -1531,6 +1537,19 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
    }
 
+   private void populateUserRoleForSupervisor(CCIStaffUser cUsr, SupervisorDetail supervisorDetail) {
+      if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
+         List<CCIUserStaffRole> staffRolesList = new ArrayList<CCIUserStaffRole>();
+         for (CCIStaffUsersCCIStaffRole sRole : cUsr.getCcistaffUsersCcistaffRoles()) {
+            CCIUserStaffRole staffRole = new CCIUserStaffRole();
+            staffRole.setRoleId(sRole.getCcistaffRole().getCciStaffRoleId());
+            staffRole.setRoleName(sRole.getCcistaffRole().getCciStaffRoleName());
+            staffRolesList.add(staffRole);
+         }
+         supervisorDetail.getUserRole().addAll(staffRolesList);
+      }
+   }
+   
    /**
     * Gets user department and department program
     * 
@@ -1543,22 +1562,12 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<CCIUserDepartmentProgram> userDepartmentProgramsList = new ArrayList<CCIUserDepartmentProgram>();
       for (CCIStaffUserProgram userProgram : userPrograms) {
          CCIUserDepartmentProgram userDepartmentProgram = new CCIUserDepartmentProgram();
-         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentId());
-         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentName());
-         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getLookupDepartment().getAcronym());
-         userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
-         userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
-         if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
-            List<CCIUserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<CCIUserDepartmentProgramOptions>();
-            for (DepartmentProgramOption departmentProgramOption : userProgram.getDepartmentProgram().getDepartmentProgramOptions()) {
-               CCIUserDepartmentProgramOptions usrDepartmentProgramOption = new CCIUserDepartmentProgramOptions();
-               usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
-               usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
-               usrDepartmentProgramOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
-               userDepartmentProgramOptions.add(usrDepartmentProgramOption);
-            }
-            userDepartmentProgram.getCciUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
-         }
+         userDepartmentProgram.setDepartmentId(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getLookupDepartmentProgram().getLookupDepartment().getAcronym());
+         userDepartmentProgram.setProgramId(userProgram.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());        
+        
          userDepartmentProgramsList.add(userDepartmentProgram);
       }
       return userDepartmentProgramsList;
@@ -1662,13 +1671,13 @@ public class UserManagementServiceImpl implements UserManagementService {
          List<UserDepartmentProgram> userDepartmentProgramsList = user.getDepartmentPrograms();
          for (UserDepartmentProgram usrDeptPrg : userDepartmentProgramsList) {
             CCIStaffUserProgram cciUsrPrg = new CCIStaffUserProgram();
-            DepartmentProgram deptProgram = departmentProgramRepository.findOne(usrDeptPrg.getProgramId());
+            LookupDepartmentProgram deptProgram = lookupDepartmentProgramRepository.findOne(usrDeptPrg.getProgramId());
             if (deptProgram != null) {
-               cciUsrPrg.setDepartmentProgram(deptProgram);
+               cciUsrPrg.setLookupDepartmentProgram(deptProgram);
             }
             CCIStaffUserProgramPK staffUserProgramPK = new CCIStaffUserProgramPK();
             staffUserProgramPK.setCciStaffUserId(cUser.getCciStaffUserId());
-            staffUserProgramPK.setDepartmentProgramId(usrDeptPrg.getProgramId());
+            staffUserProgramPK.setLookupDepartmentProgramId(usrDeptPrg.getProgramId());
             cciUsrPrg.setId(staffUserProgramPK);
             cciUsrPrg.setCreatedBy(1);
             cciUsrPrg.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1693,12 +1702,12 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          for (UserDepartmentProgram usrDeptPrg : userDepartmentProgramsList) {
             CCIStaffUserProgram cciUsrPrg = new CCIStaffUserProgram();
-            DepartmentProgram deptProgram = departmentProgramRepository.findOne(usrDeptPrg.getProgramId());
+            LookupDepartmentProgram deptProgram = lookupDepartmentProgramRepository.findOne(usrDeptPrg.getProgramId());
             CCIStaffUserProgramPK staffUserProgramPK = new CCIStaffUserProgramPK();
             staffUserProgramPK.setCciStaffUserId(cUser.getCciStaffUserId());
-            staffUserProgramPK.setDepartmentProgramId(usrDeptPrg.getProgramId());
+            staffUserProgramPK.setLookupDepartmentProgramId(usrDeptPrg.getProgramId());
             cciUsrPrg.setId(staffUserProgramPK);
-            cciUsrPrg.setDepartmentProgram(deptProgram);
+            cciUsrPrg.setLookupDepartmentProgram(deptProgram);
             cciUsrPrg.setCreatedBy(1);
             cciUsrPrg.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             cciUsrPrg.setModifiedBy(1);
@@ -1845,6 +1854,19 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return cciUser;
    }
+   
+   
+   private SupervisorDetail getSupervisorDetails(CCIStaffUser cUsr) {
+      SupervisorDetail supervisorDetail = new SupervisorDetail();
+      supervisorDetail.setCciUserId(cUsr.getCciStaffUserId());
+      supervisorDetail.setFirstName(cUsr.getFirstName());
+      supervisorDetail.setLastName(cUsr.getLastName());
+      supervisorDetail.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
+      if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
+         populateUserRoleForSupervisor(cUsr, supervisorDetail);
+      }
+      return supervisorDetail;
+   }
 
    private Departments getDepartment(List<LookupDepartment> lookupDepartmentList) {
       Departments departments = new Departments();
@@ -1919,6 +1941,14 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUsers = new CCIUsers();
       cciUsers.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return cciUsers;
+
+   }
+   
+   private SupervisorDetails setSupervisorDetailsStatus(SupervisorDetails supervisorDetails, String code, String type, int serviceCode, String message) {
+      if (supervisorDetails == null)
+         supervisorDetails = new SupervisorDetails();
+      supervisorDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return supervisorDetails;
 
    }
 

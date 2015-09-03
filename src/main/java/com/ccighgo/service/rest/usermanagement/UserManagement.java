@@ -18,6 +18,7 @@ import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.SupervisorDetails;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
@@ -79,6 +80,13 @@ public class UserManagement {
     @Produces("application/json")
     public CCIUsers findAllUsers() {
         return userMgmtServices.findAllUsers();
+    }
+    
+    @GET
+    @Path("get-all-supervisors")
+    @Produces("application/json")
+    public SupervisorDetails findAllSupervisors() {
+        return userMgmtServices.findAllSupervisors();
     }
 
     /**

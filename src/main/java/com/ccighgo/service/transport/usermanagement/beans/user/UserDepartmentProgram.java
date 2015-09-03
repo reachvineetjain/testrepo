@@ -46,8 +46,8 @@ import javax.xml.bind.annotation.XmlType;
     "departmentAcronym",
     "departmentName",
     "programId",
-    "programName",
-    "userDepartmentProgramOptions"
+    "programName"
+   /* "userDepartmentProgramOptions"*/
 })
 public class UserDepartmentProgram {
 
@@ -59,7 +59,7 @@ public class UserDepartmentProgram {
     protected int programId;
     @XmlElement(required = true)
     protected String programName;
-    protected List<UserDepartmentProgramOptions> userDepartmentProgramOptions;
+   // protected List<UserDepartmentProgramOptions> userDepartmentProgramOptions;
 
     /**
      * Gets the value of the departmentId property.
@@ -187,11 +187,11 @@ public class UserDepartmentProgram {
      * 
      * 
      */
-    public List<UserDepartmentProgramOptions> getUserDepartmentProgramOptions() {
+   /* public List<UserDepartmentProgramOptions> getUserDepartmentProgramOptions() {
         if (userDepartmentProgramOptions == null) {
             userDepartmentProgramOptions = new ArrayList<UserDepartmentProgramOptions>();
         }
         return this.userDepartmentProgramOptions;
-    }
+    }*/
 
 }

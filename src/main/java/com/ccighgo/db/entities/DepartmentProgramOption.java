@@ -1,7 +1,9 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -30,7 +32,7 @@ public class DepartmentProgramOption implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId", nullable=false)
 	private DepartmentProgram departmentProgram;
-
+		
 	//bi-directional many-to-one association to SeasonHSPAllocation
 	@OneToMany(mappedBy="departmentProgramOption")
 	private List<SeasonHSPAllocation> seasonHspallocations;
@@ -117,5 +119,5 @@ public class DepartmentProgramOption implements Serializable {
 
 		return seasonWpallocation;
 	}
-
+  
 }
