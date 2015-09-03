@@ -41,6 +41,10 @@
             /services/gciapi/**=anon
             /services/auth/logout=anon
             /services/authorize/**=anon
+            /services/partner/**=anon
+            /services/participant/**=anon
+            /services/subpartner/**=anon
+            /services/partneruser/**=anon
             /services/** = authc
          </value>
       </property>
