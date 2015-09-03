@@ -5,7 +5,7 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.country.partneruser" />
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partneruser" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
