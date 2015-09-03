@@ -61,6 +61,7 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 
 /**
@@ -627,7 +628,7 @@ public class UtilityServicesImpl implements UtilityServices {
             tempLogin.setLoginName(login.getLoginName());
             tempLogin.setEmail(login.getEmail());
             tempLogin.setKeyValue(UuidUtils.nextHexUUID());
-            tempLogin.setPassword(req.getPasskey());
+            tempLogin.setPassword(PasswordUtil.hashKey(req.getPasskey()));
             tempLogin.setCreatedBy(login.getCreatedBy());
             tempLogin.setCreatedOn(login.getCreatedOn());
             tempLogin.setModifiedBy(login.getGoIdSequence().getGoId());

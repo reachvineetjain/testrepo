@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerseason" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:ps="http://www.ccighgo.com/partnerseason"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.participant.beans.country.partnerseason" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common"/>
+
+   <xsd:element name="PartnerSeason" type="ps:PartnerSeason"/>
+
+   <xsd:complexType name="PartnerSeason">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="participantCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerSeasons" type="ps:PartnerSeasons" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerSeasons">
+      <xsd:sequence>
+         <xsd:element name="partnerId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonDepartmentCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerProgramOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerProgramOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerApplicationDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantAllocated" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

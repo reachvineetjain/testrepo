@@ -119,26 +119,26 @@
 			<arg value="${xsd.dir}/States.xsd" />
 		</java>
 	</target>
-	
+
 	<!-- forgot password-->
 
-	    <target name="ForgotRequest">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/ForgotRequest.xsd" />
-	        </java>
-	    </target>
-	
+	<target name="ForgotRequest">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/ForgotRequest.xsd" />
+		</java>
+	</target>
+
 	<!-- reset password-->
 
-	    <target name="ResetRequest">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/ResetRequest.xsd" />
-	        </java>
-	    </target>
+	<target name="ResetRequest">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/ResetRequest.xsd" />
+		</java>
+	</target>
 
 	<!-- *************************************************CCI Staff User Management*************************************************-->
 
@@ -498,22 +498,23 @@
 			<arg value="${xsd.dir}/MoveRegions.xsd" />
 		</java>
 	</target>
-	
+
 	<target name="AssignedERDsToSuperRegion">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/regionAssignment/AssignedERDsToRegion.xsd" />
-			</java>
-		</target>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionAssignment/AssignedERDsToRegion.xsd" />
+		</java>
+	</target>
+
 	<target name="DeleteRegionMember">
-				<java classname="com.sun.tools.internal.xjc.XJCFacade">
-					<arg value="-d" />
-					<arg value="${java.dir}" />
-					<arg value="${xsd.dir}/regionAssignment/DeleteRegionMember.xsd" />
-				</java>
-			</target>
-	
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/regionAssignment/DeleteRegionMember.xsd" />
+		</java>
+	</target>
+
 	<!-- Third Party Integration -->
 	<target name="InternationPartner">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -522,23 +523,83 @@
 			<arg value="${xsd.dir}/thirdparty/wordpress/InternationalPartners.xsd" />
 		</java>
 	</target>
-		
+
 	<!-- Apply Now TE-->
-		<target name="ApplyNow">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/thirdparty/background_check/BackgroundCheck.xsd" />
-			</java>
-		</target>
+	<target name="ApplyNow">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/thirdparty/background_check/BackgroundCheck.xsd" />
+		</java>
+	</target>
 
 	<!-- Background Check Status -->
-			<target name="BackgroundStatusPush">
-				<java classname="com.sun.tools.internal.xjc.XJCFacade">
-					<arg value="-d" />
-					<arg value="${java.dir}" />
-					<arg value="${xsd.dir}/thirdparty/background_check/BackgroundCheckStatus.xsd" />
-				</java>
-			</target>
-	
+	<target name="BackgroundStatusPush">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/thirdparty/background_check/BackgroundCheckStatus.xsd" />
+		</java>
+	</target>
+
+	<!--*************************************************Partners*************************************************-->
+
+	<target name="PartnerDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerDetails.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerSeason">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerSeason.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerSubPartner">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerSubPartner.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerUsers">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerUsers.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerWorkQueue">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerWorkQueue.xsd" />
+		</java>
+	</target>
+
+	<!--*************************************************Participants*************************************************-->
+
+	<target name="ParticipantsActiveList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/participants/ParticipantsActiveList.xsd" />
+		</java>
+	</target>
+
+	<target name="ParticipantsLeadList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/participants/ParticipantsLeadList.xsd" />
+		</java>
+	</target>
+
 </project>

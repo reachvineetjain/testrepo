@@ -49,6 +49,8 @@ public class Utility {
 
    @Autowired
    UtilityServices utilityServices;
+   
+   @Context HttpServletRequest request;
 
    /**
     * The method {@code ping(@PathParam("input") String input)} returns user input string back. The purpose of the
@@ -207,7 +209,9 @@ public class Utility {
     */
    @POST
    @Path("forgot/access/request")
-   public Response forgotPassword(ForgotRequest req, @Context HttpServletRequest request){
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Response forgotPassword(ForgotRequest req){
       return utilityServices.forgotPassword(req, request);
    }
    
