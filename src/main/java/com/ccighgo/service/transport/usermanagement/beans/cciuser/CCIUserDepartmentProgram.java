@@ -45,8 +45,8 @@ import javax.xml.bind.annotation.XmlType;
     "departmentName",
     "departmentAcronym",
     "programId",
-    "programName",
-    "cciUserDepartmentProgramOptions"
+    "programName"
+   /* "cciUserDepartmentProgramOptions"*/
 })
 public class CCIUserDepartmentProgram {
 
@@ -55,7 +55,8 @@ public class CCIUserDepartmentProgram {
     protected String departmentAcronym;
     protected Integer programId;
     protected String programName;
-    protected List<CCIUserDepartmentProgramOptions> cciUserDepartmentProgramOptions;
+    //Commented due to not using Program options
+   // protected List<CCIUserDepartmentProgramOptions> cciUserDepartmentProgramOptions;
 
     /**
      * Gets the value of the departmentId property.
@@ -199,11 +200,11 @@ public class CCIUserDepartmentProgram {
      * 
      * 
      */
-    public List<CCIUserDepartmentProgramOptions> getCciUserDepartmentProgramOptions() {
+    /*public List<CCIUserDepartmentProgramOptions> getCciUserDepartmentProgramOptions() {
         if (cciUserDepartmentProgramOptions == null) {
             cciUserDepartmentProgramOptions = new ArrayList<CCIUserDepartmentProgramOptions>();
         }
         return this.cciUserDepartmentProgramOptions;
-    }
+    }*/
 
 }

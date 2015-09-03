@@ -15,6 +15,14 @@ import java.util.List;
  * The persistent class for the DepartmentPrograms database table.
  * 
  */
+/**
+ * @author User
+ *
+ */
+/**
+ * @author User
+ *
+ */
 @Entity
 @Table(name="DepartmentPrograms")
 @NamedQuery(name="DepartmentProgram.findAll", query="SELECT d FROM DepartmentProgram d")
@@ -43,9 +51,9 @@ public class DepartmentProgram implements Serializable {
 	@Column(nullable=false, length=50)
 	private String programName;
 
-	//bi-directional many-to-one association to CCIStaffUserProgram
+	/*//bi-directional many-to-one association to CCIStaffUserProgram
 	@OneToMany(mappedBy="departmentProgram")
-	private List<CCIStaffUserProgram> ccistaffUserPrograms;
+	private List<CCIStaffUserProgram> ccistaffUserPrograms;*/
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
@@ -136,8 +144,15 @@ public class DepartmentProgram implements Serializable {
 	public void setProgramName(String programName) {
 		this.programName = programName;
 	}
+	
+	/**
+	 * Commented for removed the column in CCIStaffUserProgram
+	 * 
+	 * 
+	 * @return
+	 */
 
-	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
+/*	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
 		return this.ccistaffUserPrograms;
 	}
 
@@ -157,7 +172,7 @@ public class DepartmentProgram implements Serializable {
 		ccistaffUserProgram.setDepartmentProgram(null);
 
 		return ccistaffUserProgram;
-	}
+	}*/
 
 	public List<DepartmentProgramOption> getDepartmentProgramOptions() {
 		return this.departmentProgramOptions;

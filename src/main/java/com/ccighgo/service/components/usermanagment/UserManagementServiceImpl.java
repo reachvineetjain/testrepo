@@ -39,6 +39,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupDepartment;
+import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.ResourceAction;
@@ -62,6 +63,7 @@ import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
+import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.ResourceActionRepository;
 import com.ccighgo.jpa.repositories.ResourcePermissionRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
@@ -125,7 +127,9 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired CCIStaffUsersRepository cciUsersRepository;
    
-   @Autowired DepartmentProgramRepository departmentProgramRepository;
+   //@Autowired DepartmentProgramRepository departmentProgramRepository;
+   
+   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
    
    @Autowired DepartmentResourceGroupRepository departmentResourceGroupRepository;
    
@@ -1267,14 +1271,15 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<UserDepartmentProgram> userDepartmentProgramsList = new ArrayList<UserDepartmentProgram>();
       for (CCIStaffUserProgram userProgram : userPrograms) {
          UserDepartmentProgram userDepartmentProgram = new UserDepartmentProgram();
-         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentId());
-         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentName());
-         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getLookupDepartment().getAcronym());
-         userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
-         userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
-         if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
+         userDepartmentProgram.setDepartmentId(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getLookupDepartmentProgram().getLookupDepartment().getAcronym());
+         userDepartmentProgram.setProgramId(userProgram.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());
+         //not using in User Management by Program Options
+         /*if (userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions() != null) {
             List<UserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<UserDepartmentProgramOptions>();
-            for (DepartmentProgramOption departmentProgramOption : userProgram.getDepartmentProgram().getDepartmentProgramOptions()) {
+            for (DepartmentProgramOption departmentProgramOption : userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions()) {
                UserDepartmentProgramOptions usrDepartmentProgramOption = new UserDepartmentProgramOptions();
                usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
                usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
@@ -1282,7 +1287,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                userDepartmentProgramOptions.add(usrDepartmentProgramOption);
             }
             userDepartmentProgram.getUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
-         }
+         }*/
          userDepartmentProgramsList.add(userDepartmentProgram);
       }
       return userDepartmentProgramsList;
@@ -1648,14 +1653,17 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<CCIUserDepartmentProgram> userDepartmentProgramsList = new ArrayList<CCIUserDepartmentProgram>();
       for (CCIStaffUserProgram userProgram : userPrograms) {
          CCIUserDepartmentProgram userDepartmentProgram = new CCIUserDepartmentProgram();
-         userDepartmentProgram.setDepartmentId(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentId());
-         userDepartmentProgram.setDepartmentName(userProgram.getDepartmentProgram().getLookupDepartment().getDepartmentName());
-         userDepartmentProgram.setDepartmentAcronym(userProgram.getDepartmentProgram().getLookupDepartment().getAcronym());
-         userDepartmentProgram.setProgramId(userProgram.getDepartmentProgram().getDepartmentProgramId());
-         userDepartmentProgram.setProgramName(userProgram.getDepartmentProgram().getProgramName());
-         if (userProgram.getDepartmentProgram().getDepartmentProgramOptions() != null) {
+         userDepartmentProgram.setDepartmentId(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentId());
+         userDepartmentProgram.setDepartmentName(userProgram.getLookupDepartmentProgram().getLookupDepartment().getDepartmentName());
+         userDepartmentProgram.setDepartmentAcronym(userProgram.getLookupDepartmentProgram().getLookupDepartment().getAcronym());
+         userDepartmentProgram.setProgramId(userProgram.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+         userDepartmentProgram.setProgramName(userProgram.getLookupDepartmentProgram().getProgramName());
+         
+         //We are not using Department Program Options in Usermanagement
+         
+        /* if (userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions() != null) {
             List<CCIUserDepartmentProgramOptions> userDepartmentProgramOptions = new ArrayList<CCIUserDepartmentProgramOptions>();
-            for (DepartmentProgramOption departmentProgramOption : userProgram.getDepartmentProgram().getDepartmentProgramOptions()) {
+            for (DepartmentProgramOption departmentProgramOption : userProgram.getLookupDepartmentProgram().getDepartmentProgramOptions()) {
                CCIUserDepartmentProgramOptions usrDepartmentProgramOption = new CCIUserDepartmentProgramOptions();
                usrDepartmentProgramOption.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
                usrDepartmentProgramOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
@@ -1663,7 +1671,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                userDepartmentProgramOptions.add(usrDepartmentProgramOption);
             }
             userDepartmentProgram.getCciUserDepartmentProgramOptions().addAll(userDepartmentProgramOptions);
-         }
+         }*/
          userDepartmentProgramsList.add(userDepartmentProgram);
       }
       return userDepartmentProgramsList;
@@ -1767,13 +1775,13 @@ public class UserManagementServiceImpl implements UserManagementService {
          List<UserDepartmentProgram> userDepartmentProgramsList = user.getDepartmentPrograms();
          for (UserDepartmentProgram usrDeptPrg : userDepartmentProgramsList) {
             CCIStaffUserProgram cciUsrPrg = new CCIStaffUserProgram();
-            DepartmentProgram deptProgram = departmentProgramRepository.findOne(usrDeptPrg.getProgramId());
+            LookupDepartmentProgram deptProgram = lookupDepartmentProgramRepository.findOne(usrDeptPrg.getProgramId());
             if (deptProgram != null) {
-               cciUsrPrg.setDepartmentProgram(deptProgram);
+               cciUsrPrg.setLookupDepartmentProgram(deptProgram);
             }
             CCIStaffUserProgramPK staffUserProgramPK = new CCIStaffUserProgramPK();
             staffUserProgramPK.setCciStaffUserId(cUser.getCciStaffUserId());
-            staffUserProgramPK.setDepartmentProgramId(usrDeptPrg.getProgramId());
+            staffUserProgramPK.setLookupDepartmentProgramId(usrDeptPrg.getProgramId());
             cciUsrPrg.setId(staffUserProgramPK);
             cciUsrPrg.setCreatedBy(1);
             cciUsrPrg.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1798,12 +1806,12 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          for (UserDepartmentProgram usrDeptPrg : userDepartmentProgramsList) {
             CCIStaffUserProgram cciUsrPrg = new CCIStaffUserProgram();
-            DepartmentProgram deptProgram = departmentProgramRepository.findOne(usrDeptPrg.getProgramId());
+            LookupDepartmentProgram deptProgram = lookupDepartmentProgramRepository.findOne(usrDeptPrg.getProgramId());
             CCIStaffUserProgramPK staffUserProgramPK = new CCIStaffUserProgramPK();
             staffUserProgramPK.setCciStaffUserId(cUser.getCciStaffUserId());
-            staffUserProgramPK.setDepartmentProgramId(usrDeptPrg.getProgramId());
+            staffUserProgramPK.setLookupDepartmentProgramId(usrDeptPrg.getProgramId());
             cciUsrPrg.setId(staffUserProgramPK);
-            cciUsrPrg.setDepartmentProgram(deptProgram);
+            cciUsrPrg.setLookupDepartmentProgram(deptProgram);
             cciUsrPrg.setCreatedBy(1);
             cciUsrPrg.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             cciUsrPrg.setModifiedBy(1);
