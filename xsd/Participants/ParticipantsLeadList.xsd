@@ -5,7 +5,7 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.participant.beans.country.participantsleadlist" />
+            <jaxb:package name="com.ccighgo.service.transport.participant.beans.participantsleadlist" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
@@ -27,14 +27,29 @@
    <xsd:complexType name="ParticipantLead">
       <xsd:sequence>
          <xsd:element name="participantId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantType" type="pll:ParticipantType" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantlastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantSeason" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSeason" type="pll:ParticipantSeason" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantProgramOption" type="pll:ParticipantProgramOption" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantEmailId" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantGuranteed" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ParticipantType">
+      <xsd:sequence>
+         <xsd:element name="participantTypeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ParticipantSeason">
+      <xsd:sequence>
+         <xsd:element name="participantSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSeasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSeasonProgram" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
    
