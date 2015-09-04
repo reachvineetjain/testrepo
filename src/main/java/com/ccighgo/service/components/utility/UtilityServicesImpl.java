@@ -549,11 +549,12 @@ public class UtilityServicesImpl implements UtilityServices {
    private String formResetURL(HttpServletRequest request) {
       String protocol;
       if (request.getProtocol().contains("https")) {
-         protocol = "HTTPS";
+         protocol = "https";
       } else {
-         protocol = "HTTP";
+         protocol = "http";
       }
-      String url = protocol + "://" + request.getServerName() + ":" + request.getServerPort() + CCIConstants.RESET_PASSWORD_LINK;
+      String url = protocol + "://" + "ccigoqa.creo-mobile.com" + CCIConstants.RESET_PASSWORD_LINK;
+      System.out.println(url);
       return url;
    }
 
