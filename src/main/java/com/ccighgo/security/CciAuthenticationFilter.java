@@ -58,7 +58,7 @@ public class CciAuthenticationFilter extends AuthenticatingFilter {
          LOGGER.error("Error in Login", e);
       }
       if (!result) {
-         ((HttpServletResponse) response).sendError(401, "Unauthorized");
+         ((HttpServletResponse) response).sendError(401, "System cannot authenticate credentials provided, please check if entered username and password are correct");
       } else {
          LOGGER.debug("Login success");
       }
