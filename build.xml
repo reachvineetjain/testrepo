@@ -601,5 +601,41 @@
 			<arg value="${xsd.dir}/participants/ParticipantsLeadList.xsd" />
 		</java>
 	</target>
+	<!--*************************************************  Partner Company *************************************************-->
 
+	<target name="PartnerCompany">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/companyOverview/CompanyDetail.xsd" />
+		</java>
+	</target>
+	<!--*************************************************  Partner User *************************************************-->
+
+		<target name="PartnerUserDetailAndPermission">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/partner/user/UserDetail.xsd" />
+			</java>
+		</target>
+	<!--*************************************************  Partner Seasons *************************************************-->
+
+		<target name="Partners Seasons">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/partner/seasons/PartnersSeasons.xsd" />
+			</java>
+		</target>	
+	
+	<!--*************************************************  Subpartners*************************************************-->
+			<target name="SubPartners">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/partner/subpartner/SubPartner.xsd" />
+				</java>
+			</target>	
+	
 </project>
