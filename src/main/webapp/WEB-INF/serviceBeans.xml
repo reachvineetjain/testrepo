@@ -34,10 +34,15 @@
          <bean id="regionManagement" class="com.ccighgo.service.rest.regionmanagement.RegionManagement" />
          <bean id="regionAssignment" class="com.ccighgo.service.rest.regionassignment.RegionAssignment" />
          <bean id="gciapi" class="com.ccighgo.service.rest.wordpress.forms.GCIAPI" />
-         <bean id="cciResources"  class="com.ccighgo.service.rest.cciresources.CCIResources" />
+         <bean id="cciResources" class="com.ccighgo.service.rest.cciresources.CCIResources" />
          <bean id="authentication" class="com.ccighgo.service.rest.authentication.Authentication" />
          <bean id="authorization" class="com.ccighgo.service.rest.authorization.Authorization" />
          <bean id="backgroundcheck" class="com.ccighgo.service.rest.backgroundcheck.BackgroundCheck" />
+         <bean id="partner" class="com.ccighgo.service.rest.partner.Partner" />
+         <bean id="participants" class="com.ccighgo.service.rest.participants.Participants" />
+         <bean id="partnerUser" class="com.ccighgo.service.rest.partner.user.PartnerUser" />
+         <bean id="subPartner" class="com.ccighgo.service.rest.partner.subpartner.SubPartner" />
+         <bean id="partnerSeason" class="com.ccighgo.service.rest.partner.season.PartnerSeason" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />

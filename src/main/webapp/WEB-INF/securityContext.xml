@@ -30,18 +30,24 @@
       </property>
       <property name="filterChainDefinitions">
          <value>
-            /services/season/** = anon
-            /services/usm/** = anon
-            /services/region/** = anon
-            /services/utility/** = anon
-            /services/regionAssignment/**= anon
+            /services/season/**=anon
+            /services/usm/**=anon
+            /services/region/**=anon
+            /services/utility/**=anon
+            /services/regionAssignment/**=anon
             /services/findForm/**=anon
             /services/updateLog/**=anon
             /services/backgroundcheck/**=anon
             /services/gciapi/**=anon
             /services/auth/logout=anon
             /services/authorize/**=anon
-            /services/** = authc
+            /services/partner/**=anon
+            /services/participant/**=anon
+            /services/subpartner/**=anon
+            /services/partneruser/**=anon
+            /services/insurance/**=anon
+            /services/partner/season/**=anon
+            /services/**=authc
          </value>
       </property>
    </bean>

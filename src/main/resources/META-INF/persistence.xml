@@ -20,6 +20,7 @@
       <class>com.ccighgo.db.entities.DepartmentFunction</class>
       <class>com.ccighgo.db.entities.DepartmentProgramOption</class>
       <class>com.ccighgo.db.entities.DepartmentProgram</class>
+      <class>com.ccighgo.db.entities.LookupDepartmentProgram</class>
       <class>com.ccighgo.db.entities.DepartmentResourceGroup</class>
       <class>com.ccighgo.db.entities.DocumentCategoryProcess</class>
       <class>com.ccighgo.db.entities.DocumentInformation</class>
