@@ -46,6 +46,7 @@
             /services/subpartner/**=anon
             /services/partneruser/**=anon
             /services/insurance/**=anon
+            /services/partner/season/**=anon
             /services/** = authc
          </value>
       </property>

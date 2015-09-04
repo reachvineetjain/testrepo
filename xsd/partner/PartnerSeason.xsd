@@ -11,33 +11,54 @@
    </xsd:annotation>
    <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common"/>
 
-   <xsd:element name="PartnerSeason" type="ps:PartnerSeason"/>
+   <xsd:element name="PartnerSeasons" type="ps:PartnerSeasons"/>
 
-   <xsd:complexType name="PartnerSeason">
+   <xsd:complexType name="PartnerSeasons">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="participantCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerSeasons" type="ps:PartnerSeasons" minOccurs="0" maxOccurs="unbounded" />
+               <xsd:element name="partnerSeasons" type="ps:PartnerSeason" minOccurs="0" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
 
-   <xsd:complexType name="PartnerSeasons">
+   <xsd:complexType name="PartnerSeason">
       <xsd:sequence>
          <xsd:element name="partnerId" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerSeasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerSeasonProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerSeasonDepartmentCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerProgramOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerProgramOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonDepartment" type="ps:PartnerSeasonDepartment" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerProgramOption" type="ps:PartnerSeasonProgramOption" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerApplicationDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantAllocated" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramStatus" type="ps:PartnerSeasonProgramStatus" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerSeasonDepartment">
+      <xsd:sequence>
+         <xsd:element name="partnerSeasonDepartmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonDepartmentCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonDepartmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerSeasonProgramOption">
+      <xsd:sequence>
+         <xsd:element name="partnerProgramOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerProgramOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+    <xsd:complexType name="PartnerSeasonProgramStatus">
+      <xsd:sequence>
+         <xsd:element name="partnerSeasonProgramStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerSeasonProgramStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 </xsd:schema>

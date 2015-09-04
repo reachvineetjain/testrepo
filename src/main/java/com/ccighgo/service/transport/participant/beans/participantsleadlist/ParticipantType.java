@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ParticipantProgramOption complex type.
+ * <p>Java class for ParticipantType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ParticipantProgramOption">
+ * &lt;complexType name="ParticipantType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="participantProgramOptionId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="participantProgramOption" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="participantTypeId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="participantType" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,54 +35,54 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ParticipantProgramOption", propOrder = {
-    "participantProgramOptionId",
-    "participantProgramOption"
+@XmlType(name = "ParticipantType", propOrder = {
+    "participantTypeId",
+    "participantType"
 })
-public class ParticipantProgramOption {
+public class ParticipantType {
 
-    protected int participantProgramOptionId;
+    protected int participantTypeId;
     @XmlElement(required = true)
-    protected String participantProgramOption;
+    protected String participantType;
 
     /**
-     * Gets the value of the participantProgramOptionId property.
+     * Gets the value of the participantTypeId property.
      * 
      */
-    public int getParticipantProgramOptionId() {
-        return participantProgramOptionId;
+    public int getParticipantTypeId() {
+        return participantTypeId;
     }
 
     /**
-     * Sets the value of the participantProgramOptionId property.
+     * Sets the value of the participantTypeId property.
      * 
      */
-    public void setParticipantProgramOptionId(int value) {
-        this.participantProgramOptionId = value;
+    public void setParticipantTypeId(int value) {
+        this.participantTypeId = value;
     }
 
     /**
-     * Gets the value of the participantProgramOption property.
+     * Gets the value of the participantType property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getParticipantProgramOption() {
-        return participantProgramOption;
+    public String getParticipantType() {
+        return participantType;
     }
 
     /**
-     * Sets the value of the participantProgramOption property.
+     * Sets the value of the participantType property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setParticipantProgramOption(String value) {
-        this.participantProgramOption = value;
+    public void setParticipantType(String value) {
+        this.participantType = value;
     }
 
 }
