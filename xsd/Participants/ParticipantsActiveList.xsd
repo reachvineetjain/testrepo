@@ -18,37 +18,82 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="participantCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="participants" type="pal:ActiveParticipants" minOccurs="0" maxOccurs="unbounded" />
+               <xsd:element name="participants" type="pal:ActiveParticipant" minOccurs="0" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
 
-   <xsd:complexType name="ActiveParticipants">
+   <xsd:complexType name="ActiveParticipant">
       <xsd:sequence>
          <xsd:element name="participantId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantType" type="pal:ParticipantType" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantlastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantSeason" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSeason" type="pal:ParticipantSeason" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantProgramOption" type="pal:ParticipantProgramOption" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantEmailId" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantCountry" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantSubPartner" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantPlacementStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantApplicationStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantCountry" type="pal:ParticipantCountry" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSubPartner" type="pal:ParticipantSubPartner" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantPlacementStatus" type="pal:ParticipantPlacementStatus" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantApplicationStatus" type="pal:ParticipantApplicationStatus" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantGuranteed" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantSubmittedFlightInfo" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
+   
+   <xsd:complexType name="ParticipantType">
+      <xsd:sequence>
+         <xsd:element name="participantTypeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
 
+   <xsd:complexType name="ParticipantSeason">
+      <xsd:sequence>
+         <xsd:element name="participantSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSeasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSeasonProgram" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
    <xsd:complexType name="ParticipantProgramOption">
       <xsd:sequence>
          <xsd:element name="participantProgramOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantProgramOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ParticipantCountry">
+      <xsd:sequence>
+         <xsd:element name="participantCountryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantCountryCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantCountry" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ParticipantSubPartner">
+      <xsd:sequence>
+         <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSubPartnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSubPartner" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ParticipantPlacementStatus">
+      <xsd:sequence>
+         <xsd:element name="participantPlacementStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantPlacementStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ParticipantApplicationStatus">
+      <xsd:sequence>
+         <xsd:element name="participantApplicationStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantApplicationStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 </xsd:schema>

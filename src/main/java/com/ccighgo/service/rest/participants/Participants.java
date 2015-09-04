@@ -6,6 +6,7 @@ package com.ccighgo.service.rest.participants;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.slf4j.Logger;
@@ -30,19 +31,20 @@ public class Participants {
    @Autowired ParticipantsInterface participantsInterface;
    
    @GET
-   @Path("active/list")
+   @Path("active/list/{partnerId}")
    @Produces("application/json")
-   public ParticipantsActiveList getActiveParticipantsList(){
-      return null;
+   public ParticipantsActiveList getActiveParticipantsList(@PathParam("partnerId") String partnerId){
+      LOGGER.info("calling Participants.getActiveParticipantsList for partner id {}",partnerId);
+      return participantsInterface.getActiveParticipantsList(partnerId);
       
    }
    
    @GET
-   @Path("lead/list")
+   @Path("lead/list/{partnerId}")
    @Produces("application/json")
-   public ParticipantsLeadList getLeadParticipantsList(){
-      return null;
-      
+   public ParticipantsLeadList getLeadParticipantsList(@PathParam("partnerId") String partnerId){
+      LOGGER.info("calling Participants.getLeadParticipantsList for partner id {}",partnerId);
+      return participantsInterface.getLeadParticipantsList(partnerId);
    }
 
 }
