@@ -638,4 +638,14 @@
 				</java>
 			</target>	
 	
+	<!--*************************************************  Add New participant  *************************************************-->
+				<target name="Add New Participant">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/Participants/NewParticipant.xsd" />
+					</java>
+				</target>	
+		
+	
 </project>
