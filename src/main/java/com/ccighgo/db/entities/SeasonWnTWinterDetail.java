@@ -33,14 +33,14 @@ public class SeasonWnTWinterDetail implements Serializable {
 
 	private byte isJobBoardOpen;
 
-	private Integer maxPendingJobApps;
+	private int maxPendingJobApps;
 
 	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=45)
+	@Column(length=55)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -107,11 +107,11 @@ public class SeasonWnTWinterDetail implements Serializable {
 		this.isJobBoardOpen = isJobBoardOpen;
 	}
 
-	public Integer getMaxPendingJobApps() {
+	public int getMaxPendingJobApps() {
 		return this.maxPendingJobApps;
 	}
 
-	public void setMaxPendingJobApps(Integer maxPendingJobApps) {
+	public void setMaxPendingJobApps(int maxPendingJobApps) {
 		this.maxPendingJobApps = maxPendingJobApps;
 	}
 

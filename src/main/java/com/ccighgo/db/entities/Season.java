@@ -40,10 +40,10 @@ public class Season implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=50)
+	@Column(length=35)
 	private String seasonFullName;
 
-	@Column(nullable=false, length=50)
+	@Column(length=35)
 	private String seasonName;
 
 	//bi-directional many-to-one association to FieldStaffLCSeason
@@ -53,6 +53,10 @@ public class Season implements Serializable {
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
 	@OneToMany(mappedBy="season")
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
+
+	//bi-directional many-to-one association to PartnerAnnouncement
+	@OneToMany(mappedBy="season")
+	private List<PartnerAnnouncement> partnerAnnouncements;
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
@@ -119,7 +123,7 @@ public class Season implements Serializable {
 	private List<SeasonIHPDetail> seasonIhpdetails;
 
 	//bi-directional many-to-one association to SeasonIHPGeographyConfiguration
-	@OneToMany(mappedBy = "season")
+	@OneToMany(mappedBy="season")
 	private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
 
 	//bi-directional many-to-one association to SeasonJ1Detail
@@ -300,6 +304,28 @@ public class Season implements Serializable {
 		fieldStaffLeadershipSeason.setSeason(null);
 
 		return fieldStaffLeadershipSeason;
+	}
+
+	public List<PartnerAnnouncement> getPartnerAnnouncements() {
+		return this.partnerAnnouncements;
+	}
+
+	public void setPartnerAnnouncements(List<PartnerAnnouncement> partnerAnnouncements) {
+		this.partnerAnnouncements = partnerAnnouncements;
+	}
+
+	public PartnerAnnouncement addPartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
+		getPartnerAnnouncements().add(partnerAnnouncement);
+		partnerAnnouncement.setSeason(this);
+
+		return partnerAnnouncement;
+	}
+
+	public PartnerAnnouncement removePartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
+		getPartnerAnnouncements().remove(partnerAnnouncement);
+		partnerAnnouncement.setSeason(null);
+
+		return partnerAnnouncement;
 	}
 
 	public LookupDepartment getLookupDepartment() {

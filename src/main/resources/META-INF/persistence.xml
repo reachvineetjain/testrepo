@@ -20,7 +20,6 @@
       <class>com.ccighgo.db.entities.DepartmentFunction</class>
       <class>com.ccighgo.db.entities.DepartmentProgramOption</class>
       <class>com.ccighgo.db.entities.DepartmentProgram</class>
-      <class>com.ccighgo.db.entities.LookupDepartmentProgram</class>
       <class>com.ccighgo.db.entities.DepartmentResourceGroup</class>
       <class>com.ccighgo.db.entities.DocumentCategoryProcess</class>
       <class>com.ccighgo.db.entities.DocumentInformation</class>
@@ -36,17 +35,41 @@
       <class>com.ccighgo.db.entities.LoginHistory</class>
       <class>com.ccighgo.db.entities.LoginUserType</class>
       <class>com.ccighgo.db.entities.LookupCountry</class>
+      <class>com.ccighgo.db.entities.LookupDepartmentProgram</class>
       <class>com.ccighgo.db.entities.LookupDepartment</class>
       <class>com.ccighgo.db.entities.LookupGender</class>
       <class>com.ccighgo.db.entities.LookupUSState</class>
       <class>com.ccighgo.db.entities.OauthHistory</class>
       <class>com.ccighgo.db.entities.OauthHistoryPK</class>
+      <class>com.ccighgo.db.entities.Participant</class>
+      <class>com.ccighgo.db.entities.Partner</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiry</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiryDocument</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiryNote</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiryStatus</class>
       <class>com.ccighgo.db.entities.PartnerAgentProgram</class>
       <class>com.ccighgo.db.entities.PartnerAgentReview</class>
+      <class>com.ccighgo.db.entities.PartnerAnnouncement</class>
+      <class>com.ccighgo.db.entities.PartnerCCIContact</class>
+      <class>com.ccighgo.db.entities.PartnerContact</class>
+      <class>com.ccighgo.db.entities.PartnerDocument</class>
+      <class>com.ccighgo.db.entities.PartnerMessage</class>
+      <class>com.ccighgo.db.entities.PartnerNoteTag</class>
+      <class>com.ccighgo.db.entities.PartnerNoteTopic</class>
+      <class>com.ccighgo.db.entities.PartnerNote</class>
+      <class>com.ccighgo.db.entities.PartnerOffice</class>
+      <class>com.ccighgo.db.entities.PartnerOfficeType</class>
+      <class>com.ccighgo.db.entities.PartnerPermission</class>
+      <class>com.ccighgo.db.entities.PartnerProgram</class>
+      <class>com.ccighgo.db.entities.PartnerReferenceCheck</class>
+      <class>com.ccighgo.db.entities.PartnerReviewStatus</class>
+      <class>com.ccighgo.db.entities.PartnerSeason</class>
+      <class>com.ccighgo.db.entities.PartnerSeasonAllocation</class>
+      <class>com.ccighgo.db.entities.PartnerSeasonContract</class>
+      <class>com.ccighgo.db.entities.PartnerSeasonDocument</class>
+      <class>com.ccighgo.db.entities.PartnerStatus</class>
+      <class>com.ccighgo.db.entities.PartnerUser</class>
+      <class>com.ccighgo.db.entities.PartnerUserRole</class>
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>

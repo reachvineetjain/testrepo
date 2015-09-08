@@ -1,7 +1,6 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 
 
@@ -17,8 +16,10 @@ public class PartnerAgentInquiryNote implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerAgentInquiryNotesId;
 
+	@Column(length=255)
 	private String partnerAgentInquiryNotes;
 
 	//bi-directional many-to-one association to PartnerAgentInquiry

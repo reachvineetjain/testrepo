@@ -49,6 +49,10 @@ public class DocumentInformation implements Serializable {
 	@JoinColumn(name="documentTypeDocumentCategoryProcessId")
 	private DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess;
 
+	//bi-directional many-to-one association to PartnerDocument
+	@OneToMany(mappedBy="documentInformation")
+	private List<PartnerDocument> partnerDocuments;
+
 	//bi-directional many-to-one association to SeasonDepartmentDocument
 	@OneToMany(mappedBy="documentInformation")
 	private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
@@ -160,6 +164,28 @@ public class DocumentInformation implements Serializable {
 
 	public void setDocumentTypeDocumentCategoryProcess(DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess) {
 		this.documentTypeDocumentCategoryProcess = documentTypeDocumentCategoryProcess;
+	}
+
+	public List<PartnerDocument> getPartnerDocuments() {
+		return this.partnerDocuments;
+	}
+
+	public void setPartnerDocuments(List<PartnerDocument> partnerDocuments) {
+		this.partnerDocuments = partnerDocuments;
+	}
+
+	public PartnerDocument addPartnerDocument(PartnerDocument partnerDocument) {
+		getPartnerDocuments().add(partnerDocument);
+		partnerDocument.setDocumentInformation(this);
+
+		return partnerDocument;
+	}
+
+	public PartnerDocument removePartnerDocument(PartnerDocument partnerDocument) {
+		getPartnerDocuments().remove(partnerDocument);
+		partnerDocument.setDocumentInformation(null);
+
+		return partnerDocument;
 	}
 
 	public List<SeasonDepartmentDocument> getSeasonDepartmentDocuments() {

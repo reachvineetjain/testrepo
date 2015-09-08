@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -13,20 +11,22 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="PartnerAgentReview")
 @NamedQuery(name="PartnerAgentReview.findAll", query="SELECT p FROM PartnerAgentReview p")
 public class PartnerAgentReview implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerAgentReviewid;
 
-	private Integer agentRating;
+	private int agentRating;
 
 	@Temporal(TemporalType.DATE)
 	private Date followUpDate;
 
-	private Byte moreAboutAmbassadorScholership;
+	private byte moreAboutAmbassadorScholership;
 
 	private Integer partnerMessagesId;
 
@@ -38,15 +38,15 @@ public class PartnerAgentReview implements Serializable {
 	@OneToMany(mappedBy="partnerAgentReview")
 	private List<PartnerAgentInquiryNote> partnerAgentInquiryNotes;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@ManyToOne
-	@JoinColumn(name="cciStaffUserId")
-	private CCIStaffUser ccistaffUser;
-
 	//bi-directional many-to-one association to PartnerAgentProgram
 	@ManyToOne
 	@JoinColumn(name="partnerAgentProgramId")
 	private PartnerAgentProgram partnerAgentProgram;
+
+	//bi-directional many-to-one association to CCIStaffUser
+	@ManyToOne
+	@JoinColumn(name="cciStaffUserId")
+	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to PartnerAgentInquiryStatus
 	@ManyToOne
@@ -64,11 +64,11 @@ public class PartnerAgentReview implements Serializable {
 		this.partnerAgentReviewid = partnerAgentReviewid;
 	}
 
-	public Integer getAgentRating() {
+	public int getAgentRating() {
 		return this.agentRating;
 	}
 
-	public void setAgentRating(Integer agentRating) {
+	public void setAgentRating(int agentRating) {
 		this.agentRating = agentRating;
 	}
 
@@ -80,11 +80,11 @@ public class PartnerAgentReview implements Serializable {
 		this.followUpDate = followUpDate;
 	}
 
-	public Byte getMoreAboutAmbassadorScholership() {
+	public byte getMoreAboutAmbassadorScholership() {
 		return this.moreAboutAmbassadorScholership;
 	}
 
-	public void setMoreAboutAmbassadorScholership(Byte moreAboutAmbassadorScholership) {
+	public void setMoreAboutAmbassadorScholership(byte moreAboutAmbassadorScholership) {
 		this.moreAboutAmbassadorScholership = moreAboutAmbassadorScholership;
 	}
 
@@ -140,20 +140,20 @@ public class PartnerAgentReview implements Serializable {
 		return partnerAgentInquiryNote;
 	}
 
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
-	}
-
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
-	}
-
 	public PartnerAgentProgram getPartnerAgentProgram() {
 		return this.partnerAgentProgram;
 	}
 
 	public void setPartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
 		this.partnerAgentProgram = partnerAgentProgram;
+	}
+
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
+	}
+
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
 	}
 
 	public PartnerAgentInquiryStatus getPartnerAgentInquiryStatus() {
