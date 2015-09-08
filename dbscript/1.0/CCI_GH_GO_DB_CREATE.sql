@@ -37,6 +37,27 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`LookupGender` (
 );
 
 -- ----------------------------------------------------------------------------------------------------
+-- Table cci_gh_go.LookupDepartmentPrograms
+-- ---------------------------------------------------------------------------------------------------- 
+CREATE TABLE `cci_gh_go`.`LookupDepartmentPrograms` (
+  `lookupDepartmentProgramId` INT(3) NOT NULL AUTO_INCREMENT,
+  `departmentId` INT(3) NOT NULL,
+  `programName` VARCHAR(50) NOT NULL,
+  `description` VARCHAR(100) DEFAULT NULL,
+  `createdBy` INT(11) NOT NULL,
+  `createdOn` TIMESTAMP NULL DEFAULT NULL,
+  `modifiedBy` INT(11) NOT NULL,
+  `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`lookupDepartmentProgramId`),
+  KEY `FK_LookupDepartmentPrograms_LookupDepartments` (`departmentId`),
+  CONSTRAINT `FK_LookupDepartmentPrograms_LookupDepartments` 
+  FOREIGN KEY (`departmentId`) 
+  REFERENCES `LookupDepartments` (`departmentId`) 
+  ON DELETE NO ACTION 
+  ON UPDATE NO ACTION
+);
+
+-- ----------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.GoIdSequence 
 -- ----------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cci_gh_go`.`GoIdSequence` (
