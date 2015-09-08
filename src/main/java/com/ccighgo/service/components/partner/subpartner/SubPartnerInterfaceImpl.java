@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerCountry;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus;
@@ -68,6 +69,12 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
       subPartners.add(sPart1);
       psp.getSubPartners().addAll(subPartners);
       return psp;
+   }
+
+   @Override
+   public SubPartner viewSubPartners(String subPartner) {
+      // TODO Auto-generated method stub
+      return null;
    }
 
 }

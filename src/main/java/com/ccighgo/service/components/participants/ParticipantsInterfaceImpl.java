@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ActiveParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantApplicationStatus;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry;
@@ -120,6 +121,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       participants.add(lead);
       participantsLeadList.getParticipants().addAll(participants);
       return participantsLeadList;
+   }
+
+   @Override
+   public NewParticipant addNewParticipant(NewParticipant newParticipant) {
+      // persist object to DB
+      return newParticipant;
    }
 
 }
