@@ -440,7 +440,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          //findByemail
          
-         if (cciUsersRepository.findByemail(user.getEmail()) != null) {
+         if (loginRepository.findByEmail(user.getEmail()) != null) {
             // return username already exsist
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
