@@ -562,7 +562,7 @@ public class UtilityServicesImpl implements UtilityServices {
    public Response forgotPassword(ForgotRequest req, HttpServletRequest request) {
       Response response = new Response();
       try {
-         if (req.getEmail() == null) {
+         if (req.getEmail() == null && req.getUsername() == null) {
             response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
                   messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
             LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
@@ -572,11 +572,11 @@ public class UtilityServicesImpl implements UtilityServices {
          if (req.getUsername() == null) {
             loginUser = loginRepository.findByEmail(req.getEmail());
          }
-         else {
+        if(req.getEmail() == null){
             loginUser = loginRepository.findByLoginName(req.getUsername());
          }
          if (loginUser != null) {
-            email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginUser.getKeyValue()), false);
+            email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginUser.getKeyValue()), false);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
          } else {
