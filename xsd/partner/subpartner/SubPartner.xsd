@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/subpartner" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/subpartner"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.subpartner" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common"/>
+
+   <xsd:element name="Subpartner" type="cd:SubPartner"/>
+
+   <xsd:complexType name="SubPartner">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+                <xsd:sequence>
+		         <xsd:element name="subPartnerStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="logoImageURL" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="logoUserName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="agencyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="needsPartnerReview" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="deliverDS2019Forms" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="payGreenHeartDirectly" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="username" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="newPassword" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="ReTypedPassword" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="primaryContactSalutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="primaryContactTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         <xsd:element name="primaryContactFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			     
+			     <xsd:element name="primaryContactLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			     <xsd:element name="primaryContactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			     <xsd:element name="primaryContactEmergencyPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			     <xsd:element name="primaryContactFirstFax" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="primaryContactFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="receiveNotificationEmailFromCCI" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="skypeId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="webSite" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="typeOfPartnerUser" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          
+		          
+		          <xsd:element name="physicalAddress1" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="physicalAddress2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="physicalAddressCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="physicalAddressStateOrProvince" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="physicalAddressZipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="physicalAddressCountry" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          
+		          <xsd:element name="mailingAddress1" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="mailingAddress2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="mailingAddressCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="mailingAddressStateOrProvince" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="mailingAddressZipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		          <xsd:element name="mailingAddressCountry" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		        <!--   FEES is missing 
+		           -->
+		           
+		          <xsd:element name="notes" type="cd:SubPartnersSeasonsNotes" minOccurs="0" maxOccurs="unbounded" />
+		          		         
+      			</xsd:sequence>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType> 
+ <xsd:complexType name="SubPartnersSeasonsNotes">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="createdBy" type="cd:SubPartnersSeasonsNotesCreator" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="privacy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="SubPartnersSeasonsNotesCreator">
+      <xsd:sequence>
+         <xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

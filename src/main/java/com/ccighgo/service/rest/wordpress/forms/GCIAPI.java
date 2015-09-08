@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.gciapi.IGCIAPI;
@@ -26,6 +27,7 @@ import com.ccighgo.service.transport.seasons.beans.gciapi.GCIAPI_UserExist_Param
 @Consumes("application/json")
 public class GCIAPI {
 
+   public static final Logger LOGGER = Logger.getLogger(GCIAPI.class);
    @Autowired
    IGCIAPI gciApi;
 

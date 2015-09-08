@@ -5,6 +5,7 @@ package com.ccighgo.service.rest.participants;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.participants.ParticipantsInterface;
+import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 
@@ -45,6 +47,14 @@ public class Participants {
    public ParticipantsLeadList getLeadParticipantsList(@PathParam("partnerId") String partnerId){
       LOGGER.info("calling Participants.getLeadParticipantsList for partner id {}",partnerId);
       return participantsInterface.getLeadParticipantsList(partnerId);
+   }
+   
+   @POST
+   @Path("create/newParticipant")
+   @Produces("application/json")
+   public NewParticipant addNewParticipant(NewParticipant newParticipant){
+      LOGGER.info("calling Participants.addNewParticipant ");
+      return participantsInterface.addNewParticipant(newParticipant);
    }
 
 }

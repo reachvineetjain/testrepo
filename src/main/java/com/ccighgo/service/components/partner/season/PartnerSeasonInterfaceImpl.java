@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.service.transport.partner.beans.PartnersSeasons.PartnersSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeason;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonDepartment;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramOption;
@@ -61,6 +62,12 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
       partnerSeasonsList.add(pSeason);
       partnerSeasons.getPartnerSeasons().addAll(partnerSeasonsList);
       return partnerSeasons;
+   }
+
+   @Override
+   public PartnersSeasons viewPartnerSeason(String partnerId, String seasonId) {
+      // TODO Auto-generated method stub
+      return null;
    }
 
 }
