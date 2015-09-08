@@ -39,19 +39,19 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       
       PartnerUser pUser1 = new PartnerUser();
       pUser1.setPartnerUserId(123);
-      pUser1.setPartnerUserFirstName("Partner");
-      pUser1.setPartnerUserLastName("User 1");
-      pUser1.setPartnerUserLoginName("partneruserlogin");
+      pUser1.setPartnerUserFirstName("Partner2");
+      pUser1.setPartnerUserLastName("User 2");
+      pUser1.setPartnerUserLoginName("partneruserlogin2");
       PartnerUserStatus partnerUserStatus1 = new PartnerUserStatus();
-      partnerUserStatus1.setPartnerUserStatus("Active");
+      partnerUserStatus1.setPartnerUserStatus("InActive");
       partnerUserStatus1.setPartnerUserStatusId(1);
       pUser1.setPartnerUserStatus(partnerUserStatus1);
       
       PartnerUser pUser2 = new PartnerUser();
       pUser2.setPartnerUserId(123);
-      pUser2.setPartnerUserFirstName("Partner");
-      pUser2.setPartnerUserLastName("User 1");
-      pUser2.setPartnerUserLoginName("partneruserlogin");
+      pUser2.setPartnerUserFirstName("Partner3");
+      pUser2.setPartnerUserLastName("User 3");
+      pUser2.setPartnerUserLoginName("partneruserlogin3");
       PartnerUserStatus partnerUserStatus2 = new PartnerUserStatus();
       partnerUserStatus2.setPartnerUserStatus("Active");
       partnerUserStatus2.setPartnerUserStatusId(1);
