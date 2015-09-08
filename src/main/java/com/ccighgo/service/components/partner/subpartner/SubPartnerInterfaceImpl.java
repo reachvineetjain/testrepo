@@ -92,7 +92,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
       sPart2.setSubPartnerLastName("Man");
       sPart2.setSubPartnerCountry(subPartnerCountry3);
       sPart2.setSubPartnerStatus(subPartnerStatus2);
-      sPart2.getSubPartnerSeasons().addAll(subPartnerSeasons);
       
       SubPartners sPart3= new SubPartners();
       sPart3.setSubPartnerId(1234);
@@ -100,7 +99,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
       sPart3.setSubPartnerLastName("Man");
       sPart3.setSubPartnerCountry(subPartnerCountry4);
       sPart3.setSubPartnerStatus(subPartnerStatus1);
-      sPart3.getSubPartnerSeasons().addAll(subPartnerSeasons);
       
       SubPartners sPart4= new SubPartners();
       sPart4.setSubPartnerId(1234);
