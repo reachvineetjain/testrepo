@@ -30,3 +30,34 @@ SET FOREIGN_KEY_CHECKS = 1;
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 ALTER TABLE `cci_gh_go`.`Season` ADD UNIQUE INDEX IND_seasonName(seasonName);
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--- Alter script for changing departmentPrograms column to lookupDepartmentProgram in CCIStaffUserProgram table on 8th Sep 2015-------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+SET FOREIGN_KEY_CHECKS = 0;
+ALTER TABLE `cci_gh_go`.`CCIStaffUserProgram`    
+  CHANGE `departmentProgramId` `lookupDepartmentProgramId` INT(11) NOT NULL  AFTER `cciStaffUserId`, 
+  DROP INDEX `FK_CCIStaffUserProgram_DepartmentPrograms`,
+  DROP FOREIGN KEY `FK_CCIStaffUserProgram_DepartmentPrograms`,
+  ADD CONSTRAINT `FK_CCIStaffUserProgram_LookupDepartmentPrograms` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `cci_gh_go`.`LookupDepartmentPrograms`(`lookupDepartmentProgramId`);
+  
+ SET FOREIGN_KEY_CHECKS = 1;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--- Alter script for modifying seasonName,programName in all Season related tables as per BUG # 197,192,171     on 8th Sep 2015-------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------- 
+ALTER TABLE Season MODIFY seasonName VARCHAR(35);
+ALTER TABLE Season MODIFY seasonFullName VARCHAR(35);
+ALTER TABLE SeasonCAPDetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonF1Details MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonHSADetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonIHPDetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonJ1Details MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonLSDetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonTADetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonVADetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonWADetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonWnTSpringDetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonWnTSummerDetails MODIFY programName VARCHAR(55);
+ALTER TABLE SeasonWnTWinterDetails MODIFY programName VARCHAR(55);
