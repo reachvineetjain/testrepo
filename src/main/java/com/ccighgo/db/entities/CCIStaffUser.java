@@ -40,8 +40,8 @@ public class CCIStaffUser implements Serializable {
 
 	private Timestamp createdOn;
 
-	@Column(nullable=false, length=50)
-	private String email;
+	/*@Column(nullable=false, length=50)
+	private String email;*/
 
 	@Column(length=15)
 	private String emergencyPhone;
@@ -176,13 +176,13 @@ public class CCIStaffUser implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public String getEmail() {
+	/*public String getEmail() {
 		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
+	}*/
 
 	public String getEmergencyPhone() {
 		return this.emergencyPhone;
