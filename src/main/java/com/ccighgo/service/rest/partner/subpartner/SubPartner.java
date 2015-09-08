@@ -5,6 +5,7 @@ package com.ccighgo.service.rest.partner.subpartner;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,4 +38,12 @@ public class SubPartner {
       return subPartnerInterface.getSubPartnersOfpartners(partnerId);
    }
 
+   @POST
+   @Path("view/{subPartner}")
+   @Produces("application/json")
+   public com.ccighgo.service.transport.partner.beans.subpartner.SubPartner viewSubPartners(@PathParam("subPartner") String subPartner){
+      LOGGER.debug("calling SubPartner.viewSubPartners for subPartner id {}",subPartner);
+      return subPartnerInterface.viewSubPartners(subPartner);
+   }
+   
 }

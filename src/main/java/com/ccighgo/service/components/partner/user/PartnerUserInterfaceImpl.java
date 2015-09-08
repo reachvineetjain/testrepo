@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 
 /**
  * @author ravi
@@ -60,6 +61,16 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       partnerUsersList.add(pUser2);
       partnerUsers.getPartnerUsers().addAll(partnerUsersList);
       return partnerUsers;
+   }
+
+   @Override
+   public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
+     return partnerUserDetailAndRoles;
+   }
+
+   @Override
+   public PartnerUserDetailAndRoles viewPartnerUser() {
+      return null;
    }
 
 }
