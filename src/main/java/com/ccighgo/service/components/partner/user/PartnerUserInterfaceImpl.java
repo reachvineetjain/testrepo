@@ -30,8 +30,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       PartnerUser pUser = new PartnerUser();
       pUser.setPartnerUserId(123);
       pUser.setPartnerUserFirstName("Partner");
-      pUser.setPartnerUserLastName("User 1");
-      pUser.setPartnerUserLoginName("partneruserlogin");
+      pUser.setPartnerUserLastName("User 3");
+      pUser.setPartnerUserLoginName("partneruserlogin3");
       PartnerUserStatus partnerUserStatus = new PartnerUserStatus();
       partnerUserStatus.setPartnerUserStatus("Active");
       partnerUserStatus.setPartnerUserStatusId(1);
@@ -41,7 +41,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       pUser1.setPartnerUserId(123);
       pUser1.setPartnerUserFirstName("Partner2");
       pUser1.setPartnerUserLastName("User 2");
-      pUser1.setPartnerUserLoginName("partneruserlogin2");
+      pUser1.setPartnerUserLoginName("partneruserlogin1");
       PartnerUserStatus partnerUserStatus1 = new PartnerUserStatus();
       partnerUserStatus1.setPartnerUserStatus("InActive");
       partnerUserStatus1.setPartnerUserStatusId(1);
@@ -50,8 +50,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       PartnerUser pUser2 = new PartnerUser();
       pUser2.setPartnerUserId(123);
       pUser2.setPartnerUserFirstName("Partner3");
-      pUser2.setPartnerUserLastName("User 3");
-      pUser2.setPartnerUserLoginName("partneruserlogin3");
+      pUser2.setPartnerUserLastName("User 1");
+      pUser2.setPartnerUserLoginName("partneruserlogin2");
       PartnerUserStatus partnerUserStatus2 = new PartnerUserStatus();
       partnerUserStatus2.setPartnerUserStatus("Active");
       partnerUserStatus2.setPartnerUserStatusId(1);
