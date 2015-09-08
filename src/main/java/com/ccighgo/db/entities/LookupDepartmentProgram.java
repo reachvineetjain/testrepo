@@ -1,153 +1,165 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
- * The persistent class for the LookupDepartmentProgram database table.
+ * The persistent class for the LookupDepartmentPrograms database table.
  * 
  */
 @Entity
 @Table(name="LookupDepartmentPrograms")
-@NamedQuery(name="LookupDepartmentProgram.findAll", query="SELECT d FROM LookupDepartmentProgram d")
-public class LookupDepartmentProgram  implements Serializable{
-   private static final long serialVersionUID = 1L;
+@NamedQuery(name="LookupDepartmentProgram.findAll", query="SELECT l FROM LookupDepartmentProgram l")
+public class LookupDepartmentProgram implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(unique = true, nullable = false)
-   private Integer lookupDepartmentProgramId;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Integer lookupDepartmentProgramId;
 
-   @Column(nullable = false)
-   private Integer createdBy;
+	@Column(nullable=false)
+	private Integer createdBy;
 
-   private Timestamp createdOn;
+	private Timestamp createdOn;
 
-   @Column(length = 100)
-   private String description;
+	@Column(length=100)
+	private String description;
 
-   @Column(nullable = false)
-   private Integer modifiedBy;
+	@Column(nullable=false)
+	private Integer modifiedBy;
 
-   @Column(nullable = false)
-   private Timestamp modifiedOn;
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
 
-   @Column(nullable = false, length = 50)
-   private String programName;
+	@Column(nullable=false, length=50)
+	private String programName;
 
+	//bi-directional many-to-one association to CCIStaffUserProgram
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
-   //bi-directional many-to-one association to CCIStaffUserProgram
-   @OneToMany(mappedBy="lookupDepartmentProgram")
-   private List<CCIStaffUserProgram> ccistaffUserPrograms;
-   
-   // bi-directional many-to-one association to LookupDepartment
-   @ManyToOne
-   @JoinColumn(name = "departmentId", nullable = false)
-   private LookupDepartment lookupDepartment;
+	//bi-directional many-to-one association to LookupDepartment
+	@ManyToOne
+	@JoinColumn(name="departmentId", nullable=false)
+	private LookupDepartment lookupDepartment;
 
-   public LookupDepartmentProgram() {
-   }
+	//bi-directional many-to-one association to PartnerProgram
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerProgram> partnerPrograms;
 
-   public Integer getLookupDepartmentProgramId() {
-      return lookupDepartmentProgramId;
-   }
+	public LookupDepartmentProgram() {
+	}
 
-   public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
-      this.lookupDepartmentProgramId = lookupDepartmentProgramId;
-   }
+	public Integer getLookupDepartmentProgramId() {
+		return this.lookupDepartmentProgramId;
+	}
 
-   public Integer getCreatedBy() {
-      return this.createdBy;
-   }
+	public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
+		this.lookupDepartmentProgramId = lookupDepartmentProgramId;
+	}
 
-   public void setCreatedBy(Integer createdBy) {
-      this.createdBy = createdBy;
-   }
+	public Integer getCreatedBy() {
+		return this.createdBy;
+	}
 
-   public Timestamp getCreatedOn() {
-      return this.createdOn;
-   }
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
 
-   public void setCreatedOn(Timestamp createdOn) {
-      this.createdOn = createdOn;
-   }
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
 
-   public String getDescription() {
-      return this.description;
-   }
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
+	public String getDescription() {
+		return this.description;
+	}
 
-   public Integer getModifiedBy() {
-      return this.modifiedBy;
-   }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-   public void setModifiedBy(Integer modifiedBy) {
-      this.modifiedBy = modifiedBy;
-   }
+	public Integer getModifiedBy() {
+		return this.modifiedBy;
+	}
 
-   public Timestamp getModifiedOn() {
-      return this.modifiedOn;
-   }
+	public void setModifiedBy(Integer modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 
-   public void setModifiedOn(Timestamp modifiedOn) {
-      this.modifiedOn = modifiedOn;
-   }
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
 
-   public String getProgramName() {
-      return this.programName;
-   }
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 
-   public void setProgramName(String programName) {
-      this.programName = programName;
-   }
+	public String getProgramName() {
+		return this.programName;
+	}
 
-   public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
-      return this.ccistaffUserPrograms;
-   }
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
 
-   public void setCcistaffUserPrograms(List<CCIStaffUserProgram> ccistaffUserPrograms) {
-      this.ccistaffUserPrograms = ccistaffUserPrograms;
-   }
+	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
+		return this.ccistaffUserPrograms;
+	}
 
-   public CCIStaffUserProgram addCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-      getCcistaffUserPrograms().add(ccistaffUserProgram);
-      ccistaffUserProgram.setLookupDepartmentProgram(this);
+	public void setCcistaffUserPrograms(List<CCIStaffUserProgram> ccistaffUserPrograms) {
+		this.ccistaffUserPrograms = ccistaffUserPrograms;
+	}
 
-      return ccistaffUserProgram;
-   }
+	public CCIStaffUserProgram addCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
+		getCcistaffUserPrograms().add(ccistaffUserProgram);
+		ccistaffUserProgram.setLookupDepartmentProgram(this);
 
-   public CCIStaffUserProgram removeCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-      getCcistaffUserPrograms().remove(ccistaffUserProgram);
-      ccistaffUserProgram.setLookupDepartmentProgram(null);
+		return ccistaffUserProgram;
+	}
 
-      return ccistaffUserProgram;
-   }  
+	public CCIStaffUserProgram removeCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
+		getCcistaffUserPrograms().remove(ccistaffUserProgram);
+		ccistaffUserProgram.setLookupDepartmentProgram(null);
 
-   public LookupDepartment getLookupDepartment() {
-      return this.lookupDepartment;
-   }
+		return ccistaffUserProgram;
+	}
 
-   public void setLookupDepartment(LookupDepartment lookupDepartment) {
-      this.lookupDepartment = lookupDepartment;
-   }
+	public LookupDepartment getLookupDepartment() {
+		return this.lookupDepartment;
+	}
+
+	public void setLookupDepartment(LookupDepartment lookupDepartment) {
+		this.lookupDepartment = lookupDepartment;
+	}
+
+	public List<PartnerProgram> getPartnerPrograms() {
+		return this.partnerPrograms;
+	}
+
+	public void setPartnerPrograms(List<PartnerProgram> partnerPrograms) {
+		this.partnerPrograms = partnerPrograms;
+	}
+
+	public PartnerProgram addPartnerProgram(PartnerProgram partnerProgram) {
+		getPartnerPrograms().add(partnerProgram);
+		partnerProgram.setLookupDepartmentProgram(this);
+
+		return partnerProgram;
+	}
+
+	public PartnerProgram removePartnerProgram(PartnerProgram partnerProgram) {
+		getPartnerPrograms().remove(partnerProgram);
+		partnerProgram.setLookupDepartmentProgram(null);
+
+		return partnerProgram;
+	}
 
 }

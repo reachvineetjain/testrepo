@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -29,6 +30,10 @@ public class SeasonProgramDocument implements Serializable {
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
+
+	//bi-directional many-to-one association to PartnerSeasonDocument
+	@OneToMany(mappedBy="seasonProgramDocument")
+	private List<PartnerSeasonDocument> partnerSeasonDocuments;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
@@ -94,6 +99,28 @@ public class SeasonProgramDocument implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
+		return this.partnerSeasonDocuments;
+	}
+
+	public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
+		this.partnerSeasonDocuments = partnerSeasonDocuments;
+	}
+
+	public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().add(partnerSeasonDocument);
+		partnerSeasonDocument.setSeasonProgramDocument(this);
+
+		return partnerSeasonDocument;
+	}
+
+	public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().remove(partnerSeasonDocument);
+		partnerSeasonDocument.setSeasonProgramDocument(null);
+
+		return partnerSeasonDocument;
 	}
 
 	public DepartmentProgram getDepartmentProgram() {

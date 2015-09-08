@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -12,12 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="PartnerAgentProgram")
 @NamedQuery(name="PartnerAgentProgram.findAll", query="SELECT p FROM PartnerAgentProgram p")
 public class PartnerAgentProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerAgentProgramId;
 
 	//bi-directional many-to-one association to PartnerAgentInquiry

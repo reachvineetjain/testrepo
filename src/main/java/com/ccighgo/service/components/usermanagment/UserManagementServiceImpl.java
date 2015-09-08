@@ -353,7 +353,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setCciUserId(cciUser.getCciStaffUserId());
             user.setFirstName(cciUser.getFirstName());
             user.setLastName(cciUser.getLastName());
-            user.setEmail(cciUser.getEmail());
+            user.setEmail(cciUser.getGoIdSequence().getLogin().getEmail());
             user.setCity(cciUser.getCity() != null ? cciUser.getCity() : CCIConstants.EMPTY_DATA);
             user.setAddressLine1(cciUser.getHomeAddressLineOne() != null ? cciUser.getHomeAddressLineOne() : CCIConstants.EMPTY_DATA);
             user.setAddressLine2(cciUser.getHomeAddressLineTwo() != null ? cciUser.getHomeAddressLineTwo() : CCIConstants.EMPTY_DATA);
@@ -361,7 +361,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setPrimaryPhone(cciUser.getPrimaryPhone() != null ? cciUser.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
             user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
             user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
-            user.setSupervisorId(cciUser.getSupervisorId() != null && cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
+            user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
             user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
             user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
             Gender gender = new Gender();
@@ -638,7 +638,24 @@ public class UserManagementServiceImpl implements UserManagementService {
          ValidationUtils.validateRequired(user.getLastName());
          cciUser.setLastName(user.getLastName());
          ValidationUtils.validateRequired(user.getEmail());
-         cciUser.setEmail(user.getEmail());
+         // changes for deleted email column
+         ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
+         GoIdSequence goIdSequence=new GoIdSequence();
+         goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
+         cciUser.setGoIdSequence(goIdSequence);
+         Login login = new Login();
+         login.setLoginName(user.getLoginInfo().getLoginName());
+         login.setLoginId(goIdSequence.getLogin().getLoginId());
+         login.setPassword(goIdSequence.getLogin().getPassword());
+         login.setKeyValue(goIdSequence.getLogin().getKeyValue());
+         login.setEmail(goIdSequence.getLogin().getEmail());
+         login.setCreatedBy(goIdSequence.getGoId());
+         login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         login.setModifiedBy(goIdSequence.getGoId());
+         login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         login.setGoIdSequence(goIdSequence);  
+         login.setLoginUserTypes(goIdSequence.getLogin().getLoginUserTypes());
+         login = loginRepository.save(login);
          cciUser.setCity(user.getCity() != null ? user.getCity() : null);
          cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
          cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
@@ -1093,7 +1110,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Transactional
    public UserNotes updateUserNote(UserNotes userNotes) {
       CCIStaffUserNote cciUserNote = cciUserNoteRepository.findOne(Integer.valueOf(userNotes.getUserNotesId()));
-      if (cciUserNote.getCcistaffUser().getCciStaffUserId().equals(userNotes.getCciUserId())) {
+      if (cciUserNote.getCcistaffUser().getCciStaffUserId()==(userNotes.getCciUserId())) {
          cciUserNote.setNote(userNotes.getUserNote());
          cciUserNote.setModifiedBy(userNotes.getCciUserId());
          cciUserNote.setModifiedOn(new Timestamp(System.currentTimeMillis()));
@@ -1324,9 +1341,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       }
       //findByemail
-      if(!user.getEmail().equals(tempCCIUser.getEmail()))
+      if(!user.getEmail().equals(tempCCIUser.getGoIdSequence().getLogin().getEmail()))
       {
-      if (cciUsersRepository.findByemail(user.getEmail()) != null) {
+      if (loginRepository.findByEmail(user.getEmail()) != null) {
          // return username already exsist
          usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_UPDATE_USER_EMAIL_EXIST.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_EMAIL_EXIST));
@@ -1340,7 +1357,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setFirstName(user.getFirstName());
       ValidationUtils.validateRequired(user.getLastName());
       cciUser.setLastName(user.getLastName());
-      cciUser.setEmail(user.getEmail());
       cciUser.setCity(user.getCity() != null ? user.getCity() : null);
       cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
       cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
@@ -1588,7 +1604,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       ValidationUtils.validateRequired(user.getLastName());
       cciUser.setLastName(user.getLastName());
       // ValidationUtils.validateEmail(user.getEmail());
-      cciUser.setEmail(user.getEmail());
       String cciAdminGuid = UuidUtils.nextHexUUID();
       cciUser.setCciAdminGuid(cciAdminGuid);
       cciUser.setCity(user.getCity() != null ? user.getCity() : null);
@@ -1642,6 +1657,9 @@ public class UserManagementServiceImpl implements UserManagementService {
       // login.setUserTypeId(1);
       login = loginRepository.save(login);
       // byte active = 1;
+      goIdSequence.setLogin(login);
+      cciUser.setGoIdSequence(goIdSequence);
+      cciUser.setCciStaffUserId(goIdSequence.getGoId());
       LoginUserType loginUserType = new LoginUserType();
       loginUserType.setActive(CCIConstants.ACTIVE);
       loginUserType.setUserType(cciUserType);
@@ -1825,7 +1843,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setCciUserId(cUsr.getCciStaffUserId());
       cciUser.setFirstName(cUsr.getFirstName());
       cciUser.setLastName(cUsr.getLastName());
-      cciUser.setEmail(cUsr.getEmail());
+      cciUser.setEmail(cUsr.getGoIdSequence().getLogin().getEmail());
       cciUser.setLoginName(cUsr.getGoIdSequence().getLogin().getLoginName());
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);

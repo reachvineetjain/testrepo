@@ -13,89 +13,89 @@ import java.sql.Timestamp;
 @Table(name="CCIStaffUserProgram")
 @NamedQuery(name="CCIStaffUserProgram.findAll", query="SELECT c FROM CCIStaffUserProgram c")
 public class CCIStaffUserProgram implements Serializable {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   @EmbeddedId
-   private CCIStaffUserProgramPK id;
+	@EmbeddedId
+	private CCIStaffUserProgramPK id;
 
-   @Column(nullable = false)
-   private Integer createdBy;
+	@Column(nullable=false)
+	private Integer createdBy;
 
-   private Timestamp createdOn;
+	private Timestamp createdOn;
 
-   @Column(nullable = false)
-   private Integer modifiedBy;
+	@Column(nullable=false)
+	private Integer modifiedBy;
 
-   @Column(nullable = false)
-   private Timestamp modifiedOn;
+	@Column(nullable=false)
+	private Timestamp modifiedOn;
 
-   // bi-directional many-to-one association to CCIStaffUser
-   @ManyToOne
-   @JoinColumn(name = "cciStaffUserId", nullable = false, insertable = false, updatable = false)
-   private CCIStaffUser ccistaffUser;
+	//bi-directional many-to-one association to CCIStaffUser
+	@ManyToOne
+	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
+	private CCIStaffUser ccistaffUser;
 
-   // bi-directional many-to-one association to DepartmentProgram
-   @ManyToOne
-   @JoinColumn(name = "lookupDepartmentProgramId", nullable = false, insertable = false, updatable = false)
-   private LookupDepartmentProgram lookupDepartmentProgram;
+	//bi-directional many-to-one association to LookupDepartmentProgram
+	@ManyToOne
+	@JoinColumn(name="lookupDepartmentProgramId", nullable=false, insertable=false, updatable=false)
+	private LookupDepartmentProgram lookupDepartmentProgram;
 
-   public CCIStaffUserProgram() {
-   }
+	public CCIStaffUserProgram() {
+	}
 
-   public CCIStaffUserProgramPK getId() {
-      return this.id;
-   }
+	public CCIStaffUserProgramPK getId() {
+		return this.id;
+	}
 
-   public void setId(CCIStaffUserProgramPK id) {
-      this.id = id;
-   }
+	public void setId(CCIStaffUserProgramPK id) {
+		this.id = id;
+	}
 
-   public Integer getCreatedBy() {
-      return this.createdBy;
-   }
+	public Integer getCreatedBy() {
+		return this.createdBy;
+	}
 
-   public void setCreatedBy(Integer createdBy) {
-      this.createdBy = createdBy;
-   }
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
 
-   public Timestamp getCreatedOn() {
-      return this.createdOn;
-   }
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
 
-   public void setCreatedOn(Timestamp createdOn) {
-      this.createdOn = createdOn;
-   }
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
 
-   public Integer getModifiedBy() {
-      return this.modifiedBy;
-   }
+	public Integer getModifiedBy() {
+		return this.modifiedBy;
+	}
 
-   public void setModifiedBy(Integer modifiedBy) {
-      this.modifiedBy = modifiedBy;
-   }
+	public void setModifiedBy(Integer modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 
-   public Timestamp getModifiedOn() {
-      return this.modifiedOn;
-   }
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
 
-   public void setModifiedOn(Timestamp modifiedOn) {
-      this.modifiedOn = modifiedOn;
-   }
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 
-   public CCIStaffUser getCcistaffUser() {
-      return this.ccistaffUser;
-   }
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
+	}
 
-   public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-      this.ccistaffUser = ccistaffUser;
-   }
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
+	}
 
-   public LookupDepartmentProgram getLookupDepartmentProgram() {
-      return lookupDepartmentProgram;
-   }
+	public LookupDepartmentProgram getLookupDepartmentProgram() {
+		return this.lookupDepartmentProgram;
+	}
 
-   public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
-      this.lookupDepartmentProgram = lookupDepartmentProgram;
-   }
+	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		this.lookupDepartmentProgram = lookupDepartmentProgram;
+	}
 
 }
