@@ -70,7 +70,7 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=20)
 	private String sevisId;
 
-	private int supervisorId;
+	private Integer supervisorId;
 
 	@Column(length=50)
 	private String zip;
@@ -270,11 +270,11 @@ public class CCIStaffUser implements Serializable {
 		this.sevisId = sevisId;
 	}
 
-	public int getSupervisorId() {
+	public Integer getSupervisorId() {
 		return this.supervisorId;
 	}
 
-	public void setSupervisorId(int supervisorId) {
+	public void setSupervisorId(Integer supervisorId) {
 		this.supervisorId = supervisorId;
 	}
 
