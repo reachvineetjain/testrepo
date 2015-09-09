@@ -20,7 +20,7 @@ public class SeasonDepartmentUpdateLog implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer updateDepartmentLogId;
 
-	private Integer modifiedBy;
+	private int modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -44,11 +44,11 @@ public class SeasonDepartmentUpdateLog implements Serializable {
 		this.updateDepartmentLogId = updateDepartmentLogId;
 	}
 
-	public Integer getModifiedBy() {
+	public int getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(Integer modifiedBy) {
+	public void setModifiedBy(int modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

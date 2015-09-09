@@ -27,6 +27,12 @@ public class Login implements Serializable {
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=50)
+	private String email;
+
+	@Column(nullable=false, length=200)
+	private String keyValue;
+
+	@Column(nullable=false, length=50)
 	private String loginName;
 
 	@Column(nullable=false)
@@ -38,28 +44,26 @@ public class Login implements Serializable {
 	@Column(nullable=false, length=100)
 	private String password;
 
-	@Column(nullable=false, length=200)
-	private String keyValue;
-	
-	@Column(nullable=false, length=50)
-   private String email;
-
 	//bi-directional many-to-one association to GoIdSequence
-	@OneToOne
-	@JoinColumn(name="goId", nullable=false)
-	private GoIdSequence goIdSequence;
+   @OneToOne
+   @JoinColumn(name="goId", nullable=false)
+   private GoIdSequence goIdSequence;
 
-	//bi-directional many-to-one association to LoginHistory
-	@OneToMany(mappedBy="login")
-	private List<LoginHistory> loginHistories;
+   //bi-directional many-to-one association to LoginHistory
+   @OneToMany(mappedBy="login")
+   private List<LoginHistory> loginHistories;
 
-	//bi-directional many-to-one association to LoginUserType
-	@OneToMany(mappedBy="login")
-	private List<LoginUserType> loginUserTypes;
+   //bi-directional many-to-one association to LoginUserType
+   @OneToMany(mappedBy="login")
+   private List<LoginUserType> loginUserTypes;
 
-	//bi-directional many-to-one association to PasswordHistory
+   //bi-directional many-to-one association to PasswordHistory
+   @OneToMany(mappedBy="login")
+   private List<PasswordHistory> passwordHistories;
+
+	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="login")
-	private List<PasswordHistory> passwordHistories;
+	private List<PartnerUser> partnerUsers;
 
 	public Login() {
 	}
@@ -86,6 +90,22 @@ public class Login implements Serializable {
 
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getKeyValue() {
+		return this.keyValue;
+	}
+
+	public void setKeyValue(String keyValue) {
+		this.keyValue = keyValue;
 	}
 
 	public String getLoginName() {
@@ -120,23 +140,7 @@ public class Login implements Serializable {
 		this.password = password;
 	}
 
-	public String getKeyValue() {
-		return this.keyValue;
-	}
-
-	public void setKeyValue(String keyValue) {
-		this.keyValue = keyValue;
-	}
-
-	public String getEmail() {
-      return email;
-   }
-
-   public void setEmail(String email) {
-      this.email = email;
-   }
-
-   public GoIdSequence getGoIdSequence() {
+	public GoIdSequence getGoIdSequence() {
 		return this.goIdSequence;
 	}
 
@@ -186,6 +190,28 @@ public class Login implements Serializable {
 		loginUserType.setLogin(null);
 
 		return loginUserType;
+	}
+
+	public List<PartnerUser> getPartnerUsers() {
+		return this.partnerUsers;
+	}
+
+	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+		this.partnerUsers = partnerUsers;
+	}
+
+	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().add(partnerUser);
+		partnerUser.setLogin(this);
+
+		return partnerUser;
+	}
+
+	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().remove(partnerUser);
+		partnerUser.setLogin(null);
+
+		return partnerUser;
 	}
 
 	public List<PasswordHistory> getPasswordHistories() {

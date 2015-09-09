@@ -35,21 +35,21 @@ public class SeasonTADetail implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=45)
+	@Column(length=55)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
-
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
 	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
+
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId", nullable=false)
+	private Season season;
 
 	public SeasonTADetail() {
 	}
@@ -118,20 +118,20 @@ public class SeasonTADetail implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public Season getSeason() {
-		return this.season;
-	}
-
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
 	public SeasonStatus getSeasonStatus() {
 		return this.seasonStatus;
 	}
 
 	public void setSeasonStatus(SeasonStatus seasonStatus) {
 		this.seasonStatus = seasonStatus;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

@@ -22,9 +22,9 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer cciStaffUserId;
+	private int cciStaffUserId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -39,9 +39,6 @@ public class CCIStaffUser implements Serializable {
 	private Integer createdBy;
 
 	private Timestamp createdOn;
-
-	/*@Column(nullable=false, length=50)
-	private String email;*/
 
 	@Column(length=15)
 	private String emergencyPhone;
@@ -73,7 +70,7 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=20)
 	private String sevisId;
 
-	private Integer supervisorId;
+	private int supervisorId;
 
 	@Column(length=50)
 	private String zip;
@@ -88,9 +85,9 @@ public class CCIStaffUser implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
-	//bi-directional many-to-one association to GoIdSequence
+	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
+   @JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LookupCountry
@@ -118,21 +115,38 @@ public class CCIStaffUser implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
 
-	  //bi-directional many-to-one association to PartnerAgentReview
-   @OneToMany(mappedBy="ccistaffUser")
-   private List<PartnerAgentReview> partnerAgentReviews;
+	//bi-directional many-to-one association to PartnerAgentReview
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<PartnerAgentReview> partnerAgentReviews;
+
+	//bi-directional many-to-one association to PartnerCCIContact
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<PartnerCCIContact> partnerCcicontacts;
+
+	//bi-directional many-to-one association to PartnerMessage
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<PartnerMessage> partnerMessages;
+
+	//bi-directional many-to-one association to PartnerProgram
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<PartnerProgram> partnerPrograms;
+
+	//bi-directional many-to-one association to PartnerReviewStatus
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<PartnerReviewStatus> partnerReviewStatuses;
+
 	public CCIStaffUser() {
 	}
 	
 	public CCIStaffUser(Integer cciStaffUserId) {
-	   this.cciStaffUserId = cciStaffUserId;
+      this.cciStaffUserId = cciStaffUserId;
    }
 
-	public Integer getCciStaffUserId() {
+	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(Integer cciStaffUserId) {
+	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 
@@ -175,14 +189,6 @@ public class CCIStaffUser implements Serializable {
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
 	}
-
-	/*public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}*/
 
 	public String getEmergencyPhone() {
 		return this.emergencyPhone;
@@ -264,11 +270,11 @@ public class CCIStaffUser implements Serializable {
 		this.sevisId = sevisId;
 	}
 
-	public Integer getSupervisorId() {
+	public int getSupervisorId() {
 		return this.supervisorId;
 	}
 
-	public void setSupervisorId(Integer supervisorId) {
+	public void setSupervisorId(int supervisorId) {
 		this.supervisorId = supervisorId;
 	}
 
@@ -399,13 +405,115 @@ public class CCIStaffUser implements Serializable {
 
 		return ccistaffUsersResourcePermission;
 	}
-	
-	public List<PartnerAgentReview> getPartnerAgentReviews() {
-      return this.partnerAgentReviews;
-   }
 
-   public void setPartnerAgentReviews(List<PartnerAgentReview> partnerAgentReviews) {
-      this.partnerAgentReviews = partnerAgentReviews;
-   }
+	public List<PartnerAgentReview> getPartnerAgentReviews() {
+		return this.partnerAgentReviews;
+	}
+
+	public void setPartnerAgentReviews(List<PartnerAgentReview> partnerAgentReviews) {
+		this.partnerAgentReviews = partnerAgentReviews;
+	}
+
+	public PartnerAgentReview addPartnerAgentReview(PartnerAgentReview partnerAgentReview) {
+		getPartnerAgentReviews().add(partnerAgentReview);
+		partnerAgentReview.setCcistaffUser(this);
+
+		return partnerAgentReview;
+	}
+
+	public PartnerAgentReview removePartnerAgentReview(PartnerAgentReview partnerAgentReview) {
+		getPartnerAgentReviews().remove(partnerAgentReview);
+		partnerAgentReview.setCcistaffUser(null);
+
+		return partnerAgentReview;
+	}
+
+	public List<PartnerCCIContact> getPartnerCcicontacts() {
+		return this.partnerCcicontacts;
+	}
+
+	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
+		this.partnerCcicontacts = partnerCcicontacts;
+	}
+
+	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
+		getPartnerCcicontacts().add(partnerCcicontact);
+		partnerCcicontact.setCcistaffUser(this);
+
+		return partnerCcicontact;
+	}
+
+	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
+		getPartnerCcicontacts().remove(partnerCcicontact);
+		partnerCcicontact.setCcistaffUser(null);
+
+		return partnerCcicontact;
+	}
+
+	public List<PartnerMessage> getPartnerMessages() {
+		return this.partnerMessages;
+	}
+
+	public void setPartnerMessages(List<PartnerMessage> partnerMessages) {
+		this.partnerMessages = partnerMessages;
+	}
+
+	public PartnerMessage addPartnerMessage(PartnerMessage partnerMessage) {
+		getPartnerMessages().add(partnerMessage);
+		partnerMessage.setCcistaffUser(this);
+
+		return partnerMessage;
+	}
+
+	public PartnerMessage removePartnerMessage(PartnerMessage partnerMessage) {
+		getPartnerMessages().remove(partnerMessage);
+		partnerMessage.setCcistaffUser(null);
+
+		return partnerMessage;
+	}
+
+	public List<PartnerProgram> getPartnerPrograms() {
+		return this.partnerPrograms;
+	}
+
+	public void setPartnerPrograms(List<PartnerProgram> partnerPrograms) {
+		this.partnerPrograms = partnerPrograms;
+	}
+
+	public PartnerProgram addPartnerProgram(PartnerProgram partnerProgram) {
+		getPartnerPrograms().add(partnerProgram);
+		partnerProgram.setCcistaffUser(this);
+
+		return partnerProgram;
+	}
+
+	public PartnerProgram removePartnerProgram(PartnerProgram partnerProgram) {
+		getPartnerPrograms().remove(partnerProgram);
+		partnerProgram.setCcistaffUser(null);
+
+		return partnerProgram;
+	}
+
+	public List<PartnerReviewStatus> getPartnerReviewStatuses() {
+		return this.partnerReviewStatuses;
+	}
+
+	public void setPartnerReviewStatuses(List<PartnerReviewStatus> partnerReviewStatuses) {
+		this.partnerReviewStatuses = partnerReviewStatuses;
+	}
+
+	public PartnerReviewStatus addPartnerReviewStatus(PartnerReviewStatus partnerReviewStatus) {
+		getPartnerReviewStatuses().add(partnerReviewStatus);
+		partnerReviewStatus.setCcistaffUser(this);
+
+		return partnerReviewStatus;
+	}
+
+	public PartnerReviewStatus removePartnerReviewStatus(PartnerReviewStatus partnerReviewStatus) {
+		getPartnerReviewStatuses().remove(partnerReviewStatus);
+		partnerReviewStatus.setCcistaffUser(null);
+
+		return partnerReviewStatus;
+	}
 
 }
