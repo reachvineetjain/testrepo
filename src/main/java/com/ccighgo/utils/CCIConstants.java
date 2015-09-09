@@ -34,6 +34,9 @@ public class CCIConstants {
 
    public static final byte ACTIVE = 1;
    public static final byte INACTIVE = 0;
+   
+   public static final String STATUS_ACTIVE = "1";
+   public static final String STATUS_INACTIVE = "0";
    public static final String DEFAULT_PAGE = "0";
    public static final String DEFAULT_NO_OF_RECORDS_SIZE = "10";
    public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(System.currentTimeMillis());

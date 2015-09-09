@@ -88,10 +88,10 @@ public class PartnerUserDetailAndRoles
     protected String lastName;
     @XmlElement(required = true)
     protected String email;
-    protected boolean phone;
+    protected String phone;
     @XmlElement(required = true)
     protected String emergencyPhone;
-    protected boolean fax;
+    protected String fax;
     @XmlElement(required = true)
     protected String username;
     @XmlElement(required = true)
@@ -295,7 +295,7 @@ public class PartnerUserDetailAndRoles
      * Gets the value of the phone property.
      * 
      */
-    public boolean isPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -303,7 +303,7 @@ public class PartnerUserDetailAndRoles
      * Sets the value of the phone property.
      * 
      */
-    public void setPhone(boolean value) {
+    public void setPhone(String value) {
         this.phone = value;
     }
 
@@ -335,7 +335,7 @@ public class PartnerUserDetailAndRoles
      * Gets the value of the fax property.
      * 
      */
-    public boolean isFax() {
+    public String getFax() {
         return fax;
     }
 
@@ -343,7 +343,7 @@ public class PartnerUserDetailAndRoles
      * Sets the value of the fax property.
      * 
      */
-    public void setFax(boolean value) {
+    public void setFax(String value) {
         this.fax = value;
     }
 

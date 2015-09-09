@@ -18,10 +18,12 @@ public interface PartnerUserInterface {
    /**
     * @return
     */
-  public PartnerUsers getAllPartnerUsers(String partnerId);
+ // public PartnerUsers getAllPartnerUsers(String partnerId);
 
    public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles);
 
-   public PartnerUserDetailAndRoles viewPartnerUser();
+   public PartnerUserDetailAndRoles viewPartnerUser(String partnerUserId);
+
+   public PartnerUsers getAllPartnerUsers(String partnerId);
 
 }

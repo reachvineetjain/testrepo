@@ -1638,8 +1638,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       GoIdSequence goIdSequence = new GoIdSequence();
       goIdSequence = goIdSequenceRepository.save(goIdSequence);
       // goIdSequence.setLogin(login);
-      cciUser.setGoIdSequence(goIdSequence);
-      cciUser.setCciStaffUserId(goIdSequence.getGoId());
+      /*cciUser.setGoIdSequence(goIdSequence);
+      cciUser.setCciStaffUserId(goIdSequence.getGoId());*/
       com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(CCIConstants.CCI_USER_TYPE);
       if (cciUserType == null) {
          cciUserType = new com.ccighgo.db.entities.UserType();

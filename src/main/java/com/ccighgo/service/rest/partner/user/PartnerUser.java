@@ -48,12 +48,12 @@ public class PartnerUser {
       return partnerUserInterface.addNewPartnerUser(partnerUserDetailAndRoles);
    }
    
-   @POST
-   @Path("view")
+   @GET
+   @Path("view/{partnerUserId}")
    @Produces("application/json")
-   public PartnerUserDetailAndRoles viewPartnerUser() {
+   public PartnerUserDetailAndRoles viewPartnerUser(@PathParam("partnerUserId") String partnerUserId) {
       LOGGER.debug("calling PartnerUser.viewPartnerUser");
-      return partnerUserInterface.viewPartnerUser();
+      return partnerUserInterface.viewPartnerUser(partnerUserId);
    }
 
 }
