@@ -33,7 +33,7 @@ public class SeasonWnTWinterDetail implements Serializable {
 
 	private byte isJobBoardOpen;
 
-	private int maxPendingJobApps;
+	private Integer maxPendingJobApps;
 
 	private Integer modifiedBy;
 
@@ -107,11 +107,11 @@ public class SeasonWnTWinterDetail implements Serializable {
 		this.isJobBoardOpen = isJobBoardOpen;
 	}
 
-	public int getMaxPendingJobApps() {
+	public Integer getMaxPendingJobApps() {
 		return this.maxPendingJobApps;
 	}
 
-	public void setMaxPendingJobApps(int maxPendingJobApps) {
+	public void setMaxPendingJobApps(Integer maxPendingJobApps) {
 		this.maxPendingJobApps = maxPendingJobApps;
 	}
 

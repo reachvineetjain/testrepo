@@ -41,7 +41,7 @@ public class PartnerContact implements Serializable {
 	@Column(length=50)
 	private String lastName;
 
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
@@ -147,11 +147,11 @@ public class PartnerContact implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

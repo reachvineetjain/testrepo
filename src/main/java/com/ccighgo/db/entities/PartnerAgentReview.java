@@ -21,7 +21,7 @@ public class PartnerAgentReview implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerAgentReviewid;
 
-	private int agentRating;
+	private Integer agentRating;
 
 	@Temporal(TemporalType.DATE)
 	private Date followUpDate;
@@ -64,11 +64,11 @@ public class PartnerAgentReview implements Serializable {
 		this.partnerAgentReviewid = partnerAgentReviewid;
 	}
 
-	public int getAgentRating() {
+	public Integer getAgentRating() {
 		return this.agentRating;
 	}
 
-	public void setAgentRating(int agentRating) {
+	public void setAgentRating(Integer agentRating) {
 		this.agentRating = agentRating;
 	}
 

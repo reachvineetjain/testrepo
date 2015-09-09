@@ -57,9 +57,9 @@ public class SeasonJ1Detail implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date hfInquiryDate;
 
-	private int hfReferences;
+	private Integer hfReferences;
 
-	private int hoursBeforeHoldExpirationWarning;
+	private Integer hoursBeforeHoldExpirationWarning;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date janFullYearAppDeadlineDate;
@@ -247,19 +247,19 @@ public class SeasonJ1Detail implements Serializable {
 		this.hfInquiryDate = hfInquiryDate;
 	}
 
-	public int getHfReferences() {
+	public Integer getHfReferences() {
 		return this.hfReferences;
 	}
 
-	public void setHfReferences(int hfReferences) {
+	public void setHfReferences(Integer hfReferences) {
 		this.hfReferences = hfReferences;
 	}
 
-	public int getHoursBeforeHoldExpirationWarning() {
+	public Integer getHoursBeforeHoldExpirationWarning() {
 		return this.hoursBeforeHoldExpirationWarning;
 	}
 
-	public void setHoursBeforeHoldExpirationWarning(int hoursBeforeHoldExpirationWarning) {
+	public void setHoursBeforeHoldExpirationWarning(Integer hoursBeforeHoldExpirationWarning) {
 		this.hoursBeforeHoldExpirationWarning = hoursBeforeHoldExpirationWarning;
 	}
 

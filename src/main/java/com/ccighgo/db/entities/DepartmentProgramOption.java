@@ -21,7 +21,7 @@ public class DepartmentProgramOption implements Serializable {
 	private Integer departmentProgramOptionId;
 
 	@Column(nullable=false)
-	private int lookupDepartmentProgramId;
+	private Integer lookupDepartmentProgramId;
 
 	@Column(nullable=false, length=10)
 	private String programOptionCode;
@@ -57,11 +57,11 @@ public class DepartmentProgramOption implements Serializable {
 		this.departmentProgramOptionId = departmentProgramOptionId;
 	}
 
-	public int getLookupDepartmentProgramId() {
+	public Integer getLookupDepartmentProgramId() {
 		return this.lookupDepartmentProgramId;
 	}
 
-	public void setLookupDepartmentProgramId(int lookupDepartmentProgramId) {
+	public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
 		this.lookupDepartmentProgramId = lookupDepartmentProgramId;
 	}
 
