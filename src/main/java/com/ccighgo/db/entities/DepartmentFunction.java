@@ -26,7 +26,7 @@ public class DepartmentFunction implements Serializable {
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
-	private int departmentId;
+	private Integer departmentId;
 
 	@Column(length=200)
 	private String functionDescription;
@@ -67,11 +67,11 @@ public class DepartmentFunction implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getDepartmentId() {
+	public Integer getDepartmentId() {
 		return this.departmentId;
 	}
 
-	public void setDepartmentId(int departmentId) {
+	public void setDepartmentId(Integer departmentId) {
 		this.departmentId = departmentId;
 	}
 

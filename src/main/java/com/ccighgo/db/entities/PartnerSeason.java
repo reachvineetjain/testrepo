@@ -28,7 +28,7 @@ public class PartnerSeason implements Serializable {
 
 	private Integer cciStaffUserId;
 
-	private int contractScheduleId;
+	private Integer contractScheduleId;
 
 	private Integer createdBy;
 
@@ -142,11 +142,11 @@ public class PartnerSeason implements Serializable {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 
-	public int getContractScheduleId() {
+	public Integer getContractScheduleId() {
 		return this.contractScheduleId;
 	}
 
-	public void setContractScheduleId(int contractScheduleId) {
+	public void setContractScheduleId(Integer contractScheduleId) {
 		this.contractScheduleId = contractScheduleId;
 	}
 

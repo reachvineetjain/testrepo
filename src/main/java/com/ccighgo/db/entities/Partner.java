@@ -19,7 +19,7 @@ public class Partner implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int partnerGoId;
+	private Integer partnerGoId;
 
 	@Column(length=15)
 	private String acronym;
@@ -185,11 +185,11 @@ public class Partner implements Serializable {
 	public Partner() {
 	}
 
-	public int getPartnerGoId() {
+	public Integer getPartnerGoId() {
 		return this.partnerGoId;
 	}
 
-	public void setPartnerGoId(int partnerGoId) {
+	public void setPartnerGoId(Integer partnerGoId) {
 		this.partnerGoId = partnerGoId;
 	}
 
