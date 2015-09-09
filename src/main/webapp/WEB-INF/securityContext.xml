@@ -48,6 +48,7 @@
             /services/insurance/**=anon
             /services/partner/season/**=anon
             /services/**=authc
+            /loginProxy**=anon
          </value>
       </property>
    </bean>
