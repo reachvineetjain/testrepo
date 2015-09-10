@@ -5,6 +5,7 @@ package com.ccighgo.service.components.participants;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 
@@ -30,5 +31,7 @@ public interface ParticipantsInterface {
     * @return
     */
    public ParticipantsLeadList getLeadParticipantsList(String partnerId);
+
+   public NewParticipant addNewParticipant(NewParticipant newParticipant);
 
 }

@@ -5,6 +5,7 @@ package com.ccighgo.service.rest.partner.user;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
-import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 
 /**
  * @author ravi
@@ -36,6 +37,22 @@ public class PartnerUser {
    public PartnerUsers getAllPartnerUsers(@PathParam("partnerId") String partnerId) {
       LOGGER.debug("calling PartnerUser.getAllPartnerUsers for partner id {}",partnerId);
       return partnerUserInterface.getAllPartnerUsers(partnerId);
+   }
+   
+   @POST
+   @Path("addNewOne")
+   @Produces("application/json")
+   public PartnerUserDetailAndRoles createNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
+      LOGGER.debug("calling PartnerUser.addNewPartnerUser");
+      return partnerUserInterface.addNewPartnerUser(partnerUserDetailAndRoles);
+   }
+   
+   @POST
+   @Path("view")
+   @Produces("application/json")
+   public PartnerUserDetailAndRoles viewPartnerUser() {
+      LOGGER.debug("calling PartnerUser.viewPartnerUser");
+      return partnerUserInterface.viewPartnerUser();
    }
 
 }

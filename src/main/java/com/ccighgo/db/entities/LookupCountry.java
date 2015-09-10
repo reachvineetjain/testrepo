@@ -39,6 +39,22 @@ public class LookupCountry implements Serializable {
 	@OneToMany(mappedBy="lookupCountry")
 	private List<CCIStaffUser> ccistaffUsers;
 
+	//bi-directional many-to-one association to Participant
+	@OneToMany(mappedBy="lookupCountry")
+	private List<Participant> participants;
+
+	//bi-directional many-to-one association to Partner
+	@OneToMany(mappedBy="lookupCountry")
+	private List<Partner> partners;
+
+	//bi-directional many-to-one association to PartnerAgentInquiry
+	@OneToMany(mappedBy="lookupCountry")
+	private List<PartnerAgentInquiry> partnerAgentInquiries;
+
+	//bi-directional many-to-one association to PartnerOffice
+	@OneToMany(mappedBy="lookupCountry")
+	private List<PartnerOffice> partnerOffices;
+
 	public LookupCountry() {
 	}
 
@@ -110,6 +126,94 @@ public class LookupCountry implements Serializable {
 		ccistaffUser.setLookupCountry(null);
 
 		return ccistaffUser;
+	}
+
+	public List<Participant> getParticipants() {
+		return this.participants;
+	}
+
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
+	}
+
+	public Participant addParticipant(Participant participant) {
+		getParticipants().add(participant);
+		participant.setLookupCountry(this);
+
+		return participant;
+	}
+
+	public Participant removeParticipant(Participant participant) {
+		getParticipants().remove(participant);
+		participant.setLookupCountry(null);
+
+		return participant;
+	}
+
+	public List<Partner> getPartners() {
+		return this.partners;
+	}
+
+	public void setPartners(List<Partner> partners) {
+		this.partners = partners;
+	}
+
+	public Partner addPartner(Partner partner) {
+		getPartners().add(partner);
+		partner.setLookupCountry(this);
+
+		return partner;
+	}
+
+	public Partner removePartner(Partner partner) {
+		getPartners().remove(partner);
+		partner.setLookupCountry(null);
+
+		return partner;
+	}
+
+	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
+		return this.partnerAgentInquiries;
+	}
+
+	public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
+		this.partnerAgentInquiries = partnerAgentInquiries;
+	}
+
+	public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+		getPartnerAgentInquiries().add(partnerAgentInquiry);
+		partnerAgentInquiry.setLookupCountry(this);
+
+		return partnerAgentInquiry;
+	}
+
+	public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+		getPartnerAgentInquiries().remove(partnerAgentInquiry);
+		partnerAgentInquiry.setLookupCountry(null);
+
+		return partnerAgentInquiry;
+	}
+
+	public List<PartnerOffice> getPartnerOffices() {
+		return this.partnerOffices;
+	}
+
+	public void setPartnerOffices(List<PartnerOffice> partnerOffices) {
+		this.partnerOffices = partnerOffices;
+	}
+
+	public PartnerOffice addPartnerOffice(PartnerOffice partnerOffice) {
+		getPartnerOffices().add(partnerOffice);
+		partnerOffice.setLookupCountry(this);
+
+		return partnerOffice;
+	}
+
+	public PartnerOffice removePartnerOffice(PartnerOffice partnerOffice) {
+		getPartnerOffices().remove(partnerOffice);
+		partnerOffice.setLookupCountry(null);
+
+		return partnerOffice;
 	}
 
 }

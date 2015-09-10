@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -19,50 +17,82 @@ public class PartnerAgentInquiry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer partnerAgentGoId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Integer partnerAgentInquiriesId;
 
+	@Column(length=150)
 	private String adressLineOne;
 
+	@Column(length=150)
 	private String adressLineTwo;
 
-	private Byte ambassadorScholershipParticipants;
+	private byte ambassadorScholershipParticipants;
 
+	@Column(length=255)
 	private String businessName;
 
+	@Column(length=50)
 	private String businessYears;
 
+	@Column(length=30)
 	private String city;
 
+	@Column(length=50)
+	private String companyName;
+
+	@Column(length=255)
 	private String countryFlag;
 
-	private Integer countryId;
-
+	@Column(length=150)
 	private String currentlyOfferingPrograms;
 
-	private Byte currentlySendingParticipantToUS;
+	private byte currentlySendingParticipantToUS;
 
+	@Column(length=50)
 	private String email;
 
+	@Column(length=50)
 	private String firstName;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date followUpDate;
+
+	@Column(length=100)
 	private String howDidYouHearAboutCCI;
 
+	@Column(length=50)
 	private String lastName;
 
+	@Column(length=255)
 	private String logo;
 
-	private Byte participantsForHomeCountry;
+	private byte participantsForHomeCountry;
 
+	@Column(length=15)
 	private String phone;
 
+	@Column(length=10)
 	private String salutation;
 
+	@Column(length=30)
 	private String state;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date submittedOn;
 
+	@Column(length=50)
 	private String website;
+
+	//bi-directional many-to-one association to LookupCountry
+	@ManyToOne
+	@JoinColumn(name="countryId")
+	private LookupCountry lookupCountry;
+
+	//bi-directional many-to-one association to Partner
+	@ManyToOne
+	@JoinColumn(name="partnerAgentGoId", unique=true)
+	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerAgentInquiryDocument
 	@OneToMany(mappedBy="partnerAgentInquiry")
@@ -79,12 +109,12 @@ public class PartnerAgentInquiry implements Serializable {
 	public PartnerAgentInquiry() {
 	}
 
-	public Integer getPartnerAgentGoId() {
-		return this.partnerAgentGoId;
+	public Integer getPartnerAgentInquiriesId() {
+		return this.partnerAgentInquiriesId;
 	}
 
-	public void setPartnerAgentGoId(Integer partnerAgentGoId) {
-		this.partnerAgentGoId = partnerAgentGoId;
+	public void setPartnerAgentInquiriesId(Integer partnerAgentInquiriesId) {
+		this.partnerAgentInquiriesId = partnerAgentInquiriesId;
 	}
 
 	public String getAdressLineOne() {
@@ -103,11 +133,11 @@ public class PartnerAgentInquiry implements Serializable {
 		this.adressLineTwo = adressLineTwo;
 	}
 
-	public Byte getAmbassadorScholershipParticipants() {
+	public byte getAmbassadorScholershipParticipants() {
 		return this.ambassadorScholershipParticipants;
 	}
 
-	public void setAmbassadorScholershipParticipants(Byte ambassadorScholershipParticipants) {
+	public void setAmbassadorScholershipParticipants(byte ambassadorScholershipParticipants) {
 		this.ambassadorScholershipParticipants = ambassadorScholershipParticipants;
 	}
 
@@ -135,20 +165,20 @@ public class PartnerAgentInquiry implements Serializable {
 		this.city = city;
 	}
 
+	public String getCompanyName() {
+		return this.companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
 	public String getCountryFlag() {
 		return this.countryFlag;
 	}
 
 	public void setCountryFlag(String countryFlag) {
 		this.countryFlag = countryFlag;
-	}
-
-	public Integer getCountryId() {
-		return this.countryId;
-	}
-
-	public void setCountryId(Integer countryId) {
-		this.countryId = countryId;
 	}
 
 	public String getCurrentlyOfferingPrograms() {
@@ -159,11 +189,11 @@ public class PartnerAgentInquiry implements Serializable {
 		this.currentlyOfferingPrograms = currentlyOfferingPrograms;
 	}
 
-	public Byte getCurrentlySendingParticipantToUS() {
+	public byte getCurrentlySendingParticipantToUS() {
 		return this.currentlySendingParticipantToUS;
 	}
 
-	public void setCurrentlySendingParticipantToUS(Byte currentlySendingParticipantToUS) {
+	public void setCurrentlySendingParticipantToUS(byte currentlySendingParticipantToUS) {
 		this.currentlySendingParticipantToUS = currentlySendingParticipantToUS;
 	}
 
@@ -181,6 +211,14 @@ public class PartnerAgentInquiry implements Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public Date getFollowUpDate() {
+		return this.followUpDate;
+	}
+
+	public void setFollowUpDate(Date followUpDate) {
+		this.followUpDate = followUpDate;
 	}
 
 	public String getHowDidYouHearAboutCCI() {
@@ -207,11 +245,11 @@ public class PartnerAgentInquiry implements Serializable {
 		this.logo = logo;
 	}
 
-	public Byte getParticipantsForHomeCountry() {
+	public byte getParticipantsForHomeCountry() {
 		return this.participantsForHomeCountry;
 	}
 
-	public void setParticipantsForHomeCountry(Byte participantsForHomeCountry) {
+	public void setParticipantsForHomeCountry(byte participantsForHomeCountry) {
 		this.participantsForHomeCountry = participantsForHomeCountry;
 	}
 
@@ -253,6 +291,22 @@ public class PartnerAgentInquiry implements Serializable {
 
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+
+	public LookupCountry getLookupCountry() {
+		return this.lookupCountry;
+	}
+
+	public void setLookupCountry(LookupCountry lookupCountry) {
+		this.lookupCountry = lookupCountry;
+	}
+
+	public Partner getPartner() {
+		return this.partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
 	}
 
 	public List<PartnerAgentInquiryDocument> getPartnerAgentInquiryDocuments() {
