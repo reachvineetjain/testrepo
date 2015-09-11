@@ -556,10 +556,10 @@ public class UtilityServicesImpl implements UtilityServices {
          protocol = "http";
       }
       String url = "";
-      try {
-         InetAddress address = InetAddress.getLocalHost();
-         url = protocol + "://" + address.getCanonicalHostName() + CCIConstants.RESET_PASSWORD_LINK;
-      } catch (UnknownHostException e) {
+       try {
+         String address = request.getRequestURI();
+         url = address+ CCIConstants.RESET_PASSWORD_LINK;
+      } catch (Exception e) {
          e.printStackTrace();
       }
       return url;
