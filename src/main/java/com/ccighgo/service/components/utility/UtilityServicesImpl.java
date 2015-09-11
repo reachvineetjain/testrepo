@@ -587,7 +587,7 @@ public class UtilityServicesImpl implements UtilityServices {
          "<p>Please go to the following page and choose a new password:</p> " + 
                   "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p></br>"  +
          "<p>If you ignore this message, your password won’t be changed.</p></br><p>If you didn’t request a password reset, let us know.</p></br><p>Thank you,</p><p>GO System Support.</p>";
-            email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, false);
+            email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
          } else {
