@@ -177,7 +177,7 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingApplicationByGender(seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE ? true : false);
-            if (seasonIHPDetail.getApplicationDeadLineWeeks() > 0) {
+            if (seasonIHPDetail.getApplicationDeadLineWeeks()!=null && seasonIHPDetail.getApplicationDeadLineWeeks() > 0) {
                ihpProgramConfiguration.setApplicationCutOffPriorToProgStart(String.valueOf(seasonIHPDetail.getApplicationDeadLineWeeks()));
             }
             if (seasonIHPDetail.getLcHoldTime() != null && seasonIHPDetail.getLcHoldTime() > 0) {

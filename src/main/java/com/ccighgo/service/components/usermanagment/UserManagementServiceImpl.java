@@ -536,7 +536,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
 //         EmailServiceImpl email = new EmailServiceImpl();
-         email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginEmail.getKeyValue()),false);
+         email.send(loginEmail.getEmail(), "create password", formResetURL(request).concat(loginEmail.getKeyValue()),false);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
@@ -1416,7 +1416,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().getPassword());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
-      login.setEmail(goIdSequence.getLogin().getEmail());
+      login.setEmail(user.getEmail());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setModifiedBy(goIdSequence.getGoId());
@@ -1682,6 +1682,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       loginUserType.setModifiedBy(goIdSequence.getGoId());
       loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
       loginUserType.setLogin(login);
       loginUserType = loginUserTypeRepository.save(loginUserType);
       ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
