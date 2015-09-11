@@ -548,7 +548,7 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
-   private String formResetURL(HttpServletRequest request) {
+  private String formResetURL(HttpServletRequest request) {
       String protocol;
       if (request.getProtocol().contains("https")) {
          protocol = "https";
