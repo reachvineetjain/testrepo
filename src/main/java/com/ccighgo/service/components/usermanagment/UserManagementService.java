@@ -5,6 +5,8 @@ package com.ccighgo.service.components.usermanagment;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.db.entities.ResourceAction;
@@ -57,7 +59,7 @@ public interface UserManagementService {
 	 * @param usr
 	 * @return updated User
 	 */
-	public User createUser(User user);
+	public User createUser(User user,HttpServletRequest request);
 
 	/**
 	 * Updates user demographics

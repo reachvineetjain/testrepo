@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,7 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
+import com.ccighgo.service.components.utility.UtilityServicesImpl;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
@@ -172,6 +174,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired GenderRepository genderRepository;
    
    @Autowired CCIStaffRolesDepartmentRepository cciStaffRolesDepartmentRepository;
+   
    @Autowired EmailServiceImpl email;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
@@ -416,7 +419,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    @Transactional
-   public User createUser(User user) {
+   public User createUser(User user ,HttpServletRequest request) {
       User usr = new User();
       if (user == null) {
          usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
@@ -533,7 +536,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
 //         EmailServiceImpl email = new EmailServiceImpl();
-         email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginEmail.getKeyValue()),false);
+         email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginEmail.getKeyValue()),false);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
@@ -546,6 +549,18 @@ public class UserManagementServiceImpl implements UserManagementService {
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER));
       }
       return usr;
+   }
+   
+   private String formResetURL(HttpServletRequest request) {
+      String protocol;
+      if (request.getProtocol().contains("https")) {
+         protocol = "https";
+      } else {
+         protocol = "http";
+      }
+      String url = protocol + "://" + "ccigoqa.creo-mobile.com" + CCIConstants.RESET_PASSWORD_LINK;
+      System.out.println(url);
+      return url;
    }
 
    @SuppressWarnings("unchecked")

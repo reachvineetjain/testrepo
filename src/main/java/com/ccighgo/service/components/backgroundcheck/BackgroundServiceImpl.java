@@ -170,7 +170,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          backgroundCheck.setPackageNbr("1");
          PostBackURL postBackURL = new PostBackURL();
          postBackURL.setCredentialType("CCIGreen");
-         postBackURL.setValue("https://www.domain.com/postfile.cfm");
+         postBackURL.setValue("http://52.2.191.63:8086/cci_gh_go/services/backgroundcheck/sendReport");
          backgroundCheck.setPostBackURL(postBackURL);
 
          BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
@@ -253,15 +253,30 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          backgroundSearchPackage.setScreenings(screening);
          backgroundCheck.setBackgroundSearchPackage(backgroundSearchPackage);
       } catch (Exception e) {
-        ExceptionUtil.logException(e, LOGGER);
+         ExceptionUtil.logException(e, LOGGER);
       }
       return backgroundCheck;
    }
 
    @Override
    public String sendReport(BackgroundReports backgroundReports) {
-      if (backgroundReports.getUserId() != null)
-         System.out.println(backgroundReports.getUserId());
-      return "200 : Received !";
+      try {
+
+         System.out.println("--------------- Background Report -----------------");
+         if (backgroundReports.getUserId() != null) {
+            System.out.println(" User ID : " + backgroundReports.getUserId());
+            System.out.println(" Account Name :" + backgroundReports.getAccount());
+            if (backgroundReports.getBackgroundReportPackage() != null) {
+               System.out.println(" Type : " + backgroundReports.getBackgroundReportPackage().getType());
+               if (backgroundReports.getBackgroundReportPackage().getScreeningStatus() != null)
+                  System.out.println("Order Status : " + backgroundReports.getBackgroundReportPackage().getScreeningStatus().getOrderStatus());
+            }
+         }
+         System.out.println("---------------------End Of Background Report----------------------------");
+         return "200 : Received !";
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return "300 : Failed";
+      }
    }
 }

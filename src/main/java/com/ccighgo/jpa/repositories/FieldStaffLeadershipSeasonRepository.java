@@ -28,7 +28,7 @@ public interface FieldStaffLeadershipSeasonRepository extends JpaRepository<Fiel
    @Query("SELECT DISTINCT s.fieldStaff FROM FieldStaffLeadershipSeason s WHERE s.season.seasonId = ?1 AND s.fieldStaff.fieldStaffType.fieldStaffTypeId =?2")
    List<FieldStaff> findAllFieldStaffBySeasonIdAndFieldStaffType(Integer seasonId, Integer fieldstafftypecodeErd);
 
-   @Query("SELECT DISTINCT s FROM FieldStaffLeadershipSeason s WHERE s.season.seasonId = ?1 AND s.seasonGeographyConfiguration.superRegion.superRegionId= ?2 AND s.seasonGeographyConfiguration.region.regionId= ?3 AND s.seasonGeographyConfiguration.lookupUsstate.usStatesId= ?4 AND s.fieldStaff.fieldStaffType.fieldStaffTypeId in (3,4,5,6) ")
+   @Query("SELECT DISTINCT s FROM FieldStaffLeadershipSeason s WHERE s.season.seasonId = ?1 AND s.seasonGeographyConfiguration.superRegion.superRegionId= ?2 AND s.seasonGeographyConfiguration.region.regionId= ?3 AND s.seasonGeographyConfiguration.lookupUsstate.usStatesId= ?4 AND s.fieldStaff.fieldStaffType.fieldStaffTypeId in (1,2,4,6) ")
    List<FieldStaffLeadershipSeason> findStateFieldStaffBySeasonIdSuperRegionIdRegionIdAndStateId(Integer seasonId, Integer superRegionId, Integer regionId, Integer stateId);
 
    @Modifying

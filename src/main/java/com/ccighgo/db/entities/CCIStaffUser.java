@@ -22,9 +22,9 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	/*@GeneratedValue(strategy=GenerationType.IDENTITY)*/
 	@Column(unique=true, nullable=false)
-	private int cciStaffUserId;
+	private Integer cciStaffUserId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -70,7 +70,7 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=20)
 	private String sevisId;
 
-	private int supervisorId;
+	private Integer supervisorId;
 
 	@Column(length=50)
 	private String zip;
@@ -142,11 +142,11 @@ public class CCIStaffUser implements Serializable {
       this.cciStaffUserId = cciStaffUserId;
    }
 
-	public int getCciStaffUserId() {
+	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(int cciStaffUserId) {
+	public void setCciStaffUserId(Integer cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 
@@ -270,11 +270,11 @@ public class CCIStaffUser implements Serializable {
 		this.sevisId = sevisId;
 	}
 
-	public int getSupervisorId() {
+	public Integer getSupervisorId() {
 		return this.supervisorId;
 	}
 
-	public void setSupervisorId(int supervisorId) {
+	public void setSupervisorId(Integer supervisorId) {
 		this.supervisorId = supervisorId;
 	}
 

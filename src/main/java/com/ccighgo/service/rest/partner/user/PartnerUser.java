@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
-import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 
 /**
  * @author ravi

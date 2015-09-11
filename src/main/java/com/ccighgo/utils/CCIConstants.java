@@ -179,8 +179,8 @@ public class CCIConstants {
    public static final Integer UNDEFINED_GENDER = 3;
 
    // Field Staff Code
-   public static final Integer FieldStaffTypeCode_ERD = 1;
-   public static final Integer FieldStaffTypeCode_RD = 2;
+   public static final Integer FieldStaffTypeCode_ERD = 5;
+   public static final Integer FieldStaffTypeCode_RD = 3;
    public static final String SERVICE_FAILURE = "Service Failure";
    public static final String EQUAL = "=";
    public static final String BITWISE_AND = "&";
