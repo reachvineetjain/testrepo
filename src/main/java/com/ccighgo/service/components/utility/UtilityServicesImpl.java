@@ -555,7 +555,7 @@ public class UtilityServicesImpl implements UtilityServices {
       } else {
          protocol = "http";
       }
-      String url = null;
+      String url = "";
       try {
          InetAddress address = InetAddress.getLocalHost();
          url = protocol + "://" + address.getCanonicalHostName() + CCIConstants.RESET_PASSWORD_LINK;
@@ -585,7 +585,7 @@ public class UtilityServicesImpl implements UtilityServices {
          if (loginUser != null) {
             String body = "<p>This email was sent automatically by CCI Greenheart Online system in response to your request to recover your online account password. </p>" +
          "<p>Please go to the following page and choose a new password:</p> " + 
-                  "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"  +
+                  "<p>"+formResetURL(request).concat("") + "</p>"  +
          "<p>If you ignore this message, your password won't be changed.</p><p>If you didn't request a password reset, let us know.</p><p>Thank you,</p><p>GO System Support.</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
