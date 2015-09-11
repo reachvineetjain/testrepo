@@ -557,7 +557,8 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       String url = null;
       try {
-         url = protocol + "://" + InetAddress.getLocalHost().getCanonicalHostName() + CCIConstants.RESET_PASSWORD_LINK;
+         InetAddress address = InetAddress.getLocalHost();
+         url = protocol + "://" + address.getCanonicalHostName() + CCIConstants.RESET_PASSWORD_LINK;
       } catch (UnknownHostException e) {
          e.printStackTrace();
       }
