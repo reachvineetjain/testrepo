@@ -555,7 +555,7 @@ public class UtilityServicesImpl implements UtilityServices {
       } else {
          protocol = "http";
       }
-      String url = null;
+      String url = "";
       try {
          InetAddress address = InetAddress.getLocalHost();
          url = protocol + "://" + address.getCanonicalHostName() + CCIConstants.RESET_PASSWORD_LINK;
