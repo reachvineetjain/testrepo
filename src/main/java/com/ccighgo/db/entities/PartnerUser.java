@@ -50,8 +50,8 @@ public class PartnerUser implements Serializable {
 	private String title;
 
 	//bi-directional many-to-one association to PartnerPermission
-	@OneToMany(mappedBy="partnerUser")
-	private List<PartnerPermission> partnerPermissions;
+	@OneToOne(mappedBy="partnerUser")
+	private PartnerPermission partnerPermissions;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
@@ -158,7 +158,7 @@ public class PartnerUser implements Serializable {
 		this.title = title;
 	}
 
-	public List<PartnerPermission> getPartnerPermissions() {
+	/*public List<PartnerPermission> getPartnerPermissions() {
 		return this.partnerPermissions;
 	}
 
@@ -178,13 +178,21 @@ public class PartnerUser implements Serializable {
 		partnerPermission.setPartnerUser(null);
 
 		return partnerPermission;
-	}
+	}*/
 
 	public Login getLogin() {
 		return this.login;
 	}
 
-	public void setLogin(Login login) {
+	public PartnerPermission getPartnerPermissions() {
+      return partnerPermissions;
+   }
+
+   public void setPartnerPermissions(PartnerPermission partnerPermissions) {
+      this.partnerPermissions = partnerPermissions;
+   }
+
+   public void setLogin(Login login) {
 		this.login = login;
 	}
 

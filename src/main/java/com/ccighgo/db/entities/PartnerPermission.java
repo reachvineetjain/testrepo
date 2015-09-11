@@ -90,9 +90,28 @@ public class PartnerPermission implements Serializable {
 	private byte wtPlacementInfo;
 
 	private byte wtStudentsPreProgram;
+	
+	private byte ihpAdmin;
+	
+   private byte ihpApplications;
+   
+   private byte ihpFlights;
+   
+   private byte ihpPlacementInfo;
+   
+   private byte ihpMonitoring;
+   
+   private byte ihpAccountingInsurance;
+   
+   private byte ihpStudentsPreProgram;
+   
+   private byte ihpContracting;
+   
+   private byte ihpInsurance;
+   
 
 	//bi-directional many-to-one association to PartnerUser
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="partnerUserId", nullable=false)
 	private PartnerUser partnerUser;
 
@@ -402,5 +421,77 @@ public class PartnerPermission implements Serializable {
 	public void setPartnerUser(PartnerUser partnerUser) {
 		this.partnerUser = partnerUser;
 	}
+
+   public byte getIhpAdmin() {
+      return ihpAdmin;
+   }
+
+   public void setIhpAdmin(byte ihpAdmin) {
+      this.ihpAdmin = ihpAdmin;
+   }
+
+   public byte getIhpApplications() {
+      return ihpApplications;
+   }
+
+   public void setIhpApplications(byte ihpApplications) {
+      this.ihpApplications = ihpApplications;
+   }
+
+   public byte getIhpFlights() {
+      return ihpFlights;
+   }
+
+   public void setIhpFlights(byte ihpFlights) {
+      this.ihpFlights = ihpFlights;
+   }
+
+   public byte getIhpPlacementInfo() {
+      return ihpPlacementInfo;
+   }
+
+   public void setIhpPlacementInfo(byte ihpPlacementInfo) {
+      this.ihpPlacementInfo = ihpPlacementInfo;
+   }
+
+   public byte getIhpMonitoring() {
+      return ihpMonitoring;
+   }
+
+   public void setIhpMonitoring(byte ihpMonitoring) {
+      this.ihpMonitoring = ihpMonitoring;
+   }
+
+   public byte getIhpAccountingInsurance() {
+      return ihpAccountingInsurance;
+   }
+
+   public void setIhpAccountingInsurance(byte ihpAccountingInsurance) {
+      this.ihpAccountingInsurance = ihpAccountingInsurance;
+   }
+
+   public byte getIhpStudentsPreProgram() {
+      return ihpStudentsPreProgram;
+   }
+
+   public void setIhpStudentsPreProgram(byte ihpStudentsPreProgram) {
+      this.ihpStudentsPreProgram = ihpStudentsPreProgram;
+   }
+
+   public byte getIhpContracting() {
+      return ihpContracting;
+   }
+
+   public void setIhpContracting(byte ihpContracting) {
+      this.ihpContracting = ihpContracting;
+   }
+
+   public byte getIhpInsurance() {
+      return ihpInsurance;
+   }
+
+   public void setIhpInsurance(byte ihpInsurance) {
+      this.ihpInsurance = ihpInsurance;
+   }
 
 }

@@ -49,6 +49,7 @@ public class CCIConstants {
 
    // user type ids
    public static final Integer CCI_USER_TYPE = 1;
+   public static final Integer PARTNER_USER_TYPE = 2;
    public static final int EMPTY_INTEGER_FIELD = -1;
 
    // spaces, hyphens, literals, commas etc

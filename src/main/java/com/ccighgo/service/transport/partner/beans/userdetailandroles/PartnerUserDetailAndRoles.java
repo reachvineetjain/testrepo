@@ -53,6 +53,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerUserDetailAndRoles", propOrder = {
+    "partnerUserId",
+    "partnergoId",
     "userStatus",
     "logoImageURL",
     "logoUserName",
@@ -67,13 +69,16 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "username",
     "skypeId",
     "programsAccess"
+    
 })
 public class PartnerUserDetailAndRoles
     extends Response
 {
-
+   
     @XmlElement(required = true)
-    protected String userStatus;
+    protected String partnergoId;
+    @XmlElement(required = true)
+    protected boolean userStatus;
     @XmlElement(required = true)
     protected String logoImageURL;
     @XmlElement(required = true)
@@ -97,7 +102,8 @@ public class PartnerUserDetailAndRoles
     @XmlElement(required = true)
     protected String skypeId;
     @XmlElement(required = true)
-    protected List<PartnerUserProgramAccess> programsAccess;
+    protected PartnerUserProgramAccess programsAccess;
+    protected String partnerUserId;
 
     /**
      * Gets the value of the userStatus property.
@@ -107,11 +113,28 @@ public class PartnerUserDetailAndRoles
      *     {@link String }
      *     
      */
-    public String getUserStatus() {
+    
+    public boolean getUserStatus() {
         return userStatus;
     }
 
-    /**
+    public String getPartnerUserId() {
+      return partnerUserId;
+   }
+
+   public void setPartnerUserId(String partnerUserId) {
+      this.partnerUserId = partnerUserId;
+   }
+
+   public String getPartnergoId() {
+      return partnergoId;
+   }
+
+   public void setPartnergoId(String partnergoId) {
+      this.partnergoId = partnergoId;
+   }
+
+   /**
      * Sets the value of the userStatus property.
      * 
      * @param value
@@ -119,7 +142,7 @@ public class PartnerUserDetailAndRoles
      *     {@link String }
      *     
      */
-    public void setUserStatus(String value) {
+    public void setUserStatus(boolean value) {
         this.userStatus = value;
     }
 
@@ -395,6 +418,14 @@ public class PartnerUserDetailAndRoles
         this.skypeId = value;
     }
 
+   public PartnerUserProgramAccess getProgramsAccess() {
+      return programsAccess;
+   }
+
+   public void setProgramsAccess(PartnerUserProgramAccess programsAccess) {
+      this.programsAccess = programsAccess;
+   }
+
     /**
      * Gets the value of the programsAccess property.
      * 
@@ -417,11 +448,11 @@ public class PartnerUserDetailAndRoles
      * 
      * 
      */
-    public List<PartnerUserProgramAccess> getProgramsAccess() {
+    /*public List<PartnerUserProgramAccess> getProgramsAccess() {
         if (programsAccess == null) {
             programsAccess = new ArrayList<PartnerUserProgramAccess>();
         }
         return this.programsAccess;
-    }
-
+    }*/
+    
 }

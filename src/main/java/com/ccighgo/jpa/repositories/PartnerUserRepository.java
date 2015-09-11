@@ -18,7 +18,7 @@ import com.ccighgo.db.entities.PartnerUser;
  */
 @Repository
 public interface PartnerUserRepository extends JpaRepository<PartnerUser, Integer> {
-   
+
    @Query("SELECT p FROM PartnerUser p WHERE p.partner.partnerGoId=?1")
    List<PartnerUser> findByPartnerGoId(Integer partnerId);
 
