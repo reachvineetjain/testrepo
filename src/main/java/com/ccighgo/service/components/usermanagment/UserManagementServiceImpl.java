@@ -114,6 +114,8 @@ import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.ValidationUtils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 
 /**
@@ -535,8 +537,12 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
-//         EmailServiceImpl email = new EmailServiceImpl();
-         email.send(loginEmail.getEmail(), "create password", formResetURL(request).concat(loginEmail.getKeyValue()),false);
+         
+         String body = "<p>This email was sent automatically by CCI Greenheart Online system to inform you that you an online account has been created for you.  </p></br>" +
+               "<p>Please go to the following page and follow the instructions to login to the system. </p> " + 
+                        "<p>"+CCIUtils.formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>"  +
+               "<p>Thank you,</p><p>GO System Support.</p>";
+         email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body,true);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
@@ -551,17 +557,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       return usr;
    }
    
-   private String formResetURL(HttpServletRequest request) {
-      String protocol;
-      if (request.getProtocol().contains("https")) {
-         protocol = "https";
-      } else {
-         protocol = "http";
-      }
-      String url = protocol + "://" + "ccigoqa.creo-mobile.com" + CCIConstants.RESET_PASSWORD_LINK;
-      System.out.println(url);
-      return url;
-   }
+  
 
    @SuppressWarnings("unchecked")
    @Override
