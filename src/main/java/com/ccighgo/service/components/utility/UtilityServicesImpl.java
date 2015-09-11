@@ -546,15 +546,20 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
-   private String formResetURL(HttpServletRequest request) {
+  private String formResetURL(HttpServletRequest request) {
       String protocol;
       if (request.getProtocol().contains("https")) {
          protocol = "https";
       } else {
          protocol = "http";
       }
-      String url = protocol + "://" + "ccigoqa.creo-mobile.com" + CCIConstants.RESET_PASSWORD_LINK;
-      System.out.println(url);
+      String url = null;
+      try {
+         InetAddress address = InetAddress.getLocalHost();
+         url = protocol + "://" + address.getCanonicalHostName() + CCIConstants.RESET_PASSWORD_LINK;
+      } catch (UnknownHostException e) {
+         e.printStackTrace();
+      }
       return url;
    }
 
