@@ -558,7 +558,7 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       String url = "";
        try {
-         String address = new URL(request.getRequestURL().toString()).getHost();
+         String address = request.getServerName();
          url = protocol + "://"+address+ CCIConstants.RESET_PASSWORD_LINK;
       } catch (Exception e) {
          e.printStackTrace();
