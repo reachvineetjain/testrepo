@@ -1416,7 +1416,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().getPassword());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
-      login.setEmail(goIdSequence.getLogin().getEmail());
+      login.setEmail(user.getEmail());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setModifiedBy(goIdSequence.getGoId());
