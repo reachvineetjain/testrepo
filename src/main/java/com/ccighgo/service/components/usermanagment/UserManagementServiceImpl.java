@@ -1602,7 +1602,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setFirstName(user.getFirstName());
       ValidationUtils.validateRequired(user.getLastName());
       cciUser.setLastName(user.getLastName());
-       ValidationUtils.validateEmail(user.getEmail());
+//       ValidationUtils.validateEmail(user.getEmail());
       String cciAdminGuid = UuidUtils.nextHexUUID();
       cciUser.setCciAdminGuid(cciAdminGuid);
       cciUser.setCity(user.getCity() != null ? user.getCity() : null);
