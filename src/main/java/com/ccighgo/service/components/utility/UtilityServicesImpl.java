@@ -549,18 +549,10 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
-  private String formResetURL(HttpServletRequest request) {
-      String protocol;
-      if (request.getProtocol().contains("https")) {
-         protocol = "https";
-      } else {
-         protocol = "http";
-      }
+private String formResetURL(HttpServletRequest request) {
       String url = "";
-       try {
-         String address = request.getServerName();
-        // url = protocol + "://"+address+ CCIConstants.RESET_PASSWORD_LINK;
-         url = request.getHeader("Origin")+ CCIConstants.RESET_PASSWORD_LINK;
+      try {
+         url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
       } catch (Exception e) {
          e.printStackTrace();
       }
