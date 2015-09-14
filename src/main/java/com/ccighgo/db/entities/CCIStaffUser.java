@@ -24,7 +24,7 @@ public class CCIStaffUser implements Serializable {
 	@Id
 	/*@GeneratedValue(strategy=GenerationType.IDENTITY)*/
 	@Column(unique=true, nullable=false)
-	private int cciStaffUserId;
+	private Integer cciStaffUserId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -142,11 +142,11 @@ public class CCIStaffUser implements Serializable {
       this.cciStaffUserId = cciStaffUserId;
    }
 
-	public int getCciStaffUserId() {
+	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(int cciStaffUserId) {
+	public void setCciStaffUserId(Integer cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 

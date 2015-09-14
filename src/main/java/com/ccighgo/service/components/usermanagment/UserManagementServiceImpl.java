@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,7 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
+import com.ccighgo.service.components.utility.UtilityServicesImpl;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
@@ -112,6 +114,8 @@ import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.ValidationUtils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 
 /**
@@ -172,6 +176,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired GenderRepository genderRepository;
    
    @Autowired CCIStaffRolesDepartmentRepository cciStaffRolesDepartmentRepository;
+   
    @Autowired EmailServiceImpl email;
 
    private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
@@ -416,7 +421,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Override
    @Transactional
-   public User createUser(User user) {
+   public User createUser(User user ,HttpServletRequest request) {
       User usr = new User();
       if (user == null) {
          usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
@@ -532,8 +537,12 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
-//         EmailServiceImpl email = new EmailServiceImpl();
-         email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK.concat(loginEmail.getKeyValue()),false);
+         
+         String body = "<p>This email was sent automatically by CCI Greenheart Online system to inform you that you an online account has been created for you.  </p></br>" +
+               "<p>Please go to the following page and follow the instructions to login to the system. </p> " + 
+                        "<p>"+CCIUtils.formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>"  +
+               "<p>Thank you,</p><p>GO System Support.</p>";
+         email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body,true);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
@@ -547,6 +556,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return usr;
    }
+   
+  
 
    @SuppressWarnings("unchecked")
    @Override
@@ -1400,7 +1411,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().getPassword());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
-      login.setEmail(goIdSequence.getLogin().getEmail());
+      login.setEmail(user.getEmail());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setModifiedBy(goIdSequence.getGoId());
@@ -1665,6 +1676,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       loginUserType.setModifiedBy(goIdSequence.getGoId());
       loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
       loginUserType.setLogin(login);
       loginUserType = loginUserTypeRepository.save(loginUserType);
       ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
