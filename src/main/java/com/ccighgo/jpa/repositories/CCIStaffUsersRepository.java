@@ -18,5 +18,4 @@ public interface CCIStaffUsersRepository extends JpaRepository<CCIStaffUser, Int
    
    @Query("SELECT c FROM CCIStaffUser c WHERE c.cciAdminGuid = ?1")
    public CCIStaffUser findByGUID(String cciAdminGuid);
-
 }
