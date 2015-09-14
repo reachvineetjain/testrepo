@@ -28,11 +28,14 @@ import com.ccighgo.jpa.repositories.PartnerUserRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerUserMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramAccess;
+import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
@@ -164,40 +167,47 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    @Override
    public PartnerUserDetailAndRoles viewPartnerUser(String partnerUserId) {
       PartnerUserDetailAndRoles partnerUserDetailAndRoles = null;
-      if(partnerUserId == null){
-         partnerUserDetailAndRoles.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
-               messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
-         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
+      if (partnerUserId == null) {
+
+         partnerUserDetailAndRoles = setPartnerUserDetailAndRolesStatus(partnerUserDetailAndRoles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               ErrorCode.FAILED_GET_PARTNER_USER_ID_NULL.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
          return partnerUserDetailAndRoles;
       }
-      try
-      {
-          
-      partnerUserDetailAndRoles = new PartnerUserDetailAndRoles();
-      PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
-      partnerUserDetailAndRoles.setPartnergoId(partnerUser.getPartner().getPartnerGoId().toString());
-      partnerUserDetailAndRoles.setPartnerUserId(partnerUser.getPartnerUserId().toString());
-      partnerUserDetailAndRoles.setEmail(partnerUser.getEmail());
-      partnerUserDetailAndRoles.setEmergencyPhone(partnerUser.getEmergencyPhone());
-      partnerUserDetailAndRoles.setFax(partnerUser.getFax());
-      partnerUserDetailAndRoles.setFirstName(partnerUser.getFirstName());
-      partnerUserDetailAndRoles.setLastName(partnerUser.getLastName());
-      partnerUserDetailAndRoles.setLogoImageURL("");
-      partnerUserDetailAndRoles.setLogoUserName("");
-      partnerUserDetailAndRoles.setPhone(partnerUser.getPhone());
-      partnerUserDetailAndRoles.setSalutation(partnerUser.getSalutation());
-      partnerUserDetailAndRoles.setSkypeId(partnerUser.getSkypeId());
-      partnerUserDetailAndRoles.setTitle(partnerUser.getTitle());
-      partnerUserDetailAndRoles.setUsername(partnerUser.getLogin().getLoginName());
-      partnerUserDetailAndRoles.setUserStatus(partnerUser.getActive() == CCIConstants.ACTIVE ? true : false);
-      partnerUserDetailAndRoles.setProgramsAccess(getProgramAccessTO(partnerUser));
-     
-      }catch (CcighgoException e) {
+      try {
+
+         partnerUserDetailAndRoles = new PartnerUserDetailAndRoles();
+         PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
+         if (partnerUser == null) {
+
+            partnerUserDetailAndRoles = setPartnerUserDetailAndRolesStatus(partnerUserDetailAndRoles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+                  ErrorCode.FAILED_GET_PARTNER_USER_ID_NULL.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
+            return partnerUserDetailAndRoles;
+         }
+         partnerUserDetailAndRoles.setPartnergoId(partnerUser.getPartner().getPartnerGoId().toString());
+         partnerUserDetailAndRoles.setPartnerUserId(partnerUser.getPartnerUserId().toString());
+         partnerUserDetailAndRoles.setEmail(partnerUser.getEmail());
+         partnerUserDetailAndRoles.setEmergencyPhone(partnerUser.getEmergencyPhone());
+         partnerUserDetailAndRoles.setFax(partnerUser.getFax());
+         partnerUserDetailAndRoles.setFirstName(partnerUser.getFirstName());
+         partnerUserDetailAndRoles.setLastName(partnerUser.getLastName());
+         partnerUserDetailAndRoles.setLogoImageURL("");
+         partnerUserDetailAndRoles.setLogoUserName("");
+         partnerUserDetailAndRoles.setPhone(partnerUser.getPhone());
+         partnerUserDetailAndRoles.setSalutation(partnerUser.getSalutation());
+         partnerUserDetailAndRoles.setSkypeId(partnerUser.getSkypeId());
+         partnerUserDetailAndRoles.setTitle(partnerUser.getTitle());
+         partnerUserDetailAndRoles.setUsername(partnerUser.getLogin().getLoginName());
+         partnerUserDetailAndRoles.setUserStatus(partnerUser.getActive() == CCIConstants.ACTIVE ? true : false);
+         partnerUserDetailAndRoles.setProgramsAccess(getProgramAccessTO(partnerUser));
+
+      } catch (CcighgoException e) {
          partnerUserDetailAndRoles.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
       }
-         
+
       return partnerUserDetailAndRoles;
    }
    
@@ -261,5 +271,11 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       return partnerUserProgramAccess;
    }
    
+   private PartnerUserDetailAndRoles setPartnerUserDetailAndRolesStatus(PartnerUserDetailAndRoles partnerUserDetailAndRoles, String code, String type, int serviceCode, String message) {
+      if (partnerUserDetailAndRoles == null)
+         partnerUserDetailAndRoles = new PartnerUserDetailAndRoles();
+      partnerUserDetailAndRoles.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return partnerUserDetailAndRoles;
+   }
   
 }
