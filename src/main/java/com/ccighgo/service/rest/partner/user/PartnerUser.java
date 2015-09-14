@@ -40,7 +40,7 @@ public class PartnerUser {
    }
    
    @POST
-   @Path("addNewOne")
+   @Path("create")
    @Produces("application/json")
    public PartnerUserDetailAndRoles createNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
       LOGGER.debug("calling PartnerUser.addNewPartnerUser");
@@ -54,5 +54,19 @@ public class PartnerUser {
       LOGGER.debug("calling PartnerUser.viewPartnerUser");
       return partnerUserInterface.viewPartnerUser(partnerUserId);
    }
-
+   
+   @GET
+   @Path("edit/{partnerUserId}")
+   @Produces("application/json")
+   public PartnerUserDetailAndRoles editPartnerUser(@PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.viewPartnerUser");
+      return partnerUserInterface.viewPartnerUser(partnerUserId);
+   }
+   @POST
+   @Path("update")
+   @Produces("application/json")
+   public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
+      LOGGER.debug("calling PartnerUser.updatePartnerUser");
+      return partnerUserInterface.updatePartnerUser(partnerUserDetailAndRoles);
+   }
 }

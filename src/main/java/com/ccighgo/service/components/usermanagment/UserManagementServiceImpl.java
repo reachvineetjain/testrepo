@@ -1409,6 +1409,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       GoIdSequence goIdSequence=new GoIdSequence();
       goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
       goIdSequence.getLogin().iterator().next().setLoginName(user.getLoginInfo().getLoginName());
+      goIdSequence.getLogin().iterator().next().setEmail(user.getEmail());
       cciUser.setCciStaffUserId(user.getCciUserId());
       cciUser.setGoIdSequence(goIdSequence);
     /*  

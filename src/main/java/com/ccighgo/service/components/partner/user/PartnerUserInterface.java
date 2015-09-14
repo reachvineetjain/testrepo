@@ -25,5 +25,7 @@ public interface PartnerUserInterface {
    public PartnerUserDetailAndRoles viewPartnerUser(String partnerUserId);
 
    public PartnerUsers getAllPartnerUsers(String partnerId);
+   
+   public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles);
 
 }

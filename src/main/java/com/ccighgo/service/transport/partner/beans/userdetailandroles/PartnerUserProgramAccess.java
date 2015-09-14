@@ -93,453 +93,453 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PartnerUserProgramAccess {
 
-   protected byte capAccountingInsurance;
+   protected Byte capAccountingInsurance;
 
-   protected byte capAdmin;
+   protected Byte capAdmin;
 
-   protected byte capApplications;
+   protected Byte capApplications;
 
-   protected byte capContracting;
+   protected Byte capContracting;
 
-   protected byte capFlights;
+   protected Byte capFlights;
 
-   protected byte capInsurance;
+   protected Byte capInsurance;
 
-   protected byte capMonitoring;
+   protected Byte capMonitoring;
 
-   protected byte capPlacementInfo;
+   protected Byte capPlacementInfo;
 
-   protected byte capStudentsPreProgram;
+   protected Byte capStudentsPreProgram;
 
-   protected byte f1AccountingInsurance;
+   protected Byte f1AccountingInsurance;
 
-   protected byte f1Admin;
+   protected Byte f1Admin;
 
-   protected byte f1Applications;
+   protected Byte f1Applications;
 
-   protected byte f1Contracting;
+   protected Byte f1Contracting;
 
-   protected byte f1Flights;
+   protected Byte f1Flights;
 
-   protected byte f1Insurance;
+   protected Byte f1Insurance;
 
-   protected byte f1Monitoring;
+   protected Byte f1Monitoring;
 
-   protected byte f1PlacementInfo;
+   protected Byte f1PlacementInfo;
 
-   protected byte f1StudentsPreProgram;
+   protected Byte f1StudentsPreProgram;
 
-   protected byte j1AccountingInsurance;
+   protected Byte j1AccountingInsurance;
 
-   protected byte j1Admin;
+   protected Byte j1Admin;
 
-   protected byte j1Applications;
+   protected Byte j1Applications;
 
-   protected byte j1Contracting;
+   protected Byte j1Contracting;
 
-   protected byte j1Flights;
+   protected Byte j1Flights;
 
-   protected byte j1Insurance;
+   protected Byte j1Insurance;
 
-   protected byte j1Monitoring;
+   protected Byte j1Monitoring;
 
-   protected byte j1PlacementInfo;
+   protected Byte j1PlacementInfo;
 
-   protected byte j1StudentsPreProgram;
+   protected Byte j1StudentsPreProgram;
 
-   protected byte wtAccoutingInsurance;
+   protected Byte wtAccoutingInsurance;
 
-   protected byte wtAdmin;
+   protected Byte wtAdmin;
 
-   protected byte wtApplications;
+   protected Byte wtApplications;
 
-   protected byte wtContracting;
+   protected Byte wtContracting;
 
-   protected byte wtFlights;
+   protected Byte wtFlights;
 
-   protected byte wtInsurance;
+   protected Byte wtInsurance;
 
-   protected byte wtMonitoring;
+   protected Byte wtMonitoring;
 
-   protected byte wtPlacementInfo;
+   protected Byte wtPlacementInfo;
 
-   protected byte wtStudentsPreProgram;
+   protected Byte wtStudentsPreProgram;
    
-   protected byte ihpAdmin;
+   protected Byte ihpAdmin;
    
-   protected byte ihpApplications;
+   protected Byte ihpApplications;
    
-   protected byte ihpFlights;
+   protected Byte ihpFlights;
    
-   protected byte ihpPlacementInfo;
+   protected Byte ihpPlacementInfo;
    
-   protected byte ihpMonitoring;
+   protected Byte ihpMonitoring;
    
-   protected byte ihpAccountingInsurance;
+   protected Byte ihpAccountingInsurance;
    
-   protected byte ihpStudentsPreProgram;
+   protected Byte ihpStudentsPreProgram;
    
-   protected byte ihpContracting;
+   protected Byte ihpContracting;
    
-   protected byte ihpInsurance;
+   protected Byte ihpInsurance;
 
-   public byte getCapAccountingInsurance() {
+   public Byte getCapAccountingInsurance() {
       return capAccountingInsurance;
    }
 
-   public void setCapAccountingInsurance(byte capAccountingInsurance) {
+   public void setCapAccountingInsurance(Byte capAccountingInsurance) {
       this.capAccountingInsurance = capAccountingInsurance;
    }
 
-   public byte getCapAdmin() {
+   public Byte getCapAdmin() {
       return capAdmin;
    }
 
-   public void setCapAdmin(byte capAdmin) {
+   public void setCapAdmin(Byte capAdmin) {
       this.capAdmin = capAdmin;
    }
 
-   public byte getCapApplications() {
+   public Byte getCapApplications() {
       return capApplications;
    }
 
-   public void setCapApplications(byte capApplications) {
+   public void setCapApplications(Byte capApplications) {
       this.capApplications = capApplications;
    }
 
-   public byte getCapContracting() {
+   public Byte getCapContracting() {
       return capContracting;
    }
 
-   public void setCapContracting(byte capContracting) {
+   public void setCapContracting(Byte capContracting) {
       this.capContracting = capContracting;
    }
 
-   public byte getCapFlights() {
+   public Byte getCapFlights() {
       return capFlights;
    }
 
-   public void setCapFlights(byte capFlights) {
+   public void setCapFlights(Byte capFlights) {
       this.capFlights = capFlights;
    }
 
-   public byte getCapInsurance() {
+   public Byte getCapInsurance() {
       return capInsurance;
    }
 
-   public void setCapInsurance(byte capInsurance) {
+   public void setCapInsurance(Byte capInsurance) {
       this.capInsurance = capInsurance;
    }
 
-   public byte getCapMonitoring() {
+   public Byte getCapMonitoring() {
       return capMonitoring;
    }
 
-   public void setCapMonitoring(byte capMonitoring) {
+   public void setCapMonitoring(Byte capMonitoring) {
       this.capMonitoring = capMonitoring;
    }
 
-   public byte getCapPlacementInfo() {
+   public Byte getCapPlacementInfo() {
       return capPlacementInfo;
    }
 
-   public void setCapPlacementInfo(byte capPlacementInfo) {
+   public void setCapPlacementInfo(Byte capPlacementInfo) {
       this.capPlacementInfo = capPlacementInfo;
    }
 
-   public byte getCapStudentsPreProgram() {
+   public Byte getCapStudentsPreProgram() {
       return capStudentsPreProgram;
    }
 
-   public void setCapStudentsPreProgram(byte capStudentsPreProgram) {
+   public void setCapStudentsPreProgram(Byte capStudentsPreProgram) {
       this.capStudentsPreProgram = capStudentsPreProgram;
    }
 
-   public byte getF1AccountingInsurance() {
+   public Byte getF1AccountingInsurance() {
       return f1AccountingInsurance;
    }
 
-   public void setF1AccountingInsurance(byte f1AccountingInsurance) {
+   public void setF1AccountingInsurance(Byte f1AccountingInsurance) {
       this.f1AccountingInsurance = f1AccountingInsurance;
    }
 
-   public byte getF1Admin() {
+   public Byte getF1Admin() {
       return f1Admin;
    }
 
-   public void setF1Admin(byte f1Admin) {
+   public void setF1Admin(Byte f1Admin) {
       this.f1Admin = f1Admin;
    }
 
-   public byte getF1Applications() {
+   public Byte getF1Applications() {
       return f1Applications;
    }
 
-   public void setF1Applications(byte f1Applications) {
+   public void setF1Applications(Byte f1Applications) {
       this.f1Applications = f1Applications;
    }
 
-   public byte getF1Contracting() {
+   public Byte getF1Contracting() {
       return f1Contracting;
    }
 
-   public void setF1Contracting(byte f1Contracting) {
+   public void setF1Contracting(Byte f1Contracting) {
       this.f1Contracting = f1Contracting;
    }
 
-   public byte getF1Flights() {
+   public Byte getF1Flights() {
       return f1Flights;
    }
 
-   public void setF1Flights(byte f1Flights) {
+   public void setF1Flights(Byte f1Flights) {
       this.f1Flights = f1Flights;
    }
 
-   public byte getF1Insurance() {
+   public Byte getF1Insurance() {
       return f1Insurance;
    }
 
-   public void setF1Insurance(byte f1Insurance) {
+   public void setF1Insurance(Byte f1Insurance) {
       this.f1Insurance = f1Insurance;
    }
 
-   public byte getF1Monitoring() {
+   public Byte getF1Monitoring() {
       return f1Monitoring;
    }
 
-   public void setF1Monitoring(byte f1Monitoring) {
+   public void setF1Monitoring(Byte f1Monitoring) {
       this.f1Monitoring = f1Monitoring;
    }
 
-   public byte getF1PlacementInfo() {
+   public Byte getF1PlacementInfo() {
       return f1PlacementInfo;
    }
 
-   public void setF1PlacementInfo(byte f1PlacementInfo) {
+   public void setF1PlacementInfo(Byte f1PlacementInfo) {
       this.f1PlacementInfo = f1PlacementInfo;
    }
 
-   public byte getF1StudentsPreProgram() {
+   public Byte getF1StudentsPreProgram() {
       return f1StudentsPreProgram;
    }
 
-   public void setF1StudentsPreProgram(byte f1StudentsPreProgram) {
+   public void setF1StudentsPreProgram(Byte f1StudentsPreProgram) {
       this.f1StudentsPreProgram = f1StudentsPreProgram;
    }
 
-   public byte getJ1AccountingInsurance() {
+   public Byte getJ1AccountingInsurance() {
       return j1AccountingInsurance;
    }
 
-   public void setJ1AccountingInsurance(byte j1AccountingInsurance) {
+   public void setJ1AccountingInsurance(Byte j1AccountingInsurance) {
       this.j1AccountingInsurance = j1AccountingInsurance;
    }
 
-   public byte getJ1Admin() {
+   public Byte getJ1Admin() {
       return j1Admin;
    }
 
-   public void setJ1Admin(byte j1Admin) {
+   public void setJ1Admin(Byte j1Admin) {
       this.j1Admin = j1Admin;
    }
 
-   public byte getJ1Applications() {
+   public Byte getJ1Applications() {
       return j1Applications;
    }
 
-   public void setJ1Applications(byte j1Applications) {
+   public void setJ1Applications(Byte j1Applications) {
       this.j1Applications = j1Applications;
    }
 
-   public byte getJ1Contracting() {
+   public Byte getJ1Contracting() {
       return j1Contracting;
    }
 
-   public void setJ1Contracting(byte j1Contracting) {
+   public void setJ1Contracting(Byte j1Contracting) {
       this.j1Contracting = j1Contracting;
    }
 
-   public byte getJ1Flights() {
+   public Byte getJ1Flights() {
       return j1Flights;
    }
 
-   public void setJ1Flights(byte j1Flights) {
+   public void setJ1Flights(Byte j1Flights) {
       this.j1Flights = j1Flights;
    }
 
-   public byte getJ1Insurance() {
+   public Byte getJ1Insurance() {
       return j1Insurance;
    }
 
-   public void setJ1Insurance(byte j1Insurance) {
+   public void setJ1Insurance(Byte j1Insurance) {
       this.j1Insurance = j1Insurance;
    }
 
-   public byte getJ1Monitoring() {
+   public Byte getJ1Monitoring() {
       return j1Monitoring;
    }
 
-   public void setJ1Monitoring(byte j1Monitoring) {
+   public void setJ1Monitoring(Byte j1Monitoring) {
       this.j1Monitoring = j1Monitoring;
    }
 
-   public byte getJ1PlacementInfo() {
+   public Byte getJ1PlacementInfo() {
       return j1PlacementInfo;
    }
 
-   public void setJ1PlacementInfo(byte j1PlacementInfo) {
+   public void setJ1PlacementInfo(Byte j1PlacementInfo) {
       this.j1PlacementInfo = j1PlacementInfo;
    }
 
-   public byte getJ1StudentsPreProgram() {
+   public Byte getJ1StudentsPreProgram() {
       return j1StudentsPreProgram;
    }
 
-   public void setJ1StudentsPreProgram(byte j1StudentsPreProgram) {
+   public void setJ1StudentsPreProgram(Byte j1StudentsPreProgram) {
       this.j1StudentsPreProgram = j1StudentsPreProgram;
    }
 
-   public byte getWtAccoutingInsurance() {
+   public Byte getWtAccoutingInsurance() {
       return wtAccoutingInsurance;
    }
 
-   public void setWtAccoutingInsurance(byte wtAccoutingInsurance) {
+   public void setWtAccoutingInsurance(Byte wtAccoutingInsurance) {
       this.wtAccoutingInsurance = wtAccoutingInsurance;
    }
 
-   public byte getWtAdmin() {
+   public Byte getWtAdmin() {
       return wtAdmin;
    }
 
-   public void setWtAdmin(byte wtAdmin) {
+   public void setWtAdmin(Byte wtAdmin) {
       this.wtAdmin = wtAdmin;
    }
 
-   public byte getWtApplications() {
+   public Byte getWtApplications() {
       return wtApplications;
    }
 
-   public void setWtApplications(byte wtApplications) {
+   public void setWtApplications(Byte wtApplications) {
       this.wtApplications = wtApplications;
    }
 
-   public byte getWtContracting() {
+   public Byte getWtContracting() {
       return wtContracting;
    }
 
-   public void setWtContracting(byte wtContracting) {
+   public void setWtContracting(Byte wtContracting) {
       this.wtContracting = wtContracting;
    }
 
-   public byte getWtFlights() {
+   public Byte getWtFlights() {
       return wtFlights;
    }
 
-   public void setWtFlights(byte wtFlights) {
+   public void setWtFlights(Byte wtFlights) {
       this.wtFlights = wtFlights;
    }
 
-   public byte getWtInsurance() {
+   public Byte getWtInsurance() {
       return wtInsurance;
    }
 
-   public void setWtInsurance(byte wtInsurance) {
+   public void setWtInsurance(Byte wtInsurance) {
       this.wtInsurance = wtInsurance;
    }
 
-   public byte getWtMonitoring() {
+   public Byte getWtMonitoring() {
       return wtMonitoring;
    }
 
-   public void setWtMonitoring(byte wtMonitoring) {
+   public void setWtMonitoring(Byte wtMonitoring) {
       this.wtMonitoring = wtMonitoring;
    }
 
-   public byte getWtPlacementInfo() {
+   public Byte getWtPlacementInfo() {
       return wtPlacementInfo;
    }
 
-   public void setWtPlacementInfo(byte wtPlacementInfo) {
+   public void setWtPlacementInfo(Byte wtPlacementInfo) {
       this.wtPlacementInfo = wtPlacementInfo;
    }
 
-   public byte getWtStudentsPreProgram() {
+   public Byte getWtStudentsPreProgram() {
       return wtStudentsPreProgram;
    }
 
-   public void setWtStudentsPreProgram(byte wtStudentsPreProgram) {
+   public void setWtStudentsPreProgram(Byte wtStudentsPreProgram) {
       this.wtStudentsPreProgram = wtStudentsPreProgram;
    }
 
-   public byte getIhpAdmin() {
+   public Byte getIhpAdmin() {
       return ihpAdmin;
    }
 
-   public void setIhpAdmin(byte ihpAdmin) {
+   public void setIhpAdmin(Byte ihpAdmin) {
       this.ihpAdmin = ihpAdmin;
    }
 
-   public byte getIhpApplications() {
+   public Byte getIhpApplications() {
       return ihpApplications;
    }
 
-   public void setIhpApplications(byte ihpApplications) {
+   public void setIhpApplications(Byte ihpApplications) {
       this.ihpApplications = ihpApplications;
    }
 
-   public byte getIhpFlights() {
+   public Byte getIhpFlights() {
       return ihpFlights;
    }
 
-   public void setIhpFlights(byte ihpFlights) {
+   public void setIhpFlights(Byte ihpFlights) {
       this.ihpFlights = ihpFlights;
    }
 
-   public byte getIhpPlacementInfo() {
+   public Byte getIhpPlacementInfo() {
       return ihpPlacementInfo;
    }
 
-   public void setIhpPlacementInfo(byte ihpPlacementInfo) {
+   public void setIhpPlacementInfo(Byte ihpPlacementInfo) {
       this.ihpPlacementInfo = ihpPlacementInfo;
    }
 
-   public byte getIhpMonitoring() {
+   public Byte getIhpMonitoring() {
       return ihpMonitoring;
    }
 
-   public void setIhpMonitoring(byte ihpMonitoring) {
+   public void setIhpMonitoring(Byte ihpMonitoring) {
       this.ihpMonitoring = ihpMonitoring;
    }
 
-   public byte getIhpAccountingInsurance() {
+   public Byte getIhpAccountingInsurance() {
       return ihpAccountingInsurance;
    }
 
-   public void setIhpAccountingInsurance(byte ihpAccountingInsurance) {
+   public void setIhpAccountingInsurance(Byte ihpAccountingInsurance) {
       this.ihpAccountingInsurance = ihpAccountingInsurance;
    }
 
-   public byte getIhpStudentsPreProgram() {
+   public Byte getIhpStudentsPreProgram() {
       return ihpStudentsPreProgram;
    }
 
-   public void setIhpStudentsPreProgram(byte ihpStudentsPreProgram) {
+   public void setIhpStudentsPreProgram(Byte ihpStudentsPreProgram) {
       this.ihpStudentsPreProgram = ihpStudentsPreProgram;
    }
 
-   public byte getIhpContracting() {
+   public Byte getIhpContracting() {
       return ihpContracting;
    }
 
-   public void setIhpContracting(byte ihpContracting) {
+   public void setIhpContracting(Byte ihpContracting) {
       this.ihpContracting = ihpContracting;
    }
 
-   public byte getIhpInsurance() {
+   public Byte getIhpInsurance() {
       return ihpInsurance;
    }
 
-   public void setIhpInsurance(byte ihpInsurance) {
+   public void setIhpInsurance(Byte ihpInsurance) {
       this.ihpInsurance = ihpInsurance;
    }
 
