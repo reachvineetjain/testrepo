@@ -76,7 +76,7 @@ public class SeasonJ1Detail implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=45)
+	@Column(length=55)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -112,16 +112,6 @@ public class SeasonJ1Detail implements Serializable {
 
 	private byte showWelcomeFamily;
 
-	//bi-directional many-to-one association to FieldStaffAgreement
-	@ManyToOne
-	@JoinColumn(name="fsAgreementId")
-	private FieldStaffAgreement fieldStaffAgreement;
-
-	//bi-directional many-to-one association to PaymentSchedule
-	@ManyToOne
-	@JoinColumn(name="lcPaymentScheduleId")
-	private PaymentSchedule paymentSchedule;
-
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
@@ -131,6 +121,16 @@ public class SeasonJ1Detail implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
+
+	//bi-directional many-to-one association to FieldStaffAgreement
+	@ManyToOne
+	@JoinColumn(name="fsAgreementId")
+	private FieldStaffAgreement fieldStaffAgreement;
+
+	//bi-directional many-to-one association to PaymentSchedule
+	@ManyToOne
+	@JoinColumn(name="lcPaymentScheduleId")
+	private PaymentSchedule paymentSchedule;
 
 	public SeasonJ1Detail() {
 	}
@@ -423,22 +423,6 @@ public class SeasonJ1Detail implements Serializable {
 		this.showWelcomeFamily = showWelcomeFamily;
 	}
 
-	public FieldStaffAgreement getFieldStaffAgreement() {
-		return this.fieldStaffAgreement;
-	}
-
-	public void setFieldStaffAgreement(FieldStaffAgreement fieldStaffAgreement) {
-		this.fieldStaffAgreement = fieldStaffAgreement;
-	}
-
-	public PaymentSchedule getPaymentSchedule() {
-		return this.paymentSchedule;
-	}
-
-	public void setPaymentSchedule(PaymentSchedule paymentSchedule) {
-		this.paymentSchedule = paymentSchedule;
-	}
-
 	public Season getSeason() {
 		return this.season;
 	}
@@ -453,6 +437,22 @@ public class SeasonJ1Detail implements Serializable {
 
 	public void setSeasonStatus(SeasonStatus seasonStatus) {
 		this.seasonStatus = seasonStatus;
+	}
+
+	public FieldStaffAgreement getFieldStaffAgreement() {
+		return this.fieldStaffAgreement;
+	}
+
+	public void setFieldStaffAgreement(FieldStaffAgreement fieldStaffAgreement) {
+		this.fieldStaffAgreement = fieldStaffAgreement;
+	}
+
+	public PaymentSchedule getPaymentSchedule() {
+		return this.paymentSchedule;
+	}
+
+	public void setPaymentSchedule(PaymentSchedule paymentSchedule) {
+		this.paymentSchedule = paymentSchedule;
 	}
 
 }

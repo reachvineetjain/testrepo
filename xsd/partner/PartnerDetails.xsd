@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerdetails" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partnerdetails" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partnerdetails" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="PartnerDetails" type="pdl:PartnerDetails" />
+
+   <xsd:complexType name="PartnerDetails">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerCountry" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerLogo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerCompany" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="cciContact" type="pdl:PartnerCCIContact" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="partnerPrograms" type="pdl:PartnerPrograms" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="partnerProgramAccess" type="pdl:PartnerProgramAccess" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="dashboardSections" type="pdl:PartnerDashboardSections" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerCCIContact">
+      <xsd:sequence>
+         <xsd:element name="partnerProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactImageUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactExtentionNo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerPrograms">
+      <xsd:sequence>
+         <xsd:element name="partnerDepartmentId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerDepartmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerProgramId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerProgramAccess">
+      <xsd:sequence>
+         <xsd:element name="programSection" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programPermissions" type="pdl:ProgramPermissions" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="ProgramPermissions">
+      <xsd:sequence>
+         <xsd:element name="Admin" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="Applications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="Flights" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="PlacementInfo" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="Monitoring" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="AccountingInsurance" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="StudentsPreProgram" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="Contracting" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="Insurance" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerDashboardSections">
+      <xsd:sequence>
+         <xsd:element name="sectionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="sectionUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

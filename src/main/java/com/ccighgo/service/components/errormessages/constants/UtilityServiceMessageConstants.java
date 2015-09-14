@@ -17,6 +17,10 @@ public class UtilityServiceMessageConstants {
    public static final String FAILED_GET_SEASON_STATUS = "error.get.season.status";
    public static final String FAILED_GET_GENDERS = "error.get.genders";
    public static final String FAILED_RESET_PASSWORD = "error.reset.password";
-   
+   public static final String MAIL_TRANSPORT_PROTOCOL = "mail.transport.protocol";
+   public static final String MAIL_FROM_ADDRESS = "mail.from.address";
+   public static final String MAIL_AWS_USER = "mail.aws.user";
+   public static final String MAIL_AWS_PASSWORD = "mail.aws.password";
+   public static final String CANNOT_FIND_USER_RESET_PASSWORD = "cannot.find.login";
    
 }

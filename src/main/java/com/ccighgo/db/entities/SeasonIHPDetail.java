@@ -49,7 +49,7 @@ public class SeasonIHPDetail implements Serializable {
 
 	private Integer numberOfLCToRequestHold;
 
-	@Column(length=45)
+	@Column(length=55)
 	private String programName;
 
 	private Integer splitPlacementPending;
@@ -198,7 +198,7 @@ public class SeasonIHPDetail implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public Byte getStopAcceptingApps() {
+	public byte getStopAcceptingApps() {
 		return this.stopAcceptingApps;
 	}
 

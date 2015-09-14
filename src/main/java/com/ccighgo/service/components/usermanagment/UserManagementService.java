@@ -5,11 +5,14 @@ package com.ccighgo.service.components.usermanagment;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.SupervisorDetails;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
@@ -37,6 +40,8 @@ public interface UserManagementService {
 	public CCIUsers getAllCCIUsers(String pageNo, String size);
 	
 	public CCIUsers findAllUsers();
+	
+	public SupervisorDetails findAllSupervisors();
 
 	/**
 	 * The method will be used by edit calls on user, will return user details
@@ -54,7 +59,7 @@ public interface UserManagementService {
 	 * @param usr
 	 * @return updated User
 	 */
-	public User createUser(User user);
+	public User createUser(User user,HttpServletRequest request);
 
 	/**
 	 * Updates user demographics

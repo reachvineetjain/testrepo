@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.components.utility;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
@@ -61,6 +64,7 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 
 /**
@@ -72,61 +76,49 @@ public class UtilityServicesImpl implements UtilityServices {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(UtilityServicesImpl.class);
 
-   @Autowired
-   CountryRepository countryRepository;
-   @Autowired
-   StateRepository stateRepository;
-   @Autowired
-   UserTypeRepository userTypeRepository;
-   @Autowired
-   DepartmentRepository departmentRepository;
-   @Autowired
-   CCIStaffRolesRepository rolesRepository;
-   @Autowired
-   DepartmentProgramRepository departmentProgramRepository;
-   @Autowired
-   IHPRegionsRepository ihpRegionsRepository;
-   @Autowired
-   SeasonStatusRepository seasonStatusRepository;
-   @Autowired
-   GenderRepository genderRepository;
-   @Autowired
-   CommonComponentUtils componentUtils;
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   LoginRepository loginRepository;
+   @Autowired CountryRepository countryRepository;
+   @Autowired StateRepository stateRepository;
+   @Autowired UserTypeRepository userTypeRepository;
+   @Autowired DepartmentRepository departmentRepository;
+   @Autowired CCIStaffRolesRepository rolesRepository;
+   @Autowired DepartmentProgramRepository departmentProgramRepository;
+   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
+   @Autowired IHPRegionsRepository ihpRegionsRepository;
+   @Autowired SeasonStatusRepository seasonStatusRepository;
+   @Autowired GenderRepository genderRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired LoginRepository loginRepository;
+   @Autowired EmailServiceImpl email;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
       List<LookupCountry> countriesDbList = countryRepository.findAll();
       com.ccighgo.service.transport.utility.beans.country.Countries countries = null;
       List<com.ccighgo.service.transport.utility.beans.country.Country> countriesFrontList = null;
-      try
-      {
-      if (countriesDbList.size() > 0) {
-         countries = new com.ccighgo.service.transport.utility.beans.country.Countries();
-         countriesFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.country.Country>();
-         for (LookupCountry c : countriesDbList) {
-            com.ccighgo.service.transport.utility.beans.country.Country ctr = new com.ccighgo.service.transport.utility.beans.country.Country();
-            ctr.setId(c.getCountryId());
-            ctr.setCountryCode(c.getCountryCode());
-            ctr.setCountryName(c.getCountryName());
-            countriesFrontList.add(ctr);
+      try {
+         if (countriesDbList.size() > 0) {
+            countries = new com.ccighgo.service.transport.utility.beans.country.Countries();
+            countriesFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.country.Country>();
+            for (LookupCountry c : countriesDbList) {
+               com.ccighgo.service.transport.utility.beans.country.Country ctr = new com.ccighgo.service.transport.utility.beans.country.Country();
+               ctr.setId(c.getCountryId());
+               ctr.setCountryCode(c.getCountryCode());
+               ctr.setCountryName(c.getCountryName());
+               countriesFrontList.add(ctr);
+            }
+            countries.getCountries().addAll(countriesFrontList);
          }
-         countries.getCountries().addAll(countriesFrontList);
-      }
-      countries = setCountriesStatus(countries, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return countries;
-      }
-      catch (CcighgoException e) {
+         countries = setCountriesStatus(countries, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return countries;
+      } catch (CcighgoException e) {
          countries = setCountriesStatus(countries, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_COUNTRIES.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_COUNTRIES));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_COUNTRIES));
          return countries;
       }
-      
+
    }
 
    @Override
@@ -134,31 +126,29 @@ public class UtilityServicesImpl implements UtilityServices {
       List<LookupUSState> usStates = stateRepository.findAll();
       States states = null;
       List<State> statesFrontList = null;
-      try
-      {
-      if (usStates.size() > 0) {
-         states = new States();
-         statesFrontList = new ArrayList<State>();
-         for (LookupUSState st : usStates) {
-            State state = new State();
-            state.setId(st.getUsStatesId());
-            state.setStateCode(st.getStateCode());
-            state.setStateName(st.getStateName());
-            statesFrontList.add(state);
+      try {
+         if (usStates.size() > 0) {
+            states = new States();
+            statesFrontList = new ArrayList<State>();
+            for (LookupUSState st : usStates) {
+               State state = new State();
+               state.setId(st.getUsStatesId());
+               state.setStateCode(st.getStateCode());
+               state.setStateName(st.getStateName());
+               statesFrontList.add(state);
+            }
+            states.getStates().addAll(statesFrontList);
          }
-         states.getStates().addAll(statesFrontList);
-      }
-      states = setStatesStatus(states, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return states;
-      }
-      catch (CcighgoException e) {
+         states = setStatesStatus(states, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return states;
+      } catch (CcighgoException e) {
          states = setStatesStatus(states, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_STATES.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_STATES));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_STATES));
          return states;
       }
-       
+
    }
 
    @Override
@@ -166,66 +156,62 @@ public class UtilityServicesImpl implements UtilityServices {
       List<com.ccighgo.db.entities.LookupDepartment> departmentsDBList = departmentRepository.findAll();
       Departments departments = null;
       List<com.ccighgo.service.transport.utility.beans.department.Department> departmentsFrontList = null;
-      try
-      {
-      if (departmentsDBList.size() > 0) {
-         departments = new Departments();
-         departmentsFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.department.Department>();
-         for (com.ccighgo.db.entities.LookupDepartment d : departmentsDBList) {
-            com.ccighgo.service.transport.utility.beans.department.Department department = new com.ccighgo.service.transport.utility.beans.department.Department();
-            department.setId(d.getDepartmentId());
-            department.setDepartmentName(d.getDepartmentName());
-            department.setAcronym(d.getAcronym());
-            int flag = d.getActive();
-            if (flag == 1) {
-               department.setIsActive(true);
-            } else {
-               department.setIsActive(false);
+      try {
+         if (departmentsDBList.size() > 0) {
+            departments = new Departments();
+            departmentsFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.department.Department>();
+            for (com.ccighgo.db.entities.LookupDepartment d : departmentsDBList) {
+               com.ccighgo.service.transport.utility.beans.department.Department department = new com.ccighgo.service.transport.utility.beans.department.Department();
+               department.setId(d.getDepartmentId());
+               department.setDepartmentName(d.getDepartmentName());
+               department.setAcronym(d.getAcronym());
+               int flag = d.getActive();
+               if (flag == 1) {
+                  department.setIsActive(true);
+               } else {
+                  department.setIsActive(false);
+               }
+               departmentsFrontList.add(department);
             }
-            departmentsFrontList.add(department);
+            departments.getDepartments().addAll(departmentsFrontList);
          }
-         departments.getDepartments().addAll(departmentsFrontList);
-      }
-      departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return departments;
-      }
-      catch (CcighgoException e) {
+         departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return departments;
+      } catch (CcighgoException e) {
          departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_DEPARTMENTS.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_DEPARTMENTS));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_DEPARTMENTS));
          return departments;
       }
-      
+
    }
 
    @Override
    public Programs getAllPrograms() {
-      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
+      List<com.ccighgo.db.entities.LookupDepartmentProgram> lookupDepartmentProgramsList = lookupDepartmentProgramRepository.findAll();
       Programs programs = null;
       List<Program> programList = null;
-      try
-      {
-      if (departmentProgramsList.size() > 0) {
-         programs = new Programs();
-         programList = new ArrayList<Program>();
-         for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
-            Program prg = new Program();
-            prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
-            prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
-            prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
-            prg.setProgramId(deptPrg.getDepartmentProgramId());
-            prg.setProgramName(deptPrg.getProgramName());
-            prg.setProgramDescription(deptPrg.getDescription());
-            programList.add(prg);
+      try {
+         if (lookupDepartmentProgramsList.size() > 0) {
+            programs = new Programs();
+            programList = new ArrayList<Program>();
+            for (com.ccighgo.db.entities.LookupDepartmentProgram deptPrg : lookupDepartmentProgramsList) {
+               Program prg = new Program();
+               prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
+               prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
+               prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
+               prg.setProgramId(deptPrg.getLookupDepartmentProgramId());
+               prg.setProgramName(deptPrg.getProgramName());
+               prg.setProgramDescription(deptPrg.getDescription());
+               programList.add(prg);
+            }
+            programs.getPrograms().addAll(programList);
          }
-         programs.getPrograms().addAll(programList);
-      }
-      programs = setProgramsStatus(programs, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return programs;
-      }
-      catch (CcighgoException e) {
+         programs = setProgramsStatus(programs, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return programs;
+      } catch (CcighgoException e) {
          programs = setProgramsStatus(programs, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_PROGRAMS.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_PROGRAMS));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_PROGRAMS));
@@ -238,24 +224,22 @@ public class UtilityServicesImpl implements UtilityServices {
       List<CCIStaffRole> staffRolesList = rolesRepository.findAll();
       Roles roles = null;
       List<Role> rolesList = null;
-      try
-      {
-      if (staffRolesList.size() > 0) {
-         roles = new Roles();
-         rolesList = new ArrayList<Role>();
-         for (CCIStaffRole cciStaffRole : staffRolesList) {
-            Role role = new Role();
-            role.setId(cciStaffRole.getCciStaffRoleId());
-            role.setRole(cciStaffRole.getCciStaffRoleName());
-            rolesList.add(role);
+      try {
+         if (staffRolesList.size() > 0) {
+            roles = new Roles();
+            rolesList = new ArrayList<Role>();
+            for (CCIStaffRole cciStaffRole : staffRolesList) {
+               Role role = new Role();
+               role.setId(cciStaffRole.getCciStaffRoleId());
+               role.setRole(cciStaffRole.getCciStaffRoleName());
+               rolesList.add(role);
+            }
+            roles.getRoles().addAll(rolesList);
          }
-         roles.getRoles().addAll(rolesList);
-      }
-      roles = setRolesStatus(roles, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return roles;
-      }
-      catch (CcighgoException e) {
+         roles = setRolesStatus(roles, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return roles;
+      } catch (CcighgoException e) {
          roles = setRolesStatus(roles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_ROLES.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_ROLES));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_ROLES));
@@ -265,39 +249,37 @@ public class UtilityServicesImpl implements UtilityServices {
 
    @Override
    public Programs getProgramsByDepartment(String id) {
-      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
+      List<com.ccighgo.db.entities.LookupDepartmentProgram> lookupDepartmentProgramsList = lookupDepartmentProgramRepository.findAll();
       Programs programs = null;
       List<Program> programList = null;
-      try
-      {
-      if (departmentProgramsList.size() > 0) {
-         programs = new Programs();
-         programList = new ArrayList<Program>();
-         for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
-            if (deptPrg.getLookupDepartment().getDepartmentId() == Integer.valueOf(id)) {
-               Program prg = new Program();
-               prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
-               prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
-               prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
-               prg.setProgramId(deptPrg.getDepartmentProgramId());
-               prg.setProgramName(deptPrg.getProgramName());
-               prg.setProgramDescription(deptPrg.getDescription());
-               programList.add(prg);
+      try {
+         if (lookupDepartmentProgramsList.size() > 0) {
+            programs = new Programs();
+            programList = new ArrayList<Program>();
+            for (com.ccighgo.db.entities.LookupDepartmentProgram deptPrg : lookupDepartmentProgramsList) {
+               if (deptPrg.getLookupDepartment().getDepartmentId() == Integer.valueOf(id)) {
+                  Program prg = new Program();
+                  prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
+                  prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
+                  prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
+                  prg.setProgramId(deptPrg.getLookupDepartmentProgramId());
+                  prg.setProgramName(deptPrg.getProgramName());
+                  prg.setProgramDescription(deptPrg.getDescription());
+                  programList.add(prg);
+               }
             }
+            programs.getPrograms().addAll(programList);
          }
-         programs.getPrograms().addAll(programList);
-      }
-      programs = setProgramsStatus(programs, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return programs;
-      }
-      catch (CcighgoException e) {
+         programs = setProgramsStatus(programs, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return programs;
+      } catch (CcighgoException e) {
          programs = setProgramsStatus(programs, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_BY_DEPARTMENT.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
          return programs;
       }
-      
+
    }
 
    @Override
@@ -305,47 +287,45 @@ public class UtilityServicesImpl implements UtilityServices {
       List<com.ccighgo.db.entities.LookupDepartment> departmentsDBList = departmentRepository.findAll();
       UserDepartments userDepartments = null;
       List<UserDepartment> departmentsFrontList = new ArrayList<UserDepartment>();
-      try
-      {
-      if (departmentsDBList.size() > 0) {
-         userDepartments = new UserDepartments();
-         for (com.ccighgo.db.entities.LookupDepartment d : departmentsDBList) {
-            UserDepartment userDepartment = new UserDepartment();
-            userDepartment.setId(d.getDepartmentId());
-            userDepartment.setDepartmentName(d.getDepartmentName());
-            userDepartment.setAcronym(d.getAcronym());
-            int flag = d.getActive();
-            if (flag == 1) {
-               userDepartment.setIsActive(true);
-            } else {
-               userDepartment.setIsActive(false);
+      try {
+         if (departmentsDBList.size() > 0) {
+            userDepartments = new UserDepartments();
+            for (com.ccighgo.db.entities.LookupDepartment d : departmentsDBList) {
+               UserDepartment userDepartment = new UserDepartment();
+               userDepartment.setId(d.getDepartmentId());
+               userDepartment.setDepartmentName(d.getDepartmentName());
+               userDepartment.setAcronym(d.getAcronym());
+               int flag = d.getActive();
+               if (flag == 1) {
+                  userDepartment.setIsActive(true);
+               } else {
+                  userDepartment.setIsActive(false);
+               }
+               populateDepartmentPrograms(d, userDepartment);
+               departmentsFrontList.add(userDepartment);
             }
-            populateDepartmentPrograms(d, userDepartment);
-            departmentsFrontList.add(userDepartment);
+            userDepartments.getUserDepartment().addAll(departmentsFrontList);
          }
-         userDepartments.getUserDepartment().addAll(departmentsFrontList);
-      }
-      userDepartments = setUserDepartmentsStatus(userDepartments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-      return userDepartments;
-      }
-      catch (CcighgoException e) {
+         userDepartments = setUserDepartmentsStatus(userDepartments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return userDepartments;
+      } catch (CcighgoException e) {
          userDepartments = setUserDepartmentsStatus(userDepartments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_USER_DEPARTMENTS.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_USER_DEPARTMENTS));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_USER_DEPARTMENTS));
          return userDepartments;
       }
-      
+
    }
 
    private void populateDepartmentPrograms(com.ccighgo.db.entities.LookupDepartment d, UserDepartment userDepartment) {
-      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
-      if (departmentProgramsList != null) {
+      List<com.ccighgo.db.entities.LookupDepartmentProgram> lookupDepartmentProgramsList = lookupDepartmentProgramRepository.findAll();
+      if (lookupDepartmentProgramsList != null) {
          List<DepartmentProgram> programList = new ArrayList<DepartmentProgram>();
-         for (com.ccighgo.db.entities.DepartmentProgram dPrg : departmentProgramsList) {
+         for (com.ccighgo.db.entities.LookupDepartmentProgram dPrg : lookupDepartmentProgramsList) {
             if (dPrg.getLookupDepartment().getDepartmentId() == d.getDepartmentId()) {
                DepartmentProgram deptPrg = new DepartmentProgram();
-               deptPrg.setDepartmentProgramId(dPrg.getDepartmentProgramId());
+               deptPrg.setDepartmentProgramId(dPrg.getLookupDepartmentProgramId());
                deptPrg.setProgramName(dPrg.getProgramName());
                deptPrg.setProgramDescription(dPrg.getDescription());
                programList.add(deptPrg);
@@ -372,14 +352,13 @@ public class UtilityServicesImpl implements UtilityServices {
          regions = setRegionsStatus(regions, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return regions;
-      } 
-      catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          regions = setRegionsStatus(regions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_REGIONS.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_REGIONS));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_ALL_REGIONS));
          return regions;
       }
-      
+
    }
 
    @Override
@@ -401,25 +380,24 @@ public class UtilityServicesImpl implements UtilityServices {
          seasonStatuses = setSeasonStatusesStatus(seasonStatuses, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return seasonStatuses;
-      } 
-      catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          seasonStatuses = setSeasonStatusesStatus(seasonStatuses, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_STATUS.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_SEASON_STATUS));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_SEASON_STATUS));
          return seasonStatuses;
       }
-      
+
    }
 
    @Override
    public Genders getGenders() {
       Genders genders = null;
-      try{
+      try {
          List<LookupGender> genderList = genderRepository.findAll();
-         if(genderList!=null){
+         if (genderList != null) {
             genders = new Genders();
-            for(LookupGender lookupGender:genderList){
-               if(!(lookupGender.getGenderId()==CCIConstants.UNDEFINED_GENDER)){
+            for (LookupGender lookupGender : genderList) {
+               if (!(lookupGender.getGenderId() == CCIConstants.UNDEFINED_GENDER)) {
                   Gender gender = new Gender();
                   gender.setGenderId(lookupGender.getGenderId());
                   gender.setGenderCode(lookupGender.getGenderName());
@@ -430,18 +408,15 @@ public class UtilityServicesImpl implements UtilityServices {
          genders = setGendersStatus(genders, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return genders;
-      }
-      catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          genders = setGendersStatus(genders, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_GENDERS.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_GENDERS));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_GENDERS));
          return genders;
       }
-      
+
    }
 
-   
-   
    @Override
    public Country getCountryById(int countryId) {
 
@@ -465,7 +440,7 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return country;
    }
-   
+
    @Override
    public Countries addCountry(Country country) {
       LookupCountry lookupCountry = null;
@@ -508,7 +483,6 @@ public class UtilityServicesImpl implements UtilityServices {
       return country;
 
    }
-   
 
    private Countries setCountriesStatus(Countries countries, String code, String type, int serviceCode, String message) {
       if (countries == null)
@@ -517,7 +491,6 @@ public class UtilityServicesImpl implements UtilityServices {
       return countries;
 
    }
-   
 
    private States setStatesStatus(States states, String code, String type, int serviceCode, String message) {
       if (states == null)
@@ -525,64 +498,63 @@ public class UtilityServicesImpl implements UtilityServices {
       states.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return states;
    }
-   
+
    private Departments setDepartmentsStatus(Departments departments, String code, String type, int serviceCode, String message) {
       if (departments == null)
          departments = new Departments();
       departments.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return departments;
    }
-   
+
    private Programs setProgramsStatus(Programs programs, String code, String type, int serviceCode, String message) {
       if (programs == null)
          programs = new Programs();
       programs.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return programs;
    }
-   
+
    private Roles setRolesStatus(Roles roles, String code, String type, int serviceCode, String message) {
       if (roles == null)
          roles = new Roles();
       roles.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return roles;
    }
-   
+
    private UserDepartments setUserDepartmentsStatus(UserDepartments userDepartments, String code, String type, int serviceCode, String message) {
       if (userDepartments == null)
          userDepartments = new UserDepartments();
       userDepartments.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return userDepartments;
    }
-   
+
    private Regions setRegionsStatus(Regions regions, String code, String type, int serviceCode, String message) {
       if (regions == null)
          regions = new Regions();
       regions.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return regions;
    }
-   
+
    private SeasonStatuses setSeasonStatusesStatus(SeasonStatuses seasonStatuses, String code, String type, int serviceCode, String message) {
       if (seasonStatuses == null)
          seasonStatuses = new SeasonStatuses();
       seasonStatuses.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return seasonStatuses;
    }
-   
+
    private Genders setGendersStatus(Genders genders, String code, String type, int serviceCode, String message) {
       if (genders == null)
          genders = new Genders();
       genders.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return genders;
    }
-   
+
    private String formResetURL(HttpServletRequest request) {
-      String protocol;
-      if (request.getProtocol().contains("https")) {
-         protocol = "HTTPS";
-      } else {
-         protocol = "HTTP";
+      String url = "";
+      try {
+         url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
+      } catch (Exception e) {
+         e.printStackTrace();
       }
-      String url = protocol + "://" + request.getServerName() + ":" + request.getServerPort() + CCIConstants.RESET_PASSWORD_LINK;
       return url;
    }
 
@@ -590,19 +562,31 @@ public class UtilityServicesImpl implements UtilityServices {
    public Response forgotPassword(ForgotRequest req, HttpServletRequest request) {
       Response response = new Response();
       try {
-         if (req.getEmail() == null) {
+         if (req.getEmail() == null && req.getUsername() == null) {
             response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
                   messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
             LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
             return response;
          }
-         Login loginUser = loginRepository.findByEmail(req.getEmail());
-         EmailServiceImpl email = new EmailServiceImpl();
-         
-         email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginUser.getKeyValue()), false);
-         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-               messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
-         // email.send(req.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, CCIConstants.RESET_PASSWORD_LINK, false);
+         Login loginUser = null;
+         if (req.getUsername() == null) {
+            loginUser = loginRepository.findByEmail(req.getEmail());
+         }
+         else if(req.getEmail() == null){
+            loginUser = loginRepository.findByLoginName(req.getUsername());
+         }
+         if (loginUser != null) {
+            String body = "<p>This email was sent automatically by CCI Greenheart Online system in response to your request to recover your online account password. </p>" +
+         "<p>Please go to the following page and choose a new password:</p> " + 
+                  "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"  +
+         "<p>If you ignore this message, your password won't be changed.</p><p>If you didn't request a password reset, let us know.</p><p>Thank you,</p><p>GO System Support.</p>";
+            email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+         } else {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage((UtilityServiceMessageConstants.CANNOT_FIND_USER_RESET_PASSWORD))));
+         }
       } catch (CcighgoException e) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
@@ -622,21 +606,21 @@ public class UtilityServicesImpl implements UtilityServices {
             LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
             return response;
          }
-            Login tempLogin = new Login();
-            tempLogin.setLoginId(login.getLoginId());
-            tempLogin.setLoginName(login.getLoginName());
-            tempLogin.setEmail(login.getEmail());
-            tempLogin.setKeyValue(UuidUtils.nextHexUUID());
-            tempLogin.setPassword(req.getPasskey());
-            tempLogin.setCreatedBy(login.getCreatedBy());
-            tempLogin.setCreatedOn(login.getCreatedOn());
-            tempLogin.setModifiedBy(login.getGoIdSequence().getGoId());
-            tempLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            tempLogin.setGoIdSequence(login.getGoIdSequence());
-            login = loginRepository.save(tempLogin);
-            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-                  messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
-         
+         Login tempLogin = new Login();
+         tempLogin.setLoginId(login.getLoginId());
+         tempLogin.setLoginName(login.getLoginName());
+         tempLogin.setEmail(login.getEmail());
+         tempLogin.setKeyValue(UuidUtils.nextHexUUID());
+         tempLogin.setPassword(PasswordUtil.hashKey(req.getPasskey()));
+         tempLogin.setCreatedBy(login.getCreatedBy());
+         tempLogin.setCreatedOn(login.getCreatedOn());
+         tempLogin.setModifiedBy(login.getGoIdSequence().getGoId());
+         tempLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         tempLogin.setGoIdSequence(login.getGoIdSequence());
+         login = loginRepository.save(tempLogin);
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+
       } catch (CcighgoException e) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
@@ -644,23 +628,21 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return response;
    }
-   
+
    @Override
-   public  boolean checkUserName(String userName){
-      if(loginRepository.findByLoginName(userName) !=null){
+   public boolean checkUserName(String userName) {
+      if (loginRepository.findByLoginName(userName) != null) {
          return true;
-      }
-      else
-      return false;
+      } else
+         return false;
    }
-   
+
    @Override
-   public  boolean checkEmail(String email){
-      if(loginRepository.findByEmail(email) !=null){
+   public boolean checkEmail(String email) {
+      if (loginRepository.findByEmail(email) != null) {
          return true;
-      }
-      else
-      return false;
+      } else
+         return false;
    }
-   
+
 }

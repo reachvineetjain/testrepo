@@ -20,9 +20,9 @@ import com.ccighgo.service.components.partner.PartnerServiceImpl;
 @Produces("application/json")
 @Consumes("application/json")
 public class Partner {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(Partner.class);
-   
-  PartnerServiceImpl partnerServiceImpl;
-   
+
+   PartnerServiceImpl partnerServiceImpl;
+
 }

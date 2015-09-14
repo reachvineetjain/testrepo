@@ -61,6 +61,11 @@ public class LookupDepartment implements Serializable {
 	@OneToMany(mappedBy="lookupDepartment")
 	private List<DepartmentResourceGroup> departmentResourceGroups;
 
+	//bi-directional many-to-one association to LookupDepartmentProgram
+	@OneToMany(mappedBy = "lookupDepartment", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
+	private List<LookupDepartmentProgram> lookupDepartmentPrograms;
+
 	//bi-directional many-to-one association to Season
 	@OneToMany(mappedBy="lookupDepartment")
 	private List<Season> seasons;
@@ -204,6 +209,28 @@ public class LookupDepartment implements Serializable {
 		departmentResourceGroup.setLookupDepartment(null);
 
 		return departmentResourceGroup;
+	}
+
+	public List<LookupDepartmentProgram> getLookupDepartmentPrograms() {
+		return this.lookupDepartmentPrograms;
+	}
+
+	public void setLookupDepartmentPrograms(List<LookupDepartmentProgram> lookupDepartmentPrograms) {
+		this.lookupDepartmentPrograms = lookupDepartmentPrograms;
+	}
+
+	public LookupDepartmentProgram addLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		getLookupDepartmentPrograms().add(lookupDepartmentProgram);
+		lookupDepartmentProgram.setLookupDepartment(this);
+
+		return lookupDepartmentProgram;
+	}
+
+	public LookupDepartmentProgram removeLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		getLookupDepartmentPrograms().remove(lookupDepartmentProgram);
+		lookupDepartmentProgram.setLookupDepartment(null);
+
+		return lookupDepartmentProgram;
 	}
 
 	public List<Season> getSeasons() {

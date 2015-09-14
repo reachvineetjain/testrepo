@@ -43,10 +43,6 @@ public class DepartmentProgram implements Serializable {
 	@Column(nullable=false, length=50)
 	private String programName;
 
-	//bi-directional many-to-one association to CCIStaffUserProgram
-	@OneToMany(mappedBy="departmentProgram")
-	private List<CCIStaffUserProgram> ccistaffUserPrograms;
-
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
    @Fetch(value = FetchMode.SUBSELECT)
@@ -61,6 +57,18 @@ public class DepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="departmentProgram")
 	private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
+	//bi-directional many-to-one association to PartnerAgentProgram
+	@OneToMany(mappedBy="departmentProgram")
+	private List<PartnerAgentProgram> partnerAgentPrograms;
+
+	//bi-directional many-to-one association to PartnerAnnouncement
+	@OneToMany(mappedBy="departmentProgram")
+	private List<PartnerAnnouncement> partnerAnnouncements;
+
+	//bi-directional many-to-one association to PartnerCCIContact
+	@OneToMany(mappedBy="departmentProgram")
+	private List<PartnerCCIContact> partnerCcicontacts;
+
 	//bi-directional many-to-one association to SeasonProgramDocument
 	@OneToMany(mappedBy="departmentProgram")
 	private List<SeasonProgramDocument> seasonProgramDocuments;
@@ -73,11 +81,6 @@ public class DepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="departmentProgram")
 	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
-	  //bi-directional many-to-one association to PartnerAgentProgram
-   @OneToMany(mappedBy="departmentProgram")
-   private List<PartnerAgentProgram> partnerAgentPrograms;
-   
-   
 	public DepartmentProgram() {
 	}
 
@@ -137,28 +140,6 @@ public class DepartmentProgram implements Serializable {
 		this.programName = programName;
 	}
 
-	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
-		return this.ccistaffUserPrograms;
-	}
-
-	public void setCcistaffUserPrograms(List<CCIStaffUserProgram> ccistaffUserPrograms) {
-		this.ccistaffUserPrograms = ccistaffUserPrograms;
-	}
-
-	public CCIStaffUserProgram addCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-		getCcistaffUserPrograms().add(ccistaffUserProgram);
-		ccistaffUserProgram.setDepartmentProgram(this);
-
-		return ccistaffUserProgram;
-	}
-
-	public CCIStaffUserProgram removeCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-		getCcistaffUserPrograms().remove(ccistaffUserProgram);
-		ccistaffUserProgram.setDepartmentProgram(null);
-
-		return ccistaffUserProgram;
-	}
-
 	public List<DepartmentProgramOption> getDepartmentProgramOptions() {
 		return this.departmentProgramOptions;
 	}
@@ -209,6 +190,72 @@ public class DepartmentProgram implements Serializable {
 		fieldStaffLcseason.setDepartmentProgram(null);
 
 		return fieldStaffLcseason;
+	}
+
+	public List<PartnerAgentProgram> getPartnerAgentPrograms() {
+		return this.partnerAgentPrograms;
+	}
+
+	public void setPartnerAgentPrograms(List<PartnerAgentProgram> partnerAgentPrograms) {
+		this.partnerAgentPrograms = partnerAgentPrograms;
+	}
+
+	public PartnerAgentProgram addPartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
+		getPartnerAgentPrograms().add(partnerAgentProgram);
+		partnerAgentProgram.setDepartmentProgram(this);
+
+		return partnerAgentProgram;
+	}
+
+	public PartnerAgentProgram removePartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
+		getPartnerAgentPrograms().remove(partnerAgentProgram);
+		partnerAgentProgram.setDepartmentProgram(null);
+
+		return partnerAgentProgram;
+	}
+
+	public List<PartnerAnnouncement> getPartnerAnnouncements() {
+		return this.partnerAnnouncements;
+	}
+
+	public void setPartnerAnnouncements(List<PartnerAnnouncement> partnerAnnouncements) {
+		this.partnerAnnouncements = partnerAnnouncements;
+	}
+
+	public PartnerAnnouncement addPartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
+		getPartnerAnnouncements().add(partnerAnnouncement);
+		partnerAnnouncement.setDepartmentProgram(this);
+
+		return partnerAnnouncement;
+	}
+
+	public PartnerAnnouncement removePartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
+		getPartnerAnnouncements().remove(partnerAnnouncement);
+		partnerAnnouncement.setDepartmentProgram(null);
+
+		return partnerAnnouncement;
+	}
+
+	public List<PartnerCCIContact> getPartnerCcicontacts() {
+		return this.partnerCcicontacts;
+	}
+
+	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
+		this.partnerCcicontacts = partnerCcicontacts;
+	}
+
+	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
+		getPartnerCcicontacts().add(partnerCcicontact);
+		partnerCcicontact.setDepartmentProgram(this);
+
+		return partnerCcicontact;
+	}
+
+	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
+		getPartnerCcicontacts().remove(partnerCcicontact);
+		partnerCcicontact.setDepartmentProgram(null);
+
+		return partnerCcicontact;
 	}
 
 	public List<SeasonProgramDocument> getSeasonProgramDocuments() {
@@ -276,12 +323,5 @@ public class DepartmentProgram implements Serializable {
 
 		return seasonProgramUpdateLog;
 	}
-	public List<PartnerAgentProgram> getPartnerAgentPrograms() {
-      return this.partnerAgentPrograms;
-   }
-
-   public void setPartnerAgentPrograms(List<PartnerAgentProgram> partnerAgentPrograms) {
-      this.partnerAgentPrograms = partnerAgentPrograms;
-   }
 
 }

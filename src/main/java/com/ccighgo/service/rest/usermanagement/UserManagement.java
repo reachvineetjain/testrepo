@@ -5,12 +5,14 @@ package com.ccighgo.service.rest.usermanagement;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +20,7 @@ import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.SupervisorDetails;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserRolePermissions;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
@@ -47,6 +50,8 @@ public class UserManagement {
     @Autowired
     UserManagementService userMgmtServices;
 
+    @Context HttpServletRequest request;
+    
     /**
      * The method {@code ping(@PathParam("input") String input)} returns user
      * input string back. The purpose of the method is to test if utility
@@ -79,6 +84,13 @@ public class UserManagement {
     @Produces("application/json")
     public CCIUsers findAllUsers() {
         return userMgmtServices.findAllUsers();
+    }
+    
+    @GET
+    @Path("get-all-supervisors")
+    @Produces("application/json")
+    public SupervisorDetails findAllSupervisors() {
+        return userMgmtServices.findAllSupervisors();
     }
 
     /**
@@ -117,7 +129,7 @@ public class UserManagement {
     @Path("create/")
     @Consumes("application/json")
     public User createUser(User user) {
-        return userMgmtServices.createUser(user);
+        return userMgmtServices.createUser(user ,request);
     }
 
     /**

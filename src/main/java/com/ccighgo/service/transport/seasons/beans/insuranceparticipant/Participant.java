@@ -29,12 +29,16 @@ public class Participant {
    protected String email;
    protected String gender;
    protected String sports_rider;
-   protected int plan_id;
+   protected Integer plan_id;
    protected String start_date;
    protected String end_date;
    protected String labels;
    protected String status_is;
    protected String message;
+   protected Integer home_country_id;
+   protected String us_destination;
+   protected String  us_citizen;
+
 
    public String getId() {
       return id;
@@ -172,11 +176,11 @@ public class Participant {
       this.sports_rider = sports_rider;
    }
 
-   public int getPlan_id() {
+   public Integer getPlan_id() {
       return plan_id;
    }
 
-   public void setPlan_id(int plan_id) {
+   public void setPlan_id(Integer plan_id) {
       this.plan_id = plan_id;
    }
 
@@ -220,4 +224,29 @@ public class Participant {
       this.message = message;
    }
 
+   public Integer getHome_country_id() {
+      return home_country_id;
+   }
+
+   public void setHome_country_id(Integer home_country_id) {
+      this.home_country_id = home_country_id;
+   }
+
+   public String getUs_destination() {
+      return us_destination;
+   }
+
+   public void setUs_destination(String us_destination) {
+      this.us_destination = us_destination;
+   }
+
+   public String getUs_citizen() {
+      return us_citizen;
+   }
+
+   public void setUs_citizen(String us_citizen) {
+      this.us_citizen = us_citizen;
+   }
+
+   
 }

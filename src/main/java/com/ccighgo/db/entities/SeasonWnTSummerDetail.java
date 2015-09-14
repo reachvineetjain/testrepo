@@ -40,7 +40,7 @@ public class SeasonWnTSummerDetail implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=45)
+	@Column(length=55)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)

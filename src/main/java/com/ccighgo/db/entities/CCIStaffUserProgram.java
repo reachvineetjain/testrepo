@@ -34,10 +34,10 @@ public class CCIStaffUserProgram implements Serializable {
 	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
 	private CCIStaffUser ccistaffUser;
 
-	//bi-directional many-to-one association to DepartmentProgram
+	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId", nullable=false, insertable=false, updatable=false)
-	private DepartmentProgram departmentProgram;
+	@JoinColumn(name="lookupDepartmentProgramId", nullable=false, insertable=false, updatable=false)
+	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	public CCIStaffUserProgram() {
 	}
@@ -90,12 +90,12 @@ public class CCIStaffUserProgram implements Serializable {
 		this.ccistaffUser = ccistaffUser;
 	}
 
-	public DepartmentProgram getDepartmentProgram() {
-		return this.departmentProgram;
+	public LookupDepartmentProgram getLookupDepartmentProgram() {
+		return this.lookupDepartmentProgram;
 	}
 
-	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
-		this.departmentProgram = departmentProgram;
+	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		this.lookupDepartmentProgram = lookupDepartmentProgram;
 	}
 
 }

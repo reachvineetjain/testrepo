@@ -13,24 +13,24 @@ public class CCIStaffUserProgramPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private int cciStaffUserId;
+	private Integer cciStaffUserId;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private int departmentProgramId;
+	private Integer lookupDepartmentProgramId;
 
 	public CCIStaffUserProgramPK() {
 	}
-	public int getCciStaffUserId() {
+	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
-	public void setCciStaffUserId(int cciStaffUserId) {
+	public void setCciStaffUserId(Integer cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
-	public int getDepartmentProgramId() {
-		return this.departmentProgramId;
+	public Integer getLookupDepartmentProgramId() {
+		return this.lookupDepartmentProgramId;
 	}
-	public void setDepartmentProgramId(int departmentProgramId) {
-		this.departmentProgramId = departmentProgramId;
+	public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
+		this.lookupDepartmentProgramId = lookupDepartmentProgramId;
 	}
 
 	public boolean equals(Object other) {
@@ -43,14 +43,14 @@ public class CCIStaffUserProgramPK implements Serializable {
 		CCIStaffUserProgramPK castOther = (CCIStaffUserProgramPK)other;
 		return 
 			(this.cciStaffUserId == castOther.cciStaffUserId)
-			&& (this.departmentProgramId == castOther.departmentProgramId);
+			&& (this.lookupDepartmentProgramId == castOther.lookupDepartmentProgramId);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.cciStaffUserId;
-		hash = hash * prime + this.departmentProgramId;
+		hash = hash * prime + this.lookupDepartmentProgramId;
 		
 		return hash;
 	}

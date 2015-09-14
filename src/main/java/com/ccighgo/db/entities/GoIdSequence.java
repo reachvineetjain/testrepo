@@ -20,13 +20,17 @@ public class GoIdSequence implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer goId;
 
-	//bi-directional many-to-one association to CCIStaffUser
+	//bi-directional one-to-one association to CCIStaffUser
 	@OneToOne(mappedBy="goIdSequence")
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to Login
 	@OneToOne(mappedBy="goIdSequence")
-	private Login login;
+   private Login login;
+
+	//bi-directional one-to-one association to Partner
+	@OneToOne(mappedBy="goIdSequence")
+	private Partner partner;
 
 	public GoIdSequence() {
 	}
@@ -47,20 +51,6 @@ public class GoIdSequence implements Serializable {
 		this.ccistaffUser = ccistaffUser;
 	}
 
-	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
-		//getCcistaffUsers().add(ccistaffUser);
-		ccistaffUser.setGoIdSequence(this);
-
-		return ccistaffUser;
-	}
-
-	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
-//		getCcistaffUsers().remove(ccistaffUser);
-		ccistaffUser.setGoIdSequence(null);
-
-		return ccistaffUser;
-	}
-
 	public Login getLogin() {
 		return this.login;
 	}
@@ -70,17 +60,21 @@ public class GoIdSequence implements Serializable {
 	}
 
 	public Login addLogin(Login login) {
-//		getLogins().add(login);
 		login.setGoIdSequence(this);
-
 		return login;
 	}
 
 	public Login removeLogin(Login login) {
-//		getLogins().remove(login);
 		login.setGoIdSequence(null);
-
 		return login;
+	}
+
+	public Partner getPartner() {
+		return this.partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
 	}
 
 }

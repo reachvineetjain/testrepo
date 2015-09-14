@@ -177,7 +177,7 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingApplicationByGender(seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE ? true : false);
-            if (seasonIHPDetail.getApplicationDeadLineWeeks() != null && seasonIHPDetail.getApplicationDeadLineWeeks() > 0) {
+            if (seasonIHPDetail.getApplicationDeadLineWeeks()!=null && seasonIHPDetail.getApplicationDeadLineWeeks() > 0) {
                ihpProgramConfiguration.setApplicationCutOffPriorToProgStart(String.valueOf(seasonIHPDetail.getApplicationDeadLineWeeks()));
             }
             if (seasonIHPDetail.getLcHoldTime() != null && seasonIHPDetail.getLcHoldTime() > 0) {
@@ -411,10 +411,10 @@ public class SeasonIHPProgramHelper {
          SeasonIHPDetail seasonIHPDetail = ihpDetailRepository.findOne(ihpProgramConfiguration.getSeasonProgramId());
          if (seasonIHPDetail != null) {
             seasonIHPDetail.setMaxParticipants(ihpProgramConfiguration.getMaxNoOfParticipants());
-            seasonIHPDetail.setApplicationDeadLineWeeks(Integer.valueOf(ihpProgramConfiguration.getApplicationCutOffPriorToProgStart()));
+            seasonIHPDetail.setApplicationDeadLineWeeks(Integer.valueOf(ihpProgramConfiguration.getApplicationCutOffPriorToProgStart()!=null?ihpProgramConfiguration.getApplicationCutOffPriorToProgStart():"0"));
             seasonIHPDetail.setLcHoldTime(ihpProgramConfiguration.getLcHoldTimeDays());
             seasonIHPDetail.setNumberOfLCToRequestHold(ihpProgramConfiguration.getNoOfLcCanRequestHold());
-            seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending()));
+            seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending()!=null?ihpProgramConfiguration.getSplitPlacementInPending():"0"));
             seasonIHPDetail.setStopAcceptingApps(ihpProgramConfiguration.isStopAcceptingApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsStandardIHP(ihpProgramConfiguration.isStopAcceptingIhpStandardSettings() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsVolunteerHomestay(ihpProgramConfiguration.isStopAcceptingVolunteerHomeStayApplications() ? CCIConstants.ACTIVE
@@ -422,6 +422,7 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setStopAcceptingAppsLanguageBuddy(ihpProgramConfiguration.isStopAcceptingLanguageBuddyApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(ihpProgramConfiguration.isStopAcceptingHolidayHomeStayApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(ihpProgramConfiguration.isStopAcceptingHighSchoolApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+            seasonIHPDetail.setStopAcceptingAppsByGender(ihpProgramConfiguration.isStopAcceptingApplicationByGender() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             if (ihpProgramConfiguration.getGenderId() > 0 && (ihpProgramConfiguration.getGenderId() == 1 || ihpProgramConfiguration.getGenderId() == 2)) {
                LookupGender gender = genderRepository.findOne(ihpProgramConfiguration.getGenderId());
                seasonIHPDetail.setLookupGender(gender);

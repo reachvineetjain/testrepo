@@ -1,7 +1,6 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 
 
@@ -10,15 +9,17 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="PartnerAgentInquiryDocument")
 @NamedQuery(name="PartnerAgentInquiryDocument.findAll", query="SELECT p FROM PartnerAgentInquiryDocument p")
 public class PartnerAgentInquiryDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerAgentInquiryDocumentId;
 
-	private Byte active;
+	private byte active;
 
 	private Integer documentInformationId;
 
@@ -43,11 +44,11 @@ public class PartnerAgentInquiryDocument implements Serializable {
 		this.partnerAgentInquiryDocumentId = partnerAgentInquiryDocumentId;
 	}
 
-	public Byte getActive() {
+	public byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(Byte active) {
+	public void setActive(byte active) {
 		this.active = active;
 	}
 
