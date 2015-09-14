@@ -549,17 +549,10 @@ public class UtilityServicesImpl implements UtilityServices {
    }
 
    private String formResetURL(HttpServletRequest request) {
-      String protocol;
-      if (request.getProtocol().contains("https")) {
-         protocol = "https";
-      } else {
-         protocol = "http";
-      }
       String url = "";
       try {
-         InetAddress address = InetAddress.getLocalHost();
-         url = protocol + "://" + address.getCanonicalHostName() + CCIConstants.RESET_PASSWORD_LINK;
-      } catch (UnknownHostException e) {
+         url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
+      } catch (Exception e) {
          e.printStackTrace();
       }
       return url;
