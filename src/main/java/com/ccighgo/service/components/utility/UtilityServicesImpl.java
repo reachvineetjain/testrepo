@@ -549,7 +549,7 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
-private String formResetURL(HttpServletRequest request) {
+   private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
          url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
