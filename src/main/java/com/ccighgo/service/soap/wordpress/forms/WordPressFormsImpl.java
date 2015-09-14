@@ -1,11 +1,11 @@
 package com.ccighgo.service.soap.wordpress.forms;
 
-import java.util.Random;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
+import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
@@ -18,12 +18,19 @@ public class WordPressFormsImpl implements IWordPressForms {
 
    @Autowired
    PartnerAgentInquiryRepository partnerAgentInquiryRepository;
-
+   @Autowired
+   LoginRepository loginRepository;
    @Override
    public String InquiryPartner(InternationalPartners InternationalPartners) {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
+         Login user =loginRepository.findByEmail(InternationalPartners.getEmail());
+         if(user!=null){
+            String string = "400:Duplicate Row (User Already Exist ):400:Duplicate Row ( User Already Exist)";
+            System.out.println(string);
+            return string;
+         }
          if (InternationalPartners != null) {
             PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
             partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
@@ -40,25 +47,25 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          }
          if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
-            String string = "200:Success";
+            String string = "200:Success:200:Success";
             System.out.println(string);
             return string;
          } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-            String string = "400:Duplicate Row";
+            String string = "400:Duplicate Row:400:Duplicate Row";
             System.out.println(string);
             return string;
          } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-            String string = "500:Failed To Process Record ! Contact Admin";
+            String string = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
             System.out.println(string);
             return string;
          } else {
-            String string = "300:Missing Information";
+            String string = "300:Missing Information:300:Missing Information";
             System.out.println(string);
             return string;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         String string = "700:Internal Error";
+         String string = "700:Internal Error:700:"+e.getMessage();
          System.out.println(string);
          return string;
       }
