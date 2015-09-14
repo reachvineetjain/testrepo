@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -65,6 +66,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    @Autowired PartnerPermissionRepository partnerPermissionRepository;
 
    @Override
+   @Transactional(readOnly = true)
    public PartnerUsers getAllPartnerUsers(String partnerId) {
       PartnerUsers partnerUsers = new PartnerUsers();
       if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
@@ -106,6 +108,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
 
    @Override
+   @Transactional(readOnly = true)
    public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
       PartnerUserDetailAndRoles viewPartnerUser = null;
       if (partnerUserDetailAndRoles == null) {
@@ -232,10 +235,9 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
    
    @Override
+   @Transactional(readOnly = true)
    public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles){
       
-      
-
       PartnerUserDetailAndRoles viewPartnerUser = null;
       if (partnerUserDetailAndRoles == null) {
          viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PARTNER_USER.getValue(),
@@ -244,18 +246,13 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          return viewPartnerUser;
       }
       PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserDetailAndRoles.getPartnerUserId()));
-
-      com.ccighgo.db.entities.UserType partnerUserType = userTypeRepository.findOne(CCIConstants.PARTNER_USER_TYPE);
-      if (partnerUserType == null) {
-         partnerUserType = new com.ccighgo.db.entities.UserType();
-      }
       
       partnerUser.getLogin().setLoginName(partnerUserDetailAndRoles.getUsername());
       partnerUser.getLogin().setEmail(partnerUserDetailAndRoles.getEmail());
       partnerUser.getLogin().setModifiedBy(partnerUser.getPartner().getPartnerGoId());
       partnerUser.getLogin().setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       
- 
+      partnerUser.setPartnerUserId(Integer.valueOf(partnerUserDetailAndRoles.getPartnerUserId()));
       partnerUser.setActive(partnerUserDetailAndRoles.getUserStatus() == true ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
       partnerUser.setEmail(partnerUserDetailAndRoles.getEmail());
       partnerUser.setEmergencyPhone(partnerUserDetailAndRoles.getEmergencyPhone());
@@ -272,7 +269,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       partnerPermission.setPartnerPermissionsId(partnerUser.getPartnerPermissions().getPartnerPermissionsId());
       partnerUser.setPartnerPermissions(partnerPermission);
       }
-      partnerUser.setPartnerUserRoles(new ArrayList<PartnerUserRole>());
+//      partnerUser.setPartnerUserRoles(new ArrayList<PartnerUserRole>());
       partnerUser = partnerUserRepository.save(partnerUser);
       viewPartnerUser = viewPartnerUser(partnerUser.getPartnerUserId().toString());
       return viewPartnerUser;
@@ -281,6 +278,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    
    
    @Override
+   @Transactional(readOnly = true)
    public PartnerUserDetailAndRoles viewPartnerUser(String partnerUserId) {
       PartnerUserDetailAndRoles partnerUserDetailAndRoles = null;
       if (partnerUserId == null) {
@@ -390,9 +388,6 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
       return partnerUserProgramAccess;
    }
-   
-  
-   
    
    private PartnerUserDetailAndRoles setPartnerUserDetailAndRolesStatus(PartnerUserDetailAndRoles partnerUserDetailAndRoles, String code, String type, int serviceCode, String message) {
       if (partnerUserDetailAndRoles == null)
