@@ -9,14 +9,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerPermission;
 import com.ccighgo.db.entities.PartnerUser;
-import com.ccighgo.db.entities.UserType;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
@@ -30,12 +27,10 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerUserMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramAccess;
-import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
@@ -110,13 +105,22 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
    @Override
    public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
-
+      PartnerUserDetailAndRoles viewPartnerUser = null;
+      if (partnerUserDetailAndRoles == null) {
+         viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PARTNER_USER.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
+         return viewPartnerUser;
+      }
       PartnerUser partnerUser = new PartnerUser();
       Partner partner = partnerRepository.findOne(Integer.valueOf(partnerUserDetailAndRoles.getPartnergoId()));
-
-      if (partnerUserDetailAndRoles == null) {
-
+      if (partner == null) {
+         viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PARTNER.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER));
+         return viewPartnerUser;
       }
+
       com.ccighgo.db.entities.UserType partnerUserType = userTypeRepository.findOne(CCIConstants.PARTNER_USER_TYPE);
       if (partnerUserType == null) {
          partnerUserType = new com.ccighgo.db.entities.UserType();
@@ -153,7 +157,9 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       partnerUser.setLastName(partnerUserDetailAndRoles.getLastName());
       partnerUser.setLogin(login);
       partnerUser.setPartner(partner);
-      // partnerUser.setPartnerPermissions();
+      if(partnerUserDetailAndRoles.getProgramsAccess() != null){
+       partnerUser.setPartnerPermissions(getPartnerPermission(partnerUserDetailAndRoles.getProgramsAccess()));
+      }
       // partnerUser.setPartnerUserRoles(partnerUserRoles);
 
       partnerUser.setPhone(partnerUserDetailAndRoles.getPhone());
@@ -161,14 +167,26 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       partnerUser.setSkypeId(partnerUserDetailAndRoles.getSkypeId());
       partnerUser.setTitle(partnerUserDetailAndRoles.getTitle());
       partnerUser = partnerUserRepository.save(partnerUser);
-      return viewPartnerUser(partnerUser.getPartnerUserId().toString());
+      viewPartnerUser = viewPartnerUser(partnerUser.getPartnerUserId().toString());
+      return viewPartnerUser;
    }
+   
+   
+   private PartnerPermission getPartnerPermission(PartnerUserProgramAccess partnerUserProgramAccess){
+      
+      PartnerPermission partnerPermission = new PartnerPermission();
+      
+      partnerPermission.setCapAccountingInsurance(partnerUserProgramAccess.getCapAccountingInsurance());
+     // partnerPermission.setCapAdmin(capAdmin);
+      
+      return null;
+   }
+   
 
    @Override
    public PartnerUserDetailAndRoles viewPartnerUser(String partnerUserId) {
       PartnerUserDetailAndRoles partnerUserDetailAndRoles = null;
       if (partnerUserId == null) {
-
          partnerUserDetailAndRoles = setPartnerUserDetailAndRolesStatus(partnerUserDetailAndRoles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
                ErrorCode.FAILED_GET_PARTNER_USER_ID_NULL.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
          LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
@@ -179,10 +197,9 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          partnerUserDetailAndRoles = new PartnerUserDetailAndRoles();
          PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
          if (partnerUser == null) {
-
             partnerUserDetailAndRoles = setPartnerUserDetailAndRolesStatus(partnerUserDetailAndRoles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-                  ErrorCode.FAILED_GET_PARTNER_USER_ID_NULL.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
-            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
+                  ErrorCode.FAILED_GET_PARTNER_USER.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
             return partnerUserDetailAndRoles;
          }
          partnerUserDetailAndRoles.setPartnergoId(partnerUser.getPartner().getPartnerGoId().toString());
@@ -200,12 +217,18 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          partnerUserDetailAndRoles.setTitle(partnerUser.getTitle());
          partnerUserDetailAndRoles.setUsername(partnerUser.getLogin().getLoginName());
          partnerUserDetailAndRoles.setUserStatus(partnerUser.getActive() == CCIConstants.ACTIVE ? true : false);
+         if(partnerUser.getPartnerPermissions() == null){
+            partnerUserDetailAndRoles = setPartnerUserDetailAndRolesStatus(partnerUserDetailAndRoles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+                  ErrorCode.FAILED_GET_PARTNER_PERMISSIONS.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_PERMISSIONS));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_PERMISSIONS));
+            return partnerUserDetailAndRoles;
+         }
          partnerUserDetailAndRoles.setProgramsAccess(getProgramAccessTO(partnerUser));
 
       } catch (CcighgoException e) {
-         partnerUserDetailAndRoles.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
-               messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
-         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
+         partnerUserDetailAndRoles = setPartnerUserDetailAndRolesStatus(partnerUserDetailAndRoles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               ErrorCode.FAILED_GET_PARTNER_USER.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
       }
 
       return partnerUserDetailAndRoles;
@@ -214,62 +237,65 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    
    private PartnerUserProgramAccess getProgramAccessTO(PartnerUser partnerUser) {
       PartnerUserProgramAccess partnerUserProgramAccess = new PartnerUserProgramAccess();
-     // PartnerPermission PartnerPermission = partnerPermissionRepository.findByPartnerUserId(partnerUser);
+      // PartnerPermission PartnerPermission = partnerPermissionRepository.findByPartnerUserId(partnerUser);
       PartnerPermission PartnerPermission = partnerUser.getPartnerPermissions();
       
-      partnerUserProgramAccess.setCapAccountingInsurance(PartnerPermission.getCapAccountingInsurance());
-      partnerUserProgramAccess.setCapAdmin(PartnerPermission.getCapAdmin());
-      partnerUserProgramAccess.setCapApplications(PartnerPermission.getCapApplications());
-      partnerUserProgramAccess.setCapContracting(PartnerPermission.getCapContracting());
-      partnerUserProgramAccess.setCapFlights(PartnerPermission.getCapFlights());
-      partnerUserProgramAccess.setCapInsurance(PartnerPermission.getCapInsurance());
-      partnerUserProgramAccess.setCapMonitoring(PartnerPermission.getCapMonitoring());
-      partnerUserProgramAccess.setCapPlacementInfo(PartnerPermission.getCapPlacementInfo());
-      partnerUserProgramAccess.setCapStudentsPreProgram(PartnerPermission.getCapStudentsPreProgram());
-      
-      partnerUserProgramAccess.setF1AccountingInsurance(PartnerPermission.getF1AccountingInsurance());
-      partnerUserProgramAccess.setF1Admin(PartnerPermission.getF1Admin());
-      partnerUserProgramAccess.setF1Applications(PartnerPermission.getF1Applications());
-      partnerUserProgramAccess.setF1Contracting(PartnerPermission.getF1Contracting());
-      partnerUserProgramAccess.setF1Flights(PartnerPermission.getF1Flights());
-      partnerUserProgramAccess.setF1Insurance(PartnerPermission.getF1Insurance());
-      partnerUserProgramAccess.setF1Monitoring(PartnerPermission.getF1Monitoring());
-      partnerUserProgramAccess.setF1PlacementInfo(PartnerPermission.getF1PlacementInfo());
-      partnerUserProgramAccess.setF1StudentsPreProgram(PartnerPermission.getF1StudentsPreProgram());
-      
-      
-      partnerUserProgramAccess.setJ1AccountingInsurance(PartnerPermission.getJ1AccountingInsurance());
-      partnerUserProgramAccess.setJ1Admin(PartnerPermission.getJ1Admin());
-      partnerUserProgramAccess.setJ1Applications(PartnerPermission.getJ1Applications());
-      partnerUserProgramAccess.setJ1Contracting(PartnerPermission.getJ1Contracting());
-      partnerUserProgramAccess.setJ1Flights(PartnerPermission.getJ1Flights());
-      partnerUserProgramAccess.setJ1Insurance(PartnerPermission.getJ1Insurance());
-      partnerUserProgramAccess.setJ1Monitoring(PartnerPermission.getJ1Monitoring());
-      partnerUserProgramAccess.setJ1PlacementInfo(PartnerPermission.getJ1PlacementInfo());
-      partnerUserProgramAccess.setJ1StudentsPreProgram(PartnerPermission.getJ1StudentsPreProgram());
-      
-      partnerUserProgramAccess.setWtAccoutingInsurance(PartnerPermission.getWtAccoutingInsurance());
-      partnerUserProgramAccess.setWtAdmin(PartnerPermission.getWtAdmin());
-      partnerUserProgramAccess.setWtApplications(PartnerPermission.getWtApplications());
-      partnerUserProgramAccess.setWtContracting(PartnerPermission.getWtContracting());
-      partnerUserProgramAccess.setWtFlights(PartnerPermission.getWtFlights());
-      partnerUserProgramAccess.setWtInsurance(PartnerPermission.getWtInsurance());
-      partnerUserProgramAccess.setWtMonitoring(PartnerPermission.getWtMonitoring());
-      partnerUserProgramAccess.setWtPlacementInfo(PartnerPermission.getWtPlacementInfo());
-      partnerUserProgramAccess.setWtStudentsPreProgram(PartnerPermission.getWtStudentsPreProgram());
-      
-      partnerUserProgramAccess.setIhpAccountingInsurance(PartnerPermission.getIhpAccountingInsurance());
-      partnerUserProgramAccess.setIhpAdmin(PartnerPermission.getIhpAdmin());
-      partnerUserProgramAccess.setIhpApplications(PartnerPermission.getIhpApplications());
-      partnerUserProgramAccess.setIhpContracting(PartnerPermission.getIhpContracting());
-      partnerUserProgramAccess.setIhpFlights(PartnerPermission.getIhpFlights());
-      partnerUserProgramAccess.setIhpInsurance(PartnerPermission.getIhpInsurance());
-      partnerUserProgramAccess.setIhpMonitoring(PartnerPermission.getIhpMonitoring());
-      partnerUserProgramAccess.setIhpPlacementInfo(PartnerPermission.getIhpPlacementInfo());
-      partnerUserProgramAccess.setIhpStudentsPreProgram(PartnerPermission.getIhpStudentsPreProgram());
+
+      partnerUserProgramAccess.setCapAccountingInsurance(PartnerPermission.getCapAccountingInsurance() != null ? PartnerPermission.getCapAccountingInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapAdmin(PartnerPermission.getCapAdmin() != null ? PartnerPermission.getCapAdmin() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapApplications(PartnerPermission.getCapApplications() != null ? PartnerPermission.getCapApplications() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapContracting(PartnerPermission.getCapContracting() != null ? PartnerPermission.getCapContracting() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapFlights(PartnerPermission.getCapFlights() != null ? PartnerPermission.getCapFlights() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapInsurance(PartnerPermission.getCapInsurance() != null ? PartnerPermission.getCapInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapMonitoring(PartnerPermission.getCapMonitoring() != null ? PartnerPermission.getCapMonitoring() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapPlacementInfo(PartnerPermission.getCapPlacementInfo() != null ? PartnerPermission.getCapPlacementInfo() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setCapStudentsPreProgram(PartnerPermission.getCapStudentsPreProgram() != null ? PartnerPermission.getCapStudentsPreProgram() : CCIConstants.INACTIVE);
+
+      partnerUserProgramAccess.setF1AccountingInsurance(PartnerPermission.getF1AccountingInsurance() != null ? PartnerPermission.getF1AccountingInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1Admin(PartnerPermission.getF1Admin() != null ? PartnerPermission.getF1Admin() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1Applications(PartnerPermission.getF1Applications() != null ? PartnerPermission.getF1Applications() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1Contracting(PartnerPermission.getF1Contracting() != null ? PartnerPermission.getF1Contracting() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1Flights(PartnerPermission.getF1Flights() != null ? PartnerPermission.getF1Flights() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1Insurance(PartnerPermission.getF1Insurance() != null ? PartnerPermission.getF1Insurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1Monitoring(PartnerPermission.getF1Monitoring() != null ? PartnerPermission.getF1Monitoring() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1PlacementInfo(PartnerPermission.getF1PlacementInfo() != null ? PartnerPermission.getF1PlacementInfo() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setF1StudentsPreProgram(PartnerPermission.getF1StudentsPreProgram() != null ? PartnerPermission.getF1StudentsPreProgram() : CCIConstants.INACTIVE);
+
+      partnerUserProgramAccess.setJ1AccountingInsurance(PartnerPermission.getJ1AccountingInsurance() != null ? PartnerPermission.getJ1AccountingInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1Admin(PartnerPermission.getJ1Admin() != null ? PartnerPermission.getJ1Admin() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1Applications(PartnerPermission.getJ1Applications() != null ? PartnerPermission.getJ1Applications() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1Contracting(PartnerPermission.getJ1Contracting() != null ? PartnerPermission.getJ1Contracting() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1Flights(PartnerPermission.getJ1Flights() != null ? PartnerPermission.getJ1Flights() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1Insurance(PartnerPermission.getJ1Insurance() != null ? PartnerPermission.getJ1Insurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1Monitoring(PartnerPermission.getJ1Monitoring() != null ? PartnerPermission.getJ1Monitoring() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1PlacementInfo(PartnerPermission.getJ1PlacementInfo() != null ? PartnerPermission.getJ1PlacementInfo() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setJ1StudentsPreProgram(PartnerPermission.getJ1StudentsPreProgram() != null ? PartnerPermission.getJ1StudentsPreProgram() : CCIConstants.INACTIVE);
+
+      partnerUserProgramAccess.setWtAccoutingInsurance(PartnerPermission.getWtAccoutingInsurance() != null ? PartnerPermission.getWtAccoutingInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtAdmin(PartnerPermission.getWtAdmin() != null ? PartnerPermission.getWtAdmin() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtApplications(PartnerPermission.getWtApplications() != null ? PartnerPermission.getWtApplications() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtContracting(PartnerPermission.getWtContracting() != null ? PartnerPermission.getWtContracting() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtFlights(PartnerPermission.getWtFlights() != null ? PartnerPermission.getWtFlights() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtInsurance(PartnerPermission.getWtInsurance() != null ? PartnerPermission.getWtInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtMonitoring(PartnerPermission.getWtMonitoring() != null ? PartnerPermission.getWtMonitoring() : 0);
+      partnerUserProgramAccess.setWtPlacementInfo(PartnerPermission.getWtPlacementInfo() != null ? PartnerPermission.getWtPlacementInfo() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtStudentsPreProgram(PartnerPermission.getWtStudentsPreProgram() != null ? PartnerPermission.getWtStudentsPreProgram() : CCIConstants.INACTIVE);
+
+      partnerUserProgramAccess.setIhpAccountingInsurance(PartnerPermission.getIhpAccountingInsurance() != null ? PartnerPermission.getIhpAccountingInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpAdmin(PartnerPermission.getIhpAdmin() != null ? PartnerPermission.getIhpAdmin() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpApplications(PartnerPermission.getIhpApplications() != null ? PartnerPermission.getIhpApplications() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpContracting(PartnerPermission.getIhpContracting() != null ? PartnerPermission.getIhpContracting() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpFlights(PartnerPermission.getIhpFlights() != null ? PartnerPermission.getIhpFlights() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpInsurance(PartnerPermission.getIhpInsurance() != null ? PartnerPermission.getIhpInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpMonitoring(PartnerPermission.getIhpMonitoring() != null ? PartnerPermission.getIhpMonitoring() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpPlacementInfo(PartnerPermission.getIhpPlacementInfo() != null ? PartnerPermission.getIhpPlacementInfo() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setIhpStudentsPreProgram(PartnerPermission.getIhpStudentsPreProgram() != null ? PartnerPermission.getIhpStudentsPreProgram() : CCIConstants.INACTIVE);
 
       return partnerUserProgramAccess;
    }
+   
+  
+   
    
    private PartnerUserDetailAndRoles setPartnerUserDetailAndRolesStatus(PartnerUserDetailAndRoles partnerUserDetailAndRoles, String code, String type, int serviceCode, String message) {
       if (partnerUserDetailAndRoles == null)
