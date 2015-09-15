@@ -1,7 +1,9 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -50,7 +52,7 @@ public class PartnerUser implements Serializable {
 	private String title;
 
 	//bi-directional many-to-one association to PartnerPermission
-	@OneToOne(mappedBy="partnerUser")
+	@OneToOne(mappedBy="partnerUser", fetch = FetchType.EAGER , cascade = { CascadeType.ALL })
 	private PartnerPermission partnerPermissions;
 
 	//bi-directional many-to-one association to Login

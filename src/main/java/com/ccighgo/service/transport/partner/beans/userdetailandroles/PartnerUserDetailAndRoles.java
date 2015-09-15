@@ -101,7 +101,6 @@ public class PartnerUserDetailAndRoles
     protected String username;
     @XmlElement(required = true)
     protected String skypeId;
-    @XmlElement(required = true)
     protected PartnerUserProgramAccess programsAccess;
     protected String partnerUserId;
 
