@@ -475,7 +475,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       List<PartnerUserProgramAndRole> partnerUserProgramAndRoleList = new ArrayList<PartnerUserProgramAndRole>();
       List<String> programList = getPrograms();
       List<String> rolesList = getRoles();
-
+      // call the below developed method here and other transport classes are all already developed
       for (String program : programList) {
          PartnerUserProgramAndRole partnerUserProgramAndRole = new PartnerUserProgramAndRole();
          List<PartnerUserRole> partnerUserRoleList = new ArrayList<PartnerUserRole>();
@@ -491,7 +491,18 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       }
 
       partnerUserProgramsAndRoles.setPartnerUserProgramAndRole(partnerUserProgramAndRoleList);
+      getMetaData("PartnerPermissions");
       return partnerUserProgramsAndRoles;
+   }
+   
+   
+   private void getMetaData(String tableName)
+   {
+      List<String> tableMetaData = partnerPermissionRepository.getTableMetaData(tableName);
+      for (String string : tableMetaData) {
+         //have to write the logic here to split the column name and create to lists(programs list and roles list)
+         System.out.println(string);
+      }
    }
    
    private List<String> getPrograms()
