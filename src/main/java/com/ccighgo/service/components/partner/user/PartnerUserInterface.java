@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
 
 /**
  * @author ravi
@@ -27,5 +28,7 @@ public interface PartnerUserInterface {
    public PartnerUsers getAllPartnerUsers(String partnerId);
    
    public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles);
+   
+   public PartnerUserProgramsAndRoles getProgramsAndRoles();
 
 }

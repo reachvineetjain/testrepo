@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
 
 /**
  * @author ravi
@@ -68,5 +69,13 @@ public class PartnerUser {
    public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
       LOGGER.debug("calling PartnerUser.updatePartnerUser");
       return partnerUserInterface.updatePartnerUser(partnerUserDetailAndRoles);
+   }
+   
+   @GET
+   @Path("get-program-access")
+   @Produces("application/json")
+   public PartnerUserProgramsAndRoles getProgramsAndRoles() {
+      LOGGER.debug("calling PartnerUser.getProgramsAndRoles");
+      return partnerUserInterface.getProgramsAndRoles();
    }
 }

@@ -3,10 +3,12 @@
  */
 package com.ccighgo.service.components.partner.user;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.tool.hbm2ddl.TableMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,9 @@ import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatu
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramAccess;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramAndRole;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserRole;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
@@ -457,6 +462,61 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             .setIhpStudentsPreProgram(PartnerPermission.getIhpStudentsPreProgram() != null ? PartnerPermission.getIhpStudentsPreProgram() : CCIConstants.INACTIVE);
 
       return partnerUserProgramAccess;
+   }
+   
+   @Override
+   public PartnerUserProgramsAndRoles getProgramsAndRoles()
+ {
+      /*
+       * TableMetadata metadata= partnerPermissionRepository.findByTabelName("PartnerPermissions");
+       * System.out.println(metadata);
+       */
+      PartnerUserProgramsAndRoles partnerUserProgramsAndRoles = new PartnerUserProgramsAndRoles();
+      List<PartnerUserProgramAndRole> partnerUserProgramAndRoleList = new ArrayList<PartnerUserProgramAndRole>();
+      List<String> programList = getPrograms();
+      List<String> rolesList = getRoles();
+
+      for (String program : programList) {
+         PartnerUserProgramAndRole partnerUserProgramAndRole = new PartnerUserProgramAndRole();
+         List<PartnerUserRole> partnerUserRoleList = new ArrayList<PartnerUserRole>();
+         partnerUserProgramAndRole.setProgramName(program);
+         for (String role : rolesList) {
+            PartnerUserRole partnerUserRole = new PartnerUserRole();
+            partnerUserRole.setRoleName(role);
+            partnerUserRole.setEnabled(CCIConstants.INACTIVE);
+            partnerUserRoleList.add(partnerUserRole);
+         }
+         partnerUserProgramAndRole.setPartnerUserRole(partnerUserRoleList);
+         partnerUserProgramAndRoleList.add(partnerUserProgramAndRole);
+      }
+
+      partnerUserProgramsAndRoles.setPartnerUserProgramAndRole(partnerUserProgramAndRoleList);
+      return partnerUserProgramsAndRoles;
+   }
+   
+   private List<String> getPrograms()
+   {
+      List<String> programList = new ArrayList<String>();
+      programList.add("j1");
+      programList.add("f1");
+      programList.add("ihp");
+      programList.add("wt");
+      programList.add("cap");
+      return programList;
+   }
+   
+   private List<String> getRoles() {
+      List<String> rolesList = new ArrayList<String>();
+      rolesList.add("Admin");
+      rolesList.add("Applications");
+      rolesList.add("Flights");
+      rolesList.add("PlacementInfo");
+      rolesList.add("Monitoring");
+      rolesList.add("AccountingInsurance");
+      rolesList.add("StudentsPreProgram");
+      rolesList.add("Contracting");
+      rolesList.add("Insurance");
+      return rolesList;
    }
    
    private PartnerUserDetailAndRoles setPartnerUserDetailAndRolesStatus(PartnerUserDetailAndRoles partnerUserDetailAndRoles, String code, String type, int serviceCode,
