@@ -23,4 +23,7 @@ public interface IWordPressForms {
    @WebMethod
    String GenerateNewAreaRepresentative(@WebParam(name = "data") AreaRepresentativeData AreaRepresentativeData);
 
+   @WebMethod
+   Boolean IsEmailExist(@WebParam(name = "data") String Email);
+
 }
