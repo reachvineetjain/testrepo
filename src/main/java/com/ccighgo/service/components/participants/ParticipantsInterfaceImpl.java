@@ -129,4 +129,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       return newParticipant;
    }
 
+   @Override
+   public NewParticipant editNewParticipant(NewParticipant updatedObject) {
+   // persist object to DB
+      return updatedObject;
+   }
+
 }

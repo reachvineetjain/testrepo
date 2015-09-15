@@ -50,11 +50,20 @@ public class Participants {
    }
    
    @POST
-   @Path("create/newParticipant")
+   @Path("create/participant")
    @Produces("application/json")
    public NewParticipant addNewParticipant(NewParticipant newParticipant){
       LOGGER.info("calling Participants.addNewParticipant ");
       return participantsInterface.addNewParticipant(newParticipant);
    }
 
+   @POST
+   @Path("edit/participant")
+   @Produces("application/json")
+   public NewParticipant editNewParticipant(NewParticipant newParticipant){
+      LOGGER.info("calling Participants.addNewParticipant ");
+      return participantsInterface.editNewParticipant(newParticipant);
+   }
+
+   
 }

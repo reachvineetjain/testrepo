@@ -34,4 +34,6 @@ public interface ParticipantsInterface {
 
    public NewParticipant addNewParticipant(NewParticipant newParticipant);
 
+   public NewParticipant editNewParticipant(NewParticipant newParticipant);
+
 }

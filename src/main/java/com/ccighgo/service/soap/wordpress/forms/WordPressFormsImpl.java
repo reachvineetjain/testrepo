@@ -149,4 +149,19 @@ public class WordPressFormsImpl implements IWordPressForms {
       }
    }
 
+   @Override
+   public Boolean IsEmailExist(String Email) {
+      try {
+          System.out.println("IsEmailExist is Called !!! ");
+         Login user =loginRepository.findByEmail(Email);
+         if(user!=null){
+            return true;
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return false;
+      }
+      return false;
+   }
+
 }
