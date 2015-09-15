@@ -29,6 +29,7 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerUserMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
@@ -117,6 +118,23 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          return viewPartnerUser;
       }
       try {
+        
+         if (loginRepository.findByLoginName(partnerUserDetailAndRoles.getUsername()) != null) {
+            // return username already exsist
+            viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_USER_CREATE_USER_NAME_EXIST.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_CREATE_USER_NAME_EXIST));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_CREATE_USER_NAME_EXIST));
+            return viewPartnerUser;
+         }
+        
+         if (loginRepository.findByEmail(partnerUserDetailAndRoles.getEmail()) != null) {
+            // return Email already exsist
+            viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_USER_CREATE_USER_EMAIL_EXIST.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_CREATE_USER_EMAIL_EXIST));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_CREATE_USER_EMAIL_EXIST));
+            return viewPartnerUser;
+         }
+         
          PartnerUser partnerUser = new PartnerUser();
          Partner partner = partnerRepository.findOne(Integer.valueOf(partnerUserDetailAndRoles.getPartnergoId()));
          if (partner == null) {
