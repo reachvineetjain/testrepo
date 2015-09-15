@@ -47,7 +47,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          }
          if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
-            String string = "200:Success:200:Success";
+            String string = "200:Success:300:Missing Information";
             System.out.println(string);
             return string;
          } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
