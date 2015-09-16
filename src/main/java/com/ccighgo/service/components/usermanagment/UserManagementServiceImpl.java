@@ -559,7 +559,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    
   
 
-   @SuppressWarnings("unchecked")
+   /*@SuppressWarnings("unchecked")
    @Override
    @Transactional(readOnly = true)
    public CCIUsers searchUsers(UserSearch userSearch) {
@@ -595,7 +595,9 @@ public class UserManagementServiceImpl implements UserManagementService {
          query.setParameter(8, CCIUtils.parseParameter(userSearch.getDepartment(), departments));
          query.setParameter(9, CCIUtils.parseParameter(userSearch.getProgram(), programs));
          query.setParameter(10, CCIUtils.getActiveValue(userSearch.isActive()));
+         query.setMaxResults(10);
          results = query.getResultList();
+         
          if (results != null) {
             cciUsersFront = new CCIUsers();
             List<CCIUser> cciUserList = new ArrayList<CCIUser>();
@@ -623,6 +625,49 @@ public class UserManagementServiceImpl implements UserManagementService {
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER));
       }
 
+      return null;
+   }*/
+   
+   
+  
+   @Transactional(readOnly = true)
+   public CCIUsers searchUsers(UserSearch userSearch)
+ {
+      CCIUsers cciUsersFront = null;
+      List<Object> userList = null;
+      try
+      {
+      if (userSearch != null) {
+         Byte active = userSearch.isActive() == true ? CCIConstants.ACTIVE : CCIConstants.INACTIVE;
+         userList = cciUsersRepository.searchUser(userSearch.getGoId(),userSearch.getGlobalSearch(),userSearch.getCountry(),userSearch.getDepartment(),userSearch.getProgram(),userSearch.getUserRole(),active);
+         if (userList != null) {
+            cciUsersFront = new CCIUsers();
+            List<CCIUser> cciUserList = new ArrayList<CCIUser>();
+            List<Integer> idList = new ArrayList<Integer>();
+            for (Object object : userList) {
+               Integer id = Integer.valueOf(object.toString());
+               idList.add(id);
+            }
+            List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
+            for (CCIStaffUser cUser : cciUserDBList) {
+               CCIUser cciUser = getUserDetails(cUser);
+               cciUserList.add(cciUser);
+            }
+            cciUsersFront.getCciUsers().addAll(cciUserList);
+            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         } else {
+            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
+         }
+      }
+      }
+      catch (CcighgoException e) {
+         cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_SEARCH.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER));
+      }
       return cciUsersFront;
    }
 

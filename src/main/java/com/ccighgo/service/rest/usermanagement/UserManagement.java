@@ -222,6 +222,7 @@ public class UserManagement {
     @POST
     @Path("search")
     @Consumes("application/json")
+    @Produces("application/json")
     public CCIUsers searchUser(UserSearch userSearch) {
         return userMgmtServices.searchUsers(userSearch);
     }

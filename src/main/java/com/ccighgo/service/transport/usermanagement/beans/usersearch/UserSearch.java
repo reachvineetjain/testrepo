@@ -46,11 +46,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UserSearch", propOrder = {
-    "cciUserId",
-    "firstName",
-    "lastName",
-    "loginName",
-    "email",
+    "globalSearch",  
+    "goId",
     "country",
     "userRole",
     "department",
@@ -59,11 +56,8 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class UserSearch {
 
-    protected Integer cciUserId;
-    protected String firstName;
-    protected String lastName;
-    protected String loginName;
-    protected String email;
+    protected Integer goId;
+    protected String globalSearch;
     protected Integer country;
     @XmlElement(type = Integer.class)
     protected List<Integer> userRole;
@@ -73,127 +67,25 @@ public class UserSearch {
     protected List<Integer> program;
     protected Boolean active;
 
-    /**
-     * Gets the value of the cciUserId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getCciUserId() {
-        return cciUserId;
-    }
+    
 
-    /**
-     * Sets the value of the cciUserId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setCciUserId(Integer value) {
-        this.cciUserId = value;
-    }
+    public Integer getGoId() {
+      return goId;
+   }
 
-    /**
-     * Gets the value of the firstName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFirstName() {
-        return firstName;
-    }
+   public void setGoId(Integer goId) {
+      this.goId = goId;
+   }
 
-    /**
-     * Sets the value of the firstName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFirstName(String value) {
-        this.firstName = value;
-    }
+   public String getGlobalSearch() {
+      return globalSearch;
+   }
 
-    /**
-     * Gets the value of the lastName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLastName() {
-        return lastName;
-    }
+   public void setGlobalSearch(String globalSearch) {
+      this.globalSearch = globalSearch;
+   }
 
-    /**
-     * Sets the value of the lastName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLastName(String value) {
-        this.lastName = value;
-    }
-
-    /**
-     * Gets the value of the loginName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLoginName() {
-        return loginName;
-    }
-
-    /**
-     * Sets the value of the loginName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLoginName(String value) {
-        this.loginName = value;
-    }
-
-    /**
-     * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setEmail(String value) {
-        this.email = value;
-    }
-
-    /**
+   /**
      * Gets the value of the country property.
      * 
      * @return
