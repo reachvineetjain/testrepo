@@ -29,6 +29,11 @@ public class PartnerCCIContact implements Serializable {
 	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
 
+	//bi-directional many-to-one association to LookupDepartmentProgram
+	@ManyToOne
+	@JoinColumn(name="lookupDepartmentProgramId")
+	private LookupDepartmentProgram lookupDepartmentProgram;
+
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
 	@JoinColumn(name="partnerGoId")
@@ -59,6 +64,14 @@ public class PartnerCCIContact implements Serializable {
 
 	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
 		this.departmentProgram = departmentProgram;
+	}
+
+	public LookupDepartmentProgram getLookupDepartmentProgram() {
+		return this.lookupDepartmentProgram;
+	}
+
+	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		this.lookupDepartmentProgram = lookupDepartmentProgram;
 	}
 
 	public Partner getPartner() {
