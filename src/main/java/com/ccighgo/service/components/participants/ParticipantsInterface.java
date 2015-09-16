@@ -36,4 +36,8 @@ public interface ParticipantsInterface {
 
    public NewParticipant editNewParticipant(NewParticipant newParticipant);
 
+   public Boolean deleteParticipant(String participantId);
+
+   public NewParticipant updateParticipant(NewParticipant participant);
+
 }

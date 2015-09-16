@@ -135,4 +135,14 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       return updatedObject;
    }
 
+   @Override
+   public Boolean deleteParticipant(String participantId) {
+      return true;
+   }
+
+   @Override
+   public NewParticipant updateParticipant(NewParticipant participant) {
+       return participant;
+   }
+
 }

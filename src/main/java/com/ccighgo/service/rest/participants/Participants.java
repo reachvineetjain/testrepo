@@ -4,6 +4,7 @@
 package com.ccighgo.service.rest.participants;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -61,8 +62,23 @@ public class Participants {
    @Path("edit/participant")
    @Produces("application/json")
    public NewParticipant editNewParticipant(NewParticipant newParticipant){
-      LOGGER.info("calling Participants.addNewParticipant ");
+      LOGGER.info("calling Participants.editNewParticipant ");
       return participantsInterface.editNewParticipant(newParticipant);
+   }
+   @DELETE
+   @Path("delete/participant/{participantId}")
+   @Produces("application/json")
+   public Boolean deleteParticipant(@PathParam("participantId") String participantId){
+      LOGGER.info("calling Participants.deleteParticipant ");
+      return participantsInterface.deleteParticipant(participantId);
+   }
+   
+   @POST
+   @Path("update/participant")
+   @Produces("application/json")
+   public NewParticipant updateParticipant(NewParticipant participant){
+      LOGGER.info("calling Participants.updateParticipant");
+      return participantsInterface.updateParticipant(participant);
    }
 
    
