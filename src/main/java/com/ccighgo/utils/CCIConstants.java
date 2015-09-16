@@ -90,6 +90,10 @@ public class CCIConstants {
    public static final Integer GHT_TEACH_ABRD_ID = 12;
    public static final Integer GHT_VOL_ABRD_ID = 13;
    public static final Integer GHT_WRK_ABRD_ID = 14;
+   
+   
+  //partnerUsers
+   public static final String PARTNER_PERMISSIONS_TABLE_NAME= "PartnerPermissions";
 
    // bind urls for season program menu
    public static final String HSP_J1_URL = "j1hs/details/view/";

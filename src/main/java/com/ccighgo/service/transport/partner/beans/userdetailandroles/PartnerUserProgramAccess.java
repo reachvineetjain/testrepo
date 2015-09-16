@@ -147,7 +147,7 @@ public class PartnerUserProgramAccess {
 
    protected Byte j1StudentsPreProgram;
 
-   protected Byte wtAccoutingInsurance;
+   protected Byte wtAccountingInsurance;
 
    protected Byte wtAdmin;
 
@@ -399,12 +399,12 @@ public class PartnerUserProgramAccess {
       this.j1StudentsPreProgram = j1StudentsPreProgram;
    }
 
-   public Byte getWtAccoutingInsurance() {
-      return wtAccoutingInsurance;
+   public Byte getWtAccountingInsurance() {
+      return wtAccountingInsurance;
    }
 
-   public void setWtAccoutingInsurance(Byte wtAccoutingInsurance) {
-      this.wtAccoutingInsurance = wtAccoutingInsurance;
+   public void setWtAccountingInsurance(Byte wtAccountingInsurance) {
+      this.wtAccountingInsurance = wtAccountingInsurance;
    }
 
    public Byte getWtAdmin() {

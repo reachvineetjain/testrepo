@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
@@ -78,4 +79,21 @@ public class PartnerUser {
       LOGGER.debug("calling PartnerUser.getProgramsAndRoles");
       return partnerUserInterface.getProgramsAndRoles();
    }
+   
+   @POST
+   @Path("search")
+   @Produces("application/json")
+   public PartnerUserDetailAndRoles searchPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
+      LOGGER.debug("calling PartnerUser.searchPartnerUser");
+      return partnerUserInterface.searchPartnerUser(partnerUserDetailAndRoles);
+   }
+   
+   @GET
+   @Path("delete-partner-user/{partnerUserId}")
+   @Produces("application/json")
+   public DeleteRequest deletePartnerUser(@PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.deletePartnerUser");
+      return partnerUserInterface.deletePartnerUser(partnerUserId);
+   }
+   
 }

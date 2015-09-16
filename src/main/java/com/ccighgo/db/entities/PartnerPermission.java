@@ -73,7 +73,7 @@ public class PartnerPermission implements Serializable {
 
 	private Byte j1StudentsPreProgram;
 
-	private Byte wtAccoutingInsurance;
+	private Byte wtAccountingInsurance;
 
 	private Byte wtAdmin;
 
@@ -342,12 +342,12 @@ public class PartnerPermission implements Serializable {
 		this.j1StudentsPreProgram = j1StudentsPreProgram;
 	}
 
-	public Byte getWtAccoutingInsurance() {
-		return this.wtAccoutingInsurance;
+	public Byte getWtAccountingInsurance() {
+		return this.wtAccountingInsurance;
 	}
 
-	public void setWtAccoutingInsurance(Byte wtAccoutingInsurance) {
-		this.wtAccoutingInsurance = wtAccoutingInsurance;
+	public void setWtAccountingInsurance(Byte wtAccountingInsurance) {
+		this.wtAccountingInsurance = wtAccountingInsurance;
 	}
 
 	public Byte getWtAdmin() {

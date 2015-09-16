@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Partner;
@@ -32,6 +33,7 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerUserMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
@@ -255,7 +257,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       partnerPermission.setJ1StudentsPreProgram(partnerUserProgramAccess.getJ1StudentsPreProgram() != null ? partnerUserProgramAccess.getJ1StudentsPreProgram()
             : CCIConstants.INACTIVE);
 
-      partnerPermission.setWtAccoutingInsurance(partnerUserProgramAccess.getWtAccoutingInsurance() != null ? partnerUserProgramAccess.getWtAccoutingInsurance()
+      partnerPermission.setWtAccountingInsurance(partnerUserProgramAccess.getWtAccountingInsurance() != null ? partnerUserProgramAccess.getWtAccountingInsurance()
             : CCIConstants.INACTIVE);
       partnerPermission.setWtAdmin(partnerUserProgramAccess.getWtAdmin() != null ? partnerUserProgramAccess.getWtAdmin() : CCIConstants.INACTIVE);
       partnerPermission.setWtApplications(partnerUserProgramAccess.getWtApplications() != null ? partnerUserProgramAccess.getWtApplications() : CCIConstants.INACTIVE);
@@ -439,7 +441,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       partnerUserProgramAccess.setJ1PlacementInfo(PartnerPermission.getJ1PlacementInfo() != null ? PartnerPermission.getJ1PlacementInfo() : CCIConstants.INACTIVE);
       partnerUserProgramAccess.setJ1StudentsPreProgram(PartnerPermission.getJ1StudentsPreProgram() != null ? PartnerPermission.getJ1StudentsPreProgram() : CCIConstants.INACTIVE);
 
-      partnerUserProgramAccess.setWtAccoutingInsurance(PartnerPermission.getWtAccoutingInsurance() != null ? PartnerPermission.getWtAccoutingInsurance() : CCIConstants.INACTIVE);
+      partnerUserProgramAccess.setWtAccountingInsurance(PartnerPermission.getWtAccountingInsurance() != null ? PartnerPermission.getWtAccountingInsurance() : CCIConstants.INACTIVE);
       partnerUserProgramAccess.setWtAdmin(PartnerPermission.getWtAdmin() != null ? PartnerPermission.getWtAdmin() : CCIConstants.INACTIVE);
       partnerUserProgramAccess.setWtApplications(PartnerPermission.getWtApplications() != null ? PartnerPermission.getWtApplications() : CCIConstants.INACTIVE);
       partnerUserProgramAccess.setWtContracting(PartnerPermission.getWtContracting() != null ? PartnerPermission.getWtContracting() : CCIConstants.INACTIVE);
@@ -465,17 +467,55 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
    
    @Override
-   public PartnerUserProgramsAndRoles getProgramsAndRoles()
- {
-      /*
-       * TableMetadata metadata= partnerPermissionRepository.findByTabelName("PartnerPermissions");
-       * System.out.println(metadata);
-       */
+   public PartnerUserDetailAndRoles searchPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles)
+   {
+      
+      
+      return null;
+   }
+   
+ 
+   
+   @Override
+   @Transactional
+   public DeleteRequest deletePartnerUser(String partnerUserId) {
+      DeleteRequest request=new DeleteRequest();
+     try{
+
+      if (Integer.valueOf(partnerUserId) > 0) {
+         PartnerUser partneruser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
+         if (partneruser == null) {
+            request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL)));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_PARTNER_USER_NULL));
+            return request;
+         }
+         partneruser.setActive(CCIConstants.INACTIVE);
+         partnerUserRepository.saveAndFlush(partneruser);
+         request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_USER_cODE.getValue(),
+               messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+      } else {
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
+      }
+      }catch (CcighgoException e) {
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
+     }
+     
+      return request;
+   }
+   
+   
+   @Override
+   public PartnerUserProgramsAndRoles getProgramsAndRoles() {
+
       PartnerUserProgramsAndRoles partnerUserProgramsAndRoles = new PartnerUserProgramsAndRoles();
       List<PartnerUserProgramAndRole> partnerUserProgramAndRoleList = new ArrayList<PartnerUserProgramAndRole>();
-      List<String> programList = getPrograms();
-      List<String> rolesList = getRoles();
-      // call the below developed method here and other transport classes are all already developed
+      List<String> programList = getPrograms(CCIConstants.PARTNER_PERMISSIONS_TABLE_NAME);
+      List<String> rolesList = getRoles(CCIConstants.PARTNER_PERMISSIONS_TABLE_NAME);
       for (String program : programList) {
          PartnerUserProgramAndRole partnerUserProgramAndRole = new PartnerUserProgramAndRole();
          List<PartnerUserRole> partnerUserRoleList = new ArrayList<PartnerUserRole>();
@@ -486,48 +526,56 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUserRole.setEnabled(CCIConstants.INACTIVE);
             partnerUserRoleList.add(partnerUserRole);
          }
-         partnerUserProgramAndRole.setPartnerUserRole(partnerUserRoleList);
+         partnerUserProgramAndRole.getPartnerUserRole().addAll(partnerUserRoleList);
          partnerUserProgramAndRoleList.add(partnerUserProgramAndRole);
       }
 
-      partnerUserProgramsAndRoles.setPartnerUserProgramAndRole(partnerUserProgramAndRoleList);
-      getMetaData("PartnerPermissions");
+      partnerUserProgramsAndRoles.getPartnerUserProgramAndRole().addAll(partnerUserProgramAndRoleList);
       return partnerUserProgramsAndRoles;
    }
    
-   
-   private void getMetaData(String tableName)
-   {
-      List<String> tableMetaData = partnerPermissionRepository.getTableMetaData(tableName);
-      for (String string : tableMetaData) {
-         //have to write the logic here to split the column name and create to lists(programs list and roles list)
-         System.out.println(string);
-      }
-   }
-   
-   private List<String> getPrograms()
-   {
+  
+   private List<String> getPrograms(String tableName) {
       List<String> programList = new ArrayList<String>();
-      programList.add("j1");
-      programList.add("f1");
-      programList.add("ihp");
-      programList.add("wt");
-      programList.add("cap");
+      List<String> tableMetaData = partnerPermissionRepository.getTableMetaData(tableName);
+      for (String columnName : tableMetaData) {
+         if (!(columnName.equalsIgnoreCase("partnerPermissionsId") || columnName.equalsIgnoreCase("partnerUserId"))) 
+         {
+            int index = getIndex(columnName);
+            if (!(programList.contains(columnName.substring(0, index)))) {
+               programList.add(columnName.substring(0, index));
+            }
+         }
+      }
       return programList;
    }
    
-   private List<String> getRoles() {
+   private List<String> getRoles(String tableName) {
       List<String> rolesList = new ArrayList<String>();
-      rolesList.add("Admin");
-      rolesList.add("Applications");
-      rolesList.add("Flights");
-      rolesList.add("PlacementInfo");
-      rolesList.add("Monitoring");
-      rolesList.add("AccountingInsurance");
-      rolesList.add("StudentsPreProgram");
-      rolesList.add("Contracting");
-      rolesList.add("Insurance");
+      List<String> tableMetaData = partnerPermissionRepository.getTableMetaData(tableName);
+      for (String columnName : tableMetaData) {
+         if (!(columnName.equalsIgnoreCase("partnerPermissionsId") || columnName.equalsIgnoreCase("partnerUserId"))) 
+         {
+            int index = getIndex(columnName);
+            if (!(rolesList.contains(columnName.substring(index, columnName.length())))) {
+               rolesList.add(columnName.substring(index, columnName.length()));
+            }
+         }
+      }
       return rolesList;
+   }
+   
+   private int getIndex(String columnName)
+   {
+      char[] colChar = columnName.toCharArray();
+      int index = 0;
+      for (int i = 0; i < colChar.length; i++) {
+         if (Character.isUpperCase(colChar[i])) {
+            index = i;
+            break;
+         }
+      }
+      return index;
    }
    
    private PartnerUserDetailAndRoles setPartnerUserDetailAndRolesStatus(PartnerUserDetailAndRoles partnerUserDetailAndRoles, String code, String type, int serviceCode,

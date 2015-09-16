@@ -48,6 +48,8 @@ import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
+import com.ccighgo.service.transport.utility.beans.gender.Salutation;
+import com.ccighgo.service.transport.utility.beans.gender.Salutations;
 import com.ccighgo.service.transport.utility.beans.program.Program;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Region;
@@ -414,6 +416,26 @@ public class UtilityServicesImpl implements UtilityServices {
       }
 
    }
+   
+   @Override
+   public Salutations getSalutation() {
+
+      Salutations salutations = new Salutations();
+      List<String> sal = new ArrayList<String>();
+      sal.add("Mr.");
+      sal.add("Mrs.");
+      sal.add("Ms.");
+      for (int i = 1; i <= sal.size(); i++) {
+         Salutation salutation = new Salutation();
+         salutation.setSalutationId(i);
+         salutation.setSalutationCode(sal.get(i-1));
+         salutations.getSalutations().add(salutation);
+      }
+
+      return salutations;
+   }
+
+   
 
    @Override
    public Country getCountryById(int countryId) {

@@ -1,5 +1,6 @@
 package com.ccighgo.service.transport.partner.beans.userdetailandroles;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,6 +17,8 @@ public class PartnerUserProgramsAndRoles {
    protected List<PartnerUserProgramAndRole> partnerUserProgramAndRole;
 
    public List<PartnerUserProgramAndRole> getPartnerUserProgramAndRole() {
+      if(partnerUserProgramAndRole == null)
+         partnerUserProgramAndRole = new ArrayList<PartnerUserProgramAndRole>();
       return partnerUserProgramAndRole;
    }
 
