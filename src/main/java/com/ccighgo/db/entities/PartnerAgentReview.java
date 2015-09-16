@@ -38,11 +38,6 @@ public class PartnerAgentReview implements Serializable {
 	@OneToMany(mappedBy="partnerAgentReview")
 	private List<PartnerAgentInquiryNote> partnerAgentInquiryNotes;
 
-	//bi-directional many-to-one association to PartnerAgentProgram
-	@ManyToOne
-	@JoinColumn(name="partnerAgentProgramId")
-	private PartnerAgentProgram partnerAgentProgram;
-
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
 	@JoinColumn(name="cciStaffUserId")
@@ -52,6 +47,11 @@ public class PartnerAgentReview implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="partnerAgentInquiryStatusId")
 	private PartnerAgentInquiryStatus partnerAgentInquiryStatus;
+
+	//bi-directional many-to-one association to PartnerAgentProgram
+	@ManyToOne
+	@JoinColumn(name="partnerAgentProgramId")
+	private PartnerAgentProgram partnerAgentProgram;
 
 	public PartnerAgentReview() {
 	}
@@ -140,14 +140,6 @@ public class PartnerAgentReview implements Serializable {
 		return partnerAgentInquiryNote;
 	}
 
-	public PartnerAgentProgram getPartnerAgentProgram() {
-		return this.partnerAgentProgram;
-	}
-
-	public void setPartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
-		this.partnerAgentProgram = partnerAgentProgram;
-	}
-
 	public CCIStaffUser getCcistaffUser() {
 		return this.ccistaffUser;
 	}
@@ -162,6 +154,14 @@ public class PartnerAgentReview implements Serializable {
 
 	public void setPartnerAgentInquiryStatus(PartnerAgentInquiryStatus partnerAgentInquiryStatus) {
 		this.partnerAgentInquiryStatus = partnerAgentInquiryStatus;
+	}
+
+	public PartnerAgentProgram getPartnerAgentProgram() {
+		return this.partnerAgentProgram;
+	}
+
+	public void setPartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
+		this.partnerAgentProgram = partnerAgentProgram;
 	}
 
 }

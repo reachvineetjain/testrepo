@@ -26,26 +26,26 @@ public class PartnerContact implements Serializable {
 
 	private Timestamp createdOn;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String email;
 
-	@Column(length=25)
+	@Column(length=150)
 	private String emergencyPhone;
 
-	@Column(length=25)
+	@Column(length=150)
 	private String fax;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String firstName;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String lastName;
 
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
-	@Column(length=25)
+	@Column(length=150)
 	private String phone;
 
 	private byte receiveNotificationEmails;
@@ -56,21 +56,21 @@ public class PartnerContact implements Serializable {
 	@Column(length=50)
 	private String skypeId;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String title;
 
 	@Column(length=50)
 	private String website;
 
-	//bi-directional many-to-one association to PartnerOffice
-	@ManyToOne
-	@JoinColumn(name="partnerOfficeId")
-	private PartnerOffice partnerOffice;
-
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
 	@JoinColumn(name="partnerGoId")
 	private Partner partner;
+
+	//bi-directional many-to-one association to PartnerOffice
+	@ManyToOne
+	@JoinColumn(name="partnerOfficeId")
+	private PartnerOffice partnerOffice;
 
 	public PartnerContact() {
 	}
@@ -211,20 +211,20 @@ public class PartnerContact implements Serializable {
 		this.website = website;
 	}
 
-	public PartnerOffice getPartnerOffice() {
-		return this.partnerOffice;
-	}
-
-	public void setPartnerOffice(PartnerOffice partnerOffice) {
-		this.partnerOffice = partnerOffice;
-	}
-
 	public Partner getPartner() {
 		return this.partner;
 	}
 
 	public void setPartner(Partner partner) {
 		this.partner = partner;
+	}
+
+	public PartnerOffice getPartnerOffice() {
+		return this.partnerOffice;
+	}
+
+	public void setPartnerOffice(PartnerOffice partnerOffice) {
+		this.partnerOffice = partnerOffice;
 	}
 
 }

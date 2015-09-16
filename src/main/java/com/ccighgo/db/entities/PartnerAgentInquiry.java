@@ -38,7 +38,7 @@ public class PartnerAgentInquiry implements Serializable {
 	@Column(length=30)
 	private String city;
 
-	@Column(length=50)
+	@Column(length=250)
 	private String companyName;
 
 	@Column(length=255)
@@ -69,7 +69,7 @@ public class PartnerAgentInquiry implements Serializable {
 
 	private byte participantsForHomeCountry;
 
-	@Column(length=15)
+	@Column(length=25)
 	private String phone;
 
 	@Column(length=10)

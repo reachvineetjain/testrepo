@@ -26,7 +26,7 @@ public class GoIdSequence implements Serializable {
 
 	//bi-directional many-to-one association to Login
 	@OneToOne(mappedBy="goIdSequence")
-   private Login login;
+	private Login login;
 
 	//bi-directional one-to-one association to Partner
 	@OneToOne(mappedBy="goIdSequence")
