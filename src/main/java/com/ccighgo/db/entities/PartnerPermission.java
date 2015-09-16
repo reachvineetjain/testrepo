@@ -55,6 +55,24 @@ public class PartnerPermission implements Serializable {
 
 	private byte f1StudentsPreProgram;
 
+	private byte ihpAccountingInsurance;
+
+	private byte ihpAdmin;
+
+	private byte ihpApplications;
+
+	private byte ihpContracting;
+
+	private byte ihpFlights;
+
+	private byte ihpInsurance;
+
+	private byte ihpMonitoring;
+
+	private byte ihpPlacementInfo;
+
+	private byte ihpStudentsPreProgram;
+
 	private byte j1AccountingInsurance;
 
 	private byte j1Admin;
@@ -73,6 +91,9 @@ public class PartnerPermission implements Serializable {
 
 	private byte j1StudentsPreProgram;
 
+	private byte wtAccountingInsurance;
+
+	@Column(nullable=false)
 	private byte wtAccoutingInsurance;
 
 	private byte wtAdmin;
@@ -251,6 +272,78 @@ public class PartnerPermission implements Serializable {
 		this.f1StudentsPreProgram = f1StudentsPreProgram;
 	}
 
+	public byte getIhpAccountingInsurance() {
+		return this.ihpAccountingInsurance;
+	}
+
+	public void setIhpAccountingInsurance(byte ihpAccountingInsurance) {
+		this.ihpAccountingInsurance = ihpAccountingInsurance;
+	}
+
+	public byte getIhpAdmin() {
+		return this.ihpAdmin;
+	}
+
+	public void setIhpAdmin(byte ihpAdmin) {
+		this.ihpAdmin = ihpAdmin;
+	}
+
+	public byte getIhpApplications() {
+		return this.ihpApplications;
+	}
+
+	public void setIhpApplications(byte ihpApplications) {
+		this.ihpApplications = ihpApplications;
+	}
+
+	public byte getIhpContracting() {
+		return this.ihpContracting;
+	}
+
+	public void setIhpContracting(byte ihpContracting) {
+		this.ihpContracting = ihpContracting;
+	}
+
+	public byte getIhpFlights() {
+		return this.ihpFlights;
+	}
+
+	public void setIhpFlights(byte ihpFlights) {
+		this.ihpFlights = ihpFlights;
+	}
+
+	public byte getIhpInsurance() {
+		return this.ihpInsurance;
+	}
+
+	public void setIhpInsurance(byte ihpInsurance) {
+		this.ihpInsurance = ihpInsurance;
+	}
+
+	public byte getIhpMonitoring() {
+		return this.ihpMonitoring;
+	}
+
+	public void setIhpMonitoring(byte ihpMonitoring) {
+		this.ihpMonitoring = ihpMonitoring;
+	}
+
+	public byte getIhpPlacementInfo() {
+		return this.ihpPlacementInfo;
+	}
+
+	public void setIhpPlacementInfo(byte ihpPlacementInfo) {
+		this.ihpPlacementInfo = ihpPlacementInfo;
+	}
+
+	public byte getIhpStudentsPreProgram() {
+		return this.ihpStudentsPreProgram;
+	}
+
+	public void setIhpStudentsPreProgram(byte ihpStudentsPreProgram) {
+		this.ihpStudentsPreProgram = ihpStudentsPreProgram;
+	}
+
 	public byte getJ1AccountingInsurance() {
 		return this.j1AccountingInsurance;
 	}
@@ -321,6 +414,14 @@ public class PartnerPermission implements Serializable {
 
 	public void setJ1StudentsPreProgram(byte j1StudentsPreProgram) {
 		this.j1StudentsPreProgram = j1StudentsPreProgram;
+	}
+
+	public byte getWtAccountingInsurance() {
+		return this.wtAccountingInsurance;
+	}
+
+	public void setWtAccountingInsurance(byte wtAccountingInsurance) {
+		this.wtAccountingInsurance = wtAccountingInsurance;
 	}
 
 	public byte getWtAccoutingInsurance() {
