@@ -6,7 +6,7 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.partner.beans.partnerdetails;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,18 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Message complex type.
+ * <p>Java class for PartnerProgramAccess complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Message">
+ * &lt;complexType name="PartnerProgramAccess">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="serviceId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="programSection" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="programPermissions" type="{http://www.ccighgo.com/partnerdetails}ProgramPermissions"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,81 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Message", propOrder = {
-    "type",
-    "serviceId",
-    "message"
+@XmlType(name = "PartnerProgramAccess", propOrder = {
+    "programSection",
+    "programPermissions"
 })
-public class Message {
+public class PartnerProgramAccess {
 
     @XmlElement(required = true)
-    protected String type;
-    protected int serviceId;
+    protected String programSection;
     @XmlElement(required = true)
-    protected String message;
+    protected ProgramPermissions programPermissions;
 
     /**
-     * Gets the value of the type property.
+     * Gets the value of the programSection property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getType() {
-        return type;
+    public String getProgramSection() {
+        return programSection;
     }
 
     /**
-     * Sets the value of the type property.
+     * Sets the value of the programSection property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setType(String value) {
-        this.type = value;
+    public void setProgramSection(String value) {
+        this.programSection = value;
     }
 
     /**
-     * Gets the value of the serviceId property.
-     * 
-     */
-    public int getServiceId() {
-        return serviceId;
-    }
-
-    /**
-     * Sets the value of the serviceId property.
-     * 
-     */
-    public void setServiceId(int value) {
-        this.serviceId = value;
-    }
-
-    /**
-     * Gets the value of the message property.
+     * Gets the value of the programPermissions property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link ProgramPermissions }
      *     
      */
-    public String getMessage() {
-        return message;
+    public ProgramPermissions getProgramPermissions() {
+        return programPermissions;
     }
 
     /**
-     * Sets the value of the message property.
+     * Sets the value of the programPermissions property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link ProgramPermissions }
      *     
      */
-    public void setMessage(String value) {
-        this.message = value;
+    public void setProgramPermissions(ProgramPermissions value) {
+        this.programPermissions = value;
     }
 
 }

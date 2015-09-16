@@ -6,7 +6,7 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.partner.beans.partnerdetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +17,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Status complex type.
+ * <p>Java class for PartnerAnnouncements complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Status">
+ * &lt;complexType name="PartnerAnnouncements">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="statusCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="messages" type="{http://www.ccighgo.com/common}Message" maxOccurs="unbounded"/>
+ *         &lt;element name="partnerId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="announcements" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,68 +37,59 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Status", propOrder = {
-    "statusCode",
-    "messages"
+@XmlType(name = "PartnerAnnouncements", propOrder = {
+    "partnerId",
+    "announcements"
 })
-public class Status {
+public class PartnerAnnouncements {
 
+    protected int partnerId;
     @XmlElement(required = true)
-    protected String statusCode;
-    @XmlElement(required = true)
-    protected List<Message> messages;
+    protected List<String> announcements;
 
     /**
-     * Gets the value of the statusCode property.
+     * Gets the value of the partnerId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getStatusCode() {
-        return statusCode;
+    public int getPartnerId() {
+        return partnerId;
     }
 
     /**
-     * Sets the value of the statusCode property.
+     * Sets the value of the partnerId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setStatusCode(String value) {
-        this.statusCode = value;
+    public void setPartnerId(int value) {
+        this.partnerId = value;
     }
 
     /**
-     * Gets the value of the messages property.
+     * Gets the value of the announcements property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the messages property.
+     * This is why there is not a <CODE>set</CODE> method for the announcements property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMessages().add(newItem);
+     *    getAnnouncements().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Message }
+     * {@link String }
      * 
      * 
      */
-    public List<Message> getMessages() {
-        if (messages == null) {
-            messages = new ArrayList<Message>();
+    public List<String> getAnnouncements() {
+        if (announcements == null) {
+            announcements = new ArrayList<String>();
         }
-        return this.messages;
+        return this.announcements;
     }
 
 }
