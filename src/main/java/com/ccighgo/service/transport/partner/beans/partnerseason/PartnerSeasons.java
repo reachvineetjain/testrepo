@@ -38,30 +38,30 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerSeasons", propOrder = {
-    "participantCount",
+    "partnerSeasonsCount",
     "partnerSeasons"
 })
 public class PartnerSeasons
     extends Response
 {
 
-    protected int participantCount;
+    protected int partnerSeasonsCount;
     protected List<PartnerSeason> partnerSeasons;
 
     /**
      * Gets the value of the participantCount property.
      * 
      */
-    public int getParticipantCount() {
-        return participantCount;
+    public int getPartnerSeasonsCount() {
+        return partnerSeasonsCount;
     }
 
     /**
      * Sets the value of the participantCount property.
      * 
      */
-    public void setParticipantCount(int value) {
-        this.participantCount = value;
+    public void setPartnerSeasonsCount(int value) {
+        this.partnerSeasonsCount = value;
     }
 
     /**
