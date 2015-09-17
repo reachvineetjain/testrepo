@@ -18,6 +18,6 @@ public interface PartnerSeasonInterface {
    
    public PartnerSeasons getPartnerSeasons(String partnerId);
 
-   public PartnersSeasons viewPartnerSeason(String partnerId, String seasonId);
+   public PartnersSeasons viewPartnerSeason(String partnerSeasonId);
 
 }
