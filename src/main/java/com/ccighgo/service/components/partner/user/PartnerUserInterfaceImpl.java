@@ -41,6 +41,9 @@ import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUse
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramAndRole;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserRole;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUsersDetailAndRoles;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
@@ -76,7 +79,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    @Transactional(readOnly = true)
    public PartnerUsers getAllPartnerUsers(String partnerId) {
       PartnerUsers partnerUsers = new PartnerUsers();
-      if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
+      /*if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
          partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
       } else {
@@ -110,7 +113,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
             LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
          }
-      }
+      }*/
       return partnerUsers;
    }
 
@@ -467,11 +470,23 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
    
    @Override
-   public PartnerUserDetailAndRoles searchPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles)
+   @Transactional
+   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser)
    {
+      PartnerUsersDetailAndRoles partnerUsersDetailAndRoles = new PartnerUsersDetailAndRoles();
+      List<PartnerUserDetailAndRoles> partnerUserDetailAndRolesList = new ArrayList<PartnerUserDetailAndRoles>();
+      // firstName,  lastName ,  email, userName , active
+      List<Object> partnerUsers = partnerUserRepository.searchPartnerUser(partnerUser.getPartnerUserFirstName(),partnerUser.getPartnerUserLastName(),partnerUser.getPartnerUserEmail(),partnerUser.getPartnerUserLoginName(),partnerUser.getStatus());
       
+      if (partnerUsers != null) {
+         for (Object object : partnerUsers) {
+            PartnerUserDetailAndRoles partnerUserDetailAndRoles = viewPartnerUser(object.toString());
+            partnerUserDetailAndRolesList.add(partnerUserDetailAndRoles);
+         }
+         partnerUsersDetailAndRoles.getPartnerUsersDetailAndRoles().addAll(partnerUserDetailAndRolesList);
+      }
       
-      return null;
+      return partnerUsersDetailAndRoles;
    }
    
  

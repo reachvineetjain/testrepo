@@ -9,6 +9,7 @@ import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUsersDetailAndRoles;
 
 /**
  * @author ravi
@@ -32,7 +33,7 @@ public interface PartnerUserInterface {
    
    public PartnerUserProgramsAndRoles getProgramsAndRoles();
    
-   public PartnerUserDetailAndRoles searchPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles);
+   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser);
    
    public DeleteRequest deletePartnerUser(String partnerUserId);
 
