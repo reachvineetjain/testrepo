@@ -5,7 +5,6 @@ package com.ccighgo.service.rest.partner.season;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,10 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
-import com.ccighgo.service.transport.partner.beans.PartnersSeasons.PartnersSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
 
 /**
  * <h1>PartnerSeason</h1> The PartnerSeason class is the REST service front of
@@ -80,7 +77,7 @@ public class PartnerSeason {
    @GET
    @Path("view/{partnerSeasonId}}")
    @Produces("application/json")
-   public PartnersSeasons viewPartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
+   public PartnerSeasonDetail viewPartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
       LOGGER.debug("calling PartnerUser.viewPartnerSeason");
       return partnerSeasonInterface.viewPartnerSeason(partnerSeasonId);
    }
