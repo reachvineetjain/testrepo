@@ -10,11 +10,15 @@ package com.ccighgo.service.transport.partner.beans.userdetailandroles;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.gender.Salutation;
 
 
 /**
@@ -59,6 +63,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "logoImageURL",
     "logoUserName",
     "salutation",
+    "gender",
     "title",
     "firstName",
     "lastName",
@@ -68,7 +73,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "fax",
     "username",
     "skypeId",
-    "programsAccess"
+    "programsAccess",
+   
     
 })
 public class PartnerUserDetailAndRoles
@@ -84,7 +90,7 @@ public class PartnerUserDetailAndRoles
     @XmlElement(required = true)
     protected String logoUserName;
     @XmlElement(required = true)
-    protected String salutation;
+    protected Salutation salutation;
     @XmlElement(required = true)
     protected String title;
     @XmlElement(required = true)
@@ -103,6 +109,7 @@ public class PartnerUserDetailAndRoles
     protected String skypeId;
     protected PartnerUserProgramAccess programsAccess;
     protected String partnerUserId;
+    protected Gender gender;
 
     /**
      * Gets the value of the userStatus property.
@@ -201,21 +208,23 @@ public class PartnerUserDetailAndRoles
      *     {@link String }
      *     
      */
-    public String getSalutation() {
+  /*  public String getSalutation() {
         return salutation;
     }
 
-    /**
+    *//**
      * Sets the value of the salutation property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
-     */
+     *//*
     public void setSalutation(String value) {
         this.salutation = value;
-    }
+    }*/
+    
+    
 
     /**
      * Gets the value of the title property.
@@ -229,7 +238,15 @@ public class PartnerUserDetailAndRoles
         return title;
     }
 
-    /**
+    public Salutation getSalutation() {
+      return salutation;
+   }
+
+   public void setSalutation(Salutation salutation) {
+      this.salutation = salutation;
+   }
+
+   /**
      * Sets the value of the title property.
      * 
      * @param value
@@ -423,6 +440,14 @@ public class PartnerUserDetailAndRoles
 
    public void setProgramsAccess(PartnerUserProgramAccess programsAccess) {
       this.programsAccess = programsAccess;
+   }
+
+   public Gender getGender() {
+      return gender;
+   }
+
+   public void setGender(Gender gender) {
+      this.gender = gender;
    }
 
     /**

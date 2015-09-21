@@ -14,8 +14,8 @@ import javax.xml.bind.annotation.XmlType;
 public class Salutation {
 
    protected int salutationId;
-   @XmlElement(required = true)
    protected String salutationCode;
+   protected Byte active;
    
    public int getSalutationId() {
       return salutationId;
@@ -28,6 +28,12 @@ public class Salutation {
    }
    public void setSalutationCode(String salutationCode) {
       this.salutationCode = salutationCode;
+   }
+   public Byte getActive() {
+      return active;
+   }
+   public void setActive(Byte active) {
+      this.active = active;
    }
 
    

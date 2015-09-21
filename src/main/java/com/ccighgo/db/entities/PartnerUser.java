@@ -42,8 +42,8 @@ public class PartnerUser implements Serializable {
 	@Column(length=25)
 	private String phone;
 
-	@Column(length=10)
-	private String salutation;
+	/*@Column(length=10)
+	private String salutation;*/
 
 	@Column(length=50)
 	private String skypeId;
@@ -68,6 +68,15 @@ public class PartnerUser implements Serializable {
 	//bi-directional many-to-one association to PartnerUserRole
 	@OneToMany(mappedBy="partnerUser")
 	private List<PartnerUserRole> partnerUserRoles;
+	
+	//bi-directional many-to-one association to LookupGender
+   @ManyToOne
+   @JoinColumn(name="genderId")
+   private LookupGender lookupGender;
+   
+   @ManyToOne
+   @JoinColumn(name="salutationId")
+   private Salutation salutation;
 
 	public PartnerUser() {
 	}
@@ -136,13 +145,13 @@ public class PartnerUser implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getSalutation() {
+/*	public String getSalutation() {
 		return this.salutation;
 	}
 
 	public void setSalutation(String salutation) {
 		this.salutation = salutation;
-	}
+	}*/
 
 	public String getSkypeId() {
 		return this.skypeId;
@@ -227,5 +236,21 @@ public class PartnerUser implements Serializable {
 
 		return partnerUserRole;
 	}
+
+   public LookupGender getLookupGender() {
+      return lookupGender;
+   }
+
+   public void setLookupGender(LookupGender lookupGender) {
+      this.lookupGender = lookupGender;
+   }
+
+   public Salutation getSalutation() {
+      return salutation;
+   }
+
+   public void setSalutation(Salutation salutation) {
+      this.salutation = salutation;
+   }
 
 }

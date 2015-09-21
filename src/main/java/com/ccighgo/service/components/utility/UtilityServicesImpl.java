@@ -32,6 +32,7 @@ import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.SalutationRepositotry;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
@@ -90,6 +91,7 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired MessageUtils messageUtil;
    @Autowired LoginRepository loginRepository;
    @Autowired EmailServiceImpl email;
+   @Autowired SalutationRepositotry salutationRepositotry;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -420,18 +422,25 @@ public class UtilityServicesImpl implements UtilityServices {
    @Override
    public Salutations getSalutation() {
 
-      Salutations salutations = new Salutations();
-      List<String> sal = new ArrayList<String>();
-      sal.add("Mr.");
-      sal.add("Mrs.");
-      sal.add("Ms.");
-      for (int i = 1; i <= sal.size(); i++) {
-         Salutation salutation = new Salutation();
-         salutation.setSalutationId(i);
-         salutation.setSalutationCode(sal.get(i-1));
-         salutations.getSalutations().add(salutation);
-      }
+      Salutations salutations = null;
+      try {
+         List<com.ccighgo.db.entities.Salutation> salutationList = salutationRepositotry.findAll();
+         if (salutationList != null) {
+            salutations = new Salutations();
+            for (com.ccighgo.db.entities.Salutation salutationEntity : salutationList) {
 
+               Salutation salutation = new Salutation();
+               salutation.setSalutationId(salutationEntity.getSalutationId());
+               salutation.setSalutationCode(salutationEntity.getSalutationName());
+               salutation.setActive(salutationEntity.getActive());
+               salutations.getSalutations().add(salutation);
+            }
+         }
+      } catch (CcighgoException e) {
+         salutations = setSalutationsStatus(salutations, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SALUTATIONS.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_SALUTATIONS));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_SALUTATIONS));
+      }
       return salutations;
    }
 
@@ -568,6 +577,13 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
+   private Salutations setSalutationsStatus(Salutations salutations, String code, String type, int serviceCode, String message) {
+      if (salutations == null)
+         salutations = new Salutations();
+      salutations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return salutations;
+   }
+   
    private String formResetURL(HttpServletRequest request) {
       String protocol;
       if (request.getProtocol().contains("https")) {

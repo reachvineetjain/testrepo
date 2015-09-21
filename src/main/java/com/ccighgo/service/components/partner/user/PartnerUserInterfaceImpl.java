@@ -16,17 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
+import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerPermission;
 import com.ccighgo.db.entities.PartnerUser;
+import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerPermissionRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerUserRepository;
+import com.ccighgo.jpa.repositories.SalutationRepositotry;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
@@ -44,6 +48,7 @@ import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUse
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUsersDetailAndRoles;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
@@ -74,6 +79,10 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    @Autowired UserTypeRepository userTypeRepository;
    
    @Autowired PartnerPermissionRepository partnerPermissionRepository;
+   
+   @Autowired GenderRepository genderRepository;
+   
+   @Autowired SalutationRepositotry salutationRepositotry;
 
    @Override
    @Transactional(readOnly = true)
@@ -191,9 +200,20 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          partnerUser.setLogin(login);
          partnerUser.setPartner(partner);
          partnerUser.setPhone(partnerUserDetailAndRoles.getPhone());
-         partnerUser.setSalutation(partnerUserDetailAndRoles.getSalutation());
+         
+         if (partnerUserDetailAndRoles.getSalutation() != null) {
+            Salutation salutation = salutationRepositotry.findOne(partnerUserDetailAndRoles.getSalutation().getSalutationId());
+            if (salutation != null)
+               partnerUser.setSalutation(salutation);
+         }
+        // partnerUser.setSalutation(partnerUserDetailAndRoles.getSalutation());
          partnerUser.setSkypeId(partnerUserDetailAndRoles.getSkypeId());
          partnerUser.setTitle(partnerUserDetailAndRoles.getTitle());
+         if (partnerUserDetailAndRoles.getGender() != null) {
+            LookupGender gender = genderRepository.findOne(partnerUserDetailAndRoles.getGender().getGenderId());
+            if (gender != null)
+               partnerUser.setLookupGender(gender);
+         }
          partnerUser = partnerUserRepository.save(partnerUser);
          if (partnerUserDetailAndRoles.getProgramsAccess() != null) {
             PartnerPermission partnerPermission = getPartnerPermission(partnerUserDetailAndRoles.getProgramsAccess());
@@ -321,9 +341,23 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          partnerUser.setFirstName(partnerUserDetailAndRoles.getFirstName());
          partnerUser.setLastName(partnerUserDetailAndRoles.getLastName());
          partnerUser.setPhone(partnerUserDetailAndRoles.getPhone());
-         partnerUser.setSalutation(partnerUserDetailAndRoles.getSalutation());
+         
+         if (partnerUserDetailAndRoles.getSalutation() != null) {
+            Salutation salutation = salutationRepositotry.findOne(partnerUserDetailAndRoles.getSalutation().getSalutationId());
+            if (salutation != null)
+               partnerUser.setSalutation(salutation);
+         }
+         
+         //partnerUser.setSalutation(partnerUserDetailAndRoles.getSalutation());
          partnerUser.setSkypeId(partnerUserDetailAndRoles.getSkypeId());
          partnerUser.setTitle(partnerUserDetailAndRoles.getTitle());
+         
+         //update gender 
+         if (partnerUserDetailAndRoles.getGender() != null) {
+            LookupGender gender = genderRepository.findOne(partnerUserDetailAndRoles.getGender().getGenderId());
+            if (gender != null)
+               partnerUser.setLookupGender(gender);
+         }
 
          if (partnerUserDetailAndRoles.getProgramsAccess() != null) {
             PartnerPermission partnerPermission = getPartnerPermission(partnerUserDetailAndRoles.getProgramsAccess());
@@ -385,11 +419,24 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          partnerUserDetailAndRoles.setLogoImageURL("");
          partnerUserDetailAndRoles.setLogoUserName("");
          partnerUserDetailAndRoles.setPhone(partnerUser.getPhone());
-         partnerUserDetailAndRoles.setSalutation(partnerUser.getSalutation());
+        // 
+         com.ccighgo.service.transport.utility.beans.gender.Salutation salutation = new com.ccighgo.service.transport.utility.beans.gender.Salutation();
+         if (partnerUser.getSalutation() != null) {
+            salutation.setSalutationId(partnerUser.getSalutation().getSalutationId());
+            salutation.setSalutationCode(partnerUser.getSalutation().getSalutationName());
+            salutation.setActive(partnerUser.getSalutation().getActive());
+         }
+         partnerUserDetailAndRoles.setSalutation(salutation);
          partnerUserDetailAndRoles.setSkypeId(partnerUser.getSkypeId());
          partnerUserDetailAndRoles.setTitle(partnerUser.getTitle());
          partnerUserDetailAndRoles.setUsername(partnerUser.getLogin().getLoginName());
          partnerUserDetailAndRoles.setUserStatus(partnerUser.getActive() == CCIConstants.ACTIVE ? true : false);
+         Gender gender = new Gender();
+         if (partnerUser.getLookupGender() != null) {
+            gender.setGenderId(partnerUser.getLookupGender().getGenderId());
+            gender.setGenderCode(partnerUser.getLookupGender().getGenderName());
+         }
+         partnerUserDetailAndRoles.setGender(gender);
          if (partnerUser.getPartnerPermissions() != null) {
             partnerUserDetailAndRoles.setProgramsAccess(getProgramAccessTO(partnerUser));
          }
