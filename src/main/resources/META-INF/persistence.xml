@@ -112,7 +112,7 @@
       <properties>
         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go_qa?autoReconnect=true" />
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://52.2.191.63:3306/cci_gh_go_login?autoReconnect=true" />
          <property name="javax.persistence.jdbc.user" value="creomobile" />
          <property name="javax.persistence.jdbc.password" value="creodev" />
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
