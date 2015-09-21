@@ -57,6 +57,10 @@ public class DepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="departmentProgram")
 	private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
+	//bi-directional many-to-one association to Participant
+	@OneToMany(mappedBy="departmentProgram")
+	private List<Participant> participants;
+
 	//bi-directional many-to-one association to PartnerAgentProgram
 	@OneToMany(mappedBy="departmentProgram")
 	private List<PartnerAgentProgram> partnerAgentPrograms;
@@ -68,6 +72,10 @@ public class DepartmentProgram implements Serializable {
 	//bi-directional many-to-one association to PartnerCCIContact
 	@OneToMany(mappedBy="departmentProgram")
 	private List<PartnerCCIContact> partnerCcicontacts;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="departmentProgram")
+	private List<PartnerSeason> partnerSeasons;
 
 	//bi-directional many-to-one association to SeasonProgramDocument
 	@OneToMany(mappedBy="departmentProgram")
@@ -192,6 +200,28 @@ public class DepartmentProgram implements Serializable {
 		return fieldStaffLcseason;
 	}
 
+	public List<Participant> getParticipants() {
+		return this.participants;
+	}
+
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
+	}
+
+	public Participant addParticipant(Participant participant) {
+		getParticipants().add(participant);
+		participant.setDepartmentProgram(this);
+
+		return participant;
+	}
+
+	public Participant removeParticipant(Participant participant) {
+		getParticipants().remove(participant);
+		participant.setDepartmentProgram(null);
+
+		return participant;
+	}
+
 	public List<PartnerAgentProgram> getPartnerAgentPrograms() {
 		return this.partnerAgentPrograms;
 	}
@@ -256,6 +286,28 @@ public class DepartmentProgram implements Serializable {
 		partnerCcicontact.setDepartmentProgram(null);
 
 		return partnerCcicontact;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons() {
+		return this.partnerSeasons;
+	}
+
+	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
+		this.partnerSeasons = partnerSeasons;
+	}
+
+	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().add(partnerSeason);
+		partnerSeason.setDepartmentProgram(this);
+
+		return partnerSeason;
+	}
+
+	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().remove(partnerSeason);
+		partnerSeason.setDepartmentProgram(null);
+
+		return partnerSeason;
 	}
 
 	public List<SeasonProgramDocument> getSeasonProgramDocuments() {

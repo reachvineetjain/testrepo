@@ -20,15 +20,15 @@ public class PartnerAgentProgram implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerAgentProgramId;
 
-	//bi-directional many-to-one association to PartnerAgentInquiry
-	@ManyToOne
-	@JoinColumn(name="partnerAgentGoId")
-	private PartnerAgentInquiry partnerAgentInquiry;
-
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
+
+	//bi-directional many-to-one association to PartnerAgentInquiry
+	@ManyToOne
+	@JoinColumn(name="partnerAgentGoId")
+	private PartnerAgentInquiry partnerAgentInquiry;
 
 	//bi-directional many-to-one association to PartnerAgentReview
 	@OneToMany(mappedBy="partnerAgentProgram")
@@ -45,20 +45,20 @@ public class PartnerAgentProgram implements Serializable {
 		this.partnerAgentProgramId = partnerAgentProgramId;
 	}
 
-	public PartnerAgentInquiry getPartnerAgentInquiry() {
-		return this.partnerAgentInquiry;
-	}
-
-	public void setPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
-		this.partnerAgentInquiry = partnerAgentInquiry;
-	}
-
 	public DepartmentProgram getDepartmentProgram() {
 		return this.departmentProgram;
 	}
 
 	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
 		this.departmentProgram = departmentProgram;
+	}
+
+	public PartnerAgentInquiry getPartnerAgentInquiry() {
+		return this.partnerAgentInquiry;
+	}
+
+	public void setPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+		this.partnerAgentInquiry = partnerAgentInquiry;
 	}
 
 	public List<PartnerAgentReview> getPartnerAgentReviews() {

@@ -48,6 +48,8 @@
             /services/insurance/**=anon
             /services/partner/season/**=anon
             /loginProxy/**=anon
+            /services/partner/qs/**=anon
+            /services/partner/wq/**=anon
             /services/**=authc
          </value>
       </property>

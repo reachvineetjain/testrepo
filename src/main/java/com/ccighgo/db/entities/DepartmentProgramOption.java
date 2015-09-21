@@ -34,9 +34,17 @@ public class DepartmentProgramOption implements Serializable {
 	@JoinColumn(name="departmentProgramId", nullable=false)
 	private DepartmentProgram departmentProgram;
 
+	//bi-directional many-to-one association to Participant
+	@OneToMany(mappedBy="departmentProgramOptionBean")
+	private List<Participant> participants;
+
 	//bi-directional many-to-one association to PartnerSeasonAllocation
-	@OneToMany(mappedBy="departmentProgramOption")
-	private List<PartnerSeasonAllocation> partnerSeasonAllocations;
+	@OneToMany(mappedBy="departmentProgramOption1")
+	private List<PartnerSeasonAllocation> partnerSeasonAllocations1;
+
+	//bi-directional many-to-one association to PartnerSeasonAllocation
+	@OneToMany(mappedBy="departmentProgramOption2")
+	private List<PartnerSeasonAllocation> partnerSeasonAllocations2;
 
 	//bi-directional many-to-one association to SeasonHSPAllocation
 	@OneToMany(mappedBy="departmentProgramOption")
@@ -89,26 +97,70 @@ public class DepartmentProgramOption implements Serializable {
 		this.departmentProgram = departmentProgram;
 	}
 
-	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations() {
-		return this.partnerSeasonAllocations;
+	public List<Participant> getParticipants() {
+		return this.participants;
 	}
 
-	public void setPartnerSeasonAllocations(List<PartnerSeasonAllocation> partnerSeasonAllocations) {
-		this.partnerSeasonAllocations = partnerSeasonAllocations;
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
 	}
 
-	public PartnerSeasonAllocation addPartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
-		getPartnerSeasonAllocations().add(partnerSeasonAllocation);
-		partnerSeasonAllocation.setDepartmentProgramOption(this);
+	public Participant addParticipant(Participant participant) {
+		getParticipants().add(participant);
+		participant.setDepartmentProgramOptionBean(this);
 
-		return partnerSeasonAllocation;
+		return participant;
 	}
 
-	public PartnerSeasonAllocation removePartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
-		getPartnerSeasonAllocations().remove(partnerSeasonAllocation);
-		partnerSeasonAllocation.setDepartmentProgramOption(null);
+	public Participant removeParticipant(Participant participant) {
+		getParticipants().remove(participant);
+		participant.setDepartmentProgramOptionBean(null);
 
-		return partnerSeasonAllocation;
+		return participant;
+	}
+
+	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations1() {
+		return this.partnerSeasonAllocations1;
+	}
+
+	public void setPartnerSeasonAllocations1(List<PartnerSeasonAllocation> partnerSeasonAllocations1) {
+		this.partnerSeasonAllocations1 = partnerSeasonAllocations1;
+	}
+
+	public PartnerSeasonAllocation addPartnerSeasonAllocations1(PartnerSeasonAllocation partnerSeasonAllocations1) {
+		getPartnerSeasonAllocations1().add(partnerSeasonAllocations1);
+		partnerSeasonAllocations1.setDepartmentProgramOption1(this);
+
+		return partnerSeasonAllocations1;
+	}
+
+	public PartnerSeasonAllocation removePartnerSeasonAllocations1(PartnerSeasonAllocation partnerSeasonAllocations1) {
+		getPartnerSeasonAllocations1().remove(partnerSeasonAllocations1);
+		partnerSeasonAllocations1.setDepartmentProgramOption1(null);
+
+		return partnerSeasonAllocations1;
+	}
+
+	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations2() {
+		return this.partnerSeasonAllocations2;
+	}
+
+	public void setPartnerSeasonAllocations2(List<PartnerSeasonAllocation> partnerSeasonAllocations2) {
+		this.partnerSeasonAllocations2 = partnerSeasonAllocations2;
+	}
+
+	public PartnerSeasonAllocation addPartnerSeasonAllocations2(PartnerSeasonAllocation partnerSeasonAllocations2) {
+		getPartnerSeasonAllocations2().add(partnerSeasonAllocations2);
+		partnerSeasonAllocations2.setDepartmentProgramOption2(this);
+
+		return partnerSeasonAllocations2;
+	}
+
+	public PartnerSeasonAllocation removePartnerSeasonAllocations2(PartnerSeasonAllocation partnerSeasonAllocations2) {
+		getPartnerSeasonAllocations2().remove(partnerSeasonAllocations2);
+		partnerSeasonAllocations2.setDepartmentProgramOption2(null);
+
+		return partnerSeasonAllocations2;
 	}
 
 	public List<SeasonHSPAllocation> getSeasonHspallocations() {
