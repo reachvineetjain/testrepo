@@ -67,7 +67,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public ParticipantsActiveList getActiveParticipantsList(String partnerId) {
       ParticipantsActiveList participantsActiveList = new ParticipantsActiveList();
       try {
-         List<Participant> participants = participantRepository.findActiveParticipantByPartnerId(partnerId);
+         List<Participant> participants =null;// participantRepository.findActiveParticipantByPartnerId(partnerId);
          if (participants != null) {
             for (Participant participant : participants) {
                ParticipantProgramOption participantProgramOption = new ParticipantProgramOption();
@@ -135,7 +135,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public ParticipantsLeadList getLeadParticipantsList(String partnerId) {
       ParticipantsLeadList participantsLeadList = new ParticipantsLeadList();
       try {
-         List<Participant> leadParticipants = participantRepository.findLeadParticipantByPartnerId(partnerId);
+         List<Participant> leadParticipants =null;// participantRepository.findLeadParticipantByPartnerId(partnerId);
          participantsLeadList.setParticipantCount(leadParticipants.size());
          for (Participant participant : leadParticipants) {
             com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantType participantType = new com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantType();
