@@ -11,10 +11,10 @@ import com.ccighgo.db.entities.Participant;
 @Repository
 public interface ParticipantRepository  extends JpaRepository<Participant, Integer>{
 
-   @Query("select s from Participant s  where s.partner.partnerGoId = ?1 ")   
+   @Query("select s from Participant s  where s.partner.partnerGoId = ?1 and s.isLead=0 ")   
    List<Participant> findActiveParticipantByPartnerId(String partnerId);
    
-   @Query("select s from Participant s  where s.partner.partnerGoId = ?1 ")
+   @Query("select s from Participant s  where s.partner.partnerGoId = ?1  and s.isLead=1")
    List<Participant> findLeadParticipantByPartnerId(String partnerId);
 
 }
