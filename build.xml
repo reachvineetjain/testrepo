@@ -629,11 +629,11 @@
 	</target>
 	<!--*************************************************  Partner Seasons *************************************************-->
 
-	<target name="Partners Seasons">
+	<target name="PartnerSeasonDetail">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/partner/seasons/PartnersSeasons.xsd" />
+			<arg value="${xsd.dir}/partner/seasons/PartnerSeasonDetail.xsd" />
 		</java>
 	</target>
 
