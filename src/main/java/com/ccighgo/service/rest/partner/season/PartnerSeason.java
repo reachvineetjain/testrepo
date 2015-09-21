@@ -75,7 +75,7 @@ public class PartnerSeason {
     * @return
     */
    @GET
-   @Path("view/{partnerSeasonId}}")
+   @Path("view/{partnerSeasonId}")
    @Produces("application/json")
    public PartnerSeasonDetail viewPartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
       LOGGER.debug("calling PartnerUser.viewPartnerSeason");
