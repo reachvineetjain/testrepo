@@ -20,8 +20,6 @@ public class Participant implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer participantGoId;
 
-	private Integer departmentProgramId;
-
 	@Column(length=50)
 	private String email;
 
@@ -33,12 +31,12 @@ public class Participant implements Serializable {
 
 	private byte guaranteed;
 
+	private byte isLead;
+
 	@Column(length=50)
 	private String lastName;
 
 	private Integer participantStatusId;
-
-	private Integer seasonId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
@@ -46,6 +44,16 @@ public class Participant implements Serializable {
 	private byte submittedFlightInfo;
 
 	private Integer subPartner;
+
+	//bi-directional many-to-one association to DepartmentProgramOption
+	@ManyToOne
+	@JoinColumn(name="departmentProgramOption")
+	private DepartmentProgramOption departmentProgramOptionBean;
+
+	//bi-directional many-to-one association to DepartmentProgram
+	@ManyToOne
+	@JoinColumn(name="departmentProgramId")
+	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
@@ -55,7 +63,17 @@ public class Participant implements Serializable {
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
 	@JoinColumn(name="partnerGoId")
-	private Partner partner;
+	private Partner partner1;
+
+	//bi-directional many-to-one association to Partner
+	@ManyToOne
+	@JoinColumn(name="subPartnerId")
+	private Partner partner2;
+
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="seasonId")
+	private Season season;
 
 	public Participant() {
 	}
@@ -66,14 +84,6 @@ public class Participant implements Serializable {
 
 	public void setParticipantGoId(Integer participantGoId) {
 		this.participantGoId = participantGoId;
-	}
-
-	public Integer getDepartmentProgramId() {
-		return this.departmentProgramId;
-	}
-
-	public void setDepartmentProgramId(Integer departmentProgramId) {
-		this.departmentProgramId = departmentProgramId;
 	}
 
 	public String getEmail() {
@@ -108,6 +118,14 @@ public class Participant implements Serializable {
 		this.guaranteed = guaranteed;
 	}
 
+	public byte getIsLead() {
+		return this.isLead;
+	}
+
+	public void setIsLead(byte isLead) {
+		this.isLead = isLead;
+	}
+
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -122,14 +140,6 @@ public class Participant implements Serializable {
 
 	public void setParticipantStatusId(Integer participantStatusId) {
 		this.participantStatusId = participantStatusId;
-	}
-
-	public Integer getSeasonId() {
-		return this.seasonId;
-	}
-
-	public void setSeasonId(Integer seasonId) {
-		this.seasonId = seasonId;
 	}
 
 	public Date getStartDate() {
@@ -156,6 +166,22 @@ public class Participant implements Serializable {
 		this.subPartner = subPartner;
 	}
 
+	public DepartmentProgramOption getDepartmentProgramOptionBean() {
+		return this.departmentProgramOptionBean;
+	}
+
+	public void setDepartmentProgramOptionBean(DepartmentProgramOption departmentProgramOptionBean) {
+		this.departmentProgramOptionBean = departmentProgramOptionBean;
+	}
+
+	public DepartmentProgram getDepartmentProgram() {
+		return this.departmentProgram;
+	}
+
+	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+		this.departmentProgram = departmentProgram;
+	}
+
 	public LookupCountry getLookupCountry() {
 		return this.lookupCountry;
 	}
@@ -164,12 +190,28 @@ public class Participant implements Serializable {
 		this.lookupCountry = lookupCountry;
 	}
 
-	public Partner getPartner() {
-		return this.partner;
+	public Partner getPartner1() {
+		return this.partner1;
 	}
 
-	public void setPartner(Partner partner) {
-		this.partner = partner;
+	public void setPartner1(Partner partner1) {
+		this.partner1 = partner1;
+	}
+
+	public Partner getPartner2() {
+		return this.partner2;
+	}
+
+	public void setPartner2(Partner partner2) {
+		this.partner2 = partner2;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

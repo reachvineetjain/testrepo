@@ -27,11 +27,19 @@
                <xsd:element name="partnerCompany" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="cciContact" type="pdl:PartnerCCIContact" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="partnerPrograms" type="pdl:PartnerPrograms" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="partnerAnnouncements" type="pdl:PartnerAnnouncements" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="partnerProgramAccess" type="pdl:PartnerProgramAccess" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="dashboardSections" type="pdl:PartnerDashboardSections" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerAnnouncements">
+      <xsd:sequence>
+         <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="announcements" type="xsd:string" minOccurs="1" maxOccurs="unbounded" />
+      </xsd:sequence>
    </xsd:complexType>
 
    <xsd:complexType name="PartnerCCIContact">

@@ -1097,7 +1097,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       CCIStaffUserNote cciStaffUserNote=new CCIStaffUserNote();
       cciStaffUserNote.setNote(userNotes.getUserNote());
       cciStaffUserNote.setCreatedBy(userNotes.getCciUserId());
-      cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
+      cciStaffUserNote.setCcistaffUser(cciUsersRepository.findOne(userNotes.getCciUserId()));
       cciStaffUserNote.setCreatedOn(new Timestamp(System.currentTimeMillis()));
       cciStaffUserNote.setModifiedBy(userNotes.getCciUserId());
       cciStaffUserNote.setModifiedOn(new Timestamp(System.currentTimeMillis()));

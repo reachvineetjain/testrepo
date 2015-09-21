@@ -22,9 +22,8 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	/*@GeneratedValue(strategy=GenerationType.IDENTITY)*/
 	@Column(unique=true, nullable=false)
-	private Integer cciStaffUserId;
+	private int cciStaffUserId;
 
 	@Column(nullable=false)
 	private byte active;
@@ -87,7 +86,7 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-   @JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LookupCountry
@@ -135,18 +134,18 @@ public class CCIStaffUser implements Serializable {
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<PartnerReviewStatus> partnerReviewStatuses;
 
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<PartnerSeason> partnerSeasons;
+
 	public CCIStaffUser() {
 	}
-	
-	public CCIStaffUser(Integer cciStaffUserId) {
-      this.cciStaffUserId = cciStaffUserId;
-   }
 
-	public Integer getCciStaffUserId() {
+	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(Integer cciStaffUserId) {
+	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 
@@ -514,6 +513,28 @@ public class CCIStaffUser implements Serializable {
 		partnerReviewStatus.setCcistaffUser(null);
 
 		return partnerReviewStatus;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons() {
+		return this.partnerSeasons;
+	}
+
+	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
+		this.partnerSeasons = partnerSeasons;
+	}
+
+	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().add(partnerSeason);
+		partnerSeason.setCcistaffUser(this);
+
+		return partnerSeason;
+	}
+
+	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().remove(partnerSeason);
+		partnerSeason.setCcistaffUser(null);
+
+		return partnerSeason;
 	}
 
 }

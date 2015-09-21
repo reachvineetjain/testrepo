@@ -40,7 +40,12 @@ public class PartnerProgram implements Serializable {
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram;
+	private LookupDepartmentProgram lookupDepartmentProgram1;
+
+	//bi-directional many-to-one association to LookupDepartmentProgram
+	@ManyToOne
+	@JoinColumn(name="lookupDepartmentProgramId")
+	private LookupDepartmentProgram lookupDepartmentProgram2;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
@@ -120,12 +125,20 @@ public class PartnerProgram implements Serializable {
 		this.ccistaffUser = ccistaffUser;
 	}
 
-	public LookupDepartmentProgram getLookupDepartmentProgram() {
-		return this.lookupDepartmentProgram;
+	public LookupDepartmentProgram getLookupDepartmentProgram1() {
+		return this.lookupDepartmentProgram1;
 	}
 
-	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
-		this.lookupDepartmentProgram = lookupDepartmentProgram;
+	public void setLookupDepartmentProgram1(LookupDepartmentProgram lookupDepartmentProgram1) {
+		this.lookupDepartmentProgram1 = lookupDepartmentProgram1;
+	}
+
+	public LookupDepartmentProgram getLookupDepartmentProgram2() {
+		return this.lookupDepartmentProgram2;
+	}
+
+	public void setLookupDepartmentProgram2(LookupDepartmentProgram lookupDepartmentProgram2) {
+		this.lookupDepartmentProgram2 = lookupDepartmentProgram2;
 	}
 
 	public Partner getPartner() {

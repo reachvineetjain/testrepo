@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -33,5 +34,9 @@ public interface ParticipantsInterface {
    public ParticipantsLeadList getLeadParticipantsList(String partnerId);
 
    public NewParticipant addNewParticipant(NewParticipant newParticipant);
+
+   public NewParticipant editNewParticipant(Integer participantId);
+
+   public NewParticipant updateParticipant(NewParticipant participant);
 
 }

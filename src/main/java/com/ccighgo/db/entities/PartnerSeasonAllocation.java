@@ -37,7 +37,12 @@ public class PartnerSeasonAllocation implements Serializable {
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
 	@JoinColumn(name="programOptionId")
-	private DepartmentProgramOption departmentProgramOption;
+	private DepartmentProgramOption departmentProgramOption1;
+
+	//bi-directional many-to-one association to DepartmentProgramOption
+	@ManyToOne
+	@JoinColumn(name="departmentProgramOptionId")
+	private DepartmentProgramOption departmentProgramOption2;
 
 	//bi-directional many-to-one association to PartnerSeason
 	@ManyToOne
@@ -111,12 +116,20 @@ public class PartnerSeasonAllocation implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public DepartmentProgramOption getDepartmentProgramOption() {
-		return this.departmentProgramOption;
+	public DepartmentProgramOption getDepartmentProgramOption1() {
+		return this.departmentProgramOption1;
 	}
 
-	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
-		this.departmentProgramOption = departmentProgramOption;
+	public void setDepartmentProgramOption1(DepartmentProgramOption departmentProgramOption1) {
+		this.departmentProgramOption1 = departmentProgramOption1;
+	}
+
+	public DepartmentProgramOption getDepartmentProgramOption2() {
+		return this.departmentProgramOption2;
+	}
+
+	public void setDepartmentProgramOption2(DepartmentProgramOption departmentProgramOption2) {
+		this.departmentProgramOption2 = departmentProgramOption2;
 	}
 
 	public PartnerSeason getPartnerSeason() {

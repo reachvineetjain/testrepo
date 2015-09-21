@@ -13,23 +13,23 @@ public class CCIStaffUsersCCIStaffRolePK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private Integer cciStaffUserId;
+	private int cciStaffUserId;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private Integer cciStaffRoleId;
+	private int cciStaffRoleId;
 
 	public CCIStaffUsersCCIStaffRolePK() {
 	}
-	public Integer getCciStaffUserId() {
+	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
-	public void setCciStaffUserId(Integer cciStaffUserId) {
+	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
-	public Integer getCciStaffRoleId() {
+	public int getCciStaffRoleId() {
 		return this.cciStaffRoleId;
 	}
-	public void setCciStaffRoleId(Integer cciStaffRoleId) {
+	public void setCciStaffRoleId(int cciStaffRoleId) {
 		this.cciStaffRoleId = cciStaffRoleId;
 	}
 

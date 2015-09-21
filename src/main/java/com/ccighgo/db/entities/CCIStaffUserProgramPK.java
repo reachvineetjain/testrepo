@@ -13,23 +13,23 @@ public class CCIStaffUserProgramPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private Integer cciStaffUserId;
+	private int cciStaffUserId;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private Integer lookupDepartmentProgramId;
+	private int lookupDepartmentProgramId;
 
 	public CCIStaffUserProgramPK() {
 	}
-	public Integer getCciStaffUserId() {
+	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
-	public void setCciStaffUserId(Integer cciStaffUserId) {
+	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
-	public Integer getLookupDepartmentProgramId() {
+	public int getLookupDepartmentProgramId() {
 		return this.lookupDepartmentProgramId;
 	}
-	public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
+	public void setLookupDepartmentProgramId(int lookupDepartmentProgramId) {
 		this.lookupDepartmentProgramId = lookupDepartmentProgramId;
 	}
 
