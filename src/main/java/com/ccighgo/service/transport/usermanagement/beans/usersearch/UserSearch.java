@@ -74,8 +74,9 @@ public class UserSearch {
     protected Integer limitEnd;
     protected String sortField;
     protected String sortOrder;
+    
 
-    public Integer getGoId() {
+   public Integer getGoId() {
       return goId;
    }
 

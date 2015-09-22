@@ -180,7 +180,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired EmailServiceImpl email;
 
-   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?,?,?)";
+   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
 
@@ -568,32 +568,25 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<Integer> results = null;
       Query query = entityManager.createNativeQuery(SP_USER_SEARCH);
       
-      String firstName = null;
-      String lastName = null;
-      String loginName = null;
-      String email = null;
-      
+      String globalSearch=null;   
       Integer cciUserId = null;
       Integer countryId = null;
-      
       String roles = null;
       String departments = null;
       String programs = null;
-      
       Byte active = null;
-      Integer limitStart = 1;
-      Integer limitEnd = 50;
+     
       String sortField = null;
       String sortOrder = null;
       
+      Byte searchFlag = 2;
+      Integer limitStart = 1;
+      Integer limitEnd = 50;
       
       try {
 
          if (userSearch.getGlobalSearch() != null && !(userSearch.getGlobalSearch().isEmpty())) {
-            firstName = userSearch.getGlobalSearch();
-            lastName = userSearch.getGlobalSearch();
-            loginName = userSearch.getGlobalSearch();
-            email = userSearch.getGlobalSearch();
+            globalSearch = userSearch.getGlobalSearch();
          }
 
          if (userSearch.getGoId() != null && !(userSearch.getGoId().equals(CCIConstants.EMPTY_DATA)) && userSearch.getGoId() > 0) {
@@ -636,23 +629,19 @@ public class UserManagementServiceImpl implements UserManagementService {
          if (userSearch.getSortOrder() != null) {
             sortOrder = userSearch.getSortOrder();
          }
-
+         
          // 1.CCIUserId, 2.FirstName, 3.LastName, 4.LoginName, 5.CountryId, 6.email, 7.user roles, 8.departments,
          // 9.programs, 10. active, inactive 11. sortField 12. sortOrder
-         query.setParameter(1, cciUserId);
-         query.setParameter(2, firstName);
-         query.setParameter(3, lastName);
-         query.setParameter(4, loginName);
-         query.setParameter(5, countryId);
-         query.setParameter(6, email);
-         query.setParameter(7, roles);
-         query.setParameter(8, departments);
-         query.setParameter(9, programs);
-         query.setParameter(10, active);
-         /*query.setParameter(11, limitStart);
-         query.setParameter(12, limitEnd);*/
-         query.setParameter(11, sortField);
-         query.setParameter(12, sortOrder);
+         query.setParameter(1, globalSearch);
+         query.setParameter(2, cciUserId);
+         query.setParameter(3, countryId);
+         query.setParameter(4, roles);
+         query.setParameter(5, departments);
+         query.setParameter(6, programs);
+         query.setParameter(7, active);
+         query.setParameter(8, sortField);
+         query.setParameter(9, sortOrder);
+         query.setParameter(10, searchFlag);
 
          results = query.getResultList();
 
