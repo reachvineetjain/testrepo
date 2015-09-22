@@ -359,7 +359,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setCciUserId(cciUser.getCciStaffUserId());
             user.setFirstName(cciUser.getFirstName());
             user.setLastName(cciUser.getLastName());
-            user.setEmail(cciUser.getGoIdSequence().getLogin().getEmail());
+            user.setEmail(cciUser.getGoIdSequence().getLogin().iterator().next().getEmail());
             user.setCity(cciUser.getCity() != null ? cciUser.getCity() : CCIConstants.EMPTY_DATA);
             user.setAddressLine1(cciUser.getHomeAddressLineOne() != null ? cciUser.getHomeAddressLineOne() : CCIConstants.EMPTY_DATA);
             user.setAddressLine2(cciUser.getHomeAddressLineTwo() != null ? cciUser.getHomeAddressLineTwo() : CCIConstants.EMPTY_DATA);
@@ -777,16 +777,16 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setGoIdSequence(goIdSequence);
          Login login = new Login();
          login.setLoginName(user.getLoginInfo().getLoginName());
-         login.setLoginId(goIdSequence.getLogin().getLoginId());
-         login.setPassword(goIdSequence.getLogin().getPassword());
-         login.setKeyValue(goIdSequence.getLogin().getKeyValue());
-         login.setEmail(goIdSequence.getLogin().getEmail());
+         login.setLoginId(goIdSequence.getLogin().iterator().next().getLoginId());
+         login.setPassword(goIdSequence.getLogin().iterator().next().getPassword());
+         login.setKeyValue(goIdSequence.getLogin().iterator().next().getKeyValue());
+         login.setEmail(goIdSequence.getLogin().iterator().next().getEmail());
          login.setCreatedBy(goIdSequence.getGoId());
          login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          login.setModifiedBy(goIdSequence.getGoId());
          login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          login.setGoIdSequence(goIdSequence);  
-         login.setLoginUserTypes(goIdSequence.getLogin().getLoginUserTypes());
+         login.setLoginUserTypes(goIdSequence.getLogin().iterator().next().getLoginUserTypes());
          login = loginRepository.save(login);
          cciUser.setCity(user.getCity() != null ? user.getCity() : null);
          cciUser.setHomeAddressLineOne(user.getAddressLine1() != null ? user.getAddressLine1() : null);
@@ -1219,7 +1219,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       CCIStaffUserNote cciStaffUserNote=new CCIStaffUserNote();
       cciStaffUserNote.setNote(userNotes.getUserNote());
       cciStaffUserNote.setCreatedBy(userNotes.getCciUserId());
-      cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
+      cciStaffUserNote.setCcistaffUser(cciUsersRepository.findOne(userNotes.getCciUserId()));
       cciStaffUserNote.setCreatedOn(new Timestamp(System.currentTimeMillis()));
       cciStaffUserNote.setModifiedBy(userNotes.getCciUserId());
       cciStaffUserNote.setModifiedOn(new Timestamp(System.currentTimeMillis()));
@@ -1322,8 +1322,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       try {
          GoIdSequence goIdSequence = new GoIdSequence();
          goIdSequence = goIdSequenceRepository.findOne(cciUser.getCciStaffUserId());
-         loginInfo.setLoginId(goIdSequence.getLogin().getLoginId());
-         loginInfo.setLoginName(goIdSequence.getLogin().getLoginName());
+         loginInfo.setLoginId(goIdSequence.getLogin().iterator().next().getLoginId());
+         loginInfo.setLoginName(goIdSequence.getLogin().iterator().next().getLoginName());
          // loginInfo.setLoginUserTypes(login.getLoginUserTypes());
       } catch (Exception e) {
       }
@@ -1462,7 +1462,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
          return usr;
       }
-      if(!user.getLoginInfo().getLoginName().equals(tempCCIUser.getGoIdSequence().getLogin().getLoginName()))
+      if(!user.getLoginInfo().getLoginName().equals(tempCCIUser.getGoIdSequence().getLogin().iterator().next().getLoginName()))
       {
       if (loginRepository.findByLoginName(user.getLoginInfo().getLoginName()) != null) {
          // return username already exsist
@@ -1473,7 +1473,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       }
       //findByemail
-      if(!user.getEmail().equals(tempCCIUser.getGoIdSequence().getLogin().getEmail()))
+      if(!user.getEmail().equals(tempCCIUser.getGoIdSequence().getLogin().iterator().next().getEmail()))
       {
       if (loginRepository.findByEmail(user.getEmail()) != null) {
          // return email already exist
@@ -1529,13 +1529,15 @@ public class UserManagementServiceImpl implements UserManagementService {
       ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
       GoIdSequence goIdSequence=new GoIdSequence();
       goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
-      cciUser.setGoIdSequence(goIdSequence);
+      goIdSequence.getLogin().iterator().next().setLoginName(user.getLoginInfo().getLoginName());
+      goIdSequence.getLogin().iterator().next().setEmail(user.getEmail());
       cciUser.setCciStaffUserId(user.getCciUserId());
-      
+      cciUser.setGoIdSequence(goIdSequence);
+    /*  
       Login login = new Login();
       login.setLoginName(user.getLoginInfo().getLoginName());
       login.setLoginId(goIdSequence.getLogin().getLoginId());
-      login.setPassword(goIdSequence.getLogin().getPassword());
+      login.setPassword(goIdSequence.getLogin().iterator().next().getPassword());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
       login.setEmail(user.getEmail());
       login.setCreatedBy(goIdSequence.getGoId());
@@ -1543,8 +1545,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setModifiedBy(goIdSequence.getGoId());
       login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setGoIdSequence(goIdSequence);  
-      login.setLoginUserTypes(goIdSequence.getLogin().getLoginUserTypes());
-      login = loginRepository.save(login);
+      login.setLoginUserTypes(goIdSequence.getLogin().getLoginUserTypes());*/
+      //login = loginRepository.save(login);
       cciUser.setCreatedBy(user.getCciUserId());
       cciUser.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUser.setModifiedBy(user.getCciUserId());
@@ -1667,7 +1669,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       uNote.setCciUserId(cciStaffUserNote.getCcistaffUser().getCciStaffUserId());
       uNote.setUserNotesId(cciStaffUserNote.getCciStaffUserNoteId());
       uNote.setUserNote(cciStaffUserNote.getNote());
-      uNote.setCreatedBy(cciStaffUserNote.getCcistaffUser().getGoIdSequence().getLogin().getLoginName());
+      uNote.setCreatedBy(cciStaffUserNote.getCcistaffUser().getGoIdSequence().getLogin().iterator().next().getLoginName());
       uNote.setCreatedOn(cciStaffUserNote.getCreatedOn().toString());
       return uNote;
    }
@@ -1773,12 +1775,12 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       GoIdSequence goIdSequence = new GoIdSequence();
       goIdSequence = goIdSequenceRepository.save(goIdSequence);
-      // goIdSequence.setLogin(login);
-      
+     
       com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(CCIConstants.CCI_USER_TYPE);
       if (cciUserType == null) {
          cciUserType = new com.ccighgo.db.entities.UserType();
       }
+      List<Login> loginList = new ArrayList<Login>();
       Login login = new Login();
       login.setLoginName(user.getLoginInfo().getLoginName());
       login.setPassword(PasswordUtil.hashKey("password"));
@@ -1792,7 +1794,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       // login.setUserTypeId(1);
       login = loginRepository.save(login);
       // byte active = 1;
-      goIdSequence.setLogin(login);
+      loginList.add(login);
+      goIdSequence.setLogin(loginList);
       cciUser.setGoIdSequence(goIdSequence);
       cciUser.setCciStaffUserId(goIdSequence.getGoId());
       LoginUserType loginUserType = new LoginUserType();
@@ -1979,8 +1982,8 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setCciUserId(cUsr.getCciStaffUserId());
       cciUser.setFirstName(cUsr.getFirstName());
       cciUser.setLastName(cUsr.getLastName());
-      cciUser.setEmail(cUsr.getGoIdSequence().getLogin().getEmail());
-      cciUser.setLoginName(cUsr.getGoIdSequence().getLogin().getLoginName());
+      cciUser.setEmail(cUsr.getGoIdSequence().getLogin().iterator().next().getEmail());
+      cciUser.setLoginName(cUsr.getGoIdSequence().getLogin().iterator().next().getLoginName());
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
       // update country

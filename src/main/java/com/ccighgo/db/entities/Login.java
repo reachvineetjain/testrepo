@@ -45,25 +45,25 @@ public class Login implements Serializable {
 	private String password;
 
 	//bi-directional many-to-one association to GoIdSequence
-   @OneToOne
+   @ManyToOne
    @JoinColumn(name="goId", nullable=false)
    private GoIdSequence goIdSequence;
 
-   //bi-directional many-to-one association to LoginHistory
-   @OneToMany(mappedBy="login")
-   private List<LoginHistory> loginHistories;
+	//bi-directional many-to-one association to LoginHistory
+	@OneToMany(mappedBy="login")
+	private List<LoginHistory> loginHistories;
 
-   //bi-directional many-to-one association to LoginUserType
-   @OneToMany(mappedBy="login")
-   private List<LoginUserType> loginUserTypes;
-
-   //bi-directional many-to-one association to PasswordHistory
-   @OneToMany(mappedBy="login")
-   private List<PasswordHistory> passwordHistories;
+	//bi-directional many-to-one association to LoginUserType
+	@OneToMany(mappedBy="login")
+	private List<LoginUserType> loginUserTypes;
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="login")
 	private List<PartnerUser> partnerUsers;
+
+	//bi-directional many-to-one association to PasswordHistory
+	@OneToMany(mappedBy="login")
+	private List<PasswordHistory> passwordHistories;
 
 	public Login() {
 	}

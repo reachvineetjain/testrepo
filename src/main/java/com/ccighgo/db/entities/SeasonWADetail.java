@@ -41,15 +41,15 @@ public class SeasonWADetail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
 
-	//bi-directional many-to-one association to SeasonStatus
-	@ManyToOne
-	@JoinColumn(name="programStatusId")
-	private SeasonStatus seasonStatus;
-
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
+
+	//bi-directional many-to-one association to SeasonStatus
+	@ManyToOne
+	@JoinColumn(name="programStatusId")
+	private SeasonStatus seasonStatus;
 
 	public SeasonWADetail() {
 	}
@@ -118,20 +118,20 @@ public class SeasonWADetail implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public SeasonStatus getSeasonStatus() {
-		return this.seasonStatus;
-	}
-
-	public void setSeasonStatus(SeasonStatus seasonStatus) {
-		this.seasonStatus = seasonStatus;
-	}
-
 	public Season getSeason() {
 		return this.season;
 	}
 
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	public SeasonStatus getSeasonStatus() {
+		return this.seasonStatus;
+	}
+
+	public void setSeasonStatus(SeasonStatus seasonStatus) {
+		this.seasonStatus = seasonStatus;
 	}
 
 }

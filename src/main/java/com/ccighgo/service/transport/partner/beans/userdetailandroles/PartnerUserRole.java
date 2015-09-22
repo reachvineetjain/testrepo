@@ -5,7 +5,6 @@
 // Generated on: 2015.09.03 at 11:56:28 AM CDT 
 //
 
-
 package com.ccighgo.service.transport.partner.beans.userdetailandroles;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PartnerUserRole complex type.
+ * <p>
+ * Java class for PartnerUserRole complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="PartnerUserRole">
@@ -37,54 +37,43 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PartnerUserRole", propOrder = {
-    "roleName",
-    "enabled"
-})
+@XmlType(name = "PartnerUserRole", propOrder = { 
+      "roleName", 
+      "enabled" 
+ })
 public class PartnerUserRole {
 
-    @XmlElement(required = true)
-    protected String roleName;
-    protected boolean enabled;
+   @XmlElement(required = true)
+   protected String roleName;
+   protected Byte enabled;
 
-    /**
-     * Gets the value of the roleName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRoleName() {
-        return roleName;
-    }
+   /**
+    * Gets the value of the roleName property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getRoleName() {
+      return roleName;
+   }
 
-    /**
-     * Sets the value of the roleName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRoleName(String value) {
-        this.roleName = value;
-    }
+   /**
+    * Sets the value of the roleName property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setRoleName(String value) {
+      this.roleName = value;
+   }
 
-    /**
-     * Gets the value of the enabled property.
-     * 
-     */
-    public boolean isEnabled() {
-        return enabled;
-    }
+   public Byte getEnabled() {
+      return enabled;
+   }
 
-    /**
-     * Sets the value of the enabled property.
-     * 
-     */
-    public void setEnabled(boolean value) {
-        this.enabled = value;
-    }
+   public void setEnabled(Byte enabled) {
+      this.enabled = enabled;
+   }
 
 }

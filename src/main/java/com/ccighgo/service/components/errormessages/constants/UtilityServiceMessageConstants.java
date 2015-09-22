@@ -22,5 +22,6 @@ public class UtilityServiceMessageConstants {
    public static final String MAIL_AWS_USER = "mail.aws.user";
    public static final String MAIL_AWS_PASSWORD = "mail.aws.password";
    public static final String CANNOT_FIND_USER_RESET_PASSWORD = "cannot.find.login";
+   public static final String FAILED_GET_SALUTATIONS="error.get.all.salutation";
    
 }

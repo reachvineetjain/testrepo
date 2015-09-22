@@ -17,7 +17,7 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="participantCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerSeasonsCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerSeasons" type="ps:PartnerSeason" minOccurs="0" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
@@ -28,7 +28,6 @@
       <xsd:sequence>
          <xsd:element name="partnerId" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerSeasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerSeasonProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerSeasonDepartment" type="ps:PartnerSeasonDepartment" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerProgramOption" type="ps:PartnerSeasonProgramOption" minOccurs="1" maxOccurs="1" />

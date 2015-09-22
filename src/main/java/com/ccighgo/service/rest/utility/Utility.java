@@ -20,6 +20,7 @@ import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
+import com.ccighgo.service.transport.utility.beans.gender.Salutations;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
 import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
@@ -203,6 +204,14 @@ public class Utility {
    public Genders getGenders() {
       return utilityServices.getGenders();
    }
+   
+   @GET
+   @Path("salutation")
+   @Produces("application/json")
+   public Salutations getSalutation() {
+      return utilityServices.getSalutation();
+   }
+   
    
    /**
     * @param req
