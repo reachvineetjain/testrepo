@@ -46,24 +46,22 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UserSearch", propOrder = {
-    "cciUserId",
-    "firstName",
-    "lastName",
-    "loginName",
-    "email",
+    "globalSearch",  
+    "goId",
     "country",
     "userRole",
     "department",
     "program",
-    "active"
+    "active",
+    "limitStart",
+    "limitEnd",
+    "sortField",
+    "sortOrder"
 })
 public class UserSearch {
 
-    protected Integer cciUserId;
-    protected String firstName;
-    protected String lastName;
-    protected String loginName;
-    protected String email;
+    protected Integer goId;
+    protected String globalSearch;
     protected Integer country;
     @XmlElement(type = Integer.class)
     protected List<Integer> userRole;
@@ -71,129 +69,29 @@ public class UserSearch {
     protected List<Integer> department;
     @XmlElement(type = Integer.class)
     protected List<Integer> program;
-    protected Boolean active;
+    protected Byte active;
+    protected Integer limitStart;
+    protected Integer limitEnd;
+    protected String sortField;
+    protected String sortOrder;
 
-    /**
-     * Gets the value of the cciUserId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getCciUserId() {
-        return cciUserId;
-    }
+    public Integer getGoId() {
+      return goId;
+   }
 
-    /**
-     * Sets the value of the cciUserId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setCciUserId(Integer value) {
-        this.cciUserId = value;
-    }
+   public void setGoId(Integer goId) {
+      this.goId = goId;
+   }
 
-    /**
-     * Gets the value of the firstName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFirstName() {
-        return firstName;
-    }
+   public String getGlobalSearch() {
+      return globalSearch;
+   }
 
-    /**
-     * Sets the value of the firstName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFirstName(String value) {
-        this.firstName = value;
-    }
+   public void setGlobalSearch(String globalSearch) {
+      this.globalSearch = globalSearch;
+   }
 
-    /**
-     * Gets the value of the lastName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * Sets the value of the lastName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLastName(String value) {
-        this.lastName = value;
-    }
-
-    /**
-     * Gets the value of the loginName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLoginName() {
-        return loginName;
-    }
-
-    /**
-     * Sets the value of the loginName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLoginName(String value) {
-        this.loginName = value;
-    }
-
-    /**
-     * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setEmail(String value) {
-        this.email = value;
-    }
-
-    /**
+   /**
      * Gets the value of the country property.
      * 
      * @return
@@ -312,20 +210,46 @@ public class UserSearch {
      *     {@link Boolean }
      *     
      */
-    public Boolean isActive() {
-        return active;
-    }
+    
 
-    /**
-     * Sets the value of the active property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setActive(Boolean value) {
-        this.active = value;
-    }
+   public Integer getLimitStart() {
+      return limitStart;
+   }
 
+   public Byte getActive() {
+      return active;
+   }
+
+   public void setActive(Byte active) {
+      this.active = active;
+   }
+
+   public void setLimitStart(Integer limitStart) {
+      this.limitStart = limitStart;
+   }
+
+   public Integer getLimitEnd() {
+      return limitEnd;
+   }
+
+   public void setLimitEnd(Integer limitEnd) {
+      this.limitEnd = limitEnd;
+   }
+
+   public String getSortField() {
+      return sortField;
+   }
+
+   public void setSortField(String sortField) {
+      this.sortField = sortField;
+   }
+
+   public String getSortOrder() {
+      return sortOrder;
+   }
+
+   public void setSortOrder(String sortOrder) {
+      this.sortOrder = sortOrder;
+   }
+    
 }

@@ -1,7 +1,9 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -40,8 +42,8 @@ public class PartnerUser implements Serializable {
 	@Column(length=150)
 	private String phone;
 
-	@Column(length=10)
-	private String salutation;
+	/*@Column(length=10)
+	private String salutation;*/
 
 	@Column(length=150)
 	private String skypeId;
@@ -50,8 +52,8 @@ public class PartnerUser implements Serializable {
 	private String title;
 
 	//bi-directional many-to-one association to PartnerPermission
-	@OneToMany(mappedBy="partnerUser")
-	private List<PartnerPermission> partnerPermissions;
+	@OneToOne(mappedBy="partnerUser", fetch = FetchType.EAGER , cascade = { CascadeType.ALL })
+	private PartnerPermission partnerPermissions;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
@@ -66,6 +68,15 @@ public class PartnerUser implements Serializable {
 	//bi-directional many-to-one association to PartnerUserRole
 	@OneToMany(mappedBy="partnerUser")
 	private List<PartnerUserRole> partnerUserRoles;
+	
+	//bi-directional many-to-one association to LookupGender
+   @ManyToOne
+   @JoinColumn(name="genderId")
+   private LookupGender lookupGender;
+   
+   @ManyToOne
+   @JoinColumn(name="salutationId")
+   private Salutation salutation;
 
 	public PartnerUser() {
 	}
@@ -134,13 +145,13 @@ public class PartnerUser implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getSalutation() {
+/*	public String getSalutation() {
 		return this.salutation;
 	}
 
 	public void setSalutation(String salutation) {
 		this.salutation = salutation;
-	}
+	}*/
 
 	public String getSkypeId() {
 		return this.skypeId;
@@ -158,7 +169,7 @@ public class PartnerUser implements Serializable {
 		this.title = title;
 	}
 
-	public List<PartnerPermission> getPartnerPermissions() {
+	/*public List<PartnerPermission> getPartnerPermissions() {
 		return this.partnerPermissions;
 	}
 
@@ -178,13 +189,21 @@ public class PartnerUser implements Serializable {
 		partnerPermission.setPartnerUser(null);
 
 		return partnerPermission;
-	}
+	}*/
 
 	public Login getLogin() {
 		return this.login;
 	}
 
-	public void setLogin(Login login) {
+	public PartnerPermission getPartnerPermissions() {
+      return partnerPermissions;
+   }
+
+   public void setPartnerPermissions(PartnerPermission partnerPermissions) {
+      this.partnerPermissions = partnerPermissions;
+   }
+
+   public void setLogin(Login login) {
 		this.login = login;
 	}
 
@@ -217,5 +236,21 @@ public class PartnerUser implements Serializable {
 
 		return partnerUserRole;
 	}
+
+   public LookupGender getLookupGender() {
+      return lookupGender;
+   }
+
+   public void setLookupGender(LookupGender lookupGender) {
+      this.lookupGender = lookupGender;
+   }
+
+   public Salutation getSalutation() {
+      return salutation;
+   }
+
+   public void setSalutation(Salutation salutation) {
+      this.salutation = salutation;
+   }
 
 }

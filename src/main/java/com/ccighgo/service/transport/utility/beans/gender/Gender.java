@@ -43,7 +43,6 @@ import javax.xml.bind.annotation.XmlType;
 public class Gender {
 
     protected int genderId;
-    @XmlElement(required = true)
     protected String genderCode;
 
     /**

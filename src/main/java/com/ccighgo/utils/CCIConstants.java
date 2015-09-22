@@ -34,6 +34,9 @@ public class CCIConstants {
 
    public static final byte ACTIVE = 1;
    public static final byte INACTIVE = 0;
+   
+   public static final String STATUS_ACTIVE = "1";
+   public static final String STATUS_INACTIVE = "0";
    public static final String DEFAULT_PAGE = "0";
    public static final String DEFAULT_NO_OF_RECORDS_SIZE = "10";
    public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(System.currentTimeMillis());
@@ -46,6 +49,7 @@ public class CCIConstants {
 
    // user type ids
    public static final Integer CCI_USER_TYPE = 1;
+   public static final Integer PARTNER_USER_TYPE = 2;
    public static final int EMPTY_INTEGER_FIELD = -1;
 
    // spaces, hyphens, literals, commas etc
@@ -86,6 +90,10 @@ public class CCIConstants {
    public static final Integer GHT_TEACH_ABRD_ID = 12;
    public static final Integer GHT_VOL_ABRD_ID = 13;
    public static final Integer GHT_WRK_ABRD_ID = 14;
+   
+   
+  //partnerUsers
+   public static final String PARTNER_PERMISSIONS_TABLE_NAME= "PartnerPermissions";
 
    // bind urls for season program menu
    public static final String HSP_J1_URL = "j1hs/details/view/";
