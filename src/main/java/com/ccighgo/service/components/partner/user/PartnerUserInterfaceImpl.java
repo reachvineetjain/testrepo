@@ -88,7 +88,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    @Transactional(readOnly = true)
    public PartnerUsers getAllPartnerUsers(String partnerId) {
       PartnerUsers partnerUsers = new PartnerUsers();
-      /*if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
+      if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
          partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
       } else {
@@ -122,7 +122,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
             LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
          }
-      }*/
+      }
       return partnerUsers;
    }
 
@@ -516,7 +516,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       return partnerUserProgramAccess;
    }
    
-   @Override
+   /*@Override
    @Transactional
    public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser)
    {
@@ -534,7 +534,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       }
       
       return partnerUsersDetailAndRoles;
-   }
+   }*/
    
  
    
