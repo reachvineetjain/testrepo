@@ -101,9 +101,9 @@ public class PartnerSeasonDetail
     @XmlElement(required = true)
     protected String newDeadlineRequest;
     @XmlElement(required = true)
-    protected ProgramAllocationsUnguranteed programAllocationsUnguranteed;
+    protected J1HSProgramAllocationsUnguaranteed programAllocationsUnguranteed;
     @XmlElement(required = true)
-    protected ProgramAllocationsGuaranteed programAllocationsGuaranteed;
+    protected J1HSProgramAllocationsGuaranteed programAllocationsGuaranteed;
     @XmlElement(required = true)
     protected PartnerSeasonNotes partnerSeasonNotes;
 
@@ -421,10 +421,10 @@ public class PartnerSeasonDetail
      * 
      * @return
      *     possible object is
-     *     {@link ProgramAllocationsUnguranteed }
+     *     {@link J1HSProgramAllocationsUnguaranteed }
      *     
      */
-    public ProgramAllocationsUnguranteed getProgramAllocationsUnguranteed() {
+    public J1HSProgramAllocationsUnguaranteed getProgramAllocationsUnguranteed() {
         return programAllocationsUnguranteed;
     }
 
@@ -433,10 +433,10 @@ public class PartnerSeasonDetail
      * 
      * @param value
      *     allowed object is
-     *     {@link ProgramAllocationsUnguranteed }
+     *     {@link J1HSProgramAllocationsUnguaranteed }
      *     
      */
-    public void setProgramAllocationsUnguranteed(ProgramAllocationsUnguranteed value) {
+    public void setProgramAllocationsUnguranteed(J1HSProgramAllocationsUnguaranteed value) {
         this.programAllocationsUnguranteed = value;
     }
 
@@ -445,10 +445,10 @@ public class PartnerSeasonDetail
      * 
      * @return
      *     possible object is
-     *     {@link ProgramAllocationsGuaranteed }
+     *     {@link J1HSProgramAllocationsGuaranteed }
      *     
      */
-    public ProgramAllocationsGuaranteed getProgramAllocationsGuaranteed() {
+    public J1HSProgramAllocationsGuaranteed getProgramAllocationsGuaranteed() {
         return programAllocationsGuaranteed;
     }
 
@@ -457,10 +457,10 @@ public class PartnerSeasonDetail
      * 
      * @param value
      *     allowed object is
-     *     {@link ProgramAllocationsGuaranteed }
+     *     {@link J1HSProgramAllocationsGuaranteed }
      *     
      */
-    public void setProgramAllocationsGuaranteed(ProgramAllocationsGuaranteed value) {
+    public void setProgramAllocationsGuaranteed(J1HSProgramAllocationsGuaranteed value) {
         this.programAllocationsGuaranteed = value;
     }
 

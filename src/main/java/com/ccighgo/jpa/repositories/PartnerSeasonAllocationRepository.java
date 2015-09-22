@@ -19,7 +19,7 @@ import com.ccighgo.db.entities.PartnerSeasonAllocation;
 public interface PartnerSeasonAllocationRepository extends JpaRepository<PartnerSeasonAllocation, Integer> {
 
    @Query("SELECT p FROM PartnerSeasonAllocation p where p.partnerSeason.partnerSeasonId=?1 ")
-   List<PartnerSeasonAllocation> findByPartnerSeasonId(Integer partnerSeasonId);
+   List<PartnerSeasonAllocation> findAllocationsByDepartmentProgramsAndPartnerSeasonId(Integer partnerSeasonId);
    
    @Query("SELECT p FROM PartnerSeasonAllocation p where p.partnerSeason.partnerSeasonId=?1")
    List<PartnerSeasonAllocation> findPartnerSeasonJ1Allocation(Integer partnerSeasonId);

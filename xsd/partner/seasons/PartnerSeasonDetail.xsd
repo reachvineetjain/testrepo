@@ -31,8 +31,8 @@
                   <xsd:element name="seasonEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="seasonApplicationDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="newDeadlineRequest" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="programAllocationsUnguranteed" type="psd:ProgramAllocationsUnguranteed" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="programAllocationsGuaranteed" type="psd:ProgramAllocationsGuaranteed" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="programAllocationsUnguranteed" type="psd:J1HSProgramAllocationsUnguaranteed" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="programAllocationsGuaranteed" type="psd:J1HSProgramAllocationsGuaranteed" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonNotes" type="psd:PartnerSeasonNotes" minOccurs="1" maxOccurs="1" />
                </xsd:sequence>
             </xsd:sequence>
@@ -78,7 +78,7 @@
       </xsd:sequence>
    </xsd:complexType>
 
-   <xsd:complexType name="ProgramAllocationsUnguranteed">
+   <xsd:complexType name="J1HSProgramAllocationsUnguaranteed">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -97,7 +97,7 @@
       </xsd:sequence>
    </xsd:complexType>
 
-   <xsd:complexType name="ProgramAllocationsGuaranteed">
+   <xsd:complexType name="J1HSProgramAllocationsGuaranteed">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />

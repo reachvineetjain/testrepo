@@ -614,10 +614,11 @@ public class UtilityServicesImpl implements UtilityServices {
             loginUser = loginRepository.findByLoginName(req.getUsername());
          }
          if (loginUser != null) {
-            String body = "<p>This email was sent automatically by CCI Greenheart Online system in response to your request to recover your online account password. </p>" +
+            String body = "<p>Welcome to Greenheart Online System! </p>" +
+         "<p>This email was sent by the Greenheart Online system in response to your request to recover your password. </p>" +
          "<p>Please go to the following page and choose a new password:</p> " + 
                   "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"  +
-         "<p>If you ignore this message, your password won't be changed.</p><p>If you didn't request a password reset, let us know.</p><p>Thank you,</p><p>GO System Support.</p>";
+         "<p>If you didn't request a new password, please let us know.</p><p>Thank you,</p><p>CCI Greenheart.</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
