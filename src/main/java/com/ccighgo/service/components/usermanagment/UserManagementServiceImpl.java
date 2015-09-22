@@ -365,6 +365,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setAddressLine2(cciUser.getHomeAddressLineTwo() != null ? cciUser.getHomeAddressLineTwo() : CCIConstants.EMPTY_DATA);
             user.setZip(cciUser.getZip() != null ? cciUser.getZip() : CCIConstants.EMPTY_DATA);
             user.setPrimaryPhone(cciUser.getPrimaryPhone() != null ? cciUser.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
+            user.setPhoneExtension(cciUser.getPhoneExtension() != null ? cciUser.getPhoneExtension() : CCIConstants.EMPTY_DATA);
             user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
             user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
             user.setSupervisorId(cciUser.getSupervisorId() != null ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
@@ -793,6 +794,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
          cciUser.setZip(user.getZip() != null ? user.getZip() : null);
          cciUser.setPrimaryPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+         cciUser.setPhoneExtension(user.getPhoneExtension() != null ? user.getPhoneExtension() : null);
          cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
          cciUser.setSevisId(user.getSevisId() != null ? user.getSevisId() : null);
          if (user.getSupervisorId() != null) {
@@ -1494,6 +1496,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
       cciUser.setZip(user.getZip() != null ? user.getZip() : null);
       cciUser.setPrimaryPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setPhoneExtension(user.getPhoneExtension() != null ? user.getPhoneExtension() : null);
       cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
       cciUser.setSevisId(user.getSevisId() != null ? user.getSevisId() : null);
       cciUser.setCciAdminGuid(tempCCIUser.getCciAdminGuid());
@@ -1747,6 +1750,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setHomeAddressLineTwo(user.getAddressLine2() != null ? user.getAddressLine2() : null);
       cciUser.setZip(user.getZip() != null ? user.getZip() : null);
       cciUser.setPrimaryPhone(user.getPrimaryPhone() != null ? user.getPrimaryPhone() : null);
+      cciUser.setPhoneExtension(user.getPhoneExtension() != null ? user.getPhoneExtension() : null);
       cciUser.setEmergencyPhone(user.getEmergencyPhone() != null ? user.getEmergencyPhone() : null);
       cciUser.setSevisId(user.getSevisId() != null ? user.getSevisId() : null);
       if (user.getSupervisorId() != null && !user.getSupervisorId().isEmpty()) {
@@ -1982,6 +1986,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setEmail(cUsr.getGoIdSequence().getLogin().getEmail());
       cciUser.setLoginName(cUsr.getGoIdSequence().getLogin().getLoginName());
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
+      cciUser.setPhoneExtension(cUsr.getPhoneExtension() != null ? cUsr.getPhoneExtension() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
       // update country
       Country country = new Country();

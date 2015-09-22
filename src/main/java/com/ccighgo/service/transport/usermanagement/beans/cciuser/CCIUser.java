@@ -59,6 +59,7 @@ import com.ccighgo.service.transport.utility.beans.gender.Gender;
     "state",
     "email",
     "primaryPhone",
+    "phoneExtension",
     "loginName",
     "isActive",
     "photoPath",
@@ -81,6 +82,7 @@ public class CCIUser
     protected String email;
     @XmlElement(required = true)
     protected String primaryPhone;
+    protected String phoneExtension;
     @XmlElement(required = true)
     protected String loginName;
     protected Boolean isActive;
@@ -249,7 +251,15 @@ public class CCIUser
         this.primaryPhone = value;
     }
 
-    /**
+    public String getPhoneExtension() {
+      return phoneExtension;
+   }
+
+   public void setPhoneExtension(String phoneExtension) {
+      this.phoneExtension = phoneExtension;
+   }
+
+   /**
      * Gets the value of the loginName property.
      * 
      * @return
