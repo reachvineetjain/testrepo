@@ -10,11 +10,15 @@ package com.ccighgo.service.transport.partner.beans.userdetailandroles;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.utility.beans.gender.Gender;
+import com.ccighgo.service.transport.utility.beans.gender.Salutation;
 
 
 /**
@@ -53,10 +57,13 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerUserDetailAndRoles", propOrder = {
+    "partnerUserId",
+    "partnergoId",
     "userStatus",
     "logoImageURL",
     "logoUserName",
     "salutation",
+    "gender",
     "title",
     "firstName",
     "lastName",
@@ -66,20 +73,24 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "fax",
     "username",
     "skypeId",
-    "programsAccess"
+    "programsAccess",
+   
+    
 })
 public class PartnerUserDetailAndRoles
     extends Response
 {
-
+   
     @XmlElement(required = true)
-    protected String userStatus;
+    protected String partnergoId;
+    @XmlElement(required = true)
+    protected boolean userStatus;
     @XmlElement(required = true)
     protected String logoImageURL;
     @XmlElement(required = true)
     protected String logoUserName;
     @XmlElement(required = true)
-    protected String salutation;
+    protected Salutation salutation;
     @XmlElement(required = true)
     protected String title;
     @XmlElement(required = true)
@@ -88,16 +99,17 @@ public class PartnerUserDetailAndRoles
     protected String lastName;
     @XmlElement(required = true)
     protected String email;
-    protected boolean phone;
+    protected String phone;
     @XmlElement(required = true)
     protected String emergencyPhone;
-    protected boolean fax;
+    protected String fax;
     @XmlElement(required = true)
     protected String username;
     @XmlElement(required = true)
     protected String skypeId;
-    @XmlElement(required = true)
-    protected List<PartnerUserProgramAccess> programsAccess;
+    protected PartnerUserProgramAccess programsAccess;
+    protected String partnerUserId;
+    protected Gender gender;
 
     /**
      * Gets the value of the userStatus property.
@@ -107,11 +119,28 @@ public class PartnerUserDetailAndRoles
      *     {@link String }
      *     
      */
-    public String getUserStatus() {
+    
+    public boolean getUserStatus() {
         return userStatus;
     }
 
-    /**
+    public String getPartnerUserId() {
+      return partnerUserId;
+   }
+
+   public void setPartnerUserId(String partnerUserId) {
+      this.partnerUserId = partnerUserId;
+   }
+
+   public String getPartnergoId() {
+      return partnergoId;
+   }
+
+   public void setPartnergoId(String partnergoId) {
+      this.partnergoId = partnergoId;
+   }
+
+   /**
      * Sets the value of the userStatus property.
      * 
      * @param value
@@ -119,7 +148,7 @@ public class PartnerUserDetailAndRoles
      *     {@link String }
      *     
      */
-    public void setUserStatus(String value) {
+    public void setUserStatus(boolean value) {
         this.userStatus = value;
     }
 
@@ -179,21 +208,23 @@ public class PartnerUserDetailAndRoles
      *     {@link String }
      *     
      */
-    public String getSalutation() {
+  /*  public String getSalutation() {
         return salutation;
     }
 
-    /**
+    *//**
      * Sets the value of the salutation property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
-     */
+     *//*
     public void setSalutation(String value) {
         this.salutation = value;
-    }
+    }*/
+    
+    
 
     /**
      * Gets the value of the title property.
@@ -207,7 +238,15 @@ public class PartnerUserDetailAndRoles
         return title;
     }
 
-    /**
+    public Salutation getSalutation() {
+      return salutation;
+   }
+
+   public void setSalutation(Salutation salutation) {
+      this.salutation = salutation;
+   }
+
+   /**
      * Sets the value of the title property.
      * 
      * @param value
@@ -295,7 +334,7 @@ public class PartnerUserDetailAndRoles
      * Gets the value of the phone property.
      * 
      */
-    public boolean isPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -303,7 +342,7 @@ public class PartnerUserDetailAndRoles
      * Sets the value of the phone property.
      * 
      */
-    public void setPhone(boolean value) {
+    public void setPhone(String value) {
         this.phone = value;
     }
 
@@ -335,7 +374,7 @@ public class PartnerUserDetailAndRoles
      * Gets the value of the fax property.
      * 
      */
-    public boolean isFax() {
+    public String getFax() {
         return fax;
     }
 
@@ -343,7 +382,7 @@ public class PartnerUserDetailAndRoles
      * Sets the value of the fax property.
      * 
      */
-    public void setFax(boolean value) {
+    public void setFax(String value) {
         this.fax = value;
     }
 
@@ -395,6 +434,22 @@ public class PartnerUserDetailAndRoles
         this.skypeId = value;
     }
 
+   public PartnerUserProgramAccess getProgramsAccess() {
+      return programsAccess;
+   }
+
+   public void setProgramsAccess(PartnerUserProgramAccess programsAccess) {
+      this.programsAccess = programsAccess;
+   }
+
+   public Gender getGender() {
+      return gender;
+   }
+
+   public void setGender(Gender gender) {
+      this.gender = gender;
+   }
+
     /**
      * Gets the value of the programsAccess property.
      * 
@@ -417,11 +472,11 @@ public class PartnerUserDetailAndRoles
      * 
      * 
      */
-    public List<PartnerUserProgramAccess> getProgramsAccess() {
+    /*public List<PartnerUserProgramAccess> getProgramsAccess() {
         if (programsAccess == null) {
             programsAccess = new ArrayList<PartnerUserProgramAccess>();
         }
         return this.programsAccess;
-    }
-
+    }*/
+    
 }

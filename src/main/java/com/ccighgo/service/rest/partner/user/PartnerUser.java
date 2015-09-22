@@ -15,8 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
+import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
+import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUsersDetailAndRoles;
 
 /**
  * @author ravi
@@ -40,19 +43,58 @@ public class PartnerUser {
    }
    
    @POST
-   @Path("addNewOne")
+   @Path("create")
    @Produces("application/json")
    public PartnerUserDetailAndRoles createNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
       LOGGER.debug("calling PartnerUser.addNewPartnerUser");
       return partnerUserInterface.addNewPartnerUser(partnerUserDetailAndRoles);
    }
    
-   @POST
-   @Path("view")
+   @GET
+   @Path("view/{partnerUserId}")
    @Produces("application/json")
-   public PartnerUserDetailAndRoles viewPartnerUser() {
+   public PartnerUserDetailAndRoles viewPartnerUser(@PathParam("partnerUserId") String partnerUserId) {
       LOGGER.debug("calling PartnerUser.viewPartnerUser");
-      return partnerUserInterface.viewPartnerUser();
+      return partnerUserInterface.viewPartnerUser(partnerUserId);
    }
-
+   
+   @GET
+   @Path("edit/{partnerUserId}")
+   @Produces("application/json")
+   public PartnerUserDetailAndRoles editPartnerUser(@PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.viewPartnerUser");
+      return partnerUserInterface.viewPartnerUser(partnerUserId);
+   }
+   @POST
+   @Path("update")
+   @Produces("application/json")
+   public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
+      LOGGER.debug("calling PartnerUser.updatePartnerUser");
+      return partnerUserInterface.updatePartnerUser(partnerUserDetailAndRoles);
+   }
+   
+   @GET
+   @Path("get-program-access")
+   @Produces("application/json")
+   public PartnerUserProgramsAndRoles getProgramsAndRoles() {
+      LOGGER.debug("calling PartnerUser.getProgramsAndRoles");
+      return partnerUserInterface.getProgramsAndRoles();
+   }
+   
+   /*@POST
+   @Path("search")
+   @Produces("application/json")
+   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser) {
+      LOGGER.debug("calling PartnerUser.searchPartnerUser");
+      return partnerUserInterface.searchPartnerUser(partnerUser);
+   }*/
+   
+   @GET
+   @Path("delete-partner-user/{partnerUserId}")
+   @Produces("application/json")
+   public DeleteRequest deletePartnerUser(@PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.deletePartnerUser");
+      return partnerUserInterface.deletePartnerUser(partnerUserId);
+   }
+   
 }
