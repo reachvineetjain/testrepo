@@ -65,6 +65,9 @@ public class CCIStaffUser implements Serializable {
 
 	@Column(length=15)
 	private String primaryPhone;
+	
+	@Column(length=10)
+   private String phoneExtension;
 
 	@Column(length=20)
 	private String sevisId;
@@ -260,8 +263,16 @@ public class CCIStaffUser implements Serializable {
 	public void setPrimaryPhone(String primaryPhone) {
 		this.primaryPhone = primaryPhone;
 	}
+	
+	public String getPhoneExtension() {
+      return phoneExtension;
+   }
 
-	public String getSevisId() {
+   public void setPhoneExtension(String phoneExtension) {
+      this.phoneExtension = phoneExtension;
+   }
+
+   public String getSevisId() {
 		return this.sevisId;
 	}
 

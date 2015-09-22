@@ -69,6 +69,7 @@ import com.ccighgo.service.transport.utility.beans.gender.Gender;
     "zip",
     "email",
     "primaryPhone",
+    "phoneExtension",
     "emergencyPhone",
     "sevisId",
     "supervisorId",
@@ -100,6 +101,7 @@ public class User
     protected String email;
     @XmlElement(required = true)
     protected String primaryPhone;
+    protected String phoneExtension;
     protected String emergencyPhone;
     protected String sevisId;
     protected String supervisorId;
@@ -323,7 +325,15 @@ public class User
         this.primaryPhone = value;
     }
 
-    /**
+    public String getPhoneExtension() {
+      return phoneExtension;
+   }
+
+   public void setPhoneExtension(String phoneExtension) {
+      this.phoneExtension = phoneExtension;
+   }
+
+   /**
      * Gets the value of the emergencyPhone property.
      * 
      * @return
