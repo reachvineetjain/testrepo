@@ -52,7 +52,11 @@ import javax.xml.bind.annotation.XmlType;
     "userRole",
     "department",
     "program",
-    "active"
+    "active",
+    "limitStart",
+    "limitEnd",
+    "sortField",
+    "sortOrder"
 })
 public class UserSearch {
 
@@ -65,9 +69,11 @@ public class UserSearch {
     protected List<Integer> department;
     @XmlElement(type = Integer.class)
     protected List<Integer> program;
-    protected Boolean active;
-
-    
+    protected Byte active;
+    protected Integer limitStart;
+    protected Integer limitEnd;
+    protected String sortField;
+    protected String sortOrder;
 
     public Integer getGoId() {
       return goId;
@@ -204,20 +210,46 @@ public class UserSearch {
      *     {@link Boolean }
      *     
      */
-    public Boolean isActive() {
-        return active;
-    }
+    
 
-    /**
-     * Sets the value of the active property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setActive(Boolean value) {
-        this.active = value;
-    }
+   public Integer getLimitStart() {
+      return limitStart;
+   }
 
+   public Byte getActive() {
+      return active;
+   }
+
+   public void setActive(Byte active) {
+      this.active = active;
+   }
+
+   public void setLimitStart(Integer limitStart) {
+      this.limitStart = limitStart;
+   }
+
+   public Integer getLimitEnd() {
+      return limitEnd;
+   }
+
+   public void setLimitEnd(Integer limitEnd) {
+      this.limitEnd = limitEnd;
+   }
+
+   public String getSortField() {
+      return sortField;
+   }
+
+   public void setSortField(String sortField) {
+      this.sortField = sortField;
+   }
+
+   public String getSortOrder() {
+      return sortOrder;
+   }
+
+   public void setSortOrder(String sortOrder) {
+      this.sortOrder = sortOrder;
+   }
+    
 }
