@@ -27,28 +27,28 @@ public class PartnerUser implements Serializable {
 	@Column(length=50)
 	private String email;
 
-	@Column(length=25)
+	@Column(length=150)
 	private String emergencyPhone;
 
-	@Column(length=25)
+	@Column(length=150)
 	private String fax;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String firstName;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String lastName;
 
-	@Column(length=25)
+	@Column(length=150)
 	private String phone;
 
 	/*@Column(length=10)
 	private String salutation;*/
 
-	@Column(length=50)
+	@Column(length=150)
 	private String skypeId;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String title;
 
 	//bi-directional many-to-one association to PartnerPermission

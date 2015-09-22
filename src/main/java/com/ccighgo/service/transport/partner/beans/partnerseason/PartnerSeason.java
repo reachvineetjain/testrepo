@@ -47,7 +47,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PartnerSeason", propOrder = {
     "partnerId",
     "partnerSeasonId",
-    "partnerSeasonProgramId",
     "partnerSeasonProgramName",
     "partnerSeasonDepartment",
     "partnerProgramOption",
@@ -62,7 +61,6 @@ public class PartnerSeason {
     @XmlElement(required = true)
     protected String partnerId;
     protected int partnerSeasonId;
-    protected int partnerSeasonProgramId;
     @XmlElement(required = true)
     protected String partnerSeasonProgramName;
     @XmlElement(required = true)
@@ -118,22 +116,6 @@ public class PartnerSeason {
      */
     public void setPartnerSeasonId(int value) {
         this.partnerSeasonId = value;
-    }
-
-    /**
-     * Gets the value of the partnerSeasonProgramId property.
-     * 
-     */
-    public int getPartnerSeasonProgramId() {
-        return partnerSeasonProgramId;
-    }
-
-    /**
-     * Sets the value of the partnerSeasonProgramId property.
-     * 
-     */
-    public void setPartnerSeasonProgramId(int value) {
-        this.partnerSeasonProgramId = value;
     }
 
     /**

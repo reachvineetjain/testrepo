@@ -54,9 +54,17 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
+	//bi-directional many-to-one association to Participant
+	@OneToMany(mappedBy="season")
+	private List<Participant> participants;
+
 	//bi-directional many-to-one association to PartnerAnnouncement
 	@OneToMany(mappedBy="season")
 	private List<PartnerAnnouncement> partnerAnnouncements;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="season")
+	private List<PartnerSeason> partnerSeasons;
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
@@ -306,6 +314,28 @@ public class Season implements Serializable {
 		return fieldStaffLeadershipSeason;
 	}
 
+	public List<Participant> getParticipants() {
+		return this.participants;
+	}
+
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
+	}
+
+	public Participant addParticipant(Participant participant) {
+		getParticipants().add(participant);
+		participant.setSeason(this);
+
+		return participant;
+	}
+
+	public Participant removeParticipant(Participant participant) {
+		getParticipants().remove(participant);
+		participant.setSeason(null);
+
+		return participant;
+	}
+
 	public List<PartnerAnnouncement> getPartnerAnnouncements() {
 		return this.partnerAnnouncements;
 	}
@@ -326,6 +356,28 @@ public class Season implements Serializable {
 		partnerAnnouncement.setSeason(null);
 
 		return partnerAnnouncement;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons() {
+		return this.partnerSeasons;
+	}
+
+	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
+		this.partnerSeasons = partnerSeasons;
+	}
+
+	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().add(partnerSeason);
+		partnerSeason.setSeason(this);
+
+		return partnerSeason;
+	}
+
+	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().remove(partnerSeason);
+		partnerSeason.setSeason(null);
+
+		return partnerSeason;
 	}
 
 	public LookupDepartment getLookupDepartment() {

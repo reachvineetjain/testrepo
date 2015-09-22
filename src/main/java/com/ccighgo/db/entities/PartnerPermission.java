@@ -270,6 +270,7 @@ public class PartnerPermission implements Serializable {
 		this.f1StudentsPreProgram = f1StudentsPreProgram;
 	}
 
+
 	public Byte getJ1AccountingInsurance() {
 		return this.j1AccountingInsurance;
 	}

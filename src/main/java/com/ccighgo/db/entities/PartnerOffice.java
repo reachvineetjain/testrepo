@@ -34,7 +34,7 @@ public class PartnerOffice implements Serializable {
 
 	private Timestamp createdOn;
 
-	@Column(length=15)
+	@Column(length=150)
 	private String faxNumber;
 
 	private Integer modifiedBy;
@@ -44,16 +44,16 @@ public class PartnerOffice implements Serializable {
 	@Column(length=2000)
 	private String officeNotes;
 
-	@Column(length=25)
+	@Column(length=150)
 	private String phoneNumber;
 
-	@Column(length=10)
+	@Column(length=13)
 	private String postalCode;
 
 	@Column(length=30)
 	private String state;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String website;
 
 	//bi-directional many-to-one association to PartnerContact

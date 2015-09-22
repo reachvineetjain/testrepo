@@ -114,6 +114,8 @@ import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.ValidationUtils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 
 /**
@@ -364,7 +366,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setPrimaryPhone(cciUser.getPrimaryPhone() != null ? cciUser.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
             user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
             user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
-            user.setSupervisorId(cciUser.getSupervisorId() > 0 ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
+            user.setSupervisorId(cciUser.getSupervisorId() != null ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
             user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
             user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
             Gender gender = new Gender();
@@ -444,7 +446,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          //findByemail
          
          if (loginRepository.findByEmail(user.getEmail()) != null) {
-            // return username already exsist
+            // return email already exist
             usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
@@ -535,8 +537,12 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          Login loginEmail = loginRepository.findByEmail(usr.getEmail()); 
-//         EmailServiceImpl email = new EmailServiceImpl();
-         email.send(loginEmail.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginEmail.getKeyValue()),false);
+         
+         String body = "<p>This email was sent automatically by CCI Greenheart Online system to inform you that you an online account has been created for you.  </p></br>" +
+               "<p>Please go to the following page and follow the instructions to login to the system. </p> " + 
+                        "<p>"+CCIUtils.formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>"  +
+               "<p>Thank you,</p><p>GO System Support.</p>";
+         email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body,true);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
@@ -551,17 +557,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       return usr;
    }
    
-   private String formResetURL(HttpServletRequest request) {
-      String protocol;
-      if (request.getProtocol().contains("https")) {
-         protocol = "https";
-      } else {
-         protocol = "http";
-      }
-      String url = protocol + "://" + "ccigoqa.creo-mobile.com" + CCIConstants.RESET_PASSWORD_LINK;
-      System.out.println(url);
-      return url;
-   }
+  
 
    @SuppressWarnings("unchecked")
    @Override
@@ -653,7 +649,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          ValidationUtils.validateRequired(user.getLastName());
          cciUser.setLastName(user.getLastName());
          ValidationUtils.validateRequired(user.getEmail());
-         // changes for deleted email column
          ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());
          GoIdSequence goIdSequence=new GoIdSequence();
          goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
@@ -1102,7 +1097,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       CCIStaffUserNote cciStaffUserNote=new CCIStaffUserNote();
       cciStaffUserNote.setNote(userNotes.getUserNote());
       cciStaffUserNote.setCreatedBy(userNotes.getCciUserId());
-      cciStaffUserNote.setCcistaffUser(new CCIStaffUser(userNotes.getCciUserId()));
+      cciStaffUserNote.setCcistaffUser(cciUsersRepository.findOne(userNotes.getCciUserId()));
       cciStaffUserNote.setCreatedOn(new Timestamp(System.currentTimeMillis()));
       cciStaffUserNote.setModifiedBy(userNotes.getCciUserId());
       cciStaffUserNote.setModifiedOn(new Timestamp(System.currentTimeMillis()));
@@ -1359,7 +1354,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       if(!user.getEmail().equals(tempCCIUser.getGoIdSequence().getLogin().iterator().next().getEmail()))
       {
       if (loginRepository.findByEmail(user.getEmail()) != null) {
-         // return username already exsist
+         // return email already exist
          usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_UPDATE_USER_EMAIL_EXIST.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_EMAIL_EXIST));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_EMAIL_EXIST));
@@ -1418,7 +1413,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setLoginId(goIdSequence.getLogin().getLoginId());
       login.setPassword(goIdSequence.getLogin().iterator().next().getPassword());
       login.setKeyValue(goIdSequence.getLogin().getKeyValue());
-      login.setEmail(goIdSequence.getLogin().getEmail());
+      login.setEmail(user.getEmail());
       login.setCreatedBy(goIdSequence.getGoId());
       login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setModifiedBy(goIdSequence.getGoId());
@@ -1620,7 +1615,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setFirstName(user.getFirstName());
       ValidationUtils.validateRequired(user.getLastName());
       cciUser.setLastName(user.getLastName());
-      // ValidationUtils.validateEmail(user.getEmail());
+//       ValidationUtils.validateEmail(user.getEmail());
       String cciAdminGuid = UuidUtils.nextHexUUID();
       cciUser.setCciAdminGuid(cciAdminGuid);
       cciUser.setCity(user.getCity() != null ? user.getCity() : null);
@@ -1654,9 +1649,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       GoIdSequence goIdSequence = new GoIdSequence();
       goIdSequence = goIdSequenceRepository.save(goIdSequence);
-      // goIdSequence.setLogin(login);
-      /*cciUser.setGoIdSequence(goIdSequence);
-      cciUser.setCciStaffUserId(goIdSequence.getGoId());*/
+     
       com.ccighgo.db.entities.UserType cciUserType = userTypeRepository.findOne(CCIConstants.CCI_USER_TYPE);
       if (cciUserType == null) {
          cciUserType = new com.ccighgo.db.entities.UserType();
@@ -1686,6 +1679,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       loginUserType.setModifiedBy(goIdSequence.getGoId());
       loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
       loginUserType.setLogin(login);
       loginUserType = loginUserTypeRepository.save(loginUserType);
       ValidationUtils.validateRequired(user.getLoginInfo().getLoginName());

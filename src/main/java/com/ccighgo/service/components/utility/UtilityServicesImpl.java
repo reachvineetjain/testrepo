@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.components.utility;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -585,14 +587,12 @@ public class UtilityServicesImpl implements UtilityServices {
    }
    
    private String formResetURL(HttpServletRequest request) {
-      String protocol;
-      if (request.getProtocol().contains("https")) {
-         protocol = "https";
-      } else {
-         protocol = "http";
+      String url = "";
+      try {
+         url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
+      } catch (Exception e) {
+         e.printStackTrace();
       }
-      String url = protocol + "://" + "ccigoqa.creo-mobile.com" + CCIConstants.RESET_PASSWORD_LINK;
-      System.out.println(url);
       return url;
    }
 
@@ -610,11 +610,15 @@ public class UtilityServicesImpl implements UtilityServices {
          if (req.getUsername() == null) {
             loginUser = loginRepository.findByEmail(req.getEmail());
          }
-        if(req.getEmail() == null){
+         else if(req.getEmail() == null){
             loginUser = loginRepository.findByLoginName(req.getUsername());
          }
          if (loginUser != null) {
-            email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, formResetURL(request).concat(loginUser.getKeyValue()), false);
+            String body = "<p>This email was sent automatically by CCI Greenheart Online system in response to your request to recover your online account password. </p>" +
+         "<p>Please go to the following page and choose a new password:</p> " + 
+                  "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"  +
+         "<p>If you ignore this message, your password won't be changed.</p><p>If you didn't request a password reset, let us know.</p><p>Thank you,</p><p>GO System Support.</p>";
+            email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
          } else {

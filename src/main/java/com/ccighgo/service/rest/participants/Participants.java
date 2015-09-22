@@ -50,11 +50,28 @@ public class Participants {
    }
    
    @POST
-   @Path("create/newParticipant")
+   @Path("create/participant")
    @Produces("application/json")
    public NewParticipant addNewParticipant(NewParticipant newParticipant){
       LOGGER.info("calling Participants.addNewParticipant ");
       return participantsInterface.addNewParticipant(newParticipant);
    }
 
+   @GET
+   @Path("edit/participant/{participantId}")
+   @Produces("application/json")
+   public NewParticipant editNewParticipant(@PathParam("participantId") String participantId){
+      LOGGER.info("calling Participants.editNewParticipant ");
+      return participantsInterface.editNewParticipant(Integer.parseInt(participantId));
+   }
+   
+   @POST
+   @Path("update/participant")
+   @Produces("application/json")
+   public NewParticipant updateParticipant(NewParticipant participant){
+      LOGGER.info("calling Participants.updateParticipant");
+      return participantsInterface.updateParticipant(participant);
+   }
+
+   
 }

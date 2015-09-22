@@ -51,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
          // Create a new Message
          Session session = Session.getInstance(mailProperties);
          MimeMessage msg = new MimeMessage(session);
-         msg.setFrom(new InternetAddress(fromAddress, "Admin"));
+         msg.setFrom(new InternetAddress(fromAddress, "GO Support"));
          msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
          msg.setSubject(subject);
          if (isHtml)

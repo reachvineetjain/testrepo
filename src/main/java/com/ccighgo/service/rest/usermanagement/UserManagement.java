@@ -53,7 +53,7 @@ public class UserManagement {
     @Context HttpServletRequest request;
     
     /**
-     * The method {@code ping(@PathParam("input") String input)} returns user
+     * The method {@code ping(@PathParam("input"))} returns user
      * input string back. The purpose of the method is to test if utility
      * services are up and running
      * 

@@ -3,7 +3,11 @@
  */
 package com.ccighgo.utils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -68,6 +72,16 @@ public class CCIUtils {
          returnVal = sb.toString();
       }
       return returnVal;
+   }
+   
+    public static String formResetURL(HttpServletRequest request) {
+      String url = "";
+      try {
+         url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return url;
    }
 
 }

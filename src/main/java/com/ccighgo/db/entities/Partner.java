@@ -21,7 +21,7 @@ public class Partner implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerGoId;
 
-	@Column(length=15)
+	@Column(length=150)
 	private String acronym;
 
 	@Column(length=150)
@@ -38,7 +38,7 @@ public class Partner implements Serializable {
 	@Column(length=50)
 	private String city;
 
-	@Column(length=50)
+	@Column(length=250)
 	private String companyName;
 
 	@Column(length=2000)
@@ -53,12 +53,14 @@ public class Partner implements Serializable {
 
 	private Integer dandBNumber;
 
+	private byte deliverDSForms;
+
 	@Column(length=50)
 	private String email;
 
 	private byte hasSubPartners;
 
-	@Column(length=50)
+	@Column(length=100)
 	private String invoiceMail;
 
 	private byte isSubPartner;
@@ -72,6 +74,8 @@ public class Partner implements Serializable {
 	private Timestamp modifiedOn;
 
 	private byte multiCountrySender;
+
+	private byte needPartnerReview;
 
 	private Integer oldId;
 
@@ -87,6 +91,23 @@ public class Partner implements Serializable {
 
 	@Column(length=64)
 	private String partnerGuid;
+
+	private byte payGreenheartDirectly;
+
+	@Column(length=150)
+	private String physicalAddressLineOne;
+
+	@Column(length=150)
+	private String physicalAddressLineTwo;
+
+	@Column(length=50)
+	private String physicalCity;
+
+	@Column(length=50)
+	private String physicalstate;
+
+	@Column(length=15)
+	private String physicalZipcode;
 
 	@Column(length=40)
 	private String quickbooksCode;
@@ -104,8 +125,12 @@ public class Partner implements Serializable {
 	private String zipcode;
 
 	//bi-directional many-to-one association to Participant
-	@OneToMany(mappedBy="partner")
-	private List<Participant> participants;
+	@OneToMany(mappedBy="partner1")
+	private List<Participant> participants1;
+
+	//bi-directional many-to-one association to Participant
+	@OneToMany(mappedBy="partner2")
+	private List<Participant> participants2;
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
@@ -115,7 +140,12 @@ public class Partner implements Serializable {
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
 	@JoinColumn(name="countryId")
-	private LookupCountry lookupCountry;
+	private LookupCountry lookupCountry1;
+
+	//bi-directional many-to-one association to LookupCountry
+	@ManyToOne
+	@JoinColumn(name="physicalcountryId")
+	private LookupCountry lookupCountry2;
 
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
@@ -289,6 +319,14 @@ public class Partner implements Serializable {
 		this.dandBNumber = dandBNumber;
 	}
 
+	public byte getDeliverDSForms() {
+		return this.deliverDSForms;
+	}
+
+	public void setDeliverDSForms(byte deliverDSForms) {
+		this.deliverDSForms = deliverDSForms;
+	}
+
 	public String getEmail() {
 		return this.email;
 	}
@@ -361,6 +399,14 @@ public class Partner implements Serializable {
 		this.multiCountrySender = multiCountrySender;
 	}
 
+	public byte getNeedPartnerReview() {
+		return this.needPartnerReview;
+	}
+
+	public void setNeedPartnerReview(byte needPartnerReview) {
+		this.needPartnerReview = needPartnerReview;
+	}
+
 	public Integer getOldId() {
 		return this.oldId;
 	}
@@ -417,6 +463,54 @@ public class Partner implements Serializable {
 		this.partnerGuid = partnerGuid;
 	}
 
+	public byte getPayGreenheartDirectly() {
+		return this.payGreenheartDirectly;
+	}
+
+	public void setPayGreenheartDirectly(byte payGreenheartDirectly) {
+		this.payGreenheartDirectly = payGreenheartDirectly;
+	}
+
+	public String getPhysicalAddressLineOne() {
+		return this.physicalAddressLineOne;
+	}
+
+	public void setPhysicalAddressLineOne(String physicalAddressLineOne) {
+		this.physicalAddressLineOne = physicalAddressLineOne;
+	}
+
+	public String getPhysicalAddressLineTwo() {
+		return this.physicalAddressLineTwo;
+	}
+
+	public void setPhysicalAddressLineTwo(String physicalAddressLineTwo) {
+		this.physicalAddressLineTwo = physicalAddressLineTwo;
+	}
+
+	public String getPhysicalCity() {
+		return this.physicalCity;
+	}
+
+	public void setPhysicalCity(String physicalCity) {
+		this.physicalCity = physicalCity;
+	}
+
+	public String getPhysicalstate() {
+		return this.physicalstate;
+	}
+
+	public void setPhysicalstate(String physicalstate) {
+		this.physicalstate = physicalstate;
+	}
+
+	public String getPhysicalZipcode() {
+		return this.physicalZipcode;
+	}
+
+	public void setPhysicalZipcode(String physicalZipcode) {
+		this.physicalZipcode = physicalZipcode;
+	}
+
 	public String getQuickbooksCode() {
 		return this.quickbooksCode;
 	}
@@ -465,26 +559,48 @@ public class Partner implements Serializable {
 		this.zipcode = zipcode;
 	}
 
-	public List<Participant> getParticipants() {
-		return this.participants;
+	public List<Participant> getParticipants1() {
+		return this.participants1;
 	}
 
-	public void setParticipants(List<Participant> participants) {
-		this.participants = participants;
+	public void setParticipants1(List<Participant> participants1) {
+		this.participants1 = participants1;
 	}
 
-	public Participant addParticipant(Participant participant) {
-		getParticipants().add(participant);
-		participant.setPartner(this);
+	public Participant addParticipants1(Participant participants1) {
+		getParticipants1().add(participants1);
+		participants1.setPartner1(this);
 
-		return participant;
+		return participants1;
 	}
 
-	public Participant removeParticipant(Participant participant) {
-		getParticipants().remove(participant);
-		participant.setPartner(null);
+	public Participant removeParticipants1(Participant participants1) {
+		getParticipants1().remove(participants1);
+		participants1.setPartner1(null);
 
-		return participant;
+		return participants1;
+	}
+
+	public List<Participant> getParticipants2() {
+		return this.participants2;
+	}
+
+	public void setParticipants2(List<Participant> participants2) {
+		this.participants2 = participants2;
+	}
+
+	public Participant addParticipants2(Participant participants2) {
+		getParticipants2().add(participants2);
+		participants2.setPartner2(this);
+
+		return participants2;
+	}
+
+	public Participant removeParticipants2(Participant participants2) {
+		getParticipants2().remove(participants2);
+		participants2.setPartner2(null);
+
+		return participants2;
 	}
 
 	public GoIdSequence getGoIdSequence() {
@@ -495,12 +611,20 @@ public class Partner implements Serializable {
 		this.goIdSequence = goIdSequence;
 	}
 
-	public LookupCountry getLookupCountry() {
-		return this.lookupCountry;
+	public LookupCountry getLookupCountry1() {
+		return this.lookupCountry1;
 	}
 
-	public void setLookupCountry(LookupCountry lookupCountry) {
-		this.lookupCountry = lookupCountry;
+	public void setLookupCountry1(LookupCountry lookupCountry1) {
+		this.lookupCountry1 = lookupCountry1;
+	}
+
+	public LookupCountry getLookupCountry2() {
+		return this.lookupCountry2;
+	}
+
+	public void setLookupCountry2(LookupCountry lookupCountry2) {
+		this.lookupCountry2 = lookupCountry2;
 	}
 
 	public PartnerStatus getPartnerStatus() {

@@ -44,8 +44,12 @@ public class LookupCountry implements Serializable {
 	private List<Participant> participants;
 
 	//bi-directional many-to-one association to Partner
-	@OneToMany(mappedBy="lookupCountry")
-	private List<Partner> partners;
+	@OneToMany(mappedBy="lookupCountry1")
+	private List<Partner> partners1;
+
+	//bi-directional many-to-one association to Partner
+	@OneToMany(mappedBy="lookupCountry2")
+	private List<Partner> partners2;
 
 	//bi-directional many-to-one association to PartnerAgentInquiry
 	@OneToMany(mappedBy="lookupCountry")
@@ -150,26 +154,48 @@ public class LookupCountry implements Serializable {
 		return participant;
 	}
 
-	public List<Partner> getPartners() {
-		return this.partners;
+	public List<Partner> getPartners1() {
+		return this.partners1;
 	}
 
-	public void setPartners(List<Partner> partners) {
-		this.partners = partners;
+	public void setPartners1(List<Partner> partners1) {
+		this.partners1 = partners1;
 	}
 
-	public Partner addPartner(Partner partner) {
-		getPartners().add(partner);
-		partner.setLookupCountry(this);
+	public Partner addPartners1(Partner partners1) {
+		getPartners1().add(partners1);
+		partners1.setLookupCountry1(this);
 
-		return partner;
+		return partners1;
 	}
 
-	public Partner removePartner(Partner partner) {
-		getPartners().remove(partner);
-		partner.setLookupCountry(null);
+	public Partner removePartners1(Partner partners1) {
+		getPartners1().remove(partners1);
+		partners1.setLookupCountry1(null);
 
-		return partner;
+		return partners1;
+	}
+
+	public List<Partner> getPartners2() {
+		return this.partners2;
+	}
+
+	public void setPartners2(List<Partner> partners2) {
+		this.partners2 = partners2;
+	}
+
+	public Partner addPartners2(Partner partners2) {
+		getPartners2().add(partners2);
+		partners2.setLookupCountry2(this);
+
+		return partners2;
+	}
+
+	public Partner removePartners2(Partner partners2) {
+		getPartners2().remove(partners2);
+		partners2.setLookupCountry2(null);
+
+		return partners2;
 	}
 
 	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
