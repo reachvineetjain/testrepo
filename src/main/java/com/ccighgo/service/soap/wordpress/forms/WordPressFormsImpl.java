@@ -4,9 +4,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
+import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;
@@ -20,6 +22,8 @@ public class WordPressFormsImpl implements IWordPressForms {
    PartnerAgentInquiryRepository partnerAgentInquiryRepository;
    @Autowired
    LoginRepository loginRepository;
+   @Autowired
+   PartnerRepository partnerRepository;
    @Override
    public String InquiryPartner(InternationalPartners InternationalPartners) {
       try {
@@ -27,10 +31,25 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println("Inquiry partner Is Called !!!");
          Login user =loginRepository.findByEmail(InternationalPartners.getEmail());
          if(user!=null){
-            String string = "400:Duplicate Row (User Already Exist ):400:Duplicate Row ( User Already Exist)";
-            System.out.println(string);
-            return string;
+            String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist)";
+            System.out.println(message);
+            return message;
          }
+         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite());
+         if(webSiteDuplicate!=null){
+            String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
+            System.out.println(message);
+            return message;
+         }
+         
+         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
+         if(legalNameDuplicate!=null){
+            String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
+            System.out.println(message);
+            return message;
+         }
+         
+         
          if (InternationalPartners != null) {
             PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
             partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
@@ -43,6 +62,13 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
+            partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
+            partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite());
+            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
+             
+             //GoIdSequence goIdSequence = new GoIdSequence();
+            //  goIdSequence = goIdSequenceRepository.save(goIdSequence);
+           //  partnerAgentInquiry.setpartn
            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          }
@@ -162,6 +188,36 @@ public class WordPressFormsImpl implements IWordPressForms {
          return false;
       }
       return false;
+   }
+
+   @Override
+   public Boolean IsLegalNameExist(String LegalName) {
+      try {
+         System.out.println("IsLegalNameExist is Called !!! ");
+         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName);
+        if(legalNameDuplicate!=null){
+           return true;
+        }
+     } catch (Exception e) {
+        ExceptionUtil.logException(e, LOGGER);
+        return false;
+     }
+     return false;
+   }
+
+   @Override
+   public Boolean IsWebSiteExist(String WebSite) {
+      try {
+         System.out.println("IsWebSiteExist is Called !!! ");
+         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite);
+        if(webSiteDuplicate!=null){
+           return true;
+        }
+     } catch (Exception e) {
+        ExceptionUtil.logException(e, LOGGER);
+        return false;
+     }
+     return false;
    }
 
 }

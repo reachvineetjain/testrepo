@@ -1,10 +1,16 @@
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 @Repository
 public interface PartnerAgentInquiryRepository extends JpaRepository<PartnerAgentInquiry, Integer> {
+   @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.website =?1")
+   PartnerAgentInquiry findByWebSite(String website);
+   @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.businessName =?1")
+   PartnerAgentInquiry findByLegalName(String website);
 
 }

@@ -26,4 +26,8 @@ public interface IWordPressForms {
    @WebMethod
    Boolean IsEmailExist(@WebParam(name = "data") String Email);
 
+   @WebMethod
+   Boolean IsLegalNameExist(@WebParam(name = "data") String LegalName);
+   @WebMethod
+   Boolean IsWebSiteExist(@WebParam(name = "data") String WebSite);
 }
