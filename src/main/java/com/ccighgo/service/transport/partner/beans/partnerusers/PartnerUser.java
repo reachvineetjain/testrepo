@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PartnerUser {
 
-   /* protected int partnerUserId;*/
+    protected int partnerUserId;
     @XmlElement(required = true)
     protected String partnerUserFirstName;
     @XmlElement(required = true)
@@ -58,26 +58,24 @@ public class PartnerUser {
     protected String partnerUserLoginName;
     @XmlElement(required = true)
     protected String partnerUserEmail;
-   /* @XmlElement(required = true)
-    protected PartnerUserStatus partnerUserStatus;*/
-  
-    protected byte status;
+    @XmlElement(required = true)
+    protected PartnerUserStatus partnerUserStatus;
     /**
      * Gets the value of the partnerUserId property.
      * 
      */
-    /*public int getPartnerUserId() {
+    public int getPartnerUserId() {
         return partnerUserId;
     }
 
-    *//**
+    /**
      * Sets the value of the partnerUserId property.
      * 
-     *//*
+     */
     public void setPartnerUserId(int value) {
         this.partnerUserId = value;
     }
-*/
+
     /**
      * Gets the value of the partnerUserFirstName property.
      * 
@@ -182,28 +180,19 @@ public class PartnerUser {
      *     {@link PartnerUserStatus }
      *     
      */
-   /* public PartnerUserStatus getPartnerUserStatus() {
+    public PartnerUserStatus getPartnerUserStatus() {
         return partnerUserStatus;
     }
 
-    *//**
+    /**
      * Sets the value of the partnerUserStatus property.
      * 
      * @param value
      *     allowed object is
      *     {@link PartnerUserStatus }
      *     
-     *//*
+     */
     public void setPartnerUserStatus(PartnerUserStatus value) {
         this.partnerUserStatus = value;
     }
-*/
-   public byte getStatus() {
-      return status;
-   }
-
-   public void setStatus(byte status) {
-      this.status = status;
-   }
-
 }
