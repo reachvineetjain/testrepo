@@ -21,5 +21,7 @@ public interface PartnerService {
     * @return
     */
    PartnerDetails getPartnerDetails(String userId);
+   
+   
 
 }
