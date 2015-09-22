@@ -81,13 +81,13 @@ public class PartnerUser {
       return partnerUserInterface.getProgramsAndRoles();
    }
    
-   @POST
+   /*@POST
    @Path("search")
    @Produces("application/json")
    public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser) {
       LOGGER.debug("calling PartnerUser.searchPartnerUser");
       return partnerUserInterface.searchPartnerUser(partnerUser);
-   }
+   }*/
    
    @GET
    @Path("delete-partner-user/{partnerUserId}")

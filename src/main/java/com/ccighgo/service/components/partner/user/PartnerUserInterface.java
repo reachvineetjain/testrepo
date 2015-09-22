@@ -33,7 +33,7 @@ public interface PartnerUserInterface {
    
    public PartnerUserProgramsAndRoles getProgramsAndRoles();
    
-   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser);
+//   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser);
    
    public DeleteRequest deletePartnerUser(String partnerUserId);
 
