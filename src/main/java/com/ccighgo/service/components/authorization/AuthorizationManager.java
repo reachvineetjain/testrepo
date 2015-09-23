@@ -50,9 +50,9 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Autowired MessageUtils messageUtil;
 
    @Autowired UserManagementService userManagementService;
-   
+
    @Autowired PartnerService partnerService;
-   
+
    @Autowired CommonComponentUtils componentUtils;
 
    @Override
@@ -61,8 +61,8 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
       Auth auth = new Auth();
       if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
-         if(login.getGoIdSequence().getCcistaffUser().getActive()==CCIConstants.ACTIVE){
-            if (login != null) {
+         if (login != null) {
+            if (login.getGoIdSequence().getCcistaffUser().getActive() == CCIConstants.ACTIVE) {
                auth.setGoId(login.getGoIdSequence().getGoId());
                auth.setLoginId(login.getLoginId());
                auth.setLoginname(login.getLoginName());
@@ -95,11 +95,13 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                   loginTypeList.add(lt);
                }
                auth.getLoginType().addAll(loginTypeList);
+               auth.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            } else {
+               auth.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INACTIVE_LOGIN.getValue(),
+                     messageUtil.getMessage(AuthConstants.LOGIN_DISABLED)));
+               LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_DISABLED));
             }
-         }else{
-            auth.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INACTIVE_LOGIN.getValue(),
-                  messageUtil.getMessage(AuthConstants.LOGIN_DISABLED)));
-            LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_DISABLED));
          }
          return auth;
       }

@@ -42,7 +42,7 @@
          <xsd:element name="partnerCompanyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerCompanyAcronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="CCIAccountingDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="dAndBNumber" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="dAndBNumber" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="personToSignContract" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="subscribeCCINewsletter" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="recieveHSPNotificationEmails" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
