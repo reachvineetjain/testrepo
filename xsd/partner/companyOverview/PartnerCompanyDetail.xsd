@@ -23,6 +23,7 @@
                <xsd:element name="partnerCompanyDetails" type="pcd:PartnerCompanyDetails" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerPrimaryContact" type="pcd:PartnerPrimaryContact" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerPhysicalAddress" type="pcd:PartnerPhysicalAddress" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerMailingAddressSame" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="partnerMailingAddress" type="pcd:PartnerMailingAddress" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
