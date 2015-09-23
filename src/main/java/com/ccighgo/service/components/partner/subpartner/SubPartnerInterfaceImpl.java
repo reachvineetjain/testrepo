@@ -6,14 +6,28 @@ package com.ccighgo.service.components.partner.subpartner;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerContact;
+import com.ccighgo.db.entities.PartnerNote;
+import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerCountry;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerMailingAddress;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerNote;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerNoteTopic;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerNotes;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerPhysicalAddress;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerPrimaryContact;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartners;
+import com.ccighgo.utils.CCIConstants;
 
 /**
  * @author ravi
@@ -21,6 +35,8 @@ import com.ccighgo.service.transport.partner.beans.subpartner.SubPartners;
  */
 @Component
 public class SubPartnerInterfaceImpl implements SubPartnerInterface {
+   
+   @Autowired PartnerRepository partnerRepository;
 
    @Override
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -118,9 +134,109 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    }
 
    @Override
-   public SubPartner viewSubPartners(String subPartner) {
-      // TODO Auto-generated method stub
+   @Transactional
+   public SubPartner viewSubPartners(String subPartnerId) {
+      SubPartner subPartner = new SubPartner();
+      Partner partnerSubPartner = partnerRepository.findOne(Integer.valueOf(subPartnerId));
+      if (partnerSubPartner.getIsSubPartner() == CCIConstants.ACTIVE) {
+         subPartner.setSubPartnerId(partnerSubPartner.getPartnerGoId());
+
+         SubPartnerPrimaryContact subPartnerPrimaryContact = new SubPartnerPrimaryContact();
+         PartnerContact partnerContact = partnerSubPartner.getPartnerContacts().iterator().next();
+         subPartnerPrimaryContact.setSalutation(partnerContact.getSalutation());
+         subPartnerPrimaryContact.setTitle(partnerContact.getTitle());
+         subPartnerPrimaryContact.setFirstName(partnerContact.getFirstName());
+         subPartnerPrimaryContact.setLastName(partnerContact.getLastName());
+         subPartnerPrimaryContact.setEmail(partnerContact.getEmail());
+         subPartnerPrimaryContact.setPhone(partnerContact.getPhone());
+         subPartnerPrimaryContact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+         subPartnerPrimaryContact.setFax(partnerContact.getFax());
+         subPartnerPrimaryContact.setReceiveNotificationEmailFromCCI(partnerContact.getReceiveNotificationEmails());
+         subPartnerPrimaryContact.setSkypeId(partnerContact.getSkypeId());
+         subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
+         subPartnerPrimaryContact.setTypeOfPartnerUser(CCIConstants.EMPTY_DATA); // need to change type here
+         subPartner.setSubPartnerPrimaryContact(subPartnerPrimaryContact);
+         // TODO: need to add sub partner seasons
+
+         // Physical Address
+         SubPartnerPhysicalAddress subPartnerPhysicalAddress = new SubPartnerPhysicalAddress();
+         subPartnerPhysicalAddress.setPhysicalAddressLineOne(partnerSubPartner.getPhysicalAddressLineOne());
+         subPartnerPhysicalAddress.setPhysicalAddressLineTwo(partnerSubPartner.getPhysicalAddressLineTwo());
+         subPartnerPhysicalAddress.setPhysicalCity(partnerSubPartner.getPhysicalCity());
+         subPartnerPhysicalAddress.setPhysicalstate(partnerSubPartner.getPhysicalstate());
+         subPartnerPhysicalAddress.setPhysicalZipcode(partnerSubPartner.getPhysicalZipcode());
+
+         SubPartnerCountry subPartnerCountry1 = new SubPartnerCountry();
+         subPartnerCountry1.setSubPartnerCountry(partnerSubPartner.getLookupCountry1().getCountryName());
+         subPartnerCountry1.setSubPartnerCountryId(partnerSubPartner.getLookupCountry1().getCountryId());
+         subPartnerPhysicalAddress.setSubPartnerCountry(subPartnerCountry1);
+         subPartner.setSubPartnerPhysicalAddress(subPartnerPhysicalAddress);
+
+         // Mailing Address
+         SubPartnerMailingAddress subPartnerMailingAddress = new SubPartnerMailingAddress();
+         subPartnerMailingAddress.setAddressLineOne(partnerSubPartner.getAddressLineOne());
+         subPartnerMailingAddress.setAddressLineTwo(partnerSubPartner.getAddressLineTwo());
+         subPartnerMailingAddress.setCity(partnerSubPartner.getCity());
+         subPartnerMailingAddress.setState(partnerSubPartner.getState());
+         subPartnerMailingAddress.setZipcode(partnerSubPartner.getZipcode());
+
+         SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
+         subPartnerCountry2.setSubPartnerCountry(partnerSubPartner.getLookupCountry2().getCountryName());
+         subPartnerCountry2.setSubPartnerCountryId(partnerSubPartner.getLookupCountry2().getCountryId());
+         subPartnerMailingAddress.setSubPartnerCountry(subPartnerCountry2);
+         subPartner.setSubPartnerMailingAddress(subPartnerMailingAddress);
+
+         // Status
+         SubPartnerStatus subPartnerStatus = new SubPartnerStatus();
+         subPartnerStatus.setSubPartnerStatus(partnerSubPartner.getPartnerStatus().getPartnerStatusName());
+         subPartnerStatus.setSubPartnerStatusId(partnerSubPartner.getPartnerStatus().getPartnerStatusId());
+         subPartner.setSubPartnerStatus(subPartnerStatus);
+
+         // Notes
+         List<PartnerNote> PartnerNoteDBList = partnerSubPartner.getPartnerNotes();
+         SubPartnerNotes subPartnerNotes = new SubPartnerNotes();
+         for (PartnerNote partnerNote : PartnerNoteDBList) {
+            SubPartnerNote SubPartnerNote = new SubPartnerNote();
+            SubPartnerNote.setSubPartnerNotesId(partnerNote.getPartnerNotesId());
+            SubPartnerNote.setSubpartnerNote(partnerNote.getPartnerNote());
+
+            SubPartnerNoteTopic subPartnerNoteTopic = new SubPartnerNoteTopic();
+            subPartnerNoteTopic.setSubPartnerNoteTopicId(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicId());
+            subPartnerNoteTopic.setCompetitorInfo(partnerNote.getPartnerNoteTopic().getCompetitorInfo());
+            subPartnerNoteTopic.setEmbassy_VisaInfo(partnerNote.getPartnerNoteTopic().getEmbassy_VisaInfo());
+            subPartnerNoteTopic.setF1(partnerNote.getPartnerNoteTopic().getF1());
+            subPartnerNoteTopic.setGht(partnerNote.getPartnerNoteTopic().getGht());
+            subPartnerNoteTopic.setIntern(partnerNote.getPartnerNoteTopic().getIntern());
+            subPartnerNoteTopic.setJ1(partnerNote.getPartnerNoteTopic().getJ1());
+            subPartnerNoteTopic.setMeeting_visit(partnerNote.getPartnerNoteTopic().getMeeting_visit());
+            subPartnerNoteTopic.setPartnerNoteTopicName(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
+            subPartnerNoteTopic.setSeasonInfo(partnerNote.getPartnerNoteTopic().getSeasonInfo());
+            subPartnerNoteTopic.setStInbound(partnerNote.getPartnerNoteTopic().getStInbound());
+            subPartnerNoteTopic.setTrainee(partnerNote.getPartnerNoteTopic().getTrainee());
+            subPartnerNoteTopic.setW_t(partnerNote.getPartnerNoteTopic().getW_t());
+
+            SubPartnerNote.setSubPartnerNoteTopic(subPartnerNoteTopic);
+            subPartnerNotes.getSubPartnerNotes().add(SubPartnerNote);
+         }
+         subPartner.setSubPartnerNotes(subPartnerNotes);
+      }
+      return subPartner;
+   }
+   
+   
+   @Override
+   @Transactional
+   public SubPartner createSubPartner(SubPartner subPartner) {
+   
       return null;
    }
+   
+   @Override
+   @Transactional
+   public SubPartner updateSubPartner(SubPartner subPartner) {
+   
+      return null;
+   }
+   
 
 }

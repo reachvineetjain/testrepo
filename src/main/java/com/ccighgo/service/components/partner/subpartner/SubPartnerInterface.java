@@ -17,6 +17,10 @@ public interface SubPartnerInterface {
    
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId);
 
-   public SubPartner viewSubPartners(String subPartner);
+   public SubPartner viewSubPartners(String subPartnerId);
+   
+   public SubPartner createSubPartner(SubPartner subPartner);
+   
+   public SubPartner updateSubPartner(SubPartner subPartner);
 
 }
