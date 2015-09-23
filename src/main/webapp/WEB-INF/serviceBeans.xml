@@ -45,6 +45,7 @@
          <bean id="partnerSeason" class="com.ccighgo.service.rest.partner.season.PartnerSeason" />
          <bean id="partnerQuickStatistics" class="com.ccighgo.service.rest.partner.quick.stats.PartnerQuickStatistics" />
          <bean id="partnerWorkQueues" class="com.ccighgo.service.rest.partner.work.queue.PartnerWorkQueues" />
+         <bean id="partnerCompany" class="com.ccighgo.service.rest.partner.company.PartnerCompany" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />

@@ -40,12 +40,12 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerUser", propOrder = {
-    "partnerUserId",
+   
     "partnerUserFirstName",
     "partnerUserLastName",
     "partnerUserLoginName",
     "partnerUserEmail",
-    "partnerUserStatus"
+    "status"
 })
 public class PartnerUser {
 
@@ -60,7 +60,6 @@ public class PartnerUser {
     protected String partnerUserEmail;
     @XmlElement(required = true)
     protected PartnerUserStatus partnerUserStatus;
-
     /**
      * Gets the value of the partnerUserId property.
      * 
@@ -196,5 +195,4 @@ public class PartnerUser {
     public void setPartnerUserStatus(PartnerUserStatus value) {
         this.partnerUserStatus = value;
     }
-
 }

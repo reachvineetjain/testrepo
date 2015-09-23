@@ -48,7 +48,7 @@ public class PartnerContact implements Serializable {
 	@Column(length=150)
 	private String phone;
 
-	private byte receiveNotificationEmails;
+	private Byte receiveNotificationEmails;
 
 	@Column(length=10)
 	private String salutation;
@@ -171,11 +171,11 @@ public class PartnerContact implements Serializable {
 		this.phone = phone;
 	}
 
-	public byte getReceiveNotificationEmails() {
+	public Byte getReceiveNotificationEmails() {
 		return this.receiveNotificationEmails;
 	}
 
-	public void setReceiveNotificationEmails(byte receiveNotificationEmails) {
+	public void setReceiveNotificationEmails(Byte receiveNotificationEmails) {
 		this.receiveNotificationEmails = receiveNotificationEmails;
 	}
 

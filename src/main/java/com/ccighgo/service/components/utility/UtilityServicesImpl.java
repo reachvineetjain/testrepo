@@ -34,6 +34,7 @@ import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
@@ -50,6 +51,8 @@ import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
+import com.ccighgo.service.transport.utility.beans.gender.Salutation;
+import com.ccighgo.service.transport.utility.beans.gender.Salutations;
 import com.ccighgo.service.transport.utility.beans.program.Program;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Region;
@@ -90,6 +93,7 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired MessageUtils messageUtil;
    @Autowired LoginRepository loginRepository;
    @Autowired EmailServiceImpl email;
+   @Autowired SalutationRepository salutationRepositotry;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -416,6 +420,33 @@ public class UtilityServicesImpl implements UtilityServices {
       }
 
    }
+   
+   @Override
+   public Salutations getSalutation() {
+
+      Salutations salutations = null;
+      try {
+         List<com.ccighgo.db.entities.Salutation> salutationList = salutationRepositotry.findAll();
+         if (salutationList != null) {
+            salutations = new Salutations();
+            for (com.ccighgo.db.entities.Salutation salutationEntity : salutationList) {
+
+               Salutation salutation = new Salutation();
+               salutation.setSalutationId(salutationEntity.getSalutationId());
+               salutation.setSalutationCode(salutationEntity.getSalutationName());
+               salutation.setActive(salutationEntity.getActive());
+               salutations.getSalutations().add(salutation);
+            }
+         }
+      } catch (CcighgoException e) {
+         salutations = setSalutationsStatus(salutations, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SALUTATIONS.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_SALUTATIONS));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_SALUTATIONS));
+      }
+      return salutations;
+   }
+
+   
 
    @Override
    public Country getCountryById(int countryId) {
@@ -548,6 +579,13 @@ public class UtilityServicesImpl implements UtilityServices {
       return genders;
    }
 
+   private Salutations setSalutationsStatus(Salutations salutations, String code, String type, int serviceCode, String message) {
+      if (salutations == null)
+         salutations = new Salutations();
+      salutations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return salutations;
+   }
+   
    private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
@@ -576,10 +614,11 @@ public class UtilityServicesImpl implements UtilityServices {
             loginUser = loginRepository.findByLoginName(req.getUsername());
          }
          if (loginUser != null) {
-            String body = "<p>This email was sent automatically by CCI Greenheart Online system in response to your request to recover your online account password. </p>" +
+            String body = "<p>Welcome to Greenheart Online System! </p>" +
+         "<p>This email was sent by the Greenheart Online system in response to your request to recover your password. </p>" +
          "<p>Please go to the following page and choose a new password:</p> " + 
                   "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"  +
-         "<p>If you ignore this message, your password won't be changed.</p><p>If you didn't request a password reset, let us know.</p><p>Thank you,</p><p>GO System Support.</p>";
+         "<p>If you didn't request a new password, please let us know.</p><p>Thank you,</p><p>CCI Greenheart.</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
@@ -601,9 +640,9 @@ public class UtilityServicesImpl implements UtilityServices {
       try {
          Login login = loginRepository.findByKeyValue(req.getUniquekey());
          if (login == null) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
-                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
-            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.RESET_PASSWORD_LINK_EXPIRED.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED)));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED));
             return response;
          }
          Login tempLogin = new Login();

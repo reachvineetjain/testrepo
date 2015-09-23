@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +9,7 @@ import com.ccighgo.db.entities.Partner;
  * @author ravi
  *
  */
+
 @Repository
 public interface PartnerRepository extends JpaRepository<Partner, Integer> {
 
