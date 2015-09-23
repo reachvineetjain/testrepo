@@ -66,7 +66,7 @@ public class PartnerCompanyDetails {
     @XmlElement(name = "CCIAccountingDesignation", required = true)
     protected String cciAccountingDesignation;
     @XmlElement(required = true)
-    protected String dAndBNumber;
+    protected int dAndBNumber;
     @XmlElement(required = true)
     protected String personToSignContract;
     protected boolean subscribeCCINewsletter;
@@ -175,24 +175,16 @@ public class PartnerCompanyDetails {
     /**
      * Gets the value of the dAndBNumber property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getDAndBNumber() {
+    public int getDAndBNumber() {
         return dAndBNumber;
     }
 
     /**
      * Sets the value of the dAndBNumber property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setDAndBNumber(String value) {
+    public void setDAndBNumber(int value) {
         this.dAndBNumber = value;
     }
 
