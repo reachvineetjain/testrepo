@@ -34,7 +34,7 @@ import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
-import com.ccighgo.jpa.repositories.SalutationRepositotry;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
@@ -93,7 +93,7 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired MessageUtils messageUtil;
    @Autowired LoginRepository loginRepository;
    @Autowired EmailServiceImpl email;
-   @Autowired SalutationRepositotry salutationRepositotry;
+   @Autowired SalutationRepository salutationRepositotry;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {

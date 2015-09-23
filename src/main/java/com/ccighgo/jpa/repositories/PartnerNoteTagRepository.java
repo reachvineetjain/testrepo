@@ -13,6 +13,6 @@ import com.ccighgo.db.entities.PartnerNoteTag;
  *
  */
 @Repository
-public interface PartnerNoteTagInterface extends JpaRepository<PartnerNoteTag, Integer> {
+public interface PartnerNoteTagRepository extends JpaRepository<PartnerNoteTag, Integer> {
 
 }
