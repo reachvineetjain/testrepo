@@ -655,5 +655,13 @@
 		</java>
 	</target>
 
+	<!--*************************************************  Add New participant  *************************************************-->
+	<target name="AdminViewForPartnerInquiry">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/thirdparty/wordpress/partnerInquiry/AdminViewForPartnerInquiryData.xsd" />
+		</java>
+	</target>
 
 </project>

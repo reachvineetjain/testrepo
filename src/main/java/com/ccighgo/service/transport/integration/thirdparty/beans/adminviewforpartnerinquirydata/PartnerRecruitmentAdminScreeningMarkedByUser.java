@@ -6,7 +6,7 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,18 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Message complex type.
+ * <p>Java class for PartnerRecruitmentAdminScreeningMarkedByUser complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Message">
+ * &lt;complexType name="PartnerRecruitmentAdminScreeningMarkedByUser">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="serviceId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="imageUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="userName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,81 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Message", propOrder = {
-    "type",
-    "serviceId",
-    "message"
+@XmlType(name = "PartnerRecruitmentAdminScreeningMarkedByUser", propOrder = {
+    "imageUrl",
+    "userName"
 })
-public class Message {
+public class PartnerRecruitmentAdminScreeningMarkedByUser {
 
     @XmlElement(required = true)
-    protected String type;
-    protected int serviceId;
+    protected String imageUrl;
     @XmlElement(required = true)
-    protected String message;
+    protected String userName;
 
     /**
-     * Gets the value of the type property.
+     * Gets the value of the imageUrl property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getType() {
-        return type;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     /**
-     * Sets the value of the type property.
+     * Sets the value of the imageUrl property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setType(String value) {
-        this.type = value;
+    public void setImageUrl(String value) {
+        this.imageUrl = value;
     }
 
     /**
-     * Gets the value of the serviceId property.
-     * 
-     */
-    public int getServiceId() {
-        return serviceId;
-    }
-
-    /**
-     * Sets the value of the serviceId property.
-     * 
-     */
-    public void setServiceId(int value) {
-        this.serviceId = value;
-    }
-
-    /**
-     * Gets the value of the message property.
+     * Gets the value of the userName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getMessage() {
-        return message;
+    public String getUserName() {
+        return userName;
     }
 
     /**
-     * Sets the value of the message property.
+     * Sets the value of the userName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setMessage(String value) {
-        this.message = value;
+    public void setUserName(String value) {
+        this.userName = value;
     }
 
 }
