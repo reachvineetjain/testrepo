@@ -640,9 +640,9 @@ public class UtilityServicesImpl implements UtilityServices {
       try {
          Login login = loginRepository.findByKeyValue(req.getUniquekey());
          if (login == null) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
-                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
-            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.RESET_PASSWORD_LINK_EXPIRED.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED)));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED));
             return response;
          }
          Login tempLogin = new Login();
