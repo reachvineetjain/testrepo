@@ -1,5 +1,6 @@
 package com.ccighgo.db.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,21 +13,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Salutation")
-@NamedQuery(name="Salutation.findAll", query="SELECT l FROM Salutation l")
-public class Salutation {
+@Table(name = "Salutation")
+@NamedQuery(name = "Salutation.findAll", query = "SELECT l FROM Salutation l")
+public class Salutation  implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
-   @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   @Column(unique=true, nullable=false)
+   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
+   @Column(unique = true, nullable = false) 
    private Integer salutationId;
-   
-   @Column(length=30)
+
+   @Column(length = 30) 
    private String salutationName;
-   
-   @Column(length=1)
+
+   @Column(length = 1) 
    private Byte active;
 
    public Integer getSalutationId() {
@@ -40,9 +40,8 @@ public class Salutation {
    public String getSalutationName() {
       return salutationName;
    }
-   
-   @OneToMany(mappedBy="salutation")
-   private List<PartnerUser> partnerUser;
+
+   @OneToMany(mappedBy = "salutation") private List<PartnerUser> partnerUser;
 
    public void setSalutationName(String salutationName) {
       this.salutationName = salutationName;
@@ -63,8 +62,5 @@ public class Salutation {
    public void setPartnerUser(List<PartnerUser> partnerUser) {
       this.partnerUser = partnerUser;
    }
-   
-   
-   
-   
+
 }

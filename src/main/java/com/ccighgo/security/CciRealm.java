@@ -31,7 +31,7 @@ public class CciRealm extends AuthorizingRealm {
       CciToken token = (CciToken) authcToken;
       LOGGER.debug("received signature: {}", token.getCredentials());
       try {
-         Login user = loginRepository.findByLoginName(token.getPrincipal());
+         Login user = loginRepository.findByLoginName(token.getPrincipal().toLowerCase());
          if (user != null && user.getLoginName().equals(token.getPrincipal())) {
             return new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
          }
