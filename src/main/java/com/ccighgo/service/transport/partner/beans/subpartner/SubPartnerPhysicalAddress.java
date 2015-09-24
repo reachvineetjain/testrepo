@@ -22,7 +22,7 @@ public class SubPartnerPhysicalAddress {
    protected String physicalstate;
    protected String physicalZipcode;
    @XmlElement(required = true)
-   protected SubPartnerCountry subPartnerCountry;
+   protected SubPartnerCountry physicalSubPartnerCountry;
    
    
    public String getPhysicalAddressLineOne() {
@@ -55,10 +55,10 @@ public class SubPartnerPhysicalAddress {
    public void setPhysicalZipcode(String physicalZipcode) {
       this.physicalZipcode = physicalZipcode;
    }
-   public SubPartnerCountry getSubPartnerCountry() {
-      return subPartnerCountry;
+   public SubPartnerCountry getPhysicalSubPartnerCountry() {
+      return physicalSubPartnerCountry;
    }
-   public void setSubPartnerCountry(SubPartnerCountry subPartnerCountry) {
-      this.subPartnerCountry = subPartnerCountry;
+   public void setPhysicalSubPartnerCountry(SubPartnerCountry physicalSubPartnerCountry) {
+      this.physicalSubPartnerCountry = physicalSubPartnerCountry;
    }
 }

@@ -19,6 +19,8 @@ public class PartnerNoteTopic implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer partnerNoteTopicId;
+	
+	private boolean isPublic;
 
 	private byte competitorInfo;
 
@@ -68,7 +70,15 @@ public class PartnerNoteTopic implements Serializable {
 		this.partnerNoteTopicId = partnerNoteTopicId;
 	}
 
-	public byte getCompetitorInfo() {
+	public boolean isPublic() {
+      return isPublic;
+   }
+
+   public void setPublic(boolean isPublic) {
+      this.isPublic = isPublic;
+   }
+
+   public byte getCompetitorInfo() {
 		return this.competitorInfo;
 	}
 

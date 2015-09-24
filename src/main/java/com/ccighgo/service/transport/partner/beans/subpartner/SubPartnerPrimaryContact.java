@@ -34,6 +34,8 @@ public class SubPartnerPrimaryContact {
    protected String skypeId;
    protected String website;
    protected String typeOfPartnerUser;
+   
+   
    public String getSalutation() {
       return salutation;
    }

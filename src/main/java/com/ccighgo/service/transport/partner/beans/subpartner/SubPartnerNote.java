@@ -7,14 +7,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartnerNote", propOrder = {
       "subPartnerNotesId",
-      "subpartnerNote",
-      "subPartnerNoteTopic"
+      "subpartnerNote"
+      
 })
 public class SubPartnerNote {
 
    protected Integer subPartnerNotesId;
    protected String subpartnerNote;
-   protected SubPartnerNoteTopic SubPartnerNoteTopic;
+   
    
    
    public Integer getSubPartnerNotesId() {
@@ -29,10 +29,5 @@ public class SubPartnerNote {
    public void setSubpartnerNote(String subpartnerNote) {
       this.subpartnerNote = subpartnerNote;
    }
-   public SubPartnerNoteTopic getSubPartnerNoteTopic() {
-      return SubPartnerNoteTopic;
-   }
-   public void setSubPartnerNoteTopic(SubPartnerNoteTopic subPartnerNoteTopic) {
-      SubPartnerNoteTopic = subPartnerNoteTopic;
-   }
+   
 }

@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
       "seasonInfo",
       "stInbound",
       "trainee",
-      "w_t"
+      "w_t" 
           
 })
 public class SubPartnerNoteTopic {

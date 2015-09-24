@@ -80,17 +80,18 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartner", propOrder = {
       "subPartnerId",
+      "SubPartnerAgency",
       "subPartnerPrimaryContact",
       "subPartnerSeasons",
       "SubPartnerPhysicalAddress",
-      "subPartnerStatus",
       "subPartnerMailingAddress",
-      "subPartnerNotes"
+      "subPartnerNoteTopic"
 })
 public class SubPartner
     extends Response
 {
    protected int subPartnerId;
+   protected SubPartnerAgency subPartnerAgency;
    @XmlElement(required = true)
    protected SubPartnerPrimaryContact subPartnerPrimaryContact;
    protected List<SubPartnerSeasons> subPartnerSeasons;
@@ -98,9 +99,7 @@ public class SubPartner
    protected SubPartnerPhysicalAddress subPartnerPhysicalAddress;
    @XmlElement(required = true)
    protected SubPartnerMailingAddress subPartnerMailingAddress;
-   @XmlElement(required = true)
-   protected SubPartnerStatus subPartnerStatus;
-   protected SubPartnerNotes subPartnerNotes;
+   protected SubPartnerNoteTopics SubPartnerNoteTopics;
    /**
     * Gets the value of the subPartnerId property.
     * 
@@ -145,6 +144,16 @@ public class SubPartner
        }
        return this.subPartnerSeasons;
    }
+   
+   
+
+   public SubPartnerAgency getSubPartnerAgency() {
+      return subPartnerAgency;
+   }
+
+   public void setSubPartnerAgency(SubPartnerAgency subPartnerAgency) {
+      this.subPartnerAgency = subPartnerAgency;
+   }
 
    public SubPartnerPrimaryContact getSubPartnerPrimaryContact() {
       return subPartnerPrimaryContact;
@@ -164,17 +173,7 @@ public class SubPartner
       this.subPartnerMailingAddress = subPartnerMailingAddress;
    }
 
-   /**
-    * Gets the value of the subPartnerStatus property.
-    * 
-    * @return
-    *     possible object is
-    *     {@link SubPartnerStatus }
-    *     
-    */
-   public SubPartnerStatus getSubPartnerStatus() {
-       return subPartnerStatus;
-   }
+   
 
    public SubPartnerPhysicalAddress getSubPartnerPhysicalAddress() {
       return subPartnerPhysicalAddress;
@@ -184,24 +183,12 @@ public class SubPartner
       this.subPartnerPhysicalAddress = subPartnerPhysicalAddress;
    }
 
-   /**
-    * Sets the value of the subPartnerStatus property.
-    * 
-    * @param value
-    *     allowed object is
-    *     {@link SubPartnerStatus }
-    *     
-    */
-   public void setSubPartnerStatus(SubPartnerStatus value) {
-       this.subPartnerStatus = value;
+   public SubPartnerNoteTopics getSubPartnerNoteTopics() {
+      return SubPartnerNoteTopics;
    }
 
-   public SubPartnerNotes getSubPartnerNotes() {
-      return subPartnerNotes;
-   }
-
-   public void setSubPartnerNotes(SubPartnerNotes subPartnerNotes) {
-      this.subPartnerNotes = subPartnerNotes;
+   public void setSubPartnerNoteTopics(SubPartnerNoteTopics subPartnerNoteTopics) {
+      SubPartnerNoteTopics = subPartnerNoteTopics;
    }
    
    
