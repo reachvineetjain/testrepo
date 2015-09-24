@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Salutation;
@@ -77,82 +78,69 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          Login partnerLogin = null;
          for (Login login : partner.getGoIdSequence().getLogin()) {
             if (partner.getPartnerGoId() == login.getGoIdSequence().getGoId()) {
-               partnerLogin=login;
+               partnerLogin = login;
                break;
             }
          }
-         if(partnerLogin!=null){
+         if (partnerLogin != null) {
             partnerCompanyDetails.setUserName(partnerLogin.getLoginName());
          }
          partnerCompanyDetail.setPartnerCompanyDetails(partnerCompanyDetails);
          PartnerPrimaryContact partnerPrimaryContact = new PartnerPrimaryContact();
-
-         Salutation salutation = null;
-         PartnerUser partnerUser = null;
-         PartnerOffice partnerOffice = null;
-         for (PartnerUser puser : partner.getPartnerUsers()) {
-            if (partner.getPartnerGoId() == puser.getPartner().getPartnerGoId()) {
-               salutation = puser.getSalutation();
-               partnerUser = puser;
+         PartnerContact partnerContact = null;
+         for (PartnerContact contact : partner.getPartnerContacts()) {
+            if (partner.getPartnerGoId() == contact.getPartner().getPartnerGoId()) {
+               partnerContact = contact;
                break;
             }
          }
-         for (PartnerOffice po : partner.getPartnerOffices()) {
-            if (partner.getPartnerGoId() == po.getPartner().getPartnerGoId()) {
-               partnerOffice = po;
-               break;
-            }
-         }
-         if (salutation != null) {
+         if (partnerContact != null) {
             PrimaryContactSalutation primaryContactSalutation = new PrimaryContactSalutation();
-            primaryContactSalutation.setSalutationId(salutation.getSalutationId());
-            primaryContactSalutation.setSalutation(salutation.getSalutationName());
+             primaryContactSalutation.setSalutationId(1/*partnerContact.getSalutation().getSalutationId()*/);
+             primaryContactSalutation.setSalutation("Mr."/*partnerContact.getSalutation().getSalutationName()*/);
             partnerPrimaryContact.setPrimaryContactSalutation(primaryContactSalutation);
-         }
-         if (partnerUser != null) {
-            partnerPrimaryContact.setPrimaryContactTitle(partnerUser.getTitle());
-            partnerPrimaryContact.setPrimaryContactFirstName(partnerUser.getFirstName());
-            partnerPrimaryContact.setPrimaryContactLastName(partnerUser.getLastName() != null ? partnerUser.getLastName() : null);
-            partnerPrimaryContact.setPrimaryContactEmail(partnerUser.getEmail() != null ? partnerUser.getEmail() : null);
-            partnerPrimaryContact.setPrimaryContactPhone(partnerUser.getPhone() != null ? partnerUser.getPhone() : null);
-            partnerPrimaryContact.setPrimaryContactEmergencyPhone(partnerUser.getEmergencyPhone() != null ? partnerUser.getEmergencyPhone() : null);
-            partnerPrimaryContact.setPrimaryContactFax(partnerUser.getFax() != null ? partnerUser.getFax() : null);
-            partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(false/* "TODO:field not available now" */);
-            partnerPrimaryContact.setPrimaryContactSkypeId(partnerUser.getSkypeId() != null ? partnerUser.getSkypeId() : null);
-            partnerPrimaryContact.setPrimaryContactWebsite(partnerOffice.getWebsite() != null ? partnerOffice.getWebsite() : null);
+            partnerPrimaryContact.setPrimaryContactTitle(partnerContact.getTitle());
+            partnerPrimaryContact.setPrimaryContactFirstName(partnerContact.getFirstName());
+            partnerPrimaryContact.setPrimaryContactLastName(partnerContact.getLastName() != null ? partnerContact.getLastName() : null);
+            partnerPrimaryContact.setPrimaryContactEmail(partnerContact.getEmail() != null ? partnerContact.getEmail() : null);
+            partnerPrimaryContact.setPrimaryContactPhone(partnerContact.getPhone() != null ? partnerContact.getPhone() : null);
+            partnerPrimaryContact.setPrimaryContactEmergencyPhone(partnerContact.getEmergencyPhone() != null ? partnerContact.getEmergencyPhone() : null);
+            partnerPrimaryContact.setPrimaryContactFax(partnerContact.getFax() != null ? partnerContact.getFax() : null);
+            partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(partnerContact.getReceiveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
+            partnerPrimaryContact.setPrimaryContactSkypeId(partnerContact.getSkypeId() != null ? partnerContact.getSkypeId() : null);
+            partnerPrimaryContact.setPrimaryContactWebsite(partnerContact.getWebsite() != null ? partnerContact.getWebsite() : null);
             partnerCompanyDetail.setPartnerPrimaryContact(partnerPrimaryContact);
          }
          PartnerAddress physicalAddress = new PartnerAddress();
-         
+
          PartnerAddressState physicalAddressState = new PartnerAddressState();
          PartnerAddressCountry physicalAddressCountry = new PartnerAddressCountry();
-         physicalAddress.setAddressLineOne(partner.getPhysicalAddressLineOne()!=null?partner.getPhysicalAddressLineOne():null);
-         physicalAddress.setAddressLineTwo(partner.getPhysicalAddressLineTwo()!=null?partner.getPhysicalAddressLineTwo():null);
-         physicalAddress.setCity(partner.getPhysicalCity()!=null?partner.getPhysicalCity():null);
-         physicalAddress.setZipCode(partner.getPhysicalZipcode()!=null?partner.getPhysicalZipcode():null);
+         physicalAddress.setAddressLineOne(partner.getPhysicalAddressLineOne() != null ? partner.getPhysicalAddressLineOne() : null);
+         physicalAddress.setAddressLineTwo(partner.getPhysicalAddressLineTwo() != null ? partner.getPhysicalAddressLineTwo() : null);
+         physicalAddress.setCity(partner.getPhysicalCity() != null ? partner.getPhysicalCity() : null);
+         physicalAddress.setZipCode(partner.getPhysicalZipcode() != null ? partner.getPhysicalZipcode() : null);
          physicalAddress.setPartnerAddressState(physicalAddressState);
          physicalAddress.setPartnerAddressCountry(physicalAddressCountry);
-         
+
          PartnerAddress mailingAddress = new PartnerAddress();
          PartnerAddressState mailingAddressState = new PartnerAddressState();
          PartnerAddressCountry mailingAddressCountry = new PartnerAddressCountry();
-         mailingAddress.setAddressLineOne(partner.getAddressLineOne()!=null?partner.getAddressLineOne():null);
-         mailingAddress.setAddressLineTwo(partner.getAddressLineTwo()!=null?partner.getAddressLineTwo():null);
-         mailingAddress.setCity(partner.getCity()!=null?partner.getCity():null);
-         mailingAddress.setZipCode(partner.getZipcode()!=null?partner.getZipcode():null);
+         mailingAddress.setAddressLineOne(partner.getAddressLineOne() != null ? partner.getAddressLineOne() : null);
+         mailingAddress.setAddressLineTwo(partner.getAddressLineTwo() != null ? partner.getAddressLineTwo() : null);
+         mailingAddress.setCity(partner.getCity() != null ? partner.getCity() : null);
+         mailingAddress.setZipCode(partner.getZipcode() != null ? partner.getZipcode() : null);
          mailingAddress.setPartnerAddressState(mailingAddressState);
          mailingAddress.setPartnerAddressCountry(mailingAddressCountry);
          PartnerMailingAddress partnerMailingAddress = new PartnerMailingAddress();
          partnerMailingAddress.setPartnerMailingAddress(mailingAddress);
-         
+
          PartnerPhysicalAddress partnerPhysicalAddress = new PartnerPhysicalAddress();
          partnerPhysicalAddress.setPartnerPhysicalAddress(physicalAddress);
          partnerCompanyDetail.setPartnerPhysicalAddress(partnerPhysicalAddress);
-         if(partner.getMailingAddressIsSameAsPhysicalAdress()==CCIConstants.ACTIVE){
+         if (partner.getMailingAddressIsSameAsPhysicalAdress() == CCIConstants.ACTIVE) {
             partnerCompanyDetail.setPartnerMailingAddressSame(true);
             partnerCompanyDetail.setPartnerMailingAddress(null);
-         }
-         else{
+         } else {
             partnerCompanyDetail.setPartnerMailingAddress(partnerMailingAddress);
          }
          partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
