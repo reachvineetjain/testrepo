@@ -25,9 +25,6 @@ public class CCIStaffUser implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int cciStaffUserId;
 
-	@Column(nullable=false)
-	private byte active;
-
 	@Column(nullable=false, length=64)
 	private String cciAdminGuid;
 
@@ -150,14 +147,6 @@ public class CCIStaffUser implements Serializable {
 
 	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
-	}
-
-	public byte getActive() {
-		return this.active;
-	}
-
-	public void setActive(byte active) {
-		this.active = active;
 	}
 
 	public String getCciAdminGuid() {
