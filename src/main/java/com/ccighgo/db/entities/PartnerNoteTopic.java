@@ -20,7 +20,7 @@ public class PartnerNoteTopic implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerNoteTopicId;
 	
-	private boolean isPublic;
+	private Boolean isPublic;
 
 	private byte competitorInfo;
 
@@ -70,11 +70,11 @@ public class PartnerNoteTopic implements Serializable {
 		this.partnerNoteTopicId = partnerNoteTopicId;
 	}
 
-	public boolean isPublic() {
+	public Boolean isPublic() {
       return isPublic;
    }
 
-   public void setPublic(boolean isPublic) {
+   public void setPublic(Boolean isPublic) {
       this.isPublic = isPublic;
    }
 

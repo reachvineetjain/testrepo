@@ -1,5 +1,8 @@
 package com.ccighgo.service.transport.partner.beans.subpartner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -7,6 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartnerNoteTopic", propOrder = {
       "subPartnerNoteTopicId",
+      "isPublic",
       "competitorInfo",
       "embassy_VisaInfo",
       "f1",
@@ -18,12 +22,16 @@ import javax.xml.bind.annotation.XmlType;
       "seasonInfo",
       "stInbound",
       "trainee",
-      "w_t" 
-          
+      "w_t", 
+      "subPartnerNote",
+      "noteCount",
+      "author",
+      "designation"
 })
 public class SubPartnerNoteTopic {
 
    protected Integer subPartnerNoteTopicId;
+   protected Boolean isPublic;
    protected Byte competitorInfo;
    protected Byte embassy_VisaInfo;
    protected Byte f1;
@@ -36,6 +44,10 @@ public class SubPartnerNoteTopic {
    protected Byte stInbound;
    protected Byte trainee;
    protected Byte w_t;
+   protected List<SubPartnerNote> subPartnerNote;
+   protected Integer noteCount;
+   protected String author;
+   protected String designation;
    
    
    public Integer getSubPartnerNoteTopicId() {
@@ -43,6 +55,13 @@ public class SubPartnerNoteTopic {
    }
    public void setSubPartnerNoteTopicId(Integer subPartnerNoteTopicId) {
       this.subPartnerNoteTopicId = subPartnerNoteTopicId;
+   }
+   
+   public Boolean getIsPublic() {
+      return isPublic;
+   }
+   public void setIsPublic(Boolean isPublic) {
+      this.isPublic = isPublic;
    }
    public Byte getCompetitorInfo() {
       return competitorInfo;
@@ -116,6 +135,30 @@ public class SubPartnerNoteTopic {
    public void setW_t(Byte w_t) {
       this.w_t = w_t;
    }
-   
+   public List<SubPartnerNote> getSubPartnerNote(){
+      if(subPartnerNote == null){
+         subPartnerNote = new ArrayList<SubPartnerNote>();
+      }
+      
+      return this.subPartnerNote;
+   }
+   public Integer getNoteCount() {
+      return noteCount;
+   }
+   public void setNoteCount(Integer noteCount) {
+      this.noteCount = noteCount;
+   }
+   public String getAuthor() {
+      return author;
+   }
+   public void setAuthor(String author) {
+      this.author = author;
+   }
+   public String getDesignation() {
+      return designation;
+   }
+   public void setDesignation(String designation) {
+      this.designation = designation;
+   }
    
 }

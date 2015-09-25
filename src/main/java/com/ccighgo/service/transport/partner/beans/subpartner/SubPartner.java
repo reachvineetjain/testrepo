@@ -85,7 +85,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
       "subPartnerSeasons",
       "SubPartnerPhysicalAddress",
       "subPartnerMailingAddress",
-      "subPartnerNoteTopic"
+      "subPartnerNoteTopic",
+      "noteTopicCount"
 })
 public class SubPartner
     extends Response
@@ -100,6 +101,8 @@ public class SubPartner
    @XmlElement(required = true)
    protected SubPartnerMailingAddress subPartnerMailingAddress;
    protected SubPartnerNoteTopics SubPartnerNoteTopics;
+   protected Integer noteTopicCount;
+   
    /**
     * Gets the value of the subPartnerId property.
     * 
@@ -189,6 +192,14 @@ public class SubPartner
 
    public void setSubPartnerNoteTopics(SubPartnerNoteTopics subPartnerNoteTopics) {
       SubPartnerNoteTopics = subPartnerNoteTopics;
+   }
+
+   public Integer getNoteTopicCount() {
+      return noteTopicCount;
+   }
+
+   public void setNoteTopicCount(Integer noteTopicCount) {
+      this.noteTopicCount = noteTopicCount;
    }
    
    
