@@ -116,6 +116,9 @@ public class Partner implements Serializable {
 
 	@Column(length=50)
 	private String state;
+	
+	@Column(length=300)
+	private String partnerLogo;
 
 	private byte subscribeToCCINewsletter;
 
@@ -535,7 +538,15 @@ public class Partner implements Serializable {
 		this.state = state;
 	}
 
-	public byte getSubscribeToCCINewsletter() {
+	public String getPartnerLogo() {
+      return partnerLogo;
+   }
+
+   public void setPartnerLogo(String partnerLogo) {
+      this.partnerLogo = partnerLogo;
+   }
+
+   public byte getSubscribeToCCINewsletter() {
 		return this.subscribeToCCINewsletter;
 	}
 
