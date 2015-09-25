@@ -777,6 +777,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
          cciUser.setGoIdSequence(goIdSequence);
          Login login = new Login();
+         login.setActive(user.getLoginInfo().getActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
          login.setLoginName(user.getLoginInfo().getLoginName());
          login.setLoginId(goIdSequence.getLogin().iterator().next().getLoginId());
          login.setPassword(goIdSequence.getLogin().iterator().next().getPassword());
@@ -1324,6 +1325,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       try {
          GoIdSequence goIdSequence = new GoIdSequence();
          goIdSequence = goIdSequenceRepository.findOne(cciUser.getCciStaffUserId());
+         loginInfo.setActive(goIdSequence.getLogin().iterator().next().getActive()== CCIConstants.ACTIVE ? true: false);
          loginInfo.setLoginId(goIdSequence.getLogin().iterator().next().getLoginId());
          loginInfo.setLoginName(goIdSequence.getLogin().iterator().next().getLoginName());
          // loginInfo.setLoginUserTypes(login.getLoginUserTypes());
@@ -1533,6 +1535,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       GoIdSequence goIdSequence=new GoIdSequence();
       goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
       goIdSequence.getLogin().iterator().next().setLoginName(user.getLoginInfo().getLoginName());
+      goIdSequence.getLogin().iterator().next().setActive(user.getLoginInfo().getActive() == true ? CCIConstants.ACTIVE  : CCIConstants.INACTIVE);
       goIdSequence.getLogin().iterator().next().setEmail(user.getEmail());
       cciUser.setCciStaffUserId(user.getCciUserId());
       cciUser.setGoIdSequence(goIdSequence);
@@ -1786,6 +1789,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       List<Login> loginList = new ArrayList<Login>();
       Login login = new Login();
+      login.setActive(user.getLoginInfo().getActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       login.setLoginName(user.getLoginInfo().getLoginName());
       login.setPassword(PasswordUtil.hashKey("password"));
       login.setKeyValue(UuidUtils.nextHexUUID());

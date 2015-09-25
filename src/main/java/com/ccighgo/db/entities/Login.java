@@ -1,7 +1,9 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class Login implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer loginId;
+	
+	private byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
@@ -76,7 +80,15 @@ public class Login implements Serializable {
 		this.loginId = loginId;
 	}
 
-	public Integer getCreatedBy() {
+	public byte getActive() {
+      return active;
+   }
+
+   public void setActive(byte active) {
+      this.active = active;
+   }
+
+   public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
