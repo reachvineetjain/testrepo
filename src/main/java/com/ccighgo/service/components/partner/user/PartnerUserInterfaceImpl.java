@@ -30,7 +30,7 @@ import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerPermissionRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerUserRepository;
-import com.ccighgo.jpa.repositories.SalutationRepositotry;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
@@ -82,7 +82,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    
    @Autowired GenderRepository genderRepository;
    
-   @Autowired SalutationRepositotry salutationRepositotry;
+   @Autowired SalutationRepository salutationRepositotry;
 
    @Override
    @Transactional(readOnly = true)
