@@ -370,7 +370,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
             user.setSupervisorId(cciUser.getSupervisorId() != null ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
             user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
-            user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
+//            user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
             Gender gender = new Gender();
             if (cciUser.getLookupGender() != null) {
                gender.setGenderId(cciUser.getLookupGender().getGenderId());
@@ -802,7 +802,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
          }
          cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-         cciUser.setActive(user.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+//         cciUser.setActive(user.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          // update user country
          if (user.getUserCountry().getCountryId() > 0) {
             LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1158,7 +1158,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return request;
          }
-         user.setActive(CCIConstants.INACTIVE);
+//         user.setActive(CCIConstants.INACTIVE);
          cciUsersRepository.saveAndFlush(user);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
                messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
@@ -1511,7 +1511,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
+//      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1760,7 +1760,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
+//      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       // update user country
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1997,7 +1997,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setCountry(country);
       cciUser.setState(cUsr.getLookupUsstate() != null ? cUsr.getLookupUsstate().getStateName() : CCIConstants.EMPTY_DATA);
       // cciUser.setLoginName(cUsr.getLogin().getLoginName());
-      cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
+//      cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
       // update user role for user
       if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
          populateUserRole(cUsr, cciUser);
