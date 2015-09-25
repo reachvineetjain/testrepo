@@ -89,11 +89,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProgramAllocationsUnguranteed }
+     * Create an instance of {@link J1HSProgramAllocationsUnguaranteed }
      * 
      */
-    public ProgramAllocationsUnguranteed createProgramAllocationsUnguranteed() {
-        return new ProgramAllocationsUnguranteed();
+    public J1HSProgramAllocationsUnguaranteed createProgramAllocationsUnguranteed() {
+        return new J1HSProgramAllocationsUnguaranteed();
     }
 
     /**
@@ -113,11 +113,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProgramAllocationsGuaranteed }
+     * Create an instance of {@link J1HSProgramAllocationsGuaranteed }
      * 
      */
-    public ProgramAllocationsGuaranteed createProgramAllocationsGuaranteed() {
-        return new ProgramAllocationsGuaranteed();
+    public J1HSProgramAllocationsGuaranteed createProgramAllocationsGuaranteed() {
+        return new J1HSProgramAllocationsGuaranteed();
     }
 
     /**

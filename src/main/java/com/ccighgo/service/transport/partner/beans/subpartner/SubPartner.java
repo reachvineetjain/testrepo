@@ -10,12 +10,15 @@ package com.ccighgo.service.transport.partner.beans.subpartner;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
+
 import com.ccighgo.service.transport.common.response.beans.Response;
 
 
@@ -76,120 +79,130 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartner", propOrder = {
-    "rest"
+      "subPartnerId",
+      "subPartnerPrimaryContact",
+      "subPartnerSeasons",
+      "SubPartnerPhysicalAddress",
+      "subPartnerStatus",
+      "subPartnerMailingAddress",
+      "subPartnerNotes"
 })
 public class SubPartner
     extends Response
 {
+   protected int subPartnerId;
+   @XmlElement(required = true)
+   protected SubPartnerPrimaryContact subPartnerPrimaryContact;
+   protected List<SubPartnerSeasons> subPartnerSeasons;
+   @XmlElement(required = true)
+   protected SubPartnerPhysicalAddress subPartnerPhysicalAddress;
+   @XmlElement(required = true)
+   protected SubPartnerMailingAddress subPartnerMailingAddress;
+   @XmlElement(required = true)
+   protected SubPartnerStatus subPartnerStatus;
+   protected SubPartnerNotes subPartnerNotes;
+   /**
+    * Gets the value of the subPartnerId property.
+    * 
+    */
+   public int getSubPartnerId() {
+       return subPartnerId;
+   }
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "physicalAddressCity", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "physicalAddressZipCode", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "skypeId", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "deliverDS2019Forms", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "newPassword", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mailingAddress1", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "agencyName", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "payGreenHeartDirectly", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "notes", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "primaryContactEmergencyPhone", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "needsPartnerReview", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "primaryContactSalutation", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mailingAddressCountry", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "physicalAddressStateOrProvince", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mailingAddressStateOrProvince", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "primaryContactFirstName", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "physicalAddress1", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "ReTypedPassword", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "webSite", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "physicalAddressCountry", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mailingAddress2", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "logoUserName", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "primaryContactTitle", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "primaryContactLastName", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "physicalAddress2", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "username", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mailingAddressZipCode", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "primaryContactFirstFax", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "receiveNotificationEmailFromCCI", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "mailingAddressCity", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "typeOfPartnerUser", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "logoImageURL", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "subPartnerStatus", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "primaryContactPhone", type = JAXBElement.class, required = false)
-    })
-    protected List<JAXBElement<?>> rest;
+   /**
+    * Sets the value of the subPartnerId property.
+    * 
+    */
+   public void setSubPartnerId(int value) {
+       this.subPartnerId = value;
+   }
 
-    /**
-     * Gets the rest of the content model. 
-     * 
-     * <p>
-     * You are getting this "catch-all" property because of the following reason: 
-     * The field name "PrimaryContactFirstName" is used by two different parts of a schema. See: 
-     * line 39 of file:/C:/workspace_luna/CCI/CCIGHGO/xsd/partner/subpartner/SubPartner.xsd
-     * line 33 of file:/C:/workspace_luna/CCI/CCIGHGO/xsd/partner/subpartner/SubPartner.xsd
-     * <p>
-     * To get rid of this property, apply a property customization to one 
-     * of both of the following declarations to change their names: 
-     * Gets the value of the rest property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the rest property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRest().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link Boolean }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link Boolean }{@code >}
-     * {@link JAXBElement }{@code <}{@link SubPartnersSeasonsNotes }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link Boolean }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link Boolean }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
-     * 
-     * 
-     */
-    public List<JAXBElement<?>> getRest() {
-        if (rest == null) {
-            rest = new ArrayList<JAXBElement<?>>();
-        }
-        return this.rest;
-    }
+   /**
+    * Gets the value of the subPartnerSeasons property.
+    * 
+    * <p>
+    * This accessor method returns a reference to the live list,
+    * not a snapshot. Therefore any modification you make to the
+    * returned list will be present inside the JAXB object.
+    * This is why there is not a <CODE>set</CODE> method for the subPartnerSeasons property.
+    * 
+    * <p>
+    * For example, to add a new item, do as follows:
+    * <pre>
+    *    getSubPartnerSeasons().add(newItem);
+    * </pre>
+    * 
+    * 
+    * <p>
+    * Objects of the following type(s) are allowed in the list
+    * {@link SubPartnerSeasons }
+    * 
+    * 
+    */
+   public List<SubPartnerSeasons> getSubPartnerSeasons() {
+       if (subPartnerSeasons == null) {
+           subPartnerSeasons = new ArrayList<SubPartnerSeasons>();
+       }
+       return this.subPartnerSeasons;
+   }
 
+   public SubPartnerPrimaryContact getSubPartnerPrimaryContact() {
+      return subPartnerPrimaryContact;
+   }
+
+   public void setSubPartnerPrimaryContact(SubPartnerPrimaryContact subPartnerPrimaryContact) {
+      this.subPartnerPrimaryContact = subPartnerPrimaryContact;
+   }
+
+  
+
+   public SubPartnerMailingAddress getSubPartnerMailingAddress() {
+      return subPartnerMailingAddress;
+   }
+
+   public void setSubPartnerMailingAddress(SubPartnerMailingAddress subPartnerMailingAddress) {
+      this.subPartnerMailingAddress = subPartnerMailingAddress;
+   }
+
+   /**
+    * Gets the value of the subPartnerStatus property.
+    * 
+    * @return
+    *     possible object is
+    *     {@link SubPartnerStatus }
+    *     
+    */
+   public SubPartnerStatus getSubPartnerStatus() {
+       return subPartnerStatus;
+   }
+
+   public SubPartnerPhysicalAddress getSubPartnerPhysicalAddress() {
+      return subPartnerPhysicalAddress;
+   }
+
+   public void setSubPartnerPhysicalAddress(SubPartnerPhysicalAddress subPartnerPhysicalAddress) {
+      this.subPartnerPhysicalAddress = subPartnerPhysicalAddress;
+   }
+
+   /**
+    * Sets the value of the subPartnerStatus property.
+    * 
+    * @param value
+    *     allowed object is
+    *     {@link SubPartnerStatus }
+    *     
+    */
+   public void setSubPartnerStatus(SubPartnerStatus value) {
+       this.subPartnerStatus = value;
+   }
+
+   public SubPartnerNotes getSubPartnerNotes() {
+      return subPartnerNotes;
+   }
+
+   public void setSubPartnerNotes(SubPartnerNotes subPartnerNotes) {
+      this.subPartnerNotes = subPartnerNotes;
+   }
+   
+   
 }

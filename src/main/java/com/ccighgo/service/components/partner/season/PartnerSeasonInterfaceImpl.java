@@ -34,8 +34,8 @@ import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSe
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonNotes;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonStatus;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.ProgramAllocationsGuaranteed;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.ProgramAllocationsUnguranteed;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.J1HSProgramAllocationsGuaranteed;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.J1HSProgramAllocationsUnguaranteed;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 
@@ -186,9 +186,19 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          String partnerSeasonProgramName =null;
          if (seasonDetail.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_J1_HS)) {
             partnerSeasonProgramName = seasonDetail.getSeason().getSeasonJ1details().get(0).getProgramName();
+            
          }
          if (seasonDetail.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_F1)) {
             partnerSeasonProgramName = seasonDetail.getSeason().getSeasonF1details().get(0).getProgramName();
+            J1HSProgramAllocationsUnguaranteed j1ProgramAllocationsUnguaranteed = null;
+            J1HSProgramAllocationsGuaranteed j1ProgramAllocationsGuaranteed = null;
+            List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findAllocationsByDepartmentProgramsAndPartnerSeasonId(Integer.valueOf(partnerSeasonId));
+            if(partnerSeasonAllocationList!=null){
+               j1ProgramAllocationsUnguaranteed = new J1HSProgramAllocationsUnguaranteed();
+               j1ProgramAllocationsGuaranteed = new J1HSProgramAllocationsGuaranteed();
+               partnersSeasonDetails.setProgramAllocationsUnguranteed(j1ProgramAllocationsUnguaranteed);
+               partnersSeasonDetails.setProgramAllocationsGuaranteed(j1ProgramAllocationsGuaranteed);
+            }
          }
          if (seasonDetail.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
             partnerSeasonProgramName = seasonDetail.getSeason().getSeasonIhpdetails().get(0).getProgramName();
@@ -207,17 +217,10 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          }
          
          //partner season allocation
-         ProgramAllocationsUnguranteed programAllocationsUnguranteed = null;
-         ProgramAllocationsGuaranteed programAllocationsGuaranteed = null;
-         List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findByPartnerSeasonId(Integer.valueOf(partnerSeasonId));
-         if(partnerSeasonAllocationList!=null){
-             programAllocationsUnguranteed = new ProgramAllocationsUnguranteed();
-             programAllocationsGuaranteed = new ProgramAllocationsGuaranteed();
-         }
+        
          
          //partner season notes
          PartnerSeasonNotes partnerSeasonNotes = new PartnerSeasonNotes();
-         
          
          partnersSeasonDetails.setPartnerSeasonId(seasonDetail.getPartnerSeasonId());
          partnersSeasonDetails.setPartnerSeasonProgramName(partnerSeasonProgramName);
@@ -230,8 +233,6 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
          partnersSeasonDetails.setSeasonApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
          partnersSeasonDetails.setNewDeadlineRequest("TODO:need clarification");
-         partnersSeasonDetails.setProgramAllocationsUnguranteed(programAllocationsUnguranteed);
-         partnersSeasonDetails.setProgramAllocationsGuaranteed(programAllocationsGuaranteed);
          partnersSeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
 
       } catch (CcighgoException e) {
