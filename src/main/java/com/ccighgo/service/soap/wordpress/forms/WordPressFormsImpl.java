@@ -71,24 +71,25 @@ public class WordPressFormsImpl implements IWordPressForms {
            //  partnerAgentInquiry.setpartn
            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
+            return "200:Success:200:Success";
          }
-         if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
-            String string = "200:Success:300:Missing Information";
-            System.out.println(string);
-            return string;
-         } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-            String string = "400:Duplicate Row:400:Duplicate Row";
-            System.out.println(string);
-            return string;
-         } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-            String string = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
-            System.out.println(string);
-            return string;
-         } else {
-            String string = "300:Missing Information:300:Missing Information";
-            System.out.println(string);
-            return string;
-         }
+//         if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
+//            String string = "200:Success:300:Missing Information";
+//            System.out.println(string);
+//            return string;
+//         } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
+//            String string = "400:Duplicate Row:400:Duplicate Row";
+//            System.out.println(string);
+//            return string;
+//         } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
+//            String string = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
+//            System.out.println(string);
+//            return string;
+//         } else {
+//            String string = "300:Missing Information:300:Missing Information";
+//            System.out.println(string);
+//            return string;
+//         }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          String string = "700:Internal Error:700:"+e.getMessage();
