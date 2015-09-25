@@ -582,36 +582,43 @@ public class UserManagementServiceImpl implements UserManagementService {
       
       Integer limitStart = 1;
       Integer limitEnd = 50;
+      Integer tempFlag=0;
       
       
       try {
 
          if (userSearch.getGlobalSearch() != null && !(userSearch.getGlobalSearch().isEmpty())) {
             globalSearch = userSearch.getGlobalSearch();
-            searchFlag = 2;
+            searchFlag = 0;
          }
 
          if (userSearch.getGoId() != null && !(userSearch.getGoId().equals(CCIConstants.EMPTY_DATA)) && userSearch.getGoId() > 0) {
             cciUserId = Integer.valueOf(userSearch.getGoId());
+             tempFlag=1;
          }
 
          if (userSearch.getCountry() != null && !(userSearch.getCountry().equals(CCIConstants.EMPTY_DATA)) && userSearch.getCountry() > 0) {
             countryId = Integer.valueOf(userSearch.getCountry());
+            tempFlag=1;
          }
 
          if (userSearch.getUserRole() != null && !(userSearch.getUserRole().isEmpty())) {
             roles = listToString(userSearch.getUserRole());
+            tempFlag=1;
          }
 
          if (userSearch.getDepartment() != null && !(userSearch.getDepartment().isEmpty())) {
             departments = listToString(userSearch.getDepartment());
+            tempFlag=1;
          }
 
          if (userSearch.getProgram() != null && !(userSearch.getProgram().isEmpty())) {
             programs = listToString(userSearch.getProgram());
+            tempFlag=1;
          }
          if (userSearch.getActive() != null) {
             active = userSearch.getActive();
+            tempFlag=1;
          }
          
          if(userSearch.getLimitStart() != null)
@@ -626,10 +633,16 @@ public class UserManagementServiceImpl implements UserManagementService {
 
          if (userSearch.getSortField() != null) {
             sortField = userSearch.getSortField();
+            tempFlag=1;
          }
 
          if (userSearch.getSortOrder() != null) {
             sortOrder = userSearch.getSortOrder();
+            tempFlag=1;
+         }
+         
+         if(userSearch.getGlobalSearch() != null && !userSearch.getGlobalSearch().isEmpty() && tempFlag == 1){
+            searchFlag=2;
          }
 
          // 1.CCIUserId, 2.FirstName, 3.LastName, 4.LoginName, 5.CountryId, 6.email, 7.user roles, 8.departments,
