@@ -38,15 +38,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "LoginInfo", propOrder = {
     "loginId",
     "loginName",
-    "password",
-    "active"
+    "password"
 })
 public class LoginInfo {
 
     protected int loginId;
     protected String loginName;
     protected String password;
-    protected Boolean active;
     /**
      * Gets the value of the loginId property.
      * 
@@ -110,13 +108,5 @@ public class LoginInfo {
     public void setPassword(String value) {
         this.password = value;
     }
-
-   public Boolean getActive() {
-      return active;
-   }
-
-   public void setActive(Boolean active) {
-      this.active = active;
-   }
 
 }

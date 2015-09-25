@@ -62,7 +62,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
       if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
          if (login != null) {
-            if (login.getGoIdSequence().getCcistaffUser().getActive() == CCIConstants.ACTIVE) {
+            if (login.getActive() == CCIConstants.ACTIVE) {
                auth.setGoId(login.getGoIdSequence().getGoId());
                auth.setLoginId(login.getLoginId());
                auth.setLoginname(login.getLoginName());
