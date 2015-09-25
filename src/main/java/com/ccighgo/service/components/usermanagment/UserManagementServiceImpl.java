@@ -180,7 +180,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired EmailServiceImpl email;
 
-   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
+   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
 
@@ -370,7 +370,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
             user.setSupervisorId(cciUser.getSupervisorId() != null ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
             user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
-            user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
+//            user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
             Gender gender = new Gender();
             if (cciUser.getLookupGender() != null) {
                gender.setGenderId(cciUser.getLookupGender().getGenderId());
@@ -569,56 +569,55 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<Integer> results = null;
       Query query = entityManager.createNativeQuery(SP_USER_SEARCH);
       
-      String globalSearch = null;
+      String firstName = null;
+      String lastName = null;
+      String loginName = null;
+      String email = null;
+      
       Integer cciUserId = null;
       Integer countryId = null;
+      
       String roles = null;
       String departments = null;
       String programs = null;
-      Byte active = null;
-      String sortField = null;
-      String sortOrder = null;
-      Byte searchFlag = 1;
       
+      Byte active = null;
       Integer limitStart = 1;
       Integer limitEnd = 50;
-      Integer tempFlag=0;
+      String sortField = null;
+      String sortOrder = null;
       
       
       try {
 
          if (userSearch.getGlobalSearch() != null && !(userSearch.getGlobalSearch().isEmpty())) {
-            globalSearch = userSearch.getGlobalSearch();
-            searchFlag = 0;
+            firstName = userSearch.getGlobalSearch();
+            lastName = userSearch.getGlobalSearch();
+            loginName = userSearch.getGlobalSearch();
+            email = userSearch.getGlobalSearch();
          }
 
          if (userSearch.getGoId() != null && !(userSearch.getGoId().equals(CCIConstants.EMPTY_DATA)) && userSearch.getGoId() > 0) {
             cciUserId = Integer.valueOf(userSearch.getGoId());
-             tempFlag=1;
          }
 
          if (userSearch.getCountry() != null && !(userSearch.getCountry().equals(CCIConstants.EMPTY_DATA)) && userSearch.getCountry() > 0) {
             countryId = Integer.valueOf(userSearch.getCountry());
-            tempFlag=1;
          }
 
          if (userSearch.getUserRole() != null && !(userSearch.getUserRole().isEmpty())) {
             roles = listToString(userSearch.getUserRole());
-            tempFlag=1;
          }
 
          if (userSearch.getDepartment() != null && !(userSearch.getDepartment().isEmpty())) {
             departments = listToString(userSearch.getDepartment());
-            tempFlag=1;
          }
 
          if (userSearch.getProgram() != null && !(userSearch.getProgram().isEmpty())) {
             programs = listToString(userSearch.getProgram());
-            tempFlag=1;
          }
          if (userSearch.getActive() != null) {
             active = userSearch.getActive();
-            tempFlag=1;
          }
          
          if(userSearch.getLimitStart() != null)
@@ -633,30 +632,29 @@ public class UserManagementServiceImpl implements UserManagementService {
 
          if (userSearch.getSortField() != null) {
             sortField = userSearch.getSortField();
-            tempFlag=1;
          }
 
          if (userSearch.getSortOrder() != null) {
             sortOrder = userSearch.getSortOrder();
-            tempFlag=1;
-         }
-         
-         if(userSearch.getGlobalSearch() != null && !userSearch.getGlobalSearch().isEmpty() && tempFlag == 1){
-            searchFlag=2;
          }
 
          // 1.CCIUserId, 2.FirstName, 3.LastName, 4.LoginName, 5.CountryId, 6.email, 7.user roles, 8.departments,
          // 9.programs, 10. active, inactive 11. sortField 12. sortOrder
-         query.setParameter(1, globalSearch);
-         query.setParameter(2, cciUserId);
-         query.setParameter(3, countryId);
-         query.setParameter(4, roles);
-         query.setParameter(5, departments);
-         query.setParameter(6, programs);
-         query.setParameter(7, active);
-         query.setParameter(8, sortField);
-         query.setParameter(9, sortOrder);
-         query.setParameter(10, searchFlag);
+         query.setParameter(1, cciUserId);
+         query.setParameter(2, firstName);
+         query.setParameter(3, lastName);
+         query.setParameter(4, loginName);
+         query.setParameter(5, countryId);
+         query.setParameter(6, email);
+         query.setParameter(7, roles);
+         query.setParameter(8, departments);
+         query.setParameter(9, programs);
+         query.setParameter(10, active);
+         /*query.setParameter(11, limitStart);
+         query.setParameter(12, limitEnd);*/
+         query.setParameter(11, sortField);
+         query.setParameter(12, sortOrder);
+
          results = query.getResultList();
 
          if (results != null) {
@@ -804,7 +802,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
          }
          cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-         cciUser.setActive(user.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+//         cciUser.setActive(user.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          // update user country
          if (user.getUserCountry().getCountryId() > 0) {
             LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1160,7 +1158,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return request;
          }
-         user.setActive(CCIConstants.INACTIVE);
+//         user.setActive(CCIConstants.INACTIVE);
          cciUsersRepository.saveAndFlush(user);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
                messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
@@ -1513,7 +1511,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
+//      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1762,7 +1760,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
+//      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       // update user country
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1999,7 +1997,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setCountry(country);
       cciUser.setState(cUsr.getLookupUsstate() != null ? cUsr.getLookupUsstate().getStateName() : CCIConstants.EMPTY_DATA);
       // cciUser.setLoginName(cUsr.getLogin().getLoginName());
-      cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
+//      cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
       // update user role for user
       if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
          populateUserRole(cUsr, cciUser);
