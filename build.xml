@@ -655,7 +655,7 @@
 		</java>
 	</target>
 
-	<!--*************************************************  Add New participant  *************************************************-->
+	<!--*************************************************  Add AdminViewForPartnerInquiry  *************************************************-->
 	<target name="AdminViewForPartnerInquiry">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
@@ -663,5 +663,14 @@
 			<arg value="${xsd.dir}/thirdparty/wordpress/partnerInquiry/AdminViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
+	
+	<!--*************************************************  Add AdminViewForPartnerInquiry  *************************************************-->
+		<target name="AgentViewForPartnerInquiry">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/thirdparty/wordpress/partnerInquiry/AgentViewForPartnerInquiryData.xsd" />
+			</java>
+		</target>
 
 </project>
