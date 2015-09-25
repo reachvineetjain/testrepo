@@ -24,38 +24,38 @@ public class WordPressFormsImpl implements IWordPressForms {
    LoginRepository loginRepository;
    @Autowired
    PartnerRepository partnerRepository;
+
    @Override
    public String InquiryPartner(InternationalPartners InternationalPartners) {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
-         Login user =loginRepository.findByEmail(InternationalPartners.getEmail());
-         if(user!=null){
+         Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
+         if (user != null) {
             String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist)";
             System.out.println(message);
             return message;
          }
          PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite());
-         if(webSiteDuplicate!=null){
+         if (webSiteDuplicate != null) {
             String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
             System.out.println(message);
             return message;
          }
-         
+
          PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
-         if(legalNameDuplicate!=null){
+         if (legalNameDuplicate != null) {
             String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
             System.out.println(message);
             return message;
          }
-         
-         
+
          if (InternationalPartners != null) {
             PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
             partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
             partnerAgentInquiry.setAdressLineTwo(InternationalPartners.getAddress2());
             partnerAgentInquiry.setBusinessName(InternationalPartners.getLegalBusinessName());
-            partnerAgentInquiry.setBusinessYears(InternationalPartners.getYearsInBusiness()+"");
+            partnerAgentInquiry.setBusinessYears(InternationalPartners.getYearsInBusiness() + "");
             partnerAgentInquiry.setCity(InternationalPartners.getCity());
             partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
             partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
@@ -65,34 +65,41 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
             partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite());
             // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
-             
-             //GoIdSequence goIdSequence = new GoIdSequence();
-            //  goIdSequence = goIdSequenceRepository.save(goIdSequence);
-           //  partnerAgentInquiry.setpartn
-           // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
+
+            // GoIdSequence goIdSequence = new GoIdSequence();
+            // goIdSequence = goIdSequenceRepository.save(goIdSequence);
+            // partnerAgentInquiry.setpartn
+            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
-            return "200:Success:200:Success";
+            String s = "200:Success:200:Success";
+            System.out.println(s);
+            return s;
+         } else {
+            // if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
+            // String string = "200:Success:300:Missing Information";
+            // System.out.println(string);
+            // return string;
+            // } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
+            // String string = "400:Duplicate Row:400:Duplicate Row";
+            // System.out.println(string);
+            // return string;
+            // } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
+            // String string =
+            // "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
+            // System.out.println(string);
+            // return string;
+            // } else {
+            // String string = "300:Missing Information:300:Missing Information";
+            // System.out.println(string);
+            // return string;
+            // }
+            String s = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
+            System.out.println(s);
+            return s;
          }
-//         if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
-//            String string = "200:Success:300:Missing Information";
-//            System.out.println(string);
-//            return string;
-//         } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-//            String string = "400:Duplicate Row:400:Duplicate Row";
-//            System.out.println(string);
-//            return string;
-//         } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-//            String string = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
-//            System.out.println(string);
-//            return string;
-//         } else {
-//            String string = "300:Missing Information:300:Missing Information";
-//            System.out.println(string);
-//            return string;
-//         }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         String string = "700:Internal Error:700:"+e.getMessage();
+         String string = "700:Internal Error:700:" + e.getMessage();
          System.out.println(string);
          return string;
       }
@@ -179,11 +186,11 @@ public class WordPressFormsImpl implements IWordPressForms {
    @Override
    public Boolean IsEmailExist(String Email) {
       try {
-          System.out.println("IsEmailExist is Called !!! ");
-          System.out.println("Email : " + Email);
-         Login user =loginRepository.findByEmail(Email);
+         System.out.println("IsEmailExist is Called !!! ");
+         System.out.println("Email : " + Email);
+         Login user = loginRepository.findByEmail(Email);
          System.out.println(user);
-         if(user!=null){
+         if (user != null) {
             return true;
          }
       } catch (Exception e) {
@@ -198,14 +205,14 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsLegalNameExist is Called !!! ");
          PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName);
-        if(legalNameDuplicate!=null){
-           return true;
-        }
-     } catch (Exception e) {
-        ExceptionUtil.logException(e, LOGGER);
-        return false;
-     }
-     return false;
+         if (legalNameDuplicate != null) {
+            return true;
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return false;
+      }
+      return false;
    }
 
    @Override
@@ -213,14 +220,14 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsWebSiteExist is Called !!! ");
          PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite);
-        if(webSiteDuplicate!=null){
-           return true;
-        }
-     } catch (Exception e) {
-        ExceptionUtil.logException(e, LOGGER);
-        return false;
-     }
-     return false;
+         if (webSiteDuplicate != null) {
+            return true;
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         return false;
+      }
+      return false;
    }
 
 }
