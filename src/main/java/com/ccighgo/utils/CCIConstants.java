@@ -51,6 +51,9 @@ public class CCIConstants {
    public static final Integer CCI_USER_TYPE = 1;
    public static final Integer PARTNER_USER_TYPE = 2;
    public static final int EMPTY_INTEGER_FIELD = -1;
+   
+   //Designation
+   public static final String SUB_PARTNER = "Sub_Partner";
 
    // spaces, hyphens, literals, commas etc
    public static final String EMPTY_DATA = "";

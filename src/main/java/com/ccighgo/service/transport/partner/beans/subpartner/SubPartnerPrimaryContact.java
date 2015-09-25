@@ -33,7 +33,9 @@ public class SubPartnerPrimaryContact {
    protected Byte receiveNotificationEmailFromCCI;
    protected String skypeId;
    protected String website;
-   protected String typeOfPartnerUser;
+   protected Integer typeOfPartnerUser;
+   
+   
    public String getSalutation() {
       return salutation;
    }
@@ -100,10 +102,10 @@ public class SubPartnerPrimaryContact {
    public void setWebsite(String website) {
       this.website = website;
    }
-   public String getTypeOfPartnerUser() {
+   public Integer getTypeOfPartnerUser() {
       return typeOfPartnerUser;
    }
-   public void setTypeOfPartnerUser(String typeOfPartnerUser) {
+   public void setTypeOfPartnerUser(Integer typeOfPartnerUser) {
       this.typeOfPartnerUser = typeOfPartnerUser;
    }
    
