@@ -14,12 +14,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ProgramAllocationsUnguranteed complex type.
+ * <p>Java class for ProgramAllocationsGuaranteed complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ProgramAllocationsUnguranteed">
+ * &lt;complexType name="ProgramAllocationsGuaranteed">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProgramAllocationsUnguranteed", propOrder = {
+@XmlType(name = "J1HSProgramAllocationsGuaranteed", propOrder = {
     "seasonId",
     "seasonProgramId",
     "augustStartMaximumParticipants",
@@ -62,7 +62,7 @@ import javax.xml.bind.annotation.XmlType;
     "totalUnderCCIReview",
     "totalOpenings"
 })
-public class ProgramAllocationsUnguranteed {
+public class J1HSProgramAllocationsGuaranteed {
 
     protected int seasonId;
     protected int seasonProgramId;

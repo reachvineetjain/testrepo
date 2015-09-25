@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.PartnerNoteTopic;
 
+/**
+ * @author ravi
+ *
+ */
+
 @Repository
 public interface PartnerNoteTopicRepository extends JpaRepository<PartnerNoteTopic, Integer> {
 

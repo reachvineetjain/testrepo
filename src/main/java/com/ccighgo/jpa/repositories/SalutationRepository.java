@@ -5,7 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.Salutation;
 
+/**
+ * @author rajan
+ *
+ */
 @Repository
-public interface SalutationRepositotry extends JpaRepository<Salutation, Integer> {
+public interface SalutationRepository extends JpaRepository<Salutation, Integer> {
 
 }
