@@ -3,12 +3,14 @@
  */
 package com.ccighgo.service.rest.partner.user;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,8 @@ public class PartnerUser {
    
    @Autowired PartnerUserInterface partnerUserInterface;
    
+   @Context HttpServletRequest request;
+   
    @GET
    @Path("list/{partnerId}")
    @Produces("application/json")
@@ -47,7 +51,7 @@ public class PartnerUser {
    @Produces("application/json")
    public PartnerUserDetailAndRoles createNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
       LOGGER.debug("calling PartnerUser.addNewPartnerUser");
-      return partnerUserInterface.addNewPartnerUser(partnerUserDetailAndRoles);
+      return partnerUserInterface.addNewPartnerUser(partnerUserDetailAndRoles,request);
    }
    
    @GET

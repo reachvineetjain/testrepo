@@ -9,4 +9,5 @@ public class SubPartnerMessageConstants {
    public static final String FAILED_UPDATE_SUB_PARTNER="failed.update.sub.partner";
    public static final String SUB_PARTNER_CREATE_USER_USERNAME_EXIST="sub.partner.username.already.exist";
    public static final String SUB_PARTNER_CREATE_USER_EMAIL_EXIST="sub.partner.email.already.exist";
+   public static final String FAILED_TO_GET_EMAIL="failed.get.email";
 }

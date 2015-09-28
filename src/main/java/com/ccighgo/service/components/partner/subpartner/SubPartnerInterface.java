@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.components.partner.subpartner;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
@@ -20,7 +22,7 @@ public interface SubPartnerInterface {
 
    public SubPartner viewSubPartners(String subPartnerId);
    
-   public SubPartner createSubPartner(SubPartner subPartner);
+   public SubPartner createSubPartner(SubPartner subPartner,HttpServletRequest request);
    
    public SubPartner updateSubPartner(SubPartner subPartner);
    
