@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.components.partner.user;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
@@ -23,7 +25,7 @@ public interface PartnerUserInterface {
     */
  // public PartnerUsers getAllPartnerUsers(String partnerId);
 
-   public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles);
+   public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles, HttpServletRequest request);
 
    public PartnerUserDetailAndRoles viewPartnerUser(String partnerUserId);
 

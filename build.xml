@@ -668,17 +668,27 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/thirdparty/wordpress/partnerInquiry/AdminViewForPartnerInquiryData.xsd" />
+			<arg value="${xsd.dir}/partner/admin/AdminViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
 
 	<!--*************************************************  Add AdminViewForPartnerInquiry  *************************************************-->
+
 	<target name="AgentViewForPartnerInquiry">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/thirdparty/wordpress/partnerInquiry/AgentViewForPartnerInquiryData.xsd" />
+			<arg value="${xsd.dir}/partner/admin/AgentViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
 
+
+	<!--*************************************************  Partner Admin Dashboard *************************************************-->
+	<target name="PartnerAdminDashboard">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/Dashboard.xsd" />
+		</java>
+	</target>
 </project>

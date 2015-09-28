@@ -12,7 +12,7 @@
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
 
- 	<xsd:import schemaLocation="../../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+ 	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
 
    <xsd:element name="PartnerRecruitmentAgent" type="agentViewForPartnerInquiryData:PartnerRecruitmentAgent"></xsd:element>
