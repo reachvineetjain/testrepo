@@ -81,7 +81,7 @@ public class Login implements Serializable {
 		this.loginId = loginId;
 	}
 
-	public Integer getCreatedBy() {
+   public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
