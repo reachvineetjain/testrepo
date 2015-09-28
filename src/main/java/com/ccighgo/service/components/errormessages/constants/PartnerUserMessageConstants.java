@@ -10,4 +10,5 @@ public class PartnerUserMessageConstants {
    public static final String PARTNER_USER_CREATE_USER_NAME_EXIST="error.partner.user.username.exist";
    public static final String PARTNER_USER_CREATE_USER_EMAIL_EXIST="error.partner.user.create.user.email.exist";
    public static final String INVALID_PARTNER_USER_ID="invalid.partner.user.id";
+   public static final String FAILED_GET_EMAIL="failed.get.email";
 }
