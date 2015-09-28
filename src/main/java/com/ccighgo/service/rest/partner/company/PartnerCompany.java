@@ -38,17 +38,15 @@ public class PartnerCompany {
    @Produces("application/json")
    public PartnerCompanyDetail getPartnerCompanyDetails(@PathParam("partnerGoId") String partnerGoId){
       return partnerCompanyService.getPartnerCompanyDetails(partnerGoId);
-      
    }
    
-   
-   /*@POST
-   @Path("addNewOne")
+   @POST
+   @Path("update/details")
+   @Consumes("application/json")
    @Produces("application/json")
-   public PartnerCompanyDetail addNewPartnerCompany(PartnerCompanyDetail companyDetail) {
-      LOGGER.info("calling PartnerCompany.addNewPartnerCompany");
-      return partnerCompanyServiceImpl.addNewPartnerCompany(companyDetail);
-   }*/
-
+   public PartnerCompanyDetail addNewPartnerCompany(PartnerCompanyDetail partnerCompanyDetail) {
+      LOGGER.info("calling PartnerCompany.updatePartnerCompanyDetails");
+      return partnerCompanyService.updatePartnerCompanyDetails(partnerCompanyDetail);
+   }
 
 }

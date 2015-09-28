@@ -7,6 +7,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.hibernate.tool.hbm2ddl.TableMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerUserRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerUserMessageConstants;
@@ -50,6 +53,7 @@ import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 
@@ -83,6 +87,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    @Autowired GenderRepository genderRepository;
    
    @Autowired SalutationRepository salutationRepositotry;
+   
+   @Autowired EmailServiceImpl email;
 
    @Override
    @Transactional(readOnly = true)
@@ -128,7 +134,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
    @Override
    @Transactional(readOnly = true)
-   public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
+   public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles,HttpServletRequest request) {
       PartnerUserDetailAndRoles viewPartnerUser = null;
       if (partnerUserDetailAndRoles == null) {
          viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PARTNER_USER.getValue(),
@@ -229,6 +235,20 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
             return viewPartnerUser;
          }
+         Login loginEmail = loginRepository.findByEmail(partnerUserDetailAndRoles.getEmail());
+         
+         if(loginEmail == null){
+            viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PARTNER.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER));
+            return viewPartnerUser;
+         }
+
+         String body = "<p>This email was sent automatically by CCI Greenheart Online system to inform you that you an online account has been created for you.  </p></br>"
+               + "<p>Please go to the following page and follow the instructions to login to the system. </p> " + "<p>"
+               + CCIUtils.formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>" + "<p>Thank you,</p><p>GO System Support.</p>";
+         email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body, true);
+         
          viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_USER_cODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {

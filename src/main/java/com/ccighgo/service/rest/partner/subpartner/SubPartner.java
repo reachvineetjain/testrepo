@@ -3,12 +3,14 @@
  */
 package com.ccighgo.service.rest.partner.subpartner;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.subpartner.SubPartnerInterface;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
 
 /**
  * @author ravi
@@ -29,6 +32,8 @@ public class SubPartner {
    private static final Logger LOGGER = LoggerFactory.getLogger(SubPartner.class);
    
    @Autowired SubPartnerInterface subPartnerInterface;
+   
+   @Context HttpServletRequest request;
    
    @GET
    @Path("list/{partnerId}")
@@ -51,7 +56,7 @@ public class SubPartner {
    @Produces("application/json")
    public com.ccighgo.service.transport.partner.beans.subpartner.SubPartner createSubPartner(com.ccighgo.service.transport.partner.beans.subpartner.SubPartner subPartner){
       LOGGER.debug("calling SubPartner.createSubPartner",subPartner);
-      return subPartnerInterface.createSubPartner(subPartner);
+      return subPartnerInterface.createSubPartner(subPartner , request);
    }
    
    @POST
@@ -61,5 +66,11 @@ public class SubPartner {
       LOGGER.debug("calling SubPartner.updateSubPartner",subPartner);
       return subPartnerInterface.updateSubPartner(subPartner);
    }
-   
+   @GET
+   @Path("get-all-sub-partners")
+   @Produces("application/json")
+   public SubPartnerDetails getAllSubPartners(){
+      LOGGER.debug("calling SubPartner.getAllSubPartners");
+      return subPartnerInterface.getAllSubPartners();
+   }
 }

@@ -180,7 +180,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired EmailServiceImpl email;
 
-   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?,?,?)";
+   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
 
@@ -368,9 +368,11 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setPhoneExtension(cciUser.getPhoneExtension() != null ? cciUser.getPhoneExtension() : CCIConstants.EMPTY_DATA);
             user.setEmergencyPhone(cciUser.getEmergencyPhone() != null ? cciUser.getEmergencyPhone() : CCIConstants.EMPTY_DATA);
             user.setSevisId(cciUser.getSevisId() != null ? cciUser.getSevisId() : CCIConstants.EMPTY_DATA);
+            user.setActive(cciUser.getGoIdSequence().getLogin().iterator().next().getActive() ==  CCIConstants.ACTIVE ? true: false);
             user.setSupervisorId(cciUser.getSupervisorId() != null ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
             user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
-//            user.setActive(cciUser.getActive() == CCIConstants.ACTIVE ? true : false);
+           user.setActive(cciUser.getGoIdSequence().getLogin().iterator().next().getActive() == CCIConstants.ACTIVE ? true : false);
+
             Gender gender = new Gender();
             if (cciUser.getLookupGender() != null) {
                gender.setGenderId(cciUser.getLookupGender().getGenderId());
@@ -568,122 +570,114 @@ public class UserManagementServiceImpl implements UserManagementService {
       CCIUsers cciUsersFront = null;
       List<Integer> results = null;
       Query query = entityManager.createNativeQuery(SP_USER_SEARCH);
-      
-      String firstName = null;
-      String lastName = null;
-      String loginName = null;
-      String email = null;
-      
+
+      String globalSearch = null;
+
       Integer cciUserId = null;
       Integer countryId = null;
-      
+
       String roles = null;
       String departments = null;
       String programs = null;
-      
+
       Byte active = null;
-      Integer limitStart = 1;
-      Integer limitEnd = 50;
       String sortField = null;
       String sortOrder = null;
-      
-      
+
+      Byte searchFlag = 1;
+
+      Integer limitStart = 1;
+      Integer limitEnd = 50;
+      Integer tempFlag = 0;
+
       try {
 
          if (userSearch.getGlobalSearch() != null && !(userSearch.getGlobalSearch().isEmpty())) {
-            firstName = userSearch.getGlobalSearch();
-            lastName = userSearch.getGlobalSearch();
-            loginName = userSearch.getGlobalSearch();
-            email = userSearch.getGlobalSearch();
+            globalSearch = userSearch.getGlobalSearch();
+            searchFlag = 0;
          }
 
          if (userSearch.getGoId() != null && !(userSearch.getGoId().equals(CCIConstants.EMPTY_DATA)) && userSearch.getGoId() > 0) {
             cciUserId = Integer.valueOf(userSearch.getGoId());
+            tempFlag = 1;
          }
 
          if (userSearch.getCountry() != null && !(userSearch.getCountry().equals(CCIConstants.EMPTY_DATA)) && userSearch.getCountry() > 0) {
             countryId = Integer.valueOf(userSearch.getCountry());
+            tempFlag = 1;
          }
 
          if (userSearch.getUserRole() != null && !(userSearch.getUserRole().isEmpty())) {
             roles = listToString(userSearch.getUserRole());
+            tempFlag = 1;
          }
 
          if (userSearch.getDepartment() != null && !(userSearch.getDepartment().isEmpty())) {
             departments = listToString(userSearch.getDepartment());
+            tempFlag = 1;
          }
 
          if (userSearch.getProgram() != null && !(userSearch.getProgram().isEmpty())) {
             programs = listToString(userSearch.getProgram());
+            tempFlag = 1;
          }
          if (userSearch.getActive() != null) {
             active = userSearch.getActive();
+            tempFlag = 1;
          }
-         
-         if(userSearch.getLimitStart() != null)
-         {
+
+         if (userSearch.getLimitStart() != null) {
             limitStart = userSearch.getLimitStart();
          }
-         
-         if(userSearch.getLimitEnd() != null)
-         {
+
+         if (userSearch.getLimitEnd() != null) {
             limitEnd = userSearch.getLimitEnd();
          }
 
          if (userSearch.getSortField() != null) {
             sortField = userSearch.getSortField();
+            tempFlag = 1;
          }
 
          if (userSearch.getSortOrder() != null) {
             sortOrder = userSearch.getSortOrder();
+            tempFlag = 1;
          }
 
-         // 1.CCIUserId, 2.FirstName, 3.LastName, 4.LoginName, 5.CountryId, 6.email, 7.user roles, 8.departments,
-         // 9.programs, 10. active, inactive 11. sortField 12. sortOrder
-         query.setParameter(1, cciUserId);
-         query.setParameter(2, firstName);
-         query.setParameter(3, lastName);
-         query.setParameter(4, loginName);
-         query.setParameter(5, countryId);
-         query.setParameter(6, email);
-         query.setParameter(7, roles);
-         query.setParameter(8, departments);
-         query.setParameter(9, programs);
-         query.setParameter(10, active);
-         /*query.setParameter(11, limitStart);
-         query.setParameter(12, limitEnd);*/
-         query.setParameter(11, sortField);
-         query.setParameter(12, sortOrder);
+         if (userSearch.getGlobalSearch() != null && !userSearch.getGlobalSearch().isEmpty() && tempFlag == 1) {
+            searchFlag = 2;
+         }
+
+         // 1.GlobalSearch, 2.cciUserId, 3.countryId, 4.roles, 5.departments, 6.programs, 7.active, 8.sortField,
+         // 9.sortOrder, 10.searchFlag
+         query.setParameter(1, globalSearch);
+         query.setParameter(2, cciUserId);
+         query.setParameter(3, countryId);
+         query.setParameter(4, roles);
+         query.setParameter(5, departments);
+         query.setParameter(6, programs);
+         query.setParameter(7, active);
+         query.setParameter(8, sortField);
+         query.setParameter(9, sortOrder);
+         query.setParameter(10, searchFlag);
 
          results = query.getResultList();
-
          if (results != null) {
             cciUsersFront = new CCIUsers();
             cciUsersFront.setRecordCount(results.size());
             List<CCIUser> cciUserList = new ArrayList<CCIUser>();
-//            List<Integer> idList = new ArrayList<Integer>();
             int count = limitStart;
-            for (int i = limitStart; i < (limitEnd + limitStart);i++) {
+            for (int i = limitStart; i < (limitEnd + limitStart); i++) {
                if (count <= results.size()) {
                   Integer id = results.get(i - 1);
                   CCIStaffUser cUser = cciUsersRepository.findOne(id);
                   CCIUser cciUser = getUserDetails(cUser);
                   cciUserList.add(cciUser);
                   count++;
-               }
-               else
-               {
+               } else {
                   break;
                }
-               // idList.add(id);
             }
-            
-            /*List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
-            for (CCIStaffUser cUser : cciUserDBList) {
-               CCIUser cciUser = getUserDetails(cUser);
-               cciUserList.add(cciUser);
-            }*/
-            
             cciUsersFront.getCciUsers().addAll(cciUserList);
             cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
@@ -701,54 +695,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       return cciUsersFront;
    }
    
-
-  
-   /*@Transactional(readOnly = true)
-   public CCIUsers searchUsers1(UserSearch userSearch)
- {
-      CCIUsers cciUsersFront = null;
-      List<Object> userList = null;
-      try
-      {
-      if (userSearch != null) {
-         Byte active = userSearch.isActive() == true ? CCIConstants.ACTIVE : CCIConstants.INACTIVE;
-         
-         if(userSearch.getGoId() != null || !userSearch.getGlobalSearch().isEmpty() || userSearch.getCountry() != null || userSearch.getDepartment() != null || userSearch.getUserRole() != null){
-           
-            
-         userList = cciUsersRepository.searchUser(userSearch.getGoId(),userSearch.getGlobalSearch(),userSearch.getCountry(),userSearch.getDepartment(),userSearch.getProgram(),userSearch.getUserRole(),active);
-         }
-         if (userList != null) {
-            cciUsersFront = new CCIUsers();
-            List<CCIUser> cciUserList = new ArrayList<CCIUser>();
-            List<Integer> idList = new ArrayList<Integer>();
-            for (Object object : userList) {
-               Integer id = Integer.valueOf(object.toString());
-               idList.add(id);
-            }
-            List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
-            for (CCIStaffUser cUser : cciUserDBList) {
-               CCIUser cciUser = getUserDetails(cUser);
-               cciUserList.add(cciUser);
-            }
-            cciUsersFront.getCciUsers().addAll(cciUserList);
-            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-         } else {
-            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
-                  messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
-            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
-         }
-      }
-      }
-      catch (CcighgoException e) {
-         cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_SEARCH.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER));
-      }
-      return cciUsersFront;
-   }*/
-
+   
    @Override
    @Transactional
    public User updateUserDemographics(User user) {
@@ -777,6 +724,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
          cciUser.setGoIdSequence(goIdSequence);
          Login login = new Login();
+         login.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
          login.setLoginName(user.getLoginInfo().getLoginName());
          login.setLoginId(goIdSequence.getLogin().iterator().next().getLoginId());
          login.setPassword(goIdSequence.getLogin().iterator().next().getPassword());
@@ -802,7 +750,6 @@ public class UserManagementServiceImpl implements UserManagementService {
             cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
          }
          cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-//         cciUser.setActive(user.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          // update user country
          if (user.getUserCountry().getCountryId() > 0) {
             LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1151,15 +1098,17 @@ public class UserManagementServiceImpl implements UserManagementService {
      try{
 
       if (Integer.valueOf(id) > 0) {
-         CCIStaffUser user = cciUsersRepository.findOne(Integer.valueOf(id));
+         GoIdSequence goIdSequence = goIdSequenceRepository.findOne(Integer.valueOf(id));
+         Login user = loginRepository.findByGoId(goIdSequence);
          if (user == null) {
             request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL)));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return request;
          }
-//         user.setActive(CCIConstants.INACTIVE);
-         cciUsersRepository.saveAndFlush(user);
+
+         user.setActive(CCIConstants.INACTIVE);
+         loginRepository.saveAndFlush(user);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
                messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
       } else {
@@ -1511,7 +1460,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-//      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1533,23 +1481,11 @@ public class UserManagementServiceImpl implements UserManagementService {
       GoIdSequence goIdSequence=new GoIdSequence();
       goIdSequence = goIdSequenceRepository.findOne(user.getCciUserId());
       goIdSequence.getLogin().iterator().next().setLoginName(user.getLoginInfo().getLoginName());
+      goIdSequence.getLogin().iterator().next().setActive(user.isActive() == true ? CCIConstants.ACTIVE  : CCIConstants.INACTIVE);
       goIdSequence.getLogin().iterator().next().setEmail(user.getEmail());
       cciUser.setCciStaffUserId(user.getCciUserId());
       cciUser.setGoIdSequence(goIdSequence);
-    /*  
-      Login login = new Login();
-      login.setLoginName(user.getLoginInfo().getLoginName());
-      login.setLoginId(goIdSequence.getLogin().getLoginId());
-      login.setPassword(goIdSequence.getLogin().iterator().next().getPassword());
-      login.setKeyValue(goIdSequence.getLogin().getKeyValue());
-      login.setEmail(user.getEmail());
-      login.setCreatedBy(goIdSequence.getGoId());
-      login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      login.setModifiedBy(goIdSequence.getGoId());
-      login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      login.setGoIdSequence(goIdSequence);  
-      login.setLoginUserTypes(goIdSequence.getLogin().getLoginUserTypes());*/
-      //login = loginRepository.save(login);
+      
       cciUser.setCreatedBy(user.getCciUserId());
       cciUser.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       cciUser.setModifiedBy(user.getCciUserId());
@@ -1760,7 +1696,6 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setSupervisorId(supervisorId > 0 ? supervisorId : 0);
       }
       cciUser.setPhoto(user.getPhotoPath() != null ? user.getPhotoPath() : null);
-//      cciUser.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       // update user country
       if (user.getUserCountry() != null) {
          LookupCountry userCountry = countryRepository.findOne(user.getUserCountry().getCountryId());
@@ -1786,6 +1721,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       List<Login> loginList = new ArrayList<Login>();
       Login login = new Login();
+      login.setActive(user.isActive() == true ? CCIConstants.ACTIVE: CCIConstants.INACTIVE);
       login.setLoginName(user.getLoginInfo().getLoginName());
       login.setPassword(PasswordUtil.hashKey("password"));
       login.setKeyValue(UuidUtils.nextHexUUID());
@@ -1988,6 +1924,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setLastName(cUsr.getLastName());
       cciUser.setEmail(cUsr.getGoIdSequence().getLogin().iterator().next().getEmail());
       cciUser.setLoginName(cUsr.getGoIdSequence().getLogin().iterator().next().getLoginName());
+      cciUser.setIsActive(cUsr.getGoIdSequence().getLogin().iterator().next().getActive() == CCIConstants.ACTIVE ? true : false);
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhoneExtension(cUsr.getPhoneExtension() != null ? cUsr.getPhoneExtension() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
@@ -1996,8 +1933,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       country = getCountryFromCCIStaffUser(cUsr);
       cciUser.setCountry(country);
       cciUser.setState(cUsr.getLookupUsstate() != null ? cUsr.getLookupUsstate().getStateName() : CCIConstants.EMPTY_DATA);
-      // cciUser.setLoginName(cUsr.getLogin().getLoginName());
-//      cciUser.setIsActive(cUsr.getActive() == CCIConstants.ACTIVE ? true : false);
       // update user role for user
       if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
          populateUserRole(cUsr, cciUser);

@@ -15,5 +15,7 @@ import com.ccighgo.service.transport.partner.beans.companydetail.PartnerCompanyD
 public interface PartnerCompanyService {
 
    PartnerCompanyDetail getPartnerCompanyDetails(String partnerGoId);
+   
+   PartnerCompanyDetail updatePartnerCompanyDetails(PartnerCompanyDetail partnerCompanyDetail);
 
 }
