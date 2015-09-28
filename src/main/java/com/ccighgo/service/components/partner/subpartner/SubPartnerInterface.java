@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
 
 /**
  * @author ravi
@@ -22,5 +23,8 @@ public interface SubPartnerInterface {
    public SubPartner createSubPartner(SubPartner subPartner);
    
    public SubPartner updateSubPartner(SubPartner subPartner);
+   
+   public SubPartnerDetails getAllSubPartners();
+   
 
 }

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.subpartner.SubPartnerInterface;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
 
 /**
  * @author ravi
@@ -61,5 +62,11 @@ public class SubPartner {
       LOGGER.debug("calling SubPartner.updateSubPartner",subPartner);
       return subPartnerInterface.updateSubPartner(subPartner);
    }
-   
+   @GET
+   @Path("get-all-sub-partners")
+   @Produces("application/json")
+   public SubPartnerDetails getAllSubPartners(){
+      LOGGER.debug("calling SubPartner.getAllSubPartners");
+      return subPartnerInterface.getAllSubPartners();
+   }
 }
