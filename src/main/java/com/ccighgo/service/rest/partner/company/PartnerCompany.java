@@ -14,11 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.service.components.partner.PartnerServiceImpl;
 import com.ccighgo.service.components.partner.company.PartnerCompanyService;
-import com.ccighgo.service.components.partner.company.PartnerCompanyServiceImpl;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerCompanyDetail;
-import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 
 /**
  * @author ravi

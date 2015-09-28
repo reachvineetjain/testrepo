@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for PartnerProgram complex type.
+ * <p>Java class for NoteTags complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="PartnerProgram">
+ * &lt;complexType name="NoteTags">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="partnerProgramId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="partnerProgram" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="noteTagId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="noteTag" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,54 +35,54 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PartnerProgram", propOrder = {
-    "partnerProgramId",
-    "partnerProgram"
+@XmlType(name = "NoteTags", propOrder = {
+    "noteTagId",
+    "noteTag"
 })
-public class PartnerProgram {
+public class NoteTags {
 
-    protected int partnerProgramId;
+    protected int noteTagId;
     @XmlElement(required = true)
-    protected String partnerProgram;
+    protected String noteTag;
 
     /**
-     * Gets the value of the partnerProgramId property.
+     * Gets the value of the noteTagId property.
      * 
      */
-    public int getPartnerProgramId() {
-        return partnerProgramId;
+    public int getNoteTagId() {
+        return noteTagId;
     }
 
     /**
-     * Sets the value of the partnerProgramId property.
+     * Sets the value of the noteTagId property.
      * 
      */
-    public void setPartnerProgramId(int value) {
-        this.partnerProgramId = value;
+    public void setNoteTagId(int value) {
+        this.noteTagId = value;
     }
 
     /**
-     * Gets the value of the partnerProgram property.
+     * Gets the value of the noteTag property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPartnerProgram() {
-        return partnerProgram;
+    public String getNoteTag() {
+        return noteTag;
     }
 
     /**
-     * Sets the value of the partnerProgram property.
+     * Sets the value of the noteTag property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPartnerProgram(String value) {
-        this.partnerProgram = value;
+    public void setNoteTag(String value) {
+        this.noteTag = value;
     }
 
 }
