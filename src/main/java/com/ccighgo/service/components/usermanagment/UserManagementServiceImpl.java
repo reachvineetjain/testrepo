@@ -180,7 +180,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    
    @Autowired EmailServiceImpl email;
 
-   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?,?,?)";
+   private static final String SP_USER_SEARCH = "call SPUserManagementUserSearch(?,?,?,?,?,?,?,?,?,?)";
 
    // TODO List 1. update createdBy and modifiedBy from the logged in user id, for now just setting it 1.
 
@@ -570,122 +570,114 @@ public class UserManagementServiceImpl implements UserManagementService {
       CCIUsers cciUsersFront = null;
       List<Integer> results = null;
       Query query = entityManager.createNativeQuery(SP_USER_SEARCH);
-      
-      String firstName = null;
-      String lastName = null;
-      String loginName = null;
-      String email = null;
-      
+
+      String globalSearch = null;
+
       Integer cciUserId = null;
       Integer countryId = null;
-      
+
       String roles = null;
       String departments = null;
       String programs = null;
-      
+
       Byte active = null;
-      Integer limitStart = 1;
-      Integer limitEnd = 50;
       String sortField = null;
       String sortOrder = null;
-      
-      
+
+      Byte searchFlag = 1;
+
+      Integer limitStart = 1;
+      Integer limitEnd = 50;
+      Integer tempFlag = 0;
+
       try {
 
          if (userSearch.getGlobalSearch() != null && !(userSearch.getGlobalSearch().isEmpty())) {
-            firstName = userSearch.getGlobalSearch();
-            lastName = userSearch.getGlobalSearch();
-            loginName = userSearch.getGlobalSearch();
-            email = userSearch.getGlobalSearch();
+            globalSearch = userSearch.getGlobalSearch();
+            searchFlag = 0;
          }
 
          if (userSearch.getGoId() != null && !(userSearch.getGoId().equals(CCIConstants.EMPTY_DATA)) && userSearch.getGoId() > 0) {
             cciUserId = Integer.valueOf(userSearch.getGoId());
+            tempFlag = 1;
          }
 
          if (userSearch.getCountry() != null && !(userSearch.getCountry().equals(CCIConstants.EMPTY_DATA)) && userSearch.getCountry() > 0) {
             countryId = Integer.valueOf(userSearch.getCountry());
+            tempFlag = 1;
          }
 
          if (userSearch.getUserRole() != null && !(userSearch.getUserRole().isEmpty())) {
             roles = listToString(userSearch.getUserRole());
+            tempFlag = 1;
          }
 
          if (userSearch.getDepartment() != null && !(userSearch.getDepartment().isEmpty())) {
             departments = listToString(userSearch.getDepartment());
+            tempFlag = 1;
          }
 
          if (userSearch.getProgram() != null && !(userSearch.getProgram().isEmpty())) {
             programs = listToString(userSearch.getProgram());
+            tempFlag = 1;
          }
          if (userSearch.getActive() != null) {
             active = userSearch.getActive();
+            tempFlag = 1;
          }
-         
-         if(userSearch.getLimitStart() != null)
-         {
+
+         if (userSearch.getLimitStart() != null) {
             limitStart = userSearch.getLimitStart();
          }
-         
-         if(userSearch.getLimitEnd() != null)
-         {
+
+         if (userSearch.getLimitEnd() != null) {
             limitEnd = userSearch.getLimitEnd();
          }
 
          if (userSearch.getSortField() != null) {
             sortField = userSearch.getSortField();
+            tempFlag = 1;
          }
 
          if (userSearch.getSortOrder() != null) {
             sortOrder = userSearch.getSortOrder();
+            tempFlag = 1;
          }
 
-         // 1.CCIUserId, 2.FirstName, 3.LastName, 4.LoginName, 5.CountryId, 6.email, 7.user roles, 8.departments,
-         // 9.programs, 10. active, inactive 11. sortField 12. sortOrder
-         query.setParameter(1, cciUserId);
-         query.setParameter(2, firstName);
-         query.setParameter(3, lastName);
-         query.setParameter(4, loginName);
-         query.setParameter(5, countryId);
-         query.setParameter(6, email);
-         query.setParameter(7, roles);
-         query.setParameter(8, departments);
-         query.setParameter(9, programs);
-         query.setParameter(10, active);
-         /*query.setParameter(11, limitStart);
-         query.setParameter(12, limitEnd);*/
-         query.setParameter(11, sortField);
-         query.setParameter(12, sortOrder);
+         if (userSearch.getGlobalSearch() != null && !userSearch.getGlobalSearch().isEmpty() && tempFlag == 1) {
+            searchFlag = 2;
+         }
+
+         // 1.GlobalSearch, 2.cciUserId, 3.countryId, 4.roles, 5.departments, 6.programs, 7.active, 8.sortField,
+         // 9.sortOrder, 10.searchFlag
+         query.setParameter(1, globalSearch);
+         query.setParameter(2, cciUserId);
+         query.setParameter(3, countryId);
+         query.setParameter(4, roles);
+         query.setParameter(5, departments);
+         query.setParameter(6, programs);
+         query.setParameter(7, active);
+         query.setParameter(8, sortField);
+         query.setParameter(9, sortOrder);
+         query.setParameter(10, searchFlag);
 
          results = query.getResultList();
-
          if (results != null) {
             cciUsersFront = new CCIUsers();
             cciUsersFront.setRecordCount(results.size());
             List<CCIUser> cciUserList = new ArrayList<CCIUser>();
-//            List<Integer> idList = new ArrayList<Integer>();
             int count = limitStart;
-            for (int i = limitStart; i < (limitEnd + limitStart);i++) {
+            for (int i = limitStart; i < (limitEnd + limitStart); i++) {
                if (count <= results.size()) {
                   Integer id = results.get(i - 1);
                   CCIStaffUser cUser = cciUsersRepository.findOne(id);
                   CCIUser cciUser = getUserDetails(cUser);
                   cciUserList.add(cciUser);
                   count++;
-               }
-               else
-               {
+               } else {
                   break;
                }
-               // idList.add(id);
             }
-            
-            /*List<CCIStaffUser> cciUserDBList = cciUsersRepository.findAll(idList);
-            for (CCIStaffUser cUser : cciUserDBList) {
-               CCIUser cciUser = getUserDetails(cUser);
-               cciUserList.add(cciUser);
-            }*/
-            
             cciUsersFront.getCciUsers().addAll(cciUserList);
             cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
