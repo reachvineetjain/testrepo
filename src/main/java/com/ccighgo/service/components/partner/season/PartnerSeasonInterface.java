@@ -5,6 +5,7 @@ package com.ccighgo.service.components.partner.season;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
 
@@ -19,5 +20,7 @@ public interface PartnerSeasonInterface {
    public PartnerSeasons getPartnerSeasons(String partnerId);
 
    public PartnerSeasonDetail viewPartnerSeason(String partnerSeasonId);
+
+   public PartnerSeasonApplicationList getPartnerSeasonApplicationList(String partnerId);
 
 }

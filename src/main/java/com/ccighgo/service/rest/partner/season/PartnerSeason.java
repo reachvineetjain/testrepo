@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
+import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
 
@@ -80,5 +82,11 @@ public class PartnerSeason {
    public PartnerSeasonDetail viewPartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
       LOGGER.debug("calling PartnerUser.viewPartnerSeason");
       return partnerSeasonInterface.viewPartnerSeason(partnerSeasonId);
+   }
+   
+   @GET
+   @Path("apply/new/{partnerId}")
+   public PartnerSeasonApplicationList getPartnerSeasonApplicationList(@PathParam("partnerId") String partnerId){
+      return partnerSeasonInterface.getPartnerSeasonApplicationList(partnerId);
    }
 }
