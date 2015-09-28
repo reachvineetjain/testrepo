@@ -371,6 +371,8 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.setActive(cciUser.getGoIdSequence().getLogin().iterator().next().getActive() ==  CCIConstants.ACTIVE ? true: false);
             user.setSupervisorId(cciUser.getSupervisorId() != null ? String.valueOf(cciUser.getSupervisorId()) : CCIConstants.EMPTY_DATA);
             user.setPhotoPath(cciUser.getPhoto() != null ? cciUser.getPhoto() : CCIConstants.EMPTY_DATA);
+           user.setActive(cciUser.getGoIdSequence().getLogin().iterator().next().getActive() == CCIConstants.ACTIVE ? true : false);
+
             Gender gender = new Gender();
             if (cciUser.getLookupGender() != null) {
                gender.setGenderId(cciUser.getLookupGender().getGenderId());
@@ -1112,6 +1114,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return request;
          }
+
          user.setActive(CCIConstants.INACTIVE);
          loginRepository.saveAndFlush(user);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
@@ -1929,6 +1932,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       cciUser.setLastName(cUsr.getLastName());
       cciUser.setEmail(cUsr.getGoIdSequence().getLogin().iterator().next().getEmail());
       cciUser.setLoginName(cUsr.getGoIdSequence().getLogin().iterator().next().getLoginName());
+      cciUser.setIsActive(cUsr.getGoIdSequence().getLogin().iterator().next().getActive() == CCIConstants.ACTIVE ? true : false);
       cciUser.setPrimaryPhone(cUsr.getPrimaryPhone() != null ? cUsr.getPrimaryPhone() : CCIConstants.EMPTY_DATA);
       cciUser.setPhoneExtension(cUsr.getPhoneExtension() != null ? cUsr.getPhoneExtension() : CCIConstants.EMPTY_DATA);
       cciUser.setPhotoPath(cUsr.getPhoto() != null ? cUsr.getPhoto() : CCIConstants.EMPTY_DATA);
@@ -1937,7 +1941,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       country = getCountryFromCCIStaffUser(cUsr);
       cciUser.setCountry(country);
       cciUser.setState(cUsr.getLookupUsstate() != null ? cUsr.getLookupUsstate().getStateName() : CCIConstants.EMPTY_DATA);
-      // cciUser.setLoginName(cUsr.getLogin().getLoginName());
       // update user role for user
       if (cUsr.getCcistaffUsersCcistaffRoles() != null) {
          populateUserRole(cUsr, cciUser);

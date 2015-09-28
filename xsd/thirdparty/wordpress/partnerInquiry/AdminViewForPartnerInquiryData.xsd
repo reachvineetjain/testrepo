@@ -34,6 +34,7 @@
 			   <xsd:element name="offices" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningOffices" minOccurs="1" maxOccurs="unbounded" />
 			   <xsd:element name="referenceCheck" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningReferenceCheck" minOccurs="1" maxOccurs="unbounded" />
 			   <xsd:element name="documents" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningDocuments" minOccurs="1" maxOccurs="unbounded" />
+			    <xsd:element name="notes" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningNotes" minOccurs="1" maxOccurs="unbounded" />
              </xsd:sequence>
              </xsd:extension>
              </xsd:complexContent>

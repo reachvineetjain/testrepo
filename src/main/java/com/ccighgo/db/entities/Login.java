@@ -22,8 +22,6 @@ public class Login implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer loginId;
-	
-	private byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
@@ -47,6 +45,9 @@ public class Login implements Serializable {
 
 	@Column(nullable=false, length=100)
 	private String password;
+	
+	@Column(nullable=false)
+   private Byte active;
 
 	//bi-directional many-to-one association to GoIdSequence
    @ManyToOne
@@ -79,14 +80,6 @@ public class Login implements Serializable {
 	public void setLoginId(Integer loginId) {
 		this.loginId = loginId;
 	}
-
-	public byte getActive() {
-      return active;
-   }
-
-   public void setActive(byte active) {
-      this.active = active;
-   }
 
    public Integer getCreatedBy() {
 		return this.createdBy;
@@ -247,5 +240,13 @@ public class Login implements Serializable {
 
 		return passwordHistory;
 	}
+	
+	public Byte getActive() {
+      return this.active;
+   }
+
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
 }
