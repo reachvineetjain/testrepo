@@ -111,7 +111,9 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerPrimaryContact.setPrimaryContactPhone(partnerContact.getPhone());
             partnerPrimaryContact.setPrimaryContactEmergencyPhone(partnerContact.getEmergencyPhone());
             partnerPrimaryContact.setPrimaryContactFax(partnerContact.getFax());
-            partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(partnerContact.getReceiveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
+            if(partnerContact.getReceiveNotificationEmails()!=null){
+               partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(partnerContact.getReceiveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
+            }
             partnerPrimaryContact.setPrimaryContactSkypeId(partnerContact.getSkypeId());
             partnerPrimaryContact.setPrimaryContactWebsite(partnerContact.getWebsite());
             partnerCompanyDetail.setPartnerPrimaryContact(partnerPrimaryContact);
