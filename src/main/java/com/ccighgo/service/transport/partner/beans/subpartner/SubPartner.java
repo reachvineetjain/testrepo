@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics;
 
 
 /**
@@ -85,8 +86,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
       "subPartnerSeasons",
       "SubPartnerPhysicalAddress",
       "subPartnerMailingAddress",
-      "subPartnerNoteTopic",
-      "noteTopicCount"
+      "NoteTopics"
 })
 public class SubPartner
     extends Response
@@ -100,8 +100,7 @@ public class SubPartner
    protected SubPartnerPhysicalAddress subPartnerPhysicalAddress;
    @XmlElement(required = true)
    protected SubPartnerMailingAddress subPartnerMailingAddress;
-   protected SubPartnerNoteTopics SubPartnerNoteTopics;
-   protected Integer noteTopicCount;
+   protected NoteTopics noteTopics;
    
    /**
     * Gets the value of the subPartnerId property.
@@ -186,20 +185,12 @@ public class SubPartner
       this.subPartnerPhysicalAddress = subPartnerPhysicalAddress;
    }
 
-   public SubPartnerNoteTopics getSubPartnerNoteTopics() {
-      return SubPartnerNoteTopics;
+   public NoteTopics getNoteTopics() {
+      return noteTopics;
    }
 
-   public void setSubPartnerNoteTopics(SubPartnerNoteTopics subPartnerNoteTopics) {
-      SubPartnerNoteTopics = subPartnerNoteTopics;
-   }
-
-   public Integer getNoteTopicCount() {
-      return noteTopicCount;
-   }
-
-   public void setNoteTopicCount(Integer noteTopicCount) {
-      this.noteTopicCount = noteTopicCount;
+   public void setNoteTopics(NoteTopics noteTopics) {
+      this.noteTopics = noteTopics;
    }
    
    

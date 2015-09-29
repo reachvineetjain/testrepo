@@ -43,6 +43,10 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.SubPartnerMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.components.usermanagment.UserManagementServiceImpl;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Creator;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Note;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Topic;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerAgency;
@@ -603,36 +607,45 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          }
 
          // Note Topics
-         if (subPartner.getSubPartnerNoteTopics().getSubPartnerNoteTopics() != null && subPartner.getSubPartnerNoteTopics().getSubPartnerNoteTopics().size() > 0) {
-            for (SubPartnerNoteTopic subPartnerNoteTopic : subPartner.getSubPartnerNoteTopics().getSubPartnerNoteTopics()) {
+         if (subPartner.getNoteTopics().getTopicList() != null && subPartner.getNoteTopics().getTopicList().size() > 0) {
+            for (Topic topic : subPartner.getNoteTopics().getTopicList()) {
                PartnerNoteTopic partnerNoteTopic = new PartnerNoteTopic();
+      
+               partnerNoteTopic.setPartnerNoteTopicName(topic.getTopicTitle());
+            
                partnerNoteTopic.setPartner(subPartnerDetails);
-               partnerNoteTopic.setPublic(subPartnerNoteTopic.getIsPublic());
-               partnerNoteTopic.setCompetitorInfo(subPartnerNoteTopic.getCompetitorInfo());
-               partnerNoteTopic.setEmbassy_VisaInfo(subPartnerNoteTopic.getEmbassy_VisaInfo());
-               partnerNoteTopic.setF1(subPartnerNoteTopic.getF1());
-               partnerNoteTopic.setGht(subPartnerNoteTopic.getGht());
-               partnerNoteTopic.setIntern(subPartnerNoteTopic.getIntern());
-               partnerNoteTopic.setJ1(subPartnerNoteTopic.getJ1());
-               partnerNoteTopic.setMeeting_visit(subPartnerNoteTopic.getMeeting_visit());
-               partnerNoteTopic.setPartnerNoteTopicName(subPartnerNoteTopic.getPartnerNoteTopicName());
-               partnerNoteTopic.setSeasonInfo(subPartnerNoteTopic.getSeasonInfo());
-               partnerNoteTopic.setStInbound(subPartnerNoteTopic.getStInbound());
-               partnerNoteTopic.setTrainee(subPartnerNoteTopic.getTrainee());
-               partnerNoteTopic.setW_t(subPartnerNoteTopic.getW_t());
+               Creator creator = new Creator();
+               creator.setCreatedBy(topic.getCreator().getCreatedBy());
+               creator.setCreatedByPicUrl(topic.getCreator().getCreatedByPicUrl());
+               creator.setDesignation(topic.getCreator().getDesignation());
+               //TODO Persist creator
+               topic.getAddedOn();
+               //TODO need to do AddedOn
+               partnerNoteTopic.setPublic(topic.getPrivacy() == "private" ? false : true);
+               List<NoteTags> noteTagsList = new ArrayList<NoteTags>();
+               for (NoteTags noteTags : topic.getNoteTags()) {
+                  NoteTags noteTag = new NoteTags();
+                  noteTag.setNoteTagId(noteTags.getNoteTagId());
+                  noteTag.setNoteTag(noteTags.getNoteTag());
+                  noteTagsList.add(noteTag);
+               }
+               // TODO : partnerNoteTopic.getNoteTags.addAll(noteTagsList);
+              
                partnerNoteTopic = partnerNoteTopicRepository.save(partnerNoteTopic);
                // notes
                List<PartnerNote> partnerNoteList = new ArrayList<PartnerNote>();
-               if (subPartnerNoteTopic.getSubPartnerNote() != null && subPartnerNoteTopic.getSubPartnerNote().size() > 0) {
-                  for (SubPartnerNote subPartnerNote : subPartnerNoteTopic.getSubPartnerNote()) {
+               if (topic.getNotes() != null && topic.getNotes().size() > 0) {
+                  for (Note note : topic.getNotes()) {
                      PartnerNote partnerNote = new PartnerNote();
-                     partnerNote.setPartnerNotesId(subPartnerNote.getSubPartnerNotesId());
-                     partnerNote.setPartnerNote(subPartnerNote.getSubpartnerNote());
-                     partnerNote.setCreatedBy(partnerNoteTopic.getPartner().getPartnerGoId());
-                     partnerNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-                     partnerNote.setModifiedBy(partnerNoteTopic.getPartner().getPartnerGoId());
-                     partnerNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                      partnerNote.setPartnerNoteTopic(partnerNoteTopic);
+                     partnerNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                     Creator creator1 = new Creator();
+                     creator1.setCreatedBy(note.getCreator().getCreatedBy());
+                     creator1.setCreatedByPicUrl(note.getCreator().getCreatedByPicUrl());
+                     creator1.setDesignation(note.getCreator().getDesignation());
+                   //TODO Persist creator
+                     //TODO : (Change list to String)partnerNote.setPartnerNote(note.getNote());
+                
                      partnerNote.setPartner(subPartnerDetails);
                      partnerNoteList.add(partnerNote);
                   }
