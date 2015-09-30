@@ -89,9 +89,9 @@ public class PartnerSeasonDetail
     @XmlElement(required = true)
     protected PartnerHLSeason partnerHLSeason;
     @XmlElement(required = true)
-    protected String insuranceProvidedBy;
+    protected Boolean insuranceProvidedBy;
     @XmlElement(required = true)
-    protected String sevisFeesPaidBy;
+    protected Boolean sevisFeesPaidBy;
     @XmlElement(required = true)
     protected String seasonStartDate;
     @XmlElement(required = true)
@@ -277,10 +277,10 @@ public class PartnerSeasonDetail
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public String getInsuranceProvidedBy() {
+    public Boolean getInsuranceProvidedBy() {
         return insuranceProvidedBy;
     }
 
@@ -289,10 +289,10 @@ public class PartnerSeasonDetail
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public void setInsuranceProvidedBy(String value) {
+    public void setInsuranceProvidedBy(Boolean value) {
         this.insuranceProvidedBy = value;
     }
 
@@ -301,10 +301,10 @@ public class PartnerSeasonDetail
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public String getSevisFeesPaidBy() {
+    public Boolean getSevisFeesPaidBy() {
         return sevisFeesPaidBy;
     }
 
@@ -313,10 +313,10 @@ public class PartnerSeasonDetail
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public void setSevisFeesPaidBy(String value) {
+    public void setSevisFeesPaidBy(Boolean value) {
         this.sevisFeesPaidBy = value;
     }
 

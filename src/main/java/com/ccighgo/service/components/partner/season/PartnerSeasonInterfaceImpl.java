@@ -101,24 +101,31 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                   pSeason.setParticipantAllocated("TODO:need clarification");
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_J1_HS)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonJ1details().get(0).getProgramName());
+                     pSeason.setDetailsUrl("/partner/season/view/j1hs/");
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_F1)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonF1details().get(0).getProgramName());
+                     pSeason.setDetailsUrl("/partner/season/view/f1/");
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonIhpdetails().get(0).getProgramName());
+                     pSeason.setDetailsUrl("comming soon");
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SUMMER)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName());
+                     pSeason.setDetailsUrl("comming soon");
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_WINTER)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonWnTwinterDetails().get(0).getProgramName());
+                     pSeason.setDetailsUrl("comming soon");
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SPRING)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonWnTspringDetails().get(0).getProgramName());
+                     pSeason.setDetailsUrl("comming soon");
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_CAP)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonCapdetails().get(0).getProgramName());
+                     pSeason.setDetailsUrl("comming soon");
                   }
                   pSeason.setPartnerSeasonId(entity.getPartnerSeasonId());
                   pSeason.setPartnerId(partnerId);
@@ -199,28 +206,77 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (seasonDetail.getSeason().getSeasonJ1details() != null && seasonDetail.getSeason().getSeasonJ1details().size() > 0) {
             partnerSeasonProgramName = seasonDetail.getSeason().getSeasonJ1details().get(0).getProgramName();
          }
-         // TODO partner season allocation fix once db is ready
          J1HSProgramAllocationsUnguaranteed j1ProgramAllocationsUnguaranteed = null;
          J1HSProgramAllocationsGuaranteed j1ProgramAllocationsGuaranteed = null;
-         List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findAllocationsByDepartmentProgramsAndPartnerSeasonId(Integer
-               .valueOf(partnerSeasonId));
+         List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findPartnerSeasonAllocation(Integer.valueOf(partnerSeasonId));
          if (partnerSeasonAllocationList != null) {
+            int totalUnGuarant = 0;
+            int augStartUnGuarnteedParticipants = 0;
+            int janStartUnGuarnteedParticipants = 0;
+            int totalGurant = 0;
+            int augStartGuarnteedParticipants = 0;
+            int janStartGuarnteedParticipants = 0;
+            for (PartnerSeasonAllocation unGuaranteedAllocation : partnerSeasonAllocationList) {
+               if (unGuaranteedAllocation.getDepartmentProgramOption() != null) {
+                  if (unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+                     if (unGuaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
+                        augStartUnGuarnteedParticipants = unGuaranteedAllocation.getMaxPax() > 0 ? unGuaranteedAllocation.getMaxPax() : 0;
+                        totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
+                        augStartGuarnteedParticipants = unGuaranteedAllocation.getMaxGuaranteedPax() > 0 ? unGuaranteedAllocation.getMaxGuaranteedPax() : 0;
+                        totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
+
+                     }
+                     if (unGuaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                        janStartUnGuarnteedParticipants = unGuaranteedAllocation.getMaxPax() > 0 ? unGuaranteedAllocation.getMaxPax() : 0;
+                        totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
+                        janStartGuarnteedParticipants = unGuaranteedAllocation.getMaxGuaranteedPax() > 0 ? unGuaranteedAllocation.getMaxGuaranteedPax() : 0;
+                        totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
+                     }
+                  }
+               }
+            }
+            // UnGuranteed Section
             j1ProgramAllocationsUnguaranteed = new J1HSProgramAllocationsUnguaranteed();
+            j1ProgramAllocationsUnguaranteed.setAugustStartMaximumParticipants(augStartUnGuarnteedParticipants);
+            j1ProgramAllocationsUnguaranteed.setJanuaryStartMaximumParticipants(janStartUnGuarnteedParticipants);
+            j1ProgramAllocationsUnguaranteed.setTotalMaximumParticipants(totalUnGuarant);
+            j1ProgramAllocationsUnguaranteed.setAugustStartAcceptedParticipants(0);
+            j1ProgramAllocationsUnguaranteed.setJanuaryStartAcceptedParticipants(0);
+            j1ProgramAllocationsUnguaranteed.setTotalAcceptedParticipants(0);
+            j1ProgramAllocationsUnguaranteed.setAugustStartUnderCCIReview(0);
+            j1ProgramAllocationsUnguaranteed.setJanuaryStartUnderCCIReview(0);
+            j1ProgramAllocationsUnguaranteed.setTotalUnderCCIReview(0);
+            j1ProgramAllocationsUnguaranteed.setAugustStartOpenings(0);
+            j1ProgramAllocationsUnguaranteed.setJanuaryStartOpenings(0);
+            j1ProgramAllocationsUnguaranteed.setTotalOpenings(0);
+
+            // Guranteed Section
             j1ProgramAllocationsGuaranteed = new J1HSProgramAllocationsGuaranteed();
+            j1ProgramAllocationsGuaranteed.setAugustStartMaximumParticipants(augStartGuarnteedParticipants);
+            j1ProgramAllocationsGuaranteed.setJanuaryStartMaximumParticipants(janStartGuarnteedParticipants);
+            j1ProgramAllocationsGuaranteed.setTotalMaximumParticipants(totalGurant);
+            j1ProgramAllocationsGuaranteed.setAugustStartAcceptedParticipants(0);
+            j1ProgramAllocationsGuaranteed.setJanuaryStartAcceptedParticipants(0);
+            j1ProgramAllocationsGuaranteed.setTotalAcceptedParticipants(0);
+            j1ProgramAllocationsGuaranteed.setAugustStartUnderCCIReview(0);
+            j1ProgramAllocationsGuaranteed.setJanuaryStartUnderCCIReview(0);
+            j1ProgramAllocationsGuaranteed.setTotalUnderCCIReview(0);
+            j1ProgramAllocationsGuaranteed.setAugustStartOpenings(0);
+            j1ProgramAllocationsGuaranteed.setJanuaryStartOpenings(0);
+            j1ProgramAllocationsGuaranteed.setTotalOpenings(0);
             partnersSeasonDetails.setProgramAllocationsUnguranteed(j1ProgramAllocationsUnguaranteed);
             partnersSeasonDetails.setProgramAllocationsGuaranteed(j1ProgramAllocationsGuaranteed);
          }
 
          // TODO partner season notes fix once db is ready
-
          partnersSeasonDetails.setPartnerSeasonId(seasonDetail.getPartnerSeasonId());
          partnersSeasonDetails.setPartnerSeasonProgramName(partnerSeasonProgramName);
          partnersSeasonDetails.setPartnerDepartment(partnerDepartment);
          partnersSeasonDetails.setPartnerProgram(partnerProgram);
          partnersSeasonDetails.setPartnerHLSeason(partnerHLSeason);
          partnersSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
-         partnersSeasonDetails.setInsuranceProvidedBy(seasonDetail.getInsuranceCarrierName());
-         partnersSeasonDetails.setSevisFeesPaidBy("TODO:need clarification");
+         partnersSeasonDetails.setInsuranceProvidedBy(seasonDetail.getInsuranceProvidedByCCI() == CCIConstants.ACTIVE ? true : false);
+         partnersSeasonDetails.setSevisFeesPaidBy(seasonDetail.getSevisFeesPaidByCCI() == CCIConstants.ACTIVE ? true : false);
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
          partnersSeasonDetails.setSeasonApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
@@ -327,12 +383,40 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (seasonDetail.getSeason().getSeasonF1details() != null && seasonDetail.getSeason().getSeasonF1details().size() > 0) {
             partnerSeasonProgramName = seasonDetail.getSeason().getSeasonF1details().get(0).getProgramName();
          }
-         // TODO partner season allocation fix once db is ready
          F1ProgramAllocationsGuaranteed f1ProgramAllocationsGuaranteed = null;
-         List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findAllocationsByDepartmentProgramsAndPartnerSeasonId(Integer
-               .valueOf(partnerSeasonId));
+         List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findPartnerSeasonAllocation(Integer.valueOf(partnerSeasonId));
          if (partnerSeasonAllocationList != null) {
+            int totalGurant = 0;
+            int augStartGuarnteedParticipants = 0;
+            int janStartGuarnteedParticipants = 0;
+            for (PartnerSeasonAllocation guaranteedAllocation : partnerSeasonAllocationList) {
+               if (guaranteedAllocation.getDepartmentProgramOption() != null) {
+                  if (guaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                     if (guaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
+                        augStartGuarnteedParticipants = guaranteedAllocation.getMaxGuaranteedPax() > 0 ? guaranteedAllocation.getMaxGuaranteedPax() : 0;
+                        totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
+
+                     }
+                     if (guaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+                        janStartGuarnteedParticipants = guaranteedAllocation.getMaxGuaranteedPax() > 0 ? guaranteedAllocation.getMaxGuaranteedPax() : 0;
+                        totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
+                     }
+                  }
+               }
+            }
             f1ProgramAllocationsGuaranteed = new F1ProgramAllocationsGuaranteed();
+            f1ProgramAllocationsGuaranteed.setAugustStartMaximumParticipants(augStartGuarnteedParticipants);
+            f1ProgramAllocationsGuaranteed.setJanuaryStartMaximumParticipants(janStartGuarnteedParticipants);
+            f1ProgramAllocationsGuaranteed.setTotalMaximumParticipants(totalGurant);
+            f1ProgramAllocationsGuaranteed.setAugustStartAcceptedParticipants(0);
+            f1ProgramAllocationsGuaranteed.setJanuaryStartAcceptedParticipants(0);
+            f1ProgramAllocationsGuaranteed.setTotalAcceptedParticipants(0);
+            f1ProgramAllocationsGuaranteed.setAugustStartUnderCCIReview(0);
+            f1ProgramAllocationsGuaranteed.setJanuaryStartUnderCCIReview(0);
+            f1ProgramAllocationsGuaranteed.setTotalUnderCCIReview(0);
+            f1ProgramAllocationsGuaranteed.setAugustStartOpenings(0);
+            f1ProgramAllocationsGuaranteed.setJanuaryStartOpenings(0);
+            f1ProgramAllocationsGuaranteed.setTotalOpenings(0);
             partnersSeasonDetails.setProgramAllocationsGuaranteed(f1ProgramAllocationsGuaranteed);
          }
 
@@ -344,8 +428,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setPartnerProgram(partnerProgram);
          partnersSeasonDetails.setPartnerHLSeason(partnerHLSeason);
          partnersSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
-         partnersSeasonDetails.setInsuranceProvidedBy(seasonDetail.getInsuranceCarrierName());
-         partnersSeasonDetails.setSevisFeesPaidBy("TODO:need clarification");
+         partnersSeasonDetails.setInsuranceProvidedBy(seasonDetail.getInsuranceProvidedByCCI() == CCIConstants.ACTIVE ? true : false);
+         partnersSeasonDetails.setSevisFeesPaidBy(seasonDetail.getSevisFeesPaidByCCI() == CCIConstants.ACTIVE ? true : false);
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
          partnersSeasonDetails.setSeasonApplicationDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
