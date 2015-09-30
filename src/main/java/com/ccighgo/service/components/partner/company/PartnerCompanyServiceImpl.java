@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerContact;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
@@ -82,9 +83,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetails.setGeneralEmail(partner.getEmail());
          Login partnerLogin = null;
          for (Login login : partner.getGoIdSequence().getLogin()) {
-            if (partner.getPartnerGoId() == login.getGoIdSequence().getGoId()) {
-               partnerLogin = login;
-               break;
+            for (PartnerUser partUser : login.getPartnerUsers()) {
+               if(partUser.getIsPrimary()==CCIConstants.ACTIVE){
+                  partnerLogin=login;
+                  break;
+               }
             }
          }
          if (partnerLogin != null) {
@@ -146,10 +149,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerPhysicalAddress(partnerPhysicalAddress);
          if (partner.getMailingAddressIsSameAsPhysicalAdress() == CCIConstants.ACTIVE) {
             partnerCompanyDetail.setPartnerMailingAddressSame(true);
-            partnerCompanyDetail.setPartnerMailingAddress(null);
-         } else {
-            partnerCompanyDetail.setPartnerMailingAddress(partnerMailingAddress);
-         }
+         } 
+         partnerCompanyDetail.setPartnerMailingAddress(partnerMailingAddress);
          partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
@@ -173,21 +174,23 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
       try {
          Partner partner = partnerRepository.findOne(partnerCompanyDetail.getPartnerGoId());
          if (partner != null) {
-            Login partnerLogin = null;
             PartnerContact partnerContact = null;
+            Login partnerLogin = null;
             for (Login login : partner.getGoIdSequence().getLogin()) {
-               if (partner.getPartnerGoId() == login.getGoIdSequence().getGoId()) {
-                  partnerLogin = login;
-                  break;
+               for (PartnerUser partUser : login.getPartnerUsers()) {
+                  if(partUser.getIsPrimary()==CCIConstants.ACTIVE){
+                     partnerLogin=login;
+                     break;
+                  }
                }
             }
             for (PartnerContact contact : partner.getPartnerContacts()) {
-               if (partner.getPartnerGoId() == contact.getPartner().getPartnerGoId()) {
+               if (partner.getPartnerGoId().equals(contact.getPartner().getPartnerGoId())) {
                   partnerContact = contact;
                   break;
                }
             }
-            //TODO update salutation once table is linked in db
+            // TODO update salutation once table is linked in db
             partnerContact.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
             partnerContact.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
             partnerContact.setLastName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactLastName());
@@ -195,7 +198,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerContact.setPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactPhone());
             partnerContact.setEmergencyPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmergencyPhone());
             partnerContact.setFax(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFax());
-            partnerContact.setReceiveNotificationEmails(partnerCompanyDetail.getPartnerPrimaryContact().isPrimaryContactShouldRecieveCCINotification()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+            partnerContact.setReceiveNotificationEmails(partnerCompanyDetail.getPartnerPrimaryContact().isPrimaryContactShouldRecieveCCINotification() ? CCIConstants.ACTIVE
+                  : CCIConstants.INACTIVE);
             partnerContact.setSkypeId(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSkypeId());
             partnerContact.setWebsite(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactWebsite());
             partnerContactRepository.saveAndFlush(partnerContact);
@@ -232,7 +236,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partner.setPhysicalstate(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressState().getPartnerAddressStateName());
             partner.setLookupCountry2(countryRepository.findOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressCountry()
                   .getPartnerAddressCountryId()));
-            //mailing address
+            // mailing address
             partner.setAddressLineOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineOne());
             partner.setAddressLineTwo(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineTwo());
             partner.setCity(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getCity());

@@ -50,6 +50,9 @@ public class PartnerUser implements Serializable {
 
 	@Column(length=150)
 	private String title;
+	
+	@Column(nullable=false)
+   private Byte isPrimary;
 
 	//bi-directional many-to-one association to PartnerPermission
 	@OneToOne(mappedBy="partnerUser", fetch = FetchType.EAGER , cascade = { CascadeType.ALL })
@@ -191,7 +194,15 @@ public class PartnerUser implements Serializable {
 		return partnerPermission;
 	}*/
 
-	public Login getLogin() {
+	public Byte getIsPrimary() {
+      return isPrimary;
+   }
+
+   public void setIsPrimary(Byte isPrimary) {
+      this.isPrimary = isPrimary;
+   }
+
+   public Login getLogin() {
 		return this.login;
 	}
 
