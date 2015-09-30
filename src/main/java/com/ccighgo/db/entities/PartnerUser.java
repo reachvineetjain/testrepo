@@ -148,14 +148,6 @@ public class PartnerUser implements Serializable {
 		this.phone = phone;
 	}
 
-/*	public String getSalutation() {
-		return this.salutation;
-	}
-
-	public void setSalutation(String salutation) {
-		this.salutation = salutation;
-	}*/
-
 	public String getSkypeId() {
 		return this.skypeId;
 	}
@@ -171,28 +163,6 @@ public class PartnerUser implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-	/*public List<PartnerPermission> getPartnerPermissions() {
-		return this.partnerPermissions;
-	}
-
-	public void setPartnerPermissions(List<PartnerPermission> partnerPermissions) {
-		this.partnerPermissions = partnerPermissions;
-	}
-
-	public PartnerPermission addPartnerPermission(PartnerPermission partnerPermission) {
-		getPartnerPermissions().add(partnerPermission);
-		partnerPermission.setPartnerUser(this);
-
-		return partnerPermission;
-	}
-
-	public PartnerPermission removePartnerPermission(PartnerPermission partnerPermission) {
-		getPartnerPermissions().remove(partnerPermission);
-		partnerPermission.setPartnerUser(null);
-
-		return partnerPermission;
-	}*/
 
 	public Byte getIsPrimary() {
       return isPrimary;
