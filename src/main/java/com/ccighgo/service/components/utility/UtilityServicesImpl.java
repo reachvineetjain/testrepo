@@ -611,7 +611,7 @@ public class UtilityServicesImpl implements UtilityServices {
             loginUser = loginRepository.findByEmail(req.getEmail());
          }
          else if(req.getEmail() == null){
-            loginUser = loginRepository.findByLoginName(req.getUsername());
+            loginUser = loginRepository.findByLoginName(req.getUsername().toLowerCase());
          }
          if (loginUser != null) {
             String body = "<p>Welcome to Greenheart Online System! </p>" +
