@@ -3,11 +3,18 @@
  */
 package com.ccighgo.service.components.partner.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+
+
+
+
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
@@ -38,5 +45,9 @@ public interface PartnerUserInterface {
 //   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser);
    
    public DeleteRequest deletePartnerUser(String partnerUserId);
+   
+   public List<PartnerUserStatus> getPartnerUserStatuses();
+   
+   public String getPartnerGoIdForPartnerUser(String loginName);
 
 }
