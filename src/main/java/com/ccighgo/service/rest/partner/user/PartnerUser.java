@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.rest.partner.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,10 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUsersDetailAndRoles;
 
 /**
  * @author ravi
@@ -99,6 +101,22 @@ public class PartnerUser {
    public DeleteRequest deletePartnerUser(@PathParam("partnerUserId") String partnerUserId) {
       LOGGER.debug("calling PartnerUser.deletePartnerUser");
       return partnerUserInterface.deletePartnerUser(partnerUserId);
+   }
+   
+   @GET
+   @Path("partner-user-status")
+   @Produces("application/json")
+   public List<PartnerUserStatus> getPartnerUserStatuses() {
+      LOGGER.debug("calling PartnerUser.getPartnerUserStatuses");
+      return partnerUserInterface.getPartnerUserStatuses();
+   }
+   
+   @GET
+   @Path("get-partner-go-id/{loginName}")
+   @Produces("application/json")
+   public String getPartnerGoIdForPartnerUser(@PathParam("loginName") String loginName) {
+      LOGGER.debug("calling PartnerUser.getPartnerGoIdForPartnerUser");
+      return partnerUserInterface.getPartnerGoIdForPartnerUser(loginName);
    }
    
 }
