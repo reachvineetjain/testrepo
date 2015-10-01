@@ -307,7 +307,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             SubPartnerPrimaryContact subPartnerPrimaryContact = new SubPartnerPrimaryContact();
             if (partnerSubPartner.getPartnerContacts() != null && partnerSubPartner.getPartnerContacts().size() > 0) {
                PartnerContact partnerContact = partnerSubPartner.getPartnerContacts().iterator().next();
-               subPartnerPrimaryContact.setSalutation(partnerContact.getSalutation());
+               subPartnerPrimaryContact.setSalutation(partnerContact.getSalutation().getSalutationName());
                subPartnerPrimaryContact.setTitle(partnerContact.getTitle());
                subPartnerPrimaryContact.setFirstName(partnerContact.getFirstName());
                subPartnerPrimaryContact.setLastName(partnerContact.getLastName());
@@ -585,7 +585,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             SubPartnerPrimaryContact subPartnerPrimaryContact = subPartner.getSubPartnerPrimaryContact();
             List<PartnerContact> partnerContactList = new ArrayList<PartnerContact>();
             PartnerContact partnerContact = new PartnerContact();
-            partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
+           // partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
             partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
             partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
             partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
@@ -775,7 +775,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (subPartner.getSubPartnerPrimaryContact() != null) {
             subPartnerPrimaryContact = subPartner.getSubPartnerPrimaryContact();
             PartnerContact partnerContact = subPartnerDetails.getPartnerContacts().iterator().next();
-            partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
+            //partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
             partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
             partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
             partnerContact.setLastName(subPartnerPrimaryContact.getLastName());

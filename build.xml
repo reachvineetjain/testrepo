@@ -5,7 +5,8 @@
 	<target name="all" depends="Common,Auth,Countries,Departments,DocumentType,Gender,Programs,Regions,Roles,States,CCIUsers,User,UserSearch,UserDepartments,
 		CloneSeason,Season,SeasonDepartmentDocument,SeasonProgram,SeasonProgramDocument,SeasonProgramNote,SeasonList,SeasonStatus,SeasonGHTDetails,SeasonHspF1Details,
 		SeasonHspJ1HSDetails,SeasonHspStpIhpDetails,SeasonWPCAPDetails,SeasonWPDetail,SeasonDepartmentLog,SeasonProgramLog,InsuranceCountries,InsuranceParticipant,
-		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions,PartnerCompanyDetail,ForgotRequest,ResetRequest,PartnerQuickStats" />
+		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions,PartnerCompanyDetail,
+		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -592,6 +593,14 @@
 		</java>
 	</target>
 
+	<target name="PartnerSeasonApplicationList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/seasons/PartnerSeasonApplicationList.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************Participants*************************************************-->
 
 	<target name="ParticipantsActiveList">
@@ -637,6 +646,14 @@
 		</java>
 	</target>
 
+	<target name="PartnerSeasonF1Detail">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/seasons/PartnerSeasonF1Detail.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************  Subpartners*************************************************-->
 	<target name="SubPartners">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -663,15 +680,17 @@
 			<arg value="${xsd.dir}/partner/admin/AdminViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
-	
+
 	<!--*************************************************  Add AdminViewForPartnerInquiry  *************************************************-->
-		<target name="AgentViewForPartnerInquiry">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/partner/admin/AgentViewForPartnerInquiryData.xsd" />
-			</java>
-		</target>
+
+	<target name="AgentViewForPartnerInquiry">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AgentViewForPartnerInquiryData.xsd" />
+		</java>
+	</target>
+
 
 	<!--*************************************************  Partner Admin Dashboard *************************************************-->
 			<target name="PartnerAdminDashboard">

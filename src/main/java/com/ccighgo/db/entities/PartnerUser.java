@@ -50,6 +50,9 @@ public class PartnerUser implements Serializable {
 
 	@Column(length=150)
 	private String title;
+	
+	@Column(nullable=false)
+   private Byte isPrimary;
 
 	//bi-directional many-to-one association to PartnerPermission
 	@OneToOne(mappedBy="partnerUser", fetch = FetchType.EAGER , cascade = { CascadeType.ALL })
@@ -145,14 +148,6 @@ public class PartnerUser implements Serializable {
 		this.phone = phone;
 	}
 
-/*	public String getSalutation() {
-		return this.salutation;
-	}
-
-	public void setSalutation(String salutation) {
-		this.salutation = salutation;
-	}*/
-
 	public String getSkypeId() {
 		return this.skypeId;
 	}
@@ -169,29 +164,15 @@ public class PartnerUser implements Serializable {
 		this.title = title;
 	}
 
-	/*public List<PartnerPermission> getPartnerPermissions() {
-		return this.partnerPermissions;
-	}
+	public Byte getIsPrimary() {
+      return isPrimary;
+   }
 
-	public void setPartnerPermissions(List<PartnerPermission> partnerPermissions) {
-		this.partnerPermissions = partnerPermissions;
-	}
+   public void setIsPrimary(Byte isPrimary) {
+      this.isPrimary = isPrimary;
+   }
 
-	public PartnerPermission addPartnerPermission(PartnerPermission partnerPermission) {
-		getPartnerPermissions().add(partnerPermission);
-		partnerPermission.setPartnerUser(this);
-
-		return partnerPermission;
-	}
-
-	public PartnerPermission removePartnerPermission(PartnerPermission partnerPermission) {
-		getPartnerPermissions().remove(partnerPermission);
-		partnerPermission.setPartnerUser(null);
-
-		return partnerPermission;
-	}*/
-
-	public Login getLogin() {
+   public Login getLogin() {
 		return this.login;
 	}
 
