@@ -125,7 +125,7 @@
       </xsd:complexType>
       
       
-      <xsd:complexType name="PartnerAdminAgentSeasonsDetailNotes">
+    <xsd:complexType name="PartnerAdminAgentSeasonsDetailNotes">
     <xsd:complexContent>
      <xsd:extension base="common:Response">
       <xsd:sequence>
