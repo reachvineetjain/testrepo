@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.utility.beans.gender.Salutation;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartnerPrimaryContact", propOrder = {
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class SubPartnerPrimaryContact {
    
-   protected String salutation;
+   protected Salutation salutation;
    protected String title;
    protected String firstName;
    protected String lastName;
@@ -36,10 +38,10 @@ public class SubPartnerPrimaryContact {
    protected Integer typeOfPartnerUser;
    
    
-   public String getSalutation() {
+   public Salutation getSalutation() {
       return salutation;
    }
-   public void setSalutation(String salutation) {
+   public void setSalutation(Salutation salutation) {
       this.salutation = salutation;
    }
    public String getTitle() {
