@@ -3,17 +3,22 @@
  */
 package com.ccighgo.service.components.utility;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
+import com.ccighgo.service.transport.utility.beans.program.ProgramOptions;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
 import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
@@ -129,4 +134,10 @@ public interface UtilityServices {
    public  boolean checkUserName(String userName);
   
    public  boolean checkEmail(String email);
+   
+   public Programs getProgramOptionsByDepartment(String deptId);
+   
+   public ProgramOptions getAllProgramOptions();
+   
+   public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus();
 }

@@ -18,23 +18,29 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
+import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.RegionIHP;
+import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
+import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
+import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
@@ -44,7 +50,9 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
@@ -54,6 +62,8 @@ import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutation;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
 import com.ccighgo.service.transport.utility.beans.program.Program;
+import com.ccighgo.service.transport.utility.beans.program.ProgramOption;
+import com.ccighgo.service.transport.utility.beans.program.ProgramOptions;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Region;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
@@ -94,6 +104,9 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired LoginRepository loginRepository;
    @Autowired EmailServiceImpl email;
    @Autowired SalutationRepository salutationRepositotry;
+   @Autowired SeasonRepository seasonRepository;
+   @Autowired DepartmentProgramOptionRepository departmentProgramOptionRepository;
+   @Autowired PartnerStatusRepository partnerStatusRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -586,6 +599,14 @@ public class UtilityServicesImpl implements UtilityServices {
       return salutations;
    }
    
+   //ProgramOptions
+   private ProgramOptions setProgramOptionsStatus(ProgramOptions programOptions, String code, String type, int serviceCode, String message) {
+      if (programOptions == null)
+         programOptions = new ProgramOptions();
+      programOptions.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return programOptions;
+   }
+   
    private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
@@ -683,5 +704,84 @@ public class UtilityServicesImpl implements UtilityServices {
       } else
          return false;
    }
+   
+  
+   @Override
+   public Programs getProgramOptionsByDepartment(String deptId){
+      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
+      Programs programs = null;
+      List<Program> programList = null;
+      try {
+         if (departmentProgramsList.size() > 0) {
+            programs = new Programs();
+            programList = new ArrayList<Program>();
+            for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
+               if (deptPrg.getLookupDepartment().getDepartmentId() == Integer.valueOf(deptId)) {
+                  Program prg = new Program();
+                  prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
+                  prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
+                  prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
+                  prg.setProgramId(deptPrg.getDepartmentProgramId());
+                  prg.setProgramName(deptPrg.getProgramName());
+                  prg.setProgramDescription(deptPrg.getDescription());
+                  programList.add(prg);
+               }
+            }
+            programs.getPrograms().addAll(programList);
+         }
+         programs = setProgramsStatus(programs, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return programs;
+      } catch (CcighgoException e) {
+         programs = setProgramsStatus(programs, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_BY_DEPARTMENT.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
+      }
+         return programs;
+      
+   }
+   
+   @Override
+   public ProgramOptions getAllProgramOptions(){
+      ProgramOptions programOptions = new ProgramOptions();
+      try{
+      List<DepartmentProgramOption> departmentProgramOptionDBList = departmentProgramOptionRepository.findAll();
+      if(departmentProgramOptionDBList == null || departmentProgramOptionDBList.isEmpty() ){
+         programOptions = setProgramOptionsStatus(programOptions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_OPTIONS.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+         return programOptions;
+      }
+      List<ProgramOption> programOptionList = new ArrayList<ProgramOption>();
+      for (DepartmentProgramOption departmentProgramOption : departmentProgramOptionDBList) {
+         ProgramOption programOption = new ProgramOption();
+         programOption.setDepartmentProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
+         programOption.setDepartmentProgramId(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId());
+         programOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
+         programOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
+         programOptionList.add(programOption);
+      }
+      programOptions.getProgramOptions().addAll(programOptionList);   
+      programOptions = setProgramOptionsStatus(programOptions, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+      } catch (CcighgoException e) {
+         programOptions = setProgramOptionsStatus(programOptions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_OPTIONS.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+      }
+      return programOptions;
+   }
+   
+   public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus() {
 
+      List<PartnerStatus> partnerStatusDBList = partnerStatusRepository.findAll();
+      List<PartnerSeasonProgramStatus> partnerSeasonProgramStatusList = new ArrayList<PartnerSeasonProgramStatus>();
+      for (PartnerStatus partnerStatus : partnerStatusDBList) {
+         PartnerSeasonProgramStatus partnerSeasonProgramStatus = new PartnerSeasonProgramStatus();
+         partnerSeasonProgramStatus.setPartnerSeasonProgramStatusId(partnerStatus.getPartnerStatusId());
+         partnerSeasonProgramStatus.setPartnerSeasonProgramStatus(partnerStatus.getPartnerStatusName());
+         partnerSeasonProgramStatusList.add(partnerSeasonProgramStatus);
+      }
+      return partnerSeasonProgramStatusList;
+   }
 }
