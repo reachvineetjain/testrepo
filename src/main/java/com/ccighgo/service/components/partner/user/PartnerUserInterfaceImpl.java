@@ -175,6 +175,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          // Login Details
          Login login = new Login();
          login.setLoginName(partnerUserDetailAndRoles.getUsername());
+         login.setActive(partnerUserDetailAndRoles.get);
          login.setPassword(PasswordUtil.hashKey("password"));
          login.setKeyValue(UuidUtils.nextHexUUID());
          login.setCreatedBy(partner.getPartnerGoId());
@@ -188,7 +189,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
          // Login User Type
          LoginUserType loginUserType = new LoginUserType();
-         loginUserType.setActive(CCIConstants.ACTIVE);
+         loginUserType.setActive(partnerUserDetailAndRoles.getUserStatus() == true ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          loginUserType.setUserType(partnerUserType);
          loginUserType.setCreatedBy(partner.getPartnerGoId());
          loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));

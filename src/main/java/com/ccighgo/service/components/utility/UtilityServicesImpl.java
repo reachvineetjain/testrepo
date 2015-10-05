@@ -644,19 +644,12 @@ public class UtilityServicesImpl implements UtilityServices {
                   messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED)));
             LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED));
             return response;
-         }
-         Login tempLogin = new Login();
-         tempLogin.setLoginId(login.getLoginId());
-         tempLogin.setLoginName(login.getLoginName());
-         tempLogin.setEmail(login.getEmail());
-         tempLogin.setKeyValue(UuidUtils.nextHexUUID());
-         tempLogin.setPassword(PasswordUtil.hashKey(req.getPasskey()));
-         tempLogin.setCreatedBy(login.getCreatedBy());
-         tempLogin.setCreatedOn(login.getCreatedOn());
-         tempLogin.setModifiedBy(login.getGoIdSequence().getGoId());
-         tempLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         tempLogin.setGoIdSequence(login.getGoIdSequence());
-         login = loginRepository.save(tempLogin);
+         }    
+         login.setKeyValue(UuidUtils.nextHexUUID());
+         login.setPassword(PasswordUtil.hashKey(req.getPasskey()));      
+         login.setModifiedBy(login.getGoIdSequence().getGoId());
+         login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         login = loginRepository.saveAndFlush(login);
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
 
