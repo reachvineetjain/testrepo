@@ -25,6 +25,7 @@ import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerStatus;
+import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
@@ -36,6 +37,7 @@ import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
@@ -113,6 +115,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
    @Autowired
    EmailServiceImpl email;
+   
+   @Autowired
+   SalutationRepository salutationRepository;
 
    @Override
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -307,7 +312,12 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             SubPartnerPrimaryContact subPartnerPrimaryContact = new SubPartnerPrimaryContact();
             if (partnerSubPartner.getPartnerContacts() != null && partnerSubPartner.getPartnerContacts().size() > 0) {
                PartnerContact partnerContact = partnerSubPartner.getPartnerContacts().iterator().next();
-               subPartnerPrimaryContact.setSalutation(partnerContact.getSalutation().getSalutationName());
+               
+               com.ccighgo.service.transport.utility.beans.gender.Salutation salutation = new com.ccighgo.service.transport.utility.beans.gender.Salutation();
+               salutation.setSalutationId(partnerContact.getSalutation().getSalutationId());
+               salutation.setSalutationCode(partnerContact.getSalutation().getSalutationName());
+               salutation.setActive(partnerContact.getSalutation().getActive());
+               subPartnerPrimaryContact.setSalutation(salutation);
                subPartnerPrimaryContact.setTitle(partnerContact.getTitle());
                subPartnerPrimaryContact.setFirstName(partnerContact.getFirstName());
                subPartnerPrimaryContact.setLastName(partnerContact.getLastName());
@@ -585,7 +595,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             SubPartnerPrimaryContact subPartnerPrimaryContact = subPartner.getSubPartnerPrimaryContact();
             List<PartnerContact> partnerContactList = new ArrayList<PartnerContact>();
             PartnerContact partnerContact = new PartnerContact();
-           // partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
+            Salutation salutation = salutationRepository.findOne(subPartnerPrimaryContact.getSalutation().getSalutationId());
+            partnerContact.setSalutation(salutation);
             partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
             partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
             partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
@@ -775,7 +786,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (subPartner.getSubPartnerPrimaryContact() != null) {
             subPartnerPrimaryContact = subPartner.getSubPartnerPrimaryContact();
             PartnerContact partnerContact = subPartnerDetails.getPartnerContacts().iterator().next();
-            //partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
+            Salutation salutation = salutationRepository.findOne(subPartnerPrimaryContact.getSalutation().getSalutationId());
+            partnerContact.setSalutation(salutation);
             partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
             partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
             partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
