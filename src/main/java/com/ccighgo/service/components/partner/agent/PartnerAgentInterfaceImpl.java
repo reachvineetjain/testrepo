@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.DepartmentProgram;
+import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
@@ -19,6 +23,8 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAgentMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
+import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplication;
+import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentAddedSeason;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentAddedSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSeason;
@@ -42,6 +48,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
    @Autowired PartnerRepository partnerRepository;
    @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
    @Autowired SeasonRepository seasonRepository;
+   @Autowired DepartmentProgramRepository departmentProgramRepository;
    
    
    @Override
@@ -162,6 +169,66 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
          LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
       }
       return partnerAgentSeasons;
+   }
+   
+   @Override
+   @Transactional
+   public PartnerAgentSeasons addSeasons(PartnerSeasonApplicationList partnerSeasonApplicationList) {
+      PartnerAgentSeasons partnerAgentSeasons = new PartnerAgentSeasons();
+      try {
+         if (partnerSeasonApplicationList == null) {
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_SEASON_NULL.getValue(),
+                  messageUtil.getMessage(PartnerAgentMessageConstants.PARTNER_SEASON_NULL));
+            LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.PARTNER_SEASON_NULL));
+            return partnerAgentSeasons;
+         }
+         Partner partner = partnerRepository.findOne(partnerSeasonApplicationList.getPartnerId());
+         if (partner == null) {
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+                  messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
+            LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
+            return partnerAgentSeasons;
+         }
+         List<PartnerSeason> partnerSeasonList = new ArrayList<PartnerSeason>();
+         for (PartnerSeasonApplication partnerSeasonApplication : partnerSeasonApplicationList.getPartnerSeasonApplication()) {
+            PartnerSeason partnerSeason = new PartnerSeason();
+            partnerSeason.setExceptionComments(partnerSeasonApplicationList.getComments());
+            partnerSeason.setPartner(partner);
+            partnerSeason.setPartnerStatus(partner.getPartnerStatus());
+            Season season = seasonRepository.findOne(Integer.valueOf(partnerSeasonApplication.getSeasonId()));
+            partnerSeason.setSeason(season);
+            DepartmentProgram departmentProgram = departmentProgramRepository.findOne(Integer.valueOf(partnerSeasonApplication.getDepartmentProgramId()));
+            partnerSeason.setDepartmentProgram(departmentProgram);
+            partnerSeasonList.add(partnerSeason);
+         }
+         partnerSeasonList = partnerSeasonsRepository.save(partnerSeasonList);
+         if (partnerSeasonList != null) {
+            for (PartnerSeason partnerSeason : partnerSeasonList) {
+               PartnerAgentSeason partnerAgentSeason = new PartnerAgentSeason();
+               partnerAgentSeason.setSeasonId(partnerSeason.getSeason().getSeasonId());
+               partnerAgentSeason.setSeasonName(partnerSeason.getSeason().getSeasonName());
+               partnerAgentSeason.setSeasonFullName(partnerSeason.getSeason().getSeasonFullName());
+               partnerAgentSeasons.getPartnerAgentSeasons().add(partnerAgentSeason);
+               partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_AGENT_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            }
+         }else{
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASONS.getValue(),
+                  messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
+            LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
+         }
+      } catch (CcighgoException e) {
+         partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASONS.getValue(),
+               messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
+         LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
+      }
+      return partnerAgentSeasons;
+   }
+   
+   public PartnerAgentSeasons EditPartnerSeasons(PartnerSeasonApplicationList partnerSeasonApplicationList){
+      
+      
+      return null;
    }
    
    private PartnerAgentSeasons setPartnerAgentSeasonsStatus(PartnerAgentSeasons partnerAgentSeasons, String code, String type, int serviceCode, String message) {
