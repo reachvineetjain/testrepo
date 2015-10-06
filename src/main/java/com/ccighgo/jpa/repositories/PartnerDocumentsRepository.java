@@ -6,15 +6,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerDocument;
-import com.ccighgo.db.entities.PartnerNote;
+import com.ccighgo.db.entities.PartnerMessage;
+import com.ccighgo.db.entities.PartnerReferenceCheck;
 
 /**
  * @author ravi
  *
  */
+
 @Repository
-public interface PartnerNoteRepository extends JpaRepository<PartnerNote, Integer> {
+public interface PartnerDocumentsRepository extends JpaRepository<PartnerDocument, Integer> {
+   
    @Query("SELECT l FROM PartnerDocument l where l.partner.partnerGoId = ?1")
-   public List<PartnerNote> findAllPartnerNoteByPartnerId(int partnerId);
+   public List<PartnerDocument> findAllPartnerDocumentByPartnerId(int partnerId);
+
 }

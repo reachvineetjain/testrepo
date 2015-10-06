@@ -34,7 +34,7 @@ public interface PartnerService {
 
    WSDefaultResponse updatePartnerApplicationFollowUpDate();
 
-   PartnerRecruitmentAdmin getAgentRecruitmentData();
+   PartnerRecruitmentAdmin getAgentRecruitmentData(int agentId);
 
    PartnerWorkQueueType getWorkQueueType();
 

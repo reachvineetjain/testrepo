@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.PartnerService;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
@@ -32,6 +33,7 @@ public class PartnerAdmin {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerAdmin.class);
 
+   @Autowired
    PartnerService partnerService;
 
    @GET
@@ -91,12 +93,12 @@ public class PartnerAdmin {
       return partnerService.updatePartnerApplicationFollowUpDate();
    }
    
-   @POST
-   @Path("agentRecruitmentData")
+   @GET
+   @Path("agentRecruitmentData/{partnerAgentGoId}")
    @Produces("application/json")
-   public PartnerRecruitmentAdmin getAgentRecruitmentData() {
+   public PartnerRecruitmentAdmin getAgentRecruitmentData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getAgentRecruitmentData");
-      return partnerService.getAgentRecruitmentData();
+      return partnerService.getAgentRecruitmentData(Integer.parseInt(partnerAgentGoId));
    }
    
 }
