@@ -7,19 +7,23 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.agent.PartnerAgentInterface;
+import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplication;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentAddedSeasons;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSeasons;
-import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 
 @Path("/partner/agent/")
 @Produces("application/json")
 @Consumes("application/json")
 public class PartnerAgent {
    
+   private static final Logger LOGGER = LoggerFactory.getLogger(PartnerAgent.class);
    @Autowired
    PartnerAgentInterface partnerAgentInterface;
    
@@ -27,6 +31,7 @@ public class PartnerAgent {
    @Path("get-added-seasons/{partnerGoId}")
    @Produces("application/json")
    public PartnerAgentAddedSeasons getAddedSeasons(@PathParam("partnerGoId") String partnerGoId) {
+      LOGGER.debug("calling PartnerAgent.getAddedSeasons");
        return partnerAgentInterface.getAddedSeasons(partnerGoId);
    }
    
@@ -35,6 +40,7 @@ public class PartnerAgent {
    @Path("season")
    @Produces("application/json")
    public PartnerAgentSeasons getAllSeasons() {
+      LOGGER.debug("calling PartnerAgent.getAllSeasons");
       return partnerAgentInterface.getAllSeasons();
    }
    
@@ -42,13 +48,23 @@ public class PartnerAgent {
    @Path("add-seasons")
    @Produces("application/json")
    public PartnerAgentSeasons addSeasons(PartnerSeasonApplicationList partnerSeasonApplicationList) {
+      LOGGER.debug("calling PartnerAgent.addSeasons");
       return partnerAgentInterface.addSeasons(partnerSeasonApplicationList);
    }
    
    @POST
-   @Path("add-seasons")
+   @Path("edit-partner-seasons")
    @Produces("application/json")
-   public PartnerAgentSeasons EditPartnerSeasons(PartnerSeasonApplicationList partnerSeasonApplicationList) {
-      return partnerAgentInterface.EditPartnerSeasons(partnerSeasonApplicationList);
+   public PartnerAgentSeasonDetails EditPartnerSeasons(PartnerAgentSeasonDetails partnerAgentSeasonDetails) {
+      LOGGER.debug("calling PartnerAgent.EditPartnerSeasons");
+      return partnerAgentInterface.EditPartnerSeasons(partnerAgentSeasonDetails);
+   }
+   
+   @POST
+   @Path("view/{partnerSeasonId}")
+   @Produces("application/json")
+   public PartnerAgentSeasonDetails viewPartnerSeason(PartnerSeasonApplication partnerSeasonApplication) {
+      LOGGER.debug("calling PartnerAgent.viewPartnerSeason");
+      return partnerAgentInterface.viewPartnerSeason(partnerSeasonApplication);
    }
 }

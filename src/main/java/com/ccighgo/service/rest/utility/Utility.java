@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
@@ -276,5 +277,12 @@ public class Utility {
    @Produces("application/json")
    public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus() {
       return utilityServices.getPartnerSeasonStatus();
+   }  
+   
+   @GET
+   @Path("partner-note-tags")
+   @Produces("application/json")
+   public List<NoteTags> getAllTags() {
+      return utilityServices.getAllTags();
    }  
 }

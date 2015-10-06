@@ -23,6 +23,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
+import com.ccighgo.db.entities.PartnerNoteTag;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.RegionIHP;
 import com.ccighgo.db.entities.Season;
@@ -38,6 +39,7 @@ import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.PartnerNoteTagRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
@@ -51,6 +53,7 @@ import com.ccighgo.service.components.errormessages.constants.UserManagementMess
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
@@ -107,6 +110,7 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired SeasonRepository seasonRepository;
    @Autowired DepartmentProgramOptionRepository departmentProgramOptionRepository;
    @Autowired PartnerStatusRepository partnerStatusRepository;
+   @Autowired PartnerNoteTagRepository partnerNoteTagRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -783,5 +787,20 @@ public class UtilityServicesImpl implements UtilityServices {
          partnerSeasonProgramStatusList.add(partnerSeasonProgramStatus);
       }
       return partnerSeasonProgramStatusList;
+   }
+   
+   public List<NoteTags> getAllTags() {
+      
+      List<NoteTags> noteTagsList = new ArrayList<NoteTags>();
+      List<PartnerNoteTag> PartnerNoteTagDbList = partnerNoteTagRepository.findAll();
+      if (PartnerNoteTagDbList.size() > 0) {
+         for (PartnerNoteTag partnerNoteTag : PartnerNoteTagDbList) {
+            NoteTags noteTags = new NoteTags();
+            noteTags.setNoteTagId(partnerNoteTag.getPartnerNoteTagId());
+            noteTags.setNoteTag(partnerNoteTag.getTagName());
+            noteTagsList.add(noteTags);
+         }
+      }
+      return noteTagsList;
    }
 }

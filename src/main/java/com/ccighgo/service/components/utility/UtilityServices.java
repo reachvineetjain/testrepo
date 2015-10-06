@@ -10,6 +10,7 @@ import javax.ws.rs.core.Context;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
@@ -131,13 +132,45 @@ public interface UtilityServices {
     */
    public  Response resetPassword(ResetRequest req);
    
+   /**
+    * check UserName
+    * 
+    * @return
+    */
    public  boolean checkUserName(String userName);
-  
+   
+   /**
+    * check UserName
+    * 
+    * @return
+    */
    public  boolean checkEmail(String email);
    
+   /**
+    * get list of Programs in system
+    * 
+    * @return
+    */
    public Programs getProgramOptionsByDepartment(String deptId);
    
+   /**
+    * get list of ProgramOptions in system
+    * 
+    * @return
+    */
    public ProgramOptions getAllProgramOptions();
    
+   /**
+    * get list of PartnerSeasonProgramStatus in system
+    * 
+    * @return
+    */
    public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus();
+   
+   /**
+    * get list of NoteTags in system
+    * 
+    * @return
+    */
+   public List<NoteTags> getAllTags();
 }

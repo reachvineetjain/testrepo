@@ -97,6 +97,11 @@ public class CCIConstants {
    
   //partnerUsers
    public static final String PARTNER_PERMISSIONS_TABLE_NAME= "PartnerPermissions";
+   
+   //Partner Agent
+   public static final String SEASON_OPTION_1 = "Season Defaults";
+   public static final String SEASON_OPTION_2 = "Partner Values";
+   public static final String SEMESTER_START = "Start";
 
    // bind urls for season program menu
    public static final String HSP_J1_URL = "j1hs/details/view/";
