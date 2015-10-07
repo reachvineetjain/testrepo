@@ -26,7 +26,8 @@ public class PartnerAgentReview implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date followUpDate;
 
-	private byte moreAboutAmbassadorScholership;
+	@Column(nullable=false)
+	private Byte moreAboutAmbassadorScholership;
 
 	private Integer partnerMessagesId;
 
@@ -80,11 +81,11 @@ public class PartnerAgentReview implements Serializable {
 		this.followUpDate = followUpDate;
 	}
 
-	public byte getMoreAboutAmbassadorScholership() {
+	public Byte getMoreAboutAmbassadorScholership() {
 		return this.moreAboutAmbassadorScholership;
 	}
 
-	public void setMoreAboutAmbassadorScholership(byte moreAboutAmbassadorScholership) {
+	public void setMoreAboutAmbassadorScholership(Byte moreAboutAmbassadorScholership) {
 		this.moreAboutAmbassadorScholership = moreAboutAmbassadorScholership;
 	}
 

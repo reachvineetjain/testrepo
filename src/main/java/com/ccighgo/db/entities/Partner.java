@@ -17,7 +17,6 @@ public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	/*@GeneratedValue(strategy=GenerationType.IDENTITY)*/
 	@Column(unique=true, nullable=false)
 	private Integer partnerGoId;
 
@@ -92,6 +91,9 @@ public class Partner implements Serializable {
 	@Column(length=64)
 	private String partnerGuid;
 
+	@Column(length=300)
+	private String partnerLogo;
+
 	private byte payGreenheartDirectly;
 
 	@Column(length=150)
@@ -116,9 +118,6 @@ public class Partner implements Serializable {
 
 	@Column(length=50)
 	private String state;
-	
-	@Column(length=300)
-	private String partnerLogo;
 
 	private byte subscribeToCCINewsletter;
 
@@ -214,6 +213,18 @@ public class Partner implements Serializable {
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="partner")
 	private List<PartnerUser> partnerUsers;
+
+	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
+	@OneToMany(mappedBy="partner")
+	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
+	@OneToMany(mappedBy="partner")
+	private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to PartnerWorkQueueTypeAggregate
+	@OneToMany(mappedBy="partner")
+	private List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates;
 
 	public Partner() {
 	}
@@ -466,6 +477,14 @@ public class Partner implements Serializable {
 		this.partnerGuid = partnerGuid;
 	}
 
+	public String getPartnerLogo() {
+		return this.partnerLogo;
+	}
+
+	public void setPartnerLogo(String partnerLogo) {
+		this.partnerLogo = partnerLogo;
+	}
+
 	public byte getPayGreenheartDirectly() {
 		return this.payGreenheartDirectly;
 	}
@@ -538,15 +557,7 @@ public class Partner implements Serializable {
 		this.state = state;
 	}
 
-	public String getPartnerLogo() {
-      return partnerLogo;
-   }
-
-   public void setPartnerLogo(String partnerLogo) {
-      this.partnerLogo = partnerLogo;
-   }
-
-   public byte getSubscribeToCCINewsletter() {
+	public byte getSubscribeToCCINewsletter() {
 		return this.subscribeToCCINewsletter;
 	}
 
@@ -647,25 +658,25 @@ public class Partner implements Serializable {
 	}
 
 	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
-		return this.partnerAgentInquiries;
+      return this.partnerAgentInquiries;
 	}
 
-	public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
-		this.partnerAgentInquiries = partnerAgentInquiries;
+   public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
+      this.partnerAgentInquiries = partnerAgentInquiries;
+   }
+
+	public PartnerAgentInquiry addPartnerAgentInquiries(PartnerAgentInquiry partnerAgentInquiries) {
+		getPartnerAgentInquiries().add(partnerAgentInquiries);
+		partnerAgentInquiries.setPartner(this);
+
+		return partnerAgentInquiries;
 	}
 
-	public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
-		getPartnerAgentInquiries().add(partnerAgentInquiry);
-		partnerAgentInquiry.setPartner(this);
+	public PartnerAgentInquiry removePartnerAgentInquiries(PartnerAgentInquiry partnerAgentInquiries) {
+		getPartnerAgentInquiries().remove(partnerAgentInquiries);
+		partnerAgentInquiries.setPartner(null);
 
-		return partnerAgentInquiry;
-	}
-
-	public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
-		getPartnerAgentInquiries().remove(partnerAgentInquiry);
-		partnerAgentInquiry.setPartner(null);
-
-		return partnerAgentInquiry;
+		return partnerAgentInquiries;
 	}
 
 	public List<PartnerAnnouncement> getPartnerAnnouncements() {
@@ -974,6 +985,72 @@ public class Partner implements Serializable {
 		partnerUser.setPartner(null);
 
 		return partnerUser;
+	}
+
+	public List<PartnerQuickStatsCategoryAggregate> getPartnerQuickStatsCategoryAggregates() {
+		return this.partnerQuickStatsCategoryAggregates;
+	}
+
+	public void setPartnerQuickStatsCategoryAggregates(List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates) {
+		this.partnerQuickStatsCategoryAggregates = partnerQuickStatsCategoryAggregates;
+	}
+
+	public PartnerQuickStatsCategoryAggregate addPartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+		getPartnerQuickStatsCategoryAggregates().add(partnerQuickStatsCategoryAggregate);
+		partnerQuickStatsCategoryAggregate.setPartner(this);
+
+		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public PartnerQuickStatsCategoryAggregate removePartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+		getPartnerQuickStatsCategoryAggregates().remove(partnerQuickStatsCategoryAggregate);
+		partnerQuickStatsCategoryAggregate.setPartner(null);
+
+		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {
+		return this.partnerQuickStatsTypeAggregates;
+	}
+
+	public void setPartnerQuickStatsTypeAggregates(List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates) {
+		this.partnerQuickStatsTypeAggregates = partnerQuickStatsTypeAggregates;
+	}
+
+	public PartnerQuickStatsTypeAggregate addPartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+		getPartnerQuickStatsTypeAggregates().add(partnerQuickStatsTypeAggregate);
+		partnerQuickStatsTypeAggregate.setPartner(this);
+
+		return partnerQuickStatsTypeAggregate;
+	}
+
+	public PartnerQuickStatsTypeAggregate removePartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+		getPartnerQuickStatsTypeAggregates().remove(partnerQuickStatsTypeAggregate);
+		partnerQuickStatsTypeAggregate.setPartner(null);
+
+		return partnerQuickStatsTypeAggregate;
+	}
+
+	public List<PartnerWorkQueueTypeAggregate> getPartnerWorkQueueTypeAggregates() {
+		return this.partnerWorkQueueTypeAggregates;
+	}
+
+	public void setPartnerWorkQueueTypeAggregates(List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates) {
+		this.partnerWorkQueueTypeAggregates = partnerWorkQueueTypeAggregates;
+	}
+
+	public PartnerWorkQueueTypeAggregate addPartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
+		getPartnerWorkQueueTypeAggregates().add(partnerWorkQueueTypeAggregate);
+		partnerWorkQueueTypeAggregate.setPartner(this);
+
+		return partnerWorkQueueTypeAggregate;
+	}
+
+	public PartnerWorkQueueTypeAggregate removePartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
+		getPartnerWorkQueueTypeAggregates().remove(partnerWorkQueueTypeAggregate);
+		partnerWorkQueueTypeAggregate.setPartner(null);
+
+		return partnerWorkQueueTypeAggregate;
 	}
 
 }

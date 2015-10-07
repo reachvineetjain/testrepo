@@ -24,5 +24,7 @@ public class UtilityServiceMessageConstants {
    public static final String CANNOT_FIND_USER_RESET_PASSWORD = "cannot.find.login";
    public static final String FAILED_GET_SALUTATIONS="error.get.all.salutation";
    public static final String RESET_PASSWORD_LINK_EXPIRED="error.reset.password.link.expired";
+   public static final String FAILED_GET_PROGRAMS_OPTIONS = "error.get.program.options";
+   public static final String FAILED_GET_DOCUMENT_TYPES = "error.get.document.types";
    
 }

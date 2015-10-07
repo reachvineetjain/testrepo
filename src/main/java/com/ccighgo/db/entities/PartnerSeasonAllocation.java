@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.sql.Timestamp;
 
 
@@ -37,14 +35,9 @@ public class PartnerSeasonAllocation implements Serializable {
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
-   @ManyToOne
+	@ManyToOne
    @JoinColumn(name="departmentProgramOptionId", nullable=false, insertable =false, updatable=false)
    private DepartmentProgramOption departmentProgramOption;
-
-	//bi-directional many-to-one association to DepartmentProgramOption
-	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId")
-	private DepartmentProgramOption departmentProgramOption2;
 
 	//bi-directional many-to-one association to PartnerSeason
 	@ManyToOne
@@ -119,20 +112,12 @@ public class PartnerSeasonAllocation implements Serializable {
 	}
 
 	public DepartmentProgramOption getDepartmentProgramOption() {
-		return this.departmentProgramOption;
-	}
+      return this.departmentProgramOption;
+   }
 
-	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
-		this.departmentProgramOption = departmentProgramOption;
-	}
-
-	public DepartmentProgramOption getDepartmentProgramOption2() {
-		return this.departmentProgramOption2;
-	}
-
-	public void setDepartmentProgramOption2(DepartmentProgramOption departmentProgramOption2) {
-		this.departmentProgramOption2 = departmentProgramOption2;
-	}
+   public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+      this.departmentProgramOption = departmentProgramOption;
+   }
 
 	public PartnerSeason getPartnerSeason() {
 		return this.partnerSeason;

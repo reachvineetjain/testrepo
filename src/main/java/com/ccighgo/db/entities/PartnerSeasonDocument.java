@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -20,15 +20,21 @@ public class PartnerSeasonDocument implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonDocumentId;
 
+	@Column(nullable=false)
 	private byte active;
 
 	private Integer createdBy;
 
-	private Timestamp createdOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdOn;
+
+	@Lob
+	private String description;
 
 	private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedOn;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
@@ -39,6 +45,16 @@ public class PartnerSeasonDocument implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="seasonProgramDocumentId")
 	private SeasonProgramDocument seasonProgramDocument;
+
+	//bi-directional many-to-one association to DocumentInformation
+	@ManyToOne
+	@JoinColumn(name="documentInformationId")
+	private DocumentInformation documentInformation;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@ManyToOne
+	@JoinColumn(name="partnerSeasonId")
+	private PartnerSeason partnerSeason;
 
 	public PartnerSeasonDocument() {
 	}
@@ -67,12 +83,20 @@ public class PartnerSeasonDocument implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public Timestamp getCreatedOn() {
+	public Date getCreatedOn() {
 		return this.createdOn;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Integer getModifiedBy() {
@@ -83,11 +107,11 @@ public class PartnerSeasonDocument implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Timestamp getModifiedOn() {
+	public Date getModifiedOn() {
 		return this.modifiedOn;
 	}
 
-	public void setModifiedOn(Timestamp modifiedOn) {
+	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 
@@ -105,6 +129,22 @@ public class PartnerSeasonDocument implements Serializable {
 
 	public void setSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
 		this.seasonProgramDocument = seasonProgramDocument;
+	}
+
+	public DocumentInformation getDocumentInformation() {
+		return this.documentInformation;
+	}
+
+	public void setDocumentInformation(DocumentInformation documentInformation) {
+		this.documentInformation = documentInformation;
+	}
+
+	public PartnerSeason getPartnerSeason() {
+		return this.partnerSeason;
+	}
+
+	public void setPartnerSeason(PartnerSeason partnerSeason) {
+		this.partnerSeason = partnerSeason;
 	}
 
 }

@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`Login` (
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
   `modifiedBy` INT(11) NOT NULL,
+  `active` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`loginId`),
   UNIQUE INDEX `loginName` (`loginName` ASC),
   INDEX `FK_Login_GoIdSequence_idx` (`goId` ASC),
@@ -313,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`.`CCIStaffUsers` (
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT NOW(),
   `modifiedBy` INT(11) NOT NULL,
-  `active` TINYINT(1) NOT NULL DEFAULT 1,
+ 
   PRIMARY KEY (`cciStaffUserId`),
   CONSTRAINT `FK_CCIStaffUsers_LookupUSStates`
     FOREIGN KEY (`usStatesId`)
@@ -1850,3 +1851,973 @@ CREATE TABLE IF NOT EXISTS `cci_gh_go`. `EmployerPermissions` (
     REFERENCES `Employer` (`employerGoId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+	
+-- -----------------------------------------------------
+-- Table `PartnerStatus`
+-- -----------------------------------------------------	
+	
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerStatus` (
+  `partnerStatusId` INT NOT NULL AUTO_INCREMENT,
+  `partnerStatusName` VARCHAR(50) NULL,
+  `active` TINYINT(1) NULL,
+  PRIMARY KEY (`partnerStatusId`))
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `Partner`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `Partner` (
+  `partnerGoId` INT NOT NULL,
+  `companyName` VARCHAR(250) NULL,
+  `acronym` VARCHAR(150) NULL,
+  `dandBNumber` INT(11) NULL,
+  `receiveAYPMails` TINYINT(1) NULL,
+  `subscribeToCCINewsletter` TINYINT(1) DEFAULT NULL,
+  `contractSigner` VARCHAR(50) NULL,
+  `quickbooksCode` VARCHAR(40) NULL,
+  `canHaveSubPartner` TINYINT(1) NULL,
+  `hasSubPartners` TINYINT(1)	 NULL,
+  `invoiceMail` VARCHAR(100) NULL,
+  `multiCountrySender` TINYINT(1) NULL,
+  `isSubPartner` TINYINT(1) NULL,
+  `parentPartnerGoId` INT(11) NULL,
+  `payGreenheartDirectly` TINYINT(1) DEFAULT NULL,
+  `deliverDSForms` TINYINT(1) DEFAULT NULL,
+  `needPartnerReview` TINYINT(1) DEFAULT NULL,
+  `mailingAddressIsSameAsPhysicalAdress` TINYINT(1) DEFAULT NULL,
+  `addressLineOne` VARCHAR(150) NULL,
+  `addressLineTwo` VARCHAR(150) NULL,
+  `city` VARCHAR(50) NULL,
+  `zipcode` VARCHAR(15) NULL,
+  `state` VARCHAR(50) NULL,
+  `countryId` INT(3) NULL,
+  `email` VARCHAR(100) DEFAULT NULL,
+  `partnerLogo` VARCHAR(300) DEFAULT NULL,
+  `physicalAddressLineOne` VARCHAR(150) NULL,
+  `physicalAddressLineTwo` VARCHAR(150) NULL,
+  `physicalCity` VARCHAR(50) NULL,
+  `physicalZipcode` VARCHAR(15) NULL,
+  `physicalstate` VARCHAR(50) NULL,
+  `physicalcountryId` INT(3) NULL,
+  `partnerGuid` VARCHAR(64) NULL,
+  `contactNotes` VARCHAR(2000) NULL,
+  `billingNotes` VARCHAR(1000) NULL,
+  `lastSelectedProgramId` INT(11) NULL,
+  `participantMedicalReleaseRequired` TINYINT(1) NULL,
+  `participantSLEPRequired` TINYINT(1) NULL,
+  `participantTranscriptRequired` TINYINT(1) NULL,
+  `oldId` INT(11) NULL,
+  `unguaranteedFormRequired` TINYINT(1) NULL,
+  `participantELTISRequired` TINYINT(1) NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  PRIMARY KEY (`partnerGoId`),
+  INDEX `FK_Partner_LookupCountries_idx` (`physicalcountryId` ASC),
+  INDEX `FK_Partner_LookupCountries1_idx` (`countryId` ASC),
+ CONSTRAINT `FK_Partner_GoIdSequence`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Partner_LookupCountries`
+    FOREIGN KEY (`physicalcountryId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Partner_LookupCountries1`
+    FOREIGN KEY (`countryId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerSeason`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerSeason` (
+  `partnerSeasonId` INT NOT NULL AUTO_INCREMENT,
+  `seasonId` INT NULL,
+  `partnerGoId` INT NULL,
+  `departmentProgramId` INT(3) NULL,
+  `partnerSeasonStatusId` INT(3) NULL,
+  `insuranceProvidedByCCI` TINYINT(1) NULL,
+  `sevisFeesPaidByCCI` TINYINT(1) NULL,
+  `insuranceCarrierName` VARCHAR(200) NULL,
+  `insurancePhoneNumber` VARCHAR(50) NULL,
+  `insurancePolicyNumber` VARCHAR(100) NULL,
+  `questionaireRequired` TINYINT(1) NULL,
+  `questionnaireSubmittedOn` DATETIME NULL,
+  `disableAddParticipant` TINYINT(1) NULL,
+  `partnerSeasonStartDate` DATETIME NULL,
+  `partnerSeasonEndDate` DATETIME NULL,
+  `partnerSeasonAppDeadlineDate` DATETIME NULL,
+  `partnerSeasonExtAppDeadlineDate` DATETIME NULL,
+  `partnerSeasonSecSemDeadlineDate` DATETIME NULL,
+  `partnerSeasonExtSecSemDeadlineDate` DATETIME NULL,
+  `contractScheduleId` INT NULL,
+  `canAccessJobBoard` TINYINT(1) NULL,
+  `partnerTaxCompanyId` INT NULL,
+  `timelyReturnReportReceivedDate` DATETIME NULL,
+  `originalsReceivedDate` DATETIME NULL,
+  `participantPaysDeposit` TINYINT(1) NULL,
+  `exceptionComments` VARCHAR(2000) NULL,
+  `cciStaffUserId` INT(11) DEFAULT NULL,
+  `active` TINYINT(1) NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  PRIMARY KEY (`partnerSeasonId`),
+  INDEX `FK_PArtnerSeason_PartnerStatus_idx` (`partnerSeasonStatusId` ASC),
+  INDEX `FK_PartnerSeason_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerSeason_Season_idx` (`seasonId` ASC),
+  INDEX `FK_PartnerSeason_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  CONSTRAINT `FK_PartnerSeason_PartnerStatus`
+    FOREIGN KEY (`partnerSeasonStatusId`)
+    REFERENCES `PartnerStatus` (`partnerStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_CCIStaffUsers`
+    FOREIGN KEY (`cciStaffUserId`)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION	)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerCCIContact`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerCCIContact` (
+  `partnerCCIContactId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `cciStaffUserId` INT(11) NULL,
+  `lookupDepartmentProgramId` INT(3) NULL,
+  PRIMARY KEY (`partnerCCIContactId`),
+  INDEX `FK_PartnerCCIContact_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerCCICOntact_CCIStaffUser_idx` (`cciStaffUserId` ASC),
+  INDEX `FK_PartnerCCICOntact_LookupDepartmentPrograms_idx` (`lookupDepartmentProgramId` ASC),
+  CONSTRAINT `FK_PartnerCCIContact_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerCCICOntact_CCIStaffUser`
+    FOREIGN KEY (`cciStaffUserId`)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ CONSTRAINT `FK_PartnerCCICOntact_LookupDepartmentPrograms`
+    FOREIGN KEY (`lookupDepartmentProgramId`)
+    REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerSeasonAllocation`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerSeasonAllocation` (
+  `partnerSeasonAllocationId` INT NOT NULL AUTO_INCREMENT,
+  `partnerSeasonId` INT NULL,
+  `departmentProgramOptionId` INT(3) NULL,
+  `maxPax` INT NULL,
+  `maxGuaranteedPax` INT NULL,
+  `expectedPaxCount` INT NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  PRIMARY KEY (`partnerSeasonAllocationId`),
+  INDEX `FK_PartnerSeasonAllocation_PartnerSeason_idx` (`partnerSeasonId` ASC),
+  INDEX `FK_PartnerSeasonAllocation_DepartmentProgramOptions_idx` (`departmentProgramOptionId` ASC),
+  CONSTRAINT `FK_PartnerSeasonAllocation_PartnerSeason`
+    FOREIGN KEY (`partnerSeasonId`)
+    REFERENCES `PartnerSeason` (`partnerSeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeasonAllocation_DepartmentProgramOptions`
+    FOREIGN KEY (`departmentProgramOptionId`)
+    REFERENCES `DepartmentProgramOptions` (`departmentProgramOptionId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerOfficeType`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerOfficeType` (
+  `partnerOfficeTypeId` INT NOT NULL AUTO_INCREMENT,
+  `partnerOfficeType` VARCHAR(50) NULL,
+  PRIMARY KEY (`partnerOfficeTypeId`))
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerOffice`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerOffice` (
+  `partnerOfficeId` INT NOT NULL AUTO_INCREMENT,
+  `partnerOfficeTypeId` INT(3) NULL,
+  `partnerGoId` INT NULL,
+  `adressOne` VARCHAR(150) NULL,
+  `adressTwo` VARCHAR(150) NULL,
+  `city` VARCHAR(30) NULL,
+  `state` VARCHAR(30) NULL,
+  `postalCode` VARCHAR(13) NULL,
+  `countryId` INT NULL,
+  `faxNumber` VARCHAR(150) NULL,
+  `phoneNumber` VARCHAR(150) NULL,
+  `website` VARCHAR(150) NULL,
+  `officeNotes` VARCHAR(2000) NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  PRIMARY KEY (`partnerOfficeId`),
+  INDEX `FK_PartnerOffice_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerOffice_LookupCountries_idx` (`countryId` ASC),
+  INDEX `FK_PartnerOffice_PartnerOfficeType_idx` (`partnerOfficeTypeId` ASC),
+  CONSTRAINT `FK_PartnerOffice_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerOffice_LookupCountries`
+    FOREIGN KEY (`countryId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerOffice_PartnerOfficeType`
+    FOREIGN KEY (`partnerOfficeTypeId`)
+    REFERENCES `PartnerOfficeType` (`partnerOfficeTypeId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerAgentInquiries`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerAgentInquiries` (
+  `partnerAgentInquiriesId` INT NOT NULL AUTO_INCREMENT,
+  `partnerAgentGoId` INT NULL,
+  `companyName` VARCHAR(250) NULL,
+  `salutationId` INT(3) NULL,
+  `firstName` VARCHAR(50) NULL,
+  `lastName` VARCHAR(50) NULL,
+  `adressLineOne` VARCHAR(150) NULL,
+  `adressLineTwo` VARCHAR(150) NULL,
+  `city` VARCHAR(30) NULL,
+  `state` VARCHAR(30) NULL,
+  `countryId` INT NULL,
+  `phone` VARCHAR(25) NULL,
+  `email` VARCHAR(50) NULL,
+  `website` VARCHAR(50) NULL,
+  `submittedOn` DATETIME NULL,
+  `teachAbroad` TINYINT(1) DEFAULT 0,
+  `volunteerAbroad` TINYINT(1) DEFAULT 0,
+  `highSchoolAbroad` TINYINT(1) DEFAULT 0,
+  `other` TINYINT(1) DEFAULT 0,
+  `ambassadorScholershipParticipants` TINYINT(1) NULL,
+  `currentlySendingParticipantToUS` TINYINT(1) NULL,
+  `businessYears` VARCHAR(50) NULL,
+  `currentlyOfferingPrograms` VARCHAR(150) NULL,
+  `howDidYouHearAboutCCI` VARCHAR(100) NULL,
+  `followUpDate` DATETIME NULL,
+  `businessName` VARCHAR(250) DEFAULT NULL,
+  `countryFlag` VARCHAR(300) DEFAULT NULL,
+  `logo` VARCHAR(300) DEFAULT NULL,
+  `participantsForHomeCountry` TINYINT(4) DEFAULT NULL,
+  PRIMARY KEY (`partnerAgentInquiriesId`),
+  INDEX `FK_PartnerAgentInquiriesPartner_idx` (`partnerAgentGoId` ASC),
+  CONSTRAINT `FK_PartnerAgentInquiries_Partner`
+    FOREIGN KEY (`partnerAgentGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerAgentInquiries_LookupCountries`
+    FOREIGN KEY (`countryId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerAgentInquiries_Salutation`
+    FOREIGN KEY (`salutationId`)
+    REFERENCES `Salutation` (`salutationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION	)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerProgram`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerProgram` (
+  `partnerProgramId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `lookupDepartmentProgramId` INT NULL,
+  `hasApplied` TINYINT(1) NULL,
+  `markedEligibleBy` INT NULL,
+  `isOther` TINYINT(1) NULL,
+  `isEligible` TINYINT(1) NULL,
+  `isPDNotified` TINYINT(1) NULL,
+  PRIMARY KEY (`partnerProgramId`),
+  INDEX `FK_PartnerProgramListDepartmentPrograms_idx` (`lookupDepartmentProgramId` ASC),
+  INDEX `FK_PartnerAgentProgram_Partner_idx` (`partnerGoId` ASC),
+  CONSTRAINT `FK_PartnerProgram_LookupDepartmentPrograms`
+    FOREIGN KEY (`lookupDepartmentProgramId`)
+    REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerProgram_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerProgram_CCIStaffUser`
+    FOREIGN KEY (`markedEligibleBy`)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION	)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerMessages`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerMessages` (
+  `partnerInquiryMessageId` INT NOT NULL AUTO_INCREMENT,
+  `partnerInquiryMessage` VARCHAR(1000) NULL,
+  `partnerGoId` INT NULL,
+  `cciStaffUserId` INT NULL,
+  `createdOn` DATETIME NULL,
+  PRIMARY KEY (`partnerInquiryMessageId`),
+  INDEX `FK_PartnerInquiryNotes_Partner_idx` (`partnerGoId` ASC),
+  CONSTRAINT `FK_PartnerMessages_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+ CONSTRAINT `FK_PartnerMessages_CCIStaffUsers`
+    FOREIGN KEY (`cciStaffUserId`)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerUser`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerUser` (
+  `partnerUserId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `loginId` INT NULL,
+  `genderId` INT(3) DEFAULT NULL,
+  `salutationId` INT(3) NULL,
+  `title` VARCHAR(150) NULL,
+  `firstName` VARCHAR(150) NULL,
+  `lastName` VARCHAR(150) NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `photo` varchar(300) DEFAULT NULL,
+  `phone` VARCHAR(150) NULL,
+  `emergencyPhone` VARCHAR(150) NULL,
+  `isPrimary` TINYINT(1) DEFAULT 0,
+  `fax` VARCHAR(150) NULL,
+  `skypeId` VARCHAR(150) NULL,
+  `active` TINYINT(1) NULL,
+  INDEX `FK_PartnerUser_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerUser_Login_idx` (`loginId` ASC),
+  PRIMARY KEY (`partnerUserId`),
+  CONSTRAINT `FK_PartnerUser_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerUser_Login`
+    FOREIGN KEY (`loginId`)
+    REFERENCES `Login` (`loginId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerUser_LookupGender`
+    FOREIGN KEY (`genderId`)
+    REFERENCES `LookupGender` (`genderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerUser_Salutation`
+    FOREIGN KEY (`salutationId`)
+    REFERENCES `Salutation` (`salutationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerDocument`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerDocument` (
+  `partnerDocumentId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `documentInformationId` INT NULL,
+  `partnerProgramId` INT NULL,
+  `description` TEXT,
+  PRIMARY KEY (`partnerDocumentId`),
+  INDEX `FK_PartnerDocument_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerDocument_PartnerProgram_idx` (`partnerProgramId` ASC),
+  INDEX `FK_PartnerDocument_DocumentInformation_idx` (`documentInformationId` ASC),
+  CONSTRAINT `FK_PartnerDocument_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerDocument_PartnerProgram`
+    FOREIGN KEY (`partnerProgramId`)
+    REFERENCES `PartnerProgram` (`partnerProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerDocument_DocumentInformation`
+    FOREIGN KEY (`documentInformationId`)
+    REFERENCES `DocumentInformation` (`documentInformationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerAnnouncement`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerAnnouncement` (
+  `partnerAnnouncementId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `seasonId` INT NOT NULL,
+  `departmentProgramId` INT NOT NULL,
+  `announcement` LONGTEXT NOT NULL,
+  `title` VARCHAR(250) NOT NULL,
+  `active` TINYINT(1) NULL,
+  `createdBy` INT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`partnerAnnouncementId`),
+  INDEX `FK_PartnerAnnouncement_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerAnnouncement_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  INDEX `FK_PartnerAnnouncement_Season_idx` (`seasonId` ASC),
+  CONSTRAINT `FK_PartnerAnnouncement_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerAnnouncement_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerAnnouncement_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerPermissions`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerPermissions` (
+  `partnerPermissionsId` INT NOT NULL AUTO_INCREMENT,
+  `partnerUserId` INT NOT NULL,
+  `j1Admin` TINYINT(1) NULL,
+  `j1Applications` TINYINT(1) NULL,
+  `j1Flights` TINYINT(1) NULL,
+  `j1PlacementInfo` TINYINT(1) NULL,
+  `j1Monitoring` TINYINT(1) NULL,
+  `j1AccountingInsurance` TINYINT(1) NULL,
+  `j1StudentsPreProgram` TINYINT(1) NULL,
+  `j1Contracting` TINYINT(1) NULL,
+  `j1Insurance` TINYINT(1) NULL,
+  `f1Admin` TINYINT(1) NULL,
+  `f1Applications` TINYINT(1) NULL,
+  `f1Flights` TINYINT(1) NULL,
+  `f1PlacementInfo` TINYINT(1) NULL,
+  `f1Monitoring` TINYINT(1) NULL,
+  `f1AccountingInsurance` TINYINT(1) NULL,
+  `f1StudentsPreProgram` TINYINT(1) NULL,
+  `f1Contracting` TINYINT(1) NULL,
+  `f1Insurance` TINYINT(1) NULL,
+  `ihpAdmin` TINYINT(1) NULL,
+  `ihpApplications` TINYINT(1) NULL,
+  `ihpFlights` TINYINT(1) NULL,
+  `ihpPlacementInfo` TINYINT(1) NULL,
+  `ihpMonitoring` TINYINT(1) NULL,
+  `ihpAccountingInsurance` TINYINT(1) NULL,
+  `ihpStudentsPreProgram` TINYINT(1) NULL,
+  `ihpContracting` TINYINT(1) NULL,
+  `ihpInsurance` TINYINT(1) NULL,
+  `wtAdmin` TINYINT(1) NULL,
+  `wtApplications` TINYINT(1) NULL,
+  `wtFlights` TINYINT(1) NULL,
+  `wtPlacementInfo` TINYINT(1) NULL,
+  `wtMonitoring` TINYINT(1) NULL,
+  `wtAccountingInsurance` TINYINT(1) NULL,
+  `wtStudentsPreProgram` TINYINT(1) NULL,
+  `wtContracting` TINYINT(1) NULL,
+  `wtInsurance` TINYINT(1) NULL,
+  `capAdmin` TINYINT(1) NULL,
+  `capApplications` TINYINT(1) NULL,
+  `capFlights` TINYINT(1) NULL,
+  `capPlacementInfo` TINYINT(1) NULL,
+  `capMonitoring` TINYINT(1) NULL,
+  `capAccountingInsurance` TINYINT(1) NULL,
+  `capStudentsPreProgram` TINYINT(1) NULL,
+  `capContracting` TINYINT(1) NULL,
+  `capInsurance` TINYINT(1) NULL,
+  PRIMARY KEY (`partnerPermissionsId`),
+  INDEX `FK_PartnerPermissions_Partner_idx` (`partnerUserId` ASC),
+  CONSTRAINT `FK_PartnerPermissions_PartnerUser`
+    FOREIGN KEY (`partnerUserId`)
+    REFERENCES `PartnerUser` (`partnerUserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `Participants`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `Participants` (
+  `participantGoId` INT NOT NULL,
+  `firstName` VARCHAR(50) NULL,
+  `lastName` VARCHAR(50) NULL,
+  `partnerGoId` INT NULL,
+  `countryId` INT NULL,
+  `participantStatusId` INT NULL,
+  `seasonId` INT NULL,
+  `departmentProgramId` INT NULL,
+  `startDate` DATETIME NULL,
+  `endDate` DATETIME NULL,
+  `guaranteed` TINYINT(1) NULL,
+  `submittedFlightInfo` TINYINT(1) NULL,
+  `subPartnerId` INT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `isLead` tinyint(1) DEFAULT NULL,
+  `departmentProgramOptionId` int(3) DEFAULT NULL,
+  `photo` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`participantGoId`),
+  INDEX `FK_Participants_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_Participants_Partner1_idx` (`subPartnerId` ASC),
+  INDEX `FK_Participant_LookupCountries_idx` (`countryId` ASC),
+  INDEX `FK_Participants_Season_idx` (`seasonId` ASC),
+  INDEX `FK_Participants_DepartmentProgram_idx` (`departmentProgramId` ASC),
+  CONSTRAINT `FK_Participants_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Participants_Partner1`
+    FOREIGN KEY (`subPartnerId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Participant_LookupCountries`
+    FOREIGN KEY (`countryId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Participants_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Participants_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+   CONSTRAINT `FK_Participants_DepartmentProgramOptions`
+    FOREIGN KEY (`departmentProgramOptionId`)
+    REFERENCES `DepartmentProgramOptions` (`departmentProgramOptionId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+	)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerReviewStatus`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerReviewStatus` (
+  `partnerReviewStatusId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `partnerLeadStatusId` INT(3) NULL,
+  `partnerAgentStatusId` INT(3) NULL,
+  `partnerStatusReason` VARCHAR(1000) NULL,
+  `cciStaffUserId` INT NULL,
+  PRIMARY KEY (`partnerReviewStatusId`),
+  INDEX `FK_PartnerAgentStatusReasonPartnerStatus_idx` (`partnerLeadStatusId` ASC),
+  INDEX `FK_PartnerAgentStatus_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerReviewStatus_PartnerStatus1_idx` (`partnerAgentStatusId` ASC),
+  CONSTRAINT `FK_PartnerReviewStatus_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerReviewStatus_PartnerStatus`
+    FOREIGN KEY (`partnerLeadStatusId`)
+    REFERENCES `PartnerStatus` (`partnerStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerReviewStatus_PartnerStatus1`
+    FOREIGN KEY (`partnerAgentStatusId`)
+    REFERENCES `PartnerStatus` (`partnerStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerReviewStatus_CCIStaffUsers`
+    FOREIGN KEY (`cciStaffUserId`)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerNoteTopics`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerNoteTopics` (
+  `partnerNoteTopicId` INT NOT NULL AUTO_INCREMENT,
+  `PartnerNoteTopicName` VARCHAR(50) NULL,
+  `partnerGoId` INT NULL,
+  `isPublic` TINYINT(1) DEFAULT '0',
+  `w&t` TINYINT(1) NULL,
+  `j1` TINYINT(1) NULL,
+  `ght` TINYINT(1) NULL,
+  `stInbound` TINYINT(1) NULL,
+  `intern` TINYINT(1) NULL,
+  `trainee` TINYINT(1) NULL,
+  `meeting/visit` TINYINT(1) NULL,
+  `competitorInfo` TINYINT(1) NULL,
+  `embassy/VisaInfo` TINYINT(1) NULL,
+  `seasonInfo` TINYINT(1) NULL,
+  `f1` TINYINT(1) NULL,
+  PRIMARY KEY (`partnerNoteTopicId`),
+  INDEX `FK_PartnerNoteTopics_Partner_idx` (`partnerGoId` ASC),
+  CONSTRAINT `FK_PartnerNoteTopics_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerNotes`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerNotes` (
+  `partnerNotesId` INT NOT NULL AUTO_INCREMENT,
+  `partnerNoteTopicId` INT NULL,
+  `partnerGoId` INT NULL,
+  `partnerNote` LONGTEXT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT(11) NULL,
+  PRIMARY KEY (`partnerNotesId`),
+  INDEX `FK_PartnerNotes_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerNotes_PartnerNoteTopics_idx` (`partnerNoteTopicId` ASC),
+  CONSTRAINT `FK_PartnerNotes_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerNotes_PartnerNoteTopics`
+    FOREIGN KEY (`partnerNoteTopicId`)
+    REFERENCES `PartnerNoteTopics` (`partnerNoteTopicId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerContact`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerContact` (
+  `partnerContactId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `salutationId` INT(3) NULL,
+  `firstName` VARCHAR(150) NULL,
+  `lastName` VARCHAR(150) NULL,
+  `title` VARCHAR(150) NULL,
+  `partnerOfficeId` INT(11) NULL,
+  `email` VARCHAR(150) NULL,
+  `phone` VARCHAR(150) NULL,
+  `emergencyPhone` VARCHAR(150) NULL,
+  `fax` VARCHAR(150) NULL,
+  `receiveNotificationEmails` TINYINT(1) NULL,
+  `website` VARCHAR(50) DEFAULT NULL,
+  `skypeId` VARCHAR(50) NULL,
+  `active` TINYINT(1) NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  PRIMARY KEY (`partnerContactId`),
+  INDEX `FK_partnerContact_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerContact_PartnerOffice_idx` (`partnerOfficeId` ASC),
+  CONSTRAINT `FK_partnerContact_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerContact_PartnerOffice`
+    FOREIGN KEY (`partnerOfficeId`)
+    REFERENCES `PartnerOffice` (`partnerOfficeId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerContact_Salutation`
+    FOREIGN KEY (salutationId)
+	REFERENCES `Salutation` (salutationId)
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerReferenceChecks`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerReferenceChecks` (
+  `partnerReferenceCheckId` INT NOT NULL AUTO_INCREMENT,
+  `partnerGoId` INT NULL,
+  `referenceCompletedOn` DATETIME NULL,
+  `referenceCompletedBy` VARCHAR(50) NULL,
+  `referenceApprovedOn` DATETIME NULL,
+  `referenceApprovedBy` VARCHAR(50) NULL,
+  `businessLicenseExpiryDate` DATETIME NULL,
+  `referenceCheckNotes` LONGTEXT NULL,
+  PRIMARY KEY (`partnerReferenceCheckId`),
+  INDEX `FK_PartnerReferenceChecks_Partner_idx` (`partnerGoId` ASC),
+  CONSTRAINT `FK_PartnerReferenceChecks_Partner`
+    FOREIGN KEY (`partnerGoId`)
+    REFERENCES `Partner` (`partnerGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerNoteTags`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerNoteTags` (
+  `partnerNoteTagId` INT NOT NULL AUTO_INCREMENT,
+  `tagName` VARCHAR(50) NULL,
+  PRIMARY KEY (`partnerNoteTagId`))
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerUserRoles`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerUserRoles` (
+  `partnerUserRoleId` INT NOT NULL AUTO_INCREMENT,
+  `partnerUserRoleName` VARCHAR(50) NULL,
+  `partnerUserId` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`partnerUserRoleId`),
+  CONSTRAINT FK_PartnerUserRoles_PartnerUsers
+  FOREIGN KEY (partnerUserId)
+  REFERENCES PartnerUser (partnerUserId)
+  )
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `PartnerSeasonContract`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerSeasonContract` (
+  `partnerSeasonContractId` INT NOT NULL AUTO_INCREMENT,
+  `partnerSeasonId` INT NULL,
+  `isSigned` TINYINT(1) DEFAULT 0,
+  `documentInformationId` INT,
+  `description` TEXT,
+  PRIMARY KEY (`partnerSeasonContractId`),
+  INDEX `FK_PartnerSeasonContract_PartnerSeason_idx` (`partnerSeasonId` ASC),
+  CONSTRAINT `FK_PartnerSeasonContract_PartnerSeason`
+    FOREIGN KEY (`partnerSeasonId`)
+    REFERENCES `PartnerSeason` (`partnerSeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeasonContract_DocumentInformation`
+    FOREIGN KEY (`documentInformationId`)
+    REFERENCES `DocumentInformation` (`documentInformationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerSeasonDocument`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `cci_gh_go`. `PartnerSeasonDocument` (
+  `partnerSeasonDocumentId` INT NOT NULL AUTO_INCREMENT,
+  `partnerSeasonId` INT,
+  `documentInformationId` INT,
+  `description` TEXT,
+  PRIMARY KEY (`partnerSeasonDocumentId`),
+  INDEX `FK_PartnerSeasonDocument_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerSeasonDocument_DepartmentPrograms_idx` (`departmentProgramId` ASC),
+  INDEX `FK_PartnerSeasonDocument_Season_idx` (`seasonId` ASC),
+  CONSTRAINT `FK_PartnerSeasonDocument_PartnerSeason`
+    FOREIGN KEY (`partnerSeasonId`)
+    REFERENCES `PartnerSeason` (`partnerSeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeasonDocument_DocumentInformation`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeasonDocument_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+-- -----------------------------------------------------
+-- Table `PartnerHelpOption`
+-- -----------------------------------------------------
+
+
+CREATE TABLE `cci_gh_go`. `PartnerHelpOption` (
+  `partnerHelpOptionId` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `partnerHelpOptionName` VARCHAR(50) NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` DATETIME NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` DATETIME NULL,
+  `active` TINYINT(1) NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `PartnerHelpOptionProgram`
+-- -----------------------------------------------------
+
+CREATE TABLE `cci_gh_go`. `PartnerHelpOptionProgram` (
+  `partnerHelpOptionProgramId` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `partnerHelpOptionId` INT(11) NULL,
+  `lookupDepartmentProgramId` INT(11) NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` DATETIME NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` DATETIME NULL,
+    CONSTRAINT `FK_PartnerHelpOptionProgram_LookupDepartmentPrograms`
+  FOREIGN KEY(`lookupDepartmentProgramId`)
+  REFERENCES `LookupDepartmentPrograms`(`lookupDepartmentProgramId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `HelpContactMode`
+-- -----------------------------------------------------
+
+CREATE TABLE `cci_gh_go`. `HelpContactMode` (
+ `helpContactModeId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ `helpContactModeName` VARCHAR(50) NULL,
+ `active` TINYINT(1) NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `PartnerHelpRequest`
+-- -----------------------------------------------------
+
+CREATE TABLE `cci_gh_go`. `PartnerHelpRequest` (
+  `partnerHelpRequestId` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `partnerHelpRequestGUID` VARCHAR(64) NULL,
+  `partnerHelpOptionId` INT(11) NULL,
+  `helpContactModeId` INT(11) NULL,
+  `partnerGoId` INT(11) NULL,
+  `subPartnerGoId` INT(11) NULL,
+  `loginId` INT(11) NULL,
+  `lookupDepartmentProgramId` INT(11) NULL,
+  `requestName` VARCHAR(200) NULL,
+  `requestEmailAddress` VARCHAR(50) NULL,
+  `requestMessage` VARCHAR(1000) NULL,
+  `createdBy` INT(11) NULL,
+  `createdOn` DATETIME NULL,
+  `modifiedBy` INT(11) NULL,
+  `modifiedOn` DATETIME NULL,
+  `active` TINYINT(1) NULL,
+  UNIQUE KEY `PartnerHelpRequestGUID` (`PartnerHelpRequestGUID`),
+  CONSTRAINT `FK_PartnerHelpRequest_PartnerHelpOption`
+  FOREIGN KEY(`partnerHelpOptionId`)
+  REFERENCES `PartnerHelpOption`(`partnerHelpOptionId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION,
+  CONSTRAINT `FK_PartnerHelpRequest_Partner`
+  FOREIGN KEY (`partnerGoId`)
+  REFERENCES `Partner`(`partnerGoId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION,
+  CONSTRAINT `FK_PartnerHelpRequest_Partner1`
+  FOREIGN KEY (`subPartnerGoId`)
+  REFERENCES `Partner`(`partnerGoId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION,
+  CONSTRAINT `FK_PartnerHelpRequest_Login`
+  FOREIGN KEY (`loginId`)
+  REFERENCES `Login`(`loginId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION,
+  CONSTRAINT `FK_PartnerHelpRequest_LookupDepartmentPrograms`
+  FOREIGN KEY (`lookupDepartmentProgramId`)
+  REFERENCES `LookupDepartmentPrograms`(`lookupDepartmentProgramId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION,
+  CONSTRAINT `FK_PartnerHelpRequest_HelpContactMode`
+  FOREIGN KEY (`helpContactModeId`)
+  REFERENCES `HelpContactMode`(`helpContactModeId`)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=utf8;

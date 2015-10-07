@@ -59,6 +59,46 @@ public class LookupDepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="lookupDepartmentProgram2")
 	private List<PartnerProgram> partnerPrograms2;
 
+	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to AdminWorkQueueCategoryAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates;
+
+	//bi-directional many-to-one association to AdminWorkQueueType
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<AdminWorkQueueType> adminWorkQueueTypes;
+
+	//bi-directional many-to-one association to AdminWorkQueueTypeAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
+
+	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to PartnerWorkQueueType
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerWorkQueueType> partnerWorkQueueTypes;
+
+	//bi-directional many-to-one association to PartnerWorkQueueTypeAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates;
+
+	//bi-directional many-to-one association to StateTypeResourcePermission
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<StateTypeResourcePermission> stateTypeResourcePermissions;
+
 	public LookupDepartmentProgram() {
 	}
 
@@ -212,6 +252,226 @@ public class LookupDepartmentProgram implements Serializable {
 		partnerPrograms2.setLookupDepartmentProgram2(null);
 
 		return partnerPrograms2;
+	}
+
+	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
+		return this.adminQuickStatsCategoryAggregates;
+	}
+
+	public void setAdminQuickStatsCategoryAggregates(List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates) {
+		this.adminQuickStatsCategoryAggregates = adminQuickStatsCategoryAggregates;
+	}
+
+	public AdminQuickStatsCategoryAggregate addAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
+		getAdminQuickStatsCategoryAggregates().add(adminQuickStatsCategoryAggregate);
+		adminQuickStatsCategoryAggregate.setLookupDepartmentProgram(this);
+
+		return adminQuickStatsCategoryAggregate;
+	}
+
+	public AdminQuickStatsCategoryAggregate removeAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
+		getAdminQuickStatsCategoryAggregates().remove(adminQuickStatsCategoryAggregate);
+		adminQuickStatsCategoryAggregate.setLookupDepartmentProgram(null);
+
+		return adminQuickStatsCategoryAggregate;
+	}
+
+	public List<AdminQuickStatsTypeAggregate> getAdminQuickStatsTypeAggregates() {
+		return this.adminQuickStatsTypeAggregates;
+	}
+
+	public void setAdminQuickStatsTypeAggregates(List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates) {
+		this.adminQuickStatsTypeAggregates = adminQuickStatsTypeAggregates;
+	}
+
+	public AdminQuickStatsTypeAggregate addAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
+		getAdminQuickStatsTypeAggregates().add(adminQuickStatsTypeAggregate);
+		adminQuickStatsTypeAggregate.setLookupDepartmentProgram(this);
+
+		return adminQuickStatsTypeAggregate;
+	}
+
+	public AdminQuickStatsTypeAggregate removeAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
+		getAdminQuickStatsTypeAggregates().remove(adminQuickStatsTypeAggregate);
+		adminQuickStatsTypeAggregate.setLookupDepartmentProgram(null);
+
+		return adminQuickStatsTypeAggregate;
+	}
+
+	public List<AdminWorkQueueCategoryAggregate> getAdminWorkQueueCategoryAggregates() {
+		return this.adminWorkQueueCategoryAggregates;
+	}
+
+	public void setAdminWorkQueueCategoryAggregates(List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates) {
+		this.adminWorkQueueCategoryAggregates = adminWorkQueueCategoryAggregates;
+	}
+
+	public AdminWorkQueueCategoryAggregate addAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
+		getAdminWorkQueueCategoryAggregates().add(adminWorkQueueCategoryAggregate);
+		adminWorkQueueCategoryAggregate.setLookupDepartmentProgram(this);
+
+		return adminWorkQueueCategoryAggregate;
+	}
+
+	public AdminWorkQueueCategoryAggregate removeAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
+		getAdminWorkQueueCategoryAggregates().remove(adminWorkQueueCategoryAggregate);
+		adminWorkQueueCategoryAggregate.setLookupDepartmentProgram(null);
+
+		return adminWorkQueueCategoryAggregate;
+	}
+
+	public List<AdminWorkQueueType> getAdminWorkQueueTypes() {
+		return this.adminWorkQueueTypes;
+	}
+
+	public void setAdminWorkQueueTypes(List<AdminWorkQueueType> adminWorkQueueTypes) {
+		this.adminWorkQueueTypes = adminWorkQueueTypes;
+	}
+
+	public AdminWorkQueueType addAdminWorkQueueType(AdminWorkQueueType adminWorkQueueType) {
+		getAdminWorkQueueTypes().add(adminWorkQueueType);
+		adminWorkQueueType.setLookupDepartmentProgram(this);
+
+		return adminWorkQueueType;
+	}
+
+	public AdminWorkQueueType removeAdminWorkQueueType(AdminWorkQueueType adminWorkQueueType) {
+		getAdminWorkQueueTypes().remove(adminWorkQueueType);
+		adminWorkQueueType.setLookupDepartmentProgram(null);
+
+		return adminWorkQueueType;
+	}
+
+	public List<AdminWorkQueueTypeAggregate> getAdminWorkQueueTypeAggregates() {
+		return this.adminWorkQueueTypeAggregates;
+	}
+
+	public void setAdminWorkQueueTypeAggregates(List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates) {
+		this.adminWorkQueueTypeAggregates = adminWorkQueueTypeAggregates;
+	}
+
+	public AdminWorkQueueTypeAggregate addAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
+		getAdminWorkQueueTypeAggregates().add(adminWorkQueueTypeAggregate);
+		adminWorkQueueTypeAggregate.setLookupDepartmentProgram(this);
+
+		return adminWorkQueueTypeAggregate;
+	}
+
+	public AdminWorkQueueTypeAggregate removeAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
+		getAdminWorkQueueTypeAggregates().remove(adminWorkQueueTypeAggregate);
+		adminWorkQueueTypeAggregate.setLookupDepartmentProgram(null);
+
+		return adminWorkQueueTypeAggregate;
+	}
+
+	public List<PartnerQuickStatsCategoryAggregate> getPartnerQuickStatsCategoryAggregates() {
+		return this.partnerQuickStatsCategoryAggregates;
+	}
+
+	public void setPartnerQuickStatsCategoryAggregates(List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates) {
+		this.partnerQuickStatsCategoryAggregates = partnerQuickStatsCategoryAggregates;
+	}
+
+	public PartnerQuickStatsCategoryAggregate addPartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+		getPartnerQuickStatsCategoryAggregates().add(partnerQuickStatsCategoryAggregate);
+		partnerQuickStatsCategoryAggregate.setLookupDepartmentProgram(this);
+
+		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public PartnerQuickStatsCategoryAggregate removePartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+		getPartnerQuickStatsCategoryAggregates().remove(partnerQuickStatsCategoryAggregate);
+		partnerQuickStatsCategoryAggregate.setLookupDepartmentProgram(null);
+
+		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {
+		return this.partnerQuickStatsTypeAggregates;
+	}
+
+	public void setPartnerQuickStatsTypeAggregates(List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates) {
+		this.partnerQuickStatsTypeAggregates = partnerQuickStatsTypeAggregates;
+	}
+
+	public PartnerQuickStatsTypeAggregate addPartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+		getPartnerQuickStatsTypeAggregates().add(partnerQuickStatsTypeAggregate);
+		partnerQuickStatsTypeAggregate.setLookupDepartmentProgram(this);
+
+		return partnerQuickStatsTypeAggregate;
+	}
+
+	public PartnerQuickStatsTypeAggregate removePartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+		getPartnerQuickStatsTypeAggregates().remove(partnerQuickStatsTypeAggregate);
+		partnerQuickStatsTypeAggregate.setLookupDepartmentProgram(null);
+
+		return partnerQuickStatsTypeAggregate;
+	}
+
+	public List<PartnerWorkQueueType> getPartnerWorkQueueTypes() {
+		return this.partnerWorkQueueTypes;
+	}
+
+	public void setPartnerWorkQueueTypes(List<PartnerWorkQueueType> partnerWorkQueueTypes) {
+		this.partnerWorkQueueTypes = partnerWorkQueueTypes;
+	}
+
+	public PartnerWorkQueueType addPartnerWorkQueueType(PartnerWorkQueueType partnerWorkQueueType) {
+		getPartnerWorkQueueTypes().add(partnerWorkQueueType);
+		partnerWorkQueueType.setLookupDepartmentProgram(this);
+
+		return partnerWorkQueueType;
+	}
+
+	public PartnerWorkQueueType removePartnerWorkQueueType(PartnerWorkQueueType partnerWorkQueueType) {
+		getPartnerWorkQueueTypes().remove(partnerWorkQueueType);
+		partnerWorkQueueType.setLookupDepartmentProgram(null);
+
+		return partnerWorkQueueType;
+	}
+
+	public List<PartnerWorkQueueTypeAggregate> getPartnerWorkQueueTypeAggregates() {
+		return this.partnerWorkQueueTypeAggregates;
+	}
+
+	public void setPartnerWorkQueueTypeAggregates(List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates) {
+		this.partnerWorkQueueTypeAggregates = partnerWorkQueueTypeAggregates;
+	}
+
+	public PartnerWorkQueueTypeAggregate addPartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
+		getPartnerWorkQueueTypeAggregates().add(partnerWorkQueueTypeAggregate);
+		partnerWorkQueueTypeAggregate.setLookupDepartmentProgram(this);
+
+		return partnerWorkQueueTypeAggregate;
+	}
+
+	public PartnerWorkQueueTypeAggregate removePartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
+		getPartnerWorkQueueTypeAggregates().remove(partnerWorkQueueTypeAggregate);
+		partnerWorkQueueTypeAggregate.setLookupDepartmentProgram(null);
+
+		return partnerWorkQueueTypeAggregate;
+	}
+
+	public List<StateTypeResourcePermission> getStateTypeResourcePermissions() {
+		return this.stateTypeResourcePermissions;
+	}
+
+	public void setStateTypeResourcePermissions(List<StateTypeResourcePermission> stateTypeResourcePermissions) {
+		this.stateTypeResourcePermissions = stateTypeResourcePermissions;
+	}
+
+	public StateTypeResourcePermission addStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
+		getStateTypeResourcePermissions().add(stateTypeResourcePermission);
+		stateTypeResourcePermission.setLookupDepartmentProgram(this);
+
+		return stateTypeResourcePermission;
+	}
+
+	public StateTypeResourcePermission removeStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
+		getStateTypeResourcePermissions().remove(stateTypeResourcePermission);
+		stateTypeResourcePermission.setLookupDepartmentProgram(null);
+
+		return stateTypeResourcePermission;
 	}
 
 }

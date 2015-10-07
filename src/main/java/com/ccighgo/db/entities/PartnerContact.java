@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.sql.Timestamp;
 
 
@@ -22,7 +20,7 @@ public class PartnerContact implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerContactId;
 
-	private byte active;
+	private Byte active;
 
 	private Integer createdBy;
 
@@ -52,10 +50,6 @@ public class PartnerContact implements Serializable {
 
 	private Byte receiveNotificationEmails;
 
-	@ManyToOne
-	@JoinColumn(name="salutationId")
-	private Salutation salutation;
-
 	@Column(length=50)
 	private String skypeId;
 
@@ -75,6 +69,11 @@ public class PartnerContact implements Serializable {
 	@JoinColumn(name="partnerOfficeId")
 	private PartnerOffice partnerOffice;
 
+	//bi-directional many-to-one association to Salutation
+	@ManyToOne
+	@JoinColumn(name="salutationId")
+	private Salutation salutationBean;
+
 	public PartnerContact() {
 	}
 
@@ -86,11 +85,11 @@ public class PartnerContact implements Serializable {
 		this.partnerContactId = partnerContactId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -182,14 +181,6 @@ public class PartnerContact implements Serializable {
 		this.receiveNotificationEmails = receiveNotificationEmails;
 	}
 
-	public Salutation getSalutation() {
-	   return salutation;
-	}
-
-   public void setSalutation(Salutation salutation) {
-      this.salutation = salutation;
-   }
-
 	public String getSkypeId() {
 		return this.skypeId;
 	}
@@ -228,6 +219,14 @@ public class PartnerContact implements Serializable {
 
 	public void setPartnerOffice(PartnerOffice partnerOffice) {
 		this.partnerOffice = partnerOffice;
+	}
+
+	public Salutation getSalutationBean() {
+		return this.salutationBean;
+	}
+
+	public void setSalutationBean(Salutation salutationBean) {
+		this.salutationBean = salutationBean;
 	}
 
 }

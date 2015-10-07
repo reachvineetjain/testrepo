@@ -25,6 +25,7 @@ import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerStatus;
+import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
@@ -36,6 +37,7 @@ import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
@@ -113,6 +115,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
    @Autowired
    EmailServiceImpl email;
+   
+   @Autowired
+   SalutationRepository salutationRepository;
 
    @Override
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -300,14 +305,18 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerAgency.setNeedPartnerReview(partnerSubPartner.getNeedPartnerReview());
             subPartnerAgency.setDeliverDSForms(partnerSubPartner.getDeliverDSForms());
             subPartnerAgency.setPayGreenheartDirectly(partnerSubPartner.getPayGreenheartDirectly());
-            subPartnerAgency.setUserName(partnerSubPartner.getGoIdSequence().getLogin().iterator().next().getLoginName());
+            subPartnerAgency.setUserName(partnerSubPartner.getGoIdSequence().getLogins().iterator().next().getLoginName());
             subPartner.setSubPartnerAgency(subPartnerAgency);
 
             // primary contact
             SubPartnerPrimaryContact subPartnerPrimaryContact = new SubPartnerPrimaryContact();
             if (partnerSubPartner.getPartnerContacts() != null && partnerSubPartner.getPartnerContacts().size() > 0) {
                PartnerContact partnerContact = partnerSubPartner.getPartnerContacts().iterator().next();
-               subPartnerPrimaryContact.setSalutation(partnerContact.getSalutation().getSalutationName());
+               com.ccighgo.service.transport.utility.beans.gender.Salutation salutation = new com.ccighgo.service.transport.utility.beans.gender.Salutation();
+               salutation.setSalutationId(partnerContact.getSalutationBean().getSalutationId());
+               salutation.setSalutationCode(partnerContact.getSalutationBean().getSalutationName());
+               salutation.setActive(partnerContact.getSalutationBean().getActive());
+               subPartnerPrimaryContact.setSalutation(salutation);
                subPartnerPrimaryContact.setTitle(partnerContact.getTitle());
                subPartnerPrimaryContact.setFirstName(partnerContact.getFirstName());
                subPartnerPrimaryContact.setLastName(partnerContact.getLastName());
@@ -375,7 +384,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                for (PartnerNoteTopic partnerNoteTopic : partnerNoteTopicDBList) {
                   SubPartnerNoteTopic subPartnerNoteTopic = new SubPartnerNoteTopic();
                   subPartnerNoteTopic.setSubPartnerNoteTopicId(partnerNoteTopic.getPartnerNoteTopicId());
-                  subPartnerNoteTopic.setIsPublic(partnerNoteTopic.isPublic());
+                  subPartnerNoteTopic.setIsPublic(partnerNoteTopic.getIsPublic()==1?true:false);
                   subPartnerNoteTopic.setCompetitorInfo(partnerNoteTopic.getCompetitorInfo());
                   subPartnerNoteTopic.setEmbassy_VisaInfo(partnerNoteTopic.getEmbassy_VisaInfo());
                   subPartnerNoteTopic.setF1(partnerNoteTopic.getF1());
@@ -389,7 +398,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   subPartnerNoteTopic.setTrainee(partnerNoteTopic.getTrainee());
                   subPartnerNoteTopic.setW_t(partnerNoteTopic.getW_t());
                   subPartnerNoteTopic.setNoteCount(partnerNoteTopic.getPartnerNotes().size());
-                  subPartnerNoteTopic.setAuthor(partnerNoteTopic.getPartner().getGoIdSequence().getLogin().iterator().next().getLoginName());
+                  subPartnerNoteTopic.setAuthor(partnerNoteTopic.getPartner().getGoIdSequence().getLogins().iterator().next().getLoginName());
                   subPartnerNoteTopic.setDesignation(CCIConstants.SUB_PARTNER);
                   // note
                   if (partnerNoteTopic.getPartnerNotes() != null && partnerNoteTopic.getPartnerNotes().size() > 0) {
@@ -401,7 +410,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                         subPartnerNote.setCreatedOn(partnerNote.getPartner().getCreatedOn().toString());
                         subPartnerNote.setModifiedBy(partnerNote.getModifiedBy().toString());
                         subPartnerNote.setModifiedOn(partnerNote.getModifiedOn().toString());
-                        subPartnerNote.setAuthor(partnerNote.getPartner().getGoIdSequence().getLogin().iterator().next().getLoginName());
+                        subPartnerNote.setAuthor(partnerNote.getPartner().getGoIdSequence().getLogins().iterator().next().getLoginName());
                         subPartnerNote.setDesignation(CCIConstants.SUB_PARTNER);
                         subPartnerNoteTopic.getSubPartnerNote().add(subPartnerNote);
                      }
@@ -495,7 +504,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          login.setEmail(subPartner.getSubPartnerPrimaryContact().getEmail());
          login = loginRepository.save(login);
          loginList.add(login);
-         goIdSequence.setLogin(loginList);
+         goIdSequence.setLogins(loginList);
          subPartnerDetails.setGoIdSequence(goIdSequence);
          subPartnerDetails.setPartnerGoId(goIdSequence.getGoId());
 
@@ -585,7 +594,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             SubPartnerPrimaryContact subPartnerPrimaryContact = subPartner.getSubPartnerPrimaryContact();
             List<PartnerContact> partnerContactList = new ArrayList<PartnerContact>();
             PartnerContact partnerContact = new PartnerContact();
-           // partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
+            Salutation salutation = salutationRepository.findOne(subPartnerPrimaryContact.getSalutation().getSalutationId());
+            partnerContact.setSalutationBean(salutation);
             partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
             partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
             partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
@@ -607,7 +617,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             for (SubPartnerNoteTopic subPartnerNoteTopic : subPartner.getSubPartnerNoteTopics().getSubPartnerNoteTopics()) {
                PartnerNoteTopic partnerNoteTopic = new PartnerNoteTopic();
                partnerNoteTopic.setPartner(subPartnerDetails);
-               partnerNoteTopic.setPublic(subPartnerNoteTopic.getIsPublic());
+               partnerNoteTopic.setIsPublic(subPartnerNoteTopic.getIsPublic()==true?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
                partnerNoteTopic.setCompetitorInfo(subPartnerNoteTopic.getCompetitorInfo());
                partnerNoteTopic.setEmbassy_VisaInfo(subPartnerNoteTopic.getEmbassy_VisaInfo());
                partnerNoteTopic.setF1(subPartnerNoteTopic.getF1());
@@ -690,8 +700,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerDetails.setPayGreenheartDirectly(SubPartnerAgency.getPayGreenheartDirectly());
          }
          // Login
-         if (subPartnerDetails.getGoIdSequence().getLogin() != null && subPartnerDetails.getGoIdSequence().getLogin().size() > 0) {
-            Login login = subPartnerDetails.getGoIdSequence().getLogin().iterator().next();
+         if (subPartnerDetails.getGoIdSequence().getLogins() != null && subPartnerDetails.getGoIdSequence().getLogins().size() > 0) {
+            Login login = subPartnerDetails.getGoIdSequence().getLogins().iterator().next();
             if(!login.getLoginName().equalsIgnoreCase(subPartner.getSubPartnerAgency().getUserName()))
             {
             if(loginRepository.findByLoginName(subPartner.getSubPartnerAgency().getUserName()) != null)
@@ -775,7 +785,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (subPartner.getSubPartnerPrimaryContact() != null) {
             subPartnerPrimaryContact = subPartner.getSubPartnerPrimaryContact();
             PartnerContact partnerContact = subPartnerDetails.getPartnerContacts().iterator().next();
-            //partnerContact.setSalutation(subPartnerPrimaryContact.getSalutation());
+            Salutation salutation = salutationRepository.findOne(subPartnerPrimaryContact.getSalutation().getSalutationId());
+            partnerContact.setSalutationBean(salutation);
             partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
             partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
             partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
