@@ -266,7 +266,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
          programAllocation.setMaxUnguarantedParticipants(partnerSeasonAllocation.getMaxPax());
          programAllocation.setParticipantApproved(0);//TODO Need clarification from DB
          if (flag == 0) {
-            programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption1().getProgramOptionName()));
+            programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption().getProgramOptionName()));
          } else {
             programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption2().getProgramOptionName()));
          }
