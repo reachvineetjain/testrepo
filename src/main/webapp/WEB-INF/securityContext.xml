@@ -47,6 +47,7 @@
             /services/partneruser/**=anon
             /services/insurance/**=anon
             /services/partner/season/**=anon
+            /services/partner/agent/**=anon
             /loginProxy/**=anon
             /services/partner/qs/**=anon
             /services/partner/wq/**=anon
