@@ -83,12 +83,12 @@
       <class>com.ccighgo.db.entities.PartnerStatus</class>
       <class>com.ccighgo.db.entities.PartnerUser</class>
       <class>com.ccighgo.db.entities.PartnerUserRole</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueue</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueueCategory</class>
+     <!--  <class>com.ccighgo.db.entities.PartnerWorkQueue</class> -->
+      <!-- <class>com.ccighgo.db.entities.PartnerWorkQueueCategory</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryPK</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueType</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class> -->
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>
