@@ -102,6 +102,8 @@ public class CCIConstants {
    public static final String SEASON_OPTION_1 = "Season Defaults";
    public static final String SEASON_OPTION_2 = "Partner Values";
    public static final String SEMESTER_START = "Start";
+   public static final Integer AUGUST_START = 1;
+   public static final Integer JANUARY_START = 3;
 
    // bind urls for season program menu
    public static final String HSP_J1_URL = "j1hs/details/view/";
