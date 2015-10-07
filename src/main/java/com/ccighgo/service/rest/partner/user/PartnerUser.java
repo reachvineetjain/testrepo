@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
@@ -114,7 +115,7 @@ public class PartnerUser {
    @GET
    @Path("get-partner-go-id/{loginName}")
    @Produces("application/json")
-   public String getPartnerGoIdForPartnerUser(@PathParam("loginName") String loginName) {
+   public Response getPartnerGoIdForPartnerUser(@PathParam("loginName") String loginName) {
       LOGGER.debug("calling PartnerUser.getPartnerGoIdForPartnerUser");
       return partnerUserInterface.getPartnerGoIdForPartnerUser(loginName);
    }

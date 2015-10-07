@@ -41,6 +41,8 @@ import com.ccighgo.service.components.errormessages.constants.PartnerUserMessage
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Header;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
@@ -626,21 +628,35 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
    
    @Override
-   public String getPartnerGoIdForPartnerUser(String loginName) {
-      String partnerGoId = null;
+   public Response getPartnerGoIdForPartnerUser(String loginName) {
+      Response response = new Response();
+      try{
       if (loginName != null) {
          Login login = loginRepository.findByLoginName(loginName);
          if (login != null) {
             if (login.getGoIdSequence().getPartner() != null) {
-               partnerGoId = login.getGoIdSequence().getPartner().getPartnerGoId().toString();
-            } else {
-               partnerGoId = "PartnerGoId is not present for given Login Name.";
+               Header header = new Header();
+               header.setSubject(login.getGoIdSequence().getPartner().getPartnerGoId().toString());
+               response.setHeader(header);
+               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_USER_cODE.getValue(),
+                     messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+            } else {               
+               response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+                     messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+               LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
             }
-         } else {
-            partnerGoId = "Login Name is not valid.";
+         } else {           
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
          }
       }
-      return partnerGoId;
+      }catch (CcighgoException e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
+     }     
+      return response;
    }
    
    @Override

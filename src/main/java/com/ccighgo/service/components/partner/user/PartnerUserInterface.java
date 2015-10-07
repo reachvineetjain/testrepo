@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 
 
+
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
@@ -48,6 +50,6 @@ public interface PartnerUserInterface {
    
    public List<PartnerUserStatus> getPartnerUserStatuses();
    
-   public String getPartnerGoIdForPartnerUser(String loginName);
+   public Response getPartnerGoIdForPartnerUser(String loginName);
 
 }
