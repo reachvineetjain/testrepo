@@ -50,9 +50,6 @@ public class PartnerContact implements Serializable {
 
 	private Byte receiveNotificationEmails;
 
-	@Column(length=10)
-	private String salutation;
-
 	@Column(length=50)
 	private String skypeId;
 
@@ -182,14 +179,6 @@ public class PartnerContact implements Serializable {
 
 	public void setReceiveNotificationEmails(Byte receiveNotificationEmails) {
 		this.receiveNotificationEmails = receiveNotificationEmails;
-	}
-
-	public String getSalutation() {
-		return this.salutation;
-	}
-
-	public void setSalutation(String salutation) {
-		this.salutation = salutation;
 	}
 
 	public String getSkypeId() {

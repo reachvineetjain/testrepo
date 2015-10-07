@@ -84,7 +84,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
          partnerCompanyDetails.setGeneralEmail(partner.getEmail());
          Login partnerLogin = null;
-         for (Login login : partner.getGoIdSequence().getLogin()) {
+         for (Login login : partner.getGoIdSequence().getLogins()) {
             for (PartnerUser partUser : login.getPartnerUsers()) {
                if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
                   partnerLogin = login;
@@ -106,8 +106,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          }
          if (partnerContact != null) {
             PrimaryContactSalutation primaryContactSalutation = new PrimaryContactSalutation();
-            primaryContactSalutation.setSalutationId(partnerContact.getSalutation().getSalutationId());
-            primaryContactSalutation.setSalutation(partnerContact.getSalutation().getSalutationName());
+            primaryContactSalutation.setSalutationId(partnerContact.getSalutationBean().getSalutationId());
+            primaryContactSalutation.setSalutation(partnerContact.getSalutationBean().getSalutationName());
             partnerPrimaryContact.setPrimaryContactSalutation(primaryContactSalutation);
             partnerPrimaryContact.setPrimaryContactTitle(partnerContact.getTitle());
             partnerPrimaryContact.setPrimaryContactFirstName(partnerContact.getFirstName());
@@ -188,7 +188,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          if (partner != null) {
             PartnerContact partnerContact = null;
             Login partnerLogin = null;
-            for (Login login : partner.getGoIdSequence().getLogin()) {
+            for (Login login : partner.getGoIdSequence().getLogins()) {
                for (PartnerUser partUser : login.getPartnerUsers()) {
                   if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
                      partnerLogin = login;
@@ -217,7 +217,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   return updatedObject;
                }
             }else{
-               partnerContact.setSalutation(salutationRepository.findOne(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSalutation().getSalutationId()));
+               partnerContact.setSalutationBean(salutationRepository.findOne(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSalutation().getSalutationId()));
                partnerContact.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
                partnerContact.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
                partnerContact.setLastName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactLastName());
