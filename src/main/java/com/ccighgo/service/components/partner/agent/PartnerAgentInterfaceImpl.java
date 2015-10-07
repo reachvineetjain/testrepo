@@ -268,7 +268,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
          if (flag == 0) {
             programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption().getProgramOptionName()));
          } else {
-            programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption2().getProgramOptionName()));
+            programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption().getProgramOptionName()));
          }
 
          programAllocation.setTotalAllocations((partnerSeasonAllocation.getMaxGuaranteedPax() + partnerSeasonAllocation.getMaxPax()));
