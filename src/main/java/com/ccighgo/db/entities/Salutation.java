@@ -41,7 +41,11 @@ public class Salutation  implements Serializable {
       return salutationName;
    }
 
-   @OneToMany(mappedBy = "salutation") private List<PartnerUser> partnerUser;
+   @OneToMany(mappedBy = "salutation") 
+   private List<PartnerUser> partnerUser;
+   
+   @OneToMany(mappedBy = "salutation") private 
+   List<PartnerContact> partnerContact;
 
    public void setSalutationName(String salutationName) {
       this.salutationName = salutationName;
@@ -61,6 +65,14 @@ public class Salutation  implements Serializable {
 
    public void setPartnerUser(List<PartnerUser> partnerUser) {
       this.partnerUser = partnerUser;
+   }
+
+   public List<PartnerContact> getPartnerContact() {
+      return partnerContact;
+   }
+
+   public void setPartnerContact(List<PartnerContact> partnerContact) {
+      this.partnerContact = partnerContact;
    }
 
 }

@@ -33,6 +33,10 @@ public class PartnerSeason implements Serializable {
 	private Timestamp createdOn;
 
 	private byte disableAddParticipant;
+	
+	private Byte insuranceProvidedByCCI;
+	
+	private Byte sevisFeesPaidByCCI;
 
 	@Column(length=2000)
 	private String exceptionComments;
@@ -175,7 +179,23 @@ public class PartnerSeason implements Serializable {
 		this.disableAddParticipant = disableAddParticipant;
 	}
 
-	public String getExceptionComments() {
+	public Byte getInsuranceProvidedByCCI() {
+      return insuranceProvidedByCCI;
+   }
+
+   public void setInsuranceProvidedByCCI(Byte insuranceProvidedByCCI) {
+      this.insuranceProvidedByCCI = insuranceProvidedByCCI;
+   }
+
+   public Byte getSevisFeesPaidByCCI() {
+      return sevisFeesPaidByCCI;
+   }
+
+   public void setSevisFeesPaidByCCI(Byte sevisFeesPaidByCCI) {
+      this.sevisFeesPaidByCCI = sevisFeesPaidByCCI;
+   }
+
+   public String getExceptionComments() {
 		return this.exceptionComments;
 	}
 

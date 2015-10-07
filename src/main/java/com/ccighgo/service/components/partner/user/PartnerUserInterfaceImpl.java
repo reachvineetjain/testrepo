@@ -41,6 +41,8 @@ import com.ccighgo.service.components.errormessages.constants.PartnerUserMessage
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Header;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUserStatus;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
@@ -110,7 +112,6 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   puser.setPartnerUserLastName(user.getLastName());
                   puser.setPartnerUserEmail(user.getEmail());
                   PartnerUserStatus partnerUserStatus = new PartnerUserStatus();
-                  partnerUserStatus.setPartnerUserStatusId(0);
                   partnerUserStatus.setPartnerUserStatus(user.getActive() == CCIConstants.ACTIVE ? "Active" : "Inactive");
                   puser.setPartnerUserStatus(partnerUserStatus);
                   partnerUsersUIList.add(puser);
@@ -153,7 +154,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          }
         
          if (loginRepository.findByEmail(partnerUserDetailAndRoles.getEmail()) != null) {
-            // return Email already exsist
+            // return Email already exist
             viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_USER_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_CREATE_USER_EMAIL_EXIST));
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_CREATE_USER_EMAIL_EXIST));
@@ -184,6 +185,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          login.setGoIdSequence(partner.getGoIdSequence());
          login.setEmail(partnerUserDetailAndRoles.getEmail());
+         login.setActive(partnerUserDetailAndRoles.getUserStatus() == true ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          login = loginRepository.save(login);
 
          // Login User Type
@@ -212,7 +214,6 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             if (salutation != null)
                partnerUser.setSalutation(salutation);
          }
-        // partnerUser.setSalutation(partnerUserDetailAndRoles.getSalutation());
          partnerUser.setSkypeId(partnerUserDetailAndRoles.getSkypeId());
          partnerUser.setTitle(partnerUserDetailAndRoles.getTitle());
          if (partnerUserDetailAndRoles.getGender() != null) {
@@ -347,7 +348,26 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
             return viewPartnerUser;
          }
-
+         if(!partnerUser.getLogin().getLoginName().equalsIgnoreCase(partnerUserDetailAndRoles.getUsername())){
+            if (loginRepository.findByLoginName(partnerUserDetailAndRoles.getUsername()) != null) {
+               // return username already exsist
+               viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_USER_UPDATE_USER_NAME_EXIST.getValue(),
+                     messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_UPDATE_USER_NAME_EXIST));
+               LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_UPDATE_USER_NAME_EXIST));
+               return viewPartnerUser;
+            }
+         }
+         
+         if (!partnerUser.getLogin().getEmail().equalsIgnoreCase(partnerUserDetailAndRoles.getEmail())) {
+            if (loginRepository.findByEmail(partnerUserDetailAndRoles.getEmail()) != null) {
+               // return Email already exist
+               viewPartnerUser = setPartnerUserDetailAndRolesStatus(viewPartnerUser, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+                     ErrorCode.PARTNER_USER_UPDATE_USER_EMAIL_EXIST.getValue(), messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_UPDATE_USER_EMAIL_EXIST));
+               LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.PARTNER_USER_UPDATE_USER_EMAIL_EXIST));
+               return viewPartnerUser;
+            }
+         }
+         
          partnerUser.getLogin().setLoginName(partnerUserDetailAndRoles.getUsername());
          partnerUser.getLogin().setEmail(partnerUserDetailAndRoles.getEmail());
          partnerUser.getLogin().setModifiedBy(partnerUser.getPartner().getPartnerGoId());
@@ -590,6 +610,54 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       return request;
    }
    
+   @Override
+   public List<PartnerUserStatus> getPartnerUserStatuses() {
+      List<PartnerUserStatus> partnerUserStatusList = new ArrayList<PartnerUserStatus>();
+      List<String> statusList = new ArrayList<String>();
+      statusList.add("Active");
+      statusList.add("InActive");
+
+      for (String status : statusList) {
+         PartnerUserStatus partnerUserStatus = new PartnerUserStatus();
+         partnerUserStatus.setPartnerUserStatusId(statusList.indexOf(status) + 1);
+         partnerUserStatus.setPartnerUserStatus(status);
+         partnerUserStatus.setPartnerUserStatusCode(status == "Active" ? true : false);
+         partnerUserStatusList.add(partnerUserStatus);
+      }
+      return partnerUserStatusList;
+   }
+   
+   @Override
+   public Response getPartnerGoIdForPartnerUser(String loginName) {
+      Response response = new Response();
+      try{
+      if (loginName != null) {
+         Login login = loginRepository.findByLoginName(loginName);
+         if (login != null) {
+            if (login.getGoIdSequence().getPartner() != null) {
+               Header header = new Header();
+               header.setSubject(login.getGoIdSequence().getPartner().getPartnerGoId().toString());
+               response.setHeader(header);
+               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_USER_cODE.getValue(),
+                     messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+            } else {               
+               response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+                     messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+               LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
+            }
+         } else {           
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
+         }
+      }
+      }catch (CcighgoException e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
+     }     
+      return response;
+   }
    
    @Override
    public PartnerUserProgramsAndRoles getProgramsAndRoles() {

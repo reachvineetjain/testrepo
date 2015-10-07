@@ -12,12 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerContact;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerCompanyDetailsMessageConstants;
@@ -49,6 +51,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    @Autowired LoginRepository loginRepository;
    @Autowired CountryRepository countryRepository;
    @Autowired PartnerContactRepository partnerContactRepository;
+   @Autowired SalutationRepository salutationRepository;
 
    @Override
    @Transactional(readOnly = true)
@@ -82,9 +85,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetails.setGeneralEmail(partner.getEmail());
          Login partnerLogin = null;
          for (Login login : partner.getGoIdSequence().getLogin()) {
-            if (partner.getPartnerGoId() == login.getGoIdSequence().getGoId()) {
-               partnerLogin = login;
-               break;
+            for (PartnerUser partUser : login.getPartnerUsers()) {
+               if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
+                  partnerLogin = login;
+                  break;
+               }
             }
          }
          if (partnerLogin != null) {
@@ -101,8 +106,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          }
          if (partnerContact != null) {
             PrimaryContactSalutation primaryContactSalutation = new PrimaryContactSalutation();
-            primaryContactSalutation.setSalutationId(1/* partnerContact.getSalutation().getSalutationId() */);
-            primaryContactSalutation.setSalutation("Mr."/* partnerContact.getSalutation().getSalutationName() */);
+            primaryContactSalutation.setSalutationId(partnerContact.getSalutation().getSalutationId());
+            primaryContactSalutation.setSalutation(partnerContact.getSalutation().getSalutationName());
             partnerPrimaryContact.setPrimaryContactSalutation(primaryContactSalutation);
             partnerPrimaryContact.setPrimaryContactTitle(partnerContact.getTitle());
             partnerPrimaryContact.setPrimaryContactFirstName(partnerContact.getFirstName());
@@ -111,7 +116,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerPrimaryContact.setPrimaryContactPhone(partnerContact.getPhone());
             partnerPrimaryContact.setPrimaryContactEmergencyPhone(partnerContact.getEmergencyPhone());
             partnerPrimaryContact.setPrimaryContactFax(partnerContact.getFax());
-            if(partnerContact.getReceiveNotificationEmails()!=null){
+            if (partnerContact.getReceiveNotificationEmails() != null) {
                partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(partnerContact.getReceiveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
             }
             partnerPrimaryContact.setPrimaryContactSkypeId(partnerContact.getSkypeId());
@@ -121,7 +126,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          PartnerAddress physicalAddress = new PartnerAddress();
 
          PartnerAddressState physicalAddressState = new PartnerAddressState();
+         physicalAddressState.setPartnerAddressStateName(partner.getPhysicalstate());
          PartnerAddressCountry physicalAddressCountry = new PartnerAddressCountry();
+         physicalAddressCountry.setPartnerAddressCountryId(partner.getLookupCountry2().getCountryId());
+         physicalAddressCountry.setPartnerAddressCountryISOCode(partner.getLookupCountry2().getCountryCode());
+         physicalAddressCountry.setPartnerAddressCountryName(partner.getLookupCountry2().getCountryName());
          physicalAddress.setAddressLineOne(partner.getPhysicalAddressLineOne());
          physicalAddress.setAddressLineTwo(partner.getPhysicalAddressLineTwo());
          physicalAddress.setCity(partner.getPhysicalCity());
@@ -131,7 +140,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 
          PartnerAddress mailingAddress = new PartnerAddress();
          PartnerAddressState mailingAddressState = new PartnerAddressState();
+         mailingAddressState.setPartnerAddressStateName(partner.getState());
          PartnerAddressCountry mailingAddressCountry = new PartnerAddressCountry();
+         mailingAddressCountry.setPartnerAddressCountryId(partner.getLookupCountry1().getCountryId());
+         mailingAddressCountry.setPartnerAddressCountryISOCode(partner.getLookupCountry1().getCountryCode());
+         mailingAddressCountry.setPartnerAddressCountryName(partner.getLookupCountry1().getCountryName());
          mailingAddress.setAddressLineOne(partner.getAddressLineOne());
          mailingAddress.setAddressLineTwo(partner.getAddressLineTwo());
          mailingAddress.setCity(partner.getCity());
@@ -146,10 +159,10 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerPhysicalAddress(partnerPhysicalAddress);
          if (partner.getMailingAddressIsSameAsPhysicalAdress() == CCIConstants.ACTIVE) {
             partnerCompanyDetail.setPartnerMailingAddressSame(true);
-            partnerCompanyDetail.setPartnerMailingAddress(null);
          } else {
-            partnerCompanyDetail.setPartnerMailingAddress(partnerMailingAddress);
+            partnerCompanyDetail.setPartnerMailingAddressSame(false);
          }
+         partnerCompanyDetail.setPartnerMailingAddress(partnerMailingAddress);
          partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
@@ -173,32 +186,22 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
       try {
          Partner partner = partnerRepository.findOne(partnerCompanyDetail.getPartnerGoId());
          if (partner != null) {
-            Login partnerLogin = null;
             PartnerContact partnerContact = null;
+            Login partnerLogin = null;
             for (Login login : partner.getGoIdSequence().getLogin()) {
-               if (partner.getPartnerGoId() == login.getGoIdSequence().getGoId()) {
-                  partnerLogin = login;
-                  break;
+               for (PartnerUser partUser : login.getPartnerUsers()) {
+                  if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
+                     partnerLogin = login;
+                     break;
+                  }
                }
             }
             for (PartnerContact contact : partner.getPartnerContacts()) {
-               if (partner.getPartnerGoId() == contact.getPartner().getPartnerGoId()) {
+               if (partner.getPartnerGoId().equals(contact.getPartner().getPartnerGoId())) {
                   partnerContact = contact;
                   break;
                }
             }
-            //TODO update salutation once table is linked in db
-            partnerContact.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
-            partnerContact.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
-            partnerContact.setLastName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactLastName());
-            partnerContact.setEmail(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmail());
-            partnerContact.setPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactPhone());
-            partnerContact.setEmergencyPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmergencyPhone());
-            partnerContact.setFax(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFax());
-            partnerContact.setReceiveNotificationEmails(partnerCompanyDetail.getPartnerPrimaryContact().isPrimaryContactShouldRecieveCCINotification()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
-            partnerContact.setSkypeId(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSkypeId());
-            partnerContact.setWebsite(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactWebsite());
-            partnerContactRepository.saveAndFlush(partnerContact);
             // find out if login name is changed.
             // if login name changed and doesn't exists then update login name or else return error
             if (!(partnerLogin.getLoginName().equals(partnerCompanyDetail.getPartnerCompanyDetails().getUserName()))) {
@@ -208,48 +211,62 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   partnerLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                   loginRepository.saveAndFlush(partnerLogin);
                } else {
-                  partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DUPLICATE_LOGINNAME.getValue(),
+                  updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DUPLICATE_LOGINNAME.getValue(),
                         messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_DUPLICATE_LOGIN_NAME)));
                   LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_DUPLICATE_LOGIN_NAME));
-                  return partnerCompanyDetail;
+                  return updatedObject;
                }
+            }else{
+               partnerContact.setSalutation(salutationRepository.findOne(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSalutation().getSalutationId()));
+               partnerContact.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
+               partnerContact.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
+               partnerContact.setLastName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactLastName());
+               partnerContact.setEmail(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmail());
+               partnerContact.setPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactPhone());
+               partnerContact.setEmergencyPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmergencyPhone());
+               partnerContact.setFax(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFax());
+               partnerContact.setReceiveNotificationEmails(partnerCompanyDetail.getPartnerPrimaryContact().isPrimaryContactShouldRecieveCCINotification() ? CCIConstants.ACTIVE
+                     : CCIConstants.INACTIVE);
+               partnerContact.setSkypeId(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSkypeId());
+               partnerContact.setWebsite(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactWebsite());
+               partnerContactRepository.saveAndFlush(partnerContact);
+               partner.setPartnerLogo(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyLogoUrl());
+               partner.setCompanyName(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyName());
+               partner.setAcronym(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyAcronym());
+               partner.setQuickbooksCode(partnerCompanyDetail.getPartnerCompanyDetails().getCCIAccountingDesignation());
+               partner.setDandBNumber(partnerCompanyDetail.getPartnerCompanyDetails().getDAndBNumber());
+               partner.setContractSigner(partnerCompanyDetail.getPartnerCompanyDetails().getPersonToSignContract());
+               partner.setSubscribeToCCINewsletter(partnerCompanyDetail.getPartnerCompanyDetails().isSubscribeCCINewsletter() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               partner.setReceiveAYPMails(partnerCompanyDetail.getPartnerCompanyDetails().isRecieveHSPNotificationEmails() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               partner.setEmail(partnerCompanyDetail.getPartnerCompanyDetails().getGeneralEmail());
+
+               // physical address
+               partner.setPhysicalAddressLineOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getAddressLineOne());
+               partner.setPhysicalAddressLineTwo(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getAddressLineTwo());
+               partner.setPhysicalCity(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getCity());
+               partner.setPhysicalZipcode(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getZipCode());
+               partner.setPhysicalstate(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressState().getPartnerAddressStateName());
+               partner.setLookupCountry2(countryRepository.findOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressCountry()
+                     .getPartnerAddressCountryId()));
+               // mailing address
+               partner.setMailingAddressIsSameAsPhysicalAdress(partnerCompanyDetail.isPartnerMailingAddressSame() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               partner.setAddressLineOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineOne());
+               partner.setAddressLineTwo(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineTwo());
+               partner.setCity(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getCity());
+               partner.setZipcode(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getZipCode());
+               partner.setState(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getPartnerAddressState().getPartnerAddressStateName());
+               partner.setLookupCountry1(countryRepository.findOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getPartnerAddressCountry()
+                     .getPartnerAddressCountryId()));
+               partnerRepository.saveAndFlush(partner);
+               updatedObject = getPartnerCompanyDetails(String.valueOf(partner.getPartnerGoId()));
             }
-            partner.setPartnerLogo(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyLogoUrl());
-            partner.setCompanyName(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyName());
-            partner.setAcronym(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyAcronym());
-            partner.setQuickbooksCode(partnerCompanyDetail.getPartnerCompanyDetails().getCCIAccountingDesignation());
-            partner.setDandBNumber(partnerCompanyDetail.getPartnerCompanyDetails().getDAndBNumber());
-            partner.setContractSigner(partnerCompanyDetail.getPartnerCompanyDetails().getPersonToSignContract());
-            partner.setSubscribeToCCINewsletter(partnerCompanyDetail.getPartnerCompanyDetails().isSubscribeCCINewsletter() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            partner.setReceiveAYPMails(partnerCompanyDetail.getPartnerCompanyDetails().isRecieveHSPNotificationEmails() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            partner.setEmail(partnerCompanyDetail.getPartnerCompanyDetails().getGeneralEmail());
-
-            // physical address
-            partner.setPhysicalAddressLineOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getAddressLineOne());
-            partner.setPhysicalAddressLineTwo(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getAddressLineTwo());
-            partner.setPhysicalCity(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getCity());
-            partner.setPhysicalZipcode(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getZipCode());
-            partner.setPhysicalstate(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressState().getPartnerAddressStateName());
-            partner.setLookupCountry2(countryRepository.findOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressCountry()
-                  .getPartnerAddressCountryId()));
-            //mailing address
-            partner.setAddressLineOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineOne());
-            partner.setAddressLineTwo(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineTwo());
-            partner.setCity(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getCity());
-            partner.setZipcode(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getZipCode());
-            partner.setState(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getPartnerAddressState().getPartnerAddressStateName());
-            partner.setLookupCountry1(countryRepository.findOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getPartnerAddressCountry()
-                  .getPartnerAddressCountryId()));
-            partnerRepository.saveAndFlush(partner);
-
-            updatedObject = getPartnerCompanyDetails(String.valueOf(partner.getPartnerGoId()));
          } else {
-            partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
-         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
                messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL)));
          LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL), e);
       }
