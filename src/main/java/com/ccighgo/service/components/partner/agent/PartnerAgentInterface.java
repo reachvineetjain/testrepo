@@ -20,6 +20,6 @@ public interface PartnerAgentInterface {
    
    public PartnerAgentSeasonDetails EditPartnerSeasons(PartnerAgentSeasonDetails partnerAgentSeasonDetails);
    
-   public PartnerAgentSeasonDetails viewPartnerSeason(PartnerSeasonApplication partnerSeasonApplication);
+   public PartnerAgentSeasonDetails viewPartnerSeason(String partnerSeasonId);
 
 }

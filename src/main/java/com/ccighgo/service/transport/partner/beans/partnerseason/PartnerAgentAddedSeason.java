@@ -19,7 +19,9 @@ import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus;
     "partnerEndDate",
     "partnerApplicationDeadlineDate",
     "seasonProgramStatus",
-    "seasonStatus"
+    "seasonStatus",
+    "isSigned"
+    
 })
 public class PartnerAgentAddedSeason {
    
@@ -43,6 +45,9 @@ public class PartnerAgentAddedSeason {
    @XmlElement(required = true)
    protected PartnerSeasonProgramStatus seasonProgramStatus;
    protected SeasonStatus seasonStatus;
+   protected Byte isSigned;
+   
+   
 
    /**
     * Gets the value of the partnerId property.
@@ -259,6 +264,14 @@ public class PartnerAgentAddedSeason {
 
    public void setSeasonStatus(SeasonStatus seasonStatus) {
       this.seasonStatus = seasonStatus;
+   }
+
+   public Byte getIsSigned() {
+      return isSigned;
+   }
+
+   public void setIsSigned(Byte isSigned) {
+      this.isSigned = isSigned;
    }
 
 

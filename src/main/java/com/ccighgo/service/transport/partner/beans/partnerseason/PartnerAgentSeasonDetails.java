@@ -9,6 +9,7 @@ import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSe
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerAgentDetails", propOrder = {
     "partnerId",
+    "partnerSeasonId",
     "partnerSeasonStatus",
     "canHaveSubPartner",
     "insuranceCarrierName",
@@ -18,12 +19,15 @@ import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSe
     "disableAddParticipant",
     "programAllocations",
     "partnerSeasonAgentDates",
+    "partnerSeasonContracts",
     "PartnerSeasonDocuments",
     "PartnerSeasonNotes"
+    
 })
 public class PartnerAgentSeasonDetails {
    
    protected String partnerId;
+   protected String partnerSeasonId;
    protected PartnerSeasonStatus partnerSeasonStatus;
    protected Byte canHaveSubPartner;
    protected String insuranceCarrierName;
@@ -33,7 +37,9 @@ public class PartnerAgentSeasonDetails {
    protected Byte disableAddParticipant;
    protected ProgramAllocations programAllocations;
    protected PartnerSeasonAgentDates partnerSeasonAgentDates;
+   protected PartnerSeasonContracts partnerSeasonContracts;
    protected PartnerSeasonDocuments PartnerSeasonDocuments;
+  
    
    public String getPartnerId() {
       return partnerId;
@@ -94,6 +100,24 @@ public class PartnerAgentSeasonDetails {
    }
    public void setProgramAllocations(ProgramAllocations programAllocations) {
       this.programAllocations = programAllocations;
+   }
+   public String getPartnerSeasonId() {
+      return partnerSeasonId;
+   }
+   public void setPartnerSeasonId(String partnerSeasonId) {
+      this.partnerSeasonId = partnerSeasonId;
+   }
+   public PartnerSeasonDocuments getPartnerSeasonDocuments() {
+      return PartnerSeasonDocuments;
+   }
+   public void setPartnerSeasonDocuments(PartnerSeasonDocuments partnerSeasonDocuments) {
+      PartnerSeasonDocuments = partnerSeasonDocuments;
+   }
+   public PartnerSeasonContracts getPartnerSeasonContracts() {
+      return partnerSeasonContracts;
+   }
+   public void setPartnerSeasonContracts(PartnerSeasonContracts partnerSeasonContracts) {
+      this.partnerSeasonContracts = partnerSeasonContracts;
    }
     
 }

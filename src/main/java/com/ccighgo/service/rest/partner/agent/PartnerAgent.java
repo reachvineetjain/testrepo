@@ -60,11 +60,11 @@ public class PartnerAgent {
       return partnerAgentInterface.EditPartnerSeasons(partnerAgentSeasonDetails);
    }
    
-   @POST
-   @Path("view/{partnerSeasonId}")
+   @GET
+   @Path("view-partner-season-detail/{partnerSeasonId}")
    @Produces("application/json")
-   public PartnerAgentSeasonDetails viewPartnerSeason(PartnerSeasonApplication partnerSeasonApplication) {
+   public PartnerAgentSeasonDetails viewPartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
       LOGGER.debug("calling PartnerAgent.viewPartnerSeason");
-      return partnerAgentInterface.viewPartnerSeason(partnerSeasonApplication);
+      return partnerAgentInterface.viewPartnerSeason(partnerSeasonId);
    }
 }

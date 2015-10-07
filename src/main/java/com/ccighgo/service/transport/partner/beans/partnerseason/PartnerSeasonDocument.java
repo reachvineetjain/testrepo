@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerSeasonDocument", propOrder = {
     "partnerSeasonDocumentId",
@@ -12,7 +14,8 @@ import javax.xml.bind.annotation.XmlType;
     "uploadedBy",
     "uploadedDate",
     "documentType",
-    "description"
+    "description",
+    "active"
 })
 public class PartnerSeasonDocument {
    protected Integer partnerSeasonDocumentId;
@@ -20,8 +23,9 @@ public class PartnerSeasonDocument {
    protected String documentName;
    protected String uploadedBy;
    protected String uploadedDate;
-   protected String documentType;
+   protected DocumentType documentType;
    protected String description;
+   protected Byte active;
    
    public Integer getPartnerSeasonDocumentId() {
       return partnerSeasonDocumentId;
@@ -53,17 +57,25 @@ public class PartnerSeasonDocument {
    public void setUploadedDate(String uploadedDate) {
       this.uploadedDate = uploadedDate;
    }
-   public String getDocumentType() {
+
+   public DocumentType getDocumentType() {
       return documentType;
    }
-   public void setDocumentType(String documentType) {
+   public void setDocumentType(DocumentType documentType) {
       this.documentType = documentType;
    }
+
    public String getDescription() {
       return description;
    }
    public void setDescription(String description) {
       this.description = description;
+   }
+   public Byte getActive() {
+      return active;
+   }
+   public void setActive(Byte active) {
+      this.active = active;
    }
 
 }

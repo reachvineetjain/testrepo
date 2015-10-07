@@ -16,6 +16,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
@@ -173,4 +174,11 @@ public interface UtilityServices {
     * @return
     */
    public List<NoteTags> getAllTags();
+   
+   /**
+    * get list of DocumentTypes in system
+    * 
+    * @return
+    */
+   public DocumentTypes getDocumentTypes();
 }

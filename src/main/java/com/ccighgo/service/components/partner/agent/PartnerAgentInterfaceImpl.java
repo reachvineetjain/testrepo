@@ -13,13 +13,16 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
+import com.ccighgo.db.entities.PartnerSeasonDocument;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.DocumentTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
+import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
@@ -33,13 +36,17 @@ import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSea
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonAgentDate;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonAgentDates;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonContract;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonContracts;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonDepartment;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonDocuments;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramOption;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.partner.beans.partnerseason.ProgramAllocation;
 import com.ccighgo.service.transport.partner.beans.partnerseason.ProgramAllocations;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonStatus;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 
@@ -54,7 +61,8 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
    @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
    @Autowired SeasonRepository seasonRepository;
    @Autowired DepartmentProgramRepository departmentProgramRepository;
-   
+   @Autowired PartnerStatusRepository partnerStatusRepository;
+   @Autowired DocumentTypeRepository documentTypeRepository;
    
    @Override
    @Transactional
@@ -94,29 +102,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
                   seasonStatus.setActive(entity.getSeason().getSeasonStatus().getActive() == CCIConstants.ACTIVE ? true : false);
 
                   PartnerAgentAddedSeason partnerAgentAddedSeason = new PartnerAgentAddedSeason();
-
-                  // partnerAgentAddedSeason.setParticipantAllocated("TODO:need clarification");
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_J1_HS)) {
-                     partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonJ1details().get(0).getProgramName());
-                  }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_F1)) {
-                     partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonF1details().get(0).getProgramName());
-                  }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
-                     partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonIhpdetails().get(0).getProgramName());
-                  }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SUMMER)) {
-                     partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName());
-                  }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_WINTER)) {
-                     partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonWnTwinterDetails().get(0).getProgramName());
-                  }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SPRING)) {
-                     partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonWnTspringDetails().get(0).getProgramName());
-                  }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_CAP)) {
-                     partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonCapdetails().get(0).getProgramName());
-                  }
+                  partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonName()+"-"+entity.getDepartmentProgram().getProgramName());
                   partnerAgentAddedSeason.setPartnerSeasonId(entity.getPartnerSeasonId());
                   partnerAgentAddedSeason.setPartnerId(partnerGoId);
                   partnerAgentAddedSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
@@ -126,6 +112,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
                   partnerAgentAddedSeason.setPartnerProgramOption(partnerProgramOption);
                   partnerAgentAddedSeason.setSeasonProgramStatus(seasonProgramStatus);
                   partnerAgentAddedSeason.setSeasonStatus(seasonStatus);
+                  partnerAgentAddedSeason.setIsSigned(CCIConstants.INACTIVE);//TODO : need Clarification from DB
                   partnerSeasonsUIList.add(partnerAgentAddedSeason);
                }
             }
@@ -232,35 +219,44 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
    
    @Override
    @Transactional
-   public PartnerAgentSeasonDetails EditPartnerSeasons(PartnerAgentSeasonDetails partnerAgentSeasonDetails){
-      
-      
-      return null;
+   public PartnerAgentSeasonDetails EditPartnerSeasons(PartnerAgentSeasonDetails partnerAgentSeasonDetails) {
+
+      PartnerAgentSeasonDetails partnerAgentSeasonDetail = new PartnerAgentSeasonDetails();
+      PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerAgentSeasonDetails.getPartnerSeasonId()));
+
+      if (partnerAgentSeasonDetails.getPartnerSeasonStatus() != null) {
+         PartnerStatus partnerStatus = partnerStatusRepository.findOne(partnerAgentSeasonDetails.getPartnerSeasonStatus().getPartnerSeasonStatusId());
+         partnerSeason.setPartnerStatus(partnerStatus);
+      }
+
+      return partnerAgentSeasonDetail;
    }
 
    @Override
    @Transactional
-   public PartnerAgentSeasonDetails viewPartnerSeason(PartnerSeasonApplication partnerSeasonApplication){
-      
-      PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonApplication.getSeasonId()));
-      
+   public PartnerAgentSeasonDetails viewPartnerSeason(String partnerSeasonId) {
+
+      PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
+
       PartnerAgentSeasonDetails partnerAgentSeasonDetails = new PartnerAgentSeasonDetails();
-      int flag=0;
-      //Partner SeasonStatus
-      PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus(); 
+      int flag = 0;
+      // Partner SeasonStatus
+      PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus();
       partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus().getPartnerStatusId());
       partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus().getPartnerStatusName());
       partnerAgentSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
-      
-      //Details
+
+      partnerAgentSeasonDetails.setPartnerId(partnerSeason.getPartner().getPartnerGoId().toString());
+      partnerAgentSeasonDetails.setPartnerSeasonId(partnerSeason.getPartnerSeasonId().toString());
+      // Details
       partnerAgentSeasonDetails.setCanHaveSubPartner(partnerSeason.getPartner().getCanHaveSubPartner());
       partnerAgentSeasonDetails.setDisableAddParticipant(partnerSeason.getDisableAddParticipant());
       partnerAgentSeasonDetails.setInsuranceCarrierName(partnerSeason.getInsuranceCarrierName());
       partnerAgentSeasonDetails.setInsurancePhoneNumber(partnerSeason.getInsurancePhoneNumber());
       partnerAgentSeasonDetails.setInsurancePolicyNumber(partnerSeason.getInsurancePolicyNumber());
       partnerAgentSeasonDetails.setQuestionaireRequired(partnerSeason.getQuestionaireRequired());
-      
-      //Program allocations
+
+      // Program allocations
       ProgramAllocations programAllocations = new ProgramAllocations();
       List<ProgramAllocation> programAllocationList = new ArrayList<ProgramAllocation>();
       List<PartnerSeasonAllocation> partnerSeasonAllocationDbList = partnerSeason.getPartnerSeasonAllocations();
@@ -268,36 +264,36 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
          ProgramAllocation programAllocation = new ProgramAllocation();
          programAllocation.setMaxGuarantedParticipants(partnerSeasonAllocation.getMaxGuaranteedPax());
          programAllocation.setMaxUnguarantedParticipants(partnerSeasonAllocation.getMaxPax());
-         programAllocation.setParticipantApproved(0);
-         if(flag == 0){
-            programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption1().getProgramOptionName())); 
-         }else{
+         programAllocation.setParticipantApproved(0);//TODO Need clarification from DB
+         if (flag == 0) {
+            programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption1().getProgramOptionName()));
+         } else {
             programAllocation.setSemesters(getSemesterName(partnerSeasonAllocation.getDepartmentProgramOption2().getProgramOptionName()));
          }
-         
-         programAllocation.setTotalAllocations((partnerSeasonAllocation.getMaxGuaranteedPax()+partnerSeasonAllocation.getMaxPax()));
+
+         programAllocation.setTotalAllocations((partnerSeasonAllocation.getMaxGuaranteedPax() + partnerSeasonAllocation.getMaxPax()));
          programAllocationList.add(programAllocation);
-         flag=1;
+         flag = 1;
       }
       programAllocations.getProgramAllocations().addAll(programAllocationList);
       partnerAgentSeasonDetails.setProgramAllocations(programAllocations);
-      
-      //Dates
+
+      // Dates
       PartnerSeasonAgentDates partnerSeasonAgentDates = new PartnerSeasonAgentDates();
       List<PartnerSeasonAgentDate> partnerSeasonAgentDateList = new ArrayList<PartnerSeasonAgentDate>();
-      
+
       PartnerSeasonAgentDate partnerSeasonAgentDate1 = new PartnerSeasonAgentDate();
       partnerSeasonAgentDate1.setOptions(CCIConstants.SEASON_OPTION_1);
-      if(partnerSeasonApplication.getProgramName().equalsIgnoreCase(CCIConstants.HSP_J1_HS)){
+      if (partnerSeason.getDepartmentProgram().getProgramName().equalsIgnoreCase(CCIConstants.HSP_J1_HS)) {
          partnerSeasonAgentDate1.setPartnerSeasonStartDate(partnerSeason.getSeason().getSeasonJ1details().get(0).getFirstSemStartDate().toString());
          partnerSeasonAgentDate1.setPartnerSeasonEndDate(partnerSeason.getSeason().getSeasonJ1details().get(0).getFirstSemEndDate().toString());
          partnerSeasonAgentDate1.setPartnerSeasonAppDeadlineDate(partnerSeason.getSeason().getSeasonJ1details().get(0).getFirstSemAppDeadlineDate().toString());
-         partnerSeasonAgentDate1.setPartnerSeasonExtAppDeadlineDate("");//TODO:Need clarification
+         partnerSeasonAgentDate1.setPartnerSeasonExtAppDeadlineDate(partnerSeason.getSeason().getSeasonJ1details().get(0).getFirstSemAppDeadlineDate().toString());
          partnerSeasonAgentDate1.setPartnerSeasonSecSemDeadlineDate(partnerSeason.getSeason().getSeasonJ1details().get(0).getSecondSemAppDeadlineDate().toString());
-         partnerSeasonAgentDate1.setPartnerSeasonExtSecSemDeadlineDate("");//TODO:Need clarification
-         partnerSeasonAgentDateList.add(partnerSeasonAgentDate1);
+         partnerSeasonAgentDate1.setPartnerSeasonExtSecSemDeadlineDate(partnerSeason.getSeason().getSeasonJ1details().get(0).getSecondSemAppDeadlineDate().toString());
       }
-      
+      partnerSeasonAgentDateList.add(partnerSeasonAgentDate1);
+
       PartnerSeasonAgentDate partnerSeasonAgentDate2 = new PartnerSeasonAgentDate();
       partnerSeasonAgentDate2.setOptions(CCIConstants.SEASON_OPTION_2);
       partnerSeasonAgentDate2.setPartnerSeasonStartDate(partnerSeason.getPartnerSeasonStartDate().toString());
@@ -309,13 +305,54 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
       partnerSeasonAgentDateList.add(partnerSeasonAgentDate2);
       partnerSeasonAgentDates.getPartnerSeasonAgentDates().addAll(partnerSeasonAgentDateList);
       partnerAgentSeasonDetails.setPartnerSeasonAgentDates(partnerSeasonAgentDates);
-      
-      //Partner Season Documents
-      
-      
-      
-      //Partner Season Notes
-            
+
+      // Partner Season Documents Operating Agreement
+      PartnerSeasonContracts partnerSeasonContracts = new PartnerSeasonContracts();
+      List<PartnerSeasonContract> partnerSeasonContractList = new ArrayList<PartnerSeasonContract>();
+      List<com.ccighgo.db.entities.PartnerSeasonContract> PartnerSeasonContractDBList = partnerSeason.getPartnerSeasonContracts();
+      for (com.ccighgo.db.entities.PartnerSeasonContract partnerSeasonContractentity : PartnerSeasonContractDBList) {
+         PartnerSeasonContract partnerSeasonContract = new PartnerSeasonContract();
+         partnerSeasonContract.setActive(partnerSeasonContractentity.getActive());
+         partnerSeasonContract.setDisplayName(partnerSeasonContractentity.getDisplayName());
+         partnerSeasonContract.setFileName(partnerSeasonContractentity.getFileName());
+         partnerSeasonContract.setIsSigned(CCIConstants.ACTIVE); // TODO: need to add field in database
+         partnerSeasonContract.setModifiedBy(partnerSeasonContractentity.getModifiedBy().toString());
+         partnerSeasonContract.setModifiedOn(partnerSeasonContractentity.getModifiedOn().toString());
+         partnerSeasonContract.setPartnerSeasonContractId(partnerSeasonContractentity.getPartnerSeasonContractId());
+         partnerSeasonContract.setUploadedBy(partnerSeasonContractentity.getCreatedBy().toString());
+         partnerSeasonContract.setUploadedOn(partnerSeasonContractentity.getCreatedOn().toString());
+         partnerSeasonContractList.add(partnerSeasonContract);
+      }
+      partnerSeasonContracts.getPartnerSeasonContracts().addAll(partnerSeasonContractList);
+      partnerAgentSeasonDetails.setPartnerSeasonContracts(partnerSeasonContracts);
+
+      // Partner Season Documents
+      PartnerSeasonDocuments partnerSeasonDocuments = new PartnerSeasonDocuments();
+      List<com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonDocument> partnerSeasonDocumentList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonDocument>();
+      List<PartnerSeasonDocument> partnerSeasonDocumentDbList = partnerSeason.getPartner().getPartnerSeasonDocuments();
+      for (PartnerSeasonDocument partnerSeasonDocumentEntity : partnerSeasonDocumentDbList) {
+         com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonDocument partnerSeasonDocument = new com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonDocument();
+         partnerSeasonDocument.setActive(partnerSeasonDocumentEntity.getActive());
+         partnerSeasonDocument.setDescription("");// TODO : need to add field in Database
+         partnerSeasonDocument.setDocumentName(partnerSeasonDocumentEntity.getSeasonProgramDocument().getDocumentInformation().getDocumentName());
+         // Document Type
+         com.ccighgo.db.entities.DocumentType documentTypeEntity = partnerSeasonDocumentEntity.getSeasonProgramDocument().getDocumentInformation()
+               .getDocumentTypeDocumentCategoryProcess().getDocumentType();
+         DocumentType documentType = new DocumentType();
+         documentType.setDocumentTypeId(documentTypeEntity.getDocumentTypeId());
+         documentType.setDocumentTypeName(documentTypeEntity.getDocumentTypeName());
+
+         partnerSeasonDocument.setDocumentType(documentType);
+         partnerSeasonDocument.setFileName(partnerSeasonDocumentEntity.getSeasonProgramDocument().getDocumentInformation().getFileName());
+         partnerSeasonDocument.setPartnerSeasonDocumentId(partnerSeasonDocumentEntity.getPartnerSeasonDocumentId());
+         partnerSeasonDocument.setUploadedBy(partnerSeasonDocumentEntity.getCreatedBy().toString());
+         partnerSeasonDocument.setUploadedDate(partnerSeasonDocumentEntity.getCreatedOn().toString());
+         partnerSeasonDocumentList.add(partnerSeasonDocument);
+      }
+      partnerSeasonDocuments.getPartnerSeasonDocuments().addAll(partnerSeasonDocumentList);
+
+      // TODO : Partner Season Notes
+
       return partnerAgentSeasonDetails;
    }
    

@@ -35,6 +35,7 @@ import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
+import com.ccighgo.jpa.repositories.DocumentTypeRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
@@ -49,6 +50,7 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.SeasonMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -59,6 +61,8 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
@@ -111,6 +115,7 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired DepartmentProgramOptionRepository departmentProgramOptionRepository;
    @Autowired PartnerStatusRepository partnerStatusRepository;
    @Autowired PartnerNoteTagRepository partnerNoteTagRepository;
+   @Autowired DocumentTypeRepository documentTypeRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -802,5 +807,41 @@ public class UtilityServicesImpl implements UtilityServices {
          }
       }
       return noteTagsList;
+   }
+   
+   @Override
+   public DocumentTypes getDocumentTypes() {
+      DocumentTypes documentType = null;
+      try {
+         List<com.ccighgo.db.entities.DocumentType> typeList = documentTypeRepository.findAll();
+         if (typeList != null) {
+            documentType = new DocumentTypes();
+            for (com.ccighgo.db.entities.DocumentType docType : typeList) {
+               DocumentType dt = new DocumentType();
+               dt.setDocumentTypeId(docType.getDocumentTypeId());
+               dt.setDocumentTypeName(docType.getDocumentTypeName());
+               documentType.getDocumentTypes().add(dt);
+               documentType = setDocumentTypesStatus(documentType, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            }
+         } else {
+            documentType = setDocumentTypesStatus(documentType, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DOCUMENT_TYPES.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+         }
+      } catch (CcighgoException e) {
+         documentType = setDocumentTypesStatus(documentType, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DOCUMENT_TYPES.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+      }
+
+      return documentType;
+   }
+   
+   private DocumentTypes setDocumentTypesStatus(DocumentTypes documentType, String code, String type, int serviceCode, String message) {
+      if (documentType == null)
+         documentType = new DocumentTypes();
+      documentType.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return documentType;
    }
 }

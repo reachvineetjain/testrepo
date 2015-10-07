@@ -23,6 +23,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
@@ -285,4 +286,11 @@ public class Utility {
    public List<NoteTags> getAllTags() {
       return utilityServices.getAllTags();
    }  
+   
+   @GET
+   @Path("document-type")
+   @Produces("application/json")
+   public DocumentTypes getDocumentTypes(){
+      return utilityServices.getDocumentTypes();
+   }
 }
