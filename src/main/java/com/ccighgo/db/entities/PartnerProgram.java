@@ -20,13 +20,13 @@ public class PartnerProgram implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerProgramId;
 
-	private byte hasApplied;
+	private Byte hasApplied;
 
-	private byte isEligible;
+	private Byte isEligible;
 
-	private byte isOther;
+	private Byte isOther;
 
-	private byte isPDNotified;
+	private Byte isPDNotified;
 
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="partnerProgram")
@@ -63,35 +63,35 @@ public class PartnerProgram implements Serializable {
 		this.partnerProgramId = partnerProgramId;
 	}
 
-	public byte getHasApplied() {
+	public Byte getHasApplied() {
 		return this.hasApplied;
 	}
 
-	public void setHasApplied(byte hasApplied) {
+	public void setHasApplied(Byte hasApplied) {
 		this.hasApplied = hasApplied;
 	}
 
-	public byte getIsEligible() {
+	public Byte getIsEligible() {
 		return this.isEligible;
 	}
 
-	public void setIsEligible(byte isEligible) {
+	public void setIsEligible(Byte isEligible) {
 		this.isEligible = isEligible;
 	}
 
-	public byte getIsOther() {
+	public Byte getIsOther() {
 		return this.isOther;
 	}
 
-	public void setIsOther(byte isOther) {
+	public void setIsOther(Byte isOther) {
 		this.isOther = isOther;
 	}
 
-	public byte getIsPDNotified() {
+	public Byte getIsPDNotified() {
 		return this.isPDNotified;
 	}
 
-	public void setIsPDNotified(byte isPDNotified) {
+	public void setIsPDNotified(Byte isPDNotified) {
 		this.isPDNotified = isPDNotified;
 	}
 

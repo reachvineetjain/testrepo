@@ -19,7 +19,8 @@ public class PartnerAgentInquiryDocument implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerAgentInquiryDocumentId;
 
-	private byte active;
+	@Column(nullable=false)
+	private Byte active;
 
 	private Integer documentInformationId;
 
@@ -44,11 +45,11 @@ public class PartnerAgentInquiryDocument implements Serializable {
 		this.partnerAgentInquiryDocumentId = partnerAgentInquiryDocumentId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

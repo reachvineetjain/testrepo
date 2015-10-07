@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -22,7 +20,7 @@ public class PartnerUser implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerUserId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(length=50)
 	private String email;
@@ -36,27 +34,26 @@ public class PartnerUser implements Serializable {
 	@Column(length=150)
 	private String firstName;
 
+	private Byte isPrimary;
+
 	@Column(length=150)
 	private String lastName;
 
 	@Column(length=150)
 	private String phone;
 
-	/*@Column(length=10)
-	private String salutation;*/
+	@Column(length=300)
+	private String photo;
 
 	@Column(length=150)
 	private String skypeId;
 
 	@Column(length=150)
 	private String title;
-	
-	@Column(nullable=false)
-   private Byte isPrimary;
 
 	//bi-directional many-to-one association to PartnerPermission
 	@OneToOne(mappedBy="partnerUser", fetch = FetchType.EAGER , cascade = { CascadeType.ALL })
-	private PartnerPermission partnerPermissions;
+   private PartnerPermission partnerPermissions;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
@@ -71,15 +68,16 @@ public class PartnerUser implements Serializable {
 	//bi-directional many-to-one association to PartnerUserRole
 	@OneToMany(mappedBy="partnerUser")
 	private List<PartnerUserRole> partnerUserRoles;
-	
+
 	//bi-directional many-to-one association to LookupGender
-   @ManyToOne
-   @JoinColumn(name="genderId")
-   private LookupGender lookupGender;
-   
-   @ManyToOne
-   @JoinColumn(name="salutationId")
-   private Salutation salutation;
+	@ManyToOne
+	@JoinColumn(name="genderId")
+	private LookupGender lookupGender;
+
+	//bi-directional many-to-one association to Salutation
+	@ManyToOne
+	@JoinColumn(name="salutationId")
+	private Salutation salutation;
 
 	public PartnerUser() {
 	}
@@ -92,11 +90,11 @@ public class PartnerUser implements Serializable {
 		this.partnerUserId = partnerUserId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -132,6 +130,14 @@ public class PartnerUser implements Serializable {
 		this.firstName = firstName;
 	}
 
+	public Byte getIsPrimary() {
+		return this.isPrimary;
+	}
+
+	public void setIsPrimary(Byte isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -146,6 +152,14 @@ public class PartnerUser implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getPhoto() {
+		return this.photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public String getSkypeId() {
@@ -164,27 +178,29 @@ public class PartnerUser implements Serializable {
 		this.title = title;
 	}
 
-	public Byte getIsPrimary() {
-      return isPrimary;
-   }
+	public PartnerPermission getPartnerPermissions() {
+		return this.partnerPermissions;
+	}
 
-   public void setIsPrimary(Byte isPrimary) {
-      this.isPrimary = isPrimary;
-   }
+	public void setPartnerPermissions(PartnerPermission partnerPermissions) {
+		this.partnerPermissions = partnerPermissions;
+	}
 
-   public Login getLogin() {
+	public PartnerPermission addPartnerPermission(PartnerPermission partnerPermission) {
+		partnerPermission.setPartnerUser(this);
+		return partnerPermission;
+	}
+
+	public PartnerPermission removePartnerPermission(PartnerPermission partnerPermission) {
+		partnerPermission.setPartnerUser(null);
+		return partnerPermission;
+	}
+
+	public Login getLogin() {
 		return this.login;
 	}
 
-	public PartnerPermission getPartnerPermissions() {
-      return partnerPermissions;
-   }
-
-   public void setPartnerPermissions(PartnerPermission partnerPermissions) {
-      this.partnerPermissions = partnerPermissions;
-   }
-
-   public void setLogin(Login login) {
+	public void setLogin(Login login) {
 		this.login = login;
 	}
 
@@ -218,20 +234,20 @@ public class PartnerUser implements Serializable {
 		return partnerUserRole;
 	}
 
-   public LookupGender getLookupGender() {
-      return lookupGender;
-   }
+	public LookupGender getLookupGender() {
+		return this.lookupGender;
+	}
 
-   public void setLookupGender(LookupGender lookupGender) {
-      this.lookupGender = lookupGender;
-   }
+	public void setLookupGender(LookupGender lookupGender) {
+		this.lookupGender = lookupGender;
+	}
 
-   public Salutation getSalutation() {
-      return salutation;
-   }
+	public Salutation getSalutation() {
+		return this.salutation;
+	}
 
-   public void setSalutation(Salutation salutation) {
-      this.salutation = salutation;
-   }
+	public void setSalutation(Salutation salutation) {
+		this.salutation = salutation;
+	}
 
 }

@@ -17,7 +17,7 @@ public class SysDiagram implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer diagramId;
+	private int diagramId;
 
 	@Lob
 	private byte[] definition;
@@ -33,11 +33,11 @@ public class SysDiagram implements Serializable {
 	public SysDiagram() {
 	}
 
-	public Integer getDiagramId() {
+	public int getDiagramId() {
 		return this.diagramId;
 	}
 
-	public void setDiagramId(Integer diagramId) {
+	public void setDiagramId(int diagramId) {
 		this.diagramId = diagramId;
 	}
 
