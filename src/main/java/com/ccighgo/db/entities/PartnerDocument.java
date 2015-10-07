@@ -19,6 +19,9 @@ public class PartnerDocument implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerDocumentId;
 
+	@Lob
+	private String description;
+
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
 	@JoinColumn(name="documentInformationId")
@@ -43,6 +46,14 @@ public class PartnerDocument implements Serializable {
 
 	public void setPartnerDocumentId(Integer partnerDocumentId) {
 		this.partnerDocumentId = partnerDocumentId;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public DocumentInformation getDocumentInformation() {

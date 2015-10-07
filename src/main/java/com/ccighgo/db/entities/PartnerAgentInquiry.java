@@ -58,6 +58,8 @@ public class PartnerAgentInquiry implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date followUpDate;
 
+	private byte highSchoolAbroad;
+
 	@Column(length=100)
 	private String howDidYouHearAboutCCI;
 
@@ -67,10 +69,14 @@ public class PartnerAgentInquiry implements Serializable {
 	@Column(length=255)
 	private String logo;
 
+	private byte other;
+
 	private byte participantsForHomeCountry;
 
 	@Column(length=25)
 	private String phone;
+
+	private int rating;
 
 	@Column(length=10)
 	private String salutation;
@@ -80,6 +86,10 @@ public class PartnerAgentInquiry implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date submittedOn;
+
+	private byte teachAbroad;
+
+	private byte volunteerAbroad;
 
 	@Column(length=50)
 	private String website;
@@ -105,6 +115,16 @@ public class PartnerAgentInquiry implements Serializable {
 	//bi-directional many-to-one association to PartnerAgentProgram
 	@OneToMany(mappedBy="partnerAgentInquiry")
 	private List<PartnerAgentProgram> partnerAgentPrograms;
+
+	//bi-directional many-to-one association to Partner
+	@ManyToOne
+	@JoinColumn(name="partnerGoId")
+	private Partner partner2;
+
+	//bi-directional many-to-one association to Salutation
+	@ManyToOne
+	@JoinColumn(name="salutationId")
+	private Salutation salutationBean;
 
 	public PartnerAgentInquiry() {
 	}
@@ -221,6 +241,14 @@ public class PartnerAgentInquiry implements Serializable {
 		this.followUpDate = followUpDate;
 	}
 
+	public byte getHighSchoolAbroad() {
+		return this.highSchoolAbroad;
+	}
+
+	public void setHighSchoolAbroad(byte highSchoolAbroad) {
+		this.highSchoolAbroad = highSchoolAbroad;
+	}
+
 	public String getHowDidYouHearAboutCCI() {
 		return this.howDidYouHearAboutCCI;
 	}
@@ -245,6 +273,14 @@ public class PartnerAgentInquiry implements Serializable {
 		this.logo = logo;
 	}
 
+	public byte getOther() {
+		return this.other;
+	}
+
+	public void setOther(byte other) {
+		this.other = other;
+	}
+
 	public byte getParticipantsForHomeCountry() {
 		return this.participantsForHomeCountry;
 	}
@@ -259,6 +295,14 @@ public class PartnerAgentInquiry implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public int getRating() {
+		return this.rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 	public String getSalutation() {
@@ -283,6 +327,22 @@ public class PartnerAgentInquiry implements Serializable {
 
 	public void setSubmittedOn(Date submittedOn) {
 		this.submittedOn = submittedOn;
+	}
+
+	public byte getTeachAbroad() {
+		return this.teachAbroad;
+	}
+
+	public void setTeachAbroad(byte teachAbroad) {
+		this.teachAbroad = teachAbroad;
+	}
+
+	public byte getVolunteerAbroad() {
+		return this.volunteerAbroad;
+	}
+
+	public void setVolunteerAbroad(byte volunteerAbroad) {
+		this.volunteerAbroad = volunteerAbroad;
 	}
 
 	public String getWebsite() {
@@ -373,6 +433,22 @@ public class PartnerAgentInquiry implements Serializable {
 		partnerAgentProgram.setPartnerAgentInquiry(null);
 
 		return partnerAgentProgram;
+	}
+
+	public Partner getPartner2() {
+		return this.partner2;
+	}
+
+	public void setPartner2(Partner partner2) {
+		this.partner2 = partner2;
+	}
+
+	public Salutation getSalutationBean() {
+		return this.salutationBean;
+	}
+
+	public void setSalutationBean(Salutation salutationBean) {
+		this.salutationBean = salutationBean;
 	}
 
 }

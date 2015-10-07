@@ -61,6 +61,14 @@ public class DocumentInformation implements Serializable {
 	@OneToMany(mappedBy="documentInformation")
 	private List<SeasonProgramDocument> seasonProgramDocuments;
 
+	//bi-directional many-to-one association to PartnerSeasonContract
+	@OneToMany(mappedBy="documentInformation")
+	private List<PartnerSeasonContract> partnerSeasonContracts;
+
+	//bi-directional many-to-one association to PartnerSeasonDocument
+	@OneToMany(mappedBy="documentInformation")
+	private List<PartnerSeasonDocument> partnerSeasonDocuments;
+
 	public DocumentInformation() {
 	}
 
@@ -230,6 +238,50 @@ public class DocumentInformation implements Serializable {
 		seasonProgramDocument.setDocumentInformation(null);
 
 		return seasonProgramDocument;
+	}
+
+	public List<PartnerSeasonContract> getPartnerSeasonContracts() {
+		return this.partnerSeasonContracts;
+	}
+
+	public void setPartnerSeasonContracts(List<PartnerSeasonContract> partnerSeasonContracts) {
+		this.partnerSeasonContracts = partnerSeasonContracts;
+	}
+
+	public PartnerSeasonContract addPartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
+		getPartnerSeasonContracts().add(partnerSeasonContract);
+		partnerSeasonContract.setDocumentInformation(this);
+
+		return partnerSeasonContract;
+	}
+
+	public PartnerSeasonContract removePartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
+		getPartnerSeasonContracts().remove(partnerSeasonContract);
+		partnerSeasonContract.setDocumentInformation(null);
+
+		return partnerSeasonContract;
+	}
+
+	public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
+		return this.partnerSeasonDocuments;
+	}
+
+	public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
+		this.partnerSeasonDocuments = partnerSeasonDocuments;
+	}
+
+	public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().add(partnerSeasonDocument);
+		partnerSeasonDocument.setDocumentInformation(this);
+
+		return partnerSeasonDocument;
+	}
+
+	public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().remove(partnerSeasonDocument);
+		partnerSeasonDocument.setDocumentInformation(null);
+
+		return partnerSeasonDocument;
 	}
 
 }

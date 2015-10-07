@@ -5,6 +5,15 @@
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
       <mapping-file>META-INF/orm.xml</mapping-file>
       <class>com.ccighgo.db.entities.AddendumDocumentInformation</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsCategory</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsType</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsTypeAggregate</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueue</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueCategory</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueType</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueTypeAggregate</class>
       <class>com.ccighgo.db.entities.CCIStaffRole</class>
       <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission</class>
       <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermissionPK</class>
@@ -61,6 +70,10 @@
       <class>com.ccighgo.db.entities.PartnerOfficeType</class>
       <class>com.ccighgo.db.entities.PartnerPermission</class>
       <class>com.ccighgo.db.entities.PartnerProgram</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsCategory</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsType</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsTypeAggregate</class>
       <class>com.ccighgo.db.entities.PartnerReferenceCheck</class>
       <class>com.ccighgo.db.entities.PartnerReviewStatus</class>
       <class>com.ccighgo.db.entities.PartnerSeason</class>
@@ -70,12 +83,19 @@
       <class>com.ccighgo.db.entities.PartnerStatus</class>
       <class>com.ccighgo.db.entities.PartnerUser</class>
       <class>com.ccighgo.db.entities.PartnerUserRole</class>
+     <!--  <class>com.ccighgo.db.entities.PartnerWorkQueue</class> -->
+      <!-- <class>com.ccighgo.db.entities.PartnerWorkQueueCategory</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryPK</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueType</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class> -->
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>
       <class>com.ccighgo.db.entities.RegionIHP</class>
       <class>com.ccighgo.db.entities.ResourceAction</class>
       <class>com.ccighgo.db.entities.ResourcePermission</class>
+      <class>com.ccighgo.db.entities.Salutation</class>
       <class>com.ccighgo.db.entities.Season</class>
       <class>com.ccighgo.db.entities.SeasonCAPDetail</class>
       <class>com.ccighgo.db.entities.SeasonDepartmentDocument</class>
@@ -104,11 +124,17 @@
       <class>com.ccighgo.db.entities.SeasonWnTSpringDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTSummerDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTWinterDetail</class>
+      <class>com.ccighgo.db.entities.StateAction</class>
+      <class>com.ccighgo.db.entities.StateProcess</class>
+      <class>com.ccighgo.db.entities.StateTransition</class>
+      <class>com.ccighgo.db.entities.StateTypeResourcePermission</class>
+      <class>com.ccighgo.db.entities.StateType</class>
       <class>com.ccighgo.db.entities.SuperRegion</class>
       <class>com.ccighgo.db.entities.SysDiagram</class>
       <class>com.ccighgo.db.entities.USSchool</class>
       <class>com.ccighgo.db.entities.USSchoolSeason</class>
       <class>com.ccighgo.db.entities.UserType</class>
+      <class>com.ccighgo.db.entities.WorkQueueHistory</class>
       <properties>
         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />

@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -22,6 +20,9 @@ public class Login implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer loginId;
+
+	@Column(nullable=false)
+   private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
@@ -45,14 +46,11 @@ public class Login implements Serializable {
 
 	@Column(nullable=false, length=100)
 	private String password;
-	
-	@Column(nullable=false)
-   private Byte active;
 
 	//bi-directional many-to-one association to GoIdSequence
-   @ManyToOne
+	@ManyToOne
    @JoinColumn(name="goId", nullable=false)
-   private GoIdSequence goIdSequence;
+	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LoginHistory
 	@OneToMany(mappedBy="login")
@@ -81,7 +79,15 @@ public class Login implements Serializable {
 		this.loginId = loginId;
 	}
 
-   public Integer getCreatedBy() {
+	public Byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(Byte active) {
+		this.active = active;
+	}
+
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
@@ -240,13 +246,5 @@ public class Login implements Serializable {
 
 		return passwordHistory;
 	}
-	
-	public Byte getActive() {
-      return this.active;
-   }
-
-   public void setActive(Byte active) {
-      this.active = active;
-   }
 
 }

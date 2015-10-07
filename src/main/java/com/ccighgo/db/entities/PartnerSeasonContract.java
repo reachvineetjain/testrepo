@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -20,11 +20,13 @@ public class PartnerSeasonContract implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonContractId;
 
+	@Column(nullable=false)
 	private byte active;
 
 	private Integer createdBy;
 
-	private Timestamp createdOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdOn;
 
 	@Column(length=50)
 	private String displayName;
@@ -32,9 +34,12 @@ public class PartnerSeasonContract implements Serializable {
 	@Column(length=100)
 	private String fileName;
 
+	private byte isSigned;
+
 	private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedOn;
 
 	@Column(nullable=false, length=64)
 	private String partnerSeasonContractGuid;
@@ -43,6 +48,11 @@ public class PartnerSeasonContract implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="partnerSeasonId")
 	private PartnerSeason partnerSeason;
+
+	//bi-directional many-to-one association to DocumentInformation
+	@ManyToOne
+	@JoinColumn(name="documentInformationId")
+	private DocumentInformation documentInformation;
 
 	public PartnerSeasonContract() {
 	}
@@ -71,11 +81,11 @@ public class PartnerSeasonContract implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public Timestamp getCreatedOn() {
+	public Date getCreatedOn() {
 		return this.createdOn;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
@@ -95,6 +105,14 @@ public class PartnerSeasonContract implements Serializable {
 		this.fileName = fileName;
 	}
 
+	public byte getIsSigned() {
+		return this.isSigned;
+	}
+
+	public void setIsSigned(byte isSigned) {
+		this.isSigned = isSigned;
+	}
+
 	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -103,11 +121,11 @@ public class PartnerSeasonContract implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Timestamp getModifiedOn() {
+	public Date getModifiedOn() {
 		return this.modifiedOn;
 	}
 
-	public void setModifiedOn(Timestamp modifiedOn) {
+	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 
@@ -125,6 +143,14 @@ public class PartnerSeasonContract implements Serializable {
 
 	public void setPartnerSeason(PartnerSeason partnerSeason) {
 		this.partnerSeason = partnerSeason;
+	}
+
+	public DocumentInformation getDocumentInformation() {
+		return this.documentInformation;
+	}
+
+	public void setDocumentInformation(DocumentInformation documentInformation) {
+		this.documentInformation = documentInformation;
 	}
 
 }
