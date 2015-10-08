@@ -102,6 +102,19 @@ public class CCIConstants {
    public static final String SEASON_OPTION_1 = "Season Defaults";
    public static final String SEASON_OPTION_2 = "Partner Values";
    public static final String SEMESTER_START = "Start";
+   
+   //Partner Notes
+   public static final String Work_Travels = "Work&Travels";
+   public static final String HSP_J1 = "HSP-J1";
+   public static final String GHT = "GHT";
+   public static final String STBound = "STBound";
+   public static final String Intern = "Intern";
+   public static final String Trainee = "Trainee";
+   public static final String Meeting_Visit = "Meeting/Visit";
+   public static final String CompitetorInfo = "CompitetorInfo";
+   public static final String Embassy_VisaInfo = "Embassy/VisaInfo";
+   public static final String SeasonInfo = "SeasonInfo";
+   public static final String HSPF1 = "HSPF1";
 
    // bind urls for season program menu
    public static final String HSP_J1_URL = "j1hs/details/view/";

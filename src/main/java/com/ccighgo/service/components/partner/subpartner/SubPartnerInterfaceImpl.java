@@ -21,6 +21,7 @@ import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerNote;
+import com.ccighgo.db.entities.PartnerNoteTag;
 import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerSeason;
@@ -33,6 +34,7 @@ import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
+import com.ccighgo.jpa.repositories.PartnerNoteTagRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeTypeRepository;
@@ -43,8 +45,12 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.SubPartnerMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
-import com.ccighgo.service.components.usermanagment.UserManagementServiceImpl;
+import com.ccighgo.service.components.utility.UtilityServices;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Creator;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Note;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Topic;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerAgency;
@@ -53,16 +59,11 @@ import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerCountryS
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetail;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerMailingAddress;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerNote;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerNoteTopic;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerNoteTopics;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerNotes;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerPhysicalAddress;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerPrimaryContact;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartners;
-import com.ccighgo.service.transport.usermanagement.beans.user.UserNotes;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasswordUtil;
@@ -97,6 +98,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
    @Autowired
    PartnerNoteRepository partnerNoteRepository;
+   
+   @Autowired
+   PartnerNoteTagRepository partnerNoteTagRepository;
 
    @Autowired
    PartnerOfficeTypeRepository partnerOfficeTypeRepository;
@@ -118,6 +122,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    
    @Autowired
    SalutationRepository salutationRepository;
+   
+   @Autowired UtilityServices utilityServices;
 
    @Override
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -374,52 +380,81 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerCountryStatus2.setSubPartnerCountryCode(partnerSubPartner.getLookupCountry2().getCountryCode());
             subPartnerMailingAddress.setMailingSubPartnerCountryStatus(subPartnerCountryStatus2);
             subPartner.setSubPartnerMailingAddress(subPartnerMailingAddress);
-            subPartner.setNoteTopicCount(partnerSubPartner.getPartnerNoteTopics().size());
 
-            // Note Topics
-            SubPartnerNoteTopics subPartnerNoteTopics = new SubPartnerNoteTopics();
-            List<SubPartnerNoteTopic> subPartnerNoteTopicList = new ArrayList<SubPartnerNoteTopic>();
+            // Sub Partner Note topic
+            NoteTopics NoteTopics = new NoteTopics();
+            List<Topic> topicList = new ArrayList<Topic>();
             if (partnerSubPartner.getPartnerNoteTopics() != null && partnerSubPartner.getPartnerNoteTopics().size() > 0) {
                List<PartnerNoteTopic> partnerNoteTopicDBList = partnerSubPartner.getPartnerNoteTopics();
                for (PartnerNoteTopic partnerNoteTopic : partnerNoteTopicDBList) {
-                  SubPartnerNoteTopic subPartnerNoteTopic = new SubPartnerNoteTopic();
-                  subPartnerNoteTopic.setSubPartnerNoteTopicId(partnerNoteTopic.getPartnerNoteTopicId());
-                  subPartnerNoteTopic.setIsPublic(partnerNoteTopic.getIsPublic()==1?true:false);
-                  subPartnerNoteTopic.setCompetitorInfo(partnerNoteTopic.getCompetitorInfo());
-                  subPartnerNoteTopic.setEmbassy_VisaInfo(partnerNoteTopic.getEmbassy_VisaInfo());
-                  subPartnerNoteTopic.setF1(partnerNoteTopic.getF1());
-                  subPartnerNoteTopic.setGht(partnerNoteTopic.getGht());
-                  subPartnerNoteTopic.setIntern(partnerNoteTopic.getIntern());
-                  subPartnerNoteTopic.setJ1(partnerNoteTopic.getJ1());
-                  subPartnerNoteTopic.setMeeting_visit(partnerNoteTopic.getMeeting_visit());
-                  subPartnerNoteTopic.setPartnerNoteTopicName(partnerNoteTopic.getPartnerNoteTopicName());
-                  subPartnerNoteTopic.setSeasonInfo(partnerNoteTopic.getSeasonInfo());
-                  subPartnerNoteTopic.setStInbound(partnerNoteTopic.getStInbound());
-                  subPartnerNoteTopic.setTrainee(partnerNoteTopic.getTrainee());
-                  subPartnerNoteTopic.setW_t(partnerNoteTopic.getW_t());
-                  subPartnerNoteTopic.setNoteCount(partnerNoteTopic.getPartnerNotes().size());
-                  subPartnerNoteTopic.setAuthor(partnerNoteTopic.getPartner().getGoIdSequence().getLogins().iterator().next().getLoginName());
-                  subPartnerNoteTopic.setDesignation(CCIConstants.SUB_PARTNER);
-                  // note
-                  if (partnerNoteTopic.getPartnerNotes() != null && partnerNoteTopic.getPartnerNotes().size() > 0) {
-                     for (PartnerNote partnerNote : partnerNoteTopic.getPartnerNotes()) {
-                        SubPartnerNote subPartnerNote = new SubPartnerNote();
-                        subPartnerNote.setSubPartnerNotesId(partnerNote.getPartnerNotesId());
-                        subPartnerNote.setSubpartnerNote(partnerNote.getPartnerNote());
-                        subPartnerNote.setCreatedBy(partnerNote.getPartner().getCreatedBy().toString());
-                        subPartnerNote.setCreatedOn(partnerNote.getPartner().getCreatedOn().toString());
-                        subPartnerNote.setModifiedBy(partnerNote.getModifiedBy().toString());
-                        subPartnerNote.setModifiedOn(partnerNote.getModifiedOn().toString());
-                        subPartnerNote.setAuthor(partnerNote.getPartner().getGoIdSequence().getLogins().iterator().next().getLoginName());
-                        subPartnerNote.setDesignation(CCIConstants.SUB_PARTNER);
-                        subPartnerNoteTopic.getSubPartnerNote().add(subPartnerNote);
-                     }
+                  Topic topic = new Topic();
+                  topic.setTopicId(partnerNoteTopic.getPartnerNoteTopicId());
+                  topic.setTopicTitle(partnerNoteTopic.getPartnerNoteTopicName());
+                  // creator
+                  Creator TopicCreator = new Creator();
+                  TopicCreator.setCreatedBy(partnerSubPartner.getPartnerGoId().toString());
+                  TopicCreator.setCreatedByPicUrl(partnerSubPartner.getPartnerLogo());// TODO : need clarification
+                  TopicCreator.setDesignation(CCIConstants.SUB_PARTNER); // TODO : need clarification
+                  topic.setCreator(TopicCreator);
+                  topic.setPrivacy(partnerNoteTopic.getIsPublic() == CCIConstants.INACTIVE ? "private" : "public");
+                  topic.setAddedOn("");// TODO
+
+                  List<NoteTags> noteTagsList = new ArrayList<NoteTags>();
+
+                  for (PartnerNoteTag partnerNoteTag : partnerNoteTagRepository.findAll()) {
+                     NoteTags noteTags = new NoteTags();
+                     noteTags.setNoteTagId(partnerNoteTag.getPartnerNoteTagId());
+                     noteTags.setNoteTag(partnerNoteTag.getTagName());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.Work_Travels))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getW_t());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.HSP_J1))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getJ1());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.GHT))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getGht());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.STBound))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getStInbound());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.Intern))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getIntern());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.Trainee))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getTrainee());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.Meeting_Visit))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getMeeting_visit());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.CompitetorInfo))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getCompetitorInfo());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.Embassy_VisaInfo))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getEmbassy_VisaInfo());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.SeasonInfo))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getSeasonInfo());
+                     if (partnerNoteTag.getTagName().equalsIgnoreCase(CCIConstants.HSPF1))
+                        noteTags.setNoteTagValue(partnerNoteTopic.getF1());
+
+                     noteTagsList.add(noteTags);
                   }
-                  subPartnerNoteTopicList.add(subPartnerNoteTopic);
+                  topic.getNoteTags().addAll(noteTagsList);
+                  List<Note> noteList = new ArrayList<Note>();
+                  List<PartnerNote> partnerNoteDbList = partnerNoteTopic.getPartnerNotes();
+                  topic.setNotesCount(partnerNoteDbList.size());
+                  for (PartnerNote partnerNote : partnerNoteDbList) {
+                     Note note = new Note();
+
+                     note.setNoteId(partnerNote.getPartnerNotesId());
+                     note.setTopicId(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicId());
+                     note.setTimestamp(partnerNote.getCreatedOn().toString());
+                     Creator Notecreator = new Creator();
+                     Notecreator.setCreatedBy(partnerNote.getCreatedBy().toString());
+                     Notecreator.setCreatedByPicUrl(partnerSubPartner.getPartnerLogo());// TODO : need clarification
+                     Notecreator.setDesignation(CCIConstants.SUB_PARTNER);// TODO
+                     note.setCreator(Notecreator);
+                     note.setNote(partnerNote.getPartnerNote());
+                     noteList.add(note);
+                  }
+                  topic.getNotes().addAll(noteList);
+                  topicList.add(topic);
                }
+               NoteTopics.getTopicList().addAll(topicList);
+               NoteTopics.setTopicCount(partnerNoteTopicDBList.size());
             }
-            subPartnerNoteTopics.getSubPartnerNoteTopics().addAll(subPartnerNoteTopicList);
-            subPartner.setSubPartnerNoteTopics(subPartnerNoteTopics);
+            subPartner.setPartnerSeasonNotes(NoteTopics);
             subPartner = setSubPartnerStatus(subPartner, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
 
@@ -588,7 +623,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerOffice.setState(subPartnerOfficeAddress.getPhysicalstate());
             partnerOffice = partnerOfficeRepository.save(partnerOffice);
          }
-         
+
          // sub partner contact
          if (subPartner.getSubPartnerPrimaryContact() != null) {
             SubPartnerPrimaryContact subPartnerPrimaryContact = subPartner.getSubPartnerPrimaryContact();
@@ -613,31 +648,45 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          }
 
          // Note Topics
-         if (subPartner.getSubPartnerNoteTopics().getSubPartnerNoteTopics() != null && subPartner.getSubPartnerNoteTopics().getSubPartnerNoteTopics().size() > 0) {
-            for (SubPartnerNoteTopic subPartnerNoteTopic : subPartner.getSubPartnerNoteTopics().getSubPartnerNoteTopics()) {
+         if (subPartner.getPartnerSeasonNotes().getTopicList() != null && subPartner.getPartnerSeasonNotes().getTopicList().size() > 0) {
+            for (Topic subPartnerNoteTopic : subPartner.getPartnerSeasonNotes().getTopicList()) {
                PartnerNoteTopic partnerNoteTopic = new PartnerNoteTopic();
                partnerNoteTopic.setPartner(subPartnerDetails);
-               partnerNoteTopic.setIsPublic(subPartnerNoteTopic.getIsPublic()==true?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
-               partnerNoteTopic.setCompetitorInfo(subPartnerNoteTopic.getCompetitorInfo());
-               partnerNoteTopic.setEmbassy_VisaInfo(subPartnerNoteTopic.getEmbassy_VisaInfo());
-               partnerNoteTopic.setF1(subPartnerNoteTopic.getF1());
-               partnerNoteTopic.setGht(subPartnerNoteTopic.getGht());
-               partnerNoteTopic.setIntern(subPartnerNoteTopic.getIntern());
-               partnerNoteTopic.setJ1(subPartnerNoteTopic.getJ1());
-               partnerNoteTopic.setMeeting_visit(subPartnerNoteTopic.getMeeting_visit());
-               partnerNoteTopic.setPartnerNoteTopicName(subPartnerNoteTopic.getPartnerNoteTopicName());
-               partnerNoteTopic.setSeasonInfo(subPartnerNoteTopic.getSeasonInfo());
-               partnerNoteTopic.setStInbound(subPartnerNoteTopic.getStInbound());
-               partnerNoteTopic.setTrainee(subPartnerNoteTopic.getTrainee());
-               partnerNoteTopic.setW_t(subPartnerNoteTopic.getW_t());
+               partnerNoteTopic.setIsPublic(subPartnerNoteTopic.getPrivacy() == "public" ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               partnerNoteTopic.setPartnerNoteTopicName(subPartnerNoteTopic.getTopicTitle());
+               if (subPartnerNoteTopic.getNoteTags() != null && subPartnerNoteTopic.getNoteTags().size() > 0) {
+                  for (NoteTags noteTags : subPartnerNoteTopic.getNoteTags()) {
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.CompitetorInfo))
+                        partnerNoteTopic.setCompetitorInfo(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.Embassy_VisaInfo))
+                        partnerNoteTopic.setEmbassy_VisaInfo(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.HSPF1))
+                        partnerNoteTopic.setF1(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.GHT))
+                        partnerNoteTopic.setGht(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.Intern))
+                        partnerNoteTopic.setIntern(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.HSP_J1))
+                        partnerNoteTopic.setJ1(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.Meeting_Visit))
+                        partnerNoteTopic.setMeeting_visit(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.SeasonInfo))
+                        partnerNoteTopic.setSeasonInfo(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.STBound))
+                        partnerNoteTopic.setStInbound(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.Trainee))
+                        partnerNoteTopic.setTrainee(noteTags.getNoteTagValue());
+                     if (noteTags.getNoteTag().equalsIgnoreCase(CCIConstants.Work_Travels))
+                        partnerNoteTopic.setW_t(noteTags.getNoteTagValue());
+                  }
+               }
                partnerNoteTopic = partnerNoteTopicRepository.save(partnerNoteTopic);
                // notes
                List<PartnerNote> partnerNoteList = new ArrayList<PartnerNote>();
-               if (subPartnerNoteTopic.getSubPartnerNote() != null && subPartnerNoteTopic.getSubPartnerNote().size() > 0) {
-                  for (SubPartnerNote subPartnerNote : subPartnerNoteTopic.getSubPartnerNote()) {
+               if (subPartnerNoteTopic.getNotes() != null && subPartnerNoteTopic.getNotes().size() > 0) {
+                  for (Note subPartnerNote : subPartnerNoteTopic.getNotes()) {
                      PartnerNote partnerNote = new PartnerNote();
-                     partnerNote.setPartnerNotesId(subPartnerNote.getSubPartnerNotesId());
-                     partnerNote.setPartnerNote(subPartnerNote.getSubpartnerNote());
+                     partnerNote.setPartnerNote(subPartnerNote.getNote());
                      partnerNote.setCreatedBy(partnerNoteTopic.getPartner().getPartnerGoId());
                      partnerNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                      partnerNote.setModifiedBy(partnerNoteTopic.getPartner().getPartnerGoId());
