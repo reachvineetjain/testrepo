@@ -1,21 +1,23 @@
 
 
 SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE GoIdSequence;
-TRUNCATE UserType;
-TRUNCATE Login;
-TRUNCATE LoginUserType;
-TRUNCATE CCIStaffUsers;
-TRUNCATE CCIStaffUserNotes;
-TRUNCATE LoginHistory;
-/* ------------------------------------------------------------------------------------------------------------------------------------------------------------
+TRUNCATE TABLE GoIdSequence;
+TRUNCATE TABLE UserType;
+TRUNCATE TABLE Login;
+TRUNCATE TABLE LoginUserType;
+TRUNCATE TABLE CCIStaffUsers;
+TRUNCATE TABLE CCIStaffUserNotes;
+TRUNCATE TABLE CCIStaffUsersCCIStaffRoles;
+TRUNCATE TABLE CCIStaffUserProgram;
+TRUNCATE TABLE LoginHistory;
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Created a mapping table called gomapping with GoID, loginId,CCIStaffUserId, LoginTypeId to insert data into CCIStaffUser table-------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
 
  /* --------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into GoIdSequence table using gomapping table ------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
-INSERT INTO `GoIdSequence` (`goId`) SELECT `goId` FROM `cci_go`.`gomapping`;
+INSERT INTO `GoIdSequence` (`goId`) SELECT `goId` FROM `cci_go`.`GoMapping` where loginTypeId =1;
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into UserType table --------------------------------------------------------------------------------------------------
@@ -52,11 +54,15 @@ SET `createdOn` = CURRENT_TIMESTAMP,
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into Login table -----------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------*/
-INSERT INTO `Login` (`loginId`,`loginName`,`password`,`passwordSalt`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+INSERT INTO `Login` (`loginId`,`loginName`,`password`,`keyValue`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 SELECT `LoginID`,`LoginName`,`Password`,`PasswordSalt`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy`
 FROM `cci_go`.`UserLogin` WHERE `LoginID` <> 0 AND `LoginTypeID` = 1;
 
-UPDATE `Login` l,`cci_go`.`gomapping` gm
+UPDATE `Login` l,`cci_go`.`CCIAdmin` ca
+SET l.`email` = ca.`Email`
+WHERE l.`loginId` = ca.`LoginID`;
+
+UPDATE `Login` l,`cci_go`.`GoMapping` gm
 SET l.`goId` = gm.`goId`
 WHERE l.loginId = gm.`loginId`;
 
@@ -80,18 +86,19 @@ SET `defaultUserType` = 1,
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into CCIStaffUsers table  --------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------*/
-ALTER TABLE CCIStaffUsers DROP INDEX cciAdminGuid;
+
+ ALTER TABLE CCIStaffUsers DROP INDEX cciAdminGuid;
 	
-INSERT INTO `CCIStaffUsers` (`cciStaffUserId`) SELECT `goId` FROM `cci_go`.`gomapping`;
+INSERT INTO `CCIStaffUsers` (`cciStaffUserId`) 
+SELECT `goId` FROM `cci_go`.`GoMapping` WHERE `LoginTypeId` = 1;
 
 
-UPDATE `CCIStaffUsers` csu,`cci_go`.`gomapping` gm,`cci_go`.`CCIAdmin` ca
+UPDATE `CCIStaffUsers` csu,`cci_go`.`GoMapping` gm,`cci_go`.`CCIAdmin` ca
 SET csu.`cciAdminGuid` = ca.CCIAdminGuid,
     csu.`firstName` = ca.FirstName,
 	csu.`lastName` = ca.LastName,
 	csu.`primaryPhone` = ca.Phone,
 	csu.`emergencyPhone` = ca.EmergencyPhone,
-	csu.`email` = ca.Email,
 	csu.`homeAddressLineOne` = ca.HomeAddressLineOne,
 	csu.`homeAddressLineTwo` = ca.HomeAddressLineTwo,
 	csu.`city` = ca.City,
@@ -110,8 +117,8 @@ AND   gm.cciId = ca.`CCIAdminID`;
 									  
 
 UPDATE `CCIStaffUsers` 
-SET `genderId` = 1,
-    `supervisorId` = 1;
+SET `genderId` = NULL
+WHERE `genderId` = 0;
 
 UPDATE `CCIStaffUsers`
 SET `usStatesId` = NULL
@@ -121,16 +128,43 @@ UPDATE `CCIStaffUsers`
 SET `countryId` = NULL
 WHERE `countryId` = 0;
 
+UPDATE `CCIStaffUsers` csu, `cci_go`.`UserRolesByCCI` urc, `cci_go`.`UserRolesByCCI` urc1
+SET csu.`supervisorId` = urc1.`cciStaffUserId`
+WHERE csu.cciStaffUserId = urc.cciStaffUserId
+AND urc.supervisor = urc1.userName;
+
+UPDATE `CCIStaffUsers` csu,`LookupGender` lg,`cci_go`.`UserRolesByCCI` urc
+SET csu.`genderId` = lg.`genderId`
+WHERE csu.`cciStaffUserId` = urc.`cciStaffUserId` 
+AND SUBSTR(urc.`Gender`,1,1)=lg.`genderName`;
+
 ALTER TABLE CCIStaffUsers ADD UNIQUE INDEX cciAdminGuid (cciAdminGuid) ;
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------  Inserting data into CCIStaffUserProgram table -----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------- */
+INSERT INTO `CCIStaffUserProgram` (cciStaffUserId)
+SELECT cciStaffUserId FROM CCIStaffUsers;
+
+UPDATE CCIStaffUserProgram csp, cci_go.UserRolesByCCI urc
+SET lookupDepartmentProgramId = 6 
+WHERE urc.program = 'W&T' 
+AND csp.cciStaffUserId = urc.cciStaffUserId;
+
+UPDATE CCIStaffUserProgram csp, cci_go.UserRolesByCCI urc
+SET lookupDepartmentProgramId = 7 
+WHERE urc.program = 'CAP' 
+AND csp.cciStaffUserId = urc.cciStaffUserId;
+
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into CCIStaffUserNotes table -----------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-INSERT INTO CCIStaffUserNotes (cciStaffUserId)
-SELECT goId FROM cci_go.gomapping gm,cci_go.CCIAdminNote cn WHERE gm.cciId = cn. cciAdminID;
+INSERT INTO `CCIStaffUserNotes` (`cciStaffUserId`)
+SELECT `goId` FROM `cci_go`.`GoMapping` gm,`cci_go`.`CCIAdminNote` cn WHERE gm.cciId = cn.cciAdminID;
 
-UPDATE CCIStaffUserNotes csn,cci_go.gomapping gm,cci_go.CCIAdminNote cn 
+UPDATE CCIStaffUserNotes csn,cci_go.GoMapping gm,cci_go.CCIAdminNote cn 
 SET csn.note = cn.note,
 csn.createdOn = cn.CreatedOn,
 csn.createdBy = cn.CreatedBy,
@@ -140,9 +174,33 @@ WHERE csn.`cciStaffUserId` = gm.goId
 AND   gm.cciId = cn.`CCIAdminID`;
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------  Inserting data into CCIStaffUsersCCIStaffRoles table ----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+INSERT INTO `CCIStaffUsersCCIStaffRoles` (`cciStaffUserId`) 
+SELECT `cciStaffUserId` FROM `CCIStaffUsers`;
+
+UPDATE `CCIStaffUsersCCIStaffRoles` csu,`CCIStaffRoles` csr,`CCIStaffUsers` cu,`cci_go`.`UserRolesByCCI` urc
+SET csu.`cciStaffRoleId` = csr.`cciStaffRoleId`
+WHERE csr.`cciStaffRoleName` = urc.`Role`
+AND csu.`cciStaffUserId` = urc.`cciStaffUserId`;
+
+UPDATE CCIStaffUsersCCIStaffRoles csu
+SET csu.createdOn = CURRENT_TIMESTAMP,
+csu.createdBy = 1000,
+csu.modifiedBy = 1000;
+
+/*UPDATE CCIStaffUsersCCIStaffRoles csu
+SET csu.cciStaffRoleId = NULL
+WHERE csu.cciStaffRoleId = 0; */
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into LoginHistory table ----------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 INSERT INTO `LoginHistory`    (`loggedOn`,`loginId`,`ipAddress`)
 SELECT     LastLoggedIn,LoginID,LastIPAddress
 FROM       `cci_go`.`UserLogin`;
+
+SET FOREIGN_KEY_CHECKS = 1;
