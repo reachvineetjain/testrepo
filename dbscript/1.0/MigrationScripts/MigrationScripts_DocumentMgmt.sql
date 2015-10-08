@@ -1,13 +1,16 @@
-
 -- USE `cci_gh_go_prod`;
 
 SET FOREIGN_KEY_CHECKS= 0;
 
-TRUNCATE DocumentType;
-TRUNCATE DocumentCategoryProcess;
-TRUNCATE DocumentTypeDocumentCategoryProcess;
-TRUNCATE DocumentInformation;
-TRUNCATE SeasonProgramDocument;
+TRUNCATE TABLE `DocumentType`;
+TRUNCATE TABLE `DocumentCategoryProcess`;
+TRUNCATE TABLE `DocumentTypeDocumentCategoryProcess`;
+TRUNCATE TABLE `DocumentInformation`;
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Inserting data in DocumentType Table
+-------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 INSERT INTO `DocumentType` (`documentTypeName`)
 VALUES    
@@ -16,18 +19,24 @@ VALUES
 ('Participant Placement Agreement'),
 ('AYP Conditions of Participation'),
 ('AYP Conditions of Participation no signature');
-                                  
-                                  
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Inserting data in DocumentCategoryProcess Table
+-------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 INSERT INTO `DocumentCategoryProcess` (`documentCategoryProcessName`)
 VALUES
 ('Placement Process'),
 ('Application Process');
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Inserting data in DocumentTypeDocumentCategoryProcess Table
+-------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 									 
 INSERT INTO `DocumentTypeDocumentCategoryProcess` (`documentTypeId`)
 SELECT `documentTypeId` FROM `DocumentType`;
 
- /* UPDATE `DocumentTypeDocumentCategoryProcess` dtdcp,`cci_go`.`seasondocument` sd,`cci_go`.`seasonmapping` sm
+ /* UPDATE `DocumentTypeDocumentCategoryProcess` dtdcp,`cci_go`.`SeasonDocument` sd,`cci_go`.`SeasonMapping` sm
 SET    dtdcp.`departmentId` = sm.`departmentId`,
        dtdcp.`departmentProgramId` = sm.`departmentProgramId`
 WHERE  dtdcp.`documentTypeId` = sd.`SeasonDocumentTypeID`
@@ -47,11 +56,16 @@ SET `active` = 1;
 /*INSERT INTO `DocumentInformation` (`url`)
 SELECT `DocumentURL` FROM `cci_go`.`SeasonDocument` WHERE `DocumentURL` != '';*/ 
 
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Inserting data in DocumentInformation Table
+-------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 ALTER TABLE `DocumentInformation` AUTO_INCREMENT = 1;
 
 INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,`DocumentURL`,`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 2 AND FilePath = '';
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 2 AND FilePath = '';
 
 
 
@@ -59,7 +73,7 @@ FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 2 AND FilePath = '';
 
 INSERT INTO `DocumentInformation`  (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,CONCAT(`FilePath`,\,`FileName`),`Active`
-FROM `cci_go`.`seasondocument`  WHERE SeasonDocumentTypeID = 2 AND DocumentURL = '';  */
+FROM `cci_go`.`SeasonDocument`  WHERE SeasonDocumentTypeID = 2 AND DocumentURL = '';  */
 
 UPDATE `DocumentInformation` di,`DocumentTypeDocumentCategoryProcess` dt
 SET di.`documentTypeDocumentCategoryProcessId` = dt.documentTypeDocumentCategoryProcessId,
@@ -71,11 +85,11 @@ ALTER TABLE `DocumentInformation` AUTO_INCREMENT = 1;
 
 INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,`DocumentURL`,`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 3 AND FilePath = '';
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 3 AND FilePath = '';
 
 /* INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,CONCAT(`FilePath`,\,`FileName`),`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 3 AND DocumentURL = '';  */
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 3 AND DocumentURL = '';  */
 
 UPDATE `DocumentInformation` di,`DocumentTypeDocumentCategoryProcess` dt
 SET di.`documentTypeDocumentCategoryProcessId` = dt.documentTypeDocumentCategoryProcessId,
@@ -87,7 +101,7 @@ ALTER TABLE `DocumentInformation` AUTO_INCREMENT = 1;
 
 INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,`DocumentURL`,`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 4 AND FilePath = '';
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 4 AND FilePath = '';
 
 /* INSERT INTO `cci_gh_go_WIP`.`DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,CONCAT(`FilePath`,\,`FileName`),`Active`
@@ -103,11 +117,11 @@ ALTER TABLE `DocumentInformation` AUTO_INCREMENT = 1;
 
 INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,`DocumentURL`,`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 5 AND FilePath = '';
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 5 AND FilePath = '';
 
 /* INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,CONCAT(`FilePath`,\,`FileName`),`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 5 AND DocumentURL = '';  */
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 5 AND DocumentURL = '';  */
 
 UPDATE `DocumentInformation` di,`DocumentTypeDocumentCategoryProcess` dt
 SET di.`documentTypeDocumentCategoryProcessId` = dt.documentTypeDocumentCategoryProcessId,
@@ -120,11 +134,11 @@ ALTER TABLE `DocumentInformation` AUTO_INCREMENT = 1;
 
 INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,`DocumentURL`,`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 6 AND FilePath = '';
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 6 AND FilePath = '';
 
 /* INSERT INTO `DocumentInformation` (`documentInformationId`,`documentName`,`fileName`,`url`,`active`)
 SELECT `SeasonDocumentID`,`DocumentName`,`FileName`,CONCAT(`FilePath`,\,`FileName`),`Active`
-FROM `cci_go`.`seasondocument` WHERE SeasonDocumentTypeID = 6 AND DocumentURL = '';  */
+FROM `cci_go`.`SeasonDocument` WHERE SeasonDocumentTypeID = 6 AND DocumentURL = '';  */
 
 UPDATE `DocumentInformation` di,`DocumentTypeDocumentCategoryProcess` dt
 SET di.`documentTypeDocumentCategoryProcessId` = dt.documentTypeDocumentCategoryProcessId,
@@ -139,20 +153,3 @@ SET fileName = SUBSTRING(url,8);
 
 UPDATE DocumentInformation
 SET documentName = SUBSTRING(url,8);
-
-
-
--- Mapping Seasons and Document Information.
-INSERT INTO `SeasonProgramDocument` (documentInformationId)
-SELECT documentInformationId FROM `DocumentInformation`;
-
-UPDATE `SeasonProgramDocument` spd,`cci_go`.`seasondocument` sd,cci_go.`seasonmapping` sm
-SET spd.seasonId = sm.newSeasonId,
-    spd.departmentProgramId=sm.departmentProgramId,
-    spd.active = sd.Active,
-    spd.createdOn = sd.createdOn,
-    spd.createdBy = sd.createdBy,
-    spd.modifiedOn = sd.modifiedOn,
-    spd.modifiedBy = sd.modifiedBy
-WHERE sd.SeasonDocumentID = spd.documentInformationId
-AND sd.SeasonID = sm.oldSeasonId;
