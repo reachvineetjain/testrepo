@@ -26,10 +26,12 @@ public class PartnerSeason implements Serializable {
 
 	private Byte canAccessJobBoard;
 
-	private int contractScheduleId;
+	private Integer contractScheduleId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Byte disableAddParticipant;
@@ -48,8 +50,10 @@ public class PartnerSeason implements Serializable {
 
 	private Byte insuranceProvidedByCCI;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -151,11 +155,11 @@ public class PartnerSeason implements Serializable {
 		this.canAccessJobBoard = canAccessJobBoard;
 	}
 
-	public int getContractScheduleId() {
+	public Integer getContractScheduleId() {
 		return this.contractScheduleId;
 	}
 
-	public void setContractScheduleId(int contractScheduleId) {
+	public void setContractScheduleId(Integer contractScheduleId) {
 		this.contractScheduleId = contractScheduleId;
 	}
 

@@ -26,7 +26,6 @@
       <class>com.ccighgo.db.entities.CCIStaffUsersCCIStaffRolePK</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermission</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermissionPK</class>
-      <class>com.ccighgo.db.entities.DepartmentFunction</class>
       <class>com.ccighgo.db.entities.DepartmentProgramOption</class>
       <class>com.ccighgo.db.entities.DepartmentProgram</class>
       <class>com.ccighgo.db.entities.DepartmentResourceGroup</class>
@@ -48,16 +47,9 @@
       <class>com.ccighgo.db.entities.LookupDepartment</class>
       <class>com.ccighgo.db.entities.LookupGender</class>
       <class>com.ccighgo.db.entities.LookupUSState</class>
-      <class>com.ccighgo.db.entities.OauthHistory</class>
-      <class>com.ccighgo.db.entities.OauthHistoryPK</class>
       <class>com.ccighgo.db.entities.Participant</class>
       <class>com.ccighgo.db.entities.Partner</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiry</class>
-      <class>com.ccighgo.db.entities.PartnerAgentInquiryDocument</class>
-      <class>com.ccighgo.db.entities.PartnerAgentInquiryNote</class>
-      <class>com.ccighgo.db.entities.PartnerAgentInquiryStatus</class>
-      <class>com.ccighgo.db.entities.PartnerAgentProgram</class>
-      <class>com.ccighgo.db.entities.PartnerAgentReview</class>
       <class>com.ccighgo.db.entities.PartnerAnnouncement</class>
       <class>com.ccighgo.db.entities.PartnerCCIContact</class>
       <class>com.ccighgo.db.entities.PartnerContact</class>
@@ -130,11 +122,9 @@
       <class>com.ccighgo.db.entities.StateTypeResourcePermission</class>
       <class>com.ccighgo.db.entities.StateType</class>
       <class>com.ccighgo.db.entities.SuperRegion</class>
-      <class>com.ccighgo.db.entities.SysDiagram</class>
       <class>com.ccighgo.db.entities.USSchool</class>
       <class>com.ccighgo.db.entities.USSchoolSeason</class>
       <class>com.ccighgo.db.entities.UserType</class>
-      <class>com.ccighgo.db.entities.WorkQueueHistory</class>
       <properties>
         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />

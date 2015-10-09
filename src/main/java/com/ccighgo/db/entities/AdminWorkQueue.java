@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -25,8 +25,8 @@ public class AdminWorkQueue implements Serializable {
 
 	private Integer cciStaffUserGoId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+	@Column(nullable=false)
+	private Timestamp createdDate;
 
 	private Integer departmentProgramId;
 
@@ -84,11 +84,11 @@ public class AdminWorkQueue implements Serializable {
 		this.cciStaffUserGoId = cciStaffUserGoId;
 	}
 
-	public Date getCreatedDate() {
+	public Timestamp getCreatedDate() {
 		return this.createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 

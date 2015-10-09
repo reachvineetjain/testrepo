@@ -22,8 +22,10 @@ public class PartnerContact implements Serializable {
 
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=150)
@@ -41,8 +43,10 @@ public class PartnerContact implements Serializable {
 	@Column(length=150)
 	private String lastName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=150)
@@ -72,7 +76,7 @@ public class PartnerContact implements Serializable {
 	//bi-directional many-to-one association to Salutation
 	@ManyToOne
 	@JoinColumn(name="salutationId")
-	private Salutation salutationBean;
+	private Salutation salutation;
 
 	public PartnerContact() {
 	}
@@ -221,12 +225,12 @@ public class PartnerContact implements Serializable {
 		this.partnerOffice = partnerOffice;
 	}
 
-	public Salutation getSalutationBean() {
-		return this.salutationBean;
+	public Salutation getSalutation() {
+		return this.salutation;
 	}
 
-	public void setSalutationBean(Salutation salutationBean) {
-		this.salutationBean = salutationBean;
+	public void setSalutation(Salutation salutation) {
+		this.salutation = salutation;
 	}
 
 }

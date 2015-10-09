@@ -21,10 +21,12 @@ public class DocumentInformation implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer documentInformationId;
 
-	private byte active;
+	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=50)
@@ -33,8 +35,10 @@ public class DocumentInformation implements Serializable {
 	@Column(length=50)
 	private String fileName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=1000)
@@ -46,20 +50,12 @@ public class DocumentInformation implements Serializable {
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess
 	@ManyToOne
-	@JoinColumn(name="documentTypeDocumentCategoryProcessId")
+	@JoinColumn(name="documentTypeDocumentCategoryProcessId", nullable=false)
 	private DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess;
 
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="documentInformation")
 	private List<PartnerDocument> partnerDocuments;
-
-	//bi-directional many-to-one association to SeasonDepartmentDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
-
-	//bi-directional many-to-one association to SeasonProgramDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<SeasonProgramDocument> seasonProgramDocuments;
 
 	//bi-directional many-to-one association to PartnerSeasonContract
 	@OneToMany(mappedBy="documentInformation")
@@ -68,6 +64,14 @@ public class DocumentInformation implements Serializable {
 	//bi-directional many-to-one association to PartnerSeasonDocument
 	@OneToMany(mappedBy="documentInformation")
 	private List<PartnerSeasonDocument> partnerSeasonDocuments;
+
+	//bi-directional many-to-one association to SeasonDepartmentDocument
+	@OneToMany(mappedBy="documentInformation")
+	private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
+
+	//bi-directional many-to-one association to SeasonProgramDocument
+	@OneToMany(mappedBy="documentInformation")
+	private List<SeasonProgramDocument> seasonProgramDocuments;
 
 	public DocumentInformation() {
 	}
@@ -80,11 +84,11 @@ public class DocumentInformation implements Serializable {
 		this.documentInformationId = documentInformationId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -196,50 +200,6 @@ public class DocumentInformation implements Serializable {
 		return partnerDocument;
 	}
 
-	public List<SeasonDepartmentDocument> getSeasonDepartmentDocuments() {
-		return this.seasonDepartmentDocuments;
-	}
-
-	public void setSeasonDepartmentDocuments(List<SeasonDepartmentDocument> seasonDepartmentDocuments) {
-		this.seasonDepartmentDocuments = seasonDepartmentDocuments;
-	}
-
-	public SeasonDepartmentDocument addSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
-		getSeasonDepartmentDocuments().add(seasonDepartmentDocument);
-		seasonDepartmentDocument.setDocumentInformation(this);
-
-		return seasonDepartmentDocument;
-	}
-
-	public SeasonDepartmentDocument removeSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
-		getSeasonDepartmentDocuments().remove(seasonDepartmentDocument);
-		seasonDepartmentDocument.setDocumentInformation(null);
-
-		return seasonDepartmentDocument;
-	}
-
-	public List<SeasonProgramDocument> getSeasonProgramDocuments() {
-		return this.seasonProgramDocuments;
-	}
-
-	public void setSeasonProgramDocuments(List<SeasonProgramDocument> seasonProgramDocuments) {
-		this.seasonProgramDocuments = seasonProgramDocuments;
-	}
-
-	public SeasonProgramDocument addSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
-		getSeasonProgramDocuments().add(seasonProgramDocument);
-		seasonProgramDocument.setDocumentInformation(this);
-
-		return seasonProgramDocument;
-	}
-
-	public SeasonProgramDocument removeSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
-		getSeasonProgramDocuments().remove(seasonProgramDocument);
-		seasonProgramDocument.setDocumentInformation(null);
-
-		return seasonProgramDocument;
-	}
-
 	public List<PartnerSeasonContract> getPartnerSeasonContracts() {
 		return this.partnerSeasonContracts;
 	}
@@ -282,6 +242,50 @@ public class DocumentInformation implements Serializable {
 		partnerSeasonDocument.setDocumentInformation(null);
 
 		return partnerSeasonDocument;
+	}
+
+	public List<SeasonDepartmentDocument> getSeasonDepartmentDocuments() {
+		return this.seasonDepartmentDocuments;
+	}
+
+	public void setSeasonDepartmentDocuments(List<SeasonDepartmentDocument> seasonDepartmentDocuments) {
+		this.seasonDepartmentDocuments = seasonDepartmentDocuments;
+	}
+
+	public SeasonDepartmentDocument addSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
+		getSeasonDepartmentDocuments().add(seasonDepartmentDocument);
+		seasonDepartmentDocument.setDocumentInformation(this);
+
+		return seasonDepartmentDocument;
+	}
+
+	public SeasonDepartmentDocument removeSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
+		getSeasonDepartmentDocuments().remove(seasonDepartmentDocument);
+		seasonDepartmentDocument.setDocumentInformation(null);
+
+		return seasonDepartmentDocument;
+	}
+
+	public List<SeasonProgramDocument> getSeasonProgramDocuments() {
+		return this.seasonProgramDocuments;
+	}
+
+	public void setSeasonProgramDocuments(List<SeasonProgramDocument> seasonProgramDocuments) {
+		this.seasonProgramDocuments = seasonProgramDocuments;
+	}
+
+	public SeasonProgramDocument addSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+		getSeasonProgramDocuments().add(seasonProgramDocument);
+		seasonProgramDocument.setDocumentInformation(this);
+
+		return seasonProgramDocument;
+	}
+
+	public SeasonProgramDocument removeSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+		getSeasonProgramDocuments().remove(seasonProgramDocument);
+		seasonProgramDocument.setDocumentInformation(null);
+
+		return seasonProgramDocument;
 	}
 
 }

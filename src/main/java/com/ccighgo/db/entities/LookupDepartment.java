@@ -30,17 +30,19 @@ public class LookupDepartment implements Serializable {
 	private String acronym;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=50)
 	private String departmentName;
 
-	private byte isVisibleToSeason;
+	@Column(nullable=false)
+	private Byte isVisibleToSeason;
 
 	@Column(nullable=false)
 	private Integer modifiedBy;
@@ -89,11 +91,11 @@ public class LookupDepartment implements Serializable {
 		this.acronym = acronym;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -121,11 +123,11 @@ public class LookupDepartment implements Serializable {
 		this.departmentName = departmentName;
 	}
 
-	public byte getIsVisibleToSeason() {
+	public Byte getIsVisibleToSeason() {
 		return this.isVisibleToSeason;
 	}
 
-	public void setIsVisibleToSeason(byte isVisibleToSeason) {
+	public void setIsVisibleToSeason(Byte isVisibleToSeason) {
 		this.isVisibleToSeason = isVisibleToSeason;
 	}
 

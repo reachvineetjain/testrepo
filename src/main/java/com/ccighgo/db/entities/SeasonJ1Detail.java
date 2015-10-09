@@ -21,7 +21,7 @@ public class SeasonJ1Detail implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer seasonJ1DetailsId;
 
-	private byte activeFullYearJanProgram;
+	private Byte activeFullYearJanProgram;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date augFullYearAppDeadlineDate;
@@ -35,6 +35,7 @@ public class SeasonJ1Detail implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer fieldStaffHoldLength;
@@ -76,7 +77,7 @@ public class SeasonJ1Detail implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=55)
+	@Column(length=45)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -94,23 +95,23 @@ public class SeasonJ1Detail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date secondSemStartDate;
 
-	private byte showAugFullYearToNewHF;
+	private Byte showAugFullYearToNewHF;
 
-	private byte showFirstSemToNewHF;
+	private Byte showFirstSemToNewHF;
 
 	private byte showGuaranteed;
 
-	private byte showJanFullYearToNewHF;
+	private Byte showJanFullYearToNewHF;
 
-	private byte showSeasonToCurrentHF;
+	private Byte showSeasonToCurrentHF;
 
-	private byte showSecondSemToNewHF;
+	private Byte showSecondSemToNewHF;
 
-	private byte showSpecialRequestStudent;
+	private Byte showSpecialRequestStudent;
 
-	private byte showUnguaranteed;
+	private Byte showUnguaranteed;
 
-	private byte showWelcomeFamily;
+	private Byte showWelcomeFamily;
 
 	//bi-directional many-to-one association to FieldStaffAgreement
 	@ManyToOne
@@ -143,11 +144,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.seasonJ1DetailsId = seasonJ1DetailsId;
 	}
 
-	public byte getActiveFullYearJanProgram() {
+	public Byte getActiveFullYearJanProgram() {
 		return this.activeFullYearJanProgram;
 	}
 
-	public void setActiveFullYearJanProgram(byte activeFullYearJanProgram) {
+	public void setActiveFullYearJanProgram(Byte activeFullYearJanProgram) {
 		this.activeFullYearJanProgram = activeFullYearJanProgram;
 	}
 
@@ -351,19 +352,19 @@ public class SeasonJ1Detail implements Serializable {
 		this.secondSemStartDate = secondSemStartDate;
 	}
 
-	public byte getShowAugFullYearToNewHF() {
+	public Byte getShowAugFullYearToNewHF() {
 		return this.showAugFullYearToNewHF;
 	}
 
-	public void setShowAugFullYearToNewHF(byte showAugFullYearToNewHF) {
+	public void setShowAugFullYearToNewHF(Byte showAugFullYearToNewHF) {
 		this.showAugFullYearToNewHF = showAugFullYearToNewHF;
 	}
 
-	public byte getShowFirstSemToNewHF() {
+	public Byte getShowFirstSemToNewHF() {
 		return this.showFirstSemToNewHF;
 	}
 
-	public void setShowFirstSemToNewHF(byte showFirstSemToNewHF) {
+	public void setShowFirstSemToNewHF(Byte showFirstSemToNewHF) {
 		this.showFirstSemToNewHF = showFirstSemToNewHF;
 	}
 
@@ -375,51 +376,51 @@ public class SeasonJ1Detail implements Serializable {
 		this.showGuaranteed = showGuaranteed;
 	}
 
-	public byte getShowJanFullYearToNewHF() {
+	public Byte getShowJanFullYearToNewHF() {
 		return this.showJanFullYearToNewHF;
 	}
 
-	public void setShowJanFullYearToNewHF(byte showJanFullYearToNewHF) {
+	public void setShowJanFullYearToNewHF(Byte showJanFullYearToNewHF) {
 		this.showJanFullYearToNewHF = showJanFullYearToNewHF;
 	}
 
-	public byte getShowSeasonToCurrentHF() {
+	public Byte getShowSeasonToCurrentHF() {
 		return this.showSeasonToCurrentHF;
 	}
 
-	public void setShowSeasonToCurrentHF(byte showSeasonToCurrentHF) {
+	public void setShowSeasonToCurrentHF(Byte showSeasonToCurrentHF) {
 		this.showSeasonToCurrentHF = showSeasonToCurrentHF;
 	}
 
-	public byte getShowSecondSemToNewHF() {
+	public Byte getShowSecondSemToNewHF() {
 		return this.showSecondSemToNewHF;
 	}
 
-	public void setShowSecondSemToNewHF(byte showSecondSemToNewHF) {
+	public void setShowSecondSemToNewHF(Byte showSecondSemToNewHF) {
 		this.showSecondSemToNewHF = showSecondSemToNewHF;
 	}
 
-	public byte getShowSpecialRequestStudent() {
+	public Byte getShowSpecialRequestStudent() {
 		return this.showSpecialRequestStudent;
 	}
 
-	public void setShowSpecialRequestStudent(byte showSpecialRequestStudent) {
+	public void setShowSpecialRequestStudent(Byte showSpecialRequestStudent) {
 		this.showSpecialRequestStudent = showSpecialRequestStudent;
 	}
 
-	public byte getShowUnguaranteed() {
+	public Byte getShowUnguaranteed() {
 		return this.showUnguaranteed;
 	}
 
-	public void setShowUnguaranteed(byte showUnguaranteed) {
+	public void setShowUnguaranteed(Byte showUnguaranteed) {
 		this.showUnguaranteed = showUnguaranteed;
 	}
 
-	public byte getShowWelcomeFamily() {
+	public Byte getShowWelcomeFamily() {
 		return this.showWelcomeFamily;
 	}
 
-	public void setShowWelcomeFamily(byte showWelcomeFamily) {
+	public void setShowWelcomeFamily(Byte showWelcomeFamily) {
 		this.showWelcomeFamily = showWelcomeFamily;
 	}
 

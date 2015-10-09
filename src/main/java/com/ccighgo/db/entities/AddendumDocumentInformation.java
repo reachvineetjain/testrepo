@@ -23,8 +23,10 @@ public class AddendumDocumentInformation implements Serializable {
 
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=50)
@@ -33,6 +35,7 @@ public class AddendumDocumentInformation implements Serializable {
 	@Column(length=50)
 	private String fileName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;

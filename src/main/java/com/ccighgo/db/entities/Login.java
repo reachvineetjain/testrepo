@@ -22,11 +22,12 @@ public class Login implements Serializable {
 	private Integer loginId;
 
 	@Column(nullable=false)
-   private Byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=50)
@@ -49,7 +50,7 @@ public class Login implements Serializable {
 
 	//bi-directional many-to-one association to GoIdSequence
 	@ManyToOne
-   @JoinColumn(name="goId", nullable=false)
+	@JoinColumn(name="goId", nullable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LoginHistory
@@ -59,6 +60,10 @@ public class Login implements Serializable {
 	//bi-directional many-to-one association to LoginUserType
 	@OneToMany(mappedBy="login")
 	private List<LoginUserType> loginUserTypes;
+
+	//bi-directional many-to-one association to PartnerHelpRequest
+	@OneToMany(mappedBy="login")
+	private List<PartnerHelpRequest> partnerHelpRequests;
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="login")
@@ -201,6 +206,28 @@ public class Login implements Serializable {
 		loginUserType.setLogin(null);
 
 		return loginUserType;
+	}
+
+	public List<PartnerHelpRequest> getPartnerHelpRequests() {
+		return this.partnerHelpRequests;
+	}
+
+	public void setPartnerHelpRequests(List<PartnerHelpRequest> partnerHelpRequests) {
+		this.partnerHelpRequests = partnerHelpRequests;
+	}
+
+	public PartnerHelpRequest addPartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
+		getPartnerHelpRequests().add(partnerHelpRequest);
+		partnerHelpRequest.setLogin(this);
+
+		return partnerHelpRequest;
+	}
+
+	public PartnerHelpRequest removePartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
+		getPartnerHelpRequests().remove(partnerHelpRequest);
+		partnerHelpRequest.setLogin(null);
+
+		return partnerHelpRequest;
 	}
 
 	public List<PartnerUser> getPartnerUsers() {

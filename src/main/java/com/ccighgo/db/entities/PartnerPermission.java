@@ -91,7 +91,6 @@ public class PartnerPermission implements Serializable {
 
 	private Byte j1StudentsPreProgram;
 
-	@Column(nullable=false)
 	private Byte wtAccountingInsurance;
 
 	private Byte wtAdmin;

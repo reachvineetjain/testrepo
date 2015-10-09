@@ -23,7 +23,7 @@ public class PartnerWorkQueueTypeAggregate implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
-	private int partnerWQTypeAggregate;
+	private Integer partnerWQTypeAggregate;
 
 	@Column(length=50)
 	private String partnerWQTypeName;
@@ -62,11 +62,11 @@ public class PartnerWorkQueueTypeAggregate implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public int getPartnerWQTypeAggregate() {
+	public Integer getPartnerWQTypeAggregate() {
 		return this.partnerWQTypeAggregate;
 	}
 
-	public void setPartnerWQTypeAggregate(int partnerWQTypeAggregate) {
+	public void setPartnerWQTypeAggregate(Integer partnerWQTypeAggregate) {
 		this.partnerWQTypeAggregate = partnerWQTypeAggregate;
 	}
 

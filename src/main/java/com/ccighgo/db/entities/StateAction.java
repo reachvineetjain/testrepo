@@ -19,7 +19,7 @@ public class StateAction implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer stateActionId;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String action;
 
 	//bi-directional many-to-one association to StateType

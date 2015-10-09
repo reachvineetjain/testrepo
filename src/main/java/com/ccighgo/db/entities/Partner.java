@@ -17,8 +17,9 @@ public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer partnerGoId;
+	private int partnerGoId;
 
 	@Column(length=150)
 	private String acronym;
@@ -32,7 +33,7 @@ public class Partner implements Serializable {
 	@Column(length=1000)
 	private String billingNotes;
 
-	private byte canHaveSubPartner;
+	private Byte canHaveSubPartner;
 
 	@Column(length=50)
 	private String city;
@@ -48,16 +49,17 @@ public class Partner implements Serializable {
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer dandBNumber;
 
-	private byte deliverDSForms;
+	private Byte deliverDSForms;
 
-	@Column(length=50)
+	@Column(length=100)
 	private String email;
 
-	private byte hasSubPartners;
+	private Byte hasSubPartners;
 
 	@Column(length=100)
 	private String invoiceMail;
@@ -66,13 +68,14 @@ public class Partner implements Serializable {
 
 	private Integer lastSelectedProgramId;
 
-	private byte mailingAddressIsSameAsPhysicalAdress;
+	private Byte mailingAddressIsSameAsPhysicalAdress;
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	private byte multiCountrySender;
+	private Byte multiCountrySender;
 
 	private byte needPartnerReview;
 
@@ -80,13 +83,13 @@ public class Partner implements Serializable {
 
 	private Integer parentPartnerGoId;
 
-	private byte participantELTISRequired;
+	private Byte participantELTISRequired;
 
-	private byte participantMedicalReleaseRequired;
+	private Byte participantMedicalReleaseRequired;
 
-	private byte participantSLEPRequired;
+	private Byte participantSLEPRequired;
 
-	private byte participantTranscriptRequired;
+	private Byte participantTranscriptRequired;
 
 	@Column(length=64)
 	private String partnerGuid;
@@ -94,7 +97,7 @@ public class Partner implements Serializable {
 	@Column(length=300)
 	private String partnerLogo;
 
-	private byte payGreenheartDirectly;
+	private Byte payGreenheartDirectly;
 
 	@Column(length=150)
 	private String physicalAddressLineOne;
@@ -114,14 +117,14 @@ public class Partner implements Serializable {
 	@Column(length=40)
 	private String quickbooksCode;
 
-	private byte receiveAYPMails;
+	private Byte receiveAYPMails;
 
 	@Column(length=50)
 	private String state;
 
-	private byte subscribeToCCINewsletter;
+	private Byte subscribeToCCINewsletter;
 
-	private byte unguaranteedFormRequired;
+	private Byte unguaranteedFormRequired;
 
 	@Column(length=15)
 	private String zipcode;
@@ -141,18 +144,13 @@ public class Partner implements Serializable {
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="countryId")
+	@JoinColumn(name="physicalcountryId")
 	private LookupCountry lookupCountry1;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="physicalcountryId")
+	@JoinColumn(name="countryId")
 	private LookupCountry lookupCountry2;
-
-	//bi-directional many-to-one association to PartnerStatus
-	@ManyToOne
-	@JoinColumn(name="partnerStatusId")
-	private PartnerStatus partnerStatus;
 
 	//bi-directional many-to-one association to PartnerAgentInquiry
 	@OneToMany(mappedBy="partner")
@@ -174,6 +172,14 @@ public class Partner implements Serializable {
 	@OneToMany(mappedBy="partner")
 	private List<PartnerDocument> partnerDocuments;
 
+	//bi-directional many-to-one association to PartnerHelpRequest
+	@OneToMany(mappedBy="partner1")
+	private List<PartnerHelpRequest> partnerHelpRequests1;
+
+	//bi-directional many-to-one association to PartnerHelpRequest
+	@OneToMany(mappedBy="partner2")
+	private List<PartnerHelpRequest> partnerHelpRequests2;
+
 	//bi-directional many-to-one association to PartnerMessage
 	@OneToMany(mappedBy="partner")
 	private List<PartnerMessage> partnerMessages;
@@ -194,6 +200,14 @@ public class Partner implements Serializable {
 	@OneToMany(mappedBy="partner")
 	private List<PartnerProgram> partnerPrograms;
 
+	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
+	@OneToMany(mappedBy="partner")
+	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
+	@OneToMany(mappedBy="partner")
+	private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
+
 	//bi-directional many-to-one association to PartnerReferenceCheck
 	@OneToMany(mappedBy="partner")
 	private List<PartnerReferenceCheck> partnerReferenceChecks;
@@ -206,21 +220,17 @@ public class Partner implements Serializable {
 	@OneToMany(mappedBy="partner")
 	private List<PartnerSeason> partnerSeasons;
 
-	//bi-directional many-to-one association to PartnerSeasonDocument
-	@OneToMany(mappedBy="partner")
-	private List<PartnerSeasonDocument> partnerSeasonDocuments;
-
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="partner")
 	private List<PartnerUser> partnerUsers;
 
-	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
+	//bi-directional many-to-one association to PartnerWorkQueue
 	@OneToMany(mappedBy="partner")
-	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
+	private List<PartnerWorkQueue> partnerWorkQueues;
 
-	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
+	//bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate
 	@OneToMany(mappedBy="partner")
-	private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
+	private List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates;
 
 	//bi-directional many-to-one association to PartnerWorkQueueTypeAggregate
 	@OneToMany(mappedBy="partner")
@@ -229,11 +239,11 @@ public class Partner implements Serializable {
 	public Partner() {
 	}
 
-	public Integer getPartnerGoId() {
+	public int getPartnerGoId() {
 		return this.partnerGoId;
 	}
 
-	public void setPartnerGoId(Integer partnerGoId) {
+	public void setPartnerGoId(int partnerGoId) {
 		this.partnerGoId = partnerGoId;
 	}
 
@@ -269,11 +279,11 @@ public class Partner implements Serializable {
 		this.billingNotes = billingNotes;
 	}
 
-	public byte getCanHaveSubPartner() {
+	public Byte getCanHaveSubPartner() {
 		return this.canHaveSubPartner;
 	}
 
-	public void setCanHaveSubPartner(byte canHaveSubPartner) {
+	public void setCanHaveSubPartner(Byte canHaveSubPartner) {
 		this.canHaveSubPartner = canHaveSubPartner;
 	}
 
@@ -333,11 +343,11 @@ public class Partner implements Serializable {
 		this.dandBNumber = dandBNumber;
 	}
 
-	public byte getDeliverDSForms() {
+	public Byte getDeliverDSForms() {
 		return this.deliverDSForms;
 	}
 
-	public void setDeliverDSForms(byte deliverDSForms) {
+	public void setDeliverDSForms(Byte deliverDSForms) {
 		this.deliverDSForms = deliverDSForms;
 	}
 
@@ -349,11 +359,11 @@ public class Partner implements Serializable {
 		this.email = email;
 	}
 
-	public byte getHasSubPartners() {
+	public Byte getHasSubPartners() {
 		return this.hasSubPartners;
 	}
 
-	public void setHasSubPartners(byte hasSubPartners) {
+	public void setHasSubPartners(Byte hasSubPartners) {
 		this.hasSubPartners = hasSubPartners;
 	}
 
@@ -381,11 +391,11 @@ public class Partner implements Serializable {
 		this.lastSelectedProgramId = lastSelectedProgramId;
 	}
 
-	public byte getMailingAddressIsSameAsPhysicalAdress() {
+	public Byte getMailingAddressIsSameAsPhysicalAdress() {
 		return this.mailingAddressIsSameAsPhysicalAdress;
 	}
 
-	public void setMailingAddressIsSameAsPhysicalAdress(byte mailingAddressIsSameAsPhysicalAdress) {
+	public void setMailingAddressIsSameAsPhysicalAdress(Byte mailingAddressIsSameAsPhysicalAdress) {
 		this.mailingAddressIsSameAsPhysicalAdress = mailingAddressIsSameAsPhysicalAdress;
 	}
 
@@ -405,11 +415,11 @@ public class Partner implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public byte getMultiCountrySender() {
+	public Byte getMultiCountrySender() {
 		return this.multiCountrySender;
 	}
 
-	public void setMultiCountrySender(byte multiCountrySender) {
+	public void setMultiCountrySender(Byte multiCountrySender) {
 		this.multiCountrySender = multiCountrySender;
 	}
 
@@ -437,35 +447,35 @@ public class Partner implements Serializable {
 		this.parentPartnerGoId = parentPartnerGoId;
 	}
 
-	public byte getParticipantELTISRequired() {
+	public Byte getParticipantELTISRequired() {
 		return this.participantELTISRequired;
 	}
 
-	public void setParticipantELTISRequired(byte participantELTISRequired) {
+	public void setParticipantELTISRequired(Byte participantELTISRequired) {
 		this.participantELTISRequired = participantELTISRequired;
 	}
 
-	public byte getParticipantMedicalReleaseRequired() {
+	public Byte getParticipantMedicalReleaseRequired() {
 		return this.participantMedicalReleaseRequired;
 	}
 
-	public void setParticipantMedicalReleaseRequired(byte participantMedicalReleaseRequired) {
+	public void setParticipantMedicalReleaseRequired(Byte participantMedicalReleaseRequired) {
 		this.participantMedicalReleaseRequired = participantMedicalReleaseRequired;
 	}
 
-	public byte getParticipantSLEPRequired() {
+	public Byte getParticipantSLEPRequired() {
 		return this.participantSLEPRequired;
 	}
 
-	public void setParticipantSLEPRequired(byte participantSLEPRequired) {
+	public void setParticipantSLEPRequired(Byte participantSLEPRequired) {
 		this.participantSLEPRequired = participantSLEPRequired;
 	}
 
-	public byte getParticipantTranscriptRequired() {
+	public Byte getParticipantTranscriptRequired() {
 		return this.participantTranscriptRequired;
 	}
 
-	public void setParticipantTranscriptRequired(byte participantTranscriptRequired) {
+	public void setParticipantTranscriptRequired(Byte participantTranscriptRequired) {
 		this.participantTranscriptRequired = participantTranscriptRequired;
 	}
 
@@ -485,11 +495,11 @@ public class Partner implements Serializable {
 		this.partnerLogo = partnerLogo;
 	}
 
-	public byte getPayGreenheartDirectly() {
+	public Byte getPayGreenheartDirectly() {
 		return this.payGreenheartDirectly;
 	}
 
-	public void setPayGreenheartDirectly(byte payGreenheartDirectly) {
+	public void setPayGreenheartDirectly(Byte payGreenheartDirectly) {
 		this.payGreenheartDirectly = payGreenheartDirectly;
 	}
 
@@ -541,11 +551,11 @@ public class Partner implements Serializable {
 		this.quickbooksCode = quickbooksCode;
 	}
 
-	public byte getReceiveAYPMails() {
+	public Byte getReceiveAYPMails() {
 		return this.receiveAYPMails;
 	}
 
-	public void setReceiveAYPMails(byte receiveAYPMails) {
+	public void setReceiveAYPMails(Byte receiveAYPMails) {
 		this.receiveAYPMails = receiveAYPMails;
 	}
 
@@ -557,19 +567,19 @@ public class Partner implements Serializable {
 		this.state = state;
 	}
 
-	public byte getSubscribeToCCINewsletter() {
+	public Byte getSubscribeToCCINewsletter() {
 		return this.subscribeToCCINewsletter;
 	}
 
-	public void setSubscribeToCCINewsletter(byte subscribeToCCINewsletter) {
+	public void setSubscribeToCCINewsletter(Byte subscribeToCCINewsletter) {
 		this.subscribeToCCINewsletter = subscribeToCCINewsletter;
 	}
 
-	public byte getUnguaranteedFormRequired() {
+	public Byte getUnguaranteedFormRequired() {
 		return this.unguaranteedFormRequired;
 	}
 
-	public void setUnguaranteedFormRequired(byte unguaranteedFormRequired) {
+	public void setUnguaranteedFormRequired(Byte unguaranteedFormRequired) {
 		this.unguaranteedFormRequired = unguaranteedFormRequired;
 	}
 
@@ -649,34 +659,26 @@ public class Partner implements Serializable {
 		this.lookupCountry2 = lookupCountry2;
 	}
 
-	public PartnerStatus getPartnerStatus() {
-		return this.partnerStatus;
-	}
-
-	public void setPartnerStatus(PartnerStatus partnerStatus) {
-		this.partnerStatus = partnerStatus;
-	}
-
 	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
-      return this.partnerAgentInquiries;
+		return this.partnerAgentInquiries;
 	}
 
-   public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
-      this.partnerAgentInquiries = partnerAgentInquiries;
-   }
-
-	public PartnerAgentInquiry addPartnerAgentInquiries(PartnerAgentInquiry partnerAgentInquiries) {
-		getPartnerAgentInquiries().add(partnerAgentInquiries);
-		partnerAgentInquiries.setPartner(this);
-
-		return partnerAgentInquiries;
+	public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
+		this.partnerAgentInquiries = partnerAgentInquiries;
 	}
 
-	public PartnerAgentInquiry removePartnerAgentInquiries(PartnerAgentInquiry partnerAgentInquiries) {
-		getPartnerAgentInquiries().remove(partnerAgentInquiries);
-		partnerAgentInquiries.setPartner(null);
+	public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+		getPartnerAgentInquiries().add(partnerAgentInquiry);
+		partnerAgentInquiry.setPartner(this);
 
-		return partnerAgentInquiries;
+		return partnerAgentInquiry;
+	}
+
+	public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+		getPartnerAgentInquiries().remove(partnerAgentInquiry);
+		partnerAgentInquiry.setPartner(null);
+
+		return partnerAgentInquiry;
 	}
 
 	public List<PartnerAnnouncement> getPartnerAnnouncements() {
@@ -765,6 +767,50 @@ public class Partner implements Serializable {
 		partnerDocument.setPartner(null);
 
 		return partnerDocument;
+	}
+
+	public List<PartnerHelpRequest> getPartnerHelpRequests1() {
+		return this.partnerHelpRequests1;
+	}
+
+	public void setPartnerHelpRequests1(List<PartnerHelpRequest> partnerHelpRequests1) {
+		this.partnerHelpRequests1 = partnerHelpRequests1;
+	}
+
+	public PartnerHelpRequest addPartnerHelpRequests1(PartnerHelpRequest partnerHelpRequests1) {
+		getPartnerHelpRequests1().add(partnerHelpRequests1);
+		partnerHelpRequests1.setPartner1(this);
+
+		return partnerHelpRequests1;
+	}
+
+	public PartnerHelpRequest removePartnerHelpRequests1(PartnerHelpRequest partnerHelpRequests1) {
+		getPartnerHelpRequests1().remove(partnerHelpRequests1);
+		partnerHelpRequests1.setPartner1(null);
+
+		return partnerHelpRequests1;
+	}
+
+	public List<PartnerHelpRequest> getPartnerHelpRequests2() {
+		return this.partnerHelpRequests2;
+	}
+
+	public void setPartnerHelpRequests2(List<PartnerHelpRequest> partnerHelpRequests2) {
+		this.partnerHelpRequests2 = partnerHelpRequests2;
+	}
+
+	public PartnerHelpRequest addPartnerHelpRequests2(PartnerHelpRequest partnerHelpRequests2) {
+		getPartnerHelpRequests2().add(partnerHelpRequests2);
+		partnerHelpRequests2.setPartner2(this);
+
+		return partnerHelpRequests2;
+	}
+
+	public PartnerHelpRequest removePartnerHelpRequests2(PartnerHelpRequest partnerHelpRequests2) {
+		getPartnerHelpRequests2().remove(partnerHelpRequests2);
+		partnerHelpRequests2.setPartner2(null);
+
+		return partnerHelpRequests2;
 	}
 
 	public List<PartnerMessage> getPartnerMessages() {
@@ -877,6 +923,50 @@ public class Partner implements Serializable {
 		return partnerProgram;
 	}
 
+	public List<PartnerQuickStatsCategoryAggregate> getPartnerQuickStatsCategoryAggregates() {
+		return this.partnerQuickStatsCategoryAggregates;
+	}
+
+	public void setPartnerQuickStatsCategoryAggregates(List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates) {
+		this.partnerQuickStatsCategoryAggregates = partnerQuickStatsCategoryAggregates;
+	}
+
+	public PartnerQuickStatsCategoryAggregate addPartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+		getPartnerQuickStatsCategoryAggregates().add(partnerQuickStatsCategoryAggregate);
+		partnerQuickStatsCategoryAggregate.setPartner(this);
+
+		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public PartnerQuickStatsCategoryAggregate removePartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+		getPartnerQuickStatsCategoryAggregates().remove(partnerQuickStatsCategoryAggregate);
+		partnerQuickStatsCategoryAggregate.setPartner(null);
+
+		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {
+		return this.partnerQuickStatsTypeAggregates;
+	}
+
+	public void setPartnerQuickStatsTypeAggregates(List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates) {
+		this.partnerQuickStatsTypeAggregates = partnerQuickStatsTypeAggregates;
+	}
+
+	public PartnerQuickStatsTypeAggregate addPartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+		getPartnerQuickStatsTypeAggregates().add(partnerQuickStatsTypeAggregate);
+		partnerQuickStatsTypeAggregate.setPartner(this);
+
+		return partnerQuickStatsTypeAggregate;
+	}
+
+	public PartnerQuickStatsTypeAggregate removePartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+		getPartnerQuickStatsTypeAggregates().remove(partnerQuickStatsTypeAggregate);
+		partnerQuickStatsTypeAggregate.setPartner(null);
+
+		return partnerQuickStatsTypeAggregate;
+	}
+
 	public List<PartnerReferenceCheck> getPartnerReferenceChecks() {
 		return this.partnerReferenceChecks;
 	}
@@ -943,28 +1033,6 @@ public class Partner implements Serializable {
 		return partnerSeason;
 	}
 
-	public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
-		return this.partnerSeasonDocuments;
-	}
-
-	public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
-		this.partnerSeasonDocuments = partnerSeasonDocuments;
-	}
-
-	public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
-		getPartnerSeasonDocuments().add(partnerSeasonDocument);
-		partnerSeasonDocument.setPartner(this);
-
-		return partnerSeasonDocument;
-	}
-
-	public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
-		getPartnerSeasonDocuments().remove(partnerSeasonDocument);
-		partnerSeasonDocument.setPartner(null);
-
-		return partnerSeasonDocument;
-	}
-
 	public List<PartnerUser> getPartnerUsers() {
 		return this.partnerUsers;
 	}
@@ -987,48 +1055,48 @@ public class Partner implements Serializable {
 		return partnerUser;
 	}
 
-	public List<PartnerQuickStatsCategoryAggregate> getPartnerQuickStatsCategoryAggregates() {
-		return this.partnerQuickStatsCategoryAggregates;
+	public List<PartnerWorkQueue> getPartnerWorkQueues() {
+		return this.partnerWorkQueues;
 	}
 
-	public void setPartnerQuickStatsCategoryAggregates(List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates) {
-		this.partnerQuickStatsCategoryAggregates = partnerQuickStatsCategoryAggregates;
+	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+		this.partnerWorkQueues = partnerWorkQueues;
 	}
 
-	public PartnerQuickStatsCategoryAggregate addPartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
-		getPartnerQuickStatsCategoryAggregates().add(partnerQuickStatsCategoryAggregate);
-		partnerQuickStatsCategoryAggregate.setPartner(this);
+	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().add(partnerWorkQueue);
+		partnerWorkQueue.setPartner(this);
 
-		return partnerQuickStatsCategoryAggregate;
+		return partnerWorkQueue;
 	}
 
-	public PartnerQuickStatsCategoryAggregate removePartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
-		getPartnerQuickStatsCategoryAggregates().remove(partnerQuickStatsCategoryAggregate);
-		partnerQuickStatsCategoryAggregate.setPartner(null);
+	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().remove(partnerWorkQueue);
+		partnerWorkQueue.setPartner(null);
 
-		return partnerQuickStatsCategoryAggregate;
+		return partnerWorkQueue;
 	}
 
-	public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {
-		return this.partnerQuickStatsTypeAggregates;
+	public List<PartnerWorkQueueCategoryAggregate> getPartnerWorkQueueCategoryAggregates() {
+		return this.partnerWorkQueueCategoryAggregates;
 	}
 
-	public void setPartnerQuickStatsTypeAggregates(List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates) {
-		this.partnerQuickStatsTypeAggregates = partnerQuickStatsTypeAggregates;
+	public void setPartnerWorkQueueCategoryAggregates(List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates) {
+		this.partnerWorkQueueCategoryAggregates = partnerWorkQueueCategoryAggregates;
 	}
 
-	public PartnerQuickStatsTypeAggregate addPartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
-		getPartnerQuickStatsTypeAggregates().add(partnerQuickStatsTypeAggregate);
-		partnerQuickStatsTypeAggregate.setPartner(this);
+	public PartnerWorkQueueCategoryAggregate addPartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().add(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setPartner(this);
 
-		return partnerQuickStatsTypeAggregate;
+		return partnerWorkQueueCategoryAggregate;
 	}
 
-	public PartnerQuickStatsTypeAggregate removePartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
-		getPartnerQuickStatsTypeAggregates().remove(partnerQuickStatsTypeAggregate);
-		partnerQuickStatsTypeAggregate.setPartner(null);
+	public PartnerWorkQueueCategoryAggregate removePartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().remove(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setPartner(null);
 
-		return partnerQuickStatsTypeAggregate;
+		return partnerWorkQueueCategoryAggregate;
 	}
 
 	public List<PartnerWorkQueueTypeAggregate> getPartnerWorkQueueTypeAggregates() {

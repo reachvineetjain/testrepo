@@ -21,11 +21,12 @@ public class RegionIHP implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer regionIHPId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -56,11 +57,11 @@ public class RegionIHP implements Serializable {
 		this.regionIHPId = regionIHPId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

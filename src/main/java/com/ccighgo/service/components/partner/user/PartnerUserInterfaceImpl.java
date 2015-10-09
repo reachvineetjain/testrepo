@@ -449,7 +449,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER));
             return partnerUserDetailAndRoles;
          }
-         partnerUserDetailAndRoles.setPartnergoId(partnerUser.getPartner().getPartnerGoId().toString());
+         partnerUserDetailAndRoles.setPartnergoId(String.valueOf(partnerUser.getPartner().getPartnerGoId()));
          partnerUserDetailAndRoles.setPartnerUserId(partnerUser.getPartnerUserId().toString());
          partnerUserDetailAndRoles.setEmail(partnerUser.getEmail());
          partnerUserDetailAndRoles.setEmergencyPhone(partnerUser.getEmergencyPhone());
@@ -636,7 +636,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          if (login != null) {
             if (login.getGoIdSequence().getPartner() != null) {
                Header header = new Header();
-               header.setSubject(login.getGoIdSequence().getPartner().getPartnerGoId().toString());
+               header.setSubject(String.valueOf(login.getGoIdSequence().getPartner().getPartnerGoId()));
                response.setHeader(header);
                response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_USER_cODE.getValue(),
                      messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));

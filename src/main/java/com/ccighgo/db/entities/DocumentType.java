@@ -20,7 +20,7 @@ public class DocumentType implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer documentTypeId;
 
-	@Column(length=50)
+	@Column(nullable=false, length=50)
 	private String documentTypeName;
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess

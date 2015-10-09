@@ -2,7 +2,6 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
 
 /**
@@ -20,39 +19,20 @@ public class PartnerSeasonContract implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonContractId;
 
-	@Column(nullable=false)
-	private byte active;
+	@Lob
+	private String description;
 
-	private Integer createdBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdOn;
-
-	@Column(length=50)
-	private String displayName;
-
-	@Column(length=100)
-	private String fileName;
-
-	private byte isSigned;
-
-	private Integer modifiedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedOn;
-
-	@Column(nullable=false, length=64)
-	private String partnerSeasonContractGuid;
-
-	//bi-directional many-to-one association to PartnerSeason
-	@ManyToOne
-	@JoinColumn(name="partnerSeasonId")
-	private PartnerSeason partnerSeason;
+	private Byte isSigned;
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
 	@JoinColumn(name="documentInformationId")
 	private DocumentInformation documentInformation;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@ManyToOne
+	@JoinColumn(name="partnerSeasonId")
+	private PartnerSeason partnerSeason;
 
 	public PartnerSeasonContract() {
 	}
@@ -65,84 +45,20 @@ public class PartnerSeasonContract implements Serializable {
 		this.partnerSeasonContractId = partnerSeasonContractId;
 	}
 
-	public byte getActive() {
-		return this.active;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setActive(byte active) {
-		this.active = active;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public String getDisplayName() {
-		return this.displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-
-	public String getFileName() {
-		return this.fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public byte getIsSigned() {
+	public Byte getIsSigned() {
 		return this.isSigned;
 	}
 
-	public void setIsSigned(byte isSigned) {
+	public void setIsSigned(Byte isSigned) {
 		this.isSigned = isSigned;
-	}
-
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedOn() {
-		return this.modifiedOn;
-	}
-
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-
-	public String getPartnerSeasonContractGuid() {
-		return this.partnerSeasonContractGuid;
-	}
-
-	public void setPartnerSeasonContractGuid(String partnerSeasonContractGuid) {
-		this.partnerSeasonContractGuid = partnerSeasonContractGuid;
-	}
-
-	public PartnerSeason getPartnerSeason() {
-		return this.partnerSeason;
-	}
-
-	public void setPartnerSeason(PartnerSeason partnerSeason) {
-		this.partnerSeason = partnerSeason;
 	}
 
 	public DocumentInformation getDocumentInformation() {
@@ -151,6 +67,14 @@ public class PartnerSeasonContract implements Serializable {
 
 	public void setDocumentInformation(DocumentInformation documentInformation) {
 		this.documentInformation = documentInformation;
+	}
+
+	public PartnerSeason getPartnerSeason() {
+		return this.partnerSeason;
+	}
+
+	public void setPartnerSeason(PartnerSeason partnerSeason) {
+		this.partnerSeason = partnerSeason;
 	}
 
 }

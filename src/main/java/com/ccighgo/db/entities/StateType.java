@@ -22,13 +22,10 @@ public class StateType implements Serializable {
 
 	private Byte isLastStep;
 
-	@Column(nullable=false)
 	private Byte isVisibleToAdmin;
 
-	@Column(nullable=false)
 	private Byte isVisibleToParticipant;
 
-	@Column(nullable=false)
 	private Byte isVisibleToPartner;
 
 	@Column(length=45)
@@ -36,7 +33,7 @@ public class StateType implements Serializable {
 
 	private Integer workQueueCategoryId;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String workQueueRoleType;
 
 	private Integer workQueueTypeId;
@@ -44,6 +41,10 @@ public class StateType implements Serializable {
 	//bi-directional many-to-one association to AdminWorkQueue
 	@OneToMany(mappedBy="stateType")
 	private List<AdminWorkQueue> adminWorkQueues;
+
+	//bi-directional many-to-one association to PartnerWorkQueue
+	@OneToMany(mappedBy="stateType")
+	private List<PartnerWorkQueue> partnerWorkQueues;
 
 	//bi-directional many-to-one association to StateAction
 	@OneToMany(mappedBy="stateType")
@@ -161,6 +162,28 @@ public class StateType implements Serializable {
 		adminWorkQueue.setStateType(null);
 
 		return adminWorkQueue;
+	}
+
+	public List<PartnerWorkQueue> getPartnerWorkQueues() {
+		return this.partnerWorkQueues;
+	}
+
+	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+		this.partnerWorkQueues = partnerWorkQueues;
+	}
+
+	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().add(partnerWorkQueue);
+		partnerWorkQueue.setStateType(this);
+
+		return partnerWorkQueue;
+	}
+
+	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().remove(partnerWorkQueue);
+		partnerWorkQueue.setStateType(null);
+
+		return partnerWorkQueue;
 	}
 
 	public List<StateAction> getStateActions() {
