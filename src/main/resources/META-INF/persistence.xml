@@ -142,8 +142,8 @@
          <property name="javax.persistence.jdbc.user" value="creomobile" />
          <property name="javax.persistence.jdbc.password" value="creodev" />
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-         <property name="hibernate.show_sql" value="true" />
-         <property name="hibernate.hbm2ddl.auto" value="update" />
+         <property name="hibernate.show_sql" value="false" />
+         <property name="hibernate.hbm2ddl.auto" value="validate" />
          <property name="hibernate.c3p0.min_size" value="5" />
          <property name="hibernate.c3p0.max_size" value="100" />
          <property name="hibernate.c3p0.acquireIncrement " value="5" />

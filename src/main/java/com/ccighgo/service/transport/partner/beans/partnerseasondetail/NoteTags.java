@@ -37,14 +37,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NoteTags", propOrder = {
     "noteTagId",
-    "noteTag"
+    "noteTag",
+    "noteTagValue"
 })
 public class NoteTags {
 
     protected int noteTagId;
     @XmlElement(required = true)
     protected String noteTag;
-
+    protected Byte noteTagValue;
     /**
      * Gets the value of the noteTagId property.
      * 
@@ -84,5 +85,13 @@ public class NoteTags {
     public void setNoteTag(String value) {
         this.noteTag = value;
     }
+
+   public Byte getNoteTagValue() {
+      return noteTagValue;
+   }
+
+   public void setNoteTagValue(Byte noteTagValue) {
+      this.noteTagValue = noteTagValue;
+   }
 
 }
