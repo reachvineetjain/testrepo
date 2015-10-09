@@ -23,6 +23,7 @@ public class SeasonWPAllocation implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer maxPax;
@@ -35,7 +36,7 @@ public class SeasonWPAllocation implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId")
+	@JoinColumn(name="departmentProgramOptionId", nullable=false)
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Season

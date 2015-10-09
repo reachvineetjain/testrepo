@@ -27,11 +27,12 @@ public class Region implements Serializable {
 	private Integer regionId;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -59,11 +60,11 @@ public class Region implements Serializable {
 		this.regionId = regionId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

@@ -20,6 +20,7 @@ public class SeasonProgramUpdateLog implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer updateProgramLogId;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
 	@Column(nullable=false)

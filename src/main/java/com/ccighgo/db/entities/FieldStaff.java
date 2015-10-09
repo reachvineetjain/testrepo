@@ -20,10 +20,10 @@ public class FieldStaff implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer fieldStaffId;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String firstName;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String lastName;
 
 	@Column(length=100)
@@ -41,6 +41,10 @@ public class FieldStaff implements Serializable {
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
+
+	//bi-directional many-to-one association to FieldStaffPermission
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffPermission> fieldStaffPermissions;
 
 	public FieldStaff() {
 	}
@@ -127,6 +131,28 @@ public class FieldStaff implements Serializable {
 		fieldStaffLeadershipSeason.setFieldStaff(null);
 
 		return fieldStaffLeadershipSeason;
+	}
+
+	public List<FieldStaffPermission> getFieldStaffPermissions() {
+		return this.fieldStaffPermissions;
+	}
+
+	public void setFieldStaffPermissions(List<FieldStaffPermission> fieldStaffPermissions) {
+		this.fieldStaffPermissions = fieldStaffPermissions;
+	}
+
+	public FieldStaffPermission addFieldStaffPermission(FieldStaffPermission fieldStaffPermission) {
+		getFieldStaffPermissions().add(fieldStaffPermission);
+		fieldStaffPermission.setFieldStaff(this);
+
+		return fieldStaffPermission;
+	}
+
+	public FieldStaffPermission removeFieldStaffPermission(FieldStaffPermission fieldStaffPermission) {
+		getFieldStaffPermissions().remove(fieldStaffPermission);
+		fieldStaffPermission.setFieldStaff(null);
+
+		return fieldStaffPermission;
 	}
 
 }

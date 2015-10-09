@@ -21,11 +21,12 @@ public class SuperRegion implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer superRegionId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -34,7 +35,7 @@ public class SuperRegion implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String superRegionName;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
@@ -52,11 +53,11 @@ public class SuperRegion implements Serializable {
 		this.superRegionId = superRegionId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

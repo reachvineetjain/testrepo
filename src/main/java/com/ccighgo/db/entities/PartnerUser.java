@@ -22,7 +22,7 @@ public class PartnerUser implements Serializable {
 
 	private Byte active;
 
-	@Column(length=50)
+	@Column(length=150)
 	private String email;
 
 	@Column(length=150)
@@ -60,24 +60,24 @@ public class PartnerUser implements Serializable {
 	@JoinColumn(name="loginId")
 	private Login login;
 
-	//bi-directional many-to-one association to Partner
-	@ManyToOne
-	@JoinColumn(name="partnerGoId")
-	private Partner partner;
-
-	//bi-directional many-to-one association to PartnerUserRole
-	@OneToMany(mappedBy="partnerUser")
-	private List<PartnerUserRole> partnerUserRoles;
-
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
 	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
 
+	//bi-directional many-to-one association to Partner
+	@ManyToOne
+	@JoinColumn(name="partnerGoId")
+	private Partner partner;
+
 	//bi-directional many-to-one association to Salutation
 	@ManyToOne
 	@JoinColumn(name="salutationId")
 	private Salutation salutation;
+
+	//bi-directional many-to-one association to PartnerUserRole
+	@OneToMany(mappedBy="partnerUser")
+	private List<PartnerUserRole> partnerUserRoles;
 
 	public PartnerUser() {
 	}
@@ -204,12 +204,28 @@ public class PartnerUser implements Serializable {
 		this.login = login;
 	}
 
+	public LookupGender getLookupGender() {
+		return this.lookupGender;
+	}
+
+	public void setLookupGender(LookupGender lookupGender) {
+		this.lookupGender = lookupGender;
+	}
+
 	public Partner getPartner() {
 		return this.partner;
 	}
 
 	public void setPartner(Partner partner) {
 		this.partner = partner;
+	}
+
+	public Salutation getSalutation() {
+		return this.salutation;
+	}
+
+	public void setSalutation(Salutation salutation) {
+		this.salutation = salutation;
 	}
 
 	public List<PartnerUserRole> getPartnerUserRoles() {
@@ -232,22 +248,6 @@ public class PartnerUser implements Serializable {
 		partnerUserRole.setPartnerUser(null);
 
 		return partnerUserRole;
-	}
-
-	public LookupGender getLookupGender() {
-		return this.lookupGender;
-	}
-
-	public void setLookupGender(LookupGender lookupGender) {
-		this.lookupGender = lookupGender;
-	}
-
-	public Salutation getSalutation() {
-		return this.salutation;
-	}
-
-	public void setSalutation(Salutation salutation) {
-		this.salutation = salutation;
 	}
 
 }

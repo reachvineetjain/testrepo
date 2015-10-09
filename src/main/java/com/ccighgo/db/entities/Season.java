@@ -32,6 +32,7 @@ public class Season implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -40,18 +41,20 @@ public class Season implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=35)
+	@Column(nullable=false, length=50)
 	private String seasonFullName;
 
-	@Column(length=35)
+	@Column(nullable=false, length=50)
 	private String seasonName;
 
 	//bi-directional many-to-one association to FieldStaffLCSeason
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
 	//bi-directional many-to-one association to Participant
@@ -65,6 +68,10 @@ public class Season implements Serializable {
 	//bi-directional many-to-one association to PartnerSeason
 	@OneToMany(mappedBy="season")
 	private List<PartnerSeason> partnerSeasons;
+
+	//bi-directional many-to-one association to PartnerWorkQueue
+	@OneToMany(mappedBy="season")
+	private List<PartnerWorkQueue> partnerWorkQueues;
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
@@ -92,7 +99,7 @@ public class Season implements Serializable {
 	private List<SeasonDepartmentNote> seasonDepartmentNotes;
 
 	//bi-directional many-to-one association to SeasonDepartmentUpdateLog
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy = "season")
 	private List<SeasonDepartmentUpdateLog> seasonDepartmentUpdateLogs;
 
 	//bi-directional many-to-one association to SeasonF1Detail
@@ -131,7 +138,7 @@ public class Season implements Serializable {
 	private List<SeasonIHPDetail> seasonIhpdetails;
 
 	//bi-directional many-to-one association to SeasonIHPGeographyConfiguration
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy = "season")
 	private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
 
 	//bi-directional many-to-one association to SeasonJ1Detail
@@ -378,6 +385,28 @@ public class Season implements Serializable {
 		partnerSeason.setSeason(null);
 
 		return partnerSeason;
+	}
+
+	public List<PartnerWorkQueue> getPartnerWorkQueues() {
+		return this.partnerWorkQueues;
+	}
+
+	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+		this.partnerWorkQueues = partnerWorkQueues;
+	}
+
+	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().add(partnerWorkQueue);
+		partnerWorkQueue.setSeason(this);
+
+		return partnerWorkQueue;
+	}
+
+	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().remove(partnerWorkQueue);
+		partnerWorkQueue.setSeason(null);
+
+		return partnerWorkQueue;
 	}
 
 	public LookupDepartment getLookupDepartment() {

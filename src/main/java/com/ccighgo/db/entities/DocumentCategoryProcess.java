@@ -20,7 +20,7 @@ public class DocumentCategoryProcess implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer documentCategoryProcessId;
 
-	@Column(length=50)
+	@Column(nullable=false, length=50)
 	private String documentCategoryProcessName;
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess

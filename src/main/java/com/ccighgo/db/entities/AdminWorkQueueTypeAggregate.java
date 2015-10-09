@@ -20,7 +20,7 @@ public class AdminWorkQueueTypeAggregate implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer adminWQTypeAggregateId;
 
-	private int adminWQTypeAggregate;
+	private Integer adminWQTypeAggregate;
 
 	@Column(length=50)
 	private String adminWQTypeName;
@@ -54,11 +54,11 @@ public class AdminWorkQueueTypeAggregate implements Serializable {
 		this.adminWQTypeAggregateId = adminWQTypeAggregateId;
 	}
 
-	public int getAdminWQTypeAggregate() {
+	public Integer getAdminWQTypeAggregate() {
 		return this.adminWQTypeAggregate;
 	}
 
-	public void setAdminWQTypeAggregate(int adminWQTypeAggregate) {
+	public void setAdminWQTypeAggregate(Integer adminWQTypeAggregate) {
 		this.adminWQTypeAggregate = adminWQTypeAggregate;
 	}
 

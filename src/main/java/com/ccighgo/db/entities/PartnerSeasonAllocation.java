@@ -20,8 +20,10 @@ public class PartnerSeasonAllocation implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonAllocationId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer expectedPaxCount;
@@ -30,14 +32,16 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	private Integer maxPax;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-   @JoinColumn(name="departmentProgramOptionId", nullable=false, insertable =false, updatable=false)
-   private DepartmentProgramOption departmentProgramOption;
+	@JoinColumn(name="departmentProgramOptionId", nullable=false, insertable =false, updatable=false)
+	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to PartnerSeason
 	@ManyToOne
@@ -112,12 +116,12 @@ public class PartnerSeasonAllocation implements Serializable {
 	}
 
 	public DepartmentProgramOption getDepartmentProgramOption() {
-      return this.departmentProgramOption;
-   }
+		return this.departmentProgramOption;
+	}
 
-   public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
-      this.departmentProgramOption = departmentProgramOption;
-   }
+	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+		this.departmentProgramOption = departmentProgramOption;
+	}
 
 	public PartnerSeason getPartnerSeason() {
 		return this.partnerSeason;

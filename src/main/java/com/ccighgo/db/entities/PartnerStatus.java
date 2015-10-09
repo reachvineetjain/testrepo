@@ -20,14 +20,10 @@ public class PartnerStatus implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerStatusId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(length=50)
 	private String partnerStatusName;
-
-	//bi-directional many-to-one association to Partner
-	@OneToMany(mappedBy="partnerStatus")
-	private List<Partner> partners;
 
 	//bi-directional many-to-one association to PartnerReviewStatus
 	@OneToMany(mappedBy="partnerStatus1")
@@ -52,11 +48,11 @@ public class PartnerStatus implements Serializable {
 		this.partnerStatusId = partnerStatusId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -66,28 +62,6 @@ public class PartnerStatus implements Serializable {
 
 	public void setPartnerStatusName(String partnerStatusName) {
 		this.partnerStatusName = partnerStatusName;
-	}
-
-	public List<Partner> getPartners() {
-		return this.partners;
-	}
-
-	public void setPartners(List<Partner> partners) {
-		this.partners = partners;
-	}
-
-	public Partner addPartner(Partner partner) {
-		getPartners().add(partner);
-		partner.setPartnerStatus(this);
-
-		return partner;
-	}
-
-	public Partner removePartner(Partner partner) {
-		getPartners().remove(partner);
-		partner.setPartnerStatus(null);
-
-		return partner;
 	}
 
 	public List<PartnerReviewStatus> getPartnerReviewStatuses1() {

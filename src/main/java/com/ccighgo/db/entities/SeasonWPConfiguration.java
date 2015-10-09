@@ -24,6 +24,7 @@ public class SeasonWPConfiguration implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)

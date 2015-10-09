@@ -32,6 +32,7 @@ public class PartnerOffice implements Serializable {
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=150)
@@ -39,6 +40,7 @@ public class PartnerOffice implements Serializable {
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=2000)

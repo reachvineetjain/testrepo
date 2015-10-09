@@ -22,11 +22,12 @@ public class ResourcePermission implements Serializable {
 	private Integer resourcePermissionId;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -38,7 +39,7 @@ public class ResourcePermission implements Serializable {
 	@Column(length=200)
 	private String resourceDescription;
 
-	@Column(length=100)
+	@Column(nullable=false, length=50)
 	private String resourceName;
 
 	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
@@ -74,11 +75,11 @@ public class ResourcePermission implements Serializable {
 		this.resourcePermissionId = resourcePermissionId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

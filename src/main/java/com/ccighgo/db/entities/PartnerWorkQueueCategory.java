@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -14,26 +15,36 @@ import javax.persistence.*;
 public class PartnerWorkQueueCategory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private PartnerWorkQueueCategoryPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Integer partnerWQCategoryId;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String partnerWQCategoryName;
+
+	//bi-directional many-to-one association to PartnerWorkQueue
+	@OneToMany(mappedBy="partnerWorkQueueCategory")
+	private List<PartnerWorkQueue> partnerWorkQueues;
 
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="partnerWQTypeId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="partnerWQTypeId", nullable=false)
 	private PartnerWorkQueueType partnerWorkQueueType;
+
+	//bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate
+	@OneToMany(mappedBy="partnerWorkQueueCategory")
+	private List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates;
 
 	public PartnerWorkQueueCategory() {
 	}
 
-	public PartnerWorkQueueCategoryPK getId() {
-		return this.id;
+	public Integer getPartnerWQCategoryId() {
+		return this.partnerWQCategoryId;
 	}
 
-	public void setId(PartnerWorkQueueCategoryPK id) {
-		this.id = id;
+	public void setPartnerWQCategoryId(Integer partnerWQCategoryId) {
+		this.partnerWQCategoryId = partnerWQCategoryId;
 	}
 
 	public String getPartnerWQCategoryName() {
@@ -44,12 +55,56 @@ public class PartnerWorkQueueCategory implements Serializable {
 		this.partnerWQCategoryName = partnerWQCategoryName;
 	}
 
+	public List<PartnerWorkQueue> getPartnerWorkQueues() {
+		return this.partnerWorkQueues;
+	}
+
+	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+		this.partnerWorkQueues = partnerWorkQueues;
+	}
+
+	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().add(partnerWorkQueue);
+		partnerWorkQueue.setPartnerWorkQueueCategory(this);
+
+		return partnerWorkQueue;
+	}
+
+	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().remove(partnerWorkQueue);
+		partnerWorkQueue.setPartnerWorkQueueCategory(null);
+
+		return partnerWorkQueue;
+	}
+
 	public PartnerWorkQueueType getPartnerWorkQueueType() {
 		return this.partnerWorkQueueType;
 	}
 
 	public void setPartnerWorkQueueType(PartnerWorkQueueType partnerWorkQueueType) {
 		this.partnerWorkQueueType = partnerWorkQueueType;
+	}
+
+	public List<PartnerWorkQueueCategoryAggregate> getPartnerWorkQueueCategoryAggregates() {
+		return this.partnerWorkQueueCategoryAggregates;
+	}
+
+	public void setPartnerWorkQueueCategoryAggregates(List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates) {
+		this.partnerWorkQueueCategoryAggregates = partnerWorkQueueCategoryAggregates;
+	}
+
+	public PartnerWorkQueueCategoryAggregate addPartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().add(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setPartnerWorkQueueCategory(this);
+
+		return partnerWorkQueueCategoryAggregate;
+	}
+
+	public PartnerWorkQueueCategoryAggregate removePartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().remove(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setPartnerWorkQueueCategory(null);
+
+		return partnerWorkQueueCategoryAggregate;
 	}
 
 }

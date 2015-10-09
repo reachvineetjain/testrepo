@@ -21,7 +21,7 @@ public class LookupCountry implements Serializable {
 	private Integer countryId;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false, length=5)
 	private String countryCode;
@@ -33,7 +33,7 @@ public class LookupCountry implements Serializable {
 	private String countryName;
 
 	@Column(nullable=false)
-	private byte isReqFinalSOAonDS;
+	private Byte isReqFinalSOAonDS;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="lookupCountry")
@@ -70,11 +70,11 @@ public class LookupCountry implements Serializable {
 		this.countryId = countryId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -102,11 +102,11 @@ public class LookupCountry implements Serializable {
 		this.countryName = countryName;
 	}
 
-	public byte getIsReqFinalSOAonDS() {
+	public Byte getIsReqFinalSOAonDS() {
 		return this.isReqFinalSOAonDS;
 	}
 
-	public void setIsReqFinalSOAonDS(byte isReqFinalSOAonDS) {
+	public void setIsReqFinalSOAonDS(Byte isReqFinalSOAonDS) {
 		this.isReqFinalSOAonDS = isReqFinalSOAonDS;
 	}
 

@@ -20,7 +20,7 @@ public class AdminQuickStatsTypeAggregate implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer adminQSTypeAggregateId;
 
-	private int adminQSTypeAggregate;
+	private Integer adminQSTypeAggregate;
 
 	@Column(length=50)
 	private String adminQSTypeName;
@@ -54,11 +54,11 @@ public class AdminQuickStatsTypeAggregate implements Serializable {
 		this.adminQSTypeAggregateId = adminQSTypeAggregateId;
 	}
 
-	public int getAdminQSTypeAggregate() {
+	public Integer getAdminQSTypeAggregate() {
 		return this.adminQSTypeAggregate;
 	}
 
-	public void setAdminQSTypeAggregate(int adminQSTypeAggregate) {
+	public void setAdminQSTypeAggregate(Integer adminQSTypeAggregate) {
 		this.adminQSTypeAggregate = adminQSTypeAggregate;
 	}
 

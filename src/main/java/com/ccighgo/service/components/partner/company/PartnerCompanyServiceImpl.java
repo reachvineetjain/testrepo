@@ -69,9 +69,9 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerCompanyNameHeader(partner.getCompanyName());
 
          PartnerCompanyStatus partnerCompanyStatus = new PartnerCompanyStatus();
-         partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerStatus().getPartnerStatusId());
+         /*partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerStatus().getPartnerStatusId());
          partnerCompanyStatus.setPartnerCompanyStatus(partner.getPartnerStatus().getPartnerStatusName());
-         partnerCompanyDetail.setPartnerCompanyStatus(partnerCompanyStatus);
+         partnerCompanyDetail.setPartnerCompanyStatus(partnerCompanyStatus);*/
 
          PartnerCompanyDetails partnerCompanyDetails = new PartnerCompanyDetails();
          partnerCompanyDetails.setPartnerCompanyLogoUrl(partner.getPartnerLogo());
@@ -106,8 +106,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          }
          if (partnerContact != null) {
             PrimaryContactSalutation primaryContactSalutation = new PrimaryContactSalutation();
-            primaryContactSalutation.setSalutationId(partnerContact.getSalutationBean().getSalutationId());
-            primaryContactSalutation.setSalutation(partnerContact.getSalutationBean().getSalutationName());
+            primaryContactSalutation.setSalutationId(partnerContact.getSalutation().getSalutationId());
+            primaryContactSalutation.setSalutation(partnerContact.getSalutation().getSalutationName());
             partnerPrimaryContact.setPrimaryContactSalutation(primaryContactSalutation);
             partnerPrimaryContact.setPrimaryContactTitle(partnerContact.getTitle());
             partnerPrimaryContact.setPrimaryContactFirstName(partnerContact.getFirstName());
@@ -197,7 +197,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                }
             }
             for (PartnerContact contact : partner.getPartnerContacts()) {
-               if (partner.getPartnerGoId().equals(contact.getPartner().getPartnerGoId())) {
+               if (partner.getPartnerGoId()==contact.getPartner().getPartnerGoId()) {
                   partnerContact = contact;
                   break;
                }
@@ -217,7 +217,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   return updatedObject;
                }
             }else{
-               partnerContact.setSalutationBean(salutationRepository.findOne(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSalutation().getSalutationId()));
+               partnerContact.setSalutation(salutationRepository.findOne(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSalutation().getSalutationId()));
                partnerContact.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
                partnerContact.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
                partnerContact.setLastName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactLastName());

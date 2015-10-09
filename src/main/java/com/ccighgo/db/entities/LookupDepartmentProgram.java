@@ -24,6 +24,7 @@ public class LookupDepartmentProgram implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=100)
@@ -37,27 +38,6 @@ public class LookupDepartmentProgram implements Serializable {
 
 	@Column(nullable=false, length=50)
 	private String programName;
-
-	//bi-directional many-to-one association to CCIStaffUserProgram
-	@OneToMany(mappedBy="lookupDepartmentProgram")
-	private List<CCIStaffUserProgram> ccistaffUserPrograms;
-
-	//bi-directional many-to-one association to LookupDepartment
-	@ManyToOne
-	@JoinColumn(name="departmentId", nullable=false)
-	private LookupDepartment lookupDepartment;
-
-	//bi-directional many-to-one association to PartnerCCIContact
-	@OneToMany(mappedBy="lookupDepartmentProgram")
-	private List<PartnerCCIContact> partnerCcicontacts;
-
-	//bi-directional many-to-one association to PartnerProgram
-	@OneToMany(mappedBy="lookupDepartmentProgram1")
-	private List<PartnerProgram> partnerPrograms1;
-
-	//bi-directional many-to-one association to PartnerProgram
-	@OneToMany(mappedBy="lookupDepartmentProgram2")
-	private List<PartnerProgram> partnerPrograms2;
 
 	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
 	@OneToMany(mappedBy="lookupDepartmentProgram")
@@ -79,6 +59,31 @@ public class LookupDepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
 
+	//bi-directional many-to-one association to CCIStaffUserProgram
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<CCIStaffUserProgram> ccistaffUserPrograms;
+
+	//bi-directional many-to-one association to LookupDepartment
+	@ManyToOne
+	@JoinColumn(name="departmentId", nullable=false)
+	private LookupDepartment lookupDepartment;
+
+	//bi-directional many-to-one association to PartnerCCIContact
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerCCIContact> partnerCcicontacts;
+
+	//bi-directional many-to-one association to PartnerHelpOptionProgram
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerHelpOptionProgram> partnerHelpOptionPrograms;
+
+	//bi-directional many-to-one association to PartnerHelpRequest
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerHelpRequest> partnerHelpRequests;
+
+	//bi-directional many-to-one association to PartnerProgram
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerProgram> partnerPrograms;
+
 	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
@@ -86,6 +91,14 @@ public class LookupDepartmentProgram implements Serializable {
 	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to PartnerWorkQueue
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerWorkQueue> partnerWorkQueues;
+
+	//bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates;
 
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@OneToMany(mappedBy="lookupDepartmentProgram")
@@ -156,102 +169,6 @@ public class LookupDepartmentProgram implements Serializable {
 
 	public void setProgramName(String programName) {
 		this.programName = programName;
-	}
-
-	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
-		return this.ccistaffUserPrograms;
-	}
-
-	public void setCcistaffUserPrograms(List<CCIStaffUserProgram> ccistaffUserPrograms) {
-		this.ccistaffUserPrograms = ccistaffUserPrograms;
-	}
-
-	public CCIStaffUserProgram addCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-		getCcistaffUserPrograms().add(ccistaffUserProgram);
-		ccistaffUserProgram.setLookupDepartmentProgram(this);
-
-		return ccistaffUserProgram;
-	}
-
-	public CCIStaffUserProgram removeCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
-		getCcistaffUserPrograms().remove(ccistaffUserProgram);
-		ccistaffUserProgram.setLookupDepartmentProgram(null);
-
-		return ccistaffUserProgram;
-	}
-
-	public LookupDepartment getLookupDepartment() {
-		return this.lookupDepartment;
-	}
-
-	public void setLookupDepartment(LookupDepartment lookupDepartment) {
-		this.lookupDepartment = lookupDepartment;
-	}
-
-	public List<PartnerCCIContact> getPartnerCcicontacts() {
-		return this.partnerCcicontacts;
-	}
-
-	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
-		this.partnerCcicontacts = partnerCcicontacts;
-	}
-
-	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().add(partnerCcicontact);
-		partnerCcicontact.setLookupDepartmentProgram(this);
-
-		return partnerCcicontact;
-	}
-
-	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().remove(partnerCcicontact);
-		partnerCcicontact.setLookupDepartmentProgram(null);
-
-		return partnerCcicontact;
-	}
-
-	public List<PartnerProgram> getPartnerPrograms1() {
-		return this.partnerPrograms1;
-	}
-
-	public void setPartnerPrograms1(List<PartnerProgram> partnerPrograms1) {
-		this.partnerPrograms1 = partnerPrograms1;
-	}
-
-	public PartnerProgram addPartnerPrograms1(PartnerProgram partnerPrograms1) {
-		getPartnerPrograms1().add(partnerPrograms1);
-		partnerPrograms1.setLookupDepartmentProgram1(this);
-
-		return partnerPrograms1;
-	}
-
-	public PartnerProgram removePartnerPrograms1(PartnerProgram partnerPrograms1) {
-		getPartnerPrograms1().remove(partnerPrograms1);
-		partnerPrograms1.setLookupDepartmentProgram1(null);
-
-		return partnerPrograms1;
-	}
-
-	public List<PartnerProgram> getPartnerPrograms2() {
-		return this.partnerPrograms2;
-	}
-
-	public void setPartnerPrograms2(List<PartnerProgram> partnerPrograms2) {
-		this.partnerPrograms2 = partnerPrograms2;
-	}
-
-	public PartnerProgram addPartnerPrograms2(PartnerProgram partnerPrograms2) {
-		getPartnerPrograms2().add(partnerPrograms2);
-		partnerPrograms2.setLookupDepartmentProgram2(this);
-
-		return partnerPrograms2;
-	}
-
-	public PartnerProgram removePartnerPrograms2(PartnerProgram partnerPrograms2) {
-		getPartnerPrograms2().remove(partnerPrograms2);
-		partnerPrograms2.setLookupDepartmentProgram2(null);
-
-		return partnerPrograms2;
 	}
 
 	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
@@ -364,6 +281,124 @@ public class LookupDepartmentProgram implements Serializable {
 		return adminWorkQueueTypeAggregate;
 	}
 
+	public List<CCIStaffUserProgram> getCcistaffUserPrograms() {
+		return this.ccistaffUserPrograms;
+	}
+
+	public void setCcistaffUserPrograms(List<CCIStaffUserProgram> ccistaffUserPrograms) {
+		this.ccistaffUserPrograms = ccistaffUserPrograms;
+	}
+
+	public CCIStaffUserProgram addCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
+		getCcistaffUserPrograms().add(ccistaffUserProgram);
+		ccistaffUserProgram.setLookupDepartmentProgram(this);
+
+		return ccistaffUserProgram;
+	}
+
+	public CCIStaffUserProgram removeCcistaffUserProgram(CCIStaffUserProgram ccistaffUserProgram) {
+		getCcistaffUserPrograms().remove(ccistaffUserProgram);
+		ccistaffUserProgram.setLookupDepartmentProgram(null);
+
+		return ccistaffUserProgram;
+	}
+
+	public LookupDepartment getLookupDepartment() {
+		return this.lookupDepartment;
+	}
+
+	public void setLookupDepartment(LookupDepartment lookupDepartment) {
+		this.lookupDepartment = lookupDepartment;
+	}
+
+	public List<PartnerCCIContact> getPartnerCcicontacts() {
+		return this.partnerCcicontacts;
+	}
+
+	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
+		this.partnerCcicontacts = partnerCcicontacts;
+	}
+
+	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
+		getPartnerCcicontacts().add(partnerCcicontact);
+		partnerCcicontact.setLookupDepartmentProgram(this);
+
+		return partnerCcicontact;
+	}
+
+	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
+		getPartnerCcicontacts().remove(partnerCcicontact);
+		partnerCcicontact.setLookupDepartmentProgram(null);
+
+		return partnerCcicontact;
+	}
+
+	public List<PartnerHelpOptionProgram> getPartnerHelpOptionPrograms() {
+		return this.partnerHelpOptionPrograms;
+	}
+
+	public void setPartnerHelpOptionPrograms(List<PartnerHelpOptionProgram> partnerHelpOptionPrograms) {
+		this.partnerHelpOptionPrograms = partnerHelpOptionPrograms;
+	}
+
+	public PartnerHelpOptionProgram addPartnerHelpOptionProgram(PartnerHelpOptionProgram partnerHelpOptionProgram) {
+		getPartnerHelpOptionPrograms().add(partnerHelpOptionProgram);
+		partnerHelpOptionProgram.setLookupDepartmentProgram(this);
+
+		return partnerHelpOptionProgram;
+	}
+
+	public PartnerHelpOptionProgram removePartnerHelpOptionProgram(PartnerHelpOptionProgram partnerHelpOptionProgram) {
+		getPartnerHelpOptionPrograms().remove(partnerHelpOptionProgram);
+		partnerHelpOptionProgram.setLookupDepartmentProgram(null);
+
+		return partnerHelpOptionProgram;
+	}
+
+	public List<PartnerHelpRequest> getPartnerHelpRequests() {
+		return this.partnerHelpRequests;
+	}
+
+	public void setPartnerHelpRequests(List<PartnerHelpRequest> partnerHelpRequests) {
+		this.partnerHelpRequests = partnerHelpRequests;
+	}
+
+	public PartnerHelpRequest addPartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
+		getPartnerHelpRequests().add(partnerHelpRequest);
+		partnerHelpRequest.setLookupDepartmentProgram(this);
+
+		return partnerHelpRequest;
+	}
+
+	public PartnerHelpRequest removePartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
+		getPartnerHelpRequests().remove(partnerHelpRequest);
+		partnerHelpRequest.setLookupDepartmentProgram(null);
+
+		return partnerHelpRequest;
+	}
+
+	public List<PartnerProgram> getPartnerPrograms() {
+		return this.partnerPrograms;
+	}
+
+	public void setPartnerPrograms(List<PartnerProgram> partnerPrograms) {
+		this.partnerPrograms = partnerPrograms;
+	}
+
+	public PartnerProgram addPartnerProgram(PartnerProgram partnerProgram) {
+		getPartnerPrograms().add(partnerProgram);
+		partnerProgram.setLookupDepartmentProgram(this);
+
+		return partnerProgram;
+	}
+
+	public PartnerProgram removePartnerProgram(PartnerProgram partnerProgram) {
+		getPartnerPrograms().remove(partnerProgram);
+		partnerProgram.setLookupDepartmentProgram(null);
+
+		return partnerProgram;
+	}
+
 	public List<PartnerQuickStatsCategoryAggregate> getPartnerQuickStatsCategoryAggregates() {
 		return this.partnerQuickStatsCategoryAggregates;
 	}
@@ -406,6 +441,50 @@ public class LookupDepartmentProgram implements Serializable {
 		partnerQuickStatsTypeAggregate.setLookupDepartmentProgram(null);
 
 		return partnerQuickStatsTypeAggregate;
+	}
+
+	public List<PartnerWorkQueue> getPartnerWorkQueues() {
+		return this.partnerWorkQueues;
+	}
+
+	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+		this.partnerWorkQueues = partnerWorkQueues;
+	}
+
+	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().add(partnerWorkQueue);
+		partnerWorkQueue.setLookupDepartmentProgram(this);
+
+		return partnerWorkQueue;
+	}
+
+	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().remove(partnerWorkQueue);
+		partnerWorkQueue.setLookupDepartmentProgram(null);
+
+		return partnerWorkQueue;
+	}
+
+	public List<PartnerWorkQueueCategoryAggregate> getPartnerWorkQueueCategoryAggregates() {
+		return this.partnerWorkQueueCategoryAggregates;
+	}
+
+	public void setPartnerWorkQueueCategoryAggregates(List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates) {
+		this.partnerWorkQueueCategoryAggregates = partnerWorkQueueCategoryAggregates;
+	}
+
+	public PartnerWorkQueueCategoryAggregate addPartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().add(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setLookupDepartmentProgram(this);
+
+		return partnerWorkQueueCategoryAggregate;
+	}
+
+	public PartnerWorkQueueCategoryAggregate removePartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().remove(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setLookupDepartmentProgram(null);
+
+		return partnerWorkQueueCategoryAggregate;
 	}
 
 	public List<PartnerWorkQueueType> getPartnerWorkQueueTypes() {

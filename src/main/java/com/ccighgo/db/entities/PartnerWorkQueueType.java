@@ -23,12 +23,20 @@ public class PartnerWorkQueueType implements Serializable {
 	@Column(length=50)
 	private String displayWQTypeName;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String partnerWQTypeName;
+
+	//bi-directional many-to-one association to PartnerWorkQueue
+	@OneToMany(mappedBy="partnerWorkQueueType")
+	private List<PartnerWorkQueue> partnerWorkQueues;
 
 	//bi-directional many-to-one association to PartnerWorkQueueCategory
 	@OneToMany(mappedBy="partnerWorkQueueType")
 	private List<PartnerWorkQueueCategory> partnerWorkQueueCategories;
+
+	//bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate
+	@OneToMany(mappedBy="partnerWorkQueueType")
+	private List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
@@ -71,6 +79,28 @@ public class PartnerWorkQueueType implements Serializable {
 		this.partnerWQTypeName = partnerWQTypeName;
 	}
 
+	public List<PartnerWorkQueue> getPartnerWorkQueues() {
+		return this.partnerWorkQueues;
+	}
+
+	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+		this.partnerWorkQueues = partnerWorkQueues;
+	}
+
+	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().add(partnerWorkQueue);
+		partnerWorkQueue.setPartnerWorkQueueType(this);
+
+		return partnerWorkQueue;
+	}
+
+	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().remove(partnerWorkQueue);
+		partnerWorkQueue.setPartnerWorkQueueType(null);
+
+		return partnerWorkQueue;
+	}
+
 	public List<PartnerWorkQueueCategory> getPartnerWorkQueueCategories() {
 		return this.partnerWorkQueueCategories;
 	}
@@ -91,6 +121,28 @@ public class PartnerWorkQueueType implements Serializable {
 		partnerWorkQueueCategory.setPartnerWorkQueueType(null);
 
 		return partnerWorkQueueCategory;
+	}
+
+	public List<PartnerWorkQueueCategoryAggregate> getPartnerWorkQueueCategoryAggregates() {
+		return this.partnerWorkQueueCategoryAggregates;
+	}
+
+	public void setPartnerWorkQueueCategoryAggregates(List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates) {
+		this.partnerWorkQueueCategoryAggregates = partnerWorkQueueCategoryAggregates;
+	}
+
+	public PartnerWorkQueueCategoryAggregate addPartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().add(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setPartnerWorkQueueType(this);
+
+		return partnerWorkQueueCategoryAggregate;
+	}
+
+	public PartnerWorkQueueCategoryAggregate removePartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+		getPartnerWorkQueueCategoryAggregates().remove(partnerWorkQueueCategoryAggregate);
+		partnerWorkQueueCategoryAggregate.setPartnerWorkQueueType(null);
+
+		return partnerWorkQueueCategoryAggregate;
 	}
 
 	public LookupDepartmentProgram getLookupDepartmentProgram() {

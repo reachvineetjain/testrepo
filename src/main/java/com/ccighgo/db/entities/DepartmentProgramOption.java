@@ -20,9 +20,6 @@ public class DepartmentProgramOption implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer departmentProgramOptionId;
 
-	@Column(nullable=false)
-	private Integer lookupDepartmentProgramId;
-
 	@Column(nullable=false, length=10)
 	private String programOptionCode;
 
@@ -35,7 +32,7 @@ public class DepartmentProgramOption implements Serializable {
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to Participant
-	@OneToMany(mappedBy="departmentProgramOptionBean")
+	@OneToMany(mappedBy="departmentProgramOption")
 	private List<Participant> participants;
 
 	//bi-directional many-to-one association to PartnerSeasonAllocation
@@ -59,14 +56,6 @@ public class DepartmentProgramOption implements Serializable {
 
 	public void setDepartmentProgramOptionId(Integer departmentProgramOptionId) {
 		this.departmentProgramOptionId = departmentProgramOptionId;
-	}
-
-	public Integer getLookupDepartmentProgramId() {
-		return this.lookupDepartmentProgramId;
-	}
-
-	public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
-		this.lookupDepartmentProgramId = lookupDepartmentProgramId;
 	}
 
 	public String getProgramOptionCode() {
@@ -93,10 +82,49 @@ public class DepartmentProgramOption implements Serializable {
 		this.departmentProgram = departmentProgram;
 	}
 
-	
+	public List<Participant> getParticipants() {
+		return this.participants;
+	}
 
+	public void setParticipants(List<Participant> participants) {
+		this.participants = participants;
+	}
 
+	public Participant addParticipant(Participant participant) {
+		getParticipants().add(participant);
+		participant.setDepartmentProgramOption(this);
 
+		return participant;
+	}
+
+	public Participant removeParticipant(Participant participant) {
+		getParticipants().remove(participant);
+		participant.setDepartmentProgramOption(null);
+
+		return participant;
+	}
+
+	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations() {
+		return this.partnerSeasonAllocations;
+	}
+
+	public void setPartnerSeasonAllocations(List<PartnerSeasonAllocation> partnerSeasonAllocations) {
+		this.partnerSeasonAllocations = partnerSeasonAllocations;
+	}
+
+	public PartnerSeasonAllocation addPartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().add(partnerSeasonAllocation);
+		partnerSeasonAllocation.setDepartmentProgramOption(this);
+
+		return partnerSeasonAllocation;
+	}
+
+	public PartnerSeasonAllocation removePartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().remove(partnerSeasonAllocation);
+		partnerSeasonAllocation.setDepartmentProgramOption(null);
+
+		return partnerSeasonAllocation;
+	}
 
 	public List<SeasonHSPAllocation> getSeasonHspallocations() {
 		return this.seasonHspallocations;
@@ -140,28 +168,6 @@ public class DepartmentProgramOption implements Serializable {
 		seasonWpallocation.setDepartmentProgramOption(null);
 
 		return seasonWpallocation;
-	}
-
-	public List<Participant> getParticipants() {
-		return this.participants;
-	}
-
-	public void setParticipants(List<Participant> participants) {
-		this.participants = participants;
-	}
-
-	public Participant addParticipants(Participant participants) {
-		getParticipants().add(participants);
-		participants.setDepartmentProgramOptionBean(this);
-
-		return participants;
-	}
-
-	public Participant removeParticipants(Participant participants) {
-		getParticipants().remove(participants);
-		participants.setDepartmentProgramOptionBean(null);
-
-		return participants;
 	}
 
 }

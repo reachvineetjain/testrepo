@@ -71,8 +71,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          if (participants != null) {
             for (Participant participant : participants) {
                ParticipantProgramOption participantProgramOption = new ParticipantProgramOption();
-               participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOptionBean().getDepartmentProgramOptionId());
-               participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOptionBean().getProgramOptionName());
+               participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+               participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
 
                ParticipantType participantType = new ParticipantType();
                participantType.setParticipantTypeId(1);
@@ -89,7 +89,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
 
                ParticipantSubPartner participantSubPartner = new ParticipantSubPartner();
-               participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
+               //participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
                participantSubPartner.setPartnerGoId(participant.getParticipantGoId());
                participantSubPartner.setParticipantSubPartner("Sub Partner Dude");
 
@@ -148,8 +148,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
             participantSeason.setParticipantSeasonProgram(participant.getDepartmentProgram().getProgramName());
 
             com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantProgramOption participantProgramOption = new com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantProgramOption();
-            participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOptionBean().getDepartmentProgramOptionId());
-            participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOptionBean().getProgramOptionName());
+            participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+            participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
 
             ParticipantLead lead = new ParticipantLead();
             lead.setParticipantId(participant.getParticipantGoId() + "");
@@ -195,7 +195,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          participant.setEmail(newParticipant.getManualMehod().getParticipantEmailId());
          participant.setLastName(newParticipant.getManualMehod().getParticipantlastName());
          DepartmentProgramOption departmentProgramOption = departmentProgramOptions.findProgramOptionsByProgramName(newParticipant.getManualMehod().getParticipantProgramOption().getParticipantProgramOption());
-         participant.setDepartmentProgramOptionBean(departmentProgramOption);
+         participant.setDepartmentProgramOption(departmentProgramOption);
         
 //         DepartmentProgram departmentProgram= departmentPrograms.findOne(newParticipant.getManualMehod().getParticipant);
 //         participant.setDepartmentProgram(departmentProgram);
@@ -214,7 +214,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          participant.setSeason(season);
          participant.setStartDate(DateUtils.getDateFromString(newParticipant.getManualMehod().getParticipantStartDate()));
          participant.setSubmittedFlightInfo((byte) (newParticipant.getManualMehod().isParticipantSubmittedFlightInfo()?1:0));
-         participant.setSubPartner(newParticipant.getManualMehod().getParticipantSubPartner().getParticipantSubPartnerId());
+        // participant.setSubPartner(newParticipant.getManualMehod().getParticipantSubPartner().getParticipantSubPartnerId());
          
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
@@ -226,8 +226,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       NewParticipant newParticipant = new NewParticipant();
       try {
          com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantProgramOption participantProgramOption = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantProgramOption();
-         participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOptionBean().getDepartmentProgramOptionId());
-         participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOptionBean().getProgramOptionName());
+         participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+         participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
 
          com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantType participantType = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantType();
          participantType.setParticipantTypeId(1);
@@ -244,7 +244,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
 
          com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantSubPartner participantSubPartner = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantSubPartner();
-         participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
+        // participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
          participantSubPartner.setPartnerGoId(participant.getParticipantGoId());
          participantSubPartner.setParticipantSubPartner("Sub Partner Dude");
 

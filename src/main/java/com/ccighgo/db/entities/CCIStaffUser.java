@@ -25,9 +25,6 @@ public class CCIStaffUser implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int cciStaffUserId;
 
-	@Column(nullable=false)
-	private Byte active;
-
 	@Column(nullable=false, length=64)
 	private String cciAdminGuid;
 
@@ -37,6 +34,7 @@ public class CCIStaffUser implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=15)
@@ -76,6 +74,22 @@ public class CCIStaffUser implements Serializable {
 
 	@Column(length=50)
 	private String zip;
+
+	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to AdminWorkQueueCategoryAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates;
+
+	//bi-directional many-to-one association to AdminWorkQueueTypeAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
 
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
@@ -117,10 +131,6 @@ public class CCIStaffUser implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
 
-	//bi-directional many-to-one association to PartnerAgentReview
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<PartnerAgentReview> partnerAgentReviews;
-
 	//bi-directional many-to-one association to PartnerCCIContact
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<PartnerCCIContact> partnerCcicontacts;
@@ -141,22 +151,6 @@ public class CCIStaffUser implements Serializable {
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<PartnerSeason> partnerSeasons;
 
-	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
-
-	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates;
-
-	//bi-directional many-to-one association to AdminWorkQueueCategoryAggregate
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates;
-
-	//bi-directional many-to-one association to AdminWorkQueueTypeAggregate
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
-
 	public CCIStaffUser() {
 	}
 
@@ -166,14 +160,6 @@ public class CCIStaffUser implements Serializable {
 
 	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
-	}
-
-	public Byte getActive() {
-		return this.active;
-	}
-
-	public void setActive(Byte active) {
-		this.active = active;
 	}
 
 	public String getCciAdminGuid() {
@@ -312,6 +298,94 @@ public class CCIStaffUser implements Serializable {
 		this.zip = zip;
 	}
 
+	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
+		return this.adminQuickStatsCategoryAggregates;
+	}
+
+	public void setAdminQuickStatsCategoryAggregates(List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates) {
+		this.adminQuickStatsCategoryAggregates = adminQuickStatsCategoryAggregates;
+	}
+
+	public AdminQuickStatsCategoryAggregate addAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
+		getAdminQuickStatsCategoryAggregates().add(adminQuickStatsCategoryAggregate);
+		adminQuickStatsCategoryAggregate.setCcistaffUser(this);
+
+		return adminQuickStatsCategoryAggregate;
+	}
+
+	public AdminQuickStatsCategoryAggregate removeAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
+		getAdminQuickStatsCategoryAggregates().remove(adminQuickStatsCategoryAggregate);
+		adminQuickStatsCategoryAggregate.setCcistaffUser(null);
+
+		return adminQuickStatsCategoryAggregate;
+	}
+
+	public List<AdminQuickStatsTypeAggregate> getAdminQuickStatsTypeAggregates() {
+		return this.adminQuickStatsTypeAggregates;
+	}
+
+	public void setAdminQuickStatsTypeAggregates(List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates) {
+		this.adminQuickStatsTypeAggregates = adminQuickStatsTypeAggregates;
+	}
+
+	public AdminQuickStatsTypeAggregate addAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
+		getAdminQuickStatsTypeAggregates().add(adminQuickStatsTypeAggregate);
+		adminQuickStatsTypeAggregate.setCcistaffUser(this);
+
+		return adminQuickStatsTypeAggregate;
+	}
+
+	public AdminQuickStatsTypeAggregate removeAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
+		getAdminQuickStatsTypeAggregates().remove(adminQuickStatsTypeAggregate);
+		adminQuickStatsTypeAggregate.setCcistaffUser(null);
+
+		return adminQuickStatsTypeAggregate;
+	}
+
+	public List<AdminWorkQueueCategoryAggregate> getAdminWorkQueueCategoryAggregates() {
+		return this.adminWorkQueueCategoryAggregates;
+	}
+
+	public void setAdminWorkQueueCategoryAggregates(List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates) {
+		this.adminWorkQueueCategoryAggregates = adminWorkQueueCategoryAggregates;
+	}
+
+	public AdminWorkQueueCategoryAggregate addAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
+		getAdminWorkQueueCategoryAggregates().add(adminWorkQueueCategoryAggregate);
+		adminWorkQueueCategoryAggregate.setCcistaffUser(this);
+
+		return adminWorkQueueCategoryAggregate;
+	}
+
+	public AdminWorkQueueCategoryAggregate removeAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
+		getAdminWorkQueueCategoryAggregates().remove(adminWorkQueueCategoryAggregate);
+		adminWorkQueueCategoryAggregate.setCcistaffUser(null);
+
+		return adminWorkQueueCategoryAggregate;
+	}
+
+	public List<AdminWorkQueueTypeAggregate> getAdminWorkQueueTypeAggregates() {
+		return this.adminWorkQueueTypeAggregates;
+	}
+
+	public void setAdminWorkQueueTypeAggregates(List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates) {
+		this.adminWorkQueueTypeAggregates = adminWorkQueueTypeAggregates;
+	}
+
+	public AdminWorkQueueTypeAggregate addAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
+		getAdminWorkQueueTypeAggregates().add(adminWorkQueueTypeAggregate);
+		adminWorkQueueTypeAggregate.setCcistaffUser(this);
+
+		return adminWorkQueueTypeAggregate;
+	}
+
+	public AdminWorkQueueTypeAggregate removeAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
+		getAdminWorkQueueTypeAggregates().remove(adminWorkQueueTypeAggregate);
+		adminWorkQueueTypeAggregate.setCcistaffUser(null);
+
+		return adminWorkQueueTypeAggregate;
+	}
+
 	public List<CCIStaffUserNote> getCcistaffUserNotes() {
 		return this.ccistaffUserNotes;
 	}
@@ -432,28 +506,6 @@ public class CCIStaffUser implements Serializable {
 		return ccistaffUsersResourcePermission;
 	}
 
-	public List<PartnerAgentReview> getPartnerAgentReviews() {
-		return this.partnerAgentReviews;
-	}
-
-	public void setPartnerAgentReviews(List<PartnerAgentReview> partnerAgentReviews) {
-		this.partnerAgentReviews = partnerAgentReviews;
-	}
-
-	public PartnerAgentReview addPartnerAgentReview(PartnerAgentReview partnerAgentReview) {
-		getPartnerAgentReviews().add(partnerAgentReview);
-		partnerAgentReview.setCcistaffUser(this);
-
-		return partnerAgentReview;
-	}
-
-	public PartnerAgentReview removePartnerAgentReview(PartnerAgentReview partnerAgentReview) {
-		getPartnerAgentReviews().remove(partnerAgentReview);
-		partnerAgentReview.setCcistaffUser(null);
-
-		return partnerAgentReview;
-	}
-
 	public List<PartnerCCIContact> getPartnerCcicontacts() {
 		return this.partnerCcicontacts;
 	}
@@ -562,94 +614,6 @@ public class CCIStaffUser implements Serializable {
 		partnerSeason.setCcistaffUser(null);
 
 		return partnerSeason;
-	}
-
-	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
-		return this.adminQuickStatsCategoryAggregates;
-	}
-
-	public void setAdminQuickStatsCategoryAggregates(List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates) {
-		this.adminQuickStatsCategoryAggregates = adminQuickStatsCategoryAggregates;
-	}
-
-	public AdminQuickStatsCategoryAggregate addAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().add(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setCcistaffUser(this);
-
-		return adminQuickStatsCategoryAggregate;
-	}
-
-	public AdminQuickStatsCategoryAggregate removeAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().remove(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setCcistaffUser(null);
-
-		return adminQuickStatsCategoryAggregate;
-	}
-
-	public List<AdminQuickStatsTypeAggregate> getAdminQuickStatsTypeAggregates() {
-		return this.adminQuickStatsTypeAggregates;
-	}
-
-	public void setAdminQuickStatsTypeAggregates(List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates) {
-		this.adminQuickStatsTypeAggregates = adminQuickStatsTypeAggregates;
-	}
-
-	public AdminQuickStatsTypeAggregate addAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
-		getAdminQuickStatsTypeAggregates().add(adminQuickStatsTypeAggregate);
-		adminQuickStatsTypeAggregate.setCcistaffUser(this);
-
-		return adminQuickStatsTypeAggregate;
-	}
-
-	public AdminQuickStatsTypeAggregate removeAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
-		getAdminQuickStatsTypeAggregates().remove(adminQuickStatsTypeAggregate);
-		adminQuickStatsTypeAggregate.setCcistaffUser(null);
-
-		return adminQuickStatsTypeAggregate;
-	}
-
-	public List<AdminWorkQueueCategoryAggregate> getAdminWorkQueueCategoryAggregates() {
-		return this.adminWorkQueueCategoryAggregates;
-	}
-
-	public void setAdminWorkQueueCategoryAggregates(List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates) {
-		this.adminWorkQueueCategoryAggregates = adminWorkQueueCategoryAggregates;
-	}
-
-	public AdminWorkQueueCategoryAggregate addAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
-		getAdminWorkQueueCategoryAggregates().add(adminWorkQueueCategoryAggregate);
-		adminWorkQueueCategoryAggregate.setCcistaffUser(this);
-
-		return adminWorkQueueCategoryAggregate;
-	}
-
-	public AdminWorkQueueCategoryAggregate removeAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
-		getAdminWorkQueueCategoryAggregates().remove(adminWorkQueueCategoryAggregate);
-		adminWorkQueueCategoryAggregate.setCcistaffUser(null);
-
-		return adminWorkQueueCategoryAggregate;
-	}
-
-	public List<AdminWorkQueueTypeAggregate> getAdminWorkQueueTypeAggregates() {
-		return this.adminWorkQueueTypeAggregates;
-	}
-
-	public void setAdminWorkQueueTypeAggregates(List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates) {
-		this.adminWorkQueueTypeAggregates = adminWorkQueueTypeAggregates;
-	}
-
-	public AdminWorkQueueTypeAggregate addAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
-		getAdminWorkQueueTypeAggregates().add(adminWorkQueueTypeAggregate);
-		adminWorkQueueTypeAggregate.setCcistaffUser(this);
-
-		return adminWorkQueueTypeAggregate;
-	}
-
-	public AdminWorkQueueTypeAggregate removeAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
-		getAdminWorkQueueTypeAggregates().remove(adminWorkQueueTypeAggregate);
-		adminWorkQueueTypeAggregate.setCcistaffUser(null);
-
-		return adminWorkQueueTypeAggregate;
 	}
 
 }

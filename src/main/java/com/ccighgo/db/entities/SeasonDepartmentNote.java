@@ -20,11 +20,12 @@ public class SeasonDepartmentNote implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer seasonDepartmentNotesId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=1000)
@@ -52,11 +53,11 @@ public class SeasonDepartmentNote implements Serializable {
 		this.seasonDepartmentNotesId = seasonDepartmentNotesId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

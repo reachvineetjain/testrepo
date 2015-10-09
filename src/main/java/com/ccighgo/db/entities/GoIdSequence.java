@@ -24,6 +24,14 @@ public class GoIdSequence implements Serializable {
 	@OneToOne(mappedBy="goIdSequence")
 	private CCIStaffUser ccistaffUser;
 
+	//bi-directional one-to-one association to Employer
+	@OneToOne(mappedBy="goIdSequence")
+	private Employer employer;
+
+	//bi-directional one-to-one association to HostFamily
+	@OneToOne(mappedBy="goIdSequence")
+	private HostFamily hostFamily;
+
 	//bi-directional many-to-one association to Login
 	@OneToMany(mappedBy="goIdSequence")
 	private List<Login> logins;
@@ -49,6 +57,22 @@ public class GoIdSequence implements Serializable {
 
 	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
 		this.ccistaffUser = ccistaffUser;
+	}
+
+	public Employer getEmployer() {
+		return this.employer;
+	}
+
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
+	}
+
+	public HostFamily getHostFamily() {
+		return this.hostFamily;
+	}
+
+	public void setHostFamily(HostFamily hostFamily) {
+		this.hostFamily = hostFamily;
 	}
 
 	public List<Login> getLogins() {

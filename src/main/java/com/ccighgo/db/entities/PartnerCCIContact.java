@@ -24,11 +24,6 @@ public class PartnerCCIContact implements Serializable {
 	@JoinColumn(name="cciStaffUserId")
 	private CCIStaffUser ccistaffUser;
 
-	//bi-directional many-to-one association to DepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
-	private DepartmentProgram departmentProgram;
-
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="lookupDepartmentProgramId")
@@ -56,14 +51,6 @@ public class PartnerCCIContact implements Serializable {
 
 	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
 		this.ccistaffUser = ccistaffUser;
-	}
-
-	public DepartmentProgram getDepartmentProgram() {
-		return this.departmentProgram;
-	}
-
-	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
-		this.departmentProgram = departmentProgram;
 	}
 
 	public LookupDepartmentProgram getLookupDepartmentProgram() {

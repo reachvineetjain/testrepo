@@ -26,11 +26,11 @@ public class Salutation implements Serializable {
 	private String salutationName;
 
 	//bi-directional many-to-one association to PartnerAgentInquiry
-	@OneToMany(mappedBy="salutationBean")
+	@OneToMany(mappedBy="salutation")
 	private List<PartnerAgentInquiry> partnerAgentInquiries;
 
 	//bi-directional many-to-one association to PartnerContact
-	@OneToMany(mappedBy="salutationBean")
+	@OneToMany(mappedBy="salutation")
 	private List<PartnerContact> partnerContacts;
 
 	//bi-directional many-to-one association to PartnerUser
@@ -74,14 +74,14 @@ public class Salutation implements Serializable {
 
 	public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
 		getPartnerAgentInquiries().add(partnerAgentInquiry);
-		partnerAgentInquiry.setSalutationBean(this);
+		partnerAgentInquiry.setSalutation(this);
 
 		return partnerAgentInquiry;
 	}
 
 	public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
 		getPartnerAgentInquiries().remove(partnerAgentInquiry);
-		partnerAgentInquiry.setSalutationBean(null);
+		partnerAgentInquiry.setSalutation(null);
 
 		return partnerAgentInquiry;
 	}
@@ -96,14 +96,14 @@ public class Salutation implements Serializable {
 
 	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
 		getPartnerContacts().add(partnerContact);
-		partnerContact.setSalutationBean(this);
+		partnerContact.setSalutation(this);
 
 		return partnerContact;
 	}
 
 	public PartnerContact removePartnerContact(PartnerContact partnerContact) {
 		getPartnerContacts().remove(partnerContact);
-		partnerContact.setSalutationBean(null);
+		partnerContact.setSalutation(null);
 
 		return partnerContact;
 	}

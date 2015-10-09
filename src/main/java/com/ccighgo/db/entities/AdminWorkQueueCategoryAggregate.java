@@ -20,7 +20,7 @@ public class AdminWorkQueueCategoryAggregate implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer adminWQCategoryAggregateId;
 
-	private int adminWQCategoryAggregate;
+	private Integer adminWQCategoryAggregate;
 
 	@Column(length=50)
 	private String adminWQCategoryName;
@@ -59,11 +59,11 @@ public class AdminWorkQueueCategoryAggregate implements Serializable {
 		this.adminWQCategoryAggregateId = adminWQCategoryAggregateId;
 	}
 
-	public int getAdminWQCategoryAggregate() {
+	public Integer getAdminWQCategoryAggregate() {
 		return this.adminWQCategoryAggregate;
 	}
 
-	public void setAdminWQCategoryAggregate(int adminWQCategoryAggregate) {
+	public void setAdminWQCategoryAggregate(Integer adminWQCategoryAggregate) {
 		this.adminWQCategoryAggregate = adminWQCategoryAggregate;
 	}
 

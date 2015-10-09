@@ -24,6 +24,7 @@ public class SeasonTADetail implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -35,7 +36,7 @@ public class SeasonTADetail implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=55)
+	@Column(length=50)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)

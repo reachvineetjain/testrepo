@@ -12,33 +12,33 @@ import javax.persistence.*;
 @Table(name="PartnerNoteTags")
 @NamedQuery(name="PartnerNoteTag.findAll", query="SELECT p FROM PartnerNoteTag p")
 public class PartnerNoteTag implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerNoteTagId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerNoteTagId;
 
-	@Column(length=50)
-	private String tagName;
+   @Column(length=50)
+   private String tagName;
 
-	public PartnerNoteTag() {
-	}
+   public PartnerNoteTag() {
+   }
 
-	public Integer getPartnerNoteTagId() {
-		return this.partnerNoteTagId;
-	}
+   public Integer getPartnerNoteTagId() {
+      return this.partnerNoteTagId;
+   }
 
-	public void setPartnerNoteTagId(Integer partnerNoteTagId) {
-		this.partnerNoteTagId = partnerNoteTagId;
-	}
+   public void setPartnerNoteTagId(Integer partnerNoteTagId) {
+      this.partnerNoteTagId = partnerNoteTagId;
+   }
 
-	public String getTagName() {
-		return this.tagName;
-	}
+   public String getTagName() {
+      return this.tagName;
+   }
 
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
-	}
+   public void setTagName(String tagName) {
+      this.tagName = tagName;
+   }
 
 }

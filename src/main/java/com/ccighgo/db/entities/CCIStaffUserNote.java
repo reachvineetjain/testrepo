@@ -23,6 +23,7 @@ public class CCIStaffUserNote implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -31,7 +32,7 @@ public class CCIStaffUserNote implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=1000)
+	@Column(length=1000)
 	private String note;
 
 	//bi-directional many-to-one association to CCIStaffUser
