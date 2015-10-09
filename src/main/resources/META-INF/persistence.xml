@@ -75,12 +75,12 @@
       <class>com.ccighgo.db.entities.PartnerStatus</class>
       <class>com.ccighgo.db.entities.PartnerUser</class>
       <class>com.ccighgo.db.entities.PartnerUserRole</class>
-     <!--  <class>com.ccighgo.db.entities.PartnerWorkQueue</class> -->
-      <!-- <class>com.ccighgo.db.entities.PartnerWorkQueueCategory</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueue</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueCategory</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryPK</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueType</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class> -->
+      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class> 
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>
@@ -128,7 +128,7 @@
       <properties>
         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://52.2.191.63:3306/cci_gh_go_login?autoReconnect=true" />
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://52.2.191.63:3306/cci_gh_go_dev?autoReconnect=true" />
          <property name="javax.persistence.jdbc.user" value="creomobile" />
          <property name="javax.persistence.jdbc.password" value="creodev" />
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
