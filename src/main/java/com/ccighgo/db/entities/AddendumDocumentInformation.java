@@ -21,7 +21,7 @@ public class AddendumDocumentInformation implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer addendumDocumentInformationId;
 
-	private byte active;
+	private Byte active;
 
 	private Integer createdBy;
 
@@ -59,11 +59,11 @@ public class AddendumDocumentInformation implements Serializable {
 		this.addendumDocumentInformationId = addendumDocumentInformationId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
