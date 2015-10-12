@@ -87,7 +87,8 @@ import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopic
       "SubPartnerPhysicalAddress",
       "subPartnerMailingAddress",
       "subPartnerNoteTopic",
-      "partnerSeasonNotes"
+      "partnerSeasonNotes",
+      "loggedUsername"
 })
 public class SubPartner
     extends Response
@@ -103,6 +104,8 @@ public class SubPartner
    protected SubPartnerMailingAddress subPartnerMailingAddress;
    @XmlElement(required = true)
    protected NoteTopics partnerSeasonNotes;
+   @XmlElement(required = true)
+   protected String loggedUsername;
    
    /**
     * Gets the value of the subPartnerId property.
@@ -194,4 +197,13 @@ public class SubPartner
    public void setPartnerSeasonNotes(NoteTopics partnerSeasonNotes) {
       this.partnerSeasonNotes = partnerSeasonNotes;
    }
+
+   public String getLoggedUsername() {
+      return loggedUsername;
+   }
+
+   public void setLoggedUsername(String loggedUsername) {
+      this.loggedUsername = loggedUsername;
+   }
+   
 }
