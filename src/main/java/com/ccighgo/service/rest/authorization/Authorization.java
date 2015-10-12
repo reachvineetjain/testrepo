@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.authorization.AuthorizationManagerInterface;
+import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 
 /**
@@ -42,6 +43,19 @@ public class Authorization {
    @Produces("application/json")
    public User getCCIUserDetails(@PathParam("userId") String userId) {
        return authorizationManager.getCCIUserDetails(userId);
+   }
+   
+   /**
+    * RESTFul service gets user by id for edit
+    * 
+    * @param id
+    * @return User by id
+    */
+   @GET
+   @Path("partner/{partnerGoId}")
+   @Produces("application/json")
+   public PartnerDashboard getPartnerDashboard(@PathParam("partnerGoId") String partnerGoId) {
+       return authorizationManager.getPartnerDashboard(partnerGoId);
    }
 
 }
