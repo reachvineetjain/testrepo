@@ -387,8 +387,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             if (salutation != null)
                partnerUser.setSalutation(salutation);
          }
-         
-         //partnerUser.setSalutation(partnerUserDetailAndRoles.getSalutation());
+
          partnerUser.setSkypeId(partnerUserDetailAndRoles.getSkypeId());
          partnerUser.setTitle(partnerUserDetailAndRoles.getTitle());
          
@@ -404,10 +403,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerPermission.setPartnerPermissionsId(partnerUser.getPartnerPermissions().getPartnerPermissionsId());
             partnerUser.setPartnerPermissions(partnerPermission);
             partnerPermission.setPartnerUser(partnerUser);
-            /*partnerPermission =partnerPermissionRepository.save(partnerPermission);
-            partnerPermissionRepository.flush();*/
          }
-         // partnerUser.setPartnerUserRoles(new ArrayList<PartnerUserRole>());
+         // partnerUser.setPartnerUserRoles(new ArrayList<PartnerUserRole>());TODO
          partnerUser = partnerUserRepository.save(partnerUser);
          partnerUserRepository.flush();
          viewPartnerUser = viewPartnerUser(partnerUser.getPartnerUserId().toString());
@@ -494,7 +491,6 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    
    private PartnerUserProgramAccess getProgramAccessTO(PartnerUser partnerUser) {
       PartnerUserProgramAccess partnerUserProgramAccess = new PartnerUserProgramAccess();
-      // PartnerPermission PartnerPermission = partnerPermissionRepository.findByPartnerUserId(partnerUser);
       PartnerPermission PartnerPermission = partnerUser.getPartnerPermissions();
 
       partnerUserProgramAccess.setCapAccountingInsurance(PartnerPermission.getCapAccountingInsurance() != null ? PartnerPermission.getCapAccountingInsurance()
@@ -555,28 +551,6 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
       return partnerUserProgramAccess;
    }
-   
-   /*@Override
-   @Transactional
-   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser)
-   {
-      PartnerUsersDetailAndRoles partnerUsersDetailAndRoles = new PartnerUsersDetailAndRoles();
-      List<PartnerUserDetailAndRoles> partnerUserDetailAndRolesList = new ArrayList<PartnerUserDetailAndRoles>();
-      // firstName,  lastName ,  email, userName , active
-      List<Object> partnerUsers = partnerUserRepository.searchPartnerUser(partnerUser.getPartnerUserFirstName(),partnerUser.getPartnerUserLastName(),partnerUser.getPartnerUserEmail(),partnerUser.getPartnerUserLoginName(),partnerUser.getStatus());
-      
-      if (partnerUsers != null) {
-         for (Object object : partnerUsers) {
-            PartnerUserDetailAndRoles partnerUserDetailAndRoles = viewPartnerUser(object.toString());
-            partnerUserDetailAndRolesList.add(partnerUserDetailAndRoles);
-         }
-         partnerUsersDetailAndRoles.getPartnerUsersDetailAndRoles().addAll(partnerUserDetailAndRolesList);
-      }
-      
-      return partnerUsersDetailAndRoles;
-   }*/
-   
- 
    
    @Override
    @Transactional
