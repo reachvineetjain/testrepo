@@ -5,6 +5,8 @@ package com.ccighgo.service.components.partner;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;

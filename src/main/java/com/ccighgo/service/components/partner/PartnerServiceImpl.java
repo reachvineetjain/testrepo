@@ -10,20 +10,54 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerAgentInquiry;
+import com.ccighgo.db.entities.PartnerDocument;
+import com.ccighgo.db.entities.PartnerMessage;
+import com.ccighgo.db.entities.PartnerNote;
+import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerProgram;
+import com.ccighgo.db.entities.PartnerReferenceCheck;
+import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
+import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
+import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
+import com.ccighgo.jpa.repositories.PartnerNoteRepository;
+import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
+import com.ccighgo.jpa.repositories.PartnerProgramRepository;
+import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
+import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDetail;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDocuments;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMarkedByUser;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMessagesToAgent;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningOffices;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningProgramOfferings;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningPrograms;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -33,13 +67,30 @@ import com.ccighgo.utils.CCIConstants;
 public class PartnerServiceImpl implements PartnerService {
 
    private static final Logger LOGGER = Logger.getLogger(PartnerServiceImpl.class);
+   private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PartnerServiceImpl.class);
 
    @Autowired MessageUtils messageUtil;
    @Autowired CommonComponentUtils componentUtils;
 
    @Autowired PartnerRepository partnerRepository;
    @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
-
+  
+   @Autowired
+   PartnerAgentInquiryRepository partnerAgentInquiryRepository;
+   @Autowired
+   PartnerProgramRepository partnerProgramRepository;
+   @Autowired
+   PartnerMessagesRepository partnerMessagesRepository;
+   @Autowired
+   PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired
+   PartnerReviewStatusRepository partnerReviewStatusRepository;
+   @Autowired
+   PartnerReferenceCheckRepository partnerReferenceCheckRepository;
+   @Autowired
+   PartnerDocumentsRepository partnerDocumentsRepository;
+   @Autowired
+   PartnerNoteRepository partnerNoteRepository;
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
       PartnerDashboard partnerDashboard = new PartnerDashboard();
