@@ -52,8 +52,10 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpa
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -198,22 +200,18 @@ public class PartnerServiceImpl implements PartnerService {
    }
 
    @Override
-   public WSDefaultResponse changePartnerApplicationStatus() {
+   public PartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId) {
       // TODO Auto-generated method stub
       return null;
    }
 
-   @Override
-   public WSDefaultResponse updatePartnerApplicationFollowUpDate() {
-      // TODO Auto-generated method stub
-      return null;
-   }
+  
 
    @Override
-   public PartnerRecruitmentAdmin getAgentRecruitmentData(int agentId) {
+   public PartnerRecruitmentAdmin getAgentRecruitmentData(int partnerGoId) {
       PartnerRecruitmentAdmin pwt = new PartnerRecruitmentAdmin();
       try {
-         PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findOne(agentId);
+         PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findOne(partnerGoId);
          if(partnerAgentInquiry==null){
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_AGENT_DETAIL.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_AGENT_DETAIL)));
@@ -255,14 +253,14 @@ public class PartnerServiceImpl implements PartnerService {
          }
 
          pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
-         PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(agentId);
+         PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(partnerGoId);
 
          if (partnerReviewStatus != null) {
             pwt.setAgentStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
             pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
          }
          try {
-            List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(agentId);
+            List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(partnerGoId);
             if (partnerPrograms != null) {
                for (PartnerProgram partnerProgram : partnerPrograms) {
                   PartnerRecruitmentAdminScreeningPrograms partnerRecruitmentAdminScreeningPrograms = new PartnerRecruitmentAdminScreeningPrograms();
@@ -304,7 +302,7 @@ public class PartnerServiceImpl implements PartnerService {
             ExceptionUtil.logException(e, logger);
          }
          try {
-            List<PartnerMessage> messages = partnerMessagesRepository.findAllParnerMessagesByPartnerId(agentId);
+            List<PartnerMessage> messages = partnerMessagesRepository.findAllParnerMessagesByPartnerId(partnerGoId);
             if (messages != null) {
                for (PartnerMessage partnerMessage : messages) {
                   PartnerRecruitmentAdminScreeningMessagesToAgent m = new PartnerRecruitmentAdminScreeningMessagesToAgent();
@@ -322,7 +320,7 @@ public class PartnerServiceImpl implements PartnerService {
          }
 
          try {
-            List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(agentId);
+            List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(partnerGoId);
             if (offices != null) {
                for (PartnerOffice partnerOffice : offices) {
                   PartnerRecruitmentAdminScreeningOffices office = new PartnerRecruitmentAdminScreeningOffices();
@@ -342,7 +340,7 @@ public class PartnerServiceImpl implements PartnerService {
             ExceptionUtil.logException(e, logger);
          }
          try {
-            List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(agentId);
+            List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(partnerGoId);
             if (partnerReferenceChecks != null) {
                for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
                   PartnerRecruitmentAdminScreeningReferenceCheck refCheck = new PartnerRecruitmentAdminScreeningReferenceCheck();
@@ -359,7 +357,7 @@ public class PartnerServiceImpl implements PartnerService {
             ExceptionUtil.logException(e, logger);
          }
          try {
-            List<PartnerDocument> partnerDocuments = partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(agentId);
+            List<PartnerDocument> partnerDocuments = partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(partnerGoId);
             if (partnerDocuments != null) {
                for (PartnerDocument p : partnerDocuments) {
                   PartnerRecruitmentAdminScreeningDocuments doc = new PartnerRecruitmentAdminScreeningDocuments();
@@ -380,7 +378,7 @@ public class PartnerServiceImpl implements PartnerService {
             ExceptionUtil.logException(e, logger);
          }
          try {
-            List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(agentId);
+            List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(partnerGoId);
             if (partnerNotes != null) {
                for (PartnerNote partnerNote : partnerNotes) {
                   PartnerRecruitmentAdminScreeningNotes note = new PartnerRecruitmentAdminScreeningNotes();
@@ -405,11 +403,31 @@ public class PartnerServiceImpl implements PartnerService {
    }
 
    @Override
-   public com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType getWorkQueueType() {
-      // TODO Auto-generated method stub
-      return null;
+   public com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType getWorkQueueType(int partnerGoId) {
+      com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType pwt = new PartnerWorkQueueType();
+      try {
+         
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_TYPE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE));
+      }
+      return pwt;
    }
-
+   @Override
+   public com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory getWorkQueueCategory(int partnerGoId) {
+      com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory pwqc = new PartnerWorkQueueCategory();
+      try {
+         
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         pwqc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_CATEGORY.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY));
+      }
+      return pwqc;
+   }
    @Override
    public PartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId) {
       PartnerWorkQueueSubmittedApplications pwqa = new PartnerWorkQueueSubmittedApplications();
@@ -418,6 +436,7 @@ public class PartnerServiceImpl implements PartnerService {
          if (result != null) {
             for (PartnerAgentInquiry partnerAgentInquiry : result) {
                PartnerWorkQueueSubmittedApplicationsDetail pd = new PartnerWorkQueueSubmittedApplicationsDetail();
+               pd.setCompanyId(partnerAgentInquiry.getPartnerAgentInquiriesId());
                pd.setCompanyName(partnerAgentInquiry.getCompanyName());
                pd.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
                pd.setEmail(partnerAgentInquiry.getEmail());
@@ -426,13 +445,14 @@ public class PartnerServiceImpl implements PartnerService {
                pd.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
                pd.setLastName(partnerAgentInquiry.getLastName());
                pd.setPhone(partnerAgentInquiry.getPhone());
-//               pd.setPrograms(getPartnerPrograms(partnerAgentInquiry.getPartnerAgentPrograms()));
+               pd.setPrograms(partnerAgentInquiry.getCurrentlyOfferingPrograms());
                pd.setSunmittedOn(DateUtils.getDateAndTime(partnerAgentInquiry.getSubmittedOn()));
                pd.setWebsite(partnerAgentInquiry.getWebsite());
                // what is the list of status ???????????????????
-               // PartnerReviewStatus partnerReviewStatus =
-               // partnerReviewStatusRepository.findOne(partnerAgentInquiry.getPartner().getpartnerre));
-               // pd.setStatus();
+//                PartnerReviewStatus partnerReviewStatus =partnerReviewStatusRepository.findOne(partnerAgentInquiry.getPartner().getpartnerre));
+               //???????????????? will be changes once i have clarification
+               pd.setStatusOfInquiry("Valid");
+               
                pwqa.getWorkQueueSubmittedApplications().add(pd);
             }
             pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
@@ -441,7 +461,6 @@ public class PartnerServiceImpl implements PartnerService {
             pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
-
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
@@ -451,22 +470,38 @@ public class PartnerServiceImpl implements PartnerService {
       return pwqa;
    }
 
-   private String getPartnerPrograms(List<PartnerProgram> partnerAgentPrograms) {
-      StringBuilder st = new StringBuilder();
-      int index = 0;
-      if (partnerAgentPrograms != null)
-         for (PartnerProgram partnerAgentProgram : partnerAgentPrograms) {
-            if (index++ > 0)
-               st.append(",");
-            st.append(partnerAgentProgram.getLookupDepartmentProgram().getProgramName());
-         }
-      return null;
-   }
-
    @Override
-   public com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory getWorkQueueCategory() {
-      // TODO Auto-generated method stub
-      return null;
+   public PartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate) {
+      PartnerWorkQueueSubmittedApplicationsDetail pd =new PartnerWorkQueueSubmittedApplicationsDetail();
+      try {
+         PartnerAgentInquiry partnerAgentInquiry= partnerAgentInquiryRepository.findOne(partnerAgentInquiryId);
+         partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString_followUpdate(newFollowUpDate));
+         PartnerAgentInquiry updatedPartnerAgentInquiry = partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
+         
+         pd.setCompanyId(updatedPartnerAgentInquiry.getPartnerAgentInquiriesId());
+         pd.setCompanyName(updatedPartnerAgentInquiry.getCompanyName());
+         pd.setCountry(updatedPartnerAgentInquiry.getLookupCountry().getCountryName());
+         pd.setEmail(updatedPartnerAgentInquiry.getEmail());
+         pd.setFirstName(updatedPartnerAgentInquiry.getFirstName());
+         pd.setFlagUrl(updatedPartnerAgentInquiry.getCountryFlag());
+         pd.setFollowUpDate(DateUtils.getDateAndTime(updatedPartnerAgentInquiry.getFollowUpDate()));
+         pd.setLastName(updatedPartnerAgentInquiry.getLastName());
+         pd.setPhone(updatedPartnerAgentInquiry.getPhone());
+         pd.setPrograms(updatedPartnerAgentInquiry.getCurrentlyOfferingPrograms());
+         pd.setSunmittedOn(DateUtils.getDateAndTime(updatedPartnerAgentInquiry.getSubmittedOn()));
+         pd.setWebsite(updatedPartnerAgentInquiry.getWebsite());
+         // what is the list of status ???????????????????
+//          PartnerReviewStatus partnerReviewStatus =partnerReviewStatusRepository.findOne(partnerAgentInquiry.getPartner().getpartnerre));
+         //???????????????? will be changes once i have clarification
+         pd.setStatusOfInquiry("Valid");
+         pd.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         pd.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
+      }
+      return pd;
    }
-
 }

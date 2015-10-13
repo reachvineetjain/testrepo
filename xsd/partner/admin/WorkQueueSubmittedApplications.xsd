@@ -24,7 +24,10 @@
    </xsd:complexType>
 
    <xsd:complexType name="PartnerWorkQueueSubmittedApplicationsDetail">
+    <xsd:complexContent>
+         <xsd:extension base="common:Response">
       <xsd:sequence>
+       <xsd:element name="companyId" type="xsd:int" minOccurs="1" maxOccurs="1" />
    		 <xsd:element name="companyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="flagUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -36,10 +39,12 @@
          <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programs" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="sunmittedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="statusOfInquiry" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="notes" type="pdl:PartnerAdminWorkQueueTypeCategoryApplicationNotes" minOccurs="1" maxOccurs="unbounded" />                        
       </xsd:sequence>
-   </xsd:complexType>   
+      </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>   
    
 	<xsd:complexType name="PartnerAdminWorkQueueTypeCategoryApplicationNotes">
 	    <xsd:complexContent>
