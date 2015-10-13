@@ -62,7 +62,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
-            partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://", "").toLowerCase());
+            partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
             // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
 
             // GoIdSequence goIdSequence = new GoIdSequence();
@@ -222,7 +222,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    public Boolean IsWebSiteExist(String WebSite) {
       try {
          System.out.println("IsWebSiteExist is Called !!! ");
-         WebSite = WebSite.replaceAll("http://|https://", "");
+         WebSite = WebSite.replaceAll("http://|https://|/$", "");
          PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
             System.out.println("TRUE");
