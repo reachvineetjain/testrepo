@@ -15,17 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for PartnerRecruitmentAdminScreeningMarkedByUser complex type.
+ * <p>Java class for DocumentUploadUser complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="PartnerRecruitmentAdminScreeningMarkedByUser">
+ * &lt;complexType name="DocumentUploadUser">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="imageUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="userName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="role" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="photoUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,40 +36,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PartnerRecruitmentAdminScreeningMarkedByUser", propOrder = {
-    "imageUrl",
-    "userName"
+@XmlType(name = "DocumentUploadUser", propOrder = {
+    "userName",
+    "role",
+    "photoUrl"
 })
-public class PartnerRecruitmentAdminScreeningMarkedByUser {
+public class DocumentUploadUser {
 
-    @XmlElement(required = true)
-    protected String imageUrl;
     @XmlElement(required = true)
     protected String userName;
-
-    /**
-     * Gets the value of the imageUrl property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    /**
-     * Sets the value of the imageUrl property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setImageUrl(String value) {
-        this.imageUrl = value;
-    }
+    @XmlElement(required = true)
+    protected String role;
+    @XmlElement(required = true)
+    protected String photoUrl;
 
     /**
      * Gets the value of the userName property.
@@ -92,6 +72,54 @@ public class PartnerRecruitmentAdminScreeningMarkedByUser {
      */
     public void setUserName(String value) {
         this.userName = value;
+    }
+
+    /**
+     * Gets the value of the role property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * Sets the value of the role property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRole(String value) {
+        this.role = value;
+    }
+
+    /**
+     * Gets the value of the photoUrl property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    /**
+     * Sets the value of the photoUrl property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPhotoUrl(String value) {
+        this.photoUrl = value;
     }
 
 }

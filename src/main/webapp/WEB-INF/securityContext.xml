@@ -51,6 +51,7 @@
             /loginProxy/**=anon
             /services/partner/qs/**=anon
             /services/partner/wq/**=anon
+            /services/partnerAdmin/**=anon
             /services/**=authc
          </value>
       </property>
