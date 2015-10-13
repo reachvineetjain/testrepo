@@ -204,14 +204,18 @@ public class WordPressFormsImpl implements IWordPressForms {
    public Boolean IsLegalNameExist(String LegalName) {
       try {
          System.out.println("IsLegalNameExist is Called !!! ");
+         System.out.println("Legal Name:" + LegalName);
          PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName);
          if (legalNameDuplicate != null) {
+            System.out.println("TRUE");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         System.out.println("FALSE");
          return false;
       }
+      System.out.println("FALSE");
       return false;
    }
 
@@ -221,12 +225,15 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println("IsWebSiteExist is Called !!! ");
          PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite);
          if (webSiteDuplicate != null) {
+            System.out.println("TRUE");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         System.out.println("FALSE");
          return false;
       }
+      System.out.println("FALSE");
       return false;
    }
 
