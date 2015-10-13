@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
-import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
@@ -97,7 +96,7 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                   partnerDashboard.getPartnerPrograms().addAll(partnerProgramsList);
                } else {
-                  // no programs for this partner found
+                  // no programs found for this partner
                }
             } else {
                // no partner found with the goid provided

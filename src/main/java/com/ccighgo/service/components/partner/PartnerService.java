@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
+import com.ccighgo.service.transport.partner.beans.partnerquickstats.PartnerQuickStats;
+import com.ccighgo.service.transport.partner.beans.partneruser.PartnerWorkQueue;
 
 /**
  * @author ravi
@@ -52,6 +54,18 @@ public interface PartnerService {
     * @return
     */
    public PartnerDetails getCAPDashboard(String partnerGoId);
+   
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   public PartnerWorkQueue getPartnerWorkQueuue(String partnerGoId);
+   
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   public PartnerQuickStats getPartnerQuickStats(String partnerGoId);
    
    
 
