@@ -6,7 +6,7 @@
 		CloneSeason,Season,SeasonDepartmentDocument,SeasonProgram,SeasonProgramDocument,SeasonProgramNote,SeasonList,SeasonStatus,SeasonGHTDetails,SeasonHspF1Details,
 		SeasonHspJ1HSDetails,SeasonHspStpIhpDetails,SeasonWPCAPDetails,SeasonWPDetail,SeasonDepartmentLog,SeasonProgramLog,InsuranceCountries,InsuranceParticipant,
 		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions,PartnerCompanyDetail,
-		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail" />
+		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail,PartnerDashboard" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -545,6 +545,14 @@
 
 	<!--*************************************************Partners*************************************************-->
 
+	<target name="PartnerDashboard">
+	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
+	            <arg value="-d" />
+	            <arg value="${java.dir}" />
+	            <arg value="${xsd.dir}/partner/PartnerDashboard.xsd" />
+	        </java>
+	    </target>
+	
 	<target name="PartnerDetails">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />

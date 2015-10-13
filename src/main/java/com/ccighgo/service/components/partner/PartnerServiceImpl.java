@@ -6,53 +6,24 @@ package com.ccighgo.service.components.partner;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.CCIStaffUser;
-import com.ccighgo.db.entities.PartnerAgentInquiry;
-import com.ccighgo.db.entities.PartnerDocument;
-import com.ccighgo.db.entities.PartnerMessage;
-import com.ccighgo.db.entities.PartnerNote;
-import com.ccighgo.db.entities.PartnerOffice;
+import com.ccighgo.db.entities.LookupDepartmentProgram;
+import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerProgram;
-import com.ccighgo.db.entities.PartnerReferenceCheck;
-import com.ccighgo.db.entities.PartnerReviewStatus;
-import com.ccighgo.db.entities.PartnerWorkQueueCategory;
-import com.ccighgo.db.entities.PartnerWorkQueueType;
+import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
-import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
-import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
-import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
-import com.ccighgo.jpa.repositories.PartnerNoteRepository;
-import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
-import com.ccighgo.jpa.repositories.PartnerProgramRepository;
-import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
-import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
+import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDetail;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDocuments;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMarkedByUser;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMessagesToAgent;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningOffices;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningProgramOfferings;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningPrograms;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
-import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDashboardSections;
+import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
+import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerPrograms;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.utils.CCIConstants;
-import com.ccighgo.utils.DateUtils;
-import com.ccighgo.utils.ExceptionUtil;
-import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -61,54 +32,112 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Component
 public class PartnerServiceImpl implements PartnerService {
 
-   private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PartnerServiceImpl.class);
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   CommonComponentUtils componentUtils;
-   @Autowired
-   PartnerAgentInquiryRepository partnerAgentInquiryRepository;
-   @Autowired
-   PartnerProgramRepository partnerProgramRepository;
-   @Autowired
-   PartnerMessagesRepository partnerMessagesRepository;
-   @Autowired
-   PartnerOfficeRepository partnerOfficeRepository;
-   @Autowired
-   PartnerReviewStatusRepository partnerReviewStatusRepository;
-   @Autowired
-   PartnerReferenceCheckRepository partnerReferenceCheckRepository;
-   @Autowired
-   PartnerDocumentsRepository partnerDocumentsRepository;
-   @Autowired
-   PartnerNoteRepository partnerNoteRepository;
+   private static final Logger LOGGER = Logger.getLogger(PartnerServiceImpl.class);
+
+   @Autowired MessageUtils messageUtil;
+   @Autowired CommonComponentUtils componentUtils;
+
+   @Autowired PartnerRepository partnerRepository;
+   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
 
    @Override
-   public PartnerDetails getPartnerDetails(String userId) {
-      PartnerDetails partnerDetails = new PartnerDetails();
-      partnerDetails.setPartnerFirstName("Super");
-      partnerDetails.setPartnerLastName("Man");
-      partnerDetails.setPartnerAddress("Planet Krypton");
-      partnerDetails.setPartnerCountry("Doesn't matter");
-      partnerDetails.setPartnerCompany("Save the world");
-      partnerDetails.setPartnerEmail("superman@planetkrypton.com");
-      partnerDetails.setPartnerId(007);
-      partnerDetails.setPartnerLogo("Logo stolen by batman");
-      List<PartnerPrograms> partnerPrograms = new ArrayList<PartnerPrograms>();
-      PartnerPrograms pp = new PartnerPrograms();
-      pp.setPartnerDepartmentId("1");
-      pp.setPartnerDepartmentName("Save the world");
-      pp.setPartnerProgramId("1");
-      pp.setPartnerProgramName("Help Joker");
-      PartnerPrograms pp1 = new PartnerPrograms();
-      pp1.setPartnerDepartmentId("1");
-      pp1.setPartnerDepartmentName("Save the world");
-      pp1.setPartnerProgramId("1");
-      pp1.setPartnerProgramName("Help Joker");
-      partnerPrograms.add(pp);
-      partnerPrograms.add(pp1);
-      List<PartnerDashboardSections> dashboardSections = new ArrayList<PartnerDashboardSections>();
-      return partnerDetails;
+   public PartnerDashboard getPartnerDashboard(String partnerGoId) {
+      PartnerDashboard partnerDashboard = new PartnerDashboard();
+      if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
+         partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+               messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
+         return partnerDashboard;
+      } else {
+         try {
+            Partner partner = partnerRepository.findOne(Integer.valueOf(partnerGoId));
+            if (partner != null) {
+               partnerDashboard.setPartnerId(partner.getPartnerGoId());
+               partnerDashboard.setPartnerCompany(partner.getCompanyName());
+               List<PartnerSeason> partnerSeasons = partner.getPartnerSeasons();
+               if (partnerSeasons != null && partnerSeasons.size() > 0) {
+                  List<com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram> partnerProgramsList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram>();
+                  for (PartnerSeason partnerSeason : partnerSeasons) {
+                     com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram prg = new com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram();
+                     prg.setPartnerSeasonId(partnerSeason.getSeason().getSeasonId());
+                     List<LookupDepartmentProgram> lkDeptPrgList =  lookupDepartmentProgramRepository.findAll();
+                     for(LookupDepartmentProgram deptPrg:lkDeptPrgList){
+                        if(deptPrg.getProgramName().equals(CCIConstants.HSP_J1_HS) && deptPrg.getLookupDepartmentProgramId()==CCIConstants.HSP_J1_HS_ID){
+                           prg.setPartnerDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
+                           prg.setPartnerDepartmentProgramName(CCIConstants.HSP_J1_HS);
+                           prg.setProgramDetailsUrl("partner/j1/program/details/");
+                        }
+                        if(deptPrg.getProgramName().equals(CCIConstants.HSP_F1) && deptPrg.getLookupDepartmentProgramId()==CCIConstants.HSP_F1_ID){
+                           prg.setPartnerDepartmentProgramId(CCIConstants.HSP_F1_ID);
+                           prg.setPartnerDepartmentProgramName(CCIConstants.HSP_F1);
+                           prg.setProgramDetailsUrl("partner/f1/program/details/");
+                        }
+                        if(deptPrg.getProgramName().equals(CCIConstants.HSP_STP_IHP) && deptPrg.getLookupDepartmentProgramId()==CCIConstants.HSP_STP_IHP_ID){
+                           prg.setPartnerDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
+                           prg.setPartnerDepartmentProgramName(CCIConstants.HSP_STP_IHP);
+                           prg.setProgramDetailsUrl("partner/ihp/program/details/");
+                        }
+                        if(deptPrg.getProgramName().equals(CCIConstants.WP_WT_CAP) && deptPrg.getLookupDepartmentProgramId()==CCIConstants.WP_WT_CAP_ID){
+                           prg.setPartnerDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
+                           prg.setPartnerDepartmentProgramName(CCIConstants.WP_WT_CAP);
+                           prg.setProgramDetailsUrl("partner/cap/program/details/");
+                        }
+                        if(deptPrg.getProgramName().equals(CCIConstants.WP_WT_SUMMER) && deptPrg.getLookupDepartmentProgramId()==CCIConstants.WP_WT_SUMMER_ID){
+                           prg.setPartnerDepartmentProgramId(CCIConstants.WP_WT_SUMMER_ID);
+                           prg.setPartnerDepartmentProgramName(CCIConstants.WP_WT_SUMMER);
+                           prg.setProgramDetailsUrl("partner/wnt/summer/program/details/");
+                        }
+                        if(deptPrg.getProgramName().equals(CCIConstants.WP_WT_WINTER) && deptPrg.getLookupDepartmentProgramId()==CCIConstants.WP_WT_WINTER_ID){
+                           prg.setPartnerDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
+                           prg.setPartnerDepartmentProgramName(CCIConstants.WP_WT_WINTER);
+                           prg.setProgramDetailsUrl("partner/wnt/winter/program/details/");
+                        }
+                     }
+                     partnerProgramsList.add(prg);
+                  }
+                  partnerDashboard.getPartnerPrograms().addAll(partnerProgramsList);
+               } else {
+                  // no programs for this partner found
+               }
+            } else {
+               // no partner found with the goid provided
+               partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
+                     messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
+               LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
+            }
+         } catch (CcighgoException e) {
+            // error getting partner details
+            partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
+                  messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
+            LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
+         }
+      }
+      return partnerDashboard;
+   }
+
+   @Override
+   public PartnerDetails getJ1HSDashboard(String partnerGoId) {
+      return null;
+   }
+
+   @Override
+   public PartnerDetails getF1Dashboard(String partnerGoId) {
+      return null;
+   }
+
+   @Override
+   public PartnerDetails getIHPDashboard(String partnerGoId) {
+      return null;
+   }
+
+   @Override
+   public PartnerDetails getWnTDashboard(String partnerGoId) {
+      return null;
+   }
+
+   @Override
+   public PartnerDetails getCAPDashboard(String partnerGoId) {
+      return null;
    }
 
    @Override

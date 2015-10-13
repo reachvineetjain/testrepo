@@ -28,6 +28,7 @@ import com.ccighgo.service.components.errormessages.constants.AuthConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
 import com.ccighgo.service.components.partner.PartnerService;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
+import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDashboardSections;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerPrograms;
@@ -125,8 +126,8 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
 
    @Override
    @Transactional(readOnly = true)
-   public PartnerDetails getPartnerDetails(String userId) {
-      return partnerService.getPartnerDetails(userId);
+   public PartnerDashboard getPartnerDashboard(String partnerGoId) {
+      return partnerService.getPartnerDashboard(partnerGoId);
    }
 
 }
