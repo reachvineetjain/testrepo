@@ -19,6 +19,7 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpa
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -54,18 +55,18 @@ public class PartnerAdmin {
    }
 
    @GET
-   @Path("workQueueType")
+   @Path("workQueueType/{partnerAgentGoId}")
    @Produces("application/json")
-   public PartnerWorkQueueType getWorkQueueType() {
+   public PartnerWorkQueueType getWorkQueueType(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getWorkQueueType []");
-      return partnerService.getWorkQueueType();
+      return partnerService.getWorkQueueType(Integer.parseInt(partnerAgentGoId));
    }
    @GET
-   @Path("workQueueCategory")
+   @Path("workQueueCategory/{partnerAgentGoId}")
    @Produces("application/json")
-   public PartnerWorkQueueCategory getWorkQueueCategory() {
+   public PartnerWorkQueueCategory getWorkQueueCategory(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getWorkQueueCategory []");
-      return partnerService.getWorkQueueCategory();
+      return partnerService.getWorkQueueCategory(Integer.parseInt(partnerAgentGoId));
    }
    
    @GET
@@ -77,21 +78,23 @@ public class PartnerAdmin {
    }
    
    @POST
-   @Path("changeApplicationStatus")
+   @Path("changeApplicationStatus/{partnerAgentInquiryId}")
    @Produces("application/json")
-   public WSDefaultResponse changePartnerApplicationStatus() {
+   public PartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId) {
       LOGGER.debug("fun : changePartnerApplicationStatus []");
-      return partnerService.changePartnerApplicationStatus();
+      return partnerService.changePartnerApplicationStatus(Integer.parseInt(partnerAgentInquiryId));
    }
    
    
-   @POST
-   @Path("updatePartnerApplicationFollowUpDate")
+   @GET
+   @Path("updatePartnerApplicationFollowUpDate/{partnerAgentInquiryId}/{newFollowUpDate}")
    @Produces("application/json")
-   public WSDefaultResponse updatePartnerApplicationFollowUpDate() {
+   public PartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId,@PathParam("newFollowUpDate") String newFollowUpDate) {
       LOGGER.debug("fun : updatePartnerApplicationFollowUpDate");
-      return partnerService.updatePartnerApplicationFollowUpDate();
+      return partnerService.updatePartnerApplicationFollowUpDate(Integer.parseInt(partnerAgentInquiryId),newFollowUpDate);
    }
+   
+   
    
    @GET
    @Path("agentRecruitmentData/{partnerAgentGoId}")
