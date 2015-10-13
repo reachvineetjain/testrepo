@@ -223,6 +223,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    public Boolean IsWebSiteExist(String WebSite) {
       try {
          System.out.println("IsWebSiteExist is Called !!! ");
+         WebSite= WebSite.replaceAll("http://|https://", "");
          PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
             System.out.println("TRUE");
