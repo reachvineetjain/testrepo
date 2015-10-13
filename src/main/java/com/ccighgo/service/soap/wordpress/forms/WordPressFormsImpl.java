@@ -188,7 +188,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsEmailExist is Called !!! ");
          System.out.println("Email : " + Email);
-         Login user = loginRepository.findByEmail(Email);
+         Login user = loginRepository.findByEmail(Email.trim());
          System.out.println(user);
          if (user != null) {
             return true;
@@ -205,7 +205,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsLegalNameExist is Called !!! ");
          System.out.println("Legal Name:" + LegalName);
-         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName);
+         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName.trim());
          if (legalNameDuplicate != null) {
             System.out.println("TRUE");
             return true;
@@ -223,7 +223,8 @@ public class WordPressFormsImpl implements IWordPressForms {
    public Boolean IsWebSiteExist(String WebSite) {
       try {
          System.out.println("IsWebSiteExist is Called !!! ");
-         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite);
+         WebSite= WebSite.replaceAll("http://|https://", "");
+         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
             System.out.println("TRUE");
             return true;
