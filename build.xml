@@ -403,7 +403,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/ScreenRequest.xsd" />
+			<arg value="${xsd.dir}/thirdparty/background_check/ScreenRequest.xsd" />
 		</java>
 	</target>
 
@@ -694,10 +694,38 @@
 
 	<!--*************************************************  Partner Admin Dashboard *************************************************-->
 	<target name="PartnerAdminDashboard">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/partner/admin/Dashboard.xsd" />
-		</java>
-	</target>
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/partner/admin/Dashboard.xsd" />
+					</java>
+				</target>
+		
+		<!--*************************************************  Partner work queue category *************************************************-->
+					<target name="PartnerWorkQueueCategory">
+						<java classname="com.sun.tools.internal.xjc.XJCFacade">
+							<arg value="-d" />
+							<arg value="${java.dir}" />
+							<arg value="${xsd.dir}/partner/admin/WorkQueueCategory.xsd" />
+						</java>
+					</target>
+	
+		<!--*************************************************  Partner work queue Type *************************************************-->
+					<target name="PartnerWorkQueueType">
+						<java classname="com.sun.tools.internal.xjc.XJCFacade">
+							<arg value="-d" />
+							<arg value="${java.dir}" />
+							<arg value="${xsd.dir}/partner/admin/WorkQueueTypes.xsd" />
+						</java>
+					</target>
+		
+	
+		<!--*************************************************  Partner work queue Submitted Applications*************************************************-->
+					<target name="PartnerWorkQueueSubmittedApplications">
+						<java classname="com.sun.tools.internal.xjc.XJCFacade">
+							<arg value="-d" />
+							<arg value="${java.dir}" />
+							<arg value="${xsd.dir}/partner/admin/WorkQueueSubmittedApplications.xsd" />
+						</java>
+					</target>
 </project>
