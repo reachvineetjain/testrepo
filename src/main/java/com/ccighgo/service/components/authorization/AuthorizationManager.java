@@ -53,6 +53,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Transactional(readOnly = true)
    public Auth getUserLogin(String userName) {
       Auth auth = new Auth();
+      System.out.println("AuthorizationManager.getUserLogin userName "+userName);
       if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
          if (login != null) {
@@ -66,6 +67,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                LoginType lt = new LoginType();
                if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
                   lt.setUserDetailUrl("/authorize/cciusr/");
+                  System.out.println("AuthorizationManager lt in getUserLogin"+lt);
                }
                if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
                   lt.setUserDetailUrl("/authorize/partner/");
@@ -83,6 +85,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                   lt.setUserDetailUrl("/authorize/ptcpnt/");
                }
                lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
+               System.out.println(" AuthorizationManager lt after setting UserTypeId"+lt);
                lt.setLoginType(loginUsrType.getUserType().getUserTypeName());
                lt.setDefault(loginUsrType.getDefaultUserType() == 0 ? false : true);
                loginTypeList.add(lt);
@@ -97,15 +100,18 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Transactional
    private void updateHistory(String userName) {
       LoginHistory history = new LoginHistory();
+      System.out.println("AuthorizationManager.updateHistory userName "+userName);
       history.setLoggedOn(new Timestamp(System.currentTimeMillis()));
       Login loggedInUser = loginRepository.findByLoginName(userName);
       history.setLogin(loggedInUser);
+      System.out.println("AuthorizationManager.updateHistory loggedInUser "+loggedInUser);
       loginHistoryRepository.save(history);
    }
 
    @Override
    @Transactional(readOnly = true)
    public User getCCIUserDetails(String userId) {
+	   System.out.println("AuthorizationManager getCCIUserDetails "+userId);
       return userManagementService.getUserById(userId);
    }
 

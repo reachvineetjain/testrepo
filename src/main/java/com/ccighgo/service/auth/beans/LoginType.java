@@ -58,6 +58,7 @@ public class LoginType {
      * 
      */
     public int getLoginTypeId() {
+    	System.out.println("LoginType.loginTypeId"+loginTypeId);
         return loginTypeId;
     }
 
@@ -66,6 +67,7 @@ public class LoginType {
      * 
      */
     public void setLoginTypeId(int value) {
+    	System.out.println("LoginType.setLoginTypeId"+value);
         this.loginTypeId = value;
     }
 
@@ -78,6 +80,7 @@ public class LoginType {
      *     
      */
     public String getLoginType() {
+    	System.out.println("LoginType.getLoginType"+loginType);
         return loginType;
     }
 
@@ -90,6 +93,7 @@ public class LoginType {
      *     
      */
     public void setLoginType(String value) {
+    	System.out.println("LoginType.setLoginType"+loginType);
         this.loginType = value;
     }
 
@@ -98,6 +102,7 @@ public class LoginType {
      * 
      */
     public boolean isDefault() {
+    	System.out.println("LoginType.isDefault"+_default);
         return _default;
     }
 
@@ -106,6 +111,7 @@ public class LoginType {
      * 
      */
     public void setDefault(boolean value) {
+    	System.out.println("LoginType.setDefault"+value);
         this._default = value;
     }
 
@@ -118,6 +124,7 @@ public class LoginType {
      *     
      */
     public String getUserDetailUrl() {
+    	System.out.println("value in LoginType.getUserDetailUrl"+userDetailUrl);
         return userDetailUrl;
     }
 
@@ -130,6 +137,7 @@ public class LoginType {
      *     
      */
     public void setUserDetailUrl(String value) {
+    	System.out.println("value in LoginType.setUserDetailUrl"+value);
         this.userDetailUrl = value;
     }
 

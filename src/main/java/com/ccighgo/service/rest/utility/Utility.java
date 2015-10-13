@@ -240,6 +240,7 @@ public class Utility {
    @GET
    @Path("duplicate-username/{userName}")
    public  boolean checkUserName(@PathParam("userName") String userName){
+	   System.out.println("Utility.checkUserName"+userName);
       return utilityServices.checkUserName(userName);
    }
 

@@ -31,16 +31,21 @@ public class Authentication {
     @GET
 	@Path("login")
 	public Auth login(){
+	System.out.println("Welcome to login++++++++++++++++");
 		String user = SecurityUtils.getSubject().getPrincipal().toString();
+		System.out.println("login user"+user);
 		LOGGER.debug("User '{}' logged in", user);
+	
 		return authAction.login();
 	}
 	
 	@GET
 	@Path("logout")
 	public void logout(){
+		System.out.println("logout");
 		SecurityUtils.getSubject().logout();
 		LOGGER.debug("User logged out");
+		System.out.println("User logged out");
 	}
 
 }
