@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
-import com.ccighgo.utils.WSDefaultResponse;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -22,16 +21,16 @@ public interface PartnerAdminService {
 
    PartnerAdminDashboard getDashboard();
 
-   PartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId);
+   AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId);
 
-   PartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate);
+   AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate);
 
    PartnerRecruitmentAdmin getAgentRecruitmentData(int agentId);
 
-   com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType getWorkQueueType(int partnerGoId);
+   AdminPartnerWorkQueueType getWorkQueueType(int partnerGoId);
 
-   PartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId);
+   AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId);
 
-   com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory getWorkQueueCategory(int partnerGoId);
+   AdminPartnerWorkQueueCategory getWorkQueueCategory(int partnerGoId);
 
 }

@@ -14,15 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.service.components.partner.PartnerService;
 import com.ccighgo.service.components.partneradmin.PartnerAdminService;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType;
-import com.ccighgo.utils.WSDefaultResponse;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 
 /**
  * @author Ahmed
@@ -57,7 +55,7 @@ public class PartnerAdmin {
    @GET
    @Path("workQueueType/{partnerAgentGoId}")
    @Produces("application/json")
-   public PartnerWorkQueueType getWorkQueueType(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getWorkQueueType []");
       return partnerAdminService.getWorkQueueType(Integer.parseInt(partnerAgentGoId));
    }
@@ -65,7 +63,7 @@ public class PartnerAdmin {
    @GET
    @Path("workQueueCategory/{partnerAgentGoId}")
    @Produces("application/json")
-   public PartnerWorkQueueCategory getWorkQueueCategory(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getWorkQueueCategory []");
       return partnerAdminService.getWorkQueueCategory(Integer.parseInt(partnerAgentGoId));
    }
@@ -73,7 +71,7 @@ public class PartnerAdmin {
    @GET
    @Path("workQueueSubmittedApplications/{partnerAgentGoId}")
    @Produces("application/json")
-   public PartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getWorkQueueSubmittedApplications []");
       return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(partnerAgentGoId));
    }
@@ -81,7 +79,7 @@ public class PartnerAdmin {
    @POST
    @Path("changeApplicationStatus/{partnerAgentInquiryId}")
    @Produces("application/json")
-   public PartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId) {
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId) {
       LOGGER.debug("fun : changePartnerApplicationStatus []");
       return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(partnerAgentInquiryId));
    }
@@ -89,7 +87,7 @@ public class PartnerAdmin {
    @GET
    @Path("updatePartnerApplicationFollowUpDate/{partnerAgentInquiryId}/{newFollowUpDate}")
    @Produces("application/json")
-   public PartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId,
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId,
          @PathParam("newFollowUpDate") String newFollowUpDate) {
       LOGGER.debug("fun : updatePartnerApplicationFollowUpDate");
       return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(partnerAgentInquiryId), newFollowUpDate);

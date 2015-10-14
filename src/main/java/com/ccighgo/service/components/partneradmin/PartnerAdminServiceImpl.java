@@ -5,7 +5,6 @@ package com.ccighgo.service.components.partneradmin;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +17,7 @@ import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
+import com.ccighgo.db.entities.PartnerWorkQueueType;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
@@ -44,10 +44,11 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpa
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningPrograms;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -93,7 +94,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public PartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId) {
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId) {
       // TODO Auto-generated method stub
       return null;
    }
@@ -296,8 +297,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType getWorkQueueType(int partnerGoId) {
-      com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType pwt = new PartnerWorkQueueType();
+   public AdminPartnerWorkQueueType getWorkQueueType(int partnerGoId) {
+      AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
       try {
          
       } catch (Exception e) {
@@ -309,8 +310,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return pwt;
    }
    @Override
-   public com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory getWorkQueueCategory(int partnerGoId) {
-      com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory pwqc = new PartnerWorkQueueCategory();
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(int partnerGoId) {
+      AdminPartnerWorkQueueCategory pwqc = new AdminPartnerWorkQueueCategory();
       try {
          
       } catch (Exception e) {
@@ -322,13 +323,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return pwqc;
    }
    @Override
-   public PartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId) {
-      PartnerWorkQueueSubmittedApplications pwqa = new PartnerWorkQueueSubmittedApplications();
+   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId) {
+      AdminPartnerWorkQueueSubmittedApplications pwqa = new AdminPartnerWorkQueueSubmittedApplications();
       try {
          List<PartnerAgentInquiry> result = partnerAgentInquiryRepository.findPartnerByPartnerId(partnerAgentGoId);
          if (result != null) {
             for (PartnerAgentInquiry partnerAgentInquiry : result) {
-               PartnerWorkQueueSubmittedApplicationsDetail pd = new PartnerWorkQueueSubmittedApplicationsDetail();
+               AdminPartnerWorkQueueSubmittedApplicationsDetail pd = new AdminPartnerWorkQueueSubmittedApplicationsDetail();
                pd.setCompanyId(partnerAgentInquiry.getPartnerAgentInquiriesId());
                pd.setCompanyName(partnerAgentInquiry.getCompanyName());
                pd.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
@@ -364,8 +365,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public PartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate) {
-      PartnerWorkQueueSubmittedApplicationsDetail pd =new PartnerWorkQueueSubmittedApplicationsDetail();
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate) {
+      AdminPartnerWorkQueueSubmittedApplicationsDetail pd =new AdminPartnerWorkQueueSubmittedApplicationsDetail();
       try {
          PartnerAgentInquiry partnerAgentInquiry= partnerAgentInquiryRepository.findOne(partnerAgentInquiryId);
          partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString_followUpdate(newFollowUpDate));
