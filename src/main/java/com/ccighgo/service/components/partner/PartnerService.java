@@ -12,8 +12,6 @@ import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Das
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
 
 /**
  * @author ravi
