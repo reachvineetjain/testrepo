@@ -5,7 +5,6 @@ package com.ccighgo.service.components.partner;
 
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Dashboard;
@@ -20,7 +19,6 @@ import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTD
 @Service
 public interface PartnerService {
    
- PartnerAdminDashboard getDashboard();
    /**
     * Service to load partner dashboard
     * 

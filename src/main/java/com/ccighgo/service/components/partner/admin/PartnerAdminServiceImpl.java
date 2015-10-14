@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ccighgo.service.components.partneradmin;
+package com.ccighgo.service.components.partner.admin;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
-import com.ccighgo.db.entities.PartnerWorkQueueType;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
@@ -43,9 +42,7 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpa
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningProgramOfferings;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningPrograms;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
-import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
@@ -87,11 +84,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    PartnerNoteRepository partnerNoteRepository;
    
 
-   @Override
-   public PartnerAdminDashboard getDashboard() {
-      // TODO Auto-generated method stub
-      return null;
-   }
+ 
 
    @Override
    public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId) {

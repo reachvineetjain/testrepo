@@ -10,19 +10,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
-import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerAnnouncement;
 import com.ccighgo.db.entities.PartnerCCIContact;
-import com.ccighgo.db.entities.PartnerDocument;
-import com.ccighgo.db.entities.PartnerMessage;
-import com.ccighgo.db.entities.PartnerNote;
-import com.ccighgo.db.entities.PartnerOffice;
-import com.ccighgo.db.entities.PartnerProgram;
-import com.ccighgo.db.entities.PartnerReferenceCheck;
-import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
@@ -49,21 +40,8 @@ import com.ccighgo.jpa.repositories.PartnerWorkQueueTypeAggregateRepository;
 import com.ccighgo.jpa.repositories.PartnerWorkQueueTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerDashboardMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDetail;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDocuments;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMarkedByUser;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMessagesToAgent;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningOffices;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningProgramOfferings;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningPrograms;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
-import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Dashboard;
@@ -76,7 +54,6 @@ import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSW
 import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTDashboard;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
-import com.ccighgo.utils.ExceptionUtil;
 
 /**
  * @author ravi
@@ -297,9 +274,5 @@ public class PartnerServiceImpl implements PartnerService {
       return capDashboard;
    }
 
-   @Override
-   public PartnerAdminDashboard getDashboard() {
-      // TODO Auto-generated method stub
-      return null;
-   }
+ 
 }

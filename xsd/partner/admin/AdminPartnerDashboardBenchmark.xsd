@@ -5,7 +5,7 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partneradmindashboard" />
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
@@ -17,35 +17,10 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="workQueue" type="pdl:PartnerAdminDashboardWorkQueue" minOccurs="1"   maxOccurs="unbounded" />
-               <xsd:element name="quickStats" type="pdl:PartnerAdminDashboardQuickStats" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="quickLinks" type="pdl:PartnerAdminDashboardQuickLinks" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="benchmarks" type="pdl:PartnerAdminDashboardBenchmarks" minOccurs="1" maxOccurs="unbounded" />            
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
-   </xsd:complexType>
-   
-   <xsd:complexType name="PartnerAdminDashboardWorkQueue">
-      <xsd:sequence>
-         <xsd:element name="types" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="categories" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="PartnerAdminDashboardQuickStats">
-      <xsd:sequence>
-         <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-      
-   <xsd:complexType name="PartnerAdminDashboardQuickLinks">
-      <xsd:sequence>
-         <xsd:element name="category" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
    </xsd:complexType>
    
     <xsd:complexType name="PartnerAdminDashboardBenchmarks">

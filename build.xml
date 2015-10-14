@@ -741,7 +741,7 @@
 	</target>
 
 
-	<!--*************************************************  Partner Admin Dashboard *************************************************-->
+	<!--*************************************************  Partner Admin Dashboard *************************************************
 	<target name="PartnerAdminDashboard">
 					<java classname="com.sun.tools.internal.xjc.XJCFacade">
 						<arg value="-d" />
@@ -750,7 +750,7 @@
 					</java>
 				</target>
 		
-		<!--*************************************************  Partner work queue category *************************************************-->
+		*************************************************  Partner work queue category *************************************************-->
 					<target name="PartnerWorkQueueCategory">
 						<java classname="com.sun.tools.internal.xjc.XJCFacade">
 							<arg value="-d" />
@@ -777,4 +777,30 @@
 							<arg value="${xsd.dir}/partner/admin/AdminWorkQueueSubmittedApplications.xsd" />
 						</java>
 					</target>
+	<!--*************************************************  Partner Admin Dashboard  Quick links*************************************************-->
+				<target name="PartnerAdminDashboardQuickLinks">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickLinks.xsd" />
+					</java>
+				</target>
+
+	<!--*************************************************  Partner Admin Dashboard Quick Stats *************************************************-->
+				<target name="PartnerAdminDashboardQuickStats">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStats.xsd" />
+					</java>
+				</target>
+
+	<!--*************************************************  Partner Admin Dashboard Benchmarks*************************************************-->
+				<target name="PartnerAdminDashboardBenchmarks">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardBenchmark.xsd" />
+					</java>
+				</target>
 </project>

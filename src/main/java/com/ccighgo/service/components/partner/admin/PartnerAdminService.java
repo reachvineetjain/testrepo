@@ -1,12 +1,11 @@
 /**
  * 
  */
-package com.ccighgo.service.components.partneradmin;
+package com.ccighgo.service.components.partner.admin;
 
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
-import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
@@ -19,8 +18,7 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPar
 @Service
 public interface PartnerAdminService {
 
-   PartnerAdminDashboard getDashboard();
-
+ 
    AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId);
 
    AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate);
