@@ -101,7 +101,7 @@ public class PartnerServiceImpl implements PartnerService {
    @Autowired PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
    @Autowired PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
    @Autowired PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
-   @Autowired PartnerWorkQueueCategoryPKRepository partnerWorkQueueCategoryPKRepository;
+  // @Autowired PartnerWorkQueueCategoryPKRepository partnerWorkQueueCategoryPKRepository;
    @Autowired PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
    @Autowired PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
    @Autowired PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
