@@ -6,7 +6,7 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.partner.beans.partnerj1details;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,18 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Message complex type.
+ * <p>Java class for PartnerJ1HSAnnouncement complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Message">
+ * &lt;complexType name="PartnerJ1HSAnnouncement">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="serviceId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="announcement" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="timestamp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,81 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Message", propOrder = {
-    "type",
-    "serviceId",
-    "message"
+@XmlType(name = "PartnerJ1HSAnnouncement", propOrder = {
+    "announcement",
+    "timestamp"
 })
-public class Message {
+public class PartnerJ1HSAnnouncement {
 
     @XmlElement(required = true)
-    protected String type;
-    protected int serviceId;
+    protected String announcement;
     @XmlElement(required = true)
-    protected String message;
+    protected String timestamp;
 
     /**
-     * Gets the value of the type property.
+     * Gets the value of the announcement property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getType() {
-        return type;
+    public String getAnnouncement() {
+        return announcement;
     }
 
     /**
-     * Sets the value of the type property.
+     * Sets the value of the announcement property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setType(String value) {
-        this.type = value;
+    public void setAnnouncement(String value) {
+        this.announcement = value;
     }
 
     /**
-     * Gets the value of the serviceId property.
-     * 
-     */
-    public int getServiceId() {
-        return serviceId;
-    }
-
-    /**
-     * Sets the value of the serviceId property.
-     * 
-     */
-    public void setServiceId(int value) {
-        this.serviceId = value;
-    }
-
-    /**
-     * Gets the value of the message property.
+     * Gets the value of the timestamp property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getMessage() {
-        return message;
+    public String getTimestamp() {
+        return timestamp;
     }
 
     /**
-     * Sets the value of the message property.
+     * Sets the value of the timestamp property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setMessage(String value) {
-        this.message = value;
+    public void setTimestamp(String value) {
+        this.timestamp = value;
     }
 
 }
