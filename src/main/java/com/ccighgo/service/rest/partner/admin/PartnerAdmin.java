@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.admin.PartnerAdminService;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
-import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
@@ -44,28 +43,20 @@ public class PartnerAdmin {
       return input;
    }
 
-   @POST
-   @Path("dashboard")
-   @Produces("application/json")
-   public PartnerAdminDashboard getDashboard() {
-      LOGGER.debug("fun : getDashboard []");
-      return partnerAdminService.getDashboard();
-   }
-
    @GET
-   @Path("workQueueType/{partnerAgentGoId}")
+   @Path("workQueueType/{departmentProgramId}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("departmentProgramId") String departmentProgramId) {
       LOGGER.debug("fun : getWorkQueueType []");
-      return partnerAdminService.getWorkQueueType(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getWorkQueueType(Integer.parseInt(departmentProgramId));
    }
 
    @GET
-   @Path("workQueueCategory/{partnerAgentGoId}")
+   @Path("workQueueCategory/{adminWorkQueueTypeId}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId) {
       LOGGER.debug("fun : getWorkQueueCategory []");
-      return partnerAdminService.getWorkQueueCategory(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId));
    }
 
    @GET

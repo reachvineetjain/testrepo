@@ -3,6 +3,8 @@
  */
 package com.ccighgo.jpa.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +16,7 @@ import com.ccighgo.db.entities.AdminWorkQueueCategory;
  */
 @Repository
 public interface AdminWorkQueueCategoryRepository extends JpaRepository<AdminWorkQueueCategory, Integer> {
+
+   List<AdminWorkQueueCategory> findAllCategoriesByTypeId(int adminWorkQueueTypeId);
       
 }
