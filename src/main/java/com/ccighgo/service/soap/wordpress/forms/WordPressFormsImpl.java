@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.db.entities.Login;
-import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
@@ -30,27 +29,27 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
-         Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
-         if (user != null) {
-            String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist)";
-            System.out.println(message);
-            return message;
-         }
-         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite());
-         if (webSiteDuplicate != null) {
-            String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
-            System.out.println(message);
-            return message;
-         }
-
-         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
-         if (legalNameDuplicate != null) {
-            String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
-            System.out.println(message);
-            return message;
-         }
-
          if (InternationalPartners != null) {
+            Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
+            if (user != null) {
+               String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist)";
+               System.out.println(message);
+               return message;
+            }
+            PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite());
+            if (webSiteDuplicate != null) {
+               String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
+               System.out.println(message);
+               return message;
+            }
+
+            PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
+            if (legalNameDuplicate != null) {
+               String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
+               System.out.println(message);
+               return message;
+            }
+
             PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
             partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
             partnerAgentInquiry.setAdressLineTwo(InternationalPartners.getAddress2());
@@ -63,7 +62,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
-            partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite());
+            partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
             // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
 
             // GoIdSequence goIdSequence = new GoIdSequence();
@@ -188,7 +187,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsEmailExist is Called !!! ");
          System.out.println("Email : " + Email);
-         Login user = loginRepository.findByEmail(Email);
+         Login user = loginRepository.findByEmail(Email.trim());
          System.out.println(user);
          if (user != null) {
             return true;
@@ -204,14 +203,18 @@ public class WordPressFormsImpl implements IWordPressForms {
    public Boolean IsLegalNameExist(String LegalName) {
       try {
          System.out.println("IsLegalNameExist is Called !!! ");
-         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName);
+         System.out.println("Legal Name:" + LegalName);
+         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName.trim());
          if (legalNameDuplicate != null) {
+            System.out.println("TRUE");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         System.out.println("FALSE");
          return false;
       }
+      System.out.println("FALSE");
       return false;
    }
 
@@ -219,14 +222,18 @@ public class WordPressFormsImpl implements IWordPressForms {
    public Boolean IsWebSiteExist(String WebSite) {
       try {
          System.out.println("IsWebSiteExist is Called !!! ");
-         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite);
+         WebSite = WebSite.replaceAll("http://|https://|/$", "");
+         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
+            System.out.println("TRUE");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         System.out.println("FALSE");
          return false;
       }
+      System.out.println("FALSE");
       return false;
    }
 

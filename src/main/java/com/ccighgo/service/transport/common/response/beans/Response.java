@@ -14,6 +14,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSDashboard;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerAdminWorkQueueTypeCategoryApplicationNotes;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
 
 
 /**
@@ -42,7 +45,10 @@ import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSD
     "status"
 })
 @XmlSeeAlso({
-    PartnerJ1HSDashboard.class
+    PartnerJ1HSDashboard.class,
+    PartnerWorkQueueSubmittedApplications.class,
+    PartnerWorkQueueSubmittedApplicationsDetail.class,
+    PartnerAdminWorkQueueTypeCategoryApplicationNotes.class
 })
 public class Response {
 
