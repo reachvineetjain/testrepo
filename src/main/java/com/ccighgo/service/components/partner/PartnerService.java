@@ -6,8 +6,14 @@ package com.ccighgo.service.components.partner;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
+import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
+import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Dashboard;
+import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPDashboard;
+import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSDashboard;
+import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTDashboard;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
 
 /**
  * @author ravi
@@ -29,30 +35,30 @@ public interface PartnerService {
     * @param partnerGoId
     * @return
     */
-   public PartnerDetails getJ1HSDashboard(String partnerGoId);
+   public PartnerJ1HSDashboard getJ1HSDashboard(String partnerGoId);
    
    /**
     * @param partnerGoId
     * @return
     */
-   public PartnerDetails getF1Dashboard(String partnerGoId);
+   public PartnerF1Dashboard getF1Dashboard(String partnerGoId);
    
    /**
     * @param partnerGoId
     * @return
     */
-   public PartnerDetails getIHPDashboard(String partnerGoId);
+   public PartnerIHPDashboard getIHPDashboard(String partnerGoId);
    
    /**
     * @param partnerGoId
     * @return
     */
-   public PartnerDetails getWnTDashboard(String partnerGoId);
+   public PartnerCAPDashboard getWnTDashboard(String partnerGoId);
    
    /**
     * @param partnerGoId
     * @return
     */
-   public PartnerDetails getCAPDashboard(String partnerGoId);
+   public PartnerWnTDashboard getCAPDashboard(String partnerGoId);
    
 }

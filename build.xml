@@ -6,7 +6,8 @@
 		CloneSeason,Season,SeasonDepartmentDocument,SeasonProgram,SeasonProgramDocument,SeasonProgramNote,SeasonList,SeasonStatus,SeasonGHTDetails,SeasonHspF1Details,
 		SeasonHspJ1HSDetails,SeasonHspStpIhpDetails,SeasonWPCAPDetails,SeasonWPDetail,SeasonDepartmentLog,SeasonProgramLog,InsuranceCountries,InsuranceParticipant,
 		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions,PartnerCompanyDetail,
-		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail,PartnerDashboard" />
+		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail,PartnerDashboard,PartnerJ1HSDashboard,PartnerF1Dashboard,
+		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -546,13 +547,53 @@
 	<!--*************************************************Partners*************************************************-->
 
 	<target name="PartnerDashboard">
-	        <java classname="com.sun.tools.internal.xjc.XJCFacade">
-	            <arg value="-d" />
-	            <arg value="${java.dir}" />
-	            <arg value="${xsd.dir}/partner/PartnerDashboard.xsd" />
-	        </java>
-	    </target>
-	
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerDashboard.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerJ1HSDashboard">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerJ1HSDashboard.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerF1Dashboard">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerF1Dashboard.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerIHPDashboard">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerIHPDashboard.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerCAPDashboard">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerCAPDashboard.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerWnTDashboard">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerWnTDashboard.xsd" />
+		</java>
+	</target>
+
 	<target name="PartnerDetails">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
