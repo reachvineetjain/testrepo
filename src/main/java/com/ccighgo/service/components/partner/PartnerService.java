@@ -59,17 +59,4 @@ public interface PartnerService {
     */
    public PartnerDetails getCAPDashboard(String partnerGoId);
    
-   PartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId);
-
-   PartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate);
-
-   PartnerRecruitmentAdmin getAgentRecruitmentData(int agentId);
-
-   com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType getWorkQueueType(int partnerGoId);
-
-   PartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId);
-
-   com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory getWorkQueueCategory(int partnerGoId);
-//   WSDefaultResponse viewPartnerAgentInquiry(int partnerAgentInquiry);
-   
 }
