@@ -21,7 +21,7 @@
                <xsd:element name="partnerLogo" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerCompany" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerAnnouncements" type="pdl:PartnerIHPAnnouncement" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="cciContact" type="pdl:PartnerIHPCCIContact" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="cciContact" type="pdl:PartnerIHPCCIContact" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerWorkQueueTypes" type="pdl:PartnerIHPWorkQueueType" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="partnerQuickLinks" type="xsd:string" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="partnerQuickStatTypes" type="pdl:PartnerIHPQuickStatType" minOccurs="1" maxOccurs="unbounded" />

@@ -94,12 +94,12 @@
    
    <xsd:complexType name="J1HSAllocation">
       <xsd:sequence>
-         <xsd:element name="augStartUnguaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="janStartUnguaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalUnguaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augStartGuaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="janStartGuaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalGuaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augStartUnguaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartUnguaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalUnguaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
    
