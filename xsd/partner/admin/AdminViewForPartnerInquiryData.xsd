@@ -23,87 +23,66 @@
      <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="LeadStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="agentStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="detail" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningDetail" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="programs" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningPrograms" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="participantProgramOfferings" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningProgramOfferings" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="descriptionsOfPrograms" type="xsd:string" minOccurs="1" maxOccurs="1" />
-			   <xsd:element name="additionalInformation" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningAdditionalInfo" minOccurs="1" maxOccurs="1" />
-			   <xsd:element name="messagesToAgent" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningMessagesToAgent" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="detail" type="adminViewForPartnerInquiryData:AdminPartnerRecruitmentScreeningDetail" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lastLoginDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programEligibilityAndCCIContact" type="adminViewForPartnerInquiryData:AdminPartnerProgramsElgibilityAndCCIContact" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="hspSettings" type="adminViewForPartnerInquiryData:AdminPartnerHspSettings" minOccurs="1" maxOccurs="1" />
 			   <xsd:element name="offices" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningOffices" minOccurs="1" maxOccurs="unbounded" />
+			   <xsd:element name="contacts" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningContacts" minOccurs="1" maxOccurs="unbounded" />
 			   <xsd:element name="referenceCheck" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningReferenceCheck" minOccurs="1" maxOccurs="unbounded" />
 			   <xsd:element name="documents" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningDocuments" minOccurs="1" maxOccurs="unbounded" />
 			    <xsd:element name="notes" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningNotes" minOccurs="1" maxOccurs="unbounded" />
-             </xsd:sequence>
+            </xsd:sequence>
       </xsd:extension>
     </xsd:complexContent>
    </xsd:complexType>
 
 
 
-	  <xsd:complexType name="PartnerRecruitmentAdminScreeningDetail">
+	  <xsd:complexType name="AdminPartnerRecruitmentScreeningDetail">
 	            <xsd:sequence>
 	               <xsd:element name="rating" type="xsd:int" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="companyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="website" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="address1" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="address2" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="stateOrProvince" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="logo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="quickbooksCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="username" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="generalEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="invoiceEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="canHaveSubPartner" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="multiCountrySender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="cciContact" type="adminViewForPartnerInquiryData:CCIInquiryFormPerson" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="billingNotes" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
 	   </xsd:complexType>
 	   
-	   <xsd:complexType name="PartnerRecruitmentAdminScreeningPrograms">
+	   <xsd:complexType name="AdminPartnerProgramsElgibilityAndCCIContact">
 	            <xsd:sequence>
 	               <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="applied" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="notify" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="action" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="markedBy" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningMarkedByUser" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="marked" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="cciContact" type="adminViewForPartnerInquiryData:CCIInquiryFormPerson" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="cciContactProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
 	   </xsd:complexType>
 
-		<xsd:complexType name="PartnerRecruitmentAdminScreeningMarkedByUser">
+		<xsd:complexType name="CCIInquiryFormPerson">
 	             <xsd:sequence>
 	               <xsd:element name="imageUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
 	   </xsd:complexType>
 	   
-	   <xsd:complexType name="PartnerRecruitmentAdminScreeningProgramOfferings">
+	   <xsd:complexType name="AdminPartnerHspSettings">
 	            <xsd:sequence>
-	               <xsd:element name="teachAbroad" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="volunteerAbroad" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="highSchoolAbroad" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="other" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="hspParticipantUnquaranteedFromRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="hspParticipantMedicalReleaseRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="hspParticipantSlepRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="hspParticipantEltisRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="aypParticipantTranscriptRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
 	   </xsd:complexType>
 	   
-	   <xsd:complexType name="PartnerRecruitmentAdminScreeningAdditionalInfo">
-	            <xsd:sequence>
-	               <xsd:element name="likeToKnowMoreAboutAmbassadorScholarship" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="sendPartnersToUSA" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-				   <xsd:element name="yearsInBusiness" type="xsd:int" minOccurs="1" maxOccurs="1" />	               
-	               <xsd:element name="hearAboutUsFrom" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	             </xsd:sequence>
-	   </xsd:complexType>
-	   
-	    <xsd:complexType name="PartnerRecruitmentAdminScreeningMessagesToAgent">
-	            <xsd:sequence>
-	               <xsd:element name="imageUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="senderName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-				   <xsd:element name="message" type="xsd:string" minOccurs="1" maxOccurs="1" />	               
-	               <xsd:element name="date" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="received" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	             </xsd:sequence>
-	   </xsd:complexType>
 	   
 	   <xsd:complexType name="PartnerRecruitmentAdminScreeningOffices">
 	            <xsd:sequence>
@@ -118,6 +97,24 @@
 	               <xsd:element name="website"  type="xsd:string" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
 	   </xsd:complexType>
+	   
+	   <xsd:complexType name="PartnerRecruitmentAdminScreeningContacts">
+	            <xsd:sequence>
+	               <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="titile" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				   <xsd:element name="firstName"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
+	               <xsd:element name="lastName"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="email"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="phone"    type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="emergencyPhone"      type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="fax"    type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="skypeId"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="username"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="active"  type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="programs"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	             </xsd:sequence>
+	   </xsd:complexType>
+	   
 	   
 	   <xsd:complexType name="PartnerRecruitmentAdminScreeningReferenceCheck">
 	            <xsd:sequence>
