@@ -21,7 +21,7 @@
                <xsd:element name="partnerLogo" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerCompany" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerAnnouncements" type="pdl:PartnerF1Announcement" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="cciContact" type="pdl:PartnerF1CCIContact" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="cciContact" type="pdl:PartnerF1CCIContact" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerWorkQueueTypes" type="pdl:PartnerF1WorkQueueType" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="partnerQuickLinks" type="xsd:string" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="partnerQuickStatTypes" type="pdl:PartnerF1QuickStatType" minOccurs="1" maxOccurs="unbounded" />
@@ -94,9 +94,9 @@
    
    <xsd:complexType name="F1Allocation">
       <xsd:sequence>
-         <xsd:element name="augStartGuaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="janStartGuaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalGuaranteed" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
    
