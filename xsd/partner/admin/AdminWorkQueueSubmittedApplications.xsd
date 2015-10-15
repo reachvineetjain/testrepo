@@ -11,19 +11,19 @@
    </xsd:annotation>
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerWorkQueueSubmittedApplications" type="pdl:PartnerWorkQueueSubmittedApplications" />
+   <xsd:element name="AdminPartnerWorkQueueSubmittedApplications" type="pdl:AdminPartnerWorkQueueSubmittedApplications" />
 
-   <xsd:complexType name="PartnerWorkQueueSubmittedApplications">
+   <xsd:complexType name="AdminPartnerWorkQueueSubmittedApplications">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="workQueueSubmittedApplications" type="pdl:PartnerWorkQueueSubmittedApplicationsDetail" minOccurs="1"   maxOccurs="unbounded" />
+               <xsd:element name="workQueueSubmittedApplications" type="pdl:AdminPartnerWorkQueueSubmittedApplicationsDetail" minOccurs="1"   maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
 
-   <xsd:complexType name="PartnerWorkQueueSubmittedApplicationsDetail">
+   <xsd:complexType name="AdminPartnerWorkQueueSubmittedApplicationsDetail">
     <xsd:complexContent>
          <xsd:extension base="common:Response">
       <xsd:sequence>
@@ -40,13 +40,13 @@
          <xsd:element name="programs" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="sunmittedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="statusOfInquiry" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="notes" type="pdl:PartnerAdminWorkQueueTypeCategoryApplicationNotes" minOccurs="1" maxOccurs="unbounded" />                        
+         <xsd:element name="notes" type="pdl:AdminPartnerAdminWorkQueueTypeCategoryApplicationNotes" minOccurs="1" maxOccurs="unbounded" />                        
       </xsd:sequence>
       </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>   
    
-	<xsd:complexType name="PartnerAdminWorkQueueTypeCategoryApplicationNotes">
+	<xsd:complexType name="AdminPartnerAdminWorkQueueTypeCategoryApplicationNotes">
 	    <xsd:complexContent>
 	     <xsd:extension base="common:Response">
 	      <xsd:sequence>

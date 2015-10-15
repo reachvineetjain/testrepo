@@ -14,14 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.service.components.partner.PartnerService;
+import com.ccighgo.service.components.partner.admin.PartnerAdminService;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
-import com.ccighgo.service.transport.partner.beans.partneradmindashboard.PartnerAdminDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.PartnerWorkQueueCategory;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.PartnerWorkQueueSubmittedApplicationsDetail;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.PartnerWorkQueueType;
-import com.ccighgo.utils.WSDefaultResponse;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 
 /**
  * @author Ahmed
@@ -35,7 +33,7 @@ public class PartnerAdmin {
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerAdmin.class);
 
    @Autowired
-   PartnerService partnerService;
+   PartnerAdminService partnerAdminService;
 
    @GET
    @Path("ping/{input}")
@@ -45,63 +43,53 @@ public class PartnerAdmin {
       return input;
    }
 
-
-   @POST
-   @Path("dashboard")
-   @Produces("application/json")
-   public PartnerAdminDashboard getDashboard() {
-      LOGGER.debug("fun : getDashboard []");
-      return partnerService.getDashboard();
-   }
-
    @GET
-   @Path("workQueueType/{partnerAgentGoId}")
+   @Path("workQueueType/{departmentProgramId}")
    @Produces("application/json")
-   public PartnerWorkQueueType getWorkQueueType(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("departmentProgramId") String departmentProgramId) {
       LOGGER.debug("fun : getWorkQueueType []");
-      return partnerService.getWorkQueueType(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getWorkQueueType(Integer.parseInt(departmentProgramId));
    }
+
    @GET
-   @Path("workQueueCategory/{partnerAgentGoId}")
+   @Path("workQueueCategory/{adminWorkQueueTypeId}")
    @Produces("application/json")
-   public PartnerWorkQueueCategory getWorkQueueCategory(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId) {
       LOGGER.debug("fun : getWorkQueueCategory []");
-      return partnerService.getWorkQueueCategory(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId));
    }
-   
+
    @GET
    @Path("workQueueSubmittedApplications/{partnerAgentGoId}")
    @Produces("application/json")
-   public PartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getWorkQueueSubmittedApplications []");
-      return partnerService.getWorkQueueSubmittedApplications(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(partnerAgentGoId));
    }
-   
+
    @POST
    @Path("changeApplicationStatus/{partnerAgentInquiryId}")
    @Produces("application/json")
-   public PartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId) {
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId) {
       LOGGER.debug("fun : changePartnerApplicationStatus []");
-      return partnerService.changePartnerApplicationStatus(Integer.parseInt(partnerAgentInquiryId));
+      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(partnerAgentInquiryId));
    }
-   
-   
+
    @GET
    @Path("updatePartnerApplicationFollowUpDate/{partnerAgentInquiryId}/{newFollowUpDate}")
    @Produces("application/json")
-   public PartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId,@PathParam("newFollowUpDate") String newFollowUpDate) {
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId,
+         @PathParam("newFollowUpDate") String newFollowUpDate) {
       LOGGER.debug("fun : updatePartnerApplicationFollowUpDate");
-      return partnerService.updatePartnerApplicationFollowUpDate(Integer.parseInt(partnerAgentInquiryId),newFollowUpDate);
+      return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(partnerAgentInquiryId), newFollowUpDate);
    }
-   
-   
-   
+
    @GET
    @Path("agentRecruitmentData/{partnerAgentGoId}")
    @Produces("application/json")
    public PartnerRecruitmentAdmin getAgentRecruitmentData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getAgentRecruitmentData");
-      return partnerService.getAgentRecruitmentData(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getAgentRecruitmentData(Integer.parseInt(partnerAgentGoId));
    }
-   
+
 }

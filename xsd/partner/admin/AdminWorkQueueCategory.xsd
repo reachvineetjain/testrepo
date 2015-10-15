@@ -11,22 +11,26 @@
    </xsd:annotation>
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerWorkQueueCategory" type="pdl:PartnerWorkQueueCategory" />
+   <xsd:element name="AdminPartnerWorkQueueCategory" type="pdl:AdminPartnerWorkQueueCategory" />
 
-   <xsd:complexType name="PartnerWorkQueueCategory">
+   <xsd:complexType name="AdminPartnerWorkQueueCategory">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="workQueueCategory" type="pdl:PartnerWorkQueueCategoryDetail" minOccurs="1"   maxOccurs="unbounded" />
+               <xsd:element name="adminWorkQueueCategory" type="pdl:AdminPartnerWorkQueueCategoryDetail" minOccurs="1"   maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
 
-   <xsd:complexType name="PartnerWorkQueueCategoryDetail">
+   <xsd:complexType name="AdminPartnerWorkQueueCategoryDetail">
             <xsd:sequence>
-   				<xsd:element name="categoryId" type="xsd:int" minOccurs="1"   maxOccurs="unbounded" />
-               <xsd:element name="categoryName" type="xsd:string" minOccurs="1"   maxOccurs="unbounded" />                           
+   				<xsd:element name="categoryId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
+   				<xsd:element name="adminWorkQueueTypeId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
+   				<xsd:element name="categoryAggregate" type="xsd:int" minOccurs="1"   maxOccurs="1" />
+   				<xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
+   				<xsd:element name="adminGoId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
+               <xsd:element name="categoryName" type="xsd:string" minOccurs="1"   maxOccurs="1" />                           
             </xsd:sequence>
    </xsd:complexType>   
    
