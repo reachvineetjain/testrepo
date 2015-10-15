@@ -22,7 +22,6 @@ public class CustomJSONProvider extends JacksonJaxbJsonProvider {
     * settings.
     */
    public CustomJSONProvider() {
-	   System.out.println("CustomJSONProvider CustomJSONProvider");
       ObjectMapper mapper = new ObjectMapper();
       mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
       mapper.configure(org.codehaus.jackson.map.SerializationConfig.Feature.WRAP_ROOT_VALUE, true);

@@ -22,9 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public Auth login() {
-		System.out.println("login");
 		String userName = SecurityUtils.getSubject().getPrincipal().toString();
-		System.out.println("UserName is"+userName);
 		LOGGER.info("User with login name :"+userName+" attempting login");
       return authorizationManager.getUserLogin(userName);
 	}

@@ -345,23 +345,17 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Override
    @Transactional(readOnly = true)
    public User getUserById(String id) {
-	  System.out.println(" UserManagementServiceImpl getUserById::"+id);
-      User user = new User();
+	   User user = new User();
 
       if (id == null || (Integer.valueOf(id)) == 0) {
-    	  System.out.println("UserManagementServiceImpl Inside If of id == null || (Integer.valueOf(id)) == 0");
-         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+    	 user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          return user;
       }
       try {
-    	  System.out.println(" UserManagementServiceImpl.getuserbyid before findone of cciUsersRepository");
          CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
-         
-         System.out.println("UserManagementServiceImpl.getuserbyid outside if of CCIStaffUser"+cciUser);
          if (cciUser != null) {
-        	  System.out.println("UserManagementServiceImpl inside if of cciUser");
             user.setCciUserId(cciUser.getCciStaffUserId());
             user.setFirstName(cciUser.getFirstName());
             user.setLastName(cciUser.getLastName());
@@ -420,8 +414,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          }
       } catch (CcighgoException e) {
-    	  System.out.println("UserManagementServiceImpl.getuserbyid Inside catch of "+e);
-         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+    	 user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
       }

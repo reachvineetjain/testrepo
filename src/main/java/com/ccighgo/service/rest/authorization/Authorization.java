@@ -7,6 +7,7 @@ package com.ccighgo.service.rest.authorization;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
@@ -21,10 +22,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+
+
+
+
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
-
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 /*import javax.websocket.OnClose;
@@ -40,9 +45,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.apache.shiro.SecurityUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+
+
 
 
 
@@ -56,52 +66,40 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 @Path("/authorize/")
 @Produces("application/json")
 @Consumes("application/json")
+//annotation for creating websocket
 @ServerEndpoint("/push")
 public class Authorization {
-   
    private static final Logger LOGGER = LoggerFactory.getLogger(Authorization.class); 
-   
+   private Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
+   private Session wsSession;
+   private static HashMap<String,Session> unique_user= new HashMap<String,Session>();
+   JSONObject json=null;
+  
    @OnMessage
-   public String onMessage(String message) {
-   	System.out.println(message);
-       return "";
+   public void onMessage(String message) {
+   	System.out.println("Hello Inside onMessage-----"+message);
    }
+   //Socket connection open
    @OnOpen
-   public void onOpen(Session peer) {
+   public void onOpen(Session peer) throws IOException{
 	   LOGGER.info("Connection opened ...");
-       System.out.println("Connection opened");
-       Timer timer = new Timer();
-       timer.scheduleAtFixedRate(new TaskExampleRepeating(), 10000, 5000);
+       this.wsSession=peer;
+       unique_user.put(peer.getQueryString(), wsSession);
        peers.add(peer);
    }
+ //Socket connection close
    @OnClose
    public void onClose(Session peer) {
 	   LOGGER.info("Connection closed ...");
-       System.out.println("Connection closed ...");
        try {
    		peer.close();
    	} catch (IOException e) {
-   		// TODO Auto-generated catch block
    		e.printStackTrace();
    	}
        peers.remove(peer);
-    
+       unique_user.remove(wsSession);
+   }
   
-   }
-   class TaskExampleRepeating extends TimerTask{
-       public void run(){
-	        	try {
-	        		for(Session s : peers)
-	        		{
-	        			s.getBasicRemote().sendText(""+counter);
-	        			
-	        		}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        	counter++;
-       }
-   }
    @Autowired AuthorizationManagerInterface authorizationManager;
    
    /**
@@ -114,17 +112,24 @@ public class Authorization {
    @Path("cciusr/{userId}")
    @Produces("application/json")
    public User getCCIUserDetails(@PathParam("userId") String userId) {
-	   System.out.println("Authorization getCCIUserDetails"+userId);
-	   
-       return authorizationManager.getCCIUserDetails(userId);
+	   return authorizationManager.getCCIUserDetails(userId);
    }
    
- //  private static final Logger LOG = Logger.getLogger(Authorization.class.getName());
-  private Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
-   private int counter = 1;
-  
-
-  
-   
-
+   /**
+    * RESTFul service for push notification
+    * 
+    * @param no , uid, type
+    * 
+    */
+ @GET 
+@Path("pushData/{no}/{uid}/{type}")
+   public void pushData(@PathParam("no")String no,@PathParam("uid")String uid,@PathParam("type")String type)
+   {
+	Session pushDataSession=unique_user.get(uid);
+	try {
+			pushDataSession.getBasicRemote().sendText("[{\"no\": "+no+", \"uid\": "+uid+", \"type\": "+type+"}]");
+		} catch (IOException e) {	
+			e.printStackTrace();
+		}
+	}
 }

@@ -86,7 +86,6 @@ public class Auth
      * 
      */
     public void setGoId(int value) {
-    	System.out.println("Auth.setGoId");
         this.goId = value;
     }
 
@@ -99,8 +98,7 @@ public class Auth
      *     
      */
     public String getLoginname() {
-    	System.out.println("value.getLoginname"+loginname);
-        return loginname;
+          return loginname;
     }
 
     /**
@@ -112,7 +110,6 @@ public class Auth
      *     
      */
     public void setLoginname(String value) {
-    	System.out.println("Auth.setLoginname"+value);
         this.loginname = value;
     }
 
