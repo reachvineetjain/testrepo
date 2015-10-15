@@ -3144,6 +3144,7 @@ CREATE TABLE IF NOT EXISTS `AdminWorkQueueType` (
   `adminWQTypeId` int(11) NOT NULL AUTO_INCREMENT,
   `adminWQTypeName` varchar(45) DEFAULT NULL,
   `lookupDepartmentProgramId` int(11) DEFAULT NULL,
+  `roleType` VARCHAR(45),
   PRIMARY KEY (`adminWQTypeId`),
   KEY `FK_AdminWQType` (`lookupDepartmentProgramId`),
   CONSTRAINT `FK_AdminWQType` 
