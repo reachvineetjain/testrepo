@@ -41,36 +41,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 @Path("/authorize/")
 @Produces("application/json")
 @Consumes("application/json")
-//annotation for creating websocket
-@ServerEndpoint("/pushn")
 public class Authorization {
    private static final Logger LOGGER = LoggerFactory.getLogger(Authorization.class); 
-   private Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
-   private Session wsSession;
-   private static HashMap<String,Session> unique_user= new HashMap<String,Session>();
-   JSONObject json=null;
-   
-  //Socket connection open
-   @OnOpen
-   public void onOpen(Session peer) throws IOException{
-	   LOGGER.info("Connection opened ...");
-       this.wsSession=peer;
-       unique_user.put(peer.getQueryString(), wsSession);
-       peers.add(peer);
-   }
-   
- //Socket connection close
-   @OnClose
-   public void onClose(Session peer) {
-	   LOGGER.info("Connection closed ...");
-       try {
-   		peer.close();
-   	} catch (IOException e) {
-   		e.printStackTrace();
-   	}
-       peers.remove(peer);
-       unique_user.remove(wsSession);
-   }
   
    @Autowired AuthorizationManagerInterface authorizationManager;
    
@@ -86,22 +58,4 @@ public class Authorization {
    public User getCCIUserDetails(@PathParam("userId") String userId) {
 	   return authorizationManager.getCCIUserDetails(userId);
    }
-   
-   /**
-    * RESTFul service for push notification
-    * 
-    * @param no , uid, type
-    * 
-    */
-   @GET 
-   @Path("pushData/{no}/{uid}/{type}")
-   public void pushData(@PathParam("no")String no,@PathParam("uid")String uid,@PathParam("type")String type)
-   {
-	Session pushDataSession=unique_user.get(uid);
-	try {
-			pushDataSession.getBasicRemote().sendText("[{\"no\": "+no+", \"uid\": "+uid+", \"type\": "+type+"}]");
-		} catch (IOException e) {	
-			e.printStackTrace();
-		}
-	}
 }
