@@ -10,41 +10,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-
-
-
-
-
-
-import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-/*import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;*/
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.apache.shiro.SecurityUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,19 +42,15 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 @Produces("application/json")
 @Consumes("application/json")
 //annotation for creating websocket
-@ServerEndpoint("/push")
+@ServerEndpoint("/pushn")
 public class Authorization {
    private static final Logger LOGGER = LoggerFactory.getLogger(Authorization.class); 
    private Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
    private Session wsSession;
    private static HashMap<String,Session> unique_user= new HashMap<String,Session>();
    JSONObject json=null;
-  
-   @OnMessage
-   public void onMessage(String message) {
-   	System.out.println("Hello Inside onMessage-----"+message);
-   }
-   //Socket connection open
+   
+  //Socket connection open
    @OnOpen
    public void onOpen(Session peer) throws IOException{
 	   LOGGER.info("Connection opened ...");
@@ -87,6 +58,7 @@ public class Authorization {
        unique_user.put(peer.getQueryString(), wsSession);
        peers.add(peer);
    }
+   
  //Socket connection close
    @OnClose
    public void onClose(Session peer) {
@@ -121,8 +93,8 @@ public class Authorization {
     * @param no , uid, type
     * 
     */
- @GET 
-@Path("pushData/{no}/{uid}/{type}")
+   @GET 
+   @Path("pushData/{no}/{uid}/{type}")
    public void pushData(@PathParam("no")String no,@PathParam("uid")String uid,@PathParam("type")String type)
    {
 	Session pushDataSession=unique_user.get(uid);
