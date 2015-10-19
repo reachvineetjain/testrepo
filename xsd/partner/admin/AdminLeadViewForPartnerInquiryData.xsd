@@ -6,7 +6,7 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata" />
+            <jaxb:package name="com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
       <xsd:documentation></xsd:documentation>
@@ -23,7 +23,6 @@
      <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="LeadStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="agentStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="details" type="adminLeadViewForPartnerInquiryData:PartnerRecruitmentAdminLeadScreeningDetail" minOccurs="1" maxOccurs="1" />
                <xsd:element name="additionalInformation" type="adminLeadViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningAdditionalInfo" minOccurs="1" maxOccurs="1" />
@@ -55,13 +54,14 @@
 
 	   <xsd:complexType name="PartnerRecruitmentAdminScreeningAdditionalInfo">
 	            <xsd:sequence>
-	            	<xsd:element name="programsYouWishToParticipante" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	            	<xsd:element name="programsYouLikeToParticipate" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	            	<xsd:element name="programsYouOffer" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		            <xsd:element name="sendPartnersToUSA" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="isYourOrganizationSendingParticipantstoUSA" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 		            <xsd:element name="likeToKnowMoreAboutAmbassadorScholarship" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="yearsInBusiness" type="xsd:int" minOccurs="1" maxOccurs="1" />	               
-		            <xsd:element name="hearAboutUsFrom" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		            <xsd:element name="describeProgramsOrganizationOffers" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		            <xsd:element name="hearAboutUsFrom" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	            </xsd:sequence>
 	   </xsd:complexType>
 
@@ -74,9 +74,10 @@
      <xsd:extension base="common:Response">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonDepartmentNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonDepartmentProgramNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="public" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
