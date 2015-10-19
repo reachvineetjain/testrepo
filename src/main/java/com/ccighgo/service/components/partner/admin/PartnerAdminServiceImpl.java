@@ -35,16 +35,11 @@ import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDetail;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDocuments;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMarkedByUser;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningMessagesToAgent;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningOffices;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningProgramOfferings;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningPrograms;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
@@ -115,60 +110,60 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             return pwt;
          }
          try {
-            PartnerRecruitmentAdminScreeningDetail partnerRecruitmentAdminScreeningDetail = new PartnerRecruitmentAdminScreeningDetail();
-            if (partnerAgentInquiry.getCompanyName() != null)
-               partnerRecruitmentAdminScreeningDetail.setCompanyName(partnerAgentInquiry.getCompanyName());
-            if (partnerAgentInquiry.getLookupCountry() != null)
-               partnerRecruitmentAdminScreeningDetail.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
-            if (partnerAgentInquiry.getEmail() != null)
-               partnerRecruitmentAdminScreeningDetail.setEmail(partnerAgentInquiry.getEmail());
-            if (partnerAgentInquiry.getFirstName() != null)
-               partnerRecruitmentAdminScreeningDetail.setFirstName(partnerAgentInquiry.getFirstName());
-            if (partnerAgentInquiry.getLastName() != null)
-               partnerRecruitmentAdminScreeningDetail.setLastName(partnerAgentInquiry.getLastName());
-            if (partnerAgentInquiry.getPhone() != null)
-               partnerRecruitmentAdminScreeningDetail.setPhone(partnerAgentInquiry.getPhone());
-            if (partnerAgentInquiry.getWebsite() != null)
-               partnerRecruitmentAdminScreeningDetail.setWebsite(partnerAgentInquiry.getWebsite());
-            if (partnerAgentInquiry.getAdressLineOne() != null)
-               partnerRecruitmentAdminScreeningDetail.setAddress1(partnerAgentInquiry.getAdressLineOne());
-            if (partnerAgentInquiry.getAdressLineTwo() != null)
-               partnerRecruitmentAdminScreeningDetail.setAddress2(partnerAgentInquiry.getAdressLineTwo());
-            if (partnerAgentInquiry.getCity() != null)
-               partnerRecruitmentAdminScreeningDetail.setCity(partnerAgentInquiry.getCity());
-            // Rating value is static ?????
-            partnerRecruitmentAdminScreeningDetail.setRating(0);
-            // if(partnerAgentInquiry.getSalutation()!=null)
-            // partnerRecruitmentAdminScreeningDetail.setSalutation(partnerAgentInquiry.getSalutation());
-            if (partnerAgentInquiry.getState() != null)
-               partnerRecruitmentAdminScreeningDetail.setStateOrProvince(partnerAgentInquiry.getState());
-            pwt.setDetail(partnerRecruitmentAdminScreeningDetail);
+//            PartnerRecruitmentAdminScreeningDetail partnerRecruitmentAdminScreeningDetail = new PartnerRecruitmentAdminScreeningDetail();
+//            if (partnerAgentInquiry.getCompanyName() != null)
+//               partnerRecruitmentAdminScreeningDetail.setCompanyName(partnerAgentInquiry.getCompanyName());
+//            if (partnerAgentInquiry.getLookupCountry() != null)
+//               partnerRecruitmentAdminScreeningDetail.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
+//            if (partnerAgentInquiry.getEmail() != null)
+//               partnerRecruitmentAdminScreeningDetail.setEmail(partnerAgentInquiry.getEmail());
+//            if (partnerAgentInquiry.getFirstName() != null)
+//               partnerRecruitmentAdminScreeningDetail.setFirstName(partnerAgentInquiry.getFirstName());
+//            if (partnerAgentInquiry.getLastName() != null)
+//               partnerRecruitmentAdminScreeningDetail.setLastName(partnerAgentInquiry.getLastName());
+//            if (partnerAgentInquiry.getPhone() != null)
+//               partnerRecruitmentAdminScreeningDetail.setPhone(partnerAgentInquiry.getPhone());
+//            if (partnerAgentInquiry.getWebsite() != null)
+//               partnerRecruitmentAdminScreeningDetail.setWebsite(partnerAgentInquiry.getWebsite());
+//            if (partnerAgentInquiry.getAdressLineOne() != null)
+//               partnerRecruitmentAdminScreeningDetail.setAddress1(partnerAgentInquiry.getAdressLineOne());
+//            if (partnerAgentInquiry.getAdressLineTwo() != null)
+//               partnerRecruitmentAdminScreeningDetail.setAddress2(partnerAgentInquiry.getAdressLineTwo());
+//            if (partnerAgentInquiry.getCity() != null)
+//               partnerRecruitmentAdminScreeningDetail.setCity(partnerAgentInquiry.getCity());
+//            // Rating value is static ?????
+//            partnerRecruitmentAdminScreeningDetail.setRating(0);
+//            // if(partnerAgentInquiry.getSalutation()!=null)
+//            // partnerRecruitmentAdminScreeningDetail.setSalutation(partnerAgentInquiry.getSalutation());
+//            if (partnerAgentInquiry.getState() != null)
+//               partnerRecruitmentAdminScreeningDetail.setStateOrProvince(partnerAgentInquiry.getState());
+//            pwt.setDetail(partnerRecruitmentAdminScreeningDetail);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
 
-         pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
+//         pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
          PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(partnerGoId);
 
          if (partnerReviewStatus != null) {
-            pwt.setAgentStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
+//            pwt.setAgentStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
             pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
          }
          try {
             List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(partnerGoId);
             if (partnerPrograms != null) {
                for (PartnerProgram partnerProgram : partnerPrograms) {
-                  PartnerRecruitmentAdminScreeningPrograms partnerRecruitmentAdminScreeningPrograms = new PartnerRecruitmentAdminScreeningPrograms();
-                  partnerRecruitmentAdminScreeningPrograms.setAction(partnerProgram.getIsEligible() == 1 ? "Eligible" : "Ineligible");
-                  partnerRecruitmentAdminScreeningPrograms.setApplied(partnerProgram.getHasApplied() == 1);
-                  CCIStaffUser user = partnerProgram.getCcistaffUser();
-                  PartnerRecruitmentAdminScreeningMarkedByUser markedByUser = new PartnerRecruitmentAdminScreeningMarkedByUser();
-                  markedByUser.setImageUrl(user.getPhoto());
-                  markedByUser.setUserName(user.getFirstName() + " " + user.getLastName());
-                  partnerRecruitmentAdminScreeningPrograms.setMarkedBy(markedByUser);
-                  partnerRecruitmentAdminScreeningPrograms.setNotify(partnerProgram.getIsPDNotified() == 1);
-                  // partnerRecruitmentAdminScreeningPrograms.setProgramName(partnerProgram.getLookupDepartmentProgram1().getProgramName());
-                  pwt.getPrograms().add(partnerRecruitmentAdminScreeningPrograms);
+//                  PartnerRecruitmentAdminScreeningPrograms partnerRecruitmentAdminScreeningPrograms = new PartnerRecruitmentAdminScreeningPrograms();
+//                  partnerRecruitmentAdminScreeningPrograms.setAction(partnerProgram.getIsEligible() == 1 ? "Eligible" : "Ineligible");
+//                  partnerRecruitmentAdminScreeningPrograms.setApplied(partnerProgram.getHasApplied() == 1);
+//                  CCIStaffUser user = partnerProgram.getCcistaffUser();
+//                  PartnerRecruitmentAdminScreeningMarkedByUser markedByUser = new PartnerRecruitmentAdminScreeningMarkedByUser();
+//                  markedByUser.setImageUrl(user.getPhoto());
+//                  markedByUser.setUserName(user.getFirstName() + " " + user.getLastName());
+//                  partnerRecruitmentAdminScreeningPrograms.setMarkedBy(markedByUser);
+//                  partnerRecruitmentAdminScreeningPrograms.setNotify(partnerProgram.getIsPDNotified() == 1);
+//                  // partnerRecruitmentAdminScreeningPrograms.setProgramName(partnerProgram.getLookupDepartmentProgram1().getProgramName());
+//                  pwt.getPrograms().add(partnerRecruitmentAdminScreeningPrograms);
                }
             }
          } catch (Exception e) {
@@ -176,23 +171,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             // ??????????????????? program offerings
-            PartnerRecruitmentAdminScreeningProgramOfferings programOffering = new PartnerRecruitmentAdminScreeningProgramOfferings();
+//            PartnerRecruitmentAdminScreeningProgramOfferings programOffering = new PartnerRecruitmentAdminScreeningProgramOfferings();
             // programOffering.setHighSchoolAbroad(partnerAgentInquiry.);
             // programOffering.setOther(value);
             // programOffering.setTeachAbroad(value);
             // programOffering.setVolunteerAbroad(value);
-            pwt.setParticipantProgramOfferings(programOffering);
+//            pwt.setParticipantProgramOfferings(programOffering);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         pwt.setDescriptionsOfPrograms(partnerAgentInquiry.getCurrentlyOfferingPrograms());
+//         pwt.setDescriptionsOfPrograms(partnerAgentInquiry.getCurrentlyOfferingPrograms());
          try {
             PartnerRecruitmentAdminScreeningAdditionalInfo additionalInformation = new PartnerRecruitmentAdminScreeningAdditionalInfo();
             additionalInformation.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
             additionalInformation.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
             additionalInformation.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additionalInformation.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
-            pwt.setAdditionalInformation(additionalInformation);
+//            pwt.setAdditionalInformation(additionalInformation);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -200,14 +195,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             List<PartnerMessage> messages = partnerMessagesRepository.findAllParnerMessagesByPartnerId(partnerGoId);
             if (messages != null) {
                for (PartnerMessage partnerMessage : messages) {
-                  PartnerRecruitmentAdminScreeningMessagesToAgent m = new PartnerRecruitmentAdminScreeningMessagesToAgent();
-                  m.setDate(DateUtils.getDateAndTime(partnerMessage.getCreatedOn()));
-                  m.setImageUrl(partnerMessage.getCcistaffUser().getPhoto());
-                  m.setMessage(partnerMessage.getPartnerInquiryMessage());
-                  // ?????? not used column
-                  m.setReceived(false);
-                  m.setSenderName(partnerMessage.getCcistaffUser().getFirstName() + " " + partnerMessage.getCcistaffUser().getLastName());
-                  pwt.getMessagesToAgent().add(m);
+//                  PartnerRecruitmentAdminScreeningMessagesToAgent m = new PartnerRecruitmentAdminScreeningMessagesToAgent();
+//                  m.setDate(DateUtils.getDateAndTime(partnerMessage.getCreatedOn()));
+//                  m.setImageUrl(partnerMessage.getCcistaffUser().getPhoto());
+//                  m.setMessage(partnerMessage.getPartnerInquiryMessage());
+//                  // ?????? not used column
+//                  m.setReceived(false);
+//                  m.setSenderName(partnerMessage.getCcistaffUser().getFirstName() + " " + partnerMessage.getCcistaffUser().getLastName());
+//                  pwt.getMessagesToAgent().add(m);
                }
             }
          } catch (Exception e) {
