@@ -99,7 +99,7 @@ public class SeasonJ1Detail implements Serializable {
 
 	private Byte showFirstSemToNewHF;
 
-	private byte showGuaranteed;
+	private Byte showGuaranteed;
 
 	private Byte showJanFullYearToNewHF;
 
@@ -368,11 +368,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.showFirstSemToNewHF = showFirstSemToNewHF;
 	}
 
-	public byte getShowGuaranteed() {
+	public Byte getShowGuaranteed() {
 		return this.showGuaranteed;
 	}
 
-	public void setShowGuaranteed(byte showGuaranteed) {
+	public void setShowGuaranteed(Byte showGuaranteed) {
 		this.showGuaranteed = showGuaranteed;
 	}
 

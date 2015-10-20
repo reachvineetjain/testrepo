@@ -20,7 +20,7 @@ public class PartnerUser implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerUserId;
 
-	private Byte active;
+	private byte active;
 
 	@Column(length=150)
 	private String email;
@@ -52,8 +52,8 @@ public class PartnerUser implements Serializable {
 	private String title;
 
 	//bi-directional many-to-one association to PartnerPermission
-	@OneToOne(mappedBy="partnerUser", fetch = FetchType.EAGER , cascade = { CascadeType.ALL })
-   private PartnerPermission partnerPermissions;
+	@OneToMany(mappedBy="partnerUser")
+	private List<PartnerPermission> partnerPermissions;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
@@ -90,11 +90,11 @@ public class PartnerUser implements Serializable {
 		this.partnerUserId = partnerUserId;
 	}
 
-	public Byte getActive() {
+	public byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(Byte active) {
+	public void setActive(byte active) {
 		this.active = active;
 	}
 
@@ -178,21 +178,25 @@ public class PartnerUser implements Serializable {
 		this.title = title;
 	}
 
-	public PartnerPermission getPartnerPermissions() {
+	public List<PartnerPermission> getPartnerPermissions() {
 		return this.partnerPermissions;
 	}
 
-	public void setPartnerPermissions(PartnerPermission partnerPermissions) {
+	public void setPartnerPermissions(List<PartnerPermission> partnerPermissions) {
 		this.partnerPermissions = partnerPermissions;
 	}
 
 	public PartnerPermission addPartnerPermission(PartnerPermission partnerPermission) {
+		getPartnerPermissions().add(partnerPermission);
 		partnerPermission.setPartnerUser(this);
+
 		return partnerPermission;
 	}
 
 	public PartnerPermission removePartnerPermission(PartnerPermission partnerPermission) {
+		getPartnerPermissions().remove(partnerPermission);
 		partnerPermission.setPartnerUser(null);
+
 		return partnerPermission;
 	}
 

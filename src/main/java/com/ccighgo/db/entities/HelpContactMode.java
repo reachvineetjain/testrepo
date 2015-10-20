@@ -20,7 +20,7 @@ public class HelpContactMode implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer helpContactModeId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(length=50)
 	private String helpContactModeName;
@@ -40,11 +40,11 @@ public class HelpContactMode implements Serializable {
 		this.helpContactModeId = helpContactModeId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

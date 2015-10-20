@@ -23,6 +23,8 @@ public class PartnerQuickStatsCategoryAggregate implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
+	private int partnerQSCategoryAggregate;
+
 	@Column(length=50)
 	private String partnerQSCategoryName;
 
@@ -63,6 +65,14 @@ public class PartnerQuickStatsCategoryAggregate implements Serializable {
 
 	public void setModifiedDate(Timestamp modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public int getPartnerQSCategoryAggregate() {
+		return this.partnerQSCategoryAggregate;
+	}
+
+	public void setPartnerQSCategoryAggregate(int partnerQSCategoryAggregate) {
+		this.partnerQSCategoryAggregate = partnerQSCategoryAggregate;
 	}
 
 	public String getPartnerQSCategoryName() {

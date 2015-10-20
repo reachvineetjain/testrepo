@@ -24,17 +24,13 @@ public class PartnerProgram implements Serializable {
 
 	private Byte isEligible;
 
-	private Byte isOther;
-
-	private Byte isPDNotified;
-
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="partnerProgram")
 	private List<PartnerDocument> partnerDocuments;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="markedEligibleBy")
+	@JoinColumn(name="cciStaffUserId")
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
@@ -72,22 +68,6 @@ public class PartnerProgram implements Serializable {
 
 	public void setIsEligible(Byte isEligible) {
 		this.isEligible = isEligible;
-	}
-
-	public Byte getIsOther() {
-		return this.isOther;
-	}
-
-	public void setIsOther(Byte isOther) {
-		this.isOther = isOther;
-	}
-
-	public Byte getIsPDNotified() {
-		return this.isPDNotified;
-	}
-
-	public void setIsPDNotified(Byte isPDNotified) {
-		this.isPDNotified = isPDNotified;
 	}
 
 	public List<PartnerDocument> getPartnerDocuments() {
