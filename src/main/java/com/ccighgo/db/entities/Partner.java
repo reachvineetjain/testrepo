@@ -64,7 +64,7 @@ public class Partner implements Serializable {
 	@Column(length=100)
 	private String invoiceMail;
 
-	private byte isSubPartner;
+	private Byte isSubPartner;
 
 	private Integer lastSelectedProgramId;
 
@@ -77,7 +77,7 @@ public class Partner implements Serializable {
 
 	private Byte multiCountrySender;
 
-	private byte needPartnerReview;
+	private Byte needPartnerReview;
 
 	private Integer oldId;
 
@@ -97,7 +97,7 @@ public class Partner implements Serializable {
 	@Column(length=300)
 	private String partnerLogo;
 
-	private Byte payGreenheartDirectly;
+	private byte payGreenheartDirectly;
 
 	@Column(length=150)
 	private String physicalAddressLineOne;
@@ -159,10 +159,6 @@ public class Partner implements Serializable {
 	//bi-directional many-to-one association to PartnerAnnouncement
 	@OneToMany(mappedBy="partner")
 	private List<PartnerAnnouncement> partnerAnnouncements;
-
-	//bi-directional many-to-one association to PartnerCCIContact
-	@OneToMany(mappedBy="partner")
-	private List<PartnerCCIContact> partnerCcicontacts;
 
 	//bi-directional many-to-one association to PartnerContact
 	@OneToMany(mappedBy="partner")
@@ -375,11 +371,11 @@ public class Partner implements Serializable {
 		this.invoiceMail = invoiceMail;
 	}
 
-	public byte getIsSubPartner() {
+	public Byte getIsSubPartner() {
 		return this.isSubPartner;
 	}
 
-	public void setIsSubPartner(byte isSubPartner) {
+	public void setIsSubPartner(Byte isSubPartner) {
 		this.isSubPartner = isSubPartner;
 	}
 
@@ -423,11 +419,11 @@ public class Partner implements Serializable {
 		this.multiCountrySender = multiCountrySender;
 	}
 
-	public byte getNeedPartnerReview() {
+	public Byte getNeedPartnerReview() {
 		return this.needPartnerReview;
 	}
 
-	public void setNeedPartnerReview(byte needPartnerReview) {
+	public void setNeedPartnerReview(Byte needPartnerReview) {
 		this.needPartnerReview = needPartnerReview;
 	}
 
@@ -495,11 +491,11 @@ public class Partner implements Serializable {
 		this.partnerLogo = partnerLogo;
 	}
 
-	public Byte getPayGreenheartDirectly() {
+	public byte getPayGreenheartDirectly() {
 		return this.payGreenheartDirectly;
 	}
 
-	public void setPayGreenheartDirectly(Byte payGreenheartDirectly) {
+	public void setPayGreenheartDirectly(byte payGreenheartDirectly) {
 		this.payGreenheartDirectly = payGreenheartDirectly;
 	}
 
@@ -701,28 +697,6 @@ public class Partner implements Serializable {
 		partnerAnnouncement.setPartner(null);
 
 		return partnerAnnouncement;
-	}
-
-	public List<PartnerCCIContact> getPartnerCcicontacts() {
-		return this.partnerCcicontacts;
-	}
-
-	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
-		this.partnerCcicontacts = partnerCcicontacts;
-	}
-
-	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().add(partnerCcicontact);
-		partnerCcicontact.setPartner(this);
-
-		return partnerCcicontact;
-	}
-
-	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().remove(partnerCcicontact);
-		partnerCcicontact.setPartner(null);
-
-		return partnerCcicontact;
 	}
 
 	public List<PartnerContact> getPartnerContacts() {

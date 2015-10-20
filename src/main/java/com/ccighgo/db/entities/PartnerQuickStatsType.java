@@ -31,6 +31,11 @@ public class PartnerQuickStatsType implements Serializable {
 	@OneToMany(mappedBy="partnerQuickStatsType")
 	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
 
+	//bi-directional many-to-one association to LookupDepartmentProgram
+	@ManyToOne
+	@JoinColumn(name="lookupDepartmentProgramId")
+	private LookupDepartmentProgram lookupDepartmentProgram;
+
 	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
 	@OneToMany(mappedBy="partnerQuickStatsType")
 	private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
@@ -96,6 +101,14 @@ public class PartnerQuickStatsType implements Serializable {
 		partnerQuickStatsCategoryAggregate.setPartnerQuickStatsType(null);
 
 		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public LookupDepartmentProgram getLookupDepartmentProgram() {
+		return this.lookupDepartmentProgram;
+	}
+
+	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		this.lookupDepartmentProgram = lookupDepartmentProgram;
 	}
 
 	public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {

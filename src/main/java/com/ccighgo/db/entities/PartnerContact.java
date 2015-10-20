@@ -40,6 +40,8 @@ public class PartnerContact implements Serializable {
 	@Column(length=150)
 	private String firstName;
 
+	private Byte isPrimary;
+
 	@Column(length=150)
 	private String lastName;
 
@@ -143,6 +145,14 @@ public class PartnerContact implements Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public Byte getIsPrimary() {
+		return this.isPrimary;
+	}
+
+	public void setIsPrimary(Byte isPrimary) {
+		this.isPrimary = isPrimary;
 	}
 
 	public String getLastName() {

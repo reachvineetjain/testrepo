@@ -61,11 +61,11 @@ public class PartnerPermission implements Serializable {
 
 	private Byte ihpApplications;
 
-	private Byte ihpContracting;
+	private byte ihpContracting;
 
 	private Byte ihpFlights;
 
-	private Byte ihpInsurance;
+	private byte ihpInsurance;
 
 	private Byte ihpMonitoring;
 
@@ -110,7 +110,7 @@ public class PartnerPermission implements Serializable {
 	private Byte wtStudentsPreProgram;
 
 	//bi-directional many-to-one association to PartnerUser
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="partnerUserId", nullable=false)
 	private PartnerUser partnerUser;
 
@@ -293,11 +293,11 @@ public class PartnerPermission implements Serializable {
 		this.ihpApplications = ihpApplications;
 	}
 
-	public Byte getIhpContracting() {
+	public byte getIhpContracting() {
 		return this.ihpContracting;
 	}
 
-	public void setIhpContracting(Byte ihpContracting) {
+	public void setIhpContracting(byte ihpContracting) {
 		this.ihpContracting = ihpContracting;
 	}
 
@@ -309,11 +309,11 @@ public class PartnerPermission implements Serializable {
 		this.ihpFlights = ihpFlights;
 	}
 
-	public Byte getIhpInsurance() {
+	public byte getIhpInsurance() {
 		return this.ihpInsurance;
 	}
 
-	public void setIhpInsurance(Byte ihpInsurance) {
+	public void setIhpInsurance(byte ihpInsurance) {
 		this.ihpInsurance = ihpInsurance;
 	}
 

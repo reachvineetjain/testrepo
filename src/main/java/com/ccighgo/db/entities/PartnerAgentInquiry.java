@@ -75,6 +75,8 @@ public class PartnerAgentInquiry implements Serializable {
 	@Column(length=25)
 	private String phone;
 
+	private Integer rating;
+
 	@Column(length=30)
 	private String state;
 
@@ -272,6 +274,14 @@ public class PartnerAgentInquiry implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Integer getRating() {
+		return this.rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 
 	public String getState() {

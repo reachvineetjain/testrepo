@@ -226,7 +226,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             PartnerPermission partnerPermission = getPartnerPermission(partnerUserDetailAndRoles.getProgramsAccess());
             partnerPermission.setPartnerUser(partnerUser);
             partnerPermission =  partnerPermissionRepository.save(partnerPermission);
-            partnerUser.setPartnerPermissions(partnerPermission);
+//            partnerUser.setPartnerPermissions(partnerPermission);
          }
          
          viewPartnerUser = viewPartnerUser(partnerUser.getPartnerUserId().toString());
@@ -400,8 +400,9 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
          if (partnerUserDetailAndRoles.getProgramsAccess() != null) {
             PartnerPermission partnerPermission = getPartnerPermission(partnerUserDetailAndRoles.getProgramsAccess());
-            partnerPermission.setPartnerPermissionsId(partnerUser.getPartnerPermissions().getPartnerPermissionsId());
-            partnerUser.setPartnerPermissions(partnerPermission);
+            //TODO
+//            partnerPermission.setPartnerPermissionsId(partnerUser.getPartnerPermissions().getPartnerPermissionsId());
+//            partnerUser.setPartnerPermissions(partnerPermission);
             partnerPermission.setPartnerUser(partnerUser);
          }
          // partnerUser.setPartnerUserRoles(new ArrayList<PartnerUserRole>());TODO
@@ -491,63 +492,64 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    
    private PartnerUserProgramAccess getProgramAccessTO(PartnerUser partnerUser) {
       PartnerUserProgramAccess partnerUserProgramAccess = new PartnerUserProgramAccess();
-      PartnerPermission PartnerPermission = partnerUser.getPartnerPermissions();
-
-      partnerUserProgramAccess.setCapAccountingInsurance(PartnerPermission.getCapAccountingInsurance() != null ? PartnerPermission.getCapAccountingInsurance()
-            : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setCapAdmin(PartnerPermission.getCapAdmin() != null ? PartnerPermission.getCapAdmin() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setCapApplications(PartnerPermission.getCapApplications() != null ? PartnerPermission.getCapApplications() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setCapContracting(PartnerPermission.getCapContracting() != null ? PartnerPermission.getCapContracting() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setCapFlights(PartnerPermission.getCapFlights() != null ? PartnerPermission.getCapFlights() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setCapInsurance(PartnerPermission.getCapInsurance() != null ? PartnerPermission.getCapInsurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setCapMonitoring(PartnerPermission.getCapMonitoring() != null ? PartnerPermission.getCapMonitoring() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setCapPlacementInfo(PartnerPermission.getCapPlacementInfo() != null ? PartnerPermission.getCapPlacementInfo() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess
-            .setCapStudentsPreProgram(PartnerPermission.getCapStudentsPreProgram() != null ? PartnerPermission.getCapStudentsPreProgram() : CCIConstants.INACTIVE);
-
-      partnerUserProgramAccess
-            .setF1AccountingInsurance(PartnerPermission.getF1AccountingInsurance() != null ? PartnerPermission.getF1AccountingInsurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1Admin(PartnerPermission.getF1Admin() != null ? PartnerPermission.getF1Admin() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1Applications(PartnerPermission.getF1Applications() != null ? PartnerPermission.getF1Applications() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1Contracting(PartnerPermission.getF1Contracting() != null ? PartnerPermission.getF1Contracting() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1Flights(PartnerPermission.getF1Flights() != null ? PartnerPermission.getF1Flights() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1Insurance(PartnerPermission.getF1Insurance() != null ? PartnerPermission.getF1Insurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1Monitoring(PartnerPermission.getF1Monitoring() != null ? PartnerPermission.getF1Monitoring() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1PlacementInfo(PartnerPermission.getF1PlacementInfo() != null ? PartnerPermission.getF1PlacementInfo() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setF1StudentsPreProgram(PartnerPermission.getF1StudentsPreProgram() != null ? PartnerPermission.getF1StudentsPreProgram() : CCIConstants.INACTIVE);
-
-      partnerUserProgramAccess
-            .setJ1AccountingInsurance(PartnerPermission.getJ1AccountingInsurance() != null ? PartnerPermission.getJ1AccountingInsurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1Admin(PartnerPermission.getJ1Admin() != null ? PartnerPermission.getJ1Admin() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1Applications(PartnerPermission.getJ1Applications() != null ? PartnerPermission.getJ1Applications() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1Contracting(PartnerPermission.getJ1Contracting() != null ? PartnerPermission.getJ1Contracting() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1Flights(PartnerPermission.getJ1Flights() != null ? PartnerPermission.getJ1Flights() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1Insurance(PartnerPermission.getJ1Insurance() != null ? PartnerPermission.getJ1Insurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1Monitoring(PartnerPermission.getJ1Monitoring() != null ? PartnerPermission.getJ1Monitoring() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1PlacementInfo(PartnerPermission.getJ1PlacementInfo() != null ? PartnerPermission.getJ1PlacementInfo() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setJ1StudentsPreProgram(PartnerPermission.getJ1StudentsPreProgram() != null ? PartnerPermission.getJ1StudentsPreProgram() : CCIConstants.INACTIVE);
-
-      partnerUserProgramAccess.setWtAccountingInsurance(PartnerPermission.getWtAccountingInsurance() != null ? PartnerPermission.getWtAccountingInsurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtAdmin(PartnerPermission.getWtAdmin() != null ? PartnerPermission.getWtAdmin() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtApplications(PartnerPermission.getWtApplications() != null ? PartnerPermission.getWtApplications() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtContracting(PartnerPermission.getWtContracting() != null ? PartnerPermission.getWtContracting() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtFlights(PartnerPermission.getWtFlights() != null ? PartnerPermission.getWtFlights() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtInsurance(PartnerPermission.getWtInsurance() != null ? PartnerPermission.getWtInsurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtMonitoring(PartnerPermission.getWtMonitoring() != null ? PartnerPermission.getWtMonitoring() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtPlacementInfo(PartnerPermission.getWtPlacementInfo() != null ? PartnerPermission.getWtPlacementInfo() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setWtStudentsPreProgram(PartnerPermission.getWtStudentsPreProgram() != null ? PartnerPermission.getWtStudentsPreProgram() : CCIConstants.INACTIVE);
-
-      partnerUserProgramAccess.setIhpAccountingInsurance(PartnerPermission.getIhpAccountingInsurance() != null ? PartnerPermission.getIhpAccountingInsurance()
-            : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setIhpAdmin(PartnerPermission.getIhpAdmin() != null ? PartnerPermission.getIhpAdmin() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setIhpApplications(PartnerPermission.getIhpApplications() != null ? PartnerPermission.getIhpApplications() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setIhpContracting(PartnerPermission.getIhpContracting() != null ? PartnerPermission.getIhpContracting() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setIhpFlights(PartnerPermission.getIhpFlights() != null ? PartnerPermission.getIhpFlights() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setIhpInsurance(PartnerPermission.getIhpInsurance() != null ? PartnerPermission.getIhpInsurance() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setIhpMonitoring(PartnerPermission.getIhpMonitoring() != null ? PartnerPermission.getIhpMonitoring() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess.setIhpPlacementInfo(PartnerPermission.getIhpPlacementInfo() != null ? PartnerPermission.getIhpPlacementInfo() : CCIConstants.INACTIVE);
-      partnerUserProgramAccess
-            .setIhpStudentsPreProgram(PartnerPermission.getIhpStudentsPreProgram() != null ? PartnerPermission.getIhpStudentsPreProgram() : CCIConstants.INACTIVE);
+      //TODO
+//      PartnerPermission PartnerPermission = partnerUser.getPartnerPermissions();
+//
+//      partnerUserProgramAccess.setCapAccountingInsurance(PartnerPermission.getCapAccountingInsurance() != null ? PartnerPermission.getCapAccountingInsurance()
+//            : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setCapAdmin(PartnerPermission.getCapAdmin() != null ? PartnerPermission.getCapAdmin() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setCapApplications(PartnerPermission.getCapApplications() != null ? PartnerPermission.getCapApplications() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setCapContracting(PartnerPermission.getCapContracting() != null ? PartnerPermission.getCapContracting() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setCapFlights(PartnerPermission.getCapFlights() != null ? PartnerPermission.getCapFlights() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setCapInsurance(PartnerPermission.getCapInsurance() != null ? PartnerPermission.getCapInsurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setCapMonitoring(PartnerPermission.getCapMonitoring() != null ? PartnerPermission.getCapMonitoring() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setCapPlacementInfo(PartnerPermission.getCapPlacementInfo() != null ? PartnerPermission.getCapPlacementInfo() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess
+//            .setCapStudentsPreProgram(PartnerPermission.getCapStudentsPreProgram() != null ? PartnerPermission.getCapStudentsPreProgram() : CCIConstants.INACTIVE);
+//
+//      partnerUserProgramAccess
+//            .setF1AccountingInsurance(PartnerPermission.getF1AccountingInsurance() != null ? PartnerPermission.getF1AccountingInsurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1Admin(PartnerPermission.getF1Admin() != null ? PartnerPermission.getF1Admin() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1Applications(PartnerPermission.getF1Applications() != null ? PartnerPermission.getF1Applications() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1Contracting(PartnerPermission.getF1Contracting() != null ? PartnerPermission.getF1Contracting() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1Flights(PartnerPermission.getF1Flights() != null ? PartnerPermission.getF1Flights() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1Insurance(PartnerPermission.getF1Insurance() != null ? PartnerPermission.getF1Insurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1Monitoring(PartnerPermission.getF1Monitoring() != null ? PartnerPermission.getF1Monitoring() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1PlacementInfo(PartnerPermission.getF1PlacementInfo() != null ? PartnerPermission.getF1PlacementInfo() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setF1StudentsPreProgram(PartnerPermission.getF1StudentsPreProgram() != null ? PartnerPermission.getF1StudentsPreProgram() : CCIConstants.INACTIVE);
+//
+//      partnerUserProgramAccess
+//            .setJ1AccountingInsurance(PartnerPermission.getJ1AccountingInsurance() != null ? PartnerPermission.getJ1AccountingInsurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1Admin(PartnerPermission.getJ1Admin() != null ? PartnerPermission.getJ1Admin() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1Applications(PartnerPermission.getJ1Applications() != null ? PartnerPermission.getJ1Applications() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1Contracting(PartnerPermission.getJ1Contracting() != null ? PartnerPermission.getJ1Contracting() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1Flights(PartnerPermission.getJ1Flights() != null ? PartnerPermission.getJ1Flights() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1Insurance(PartnerPermission.getJ1Insurance() != null ? PartnerPermission.getJ1Insurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1Monitoring(PartnerPermission.getJ1Monitoring() != null ? PartnerPermission.getJ1Monitoring() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1PlacementInfo(PartnerPermission.getJ1PlacementInfo() != null ? PartnerPermission.getJ1PlacementInfo() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setJ1StudentsPreProgram(PartnerPermission.getJ1StudentsPreProgram() != null ? PartnerPermission.getJ1StudentsPreProgram() : CCIConstants.INACTIVE);
+//
+//      partnerUserProgramAccess.setWtAccountingInsurance(PartnerPermission.getWtAccountingInsurance() != null ? PartnerPermission.getWtAccountingInsurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtAdmin(PartnerPermission.getWtAdmin() != null ? PartnerPermission.getWtAdmin() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtApplications(PartnerPermission.getWtApplications() != null ? PartnerPermission.getWtApplications() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtContracting(PartnerPermission.getWtContracting() != null ? PartnerPermission.getWtContracting() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtFlights(PartnerPermission.getWtFlights() != null ? PartnerPermission.getWtFlights() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtInsurance(PartnerPermission.getWtInsurance() != null ? PartnerPermission.getWtInsurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtMonitoring(PartnerPermission.getWtMonitoring() != null ? PartnerPermission.getWtMonitoring() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtPlacementInfo(PartnerPermission.getWtPlacementInfo() != null ? PartnerPermission.getWtPlacementInfo() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setWtStudentsPreProgram(PartnerPermission.getWtStudentsPreProgram() != null ? PartnerPermission.getWtStudentsPreProgram() : CCIConstants.INACTIVE);
+//
+//      partnerUserProgramAccess.setIhpAccountingInsurance(PartnerPermission.getIhpAccountingInsurance() != null ? PartnerPermission.getIhpAccountingInsurance()
+//            : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setIhpAdmin(PartnerPermission.getIhpAdmin() != null ? PartnerPermission.getIhpAdmin() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setIhpApplications(PartnerPermission.getIhpApplications() != null ? PartnerPermission.getIhpApplications() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setIhpContracting(PartnerPermission.getIhpContracting() != null ? PartnerPermission.getIhpContracting() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setIhpFlights(PartnerPermission.getIhpFlights() != null ? PartnerPermission.getIhpFlights() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setIhpInsurance(PartnerPermission.getIhpInsurance() != null ? PartnerPermission.getIhpInsurance() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setIhpMonitoring(PartnerPermission.getIhpMonitoring() != null ? PartnerPermission.getIhpMonitoring() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess.setIhpPlacementInfo(PartnerPermission.getIhpPlacementInfo() != null ? PartnerPermission.getIhpPlacementInfo() : CCIConstants.INACTIVE);
+//      partnerUserProgramAccess
+//            .setIhpStudentsPreProgram(PartnerPermission.getIhpStudentsPreProgram() != null ? PartnerPermission.getIhpStudentsPreProgram() : CCIConstants.INACTIVE);
 
       return partnerUserProgramAccess;
    }

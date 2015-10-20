@@ -23,6 +23,9 @@ public class AdminWorkQueueType implements Serializable {
 	@Column(length=45)
 	private String adminWQTypeName;
 
+	@Column(length=45)
+	private String roleType;
+
 	//bi-directional many-to-one association to AdminWorkQueue
 	@OneToMany(mappedBy="adminWorkQueueType")
 	private List<AdminWorkQueue> adminWorkQueues;
@@ -61,6 +64,14 @@ public class AdminWorkQueueType implements Serializable {
 
 	public void setAdminWQTypeName(String adminWQTypeName) {
 		this.adminWQTypeName = adminWQTypeName;
+	}
+
+	public String getRoleType() {
+		return this.roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 
 	public List<AdminWorkQueue> getAdminWorkQueues() {

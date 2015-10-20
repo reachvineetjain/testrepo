@@ -5,29 +5,23 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstats" />
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatscategory" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerAdminDashboard" type="pdl:PartnerAdminDashboard" />
+   <xsd:element name="PartnerAdminDashboardQuickStatsCategory" type="pdl:PartnerAdminDashboardQuickStatsCategory" />
 
-   <xsd:complexType name="PartnerAdminDashboard">
+   <xsd:complexType name="PartnerAdminDashboardQuickStatsCategory">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-                <xsd:element name="quickStats" type="pdl:PartnerAdminDashboardQuickStats" minOccurs="1" maxOccurs="unbounded" />
+                 <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                 <xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
-   
-   <xsd:complexType name="PartnerAdminDashboardQuickStats">
-      <xsd:sequence>
-         <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-      
+ 
 </xsd:schema>
