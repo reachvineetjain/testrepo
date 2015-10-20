@@ -36,7 +36,12 @@ public class WordPressFormsImpl implements IWordPressForms {
                System.out.println(message);
                return message;
             }
-            PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite());
+            String secondFormatOfWebSite = "";
+            if(InternationalPartners.getWebsite().toLowerCase().startsWith("www"))
+               secondFormatOfWebSite = InternationalPartners.getWebsite().replaceAll("^www\\.", "");
+            else 
+               secondFormatOfWebSite= "www."+InternationalPartners.getWebsite();
+            PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(),secondFormatOfWebSite);
             if (webSiteDuplicate != null) {
                String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
                System.out.println(message);
@@ -223,7 +228,12 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsWebSiteExist is Called !!! ");
          WebSite = WebSite.replaceAll("http://|https://|/$", "");
-         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim());
+         String secondFormatOfWebSite = "";
+         if(WebSite.toLowerCase().startsWith("www"))
+            secondFormatOfWebSite = WebSite.replaceAll("^www\\.", "");
+         else 
+            secondFormatOfWebSite= "www."+WebSite;
+         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(),secondFormatOfWebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
             System.out.println("TRUE");
             return true;
@@ -237,4 +247,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       return false;
    }
 
+   public static void main(String[] args) {
+      System.out.println("www.google.com".replaceAll("^www\\.", ""));
+   }
 }

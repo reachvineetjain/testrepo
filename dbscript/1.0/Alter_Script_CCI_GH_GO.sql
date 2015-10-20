@@ -71,3 +71,28 @@ ALTER TABLE SeasonWADetails MODIFY programName VARCHAR(55);
 ALTER TABLE SeasonWnTSpringDetails MODIFY programName VARCHAR(55);
 ALTER TABLE SeasonWnTSummerDetails MODIFY programName VARCHAR(55);
 ALTER TABLE SeasonWnTWinterDetails MODIFY programName VARCHAR(55);
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------- Alter script in Partner DB Model based on new mock up screens changes on 20th October 2015------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `PartnerAgentInquiries` ADD COLUMN rating INT(3) AFTER companyName;
+
+ALTER TABLE `PartnerContact` ADD COLUMN isPrimary TINYINT(1) DEFAULT 0 AFTER salutationId;
+
+DROP TABLE `PartnerCCIContact`;
+
+ALTER TABLE `PartnerProgram`   DROP COLUMN isOther,DROP COLUMN isPDNotified;
+
+ALTER TABLE `PartnerProgram` DROP FOREIGN KEY FK_PartnerProgram_CCIStaffUser,
+DROP INDEX FK_PartnerProgram_CCIStaffUser,
+DROP COLUMN markedEligibleBy;
+
+ALTER TABLE `PartnerProgram` ADD COLUMN cciStaffUserId INT(11),
+ADD INDEX `FK_PartnerProgram_CCIStaffUser_idx` (`cciStaffUserId` ASC),
+ADD CONSTRAINT `FK_PartnerProgram_CCIStaffUser`
+    FOREIGN KEY (`cciStaffUserId`)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION	;
+ 
+ALTER TABLE `PartnerSeason` ADD COLUMN canCreateSubPartner TINYINT(1) DEFAULT 0; 
