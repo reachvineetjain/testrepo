@@ -293,14 +293,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public AdminPartnerWorkQueueType getWorkQueueType(int departmentProgramId) {
+   public AdminPartnerWorkQueueType getWorkQueueType(int roleId) {
       AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
       try {
-         List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByDepartmentProgramId(departmentProgramId);
+         List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByPartnerRole(roleId);
          if (types != null) {
             for (AdminWorkQueueType adminWorkQueueType : types) {
                AdminPartnerWorkQueueTypeDetail newType = new AdminPartnerWorkQueueTypeDetail();
-               newType.setDepartmentProgramId(departmentProgramId);
+               newType.setDepartmentProgramId(roleId);
                newType.setTypeId(adminWorkQueueType.getAdminWQTypeId());
                newType.setTypeName(adminWorkQueueType.getAdminWQTypeName());
                pwt.getWorkQueueType().add(newType);

@@ -44,11 +44,11 @@ public class PartnerAdmin {
    }
 
    @GET
-   @Path("workQueueType/{departmentProgramId}")
+   @Path("workQueueType/{roleId}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("departmentProgramId") String departmentProgramId) {
+   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("roleId") String roleId) {
       LOGGER.debug("fun : getWorkQueueType []");
-      return partnerAdminService.getWorkQueueType(Integer.parseInt(departmentProgramId));
+      return partnerAdminService.getWorkQueueType(Integer.parseInt(roleId));
    }
 
    @GET
