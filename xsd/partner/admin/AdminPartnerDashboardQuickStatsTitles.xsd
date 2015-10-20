@@ -5,26 +5,23 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks" />
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerAdminDashboardBenchmarks" type="pdl:PartnerAdminDashboardBenchmarks" />
+   <xsd:element name="PartnerAdminDashboardQuickStatsTitles" type="pdl:PartnerAdminDashboardQuickStatsTitles" />
 
-   <xsd:complexType name="PartnerAdminDashboardBenchmarks">
+   <xsd:complexType name="PartnerAdminDashboardQuickStatsTitles">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-  				<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        		 <xsd:element name="total" type="xsd:int" minOccurs="1" maxOccurs="1" />         
-           </xsd:sequence>
+					<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         			<xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
-   
-     
-   
-   
+
 </xsd:schema>

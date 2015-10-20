@@ -15,7 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.admin.PartnerAdminService;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLead;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatscategory.PartnerAdminDashboardQuickStatsCategory;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles.PartnerAdminDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
@@ -58,6 +63,41 @@ public class PartnerAdmin {
       LOGGER.debug("fun : getWorkQueueCategory []");
       return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId));
    }
+   
+   
+   @GET
+   @Path("quicklinks")
+   @Produces("application/json")
+   public PartnerAdminDashboardQuickLinks getQuickLinks() {
+      LOGGER.debug("fun : getQuickLinks []");
+      return partnerAdminService.getQuickLinks();
+   }
+   
+   @GET
+   @Path("quickstatsTitle")
+   @Produces("application/json")
+   public PartnerAdminDashboardQuickStatsTitles getQuickStatsTitle() {
+      LOGGER.debug("fun : getQuickStatsTitle []");
+      return partnerAdminService.getQuickStatsTitle();
+   }
+   
+   @GET
+   @Path("quickstatsCategory")
+   @Produces("application/json")
+   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory() {
+      LOGGER.debug("fun : getQuickStatsCategory []");
+      return partnerAdminService.getQuickStatsCategory();
+   }
+   
+   @GET
+   @Path("benchmark")
+   @Produces("application/json")
+   public PartnerAdminDashboardBenchmarks getBenchmark() {
+      LOGGER.debug("fun : getBenchmark []");
+      return partnerAdminService.getBenchmark();
+   }
+   
+   
 
    /**
     * will use SPAdminWQPartnerSearch stored procedure
@@ -73,8 +113,42 @@ public class PartnerAdmin {
       LOGGER.debug("fun : getWorkQueueSubmittedApplications []");
       return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType);
    }
-
+   
+   
+   @GET
+   @Path("partnerInquiryOverViewData/{partnerAgentGoId}")
+   @Produces("application/json")
+   public PartnerRecruitmentAdmin getPartnerInquiryOverviewData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+      LOGGER.debug("fun : getPartnerInquiryOverviewData");
+      return partnerAdminService.getPartnerInquiryOverviewData(Integer.parseInt(partnerAgentGoId));
+   }
+   
    @POST
+   @Path("updatePartnerInquiryOverViewData")
+   @Produces("application/json")
+   public PartnerRecruitmentAdmin updatePartnerInquiryOverViewData(PartnerRecruitmentAdmin partnerAdmin) {
+      LOGGER.debug("fun : updatePartnerInquiryOverViewData");
+      return partnerAdminService.updatePartnerInquiryOverViewData(partnerAdmin);
+   }
+   
+   @GET
+   @Path("partnerInquiryLeadData/{partnerAgentGoId}")
+   @Produces("application/json")
+   public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+      LOGGER.debug("fun : getPartnerInquiryLeadData");
+      return partnerAdminService.getPartnerInquiryLeadData(Integer.parseInt(partnerAgentGoId));
+   }
+   
+   @POST
+   @Path("updatePartnerInquiryLeadData")
+   @Produces("application/json")
+   public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead partnerRecruitmentAdminLead) {
+      LOGGER.debug("fun : getPartnerInquiryLeadData");
+      return partnerAdminService.updatePartnerInquiryLeadData(partnerRecruitmentAdminLead);
+   }
+
+   
+   @GET
    @Path("changeApplicationStatus/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}/{newStatus}")
    @Produces("application/json")
    public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
@@ -92,12 +166,5 @@ public class PartnerAdmin {
       return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType,newFollowUpDate);
    }
 
-   @GET
-   @Path("agentRecruitmentData/{partnerAgentGoId}")
-   @Produces("application/json")
-   public PartnerRecruitmentAdmin getAgentRecruitmentData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
-      LOGGER.debug("fun : getAgentRecruitmentData");
-      return partnerAdminService.getAdminAgentRecruitmentData(Integer.parseInt(partnerAgentGoId));
-   }
 
 }

@@ -37,12 +37,17 @@ import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLead;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDocuments;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningOffices;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatscategory.PartnerAdminDashboardQuickStatsCategory;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles.PartnerAdminDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
@@ -97,7 +102,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    EntityManager em;
   
    @Override
-   public PartnerRecruitmentAdmin getAdminAgentRecruitmentData(int partnerGoId) {
+   public PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int partnerGoId) {
       PartnerRecruitmentAdmin pwt = new PartnerRecruitmentAdmin();
       try {
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findOne(partnerGoId);
@@ -290,7 +295,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pwt;
    }
-
+   
+   @Override
+   public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int parseInt) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+   
    @Override
    public AdminPartnerWorkQueueType getWorkQueueType(String roleType) {
       AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
@@ -431,5 +442,43 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       // TODO Auto-generated method stub
       return null;
    }
+
+   @Override
+   public PartnerRecruitmentAdmin updatePartnerInquiryOverViewData(PartnerRecruitmentAdmin partnerAdmin) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead partnerRecruitmentAdminLead) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public PartnerAdminDashboardQuickLinks getQuickLinks() {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public PartnerAdminDashboardQuickStatsTitles getQuickStatsTitle() {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory() {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public PartnerAdminDashboardBenchmarks getBenchmark() {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
 
 }

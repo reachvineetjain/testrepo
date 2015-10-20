@@ -11,26 +11,19 @@
    </xsd:annotation>
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerAdminDashboard" type="pdl:PartnerAdminDashboard" />
+   <xsd:element name="PartnerAdminDashboardQuickLinks" type="pdl:PartnerAdminDashboardQuickLinks" />
 
-   <xsd:complexType name="PartnerAdminDashboard">
+   <xsd:complexType name="PartnerAdminDashboardQuickLinks">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="quickLinks" type="pdl:PartnerAdminDashboardQuickLinks" minOccurs="1" maxOccurs="unbounded" />
-            </xsd:sequence>
+					<xsd:element name="value" type="xsd:string" minOccurs="1" maxOccurs="1" />
+       	   </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
   
-      
-   <xsd:complexType name="PartnerAdminDashboardQuickLinks">
-      <xsd:sequence>
-         <xsd:element name="category" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-  
+ 
    
    
 </xsd:schema>

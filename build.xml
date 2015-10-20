@@ -786,15 +786,23 @@
 					</java>
 				</target>
 
-	<!--*************************************************  Partner Admin Dashboard Quick Stats *************************************************-->
-				<target name="PartnerAdminDashboardQuickStats">
+	<!--*************************************************  Partner Admin Dashboard Quick Stats category *************************************************-->
+				<target name="PartnerAdminDashboardQuickStatsCategory">
 					<java classname="com.sun.tools.internal.xjc.XJCFacade">
 						<arg value="-d" />
 						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStats.xsd" />
+						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStatsCategory.xsd" />
 					</java>
 				</target>
-
+	<!--*************************************************  Partner Admin Dashboard Quick Stats titles *************************************************-->
+					<target name="PartnerAdminDashboardQuickStatsTitles">
+						<java classname="com.sun.tools.internal.xjc.XJCFacade">
+							<arg value="-d" />
+							<arg value="${java.dir}" />
+							<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStatsTitles.xsd" />
+						</java>
+					</target>
+	
 	<!--*************************************************  Partner Admin Dashboard Benchmarks*************************************************-->
 				<target name="PartnerAdminDashboardBenchmarks">
 					<java classname="com.sun.tools.internal.xjc.XJCFacade">
