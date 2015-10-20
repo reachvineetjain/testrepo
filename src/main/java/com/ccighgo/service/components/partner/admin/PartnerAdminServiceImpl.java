@@ -5,12 +5,14 @@ package com.ccighgo.service.components.partner.admin;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.AdminWorkQueueCategory;
 import com.ccighgo.db.entities.AdminWorkQueueType;
-import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerDocument;
 import com.ccighgo.db.entities.PartnerMessage;
@@ -50,6 +52,7 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPar
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
+import com.sun.org.omg.CORBA.ParameterMode;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -90,15 +93,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    AdminWorkQueueTypeRepository adminWorkQueueTypeRepository;
    @Autowired
    AdminWorkQueueCategoryRepository adminWorkQueueCategoryRepository;
-
+   @PersistenceContext
+   EntityManager em;
+  
    @Override
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId) {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
-   @Override
-   public PartnerRecruitmentAdmin getAgentRecruitmentData(int partnerGoId) {
+   public PartnerRecruitmentAdmin getAdminAgentRecruitmentData(int partnerGoId) {
       PartnerRecruitmentAdmin pwt = new PartnerRecruitmentAdmin();
       try {
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findOne(partnerGoId);
@@ -293,14 +292,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public AdminPartnerWorkQueueType getWorkQueueType(int departmentProgramId) {
+   public AdminPartnerWorkQueueType getWorkQueueType(String roleType) {
       AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
       try {
-         List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByDepartmentProgramId(departmentProgramId);
+         List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByPartnerRole(roleType);
          if (types != null) {
             for (AdminWorkQueueType adminWorkQueueType : types) {
                AdminPartnerWorkQueueTypeDetail newType = new AdminPartnerWorkQueueTypeDetail();
-               newType.setDepartmentProgramId(departmentProgramId);
                newType.setTypeId(adminWorkQueueType.getAdminWQTypeId());
                newType.setTypeName(adminWorkQueueType.getAdminWQTypeName());
                pwt.getWorkQueueType().add(newType);
@@ -340,10 +338,20 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId) {
+   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType) {
       AdminPartnerWorkQueueSubmittedApplications pwqa = new AdminPartnerWorkQueueSubmittedApplications();
       try {
-         List<PartnerAgentInquiry> result = partnerAgentInquiryRepository.findPartnerByPartnerId(partnerAgentGoId);
+//         StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("sales_tax");
+//      // set parameters
+//      storedProcedure.registerStoredProcedureParameter("subtotal", Double.class, ParameterMode.IN);
+//      storedProcedure.registerStoredProcedureParameter("tax", Double.class, ParameterMode.OUT);
+//      storedProcedure.setParameter("subtotal", 1f);
+//      // execute SP
+//      storedProcedure.execute();
+//      // get result
+//      Double tax = (Double)storedProcedure.getOutputParameterValue("tax");
+         
+         List<PartnerAgentInquiry> result = null; //partnerAgentInquiryRepository.findPartnerByPartnerId(partnerAgentGoId);
          if (result != null) {
             for (PartnerAgentInquiry partnerAgentInquiry : result) {
                AdminPartnerWorkQueueSubmittedApplicationsDetail pd = new AdminPartnerWorkQueueSubmittedApplicationsDetail();
@@ -383,10 +391,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate) {
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int typeId, int categoryId, int staffUserId, String roleType, String newFollowUpDate) {
       AdminPartnerWorkQueueSubmittedApplicationsDetail pd = new AdminPartnerWorkQueueSubmittedApplicationsDetail();
       try {
-         PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findOne(partnerAgentInquiryId);
+         PartnerAgentInquiry partnerAgentInquiry = null;//partnerAgentInquiryRepository.findOne(partnerAgentInquiryId);
          partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString_followUpdate(newFollowUpDate));
          PartnerAgentInquiry updatedPartnerAgentInquiry = partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
 
@@ -417,4 +425,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pd;
    }
+   
+   @Override
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int typeId, int categoryId, int staffUserId, String roleType,String newStatus) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
 }

@@ -44,11 +44,11 @@ public class PartnerAdmin {
    }
 
    @GET
-   @Path("workQueueType/{departmentProgramId}")
+   @Path("workQueueType/{roleType}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("departmentProgramId") String departmentProgramId) {
+   public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("roleType") String roleType) {
       LOGGER.debug("fun : getWorkQueueType []");
-      return partnerAdminService.getWorkQueueType(Integer.parseInt(departmentProgramId));
+      return partnerAdminService.getWorkQueueType(roleType);
    }
 
    @GET
@@ -59,29 +59,37 @@ public class PartnerAdmin {
       return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId));
    }
 
+   /**
+    * will use SPAdminWQPartnerSearch stored procedure
+    * 
+    * @param typeId
+    * @return
+    */
    @GET
-   @Path("workQueueSubmittedApplications/{partnerAgentGoId}")
+   @Path("workQueueSubmittedApplications/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
+         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
       LOGGER.debug("fun : getWorkQueueSubmittedApplications []");
-      return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType);
    }
 
    @POST
-   @Path("changeApplicationStatus/{partnerAgentInquiryId}")
+   @Path("changeApplicationStatus/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}/{newStatus}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId) {
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
+         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType,@PathParam("newStatus") String newStatus) {
       LOGGER.debug("fun : changePartnerApplicationStatus []");
-      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(partnerAgentInquiryId));
+      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType,newStatus);
    }
 
    @GET
-   @Path("updatePartnerApplicationFollowUpDate/{partnerAgentInquiryId}/{newFollowUpDate}")
+   @Path("updatePartnerApplicationFollowUpDate/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}/{newStatus}/{newFollowUpDate}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("partnerAgentInquiryId") String partnerAgentInquiryId,
-         @PathParam("newFollowUpDate") String newFollowUpDate) {
+   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
+         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType,@PathParam("newFollowUpDate") String newFollowUpDate) {
       LOGGER.debug("fun : updatePartnerApplicationFollowUpDate");
-      return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(partnerAgentInquiryId), newFollowUpDate);
+      return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType,newFollowUpDate);
    }
 
    @GET
@@ -89,7 +97,7 @@ public class PartnerAdmin {
    @Produces("application/json")
    public PartnerRecruitmentAdmin getAgentRecruitmentData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
       LOGGER.debug("fun : getAgentRecruitmentData");
-      return partnerAdminService.getAgentRecruitmentData(Integer.parseInt(partnerAgentGoId));
+      return partnerAdminService.getAdminAgentRecruitmentData(Integer.parseInt(partnerAgentGoId));
    }
 
 }
