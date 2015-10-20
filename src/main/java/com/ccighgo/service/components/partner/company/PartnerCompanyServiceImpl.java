@@ -3,6 +3,9 @@
  */
 package com.ccighgo.service.components.partner.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,7 @@ import com.ccighgo.service.transport.partner.beans.companydetail.PartnerCompanyD
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerCompanyDetails;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerCompanyStatus;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerMailingAddress;
+import com.ccighgo.service.transport.partner.beans.companydetail.PartnerOffice;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerPhysicalAddress;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerPrimaryContact;
 import com.ccighgo.service.transport.partner.beans.companydetail.PrimaryContactSalutation;
@@ -69,9 +73,9 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerCompanyNameHeader(partner.getCompanyName());
 
          PartnerCompanyStatus partnerCompanyStatus = new PartnerCompanyStatus();
-         /*partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerStatus().getPartnerStatusId());
-         partnerCompanyStatus.setPartnerCompanyStatus(partner.getPartnerStatus().getPartnerStatusName());
-         partnerCompanyDetail.setPartnerCompanyStatus(partnerCompanyStatus);*/
+        /* partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerReviewStatuses().getPartnerStatus2().getPartnerStatusId());
+         partnerCompanyStatus.setPartnerCompanyStatus(partner.getPartnerReviewStatuses().getPartnerStatus2().getPartnerStatusName());*/
+         partnerCompanyDetail.setPartnerCompanyStatus(partnerCompanyStatus);
 
          PartnerCompanyDetails partnerCompanyDetails = new PartnerCompanyDetails();
          partnerCompanyDetails.setPartnerCompanyLogoUrl(partner.getPartnerLogo());
@@ -102,6 +106,13 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             if (partner.getPartnerGoId() == contact.getPartner().getPartnerGoId()) {
                partnerContact = contact;
                break;
+            }
+         }
+         List<PartnerOffice> partnerOfficeList =null;
+         if(partner.getPartnerOffices()!=null && partner.getPartnerOffices().size()>0){
+            partnerOfficeList = new ArrayList<PartnerOffice>();
+            for(com.ccighgo.db.entities.PartnerOffice pOffice:partner.getPartnerOffices()){
+               PartnerOffice partOffice = new PartnerOffice();
             }
          }
          if (partnerContact != null) {
@@ -230,6 +241,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partnerContact.setSkypeId(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSkypeId());
                partnerContact.setWebsite(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactWebsite());
                partnerContactRepository.saveAndFlush(partnerContact);
+               
                partner.setPartnerLogo(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyLogoUrl());
                partner.setCompanyName(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyName());
                partner.setAcronym(partnerCompanyDetail.getPartnerCompanyDetails().getPartnerCompanyAcronym());
