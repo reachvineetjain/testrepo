@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.apache.taglibs.standard.tag.common.core.ForEachSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +18,6 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
-import com.ccighgo.db.entities.PartnerCCIContact;
 import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTag;
@@ -34,7 +32,6 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
-import com.ccighgo.jpa.repositories.PartnerCCIContactRepository;
 import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTagRepository;
@@ -128,8 +125,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    SalutationRepository salutationRepository;
    
    @Autowired UtilityServices utilityServices;
-   
-   @Autowired PartnerCCIContactRepository partnerCCIContactRepository;
+   //TODO
+//   @Autowired PartnerCCIContactRepository partnerCCIContactRepository;
    
    @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
 
@@ -400,9 +397,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   topic.setTopicTitle(partnerNoteTopic.getPartnerNoteTopicName());
                   // creator
                   Creator TopicCreator = new Creator();
-                  TopicCreator.setCreatedBy(String.valueOf(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCciStaffUserId()));
-                  TopicCreator.setCreatedByPicUrl(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getPhoto());// TODO : need clarification
-                  TopicCreator.setDesignation(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName()); // TODO : need clarification
+                  //TODO
+//                  TopicCreator.setCreatedBy(String.valueOf(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCciStaffUserId()));
+//                  TopicCreator.setCreatedByPicUrl(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getPhoto());// TODO : need clarification
+//                  TopicCreator.setDesignation(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName()); // TODO : need clarification
                   topic.setCreator(TopicCreator);
                   topic.setPrivacy(partnerNoteTopic.getIsPublic() == CCIConstants.INACTIVE ? "private" : "public");
                
@@ -449,9 +447,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                      note.setTopicId(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicId());
                      note.setTimestamp(partnerNote.getCreatedOn().toString());
                      Creator Notecreator = new Creator();
-                     Notecreator.setCreatedBy(String.valueOf(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCciStaffUserId()));
-                     Notecreator.setCreatedByPicUrl(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getPhoto());// TODO : need clarification
-                     Notecreator.setDesignation(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());// TODO
+                     //TODO
+//                     Notecreator.setCreatedBy(String.valueOf(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCciStaffUserId()));
+//                     Notecreator.setCreatedByPicUrl(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getPhoto());// TODO : need clarification
+//                     Notecreator.setDesignation(partnerSubPartner.getPartnerCcicontacts().get(0).getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());// TODO
                      note.setCreator(Notecreator);
                      note.setNote(partnerNote.getPartnerNote());
                      noteList.add(note);
@@ -604,16 +603,18 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerDetails = partnerRepository.save(subPartnerDetails);
          }
 
+         //TODO
          //Sub partner CCI Contact
-         PartnerCCIContact partnerCCIContact = new PartnerCCIContact();
-         partnerCCIContact.setPartner(subPartnerDetails);
-         Login cciLogin = loginRepository.findByLoginName(subPartner.getLoggedUsername());
-         partnerCCIContact.setCcistaffUser(cciLogin.getGoIdSequence().getCcistaffUser());
-         partnerCCIContact = partnerCCIContactRepository.save(partnerCCIContact);
+//         PartnerCCIContact partnerCCIContact = new PartnerCCIContact();
+//         partnerCCIContact.setPartner(subPartnerDetails);
+//         Login cciLogin = loginRepository.findByLoginName(subPartner.getLoggedUsername());
+//         partnerCCIContact.setCcistaffUser(cciLogin.getGoIdSequence().getCcistaffUser());
+//         partnerCCIContact = partnerCCIContactRepository.save(partnerCCIContact);
          
          //Sub partner Review Status
          PartnerReviewStatus partnerReviewStatus = new PartnerReviewStatus();
-         partnerReviewStatus.setCcistaffUser(cciLogin.getGoIdSequence().getCcistaffUser());
+         //TODO
+//         partnerReviewStatus.setCcistaffUser(cciLogin.getGoIdSequence().getCcistaffUser());
          partnerReviewStatus.setPartner(subPartnerDetails);
          partnerReviewStatus.setPartnerStatus1(partnerStatus);
          partnerReviewStatus.setPartnerStatus2(partnerStatus);
@@ -829,7 +830,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          
          //Sub partner CCI Contact
          Login cciLogin = loginRepository.findByLoginName(subPartner.getLoggedUsername());
-         subPartnerDetails.getPartnerCcicontacts().get(0).setCcistaffUser(cciLogin.getGoIdSequence().getCcistaffUser());
+         //TODO
+//         subPartnerDetails.getPartnerCcicontacts().get(0).setCcistaffUser(cciLogin.getGoIdSequence().getCcistaffUser());
          
          //Sub partner Review Status
          subPartnerDetails.getPartnerReviewStatuses().get(0).getPartnerStatus2().setPartnerStatusId(subPartner.getSubPartnerAgency().getSubPartnerStatus().getSubPartnerStatusId());
