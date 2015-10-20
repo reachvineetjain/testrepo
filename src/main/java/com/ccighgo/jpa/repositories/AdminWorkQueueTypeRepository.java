@@ -20,6 +20,6 @@ public interface AdminWorkQueueTypeRepository extends JpaRepository<AdminWorkQue
    @Query("select d from AdminWorkQueueType d where d.lookupDepartmentProgram.lookupDepartmentProgramId = ?1 ")
    List<AdminWorkQueueType> findTypesByDepartmentProgramId(int departmentProgramId);
    @Query("select d from AdminWorkQueueType d")
-   List<AdminWorkQueueType> findTypesByPartnerRole(int roleId);
+   List<AdminWorkQueueType> findTypesByPartnerRole(String roleType);
    
 }

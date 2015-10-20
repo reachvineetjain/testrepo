@@ -19,16 +19,18 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPar
 public interface PartnerAdminService {
 
  
-   AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int partnerAgentInquiryId);
+   AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int typeId, int categoryId, int staffUserId, String roleType,String newStatus);
 
-   AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int partnerAgentInquiryId, String newFollowUpDate);
+   AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int typeId, int categoryId, int staffUserId, String roleType,String newFollowUpDate);
 
-   PartnerRecruitmentAdmin getAgentRecruitmentData(int agentId);
+   AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType);
 
-   AdminPartnerWorkQueueType getWorkQueueType(int partnerGoId);
+   AdminPartnerWorkQueueType getWorkQueueType(String roleType);
+   AdminPartnerWorkQueueCategory getWorkQueueCategory(int typeId);
 
-   AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int partnerAgentGoId);
-
-   AdminPartnerWorkQueueCategory getWorkQueueCategory(int partnerGoId);
+   
+   
+   PartnerRecruitmentAdmin getAdminAgentRecruitmentData(int agentId);
+   
 
 }
