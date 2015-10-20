@@ -1853,6 +1853,7 @@ CREATE TABLE IF NOT EXISTS  `PartnerSeason` (
   `partnerGoId` INT NULL,
   `departmentProgramId` INT(3) NULL,
   `partnerSeasonStatusId` INT(3) NULL,
+  `canCreateSubPartner` TINYINT(1) DEFAULT 0,
   `insuranceProvidedByCCI` TINYINT(1)  DEFAULT 0,
   `sevisFeesPaidByCCI` TINYINT(1)  DEFAULT 0,
   `insuranceCarrierName` VARCHAR(200) NULL,
@@ -1912,35 +1913,7 @@ CREATE TABLE IF NOT EXISTS  `PartnerSeason` (
     ON UPDATE NO ACTION	)
 ENGINE = INNODB;
 
--- -----------------------------------------------------
--- Table `PartnerCCIContact`
--- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS  `PartnerCCIContact` (
-  `partnerCCIContactId` INT NOT NULL AUTO_INCREMENT,
-  `partnerGoId` INT NULL,
-  `cciStaffUserId` INT(11) NULL,
-  `lookupDepartmentProgramId` INT(3) NULL,
-  PRIMARY KEY (`partnerCCIContactId`),
-  INDEX `FK_PartnerCCIContact_Partner_idx` (`partnerGoId` ASC),
-  INDEX `FK_PartnerCCICOntact_CCIStaffUser_idx` (`cciStaffUserId` ASC),
-  INDEX `FK_PartnerCCICOntact_LookupDepartmentPrograms_idx` (`lookupDepartmentProgramId` ASC),
-  CONSTRAINT `FK_PartnerCCIContact_Partner`
-    FOREIGN KEY (`partnerGoId`)
-    REFERENCES `Partner` (`partnerGoId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_PartnerCCICOntact_CCIStaffUser`
-    FOREIGN KEY (`cciStaffUserId`)
-    REFERENCES `CCIStaffUsers` (`cciStaffUserID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
- CONSTRAINT `FK_PartnerCCICOntact_LookupDepartmentPrograms`
-    FOREIGN KEY (`lookupDepartmentProgramId`)
-    REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = INNODB;
 
 -- -----------------------------------------------------
 -- Table `PartnerSeasonAllocation`
@@ -2036,6 +2009,7 @@ CREATE TABLE IF NOT EXISTS  `PartnerAgentInquiries` (
   `partnerAgentGoId` INT NULL,
   `companyName` VARCHAR(250) NULL,
   `salutationId` INT(3) NULL,
+  `rating` INT(3) NULL,
   `firstName` VARCHAR(50) NULL,
   `lastName` VARCHAR(50) NULL,
   `adressLineOne` VARCHAR(150) NULL,
@@ -2090,13 +2064,12 @@ CREATE TABLE IF NOT EXISTS  `PartnerProgram` (
   `partnerGoId` INT NULL,
   `lookupDepartmentProgramId` INT NULL,
   `hasApplied` TINYINT(1) DEFAULT 0,
-  `markedEligibleBy` INT NULL,
-  `isOther` TINYINT(1) DEFAULT 0,
+  `cciStaffUserId` INT(11),
   `isEligible` TINYINT(1) DEFAULT 0,
-  `isPDNotified` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`partnerProgramId`),
   INDEX `FK_PartnerProgramListDepartmentPrograms_idx` (`lookupDepartmentProgramId` ASC),
   INDEX `FK_PartnerAgentProgram_Partner_idx` (`partnerGoId` ASC),
+  INDEX `FK_PartnerProgram_CCIStaffUser_idx` (`cciStaffUserId` ASC),
   CONSTRAINT `FK_PartnerProgram_LookupDepartmentPrograms`
     FOREIGN KEY (`lookupDepartmentProgramId`)
     REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
@@ -2107,8 +2080,8 @@ CREATE TABLE IF NOT EXISTS  `PartnerProgram` (
     REFERENCES `Partner` (`partnerGoId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_PartnerProgram_CCIStaffUser`
-    FOREIGN KEY (`markedEligibleBy`)
+ CONSTRAINT `FK_PartnerProgram_CCIStaffUser`
+    FOREIGN KEY (`cciStaffUserId`)
     REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION	)
@@ -2505,6 +2478,7 @@ CREATE TABLE IF NOT EXISTS  `PartnerContact` (
   `partnerContactId` INT NOT NULL AUTO_INCREMENT,
   `partnerGoId` INT NULL,
   `salutationId` INT(3) NULL,
+  `isPrimary` TINYINT(1) DEFAULT 0,
   `firstName` VARCHAR(150) NULL,
   `lastName` VARCHAR(150) NULL,
   `title` VARCHAR(150) NULL,
