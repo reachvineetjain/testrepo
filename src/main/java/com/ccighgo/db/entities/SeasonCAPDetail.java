@@ -37,7 +37,7 @@ public class SeasonCAPDetail implements Serializable {
 	private Date internStartDate;
 
 	@Column(nullable=false)
-	private Integer modifiedBy;
+	private int modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -115,11 +115,11 @@ public class SeasonCAPDetail implements Serializable {
 		this.internStartDate = internStartDate;
 	}
 
-	public Integer getModifiedBy() {
+	public int getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(Integer modifiedBy) {
+	public void setModifiedBy(int modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

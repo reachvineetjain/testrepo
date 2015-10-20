@@ -39,8 +39,8 @@
       <class>com.ccighgo.db.entities.FieldStaffAgreement</class>
       <class>com.ccighgo.db.entities.FieldStaffLCSeason</class>
       <class>com.ccighgo.db.entities.FieldStaffLeadershipSeason</class>
-      <class>com.ccighgo.db.entities.FieldStaffType</class>
       <class>com.ccighgo.db.entities.FieldStaffPermission</class>
+      <class>com.ccighgo.db.entities.FieldStaffType</class>
       <class>com.ccighgo.db.entities.GoIdSequence</class>
       <class>com.ccighgo.db.entities.HelpContactMode</class>
       <class>com.ccighgo.db.entities.HostFamily</class>
@@ -53,13 +53,17 @@
       <class>com.ccighgo.db.entities.LookupDepartment</class>
       <class>com.ccighgo.db.entities.LookupGender</class>
       <class>com.ccighgo.db.entities.LookupUSState</class>
+      <class>com.ccighgo.db.entities.ParticipantPermission</class>
+      <class>com.ccighgo.db.entities.ParticipantStatus</class>
       <class>com.ccighgo.db.entities.Participant</class>
       <class>com.ccighgo.db.entities.Partner</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiry</class>
       <class>com.ccighgo.db.entities.PartnerAnnouncement</class>
-      <class>com.ccighgo.db.entities.PartnerCCIContact</class>
       <class>com.ccighgo.db.entities.PartnerContact</class>
       <class>com.ccighgo.db.entities.PartnerDocument</class>
+      <class>com.ccighgo.db.entities.PartnerHelpOption</class>
+      <class>com.ccighgo.db.entities.PartnerHelpOptionProgram</class>
+      <class>com.ccighgo.db.entities.PartnerHelpRequest</class>
       <class>com.ccighgo.db.entities.PartnerMessage</class>
       <class>com.ccighgo.db.entities.PartnerNoteTag</class>
       <class>com.ccighgo.db.entities.PartnerNoteTopic</class>
@@ -83,17 +87,11 @@
       <class>com.ccighgo.db.entities.PartnerUserRole</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueue</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueCategory</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryPK</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate</class>
       <class>com.ccighgo.db.entities.PartnerWorkQueueType</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class> 
+      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class>
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
-      <class>com.ccighgo.db.entities.ParticipantPermission</class>
-      <class>com.ccighgo.db.entities.ParticipantStatus</class>
-      <class>com.ccighgo.db.entities.PartnerHelpOption</class>
-      <class>com.ccighgo.db.entities.PartnerHelpOptionProgram</class>
-      <class>com.ccighgo.db.entities.PartnerHelpRequest</class>
       <class>com.ccighgo.db.entities.Region</class>
       <class>com.ccighgo.db.entities.RegionIHP</class>
       <class>com.ccighgo.db.entities.ResourceAction</class>

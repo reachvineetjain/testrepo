@@ -26,6 +26,8 @@ public class PartnerSeason implements Serializable {
 
 	private Byte canAccessJobBoard;
 
+	private Byte canCreateSubPartner;
+
 	private Integer contractScheduleId;
 
 	@Column(nullable=false)
@@ -153,6 +155,14 @@ public class PartnerSeason implements Serializable {
 
 	public void setCanAccessJobBoard(Byte canAccessJobBoard) {
 		this.canAccessJobBoard = canAccessJobBoard;
+	}
+
+	public Byte getCanCreateSubPartner() {
+		return this.canCreateSubPartner;
+	}
+
+	public void setCanCreateSubPartner(Byte canCreateSubPartner) {
+		this.canCreateSubPartner = canCreateSubPartner;
 	}
 
 	public Integer getContractScheduleId() {

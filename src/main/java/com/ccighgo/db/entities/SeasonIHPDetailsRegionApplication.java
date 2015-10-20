@@ -32,7 +32,7 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	private Byte stopAcceptingApps;
+	private byte stopAcceptingApps;
 
 	//bi-directional many-to-one association to RegionIHP
 	@ManyToOne
@@ -87,11 +87,11 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Byte getStopAcceptingApps() {
+	public byte getStopAcceptingApps() {
 		return this.stopAcceptingApps;
 	}
 
-	public void setStopAcceptingApps(Byte stopAcceptingApps) {
+	public void setStopAcceptingApps(byte stopAcceptingApps) {
 		this.stopAcceptingApps = stopAcceptingApps;
 	}
 

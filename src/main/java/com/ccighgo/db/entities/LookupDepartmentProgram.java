@@ -43,6 +43,10 @@ public class LookupDepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
 
+	//bi-directional many-to-one association to AdminQuickStatsType
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<AdminQuickStatsType> adminQuickStatsTypes;
+
 	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates;
@@ -68,10 +72,6 @@ public class LookupDepartmentProgram implements Serializable {
 	@JoinColumn(name="departmentId", nullable=false)
 	private LookupDepartment lookupDepartment;
 
-	//bi-directional many-to-one association to PartnerCCIContact
-	@OneToMany(mappedBy="lookupDepartmentProgram")
-	private List<PartnerCCIContact> partnerCcicontacts;
-
 	//bi-directional many-to-one association to PartnerHelpOptionProgram
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<PartnerHelpOptionProgram> partnerHelpOptionPrograms;
@@ -87,6 +87,10 @@ public class LookupDepartmentProgram implements Serializable {
 	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to PartnerQuickStatsType
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerQuickStatsType> partnerQuickStatsTypes;
 
 	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
 	@OneToMany(mappedBy="lookupDepartmentProgram")
@@ -191,6 +195,28 @@ public class LookupDepartmentProgram implements Serializable {
 		adminQuickStatsCategoryAggregate.setLookupDepartmentProgram(null);
 
 		return adminQuickStatsCategoryAggregate;
+	}
+
+	public List<AdminQuickStatsType> getAdminQuickStatsTypes() {
+		return this.adminQuickStatsTypes;
+	}
+
+	public void setAdminQuickStatsTypes(List<AdminQuickStatsType> adminQuickStatsTypes) {
+		this.adminQuickStatsTypes = adminQuickStatsTypes;
+	}
+
+	public AdminQuickStatsType addAdminQuickStatsType(AdminQuickStatsType adminQuickStatsType) {
+		getAdminQuickStatsTypes().add(adminQuickStatsType);
+		adminQuickStatsType.setLookupDepartmentProgram(this);
+
+		return adminQuickStatsType;
+	}
+
+	public AdminQuickStatsType removeAdminQuickStatsType(AdminQuickStatsType adminQuickStatsType) {
+		getAdminQuickStatsTypes().remove(adminQuickStatsType);
+		adminQuickStatsType.setLookupDepartmentProgram(null);
+
+		return adminQuickStatsType;
 	}
 
 	public List<AdminQuickStatsTypeAggregate> getAdminQuickStatsTypeAggregates() {
@@ -311,28 +337,6 @@ public class LookupDepartmentProgram implements Serializable {
 		this.lookupDepartment = lookupDepartment;
 	}
 
-	public List<PartnerCCIContact> getPartnerCcicontacts() {
-		return this.partnerCcicontacts;
-	}
-
-	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
-		this.partnerCcicontacts = partnerCcicontacts;
-	}
-
-	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().add(partnerCcicontact);
-		partnerCcicontact.setLookupDepartmentProgram(this);
-
-		return partnerCcicontact;
-	}
-
-	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().remove(partnerCcicontact);
-		partnerCcicontact.setLookupDepartmentProgram(null);
-
-		return partnerCcicontact;
-	}
-
 	public List<PartnerHelpOptionProgram> getPartnerHelpOptionPrograms() {
 		return this.partnerHelpOptionPrograms;
 	}
@@ -419,6 +423,28 @@ public class LookupDepartmentProgram implements Serializable {
 		partnerQuickStatsCategoryAggregate.setLookupDepartmentProgram(null);
 
 		return partnerQuickStatsCategoryAggregate;
+	}
+
+	public List<PartnerQuickStatsType> getPartnerQuickStatsTypes() {
+		return this.partnerQuickStatsTypes;
+	}
+
+	public void setPartnerQuickStatsTypes(List<PartnerQuickStatsType> partnerQuickStatsTypes) {
+		this.partnerQuickStatsTypes = partnerQuickStatsTypes;
+	}
+
+	public PartnerQuickStatsType addPartnerQuickStatsType(PartnerQuickStatsType partnerQuickStatsType) {
+		getPartnerQuickStatsTypes().add(partnerQuickStatsType);
+		partnerQuickStatsType.setLookupDepartmentProgram(this);
+
+		return partnerQuickStatsType;
+	}
+
+	public PartnerQuickStatsType removePartnerQuickStatsType(PartnerQuickStatsType partnerQuickStatsType) {
+		getPartnerQuickStatsTypes().remove(partnerQuickStatsType);
+		partnerQuickStatsType.setLookupDepartmentProgram(null);
+
+		return partnerQuickStatsType;
 	}
 
 	public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {

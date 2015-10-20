@@ -1,14 +1,24 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -22,6 +32,7 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int cciStaffUserId;
 
@@ -92,12 +103,12 @@ public class CCIStaffUser implements Serializable {
 	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
 
 	//bi-directional many-to-one association to CCIStaffUserNote
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
@@ -122,18 +133,13 @@ public class CCIStaffUser implements Serializable {
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	  @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
-	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
-
-	//bi-directional many-to-one association to PartnerCCIContact
 	@OneToMany(mappedBy="ccistaffUser")
-	private List<PartnerCCIContact> partnerCcicontacts;
+	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
 
 	//bi-directional many-to-one association to PartnerMessage
 	@OneToMany(mappedBy="ccistaffUser")
@@ -504,28 +510,6 @@ public class CCIStaffUser implements Serializable {
 		ccistaffUsersResourcePermission.setCcistaffUser(null);
 
 		return ccistaffUsersResourcePermission;
-	}
-
-	public List<PartnerCCIContact> getPartnerCcicontacts() {
-		return this.partnerCcicontacts;
-	}
-
-	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
-		this.partnerCcicontacts = partnerCcicontacts;
-	}
-
-	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().add(partnerCcicontact);
-		partnerCcicontact.setCcistaffUser(this);
-
-		return partnerCcicontact;
-	}
-
-	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().remove(partnerCcicontact);
-		partnerCcicontact.setCcistaffUser(null);
-
-		return partnerCcicontact;
 	}
 
 	public List<PartnerMessage> getPartnerMessages() {

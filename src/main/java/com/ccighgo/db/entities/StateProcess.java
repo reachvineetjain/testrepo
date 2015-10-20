@@ -18,7 +18,7 @@ public class StateProcess implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int stateProcessId;
+	private Integer stateProcessId;
 
 	@Column(length=50)
 	private String stateProcessName;
@@ -37,11 +37,11 @@ public class StateProcess implements Serializable {
 	public StateProcess() {
 	}
 
-	public int getStateProcessId() {
+	public Integer getStateProcessId() {
 		return this.stateProcessId;
 	}
 
-	public void setStateProcessId(int stateProcessId) {
+	public void setStateProcessId(Integer stateProcessId) {
 		this.stateProcessId = stateProcessId;
 	}
 
