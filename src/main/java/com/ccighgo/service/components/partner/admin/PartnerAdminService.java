@@ -47,7 +47,7 @@ public interface PartnerAdminService {
 
    PartnerAdminDashboardQuickStatsTitles getQuickStatsTitle();
 
-   PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory();
+   PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(int quickStatsTypeID);
 
    PartnerAdminDashboardBenchmarks getBenchmark();
    

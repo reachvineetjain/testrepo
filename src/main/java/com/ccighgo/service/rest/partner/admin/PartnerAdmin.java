@@ -64,7 +64,7 @@ public class PartnerAdmin {
       return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId));
    }
    
-   
+   //TODO
    @GET
    @Path("quicklinks")
    @Produces("application/json")
@@ -82,11 +82,11 @@ public class PartnerAdmin {
    }
    
    @GET
-   @Path("quickstatsCategory")
+   @Path("quickstatsCategory/{typeId}")
    @Produces("application/json")
-   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory() {
+   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(@PathParam("typeId") String typeId) {
       LOGGER.debug("fun : getQuickStatsCategory []");
-      return partnerAdminService.getQuickStatsCategory();
+      return partnerAdminService.getQuickStatsCategory(Integer.parseInt(typeId));
    }
    
    @GET
