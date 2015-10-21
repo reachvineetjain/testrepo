@@ -30,7 +30,8 @@
    				<xsd:element name="categoryAggregate" type="xsd:int" minOccurs="1"   maxOccurs="1" />
    				<xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
    				<xsd:element name="adminGoId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
-               <xsd:element name="categoryName" type="xsd:string" minOccurs="1"   maxOccurs="1" />                           
+               <xsd:element name="categoryName" type="xsd:string" minOccurs="1"   maxOccurs="1" />
+				<xsd:element name="serviceUrl" type="xsd:string" minOccurs="1"   maxOccurs="1" />
             </xsd:sequence>
    </xsd:complexType>   
    

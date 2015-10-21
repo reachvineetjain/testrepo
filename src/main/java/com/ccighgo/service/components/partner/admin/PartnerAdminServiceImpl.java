@@ -371,6 +371,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                newCategory.setAdminWorkQueueTypeId(adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeId());
                newCategory.setCategoryId(adminWorkQueueCategory.getAdminWorkQueueCategoryId());
                newCategory.setCategoryName(adminWorkQueueCategory.getAdminWorkQueueCategoryName());
+               if (adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeName().equalsIgnoreCase("Application")) {
+                  if (newCategory.getCategoryName().equals("Submitted")){
+                     newCategory.setServiceUrl(CCIConstants.SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1);
+                  }else{
+                     newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
+                  }
+               }
+               else{
+                  newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
+               }
                AdminWorkQueueCategoryAggregate categoryAggregate = adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
                      adminWorkQueueCategory.getAdminWorkQueueCategoryId());
                if (categoryAggregate != null) {
@@ -395,37 +405,33 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       AdminPartnerWorkQueueSubmittedApplications pwqa = new AdminPartnerWorkQueueSubmittedApplications();
       try {
          // Admin work queue partner Search
-         List result = em
-               .createNativeQuery("call SPAdminWQPartnerSearch(:typeId,:categoryId,:cciStaffUserId,:roleType)")
-               .setParameter("typeId", typeId)
-               .setParameter("categoryId", categoryId)
-               .setParameter("cciStaffUserId", staffUserId)
-               .setParameter("roleType", roleType)
-               .getResultList();
-//         List<PartnerAgentInquiry> result = null; // partnerAgentInquiryRepository.findPartnerByPartnerId(partnerAgentGoId);
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerSearch(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+               .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
          if (result != null) {
-//            for (PartnerAgentInquiry partnerAgentInquiry : result) {
-//               AdminPartnerWorkQueueSubmittedApplicationsDetail pd = new AdminPartnerWorkQueueSubmittedApplicationsDetail();
-//               pd.setCompanyId(partnerAgentInquiry.getPartnerAgentInquiriesId());
-//               pd.setCompanyName(partnerAgentInquiry.getCompanyName());
-//               pd.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
-//               pd.setEmail(partnerAgentInquiry.getEmail());
-//               pd.setFirstName(partnerAgentInquiry.getFirstName());
-//               pd.setFlagUrl(partnerAgentInquiry.getCountryFlag());
-//               pd.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
-//               pd.setLastName(partnerAgentInquiry.getLastName());
-//               pd.setPhone(partnerAgentInquiry.getPhone());
-//               pd.setPrograms(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-//               pd.setSunmittedOn(DateUtils.getDateAndTime(partnerAgentInquiry.getSubmittedOn()));
-//               pd.setWebsite(partnerAgentInquiry.getWebsite());
-//               // what is the list of status ???????????????????
-//               // PartnerReviewStatus partnerReviewStatus
-//               // =partnerReviewStatusRepository.findOne(partnerAgentInquiry.getPartner().getpartnerre));
-//               // ???????????????? will be changes once i have clarification
-//               pd.setStatusOfInquiry("Valid");
-//
-//               pwqa.getWorkQueueSubmittedApplications().add(pd);
-//            }
+            for (Object[] wq : result) {
+               AdminPartnerWorkQueueSubmittedApplicationsDetail pd = new AdminPartnerWorkQueueSubmittedApplicationsDetail();
+               pd.setCompanyName(String.valueOf(wq[0]));
+               pd.setFirstName(String.valueOf(wq[1]));
+               pd.setLastName(String.valueOf(wq[2]));
+               pd.setPhone(String.valueOf(wq[3]));
+               pd.setEmail(String.valueOf(wq[4]));
+               pd.setWebsite(String.valueOf(wq[5]));
+               pd.setCountry(String.valueOf(wq[6]));
+               pd.setFollowUpDate(String.valueOf(wq[7]));
+               pd.setSunmittedOn(String.valueOf(wq[8]));
+               pd.setFlagUrl(String.valueOf(wq[9]));
+               pd.setPrograms(String.valueOf(wq[10]));
+               if (wq[11] != null)
+                  pd.setNotesCount(Integer.parseInt(String.valueOf(wq[11])));
+               // what is the list of status ???????????????????
+               // PartnerReviewStatus partnerReviewStatus
+               // =partnerReviewStatusRepository.findOne(partnerAgentInquiry.getPartner().getpartnerre));
+               // ???????????????? will be changes once i have clarification
+               pd.setStatusOfInquiry("Valid");
+
+               pwqa.getWorkQueueSubmittedApplications().add(pd);
+            }
             pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
@@ -497,8 +503,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public PartnerAdminDashboardQuickLinks getQuickLinks() {
-      PartnerAdminDashboardQuickLinks pwt =new PartnerAdminDashboardQuickLinks();
-      try{
+      PartnerAdminDashboardQuickLinks pwt = new PartnerAdminDashboardQuickLinks();
+      try {
          PartnerAdminDashboardQuickLinksDetails details = new PartnerAdminDashboardQuickLinksDetails();
          details.setValue("Quick Link 1");
          PartnerAdminDashboardQuickLinksDetails details2 = new PartnerAdminDashboardQuickLinksDetails();
@@ -511,16 +517,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pwt.getQuickLinks().add(details2);
          pwt.getQuickLinks().add(details3);
          pwt.getQuickLinks().add(details4);
-         
-      pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_QUICK_LINKS.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-   } catch (Exception e) {
-      ExceptionUtil.logException(e, logger);
-      pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_QUICK_LINKS.getValue(),
-            messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_LINKS)));
-      logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_LINKS));
-   }
-   return pwt;
+
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_QUICK_LINKS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_QUICK_LINKS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_LINKS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_LINKS));
+      }
+      return pwt;
    }
 
    @Override
@@ -554,17 +560,18 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(int quickStatsTypeID) {
       PartnerAdminDashboardQuickStatsCategory pwt = new PartnerAdminDashboardQuickStatsCategory();
       try {
-         List<AdminQuickStatsCategory> adminQuickStatsCategories= adminQuickStatsCategoriesRepository.findAllCategoriesByTypeId(quickStatsTypeID);
-         if(adminQuickStatsCategories!=null){
+         List<AdminQuickStatsCategory> adminQuickStatsCategories = adminQuickStatsCategoriesRepository.findAllCategoriesByTypeId(quickStatsTypeID);
+         if (adminQuickStatsCategories != null) {
             for (AdminQuickStatsCategory adminQuickStatsCategory : adminQuickStatsCategories) {
-               PartnerAdminDashboardQuickStatsCategoryDetail partnerAdminDashboardQuickStatsCategory=new PartnerAdminDashboardQuickStatsCategoryDetail();
+               PartnerAdminDashboardQuickStatsCategoryDetail partnerAdminDashboardQuickStatsCategory = new PartnerAdminDashboardQuickStatsCategoryDetail();
                partnerAdminDashboardQuickStatsCategory.setTitle(adminQuickStatsCategory.getAdminQSCategoryName());
-              AdminQuickStatsCategoryAggregate aggregates = adminQuickStatsCategoriesAggregateRepository.findAggregateValueForCategory(quickStatsTypeID, adminQuickStatsCategory.getAdminQSCategoryId());
-              if(aggregates!=null){
-                 //TODO
-                 partnerAdminDashboardQuickStatsCategory.setNum(0);
-              }
-              pwt.getQuickStatsDetail().add(partnerAdminDashboardQuickStatsCategory);
+               AdminQuickStatsCategoryAggregate aggregates = adminQuickStatsCategoriesAggregateRepository.findAggregateValueForCategory(quickStatsTypeID,
+                     adminQuickStatsCategory.getAdminQSCategoryId());
+               if (aggregates != null) {
+                  // TODO
+                  partnerAdminDashboardQuickStatsCategory.setNum(0);
+               }
+               pwt.getQuickStatsDetail().add(partnerAdminDashboardQuickStatsCategory);
             }
          }
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_QUICK_STATS_CATEGORY.getValue(),
@@ -581,25 +588,25 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Override
    public PartnerAdminDashboardBenchmarks getBenchmark() {
       PartnerAdminDashboardBenchmarks benchMark = new PartnerAdminDashboardBenchmarks();
-      try{
-         PartnerAdminDashboardBenchmarksDetails partnerAdminDashboardBenchmarks=new PartnerAdminDashboardBenchmarksDetails();
+      try {
+         PartnerAdminDashboardBenchmarksDetails partnerAdminDashboardBenchmarks = new PartnerAdminDashboardBenchmarksDetails();
          partnerAdminDashboardBenchmarks.setTitle("title1");
          partnerAdminDashboardBenchmarks.setTotal(80);
          benchMark.getBenchmarks().add(partnerAdminDashboardBenchmarks);
-         PartnerAdminDashboardBenchmarksDetails partnerAdminDashboardBenchmarks2=new PartnerAdminDashboardBenchmarksDetails();
+         PartnerAdminDashboardBenchmarksDetails partnerAdminDashboardBenchmarks2 = new PartnerAdminDashboardBenchmarksDetails();
          partnerAdminDashboardBenchmarks2.setTitle("title2");
          partnerAdminDashboardBenchmarks2.setTotal(90);
          benchMark.getBenchmarks().add(partnerAdminDashboardBenchmarks2);
-         
-       benchMark.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_BENCHMARKS.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-   } catch (Exception e) {
-      ExceptionUtil.logException(e, logger);
-      benchMark.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_BENCHMARKS.getValue(),
-            messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_BENCHMARKS)));
-      logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_BENCHMARKS));
-   }
-   return benchMark;
+
+         benchMark.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_BENCHMARKS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         benchMark.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_BENCHMARKS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_BENCHMARKS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_BENCHMARKS));
+      }
+      return benchMark;
    }
 
 }
