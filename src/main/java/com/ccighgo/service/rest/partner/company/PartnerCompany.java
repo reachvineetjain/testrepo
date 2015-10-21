@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.company.PartnerCompanyService;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.add.partner.office.NewPartnerOffice;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerCompanyDetail;
 
 /**
@@ -44,6 +46,15 @@ public class PartnerCompany {
    public PartnerCompanyDetail addNewPartnerCompany(PartnerCompanyDetail partnerCompanyDetail) {
       LOGGER.info("calling PartnerCompany.updatePartnerCompanyDetails");
       return partnerCompanyService.updatePartnerCompanyDetails(partnerCompanyDetail);
+   }
+   
+   @POST
+   @Path("add/office/{partnerGoId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Response addNewPartnerOffice(@PathParam("partnerGoId") String partnerGoId, NewPartnerOffice newPartnerOffice) {
+      LOGGER.info("calling PartnerCompany.addNewPartnerOffice");
+      return partnerCompanyService.addNewPartnerOffice(partnerGoId,newPartnerOffice);
    }
 
 }
