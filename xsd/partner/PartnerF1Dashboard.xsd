@@ -23,8 +23,7 @@
                <xsd:element name="partnerAnnouncements" type="pdl:PartnerF1Announcement" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="cciContact" type="pdl:PartnerF1CCIContact" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerWorkQueueTypes" type="pdl:PartnerF1WorkQueueType" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="partnerQuickLinks" type="xsd:string" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="partnerQuickStatTypes" type="pdl:PartnerF1QuickStatType" minOccurs="1" maxOccurs="unbounded" />
+                <xsd:element name="partnerStatistics" type="pdl:PartnerStatistics" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerF1Programs" type="pdl:PartnerF1Program" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
@@ -64,20 +63,31 @@
          <xsd:element name="partnerWorkQueueCategoryUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
-   
-  <xsd:complexType name="PartnerF1QuickStatType">
+     
+   <xsd:complexType name="PartnerStatistics">
       <xsd:sequence>
-         <xsd:element name="partnerQuickStatTypeName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatTypeNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatCategories" type="pdl:PartnerF1QuickStatCategory" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="applicationStats" type="pdl:PartnerApplicationStats" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programStats" type="pdl:PartnerProgramStats" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
-
-   <xsd:complexType name="PartnerF1QuickStatCategory">
+   
+   <xsd:complexType name="PartnerApplicationStats">
       <xsd:sequence>
-         <xsd:element name="partnerQuickStatCategoryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatCategoryNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatCategoryUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="submitted" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="greenheartReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="approved" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="notApproved" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerProgramStats">
+      <xsd:sequence>
+      <xsd:element name="submitted" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="greenheartReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="approved" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="notApproved" type="xsd:int" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAnnouncement;
+import com.ccighgo.db.entities.PartnerProgram;
+import com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerWorkQueueCategory;
@@ -23,6 +25,7 @@ import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
+import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
@@ -47,21 +50,27 @@ import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPD
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.F1Allocation;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Announcement;
+import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1CCIContact;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Dashboard;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Program;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1WorkQueueType;
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPAnnouncement;
+import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPCCIContact;
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPProgram;
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPWorkQueueType;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.J1HSAllocation;
+import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerApplicationStats;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSAnnouncement;
+import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSCCIContact;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSProgram;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSWorkQueueType;
+import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerProgramStats;
+import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerStatistics;
 import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTDashboard;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
@@ -80,8 +89,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Autowired PartnerRepository partnerRepository;
    @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
-   // TODO
-//   @Autowired PartnerCCIContactRepository partnerCCIContactRepository;
+   @Autowired PartnerContactRepository partnerContactRepository;
    @Autowired PartnerWorkQueueRepository partnerWorkQueueRepository;
    @Autowired PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
    @Autowired PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
@@ -125,17 +133,17 @@ public class PartnerServiceImpl implements PartnerService {
                      for (LookupDepartmentProgram deptPrg : lkDeptPrgList) {
                         if (deptPrg.getProgramName().equals(CCIConstants.HSP_J1_HS) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
-                           prg.setPartnerDepartmentProgramName(CCIConstants.HSP_J1_HS);
+                           prg.setPartnerDepartmentProgramName("J1HS");
                            prg.setProgramDetailsUrl("partner/j1/program/details/");
                         }
                         if (deptPrg.getProgramName().equals(CCIConstants.HSP_F1) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.HSP_F1_ID);
-                           prg.setPartnerDepartmentProgramName(CCIConstants.HSP_F1);
+                           prg.setPartnerDepartmentProgramName("F1");
                            prg.setProgramDetailsUrl("partner/f1/program/details/");
                         }
                         if (deptPrg.getProgramName().equals(CCIConstants.HSP_STP_IHP) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
-                           prg.setPartnerDepartmentProgramName(CCIConstants.HSP_STP_IHP);
+                           prg.setPartnerDepartmentProgramName("IHP");
                            prg.setProgramDetailsUrl("partner/ihp/program/details/");
                         }
                         if (deptPrg.getProgramName().equals(CCIConstants.WP_WT_CAP) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.WP_WT_CAP_ID) {
@@ -206,20 +214,19 @@ public class PartnerServiceImpl implements PartnerService {
                }
                j1hsDashboard.getPartnerAnnouncements().addAll(partnerJ1HSAnnouncements);
 
-               //TODO
-               // cci contact
-//               PartnerCCIContact partnerCCIJ1Contact = partnerCCIContactRepository.getCCIContactByDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-//               PartnerJ1HSCCIContact cciContact = null;
-//               if (partnerCCIJ1Contact != null) {
-//                  cciContact = new PartnerJ1HSCCIContact();
-//                  cciContact.setPartnerCCIContactName(partnerCCIJ1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIJ1Contact.getCcistaffUser().getLastName());
-//                  cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " CCI Contact");
-//                  cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-//                  cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
-//                  cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
-//                  cciContact.setPartnerCCIContactExtentionNo(partnerCCIJ1Contact.getCcistaffUser().getPhoneExtension());
-//               }
-//               j1hsDashboard.setCciContact(cciContact);
+               // partner j1 cci contact
+               PartnerProgram partnerCCIJ1Contact = partnerProgramRepository.findByPartnerIdAndDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
+               PartnerJ1HSCCIContact cciContact = null;
+               if (partnerCCIJ1Contact != null) {
+                  cciContact = new PartnerJ1HSCCIContact();
+                  cciContact.setPartnerCCIContactName(partnerCCIJ1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIJ1Contact.getCcistaffUser().getLastName());
+                  cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " CCI Contact");
+                  cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
+                  cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
+                  cciContact.setPartnerCCIContactExtentionNo(partnerCCIJ1Contact.getCcistaffUser().getPhoneExtension());
+               }
+               j1hsDashboard.setCciContact(cciContact);
 
                // work queue types and categories
                List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
@@ -249,6 +256,36 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                j1hsDashboard.getPartnerWorkQueueTypes().addAll(partnerWorkQueueTypesList);
+
+               // Statistics
+               PartnerStatistics partnerStatistics = null;
+               List<PartnerQuickStatsCategoryAggregate> partnerStatsDetails = partnerQuickStatsCategoryAggregateRepository.getStats(CCIConstants.APPL_J1, partner.getPartnerGoId(),
+                     CCIConstants.HSP_J1_HS_ID);
+               if (partnerStatsDetails != null && partnerStatsDetails.size() > 0) {
+                  partnerStatistics = new PartnerStatistics();
+                  PartnerApplicationStats applicationStats = new PartnerApplicationStats();
+                  PartnerProgramStats programStats = new PartnerProgramStats();
+                  for (PartnerQuickStatsCategoryAggregate categoryAggregate : partnerStatsDetails) {
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.SUBMITTED)) {
+                        applicationStats.setSubmitted(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.PARTNER_REVIEW)) {
+                        applicationStats.setPartnerReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.GREENHEART_REVIEW)) {
+                        applicationStats.setGreenheartReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.APPROVED)) {
+                        applicationStats.setApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.NOT_APPROVED)) {
+                        applicationStats.setNotApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                  }
+                  partnerStatistics.setApplicationStats(applicationStats);
+                  partnerStatistics.setProgramStats(programStats);
+               }
+               j1hsDashboard.setPartnerStatistics(partnerStatistics);
 
                // programs and allocations
                List<PartnerJ1HSProgram> partnerJ1HSProgramsList = null;
@@ -347,20 +384,20 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                f1Dashboard.getPartnerAnnouncements().addAll(partnerF1Announcements);
-               //TODO
-               // cci contact
-//               PartnerCCIContact partnerCCIF1Contact = partnerCCIContactRepository.getCCIContactByDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_F1_ID);
-//               PartnerF1CCIContact cciContact = null;
-//               if (partnerCCIF1Contact != null) {
-//                  cciContact = new PartnerF1CCIContact();
-//                  cciContact.setPartnerCCIContactName(partnerCCIF1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIF1Contact.getCcistaffUser().getLastName());
-//                  cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " CCI Contact");
-//                  cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-//                  cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
-//                  cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
-//                  cciContact.setPartnerCCIContactExtentionNo(partnerCCIF1Contact.getCcistaffUser().getPhoneExtension());
-//               }
-//               f1Dashboard.setCciContact(cciContact);
+
+               // partner f1 cci contact
+               PartnerProgram partnerCCIF1Contact = partnerProgramRepository.findByPartnerIdAndDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
+               PartnerF1CCIContact cciContact = null;
+               if (partnerCCIF1Contact != null) {
+                  cciContact = new PartnerF1CCIContact();
+                  cciContact.setPartnerCCIContactName(partnerCCIF1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIF1Contact.getCcistaffUser().getLastName());
+                  cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " CCI Contact");
+                  cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
+                  cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
+                  cciContact.setPartnerCCIContactExtentionNo(partnerCCIF1Contact.getCcistaffUser().getPhoneExtension());
+               }
+               f1Dashboard.setCciContact(cciContact);
 
                // work queue types and categories
                List<PartnerF1WorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerF1WorkQueueType>();
@@ -390,15 +427,45 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
 
+               // Statistics
+               com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerStatistics partnerStatistics = null;
+               List<PartnerQuickStatsCategoryAggregate> partnerStatsDetails = partnerQuickStatsCategoryAggregateRepository.getStats(CCIConstants.APPL_F1, partner.getPartnerGoId(),
+                     CCIConstants.HSP_F1_ID);
+               if (partnerStatsDetails != null && partnerStatsDetails.size() > 0) {
+                  partnerStatistics = new com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerStatistics();
+                  com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats applicationStats = new com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats();
+                  com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerProgramStats programStats = new com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerProgramStats();
+                  for (PartnerQuickStatsCategoryAggregate categoryAggregate : partnerStatsDetails) {
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.SUBMITTED)) {
+                        applicationStats.setSubmitted(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.PARTNER_REVIEW)) {
+                        applicationStats.setPartnerReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.GREENHEART_REVIEW)) {
+                        applicationStats.setGreenheartReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.APPROVED)) {
+                        applicationStats.setApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.NOT_APPROVED)) {
+                        applicationStats.setNotApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                  }
+                  partnerStatistics.setApplicationStats(applicationStats);
+                  partnerStatistics.setProgramStats(programStats);
+               }
+               f1Dashboard.setPartnerStatistics(partnerStatistics);
+
                // programs and allocations
                List<PartnerF1Program> partnerF1ProgramsList = null;
                List<PartnerSeason> partnerSeasonList = partner.getPartnerSeasons();
                if (partnerSeasonList != null) {
                   partnerF1ProgramsList = new ArrayList<PartnerF1Program>();
                   for (PartnerSeason partSeason : partnerSeasonList) {
-                     if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+                     if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                         PartnerF1Program prg = new PartnerF1Program();
-                        prg.setProgramName(partSeason.getSeason().getSeasonName() + " -" + CCIConstants.HSP_J1_HS);
+                        prg.setProgramName(partSeason.getSeason().getSeasonName() + " -" + CCIConstants.HSP_F1);
                         prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonF1details().get(0).getFirstSemAppDeadlineDate()));
                         prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonF1details().get(0).getSecondSemAppDeadlineDate()));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonStatus().getStatus());
@@ -410,13 +477,13 @@ public class PartnerServiceImpl implements PartnerService {
                            int janStartGuarnteedParticipants = 0;
                            for (PartnerSeasonAllocation psa : f1Allocations) {
                               if (psa.getDepartmentProgramOption() != null) {
-                                 if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
+                                 if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
                                        augStartGuarnteedParticipants = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
                                        totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
 
                                     }
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
                                        janStartGuarnteedParticipants = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
                                        totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
                                     }
@@ -476,19 +543,20 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                ihpDashboard.getPartnerAnnouncements().addAll(partnerIHPAnnouncements);
-               //TODO
-//               PartnerCCIContact partnerCCIIHPContact = partnerCCIContactRepository.getCCIContactByDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
-//               PartnerIHPCCIContact cciContact = null;
-//               if (partnerCCIIHPContact != null) {
-//                  cciContact = new PartnerIHPCCIContact();
-//                  cciContact.setPartnerCCIContactName(partnerCCIIHPContact.getCcistaffUser().getFirstName() + " " + partnerCCIIHPContact.getCcistaffUser().getLastName());
-//                  cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " CCI Contact");
-//                  cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-//                  cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
-//                  cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
-//                  cciContact.setPartnerCCIContactExtentionNo(partnerCCIIHPContact.getCcistaffUser().getPhoneExtension());
-//               }
-//               ihpDashboard.setCciContact(cciContact);
+
+               // partner ihp cci contact
+               PartnerProgram partnerCCIIHPContact = partnerProgramRepository.findByPartnerIdAndDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
+               PartnerIHPCCIContact cciContact = null;
+               if (partnerCCIIHPContact != null) {
+                  cciContact = new PartnerIHPCCIContact();
+                  cciContact.setPartnerCCIContactName(partnerCCIIHPContact.getCcistaffUser().getFirstName() + " " + partnerCCIIHPContact.getCcistaffUser().getLastName());
+                  cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " CCI Contact");
+                  cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
+                  cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
+                  cciContact.setPartnerCCIContactExtentionNo(partnerCCIIHPContact.getCcistaffUser().getPhoneExtension());
+               }
+               ihpDashboard.setCciContact(cciContact);
 
                // work queue types and categories
                List<PartnerIHPWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerIHPWorkQueueType>();
@@ -517,6 +585,36 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerWorkQueueTypesList.add(ihpWqType);
                   }
                }
+
+               // Statistics
+               com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerStatistics partnerStatistics = null;
+               List<PartnerQuickStatsCategoryAggregate> partnerStatsDetails = partnerQuickStatsCategoryAggregateRepository.getStats(CCIConstants.APPL_IHP,
+                     partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
+               if (partnerStatsDetails != null && partnerStatsDetails.size() > 0) {
+                  partnerStatistics = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerStatistics();
+                  com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats applicationStats = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats();
+                  com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerProgramStats programStats = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerProgramStats();
+                  for (PartnerQuickStatsCategoryAggregate categoryAggregate : partnerStatsDetails) {
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.SUBMITTED)) {
+                        applicationStats.setSubmitted(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.PARTNER_REVIEW)) {
+                        applicationStats.setPartnerReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.GREENHEART_REVIEW)) {
+                        applicationStats.setGreenheartReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.APPROVED)) {
+                        applicationStats.setApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                     if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.NOT_APPROVED)) {
+                        applicationStats.setNotApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                     }
+                  }
+                  partnerStatistics.setApplicationStats(applicationStats);
+                  partnerStatistics.setProgramStats(programStats);
+               }
+               ihpDashboard.setPartnerStatistics(partnerStatistics);
 
                // programs
                List<PartnerIHPProgram> partnerIHPProgramsList = null;
@@ -575,5 +673,4 @@ public class PartnerServiceImpl implements PartnerService {
       return capDashboard;
    }
 
- 
 }
