@@ -222,5 +222,15 @@ public class CCIConstants {
    public static final String RESET_PASSWORD_SUBJECT = "Greenheart Online Password Request";
    public static final String CREATE_CCI_USER_SUBJECT = "Greenheart Online application account creation notification";
    
+   //Partner stats
+   public static final Integer APPL_J1 = 1;
+   public static final Integer APPL_F1 = 3;
+   public static final Integer APPL_IHP = 5;
+   
+   public static final String SUBMITTED = "Submitted";
+   public static final String PARTNER_REVIEW = "Partner Review";
+   public static final String GREENHEART_REVIEW = "Greenheart Review";
+   public static final String APPROVED = "Approved";
+   public static final String NOT_APPROVED = "Not Approved";
 
 }

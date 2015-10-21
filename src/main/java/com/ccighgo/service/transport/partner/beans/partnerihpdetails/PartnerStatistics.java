@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for PartnerIHPAnnouncement complex type.
+ * <p>Java class for PartnerStatistics complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="PartnerIHPAnnouncement">
+ * &lt;complexType name="PartnerStatistics">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="announcement" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="timestamp" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="applicationStats" type="{http://www.ccighgo.com/partnerihp}PartnerApplicationStats"/>
+ *         &lt;element name="programStats" type="{http://www.ccighgo.com/partnerihp}PartnerProgramStats"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,63 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PartnerIHPAnnouncement", propOrder = {
-    "announcement",
-    "timestamp"
+@XmlType(name = "PartnerStatistics", propOrder = {
+    "applicationStats",
+    "programStats"
 })
-public class PartnerIHPAnnouncement {
+public class PartnerStatistics {
 
     @XmlElement(required = true)
-    protected String announcement;
+    protected PartnerApplicationStats applicationStats;
     @XmlElement(required = true)
-    protected String timestamp;
+    protected PartnerProgramStats programStats;
 
     /**
-     * Gets the value of the announcement property.
+     * Gets the value of the applicationStats property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link PartnerApplicationStats }
      *     
      */
-    public String getAnnouncement() {
-        return announcement;
+    public PartnerApplicationStats getApplicationStats() {
+        return applicationStats;
     }
 
     /**
-     * Sets the value of the announcement property.
+     * Sets the value of the applicationStats property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link PartnerApplicationStats }
      *     
      */
-    public void setAnnouncement(String value) {
-        this.announcement = value;
+    public void setApplicationStats(PartnerApplicationStats value) {
+        this.applicationStats = value;
     }
 
     /**
-     * Gets the value of the timestamp property.
+     * Gets the value of the programStats property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link PartnerProgramStats }
      *     
      */
-    public String getTimestamp() {
-        return timestamp;
+    public PartnerProgramStats getProgramStats() {
+        return programStats;
     }
 
     /**
-     * Sets the value of the timestamp property.
+     * Sets the value of the programStats property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link PartnerProgramStats }
      *     
      */
-    public void setTimestamp(String value) {
-        this.timestamp = value;
+    public void setProgramStats(PartnerProgramStats value) {
+        this.programStats = value;
     }
 
 }

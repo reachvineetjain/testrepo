@@ -40,7 +40,7 @@
                <xsd:element name="roles" type="usr:UserRole" minOccurs="0" maxOccurs="unbounded" />
                <xsd:element name="permissions" type="usr:UserPermissions" minOccurs="0" maxOccurs="unbounded" />
                <xsd:element name="userNotes" type="usr:UserNotes" minOccurs="0" maxOccurs="unbounded" />
-               <xsd:element name="gender" type="gender:Gender" minOccurs="0" maxOccurs="1" />
+               <!-- <xsd:element name="gender" type="gender:Gender" minOccurs="0" maxOccurs="1" /> -->
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
