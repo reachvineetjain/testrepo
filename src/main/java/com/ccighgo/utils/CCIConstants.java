@@ -224,5 +224,15 @@ public class CCIConstants {
    public static final String SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1 = "partnerAdmin/workQueueSubmittedApplications/";
    public static final String SERVICE_URL_NDY = "Not Determined Yet";
    
+   //Partner stats
+   public static final Integer APPL_J1 = 1;
+   public static final Integer APPL_F1 = 3;
+   public static final Integer APPL_IHP = 5;
+   
+   public static final String SUBMITTED = "Submitted";
+   public static final String PARTNER_REVIEW = "Partner Review";
+   public static final String GREENHEART_REVIEW = "Greenheart Review";
+   public static final String APPROVED = "Approved";
+   public static final String NOT_APPROVED = "Not Approved";
 
 }

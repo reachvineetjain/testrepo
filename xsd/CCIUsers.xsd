@@ -43,8 +43,8 @@
                <xsd:element name="photoPath" type="xsd:string" maxOccurs="1" minOccurs="0" />
                <xsd:element name="userRole" type="cciusr:CCIUserStaffRole" minOccurs="0" maxOccurs="unbounded" />
                <xsd:element name="cciUserDepartmentPrograms" type="cciusr:CCIUserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
-               <xsd:element name="gender" type="gender:Gender" minOccurs="0" maxOccurs="1" />
-            </xsd:sequence>
+<!--                <xsd:element name="gender" type="gender:Gender" minOccurs="0" maxOccurs="1" />
+ -->            </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
