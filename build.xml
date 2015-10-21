@@ -7,7 +7,7 @@
 		SeasonHspJ1HSDetails,SeasonHspStpIhpDetails,SeasonWPCAPDetails,SeasonWPDetail,SeasonDepartmentLog,SeasonProgramLog,InsuranceCountries,InsuranceParticipant,
 		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions,PartnerCompanyDetail,
 		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail,PartnerDashboard,PartnerJ1HSDashboard,PartnerF1Dashboard,
-		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard" />
+		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard,AddNewPartnerOffice" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -676,6 +676,15 @@
 			<arg value="${xsd.dir}/partner/companyOverview/PartnerCompanyDetail.xsd" />
 		</java>
 	</target>
+
+	<target name="AddNewPartnerOffice">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/companyOverview/AddNewPartnerOffice.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************  Partner User *************************************************-->
 
 	<target name="PartnerUserDetailAndPermission">
@@ -751,81 +760,81 @@
 				</target>
 		
 		*************************************************  Partner work queue category *************************************************-->
-					<target name="PartnerWorkQueueCategory">
-						<java classname="com.sun.tools.internal.xjc.XJCFacade">
-							<arg value="-d" />
-							<arg value="${java.dir}" />
-							<arg value="${xsd.dir}/partner/admin/AdminWorkQueueCategory.xsd" />
-						</java>
-					</target>
-	
-		<!--*************************************************  Partner work queue Type *************************************************-->
-					<target name="PartnerWorkQueueType">
-						<java classname="com.sun.tools.internal.xjc.XJCFacade">
-							<arg value="-d" />
-							<arg value="${java.dir}" />
-							<arg value="${xsd.dir}/partner/admin/AdminWorkQueueTypes.xsd" />
-						</java>
-					</target>
-		
-	
-		<!--*************************************************  Partner work queue Submitted Applications*************************************************-->
-					<target name="PartnerWorkQueueSubmittedApplications">
-						<java classname="com.sun.tools.internal.xjc.XJCFacade">
-							<arg value="-d" />
-							<arg value="${java.dir}" />
-							<arg value="${xsd.dir}/partner/admin/AdminWorkQueueSubmittedApplications.xsd" />
-						</java>
-					</target>
+	<target name="PartnerWorkQueueCategory">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminWorkQueueCategory.xsd" />
+		</java>
+	</target>
+
+	<!--*************************************************  Partner work queue Type *************************************************-->
+	<target name="PartnerWorkQueueType">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminWorkQueueTypes.xsd" />
+		</java>
+	</target>
+
+
+	<!--*************************************************  Partner work queue Submitted Applications*************************************************-->
+	<target name="PartnerWorkQueueSubmittedApplications">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminWorkQueueSubmittedApplications.xsd" />
+		</java>
+	</target>
 	<!--*************************************************  Partner Admin Dashboard  Quick links*************************************************-->
-				<target name="PartnerAdminDashboardQuickLinks">
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickLinks.xsd" />
-					</java>
-				</target>
+	<target name="PartnerAdminDashboardQuickLinks">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickLinks.xsd" />
+		</java>
+	</target>
 
 	<!--*************************************************  Partner Admin Dashboard Quick Stats category *************************************************-->
-				<target name="PartnerAdminDashboardQuickStatsCategory">
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStatsCategory.xsd" />
-					</java>
-				</target>
+	<target name="PartnerAdminDashboardQuickStatsCategory">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStatsCategory.xsd" />
+		</java>
+	</target>
 	<!--*************************************************  Partner Admin Dashboard Quick Stats titles *************************************************-->
-					<target name="PartnerAdminDashboardQuickStatsTitles">
-						<java classname="com.sun.tools.internal.xjc.XJCFacade">
-							<arg value="-d" />
-							<arg value="${java.dir}" />
-							<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStatsTitles.xsd" />
-						</java>
-					</target>
-	
+	<target name="PartnerAdminDashboardQuickStatsTitles">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardQuickStatsTitles.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************  Partner Admin Dashboard Benchmarks*************************************************-->
-				<target name="PartnerAdminDashboardBenchmarks">
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardBenchmark.xsd" />
-					</java>
-				</target>
+	<target name="PartnerAdminDashboardBenchmarks">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminPartnerDashboardBenchmark.xsd" />
+		</java>
+	</target>
 	<!--*************************************************  Partner Admin recurtment lead View*************************************************-->
-					<target name="PartnerAdminRecuritmentLeadView">
-						<java classname="com.sun.tools.internal.xjc.XJCFacade">
-							<arg value="-d" />
-							<arg value="${java.dir}" />
-							<arg value="${xsd.dir}/partner/admin/AdminLeadViewForPartnerInquiryData.xsd" />
-						</java>
-					</target>
-	
+	<target name="PartnerAdminRecuritmentLeadView">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminLeadViewForPartnerInquiryData.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************  Partner Admin recuritment agent page *************************************************-->
-					<target name="PartnerAdminRecuritmentPartnerInquiry">
-						<java classname="com.sun.tools.internal.xjc.XJCFacade">
-							<arg value="-d" />
-							<arg value="${java.dir}" />
-							<arg value="${xsd.dir}/partner/admin/AdminViewForPartnerInquiryData.xsd" />
-						</java>
-					</target>
+	<target name="PartnerAdminRecuritmentPartnerInquiry">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/AdminViewForPartnerInquiryData.xsd" />
+		</java>
+	</target>
 </project>
