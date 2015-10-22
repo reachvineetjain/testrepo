@@ -83,11 +83,11 @@ public class PartnerAdmin {
    }
    
    @GET
-   @Path("quickstatsCategory/{typeId}")
+   @Path("quickstatsCategory/{typeId}/{roleName}")
    @Produces("application/json")
-   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(@PathParam("typeId") String typeId) {
+   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(@PathParam("typeId") String typeId,@PathParam("roleName") String roleName) {
       LOGGER.debug("fun : getQuickStatsCategory []");
-      return partnerAdminService.getQuickStatsCategory(Integer.parseInt(typeId));
+      return partnerAdminService.getQuickStatsCategory(Integer.parseInt(typeId),roleName);
    }
    
    @GET
