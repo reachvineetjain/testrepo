@@ -234,5 +234,8 @@ public class CCIConstants {
    public static final String GREENHEART_REVIEW = "Greenheart Review";
    public static final String APPROVED = "Approved";
    public static final String NOT_APPROVED = "Not Approved";
+   
+   //Partner Office
+   public static final String PRIMARY_OFFICE="Main";
 
 }

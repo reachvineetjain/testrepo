@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pcd:NewPartnerOffice xmlns:common="http://www.ccighgo.com/common" xmlns:pcd="http://www.ccighgo.com/addnewoffice" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ccighgo.com/addnewoffice AddNewPartnerOffice.xsd ">
+  <header>
+    <subject>subject</subject>
+    <transaction>transaction</transaction>
+    <retry>0</retry>
+    <sequence>0</sequence>
+  </header>
+  <status>
+    <statusCode>statusCode</statusCode>
+    <messages>
+      <type>type</type>
+      <serviceId>0</serviceId>
+      <message>message</message>
+    </messages>
+  </status>
+  <isPrimary>true</isPrimary>
+  <officeAddressLineOne>officeAddressLineOne</officeAddressLineOne>
+  <officeAddressLineTwo>officeAddressLineTwo</officeAddressLineTwo>
+  <city>city</city>
+  <zipCode>zipCode</zipCode>
+  <officeAddressCountry>
+    <officeAddressCountryId>0</officeAddressCountryId>
+    <officeAddressCountryISOCode>officeAddressCountryISOCode</officeAddressCountryISOCode>
+    <officeAddressCountryName>officeAddressCountryName</officeAddressCountryName>
+  </officeAddressCountry>
+  <officePhone>officePhone</officePhone>
+  <officeFax>officeFax</officeFax>
+  <officeEmail>officeEmail</officeEmail>
+  <officeWebsite>officeWebsite</officeWebsite>
+</pcd:NewPartnerOffice>

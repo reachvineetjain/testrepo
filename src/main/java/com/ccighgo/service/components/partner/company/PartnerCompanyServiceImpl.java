@@ -21,12 +21,17 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerContactRepository;
+import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
+import com.ccighgo.jpa.repositories.PartnerOfficeTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerCompanyDetailsMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.add.partner.office.NewPartnerOffice;
+import com.ccighgo.service.transport.partner.beans.companydetail.OfficeAddressCountry;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerAddress;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerAddressCountry;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerAddressState;
@@ -55,6 +60,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    @Autowired LoginRepository loginRepository;
    @Autowired CountryRepository countryRepository;
    @Autowired PartnerContactRepository partnerContactRepository;
+   @Autowired PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired PartnerOfficeTypeRepository partnerOfficeTypeRepository;
    @Autowired SalutationRepository salutationRepository;
 
    @Override
@@ -73,8 +80,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerCompanyNameHeader(partner.getCompanyName());
 
          PartnerCompanyStatus partnerCompanyStatus = new PartnerCompanyStatus();
-        /* partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerReviewStatuses().getPartnerStatus2().getPartnerStatusId());
-         partnerCompanyStatus.setPartnerCompanyStatus(partner.getPartnerReviewStatuses().getPartnerStatus2().getPartnerStatusName());*/
+        /* partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerReviewStatus().getPartnerStatus2().getPartnerStatusId());
+         partnerCompanyStatus.setPartnerCompanyStatus(partner.getPartnerReviewStatus().getPartnerStatus2().getPartnerStatusName());*/
          partnerCompanyDetail.setPartnerCompanyStatus(partnerCompanyStatus);
 
          PartnerCompanyDetails partnerCompanyDetails = new PartnerCompanyDetails();
@@ -108,13 +115,36 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                break;
             }
          }
+         
+         //Partner Offices
          List<PartnerOffice> partnerOfficeList =null;
          if(partner.getPartnerOffices()!=null && partner.getPartnerOffices().size()>0){
             partnerOfficeList = new ArrayList<PartnerOffice>();
             for(com.ccighgo.db.entities.PartnerOffice pOffice:partner.getPartnerOffices()){
                PartnerOffice partOffice = new PartnerOffice();
+               partOffice.setOfficeAddressLineOne(pOffice.getAdressOne());
+               partOffice.setOfficeAddressLineTwo(pOffice.getAdressTwo());
+               partOffice.setCity(pOffice.getCity());
+               partOffice.setZipCode(pOffice.getPostalCode());
+               OfficeAddressCountry officeAddressCountry = new OfficeAddressCountry();
+               officeAddressCountry.setOfficeAddressCountryId(pOffice.getLookupCountry().getCountryId());
+               officeAddressCountry.setOfficeAddressCountryISOCode(pOffice.getLookupCountry().getCountryCode());
+               officeAddressCountry.setOfficeAddressCountryName(pOffice.getLookupCountry().getCountryName());
+               partOffice.setOfficeAddressCountry(officeAddressCountry);
+               partOffice.setOfficePhone(pOffice.getPhoneNumber());
+               partOffice.setOfficeFax(pOffice.getFaxNumber());
+               partOffice.setOfficeEmail(pOffice.getPartner().getEmail());
+               partOffice.setOfficeWebsite(pOffice.getWebsite());
+               if(pOffice.getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)){
+                  partOffice.setIsPrimary(true);
+               }else{
+                  partOffice.setIsPrimary(false);
+               }
+               partnerOfficeList.add(partOffice);
             }
          }
+         partnerCompanyDetail.getPartnerOffices().addAll(partnerOfficeList);
+         
          if (partnerContact != null) {
             PrimaryContactSalutation primaryContactSalutation = new PrimaryContactSalutation();
             primaryContactSalutation.setSalutationId(partnerContact.getSalutation().getSalutationId());
@@ -285,4 +315,41 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
       return updatedObject;
    }
 
+   @Override
+   @Transactional
+   public Response addNewPartnerOffice(String partnerGoId, NewPartnerOffice newPartnerOffice) {
+      Response resp = new Response();
+      if (partnerGoId==null || Integer.valueOf(partnerGoId)==0 ||Integer.valueOf(partnerGoId)<0 ||newPartnerOffice==null) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+               messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
+         return resp;
+      }else{
+         try{
+            com.ccighgo.db.entities.PartnerOffice partnerOffice = new com.ccighgo.db.entities.PartnerOffice();
+            partnerOffice.setAdressOne(newPartnerOffice.getOfficeAddressLineOne());
+            partnerOffice.setAdressTwo(newPartnerOffice.getOfficeAddressLineTwo());
+            partnerOffice.setCity(newPartnerOffice.getCity());
+            partnerOffice.setCreatedBy(1000);
+            partnerOffice.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            partnerOffice.setModifiedBy(1000);
+            partnerOffice.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            partnerOffice.setFaxNumber(newPartnerOffice.getOfficeFax());
+            partnerOffice.setPartner(partnerRepository.findOne(Integer.valueOf(partnerGoId)));
+            partnerOffice.setLookupCountry(countryRepository.findOne(newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId()));
+            partnerOffice.setPhoneNumber(newPartnerOffice.getOfficePhone());
+            partnerOffice.setPostalCode(newPartnerOffice.getZipCode());
+            partnerOffice.setWebsite(newPartnerOffice.getOfficeWebsite());
+            partnerOffice.setPartnerOfficeType(newPartnerOffice.isIsPrimary()?partnerOfficeTypeRepository.findOne(1):partnerOfficeTypeRepository.findOne(3));
+            partnerOfficeRepository.saveAndFlush(partnerOffice);
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }catch (CcighgoException e) {
+            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
+                  messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL)));
+            LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL), e);
+         }
+      }
+      return resp;
+   }
 }
