@@ -12,7 +12,7 @@
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
 
- 	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+ 	<xsd:import schemaLocation="../../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
 
    <xsd:element name="PartnerRecruitmentAdmin" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdmin"></xsd:element>
@@ -22,6 +22,7 @@
     <xsd:complexContent>
      <xsd:extension base="common:Response">
             <xsd:sequence>
+            	<xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="LeadStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="detail" type="adminViewForPartnerInquiryData:AdminPartnerRecruitmentScreeningDetail" minOccurs="1" maxOccurs="1" />
@@ -95,6 +96,7 @@
 	               <xsd:element name="fax"      type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="email"    type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="website"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="officeType"  type="xsd:string" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
 	   </xsd:complexType>
 	   
@@ -112,6 +114,7 @@
 	               <xsd:element name="username"  type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="active"  type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="programs"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="primaryContact"  type="xsd:boolean" minOccurs="1" maxOccurs="1" />	               
 	             </xsd:sequence>
 	   </xsd:complexType>
 	   
@@ -165,10 +168,18 @@
          <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="createdBy" type="adminViewForPartnerInquiryData:NoteUserCreator" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
       </xsd:extension>
     </xsd:complexContent>
    </xsd:complexType>
+   
+   <xsd:complexType name="NoteUserCreator">
+	            <xsd:sequence>
+	               <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				   <xsd:element name="photoUrl"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
+	             </xsd:sequence>
+	   </xsd:complexType>
    
 </xsd:schema>
