@@ -40,7 +40,8 @@
          <xsd:element name="programs" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="sunmittedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="statusOfInquiry" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="notes" type="pdl:AdminPartnerAdminWorkQueueTypeCategoryApplicationNotes" minOccurs="1" maxOccurs="unbounded" />                        
+         <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />  
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />                      
       </xsd:sequence>
       </xsd:extension>
         </xsd:complexContent>

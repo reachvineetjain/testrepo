@@ -25,6 +25,7 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.Admi
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author Ahmed
@@ -64,7 +65,7 @@ public class PartnerAdmin {
       return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId));
    }
    
-   
+   //TODO
    @GET
    @Path("quicklinks")
    @Produces("application/json")
@@ -82,11 +83,11 @@ public class PartnerAdmin {
    }
    
    @GET
-   @Path("quickstatsCategory")
+   @Path("quickstatsCategory/{typeId}")
    @Produces("application/json")
-   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory() {
+   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(@PathParam("typeId") String typeId) {
       LOGGER.debug("fun : getQuickStatsCategory []");
-      return partnerAdminService.getQuickStatsCategory();
+      return partnerAdminService.getQuickStatsCategory(Integer.parseInt(typeId));
    }
    
    @GET
@@ -112,6 +113,38 @@ public class PartnerAdmin {
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
       LOGGER.debug("fun : getWorkQueueSubmittedApplications []");
       return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType);
+   }
+   
+   @GET
+   @Path("changeApplicationStatus/{goId}/{newStatus}")
+   @Produces("application/json")
+   public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId,@PathParam("newStatus") String newStatus) {
+      LOGGER.debug("fun : changePartnerApplicationStatus []");
+      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId),newStatus);
+   }
+
+   @GET
+   @Path("updatePartnerApplicationFollowUpDate/{goId}/{followUpdate}")
+   @Produces("application/json")
+   public WSDefaultResponse updatePartnerApplicationFollowUpDate(@PathParam("goId") String goId,@PathParam("followUpdate") String followUpdate) {
+      LOGGER.debug("fun : updatePartnerApplicationFollowUpDate");
+      return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(goId),followUpdate);
+   }
+   
+   @GET
+   @Path("addNoteToPartnerApplication/{goId}/{noteValue}")
+   @Produces("application/json")
+   public WSDefaultResponse addNoteToPartnerApplication(@PathParam("goId") String goId,@PathParam("noteValue") String noteValue) {
+      LOGGER.debug("fun : addNoteToPartnerApplication");
+      return partnerAdminService.addNoteToPartnerApplication(Integer.parseInt(goId),noteValue);
+   }
+   
+   @GET
+   @Path("getNotesOfPartnerApplication/{goId}")
+   @Produces("application/json")
+   public WSDefaultResponse getNotesOfPartnerApplication(@PathParam("goId") String goId) {
+      LOGGER.debug("fun : getNotesOfPartnerApplication");
+      return partnerAdminService.getNotesOfPartnerApplication(Integer.parseInt(goId));
    }
    
    
@@ -148,23 +181,7 @@ public class PartnerAdmin {
    }
 
    
-   @GET
-   @Path("changeApplicationStatus/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}/{newStatus}")
-   @Produces("application/json")
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
-         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType,@PathParam("newStatus") String newStatus) {
-      LOGGER.debug("fun : changePartnerApplicationStatus []");
-      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType,newStatus);
-   }
-
-   @GET
-   @Path("updatePartnerApplicationFollowUpDate/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}/{newStatus}/{newFollowUpDate}")
-   @Produces("application/json")
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
-         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType,@PathParam("newFollowUpDate") String newFollowUpDate) {
-      LOGGER.debug("fun : updatePartnerApplicationFollowUpDate");
-      return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType,newFollowUpDate);
-   }
+   
 
 
 }

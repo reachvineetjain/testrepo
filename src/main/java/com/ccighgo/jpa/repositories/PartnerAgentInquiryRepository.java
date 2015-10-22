@@ -15,4 +15,7 @@ public interface PartnerAgentInquiryRepository extends JpaRepository<PartnerAgen
    PartnerAgentInquiry findByLegalName(String website);
    @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.partner.partnerGoId =?1")
    List<PartnerAgentInquiry> findPartnerByPartnerId(int partnerId);
+   
+   @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.partner.partnerGoId =?1")
+   PartnerAgentInquiry findPartnerByGoId(int goId);
 }

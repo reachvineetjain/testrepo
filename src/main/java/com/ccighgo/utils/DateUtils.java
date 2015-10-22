@@ -154,7 +154,7 @@ public class DateUtils {
    }
 
    public static Date getDateFromString_followUpdate(String newFollowUpDate) {
-      DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
+      DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
       Date date = null;
       if (newFollowUpDate != null && !newFollowUpDate.trim().isEmpty())
          try {

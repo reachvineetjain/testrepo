@@ -17,14 +17,19 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-  				<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        		 <xsd:element name="total" type="xsd:int" minOccurs="1" maxOccurs="1" />         
+            	<xsd:element name="benchmarks" type="pdl:PartnerAdminDashboardBenchmarksDetails" minOccurs="1" maxOccurs="unbounded" />
            </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
    
-     
-   
+
+   <xsd:complexType name="PartnerAdminDashboardBenchmarksDetails">
+            <xsd:sequence>
+  				<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        		 <xsd:element name="total" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           </xsd:sequence>
+   </xsd:complexType>
+        
    
 </xsd:schema>

@@ -17,12 +17,18 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-					<xsd:element name="value" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	            <xsd:element name="quickLinks" type="pdl:PartnerAdminDashboardQuickLinksDetails" minOccurs="1" maxOccurs="unbounded" />
        	   </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
-  
+
+
+   <xsd:complexType name="PartnerAdminDashboardQuickLinksDetails">
+            <xsd:sequence>
+					<xsd:element name="value" type="xsd:string" minOccurs="1" maxOccurs="1" />
+       	   </xsd:sequence>
+   </xsd:complexType>  
  
    
    

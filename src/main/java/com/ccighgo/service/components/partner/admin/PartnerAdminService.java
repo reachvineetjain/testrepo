@@ -15,6 +15,7 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.Admi
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -24,9 +25,9 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPar
 public interface PartnerAdminService {
 
  
-   AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int typeId, int categoryId, int staffUserId, String roleType,String newStatus);
+   WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus);
 
-   AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int typeId, int categoryId, int staffUserId, String roleType,String newFollowUpDate);
+   WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String followUpdate);
 
    AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType);
 
@@ -47,9 +48,13 @@ public interface PartnerAdminService {
 
    PartnerAdminDashboardQuickStatsTitles getQuickStatsTitle();
 
-   PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory();
+   PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(int quickStatsTypeID);
 
    PartnerAdminDashboardBenchmarks getBenchmark();
+
+   WSDefaultResponse addNoteToPartnerApplication(int parseInt, String noteValue);
+
+   WSDefaultResponse getNotesOfPartnerApplication(int parseInt);
    
 
 }

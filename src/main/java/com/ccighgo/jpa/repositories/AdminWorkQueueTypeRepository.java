@@ -19,7 +19,7 @@ import com.ccighgo.db.entities.AdminWorkQueueType;
 public interface AdminWorkQueueTypeRepository extends JpaRepository<AdminWorkQueueType, Integer> {
    @Query("select d from AdminWorkQueueType d where d.lookupDepartmentProgram.lookupDepartmentProgramId = ?1 ")
    List<AdminWorkQueueType> findTypesByDepartmentProgramId(int departmentProgramId);
-   @Query("select d from AdminWorkQueueType d")
+   @Query("select d from AdminWorkQueueType d where d.roleType =?1")
    List<AdminWorkQueueType> findTypesByPartnerRole(String roleType);
    
 }
