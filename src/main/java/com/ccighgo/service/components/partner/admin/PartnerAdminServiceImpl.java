@@ -26,6 +26,7 @@ import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
+import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesRepository;
@@ -44,6 +45,7 @@ import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
+import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
@@ -71,7 +73,7 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPar
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
-import com.sun.org.omg.CORBA.ParameterMode;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -123,7 +125,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    AdminQuickStatsTypeAggregateRepository adminQuickStatsTypeAggregateRepository;
    @Autowired
    AdminQuickStatsTypeRepository adminQuickStatsTypeRepository;
-
+@Autowired
+PartnerStatusRepository partnerStatusRepository;
    @PersistenceContext
    EntityManager em;
 
@@ -372,13 +375,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                newCategory.setCategoryId(adminWorkQueueCategory.getAdminWorkQueueCategoryId());
                newCategory.setCategoryName(adminWorkQueueCategory.getAdminWorkQueueCategoryName());
                if (adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeName().equalsIgnoreCase("Application")) {
-                  if (newCategory.getCategoryName().equals("Submitted")){
+                  if (newCategory.getCategoryName().equals("Submitted")) {
                      newCategory.setServiceUrl(CCIConstants.SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1);
-                  }else{
+                  } else {
                      newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
                   }
-               }
-               else{
+               } else {
                   newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
                }
                AdminWorkQueueCategoryAggregate categoryAggregate = adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
@@ -418,17 +420,25 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                pd.setEmail(String.valueOf(wq[4]));
                pd.setWebsite(String.valueOf(wq[5]));
                pd.setCountry(String.valueOf(wq[6]));
-               pd.setFollowUpDate(String.valueOf(wq[7]));
-               pd.setSunmittedOn(String.valueOf(wq[8]));
+               if (wq[7] != null) {
+                  String followUpdate = String.valueOf(wq[7]);
+                  pd.setFollowUpDate(followUpdate.split("\\s+")[0]);
+               }
+               if (wq[8] != null) {
+                  String submittedOn = String.valueOf(wq[8]);
+                  pd.setSunmittedOn(submittedOn.split("\\s+")[0]);
+               }
                pd.setFlagUrl(String.valueOf(wq[9]));
                pd.setPrograms(String.valueOf(wq[10]));
                if (wq[11] != null)
                   pd.setNotesCount(Integer.parseInt(String.valueOf(wq[11])));
-               // what is the list of status ???????????????????
-               // PartnerReviewStatus partnerReviewStatus
-               // =partnerReviewStatusRepository.findOne(partnerAgentInquiry.getPartner().getpartnerre));
-               // ???????????????? will be changes once i have clarification
-               pd.setStatusOfInquiry("Valid");
+               if (wq[12] != null)
+                  pd.setGoId(Integer.parseInt(String.valueOf(wq[12])));
+
+               PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(pd.getGoId());
+               if (partnerReviewStatus != null) {
+                  pd.setStatusOfInquiry(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
+               }
 
                pwqa.getWorkQueueSubmittedApplications().add(pd);
             }
@@ -448,45 +458,59 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail updatePartnerApplicationFollowUpDate(int typeId, int categoryId, int staffUserId, String roleType, String newFollowUpDate) {
-      AdminPartnerWorkQueueSubmittedApplicationsDetail pd = new AdminPartnerWorkQueueSubmittedApplicationsDetail();
+   public WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String newFollowUpDate) {
+      WSDefaultResponse wsDefaultResponse =new WSDefaultResponse();
       try {
-         PartnerAgentInquiry partnerAgentInquiry = null;// partnerAgentInquiryRepository.findOne(partnerAgentInquiryId);
+         PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
          partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString_followUpdate(newFollowUpDate));
-         PartnerAgentInquiry updatedPartnerAgentInquiry = partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
-
-         pd.setCompanyId(updatedPartnerAgentInquiry.getPartnerAgentInquiriesId());
-         pd.setCompanyName(updatedPartnerAgentInquiry.getCompanyName());
-         pd.setCountry(updatedPartnerAgentInquiry.getLookupCountry().getCountryName());
-         pd.setEmail(updatedPartnerAgentInquiry.getEmail());
-         pd.setFirstName(updatedPartnerAgentInquiry.getFirstName());
-         pd.setFlagUrl(updatedPartnerAgentInquiry.getCountryFlag());
-         pd.setFollowUpDate(DateUtils.getDateAndTime(updatedPartnerAgentInquiry.getFollowUpDate()));
-         pd.setLastName(updatedPartnerAgentInquiry.getLastName());
-         pd.setPhone(updatedPartnerAgentInquiry.getPhone());
-         pd.setPrograms(updatedPartnerAgentInquiry.getCurrentlyOfferingPrograms());
-         pd.setSunmittedOn(DateUtils.getDateAndTime(updatedPartnerAgentInquiry.getSubmittedOn()));
-         pd.setWebsite(updatedPartnerAgentInquiry.getWebsite());
-         // what is the list of status ???????????????????
-         // PartnerReviewStatus partnerReviewStatus
-         // =partnerReviewStatusRepository.findOne(partnerAgentInquiry.getPartner().getpartnerre));
-         // ???????????????? will be changes once i have clarification
-         pd.setStatusOfInquiry("Valid");
-         pd.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+         partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pd.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
       }
-      return pd;
+      return wsDefaultResponse;
    }
 
    @Override
-   public AdminPartnerWorkQueueSubmittedApplicationsDetail changePartnerApplicationStatus(int typeId, int categoryId, int staffUserId, String roleType, String newStatus) {
-      // TODO Auto-generated method stub
-      return null;
+   public WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus) {
+      WSDefaultResponse wsDefaultResponse =new WSDefaultResponse();
+      try {
+         PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(goId);
+         PartnerStatus partnerStatus= partnerStatusRepository.findStatusByName(newStatus);
+         partnerReviewStatus.setPartnerStatus1(partnerStatus);
+         partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_APPLICATION_STATUS_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse addNoteToPartnerApplication(int goId, String noteValue) {
+      WSDefaultResponse wsDefaultResponse =new WSDefaultResponse();
+      try {
+//         PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(goId);
+//         PartnerStatus partnerStatus= partnerStatusRepository.findStatusByName(newStatus);
+//         partnerReviewStatus.setPartnerStatus1(partnerStatus);
+//         partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
+//         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_APPLICATION_STATUS_UPDATED.getValue(),
+//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
+      }
+      return wsDefaultResponse;
    }
 
    @Override
@@ -607,6 +631,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_BENCHMARKS));
       }
       return benchMark;
+   }
+
+   @Override
+   public WSDefaultResponse getNotesOfPartnerApplication(int parseInt) {
+      // TODO Auto-generated method stub
+      return null;
    }
 
 }

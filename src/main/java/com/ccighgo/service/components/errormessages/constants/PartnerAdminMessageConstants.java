@@ -11,5 +11,6 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_WORK_QUEUE_QUICK_STATS_CATEGORY = "error.get.workqueue.quickstats.category";
    public static final String EXCEPTION_WORK_QUEUE_BENCHMARKS = "error.get.workqueue.benchmarks";
    public static final String EXCEPTION_WORK_QUICK_LINKS = "error.get.workqueue.quicklinks";
+   public static final String EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS = "error.updating.partner.application.status";
 
 }
