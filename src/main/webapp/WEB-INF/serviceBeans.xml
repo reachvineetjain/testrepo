@@ -48,6 +48,7 @@
          <bean id="partnerWorkQueues" class="com.ccighgo.service.rest.partner.work.queue.PartnerWorkQueues" />
          <bean id="partnerCompany" class="com.ccighgo.service.rest.partner.company.PartnerCompany" />
          <bean id="partnerAdmin" class="com.ccighgo.service.rest.partner.admin.PartnerAdmin" />
+         <bean id="partnerAdminSeason" class="com.ccighgo.service.rest.partner.admin.season.PartnerAdminSeason" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />
