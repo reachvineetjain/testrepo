@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerAdminOverviewOffices" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:partnerAdminOverviewOffices="http://www.ccighgo.com/partnerAdminOverviewOffices" xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
+   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
+
+ 	<xsd:import schemaLocation="../../../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+
+   <xsd:element name="PartnerAdminOverviewOffices" type="partnerAdminOverviewOffices:PartnerAdminOverviewOffices"></xsd:element>
+
+   <xsd:complexType name="PartnerAdminOverviewOffices">
+    <xsd:complexContent>
+     <xsd:extension base="common:Response">
+            <xsd:sequence>
+            	<xsd:element name="offices" type="partnerAdminOverviewOffices:PartnerAdminOverviewOfficesDetails" minOccurs="1" maxOccurs="unbounded" />
+			   
+            </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+	   
+	   <xsd:complexType name="PartnerAdminOverviewOfficesDetails">
+	            <xsd:sequence>
+                <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="partnerOfficeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="address1" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="address2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				   <xsd:element name="city"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
+	               <xsd:element name="zipCode"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="country"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="phone"    type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="fax"      type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="email"    type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="website"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="officeType"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	             </xsd:sequence>
+	   </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerAdminOverviewReferenceCheck" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:partnerAdminOverviewReferenceCheck="http://www.ccighgo.com/partnerAdminOverviewReferenceCheck" xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
+   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
+
+ 	<xsd:import schemaLocation="../../../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+
+
+   <xsd:element name="PartnerAdminOverviewReferenceCheck" type="partnerAdminOverviewReferenceCheck:PartnerAdminOverviewReferenceCheck"></xsd:element>
+ 
+
+   <xsd:complexType name="PartnerAdminOverviewReferenceCheck">
+    <xsd:complexContent>
+     <xsd:extension base="common:Response">
+            <xsd:sequence>
+			   <xsd:element name="referenceCheck" type="partnerAdminOverviewReferenceCheck:PartnerAdminOverviewReferenceCheckDetails" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+	   
+	   <xsd:complexType name="PartnerAdminOverviewReferenceCheckDetails">
+	            <xsd:sequence>
+            	<xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            		            <xsd:element name="partnerCheckReferenceId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="completedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="completedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				   <xsd:element name="approvedOn"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
+	               <xsd:element name="approvedBy"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="latestCopyOfBusinessExpires"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="note"    type="xsd:string" minOccurs="1" maxOccurs="1" />
+	             </xsd:sequence>
+	   </xsd:complexType>
+	   
+</xsd:schema>

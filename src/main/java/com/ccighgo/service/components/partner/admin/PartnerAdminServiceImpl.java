@@ -20,19 +20,25 @@ import com.ccighgo.db.entities.AdminWorkQueueCategory;
 import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueType;
 import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
+import com.ccighgo.db.entities.DocumentCategoryProcess;
+import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerDocument;
 import com.ccighgo.db.entities.PartnerMessage;
 import com.ccighgo.db.entities.PartnerNote;
+import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerOffice;
+import com.ccighgo.db.entities.PartnerOfficeType;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerStatus;
+import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesRepository;
@@ -42,6 +48,9 @@ import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueTypeRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUsersCCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CountryRepository;
+import com.ccighgo.jpa.repositories.DocumentInformationRepository;
+import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
@@ -50,12 +59,15 @@ import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
+import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
+import com.ccighgo.jpa.repositories.PartnerOfficeTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
@@ -74,6 +86,16 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpa
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningOffices;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewContacts.PartnerAdminOverviewContacts;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewContacts.PartnerAdminOverviewContactsDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.PartnerAdminOverviewDocuments;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.PartnerAdminOverviewDocumentsDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.PartnerAdminOverviewNotes;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.PartnerAdminOverviewNotesDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOffices;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarksDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
@@ -154,6 +176,18 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    GoIdSequenceRepository goIdSequenceRepository;
    @Autowired
    CCIStaffUsersCCIStaffRolesRepository cciStaffRolesRepository;
+   @Autowired
+   DocumentInformationRepository documentInformationRepository;
+   @Autowired
+   DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
+   @Autowired
+   CountryRepository lookupCountryRepository;
+   @Autowired
+   PartnerOfficeTypeRepository partnerOfficeTypeRepository;
+   @Autowired
+   SalutationRepository salutationRepository;
+   @Autowired
+   PartnerNoteTopicRepository partnerNoteTopicRepository;
    @PersistenceContext
    EntityManager em;
 
@@ -250,6 +284,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                      noteCreator.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
                      note.setCreatedBy(noteCreator);
                   }
+                  note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
+                  note.setPartnerNoteId(partnerNote.getPartnerNotesId());
                   note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
                   note.setNoteValue(partnerNote.getPartnerNote());
                   pwt.getNotes().add(note);
@@ -289,7 +325,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(pwt.getGoId());
          List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(pwt.getGoId());
-         
+
          if (partnerAgentInquiry == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATING__WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_UPDATE)));
@@ -298,15 +334,15 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             return pwt;
          }
          Partner partner = partnerAgentInquiry.getPartner();
-         
+
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(pwt.getGoId());
             if (partnerReviewStatus != null) {
-               if (pwt.isActive()){
-                PartnerStatus activeStatus = partnerStatusRepository.findStatusByName("Valid");
-                partnerReviewStatus.setPartnerStatus1(activeStatus);
+               if (pwt.isActive()) {
+                  PartnerStatus activeStatus = partnerStatusRepository.findStatusByName("Valid");
+                  partnerReviewStatus.setPartnerStatus1(activeStatus);
                }
-               if (pwt.getLeadStatus()!=null){
+               if (pwt.getLeadStatus() != null) {
                   PartnerStatus leadStatus = partnerStatusRepository.findStatusByName(pwt.getLeadStatus());
                   partnerReviewStatus.setPartnerStatus2(leadStatus);
                }
@@ -314,80 +350,24 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         
+
          try {
             AdminPartnerRecruitmentScreeningDetail detail = pwt.getDetail();
             partnerAgentInquiry.setCompanyName(detail.getCompanyName());
             partnerAgentInquiry.setLogo(detail.getLogo());
             partnerAgentInquiry.setRating(detail.getRating());
-            //TODO Ask phani !!!!!!
+            // TODO Ask phani !!!!!!
             partnerAgentInquiry.setBusinessName(detail.getUsername());
 
-            
             if (partner != null) {
                partner.setBillingNotes(detail.getBillingNotes());
-               partner.setCanHaveSubPartner((byte) (detail.getCanHaveSubPartner()=="true"?1:0));
+               partner.setCanHaveSubPartner((byte) (detail.getCanHaveSubPartner() == "true" ? 1 : 0));
                partner.setEmail(detail.getGeneralEmail());
                partner.setInvoiceMail(detail.getInvoiceEmail());
-               partner.setMultiCountrySender((byte) (detail.getMultiCountrySender()=="true"?1:0));
+               partner.setMultiCountrySender((byte) (detail.getMultiCountrySender() == "true" ? 1 : 0));
                partner.setQuickbooksCode(detail.getQuickbooksCode());
             }
-            // TODO ask vivek
-//            try {
-//               for (PartnerProgram partnerProgram : partnerPrograms) {
-//                  CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
-//                  cciContact.setUserName(partnerProgram.getCcistaffUser().getFirstName());
-//                  if (partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null && !partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().isEmpty())
-//                     cciContact.setRole(partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-//                  cciContact.setImageUrl(partnerProgram.getCcistaffUser().getPhoto());
-//                  detail.setCciContact(cciContact);
-//                  break;
-//               }
-//            } catch (Exception e) {
-//               ExceptionUtil.logException(e, logger);
-//            }
 
-//            try {
-//               if (partnerPrograms != null) {
-//                  for (PartnerProgram partnerProgram : partnerPrograms) {
-//                     AdminPartnerProgramsElgibilityAndCCIContact contact = new AdminPartnerProgramsElgibilityAndCCIContact();
-//                     contact.setCciContactProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
-//                     contact.setMarked(false);
-//                     contact.setProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
-//                     if (partnerProgram.getCcistaffUser() != null) {
-//                        CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
-//                        cciContact.setUserName(partnerProgram.getCcistaffUser().getFirstName());
-//                        if (partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null && !partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().isEmpty())
-//                           cciContact.setRole(partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-//                        cciContact.setImageUrl(partnerProgram.getCcistaffUser().getPhoto());
-//                        contact.setCciContact(cciContact);
-//                        pwt.getProgramEligibilityAndCCIContact().add(contact);
-//                     }
-//                  }
-//               }
-//            } catch (Exception e) {
-//               ExceptionUtil.logException(e, logger);
-//            }
-            
-//            try {
-//               List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(goId);
-//               if (partnerReferenceChecks != null) {
-//                  for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
-//                     PartnerRecruitmentAdminScreeningReferenceCheck refCheck = new PartnerRecruitmentAdminScreeningReferenceCheck();
-//                     refCheck.setApprovedBy(partnerReferenceCheck.getReferenceApprovedBy());
-//                     refCheck.setApprovedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceApprovedOn()));
-//                     refCheck.setCompletedBy(partnerReferenceCheck.getReferenceCompletedBy());
-//                     refCheck.setCompletedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceCompletedOn()));
-//                     refCheck.setLatestCopyOfBusinessExpires(DateUtils.getDateAndTime(partnerReferenceCheck.getBusinessLicenseExpiryDate()));
-//                     refCheck.setNote(partnerReferenceCheck.getReferenceCheckNotes());
-//                     pwt.getReferenceCheck().add(refCheck);
-//                  }
-//               }
-//            } catch (Exception e) {
-//               ExceptionUtil.logException(e, logger);
-//            }
-            
-            
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -401,13 +381,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         partnerRepository.saveAndFlush(partner);         
-         
-         
-         
-         
-         
-         
+         partnerRepository.saveAndFlush(partner);
 
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_OVERVIEW_UPDATE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -419,7 +393,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pwt;
    }
-   
+
    @Override
    public PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int goId) {
       PartnerRecruitmentAdmin pwt = new PartnerRecruitmentAdmin();
@@ -523,6 +497,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (offices != null) {
                for (PartnerOffice partnerOffice : offices) {
                   PartnerRecruitmentAdminScreeningOffices office = new PartnerRecruitmentAdminScreeningOffices();
+                  office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
                   office.setAddress1(partnerOffice.getAdressOne());
                   office.setAddress2(partnerOffice.getAdressTwo());
                   office.setCity(partnerOffice.getCity());
@@ -545,6 +520,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (contacts != null) {
                for (PartnerContact partnerContact : contacts) {
                   PartnerRecruitmentAdminScreeningContacts contact = new PartnerRecruitmentAdminScreeningContacts();
+                  contact.setPartnerContactId(partnerContact.getPartnerContactId());
                   contact.setActive(partnerContact.getActive() == 1);
                   contact.setEmail(partnerContact.getEmail());
                   contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
@@ -570,6 +546,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (partnerReferenceChecks != null) {
                for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
                   PartnerRecruitmentAdminScreeningReferenceCheck refCheck = new PartnerRecruitmentAdminScreeningReferenceCheck();
+                  refCheck.setPartnerCheckReferenceId(partnerReferenceCheck.getPartnerReferenceCheckId());
                   refCheck.setApprovedBy(partnerReferenceCheck.getReferenceApprovedBy());
                   refCheck.setApprovedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceApprovedOn()));
                   refCheck.setCompletedBy(partnerReferenceCheck.getReferenceCompletedBy());
@@ -587,6 +564,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (partnerDocuments != null) {
                for (PartnerDocument p : partnerDocuments) {
                   PartnerRecruitmentAdminScreeningDocuments doc = new PartnerRecruitmentAdminScreeningDocuments();
+                  doc.setPartnerDocumentId(p.getPartnerDocumentId());
                   doc.setActive(p.getDocumentInformation().getActive() == 1);
                   doc.setDescription("");
                   doc.setDocName(p.getDocumentInformation().getDocumentName());
@@ -623,6 +601,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                      noteCreator.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
                      note.setCreatedBy(noteCreator);
                   }
+                  note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
+                  note.setPartnerNoteId(partnerNote.getPartnerNotesId());
                   note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
                   note.setNoteValue(partnerNote.getPartnerNote());
                   pwt.getNotes().add(note);
@@ -641,8 +621,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pwt;
    }
-
-  
 
    @Override
    public AdminPartnerWorkQueueType getWorkQueueType(String roleType) {
@@ -934,4 +912,400 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return null;
    }
 
+   /****************************** Partner Inquiry Overview *****************************/
+
+   @Transactional
+   @Override
+   public PartnerAdminOverviewDocuments addNewPartnerInquiryDocument(PartnerAdminOverviewDocumentsDetails document) {
+      PartnerAdminOverviewDocuments documents = new PartnerAdminOverviewDocuments();
+      try {
+
+         /**
+          * Adding the Document
+          */
+         PartnerProgram partnerProgram = partnerProgramRepository.findOne(4); // TODO Ask Phani Why This Field is here
+         Partner partner = partnerRepository.findOne(document.getGoId());
+
+         DocumentInformation documentInformation = new DocumentInformation();
+         documentInformation.setFileName(document.getFileName());
+         documentInformation.setDocumentName(document.getDocName());
+         documentInformation.setUrl(document.getDocUrl());
+         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(document.getDocType()));
+         documentInformation.setCreatedBy(1);
+         documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         documentInformation.setModifiedBy(1);
+         documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
+         documentInformation.setActive(CCIConstants.ACTIVE);
+
+         DocumentInformation d = documentInformationRepository.saveAndFlush(documentInformation);
+         PartnerDocument p = new PartnerDocument();
+         p.setDescription("Test Description Added using Java Code [ from function]");
+         p.setDocumentInformation(d);
+         p.setPartner(partner);
+         p.setPartnerProgram(partnerProgram);
+
+         partnerDocumentsRepository.saveAndFlush(p);
+         /**
+          * Fetching All Documents
+          */
+         List<PartnerDocument> partnerDocuments = partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(document.getGoId());
+         if (partnerDocuments != null) {
+            for (PartnerDocument pd : partnerDocuments) {
+               PartnerAdminOverviewDocumentsDetails doc = new PartnerAdminOverviewDocumentsDetails();
+               doc.setPartnerDocumentId(pd.getPartnerDocumentId());
+               doc.setActive(pd.getDocumentInformation().getActive() == 1);
+               doc.setDescription("");
+               doc.setDocName(pd.getDocumentInformation().getDocumentName());
+               doc.setDocType(pd.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+               doc.setDocUrl(pd.getDocumentInformation().getUrl());
+               doc.setFileName(pd.getDocumentInformation().getFileName());
+               doc.setFileType("");
+               doc.setUploadDate(DateUtils.getDateAndTime(pd.getDocumentInformation().getCreatedOn()));
+               Integer createdBy = pd.getDocumentInformation().getCreatedBy();
+               CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(createdBy);
+               if (staffUserAndRole != null) {
+                  com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser uploadedBy = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser();
+                  uploadedBy.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
+                  uploadedBy.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
+                  uploadedBy.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
+                  doc.setUploadedBy(uploadedBy);
+               }
+               documents.getDocuments().add(doc);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return documents;
+   }
+
+   @Transactional
+   @Override
+   public PartnerAdminOverviewDocuments removeNewPartnerInquiryDocument(PartnerAdminOverviewDeletedDocuments deletedItems) {
+      PartnerAdminOverviewDocuments documents = new PartnerAdminOverviewDocuments();
+      try {
+
+         /**
+          * Remove the Document
+          */
+         for (Integer item : deletedItems.getDocumentIds()) {
+            partnerDocumentsRepository.delete(item);
+
+         }
+         partnerDocumentsRepository.flush();
+         /**
+          * Fetching All Documents
+          */
+         List<PartnerDocument> partnerDocuments = partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(deletedItems.getGoId());
+         if (partnerDocuments != null) {
+            for (PartnerDocument pd : partnerDocuments) {
+               PartnerAdminOverviewDocumentsDetails doc = new PartnerAdminOverviewDocumentsDetails();
+               doc.setPartnerDocumentId(pd.getPartnerDocumentId());
+               doc.setActive(pd.getDocumentInformation().getActive() == 1);
+               doc.setDescription("");
+               doc.setDocName(pd.getDocumentInformation().getDocumentName());
+               doc.setDocType(pd.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+               doc.setDocUrl(pd.getDocumentInformation().getUrl());
+               doc.setFileName(pd.getDocumentInformation().getFileName());
+               doc.setFileType("");
+               doc.setUploadDate(DateUtils.getDateAndTime(pd.getDocumentInformation().getCreatedOn()));
+               Integer createdBy = pd.getDocumentInformation().getCreatedBy();
+               CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(createdBy);
+               if (staffUserAndRole != null) {
+                  com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser uploadedBy = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser();
+                  uploadedBy.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
+                  uploadedBy.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
+                  uploadedBy.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
+                  doc.setUploadedBy(uploadedBy);
+               }
+               documents.getDocuments().add(doc);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return documents;
+   }
+
+   @Override
+   public PartnerAdminOverviewOffices addNewPartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
+      try {
+         PartnerOffice po = new PartnerOffice();
+         po.setAdressOne(officesDetails.getAddress1());
+         po.setAdressTwo(officesDetails.getAddress2());
+         po.setCity(officesDetails.getCity());
+         po.setCreatedBy(1);
+         po.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         po.setFaxNumber(officesDetails.getFax());
+         LookupCountry country = lookupCountryRepository.findByCountryName(officesDetails.getCountry());
+         po.setLookupCountry(country);
+         Partner partner = partnerRepository.findOne(officesDetails.getGoId());
+         po.setPartner(partner);
+         PartnerOfficeType officeType = partnerOfficeTypeRepository.findByPartnerOfficeType(officesDetails.getOfficeType());
+         po.setPartnerOfficeType(officeType);
+         po.setModifiedBy(1);
+         po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         // partnerOffice.setOfficeNotes(officesDetails.geto);
+         po.setPhoneNumber(officesDetails.getPhone());
+         po.setPostalCode(officesDetails.getZipCode());
+         // partnerOffice.setState(officesDetails.get);
+         po.setWebsite(officesDetails.getWebsite());
+         partnerOfficeRepository.saveAndFlush(po);
+
+         List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(officesDetails.getGoId());
+         if (offices != null) {
+            for (PartnerOffice partnerOffice : offices) {
+               PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
+               office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
+               office.setAddress1(partnerOffice.getAdressOne());
+               office.setAddress2(partnerOffice.getAdressTwo());
+               office.setCity(partnerOffice.getCity());
+               office.setCountry(partnerOffice.getLookupCountry().getCountryName());
+               office.setEmail(partnerOffice.getPartner().getEmail());
+               office.setFax(partnerOffice.getFaxNumber());
+               office.setPhone(partnerOffice.getPhoneNumber());
+               office.setWebsite(partnerOffice.getWebsite());
+               office.setZipCode(partnerOffice.getPostalCode());
+               office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
+               pOffices.getOffices().add(office);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return pOffices;
+   }
+
+   @Transactional
+   @Override
+   public PartnerAdminOverviewOffices removeNewPartnerInquiryOffice(PartnerAdminOverviewDeletedOffices deletedItems) {
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
+      try {
+         for (Integer item : deletedItems.getOffices()) {
+            partnerOfficeRepository.delete(item);
+         }
+         partnerOfficeRepository.flush();
+
+         List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(deletedItems.getGoId());
+         if (offices != null) {
+            for (PartnerOffice partnerOffice : offices) {
+               PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
+               office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
+               office.setAddress1(partnerOffice.getAdressOne());
+               office.setAddress2(partnerOffice.getAdressTwo());
+               office.setCity(partnerOffice.getCity());
+               office.setCountry(partnerOffice.getLookupCountry().getCountryName());
+               office.setEmail(partnerOffice.getPartner().getEmail());
+               office.setFax(partnerOffice.getFaxNumber());
+               office.setPhone(partnerOffice.getPhoneNumber());
+               office.setWebsite(partnerOffice.getWebsite());
+               office.setZipCode(partnerOffice.getPostalCode());
+               office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
+               pOffices.getOffices().add(office);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return pOffices;
+   }
+
+   @Override
+   public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
+      PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
+      try {
+         PartnerContact pc = new PartnerContact();
+         pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
+         pc.setCreatedBy(1);
+         pc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         pc.setEmail(contactsDetails.getEmail());
+         pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+         pc.setFax(contactsDetails.getFax());
+         pc.setFirstName(contactsDetails.getFirstName());
+         pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
+         pc.setLastName(contactsDetails.getLastName());
+         pc.setModifiedBy(1);
+         pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
+         pc.setPartner(partner);
+         // PartnerOffice partnerOffice = partnerOfficeRepository.find;
+         // partnerContact.setPartnerOffice(partnerOffice);
+         pc.setPhone(contactsDetails.getPhone());
+         pc.setReceiveNotificationEmails(CCIConstants.INACTIVE);
+         Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
+         pc.setSalutation(salutation);
+         pc.setSkypeId(contactsDetails.getSkypeId());
+         pc.setTitle(contactsDetails.getTitile());
+         // partnerContact.setWebsite(contactsDetails.get);
+         partnerContactRepository.saveAndFlush(pc);
+
+         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
+         if (contacts != null) {
+            for (PartnerContact partnerContact : contacts) {
+               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
+               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+               contact.setActive(partnerContact.getActive() == 1);
+               contact.setEmail(partnerContact.getEmail());
+               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+               contact.setFax(partnerContact.getFax());
+               contact.setFirstName(partnerContact.getFirstName());
+               contact.setLastName(partnerContact.getLastName());
+               contact.setPhone(partnerContact.getPhone());
+               // contact.setPrograms(partnerContact.get);
+               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+               contact.setSkypeId(partnerContact.getSkypeId());
+               contact.setTitile(partnerContact.getTitle());
+               // contact.setUsername(partnerContact.get);
+               contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
+               pContacts.getContacts().add(contact);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return pContacts;
+   }
+
+   @Override
+   public PartnerAdminOverviewContacts removeNewPartnerInquiryContact(PartnerAdminOverviewDeletedContacts deletedItems) {
+      PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
+      try {
+
+         for (Integer item : deletedItems.getContacts()) {
+            partnerContactRepository.delete(item);
+         }
+         partnerContactRepository.flush();
+
+         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(deletedItems.getGoId());
+         if (contacts != null) {
+            for (PartnerContact partnerContact : contacts) {
+               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
+               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+               contact.setActive(partnerContact.getActive() == 1);
+               contact.setEmail(partnerContact.getEmail());
+               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+               contact.setFax(partnerContact.getFax());
+               contact.setFirstName(partnerContact.getFirstName());
+               contact.setLastName(partnerContact.getLastName());
+               contact.setPhone(partnerContact.getPhone());
+               // contact.setPrograms(partnerContact.get);
+               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+               contact.setSkypeId(partnerContact.getSkypeId());
+               contact.setTitile(partnerContact.getTitle());
+               // contact.setUsername(partnerContact.get);
+               contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
+               pContacts.getContacts().add(contact);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return pContacts;
+   }
+
+   @Override
+   public PartnerAdminOverviewNotes addNewPartnerInquiryNote(PartnerAdminOverviewNotesDetails notesDetails) {
+      PartnerAdminOverviewNotes pn = new PartnerAdminOverviewNotes();
+      try {
+         PartnerNote note = new PartnerNote();
+         note.setCreatedBy(1);
+         note.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         note.setModifiedBy(1);
+         note.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         Partner partner = partnerRepository.findOne(notesDetails.getGoId());
+         note.setPartner(partner);
+         note.setPartnerNote(notesDetails.getNoteValue());
+         PartnerNoteTopic partnerNoteTopic = partnerNoteTopicRepository.findByPartnerNoteTopicName(notesDetails.getTopic());
+         note.setPartnerNoteTopic(partnerNoteTopic);
+         partnerNoteRepository.saveAndFlush(note);
+
+         List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(notesDetails.getGoId());
+         if (partnerNotes != null) {
+            for (PartnerNote partnerNote : partnerNotes) {
+               PartnerAdminOverviewNotesDetails nd = new PartnerAdminOverviewNotesDetails();
+               CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(partnerNote.getCreatedBy());
+               if (staffUserAndRole != null) {
+                  com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.NoteUserCreator noteCreator = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.NoteUserCreator();
+                  noteCreator.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
+                  noteCreator.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
+                  noteCreator.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
+                  nd.setCreatedBy(noteCreator);
+               }
+               nd.setPartnerNoteId(partnerNote.getPartnerNotesId());
+               nd.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
+               nd.setNoteValue(partnerNote.getPartnerNote());
+               pn.getNotes().add(nd);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return pn;
+   }
+
+   @Override
+   public PartnerAdminOverviewReferenceCheck addNewPartnerInquiryReferenceCheck(PartnerAdminOverviewReferenceCheckDetails referenceChecksDetails) {
+      PartnerAdminOverviewReferenceCheck prc = new PartnerAdminOverviewReferenceCheck();
+      try {
+         PartnerReferenceCheck refcheck = new PartnerReferenceCheck();
+         refcheck.setBusinessLicenseExpiryDate(DateUtils.getDateFromString(referenceChecksDetails.getLatestCopyOfBusinessExpires()));
+         Partner partner = partnerRepository.findOne(referenceChecksDetails.getGoId());
+         refcheck.setPartner(partner);
+         refcheck.setReferenceApprovedOn(DateUtils.getDateFromString(referenceChecksDetails.getApprovedOn()));
+         refcheck.setReferenceApprovedBy(referenceChecksDetails.getApprovedBy());
+         refcheck.setReferenceCheckNotes(referenceChecksDetails.getNote());
+         refcheck.setReferenceCompletedBy(referenceChecksDetails.getCompletedBy());
+         refcheck.setReferenceCompletedOn(DateUtils.getDateFromString(referenceChecksDetails.getCompletedOn()));
+         partnerReferenceCheckRepository.saveAndFlush(refcheck);
+
+         List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(referenceChecksDetails.getGoId());
+         if (partnerReferenceChecks != null) {
+            for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
+               PartnerAdminOverviewReferenceCheckDetails refCheck = new PartnerAdminOverviewReferenceCheckDetails();
+               refCheck.setPartnerCheckReferenceId(partnerReferenceCheck.getPartnerReferenceCheckId());
+               refCheck.setApprovedBy(partnerReferenceCheck.getReferenceApprovedBy());
+               refCheck.setApprovedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceApprovedOn()));
+               refCheck.setCompletedBy(partnerReferenceCheck.getReferenceCompletedBy());
+               refCheck.setCompletedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceCompletedOn()));
+               refCheck.setLatestCopyOfBusinessExpires(DateUtils.getDateAndTime(partnerReferenceCheck.getBusinessLicenseExpiryDate()));
+               refCheck.setNote(partnerReferenceCheck.getReferenceCheckNotes());
+               prc.getReferenceCheck().add(refCheck);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return prc;
+   }
+
+   @Override
+   public PartnerAdminOverviewReferenceCheck removeNewPartnerInquiryReferenceCheck(PartnerAdminOverviewDeletedReferenceCheck deletedItems) {
+      PartnerAdminOverviewReferenceCheck prc = new PartnerAdminOverviewReferenceCheck();
+      try {
+         for (Integer item : deletedItems.getReferenceCheck()) {
+            partnerReferenceCheckRepository.delete(item);
+         }
+         partnerReferenceCheckRepository.flush();
+
+         List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(deletedItems.getGoId());
+         if (partnerReferenceChecks != null) {
+            for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
+               PartnerAdminOverviewReferenceCheckDetails refCheck = new PartnerAdminOverviewReferenceCheckDetails();
+               refCheck.setPartnerCheckReferenceId(partnerReferenceCheck.getPartnerReferenceCheckId());
+               refCheck.setApprovedBy(partnerReferenceCheck.getReferenceApprovedBy());
+               refCheck.setApprovedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceApprovedOn()));
+               refCheck.setCompletedBy(partnerReferenceCheck.getReferenceCompletedBy());
+               refCheck.setCompletedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceCompletedOn()));
+               refCheck.setLatestCopyOfBusinessExpires(DateUtils.getDateAndTime(partnerReferenceCheck.getBusinessLicenseExpiryDate()));
+               refCheck.setNote(partnerReferenceCheck.getReferenceCheckNotes());
+               prc.getReferenceCheck().add(refCheck);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return prc;
+   }
 }
