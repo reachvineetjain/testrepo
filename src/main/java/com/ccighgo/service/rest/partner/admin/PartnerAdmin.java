@@ -14,16 +14,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedContacts;
+import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedDocuments;
+import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedOffices;
+import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedReferenceCheck;
 import com.ccighgo.service.components.partner.admin.PartnerAdminService;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLead;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewContacts.PartnerAdminOverviewContacts;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewContacts.PartnerAdminOverviewContactsDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.PartnerAdminOverviewDocuments;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.PartnerAdminOverviewDocumentsDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.PartnerAdminOverviewNotes;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.PartnerAdminOverviewNotesDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOffices;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatscategory.PartnerAdminDashboardQuickStatsCategory;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles.PartnerAdminDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -179,9 +192,99 @@ public class PartnerAdmin {
       LOGGER.debug("fun : getPartnerInquiryLeadData");
       return partnerAdminService.updatePartnerInquiryLeadData(partnerRecruitmentAdminLead);
    }
+   
+   /***************************************** partial Updates ********************/
+   /*
+    * Partner Documents
+    */
+   
+   
+   @POST
+   @Path("addNewPartnerInquiryDocument/")
+   @Produces("application/json")
+   public PartnerAdminOverviewDocuments addNewPartnerInquiryDocument(PartnerAdminOverviewDocumentsDetails document) {
+      LOGGER.debug("fun : addNewPartnerInquiryDocument");
+      return partnerAdminService.addNewPartnerInquiryDocument(document);
+   }
+   
+   @POST
+   @Path("removeNewPartnerInquiryDocument/")
+   @Produces("application/json")
+   public PartnerAdminOverviewDocuments removeNewPartnerInquiryDocument(PartnerAdminOverviewDeletedDocuments deletedItems) {
+      LOGGER.debug("fun : removeNewPartnerInquiryDocument");
+      return partnerAdminService.removeNewPartnerInquiryDocument(deletedItems);
+   }
+   /**
+    *  Partner Office
+    */
+   
+   @POST
+   @Path("addNewPartnerInquiryOffice/")
+   @Produces("application/json")
+   public PartnerAdminOverviewOffices addNewPartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
+      LOGGER.debug("fun : addNewPartnerInquiryOffice");
+      return partnerAdminService.addNewPartnerInquiryOffice(officesDetails);
+   }
+   
+   @POST
+   @Path("removeNewPartnerInquiryOffice")
+   @Produces("application/json")
+   public PartnerAdminOverviewOffices removeNewPartnerInquiryOffice(PartnerAdminOverviewDeletedOffices deletedItems) {
+      LOGGER.debug("fun : removeNewPartnerInquiryOffice");
+      return partnerAdminService.removeNewPartnerInquiryOffice(deletedItems);
+   }
 
+   /**
+    *  Partner Contacts
+    */
    
+   @POST
+   @Path("addNewPartnerInquiryContacts/")
+   @Produces("application/json")
+   public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails ContactsDetails) {
+      LOGGER.debug("fun : addNewPartnerInquiryContact");
+      return partnerAdminService.addNewPartnerInquiryContact(ContactsDetails);
+   }
    
+   @POST
+   @Path("removeNewPartnerInquiryContact")
+   @Produces("application/json")
+   public PartnerAdminOverviewContacts removeNewPartnerInquiryContact(PartnerAdminOverviewDeletedContacts deletedItems) {
+      LOGGER.debug("fun : removeNewPartnerInquiryContact");
+      return partnerAdminService.removeNewPartnerInquiryContact(deletedItems);
+   }
+   
+   /**
+    *  Partner Note
+    */
+   
+   @POST
+   @Path("addNewPartnerInquiryNote/")
+   @Produces("application/json")
+   public PartnerAdminOverviewNotes addNewPartnerInquiryNote(PartnerAdminOverviewNotesDetails NotesDetails) {
+      LOGGER.debug("fun : addNewPartnerInquiryNote");
+      return partnerAdminService.addNewPartnerInquiryNote(NotesDetails);
+   }
+
+   /**
+    *  Partner ReferenceCheck
+    */
+   
+   @POST
+   @Path("addNewPartnerInquiryReferenceCheck/")
+   @Produces("application/json")
+   public PartnerAdminOverviewReferenceCheck addNewPartnerInquiryReferenceCheck(PartnerAdminOverviewReferenceCheckDetails ReferenceChecksDetails) {
+      LOGGER.debug("fun : addNewPartnerInquiryReferenceCheck");
+      return partnerAdminService.addNewPartnerInquiryReferenceCheck(ReferenceChecksDetails);
+   }
+   
+   @POST
+   @Path("removeNewPartnerInquiryReferenceCheck")
+   @Produces("application/json")
+   public PartnerAdminOverviewReferenceCheck removeNewPartnerInquiryReferenceCheck(PartnerAdminOverviewDeletedReferenceCheck deletedItems) {
+      LOGGER.debug("fun : removeNewPartnerInquiryReferenceCheck");
+      return partnerAdminService.removeNewPartnerInquiryReferenceCheck(deletedItems);
+   }
 
 
 }
