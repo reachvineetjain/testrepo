@@ -29,8 +29,10 @@
                   <xsd:element name="sevisFeesPaidBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="seasonStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="seasonEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="seasonApplicationDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="newDeadlineRequest" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="augStartDeadlineDateRequested" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="augStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="janStartDeadlineDateRequested" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="janStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="programAllocationsUnguranteed" type="psd:J1HSProgramAllocationsUnguaranteed" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="programAllocationsGuaranteed" type="psd:J1HSProgramAllocationsGuaranteed" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonNotes" type="psd:NoteTopics" minOccurs="1" maxOccurs="1" />
