@@ -12,7 +12,7 @@
       <xsd:documentation></xsd:documentation>
    </xsd:annotation>
 
- 	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+ 	<xsd:import schemaLocation="../../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
 
    <xsd:element name="PartnerRecruitmentAdminLead" type="adminLeadViewForPartnerInquiryData:PartnerRecruitmentAdminLead"></xsd:element>
@@ -22,6 +22,7 @@
     <xsd:complexContent>
      <xsd:extension base="common:Response">
             <xsd:sequence>
+            <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="LeadStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="details" type="adminLeadViewForPartnerInquiryData:PartnerRecruitmentAdminLeadScreeningDetail" minOccurs="1" maxOccurs="1" />
@@ -79,10 +80,17 @@
          <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="public" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="createdBy" type="adminLeadViewForPartnerInquiryData:NoteUserCreator" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
       </xsd:extension>
     </xsd:complexContent>
    </xsd:complexType>
    
+    <xsd:complexType name="NoteUserCreator">
+	            <xsd:sequence>
+	               <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				   <xsd:element name="photoUrl"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
+	             </xsd:sequence>
+	   </xsd:complexType>
 </xsd:schema>

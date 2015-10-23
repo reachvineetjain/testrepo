@@ -735,7 +735,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/partner/admin/AdminViewForPartnerInquiryData.xsd" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/AdminViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
 
@@ -745,7 +745,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/partner/admin/AgentViewForPartnerInquiryData.xsd" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/AgentViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
 
@@ -825,7 +825,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/partner/admin/AdminLeadViewForPartnerInquiryData.xsd" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/AdminLeadViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
 
@@ -834,7 +834,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/partner/admin/AdminViewForPartnerInquiryData.xsd" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/AdminViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
 
