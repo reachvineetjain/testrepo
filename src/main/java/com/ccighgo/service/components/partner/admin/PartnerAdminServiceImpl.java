@@ -309,7 +309,64 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead partnerRecruitmentAdminLead) {
       PartnerRecruitmentAdminLead pwt = new PartnerRecruitmentAdminLead();
       try {
+         PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(pwt.getGoId());
+         if (partnerAgentInquiry == null) {
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATING__WOEKQUEUE_PARTNER_INQUIRY_LEAD.getValue(),
+                  messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE)));
+            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE));
+            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE));
+            return pwt;
+         }
+         try {
+            PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(pwt.getGoId());
+            if (partnerReviewStatus != null) {
+               PartnerStatus activeStatus = partnerStatusRepository.findStatusByName(pwt.getLeadStatus());
+               partnerReviewStatus.setPartnerStatus1(activeStatus);
+            }
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, logger);
+         }
+         try {
+            partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString(pwt.getFollowUpDate()));
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, logger);
+         }
+         try {
+            PartnerRecruitmentAdminLeadScreeningDetail detail = pwt.getDetails();
+            partnerAgentInquiry.setCompanyName(detail.getCompanyName());
+            partnerAgentInquiry.setRating(detail.getRating());
+            partnerAgentInquiry.setAdressLineOne(detail.getAddress1());
+            partnerAgentInquiry.setAdressLineTwo(detail.getAddress2());
+            partnerAgentInquiry.setEmail(detail.getEmail());
+            partnerAgentInquiry.setFirstName(detail.getFirstName());
+            partnerAgentInquiry.setLastName(detail.getLastName());
+            partnerAgentInquiry.setPhone(detail.getPhone());
+            partnerAgentInquiry.setWebsite(detail.getWebsite());
+            partnerAgentInquiry.setCity(detail.getCity());
+            partnerAgentInquiry.setState(detail.getStateOrProvince());
+            LookupCountry lookupCountry = lookupCountryRepository.findByCountryName(detail.getCountry());
+            partnerAgentInquiry.setLookupCountry(lookupCountry);
+            Salutation salutation = salutationRepository.findBySalutationName(detail.getSalutation());
+            partnerAgentInquiry.setSalutation(salutation);
 
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, logger);
+         }
+         try {
+            //TODO
+            PartnerRecruitmentAdminScreeningAdditionalInfo additionalInformation = pwt.getAdditionalInformation();
+            partnerAgentInquiry.setCurrentlyOfferingPrograms(additionalInformation.getProgramsYouOffer());
+            partnerAgentInquiry.setCurrentlySendingParticipantToUS((byte) (additionalInformation.isIsYourOrganizationSendingParticipantstoUSA()?1:0));
+            partnerAgentInquiry.setBusinessYears(additionalInformation.getYearsInBusiness()+"");
+            partnerAgentInquiry.setHowDidYouHearAboutCCI(additionalInformation.getHearAboutUsFrom());
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, logger);
+         }
+
+         partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
+
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.ERROR_UPDATING__WOEKQUEUE_PARTNER_INQUIRY_LEAD.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE.getValue(),
@@ -358,8 +415,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             partnerAgentInquiry.setRating(detail.getRating());
             // TODO Ask phani !!!!!!
             partnerAgentInquiry.setBusinessName(detail.getUsername());
-
+            partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
             if (partner != null) {
+               partner.setCompanyName(detail.getCompanyName());
                partner.setBillingNotes(detail.getBillingNotes());
                partner.setCanHaveSubPartner((byte) (detail.getCanHaveSubPartner() == "true" ? 1 : 0));
                partner.setEmail(detail.getGeneralEmail());
