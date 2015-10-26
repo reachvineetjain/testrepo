@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.participants.ParticipantsInterface;
-import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
+import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
+import com.ccighgo.service.transport.participant.beans.newmanualparticipant.NewManualParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 
@@ -52,26 +54,40 @@ public class Participants {
    @POST
    @Path("create/participant")
    @Produces("application/json")
-   public NewParticipant addNewParticipant(NewParticipant newParticipant){
+   public NewManualParticipant addNewParticipant(NewManualParticipant newParticipant){
       LOGGER.info("calling Participants.addNewParticipant ");
       return participantsInterface.addNewParticipant(newParticipant);
    }
 
    @GET
-   @Path("edit/participant/{participantId}")
+   @Path("view/participants/{seasonId}/{programOptionId}")
    @Produces("application/json")
-   public NewParticipant editNewParticipant(@PathParam("participantId") String participantId){
+   public NewManualParticipant viewParticipant(@PathParam("seasonId") String seasonId,@PathParam("programOptionId") String programOptionId){
       LOGGER.info("calling Participants.editNewParticipant ");
-      return participantsInterface.editNewParticipant(Integer.parseInt(participantId));
+      return null; //participantsInterface.editNewParticipant(Integer.parseInt(participantId));
    }
    
    @POST
    @Path("update/participant")
    @Produces("application/json")
-   public NewParticipant updateParticipant(NewParticipant participant){
+   public NewManualParticipant updateParticipant(NewManualParticipant participant){
       LOGGER.info("calling Participants.updateParticipant");
       return participantsInterface.updateParticipant(participant);
    }
 
+   @GET
+   @Path("allSeasons")
+   @Produces("application/json")
+   public SeasonsForParticipants getAllAvailableSeasons(){
+      LOGGER.info("calling Participants.getAllAvailableSeasons ");
+      return participantsInterface.getAllAvailableSeasons();
+   }
    
+   @GET
+   @Path("allProgramOptions")
+   @Produces("application/json")
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(){
+      LOGGER.info("calling Participants.getAllAvailableProgramOptions ");
+      return participantsInterface.getAllAvailableProgramOptions();
+   }
 }
