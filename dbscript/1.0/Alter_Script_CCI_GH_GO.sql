@@ -96,3 +96,51 @@ ADD CONSTRAINT `FK_PartnerProgram_CCIStaffUser`
     ON UPDATE NO ACTION	;
  
 ALTER TABLE `PartnerSeason` ADD COLUMN canCreateSubPartner TINYINT(1) DEFAULT 0; 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------- Alter script for Partner Change Requests for Deadline date and Allocations 26th October 2015----------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `PartnerSeason` ADD COLUMN isSignedContract TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE PartnerSeason   
+ADD COLUMN partnerDeadlineRequestStatusId  INT ,
+ADD COLUMN partnerSecSemDeadlineRequestStatusId  INT ,
+ADD COLUMN deadlineRequestedBy  INT,
+ADD COLUMN deadlineRequestedOn DATETIME,
+ADD COLUMN deadlineRequestReviewedBy INT,
+ADD COLUMN deadlineRequestReviewedOn  DATETIME,
+ADD CONSTRAINT `FK_PartnerSeason_PartnerStatus1`
+    FOREIGN KEY (partnerDeadlineRequestStatusId)
+    REFERENCES `PartnerStatus` (`partnerStatusId`),
+ADD CONSTRAINT `FK_PartnerSeason_PartnerStatus2`
+    FOREIGN KEY (partnerSecSemDeadlineRequestStatusId)
+    REFERENCES `PartnerStatus` (`partnerStatusId`),
+ADD CONSTRAINT `FK_PartnerSeason_Login`
+    FOREIGN KEY (deadlineRequestedBy)
+    REFERENCES `Login` (`loginId`),
+ADD CONSTRAINT `FK_PartnerSeason_CCIStaffUsers1`
+    FOREIGN KEY (deadlineRequestReviewedBy)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`);
+	
+
+ALTER TABLE PartnerSeasonAllocation   
+ADD COLUMN requestedMaxPax  INT AFTER maxPax,
+ADD COLUMN requestedMaxGuaranteedPax INT AFTER maxGuaranteedPax ,
+ADD COLUMN allocationRequestStatusId INT,
+ADD COLUMN allocationRequestedBy  INT,
+ADD COLUMN allocationRequestedOn  DATETIME,
+ADD COLUMN allocationRequestReviewedBy  INT,
+ADD COLUMN allocationRequestReviewedOn DATETIME,
+ADD CONSTRAINT `FK_PartnerSeasonAllocation_PartnerStatus`
+    FOREIGN KEY (allocationRequestStatusId)
+    REFERENCES PartnerStatus (partnerStatusId),
+ADD CONSTRAINT `FK_PartnerSeasonAllocation_Login`
+    FOREIGN KEY (allocationRequestedBy)
+    REFERENCES `Login` (`loginId`),
+ADD CONSTRAINT `FK_PartnerSeasonAllocation_CCIStaffUsers`
+    FOREIGN KEY (allocationRequestReviewedBy)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`);
+							 
+
+
