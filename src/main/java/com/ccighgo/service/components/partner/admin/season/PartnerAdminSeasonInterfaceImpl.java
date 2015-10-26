@@ -47,6 +47,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    @Autowired PartnerSeasonDocumentRepository partnerSeasonDocumentRepository;
 
    @Autowired EntityManager entityManager;
+   
+   public static final String SP_ACTIVE_SEASON="call SPLookupActiveSeasonSearch()";
 
    @Override
    public PartnerAdminSeasonList getPartnerAdminSeasons() {
