@@ -13,4 +13,6 @@ import com.ccighgo.db.entities.PartnerNoteTopic;
 @Repository
 public interface PartnerNoteTopicRepository extends JpaRepository<PartnerNoteTopic, Integer> {
 
+   PartnerNoteTopic findByPartnerNoteTopicName(String topic);
+
 }

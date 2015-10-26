@@ -837,7 +837,6 @@
 			<arg value="${xsd.dir}/partner/admin/partnerinquiry/AdminViewForPartnerInquiryData.xsd" />
 		</java>
 	</target>
-
 	<!--*************************************************  Partner Admin season list *************************************************-->
 
 	<target name="PartnerAdminSeasonsList">
@@ -856,4 +855,40 @@
 		</java>
 	</target>
 
+	<!--*************************************************  Partner Admin Overview Pages Partial Services*************************************************-->
+	<target name="OverviewDocuments">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewDocuments.xsd" />
+		</java>
+	</target>
+	<target name="OverviewNotes">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewNotes.xsd" />
+		</java>
+	</target>
+	<target name="OverviewOffices">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewOffices.xsd" />
+		</java>
+	</target>
+	<target name="OverviewContacts">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewContacts.xsd" />
+		</java>
+	</target>
+	<target name="OverviewReferenceContact">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewReferenceCheck.xsd" />
+		</java>
+	</target>
 </project>
