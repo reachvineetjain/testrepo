@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasonadminapplication" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:sa="http://www.ccighgo.com/seasonadminapplication"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partner.season.admin.application" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="PartnerAdminSeasonApplicationList" type="sa:PartnerAdminSeasonApplicationList" />
+
+   <xsd:complexType name="PartnerAdminSeasonApplicationList">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:sequence>
+                  <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="partnerSeasonApplication" type="sa:PartnerAdminSeasonApplication" minOccurs="0" maxOccurs="unbounded" />
+                  <xsd:element name="comments" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               </xsd:sequence>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerAdminSeasonApplication">
+      <xsd:sequence>
+         <xsd:sequence>
+            <xsd:element name="seasonId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="departmentProgramId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         </xsd:sequence>
+      </xsd:sequence>
+   </xsd:complexType>
+
+
+</xsd:schema>

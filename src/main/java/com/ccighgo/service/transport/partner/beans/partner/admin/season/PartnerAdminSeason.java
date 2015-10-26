@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerAdminSeason", propOrder = {
+    "partnerGoId",
     "seasonId",
     "partnerSeasonId",
     "departmentProgramId",
@@ -58,7 +59,9 @@ import javax.xml.bind.annotation.XmlType;
     "signedContract"
 })
 public class PartnerAdminSeason {
-
+   
+    @XmlElement(required = true) 
+    protected String partnerGoId;
     protected int seasonId;
     protected int partnerSeasonId;
     protected int departmentProgramId;
@@ -76,6 +79,27 @@ public class PartnerAdminSeason {
     protected SeasonStatus seasonStatus;
     protected boolean partnerActiveForSeason;
     protected boolean signedContract;
+    
+    /**
+     * Gets the value of the partnerGoId property.
+     * 
+     * @return possible object is {@link String }
+     * 
+     */
+    public String getPartnerGoId() {
+       return partnerGoId;
+    }
+
+    /**
+     * Sets the value of the partnerGoId property.
+     * 
+     * @param value
+     *           allowed object is {@link String }
+     * 
+     */
+    public void setPartnerGoId(String value) {
+       this.partnerGoId = value;
+    }
 
     /**
      * Gets the value of the seasonId property.
