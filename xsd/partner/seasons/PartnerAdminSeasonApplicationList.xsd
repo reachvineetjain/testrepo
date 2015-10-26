@@ -18,7 +18,7 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:sequence>
-                  <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonApplication" type="sa:PartnerAdminSeasonApplication" minOccurs="0" maxOccurs="unbounded" />
                   <xsd:element name="comments" type="xsd:string" minOccurs="1" maxOccurs="1" />
                </xsd:sequence>
