@@ -38,14 +38,14 @@ public class PartnerAdminSeason {
       return partnerAdminSeasonInterface.getPartnerAdminSeasons(partnerGoId);
    }
    
-   /**
+  /**
     * @param partnerId
     * @return
     */
    @GET
-   @Path("apply/new/")
-   public PartnerAdminSeasonApplicationList getPartnerAdminSeasonApplicationList(){
-      return partnerAdminSeasonInterface.getPartnerAdminSeasonApplicationList();
+   @Path("apply/new/{partnerGoId}")
+   public PartnerAdminSeasonApplicationList getPartnerAdminSeasonApplicationList(@PathParam("partnerGoId") String partnerGoId){
+      return partnerAdminSeasonInterface.getPartnerAdminSeasonApplicationList(partnerGoId);
    }
 
 }
