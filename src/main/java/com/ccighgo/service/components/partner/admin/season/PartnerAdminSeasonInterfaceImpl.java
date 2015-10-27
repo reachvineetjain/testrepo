@@ -152,7 +152,6 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminSeasonApplicationList.setPartnerId(Integer.valueOf(partnerGoId));
             List<PartnerAdminSeasonApplication> partnerSeasonApplication = new ArrayList<PartnerAdminSeasonApplication>();
             for (Object[] obj : results) {
-               // position 0 : programName, position 1, position 2 seasonId: departmentProgramId
                PartnerAdminSeasonApplication application = new PartnerAdminSeasonApplication();
                application.setProgramName(obj[0].toString());
                application.setSeasonId(obj[1].toString());
