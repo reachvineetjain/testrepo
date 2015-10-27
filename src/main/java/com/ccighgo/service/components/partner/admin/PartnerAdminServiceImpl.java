@@ -20,16 +20,12 @@ import com.ccighgo.db.entities.AdminWorkQueueCategory;
 import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueType;
 import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
-import com.ccighgo.db.entities.DocumentCategoryProcess;
 import com.ccighgo.db.entities.DocumentInformation;
-import com.ccighgo.db.entities.GoIdSequence;
-import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerDocument;
-import com.ccighgo.db.entities.PartnerMessage;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerOffice;
@@ -71,6 +67,7 @@ import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.usermanagment.UserManagementService;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLead;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLeadScreeningDetail;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
@@ -110,6 +107,7 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedappl
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueTypeDetail;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -188,6 +186,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    SalutationRepository salutationRepository;
    @Autowired
    PartnerNoteTopicRepository partnerNoteTopicRepository;
+   @Autowired
+   UserManagementService userManagementService;
    @PersistenceContext
    EntityManager em;
 
@@ -1365,5 +1365,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          ExceptionUtil.logException(e, logger);
       }
       return prc;
+   }
+
+   @Override
+   public WSDefaultResponse sendLogin() {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public CCIUsers getAllCCIUsers() {
+      return userManagementService.findAllUsers();
    }
 }
