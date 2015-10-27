@@ -15,11 +15,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.participants.ParticipantsInterface;
+import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
 import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
 import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availablesubpartnerforparticipant.SubPartnersForParticipants;
 import com.ccighgo.service.transport.participant.beans.newmanualparticipant.NewManualParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -40,6 +43,14 @@ public class Participants {
    public ParticipantsActiveList getActiveParticipantsList(@PathParam("partnerId") String partnerId){
       LOGGER.info("calling Participants.getActiveParticipantsList for partner id {}",partnerId);
       return participantsInterface.getActiveParticipantsList(partnerId);
+      
+   }
+   @GET
+   @Path("list/AddedParticipant/{partnerId}")
+   @Produces("application/json")
+   public AddedParticipantsList getAddedParticipant(@PathParam("partnerId") String partnerId){
+      LOGGER.info("calling Participants.getAddedParticipant for partner id {}",partnerId);
+      return participantsInterface.getAddedParticipant(partnerId);
       
    }
    
@@ -90,4 +101,28 @@ public class Participants {
       LOGGER.info("calling Participants.getAllAvailableProgramOptions ");
       return participantsInterface.getAllAvailableProgramOptions();
    }
+   
+   @GET
+   @Path("allSubPartners")
+   @Produces("application/json")
+   public SubPartnersForParticipants getAllAvailableSubPartners(){
+      LOGGER.info("calling Participants.getAllAvailableSubPartners ");
+      return participantsInterface.getAllAvailableSubPartners();
+   }
+   
+   @GET
+   @Path("assignSeason/{seasonId}/{participantId}")
+   @Produces("application/json")
+   public WSDefaultResponse assignSeasonToParticipant(@PathParam("seasonId") String seasonId,@PathParam("participantId")String participantId){
+      LOGGER.info("calling Participants.assignSeasonToParticipant ");
+      return participantsInterface.assignSeasonToParticipant(seasonId,participantId);
+   }
+   @GET
+   @Path("assignSubPartner/{subpartnerId}/{participantId}")
+   @Produces("application/json")
+   public WSDefaultResponse assignSubpartnerToParticipant(@PathParam("subpartnerId") String subpartnerId,@PathParam("participantId")String participantId){
+      LOGGER.info("calling Participants.assignSubpartnerToParticipant ");
+      return participantsInterface.assignSubpartnerToParticipant(subpartnerId,participantId);
+   }
+   
 }

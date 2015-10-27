@@ -5,11 +5,14 @@ package com.ccighgo.service.components.participants;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
 import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
 import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availablesubpartnerforparticipant.SubPartnersForParticipants;
 import com.ccighgo.service.transport.participant.beans.newmanualparticipant.NewManualParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -43,5 +46,13 @@ public interface ParticipantsInterface {
    public SeasonsForParticipants getAllAvailableSeasons();
 
    public ProgramOptionsForParticipants getAllAvailableProgramOptions();
+
+   public AddedParticipantsList getAddedParticipant(String partnerId);
+
+   public SubPartnersForParticipants getAllAvailableSubPartners();
+
+   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId);
+
+   public WSDefaultResponse assignSubpartnerToParticipant(String subpartnerId, String participantId);
 
 }

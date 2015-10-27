@@ -856,70 +856,100 @@
 	</target>
 
 	<!--*************************************************  Partner Admin Overview Pages Partial Services*************************************************-->
-		<target name="OverviewDocuments">
+	<target name="OverviewDocuments">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewDocuments.xsd" />
+		</java>
+	</target>
+	<target name="OverviewNotes">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewNotes.xsd" />
+		</java>
+	</target>
+	<target name="OverviewOffices">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewOffices.xsd" />
+		</java>
+	</target>
+	<target name="OverviewContacts">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewContacts.xsd" />
+		</java>
+	</target>
+	<target name="OverviewReferenceContact">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewReferenceCheck.xsd" />
+		</java>
+	</target>
+	<!--*************************************************  Participant Services  *************************************************-->
+	<target name="AddNewParticipantManually">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/addNewParticipantManually/NewManualParticipant.xsd" />
+		</java>
+	</target>
+	<target name="AddNewParticipantFromFile">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/NewParticipantFromFile.xsd" />
+		</java>
+	</target>
+	<target name="GetAllSeasonsForParticipants">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/addNewParticipantManually/GetAllAvailableSeasonsForParticipants.xsd" />
+		</java>
+	</target>
+	<target name="GetAllProgramOptionsForParticipants">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/addNewParticipantManually/GetAllAvailableProgramOptionsForParticipants.xsd" />
+		</java>
+	</target>
+
+	<!--***************************************************Partner WorkQueue Categories***************************  -->
+	<target name="DeadlineRequestsCatalog">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/workqueue/type/partnerUpdate/DeadlineRequestsCategory.xsd" />
+		</java>
+	</target>
+	<target name="RequestForChangesInAllocations">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/workqueue/type/partnerUpdate/RequestsForChangesInAllocationCategory.xsd" />
+		</java>
+	</target>
+	<!--***************************************************Participants***************************  -->
+	<target name="AddedParticipantList">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
 				<arg value="-d" />
 				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewDocuments.xsd" />
+				<arg value="${xsd.dir}/Participants/AddedParticipantsList.xsd" />
 			</java>
 		</target>
-		<target name="OverviewNotes">
+	<target name="GetAllAvailableSubpartnerToBeAssignedToParticipant">
 				<java classname="com.sun.tools.internal.xjc.XJCFacade">
 					<arg value="-d" />
 					<arg value="${java.dir}" />
-					<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewNotes.xsd" />
-				</java>
-		</target>
-		<target name="OverviewOffices">
-				<java classname="com.sun.tools.internal.xjc.XJCFacade">
-					<arg value="-d" />
-					<arg value="${java.dir}" />
-					<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewOffices.xsd" />
+					<arg value="${xsd.dir}/Participants/GetAllAvailableSubPartnersForParticipants.xsd" />
 				</java>
 			</target>
-		<target name="OverviewContacts">
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewContacts.xsd" />
-					</java>
-		</target>
-		<target name="OverviewReferenceContact">
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/admin/partnerinquiry/partneradminoverviewpartialupdate/PartnerAdminOverviewReferenceCheck.xsd" />
-					</java>
-	   </target>
-	<!--*************************************************  Participant Services  *************************************************-->
-			<target name="AddNewParticipantManually">
-				<java classname="com.sun.tools.internal.xjc.XJCFacade">
-					<arg value="-d" />
-					<arg value="${java.dir}" />
-					<arg value="${xsd.dir}/Participants/addNewParticipantManually/NewManualParticipant.xsd" />
-				</java>
-			</target>
-			<target name="AddNewParticipantFromFile">
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/Participants/NewParticipantFromFile.xsd" />
-					</java>
-				</target>
-			<target name="GetAllSeasonsForParticipants">
-						<java classname="com.sun.tools.internal.xjc.XJCFacade">
-							<arg value="-d" />
-							<arg value="${java.dir}" />
-							<arg value="${xsd.dir}/Participants/addNewParticipantManually/GetAllAvailableSeasonsForParticipants.xsd" />
-						</java>
-			</target>
-			<target name="GetAllProgramOptionsForParticipants">
-							<java classname="com.sun.tools.internal.xjc.XJCFacade">
-								<arg value="-d" />
-								<arg value="${java.dir}" />
-								<arg value="${xsd.dir}/Participants/addNewParticipantManually/GetAllAvailableProgramOptionsForParticipants.xsd" />
-			</java>
-				</target>
-
 
 </project>
