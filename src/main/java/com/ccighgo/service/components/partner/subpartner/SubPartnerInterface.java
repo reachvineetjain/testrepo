@@ -5,10 +5,12 @@ package com.ccighgo.service.components.partner.subpartner;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetail;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
 
 /**
@@ -28,5 +30,6 @@ public interface SubPartnerInterface {
    
    public SubPartnerDetails getAllSubPartners();
    
+   public com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail getSubPartnerDetail(String subPartnerId);
 
 }

@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
+import org.jboss.logging.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.partner.subpartner.SubPartnerInterface;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail;
 
 /**
  * @author ravi
@@ -73,4 +75,14 @@ public class SubPartner {
       LOGGER.debug("calling SubPartner.getAllSubPartners");
       return subPartnerInterface.getAllSubPartners();
    }
+   
+   @GET
+   @Path("getDetail/{subPartnerId}")
+   @Produces("application/json")
+   public com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail getSubPartnerDetail(@PathParam("subPartnerId") String subPartnerId)
+   {
+	   LOGGER.debug("calling subpartner.getSubpartnerDetail");
+	   return subPartnerInterface.getSubPartnerDetail(subPartnerId) ;
+   }
+   
 }
