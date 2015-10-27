@@ -3,15 +3,17 @@
  */
 package com.ccighgo.service.components.participants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.DepartmentProgramOption;
-import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerReviewStatus;
+import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
@@ -22,21 +24,25 @@ import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsDetails;
+import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
+import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipantsDetails;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipantDetails;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availablesubpartnerforparticipant.SubPartnersForParticipants;
+import com.ccighgo.service.transport.participant.beans.availablesubpartnerforparticipant.SubPartnersForParticipantsDetails;
+import com.ccighgo.service.transport.participant.beans.newmanualparticipant.AddNewManualParticipant;
+import com.ccighgo.service.transport.participant.beans.newmanualparticipant.NewManualParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ActiveParticipant;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantApplicationStatus;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantPlacementStatus;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantProgramOption;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSeason;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSubPartner;
-import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantType;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantLead;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -67,37 +73,38 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public ParticipantsActiveList getActiveParticipantsList(String partnerId) {
       ParticipantsActiveList participantsActiveList = new ParticipantsActiveList();
       try {
-         List<Participant> participants =null;// participantRepository.findActiveParticipantByPartnerId(partnerId);
+         // TODO
+         List<Participant> participants = new ArrayList<Participant>();// participantRepository.findActiveParticipantByPartnerId(partnerId);
          if (participants != null) {
             for (Participant participant : participants) {
-               ParticipantProgramOption participantProgramOption = new ParticipantProgramOption();
+               com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantProgramOption participantProgramOption = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantProgramOption();
                participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
 
-               ParticipantType participantType = new ParticipantType();
+               com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantType participantType = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantType();
                participantType.setParticipantTypeId(1);
                participantType.setParticipantType("Activated");
 
-               ParticipantSeason participantSeason = new ParticipantSeason();
+               com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSeason participantSeason = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSeason();
                participantSeason.setParticipantSeasonId(participant.getSeason().getSeasonId());
                participantSeason.setParticipantSeasonProgramId(participant.getDepartmentProgram().getDepartmentProgramId());
                participantSeason.setParticipantSeasonProgram(participant.getDepartmentProgram().getProgramName());
 
-               ParticipantCountry participantCountry = new ParticipantCountry();
+               com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry participantCountry = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry();
                participantCountry.setParticipantCountryId(participant.getLookupCountry().getCountryId());
                participantCountry.setParticipantCountryCode(participant.getLookupCountry().getCountryCode());
                participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
 
-               ParticipantSubPartner participantSubPartner = new ParticipantSubPartner();
-               //participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
+               com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSubPartner participantSubPartner = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSubPartner();
+               // participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
                participantSubPartner.setPartnerGoId(participant.getParticipantGoId());
                participantSubPartner.setParticipantSubPartner("Sub Partner Dude");
 
-               ParticipantPlacementStatus participantPlacementStatus = new ParticipantPlacementStatus();
+               com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantPlacementStatus participantPlacementStatus = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantPlacementStatus();
                participantPlacementStatus.setParticipantPlacementStatusId(1);
                participantPlacementStatus.setParticipantPlacementStatus("Active");
 
-               ParticipantApplicationStatus participantApplicationStatus = new ParticipantApplicationStatus();
+               com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantApplicationStatus participantApplicationStatus = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantApplicationStatus();
                participantApplicationStatus.setParticipantApplicationStatusId(1);
                participantApplicationStatus.setParticipantApplicationStatus("Accepted");
 
@@ -135,7 +142,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public ParticipantsLeadList getLeadParticipantsList(String partnerId) {
       ParticipantsLeadList participantsLeadList = new ParticipantsLeadList();
       try {
-         List<Participant> leadParticipants =null;// participantRepository.findLeadParticipantByPartnerId(partnerId);
+         List<Participant> leadParticipants = null;// participantRepository.findLeadParticipantByPartnerId(partnerId);
          participantsLeadList.setParticipantCount(leadParticipants.size());
          for (Participant participant : leadParticipants) {
             com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantType participantType = new com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantType();
@@ -175,113 +182,52 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public NewParticipant addNewParticipant(NewParticipant newParticipant) {
+   public NewManualParticipant addNewParticipant(NewManualParticipant NewManualParticipant) {
       try {
-         participantRepository.saveAndFlush(getParticipantEntity(newParticipant));
-         newParticipant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         if(NewManualParticipant!=null){
+            for (AddNewManualParticipant p : NewManualParticipant.getDetails()) {
+               Participant participant = new Participant();
+               try {
+                  participant.setFirstName(p.getFirstName());
+                  participant.setEmail(p.getEmail());
+                  participant.setLastName(p.getLastName());
+                  DepartmentProgramOption departmentProgramOption = departmentProgramOptions.findOne(p.getDepartmentProgramOptionId());
+                  participant.setDepartmentProgramOption(departmentProgramOption);
+                  Season season=seasonRepository.findOne(p.getSeasonId());
+                  participant.setSeason(season);
+                
+                  participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
+                  participantRepository.saveAndFlush(participant);
+                  p.setAdded(true);
+               } catch (Exception e) {
+                  ExceptionUtil.logException(e, logger);
+               }
+            }
+         }
+         NewManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         newParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+         NewManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
-      return newParticipant;
+      return NewManualParticipant;
    }
+ 
 
-   private Participant getParticipantEntity(NewParticipant newParticipant) {
-      Participant participant = new Participant();
+   private NewManualParticipant getParticipantEntity(Participant participant) {
+      NewManualParticipant NewManualParticipant = new NewManualParticipant();
       try {
-         participant.setFirstName(newParticipant.getManualMehod().getParticipantFirstName());
-         participant.setEmail(newParticipant.getManualMehod().getParticipantEmailId());
-         participant.setLastName(newParticipant.getManualMehod().getParticipantlastName());
-         DepartmentProgramOption departmentProgramOption = departmentProgramOptions.findProgramOptionsByProgramName(newParticipant.getManualMehod().getParticipantProgramOption().getParticipantProgramOption());
-         participant.setDepartmentProgramOption(departmentProgramOption);
-        
-//         DepartmentProgram departmentProgram= departmentPrograms.findOne(newParticipant.getManualMehod().getParticipant);
-//         participant.setDepartmentProgram(departmentProgram);
-         participant.setEndDate(DateUtils.getDateFromString(newParticipant.getManualMehod().getParticipantEndDate()));
-         participant.setGuaranteed((byte) (newParticipant.getManualMehod().isParticipantGuranteed()?1:0));
-         participant.setIsLead((byte) (newParticipant.getManualMehod().isParticipantLead()?1:0));
-         LookupCountry lc = lookupCountry.findOne(newParticipant.getManualMehod().getParticipantCountry().getParticipantCountryId());
-         participant.setLookupCountry(lc );
-         participant.setParticipantGoId(Integer.parseInt(newParticipant.getManualMehod().getParticipantId()));
-//         participant.getParticipantStatusId()(newParticipant.getManualMehod().getParticipant);
-         Partner partner1 = partnerRepository.findOne(newParticipant.getManualMehod().getParticipantSubPartner().getPartnerGoId());
-         participant.setPartner1(partner1 );
-         Partner partner2 = partnerRepository.findOne(newParticipant.getManualMehod().getParticipantSubPartner().getParticipantSubPartnerId());
-         participant.setPartner2(partner2);
-         Season season=seasonRepository.findOne(newParticipant.getManualMehod().getParticipantSeason().getParticipantSeasonId());
-         participant.setSeason(season);
-         participant.setStartDate(DateUtils.getDateFromString(newParticipant.getManualMehod().getParticipantStartDate()));
-         participant.setSubmittedFlightInfo((byte) (newParticipant.getManualMehod().isParticipantSubmittedFlightInfo()?1:0));
-        // participant.setSubPartner(newParticipant.getManualMehod().getParticipantSubPartner().getParticipantSubPartnerId());
-         
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      return participant;
-   }
-
-   private NewParticipant getParticipantEntity(Participant participant) {
-      NewParticipant newParticipant = new NewParticipant();
-      try {
-         com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantProgramOption participantProgramOption = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantProgramOption();
-         participantProgramOption.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
-         participantProgramOption.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
-
-         com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantType participantType = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantType();
-         participantType.setParticipantTypeId(1);
-         participantType.setParticipantType("Activated");
-
-         com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantSeason participantSeason = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantSeason();
-         participantSeason.setParticipantSeasonId(participant.getSeason().getSeasonId());
-         participantSeason.setParticipantSeasonProgramId(participant.getDepartmentProgram().getDepartmentProgramId());
-         participantSeason.setParticipantSeasonProgram(participant.getDepartmentProgram().getProgramName());
-
-         com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantCountry participantCountry = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantCountry();
-         participantCountry.setParticipantCountryId(participant.getLookupCountry().getCountryId());
-         participantCountry.setParticipantCountryCode(participant.getLookupCountry().getCountryCode());
-         participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
-
-         com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantSubPartner participantSubPartner = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantSubPartner();
-        // participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
-         participantSubPartner.setPartnerGoId(participant.getParticipantGoId());
-         participantSubPartner.setParticipantSubPartner("Sub Partner Dude");
-
-         com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantPlacementStatus participantPlacementStatus = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantPlacementStatus();
-         participantPlacementStatus.setParticipantPlacementStatusId(1);
-         participantPlacementStatus.setParticipantPlacementStatus("Active");
-
-         com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantApplicationStatus participantApplicationStatus = new com.ccighgo.service.transport.participant.beans.newparticipant.ParticipantApplicationStatus();
-         participantApplicationStatus.setParticipantApplicationStatusId(1);
-         participantApplicationStatus.setParticipantApplicationStatus("Accepted");
-
-         newParticipant.getManualMehod().setParticipantId(participant.getParticipantGoId() + "");
-         newParticipant.getManualMehod().setParticipantEmailId(participant.getEmail());
-         newParticipant.getManualMehod().setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
-         newParticipant.getManualMehod().setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
-         newParticipant.getManualMehod().setParticipantFirstName(participant.getFirstName());
-         newParticipant.getManualMehod().setParticipantlastName(participant.getLastName());
-         newParticipant.getManualMehod().setParticipantPicUrl("www.google.com");
-         newParticipant.getManualMehod().setParticipantType(participantType);
-         newParticipant.getManualMehod().setParticipantSeason(participantSeason);
-         newParticipant.getManualMehod().setParticipantCountry(participantCountry);
-         newParticipant.getManualMehod().setParticipantProgramOption(participantProgramOption);
-         newParticipant.getManualMehod().setParticipantSubPartner(participantSubPartner);
-         newParticipant.getManualMehod().setParticipantPlacementStatus(participantPlacementStatus);
-         newParticipant.getManualMehod().setParticipantApplicationStatus(participantApplicationStatus);
-         newParticipant.getManualMehod().setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() != 0);
-         newParticipant.getManualMehod().setParticipantGuranteed(participant.getGuaranteed() != 0);
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-      return newParticipant;
+      return NewManualParticipant;
    }
 
    @Override
-   public NewParticipant editNewParticipant(Integer participantId) {
-      NewParticipant editedParticipant = new NewParticipant();
+   public NewManualParticipant editNewParticipant(Integer participantId) {
+      NewManualParticipant editedParticipant = new NewManualParticipant();
       try {
          Participant participant = participantRepository.findOne(participantId);
          editedParticipant = getParticipantEntity(participant);
@@ -296,17 +242,167 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public NewParticipant updateParticipant(NewParticipant participant) {
+   public NewManualParticipant updateParticipant(NewManualParticipant participant) {
       try {
-         participantRepository.saveAndFlush(getParticipantEntity(participant));
-         participant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//         participantRepository.saveAndFlush(getParticipantEntity(participant));
+//         participant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          participant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return participant;
+   }
+
+   @Override
+   public SeasonsForParticipants getAllAvailableSeasons() {
+      SeasonsForParticipants seasons = new SeasonsForParticipants();
+      try {
+         List<Season> allSeasons = seasonRepository.getAllSeasons();
+         if (allSeasons != null) {
+            for (Season season : allSeasons) {
+               SeasonsForParticipantDetails seasonsForParticipantDetails =new SeasonsForParticipantDetails();
+               seasonsForParticipantDetails.setSeasonId(season.getSeasonId());
+               seasonsForParticipantDetails.setSeasonName(season.getSeasonFullName());
+               seasons.getDetails().add(seasonsForParticipantDetails);
+            }
+         }
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return seasons;
+   }
+
+   @Override
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions() {
+      ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();
+      try {
+         List<DepartmentProgramOption> allProgramOptions = departmentProgramOptions.findAll();
+         if (allProgramOptions != null) {
+            for (DepartmentProgramOption departmentProgramOption : allProgramOptions) {
+               ProgramOptionsForParticipantsDetails details= new ProgramOptionsForParticipantsDetails();
+               details.setDepartmentProgramId(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId());
+               details.setDepartmentProgramOption(departmentProgramOption.getProgramOptionName());
+               details.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
+               programOptionsForParticipants.getDetails().add(details);
+            }
+         }
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return programOptionsForParticipants;
+   }
+
+   @Override
+   public AddedParticipantsList getAddedParticipant(String partnerId) {
+      AddedParticipantsList addedParticipants = new AddedParticipantsList();
+      try {
+         // TODO
+         List<Participant> participants =  participantRepository.findAddedParticipantByPartnerId(partnerId);
+         if (participants != null) {
+            for (Participant participant : participants) {
+               AddedParticipantsDetails details=new AddedParticipantsDetails();
+//               details.setActive(participant.get);
+               details.setActive(participant.getParticipantStatus().getActive()==1);
+               details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
+               details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
+               details.setParticipantCountry(participant.getLookupCountry().getCountryName());
+               details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
+               details.setParticipantEmail(participant.getEmail());
+               details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
+               details.setParticipantFirstName(participant.getFirstName());
+               details.setParticipantGuranteed(participant.getGuaranteed()==1);
+               details.setParticipantlastName(participant.getLastName());
+               details.setParticipantPicUrl(participant.getPhoto());
+//               details.setParticipantPlacementStatus(participant.getParticipantStatus());
+               details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
+               details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+               details.setParticipantSeasonId(participant.getSeason().getSeasonId());
+               details.setParticipantSeasonName(participant.getSeason().getSeasonName());
+               details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
+               details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo()==1);
+//               details.setParticipantType(participant.getpar);
+               addedParticipants.getParticipants().add(details);
+            }
+            addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (Exception e) {
+         addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return addedParticipants;
+   }
+
+   @Override
+   public SubPartnersForParticipants getAllAvailableSubPartners() {
+      SubPartnersForParticipants subPartners = new SubPartnersForParticipants();
+      try {
+         List<Partner> allPartners = partnerRepository.findAll();
+         if (allPartners != null) {
+            for (Partner p : allPartners) {
+               SubPartnersForParticipantsDetails details =new SubPartnersForParticipantsDetails();
+               details.setSubPartnerId(p.getPartnerGoId());
+               details.setSubPartnerName(p.getCompanyName());
+               subPartners.getDetails().add(details);
+            }
+         }
+         subPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         subPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return subPartners;
+   }
+
+   @Override
+   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
+         Season season =seasonRepository.findOne(Integer.parseInt(seasonId));
+         p.setSeason(season);
+         participantRepository.saveAndFlush(p);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_SEASON.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SEASON)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SEASON));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse assignSubpartnerToParticipant(String subpartnerId, String participantId) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
+         Partner subPartner = partnerRepository.findOne(Integer.parseInt(subpartnerId));
+         p.setPartner2(subPartner);
+         participantRepository.saveAndFlush(p);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_SUBPARTNER.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_SUBPARTNER.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER));
+      }
+      return wsDefaultResponse;
    }
 
 }

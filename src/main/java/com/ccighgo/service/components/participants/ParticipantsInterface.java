@@ -5,7 +5,11 @@ package com.ccighgo.service.components.participants;
 
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
+import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
+import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availablesubpartnerforparticipant.SubPartnersForParticipants;
+import com.ccighgo.service.transport.participant.beans.newmanualparticipant.NewManualParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -33,10 +37,22 @@ public interface ParticipantsInterface {
     */
    public ParticipantsLeadList getLeadParticipantsList(String partnerId);
 
-   public NewParticipant addNewParticipant(NewParticipant newParticipant);
+   public NewManualParticipant addNewParticipant(NewManualParticipant newParticipant);
 
-   public NewParticipant editNewParticipant(Integer participantId);
+   public NewManualParticipant editNewParticipant(Integer participantId);
 
-   public NewParticipant updateParticipant(NewParticipant participant);
+   public NewManualParticipant updateParticipant(NewManualParticipant participant);
+
+   public SeasonsForParticipants getAllAvailableSeasons();
+
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions();
+
+   public AddedParticipantsList getAddedParticipant(String partnerId);
+
+   public SubPartnersForParticipants getAllAvailableSubPartners();
+
+   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId);
+
+   public WSDefaultResponse assignSubpartnerToParticipant(String subpartnerId, String participantId);
 
 }
