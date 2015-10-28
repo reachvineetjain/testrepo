@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -31,6 +32,8 @@ import com.ccighgo.db.entities.PartnerUserRole;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUsersCCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
@@ -42,14 +45,19 @@ import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
+import com.ccighgo.jpa.repositories.PartnerUserRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.SubPartnerMessageConstants;
 import com.ccighgo.service.components.utility.UtilityServices;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.NoteUserCreator;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerMailingAddress;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Creator;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Note;
@@ -71,14 +79,19 @@ import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.Country;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.Details;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerScreeningNotes;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersMailingAddress;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersPhysicalAddress;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersPrimaryContact;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.Topics;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.TypeofPartnerUser;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
+import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -143,6 +156,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 	@Autowired
 	PartnerReviewStatusRepository partnerReviewStatusRepository;
 
+	@Autowired
+	PartnerUserRepository partnerUserRepository;
+	
+	
 	@Override
 	public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
 		PartnerSubPartners psp = new PartnerSubPartners();
@@ -1410,6 +1427,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 			{
 			for(PartnerUser pu:partnerUsers)
 			{
+				if(pu!=null)
 				if(pu.getPartner().getPartnerGoId()==Integer.valueOf(subPartnerId))
 				{
 					partnerUser=pu;
@@ -1540,6 +1558,57 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 								.getState());
 				
 			}
+			List<PartnerNoteTopic> partnerTopics = partnerNoteTopicRepository.findAllPartnerNoteTopicByPartnerId(Integer.valueOf(subPartnerId));
+			
+			if(partnerTopics!=null)
+			{
+			for(PartnerNoteTopic partnerTopic:partnerTopics )
+			{
+				Topics tpc=new Topics();
+				tpc.setPartnerNoteTopicName(partnerTopic.getPartnerNoteTopicName());
+				tpc.setPartnerNoteTopicId(partnerTopic.getPartnerNoteTopicId());
+				tpc.setCompetitorInfo(partnerTopic.getCompetitorInfo()==CCIConstants.ACTIVE?true:false);
+				tpc.setEmbassyVisaInfo(partnerTopic.getEmbassy_VisaInfo()==CCIConstants.ACTIVE?true:false);
+				tpc.setIsPublic(partnerTopic.getIsPublic()==CCIConstants.ACTIVE?true:false);
+				tpc.setWT(partnerTopic.getW_t()==CCIConstants.ACTIVE?true:false);
+				tpc.setJ1(partnerTopic.getJ1()==CCIConstants.ACTIVE?true:false);
+				tpc.setGht(partnerTopic.getGht()==CCIConstants.ACTIVE?true:false);
+				tpc.setStInbound(partnerTopic.getStInbound()==CCIConstants.ACTIVE?true:false);
+				tpc.setMeetingVisit(partnerTopic.getMeeting_visit()==CCIConstants.ACTIVE?true:false);			
+				tpc.setSeasonInfo(partnerTopic.getSeasonInfo()==CCIConstants.ACTIVE?true:false);
+				tpc.setF1(partnerTopic.getF1()==CCIConstants.ACTIVE?true:false);
+				tpc.setIntern(partnerTopic.getIntern()==CCIConstants.ACTIVE?true:false);
+				tpc.setTrainee(partnerTopic.getTrainee()==CCIConstants.ACTIVE?true:false);
+			List<PartnerNote> partnerNotes =partnerTopic.getPartnerNotes();
+					 /*partnerNoteRepository.findAllPartnerNoteByPartnerId(Integer
+						.valueOf(subPartnerId));*/
+	            if (partnerNotes != null) {
+	               for (PartnerNote partnerNote : partnerNotes) {
+	            	   
+	                  SubPartnerScreeningNotes note = new SubPartnerScreeningNotes();
+	            
+	                 PartnerUser notePartnerUser=partnerUserRepository.findOne(partnerNote.getCreatedBy());
+	                  //
+	                  if (notePartnerUser != null) {
+	                     com.ccighgo.service.transport.partner.beans.subpartnerdetail.NoteUserCreator noteCreator = new com.ccighgo.service.transport.partner.beans.subpartnerdetail.NoteUserCreator();
+	                     noteCreator.setPhotoUrl(notePartnerUser.getPhoto());
+	                     noteCreator.setRole(notePartnerUser.getTitle());
+	                     noteCreator.setUserName(notePartnerUser.getFirstName()+" "+notePartnerUser.getLastName());
+	                     note.setCreatedBy(noteCreator);
+	                    note.setUserId(notePartnerUser.getPartnerUserId());
+	                  }
+	                  note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
+	                  note.setNoteValue(partnerNote.getPartnerNote());
+	                  note.setTopicId(tpc.getPartnerNoteTopicId());
+	                  note.setPartnerId(Integer.valueOf(subPartnerId));
+	                  
+	                  tpc.getPartnerNotes().add(note);
+	               }
+	                
+	               }
+	            subPartnerDetail.getTopic().add(tpc);
+	            }
+			}
 			subPartnerDetail.setPartnerDetail(details);
 			subPartnerDetail
 					.setSubPartnerPrimaryContact(subPartnerPrimaryContact);
@@ -1547,8 +1616,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 					.setSubPartnerPhysicalAddress(subPartnerPhysicalAddress);
 			subPartnerDetail
 					.setSubPartnerMailingAddress(subPartnersMailingAddress);
+			
 			subPartnerDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
 	                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			
 
 		} catch (CcighgoException e) {
 			subPartnerDetail
@@ -1564,5 +1635,66 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 		}
 		return subPartnerDetail;
 	}
+	@Override
+	public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail) {
+		WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+		try
+		{
+		PartnerNote note=new PartnerNote();
+		note.setCreatedBy(noteDetail.getUserId());
+        note.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));       
+        note.setModifiedBy(noteDetail.getUserId());
+        
+        note.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         Partner partner = partnerRepository.findOne(noteDetail.getPartnerId());
+        note.setPartner(partner);
+        note.setPartnerNote(noteDetail.getNoteValue());
+      
+        PartnerNoteTopic partnerNoteTopic = partnerNoteTopicRepository.findOne(noteDetail.getTopicId());
+        note.setPartnerNoteTopic(partnerNoteTopic);
+        
+        partnerNoteRepository.saveAndFlush(note);
+        wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_NOTE_CREATED.getValue(),
+	               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+		catch(Exception e)
+		{
+			ExceptionUtil.logException(e, LOGGER);
+	        
+			wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_ADD_SUBPARTNER_NOTE.getValue(),
+	                 messageUtil.getMessage(SubPartnerMessageConstants.FAILED_TO_ADD_SUBPARTNER_NOTE)));
+	           LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.FAILED_TO_ADD_SUBPARTNER_NOTE));
+	           
+		}
+		return wsDefaultResponse;
+	}
+	@Override
+	@Transactional
+	public WSDefaultResponse updatePartnerUserStatus(String partnerUserId,
+			String statusVal) {
+		 WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+			try
+			{
+				PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.parseInt(partnerUserId));
+				PartnerStatus partnerStatus2=partnerReviewStatus.getPartnerStatus2();
+				partnerStatus2.setPartnerStatusName(statusVal);
+				partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
+		         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_APPLICATION_STATUS_UPDATED.getValue(),
+		               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+				
+			}catch(Exception e) {
+		         ExceptionUtil.logException(e, LOGGER);
+		         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
+		                 messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
+		           LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
+				
+			}
+		return wsDefaultResponse;
+	}
 
+	
+
+
+
+	
 }

@@ -19,6 +19,7 @@ import com.ccighgo.db.entities.AdminQuickStatsTypeAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueCategory;
 import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueType;
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
@@ -42,6 +43,7 @@ import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueTypeRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUsersCCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
@@ -154,6 +156,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    GoIdSequenceRepository goIdSequenceRepository;
    @Autowired
    CCIStaffUsersCCIStaffRolesRepository cciStaffRolesRepository;
+   @Autowired
+   CCIStaffUsersRepository cciStaffUsersRepository;
    @PersistenceContext
    EntityManager em;
 
@@ -615,6 +619,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (partnerNotes != null) {
                for (PartnerNote partnerNote : partnerNotes) {
                   PartnerRecruitmentAdminScreeningNotes note = new PartnerRecruitmentAdminScreeningNotes();
+                
+                  
                   CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(partnerNote.getCreatedBy());
                   if (staffUserAndRole != null) {
                      NoteUserCreator noteCreator = new NoteUserCreator();

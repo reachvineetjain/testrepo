@@ -18,9 +18,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.subpartner.SubPartnerInterface;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerScreeningNotes;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -85,4 +88,20 @@ public class SubPartner {
 	   return subPartnerInterface.getSubPartnerDetail(subPartnerId) ;
    }
    
+   @GET
+   @Path("update/status/{partnerUserId}/{statusVal}")
+   @Produces("application/json")
+   public WSDefaultResponse updateSubPartnerUserStatus(@PathParam("partnerUserId") String partnerUserId, @PathParam("statusVal") String statusVal) {
+    LOGGER.debug("calling PartnerUser.updatePartnerUserStatus");
+    return subPartnerInterface.updatePartnerUserStatus(partnerUserId,statusVal);
+   }
+   
+   @POST
+   @Path("update/addSubPartnerNote")
+   @Produces("application/json")
+   public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail)
+   {
+	   LOGGER.debug("calling subPartnerInterface.addSubPartnerScreenNote");
+	return subPartnerInterface.addSubPartnerScreenNote(noteDetail);
+   }
 }

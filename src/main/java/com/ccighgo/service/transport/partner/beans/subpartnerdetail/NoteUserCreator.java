@@ -15,19 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Country complex type.
+ * <p>Java class for NoteUserCreator complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Country">
+ * &lt;complexType name="NoteUserCreator">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="countryId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="countryCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="countryName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="countryFlag" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="userName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="role" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="photoUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,108 +36,90 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Country", propOrder = {
-    "countryId",
-    "countryCode",
-    "countryName",
-    "countryFlag"
+@XmlType(name = "NoteUserCreator", propOrder = {
+    "userName",
+    "role",
+    "photoUrl"
 })
-public class Country {
+public class NoteUserCreator {
 
-    protected int countryId;
     @XmlElement(required = true)
-    protected String countryCode;
+    protected String userName;
     @XmlElement(required = true)
-    protected String countryName;
+    protected String role;
     @XmlElement(required = true)
-    protected String countryFlag;
+    protected String photoUrl;
 
     /**
-     * Gets the value of the countryId property.
-     * 
-     */
-    public int getCountryId() {
-        return countryId;
-    }
-
-    /**
-     * Sets the value of the countryId property.
-     * 
-     */
-    public void setCountryId(int value) {
-        this.countryId = value;
-    }
-
-    /**
-     * Gets the value of the countryCode property.
+     * Gets the value of the userName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCountryCode() {
-        return countryCode;
+    public String getUserName() {
+        return userName;
     }
 
     /**
-     * Sets the value of the countryCode property.
+     * Sets the value of the userName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCountryCode(String value) {
-        this.countryCode = value;
+    public void setUserName(String value) {
+        this.userName = value;
     }
 
     /**
-     * Gets the value of the countryName property.
+     * Gets the value of the role property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCountryName() {
-        return countryName;
+    public String getRole() {
+        return role;
     }
 
     /**
-     * Sets the value of the countryName property.
+     * Sets the value of the role property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCountryName(String value) {
-        this.countryName = value;
+    public void setRole(String value) {
+        this.role = value;
     }
 
     /**
-     * Gets the value of the countryFlag property.
+     * Gets the value of the photoUrl property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCountryFlag() {
-        return countryFlag;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
     /**
-     * Sets the value of the countryFlag property.
+     * Sets the value of the photoUrl property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCountryFlag(String value) {
-        this.countryFlag = value;
+    public void setPhotoUrl(String value) {
+        this.photoUrl = value;
     }
 
 }
