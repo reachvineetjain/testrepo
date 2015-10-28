@@ -368,10 +368,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public SubPartnersForParticipants getAllAvailableSubPartners() {
+   public SubPartnersForParticipants getAllAvailableSubPartners(int partnerId) {
       SubPartnersForParticipants subPartners = new SubPartnersForParticipants();
       try {
-         List<Partner> allPartners = partnerRepository.findAll();
+         List<Partner> allPartners = partnerRepository.findByIsSubPartnerAndParentId(partnerId);
          if (allPartners != null) {
             for (Partner p : allPartners) {
                SubPartnersForParticipantsDetails details =new SubPartnersForParticipantsDetails();

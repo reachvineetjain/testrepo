@@ -49,7 +49,7 @@ public interface ParticipantsInterface {
 
    public AddedParticipantsList getAddedParticipant(String partnerId);
 
-   public SubPartnersForParticipants getAllAvailableSubPartners();
+   public SubPartnersForParticipants getAllAvailableSubPartners(int partnerId);
 
    public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId);
 

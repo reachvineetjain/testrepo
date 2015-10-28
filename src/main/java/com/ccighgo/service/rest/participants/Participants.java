@@ -103,11 +103,11 @@ public class Participants {
    }
    
    @GET
-   @Path("allSubPartners")
+   @Path("allSubPartners/{partnerId}")
    @Produces("application/json")
-   public SubPartnersForParticipants getAllAvailableSubPartners(){
+   public SubPartnersForParticipants getAllAvailableSubPartners(@PathParam("partnerId")  String partnerId){
       LOGGER.info("calling Participants.getAllAvailableSubPartners ");
-      return participantsInterface.getAllAvailableSubPartners();
+      return participantsInterface.getAllAvailableSubPartners(Integer.parseInt(partnerId));
    }
    
    @GET
