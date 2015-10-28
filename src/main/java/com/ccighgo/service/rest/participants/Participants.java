@@ -87,19 +87,19 @@ public class Participants {
    }
 
    @GET
-   @Path("allSeasons")
+   @Path("allSeasons/{partnerId}")
    @Produces("application/json")
-   public SeasonsForParticipants getAllAvailableSeasons(){
+   public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId") String partnerId){
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
-      return participantsInterface.getAllAvailableSeasons();
+      return participantsInterface.getAllAvailableSeasons(Integer.parseInt(partnerId));
    }
    
    @GET
-   @Path("allProgramOptions")
+   @Path("allProgramOptions/{partnerId}/{seasonId}")
    @Produces("application/json")
-   public ProgramOptionsForParticipants getAllAvailableProgramOptions(){
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(@PathParam("partnerId")  String partnerId, @PathParam("seasonId") String seasonId){
       LOGGER.info("calling Participants.getAllAvailableProgramOptions ");
-      return participantsInterface.getAllAvailableProgramOptions();
+      return participantsInterface.getAllAvailableProgramOptions(Integer.parseInt(partnerId),Integer.parseInt(seasonId));
    }
    
    @GET

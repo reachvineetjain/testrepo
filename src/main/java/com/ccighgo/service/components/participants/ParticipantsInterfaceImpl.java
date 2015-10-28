@@ -9,22 +9,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
+import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReviewStatus;
+import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
+import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
+import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsDetails;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
 import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
@@ -67,6 +75,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    CountryRepository lookupCountry;
    @Autowired
    SeasonRepository seasonRepository;
+   @Autowired GoIdSequenceRepository goIdSequenceRepository;
+   @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
+   @Autowired PartnerProgramRepository partnerProgramRepository;
+
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
    @Override
@@ -182,10 +194,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public NewManualParticipant addNewParticipant(NewManualParticipant NewManualParticipant) {
+   public NewManualParticipant addNewParticipant(NewManualParticipant newManualParticipant) {
       try {
-         if(NewManualParticipant!=null){
-            for (AddNewManualParticipant p : NewManualParticipant.getDetails()) {
+         if(newManualParticipant!=null){
+            for (AddNewManualParticipant p : newManualParticipant.getDetails()) {
                Participant participant = new Participant();
                try {
                   participant.setFirstName(p.getFirstName());
@@ -193,10 +205,15 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   participant.setLastName(p.getLastName());
                   DepartmentProgramOption departmentProgramOption = departmentProgramOptions.findOne(p.getDepartmentProgramOptionId());
                   participant.setDepartmentProgramOption(departmentProgramOption);
+                  DepartmentProgram departmentProgram = departmentPrograms.findOne(p.getDepartmentId());
+                  participant.setDepartmentProgram(departmentProgram);
                   Season season=seasonRepository.findOne(p.getSeasonId());
                   participant.setSeason(season);
                 
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
+                  GoIdSequence goIdSequence = new GoIdSequence();
+                  goIdSequence = goIdSequenceRepository.save(goIdSequence);
+                  participant.setParticipantGoId(goIdSequence.getGoId());
                   participantRepository.saveAndFlush(participant);
                   p.setAdded(true);
                } catch (Exception e) {
@@ -204,14 +221,14 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                }
             }
          }
-         NewManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         newManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         NewManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+         newManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
-      return NewManualParticipant;
+      return newManualParticipant;
    }
  
 
@@ -256,15 +273,15 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public SeasonsForParticipants getAllAvailableSeasons() {
+   public SeasonsForParticipants getAllAvailableSeasons(int partnerId) {
       SeasonsForParticipants seasons = new SeasonsForParticipants();
       try {
-         List<Season> allSeasons = seasonRepository.getAllSeasons();
-         if (allSeasons != null) {
-            for (Season season : allSeasons) {
+          List<PartnerSeason> partnerSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoId(partnerId);
+          if (partnerSeasons != null) {
+            for (PartnerSeason partnerSeason : partnerSeasons) {
                SeasonsForParticipantDetails seasonsForParticipantDetails =new SeasonsForParticipantDetails();
-               seasonsForParticipantDetails.setSeasonId(season.getSeasonId());
-               seasonsForParticipantDetails.setSeasonName(season.getSeasonFullName());
+               seasonsForParticipantDetails.setSeasonId(partnerSeason.getSeason().getSeasonId());
+               seasonsForParticipantDetails.setSeasonName(partnerSeason.getSeason().getSeasonFullName());
                seasons.getDetails().add(seasonsForParticipantDetails);
             }
          }
@@ -279,17 +296,20 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public ProgramOptionsForParticipants getAllAvailableProgramOptions() {
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId,int seasonId) {
       ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();
       try {
-         List<DepartmentProgramOption> allProgramOptions = departmentProgramOptions.findAll();
-         if (allProgramOptions != null) {
-            for (DepartmentProgramOption departmentProgramOption : allProgramOptions) {
-               ProgramOptionsForParticipantsDetails details= new ProgramOptionsForParticipantsDetails();
-               details.setDepartmentProgramId(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId());
-               details.setDepartmentProgramOption(departmentProgramOption.getProgramOptionName());
-               details.setProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
-               programOptionsForParticipants.getDetails().add(details);
+         List<PartnerSeason> partnerSeasons= partnerSeasonsRepository.findPartnerSeasonByPartnerGoIdAndSeasonId(partnerId,seasonId);
+         
+         if (partnerSeasons != null) {
+            for (PartnerSeason partnerSeason : partnerSeasons) {
+               for (DepartmentProgramOption options : partnerSeason.getDepartmentProgram().getDepartmentProgramOptions()) {
+                  ProgramOptionsForParticipantsDetails details= new ProgramOptionsForParticipantsDetails();
+                  details.setDepartmentProgramId(partnerSeason.getDepartmentProgram().getDepartmentProgramId());
+                  details.setDepartmentProgramOption(options.getProgramOptionName());
+                  details.setProgramOptionId(options.getDepartmentProgramOptionId());
+                  programOptionsForParticipants.getDetails().add(details);                  
+               }
             }
          }
          programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -307,12 +327,15 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       AddedParticipantsList addedParticipants = new AddedParticipantsList();
       try {
          // TODO
-         List<Participant> participants =  participantRepository.findAddedParticipantByPartnerId(partnerId);
+         List<Participant> participants =  participantRepository.findAddedParticipantByPartnerId(Integer.parseInt(partnerId));
          if (participants != null) {
             for (Participant participant : participants) {
                AddedParticipantsDetails details=new AddedParticipantsDetails();
 //               details.setActive(participant.get);
-               details.setActive(participant.getParticipantStatus().getActive()==1);
+               // active came from login table
+               // username came from login table
+               
+//               details.setActive();
                details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
                details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
                details.setParticipantCountry(participant.getLookupCountry().getCountryName());
@@ -323,7 +346,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantGuranteed(participant.getGuaranteed()==1);
                details.setParticipantlastName(participant.getLastName());
                details.setParticipantPicUrl(participant.getPhoto());
-//               details.setParticipantPlacementStatus(participant.getParticipantStatus());
+               details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive()==1?"Active":"InActive");
                details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());

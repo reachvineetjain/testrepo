@@ -42,10 +42,10 @@ public interface ParticipantsInterface {
    public NewManualParticipant editNewParticipant(Integer participantId);
 
    public NewManualParticipant updateParticipant(NewManualParticipant participant);
+   
+   public SeasonsForParticipants getAllAvailableSeasons(int partnerId);
 
-   public SeasonsForParticipants getAllAvailableSeasons();
-
-   public ProgramOptionsForParticipants getAllAvailableProgramOptions();
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId);
 
    public AddedParticipantsList getAddedParticipant(String partnerId);
 
