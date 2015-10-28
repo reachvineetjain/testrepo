@@ -720,6 +720,14 @@
 			<arg value="${xsd.dir}/partner/subpartner/SubPartner.xsd" />
 		</java>
 	</target>
+	
+	<target name="SubPartnerDetail">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/partner/subpartner/SubPartnerDetail.xsd" />
+			</java>
+		</target>
 
 	<!--*************************************************  Add New participant  *************************************************-->
 	<target name="Add New Participant">
