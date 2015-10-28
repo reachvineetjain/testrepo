@@ -19,5 +19,7 @@ public interface PartnerRepository extends JpaRepository<Partner, Integer> {
    
    @Query("SELECT l FROM Partner l where l.isSubPartner = 1")
    public List<Partner> findByIsSubPartner();
+   @Query("SELECT l FROM Partner l where l.isSubPartner = 1 AND l.parentPartnerGoId=?1")
+   public List<Partner> findByIsSubPartnerAndParentId(int partnerId);
 
 }
