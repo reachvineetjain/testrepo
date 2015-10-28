@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.service.components.partner.PartnerService;
 import com.ccighgo.service.components.partner.PartnerServiceImpl;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Dashboard;
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPDashboard;
@@ -29,14 +30,14 @@ public class Partner {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(Partner.class);
 
-   @Autowired PartnerServiceImpl partnerServiceImpl;
+   @Autowired PartnerService partnerService;
    
    @GET
    @Path("j1/program/details/{partnerGoId}")
    @Produces("application/json")
    public PartnerJ1HSDashboard getJ1HSDashboard(@PathParam("partnerGoId") String partnerGoId){
       LOGGER.info("calling Partner.getJ1HSDashboard for partner id {}",partnerGoId);
-      return partnerServiceImpl.getJ1HSDashboard(partnerGoId);
+      return partnerService.getJ1HSDashboard(partnerGoId);
       
    }
    
@@ -45,7 +46,7 @@ public class Partner {
    @Produces("application/json")
    public PartnerF1Dashboard getActiveParticipangetF1DashboardtsList(@PathParam("partnerGoId") String partnerGoId){
       LOGGER.info("calling Partner.getF1Dashboard for partner id {}",partnerGoId);
-      return partnerServiceImpl.getF1Dashboard(partnerGoId);
+      return partnerService.getF1Dashboard(partnerGoId);
       
    }
    
@@ -54,7 +55,7 @@ public class Partner {
    @Produces("application/json")
    public PartnerIHPDashboard getIHPDashboard(@PathParam("partnerGoId") String partnerGoId){
       LOGGER.info("calling Partner.getIHPDashboard for partner id {}",partnerGoId);
-      return partnerServiceImpl.getIHPDashboard(partnerGoId);
+      return partnerService.getIHPDashboard(partnerGoId);
       
    }
 

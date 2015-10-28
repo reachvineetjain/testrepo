@@ -53,6 +53,7 @@
             /services/partner/wq/**=anon
             /services/partnerAdmin/**=anon
             /services/pushData/**=anon
+            /services/partner/admin/season/**=anon
             /services/**=authc
          </value>
       </property>

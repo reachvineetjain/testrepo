@@ -87,6 +87,7 @@
 	   
 	   <xsd:complexType name="PartnerRecruitmentAdminScreeningOffices">
 	            <xsd:sequence>
+	            <xsd:element name="partnerOfficeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="address1" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="address2" type="xsd:string" minOccurs="1" maxOccurs="1" />
 				   <xsd:element name="city"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
@@ -102,6 +103,7 @@
 	   
 	   <xsd:complexType name="PartnerRecruitmentAdminScreeningContacts">
 	            <xsd:sequence>
+	            <xsd:element name="partnerContactId" type="xsd:int" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="titile" type="xsd:string" minOccurs="1" maxOccurs="1" />
 				   <xsd:element name="firstName"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
@@ -121,6 +123,7 @@
 	   
 	   <xsd:complexType name="PartnerRecruitmentAdminScreeningReferenceCheck">
 	            <xsd:sequence>
+	            <xsd:element name="partnerCheckReferenceId" type="xsd:int" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="completedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="completedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
 				   <xsd:element name="approvedOn"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
@@ -134,6 +137,8 @@
 	     <xsd:complexContent>
      <xsd:extension base="common:Response">
 	   <xsd:sequence>
+	   <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+	    <xsd:element name="partnerDocumentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="fileType" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -163,10 +168,12 @@
     <xsd:complexContent>
      <xsd:extension base="common:Response">
       <xsd:sequence>
+      <xsd:element name="partnerNoteId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonDepartmentNotetId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="topic" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="createdBy" type="adminViewForPartnerInquiryData:NoteUserCreator" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
