@@ -30,7 +30,7 @@ public class LoginUserType implements Serializable {
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
-	private byte defaultUserType;
+	private Byte defaultUserType;
 
 	@Column(nullable=false)
 	private Integer modifiedBy;
@@ -83,11 +83,11 @@ public class LoginUserType implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public byte getDefaultUserType() {
+	public Byte getDefaultUserType() {
 		return this.defaultUserType;
 	}
 
-	public void setDefaultUserType(byte defaultUserType) {
+	public void setDefaultUserType(Byte defaultUserType) {
 		this.defaultUserType = defaultUserType;
 	}
 

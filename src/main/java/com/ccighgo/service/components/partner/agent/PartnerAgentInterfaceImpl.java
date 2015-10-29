@@ -93,8 +93,9 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
                   partnerSeasonDepartment.setPartnerSeasonDepartmentName(entity.getDepartmentProgram().getLookupDepartment().getDepartmentName());
 
                   PartnerSeasonProgramStatus seasonProgramStatus = new PartnerSeasonProgramStatus();
-                  seasonProgramStatus.setPartnerSeasonProgramStatusId(entity.getPartnerStatus().getPartnerStatusId());
-                  seasonProgramStatus.setPartnerSeasonProgramStatus(entity.getPartnerStatus().getPartnerStatusName());
+//TODO
+                  //                  seasonProgramStatus.setPartnerSeasonProgramStatusId(entity.getPartnerStatus().getPartnerStatusId());
+//                  seasonProgramStatus.setPartnerSeasonProgramStatus(entity.getPartnerStatus().getPartnerStatusName());
 
                   SeasonStatus seasonStatus = new SeasonStatus();
                   seasonStatus.setSeasonStatusId(entity.getSeason().getSeasonStatus().getSeasonStatusId());
@@ -226,7 +227,8 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
 
       if (partnerAgentSeasonDetails.getPartnerSeasonStatus() != null) {
          PartnerStatus partnerStatus = partnerStatusRepository.findOne(partnerAgentSeasonDetails.getPartnerSeasonStatus().getPartnerSeasonStatusId());
-         partnerSeason.setPartnerStatus(partnerStatus);
+         //TODO
+         //         partnerSeason.setPartnerStatus(partnerStatus);
       }
 
       return partnerAgentSeasonDetail;
@@ -242,8 +244,9 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
       int flag = 0;
       // Partner SeasonStatus
       PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus();
-      partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus().getPartnerStatusId());
-      partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus().getPartnerStatusName());
+      //TODO
+//      partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus().getPartnerStatusId());
+//      partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus().getPartnerStatusName());
       partnerAgentSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
 
       partnerAgentSeasonDetails.setPartnerId(String.valueOf(partnerSeason.getPartner().getPartnerGoId()));

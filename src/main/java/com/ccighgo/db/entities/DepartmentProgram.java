@@ -54,7 +54,7 @@ public class DepartmentProgram implements Serializable {
 	private String programName;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
-	  @OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgramOption> departmentProgramOptions;
 
