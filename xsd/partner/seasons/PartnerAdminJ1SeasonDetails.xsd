@@ -173,7 +173,7 @@
          <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="creator" type="psd:Creator" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="note" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="note" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
