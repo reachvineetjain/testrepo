@@ -331,11 +331,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          if (participants != null) {
             for (Participant participant : participants) {
                AddedParticipantsDetails details=new AddedParticipantsDetails();
-//               details.setActive(participant.get);
+               // details.setActive(participant.get);
                // active came from login table
                // username came from login table
-               
-//               details.setActive();
+               // details.setActive();
+               details.setParticipantGoId(participant.getParticipantGoId()+"");
                details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
                details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
                details.setParticipantCountry(participant.getLookupCountry().getCountryName());
@@ -353,7 +353,6 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantSeasonName(participant.getSeason().getSeasonName());
                details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
                details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo()==1);
-//               details.setParticipantType(participant.getpar);
                addedParticipants.getParticipants().add(details);
             }
             addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
