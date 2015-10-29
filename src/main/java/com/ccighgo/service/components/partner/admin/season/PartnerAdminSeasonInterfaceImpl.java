@@ -22,7 +22,9 @@ import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerSeasonDocument;
+import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.PartnerUser;
+import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LoginRepository;
@@ -33,10 +35,14 @@ import com.ccighgo.jpa.repositories.PartnerSeasonAllocationRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonContractRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonDocumentRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
+import com.ccighgo.jpa.repositories.PartnerStatusRepository;
+import com.ccighgo.jpa.repositories.SeasonRepository;
+import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.service.auth.beans.LoginType;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Creator;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Dates;
@@ -83,7 +89,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    @Autowired PartnerNoteRepository partnerNoteRepository;
    @Autowired PartnerNoteTagRepository partnerNoteTagRepository;
    @Autowired PartnerNoteTopicRepository partnerNoteTopicRepository;
-
+   @Autowired PartnerStatusRepository  partnerStatusRepository;
+   @Autowired SeasonStatusRepository seasonStatusRepository;
+   @Autowired SeasonRepository seasonRepository;
+   
+ 
    @Autowired EntityManager entityManager;
 
    private static final String SP_PARTNER_SEASON_APPLICATION_LIST = "call SPPartnerSeasonAplication(?)";
@@ -94,8 +104,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
       PartnerAdminSeasonList adminSeasonList = new PartnerAdminSeasonList();
       if (partnerGoId == null) {
          adminSeasonList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
-               messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
-         LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
          return adminSeasonList;
       }
       try {
@@ -165,11 +175,14 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminSeasonList.getPartnerAdminSeasons().addAll(partnerAdminSeasons);
             adminSeasonList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            adminSeasonList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.NO_PARTNER_ADMIN_SEASON_FOUND)));
          }
       } catch (CcighgoException e) {
          adminSeasonList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST)));
-         LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST));
+               messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_SEASONS)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_SEASONS));
       }
       return adminSeasonList;
    }
@@ -178,6 +191,12 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    @Transactional(readOnly = true)
    public PartnerAdminSeasonApplicationList getPartnerAdminSeasonApplicationList(String partnerGoId) {
       PartnerAdminSeasonApplicationList adminSeasonApplicationList = new PartnerAdminSeasonApplicationList();
+      if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
+         adminSeasonApplicationList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_RECORD.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID));
+         return adminSeasonApplicationList;
+      }
       try {
          Query query = entityManager.createNativeQuery(SP_PARTNER_SEASON_APPLICATION_LIST);
          query.setParameter(1, Integer.valueOf(partnerGoId));
@@ -202,8 +221,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          }
       } catch (CcighgoException e) {
          adminSeasonApplicationList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST)));
-         LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST));
+               messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_SEASON_APPLY_LIST)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_SEASON_APPLY_LIST));
       }
       return adminSeasonApplicationList;
    }
@@ -211,10 +230,16 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    @Override
    public PartnerAdminJ1SeasonDetails getPartnerAdminJ1Details(String partnerGoId, String partnerSeasonId) {
       PartnerAdminJ1SeasonDetails adminJ1SeasonDetails = new PartnerAdminJ1SeasonDetails();
-      if (partnerGoId == null || partnerSeasonId == null) {
+      if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          adminJ1SeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
-               messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
-         LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID));
+         return adminJ1SeasonDetails;
+      }
+      if (partnerSeasonId == null || Integer.valueOf(partnerSeasonId) == 0 || Integer.valueOf(partnerSeasonId) < 0) {
+         adminJ1SeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
          return adminJ1SeasonDetails;
       } else {
          try {
@@ -468,8 +493,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminJ1SeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
          } catch (CcighgoException e) {
             adminJ1SeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST)));
-            LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST));
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_J1_DETAILS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_J1_DETAILS));
          }
       }
       return adminJ1SeasonDetails;
@@ -478,10 +503,16 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    @Override
    public PartnerAdminF1SeasonDetails getPartnerAdminF1Details(String partnerGoId, String partnerSeasonId) {
       PartnerAdminF1SeasonDetails adminF1SeasonDetails = new PartnerAdminF1SeasonDetails();
-      if (partnerGoId == null || partnerSeasonId == null) {
+      if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          adminF1SeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
-               messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
-         LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID));
+         return adminF1SeasonDetails;
+      }
+      if (partnerSeasonId == null || Integer.valueOf(partnerSeasonId) == 0 || Integer.valueOf(partnerSeasonId) < 0) {
+         adminF1SeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
          return adminF1SeasonDetails;
       } else {
          try {
@@ -733,11 +764,73 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminF1SeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
          } catch (CcighgoException e) {
             adminF1SeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST)));
-            LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.ERROR_GET_PARTNER_SEASON_LIST));
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_F1_DETAILS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_F1_DETAILS));
          }
       }
       return adminF1SeasonDetails;
 
+   }
+
+   @Override
+   @Transactional
+   public Response updatePartnerSeasonActiveStatus(String statusVal, String partnerSeasonId) {
+      Response response = new Response();
+      if (partnerSeasonId == null) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
+         return response;
+      }
+      if (statusVal == null || !(Integer.valueOf(statusVal) == 0 || Integer.valueOf(statusVal) < 0)) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE));
+         return response;
+      }else{
+         try{
+            PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
+            PartnerStatus partnerStatus = partnerStatusRepository.findOne(Integer.valueOf(statusVal));
+            partnerSeason.setPartnerStatus(partnerStatus);
+            partnerSeasonsRepository.saveAndFlush(partnerSeason);
+            
+         }catch (CcighgoException e) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_ACTIVE_STATUS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_ACTIVE_STATUS));
+         }
+      }
+      return response;
+   }
+
+   @Override
+   @Transactional
+   public Response updateSeasonActiveStatus(String statusVal, String partnerSeasonId) {
+      Response response = new Response();
+      if (partnerSeasonId == null) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
+         return response;
+      }
+      if (statusVal == null || !(Integer.valueOf(statusVal) == 0 || Integer.valueOf(statusVal) < 0)) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE));
+         return response;
+      }else{
+         try{
+            PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
+            com.ccighgo.db.entities.SeasonStatus seasonStatus = seasonStatusRepository.findOne(Integer.valueOf(statusVal));
+            Season season = partnerSeason.getSeason();
+            season.setSeasonStatus(seasonStatus);
+            seasonRepository.saveAndFlush(season);
+         }catch (CcighgoException e) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+         }
+      }
+      return response;
    }
 }
