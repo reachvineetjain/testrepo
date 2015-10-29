@@ -10,6 +10,7 @@ package com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detai
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -55,7 +56,7 @@ public class Note {
     protected String timestamp;
     @XmlElement(required = true)
     protected Creator creator;
-    protected List<String> note;
+    protected String note;
 
     /**
      * Gets the value of the noteId property.
@@ -138,32 +139,27 @@ public class Note {
     }
 
     /**
-     * Gets the value of the note property.
+     * Gets the value of the topicTnoteitle property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the note property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getNote().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public List<String> getNote() {
-        if (note == null) {
-            note = new ArrayList<String>();
-        }
-        return this.note;
+    public String getNote() {
+        return note;
+    }
+
+    /**
+     * Sets the value of the note property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNote(String value) {
+        this.note = value;
     }
 
 }
