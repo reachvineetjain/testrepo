@@ -363,8 +363,14 @@ public enum ErrorCode {
 	  CHANGE_PARTICIPANT_SEASON(8000238), 
 	  CANT_CHANGE_PARTICIPANT_SEASON(8000239), 
 	  CHANGE_PARTICIPANT_SUBPARTNER(8000240), 
-	  CANT_CHANGE_PARTICIPANT_SUBPARTNER(8000241)
-		;
+	  CANT_CHANGE_PARTICIPANT_SUBPARTNER(8000241),
+	  
+	  //partner admin seasons
+	  
+	  
+	  
+	  //keep your error code above this
+	  NO_ERROR(9999999);
 		
 
 		
