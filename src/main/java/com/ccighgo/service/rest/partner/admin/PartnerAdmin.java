@@ -38,6 +38,7 @@ import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickst
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -285,6 +286,23 @@ public class PartnerAdmin {
       LOGGER.debug("fun : removeNewPartnerInquiryReferenceCheck");
       return partnerAdminService.removeNewPartnerInquiryReferenceCheck(deletedItems);
    }
+   
+   @GET
+   @Path("sendLogin")
+   @Produces("application/json")
+   public WSDefaultResponse sendLogin() {
+      LOGGER.debug("fun : sendLogin");
+      return partnerAdminService.sendLogin();
+   }
+   
+   @GET
+   @Path("cciUsers")
+   @Produces("application/json")
+   public CCIUsers getAllCCIUsers() {
+      LOGGER.debug("fun : getAllCCIUsers");
+      return partnerAdminService.getAllCCIUsers();
+   }
+   
 
 
 }

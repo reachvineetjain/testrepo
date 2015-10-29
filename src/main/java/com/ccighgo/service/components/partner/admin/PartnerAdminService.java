@@ -25,6 +25,7 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.Admi
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
+import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -83,6 +84,10 @@ public interface PartnerAdminService {
    PartnerAdminOverviewReferenceCheck addNewPartnerInquiryReferenceCheck(PartnerAdminOverviewReferenceCheckDetails referenceChecksDetails);
 
    PartnerAdminOverviewReferenceCheck removeNewPartnerInquiryReferenceCheck(PartnerAdminOverviewDeletedReferenceCheck deletedItems);
+
+   WSDefaultResponse sendLogin();
+
+   CCIUsers getAllCCIUsers();
    
 
 }
