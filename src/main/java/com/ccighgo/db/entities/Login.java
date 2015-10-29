@@ -65,6 +65,14 @@ public class Login implements Serializable {
 	@OneToMany(mappedBy="login")
 	private List<PartnerHelpRequest> partnerHelpRequests;
 
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="login")
+	private List<PartnerSeason> partnerSeasons;
+
+	//bi-directional many-to-one association to PartnerSeasonAllocation
+	@OneToMany(mappedBy="login")
+	private List<PartnerSeasonAllocation> partnerSeasonAllocations;
+
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="login")
 	private List<PartnerUser> partnerUsers;
@@ -228,6 +236,50 @@ public class Login implements Serializable {
 		partnerHelpRequest.setLogin(null);
 
 		return partnerHelpRequest;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons() {
+		return this.partnerSeasons;
+	}
+
+	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
+		this.partnerSeasons = partnerSeasons;
+	}
+
+	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().add(partnerSeason);
+		partnerSeason.setLogin(this);
+
+		return partnerSeason;
+	}
+
+	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
+		getPartnerSeasons().remove(partnerSeason);
+		partnerSeason.setLogin(null);
+
+		return partnerSeason;
+	}
+
+	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations() {
+		return this.partnerSeasonAllocations;
+	}
+
+	public void setPartnerSeasonAllocations(List<PartnerSeasonAllocation> partnerSeasonAllocations) {
+		this.partnerSeasonAllocations = partnerSeasonAllocations;
+	}
+
+	public PartnerSeasonAllocation addPartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().add(partnerSeasonAllocation);
+		partnerSeasonAllocation.setLogin(this);
+
+		return partnerSeasonAllocation;
+	}
+
+	public PartnerSeasonAllocation removePartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().remove(partnerSeasonAllocation);
+		partnerSeasonAllocation.setLogin(null);
+
+		return partnerSeasonAllocation;
 	}
 
 	public List<PartnerUser> getPartnerUsers() {

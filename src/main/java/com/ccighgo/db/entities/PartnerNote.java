@@ -26,6 +26,8 @@ public class PartnerNote implements Serializable {
 	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	private Byte hasRead;
+
 	@Column(nullable=false)
 	private Integer modifiedBy;
 
@@ -70,6 +72,14 @@ public class PartnerNote implements Serializable {
 
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public Byte getHasRead() {
+		return this.hasRead;
+	}
+
+	public void setHasRead(Byte hasRead) {
+		this.hasRead = hasRead;
 	}
 
 	public Integer getModifiedBy() {

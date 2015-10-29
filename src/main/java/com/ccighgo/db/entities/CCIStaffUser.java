@@ -103,13 +103,13 @@ public class CCIStaffUser implements Serializable {
 	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
 
 	//bi-directional many-to-one association to CCIStaffUserNote
-   @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
-   @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional one-to-one association to GoIdSequence
@@ -133,7 +133,7 @@ public class CCIStaffUser implements Serializable {
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
-	  @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
@@ -154,8 +154,16 @@ public class CCIStaffUser implements Serializable {
 	private List<PartnerReviewStatus> partnerReviewStatuses;
 
 	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="ccistaffUser1")
+	private List<PartnerSeason> partnerSeasons1;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="ccistaffUser2")
+	private List<PartnerSeason> partnerSeasons2;
+
+	//bi-directional many-to-one association to PartnerSeasonAllocation
 	@OneToMany(mappedBy="ccistaffUser")
-	private List<PartnerSeason> partnerSeasons;
+	private List<PartnerSeasonAllocation> partnerSeasonAllocations;
 
 	public CCIStaffUser() {
 	}
@@ -578,26 +586,70 @@ public class CCIStaffUser implements Serializable {
 		return partnerReviewStatus;
 	}
 
-	public List<PartnerSeason> getPartnerSeasons() {
-		return this.partnerSeasons;
+	public List<PartnerSeason> getPartnerSeasons1() {
+		return this.partnerSeasons1;
 	}
 
-	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
-		this.partnerSeasons = partnerSeasons;
+	public void setPartnerSeasons1(List<PartnerSeason> partnerSeasons1) {
+		this.partnerSeasons1 = partnerSeasons1;
 	}
 
-	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().add(partnerSeason);
-		partnerSeason.setCcistaffUser(this);
+	public PartnerSeason addPartnerSeasons1(PartnerSeason partnerSeasons1) {
+		getPartnerSeasons1().add(partnerSeasons1);
+		partnerSeasons1.setCcistaffUser1(this);
 
-		return partnerSeason;
+		return partnerSeasons1;
 	}
 
-	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().remove(partnerSeason);
-		partnerSeason.setCcistaffUser(null);
+	public PartnerSeason removePartnerSeasons1(PartnerSeason partnerSeasons1) {
+		getPartnerSeasons1().remove(partnerSeasons1);
+		partnerSeasons1.setCcistaffUser1(null);
 
-		return partnerSeason;
+		return partnerSeasons1;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons2() {
+		return this.partnerSeasons2;
+	}
+
+	public void setPartnerSeasons2(List<PartnerSeason> partnerSeasons2) {
+		this.partnerSeasons2 = partnerSeasons2;
+	}
+
+	public PartnerSeason addPartnerSeasons2(PartnerSeason partnerSeasons2) {
+		getPartnerSeasons2().add(partnerSeasons2);
+		partnerSeasons2.setCcistaffUser2(this);
+
+		return partnerSeasons2;
+	}
+
+	public PartnerSeason removePartnerSeasons2(PartnerSeason partnerSeasons2) {
+		getPartnerSeasons2().remove(partnerSeasons2);
+		partnerSeasons2.setCcistaffUser2(null);
+
+		return partnerSeasons2;
+	}
+
+	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations() {
+		return this.partnerSeasonAllocations;
+	}
+
+	public void setPartnerSeasonAllocations(List<PartnerSeasonAllocation> partnerSeasonAllocations) {
+		this.partnerSeasonAllocations = partnerSeasonAllocations;
+	}
+
+	public PartnerSeasonAllocation addPartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().add(partnerSeasonAllocation);
+		partnerSeasonAllocation.setCcistaffUser(this);
+
+		return partnerSeasonAllocation;
+	}
+
+	public PartnerSeasonAllocation removePartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().remove(partnerSeasonAllocation);
+		partnerSeasonAllocation.setCcistaffUser(null);
+
+		return partnerSeasonAllocation;
 	}
 
 }
