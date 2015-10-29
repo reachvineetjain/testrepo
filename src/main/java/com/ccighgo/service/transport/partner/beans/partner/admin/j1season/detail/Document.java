@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Document", propOrder = {
     "documentName",
-    "uploaddedByFirstName",
+    "uploadedByFirstName",
     "uploadedByLastName",
     "uploadedByPicUrl",
     "uploadedByDesignation",
@@ -54,7 +54,7 @@ public class Document {
     @XmlElement(required = true)
     protected String documentName;
     @XmlElement(required = true)
-    protected String uploaddedByFirstName;
+    protected String uploadedByFirstName;
     @XmlElement(required = true)
     protected String uploadedByLastName;
     @XmlElement(required = true)
@@ -91,27 +91,27 @@ public class Document {
     }
 
     /**
-     * Gets the value of the uploaddedByFirstName property.
+     * Gets the value of the uploadedByFirstName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUploaddedByFirstName() {
-        return uploaddedByFirstName;
+    public String getUploadedByFirstName() {
+        return uploadedByFirstName;
     }
 
     /**
-     * Sets the value of the uploaddedByFirstName property.
+     * Sets the value of the uploadedByFirstName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUploaddedByFirstName(String value) {
-        this.uploaddedByFirstName = value;
+    public void setUploadedByFirstName(String value) {
+        this.uploadedByFirstName = value;
     }
 
     /**

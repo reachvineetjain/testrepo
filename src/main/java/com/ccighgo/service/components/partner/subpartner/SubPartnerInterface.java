@@ -7,9 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
+import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetail;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerScreeningNotes;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -28,5 +32,8 @@ public interface SubPartnerInterface {
    
    public SubPartnerDetails getAllSubPartners();
    
+   public com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail getSubPartnerDetail(String subPartnerId);
 
+   public WSDefaultResponse updatePartnerUserStatus(String partnerUserId,String statusVal);
+   public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail)  ;
 }
