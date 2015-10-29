@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.admin.season.PartnerAdminSeasonInterface;
+import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerAdminJ1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerAdminSeasonList;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
@@ -57,6 +58,16 @@ public class PartnerAdminSeason {
    @Path("get/j1/details/{partnerGoId}/{partnerSeasonId}")
    public PartnerAdminJ1SeasonDetails getPartnerAdminJ1Details(@PathParam("partnerGoId") String partnerGoId, @PathParam("partnerSeasonId") String partnerSeasonId) {
       return partnerAdminSeasonInterface.getPartnerAdminJ1Details(partnerGoId, partnerSeasonId);
+   }
+   
+   /**
+    * @param partnerId
+    * @return
+    */
+   @GET
+   @Path("get/f1/details/{partnerGoId}/{partnerSeasonId}")
+   public PartnerAdminF1SeasonDetails getPartnerAdminF1Details(@PathParam("partnerGoId") String partnerGoId, @PathParam("partnerSeasonId") String partnerSeasonId) {
+      return partnerAdminSeasonInterface.getPartnerAdminF1Details(partnerGoId, partnerSeasonId);
    }
 
 }
