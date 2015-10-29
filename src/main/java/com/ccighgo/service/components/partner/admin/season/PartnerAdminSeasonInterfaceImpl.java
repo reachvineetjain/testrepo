@@ -782,7 +782,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
          return response;
       }
-      if (statusVal == null || !(Integer.valueOf(statusVal) == 0 || Integer.valueOf(statusVal) < 0)) {
+      if (statusVal == null) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
                messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE));
@@ -813,7 +813,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
          return response;
       }
-      if (statusVal == null || !(Integer.valueOf(statusVal) == 0 || Integer.valueOf(statusVal) < 0)) {
+      if (statusVal == null) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
                messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE));
