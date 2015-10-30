@@ -31,7 +31,7 @@
                <xsd:element name="userLoginName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userSkypeId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userOffices" type="pdl:UserOffice" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="userProgramsAndPermissions" type="pdl:Programs" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userProgramsAndPermissions" type="pdl:Programs" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
@@ -69,11 +69,8 @@
 
    <xsd:complexType name="Programs">
       <xsd:sequence>
-         <xsd:element name="j1Permissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="f1Permissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="ihpPermissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="wntPermissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="capPermissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="permissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
    
