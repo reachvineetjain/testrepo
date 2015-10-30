@@ -95,7 +95,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
                   PartnerSeasonProgramStatus seasonProgramStatus = new PartnerSeasonProgramStatus();
 //TODO
-                  //                  seasonProgramStatus.setPartnerSeasonProgramStatusId(entity.getPartnerStatus().getPartnerStatusId());
+           //                         seasonProgramStatus.setPartnerSeasonProgramStatusId(entity.getPartnerStatus().getPartnerStatusId());
 //                  seasonProgramStatus.setPartnerSeasonProgramStatus(entity.getPartnerStatus().getPartnerStatusName());
 
                   PartnerSeason pSeason = new PartnerSeason();
