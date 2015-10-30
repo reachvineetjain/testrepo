@@ -792,7 +792,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          try{
             PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
             PartnerStatus partnerStatus = partnerStatusRepository.findOne(Integer.valueOf(statusVal));
-           // partnerSeason.setPartnerStatus(partnerStatus);
+            //partnerSeason.setPartnerSeasStatus(partnerStatus);
             partnerSeasonsRepository.saveAndFlush(partnerSeason);
             
          }catch (CcighgoException e) {
