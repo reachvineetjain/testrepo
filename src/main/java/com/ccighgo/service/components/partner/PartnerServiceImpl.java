@@ -123,6 +123,12 @@ public class PartnerServiceImpl implements PartnerService {
             if (partner != null) {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
+                List<PartnerUser> partnerUsers = partner.getPartnerUsers();
+               for(PartnerUser pu:partnerUsers){
+                  if(partner.getPartnerGoId()==pu.getPartner().getPartnerGoId() && pu.getIsPrimary()==CCIConstants.ACTIVE){
+                     partnerDashboard.setPartnerPhotoUrl(pu.getPhoto());
+                  }
+               }
                List<PartnerSeason> partnerSeasons = partner.getPartnerSeasons();
                if (partnerSeasons != null && partnerSeasons.size() > 0) {
                   List<com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram> partnerProgramsList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram>();
