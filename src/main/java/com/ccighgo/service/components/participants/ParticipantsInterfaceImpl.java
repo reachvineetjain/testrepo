@@ -13,6 +13,7 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Participant;
+import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReviewStatus;
@@ -75,9 +76,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    CountryRepository lookupCountry;
    @Autowired
    SeasonRepository seasonRepository;
-   @Autowired GoIdSequenceRepository goIdSequenceRepository;
-   @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
-   @Autowired PartnerProgramRepository partnerProgramRepository;
+   @Autowired
+   GoIdSequenceRepository goIdSequenceRepository;
+   @Autowired
+   PartnerSeasonsRepository partnerSeasonsRepository;
+   @Autowired
+   PartnerProgramRepository partnerProgramRepository;
 
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
@@ -196,7 +200,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    @Override
    public NewManualParticipant addNewParticipant(NewManualParticipant newManualParticipant) {
       try {
-         if(newManualParticipant!=null){
+         if (newManualParticipant != null) {
             for (AddNewManualParticipant p : newManualParticipant.getDetails()) {
                Participant participant = new Participant();
                try {
@@ -207,9 +211,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   participant.setDepartmentProgramOption(departmentProgramOption);
                   DepartmentProgram departmentProgram = departmentPrograms.findOne(p.getDepartmentId());
                   participant.setDepartmentProgram(departmentProgram);
-                  Season season=seasonRepository.findOne(p.getSeasonId());
+                  Season season = seasonRepository.findOne(p.getSeasonId());
                   participant.setSeason(season);
-                
+
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
                   GoIdSequence goIdSequence = new GoIdSequence();
                   goIdSequence = goIdSequenceRepository.save(goIdSequence);
@@ -230,7 +234,6 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       }
       return newManualParticipant;
    }
- 
 
    private NewManualParticipant getParticipantEntity(Participant participant) {
       NewManualParticipant NewManualParticipant = new NewManualParticipant();
@@ -261,9 +264,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    @Override
    public NewManualParticipant updateParticipant(NewManualParticipant participant) {
       try {
-//         participantRepository.saveAndFlush(getParticipantEntity(participant));
-//         participant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // participantRepository.saveAndFlush(getParticipantEntity(participant));
+         // participant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
+         // ErrorCode.DEFAULT_CODE.getValue(),
+         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          participant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
@@ -276,10 +280,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public SeasonsForParticipants getAllAvailableSeasons(int partnerId) {
       SeasonsForParticipants seasons = new SeasonsForParticipants();
       try {
-          List<PartnerSeason> partnerSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoId(partnerId);
-          if (partnerSeasons != null) {
+         List<PartnerSeason> partnerSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoId(partnerId);
+         if (partnerSeasons != null) {
             for (PartnerSeason partnerSeason : partnerSeasons) {
-               SeasonsForParticipantDetails seasonsForParticipantDetails =new SeasonsForParticipantDetails();
+               SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
                seasonsForParticipantDetails.setSeasonId(partnerSeason.getSeason().getSeasonId());
                seasonsForParticipantDetails.setSeasonName(partnerSeason.getSeason().getSeasonFullName());
                seasons.getDetails().add(seasonsForParticipantDetails);
@@ -296,19 +300,21 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId,int seasonId) {
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId) {
       ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();
       try {
-         List<PartnerSeason> partnerSeasons= partnerSeasonsRepository.findPartnerSeasonByPartnerGoIdAndSeasonId(partnerId,seasonId);
-         
+         List<PartnerSeason> partnerSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoIdAndSeasonId(partnerId, seasonId);
+
          if (partnerSeasons != null) {
             for (PartnerSeason partnerSeason : partnerSeasons) {
-               for (DepartmentProgramOption options : partnerSeason.getDepartmentProgram().getDepartmentProgramOptions()) {
-                  ProgramOptionsForParticipantsDetails details= new ProgramOptionsForParticipantsDetails();
-                  details.setDepartmentProgramId(partnerSeason.getDepartmentProgram().getDepartmentProgramId());
-                  details.setDepartmentProgramOption(options.getProgramOptionName());
-                  details.setProgramOptionId(options.getDepartmentProgramOptionId());
-                  programOptionsForParticipants.getDetails().add(details);                  
+               DepartmentProgram departmentProgram = partnerSeason.getDepartmentProgram();
+               List<DepartmentProgramOption> options = departmentProgramOptions.findProgramOptionsByDepartmentProgramId(departmentProgram.getDepartmentProgramId());
+               for (DepartmentProgramOption o : options) {
+                  ProgramOptionsForParticipantsDetails details = new ProgramOptionsForParticipantsDetails();
+                  details.setDepartmentProgramId(departmentProgram.getDepartmentProgramId());
+                  details.setDepartmentProgramOption(o.getProgramOptionName());
+                  details.setProgramOptionId(o.getDepartmentProgramOptionId());
+                  programOptionsForParticipants.getDetails().add(details);
                }
             }
          }
@@ -327,15 +333,15 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       AddedParticipantsList addedParticipants = new AddedParticipantsList();
       try {
          // TODO
-         List<Participant> participants =  participantRepository.findAddedParticipantByPartnerId(Integer.parseInt(partnerId));
+         List<Participant> participants = participantRepository.findAddedParticipantByPartnerId(Integer.parseInt(partnerId));
          if (participants != null) {
             for (Participant participant : participants) {
-               AddedParticipantsDetails details=new AddedParticipantsDetails();
+               AddedParticipantsDetails details = new AddedParticipantsDetails();
                // details.setActive(participant.get);
                // active came from login table
                // username came from login table
                // details.setActive();
-               details.setParticipantGoId(participant.getParticipantGoId()+"");
+               details.setParticipantGoId(participant.getParticipantGoId() + "");
                details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
                details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
                details.setParticipantCountry(participant.getLookupCountry().getCountryName());
@@ -343,16 +349,16 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantEmail(participant.getEmail());
                details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
                details.setParticipantFirstName(participant.getFirstName());
-               details.setParticipantGuranteed(participant.getGuaranteed()==1);
+               details.setParticipantGuranteed(participant.getGuaranteed() == 1);
                details.setParticipantlastName(participant.getLastName());
                details.setParticipantPicUrl(participant.getPhoto());
-               details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive()==1?"Active":"InActive");
+               details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
                details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
                details.setParticipantSeasonName(participant.getSeason().getSeasonName());
                details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
-               details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo()==1);
+               details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
                addedParticipants.getParticipants().add(details);
             }
             addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -373,7 +379,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          List<Partner> allPartners = partnerRepository.findByIsSubPartnerAndParentId(partnerId);
          if (allPartners != null) {
             for (Partner p : allPartners) {
-               SubPartnersForParticipantsDetails details =new SubPartnersForParticipantsDetails();
+               SubPartnersForParticipantsDetails details = new SubPartnersForParticipantsDetails();
                details.setSubPartnerId(p.getPartnerGoId());
                details.setSubPartnerName(p.getCompanyName());
                subPartners.getDetails().add(details);
@@ -394,7 +400,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          Participant p = participantRepository.findOne(Integer.parseInt(participantId));
-         Season season =seasonRepository.findOne(Integer.parseInt(seasonId));
+         Season season = seasonRepository.findOne(Integer.parseInt(seasonId));
          p.setSeason(season);
          participantRepository.saveAndFlush(p);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_SEASON.getValue(),
@@ -423,6 +429,46 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_SUBPARTNER.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse assignEmailToParticipant(String participantId, String email2) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
+         p.setEmail(email2);
+         participantRepository.saveAndFlush(p);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_EMAIL.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_EMAIL)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_EMAIL));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse changeParticipantStatus(String participantId, String status) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
+         if (p.getParticipantStatus() != null)
+            if (status.equalsIgnoreCase("active"))
+               p.getParticipantStatus().setActive((byte) 1);
+            else
+               p.getParticipantStatus().setActive((byte) 0);
+         participantRepository.saveAndFlush(p);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_STATUS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_STATUS));
       }
       return wsDefaultResponse;
    }
