@@ -125,4 +125,20 @@ public class Participants {
       return participantsInterface.assignSubpartnerToParticipant(subpartnerId,participantId);
    }
    
+   @GET
+   @Path("assignEmailToParticipant/{participantId}/{email}")
+   @Produces("application/json")
+   public WSDefaultResponse assignEmailToParticipant(@PathParam("participantId") String participantId,@PathParam("email")String email){
+      LOGGER.info("calling Participants.assignEmailToParticipant ");
+      return participantsInterface.assignEmailToParticipant(participantId,email);
+   }
+   
+   @GET
+   @Path("changeParticipantStatus/{participantId}/{status}")
+   @Produces("application/json")
+   public WSDefaultResponse changeParticipantStatus(@PathParam("participantId") String participantId,@PathParam("status")String status){
+      LOGGER.info("calling Participants.changeParticipantStatus ");
+      return participantsInterface.changeParticipantStatus(participantId,status);
+   }
+
 }
