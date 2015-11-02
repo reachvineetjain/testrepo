@@ -124,6 +124,7 @@ public class PartnerServiceImpl implements PartnerService {
             if (partner != null) {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
+               partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
                 List<PartnerUser> partnerUsers = partner.getPartnerUsers();
                for(PartnerUser pu:partnerUsers){
                   if(partner.getPartnerGoId()==pu.getPartner().getPartnerGoId() && pu.getIsPrimary()==CCIConstants.ACTIVE){
