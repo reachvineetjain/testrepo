@@ -340,10 +340,13 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          if (participants != null) {
             for (Participant participant : participants) {
                AddedParticipantsDetails details = new AddedParticipantsDetails();
-               // details.setActive(participant.get);
-               // active came from login table
-               // username came from login table
-               // details.setActive();
+               try {
+                  GoIdSequence goIdSequence = goIdSequenceRepository.findOne(participant.getParticipantGoId());
+                  Login p = loginRepository.findByGoId(goIdSequence);
+                  details.setActive(p.getActive()==1);
+               } catch (Exception e) {
+                  ExceptionUtil.logException(e, logger);
+               }
                details.setParticipantGoId(participant.getParticipantGoId() + "");
                details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
                details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
@@ -458,8 +461,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public WSDefaultResponse changeParticipantStatus(String participantId, String status) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-         GoIdSequence goIdSequence = new GoIdSequence();
-         goIdSequence = goIdSequenceRepository.save(goIdSequence);
+         GoIdSequence goIdSequence = goIdSequenceRepository.findOne(Integer.parseInt(participantId));
          Login p = loginRepository.findByGoId(goIdSequence);
 
          if (p != null)
