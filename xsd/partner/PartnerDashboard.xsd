@@ -19,7 +19,10 @@
             <xsd:sequence>
                <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerCompany" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerPhotoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="username" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="photoPath" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerPrograms" type="pdl:PartnerProgram" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>

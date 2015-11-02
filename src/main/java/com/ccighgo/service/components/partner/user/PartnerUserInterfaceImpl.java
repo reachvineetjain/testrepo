@@ -368,7 +368,16 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       if (partnerUserDetails == null) {
       } else {
          try {
-
+            Login checkLoginNameExists = loginRepository.findByLoginName(partnerUserDetails.getUserLoginName());
+            Login checkEmailExists = loginRepository.findByEmail(partnerUserDetails.getUserEmail());
+            //proceed only if no login found by email or selected login name
+            if (checkLoginNameExists == null && checkEmailExists == null) {
+               
+            } else {
+               newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                     messageUtil.getMessage("User with same login name or email already exists")));
+               LOGGER.error(messageUtil.getMessage("User with same login name or email already exists"));
+            }
          } catch (CcighgoException e) {
             newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
                   messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
