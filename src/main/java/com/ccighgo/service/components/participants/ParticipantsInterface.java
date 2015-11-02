@@ -55,4 +55,9 @@ public interface ParticipantsInterface {
 
    public WSDefaultResponse assignSubpartnerToParticipant(String subpartnerId, String participantId);
 
+   public WSDefaultResponse assignEmailToParticipant(String email, String email2);
+
+   public WSDefaultResponse changeParticipantStatus(String participantId, String status);
+
+
 }
