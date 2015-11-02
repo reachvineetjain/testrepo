@@ -36,6 +36,7 @@ import com.ccighgo.service.transport.partner.beans.partner.user.details.PartnerU
 import com.ccighgo.service.transport.partner.beans.partner.user.details.Permissions;
 import com.ccighgo.service.transport.partner.beans.partner.user.details.Programs;
 import com.ccighgo.service.transport.partner.beans.partner.user.details.UserAddressCountry;
+import com.ccighgo.service.transport.partner.beans.partner.user.details.UserGender;
 import com.ccighgo.service.transport.partner.beans.partner.user.details.UserOffice;
 import com.ccighgo.service.transport.partner.beans.partner.user.details.UserSalutation;
 import com.ccighgo.service.transport.partner.beans.partner.user.office.PartnerUserOffices;
@@ -171,6 +172,12 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUserDetails.setUserFax(partnerUser.getFax());
             partnerUserDetails.setUserLoginName(partnerUser.getLogin().getLoginName());
             partnerUserDetails.setUserSkypeId(partnerUser.getSkypeId());
+            partnerUserDetails.setUserPictureUrl(partnerUser.getPhoto());
+            //gender
+            UserGender gender = new UserGender();
+            gender.setGenderId(partnerUser.getLookupGender().getGenderId());
+            gender.setGender(partnerUser.getLookupGender().getGenderName());
+            partnerUserDetails.setUserGender(gender);
 
             // partner office
             List<UserOffice> userOfficesList = null;

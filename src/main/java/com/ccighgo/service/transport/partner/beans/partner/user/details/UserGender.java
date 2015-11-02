@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for UserSalutation complex type.
+ * <p>Java class for UserGender complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="UserSalutation">
+ * &lt;complexType name="UserGender">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="salutationId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="salutation" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="genderId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="gender" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,54 +35,54 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UserSalutation", propOrder = {
-    "salutationId",
-    "salutation"
+@XmlType(name = "UserGender", propOrder = {
+    "genderId",
+    "gender"
 })
-public class UserSalutation {
+public class UserGender {
 
-    protected int salutationId;
+    protected int genderId;
     @XmlElement(required = true)
-    protected String salutation;
+    protected String gender;
 
     /**
-     * Gets the value of the salutationId property.
+     * Gets the value of the genderId property.
      * 
      */
-    public int getSalutationId() {
-        return salutationId;
+    public int getGenderId() {
+        return genderId;
     }
 
     /**
-     * Sets the value of the salutationId property.
+     * Sets the value of the genderId property.
      * 
      */
-    public void setSalutationId(int value) {
-        this.salutationId = value;
+    public void setGenderId(int value) {
+        this.genderId = value;
     }
 
     /**
-     * Gets the value of the salutation property.
+     * Gets the value of the gender property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSalutation() {
-        return salutation;
+    public String getGender() {
+        return gender;
     }
 
     /**
-     * Sets the value of the salutation property.
+     * Sets the value of the gender property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSalutation(String value) {
-        this.salutation = value;
+    public void setGender(String value) {
+        this.gender = value;
     }
 
 }
