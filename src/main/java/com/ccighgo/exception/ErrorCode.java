@@ -369,7 +369,7 @@ public enum ErrorCode {
 	  
 	  
 	  //keep your error code above this
-	  NO_ERROR(9999999);
+	  NO_ERROR(9999999),
 	  CHANGE_PARTICIPANT_EMAIL(8000242), 
 	  CANT_CHANGE_PARTICIPANT_EMAIL(8000243), 
 	  CHANGE_PARTICIPANT_STATUS(8000244), 

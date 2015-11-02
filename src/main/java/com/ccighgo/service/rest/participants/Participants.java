@@ -130,7 +130,7 @@ public class Participants {
    @Produces("application/json")
    public WSDefaultResponse assignEmailToParticipant(@PathParam("participantId") String participantId,@PathParam("email")String email){
       LOGGER.info("calling Participants.assignEmailToParticipant ");
-      return participantsInterface.assignEmailToParticipant(email,email);
+      return participantsInterface.assignEmailToParticipant(participantId,email);
    }
    
    @GET

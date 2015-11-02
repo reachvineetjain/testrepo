@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.GoIdSequence;
+import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
@@ -25,6 +26,7 @@ import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
+import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
@@ -82,7 +84,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    PartnerSeasonsRepository partnerSeasonsRepository;
    @Autowired
    PartnerProgramRepository partnerProgramRepository;
-
+   @Autowired
+   LoginRepository loginRepository;
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
    @Override
@@ -455,13 +458,16 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public WSDefaultResponse changeParticipantStatus(String participantId, String status) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
-         if (p.getParticipantStatus() != null)
+         GoIdSequence goIdSequence = new GoIdSequence();
+         goIdSequence = goIdSequenceRepository.save(goIdSequence);
+         Login p = loginRepository.findByGoId(goIdSequence);
+
+         if (p != null)
             if (status.equalsIgnoreCase("active"))
-               p.getParticipantStatus().setActive((byte) 1);
+               p.setActive((byte) 1);
             else
-               p.getParticipantStatus().setActive((byte) 0);
-         participantRepository.saveAndFlush(p);
+               p.setActive((byte) 0);
+         loginRepository.saveAndFlush(p);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_STATUS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
