@@ -13,6 +13,7 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
@@ -27,11 +28,13 @@ import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
+import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
@@ -53,6 +56,8 @@ import com.ccighgo.service.transport.participant.beans.participantsleadlist.Part
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.PasswordUtil;
+import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -84,6 +89,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    PartnerSeasonsRepository partnerSeasonsRepository;
    @Autowired
    PartnerProgramRepository partnerProgramRepository;
+   @Autowired
+   UserTypeRepository userTypeRepository;
+   @Autowired
+   LoginUserTypeRepository loginUserTypeRepository;
    @Autowired
    LoginRepository loginRepository;
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
@@ -205,6 +214,39 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       try {
          if (newManualParticipant != null) {
             for (AddNewManualParticipant p : newManualParticipant.getDetails()) {
+               List<Login> loginList = new ArrayList<Login>();
+               GoIdSequence goIdSequence = new GoIdSequence();
+               goIdSequence = goIdSequenceRepository.save(goIdSequence);
+               com.ccighgo.db.entities.UserType ParticipantUserType = userTypeRepository.findOne(CCIConstants.PARTICIPANT_USER_TYPE);
+               if (ParticipantUserType == null) {
+                  ParticipantUserType = new com.ccighgo.db.entities.UserType();
+               }
+               Login login = new Login();
+               login.setActive(CCIConstants.INACTIVE);
+               login.setLoginName("");
+               login.setPassword(PasswordUtil.hashKey("password"));
+               login.setKeyValue(UuidUtils.nextHexUUID());
+               login.setCreatedBy(goIdSequence.getGoId());
+               login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               login.setModifiedBy(goIdSequence.getGoId());
+               login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               login.setGoIdSequence(goIdSequence);
+               login.setEmail(p.getEmail());
+               login = loginRepository.save(login);
+               loginList.add(login);
+               goIdSequence.setLogins(loginList);
+
+               LoginUserType loginUserType = new LoginUserType();
+               loginUserType.setActive(CCIConstants.ACTIVE);
+               loginUserType.setUserType(ParticipantUserType);
+               loginUserType.setCreatedBy(goIdSequence.getGoId());
+               loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               loginUserType.setModifiedBy(goIdSequence.getGoId());
+               loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
+               loginUserType.setLogin(login);
+               loginUserType = loginUserTypeRepository.save(loginUserType);
+
                Participant participant = new Participant();
                try {
                   participant.setFirstName(p.getFirstName());
@@ -218,8 +260,6 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   participant.setSeason(season);
 
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
-                  GoIdSequence goIdSequence = new GoIdSequence();
-                  goIdSequence = goIdSequenceRepository.save(goIdSequence);
                   participant.setParticipantGoId(goIdSequence.getGoId());
                   participantRepository.saveAndFlush(participant);
                   p.setAdded(true);
@@ -343,7 +383,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                try {
                   GoIdSequence goIdSequence = goIdSequenceRepository.findOne(participant.getParticipantGoId());
                   Login p = loginRepository.findByGoId(goIdSequence);
-                  details.setActive(p.getActive()==1);
+                  details.setActive(p.getActive() == 1);
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
