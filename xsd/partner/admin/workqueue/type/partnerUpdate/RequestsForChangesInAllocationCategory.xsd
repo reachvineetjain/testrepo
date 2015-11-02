@@ -36,17 +36,29 @@
          <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
          
-	    <xsd:element name="currentSeasonAugustStartUnguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />         
-		<xsd:element name="currentSeasonAugustStartguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	    <xsd:element name="currentSeasonAugustStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	    <xsd:element name="currentSeasonAugustStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	             
+		<xsd:element name="currentSeasonAugustStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="currentSeasonAugustStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		
-		 <xsd:element name="currentSeasonJanStartUnguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />         
-		<xsd:element name="currentSeasonJanStartguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="currentSeasonJanStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />         
+		<xsd:element name="currentSeasonJanStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		
-		<xsd:element name="requestedSeasonAugustStartUnguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />         
-		<xsd:element name="requestedSeasonAugustStartguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="currentSeasonJanStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="currentSeasonJanStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		
-		 <xsd:element name="requestedSeasonJanStartUnguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />         
-		<xsd:element name="requestedSeasonJanStartguarantedParticipant" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="requestedSeasonAugustStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="requestedSeasonAugustStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         
+		<xsd:element name="requestedSeasonAugustStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="requestedSeasonAugustStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		
+		 <xsd:element name="requestedSeasonJanStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />         
+		 <xsd:element name="requestedSeasonJanStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		 
+		<xsd:element name="requestedSeasonJanStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="requestedSeasonJanStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		
 		
          <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
