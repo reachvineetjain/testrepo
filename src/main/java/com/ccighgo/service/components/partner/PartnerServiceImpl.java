@@ -127,7 +127,11 @@ public class PartnerServiceImpl implements PartnerService {
                 List<PartnerUser> partnerUsers = partner.getPartnerUsers();
                for(PartnerUser pu:partnerUsers){
                   if(partner.getPartnerGoId()==pu.getPartner().getPartnerGoId() && pu.getIsPrimary()==CCIConstants.ACTIVE){
-                     partnerDashboard.setPartnerPhotoUrl(pu.getPhoto());
+                     partnerDashboard.setFirstName(pu.getFirstName());
+                     partnerDashboard.setLastName(pu.getLastName());
+                     partnerDashboard.setUsername(pu.getLogin().getLoginName());
+                     partnerDashboard.setPhotoPath(pu.getPhoto());
+                     break;
                   }
                }
                List<PartnerSeason> partnerSeasons = partner.getPartnerSeasons();
