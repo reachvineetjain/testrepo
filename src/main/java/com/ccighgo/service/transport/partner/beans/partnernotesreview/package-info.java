@@ -5,5 +5,5 @@
 // Generated on: 2015.10.30 at 02:44:39 PM CDT 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/common")
-package com.ccighgo.service.transport.common.response.beans;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/partnernotesreview")
+package com.ccighgo.service.transport.partner.beans.partnernotesreview;

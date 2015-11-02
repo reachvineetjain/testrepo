@@ -960,6 +960,13 @@
 			<arg value="${xsd.dir}/partner/admin/workqueue/type/partnerUpdate/RequestsForChangesInAllocationCategory.xsd" />
 		</java>
 	</target>
+	<target name="PartnerNotesReview">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/partner/admin/workqueue/type/partnerUpdate/PartnerNotesReview.xsd" />
+			</java>
+		</target>
 	<!--***************************************************Participants***************************  -->
 	<target name="AddedParticipantList">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
