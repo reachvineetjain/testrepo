@@ -25,5 +25,4 @@ public interface PartnerUserRepository extends JpaRepository<PartnerUser, Intege
    @Query("SELECT p.partnerUserId FROM PartnerUser p WHERE p.firstName like %?1% or p.lastName like %?2% or p.email like %?3% or p.login.loginName like %?4% or p.active = ?5 ")
    List<Object> searchPartnerUser(String firstName, String lastName , String email, String userName ,byte active);
 
-
 }

@@ -8,7 +8,7 @@
 		InsurancePlan,InsuranceStates,BackgroundCheckScreenRequest,BackgroundCheckScreenResponse,RegionManagementDetails,RegionSuperRegion,MoveRegions,PartnerCompanyDetail,
 		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail,PartnerDashboard,PartnerJ1HSDashboard,PartnerF1Dashboard,
 		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard,AddNewPartnerOffice,PartnerAdminSeasonsList,PartnerAdminSeasonApplicationList,PartnerAdminJ1SeasonDetails,
-		PartnerAdminF1SeasonDetails,PartnerUserDetails" />
+		PartnerAdminF1SeasonDetails,PartnerUserDetails, PartnerUserOffices" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -651,6 +651,14 @@
 		</java>
 	</target>
 
+	<target name="PartnerUserOffices">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/PartnerUserOffices.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************Participants*************************************************-->
 
 	<target name="ParticipantsActiveList">
@@ -695,7 +703,7 @@
 			<arg value="${xsd.dir}/partner/user/PartnerUserDetails.xsd" />
 		</java>
 	</target>
-	
+
 	<!--*************************************************  Partner Seasons *************************************************-->
 
 	<target name="PartnerSeasonDetail">
