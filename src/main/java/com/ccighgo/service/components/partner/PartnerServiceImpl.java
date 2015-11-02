@@ -17,6 +17,7 @@ import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.PartnerWorkQueueCategory;
 import com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.PartnerWorkQueueType;

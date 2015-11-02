@@ -173,7 +173,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUserDetails.setUserLoginName(partnerUser.getLogin().getLoginName());
             partnerUserDetails.setUserSkypeId(partnerUser.getSkypeId());
             partnerUserDetails.setUserPictureUrl(partnerUser.getPhoto());
-            //gender
+            // gender
             UserGender gender = new UserGender();
             gender.setGenderId(partnerUser.getLookupGender().getGenderId());
             gender.setGender(partnerUser.getLookupGender().getGenderName());
@@ -313,10 +313,10 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             List<PartnerUser> partnerUsersDBList = partnerUserRepository.findByPartnerGoId(Integer.valueOf(partnerGoId));
             Login login = loginRepository.findByCCIGoId(Integer.valueOf(partnerGoId));
             PartnerUser partnerUser = null;
-            if(partnerUsersDBList!=null){
-               for(PartnerUser pUser:partnerUsersDBList){
-                  if(pUser.getLogin().getLoginId()==login.getLoginId()){
-                     partnerUser=pUser;
+            if (partnerUsersDBList != null) {
+               for (PartnerUser pUser : partnerUsersDBList) {
+                  if (pUser.getLogin().getLoginId() == login.getLoginId()) {
+                     partnerUser = pUser;
                      break;
                   }
                }
@@ -365,7 +365,16 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    @Override
    public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails) {
       PartnerUserDetails newUser = new PartnerUserDetails();
-      
+      if (partnerUserDetails == null) {
+      } else {
+         try {
+
+         } catch (CcighgoException e) {
+            newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+         }
+      }
       return newUser;
    }
 
