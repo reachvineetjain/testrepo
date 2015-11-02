@@ -77,6 +77,10 @@ public class PartnerOffice implements Serializable {
 	@JoinColumn(name="partnerOfficeTypeId")
 	private PartnerOfficeType partnerOfficeType;
 
+	//bi-directional many-to-one association to PartnerUser
+	@OneToMany(mappedBy="partnerOffice")
+	private List<PartnerUser> partnerUsers;
+
 	public PartnerOffice() {
 	}
 
@@ -236,6 +240,28 @@ public class PartnerOffice implements Serializable {
 
 	public void setPartnerOfficeType(PartnerOfficeType partnerOfficeType) {
 		this.partnerOfficeType = partnerOfficeType;
+	}
+
+	public List<PartnerUser> getPartnerUsers() {
+		return this.partnerUsers;
+	}
+
+	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+		this.partnerUsers = partnerUsers;
+	}
+
+	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().add(partnerUser);
+		partnerUser.setPartnerOffice(this);
+
+		return partnerUser;
+	}
+
+	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().remove(partnerUser);
+		partnerUser.setPartnerOffice(null);
+
+		return partnerUser;
 	}
 
 }

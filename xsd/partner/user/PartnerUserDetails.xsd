@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partneruserdetails" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partneruserdetails"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partner.user.details" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="PartnerUserDetails" type="pdl:PartnerUserDetails" />
+
+   <xsd:complexType name="PartnerUserDetails">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userActiveStatus" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userSalutation" type="pdl:UserSalutation" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userEmergencyPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userFax" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userLoginName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userSkypeId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userOffices" type="pdl:UserOffice" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="userProgramsAndPermissions" type="pdl:Programs" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="UserSalutation">
+      <xsd:sequence>
+         <xsd:element name="salutationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="UserOffice">
+      <xsd:sequence>
+         <xsd:element name="isPrimary" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeAddressLineOne" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeAddressLineTwo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeAddressCountry" type="pdl:UserAddressCountry" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeFax" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeWebsite" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="UserAddressCountry">
+      <xsd:sequence>
+         <xsd:element name="officeAddressCountryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeAddressCountryISOCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="officeAddressCountryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Programs">
+      <xsd:sequence>
+         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="permissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Permissions">
+      <xsd:sequence>
+         <xsd:element name="admin" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="applications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="flights" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="placementInfo" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="monitoring" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="accounting" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="studentsPreProgram" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contracting" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="insurance" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

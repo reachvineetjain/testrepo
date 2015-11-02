@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -22,6 +23,10 @@ public class PartnerNoteTopic implements Serializable {
 
 	private Byte competitorInfo;
 
+	private Integer createdBy;
+
+	private Timestamp createdOn;
+
 	@Column(name="`embassy/VisaInfo`")
 	private Byte embassy_VisaInfo;
 
@@ -33,12 +38,18 @@ public class PartnerNoteTopic implements Serializable {
 
 	private Byte isPublic;
 
+	private Byte isVisibleToPartner;
+
 	private Byte j1;
 
 	@Column(name="`meeting/visit`")
 	private Byte meeting_visit;
 
-	@Column(length=50)
+	private Integer modifiedBy;
+
+	private Timestamp modifiedOn;
+
+	@Column(name="PartnerNoteTopicName", length=50)
 	private String partnerNoteTopicName;
 
 	private Byte seasonInfo;
@@ -76,6 +87,22 @@ public class PartnerNoteTopic implements Serializable {
 
 	public void setCompetitorInfo(Byte competitorInfo) {
 		this.competitorInfo = competitorInfo;
+	}
+
+	public Integer getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
 	}
 
 	public Byte getEmbassy_VisaInfo() {
@@ -118,6 +145,14 @@ public class PartnerNoteTopic implements Serializable {
 		this.isPublic = isPublic;
 	}
 
+	public Byte getIsVisibleToPartner() {
+		return this.isVisibleToPartner;
+	}
+
+	public void setIsVisibleToPartner(Byte isVisibleToPartner) {
+		this.isVisibleToPartner = isVisibleToPartner;
+	}
+
 	public Byte getJ1() {
 		return this.j1;
 	}
@@ -132,6 +167,22 @@ public class PartnerNoteTopic implements Serializable {
 
 	public void setMeeting_visit(Byte meeting_visit) {
 		this.meeting_visit = meeting_visit;
+	}
+
+	public Integer getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(Integer modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 
 	public String getPartnerNoteTopicName() {

@@ -57,12 +57,12 @@ public class Season implements Serializable {
 	private String seasonName;
 
 	//bi-directional many-to-one association to FieldStaffLCSeason
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
@@ -93,17 +93,17 @@ public class Season implements Serializable {
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonCAPDetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonCAPDetail> seasonCapdetails;
 
 	//bi-directional many-to-one association to SeasonDepartmentDocument
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
 
 	//bi-directional many-to-one association to SeasonDepartmentNote
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonDepartmentNote> seasonDepartmentNotes;
 
@@ -112,37 +112,37 @@ public class Season implements Serializable {
 	private List<SeasonDepartmentUpdateLog> seasonDepartmentUpdateLogs;
 
 	//bi-directional many-to-one association to SeasonF1Detail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonF1Detail> seasonF1details;
 
 	//bi-directional many-to-one association to SeasonGHTConfiguration
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonGHTConfiguration> seasonGhtconfigurations;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
 	//bi-directional many-to-one association to SeasonHSADetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSADetail> seasonHsadetails;
 
 	//bi-directional many-to-one association to SeasonHSPAllocation
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSPAllocation> seasonHspallocations;
 
 	//bi-directional many-to-one association to SeasonHSPConfiguration
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSPConfiguration> seasonHspconfigurations;
 
 	//bi-directional many-to-one association to SeasonIHPDetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonIHPDetail> seasonIhpdetails;
 
@@ -151,67 +151,67 @@ public class Season implements Serializable {
 	private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
 
 	//bi-directional many-to-one association to SeasonJ1Detail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonJ1Detail> seasonJ1details;
 
 	//bi-directional many-to-one association to SeasonLSDetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonLSDetail> seasonLsdetails;
 
 	//bi-directional many-to-one association to SeasonProgramDocument
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonProgramDocument> seasonProgramDocuments;
 
 	//bi-directional many-to-one association to SeasonProgramNote
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonProgramNote> seasonProgramNotes;
 
 	//bi-directional many-to-one association to SeasonProgramUpdateLog
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
 	//bi-directional many-to-one association to SeasonTADetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonTADetail> seasonTadetails;
 
 	//bi-directional many-to-one association to SeasonVADetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonVADetail> seasonVadetails;
 
 	//bi-directional many-to-one association to SeasonWADetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWADetail> seasonWadetails;
 
 	//bi-directional many-to-one association to SeasonWPAllocation
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWPAllocation> seasonWpallocations;
 
 	//bi-directional many-to-one association to SeasonWPConfiguration
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWPConfiguration> seasonWpconfigurations;
 
 	//bi-directional many-to-one association to SeasonWnTSpringDetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWnTSpringDetail> seasonWnTspringDetails;
 
 	//bi-directional many-to-one association to SeasonWnTSummerDetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWnTSummerDetail> seasonWnTsummerDetails;
 
 	//bi-directional many-to-one association to SeasonWnTWinterDetail
-	  @OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWnTWinterDetail> seasonWnTwinterDetails;
 

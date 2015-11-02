@@ -17,7 +17,6 @@ public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	/*@GeneratedValue(strategy=GenerationType.IDENTITY)*/
 	@Column(unique=true, nullable=false)
 	private int partnerGoId;
 
@@ -97,7 +96,7 @@ public class Partner implements Serializable {
 	@Column(length=300)
 	private String partnerLogo;
 
-	private byte payGreenheartDirectly;
+	private Byte payGreenheartDirectly;
 
 	@Column(length=150)
 	private String physicalAddressLineOne;
@@ -491,11 +490,11 @@ public class Partner implements Serializable {
 		this.partnerLogo = partnerLogo;
 	}
 
-	public byte getPayGreenheartDirectly() {
+	public Byte getPayGreenheartDirectly() {
 		return this.payGreenheartDirectly;
 	}
 
-	public void setPayGreenheartDirectly(byte payGreenheartDirectly) {
+	public void setPayGreenheartDirectly(Byte payGreenheartDirectly) {
 		this.payGreenheartDirectly = payGreenheartDirectly;
 	}
 

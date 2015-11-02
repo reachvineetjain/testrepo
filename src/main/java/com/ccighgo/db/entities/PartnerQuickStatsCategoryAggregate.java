@@ -17,13 +17,13 @@ public class PartnerQuickStatsCategoryAggregate implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
+	@Column(name="PartnerQSCategoryAggregateId", unique=true, nullable=false)
 	private Integer partnerQSCategoryAggregateId;
 
 	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
-	private int partnerQSCategoryAggregate;
+	private Integer partnerQSCategoryAggregate;
 
 	@Column(length=50)
 	private String partnerQSCategoryName;
@@ -67,11 +67,11 @@ public class PartnerQuickStatsCategoryAggregate implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public int getPartnerQSCategoryAggregate() {
+	public Integer getPartnerQSCategoryAggregate() {
 		return this.partnerQSCategoryAggregate;
 	}
 
-	public void setPartnerQSCategoryAggregate(int partnerQSCategoryAggregate) {
+	public void setPartnerQSCategoryAggregate(Integer partnerQSCategoryAggregate) {
 		this.partnerQSCategoryAggregate = partnerQSCategoryAggregate;
 	}
 

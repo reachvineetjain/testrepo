@@ -99,8 +99,8 @@ public class SeasonIHPDetail implements Serializable {
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
-   @OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	 @OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
 
 	public SeasonIHPDetail() {
