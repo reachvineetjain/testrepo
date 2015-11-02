@@ -20,6 +20,8 @@
                <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userActiveStatus" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userPictureUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userGender" type="pdl:UserGender" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userSalutation" type="pdl:UserSalutation" minOccurs="1" maxOccurs="1" />
@@ -36,6 +38,13 @@
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
+   
+   <xsd:complexType name="UserGender">
+      <xsd:sequence>
+         <xsd:element name="genderId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
 
    <xsd:complexType name="UserSalutation">
       <xsd:sequence>
@@ -47,6 +56,7 @@
    <xsd:complexType name="UserOffice">
       <xsd:sequence>
          <xsd:element name="isPrimary" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="userOfficeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="officeAddressLineOne" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="officeAddressLineTwo" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />

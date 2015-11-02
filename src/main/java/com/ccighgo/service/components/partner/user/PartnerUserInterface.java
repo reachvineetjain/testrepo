@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partner.user.details.PartnerUserDetails;
+import com.ccighgo.service.transport.partner.beans.partner.user.office.PartnerUserOffices;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 
 /**
@@ -40,5 +41,19 @@ public interface PartnerUserInterface {
     * @return
     */
    public PartnerUserDetails getPartnerUserDetails(String partnerUserId);
+
+   /**
+    * Service to pre-populate Partner offices before adding partner user
+    * 
+    * @param partnerGoId
+    * @return
+    */
+   public PartnerUserOffices getPartnerUserOffices(String partnerGoId);
+
+   /**
+    * @param partnerUserDetails
+    * @return
+    */
+   public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails);
 
 }
