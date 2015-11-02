@@ -841,10 +841,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 		   }
 	   }catch(Exception e)
 	   {
-		   ExceptionUtil.logException(e, logger);
+		  /* ExceptionUtil.logException(e, logger);
 		   adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
 				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)); 
+		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE))*/; 
 	   }
 	   return adr;
    }
@@ -891,10 +891,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 			   
 	   }catch(Exception e)
 	   {
-		   ExceptionUtil.logException(e, logger);
+		  /* ExceptionUtil.logException(e, logger);
 		   rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
 				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)); 
+		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)); */
 	  
 	   }
    	return rca;
@@ -936,10 +936,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 		   }
 	   }catch(Exception e)
 	   {
-		   ExceptionUtil.logException(e, logger);
+		  /* ExceptionUtil.logException(e, logger);
 		   nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
 				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)); 
+		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)); */
 	  
 	   }
    	return nr;

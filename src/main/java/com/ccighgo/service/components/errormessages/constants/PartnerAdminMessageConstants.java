@@ -17,7 +17,7 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE = "error.updating.partner.inquiry.lead";
    public static final String EXCEPTION_UPDATEING_PATICIPANT_SEASON = "error.updating.participant.season";
    public static final String EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER = "error.updating.participant.subpartner";
-   public static final String EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE="error.get.workqueue.submitted.deadline";
-   public static final String EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE="error.get.workqueue.submitted.allocation.change";
-   public static final String EXCEPTION_WORKQUEUE_SUBMITTED_NOTE_REVIEW="error.get.workqueue.submitted.note_review";
+   public static final String EXCEPTION_UPDATEING_PATICIPANT_EMAIL = "error.updating.participant.email";
+   public static final String EXCEPTION_UPDATEING_PATICIPANT_STATUS = "error.updating.participant.status";
+
 }

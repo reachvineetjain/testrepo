@@ -20,7 +20,7 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer documentTypeDocumentCategoryProcessId;
 
-	@Column(nullable=false, length=50)
+	@Column(length=50)
 	private String documentTypeRole;
 
 	//bi-directional many-to-one association to DocumentInformation
@@ -29,7 +29,7 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 
 	//bi-directional many-to-one association to DocumentCategoryProcess
 	@ManyToOne
-	@JoinColumn(name="documentCategoryProcessId", nullable=false)
+	@JoinColumn(name="documentCategoryProcessId")
 	private DocumentCategoryProcess documentCategoryProcess;
 
 	//bi-directional many-to-one association to DocumentType

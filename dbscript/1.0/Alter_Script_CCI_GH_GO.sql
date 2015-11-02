@@ -143,4 +143,23 @@ ADD CONSTRAINT `FK_PartnerSeasonAllocation_CCIStaffUsers`
     REFERENCES `CCIStaffUsers` (`cciStaffUserId`);
 							 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------- Alter script for Partner Note & Partner Note Topics on 29th October 2015------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+							 
+ALTER TABLE PartnerUser ADD COLUMN `partnerOfficeId` INT AFTER `salutationId`,
+ADD CONSTRAINT `FK_PartnerUser_PartnerOffice`
+FOREIGN KEY (`partnerOfficeId`)
+REFERENCES PartnerOffice (`partnerOfficeId`);
+
+ALTER TABLE PartnerNoteTopics
+ADD COLUMN isVisibleToPartner TINYINT(1) DEFAULT 0 AFTER f1,
+ADD COLUMN createdOn TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP AFTER isVisibleToPartner,
+ADD COLUMN createdBy INT NULL AFTER createdOn,
+ADD COLUMN modifiedOn TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP AFTER createdBy,
+ADD COLUMN modifiedBy INT NULL AFTER modifiedOn;
+
+ALTER TABLE PartnerNotes
+ADD COLUMN hasRead TINYINT(1) DEFAULT 0 AFTER `partnerNote`;
 

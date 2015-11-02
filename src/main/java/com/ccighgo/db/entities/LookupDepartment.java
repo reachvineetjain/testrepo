@@ -40,7 +40,7 @@ public class LookupDepartment implements Serializable {
 	private Byte active;
 
 	@Column(nullable=false)
-	private Integer createdBy;
+	private int createdBy;
 
 	@Column(nullable=false)
 	private Timestamp createdOn;
@@ -62,7 +62,7 @@ public class LookupDepartment implements Serializable {
 	private List<CCIStaffRolesDepartment> ccistaffRolesDepartments;
 
 	//bi-directional many-to-one association to DepartmentProgram
-	  @OneToMany(mappedBy = "lookupDepartment", fetch = FetchType.EAGER)
+	 @OneToMany(mappedBy = "lookupDepartment", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgram> departmentPrograms;
 
@@ -72,7 +72,7 @@ public class LookupDepartment implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@OneToMany(mappedBy = "lookupDepartment", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<LookupDepartmentProgram> lookupDepartmentPrograms;
 
 	//bi-directional many-to-one association to Season
@@ -106,11 +106,11 @@ public class LookupDepartment implements Serializable {
 		this.active = active;
 	}
 
-	public Integer getCreatedBy() {
+	public int getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
 

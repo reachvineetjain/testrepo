@@ -17,6 +17,7 @@ import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.PartnerWorkQueueCategory;
 import com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.PartnerWorkQueueType;
@@ -123,6 +124,17 @@ public class PartnerServiceImpl implements PartnerService {
             if (partner != null) {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
+               partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
+                List<PartnerUser> partnerUsers = partner.getPartnerUsers();
+               for(PartnerUser pu:partnerUsers){
+                  if(partner.getPartnerGoId()==pu.getPartner().getPartnerGoId() && pu.getIsPrimary()==CCIConstants.ACTIVE){
+                     partnerDashboard.setFirstName(pu.getFirstName());
+                     partnerDashboard.setLastName(pu.getLastName());
+                     partnerDashboard.setUsername(pu.getLogin().getLoginName());
+                     partnerDashboard.setPhotoPath(pu.getPhoto());
+                     break;
+                  }
+               }
                List<PartnerSeason> partnerSeasons = partner.getPartnerSeasons();
                if (partnerSeasons != null && partnerSeasons.size() > 0) {
                   List<com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram> partnerProgramsList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram>();

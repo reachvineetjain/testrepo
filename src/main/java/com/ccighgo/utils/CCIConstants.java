@@ -34,7 +34,7 @@ public class CCIConstants {
 
    public static final byte ACTIVE = 1;
    public static final byte INACTIVE = 0;
-   
+
    public static final String STATUS_ACTIVE = "1";
    public static final String STATUS_INACTIVE = "0";
    public static final String DEFAULT_PAGE = "0";
@@ -51,8 +51,9 @@ public class CCIConstants {
    public static final Integer CCI_USER_TYPE = 1;
    public static final Integer PARTNER_USER_TYPE = 2;
    public static final int EMPTY_INTEGER_FIELD = -1;
-   
-   //Designation
+   public static final Integer PARTICIPANT_USER_TYPE = 6;
+
+   // Designation
    public static final String SUB_PARTNER = "Sub_Partner";
 
    // spaces, hyphens, literals, commas etc
@@ -93,17 +94,16 @@ public class CCIConstants {
    public static final Integer GHT_TEACH_ABRD_ID = 12;
    public static final Integer GHT_VOL_ABRD_ID = 13;
    public static final Integer GHT_WRK_ABRD_ID = 14;
-   
-   
-  //partnerUsers
-   public static final String PARTNER_PERMISSIONS_TABLE_NAME= "PartnerPermissions";
-   
-   //Partner Agent
+
+   // partnerUsers
+   public static final String PARTNER_PERMISSIONS_TABLE_NAME = "PartnerPermissions";
+
+   // Partner Agent
    public static final String SEASON_OPTION_1 = "Season Defaults";
    public static final String SEASON_OPTION_2 = "Partner Values";
    public static final String SEMESTER_START = "Start";
-   
-   //Partner Notes
+
+   // Partner Notes
    public static final String Work_Travels = "Work&Travels";
    public static final String HSP_J1 = "HSP-J1";
    public static final String GHT = "GHT";
@@ -210,7 +210,7 @@ public class CCIConstants {
    public static final String SERVICE_FAILURE = "Service Failure";
    public static final String EQUAL = "=";
    public static final String BITWISE_AND = "&";
-   
+
    // User Login
    public static final String CCI_USR = "CCI";
    public static final String PARTNER_USER = "PARTNER";
@@ -223,19 +223,21 @@ public class CCIConstants {
    public static final String CREATE_CCI_USER_SUBJECT = "Greenheart Online application account creation notification";
    public static final String SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1 = "partnerAdmin/workQueueSubmittedApplications/";
    public static final String SERVICE_URL_NDY = "Not Determined Yet";
-   
-   //Partner stats
+
+   // Partner stats
    public static final Integer APPL_J1 = 1;
    public static final Integer APPL_F1 = 3;
    public static final Integer APPL_IHP = 5;
-   
+
    public static final String SUBMITTED = "Submitted";
    public static final String PARTNER_REVIEW = "Partner Review";
    public static final String GREENHEART_REVIEW = "Greenheart Review";
    public static final String APPROVED = "Approved";
    public static final String NOT_APPROVED = "Not Approved";
-   
-   //Partner Office
-   public static final String PRIMARY_OFFICE="Main";
 
+   // Partner Office
+   public static final String PRIMARY_OFFICE = "Main";
+
+   // agreement type
+   public static final String OPERATING_AGGREMENT = "Operating Agreement";
 }

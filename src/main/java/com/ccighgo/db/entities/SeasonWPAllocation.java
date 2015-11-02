@@ -29,7 +29,7 @@ public class SeasonWPAllocation implements Serializable {
 	private Integer maxPax;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -79,11 +79,11 @@ public class SeasonWPAllocation implements Serializable {
 		this.maxPax = maxPax;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

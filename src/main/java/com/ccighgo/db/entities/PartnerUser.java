@@ -20,7 +20,7 @@ public class PartnerUser implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerUserId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(length=150)
 	private String email;
@@ -70,6 +70,11 @@ public class PartnerUser implements Serializable {
 	@JoinColumn(name="partnerGoId")
 	private Partner partner;
 
+	//bi-directional many-to-one association to PartnerOffice
+	@ManyToOne
+	@JoinColumn(name="partnerOfficeId")
+	private PartnerOffice partnerOffice;
+
 	//bi-directional many-to-one association to Salutation
 	@ManyToOne
 	@JoinColumn(name="salutationId")
@@ -90,11 +95,11 @@ public class PartnerUser implements Serializable {
 		this.partnerUserId = partnerUserId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -222,6 +227,14 @@ public class PartnerUser implements Serializable {
 
 	public void setPartner(Partner partner) {
 		this.partner = partner;
+	}
+
+	public PartnerOffice getPartnerOffice() {
+		return this.partnerOffice;
+	}
+
+	public void setPartnerOffice(PartnerOffice partnerOffice) {
+		this.partnerOffice = partnerOffice;
 	}
 
 	public Salutation getSalutation() {

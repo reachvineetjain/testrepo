@@ -61,11 +61,11 @@ public class PartnerPermission implements Serializable {
 
 	private Byte ihpApplications;
 
-	private byte ihpContracting;
+	private Byte ihpContracting;
 
 	private Byte ihpFlights;
 
-	private byte ihpInsurance;
+	private Byte ihpInsurance;
 
 	private Byte ihpMonitoring;
 
@@ -293,11 +293,11 @@ public class PartnerPermission implements Serializable {
 		this.ihpApplications = ihpApplications;
 	}
 
-	public byte getIhpContracting() {
+	public Byte getIhpContracting() {
 		return this.ihpContracting;
 	}
 
-	public void setIhpContracting(byte ihpContracting) {
+	public void setIhpContracting(Byte ihpContracting) {
 		this.ihpContracting = ihpContracting;
 	}
 
@@ -309,11 +309,11 @@ public class PartnerPermission implements Serializable {
 		this.ihpFlights = ihpFlights;
 	}
 
-	public byte getIhpInsurance() {
+	public Byte getIhpInsurance() {
 		return this.ihpInsurance;
 	}
 
-	public void setIhpInsurance(byte ihpInsurance) {
+	public void setIhpInsurance(Byte ihpInsurance) {
 		this.ihpInsurance = ihpInsurance;
 	}
 

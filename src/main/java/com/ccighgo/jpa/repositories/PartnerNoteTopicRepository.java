@@ -18,6 +18,9 @@ import com.ccighgo.db.entities.PartnerNoteTopic;
 public interface PartnerNoteTopicRepository extends JpaRepository<PartnerNoteTopic, Integer> {
 
    PartnerNoteTopic findByPartnerNoteTopicName(String topic);
+   
+   @Query("SELECT p FROM PartnerNoteTopic p WHERE p.partner.partnerGoId = ?1")
+   List<PartnerNoteTopic> findByPartnerGoId(Integer partnerGoId);
 
 	@Query("SELECT l FROM PartnerNoteTopic l where l.partner.partnerGoId = ?1")
     public List<PartnerNoteTopic> findAllPartnerNoteTopicByPartnerId(int partnerId);
