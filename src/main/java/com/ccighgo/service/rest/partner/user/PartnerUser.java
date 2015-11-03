@@ -27,9 +27,9 @@ import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
  * <p>
  * Rest service interface exposes list of services for Partner User management.
  * <P>
- * See {@link com.ccighgo.service.components.partner.user.PartnerUserInterface} for service interface injected
- * for business logic and {@link com.ccighgo.service.components.partner.user.PartnerUserInterfaceImpl} for
- * actual business logic.
+ * See {@link com.ccighgo.service.components.partner.user.PartnerUserInterface} for service interface injected for
+ * business logic and {@link com.ccighgo.service.components.partner.user.PartnerUserInterfaceImpl} for actual business
+ * logic.
  * </p>
  * 
  * @see com.ccighgo.service.components.partner.user.PartnerUserInterface
@@ -91,7 +91,7 @@ public class PartnerUser {
       LOGGER.debug("calling PartnerUser.getPartnerUserDetails for partnerUserId id {}", partnerUserId);
       return partnerUserInterface.getPartnerUserDetails(partnerUserId);
    }
-   
+
    /**
     * @param partnerUserId
     * @return
@@ -103,7 +103,7 @@ public class PartnerUser {
       LOGGER.debug("calling PartnerUser.getPartnerUserDetails for partnerUserId id {}", partnerUserId);
       return partnerUserInterface.getPartnerUserDetails(partnerUserId);
    }
-   
+
    /**
     * @param partnerGoId
     * @return
@@ -111,11 +111,11 @@ public class PartnerUser {
    @GET
    @Path("get/offices/{partnerGoId}")
    @Produces("application/json")
-   public PartnerUserOffices getPartnerUserOffices(@PathParam("partnerGoId") String partnerGoId){
+   public PartnerUserOffices getPartnerUserOffices(@PathParam("partnerGoId") String partnerGoId) {
       LOGGER.debug("calling PartnerUser.getPartnerUserOffice for partnerGoId id {}", partnerGoId);
       return partnerUserInterface.getPartnerUserOffices(partnerGoId);
    }
-   
+
    /**
     * @param partnerUserDetails
     * @return
@@ -125,7 +125,7 @@ public class PartnerUser {
    @Produces("application/json")
    public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails) {
       LOGGER.debug("calling PartnerUser.addPartnerUser for partnerGoId id {}", partnerUserDetails.getPartnerGoId());
-      return partnerUserInterface.addPartnerUser(partnerUserDetails);
+      return partnerUserInterface.addPartnerUser(partnerUserDetails, request);
    }
-   
+
 }
