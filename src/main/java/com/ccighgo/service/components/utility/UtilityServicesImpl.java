@@ -442,7 +442,7 @@ public class UtilityServicesImpl implements UtilityServices {
       }
 
    }
-   
+
    @Override
    public Salutations getSalutation() {
 
@@ -467,8 +467,6 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return salutations;
    }
-
-   
 
    @Override
    public Country getCountryById(int countryId) {
@@ -607,15 +605,15 @@ public class UtilityServicesImpl implements UtilityServices {
       salutations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return salutations;
    }
-   
-   //ProgramOptions
+
+   // ProgramOptions
    private ProgramOptions setProgramOptionsStatus(ProgramOptions programOptions, String code, String type, int serviceCode, String message) {
       if (programOptions == null)
          programOptions = new ProgramOptions();
       programOptions.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return programOptions;
    }
-   
+
    private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
@@ -639,16 +637,18 @@ public class UtilityServicesImpl implements UtilityServices {
          Login loginUser = null;
          if (req.getUsername() == null) {
             loginUser = loginRepository.findByEmail(req.getEmail());
-         }
-         else if(req.getEmail() == null){
+         } else if (req.getEmail() == null) {
             loginUser = loginRepository.findByLoginName(req.getUsername().toLowerCase());
          }
          if (loginUser != null) {
-            String body = "<p>Welcome to Greenheart Online System! </p>" +
-         "<p>This email was sent by the Greenheart Online system in response to your request to recover your password. </p>" +
-         "<p>Please go to the following page and choose a new password:</p> " + 
-                  "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"  +
-         "<p>If you didn't request a new password, please let us know.</p><p>Thank you,</p><p>CCI Greenheart.</p>";
+            String body = "<p>Ciao! </p>" 
+                  + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" 
+                  + "<p>"+ "Your username is : " + req.getUsername() + "</p>" 
+                  + "<p>Please click on the link below to create a new password:</p> " 
+                  + "<p>"+ formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"
+                  + "<p>If you didn't request a new password, please let us know.</p>"
+                  + "<p>Thank you,</p>"
+                  + "<p>CCI Greenheart.</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
@@ -674,9 +674,9 @@ public class UtilityServicesImpl implements UtilityServices {
                   messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED)));
             LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED));
             return response;
-         }    
+         }
          login.setKeyValue(UuidUtils.nextHexUUID());
-         login.setPassword(PasswordUtil.hashKey(req.getPasskey()));      
+         login.setPassword(PasswordUtil.hashKey(req.getPasskey()));
          login.setModifiedBy(login.getGoIdSequence().getGoId());
          login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          login = loginRepository.saveAndFlush(login);
@@ -706,10 +706,9 @@ public class UtilityServicesImpl implements UtilityServices {
       } else
          return false;
    }
-   
-  
+
    @Override
-   public Programs getProgramOptionsByDepartment(String deptId){
+   public Programs getProgramOptionsByDepartment(String deptId) {
       List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
       Programs programs = null;
       List<Program> programList = null;
@@ -739,33 +738,33 @@ public class UtilityServicesImpl implements UtilityServices {
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
          LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
       }
-         return programs;
-      
+      return programs;
+
    }
-   
+
    @Override
-   public ProgramOptions getAllProgramOptions(){
+   public ProgramOptions getAllProgramOptions() {
       ProgramOptions programOptions = new ProgramOptions();
-      try{
-      List<DepartmentProgramOption> departmentProgramOptionDBList = departmentProgramOptionRepository.findAll();
-      if(departmentProgramOptionDBList == null || departmentProgramOptionDBList.isEmpty() ){
-         programOptions = setProgramOptionsStatus(programOptions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_OPTIONS.getValue(),
-               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
-         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
-         return programOptions;
-      }
-      List<ProgramOption> programOptionList = new ArrayList<ProgramOption>();
-      for (DepartmentProgramOption departmentProgramOption : departmentProgramOptionDBList) {
-         ProgramOption programOption = new ProgramOption();
-         programOption.setDepartmentProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
-         programOption.setDepartmentProgramId(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId());
-         programOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
-         programOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
-         programOptionList.add(programOption);
-      }
-      programOptions.getProgramOptions().addAll(programOptionList);   
-      programOptions = setProgramOptionsStatus(programOptions, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+      try {
+         List<DepartmentProgramOption> departmentProgramOptionDBList = departmentProgramOptionRepository.findAll();
+         if (departmentProgramOptionDBList == null || departmentProgramOptionDBList.isEmpty()) {
+            programOptions = setProgramOptionsStatus(programOptions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_OPTIONS.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+            return programOptions;
+         }
+         List<ProgramOption> programOptionList = new ArrayList<ProgramOption>();
+         for (DepartmentProgramOption departmentProgramOption : departmentProgramOptionDBList) {
+            ProgramOption programOption = new ProgramOption();
+            programOption.setDepartmentProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
+            programOption.setDepartmentProgramId(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId());
+            programOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
+            programOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
+            programOptionList.add(programOption);
+         }
+         programOptions.getProgramOptions().addAll(programOptionList);
+         programOptions = setProgramOptionsStatus(programOptions, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
          programOptions = setProgramOptionsStatus(programOptions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_OPTIONS.getValue(),
                messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
@@ -773,7 +772,7 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return programOptions;
    }
-   
+
    public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus() {
 
       List<PartnerStatus> partnerStatusDBList = partnerStatusRepository.findAll();
@@ -786,9 +785,9 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return partnerSeasonProgramStatusList;
    }
-   
+
    public List<NoteTags> getAllTags() {
-      
+
       List<NoteTags> noteTagsList = new ArrayList<NoteTags>();
       List<PartnerNoteTag> PartnerNoteTagDbList = partnerNoteTagRepository.findAll();
       if (PartnerNoteTagDbList.size() > 0) {
@@ -801,7 +800,7 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return noteTagsList;
    }
-   
+
    @Override
    public DocumentTypes getDocumentTypes() {
       DocumentTypes documentType = null;
@@ -830,7 +829,7 @@ public class UtilityServicesImpl implements UtilityServices {
 
       return documentType;
    }
-   
+
    private DocumentTypes setDocumentTypesStatus(DocumentTypes documentType, String code, String type, int serviceCode, String message) {
       if (documentType == null)
          documentType = new DocumentTypes();
