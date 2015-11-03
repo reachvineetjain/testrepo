@@ -398,7 +398,7 @@ public class PartnerServiceImpl implements PartnerService {
                f1Dashboard.getPartnerAnnouncements().addAll(partnerF1Announcements);
 
                // partner f1 cci contact
-               PartnerProgram partnerCCIF1Contact = partnerProgramRepository.findByPartnerIdAndDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
+               PartnerProgram partnerCCIF1Contact = partnerProgramRepository.findByPartnerIdAndDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_F1_ID);
                PartnerF1CCIContact cciContact = null;
                if (partnerCCIF1Contact != null) {
                   cciContact = new PartnerF1CCIContact();

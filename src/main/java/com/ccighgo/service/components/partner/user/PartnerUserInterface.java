@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.components.partner.user;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -54,6 +56,6 @@ public interface PartnerUserInterface {
     * @param partnerUserDetails
     * @return
     */
-   public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails);
+   public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request);
 
 }

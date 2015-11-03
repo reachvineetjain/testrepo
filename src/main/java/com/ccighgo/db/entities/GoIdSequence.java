@@ -43,7 +43,10 @@ public class GoIdSequence implements Serializable {
 	public GoIdSequence() {
 	}
 
-	public Integer getGoId() {
+	public GoIdSequence(int partnerGoId) {
+   }
+
+   public Integer getGoId() {
 		return this.goId;
 	}
 
