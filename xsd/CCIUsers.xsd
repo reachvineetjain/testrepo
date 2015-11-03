@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/cciuser" xmlns:common="http://www.ccighgo.com/common" xmlns:country="http://www.ccighgo.com/country" xmlns:gender="http://www.ccighgo.com/gender" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+<xsd:schema targetNamespace="http://www.ccighgo.com/cciuser" xmlns:common="http://www.ccighgo.com/common" xmlns:country="http://www.ccighgo.com/country"
+   xmlns:gender="http://www.ccighgo.com/gender" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cciusr="http://www.ccighgo.com/cciuser">
 
    <xsd:annotation>
@@ -15,43 +16,38 @@
    <xsd:import schemaLocation="Countries.xsd" namespace="http://www.ccighgo.com/country"></xsd:import>
    <xsd:element name="CCIUsers" type="cciusr:CCIUsers"></xsd:element>
 
-	<xsd:complexType name="CCIUsers">
-		<xsd:complexContent>
-			<xsd:extension base="common:Response">
-				<xsd:sequence>
-					<xsd:element name="recordCount" type="xsd:int"
-						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="cciUsers" type="cciusr:CCIUser"
-						minOccurs="0" maxOccurs="unbounded" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+   <xsd:complexType name="CCIUsers">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="recordCount" type="xsd:int" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="cciUsers" type="cciusr:CCIUser" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
 
-	<xsd:complexType name="CCIUser">
-		<xsd:complexContent>
-			<xsd:extension base="common:Response">
-				<xsd:sequence>
-					<xsd:element name="cciUserId" type="xsd:int" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="firstName" type="xsd:string"	minOccurs="1" maxOccurs="1" />
-					<xsd:element name="lastName" type="xsd:string"  minOccurs="1" maxOccurs="1" />
-					<xsd:element name="country" type="country:Country"   minOccurs="0" maxOccurs="1" />
-					<xsd:element name="state" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="primaryPhone" type="xsd:string"	minOccurs="1" maxOccurs="1" />
-					<xsd:element name="loginName" type="xsd:string" 	minOccurs="1" maxOccurs="1" />
-					<xsd:element name="isActive" type="xsd:boolean"		maxOccurs="1" minOccurs="0" />
-					<xsd:element name="photoPath" type="xsd:string"		maxOccurs="1" minOccurs="0" />
-					<xsd:element name="userRole" type="cciusr:CCIUserStaffRole"	minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="cciUserDepartmentPrograms" type="cciusr:CCIUserDepartmentProgram"
-						minOccurs="0" maxOccurs="unbounded" />
-                                        <xsd:element name="gender" type="gender:Gender"
-						minOccurs="0" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+   <xsd:complexType name="CCIUser">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="country" type="country:Country" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="state" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="primaryPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="loginName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="isActive" type="xsd:boolean" maxOccurs="1" minOccurs="0" />
+               <xsd:element name="photoPath" type="xsd:string" maxOccurs="1" minOccurs="0" />
+               <xsd:element name="userRole" type="cciusr:CCIUserStaffRole" minOccurs="0" maxOccurs="unbounded" />
+               <xsd:element name="cciUserDepartmentPrograms" type="cciusr:CCIUserDepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
+<!--                <xsd:element name="gender" type="gender:Gender" minOccurs="0" maxOccurs="1" />
+ -->            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
 
    <xsd:complexType name="CCIUserDepartmentProgram">
       <xsd:sequence>
@@ -61,8 +57,8 @@
          <xsd:element name="programId" type="xsd:int" minOccurs="0" maxOccurs="1" />
          <xsd:element name="programName" type="xsd:string" minOccurs="0" maxOccurs="1" />
       </xsd:sequence>
-   </xsd:complexType> 
- 
+   </xsd:complexType>
+
 
    <xsd:complexType name="CCIUserStaffRole">
       <xsd:sequence>

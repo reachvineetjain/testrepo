@@ -22,11 +22,12 @@ public class ResourceAction implements Serializable {
 	private Integer resourceActionId;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -39,7 +40,7 @@ public class ResourceAction implements Serializable {
 	private String resourceAction;
 
 	@Column(nullable=false)
-	private byte visibleToUser;
+	private Byte visibleToUser;
 
 	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
 	@OneToMany(mappedBy="resourceAction")
@@ -64,11 +65,11 @@ public class ResourceAction implements Serializable {
 		this.resourceActionId = resourceActionId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -112,11 +113,11 @@ public class ResourceAction implements Serializable {
 		this.resourceAction = resourceAction;
 	}
 
-	public byte getVisibleToUser() {
+	public Byte getVisibleToUser() {
 		return this.visibleToUser;
 	}
 
-	public void setVisibleToUser(byte visibleToUser) {
+	public void setVisibleToUser(Byte visibleToUser) {
 		this.visibleToUser = visibleToUser;
 	}
 

@@ -49,8 +49,8 @@ public class PartnerSubPartners
 
     protected int count;
     protected int partnerGoId;
-    protected List<SubPartners> subPartners;
 
+    protected List<SubPartners> subPartners;
     /**
      * Gets the value of the count property.
      * 

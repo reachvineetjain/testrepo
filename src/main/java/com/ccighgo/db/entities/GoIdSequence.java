@@ -24,9 +24,17 @@ public class GoIdSequence implements Serializable {
 	@OneToOne(mappedBy="goIdSequence")
 	private CCIStaffUser ccistaffUser;
 
+	//bi-directional one-to-one association to Employer
+	@OneToOne(mappedBy="goIdSequence")
+	private Employer employer;
+
+	//bi-directional one-to-one association to HostFamily
+	@OneToOne(mappedBy="goIdSequence")
+	private HostFamily hostFamily;
+
 	//bi-directional many-to-one association to Login
 	@OneToMany(mappedBy="goIdSequence")
-   private List<Login> login;
+	private List<Login> logins;
 
 	//bi-directional one-to-one association to Partner
 	@OneToOne(mappedBy="goIdSequence")
@@ -35,7 +43,10 @@ public class GoIdSequence implements Serializable {
 	public GoIdSequence() {
 	}
 
-	public Integer getGoId() {
+	public GoIdSequence(int partnerGoId) {
+   }
+
+   public Integer getGoId() {
 		return this.goId;
 	}
 
@@ -51,21 +62,41 @@ public class GoIdSequence implements Serializable {
 		this.ccistaffUser = ccistaffUser;
 	}
 
-	public List<Login> getLogin() {
-		return this.login;
+	public Employer getEmployer() {
+		return this.employer;
 	}
 
-	public void setLogin(List<Login> login) {
-		this.login = login;
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
+	}
+
+	public HostFamily getHostFamily() {
+		return this.hostFamily;
+	}
+
+	public void setHostFamily(HostFamily hostFamily) {
+		this.hostFamily = hostFamily;
+	}
+
+	public List<Login> getLogins() {
+		return this.logins;
+	}
+
+	public void setLogins(List<Login> logins) {
+		this.logins = logins;
 	}
 
 	public Login addLogin(Login login) {
+		getLogins().add(login);
 		login.setGoIdSequence(this);
+
 		return login;
 	}
 
 	public Login removeLogin(Login login) {
+		getLogins().remove(login);
 		login.setGoIdSequence(null);
+
 		return login;
 	}
 

@@ -3,25 +3,38 @@
  */
 package com.ccighgo.service.rest.partner.user;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.user.PartnerUserInterface;
-import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partner.user.details.PartnerUserDetails;
+import com.ccighgo.service.transport.partner.beans.partner.user.office.PartnerUserOffices;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUsersDetailAndRoles;
 
 /**
+ * <p>
+ * Rest service interface exposes list of services for Partner User management.
+ * <P>
+ * See {@link com.ccighgo.service.components.partner.user.PartnerUserInterface} for service interface injected for
+ * business logic and {@link com.ccighgo.service.components.partner.user.PartnerUserInterfaceImpl} for actual business
+ * logic.
+ * </p>
+ * 
+ * @see com.ccighgo.service.components.partner.user.PartnerUserInterface
+ * @see com.ccighgo.service.components.partner.user.PartnerUserInterfaceImpl
+ * 
  * @author ravi
  *
  */
@@ -29,72 +42,102 @@ import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUse
 @Produces("application/json")
 @Consumes("application/json")
 public class PartnerUser {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerUser.class);
-   
+
    @Autowired PartnerUserInterface partnerUserInterface;
-   
+
+   @Context HttpServletRequest request;
+
+   /**
+    * REST service to return list of partner user for specified partner
+    * 
+    * @param partnerId
+    * @return
+    */
    @GET
    @Path("list/{partnerId}")
    @Produces("application/json")
    public PartnerUsers getAllPartnerUsers(@PathParam("partnerId") String partnerId) {
-      LOGGER.debug("calling PartnerUser.getAllPartnerUsers for partner id {}",partnerId);
+      LOGGER.debug("calling PartnerUser.getAllPartnerUsers for partner id {}", partnerId);
       return partnerUserInterface.getAllPartnerUsers(partnerId);
    }
-   
+
+   /**
+    * REST service updates status of partner for the season as in active or inactive
+    * 
+    * @param statusVal
+    * @param partnerUserId
+    * @return
+    */
+   @GET
+   @Path("update/status/{statusVal}/{partnerUserId}")
+   @Produces("application/json")
+   public Response updatePartnerUserStatus(@PathParam("statusVal") String statusVal, @PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.updatePartnerUserStatus for partnerGoId id {}", partnerUserId);
+      return partnerUserInterface.updatePartnerUserStatus(statusVal, partnerUserId);
+   }
+
+   /**
+    * 
+    * 
+    * @param partnerUserId
+    * @return
+    */
+   @GET
+   @Path("view/user/details/{partnerUserId}")
+   @Produces("application/json")
+   public PartnerUserDetails getPartnerUserDetails(@PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.getPartnerUserDetails for partnerUserId id {}", partnerUserId);
+      return partnerUserInterface.getPartnerUserDetails(partnerUserId);
+   }
+
+   /**
+    * @param partnerUserId
+    * @return
+    */
+   @GET
+   @Path("edit/user/details/{partnerUserId}")
+   @Produces("application/json")
+   public PartnerUserDetails editPartnerUserDetails(@PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.getPartnerUserDetails for partnerUserId id {}", partnerUserId);
+      return partnerUserInterface.getPartnerUserDetails(partnerUserId);
+   }
+
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   @GET
+   @Path("get/offices/{partnerGoId}")
+   @Produces("application/json")
+   public PartnerUserOffices getPartnerUserOffices(@PathParam("partnerGoId") String partnerGoId) {
+      LOGGER.debug("calling PartnerUser.getPartnerUserOffice for partnerGoId id {}", partnerGoId);
+      return partnerUserInterface.getPartnerUserOffices(partnerGoId);
+   }
+
+   /**
+    * @param partnerUserDetails
+    * @return
+    */
    @POST
-   @Path("create")
+   @Path("add/user")
    @Produces("application/json")
-   public PartnerUserDetailAndRoles createNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
-      LOGGER.debug("calling PartnerUser.addNewPartnerUser");
-      return partnerUserInterface.addNewPartnerUser(partnerUserDetailAndRoles);
+   public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails) {
+      LOGGER.debug("calling PartnerUser.addPartnerUser for partnerGoId id {}", partnerUserDetails.getPartnerGoId());
+      return partnerUserInterface.addPartnerUser(partnerUserDetails, request);
    }
    
-   @GET
-   @Path("view/{partnerUserId}")
-   @Produces("application/json")
-   public PartnerUserDetailAndRoles viewPartnerUser(@PathParam("partnerUserId") String partnerUserId) {
-      LOGGER.debug("calling PartnerUser.viewPartnerUser");
-      return partnerUserInterface.viewPartnerUser(partnerUserId);
-   }
-   
-   @GET
-   @Path("edit/{partnerUserId}")
-   @Produces("application/json")
-   public PartnerUserDetailAndRoles editPartnerUser(@PathParam("partnerUserId") String partnerUserId) {
-      LOGGER.debug("calling PartnerUser.viewPartnerUser");
-      return partnerUserInterface.viewPartnerUser(partnerUserId);
-   }
+   /**
+    * @param partnerUserDetails
+    * @return
+    */
    @POST
-   @Path("update")
+   @Path("update/user")
    @Produces("application/json")
-   public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles) {
-      LOGGER.debug("calling PartnerUser.updatePartnerUser");
-      return partnerUserInterface.updatePartnerUser(partnerUserDetailAndRoles);
+   public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails) {
+      LOGGER.debug("calling PartnerUser.updatePartnerUser for partnerGoId id {}", partnerUserDetails.getPartnerGoId());
+      return partnerUserInterface.updatePartnerUser(partnerUserDetails, request);
    }
-   
-   @GET
-   @Path("get-program-access")
-   @Produces("application/json")
-   public PartnerUserProgramsAndRoles getProgramsAndRoles() {
-      LOGGER.debug("calling PartnerUser.getProgramsAndRoles");
-      return partnerUserInterface.getProgramsAndRoles();
-   }
-   
-   /*@POST
-   @Path("search")
-   @Produces("application/json")
-   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser) {
-      LOGGER.debug("calling PartnerUser.searchPartnerUser");
-      return partnerUserInterface.searchPartnerUser(partnerUser);
-   }*/
-   
-   @GET
-   @Path("delete-partner-user/{partnerUserId}")
-   @Produces("application/json")
-   public DeleteRequest deletePartnerUser(@PathParam("partnerUserId") String partnerUserId) {
-      LOGGER.debug("calling PartnerUser.deletePartnerUser");
-      return partnerUserInterface.deletePartnerUser(partnerUserId);
-   }
-   
+
 }

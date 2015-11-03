@@ -24,23 +24,26 @@ public class SeasonWnTSummerDetail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date applicationDeadlineDate;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
-	private byte isJobBoardOpen;
+	private Byte isJobBoardOpen;
 
 	private Integer maxPendingJobApps;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=55)
+	@Column(length=50)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -53,7 +56,7 @@ public class SeasonWnTSummerDetail implements Serializable {
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId")
+	@JoinColumn(name="programStatusId", nullable=false)
 	private SeasonStatus seasonStatus;
 
 	public SeasonWnTSummerDetail() {
@@ -99,11 +102,11 @@ public class SeasonWnTSummerDetail implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public byte getIsJobBoardOpen() {
+	public Byte getIsJobBoardOpen() {
 		return this.isJobBoardOpen;
 	}
 
-	public void setIsJobBoardOpen(byte isJobBoardOpen) {
+	public void setIsJobBoardOpen(Byte isJobBoardOpen) {
 		this.isJobBoardOpen = isJobBoardOpen;
 	}
 

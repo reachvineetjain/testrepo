@@ -22,17 +22,27 @@ public class PartnerSeason implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonId;
 
-	private byte active;
+	private Byte active;
 
-	private byte canAccessJobBoard;
+	private Byte canAccessJobBoard;
 
-	private int contractScheduleId;
+	private Byte canCreateSubPartner;
 
+	private Integer contractScheduleId;
+
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	private byte disableAddParticipant;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date deadlineRequestedOn;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date deadlineRequestReviewedOn;
+
+	private Byte disableAddParticipant;
 
 	@Column(length=2000)
 	private String exceptionComments;
@@ -46,14 +56,21 @@ public class PartnerSeason implements Serializable {
 	@Column(length=100)
 	private String insurancePolicyNumber;
 
+	private Byte insuranceProvidedByCCI;
+
+	@Column(nullable=false)
+	private Byte isSignedContract;
+
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date originalsReceivedDate;
 
-	private byte participantPaysDeposit;
+	private Byte participantPaysDeposit;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date partnerSeasonAppDeadlineDate;
@@ -75,10 +92,12 @@ public class PartnerSeason implements Serializable {
 
 	private Integer partnerTaxCompanyId;
 
-	private byte questionaireRequired;
+	private Byte questionaireRequired;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date questionnaireSubmittedOn;
+
+	private Byte sevisFeesPaidByCCI;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timelyReturnReportReceivedDate;
@@ -86,12 +105,22 @@ public class PartnerSeason implements Serializable {
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
 	@JoinColumn(name="cciStaffUserId")
-	private CCIStaffUser ccistaffUser;
+	private CCIStaffUser ccistaffUser1;
+
+	//bi-directional many-to-one association to CCIStaffUser
+	@ManyToOne
+	@JoinColumn(name="deadlineRequestReviewedBy")
+	private CCIStaffUser ccistaffUser2;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
+
+	//bi-directional many-to-one association to Login
+	@ManyToOne
+	@JoinColumn(name="deadlineRequestedBy")
+	private Login login;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
@@ -101,7 +130,17 @@ public class PartnerSeason implements Serializable {
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
 	@JoinColumn(name="partnerSeasonStatusId")
-	private PartnerStatus partnerStatus;
+	private PartnerStatus partnerStatus1;
+
+	//bi-directional many-to-one association to PartnerStatus
+	@ManyToOne
+	@JoinColumn(name="partnerDeadlineRequestStatusId")
+	private PartnerStatus partnerStatus2;
+
+	//bi-directional many-to-one association to PartnerStatus
+	@ManyToOne
+	@JoinColumn(name="partnerSecSemDeadlineRequestStatusId")
+	private PartnerStatus partnerStatus3;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -116,6 +155,10 @@ public class PartnerSeason implements Serializable {
 	@OneToMany(mappedBy="partnerSeason")
 	private List<PartnerSeasonContract> partnerSeasonContracts;
 
+	//bi-directional many-to-one association to PartnerSeasonDocument
+	@OneToMany(mappedBy="partnerSeason")
+	private List<PartnerSeasonDocument> partnerSeasonDocuments;
+
 	public PartnerSeason() {
 	}
 
@@ -127,27 +170,35 @@ public class PartnerSeason implements Serializable {
 		this.partnerSeasonId = partnerSeasonId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
-	public byte getCanAccessJobBoard() {
+	public Byte getCanAccessJobBoard() {
 		return this.canAccessJobBoard;
 	}
 
-	public void setCanAccessJobBoard(byte canAccessJobBoard) {
+	public void setCanAccessJobBoard(Byte canAccessJobBoard) {
 		this.canAccessJobBoard = canAccessJobBoard;
 	}
 
-	public int getContractScheduleId() {
+	public Byte getCanCreateSubPartner() {
+		return this.canCreateSubPartner;
+	}
+
+	public void setCanCreateSubPartner(Byte canCreateSubPartner) {
+		this.canCreateSubPartner = canCreateSubPartner;
+	}
+
+	public Integer getContractScheduleId() {
 		return this.contractScheduleId;
 	}
 
-	public void setContractScheduleId(int contractScheduleId) {
+	public void setContractScheduleId(Integer contractScheduleId) {
 		this.contractScheduleId = contractScheduleId;
 	}
 
@@ -167,11 +218,27 @@ public class PartnerSeason implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public byte getDisableAddParticipant() {
+	public Date getDeadlineRequestedOn() {
+		return this.deadlineRequestedOn;
+	}
+
+	public void setDeadlineRequestedOn(Date deadlineRequestedOn) {
+		this.deadlineRequestedOn = deadlineRequestedOn;
+	}
+
+	public Date getDeadlineRequestReviewedOn() {
+		return this.deadlineRequestReviewedOn;
+	}
+
+	public void setDeadlineRequestReviewedOn(Date deadlineRequestReviewedOn) {
+		this.deadlineRequestReviewedOn = deadlineRequestReviewedOn;
+	}
+
+	public Byte getDisableAddParticipant() {
 		return this.disableAddParticipant;
 	}
 
-	public void setDisableAddParticipant(byte disableAddParticipant) {
+	public void setDisableAddParticipant(Byte disableAddParticipant) {
 		this.disableAddParticipant = disableAddParticipant;
 	}
 
@@ -207,6 +274,22 @@ public class PartnerSeason implements Serializable {
 		this.insurancePolicyNumber = insurancePolicyNumber;
 	}
 
+	public Byte getInsuranceProvidedByCCI() {
+		return this.insuranceProvidedByCCI;
+	}
+
+	public void setInsuranceProvidedByCCI(Byte insuranceProvidedByCCI) {
+		this.insuranceProvidedByCCI = insuranceProvidedByCCI;
+	}
+
+	public Byte getIsSignedContract() {
+		return this.isSignedContract;
+	}
+
+	public void setIsSignedContract(Byte isSignedContract) {
+		this.isSignedContract = isSignedContract;
+	}
+
 	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -231,11 +314,11 @@ public class PartnerSeason implements Serializable {
 		this.originalsReceivedDate = originalsReceivedDate;
 	}
 
-	public byte getParticipantPaysDeposit() {
+	public Byte getParticipantPaysDeposit() {
 		return this.participantPaysDeposit;
 	}
 
-	public void setParticipantPaysDeposit(byte participantPaysDeposit) {
+	public void setParticipantPaysDeposit(Byte participantPaysDeposit) {
 		this.participantPaysDeposit = participantPaysDeposit;
 	}
 
@@ -295,11 +378,11 @@ public class PartnerSeason implements Serializable {
 		this.partnerTaxCompanyId = partnerTaxCompanyId;
 	}
 
-	public byte getQuestionaireRequired() {
+	public Byte getQuestionaireRequired() {
 		return this.questionaireRequired;
 	}
 
-	public void setQuestionaireRequired(byte questionaireRequired) {
+	public void setQuestionaireRequired(Byte questionaireRequired) {
 		this.questionaireRequired = questionaireRequired;
 	}
 
@@ -311,6 +394,14 @@ public class PartnerSeason implements Serializable {
 		this.questionnaireSubmittedOn = questionnaireSubmittedOn;
 	}
 
+	public Byte getSevisFeesPaidByCCI() {
+		return this.sevisFeesPaidByCCI;
+	}
+
+	public void setSevisFeesPaidByCCI(Byte sevisFeesPaidByCCI) {
+		this.sevisFeesPaidByCCI = sevisFeesPaidByCCI;
+	}
+
 	public Date getTimelyReturnReportReceivedDate() {
 		return this.timelyReturnReportReceivedDate;
 	}
@@ -319,12 +410,20 @@ public class PartnerSeason implements Serializable {
 		this.timelyReturnReportReceivedDate = timelyReturnReportReceivedDate;
 	}
 
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
+	public CCIStaffUser getCcistaffUser1() {
+		return this.ccistaffUser1;
 	}
 
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
+	public void setCcistaffUser1(CCIStaffUser ccistaffUser1) {
+		this.ccistaffUser1 = ccistaffUser1;
+	}
+
+	public CCIStaffUser getCcistaffUser2() {
+		return this.ccistaffUser2;
+	}
+
+	public void setCcistaffUser2(CCIStaffUser ccistaffUser2) {
+		this.ccistaffUser2 = ccistaffUser2;
 	}
 
 	public DepartmentProgram getDepartmentProgram() {
@@ -335,6 +434,14 @@ public class PartnerSeason implements Serializable {
 		this.departmentProgram = departmentProgram;
 	}
 
+	public Login getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 	public Partner getPartner() {
 		return this.partner;
 	}
@@ -343,12 +450,28 @@ public class PartnerSeason implements Serializable {
 		this.partner = partner;
 	}
 
-	public PartnerStatus getPartnerStatus() {
-		return this.partnerStatus;
+	public PartnerStatus getPartnerStatus1() {
+		return this.partnerStatus1;
 	}
 
-	public void setPartnerStatus(PartnerStatus partnerStatus) {
-		this.partnerStatus = partnerStatus;
+	public void setPartnerStatus1(PartnerStatus partnerStatus1) {
+		this.partnerStatus1 = partnerStatus1;
+	}
+
+	public PartnerStatus getPartnerStatus2() {
+		return this.partnerStatus2;
+	}
+
+	public void setPartnerStatus2(PartnerStatus partnerStatus2) {
+		this.partnerStatus2 = partnerStatus2;
+	}
+
+	public PartnerStatus getPartnerStatus3() {
+		return this.partnerStatus3;
+	}
+
+	public void setPartnerStatus3(PartnerStatus partnerStatus3) {
+		this.partnerStatus3 = partnerStatus3;
 	}
 
 	public Season getSeason() {
@@ -401,6 +524,28 @@ public class PartnerSeason implements Serializable {
 		partnerSeasonContract.setPartnerSeason(null);
 
 		return partnerSeasonContract;
+	}
+
+	public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
+		return this.partnerSeasonDocuments;
+	}
+
+	public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
+		this.partnerSeasonDocuments = partnerSeasonDocuments;
+	}
+
+	public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().add(partnerSeasonDocument);
+		partnerSeasonDocument.setPartnerSeason(this);
+
+		return partnerSeasonDocument;
+	}
+
+	public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().remove(partnerSeasonDocument);
+		partnerSeasonDocument.setPartnerSeason(null);
+
+		return partnerSeasonDocument;
 	}
 
 }

@@ -22,7 +22,7 @@ public class SubPartnerMailingAddress {
    protected String state;
    protected String zipcode;
    @XmlElement(required = true)
-   protected SubPartnerCountry subPartnerCountry;
+   protected SubPartnerCountryStatus mailingSubPartnerCountryStatus;
    
    
    public String getAddressLineOne() {
@@ -55,11 +55,11 @@ public class SubPartnerMailingAddress {
    public void setZipcode(String zipcode) {
       this.zipcode = zipcode;
    }
-   public SubPartnerCountry getSubPartnerCountry() {
-      return subPartnerCountry;
+   public SubPartnerCountryStatus getMailingSubPartnerCountryStatus() {
+      return mailingSubPartnerCountryStatus;
    }
-   public void setSubPartnerCountry(SubPartnerCountry subPartnerCountry) {
-      this.subPartnerCountry = subPartnerCountry;
+   public void setMailingSubPartnerCountryStatus(SubPartnerCountryStatus mailingSubPartnerCountryStatus) {
+      this.mailingSubPartnerCountryStatus = mailingSubPartnerCountryStatus;
    }
    
 }

@@ -1,15 +1,26 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.util.Date;
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -32,6 +43,7 @@ public class SeasonIHPDetail implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,7 +61,7 @@ public class SeasonIHPDetail implements Serializable {
 
 	private Integer numberOfLCToRequestHold;
 
-	@Column(length=55)
+	@Column(length=50)
 	private String programName;
 
 	private Integer splitPlacementPending;
@@ -57,19 +69,19 @@ public class SeasonIHPDetail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
 
-	private byte stopAcceptingApps;
+	private Byte stopAcceptingApps;
 
-	private byte stopAcceptingAppsByGender;
+	private Byte stopAcceptingAppsByGender;
 
-	private byte stopAcceptingAppsHighSchoolVisits;
+	private Byte stopAcceptingAppsHighSchoolVisits;
 
-	private byte stopAcceptingAppsHolidayHomestay;
+	private Byte stopAcceptingAppsHolidayHomestay;
 
-	private byte stopAcceptingAppsLanguageBuddy;
+	private Byte stopAcceptingAppsLanguageBuddy;
 
-	private byte stopAcceptingAppsStandardIHP;
+	private Byte stopAcceptingAppsStandardIHP;
 
-	private byte stopAcceptingAppsVolunteerHomestay;
+	private Byte stopAcceptingAppsVolunteerHomestay;
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
@@ -87,8 +99,8 @@ public class SeasonIHPDetail implements Serializable {
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
-	@OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	 @OneToMany(mappedBy = "seasonIhpdetail", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
 
 	public SeasonIHPDetail() {
@@ -198,59 +210,59 @@ public class SeasonIHPDetail implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public byte getStopAcceptingApps() {
+	public Byte getStopAcceptingApps() {
 		return this.stopAcceptingApps;
 	}
 
-	public void setStopAcceptingApps(byte stopAcceptingApps) {
+	public void setStopAcceptingApps(Byte stopAcceptingApps) {
 		this.stopAcceptingApps = stopAcceptingApps;
 	}
 
-	public byte getStopAcceptingAppsByGender() {
+	public Byte getStopAcceptingAppsByGender() {
 		return this.stopAcceptingAppsByGender;
 	}
 
-	public void setStopAcceptingAppsByGender(byte stopAcceptingAppsByGender) {
+	public void setStopAcceptingAppsByGender(Byte stopAcceptingAppsByGender) {
 		this.stopAcceptingAppsByGender = stopAcceptingAppsByGender;
 	}
 
-	public byte getStopAcceptingAppsHighSchoolVisits() {
+	public Byte getStopAcceptingAppsHighSchoolVisits() {
 		return this.stopAcceptingAppsHighSchoolVisits;
 	}
 
-	public void setStopAcceptingAppsHighSchoolVisits(byte stopAcceptingAppsHighSchoolVisits) {
+	public void setStopAcceptingAppsHighSchoolVisits(Byte stopAcceptingAppsHighSchoolVisits) {
 		this.stopAcceptingAppsHighSchoolVisits = stopAcceptingAppsHighSchoolVisits;
 	}
 
-	public byte getStopAcceptingAppsHolidayHomestay() {
+	public Byte getStopAcceptingAppsHolidayHomestay() {
 		return this.stopAcceptingAppsHolidayHomestay;
 	}
 
-	public void setStopAcceptingAppsHolidayHomestay(byte stopAcceptingAppsHolidayHomestay) {
+	public void setStopAcceptingAppsHolidayHomestay(Byte stopAcceptingAppsHolidayHomestay) {
 		this.stopAcceptingAppsHolidayHomestay = stopAcceptingAppsHolidayHomestay;
 	}
 
-	public byte getStopAcceptingAppsLanguageBuddy() {
+	public Byte getStopAcceptingAppsLanguageBuddy() {
 		return this.stopAcceptingAppsLanguageBuddy;
 	}
 
-	public void setStopAcceptingAppsLanguageBuddy(byte stopAcceptingAppsLanguageBuddy) {
+	public void setStopAcceptingAppsLanguageBuddy(Byte stopAcceptingAppsLanguageBuddy) {
 		this.stopAcceptingAppsLanguageBuddy = stopAcceptingAppsLanguageBuddy;
 	}
 
-	public byte getStopAcceptingAppsStandardIHP() {
+	public Byte getStopAcceptingAppsStandardIHP() {
 		return this.stopAcceptingAppsStandardIHP;
 	}
 
-	public void setStopAcceptingAppsStandardIHP(byte stopAcceptingAppsStandardIHP) {
+	public void setStopAcceptingAppsStandardIHP(Byte stopAcceptingAppsStandardIHP) {
 		this.stopAcceptingAppsStandardIHP = stopAcceptingAppsStandardIHP;
 	}
 
-	public byte getStopAcceptingAppsVolunteerHomestay() {
+	public Byte getStopAcceptingAppsVolunteerHomestay() {
 		return this.stopAcceptingAppsVolunteerHomestay;
 	}
 
-	public void setStopAcceptingAppsVolunteerHomestay(byte stopAcceptingAppsVolunteerHomestay) {
+	public void setStopAcceptingAppsVolunteerHomestay(Byte stopAcceptingAppsVolunteerHomestay) {
 		this.stopAcceptingAppsVolunteerHomestay = stopAcceptingAppsVolunteerHomestay;
 	}
 

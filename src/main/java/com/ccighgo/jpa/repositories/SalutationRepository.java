@@ -12,4 +12,6 @@ import com.ccighgo.db.entities.Salutation;
 @Repository
 public interface SalutationRepository extends JpaRepository<Salutation, Integer> {
 
+   Salutation findBySalutationName(String salutation);
+
 }

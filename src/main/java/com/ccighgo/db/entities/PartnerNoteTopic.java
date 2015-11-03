@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -20,33 +21,45 @@ public class PartnerNoteTopic implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerNoteTopicId;
 
-	private byte competitorInfo;
+	private Byte competitorInfo;
+
+	private Integer createdBy;
+
+	private Timestamp createdOn;
 
 	@Column(name="`embassy/VisaInfo`")
-	private byte embassy_VisaInfo;
+	private Byte embassy_VisaInfo;
 
-	private byte f1;
+	private Byte f1;
 
-	private byte ght;
+	private Byte ght;
 
-	private byte intern;
+	private Byte intern;
 
-	private byte j1;
+	private Byte isPublic;
+
+	private Byte isVisibleToPartner;
+
+	private Byte j1;
 
 	@Column(name="`meeting/visit`")
-	private byte meeting_visit;
+	private Byte meeting_visit;
 
-	@Column(length=50)
+	private Integer modifiedBy;
+
+	private Timestamp modifiedOn;
+
+	@Column(name="PartnerNoteTopicName", length=50)
 	private String partnerNoteTopicName;
 
-	private byte seasonInfo;
+	private Byte seasonInfo;
 
-	private byte stInbound;
+	private Byte stInbound;
 
-	private byte trainee;
+	private Byte trainee;
 
 	@Column(name="`w&t`")
-	private byte w_t;
+	private Byte w_t;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
@@ -68,60 +81,108 @@ public class PartnerNoteTopic implements Serializable {
 		this.partnerNoteTopicId = partnerNoteTopicId;
 	}
 
-	public byte getCompetitorInfo() {
+	public Byte getCompetitorInfo() {
 		return this.competitorInfo;
 	}
 
-	public void setCompetitorInfo(byte competitorInfo) {
+	public void setCompetitorInfo(Byte competitorInfo) {
 		this.competitorInfo = competitorInfo;
 	}
 
-	public byte getEmbassy_VisaInfo() {
+	public Integer getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Byte getEmbassy_VisaInfo() {
 		return this.embassy_VisaInfo;
 	}
 
-	public void setEmbassy_VisaInfo(byte embassy_VisaInfo) {
+	public void setEmbassy_VisaInfo(Byte embassy_VisaInfo) {
 		this.embassy_VisaInfo = embassy_VisaInfo;
 	}
 
-	public byte getF1() {
+	public Byte getF1() {
 		return this.f1;
 	}
 
-	public void setF1(byte f1) {
+	public void setF1(Byte f1) {
 		this.f1 = f1;
 	}
 
-	public byte getGht() {
+	public Byte getGht() {
 		return this.ght;
 	}
 
-	public void setGht(byte ght) {
+	public void setGht(Byte ght) {
 		this.ght = ght;
 	}
 
-	public byte getIntern() {
+	public Byte getIntern() {
 		return this.intern;
 	}
 
-	public void setIntern(byte intern) {
+	public void setIntern(Byte intern) {
 		this.intern = intern;
 	}
 
-	public byte getJ1() {
+	public Byte getIsPublic() {
+		return this.isPublic;
+	}
+
+	public void setIsPublic(Byte isPublic) {
+		this.isPublic = isPublic;
+	}
+
+	public Byte getIsVisibleToPartner() {
+		return this.isVisibleToPartner;
+	}
+
+	public void setIsVisibleToPartner(Byte isVisibleToPartner) {
+		this.isVisibleToPartner = isVisibleToPartner;
+	}
+
+	public Byte getJ1() {
 		return this.j1;
 	}
 
-	public void setJ1(byte j1) {
+	public void setJ1(Byte j1) {
 		this.j1 = j1;
 	}
 
-	public byte getMeeting_visit() {
+	public Byte getMeeting_visit() {
 		return this.meeting_visit;
 	}
 
-	public void setMeeting_visit(byte meeting_visit) {
+	public void setMeeting_visit(Byte meeting_visit) {
 		this.meeting_visit = meeting_visit;
+	}
+
+	public Integer getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(Integer modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 
 	public String getPartnerNoteTopicName() {
@@ -132,35 +193,35 @@ public class PartnerNoteTopic implements Serializable {
 		this.partnerNoteTopicName = partnerNoteTopicName;
 	}
 
-	public byte getSeasonInfo() {
+	public Byte getSeasonInfo() {
 		return this.seasonInfo;
 	}
 
-	public void setSeasonInfo(byte seasonInfo) {
+	public void setSeasonInfo(Byte seasonInfo) {
 		this.seasonInfo = seasonInfo;
 	}
 
-	public byte getStInbound() {
+	public Byte getStInbound() {
 		return this.stInbound;
 	}
 
-	public void setStInbound(byte stInbound) {
+	public void setStInbound(Byte stInbound) {
 		this.stInbound = stInbound;
 	}
 
-	public byte getTrainee() {
+	public Byte getTrainee() {
 		return this.trainee;
 	}
 
-	public void setTrainee(byte trainee) {
+	public void setTrainee(Byte trainee) {
 		this.trainee = trainee;
 	}
 
-	public byte getW_t() {
+	public Byte getW_t() {
 		return this.w_t;
 	}
 
-	public void setW_t(byte w_t) {
+	public void setW_t(Byte w_t) {
 		this.w_t = w_t;
 	}
 

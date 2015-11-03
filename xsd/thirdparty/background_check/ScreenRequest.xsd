@@ -33,6 +33,7 @@
 		<xsd:sequence>
 			 <xsd:element name="AcctNbr" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 			 <xsd:element name="Applicant" type="backgroundscreenrequest:Applicant" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+			 <xsd:element name="PostBackURL" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 	

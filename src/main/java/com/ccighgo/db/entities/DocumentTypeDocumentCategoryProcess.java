@@ -34,7 +34,7 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 
 	//bi-directional many-to-one association to DocumentType
 	@ManyToOne
-	@JoinColumn(name="documentTypeId")
+	@JoinColumn(name="documentTypeId", nullable=false)
 	private DocumentType documentType;
 
 	public DocumentTypeDocumentCategoryProcess() {

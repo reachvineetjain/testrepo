@@ -14,11 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.service.components.partner.PartnerServiceImpl;
 import com.ccighgo.service.components.partner.company.PartnerCompanyService;
-import com.ccighgo.service.components.partner.company.PartnerCompanyServiceImpl;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.add.partner.office.NewPartnerOffice;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerCompanyDetail;
-import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 
 /**
  * @author ravi
@@ -38,17 +37,24 @@ public class PartnerCompany {
    @Produces("application/json")
    public PartnerCompanyDetail getPartnerCompanyDetails(@PathParam("partnerGoId") String partnerGoId){
       return partnerCompanyService.getPartnerCompanyDetails(partnerGoId);
-      
    }
    
-   
-   /*@POST
-   @Path("addNewOne")
+   @POST
+   @Path("update/details")
+   @Consumes("application/json")
    @Produces("application/json")
-   public PartnerCompanyDetail addNewPartnerCompany(PartnerCompanyDetail companyDetail) {
-      LOGGER.info("calling PartnerCompany.addNewPartnerCompany");
-      return partnerCompanyServiceImpl.addNewPartnerCompany(companyDetail);
-   }*/
-
+   public PartnerCompanyDetail addNewPartnerCompany(PartnerCompanyDetail partnerCompanyDetail) {
+      LOGGER.info("calling PartnerCompany.updatePartnerCompanyDetails");
+      return partnerCompanyService.updatePartnerCompanyDetails(partnerCompanyDetail);
+   }
+   
+   @POST
+   @Path("add/office/{partnerGoId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Response addNewPartnerOffice(@PathParam("partnerGoId") String partnerGoId, NewPartnerOffice newPartnerOffice) {
+      LOGGER.info("calling PartnerCompany.addNewPartnerOffice");
+      return partnerCompanyService.addNewPartnerOffice(partnerGoId,newPartnerOffice);
+   }
 
 }

@@ -45,7 +45,6 @@ public class LoginInfo {
     protected int loginId;
     protected String loginName;
     protected String password;
-
     /**
      * Gets the value of the loginId property.
      * 

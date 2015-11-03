@@ -21,6 +21,7 @@ public class CCIStaffUsersResourcePermission implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -41,7 +42,7 @@ public class CCIStaffUsersResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to ResourceAction
 	@ManyToOne
-	@JoinColumn(name="resourceActionId")
+	@JoinColumn(name="resourceActionId", nullable=false)
 	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to ResourcePermission

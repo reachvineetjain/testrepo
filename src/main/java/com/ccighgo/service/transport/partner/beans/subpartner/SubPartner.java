@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics;
 
 
 /**
@@ -80,17 +81,20 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartner", propOrder = {
       "subPartnerId",
+      "SubPartnerAgency",
       "subPartnerPrimaryContact",
       "subPartnerSeasons",
       "SubPartnerPhysicalAddress",
-      "subPartnerStatus",
       "subPartnerMailingAddress",
-      "subPartnerNotes"
+      "subPartnerNoteTopic",
+      "partnerSeasonNotes",
+      "loggedUsername"
 })
 public class SubPartner
     extends Response
 {
    protected int subPartnerId;
+   protected SubPartnerAgency subPartnerAgency;
    @XmlElement(required = true)
    protected SubPartnerPrimaryContact subPartnerPrimaryContact;
    protected List<SubPartnerSeasons> subPartnerSeasons;
@@ -99,8 +103,10 @@ public class SubPartner
    @XmlElement(required = true)
    protected SubPartnerMailingAddress subPartnerMailingAddress;
    @XmlElement(required = true)
-   protected SubPartnerStatus subPartnerStatus;
-   protected SubPartnerNotes subPartnerNotes;
+   protected NoteTopics partnerSeasonNotes;
+   @XmlElement(required = true)
+   protected String loggedUsername;
+   
    /**
     * Gets the value of the subPartnerId property.
     * 
@@ -145,6 +151,16 @@ public class SubPartner
        }
        return this.subPartnerSeasons;
    }
+   
+   
+
+   public SubPartnerAgency getSubPartnerAgency() {
+      return subPartnerAgency;
+   }
+
+   public void setSubPartnerAgency(SubPartnerAgency subPartnerAgency) {
+      this.subPartnerAgency = subPartnerAgency;
+   }
 
    public SubPartnerPrimaryContact getSubPartnerPrimaryContact() {
       return subPartnerPrimaryContact;
@@ -164,17 +180,7 @@ public class SubPartner
       this.subPartnerMailingAddress = subPartnerMailingAddress;
    }
 
-   /**
-    * Gets the value of the subPartnerStatus property.
-    * 
-    * @return
-    *     possible object is
-    *     {@link SubPartnerStatus }
-    *     
-    */
-   public SubPartnerStatus getSubPartnerStatus() {
-       return subPartnerStatus;
-   }
+   
 
    public SubPartnerPhysicalAddress getSubPartnerPhysicalAddress() {
       return subPartnerPhysicalAddress;
@@ -184,25 +190,20 @@ public class SubPartner
       this.subPartnerPhysicalAddress = subPartnerPhysicalAddress;
    }
 
-   /**
-    * Sets the value of the subPartnerStatus property.
-    * 
-    * @param value
-    *     allowed object is
-    *     {@link SubPartnerStatus }
-    *     
-    */
-   public void setSubPartnerStatus(SubPartnerStatus value) {
-       this.subPartnerStatus = value;
+   public NoteTopics getPartnerSeasonNotes() {
+      return partnerSeasonNotes;
    }
 
-   public SubPartnerNotes getSubPartnerNotes() {
-      return subPartnerNotes;
+   public void setPartnerSeasonNotes(NoteTopics partnerSeasonNotes) {
+      this.partnerSeasonNotes = partnerSeasonNotes;
    }
 
-   public void setSubPartnerNotes(SubPartnerNotes subPartnerNotes) {
-      this.subPartnerNotes = subPartnerNotes;
+   public String getLoggedUsername() {
+      return loggedUsername;
    }
-   
+
+   public void setLoggedUsername(String loggedUsername) {
+      this.loggedUsername = loggedUsername;
+   }
    
 }

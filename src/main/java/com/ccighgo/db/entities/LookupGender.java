@@ -27,12 +27,13 @@ public class LookupGender implements Serializable {
 	@OneToMany(mappedBy="lookupGender")
 	private List<CCIStaffUser> ccistaffUsers;
 
+	//bi-directional many-to-one association to PartnerUser
+	@OneToMany(mappedBy="lookupGender")
+	private List<PartnerUser> partnerUsers;
+
 	//bi-directional many-to-one association to SeasonIHPDetail
 	@OneToMany(mappedBy="lookupGender")
 	private List<SeasonIHPDetail> seasonIhpdetails;
-	
-	@OneToMany(mappedBy="lookupGender")
-   private List<PartnerUser> partnerUser;
 
 	public LookupGender() {
 	}
@@ -74,32 +75,30 @@ public class LookupGender implements Serializable {
 
 		return ccistaffUser;
 	}
-	
-	
 
-	public List<PartnerUser> getPartnerUser() {
-      return partnerUser;
-   }
+	public List<PartnerUser> getPartnerUsers() {
+		return this.partnerUsers;
+	}
 
-   public void setPartnerUser(List<PartnerUser> partnerUser) {
-      this.partnerUser = partnerUser;
-   }
-   
-   public PartnerUser addPartnerUser(PartnerUser partnerUser) {
-      getPartnerUser().add(partnerUser);
-      partnerUser.setLookupGender(this);
+	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+		this.partnerUsers = partnerUsers;
+	}
 
-      return partnerUser;
-   }
+	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().add(partnerUser);
+		partnerUser.setLookupGender(this);
 
-   public PartnerUser removeCcistaffUser(PartnerUser partnerUser) {
-      getCcistaffUsers().remove(partnerUser);
-      partnerUser.setLookupGender(null);
+		return partnerUser;
+	}
 
-      return partnerUser;
-   }
+	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().remove(partnerUser);
+		partnerUser.setLookupGender(null);
 
-   public List<SeasonIHPDetail> getSeasonIhpdetails() {
+		return partnerUser;
+	}
+
+	public List<SeasonIHPDetail> getSeasonIhpdetails() {
 		return this.seasonIhpdetails;
 	}
 

@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.utility.beans.gender.Salutation;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartnerPrimaryContact", propOrder = {
@@ -22,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class SubPartnerPrimaryContact {
    
-   protected String salutation;
+   protected Salutation salutation;
    protected String title;
    protected String firstName;
    protected String lastName;
@@ -33,11 +35,13 @@ public class SubPartnerPrimaryContact {
    protected Byte receiveNotificationEmailFromCCI;
    protected String skypeId;
    protected String website;
-   protected String typeOfPartnerUser;
-   public String getSalutation() {
+   protected Integer typeOfPartnerUser;
+   
+   
+   public Salutation getSalutation() {
       return salutation;
    }
-   public void setSalutation(String salutation) {
+   public void setSalutation(Salutation salutation) {
       this.salutation = salutation;
    }
    public String getTitle() {
@@ -100,10 +104,10 @@ public class SubPartnerPrimaryContact {
    public void setWebsite(String website) {
       this.website = website;
    }
-   public String getTypeOfPartnerUser() {
+   public Integer getTypeOfPartnerUser() {
       return typeOfPartnerUser;
    }
-   public void setTypeOfPartnerUser(String typeOfPartnerUser) {
+   public void setTypeOfPartnerUser(Integer typeOfPartnerUser) {
       this.typeOfPartnerUser = typeOfPartnerUser;
    }
    

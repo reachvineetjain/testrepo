@@ -20,7 +20,7 @@ public class PartnerAnnouncement implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerAnnouncementId;
 
-	private byte active;
+	private Byte active;
 
 	@Lob
 	@Column(nullable=false)
@@ -28,10 +28,12 @@ public class PartnerAnnouncement implements Serializable {
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(nullable=false, length=250)
@@ -63,11 +65,11 @@ public class PartnerAnnouncement implements Serializable {
 		this.partnerAnnouncementId = partnerAnnouncementId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

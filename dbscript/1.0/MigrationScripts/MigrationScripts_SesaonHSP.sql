@@ -6,15 +6,57 @@ SET FOREIGN_KEY_CHECKS= 0;
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------
           Truncating Season Module tables.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+TRUNCATE TABLE `FieldStaffAgreement` ;
+TRUNCATE TABLE `PaymentSchedule` ;
+TRUNCATE TABLE `Season` ;
+TRUNCATE TABLE `SeasonHSPConfiguration` ;
+TRUNCATE TABLE `SeasonF1Details` ;
+TRUNCATE TABLE `SeasonJ1Details` ;
+TRUNCATE TABLE `SeasonHSPAllocation` ;
+TRUNCATE TABLE `SeasonGeographyConfiguration` ;
+TRUNCATE TABLE `SeasonIHPDetails` ;
+TRUNCATE TABLE `SeasonIHPDetailsRegionApplications`;
+TRUNCATE TABLE `SeasonIHPGeographyConfiguration`;
 
-TRUNCATE `SeasonHSPConfiguration` ;
-TRUNCATE `SeasonF1Details` ;
-TRUNCATE `SeasonJ1Details` ;
-TRUNCATE `SeasonHSPAllocation` ;
-TRUNCATE `SeasonGeographyConfiguration` ;
-TRUNCATE `SeasonIHPDetails` ;
-TRUNCATE `SeasonIHPDetailsRegionApplications`;
-TRUNCATE `SeasonIHPGeographyConfiguration`;
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Inserting Data Into FieldStaffAgreement.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+INSERT INTO `FieldStaffAgreement` (`fieldStaffAgreementId`,`agreementName`)
+/*SELECT `FieldStaffAgreementID`,`AgreementName` FROM `cci_go`.`FieldStaffAgreement` WHERE `FieldStaffAgreementID` <> 0;*/
+VALUES
+(1,'2009-2010'),
+(2,'2010-2011'),
+(3,'2011-2012'),
+(4,'2012-2013'),
+(5,'2013-2014'),
+(6,'2014-2015'),
+(7,'2015-2016'),
+(8,'Undefined'),
+(9,'2013-2014'),
+(10,'2013-2014');
+/*INSERT INTO `FieldStaffAgreement` (fsAgreementId,`agreementName`)
+VALUES (11,'Undefined');*/
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          Inserting Data Into PaymentSchedule.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+INSERT INTO `PaymentSchedule` (`paymentScheduleId`,`scheduleName`)
+/*SELECT `PaymentScheduleID`,`ScheduleName` FROM `cci_go`.`PaymentSchedule` WHERE `PaymentScheduleID` <> 0;*/
+VALUES 
+(1,'Area Representative Stipend Schedule'),
+(2,'PSPP Area Representative Stipend Schedule'),
+(3,'Field Staff Schedule'),
+(4,'PSPP Field Staff Schedule'),
+(6,'PSPP Field Staff Schedule'),
+(21,'PSPP Area Representative Stipend Schedule'),
+(24,'PSPP Area Representative Stipend Schedule'),
+(30,'PSPP Area Representative Stipend Schedule'),
+(31,'PSPP Area Representative Stipend Schedule'),
+(32,'Undefined');
+/*INSERT INTO `PaymentSchedule` (lcPaymentScheduleId,`scheduleName`)
+VALUES (33,'Undefined');*/
 
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -30,29 +72,33 @@ VALUES
 (4,'HSP AYP 2012-2013','HSP AYP 2012-2013',1,1,1),
 (5,'HSP AYP 2013-2014','HSP AYP 2013-2014',1,1,1),
 (6,'HSP AYP 2014-2015','HSP AYP 2014-2015',1,1,1),
-(7,'HSP AYP 2015-2016','HSP AYP 2015-2016',1,1,1);
+(7,'HSP AYP 2015-2016','HSP AYP 2015-2016',1,1,1),
+(22,'HSP AYP 2016-2017','HSP AYP 2016-2017',1,1,1);
 		
 
 UPDATE `Season`
 SET `seasonStatusId` = 2 WHERE seasonId= 1;
 UPDATE `Season`
-SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`season` WHERE `SeasonID` IN(39,49) ORDER BY `SeasonStatusID` ASC LIMIT 1)
+SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`Season` WHERE `SeasonID` IN(39,49) ORDER BY `SeasonStatusID` ASC LIMIT 1)
 WHERE seasonId= 2;
 UPDATE `Season`
-SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`season` WHERE `SeasonID` IN(48,60) ORDER BY `SeasonStatusID` ASC LIMIT 1)
+SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`Season` WHERE `SeasonID` IN(48,60) ORDER BY `SeasonStatusID` ASC LIMIT 1)
 WHERE seasonId= 3;
 UPDATE `Season`
-SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`season` WHERE `SeasonID` IN(67,69) ORDER BY `SeasonStatusID` ASC LIMIT 1)
+SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`Season` WHERE `SeasonID` IN(67,69) ORDER BY `SeasonStatusID` ASC LIMIT 1)
 WHERE seasonId= 4;
 UPDATE `Season`
-SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`season` WHERE `SeasonID` IN(74,75) ORDER BY `SeasonStatusID` ASC LIMIT 1)
+SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`Season` WHERE `SeasonID` IN(74,75) ORDER BY `SeasonStatusID` ASC LIMIT 1)
 WHERE seasonId= 5;
 UPDATE `Season`
-SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`season` WHERE `SeasonID` IN(88,89) ORDER BY `SeasonStatusID` ASC LIMIT 1)
+SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`Season` WHERE `SeasonID` IN(88,89) ORDER BY `SeasonStatusID` ASC LIMIT 1)
 WHERE seasonId= 6;		
 UPDATE `Season`
-SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`season` WHERE `SeasonID` IN(92,94) ORDER BY `SeasonStatusID` ASC LIMIT 1)
+SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`Season` WHERE `SeasonID` IN(92,94) ORDER BY `SeasonStatusID` ASC LIMIT 1)
 WHERE seasonId= 7;
+UPDATE `Season`
+SET `seasonStatusId` = (SELECT `SeasonStatusID` FROM `cci_go`.`Season` WHERE `SeasonID` IN(106) ORDER BY `SeasonStatusID` ASC LIMIT 1)
+WHERE seasonId= 22;
 
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -68,42 +114,48 @@ VALUES
 (4,1,1),
 (5,1,1),
 (6,1,1),
-(7,1,1);
+(7,1,1),
+(22,1,1);
 		
 UPDATE SeasonHSPConfiguration 
-SET seasonStartDate = (SELECT StartDate FROM `cci_go`.`season` WHERE SeasonID IN (37)),
-	seasonEndDate = (SELECT EndDate FROM `cci_go`.`season` WHERE SeasonID IN (37))
+SET seasonStartDate = (SELECT StartDate FROM `cci_go`.`Season` WHERE SeasonID IN (37)),
+	seasonEndDate = (SELECT EndDate FROM `cci_go`.`Season` WHERE SeasonID IN (37))
 WHERE seasonId = 1;
 		
 UPDATE SeasonHSPConfiguration 
-SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`season` WHERE SeasonID IN (39,49)),
-	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`season` WHERE SeasonID IN (39,49))
+SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`Season` WHERE SeasonID IN (39,49)),
+	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`Season` WHERE SeasonID IN (39,49))
 WHERE seasonId = 2;
 
 UPDATE SeasonHSPConfiguration 
-SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`season` WHERE SeasonID IN (48,60)),
-	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`season` WHERE SeasonID IN (48,60))
+SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`Season` WHERE SeasonID IN (48,60)),
+	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`Season` WHERE SeasonID IN (48,60))
 WHERE seasonId = 3;
 
 UPDATE SeasonHSPConfiguration 
-SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`season` WHERE SeasonID IN (67,69)),
-	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`season` WHERE SeasonID IN (67,69))
+SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`Season` WHERE SeasonID IN (67,69)),
+	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`Season` WHERE SeasonID IN (67,69))
 WHERE seasonId = 4;
 
 UPDATE SeasonHSPConfiguration 
-SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`season` WHERE SeasonID IN (74,75)),
-	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`season` WHERE SeasonID IN (74,75))
+SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`Season` WHERE SeasonID IN (74,75)),
+	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`Season` WHERE SeasonID IN (74,75))
 WHERE seasonId = 5;
 
 UPDATE SeasonHSPConfiguration 
-SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`season` WHERE SeasonID IN (88,89)),
-	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`season` WHERE SeasonID IN (88,89))
+SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`Season` WHERE SeasonID IN (88,89)),
+	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`Season` WHERE SeasonID IN (88,89))
 WHERE seasonId = 6;
 
 UPDATE SeasonHSPConfiguration 
-SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`season` WHERE SeasonID IN (92,94)),
-	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`season` WHERE SeasonID IN (92,94))
+SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`Season` WHERE SeasonID IN (92,94)),
+	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`Season` WHERE SeasonID IN (92,94))
 WHERE seasonId = 7;
+
+UPDATE SeasonHSPConfiguration 
+SET seasonStartDate = (SELECT MIN(StartDate) FROM `cci_go`.`Season` WHERE SeasonID IN (106)),
+	seasonEndDate = (SELECT MAX(EndDate) FROM `cci_go`.`Season` WHERE SeasonID IN (106))
+WHERE seasonId = 22;
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------
         SeasonF1Details Migration
@@ -132,7 +184,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`= 49;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`= 49;
 
 
 UPDATE `SeasonF1Details` 
@@ -155,7 +207,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`= 60;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`= 60;
 
 
 
@@ -178,7 +230,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`= 69;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`= 69;
 
 
 
@@ -203,7 +255,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`= 75;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`= 75;
 
 
 
@@ -227,7 +279,7 @@ INSERT INTO `SeasonF1Details` (`seasonF1DetailsId`,`programName`,`programStatusI
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`= 89;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`= 89;
 
 
 
@@ -251,7 +303,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`= 94;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`= 94;
  
 
 
@@ -260,6 +312,10 @@ SET `seasonId` = 7,activeFullYearJanProgram = 0,janFullYearStartDate ='9999-09-0
 janFullYearAppDeadlineDate ='9999-09-09 00:00:00' ,janFullYearEndDate ='9999-09-09 00:00:00',showJanFullYearToNewHF=0,
 hfInquiryDate='9999-09-09',allowFieldStaffToStartRenewalProcess=0,showSpecialRequestStudent=0,greenHeartMargin=0
 WHERE `seasonF1DetailsId`=94;
+
+INSERT INTO `SeasonF1Details`(`seasonF1DetailsId`,`seasonId`,`programName`,`programStatusId`,`secondSemStartDate`,`secondSemEndDate`,`secondSemAppDeadlineDate`,`secondSemEarliestBirthDate`,`secondSemLatestBirthDate`,`showSecSemToNewHF`,`activeFullYearJanProgram`,`janFullYearStartDate`,`janFullYearAppDeadlineDate`,`janFullYearEndDate`,`showJanFullYearToNewHF`,`firstSemStartDate`,`firstSemEndDate`,`firstSemAppDeadlineDate`,`firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,`augFullYearEndDate`,`augFullYearAppDeadlineDate`,`showAugFullYearToNewHF`,`showSeasonToCurrentHF`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,`hfInquiryDate`,`showWelcomeFamily`,`allowFieldStaffToStartRenewalProcess`,`showSpecialRequestStudent`,`greenHeartMargin`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
+VALUES 
+(106,22,'AYP-PSPP 2016-17',2,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,'9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,0,1,1,0,'9999-09-09',0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 
 UPDATE `SeasonF1Details`
@@ -291,7 +347,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`=37;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=37;
 
 
 UPDATE `SeasonJ1Details` 
@@ -316,7 +372,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`=39;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=39;
 
 	
 UPDATE `SeasonJ1Details` 
@@ -340,7 +396,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`=48;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=48;
 
 
 UPDATE `SeasonJ1Details` 
@@ -364,7 +420,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`=67;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=67;
 
 
 UPDATE `SeasonJ1Details` 
@@ -388,7 +444,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`=74;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=74;
 
 
 UPDATE `SeasonJ1Details` 
@@ -412,7 +468,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`=88;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=88;
 
 	
 UPDATE `SeasonJ1Details` 
@@ -436,7 +492,7 @@ SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
                                             `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
                                             `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
                                             `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
-                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`season` WHERE `SeasonID`=92;
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=92;
 
 
 UPDATE `SeasonJ1Details` 
@@ -446,6 +502,30 @@ SET `seasonId` = 7,
 	  janFullYearAppDeadlineDate ='9999-09-09 00:00:00' ,janFullYearEndDate ='9999-09-09 00:00:00',showJanFullYearToNewHF=0,
       hfInquiryDate='9999-09-09',showSpecialRequestStudent=0
 WHERE `seasonJ1DetailsId`=92;
+
+INSERT INTO `SeasonJ1Details` (`seasonJ1DetailsId`,`programName`,`programStatusId`,`secondSemStartDate`,`secondSemEndDate`,
+                                           `secondSemAppDeadlineDate`,`secondSemEarliestBirthDate`,`secondSemLatestBirthDate`,`showSecondSemToNewHF`,
+                                           `firstSemStartDate`,`firstSemEndDate`,`firstSemAppDeadlineDate`,
+                                           `firstSemEarliestBirthDate`,`firstSemLatestBirthDate`,`showFirstSemToNewHF`,`augFullYearStartDate`,
+                                           `augFullYearEndDate`,`augFullYearAppDeadlineDate`,`showAugFullYearToNewHF`,`showSeasonToCurrentHF`,
+                                           `fieldStaffHoldLength`,`hoursBeforeHoldExpirationWarning`,`lcPaymentScheduleId`,`fsAgreementId`,`hfReferences`,
+                                           `showWelcomeFamily`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+SELECT `SeasonID`,`SeasonFullName`,`SeasonStatusID`,`SecondStartDate`,`EndDate`,
+                                           `SecondDeadlineDate`,`SecondEarliestBirthDate`,`SecondLatestBirthDate`,`HFCanHostSecondSemester`,
+                                            `StartDate`,`SecondEndDate`,`ApplicationDeadlineDate`,
+                                            `EarliestBirthDate`,`LatestBirthDate`,`HFCanHostFirstSemester`,`StartDate`,
+                                            `EndDate`,`ApplicationDeadlineDate`,`HFCanHostFirstSemester`,`HFCanReturningView`,
+                                            `FieldStaffHoldLength`,`HoursBeforeHoldExpirationWarning`,`DefaultPaymentScheduleID`,`FieldStaffAgreementID`,`HFRequiredReferences`,
+                                            `WelcomeFamilyActive`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy` FROM `cci_go`.`Season` WHERE `SeasonID`=106;
+
+
+UPDATE `SeasonJ1Details` 
+SET `seasonId` = 22,
+	 `showGuaranteed` = 0, 
+	 `showUnguaranteed` = 0,activeFullYearJanProgram = 0,janFullYearStartDate ='9999-09-09 00:00:00' ,
+	  janFullYearAppDeadlineDate ='9999-09-09 00:00:00' ,janFullYearEndDate ='9999-09-09 00:00:00',showJanFullYearToNewHF=0,
+      hfInquiryDate='9999-09-09',showSpecialRequestStudent=0
+WHERE `seasonJ1DetailsId`=106;
 
 
 /*UPDATE `SeasonJ1Details` sj,`dummy`.`season` s
@@ -467,7 +547,7 @@ WHERE lcPaymentScheduleId = 0;
 
 INSERT  INTO `SeasonIHPDetails`(`seasonIHPDetailsId`,`seasonId`,`programName`,`startDate`,`endDate`,`programStatusId`,`maxParticipants`,`lcHoldTime`,`numberOfLCToRequestHold`,`splitPlacementPending`,`stopAcceptingApps`,`stopAcceptingAppsByGender`,`genderId`,`applicationDeadLineWeeks`,`stopAcceptingAppsStandardIHP`,`stopAcceptingAppsVolunteerHomestay`,`stopAcceptingAppsLanguageBuddy`,`stopAcceptingAppsHolidayHomestay`,`stopAcceptingAppsHighSchoolVisits`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
 VALUES 
-(1,7,'IHP-2015','9999-09-09 00:00:00','9999-09-09 00:00:00',2,0,0,0,0,0,0,1,0,0,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(1,22,'IHP-2016','9999-09-09 00:00:00','9999-09-09 00:00:00',2,0,0,0,0,0,0,1,0,0,0,0,0,0,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------
           SeasonIHPDetailsRegionApplications Migration
@@ -533,81 +613,96 @@ VALUES
 (7,3,1,1),
 (7,5,1,1), 
 (7,8,1,1);
+
+INSERT INTO `SeasonHSPAllocation` (`seasonId`,`departmentProgramOptionId`,`createdBy`,`modifiedBy`)
+VALUES 
+(22,1,1,1), 
+(22,3,1,1),
+(22,5,1,1), 
+(22,8,1,1);
        
 --  J1  Allocations
     
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season` so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season` so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=1 AND so.`SeasonID` = 37;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=1 AND so.`SeasonID` = 37;
 
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=2 AND so.`SeasonID` = 39;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=2 AND so.`SeasonID` = 39;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=3 AND so.`SeasonID` = 48;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=3 AND so.`SeasonID` = 48;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=4 AND so.`SeasonID` = 67;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=4 AND so.`SeasonID` = 67;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=5 AND so.`SeasonID` = 74;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=5 AND so.`SeasonID` = 74;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=6 AND so.`SeasonID` = 88;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=6 AND so.`SeasonID` = 88;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=7 AND so.`SeasonID` = 92;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=7 AND so.`SeasonID` = 92;
 
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season` so
+SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
+    shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
+WHERE shsp.`departmentProgramOptionId` = 1 AND shsp.`seasonId`=22 AND so.`SeasonID` = 106;
 
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
+SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
+    shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
+WHERE shsp.`departmentProgramOptionId` = 3 AND shsp.`seasonId`=22 AND so.`SeasonID` = 106;
 
 
 
@@ -624,66 +719,76 @@ SET `maxGuaranteedPax`= 0,
 WHERE `departmentProgramOptionId` = 8 AND `seasonId`=1;
 
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 5 AND shsp.`seasonId`=2 AND so.`SeasonID` = 49;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=2 AND so.`SeasonID` = 49;
 
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 5 AND shsp.`seasonId`=3 AND so.`SeasonID` = 60;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=3 AND so.`SeasonID` = 60;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 5 AND shsp.`seasonId`=4 AND so.`SeasonID` = 69;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=4 AND so.`SeasonID` = 69;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 5 AND shsp.`seasonId`=5 AND so.`SeasonID` = 75;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=5 AND so.`SeasonID` = 75;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 5 AND shsp.`seasonId`=6 AND so.`SeasonID` = 89;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=6 AND so.`SeasonID` = 89;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationAugustGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationAugust`
 WHERE shsp.`departmentProgramOptionId` = 5 AND shsp.`seasonId`=7 AND so.`SeasonID` = 94;
 
-UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`season`  so
+UPDATE `SeasonHSPAllocation` shsp,`cci_go`.`Season`  so
 SET shsp.`maxGuaranteedPax`= so.`AllocationJanuaryGuaranteed`,
     shsp.`maxUnguaranteedPax`= so.`AllocationJanuary`
 WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=7 AND so.`SeasonID` = 94;  
+
+UPDATE `SeasonHSPAllocation` 
+SET `maxGuaranteedPax`= 0,
+    `maxUnguaranteedPax`= 0
+WHERE `departmentProgramOptionId` = 5 AND `seasonId`=22;
+
+UPDATE `SeasonHSPAllocation` 
+SET `maxGuaranteedPax`= 0,
+    `maxUnguaranteedPax`= 0
+WHERE `departmentProgramOptionId` = 8 AND `seasonId`=22;
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------
           Insert data for SeasonGeographyConfiguration table 
@@ -692,69 +797,69 @@ WHERE shsp.`departmentProgramOptionId` = 8 AND shsp.`seasonId`=7 AND so.`SeasonI
 
 INSERT INTO `SeasonGeographyConfiguration` (superRegionId,regionId,usStatesId,seasonId)
 VALUES
-(1,NULL,NULL,7),
-(1,1,NULL,7),
-(1,1,48,7),
-(1,1,32,7),
-(1,1,13,7),
-(1,1,21,7),
-(1,2,NULL,7),
-(1,2,23,7),
-(1,2,45,7),
-(1,2,3,7),
-(1,2,26,7),
-(1,3,NULL,7),
-(1,3,5,7),
-(1,3,51,7),
-(1,3,6,7),
-(1,3,22,7),
-(1,3,17,7),
-(1,3,2,7),
-(1,3,12,7),
-(2,NULL,NULL,7),
-(2,4,NULL,7),
-(2,4,29,7),
-(2,4,42,7),
-(2,4,36,7),
-(2,4,16,7),
-(2,4,50,7),
-(2,4,14,7),
-(2,5,NULL,7),
-(2,5,38,7),
-(2,5,31,7),
-(2,5,44,7),
-(2,5,1,7),
-(2,6,NULL,7),
-(2,6,18,7),
-(2,6,43,7),
-(2,6,4,7),
-(2,6,37,7),
-(2,6,19,7),
-(2,7,NULL,7),
-(3,NULL,NULL,7),
-(3,8,NULL,7),
-(3,8,35,7),
-(3,8,15,7),
-(3,8,30,7),
-(3,8,49,7),
-(3,9,NULL,7),
-(3,9,27,7),
-(3,9,39,7),
-(3,9,25,7),
-(3,9,33,7),
-(3,9,8,7),
-(3,9,47,7),
-(3,9,28,7),
-(3,9,41,7),
-(3,9,11,7),
-(3,9,10,7),
-(3,10,NULL,7),
-(3,10,20,7),
-(3,10,46,7),
-(3,10,24,7),
-(3,10,34,7),
-(3,10,7,7),
-(3,10,40,7);
+(1,NULL,NULL,22),
+(1,1,NULL,22),
+(1,1,48,22),
+(1,1,32,22),
+(1,1,13,22),
+(1,1,21,22),
+(1,2,NULL,22),
+(1,2,23,22),
+(1,2,45,22),
+(1,2,3,22),
+(1,2,26,22),
+(1,3,NULL,22),
+(1,3,5,22),
+(1,3,51,22),
+(1,3,6,22),
+(1,3,22,22),
+(1,3,17,22),
+(1,3,2,22),
+(1,3,12,22),
+(2,NULL,NULL,22),
+(2,4,NULL,22),
+(2,4,29,22),
+(2,4,42,22),
+(2,4,36,22),
+(2,4,16,22),
+(2,4,50,22),
+(2,4,14,22),
+(2,5,NULL,22),
+(2,5,38,22),
+(2,5,31,22),
+(2,5,44,22),
+(2,5,1,22),
+(2,6,NULL,22),
+(2,6,18,22),
+(2,6,43,22),
+(2,6,4,22),
+(2,6,37,22),
+(2,6,19,22),
+(2,7,NULL,22),
+(3,NULL,NULL,22),
+(3,8,NULL,22),
+(3,8,35,22),
+(3,8,15,22),
+(3,8,30,22),
+(3,8,49,22),
+(3,9,NULL,22),
+(3,9,27,22),
+(3,9,39,22),
+(3,9,25,22),
+(3,9,33,22),
+(3,9,8,22),
+(3,9,47,22),
+(3,9,28,22),
+(3,9,41,22),
+(3,9,11,22),
+(3,9,10,22),
+(3,10,NULL,22),
+(3,10,20,22),
+(3,10,46,22),
+(3,10,24,22),
+(3,10,34,22),
+(3,10,7,22),
+(3,10,40,22);
 
 UPDATE SeasonGeographyConfiguration SET createdBy = 1,modifiedBy = 1;   
 
@@ -765,64 +870,64 @@ UPDATE SeasonGeographyConfiguration SET createdBy = 1,modifiedBy = 1;
 
 INSERT INTO SeasonIHPGeographyConfiguration (regionIHPId,usStatesId,seasonId)
 VALUES 
-(1,NULL,7),
-(1,7,7),
-(1,9,7),
-(1,22,7),
-(1,21,7),
-(1,20,7),
-(1,31,7),
-(1,32,7),
-(1,35,7),
-(1,39,7),
-(1,40,7),
-(1,47,7),
-(1,46,7),
-(1,48,7),
-(2,NULL,7),
-(2,15,7),
-(2,16,7),
-(2,13,7),
-(2,23,7),
-(2,24,7),
-(2,25,7),
-(2,36,7),
-(2,50,7),
-(2,49,7),
-(2,30,7),
-(2,17,7),
-(3,NULL,7),
-(3,6,7),
-(3,4,7),
-(3,14,7),
-(3,27,7),
-(3,33,7),
-(3,34,7),
-(3,42,7),
-(3,29,7),
-(3,45,7),
-(3,51,7),
-(3,48,7),
-(3,38,7),
-(4,NULL,7),
-(4,5,7),
-(5,NULL,7),
-(5,2,7),
-(5,3,7),
-(5,10,7),
-(5,11,7),
-(5,18,7),
-(5,19,7),
-(5,26,7),
-(5,28,7),
-(5,41,7),
-(5,43,7),
-(5,44,7),
-(5,37,7),
-(5,50,7),
-(6,NULL,7),
-(6,12,7),
-(6,1,7);
+(1,NULL,22),
+(1,7,22),
+(1,9,22),
+(1,22,22),
+(1,21,22),
+(1,20,22),
+(1,31,22),
+(1,32,22),
+(1,35,22),
+(1,39,22),
+(1,40,22),
+(1,47,22),
+(1,46,22),
+(1,48,22),
+(2,NULL,22),
+(2,15,22),
+(2,16,22),
+(2,13,22),
+(2,23,22),
+(2,24,22),
+(2,25,22),
+(2,36,22),
+(2,50,22),
+(2,49,22),
+(2,30,22),
+(2,17,22),
+(3,NULL,22),
+(3,6,22),
+(3,4,22),
+(3,14,22),
+(3,27,22),
+(3,33,22),
+(3,34,22),
+(3,42,22),
+(3,29,22),
+(3,45,22),
+(3,51,22),
+(3,48,22),
+(3,38,22),
+(4,NULL,22),
+(4,5,22),
+(5,NULL,22),
+(5,2,22),
+(5,3,22),
+(5,10,22),
+(5,11,22),
+(5,18,22),
+(5,19,22),
+(5,26,22),
+(5,28,22),
+(5,41,22),
+(5,43,22),
+(5,44,22),
+(5,37,22),
+(5,50,22),
+(6,NULL,22),
+(6,12,22),
+(6,1,22);
 
 UPDATE SeasonIHPGeographyConfiguration
 SET createdOn = CURRENT_TIMESTAMP,

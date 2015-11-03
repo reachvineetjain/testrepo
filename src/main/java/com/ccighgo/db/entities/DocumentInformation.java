@@ -21,10 +21,12 @@ public class DocumentInformation implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer documentInformationId;
 
-	private byte active;
+	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=50)
@@ -33,8 +35,10 @@ public class DocumentInformation implements Serializable {
 	@Column(length=50)
 	private String fileName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=1000)
@@ -46,12 +50,20 @@ public class DocumentInformation implements Serializable {
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess
 	@ManyToOne
-	@JoinColumn(name="documentTypeDocumentCategoryProcessId")
+	@JoinColumn(name="documentTypeDocumentCategoryProcessId", nullable=false)
 	private DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess;
 
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="documentInformation")
 	private List<PartnerDocument> partnerDocuments;
+
+	//bi-directional many-to-one association to PartnerSeasonContract
+	@OneToMany(mappedBy="documentInformation")
+	private List<PartnerSeasonContract> partnerSeasonContracts;
+
+	//bi-directional many-to-one association to PartnerSeasonDocument
+	@OneToMany(mappedBy="documentInformation")
+	private List<PartnerSeasonDocument> partnerSeasonDocuments;
 
 	//bi-directional many-to-one association to SeasonDepartmentDocument
 	@OneToMany(mappedBy="documentInformation")
@@ -72,11 +84,11 @@ public class DocumentInformation implements Serializable {
 		this.documentInformationId = documentInformationId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -186,6 +198,50 @@ public class DocumentInformation implements Serializable {
 		partnerDocument.setDocumentInformation(null);
 
 		return partnerDocument;
+	}
+
+	public List<PartnerSeasonContract> getPartnerSeasonContracts() {
+		return this.partnerSeasonContracts;
+	}
+
+	public void setPartnerSeasonContracts(List<PartnerSeasonContract> partnerSeasonContracts) {
+		this.partnerSeasonContracts = partnerSeasonContracts;
+	}
+
+	public PartnerSeasonContract addPartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
+		getPartnerSeasonContracts().add(partnerSeasonContract);
+		partnerSeasonContract.setDocumentInformation(this);
+
+		return partnerSeasonContract;
+	}
+
+	public PartnerSeasonContract removePartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
+		getPartnerSeasonContracts().remove(partnerSeasonContract);
+		partnerSeasonContract.setDocumentInformation(null);
+
+		return partnerSeasonContract;
+	}
+
+	public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
+		return this.partnerSeasonDocuments;
+	}
+
+	public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
+		this.partnerSeasonDocuments = partnerSeasonDocuments;
+	}
+
+	public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().add(partnerSeasonDocument);
+		partnerSeasonDocument.setDocumentInformation(this);
+
+		return partnerSeasonDocument;
+	}
+
+	public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+		getPartnerSeasonDocuments().remove(partnerSeasonDocument);
+		partnerSeasonDocument.setDocumentInformation(null);
+
+		return partnerSeasonDocument;
 	}
 
 	public List<SeasonDepartmentDocument> getSeasonDepartmentDocuments() {
