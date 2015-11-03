@@ -54,8 +54,16 @@ public interface PartnerUserInterface {
 
    /**
     * @param partnerUserDetails
+    * @param request
     * @return
     */
    public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request);
+
+   /**
+    * @param partnerUserDetails
+    * @param request
+    * @return
+    */
+   public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request);
 
 }
