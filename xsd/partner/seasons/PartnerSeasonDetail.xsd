@@ -33,8 +33,9 @@
                   <xsd:element name="augStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="janStartDeadlineDateRequested" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="janStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="programAllocationsUnguranteed" type="psd:J1HSProgramAllocationsUnguaranteed" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="programAllocationsGuaranteed" type="psd:J1HSProgramAllocationsGuaranteed" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="programAllocationsAugustStart" type="psd:J1HSProgramAllocationsAugustStart" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="programAllocationsJanStart" type="psd:J1HSProgramAllocationsJanStart" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="programAllocationsJanAugTotal" type="psd:J1HSProgramAllocationsJanAugTotal" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonNotes" type="psd:NoteTopics" minOccurs="1" maxOccurs="1" />
                </xsd:sequence>
             </xsd:sequence>
@@ -80,26 +81,24 @@
       </xsd:sequence>
    </xsd:complexType>
 
-   <xsd:complexType name="J1HSProgramAllocationsUnguaranteed">
+   <xsd:complexType name="J1HSProgramAllocationsAugustStart">
       <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartMaximumParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartAcceptedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartUnderCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartOpenings" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartMaximumParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartAcceptedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartUnderCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartOpenings" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalMaximumParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalAcceptedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalUnderCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalOpenings" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augustStartUnguarantedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augustStartGuarantedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augustStartParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augustStartCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />       
       </xsd:sequence>
    </xsd:complexType>
 
-   <xsd:complexType name="J1HSProgramAllocationsGuaranteed">
+   <xsd:complexType name="J1HSProgramAllocationsJanStart">
+      <xsd:sequence>
+         <xsd:element name="janStartUnguarantedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartGuarantedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />  
+      </xsd:sequence>
+   </xsd:complexType>
+    <xsd:complexType name="J1HSProgramAllocationsJanAugTotal">
       <xsd:sequence>
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
