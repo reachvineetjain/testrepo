@@ -34,11 +34,18 @@
          <xsd:element name="sunmittedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-		
+         <xsd:element name="partnerStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />		
          <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />  
-      </xsd:sequence>
+        <!--  <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />   -->
+        <xsd:element name="noteTopic" type="xsd:string"  minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="noteTopicCreatedBy" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="noteTopicRoll" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteCreatedBy" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="noteRoll" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        <xsd:element name="noteValue" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="isPublic" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteCreatedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+             </xsd:sequence>
       </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>   

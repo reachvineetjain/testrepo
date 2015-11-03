@@ -817,34 +817,51 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 			   for(Object[] dr:result)
 			   {
 				   AdminPartnerWorkQueueDeadlineRequestsDetail drd = new AdminPartnerWorkQueueDeadlineRequestsDetail();
-				   drd.setCompanyName(String.valueOf(dr[0]));
-				   if(dr[1]!=null)
-					   drd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
-				   drd.setPartnerStatus(String.valueOf(dr[2]));
-				   drd.setSeasonName(String.valueOf(dr[3]));
-				   drd.setCountry(String.valueOf(dr[4]));
-				   drd.setSunmittedOn(String.valueOf(dr[5]));
-				   drd.setFlagUrl(String.valueOf(dr[6]));
-				   /*
-				    * 
-				    * 
-				    */ 
-				   adr.getDeadlineRequests().add(drd);
+				   AdminPartnerWorkQueueDeadlineRequestsDetail drd2 = new AdminPartnerWorkQueueDeadlineRequestsDetail();
+				   if(dr[8]!=null && dr[7]!=null) 
+				   {
+					   drd.setCompanyName(String.valueOf(dr[0]));
+					   if(dr[1]!=null)
+						   drd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+					   drd.setPartnerStatus(String.valueOf(dr[2]));
+					   drd.setSeasonName(String.valueOf(dr[3]));
+					   drd.setCountry(String.valueOf(dr[4]));
+					   drd.setSunmittedOn(String.valueOf(dr[5]));
+					   drd.setFlagUrl(String.valueOf(dr[6])); 
+					   drd.setNewDateRequested(String.valueOf(dr[8]));
+					   drd.setCurrentDate(String.valueOf(dr[7]));
+					   adr.getDeadlineRequests().add(drd);
+				   }
+				   if(dr[9]!=null && dr[10]!=null) 
+				   {
+					   drd2.setCompanyName(String.valueOf(dr[0]));
+					   if(dr[1]!=null)
+						   drd2.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+					   drd2.setPartnerStatus(String.valueOf(dr[2]));
+					   drd2.setSeasonName(String.valueOf(dr[3]));
+					   drd2.setCountry(String.valueOf(dr[4]));
+					   drd2.setSunmittedOn(String.valueOf(dr[5]));
+					   drd2.setFlagUrl(String.valueOf(dr[6])); 
+					   drd2.setNewDateRequested(String.valueOf(dr[9]));
+					   drd2.setCurrentDate(String.valueOf(dr[10]));
+					   adr.getDeadlineRequests().add(drd2);
+				   }
+				  
 			   }
 			   adr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
 		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 		   }
 		   else
 		   {
-			   adr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			   adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
+		                  messageUtil.getMessage(CCIConstants.FAILURE)));
 		   }
 	   }catch(Exception e)
 	   {
-		  /* ExceptionUtil.logException(e, logger);
+		   ExceptionUtil.logException(e, logger);
 		   adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
 				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE))*/; 
+		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE));
 	   }
 	   return adr;
    }
@@ -871,6 +888,33 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				   ad.setGoId(Integer.valueOf(String.valueOf(dr[1])));
 				   ad.setPartnerStatus(String.valueOf(dr[2]));
 				  ad.setSeasonName(String.valueOf(dr[3]));
+				  
+				  if(dr[4]!=null)
+				  {
+				  int ProgramOptionId =Integer.valueOf(String.valueOf(dr[4]));
+				  if(ProgramOptionId==1||ProgramOptionId==5)
+				  {
+				  ad.setCurrentSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[5]));
+				  ad.setCurrentSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[6]));
+				  ad.setRequestedSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[7]));
+				  ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[8]));
+				 
+				  }
+				  else if (ProgramOptionId==3||ProgramOptionId==8)
+				  {
+					  ad.setCurrentSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[5]));
+					  ad.setCurrentSeasonJanStartguarantedParticipantNume(String.valueOf(dr[6]));
+					  ad.setRequestedSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[7]));
+					  ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[8]));
+				  }
+				  }
+				  ad.setCountry(String.valueOf(dr[9]));
+				  ad.setFlagUrl(String.valueOf(dr[11]));
+				  
+				  ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[12]));
+				  ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[12]));
+				  ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
+				  ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
 				  //department program option id
 				  //maxPax
 				  //maxGuranteedPax
@@ -900,6 +944,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    	return rca;
    }
    @Override
+   @Transactional
    public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(
    		int typeId, int categoryId, int staffUserId, String roleType) {
 	   
@@ -921,9 +966,19 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  nrd.setCountry(String.valueOf(dr[2]));
 				  nrd.setFlagUrl(String.valueOf(dr[3]));
 				  nrd.setPartnerStatus(String.valueOf(dr[4]));
-				 //topic name
-				  //is public
-				  //created on
+				  nrd.setNoteTopic(String.valueOf(dr[5]));
+				  if(dr[6]!=null)
+				  {
+					/*  boolean  pub= (Byte.valueOf(String.valueOf(dr[6]))==(CCIConstants.ACTIVE))?true:false;
+				  nrd.setIsPublic(pub);*/
+				  }
+				  nrd.setNoteCreatedOn(String.valueOf(dr[7]));
+				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
+				 
+				  nrd.setNoteValue(String.valueOf(dr[9]));
+				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[10]));
+				  nrd.setNoteTopicRoll(String.valueOf(dr[12]));
+				  nrd.setNoteRoll(String.valueOf(dr[13]));
 				 nr.getNotesReview().add(nrd);
 			   }
 			  nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
@@ -934,7 +989,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 			   nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
 		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 		   }
-	   }catch(Exception e)
+	   }catch( ClassCastException e)
 	   {
 		  /* ExceptionUtil.logException(e, logger);
 		   nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),

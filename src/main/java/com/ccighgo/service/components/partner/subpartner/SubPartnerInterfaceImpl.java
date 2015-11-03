@@ -1423,7 +1423,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 			details.setRecivevisaforms(partnerSubPartner.getDeliverDSForms()==CCIConstants.ACTIVE?true:false);
 			List<PartnerUser> partnerUsers=partnerSubPartner.getPartnerUsers();
 			PartnerUser partnerUser=new PartnerUser();
-			if(partnerUsers!=null)
+			if(partnerUsers!=null&& partnerUsers.size()>0)
 			{
 			for(PartnerUser pu:partnerUsers)
 			{
@@ -1621,7 +1621,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 	                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 			
 
-		} catch (CcighgoException e) {
+		} catch (Exception e) {
 			subPartnerDetail
 					.setStatus(componentUtils.getStatus(
 							CCIConstants.FAILURE,
