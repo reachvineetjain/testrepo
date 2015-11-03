@@ -127,5 +127,17 @@ public class PartnerUser {
       LOGGER.debug("calling PartnerUser.addPartnerUser for partnerGoId id {}", partnerUserDetails.getPartnerGoId());
       return partnerUserInterface.addPartnerUser(partnerUserDetails, request);
    }
+   
+   /**
+    * @param partnerUserDetails
+    * @return
+    */
+   @POST
+   @Path("update/user")
+   @Produces("application/json")
+   public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails) {
+      LOGGER.debug("calling PartnerUser.updatePartnerUser for partnerGoId id {}", partnerUserDetails.getPartnerGoId());
+      return partnerUserInterface.updatePartnerUser(partnerUserDetails, request);
+   }
 
 }
