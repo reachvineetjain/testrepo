@@ -19,5 +19,7 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER = "error.updating.participant.subpartner";
    public static final String EXCEPTION_UPDATEING_PATICIPANT_EMAIL = "error.updating.participant.email";
    public static final String EXCEPTION_UPDATEING_PATICIPANT_STATUS = "error.updating.participant.status";
+   public static final String EXCEPTION_CREATING_NEWPARTNER_ALLOCATION = "error.creating.newpartner.allocation";
+   public static final String EXCEPTION_CREATING_NEW_DEALINE_DATE_REQUEST = "error.creating.newdeadline.date.request";
 
 }
