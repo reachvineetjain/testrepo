@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for PartnerHLSeason complex type.
+ * <p>Java class for SeasonStatus complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="PartnerHLSeason">
+ * &lt;complexType name="SeasonStatus">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="partnerHLSeasonId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="partnerHLSeasonName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="seasonStatusId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="seasonStatus" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,54 +35,54 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PartnerHLSeason", propOrder = {
-    "partnerHLSeasonId",
-    "partnerHLSeasonName"
+@XmlType(name = "SeasonStatus", propOrder = {
+    "seasonStatusId",
+    "seasonStatus"
 })
-public class PartnerHLSeason {
+public class SeasonStatus {
 
-    protected int partnerHLSeasonId;
+    protected int seasonStatusId;
     @XmlElement(required = true)
-    protected String partnerHLSeasonName;
+    protected String seasonStatus;
 
     /**
-     * Gets the value of the partnerHLSeasonId property.
+     * Gets the value of the seasonStatusId property.
      * 
      */
-    public int getPartnerHLSeasonId() {
-        return partnerHLSeasonId;
+    public int getSeasonStatusId() {
+        return seasonStatusId;
     }
 
     /**
-     * Sets the value of the partnerHLSeasonId property.
+     * Sets the value of the seasonStatusId property.
      * 
      */
-    public void setPartnerHLSeasonId(int value) {
-        this.partnerHLSeasonId = value;
+    public void setSeasonStatusId(int value) {
+        this.seasonStatusId = value;
     }
 
     /**
-     * Gets the value of the partnerHLSeasonName property.
+     * Gets the value of the seasonStatus property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPartnerHLSeasonName() {
-        return partnerHLSeasonName;
+    public String getSeasonStatus() {
+        return seasonStatus;
     }
 
     /**
-     * Sets the value of the partnerHLSeasonName property.
+     * Sets the value of the seasonStatus property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPartnerHLSeasonName(String value) {
-        this.partnerHLSeasonName = value;
+    public void setSeasonStatus(String value) {
+        this.seasonStatus = value;
     }
 
 }
