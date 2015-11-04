@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/partnernotesreview" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partnernotesreview" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partnernotesreview" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../../../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnernotesreview"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partnernotesreview"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.partnernotesreview" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../../../../Common.xsd"
+		namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="AdminPartnerWorkQueueNotesReview" type="pdl:AdminPartnerWorkQueueNotesReview" />
+	<xsd:element name="AdminPartnerWorkQueueNotesReview" type="pdl:AdminPartnerWorkQueueNotesReview" />
 
-   <xsd:complexType name="AdminPartnerWorkQueueNotesReview">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="notesReview" type="pdl:AdminPartnerWorkQueueNotesReviewDetail" minOccurs="1"   maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="AdminPartnerWorkQueueNotesReview">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="notesReview"
+						type="pdl:AdminPartnerWorkQueueNotesReviewDetail" minOccurs="1"
+						maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="AdminPartnerWorkQueueNotesReviewDetail">
-    <xsd:complexContent>
-         <xsd:extension base="common:Response">
-      <xsd:sequence>
-         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />                      
-      	 <xsd:element name="companyId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-   		 <xsd:element name="companyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="flagUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="sunmittedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />		
-         <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        <!--  <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />   -->
-        <xsd:element name="noteTopic" type="xsd:string"  minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="noteTopicCreatedBy" type="xsd:string" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="noteTopicRoll" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="noteCreatedBy" type="xsd:string" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="noteRoll" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        <xsd:element name="noteValue" type="xsd:string" minOccurs="1" maxOccurs="1"/>
-        <xsd:element name="isPublic" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="noteCreatedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-             </xsd:sequence>
-      </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>   
-   
+	<xsd:complexType name="AdminPartnerWorkQueueNotesReviewDetail">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="goId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="companyId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="companyName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="flagUrl" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="sunmittedOn" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="seasonName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="country" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerStatus" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="followUpDate" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="noteTopic" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="noteTopicCreatedBy" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="noteTopicRoll" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="noteCreatedBy" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="noteRoll" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="noteValue" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="isPublic" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="noteCreatedOn" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 </xsd:schema>

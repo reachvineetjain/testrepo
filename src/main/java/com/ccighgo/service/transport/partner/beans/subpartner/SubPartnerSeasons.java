@@ -45,8 +45,7 @@ public class SubPartnerSeasons {
 
     protected int subPartnerSeasonId;
     protected int subPartnerSeasonProgramId;
-    @XmlElement(required = true)
-    protected String subPartnerSeasonProgram;
+     protected String subPartnerSeasonProgram;
 
     /**
      * Gets the value of the subPartnerSeasonId property.

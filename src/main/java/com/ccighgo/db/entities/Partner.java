@@ -713,8 +713,9 @@ public class Partner implements Serializable {
 	}
 
 	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().add(partnerContact);
 		partnerContact.setPartner(this);
+		getPartnerContacts().add(partnerContact);
+		
 
 		return partnerContact;
 	}

@@ -81,7 +81,7 @@ import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopic
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartner", propOrder = {
       "subPartnerId",
-      "SubPartnerAgency",
+      "subPartnerAgency",
       "subPartnerPrimaryContact",
       "subPartnerSeasons",
       "SubPartnerPhysicalAddress",
@@ -95,17 +95,12 @@ public class SubPartner
 {
    protected int subPartnerId;
    protected SubPartnerAgency subPartnerAgency;
-   @XmlElement(required = true)
-   protected SubPartnerPrimaryContact subPartnerPrimaryContact;
-   protected List<SubPartnerSeasons> subPartnerSeasons;
-   @XmlElement(required = true)
-   protected SubPartnerPhysicalAddress subPartnerPhysicalAddress;
-   @XmlElement(required = true)
-   protected SubPartnerMailingAddress subPartnerMailingAddress;
-   @XmlElement(required = true)
-   protected NoteTopics partnerSeasonNotes;
-   @XmlElement(required = true)
-   protected String loggedUsername;
+    protected SubPartnerPrimaryContact subPartnerPrimaryContact;
+    protected List<SubPartnerSeasons> subPartnerSeasons;
+    protected SubPartnerPhysicalAddress subPartnerPhysicalAddress;
+    protected SubPartnerMailingAddress subPartnerMailingAddress;
+    protected NoteTopics partnerSeasonNotes;
+    protected String loggedUsername;
    
    /**
     * Gets the value of the subPartnerId property.

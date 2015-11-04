@@ -33,7 +33,8 @@ public interface SubPartnerInterface {
    public SubPartnerDetails getAllSubPartners();
    
    public com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail getSubPartnerDetail(String subPartnerId);
-
+   
+   public WSDefaultResponse UpdateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner);
    public WSDefaultResponse updatePartnerUserStatus(String partnerUserId,String statusVal);
    public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail)  ;
 }
