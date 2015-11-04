@@ -22,4 +22,6 @@ public interface PartnerCompanyService {
 
    Response addNewPartnerOffice(String partnerGoId, NewPartnerOffice newPartnerOffice);
 
+   Response deletePartnerOffice(String partnerOfficeId);
+
 }
