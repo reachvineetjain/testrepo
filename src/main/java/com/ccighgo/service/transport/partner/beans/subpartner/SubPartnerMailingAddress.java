@@ -21,8 +21,7 @@ public class SubPartnerMailingAddress {
    protected String city;
    protected String state;
    protected String zipcode;
-   @XmlElement(required = true)
-   protected SubPartnerCountryStatus mailingSubPartnerCountryStatus;
+    protected SubPartnerCountryStatus mailingSubPartnerCountryStatus;
    
    
    public String getAddressLineOne() {

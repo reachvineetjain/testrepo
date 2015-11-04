@@ -23,17 +23,10 @@ import com.ccighgo.utils.WSDefaultResponse;
 public interface SubPartnerInterface {
    
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId);
-
-   public SubPartner viewSubPartners(String subPartnerId);
-   
-   public SubPartner createSubPartner(SubPartner subPartner,HttpServletRequest request);
-   
-   public SubPartner updateSubPartner(SubPartner subPartner);
-   
-   public SubPartnerDetails getAllSubPartners();
-   
-   public com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail getSubPartnerDetail(String subPartnerId);
-
+   public SubPartnerDetails getAllSubPartners(); 
+   public com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail getSubPartnerDetail(String subPartnerId); 
+   public WSDefaultResponse UpdateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner);
+   public WSDefaultResponse createSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner);
    public WSDefaultResponse updatePartnerUserStatus(String partnerUserId,String statusVal);
    public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail)  ;
 }

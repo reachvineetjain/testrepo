@@ -970,6 +970,13 @@
 			<arg value="${xsd.dir}/partner/admin/workqueue/type/partnerUpdate/RequestsForChangesInAllocationCategory.xsd" />
 		</java>
 	</target>
+	<target name="PartnerNotesReview">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/partner/admin/workqueue/type/partnerUpdate/PartnerNotesReview.xsd" />
+			</java>
+		</target>
 	<!--***************************************************Participants***************************  -->
 	<target name="AddedParticipantList">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -985,5 +992,32 @@
 			<arg value="${xsd.dir}/Participants/GetAllAvailableSubPartnersForParticipants.xsd" />
 		</java>
 	</target>
+	
+	<!--******************************************************************************************** -->
+	
+	<target name="AddNewDeadlineRequest">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/partner/seasons/PartnerSeasonDeadlineRequest.xsd" />
+			</java>
+		</target>
+		
+	<target name="AddNewPartnerAllocationRequest">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/partner/seasons/PartnerSeasonAllocationRequest.xsd" />
+				</java>
+			</target>
+	<target name="PartnerLeadViewForPartnerInquiryData">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/partner/PartnerLeadViewForPartnerInquiryData.xsd" />
+					</java>
+				</target>
+	
+	
 
 </project>

@@ -38,7 +38,6 @@ import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
-import com.ccighgo.service.auth.beans.LoginType;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
@@ -63,9 +62,6 @@ import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerS
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.SeasonStatus;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplication;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
-import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplication;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.J1HSProgramAllocationsGuaranteed;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.J1HSProgramAllocationsUnguaranteed;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 

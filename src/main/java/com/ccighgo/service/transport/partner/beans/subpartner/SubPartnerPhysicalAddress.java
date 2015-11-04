@@ -21,8 +21,7 @@ public class SubPartnerPhysicalAddress {
    protected String physicalCity;
    protected String physicalstate;
    protected String physicalZipcode;
-   @XmlElement(required = true)
-   protected SubPartnerCountryStatus physicalSubPartnerCountryStatus;
+    protected SubPartnerCountryStatus physicalSubPartnerCountryStatus;
    
    
    public String getPhysicalAddressLineOne() {
