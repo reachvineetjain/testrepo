@@ -388,8 +388,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   ExceptionUtil.logException(e, logger);
                }
                details.setParticipantGoId(participant.getParticipantGoId() + "");
+               
                details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
                details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
+               details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
+
                details.setParticipantCountry(participant.getLookupCountry().getCountryName());
                details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
                details.setParticipantEmail(participant.getEmail());
@@ -398,7 +401,6 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantGuranteed(participant.getGuaranteed() == 1);
                details.setParticipantlastName(participant.getLastName());
                details.setParticipantPicUrl(participant.getPhoto());
-               details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
                details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
