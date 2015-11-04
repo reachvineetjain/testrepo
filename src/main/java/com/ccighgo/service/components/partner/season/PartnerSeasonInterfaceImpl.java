@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.PartnerAnnouncement;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.SeasonF1Detail;
@@ -82,7 +83,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
    PartnerSeasonDocumentRepository partnerSeasonDocumentRepository;
    @Autowired
    SeasonF1DetailsRepository seasonF1DetailsRepository;
-   @Autowired 
+   @Autowired
    SeasonJ1DetailsRepository seasonJ1DetailsRepository;
    @Autowired
    EntityManager entityManager;
@@ -107,28 +108,58 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                if (entity.getDepartmentProgram() != null && entity.getSeason() != null) {
                   count += 1;
                   PartnerSeasonProgramOption partnerProgramOption = new PartnerSeasonProgramOption();
+                  // department program option table
                   partnerProgramOption.setPartnerProgramOptionId(entity.getDepartmentProgram().getDepartmentProgramId());
                   partnerProgramOption.setPartnerProgramOption(entity.getDepartmentProgram().getProgramName());
 
+                  if (entity.getDepartmentProgram() != null && entity.getDepartmentProgram().getDepartmentProgramOptions() != null) {
+                     StringBuilder st = new StringBuilder();
+                     int i = 0;
+                     for (DepartmentProgramOption o : entity.getDepartmentProgram().getDepartmentProgramOptions()) {
+                        if (i++ > 0) {
+                           st.append(",");
+                        } else {
+                           st.append(o.getProgramOptionCode());
+                        }
+                     }
+                  }
                   PartnerSeasonDepartment partnerSeasonDepartment = new PartnerSeasonDepartment();
                   partnerSeasonDepartment.setPartnerSeasonDepartmentId(entity.getDepartmentProgram().getLookupDepartment().getDepartmentId());
                   partnerSeasonDepartment.setPartnerSeasonDepartmentCode(entity.getDepartmentProgram().getLookupDepartment().getAcronym());
                   partnerSeasonDepartment.setPartnerSeasonDepartmentName(entity.getDepartmentProgram().getLookupDepartment().getDepartmentName());
 
                   PartnerSeasonProgramStatus seasonProgramStatus = new PartnerSeasonProgramStatus();
-                  // TODO
-                  // seasonProgramStatus.setPartnerSeasonProgramStatusId(entity.getPartnerStatus().getPartnerStatusId());
-                  // seasonProgramStatus.setPartnerSeasonProgramStatus(entity.getPartnerStatus().getPartnerStatusName());
 
                   PartnerSeason pSeason = new PartnerSeason();
+
                   pSeason.setParticipantAllocated("TODO:need clarification");
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_J1_HS)) {
-                     pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonJ1details().get(0).getProgramName());
+                  if (entity.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
+                     SeasonJ1Detail j1detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(entity.getSeason().getSeasonId());
+                     if (j1detail != null) {
+                     pSeason.setPartnerSeasonProgramName(j1detail.getProgramName());
                      pSeason.setDetailsUrl("/partner/season/view/j1hs/");
+
+                        seasonProgramStatus.setPartnerSeasonProgramStatusId(j1detail.getSeasonStatus().getSeasonStatusId());
+                        seasonProgramStatus.setPartnerSeasonProgramStatus(j1detail.getSeasonStatus().getStatus());
+
+                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(j1detail.getFirstSemStartDate()));
+                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(j1detail.getSecondSemEndDate()));
+                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(j1detail.getFirstSemAppDeadlineDate()));
+                     }
                   }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_F1)) {
-                     pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonF1details().get(0).getProgramName());
-                     pSeason.setDetailsUrl("/partner/season/view/f1/");
+                  if (entity.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1)) {
+                     SeasonF1Detail f1Detail = seasonF1DetailsRepository.getAllSeasonF1DetailById(entity.getSeason().getSeasonId());
+                     if (f1Detail != null) {
+                        pSeason.setPartnerSeasonProgramName(f1Detail.getProgramName());
+                        pSeason.setDetailsUrl("/partner/season/view/f1/");
+
+                        seasonProgramStatus.setPartnerSeasonProgramStatusId(f1Detail.getSeasonStatus().getSeasonStatusId());
+                        seasonProgramStatus.setPartnerSeasonProgramStatus(f1Detail.getSeasonStatus().getStatus());
+
+                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(f1Detail.getFirstSemStartDate()));
+                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(f1Detail.getSecondSemEndDate()));
+                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(f1Detail.getFirstSemAppDeadlineDate()));
+                     }
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonIhpdetails().get(0).getProgramName());
@@ -152,9 +183,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                   }
                   pSeason.setPartnerSeasonId(entity.getPartnerSeasonId());
                   pSeason.setPartnerId(partnerId);
-                  pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
-                  pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonEndDate()));
-                  pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonAppDeadlineDate()));
+
                   pSeason.setPartnerSeasonDepartment(partnerSeasonDepartment);
                   pSeason.setPartnerProgramOption(partnerProgramOption);
                   pSeason.setSeasonProgramStatus(seasonProgramStatus);
@@ -200,7 +229,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                }
             }
          }
-          
+
          PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus();
          partnerSeasonStatus.setPartnerSeasonStatusId(seasonDetail.getPartnerStatus1().getPartnerStatusId());
          partnerSeasonStatus.setPartnerSeasonStatus(seasonDetail.getPartnerStatus1().getPartnerStatusName());
@@ -214,8 +243,6 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setSeasonStatus(seasonStatus);
          partnersSeasonDetails.setPartnerActiveSeason(seasonDetail.getActive() == 1);
 
-         
-         
          // get department
          PartnerDepartment partnerDepartment = new PartnerDepartment();
          partnerDepartment.setPartnerSeasonDepartmentId(seasonDetail.getDepartmentProgram().getLookupDepartment().getDepartmentId());
@@ -252,8 +279,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (seasonDetail.getPartnerStatus3() != null)
             dla.setJanStartDeadlineStatus(seasonDetail.getPartnerStatus3().getPartnerStatusName());
          partnersSeasonDetails.setApplicationDeadlineDatesAllocations(dla);
-         
-         
+
          PartnerSeasonJ1HSProgramAllocations programAllocations = new PartnerSeasonJ1HSProgramAllocations();
          List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findPartnerSeasonAllocation(Integer.valueOf(partnerSeasonId));
          if (partnerSeasonAllocationList != null) {
@@ -431,7 +457,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (seasonDetail.getPartnerStatus3() != null)
             dla.setJanStartDeadlineStatus(seasonDetail.getPartnerStatus3().getPartnerStatusName());
          partnersSeasonDetails.setApplicationDeadlineDatesAllocations(dla);
-        
+
          PartnerSeasonF1ProgramAllocations programAllocations = new PartnerSeasonF1ProgramAllocations();
          List<PartnerSeasonAllocation> partnerSeasonAllocationList = partnerSeasonAllocationRepository.findPartnerSeasonAllocation(Integer.valueOf(partnerSeasonId));
          if (partnerSeasonAllocationList != null) {
