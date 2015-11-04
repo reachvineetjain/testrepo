@@ -124,6 +124,7 @@ public class PartnerServiceImpl implements PartnerService {
             if (partner != null) {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
+               partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
                 List<PartnerUser> partnerUsers = partner.getPartnerUsers();
                for(PartnerUser pu:partnerUsers){
                   if(partner.getPartnerGoId()==pu.getPartner().getPartnerGoId() && pu.getIsPrimary()==CCIConstants.ACTIVE){
@@ -397,7 +398,7 @@ public class PartnerServiceImpl implements PartnerService {
                f1Dashboard.getPartnerAnnouncements().addAll(partnerF1Announcements);
 
                // partner f1 cci contact
-               PartnerProgram partnerCCIF1Contact = partnerProgramRepository.findByPartnerIdAndDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
+               PartnerProgram partnerCCIF1Contact = partnerProgramRepository.findByPartnerIdAndDepartmentProgramId(partner.getPartnerGoId(), CCIConstants.HSP_F1_ID);
                PartnerF1CCIContact cciContact = null;
                if (partnerCCIF1Contact != null) {
                   cciContact = new PartnerF1CCIContact();
@@ -437,6 +438,7 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerWorkQueueTypesList.add(f1wqType);
                   }
                }
+               f1Dashboard.getPartnerWorkQueueTypes().addAll(partnerWorkQueueTypesList);
 
                // Statistics
                com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerStatistics partnerStatistics = null;
@@ -596,7 +598,7 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerWorkQueueTypesList.add(ihpWqType);
                   }
                }
-
+               ihpDashboard.getPartnerWorkQueueTypes().addAll(partnerWorkQueueTypesList);
                // Statistics
                com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerStatistics partnerStatistics = null;
                List<PartnerQuickStatsCategoryAggregate> partnerStatsDetails = partnerQuickStatsCategoryAggregateRepository.getStats(CCIConstants.APPL_IHP,
