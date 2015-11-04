@@ -42,7 +42,7 @@ import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadliln
     "status"
 })
 @XmlSeeAlso({
-    NewPartnerApplicationDeadLineDate.class
+
 })
 public class Response {
 

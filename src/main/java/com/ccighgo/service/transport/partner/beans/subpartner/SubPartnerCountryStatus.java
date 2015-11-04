@@ -43,8 +43,7 @@ import javax.xml.bind.annotation.XmlType;
 public class SubPartnerCountryStatus {
 
     protected int subPartnerCountryId;
-    @XmlElement(required = true)
-    protected String subPartnerCountryName;
+     protected String subPartnerCountryName;
     protected String subPartnerCountryCode;
 
     /**

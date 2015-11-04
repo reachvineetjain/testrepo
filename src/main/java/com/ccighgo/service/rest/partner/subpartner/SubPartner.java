@@ -48,28 +48,20 @@ public class SubPartner {
       return subPartnerInterface.getSubPartnersOfpartners(partnerId);
    }
 
-   @GET
-   @Path("view/{subPartnerId}")
-   @Produces("application/json")
-   public com.ccighgo.service.transport.partner.beans.subpartner.SubPartner viewSubPartners(@PathParam("subPartnerId") String subPartnerId){
-      LOGGER.debug("calling SubPartner.viewSubPartners for subPartner id {}",subPartnerId);
-      return subPartnerInterface.viewSubPartners(subPartnerId);
-   }
-   
    @POST
    @Path("create")
    @Produces("application/json")
-   public com.ccighgo.service.transport.partner.beans.subpartner.SubPartner createSubPartner(com.ccighgo.service.transport.partner.beans.subpartner.SubPartner subPartner){
+   public WSDefaultResponse createSubPartner(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner){
       LOGGER.debug("calling SubPartner.createSubPartner",subPartner);
-      return subPartnerInterface.createSubPartner(subPartner , request);
+      return subPartnerInterface.createSubPartnerDetail(subPartner);
    }
-   
    @POST
    @Path("update")
    @Produces("application/json")
-   public com.ccighgo.service.transport.partner.beans.subpartner.SubPartner updateSubPartner(com.ccighgo.service.transport.partner.beans.subpartner.SubPartner subPartner){
+   public WSDefaultResponse UpdateSubPartnerDetail(
+			com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner){
       LOGGER.debug("calling SubPartner.updateSubPartner",subPartner);
-      return subPartnerInterface.updateSubPartner(subPartner);
+      return subPartnerInterface.UpdateSubPartnerDetail(subPartner);
    }
    @GET
    @Path("get-all-sub-partners")

@@ -3,6 +3,8 @@
  */
 package com.ccighgo.service.components.partner.admin;
 
+import javax.ws.rs.PathParam;
+
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLead;
@@ -21,10 +23,13 @@ import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchma
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatscategory.PartnerAdminDashboardQuickStatsCategory;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles.PartnerAdminDashboardQuickStatsTitles;
+import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminPartnerWorkQueueDeadlineRequests;
+import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReview;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
+import com.ccighgo.service.transport.partner.beans.requestchangeinallocation.AdminPartnerWorkQueueRequestChangeInAllocation;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -37,11 +42,11 @@ public interface PartnerAdminService {
 
  
    WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus);
-
    WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String followUpdate);
-
    AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType);
-
+   AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests( int typeId, int categoryId, int staffUserId, String roleType);
+   AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests( int typeId, int categoryId, int staffUserId, String roleType);
+   AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview( int typeId, int categoryId, int staffUserId, String roleType);
    AdminPartnerWorkQueueType getWorkQueueType(String roleType);
    AdminPartnerWorkQueueCategory getWorkQueueCategory(int typeId);
 
