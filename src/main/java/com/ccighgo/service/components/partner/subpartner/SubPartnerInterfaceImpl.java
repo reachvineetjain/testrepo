@@ -1539,17 +1539,16 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 							.getWebsite());
 					partnerContact.setIsPrimary((byte) 1);
 				}
-				GoIdSequence goId=subPartnerDetails.getGoIdSequence();
-				Login login=loginRepository.findByGoId(goId);
-				if(login!=null)
-				{
+				GoIdSequence goId = subPartnerDetails.getGoIdSequence();
+				Login login = loginRepository.findByGoId(goId);
+				if (login != null) {
 					partnerContact.setCreatedBy(login.getLoginId());
 					partnerContact.setModifiedBy(login.getLoginId());
-					
+
 				}
 				subPartnerDetails.addPartnerContact(partnerContact);
 				partnerContactRepository.saveAndFlush(partnerContact);
-				
+
 			}
 			/*
 			 * SubPartnersPhysicalAddress
@@ -1604,7 +1603,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 					}
 				}
 				partnerRepository.saveAndFlush(subPartnerDetails);
-				
+
 				responce.setStatus(componentUtils.getStatus(
 						CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
 						ErrorCode.SUB_PARTNER_CODE.getValue(),
@@ -2029,9 +2028,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 	@Override
 	public WSDefaultResponse createSubPartnerDetail(
 			com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner) {
-		WSDefaultResponse responce=new WSDefaultResponse();
+		WSDefaultResponse responce = new WSDefaultResponse();
 		try {
-			
+
 			if (subPartner == null) {
 
 				responce.setStatus(componentUtils.getStatus(
@@ -2044,8 +2043,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 						.getMessage(SubPartnerMessageConstants.FAILED_SUB_PARTNER_DETAILS_NULL));
 				return responce;
 			}
-			if (loginRepository.findByLoginName(subPartner
-					.getPartnerDetail().getLogoUserName()) != null) {
+			if (loginRepository.findByLoginName(subPartner.getPartnerDetail()
+					.getLogoUserName()) != null) {
 				// return username already exsist
 				responce.setStatus(componentUtils.getStatus(
 						CCIConstants.FAILURE,
@@ -2209,17 +2208,16 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 							.getWebsite());
 					partnerContact.setIsPrimary((byte) 1);
 				}
-				GoIdSequence goId=subPartnerDetails.getGoIdSequence();
-				Login login=loginRepository.findByGoId(goId);
-				if(login!=null)
-				{
+				GoIdSequence goId = subPartnerDetails.getGoIdSequence();
+				Login login = loginRepository.findByGoId(goId);
+				if (login != null) {
 					partnerContact.setCreatedBy(login.getLoginId());
 					partnerContact.setModifiedBy(login.getLoginId());
-					
+
 				}
 				subPartnerDetails.addPartnerContact(partnerContact);
 				partnerContactRepository.saveAndFlush(partnerContact);
-				
+
 			}
 			/*
 			 * SubPartnersPhysicalAddress
@@ -2274,7 +2272,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 					}
 				}
 				partnerRepository.saveAndFlush(subPartnerDetails);
-				
+
 				responce.setStatus(componentUtils.getStatus(
 						CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
 						ErrorCode.SUB_PARTNER_CODE.getValue(),

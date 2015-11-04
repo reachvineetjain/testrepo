@@ -37,6 +37,12 @@ public interface PartnerUserInterface {
    public Response updatePartnerUserStatus(String statusVal, String partnerUserId);
 
    /**
+    * @param partnerUserId
+    * @return
+    */
+   public Response resetPartnerUserPassword(String partnerUserId, HttpServletRequest request);
+
+   /**
     * View Partner user details and permissions
     * 
     * @param partnerUserId
@@ -54,8 +60,16 @@ public interface PartnerUserInterface {
 
    /**
     * @param partnerUserDetails
+    * @param request
     * @return
     */
    public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request);
+
+   /**
+    * @param partnerUserDetails
+    * @param request
+    * @return
+    */
+   public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request);
 
 }

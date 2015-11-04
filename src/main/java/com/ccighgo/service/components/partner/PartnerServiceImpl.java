@@ -438,6 +438,7 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerWorkQueueTypesList.add(f1wqType);
                   }
                }
+               f1Dashboard.getPartnerWorkQueueTypes().addAll(partnerWorkQueueTypesList);
 
                // Statistics
                com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerStatistics partnerStatistics = null;
@@ -597,7 +598,7 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerWorkQueueTypesList.add(ihpWqType);
                   }
                }
-
+               ihpDashboard.getPartnerWorkQueueTypes().addAll(partnerWorkQueueTypesList);
                // Statistics
                com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerStatistics partnerStatistics = null;
                List<PartnerQuickStatsCategoryAggregate> partnerStatsDetails = partnerQuickStatsCategoryAggregateRepository.getStats(CCIConstants.APPL_IHP,

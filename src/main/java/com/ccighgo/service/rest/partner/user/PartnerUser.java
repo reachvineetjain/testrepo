@@ -79,7 +79,19 @@ public class PartnerUser {
    }
 
    /**
-    * 
+    * @param partnerUserId
+    * @return
+    */
+   @GET
+   @Path("reset/access/{partnerUserId}")
+   @Produces("application/json")
+   public Response resetPartnerUserPassword(@PathParam("partnerUserId") String partnerUserId) {
+      LOGGER.debug("calling PartnerUser.getAllPartnerUsers for partner id {}", partnerUserId);
+      return partnerUserInterface.resetPartnerUserPassword(partnerUserId, request);
+   }
+
+   /**
+    * Populates details for selected partner user
     * 
     * @param partnerUserId
     * @return
@@ -105,6 +117,8 @@ public class PartnerUser {
    }
 
    /**
+    * Service to pre-populate partner offices before editing partner user
+    * 
     * @param partnerGoId
     * @return
     */
@@ -117,6 +131,8 @@ public class PartnerUser {
    }
 
    /**
+    * Adds new partner user in the system
+    * 
     * @param partnerUserDetails
     * @return
     */
@@ -126,6 +142,20 @@ public class PartnerUser {
    public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails) {
       LOGGER.debug("calling PartnerUser.addPartnerUser for partnerGoId id {}", partnerUserDetails.getPartnerGoId());
       return partnerUserInterface.addPartnerUser(partnerUserDetails, request);
+   }
+
+   /**
+    * Update details existing partner user of the system
+    * 
+    * @param partnerUserDetails
+    * @return
+    */
+   @POST
+   @Path("update/user")
+   @Produces("application/json")
+   public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails) {
+      LOGGER.debug("calling PartnerUser.updatePartnerUser for partnerGoId id {}", partnerUserDetails.getPartnerGoId());
+      return partnerUserInterface.updatePartnerUser(partnerUserDetails, request);
    }
 
 }
