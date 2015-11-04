@@ -5,6 +5,7 @@ package com.ccighgo.service.components.partner;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Dashboard;
@@ -56,5 +57,7 @@ public interface PartnerService {
     * @return
     */
    public PartnerWnTDashboard getCAPDashboard(String partnerGoId);
+
+   public PartnerRecruitmentLead getPartnerInquiryLeadData(int parseInt);
    
 }

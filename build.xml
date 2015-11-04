@@ -1010,5 +1010,14 @@
 					<arg value="${xsd.dir}/partner/seasons/PartnerSeasonAllocationRequest.xsd" />
 				</java>
 			</target>
+	<target name="PartnerLeadViewForPartnerInquiryData">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/partner/PartnerLeadViewForPartnerInquiryData.xsd" />
+					</java>
+				</target>
+	
+	
 
 </project>

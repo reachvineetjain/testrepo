@@ -12,9 +12,11 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerAnnouncement;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate;
+import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerUser;
@@ -46,7 +48,12 @@ import com.ccighgo.jpa.repositories.PartnerWorkQueueTypeAggregateRepository;
 import com.ccighgo.jpa.repositories.PartnerWorkQueueTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerDashboardMessageConstants;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLeadScreeningDetail;
+import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLeadScreeningDetail;
 import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.F1Allocation;
@@ -75,6 +82,7 @@ import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerStati
 import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTDashboard;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
 
 /**
  * @author ravi
@@ -684,6 +692,94 @@ public class PartnerServiceImpl implements PartnerService {
 
       }
       return capDashboard;
+   }
+
+   @Override
+   public PartnerRecruitmentLead getPartnerInquiryLeadData(int goId) {
+         PartnerRecruitmentLead pwt = new PartnerRecruitmentLead();
+         try {
+            pwt.setGoId(goId);
+            PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
+            if (partnerAgentInquiry == null) {
+               pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
+                     messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
+               LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
+               return pwt;
+            }
+            try {
+               PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
+               if (partnerReviewStatus != null) {
+                  if (partnerReviewStatus.getPartnerStatus2() != null)
+                     pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
+               }
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, LOGGER);
+            }
+            pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
+
+            /**
+             * Details
+             */
+            try {
+               PartnerRecruitmentLeadScreeningDetail detail = new PartnerRecruitmentLeadScreeningDetail();
+               if (partnerAgentInquiry.getRating() != null)
+                  detail.setRating(partnerAgentInquiry.getRating());
+               if (partnerAgentInquiry.getAdressLineOne() != null)
+                  detail.setAddress1(partnerAgentInquiry.getAdressLineOne());
+               if (partnerAgentInquiry.getAdressLineTwo() != null)
+                  detail.setAddress2(partnerAgentInquiry.getAdressLineTwo());
+               if (partnerAgentInquiry.getCity() != null)
+                  detail.setCity(partnerAgentInquiry.getCity());
+               if (partnerAgentInquiry.getCompanyName() != null)
+                  detail.setCompanyName(partnerAgentInquiry.getCompanyName());
+               if (partnerAgentInquiry.getLookupCountry() != null)
+                  detail.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
+               if (partnerAgentInquiry.getEmail() != null)
+                  detail.setEmail(partnerAgentInquiry.getEmail());
+               if (partnerAgentInquiry.getFirstName() != null)
+                  detail.setFirstName(partnerAgentInquiry.getFirstName());
+               if (partnerAgentInquiry.getLastName() != null)
+                  detail.setLastName(partnerAgentInquiry.getLastName());
+               if (partnerAgentInquiry.getPhone() != null)
+                  detail.setPhone(partnerAgentInquiry.getPhone());
+               if (partnerAgentInquiry.getSalutation() != null)
+                  detail.setSalutation(partnerAgentInquiry.getSalutation().getSalutationName());
+               if (partnerAgentInquiry.getState() != null)
+                  detail.setStateOrProvince(partnerAgentInquiry.getState());
+               if (partnerAgentInquiry.getWebsite() != null)
+                  detail.setWebsite(partnerAgentInquiry.getWebsite());
+               pwt.setDetails(detail);
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, LOGGER);
+            }
+
+            /**
+             * Additional Data
+             */
+            try {
+               com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentAdminScreeningAdditionalInfo additional = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentAdminScreeningAdditionalInfo();
+               additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
+               additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
+               additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
+               additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
+               additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
+               additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
+               additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
+               pwt.setAdditionalInformation(additional);
+            } catch (Exception e) {
+               ExceptionUtil.logException(e, LOGGER);
+            }
+
+           
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, LOGGER);
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
+                  messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
+         }
+         return pwt;
    }
 
 }

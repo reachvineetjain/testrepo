@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ccighgo.service.rest.partner.generic.notes;
+package com.ccighgo.service.rest.partner.generic.documents;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,13 +18,12 @@ import com.ccighgo.service.components.partnerinquiry.PartnerInquiryService;
  * @author Ahmed
  *
  */
-@Path("/partnerGenericNotes/")
+@Path("/partnerGenericDocuments/")
 @Produces("application/json")
 @Consumes("application/json")
-public class PartnerGenericNotes {
+public class PartnerGenericDocuments {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(PartnerGenericNotes.class);
-
+   private static final Logger LOGGER = LoggerFactory.getLogger(PartnerGenericDocuments.class);
 
    @GET
    @Path("ping/{input}")
