@@ -31,14 +31,14 @@ public class PartnerCompany {
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerCompany.class);
 
    @Autowired PartnerCompanyService partnerCompanyService;
-   
+
    @GET
    @Path("get/details/{partnerGoId}")
    @Produces("application/json")
-   public PartnerCompanyDetail getPartnerCompanyDetails(@PathParam("partnerGoId") String partnerGoId){
+   public PartnerCompanyDetail getPartnerCompanyDetails(@PathParam("partnerGoId") String partnerGoId) {
       return partnerCompanyService.getPartnerCompanyDetails(partnerGoId);
    }
-   
+
    @POST
    @Path("update/details")
    @Consumes("application/json")
@@ -47,14 +47,22 @@ public class PartnerCompany {
       LOGGER.info("calling PartnerCompany.updatePartnerCompanyDetails");
       return partnerCompanyService.updatePartnerCompanyDetails(partnerCompanyDetail);
    }
-   
+
    @POST
    @Path("add/office/{partnerGoId}")
    @Consumes("application/json")
    @Produces("application/json")
    public Response addNewPartnerOffice(@PathParam("partnerGoId") String partnerGoId, NewPartnerOffice newPartnerOffice) {
       LOGGER.info("calling PartnerCompany.addNewPartnerOffice");
-      return partnerCompanyService.addNewPartnerOffice(partnerGoId,newPartnerOffice);
+      return partnerCompanyService.addNewPartnerOffice(partnerGoId, newPartnerOffice);
+   }
+
+   @GET
+   @Path("delete/office/{partnerOfficeId}")
+   @Consumes("application/json")
+   public Response deletePartnerOffice( @PathParam("partnerOfficeId") String partnerOfficeId) {
+      LOGGER.info("calling PartnerCompany.deletePartnerOffice");
+      return partnerCompanyService.deletePartnerOffice(partnerOfficeId);
    }
 
 }
