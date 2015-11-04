@@ -294,7 +294,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                userProgramsAndPermissions.add(f1Program);
 
                Programs ihpProgram = new Programs();
-               j1Program.setProgramName("IHP");
+               ihpProgram.setProgramName("IHP");
                Permissions ihpPermissions = new Permissions();
                ihpPermissions.setAccounting(partnerPermission.getIhpAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
                ihpPermissions.setAdmin(partnerPermission.getIhpAdmin() == CCIConstants.ACTIVE ? true : false);
