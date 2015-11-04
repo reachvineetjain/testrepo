@@ -224,7 +224,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      && seasonDetail.getDepartmentProgram().getDepartmentProgramId() == announcement.getDepartmentProgram().getDepartmentProgramId()) {
                   PartnerSeasonAnnouncements seasonAnnouncement = new PartnerSeasonAnnouncements();
                   seasonAnnouncement.setPartnerSeasonAnnouncement(announcement.getAnnouncement());
-                  seasonAnnouncement.setAnnouncementDate(DateUtils.getTimestamp(announcement.getCreatedOn()));
+                  seasonAnnouncement.setAnnouncementDate(DateUtils.getMMddyyDate(announcement.getCreatedOn()));
                   partnersSeasonDetails.getPartnerSeasonAnnouncement().add(seasonAnnouncement);
                }
             }
@@ -267,15 +267,15 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
          ApplicationDeadlilneDatesAllocations dla = new ApplicationDeadlilneDatesAllocations();
          if (seasonDetail.getPartnerSeasonAppDeadlineDate() != null)
-            dla.setAugStartDeadlineDate(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonAppDeadlineDate()));
+            dla.setAugStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtAppDeadlineDate() != null)
-            dla.setAugStartDeadlineDateRequested(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonExtAppDeadlineDate()));
+            dla.setAugStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtAppDeadlineDate()));
          if (seasonDetail.getPartnerStatus2() != null)
             dla.setAugStartDeadlineStatus(seasonDetail.getPartnerStatus2().getPartnerStatusName());
          if (seasonDetail.getPartnerSeasonSecSemDeadlineDate() != null)
-            dla.setJanStartDeadlineDate(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonSecSemDeadlineDate()));
+            dla.setJanStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonSecSemDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtSecSemDeadlineDate() != null)
-            dla.setJanStartDeadlineDateRequested(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonExtSecSemDeadlineDate()));
+            dla.setJanStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtSecSemDeadlineDate()));
          if (seasonDetail.getPartnerStatus3() != null)
             dla.setJanStartDeadlineStatus(seasonDetail.getPartnerStatus3().getPartnerStatusName());
          partnersSeasonDetails.setApplicationDeadlineDatesAllocations(dla);
@@ -401,7 +401,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      && seasonDetail.getDepartmentProgram().getDepartmentProgramId() == announcement.getDepartmentProgram().getDepartmentProgramId()) {
                   com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.PartnerSeasonAnnouncements seasonAnnouncement = new com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.PartnerSeasonAnnouncements();
                   seasonAnnouncement.setPartnerSeasonAnnouncement(announcement.getAnnouncement());
-                  seasonAnnouncement.setAnnouncementDate(DateUtils.getTimestamp(announcement.getCreatedOn()));
+                  seasonAnnouncement.setAnnouncementDate(DateUtils.getMMddyyDate(announcement.getCreatedOn()));
                   partnersSeasonDetails.getPartnerSeasonAnnouncement().add(seasonAnnouncement);
                }
             }
@@ -445,15 +445,15 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          ApplicationDeadlilneDatesF1Allocations dla = new ApplicationDeadlilneDatesF1Allocations();
 
          if (seasonDetail.getPartnerSeasonAppDeadlineDate() != null)
-            dla.setAugStartDeadlineDate(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonAppDeadlineDate()));
+            dla.setAugStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtAppDeadlineDate() != null)
-            dla.setAugStartDeadlineDateRequested(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonExtAppDeadlineDate()));
+            dla.setAugStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtAppDeadlineDate()));
          if (seasonDetail.getPartnerStatus2() != null)
             dla.setAugStartDeadlineStatus(seasonDetail.getPartnerStatus2().getPartnerStatusName());
          if (seasonDetail.getPartnerSeasonSecSemDeadlineDate() != null)
-            dla.setJanStartDeadlineDate(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonSecSemDeadlineDate()));
+            dla.setJanStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonSecSemDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtSecSemDeadlineDate() != null)
-            dla.setJanStartDeadlineDateRequested(DateUtils.getDateAndTime(seasonDetail.getPartnerSeasonExtSecSemDeadlineDate()));
+            dla.setJanStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtSecSemDeadlineDate()));
          if (seasonDetail.getPartnerStatus3() != null)
             dla.setJanStartDeadlineStatus(seasonDetail.getPartnerStatus3().getPartnerStatusName());
          partnersSeasonDetails.setApplicationDeadlineDatesAllocations(dla);
