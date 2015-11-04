@@ -6,6 +6,7 @@ package com.ccighgo.service.rest.partner.season;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,10 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
+import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewApplicationDeadlilneDatesAllocations;
+import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
 import com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.PartnerSeasonF1Detail;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * <h1>PartnerSeason</h1> The PartnerSeason class is the REST service front of
@@ -108,5 +112,16 @@ public class PartnerSeason {
    @Path("apply/new/{partnerId}")
    public PartnerSeasonApplicationList getPartnerSeasonApplicationList(@PathParam("partnerId") String partnerId){
       return partnerSeasonInterface.getPartnerSeasonApplicationList(partnerId);
+   }
+   
+   @POST
+   @Path("createNewPartnerAllocationRequest")
+   public WSDefaultResponse createNewPartnerAllocationRequest(NewPartnerSeasonAllocationRequest newPartnerSeasonAllocationRequest){
+      return partnerSeasonInterface.createNewPartnerAllocationRequest(newPartnerSeasonAllocationRequest);
+   }
+   @POST
+   @Path("createNewDeadlineDateRequest")
+   public WSDefaultResponse createNewDeadlineDateRequest(NewApplicationDeadlilneDatesAllocations newApplicationDeadlineDatesAllocations){
+      return partnerSeasonInterface.createNewDeadlineDateRequest(newApplicationDeadlineDatesAllocations);
    }
 }
