@@ -59,9 +59,9 @@ public class SubPartner {
    @POST
    @Path("create")
    @Produces("application/json")
-   public com.ccighgo.service.transport.partner.beans.subpartner.SubPartner createSubPartner(com.ccighgo.service.transport.partner.beans.subpartner.SubPartner subPartner){
+   public WSDefaultResponse createSubPartner(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner){
       LOGGER.debug("calling SubPartner.createSubPartner",subPartner);
-      return subPartnerInterface.createSubPartner(subPartner , request);
+      return subPartnerInterface.createSubPartnerDetail(subPartner);
    }
    
    @POST
