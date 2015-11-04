@@ -18,8 +18,9 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:sequence>
-                  <xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="applicationDeadlineDatesAllocations" type="psd:NewApplicationDeadlilneDatesAllocations" minOccurs="1" maxOccurs="1" />
+                    <xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />      		
+					<xsd:element name="augStartDeadlineDateRequested" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		      		<xsd:element name="janStartDeadlineDateRequested" type="xsd:string" minOccurs="1" maxOccurs="1" />
                </xsd:sequence>
             </xsd:sequence>
          </xsd:extension>
@@ -29,17 +30,6 @@
  
 
 
-   <xsd:complexType name="NewApplicationDeadlilneDatesAllocations">
-      <xsd:sequence>
-			<xsd:element name="augStartDeadlineDateRequested" type="xsd:string" minOccurs="1" maxOccurs="1" />
-    	    <xsd:element name="augStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-    	    <xsd:element name="augStartDeadlineStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-    	    
-      		<xsd:element name="janStartDeadlineDateRequested" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="janStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="janStartDeadlineStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
 
 
 

@@ -5,7 +5,7 @@ package com.ccighgo.service.components.partner.season;
 
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewApplicationDeadlilneDatesAllocations;
+import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewPartnerApplicationDeadLineDate;
 import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
@@ -47,6 +47,6 @@ public interface PartnerSeasonInterface {
 
    public WSDefaultResponse createNewPartnerAllocationRequest(NewPartnerSeasonAllocationRequest newPartnerSeasonAllocationRequest);
 
-   public WSDefaultResponse createNewDeadlineDateRequest(NewApplicationDeadlilneDatesAllocations newApplicationDeadlineDatesAllocations);
+   public WSDefaultResponse createNewDeadlineDateRequest(NewPartnerApplicationDeadLineDate newApplicationDeadlineDatesAllocations);
 
 }

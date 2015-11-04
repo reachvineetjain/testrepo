@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
-import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewApplicationDeadlilneDatesAllocations;
+import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewPartnerApplicationDeadLineDate;
 import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
@@ -121,7 +121,7 @@ public class PartnerSeason {
    }
    @POST
    @Path("createNewDeadlineDateRequest")
-   public WSDefaultResponse createNewDeadlineDateRequest(NewApplicationDeadlilneDatesAllocations newApplicationDeadlineDatesAllocations){
+   public WSDefaultResponse createNewDeadlineDateRequest(NewPartnerApplicationDeadLineDate newApplicationDeadlineDatesAllocations){
       return partnerSeasonInterface.createNewDeadlineDateRequest(newApplicationDeadlineDatesAllocations);
    }
 }
