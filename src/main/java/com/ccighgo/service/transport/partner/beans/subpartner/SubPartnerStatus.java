@@ -42,7 +42,6 @@ import javax.xml.bind.annotation.XmlType;
 public class SubPartnerStatus {
 
     protected int subPartnerStatusId;
-    @XmlElement(required = true)
     protected String subPartnerStatus;
 
     /**

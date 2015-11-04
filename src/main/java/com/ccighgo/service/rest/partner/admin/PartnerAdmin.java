@@ -35,9 +35,12 @@ import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchma
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatscategory.PartnerAdminDashboardQuickStatsCategory;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles.PartnerAdminDashboardQuickStatsTitles;
+import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminPartnerWorkQueueDeadlineRequests;
+import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReview;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
+import com.ccighgo.service.transport.partner.beans.requestchangeinallocation.AdminPartnerWorkQueueRequestChangeInAllocation;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -128,7 +131,40 @@ public class PartnerAdmin {
       LOGGER.debug("fun : getWorkQueueSubmittedApplications []");
       return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType);
    }
+  /* 
+   * will use SPAdminWQPartner 
+   */
    
+   
+   @GET
+   @Path("workQueueSubmittedDeadlineChange/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
+   @Produces("application/json")
+   public AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
+	         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
+	   return partnerAdminService.getWorkQueueDeadlineRequests(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType);
+   }
+   
+   
+  @GET
+  @Path("workQueueSubmittedChangeInAllocation/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
+  @Produces("application/json")
+   public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
+	         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType)
+   {
+	   return partnerAdminService.getWorkQueueChangeInAllocationRequests(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType);
+   }
+   @GET
+   @Path("workQueueSubmittedNotesReview/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
+   @Produces("application/json")
+  public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,@PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType)
+ {
+	   return partnerAdminService.getWorkQueuePartnerNoteReview(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType);
+ 
+ }
+  /*  
+   * end
+   * 
+   * */
    @GET
    @Path("changeApplicationStatus/{goId}/{newStatus}")
    @Produces("application/json")
