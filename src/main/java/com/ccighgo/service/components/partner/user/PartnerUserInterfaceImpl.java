@@ -153,6 +153,43 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
 
    @Override
+   public Response resetPartnerUserPassword(String partnerUserId, HttpServletRequest request) {
+      Response response = new Response();
+      if (partnerUserId == null) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
+         return response;
+      }else{
+         try{
+            PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
+            if(partnerUser!=null && partnerUser.getLogin()!=null){
+                  String body = "<p>Ciao! </p>" 
+                        + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" 
+                        + "<p>"+ "Your username is : " + partnerUser.getLogin().getLoginName() + "</p>" 
+                        + "<p>Please click on the link below to create a new password:</p> " 
+                        + "<p>"+ formResetURL(request).concat(partnerUser.getLogin().getKeyValue()) + "</p>"
+                        + "<p>If you didn't request a new password, please let us know.</p>"
+                        + "<p>Thank you,</p>"
+                        + "<p>CCI Greenheart.</p>";
+                  email.send(partnerUser.getLogin().getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
+                  response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                        "An email has been sent to address "+"\'"+partnerUser.getLogin().getEmail()+ "\'"+" for login name "+"\'"+partnerUser.getLogin().getLoginName()+"\'"+" with instructions to reset password"));
+            }else{
+               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+            }
+         }catch (CcighgoException e) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+         }
+      }
+      return response;
+   }
+
+   @Override
    @Transactional(readOnly = true)
    public PartnerUserDetails getPartnerUserDetails(String partnerUserId) {
       PartnerUserDetails partnerUserDetails = new PartnerUserDetails();
@@ -536,6 +573,22 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       } else {
          try {
             PartnerUser partnerUser = partnerUserRepository.findOne(partnerUserDetails.getPartnerUserId());
+            //check if username has changed
+            Login partnerUserLogin = partnerUser.getLogin();
+            if(partnerUserLogin.getLoginName().equals(partnerUserDetails.getUserLoginName())){
+               //just update email
+               partnerUserLogin.setEmail(partnerUserDetails.getUserEmail());
+            }else{
+               //check if login name selected is available
+               Login checkExistingLoginName = loginRepository.findByLoginName(partnerUserDetails.getUserLoginName().toLowerCase());
+               if(checkExistingLoginName==null){
+                  partnerUserLogin.setEmail(partnerUserDetails.getUserEmail());
+                  partnerUserLogin.setLoginName(partnerUserDetails.getUserLoginName().toLowerCase());
+               }else{
+                  throw new CcighgoException("Please select different login name, a user already exists with specified login name");
+               }
+            }
+            loginRepository.saveAndFlush(partnerUserLogin);
             if (partnerUserDetails.getUserSalutation() != null) {
                partnerUser.setSalutation(salutationRepositotry.findOne(partnerUserDetails.getUserSalutation().getSalutationId()));
             }
@@ -543,6 +596,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUser.setTitle(partnerUserDetails.getUserDesignation());
             partnerUser.setFirstName(partnerUserDetails.getUserFirstName());
             partnerUser.setLastName(partnerUserDetails.getUserLastName());
+            partnerUser.setEmail(partnerUserDetails.getUserEmail());
             partnerUser.setPhone(partnerUserDetails.getUserPhone());
             partnerUser.setEmergencyPhone(partnerUserDetails.getUserEmergencyPhone());
             partnerUser.setFax(partnerUserDetails.getUserFax());
@@ -628,4 +682,5 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       }
       return updatedUser;
    }
+
 }

@@ -37,6 +37,12 @@ public interface PartnerUserInterface {
    public Response updatePartnerUserStatus(String statusVal, String partnerUserId);
 
    /**
+    * @param partnerUserId
+    * @return
+    */
+   public Response resetPartnerUserPassword(String partnerUserId, HttpServletRequest request);
+
+   /**
     * View Partner user details and permissions
     * 
     * @param partnerUserId
