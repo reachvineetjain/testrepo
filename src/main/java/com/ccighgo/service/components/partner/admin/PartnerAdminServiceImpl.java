@@ -282,14 +282,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (partnerNotes != null) {
                for (PartnerNote partnerNote : partnerNotes) {
                   com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes note = new com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes();
-                  /*CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(partnerNote.getCreatedBy());
-                  if (staffUserAndRole != null) {
-                     com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.NoteUserCreator noteCreator = new com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.NoteUserCreator();
-                     noteCreator.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
-                     noteCreator.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
-                     noteCreator.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
-                     note.setCreatedBy(noteCreator);
-                  }*/
                   note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
                   note.setPartnerNoteId(partnerNote.getPartnerNotesId());
                   note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
@@ -628,7 +620,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                for (PartnerDocument p : partnerDocuments) {
                   PartnerRecruitmentAdminScreeningDocuments doc = new PartnerRecruitmentAdminScreeningDocuments();
                   doc.setPartnerDocumentId(p.getPartnerDocumentId());
-                  doc.setActive(p.getDocumentInformation().getActive() == 1);
+                  doc.setActive(p.getDocumentInformation().getActive() == CCIConstants.ACTIVE?true:false);
                   doc.setDescription("");
                   doc.setDocName(p.getDocumentInformation().getDocumentName());
                   doc.setDocType(p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
@@ -637,14 +629,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   doc.setFileType("");
                   doc.setUploadDate(DateUtils.getDateAndTime(p.getDocumentInformation().getCreatedOn()));
                   Integer createdBy = p.getDocumentInformation().getCreatedBy();
-                 /* CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(createdBy);
-                  if (staffUserAndRole != null) {
-                     DocumentUploadUser uploadedBy = new DocumentUploadUser();
-                     uploadedBy.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
-                     uploadedBy.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
-                     uploadedBy.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
-                     doc.setUploadedBy(uploadedBy);
-                  }*/
                   pwt.getDocuments().add(doc);
                }
             }
@@ -656,14 +640,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (partnerNotes != null) {
                for (PartnerNote partnerNote : partnerNotes) {
                   PartnerRecruitmentAdminScreeningNotes note = new PartnerRecruitmentAdminScreeningNotes();
-                 /* CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(partnerNote.getCreatedBy());
-                  if (staffUserAndRole != null) {
-                     NoteUserCreator noteCreator = new NoteUserCreator();
-                     noteCreator.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
-                     noteCreator.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
-                     noteCreator.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
-                     note.setCreatedBy(noteCreator);
-                  }*/
                   note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
                   note.setPartnerNoteId(partnerNote.getPartnerNotesId());
                   note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
@@ -684,7 +660,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pwt;
    }
-
    @Override
    public AdminPartnerWorkQueueType getWorkQueueType(String roleType) {
       AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
@@ -1040,13 +1015,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    public WSDefaultResponse addNoteToPartnerApplication(int goId, String noteValue) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-         // PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(goId);
-         // PartnerStatus partnerStatus= partnerStatusRepository.findStatusByName(newStatus);
-         // partnerReviewStatus.setPartnerStatus1(partnerStatus);
-         // partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
-         // wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
-         // ErrorCode.PARTNER_APPLICATION_STATUS_UPDATED.getValue(),
-         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
@@ -1222,15 +1190,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                doc.setFileName(pd.getDocumentInformation().getFileName());
                doc.setFileType("");
                doc.setUploadDate(DateUtils.getDateAndTime(pd.getDocumentInformation().getCreatedOn()));
-               Integer createdBy = pd.getDocumentInformation().getCreatedBy();
-//               CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(createdBy);
-//               if (staffUserAndRole != null) {
-//                  com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser uploadedBy = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser();
-//                  uploadedBy.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
-//                  uploadedBy.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
-//                  uploadedBy.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
-//                  doc.setUploadedBy(uploadedBy);
-//               }
                documents.getDocuments().add(doc);
             }
          }
@@ -1270,15 +1229,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                doc.setFileName(pd.getDocumentInformation().getFileName());
                doc.setFileType("");
                doc.setUploadDate(DateUtils.getDateAndTime(pd.getDocumentInformation().getCreatedOn()));
-               /*Integer createdBy = pd.getDocumentInformation().getCreatedBy();
-               CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(createdBy);
-               if (staffUserAndRole != null) {
-                  com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser uploadedBy = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewDocuments.DocumentUploadUser();
-                  uploadedBy.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
-                  uploadedBy.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
-                  uploadedBy.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
-                  doc.setUploadedBy(uploadedBy);
-               }*/
                documents.getDocuments().add(doc);
             }
          }
@@ -1307,33 +1257,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          PartnerOfficeType officeType = partnerOfficeTypeRepository.findByPartnerOfficeType(officesDetails.getOfficeType());
          po.setPartnerOfficeType(officeType);
          po.setModifiedBy(1);
-         po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         // partnerOffice.setOfficeNotes(officesDetails.geto);
+         po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));        
          po.setPhoneNumber(officesDetails.getPhone());
-         po.setPostalCode(officesDetails.getZipCode());
-         // partnerOffice.setState(officesDetails.get);
+         po.setPostalCode(officesDetails.getZipCode());       
          po.setWebsite(officesDetails.getWebsite());
-         partnerOfficeRepository.saveAndFlush(po);
-
-     /*    List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(officesDetails.getGoId());
-         if (offices != null) {
-            for (PartnerOffice partnerOffice : offices) {
-               PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
-               office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
-               office.setAddress1(partnerOffice.getAdressOne());
-               office.setAddress2(partnerOffice.getAdressTwo());
-               office.setCity(partnerOffice.getCity());
-               office.setCountry(partnerOffice.getLookupCountry().getCountryName());
-               office.setEmail(partnerOffice.getPartner().getEmail());
-               office.setFax(partnerOffice.getFaxNumber());
-               office.setPhone(partnerOffice.getPhoneNumber());
-               office.setWebsite(partnerOffice.getWebsite());
-               office.setZipCode(partnerOffice.getPostalCode());
-               office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
-               pOffices.getOffices().add(office);
-            }
-         }*/
-         
+         partnerOfficeRepository.saveAndFlush(po);     
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
@@ -1341,7 +1269,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return pOffices;
    }
    
-   @Transactional
  private PartnerAdminOverviewOffices getListofOffices(int goId)
    {
 	   PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
@@ -1420,15 +1347,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
          pc.setPartner(partner);
-         // PartnerOffice partnerOffice = partnerOfficeRepository.find;
-         // partnerContact.setPartnerOffice(partnerOffice);
          pc.setPhone(contactsDetails.getPhone());
          pc.setReceiveNotificationEmails(CCIConstants.INACTIVE);
          Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
          pc.setSalutation(salutation);
          pc.setSkypeId(contactsDetails.getSkypeId());
          pc.setTitle(contactsDetails.getTitile());
-         // partnerContact.setWebsite(contactsDetails.get);
          partnerContactRepository.saveAndFlush(pc);
 
          List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
@@ -1442,12 +1366,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
                contact.setLastName(partnerContact.getLastName());
-               contact.setPhone(partnerContact.getPhone());
-               // contact.setPrograms(partnerContact.get);
+               contact.setPhone(partnerContact.getPhone());            
                contact.setSalutation(partnerContact.getSalutation().getSalutationName());
                contact.setSkypeId(partnerContact.getSkypeId());
                contact.setTitile(partnerContact.getTitle());
-               // contact.setUsername(partnerContact.get);
+              
                contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
                pContacts.getContacts().add(contact);
             }
@@ -1480,11 +1403,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                contact.setFirstName(partnerContact.getFirstName());
                contact.setLastName(partnerContact.getLastName());
                contact.setPhone(partnerContact.getPhone());
-               // contact.setPrograms(partnerContact.get);
                contact.setSalutation(partnerContact.getSalutation().getSalutationName());
                contact.setSkypeId(partnerContact.getSkypeId());
                contact.setTitile(partnerContact.getTitle());
-               // contact.setUsername(partnerContact.get);
                contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
                pContacts.getContacts().add(contact);
             }
@@ -1515,15 +1436,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          if (partnerNotes != null) {
             for (PartnerNote partnerNote : partnerNotes) {
                PartnerAdminOverviewNotesDetails nd = new PartnerAdminOverviewNotesDetails();
-             /*  CCIStaffUsersCCIStaffRole staffUserAndRole = cciStaffRolesRepository.findOne(partnerNote.getCreatedBy());
-               if (staffUserAndRole != null) {
-                  com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.NoteUserCreator noteCreator = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewNotes.NoteUserCreator();
-                  noteCreator.setPhotoUrl(staffUserAndRole.getCcistaffUser().getPhoto());
-                  noteCreator.setRole(staffUserAndRole.getCcistaffRole().getCciStaffRoleName());
-                  noteCreator.setUserName(staffUserAndRole.getCcistaffUser().getFirstName() + " " + staffUserAndRole.getCcistaffUser().getLastName());
-                  nd.setCreatedBy(noteCreator);
-               }*/
-               nd.setPartnerNoteId(partnerNote.getPartnerNotesId());
+                nd.setPartnerNoteId(partnerNote.getPartnerNotesId());
                nd.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
                nd.setNoteValue(partnerNote.getPartnerNote());
                pn.getNotes().add(nd);

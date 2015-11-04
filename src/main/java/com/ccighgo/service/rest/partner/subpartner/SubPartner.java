@@ -48,14 +48,6 @@ public class SubPartner {
       return subPartnerInterface.getSubPartnersOfpartners(partnerId);
    }
 
-   @GET
-   @Path("view/{subPartnerId}")
-   @Produces("application/json")
-   public com.ccighgo.service.transport.partner.beans.subpartner.SubPartner viewSubPartners(@PathParam("subPartnerId") String subPartnerId){
-      LOGGER.debug("calling SubPartner.viewSubPartners for subPartner id {}",subPartnerId);
-      return subPartnerInterface.viewSubPartners(subPartnerId);
-   }
-   
    @POST
    @Path("create")
    @Produces("application/json")
@@ -63,7 +55,6 @@ public class SubPartner {
       LOGGER.debug("calling SubPartner.createSubPartner",subPartner);
       return subPartnerInterface.createSubPartnerDetail(subPartner);
    }
-   
    @POST
    @Path("update")
    @Produces("application/json")

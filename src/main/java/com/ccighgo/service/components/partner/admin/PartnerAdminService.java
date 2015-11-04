@@ -42,9 +42,7 @@ public interface PartnerAdminService {
 
  
    WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus);
-
    WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String followUpdate);
-
    AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType);
    AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests( int typeId, int categoryId, int staffUserId, String roleType);
    AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests( int typeId, int categoryId, int staffUserId, String roleType);
