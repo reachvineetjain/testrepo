@@ -490,11 +490,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          details.setAgencyName(partnerSubPartner.getCompanyName());
          details.setLogoImageURL(partnerSubPartner.getPartnerLogo());
          GoIdSequence goIdSequence = goIdSequenceRepository.findOne(Integer.parseInt(subPartnerId));
-         Login login = loginRepository.findByGoId(goIdSequence);
-         if (login != null) {
-            details.setLogoUserName(login.getLoginName());
+         //Login login = loginRepository.findByGoId(goIdSequence);
+        // if (login != null) {
+            details.setUsername("user name");
             details.setPassword("**********");
-         }
+       //  }
          if (partnerSubPartner.getNeedPartnerReview() != null)
             details.setNeedsPartnerReview(partnerSubPartner.getNeedPartnerReview().equals(CCIConstants.ACTIVE) ? true : false);
          if (partnerSubPartner.getPayGreenheartDirectly() != null)
@@ -839,7 +839,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             return responce;
          }
 
-         if (loginRepository.findByEmail(subPartner.getSubPartnerPrimaryContact().getEmail()) != null) {
+         if (subPartner.getSubPartnerPrimaryContact()!=null&& loginRepository.findByEmail(subPartner.getSubPartnerPrimaryContact().getEmail()) != null) {
             responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUB_PARTNER_UPDATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(SubPartnerMessageConstants.SUB_PARTNER_CREATE_USER_EMAIL_EXIST)));
             LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.SUB_PARTNER_CREATE_USER_EMAIL_EXIST));
