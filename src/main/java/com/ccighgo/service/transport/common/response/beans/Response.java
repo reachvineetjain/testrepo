@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
+import com.ccighgo.service.transport.partner.beans.generic.deletenote.DeleteNote;
 
 
 /**
@@ -42,7 +42,7 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadVie
     "status"
 })
 @XmlSeeAlso({
-    PartnerRecruitmentLead.class
+    DeleteNote.class
 })
 public class Response {
 
