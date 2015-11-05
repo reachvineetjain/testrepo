@@ -218,6 +218,7 @@ public class CCIConstants {
    public static final String HOST_FAMILY_USER = "HF";
    public static final String EMPLOYEE_USER = "EMP";
    public static final String PARTICPANT_USER = "PARTICIPANT";
+   public static final String PARTNER_AGENT = "PA";
    public static final String RESET_PASSWORD_LINK = "/module/login/#/reset/";
    public static final String RESET_PASSWORD_SUBJECT = "Greenheart Online Password Request";
    public static final String CREATE_CCI_USER_SUBJECT = "Greenheart Online application account creation notification";

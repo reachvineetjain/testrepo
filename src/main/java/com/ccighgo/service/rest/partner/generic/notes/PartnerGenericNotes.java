@@ -34,7 +34,6 @@ public class PartnerGenericNotes {
 	
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerGenericNotes.class);
 
-   PartnerInquiryService partnerInquiryService;
 
    @GET
    @Path("ping/{input}")

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.PartnerService;
-import com.ccighgo.service.components.partner.PartnerServiceImpl;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerF1Dashboard;
 import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerj1details.PartnerJ1HSDashboard;
@@ -57,6 +57,14 @@ public class Partner {
       LOGGER.info("calling Partner.getIHPDashboard for partner id {}",partnerGoId);
       return partnerService.getIHPDashboard(partnerGoId);
       
+   }
+   
+   @GET
+   @Path("partnerInquiryLeadData/{partnerAgentGoId}")
+   @Produces("application/json")
+   public PartnerRecruitmentLead getPartnerInquiryLeadData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
+      LOGGER.debug("fun : getPartnerInquiryLeadData");
+      return partnerService.getPartnerInquiryLeadData(Integer.parseInt(partnerAgentGoId));
    }
 
 }
