@@ -13,7 +13,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.Details;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersMailingAddress;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersPhysicalAddress;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersPrimaryContact;
 
 
 /**
@@ -42,7 +46,11 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadVie
     "status"
 })
 @XmlSeeAlso({
-    PartnerRecruitmentLead.class
+    SubPartnerDetail.class,
+    Details.class,
+    SubPartnersPrimaryContact.class,
+    SubPartnersPhysicalAddress.class,
+    SubPartnersMailingAddress.class
 })
 public class Response {
 

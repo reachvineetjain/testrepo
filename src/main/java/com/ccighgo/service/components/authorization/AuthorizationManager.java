@@ -28,6 +28,7 @@ import com.ccighgo.service.components.errormessages.constants.AuthConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
 import com.ccighgo.service.components.partner.PartnerService;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDashboardSections;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
@@ -62,44 +63,45 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
       Auth auth = new Auth();
       if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
-         if (login != null && login.getActive()== CCIConstants.ACTIVE) {
-
-               auth.setGoId(login.getGoIdSequence().getGoId());
-               auth.setLoginId(login.getLoginId());
-               auth.setLoginname(login.getLoginName());
-               LOGGER.info("User with login name :" + login.getLoginName() + " logged in at :" + new Timestamp(System.currentTimeMillis()));
-               updateHistory(login.getLoginName());
-               List<LoginType> loginTypeList = new ArrayList<LoginType>();
-               for (LoginUserType loginUsrType : login.getLoginUserTypes()) {
-                  LoginType lt = new LoginType();
-                  if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
-                     lt.setUserDetailUrl("/authorize/cciusr/");
-                  }
-                  if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
-                     lt.setUserDetailUrl("/authorize/partner/");
-                  }
-                  if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.FIELD_STAFF_USER)) {
-                     lt.setUserDetailUrl("/authorize/fs/");
-                  }
-                  if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.HOST_FAMILY_USER)) {
-                     lt.setUserDetailUrl("/authorize/hf/");
-                  }
-                  if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.EMPLOYEE_USER)) {
-                     lt.setUserDetailUrl("/authorize/emp/");
-                  }
-                  if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTICPANT_USER)) {
-                     lt.setUserDetailUrl("/authorize/ptcpnt/");
-                  }
-                  lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
-                  lt.setLoginType(loginUsrType.getUserType().getUserTypeName());
-                  lt.setDefault(loginUsrType.getDefaultUserType() == 0 ? false : true);
-                  loginTypeList.add(lt);
+         if (login != null && login.getActive() == CCIConstants.ACTIVE) {
+            auth.setGoId(login.getGoIdSequence().getGoId());
+            auth.setLoginId(login.getLoginId());
+            auth.setLoginname(login.getLoginName());
+            LOGGER.info("User with login name :" + login.getLoginName() + " logged in at :" + new Timestamp(System.currentTimeMillis()));
+            updateHistory(login.getLoginName());
+            List<LoginType> loginTypeList = new ArrayList<LoginType>();
+            for (LoginUserType loginUsrType : login.getLoginUserTypes()) {
+               LoginType lt = new LoginType();
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
+                  lt.setUserDetailUrl("/authorize/cciusr/");
                }
-               auth.getLoginType().addAll(loginTypeList);
-               auth.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         }
-         else {
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
+                  lt.setUserDetailUrl("/authorize/partner/");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_AGENT)) {
+                  lt.setUserDetailUrl("/authorize/partneragent/");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.FIELD_STAFF_USER)) {
+                  lt.setUserDetailUrl("/authorize/fs/");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.HOST_FAMILY_USER)) {
+                  lt.setUserDetailUrl("/authorize/hf/");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.EMPLOYEE_USER)) {
+                  lt.setUserDetailUrl("/authorize/emp/");
+               }
+               if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTICPANT_USER)) {
+                  lt.setUserDetailUrl("/authorize/ptcpnt/");
+               }
+               lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
+               lt.setLoginType(loginUsrType.getUserType().getUserTypeName());
+               lt.setDefault(loginUsrType.getDefaultUserType() == 0 ? false : true);
+               loginTypeList.add(lt);
+            }
+            auth.getLoginType().addAll(loginTypeList);
+            auth.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
             auth.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INACTIVE_LOGIN.getValue(),
                   messageUtil.getMessage(AuthConstants.LOGIN_DISABLED)));
             LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_DISABLED));
@@ -128,6 +130,12 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Transactional(readOnly = true)
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
       return partnerService.getPartnerDashboard(partnerGoId);
+   }
+
+   @Override
+   @Transactional(readOnly = true)
+   public PartnerRecruitmentLead getPartnerAgentDashboard(int partnerGoId) {
+      return partnerService.getPartnerInquiryLeadData(partnerGoId);
    }
 
 }

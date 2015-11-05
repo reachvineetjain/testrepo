@@ -601,6 +601,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUser.setEmergencyPhone(partnerUserDetails.getUserEmergencyPhone());
             partnerUser.setFax(partnerUserDetails.getUserFax());
             partnerUser.setSkypeId(partnerUserDetails.getUserSkypeId());
+            partnerUser.setLookupGender(genderRepository.findOne(partnerUserDetails.getUserGender().getGenderId()));
             if (partnerUserDetails.getUserOffices() != null) {
                for (UserOffice uo : partnerUserDetails.getUserOffices()) {
                   if (uo.isIsPrimary()) {
