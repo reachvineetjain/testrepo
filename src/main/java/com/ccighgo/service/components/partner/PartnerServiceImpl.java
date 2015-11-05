@@ -93,30 +93,52 @@ public class PartnerServiceImpl implements PartnerService {
 
    private static final Logger LOGGER = Logger.getLogger(PartnerServiceImpl.class);
 
-   @Autowired MessageUtils messageUtil;
-   @Autowired CommonComponentUtils componentUtils;
+   @Autowired
+   MessageUtils messageUtil;
+   @Autowired
+   CommonComponentUtils componentUtils;
 
-   @Autowired PartnerRepository partnerRepository;
-   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
-   @Autowired PartnerContactRepository partnerContactRepository;
-   @Autowired PartnerWorkQueueRepository partnerWorkQueueRepository;
-   @Autowired PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
-   @Autowired PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
-   @Autowired PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
-   @Autowired PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
-   @Autowired PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
-   @Autowired PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
-   @Autowired PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
-   @Autowired PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
+   @Autowired
+   PartnerRepository partnerRepository;
+   @Autowired
+   LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
+   @Autowired
+   PartnerContactRepository partnerContactRepository;
+   @Autowired
+   PartnerWorkQueueRepository partnerWorkQueueRepository;
+   @Autowired
+   PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
+   @Autowired
+   PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
+   @Autowired
+   PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
+   @Autowired
+   PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
+   @Autowired
+   PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
+   @Autowired
+   PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
+   @Autowired
+   PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
+   @Autowired
+   PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
 
-   @Autowired PartnerAgentInquiryRepository partnerAgentInquiryRepository;
-   @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
-   @Autowired PartnerProgramRepository partnerProgramRepository;
-   @Autowired PartnerMessagesRepository partnerMessagesRepository;
-   @Autowired PartnerOfficeRepository partnerOfficeRepository;
-   @Autowired PartnerReferenceCheckRepository partnerReferenceCheckRepository;
-   @Autowired PartnerDocumentsRepository partnerDocumentsRepository;
-   @Autowired PartnerNoteRepository partnerNoteRepository;
+   @Autowired
+   PartnerAgentInquiryRepository partnerAgentInquiryRepository;
+   @Autowired
+   PartnerReviewStatusRepository partnerReviewStatusRepository;
+   @Autowired
+   PartnerProgramRepository partnerProgramRepository;
+   @Autowired
+   PartnerMessagesRepository partnerMessagesRepository;
+   @Autowired
+   PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired
+   PartnerReferenceCheckRepository partnerReferenceCheckRepository;
+   @Autowired
+   PartnerDocumentsRepository partnerDocumentsRepository;
+   @Autowired
+   PartnerNoteRepository partnerNoteRepository;
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
@@ -133,9 +155,9 @@ public class PartnerServiceImpl implements PartnerService {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
                partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
-                List<PartnerUser> partnerUsers = partner.getPartnerUsers();
-               for(PartnerUser pu:partnerUsers){
-                  if(partner.getPartnerGoId()==pu.getPartner().getPartnerGoId() && pu.getIsPrimary()==CCIConstants.ACTIVE){
+               List<PartnerUser> partnerUsers = partner.getPartnerUsers();
+               for (PartnerUser pu : partnerUsers) {
+                  if (partner.getPartnerGoId() == pu.getPartner().getPartnerGoId() && pu.getIsPrimary() == CCIConstants.ACTIVE) {
                      partnerDashboard.setFirstName(pu.getFirstName());
                      partnerDashboard.setLastName(pu.getLastName());
                      partnerDashboard.setUsername(pu.getLogin().getLoginName());
@@ -696,90 +718,107 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerRecruitmentLead getPartnerInquiryLeadData(int goId) {
-         PartnerRecruitmentLead pwt = new PartnerRecruitmentLead();
-         try {
-            pwt.setGoId(goId);
-            PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
-            if (partnerAgentInquiry == null) {
-               pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
-                     messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
-               LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
-               return pwt;
-            }
-            try {
-               PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-               if (partnerReviewStatus != null) {
-                  if (partnerReviewStatus.getPartnerStatus2() != null)
-                     pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-            pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
-
-            /**
-             * Details
-             */
-            try {
-               PartnerRecruitmentLeadScreeningDetail detail = new PartnerRecruitmentLeadScreeningDetail();
-               if (partnerAgentInquiry.getRating() != null)
-                  detail.setRating(partnerAgentInquiry.getRating());
-               if (partnerAgentInquiry.getAdressLineOne() != null)
-                  detail.setAddress1(partnerAgentInquiry.getAdressLineOne());
-               if (partnerAgentInquiry.getAdressLineTwo() != null)
-                  detail.setAddress2(partnerAgentInquiry.getAdressLineTwo());
-               if (partnerAgentInquiry.getCity() != null)
-                  detail.setCity(partnerAgentInquiry.getCity());
-               if (partnerAgentInquiry.getCompanyName() != null)
-                  detail.setCompanyName(partnerAgentInquiry.getCompanyName());
-               if (partnerAgentInquiry.getLookupCountry() != null)
-                  detail.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
-               if (partnerAgentInquiry.getEmail() != null)
-                  detail.setEmail(partnerAgentInquiry.getEmail());
-               if (partnerAgentInquiry.getFirstName() != null)
-                  detail.setFirstName(partnerAgentInquiry.getFirstName());
-               if (partnerAgentInquiry.getLastName() != null)
-                  detail.setLastName(partnerAgentInquiry.getLastName());
-               if (partnerAgentInquiry.getPhone() != null)
-                  detail.setPhone(partnerAgentInquiry.getPhone());
-               if (partnerAgentInquiry.getSalutation() != null)
-                  detail.setSalutation(partnerAgentInquiry.getSalutation().getSalutationName());
-               if (partnerAgentInquiry.getState() != null)
-                  detail.setStateOrProvince(partnerAgentInquiry.getState());
-               if (partnerAgentInquiry.getWebsite() != null)
-                  detail.setWebsite(partnerAgentInquiry.getWebsite());
-               pwt.setDetails(detail);
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-
-            /**
-             * Additional Data
-             */
-            try {
-               com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentAdminScreeningAdditionalInfo additional = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentAdminScreeningAdditionalInfo();
-               additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-               additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
-               additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
-               additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
-               additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-               additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
-               additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
-               pwt.setAdditionalInformation(additional);
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-
-           
-            pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, LOGGER);
+      PartnerRecruitmentLead pwt = new PartnerRecruitmentLead();
+      try {
+         pwt.setGoId(goId);
+         PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
+         if (partnerAgentInquiry == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
             LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
+            return pwt;
          }
-         return pwt;
+         try {
+            PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
+            if (partnerReviewStatus != null) {
+               if (partnerReviewStatus.getPartnerStatus2() != null)
+                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
+            }
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, LOGGER);
+         }
+         pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
+
+         /**
+          * Details
+          */
+         try {
+            PartnerRecruitmentLeadScreeningDetail detail = new PartnerRecruitmentLeadScreeningDetail();
+            if (partnerAgentInquiry.getRating() != null)
+               detail.setRating(partnerAgentInquiry.getRating());
+            if (partnerAgentInquiry.getAdressLineOne() != null)
+               detail.setAddress1(partnerAgentInquiry.getAdressLineOne());
+            if (partnerAgentInquiry.getAdressLineTwo() != null)
+               detail.setAddress2(partnerAgentInquiry.getAdressLineTwo());
+            if (partnerAgentInquiry.getCity() != null)
+               detail.setCity(partnerAgentInquiry.getCity());
+            if (partnerAgentInquiry.getCompanyName() != null)
+               detail.setCompanyName(partnerAgentInquiry.getCompanyName());
+            if (partnerAgentInquiry.getLookupCountry() != null)
+               detail.setCountry(partnerAgentInquiry.getLookupCountry().getCountryName());
+            if (partnerAgentInquiry.getEmail() != null)
+               detail.setEmail(partnerAgentInquiry.getEmail());
+            if (partnerAgentInquiry.getFirstName() != null)
+               detail.setFirstName(partnerAgentInquiry.getFirstName());
+            if (partnerAgentInquiry.getLastName() != null)
+               detail.setLastName(partnerAgentInquiry.getLastName());
+            if (partnerAgentInquiry.getPhone() != null)
+               detail.setPhone(partnerAgentInquiry.getPhone());
+            if (partnerAgentInquiry.getSalutation() != null)
+               detail.setSalutation(partnerAgentInquiry.getSalutation().getSalutationName());
+            if (partnerAgentInquiry.getState() != null)
+               detail.setStateOrProvince(partnerAgentInquiry.getState());
+            if (partnerAgentInquiry.getWebsite() != null)
+               detail.setWebsite(partnerAgentInquiry.getWebsite());
+            pwt.setDetails(detail);
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, LOGGER);
+         }
+
+         /**
+          * Additional Data
+          */
+         try {
+            com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentAdminScreeningAdditionalInfo additional = new com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentAdminScreeningAdditionalInfo();
+            List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(goId);
+            if (partnerPrograms != null) {
+               StringBuilder st = new StringBuilder();
+               int i = 0;
+               for (PartnerProgram partnerProgram : partnerPrograms) {
+                  if (i++ > 0) {
+                     st.append(",");
+                  } else {
+                     st.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
+                  }
+               }
+               additional.setProgramsYouLikeToParticipate(st.toString());
+            }
+            additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
+            additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
+            additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
+            additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
+            additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
+            additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
+
+            additional.setInterestedInHighSchoolAbroad(partnerAgentInquiry.getHighSchoolAbroad()==1);
+            additional.setInterestedInTeachAbroad(partnerAgentInquiry.getTeachAbroad()==1);
+            additional.setInterestedInVolunteerAbroad(partnerAgentInquiry.getVolunteerAbroad()==1);
+            
+//            additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
+            pwt.setAdditionalInformation(additional);
+         } catch (Exception e) {
+            ExceptionUtil.logException(e, LOGGER);
+         }
+
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
+      }
+      return pwt;
    }
 
 }
