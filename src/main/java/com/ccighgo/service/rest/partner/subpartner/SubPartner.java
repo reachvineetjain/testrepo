@@ -94,6 +94,6 @@ public class SubPartner {
    public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail)
    {
 	   LOGGER.debug("calling subPartnerInterface.addSubPartnerScreenNote");
-	return subPartnerInterface.addSubPartnerScreenNote(noteDetail);
+	   return subPartnerInterface.addSubPartnerScreenNote(noteDetail);
    }
 }
