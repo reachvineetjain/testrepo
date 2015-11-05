@@ -3,18 +3,21 @@
  */
 package com.ccighgo.service.rest.participants;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.participants.ParticipantsInterface;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
 import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
 import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
@@ -24,10 +27,6 @@ import com.ccighgo.service.transport.participant.beans.participantsactivelist.Pa
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 import com.ccighgo.utils.WSDefaultResponse;
 
-/**
- * @author ravi
- *
- */
 @Path("/participant/")
 @Produces("application/json")
 @Consumes("application/json")
@@ -36,6 +35,8 @@ public class Participants {
    private static final Logger LOGGER = LoggerFactory.getLogger(Participants.class);
 
    @Autowired ParticipantsInterface participantsInterface;
+   
+   @Context HttpServletRequest request;
    
    @GET
    @Path("active/list/{partnerId}")
@@ -139,6 +140,17 @@ public class Participants {
    public WSDefaultResponse changeParticipantStatus(@PathParam("participantId") String participantId,@PathParam("status")String status){
       LOGGER.info("calling Participants.changeParticipantStatus ");
       return participantsInterface.changeParticipantStatus(participantId,status);
+   }
+   
+   /**
+    * @param participantGoId
+    * @return
+    */
+   @GET
+   @Path("reset/access/{participantGoId}")
+   @Produces("application/json")
+   public Response resetParticipantPassword(@PathParam("participantGoId") String participantGoId) {
+      return participantsInterface.resetParticipantPassword(participantGoId, request);
    }
 
 }

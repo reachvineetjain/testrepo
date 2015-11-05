@@ -6,6 +6,7 @@ package com.ccighgo.service.components.authorization;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.auth.beans.Auth;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
@@ -42,5 +43,11 @@ public interface AuthorizationManagerInterface {
     * @return
     */
    public PartnerDashboard getPartnerDashboard(String partnerGoId);
+
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   public PartnerRecruitmentLead getPartnerAgentDashboard(int partnerGoId);
 
 }

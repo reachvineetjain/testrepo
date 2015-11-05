@@ -6,6 +6,8 @@ package com.ccighgo.service.components.participants;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,9 @@ import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerStatus;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
@@ -35,10 +39,13 @@ import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
 import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsDetails;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
 import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
@@ -67,34 +74,21 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Component
 public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
-   @Autowired
-   CommonComponentUtils componentUtils;
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   ParticipantRepository participantRepository;
-   @Autowired
-   DepartmentProgramRepository departmentPrograms;
-   @Autowired
-   DepartmentProgramOptionRepository departmentProgramOptions;
-   @Autowired
-   PartnerRepository partnerRepository;
-   @Autowired
-   CountryRepository lookupCountry;
-   @Autowired
-   SeasonRepository seasonRepository;
-   @Autowired
-   GoIdSequenceRepository goIdSequenceRepository;
-   @Autowired
-   PartnerSeasonsRepository partnerSeasonsRepository;
-   @Autowired
-   PartnerProgramRepository partnerProgramRepository;
-   @Autowired
-   UserTypeRepository userTypeRepository;
-   @Autowired
-   LoginUserTypeRepository loginUserTypeRepository;
-   @Autowired
-   LoginRepository loginRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired ParticipantRepository participantRepository;
+   @Autowired DepartmentProgramRepository departmentPrograms;
+   @Autowired DepartmentProgramOptionRepository departmentProgramOptions;
+   @Autowired PartnerRepository partnerRepository;
+   @Autowired CountryRepository lookupCountry;
+   @Autowired SeasonRepository seasonRepository;
+   @Autowired GoIdSequenceRepository goIdSequenceRepository;
+   @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
+   @Autowired PartnerProgramRepository partnerProgramRepository;
+   @Autowired UserTypeRepository userTypeRepository;
+   @Autowired LoginUserTypeRepository loginUserTypeRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired EmailServiceImpl email;
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
    @Override
@@ -388,7 +382,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   ExceptionUtil.logException(e, logger);
                }
                details.setParticipantGoId(participant.getParticipantGoId() + "");
-               
+
                details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
                details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
                details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
@@ -521,6 +515,54 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_STATUS));
       }
       return wsDefaultResponse;
+   }
+
+   @Override
+   public Response resetParticipantPassword(String participantGoId, HttpServletRequest request) {
+      Response response = new Response();
+      if (participantGoId == null) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),"invalid participant id"));
+         logger.error("invalid participant id");
+         return response;
+      }else{
+         try{
+            Participant paricipant = participantRepository.findOne(Integer.valueOf(participantGoId));
+            if(paricipant!=null){
+               Login participantLogin = loginRepository.findByCCIGoId(paricipant.getParticipantGoId());
+               if(participantLogin!=null){
+                  String body = "<p>Ciao! </p>" 
+                        + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" 
+                        + "<p>"+ "Your username is : " + participantLogin.getLoginName() + "</p>" 
+                        + "<p>Please click on the link below to create a new password:</p> " 
+                        + "<p>"+ formResetURL(request).concat(participantLogin.getKeyValue()) + "</p>"
+                        + "<p>If you didn't request a new password, please let us know.</p>"
+                        + "<p>Thank you,</p>"
+                        + "<p>CCI Greenheart.</p>";
+                  email.send(participantLogin.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
+                  response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                        "An email has been sent to address "+"\'"+participantLogin.getEmail()+ "\'"+" for login name "+"\'"+participantLogin.getLoginName()+"\'"+" with instructions to reset password"));
+            }else{
+               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               logger.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+            }
+            }
+         }catch (CcighgoException e) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),"an error occurred while reseting password"));
+            logger.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+         }
+      }
+      return response;
+   }
+   
+   private String formResetURL(HttpServletRequest request) {
+      String url = "";
+      try {
+         url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return url;
    }
 
 }

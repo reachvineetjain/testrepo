@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.authorization.AuthorizationManagerInterface;
+import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 
@@ -57,5 +58,14 @@ public class Authorization {
    public PartnerDashboard getPartnerDashboard(@PathParam("partnerGoId") String partnerGoId) {
        return authorizationManager.getPartnerDashboard(partnerGoId);
    }
+   
+   @GET
+   @Path("partneragent/{partnerGoId}")
+   @Produces("application/json")
+   public PartnerRecruitmentLead getPartnerAgentDashboard(@PathParam("partnerGoId") String partnerGoId) {
+      return authorizationManager.getPartnerAgentDashboard(Integer.parseInt(partnerGoId));
+   }
+   
+   
 
 }

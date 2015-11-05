@@ -3,8 +3,11 @@
  */
 package com.ccighgo.service.components.participants;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
 import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
 import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
@@ -58,6 +61,13 @@ public interface ParticipantsInterface {
    public WSDefaultResponse assignEmailToParticipant(String email, String email2);
 
    public WSDefaultResponse changeParticipantStatus(String participantId, String status);
+
+   /**
+    * @param participantGoId
+    * @param request
+    * @return
+    */
+   public Response resetParticipantPassword(String participantGoId, HttpServletRequest request);
 
 
 }
