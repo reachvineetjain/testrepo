@@ -371,8 +371,11 @@ public enum ErrorCode {
 	  CANT_CHANGE_PARTICIPANT_SUBPARTNER(8000241), 
   //partner admin seasons
 	  
-	  
-	  
+	  //generic note
+	  NOTE_CREATED(8000242),
+	  FAILED_TO_CREATE_NOTE(8000243),
+	  NOTE_DELETED(8000244),
+	  FAILED_TO_DELETE_NOTE(8000243),	  
 	  //keep your error code above this
 	  NO_ERROR(9999999),
 	  CHANGE_PARTICIPANT_EMAIL(8000242), 
