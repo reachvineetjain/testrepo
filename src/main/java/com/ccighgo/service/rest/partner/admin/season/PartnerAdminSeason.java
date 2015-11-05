@@ -51,8 +51,20 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("apply/new/{partnerGoId}")
+   @Produces("application/json")
    public PartnerAdminSeasonApplicationList getPartnerAdminSeasonApplicationList(@PathParam("partnerGoId") String partnerGoId) {
       return partnerAdminSeasonInterface.getPartnerAdminSeasonApplicationList(partnerGoId);
+   }
+   
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   @GET
+   @Path("add/new/")
+   @Produces("application/json")
+   public Response addNewSeasonsToPartner(PartnerAdminSeasonApplicationList partnerAdminSeasonApplicationList) {
+      return partnerAdminSeasonInterface.addNewSeasonsToPartner(partnerAdminSeasonApplicationList);
    }
   
    /**
@@ -62,6 +74,7 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("get/j1/details/{partnerGoId}/{partnerSeasonId}")
+   @Produces("application/json")
    public PartnerAdminJ1SeasonDetails getPartnerAdminJ1Details(@PathParam("partnerGoId") String partnerGoId, @PathParam("partnerSeasonId") String partnerSeasonId) {
       return partnerAdminSeasonInterface.getPartnerAdminJ1Details(partnerGoId, partnerSeasonId);
    }
@@ -73,6 +86,7 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("get/f1/details/{partnerGoId}/{partnerSeasonId}")
+   @Produces("application/json")
    public PartnerAdminF1SeasonDetails getPartnerAdminF1Details(@PathParam("partnerGoId") String partnerGoId, @PathParam("partnerSeasonId") String partnerSeasonId) {
       return partnerAdminSeasonInterface.getPartnerAdminF1Details(partnerGoId, partnerSeasonId);
    }
@@ -84,6 +98,7 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("update/partner/season/active/status/{statusVal}/{partnerSeasonId}")
+   @Produces("application/json")
    public Response updatePartnerSeasonActiveStatus(@PathParam("statusVal") String statusVal, @PathParam("partnerSeasonId") String partnerSeasonId) {
       return partnerAdminSeasonInterface.updatePartnerSeasonActiveStatus(statusVal, partnerSeasonId);
    }
@@ -95,6 +110,7 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("update/season/active/status/{statusVal}/{partnerSeasonId}")
+   @Produces("application/json")
    public Response updateSeasonActiveStatus(@PathParam("statusVal") String statusVal, @PathParam("partnerSeasonId") String partnerSeasonId) {
       return partnerAdminSeasonInterface.updateSeasonActiveStatus(statusVal, partnerSeasonId);
    }

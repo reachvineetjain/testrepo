@@ -30,4 +30,6 @@ public interface PartnerAdminSeasonInterface {
 
    public Response updateSeasonActiveStatus(String statusVal, String partnerSeasonId);
 
+   public Response addNewSeasonsToPartner(PartnerAdminSeasonApplicationList partnerAdminSeasonApplicationList);
+
 }
