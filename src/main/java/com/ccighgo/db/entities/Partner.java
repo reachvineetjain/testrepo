@@ -8,6 +8,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -705,6 +706,8 @@ public class Partner implements Serializable {
 	}
 
 	public List<PartnerContact> getPartnerContacts() {
+	   if(this.partnerContacts==null)
+	      this.partnerContacts=new ArrayList<PartnerContact>();
 		return this.partnerContacts;
 	}
 
