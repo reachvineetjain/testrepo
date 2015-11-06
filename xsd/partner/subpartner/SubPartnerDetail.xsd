@@ -23,7 +23,7 @@
 					<xsd:sequence>
 						<xsd:element name="goId" type="xsd:string" minOccurs="0"
 							maxOccurs="1" />
-						<xsd:element name="subPartnerStatus" type="xsd:string"
+						<xsd:element name="active" type="xsd:boolean"
 							minOccurs="0" maxOccurs="1" />
 						<xsd:element name="partnerDetail" type="cd:Details"
 							minOccurs="0" maxOccurs="1" />
@@ -33,9 +33,6 @@
 							minOccurs="0" maxOccurs="1" />
 						<xsd:element name="subPartnerMailingAddress" type="cd:SubPartnersMailingAddress"
 							minOccurs="0" maxOccurs="1" />
-						<xsd:element name="topic" type="cd:topics" minOccurs="0"
-							maxOccurs="unbounded" />
-
 					</xsd:sequence>
 				</xsd:sequence>
 			</xsd:extension>
@@ -47,20 +44,14 @@
 				<xsd:sequence>
 					<xsd:element name="logoImageURL" type="xsd:anyURI"
 						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="logoUserName" type="xsd:string"
-						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="agencyName" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="needsPartnerReview" type="xsd:boolean" />
-					<xsd:element name="subPartnerStatus" type="cd:SubPartnerStatus"
-						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="recivevisaforms" type="xsd:boolean"/>
 					<xsd:element name="payGreenHeartDirectly" type="xsd:boolean"/>
 					<xsd:element name="username" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="password" type="xsd:string"
-						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="ReTypedPassword" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
@@ -92,8 +83,6 @@
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="website" type="xsd:anyURI"
 						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="typeofpartneruser" type="cd:TypeofPartnerUser"
-						minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -144,117 +133,18 @@
 		<xsd:sequence>
 			<xsd:element name="countryId" type="xsd:int" minOccurs="1"
 				maxOccurs="1" />
-			<xsd:element name="countryCode" type="xsd:string"
-				minOccurs="0" maxOccurs="1" />
 			<xsd:element name="countryName" type="xsd:string"
 				minOccurs="0" maxOccurs="1" />
-			<xsd:element name="countryFlag" type="xsd:string"
-				minOccurs="0" maxOccurs="1" />
-			<xsd:element name="active" type="xsd:boolean" />
 		</xsd:sequence>
-
 	</xsd:complexType>
-	<xsd:complexType name="TypeofPartnerUser">
 
-		<xsd:sequence>
-			<xsd:element name="partnerUserRoleId" type="xsd:int" />
-			<xsd:element name="partnerUserRoleName" type="xsd:string" />
-
-		</xsd:sequence>
-
-	</xsd:complexType>
-	<xsd:complexType name="SubPartnerStatus">
-
-		<xsd:sequence>
-			<xsd:element name="partnerReviewStatusId" type="xsd:integer" />
-			<xsd:element name="partnerGoId" type="xsd:integer" />
-			<xsd:element name="partnerLeadStatusId" type="xsd:integer" />
-			<xsd:element name="partnerAgentStatusId" type="xsd:integer" />
-			<xsd:element name="partnerStatusReason" type="xsd:string" />
-			<xsd:element name="cciStaffUserId" type="xsd:integer" />
-		</xsd:sequence>
-
-	</xsd:complexType>
+	
 	<xsd:complexType name="Salutation">
 		<xsd:sequence>
 			<xsd:element name="salutationId" type="xsd:int" />
 			<xsd:element name="salutationName" type="xsd:string" />
-			<xsd:element name="active" type="xsd:boolean" />
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:complexType name="SubPartnerScreeningNotes">
-		<xsd:complexContent>
-			<xsd:extension base="common:Response">
-				<xsd:sequence>
-
-					<xsd:element name="noteId" type="xsd:int" minOccurs="0"
-						maxOccurs="1" />
-					<xsd:element name="noteValue" type="xsd:string"
-						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="public" type="xsd:boolean"
-						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="createdOn" type="xsd:string"
-						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="createdBy" type="cd:NoteUserCreator"
-						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="topicId" type="xsd:int" minOccurs="0"
-						maxOccurs="1" />
-					<xsd:element name="partnerId" type="xsd:int" minOccurs="0"
-						maxOccurs="1" />
-					<xsd:element name="userId" type="xsd:int" minOccurs="0"
-						maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
-	<xsd:complexType name="NoteUserCreator">
-		<xsd:sequence>
-			<xsd:element name="userName" type="xsd:string" minOccurs="1"
-				maxOccurs="1" />
-			<xsd:element name="role" type="xsd:string" minOccurs="1"
-				maxOccurs="1" />
-			<xsd:element name="photoUrl" type="xsd:string" minOccurs="1"
-				maxOccurs="1" />
-		</xsd:sequence>
-	</xsd:complexType>
-
-	<xsd:complexType name="topics">
-		<xsd:complexContent>
-			<xsd:extension base="common:Response">
-				<xsd:sequence>
-					<xsd:element name="partnerNoteTopicId" type="xsd:int"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="partnerNoteTopicName" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="competitorInfo" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="embassy_VisaInfo" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="f1" type="xsd:boolean" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="ght" type="xsd:boolean" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="intern" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="isPublic" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="j1" type="xsd:boolean" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="meeting_visit" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="seasonInfo" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="stInbound" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="trainee" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="w_t" type="xsd:boolean" minOccurs="0"
-						maxOccurs="1" />
-					<xsd:element name="partnerNotes" type="cd:SubPartnerScreeningNotes"
-						minOccurs="0" maxOccurs="unbounded" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+	
+	
 </xsd:schema>

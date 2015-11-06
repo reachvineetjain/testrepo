@@ -88,11 +88,11 @@ public class Participants {
    }
 
    @GET
-   @Path("allSeasons/{partnerId}")
+   @Path("allSeasons")
    @Produces("application/json")
-   public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId") String partnerId){
+   public SeasonsForParticipants getAllAvailableSeasons(){
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
-      return participantsInterface.getAllAvailableSeasons(Integer.parseInt(partnerId));
+      return participantsInterface.getAllAvailableSeasons();
    }
    
    @GET
@@ -112,11 +112,11 @@ public class Participants {
    }
    
    @GET
-   @Path("assignSeason/{seasonId}/{participantId}")
+   @Path("assignSeason/{seasonId}/{participantId}/{departmentProgramId}")
    @Produces("application/json")
-   public WSDefaultResponse assignSeasonToParticipant(@PathParam("seasonId") String seasonId,@PathParam("participantId")String participantId){
+   public WSDefaultResponse assignSeasonToParticipant(@PathParam("seasonId") String seasonId,@PathParam("participantId")String participantId,@PathParam("departmentProgramId")String departmentProgramId){
       LOGGER.info("calling Participants.assignSeasonToParticipant ");
-      return participantsInterface.assignSeasonToParticipant(seasonId,participantId);
+      return participantsInterface.assignSeasonToParticipant(seasonId,participantId, departmentProgramId);
    }
    @GET
    @Path("assignSubPartner/{subpartnerId}/{participantId}")
