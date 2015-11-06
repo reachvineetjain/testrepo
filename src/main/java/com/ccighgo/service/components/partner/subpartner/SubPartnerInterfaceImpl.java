@@ -60,6 +60,8 @@ import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.NoteUserCreator;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
+import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
+import com.ccighgo.service.transport.partner.beans.allsalutation.SalutationList;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerMailingAddress;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Creator;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Note;
@@ -299,11 +301,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                }
                Login login = partnerUser.getLogin();
                if (login != null) {
-                 subPartnerStatus.setSubPartnerStatus(login.getActive()==1?"Active":"Inactive");
-                 subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
+                  subPartnerStatus.setSubPartnerStatus(login.getActive() == 1 ? "Active" : "Inactive");
+                  subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
                }
             }
-            
+
             List<SubPartnerSeasons> subPartnerSeasonsList = new ArrayList<SubPartnerSeasons>();
             if (subPartner.getPartnerSeasons() != null && subPartner.getPartnerSeasons().size() > 0) {
                for (PartnerSeason partnerSeason : subPartner.getPartnerSeasons()) {
@@ -1119,6 +1121,29 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.FAILED_UPDATE_SUB_PARTNER));
       }
       return responce;
+   }
+
+   @Override
+   public AllSalutations getAllSalutation() {
+      AllSalutations as = new AllSalutations();
+      try {
+         List<Salutation> salutations = salutationRepository.findAll();
+         if (salutations != null)
+            for (Salutation salutation : salutations) {
+               SalutationList sl=new SalutationList();
+               sl.setSalutationId(salutation.getSalutationId());
+               sl.setSalutationValue(salutation.getSalutationName());
+               as.getSalutationList().add(sl);
+            }
+         as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         as.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCH_SALUTATION.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FETCH_SALUTATION)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FETCH_SALUTATION));
+      }
+      return as;
    }
 
 }
