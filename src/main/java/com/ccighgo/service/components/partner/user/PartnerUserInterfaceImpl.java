@@ -92,6 +92,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                for (PartnerUser user : partnerUsersDBList) {
                   com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser puser = new com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser();
                   puser.setPartnerUserId(user.getPartnerUserId());
+                  puser.setPartnerUserPhotoUrl(user.getPhoto());
                   puser.setPartnerUserFirstName(user.getFirstName());
                   puser.setPartnerUserLastName(user.getLastName());
                   puser.setPartnerUserLoginName(user.getLogin().getLoginName());
@@ -465,6 +466,13 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                pUser.setFax(partnerUserDetails.getUserFax());
                pUser.setIsPrimary(CCIConstants.INACTIVE);
                pUser.setActive(CCIConstants.ACTIVE);
+               if (partnerUserDetails.getUserOffices() != null) {
+                  for (UserOffice uo : partnerUserDetails.getUserOffices()) {
+                     if (uo.isIsPrimary()) {
+                        pUser.setPartnerOffice(partnerOfficeRepository.findOne(uo.getUserOfficeId()));
+                     }
+                  }
+               }
                PartnerUser patUser = partnerUserRepository.saveAndFlush(pUser);
                // save permissions
                PartnerPermission partnerUserPermission = new PartnerPermission();

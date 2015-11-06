@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.subpartner.SubPartnerInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail;
@@ -95,5 +96,12 @@ public class SubPartner {
    {
 	   LOGGER.debug("calling subPartnerInterface.addSubPartnerScreenNote");
 	   return subPartnerInterface.addSubPartnerScreenNote(noteDetail);
+   }
+   @GET
+   @Path("getAllSalutation")
+   @Produces("application/json")
+   public AllSalutations getAllSalutation(){
+      LOGGER.debug("calling SubPartner.getAllSubPartners");
+      return subPartnerInterface.getAllSalutation();
    }
 }
