@@ -46,7 +46,7 @@ public interface ParticipantsInterface {
 
    public NewManualParticipant updateParticipant(NewManualParticipant participant);
    
-   public SeasonsForParticipants getAllAvailableSeasons(int partnerId);
+   public SeasonsForParticipants getAllAvailableSeasons();
 
    public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId);
 
@@ -54,7 +54,7 @@ public interface ParticipantsInterface {
 
    public SubPartnersForParticipants getAllAvailableSubPartners(int partnerId);
 
-   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId);
+   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId, String departmentProgramId);
 
    public WSDefaultResponse assignSubpartnerToParticipant(String subpartnerId, String participantId);
 

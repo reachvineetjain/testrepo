@@ -25,6 +25,12 @@ import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
+import com.ccighgo.db.entities.SeasonCAPDetail;
+import com.ccighgo.db.entities.SeasonF1Detail;
+import com.ccighgo.db.entities.SeasonHSADetail;
+import com.ccighgo.db.entities.SeasonIHPDetail;
+import com.ccighgo.db.entities.SeasonJ1Detail;
+import com.ccighgo.db.entities.SeasonLSDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
@@ -74,21 +80,36 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Component
 public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
-   @Autowired CommonComponentUtils componentUtils;
-   @Autowired MessageUtils messageUtil;
-   @Autowired ParticipantRepository participantRepository;
-   @Autowired DepartmentProgramRepository departmentPrograms;
-   @Autowired DepartmentProgramOptionRepository departmentProgramOptions;
-   @Autowired PartnerRepository partnerRepository;
-   @Autowired CountryRepository lookupCountry;
-   @Autowired SeasonRepository seasonRepository;
-   @Autowired GoIdSequenceRepository goIdSequenceRepository;
-   @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
-   @Autowired PartnerProgramRepository partnerProgramRepository;
-   @Autowired UserTypeRepository userTypeRepository;
-   @Autowired LoginUserTypeRepository loginUserTypeRepository;
-   @Autowired LoginRepository loginRepository;
-   @Autowired EmailServiceImpl email;
+   @Autowired
+   CommonComponentUtils componentUtils;
+   @Autowired
+   MessageUtils messageUtil;
+   @Autowired
+   ParticipantRepository participantRepository;
+   @Autowired
+   DepartmentProgramRepository departmentPrograms;
+   @Autowired
+   DepartmentProgramOptionRepository departmentProgramOptions;
+   @Autowired
+   PartnerRepository partnerRepository;
+   @Autowired
+   CountryRepository lookupCountry;
+   @Autowired
+   SeasonRepository seasonRepository;
+   @Autowired
+   GoIdSequenceRepository goIdSequenceRepository;
+   @Autowired
+   PartnerSeasonsRepository partnerSeasonsRepository;
+   @Autowired
+   PartnerProgramRepository partnerProgramRepository;
+   @Autowired
+   UserTypeRepository userTypeRepository;
+   @Autowired
+   LoginUserTypeRepository loginUserTypeRepository;
+   @Autowired
+   LoginRepository loginRepository;
+   @Autowired
+   EmailServiceImpl email;
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
    @Override
@@ -314,16 +335,53 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public SeasonsForParticipants getAllAvailableSeasons(int partnerId) {
+   public SeasonsForParticipants getAllAvailableSeasons() {
       SeasonsForParticipants seasons = new SeasonsForParticipants();
       try {
-         List<PartnerSeason> partnerSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoId(partnerId);
-         if (partnerSeasons != null) {
-            for (PartnerSeason partnerSeason : partnerSeasons) {
-               SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
-               seasonsForParticipantDetails.setSeasonId(partnerSeason.getSeason().getSeasonId());
-               seasonsForParticipantDetails.setSeasonName(partnerSeason.getSeason().getSeasonFullName());
-               seasons.getDetails().add(seasonsForParticipantDetails);
+         List<Season> allSeasons = seasonRepository.findAll();
+         if (allSeasons != null && !allSeasons.isEmpty()) {
+            for (Season s : allSeasons) {
+               if(s.getSeasonF1details()!= null)
+                  for (SeasonF1Detail f1 : s.getSeasonF1details()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(f1.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonJ1details() != null)
+                  for (SeasonJ1Detail j1 : s.getSeasonJ1details()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(j1.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonCapdetails() != null)
+                  for (SeasonCAPDetail cap : s.getSeasonCapdetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(cap.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonHsadetails() != null)
+                  for (SeasonHSADetail hsa : s.getSeasonHsadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(hsa.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_HS_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonIhpdetails() != null)
+                  for (SeasonIHPDetail ihp : s.getSeasonIhpdetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(ihp.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+
             }
          }
          seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -438,12 +496,14 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId) {
+   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId, String departmentProgram) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          Participant p = participantRepository.findOne(Integer.parseInt(participantId));
          Season season = seasonRepository.findOne(Integer.parseInt(seasonId));
+         DepartmentProgram departmentProgram2 = departmentPrograms.findOne(Integer.parseInt(departmentProgram));
          p.setSeason(season);
+         p.setDepartmentProgram(departmentProgram2);
          participantRepository.saveAndFlush(p);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_SEASON.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -521,40 +581,38 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public Response resetParticipantPassword(String participantGoId, HttpServletRequest request) {
       Response response = new Response();
       if (participantGoId == null) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),"invalid participant id"));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "invalid participant id"));
          logger.error("invalid participant id");
          return response;
-      }else{
-         try{
+      } else {
+         try {
             Participant paricipant = participantRepository.findOne(Integer.valueOf(participantGoId));
-            if(paricipant!=null){
+            if (paricipant != null) {
                Login participantLogin = loginRepository.findByCCIGoId(paricipant.getParticipantGoId());
-               if(participantLogin!=null){
-                  String body = "<p>Ciao! </p>" 
-                        + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" 
-                        + "<p>"+ "Your username is : " + participantLogin.getLoginName() + "</p>" 
-                        + "<p>Please click on the link below to create a new password:</p> " 
-                        + "<p>"+ formResetURL(request).concat(participantLogin.getKeyValue()) + "</p>"
-                        + "<p>If you didn't request a new password, please let us know.</p>"
-                        + "<p>Thank you,</p>"
-                        + "<p>CCI Greenheart.</p>";
+               if (participantLogin != null) {
+                  String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
+                        + "Your username is : " + participantLogin.getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
+                        + formResetURL(request).concat(participantLogin.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>"
+                        + "<p>Thank you,</p>" + "<p>CCI Greenheart.</p>";
                   email.send(participantLogin.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
                   response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-                        "An email has been sent to address "+"\'"+participantLogin.getEmail()+ "\'"+" for login name "+"\'"+participantLogin.getLoginName()+"\'"+" with instructions to reset password"));
-            }else{
-               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
-               logger.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+                        "An email has been sent to address " + "\'" + participantLogin.getEmail() + "\'" + " for login name " + "\'" + participantLogin.getLoginName() + "\'"
+                              + " with instructions to reset password"));
+               } else {
+                  response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                        messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  logger.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+               }
             }
-            }
-         }catch (CcighgoException e) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),"an error occurred while reseting password"));
+         } catch (CcighgoException e) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  "an error occurred while reseting password"));
             logger.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
          }
       }
       return response;
    }
-   
+
    private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
