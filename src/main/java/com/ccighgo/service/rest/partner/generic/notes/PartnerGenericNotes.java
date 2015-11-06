@@ -18,6 +18,7 @@ import com.ccighgo.service.component.partner.generic.PartnerGenericNoteInterface
 import com.ccighgo.service.components.partnerinquiry.PartnerInquiryService;
 import com.ccighgo.service.transport.partner.beans.generic.deletenote.DeleteNote;
 import com.ccighgo.service.transport.partner.beans.generic.notes.ScreeNote;
+import com.ccighgo.service.transport.partner.beans.generic.topic.Topics;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -58,5 +59,10 @@ public class PartnerGenericNotes {
   {
 	  return partnerGenericNoteInterface.deleteNote(deleteNote);
   }
-   
+  @GET
+  @Path("view/{partnerId}")
+  public Topics viewTopics(@PathParam("partnerId")String partnerId)
+  {
+	  return partnerGenericNoteInterface.viewTopics(Integer.parseInt(partnerId));
+  }
 }

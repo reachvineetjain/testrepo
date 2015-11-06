@@ -50,6 +50,7 @@
          <bean id="partnerAdmin" class="com.ccighgo.service.rest.partner.admin.PartnerAdmin" />
          <bean id="partnerAdminSeason" class="com.ccighgo.service.rest.partner.admin.season.PartnerAdminSeason" />
      	 <bean id="partnerGenericNotes" class="com.ccighgo.service.rest.partner.generic.notes.PartnerGenericNotes" />
+     	 <bean id="genericDocuments" class="com.ccighgo.service.rest.generic.documents.GenericDocuments"/>
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />

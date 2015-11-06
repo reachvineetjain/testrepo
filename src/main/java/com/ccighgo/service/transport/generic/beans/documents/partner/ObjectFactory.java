@@ -6,7 +6,7 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.generic.beans.documents.partner;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the com.ccighgo.service.transport.common.response.beans package. 
+ * generated in the com.ccighgo.service.transport.generic.beans.documents.partner package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -30,42 +30,26 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ccighgo.service.transport.common.response.beans
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ccighgo.service.transport.generic.beans.documents.partner
      * 
      */
     public ObjectFactory() {
     }
 
     /**
-     * Create an instance of {@link Response }
+     * Create an instance of {@link PartnerGenericDocuments }
      * 
      */
-    public Response createResponse() {
-        return new Response();
+    public PartnerGenericDocuments createPartnerGenericDocuments() {
+        return new PartnerGenericDocuments();
     }
 
     /**
-     * Create an instance of {@link Status }
+     * Create an instance of {@link DocumentUploadUser }
      * 
      */
-    public Status createStatus() {
-        return new Status();
-    }
-
-    /**
-     * Create an instance of {@link Header }
-     * 
-     */
-    public Header createHeader() {
-        return new Header();
-    }
-
-    /**
-     * Create an instance of {@link Message }
-     * 
-     */
-    public Message createMessage() {
-        return new Message();
+    public DocumentUploadUser createDocumentUploadUser() {
+        return new DocumentUploadUser();
     }
 
 }
