@@ -32,7 +32,7 @@ public class CciRealm extends AuthorizingRealm {
       LOGGER.debug("received signature: {}", token.getCredentials());
       try {
          Login user = loginRepository.findByLoginName(token.getPrincipal().toLowerCase());
-         if (user != null && user.getLoginName().equals(token.getPrincipal().toLowerCase())) {
+         if (user != null && user.getLoginName().toLowerCase().equals(token.getPrincipal().toLowerCase())) {
             return new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
          }
       } catch (AuthenticationException e) {

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetail;
@@ -29,4 +30,5 @@ public interface SubPartnerInterface {
    public WSDefaultResponse createSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner);
    public WSDefaultResponse updatePartnerUserStatus(String partnerUserId,String statusVal);
    public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail)  ;
+   public AllSalutations getAllSalutation();
 }

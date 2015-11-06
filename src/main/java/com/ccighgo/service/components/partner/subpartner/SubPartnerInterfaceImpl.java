@@ -60,6 +60,8 @@ import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.NoteUserCreator;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
+import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
+import com.ccighgo.service.transport.partner.beans.allsalutation.SalutationList;
 import com.ccighgo.service.transport.partner.beans.companydetail.PartnerMailingAddress;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Creator;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Note;
@@ -166,8 +168,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired
    CountryRepository countryRepository;
 
-   @Override
-   public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
+   public PartnerSubPartners getSubPartnersOfpartners2(String partnerId) {
       PartnerSubPartners psp = new PartnerSubPartners();
       psp.setCount(2);
       psp.setPartnerGoId(1111);
@@ -259,6 +260,74 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
       subPartners.add(sPart4);
       psp.getSubPartners().addAll(subPartners);
       return psp;
+   }
+
+   @Override
+   @Transactional
+   public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
+      PartnerSubPartners subPartnerDetails = new PartnerSubPartners();
+      try {
+         List<Partner> subPartnerList = partnerRepository.findByIsSubPartnerAndParentId(Integer.parseInt(partnerId));
+         if (subPartnerList == null) {
+            subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_SUB_PARTNER_DETAILS.getValue(),
+                  messageUtil.getMessage(SubPartnerMessageConstants.ERROR_GET_SUB_PARTNER_DETAILS));
+            LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.ERROR_GET_SUB_PARTNER_DETAILS));
+            return subPartnerDetails;
+         }
+         subPartnerDetails.setCount(subPartnerList.size());
+         for (Partner subPartner : subPartnerList) {
+            SubPartners sp = new SubPartners();
+            sp.setSubPartnerId(subPartner.getPartnerGoId());
+            if (subPartner.getPartnerContacts() != null && subPartner.getPartnerContacts().size() > 0) {
+               sp.setSubPartnerFirstName(subPartner.getPartnerContacts().iterator().next().getFirstName());
+               sp.setSubPartnerLastName(subPartner.getPartnerContacts().iterator().next().getLastName());
+            }
+            SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
+            subPartnerCountry2.setSubPartnerCountry(subPartner.getLookupCountry2().getCountryName());
+            subPartnerCountry2.setSubPartnerCountryId(subPartner.getLookupCountry2().getCountryId());
+
+            sp.setSubPartnerCountry(subPartnerCountry2);
+
+            SubPartnerStatus subPartnerStatus = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus();
+            List<PartnerUser> partnerUsers = subPartner.getPartnerUsers();
+            PartnerUser partnerUser = new PartnerUser();
+            if (partnerUsers != null && partnerUsers.size() > 0) {
+               for (PartnerUser puser : partnerUsers) {
+                  if (puser.getPartner() != null)
+                     if (puser.getPartner().getPartnerGoId() == subPartner.getGoIdSequence().getGoId()) {
+                        partnerUser = puser;
+                        break;
+                     }
+               }
+               Login login = partnerUser.getLogin();
+               if (login != null) {
+                  subPartnerStatus.setSubPartnerStatus(login.getActive() == 1 ? "Active" : "Inactive");
+                  subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
+               }
+            }
+
+            List<SubPartnerSeasons> subPartnerSeasonsList = new ArrayList<SubPartnerSeasons>();
+            if (subPartner.getPartnerSeasons() != null && subPartner.getPartnerSeasons().size() > 0) {
+               for (PartnerSeason partnerSeason : subPartner.getPartnerSeasons()) {
+                  SubPartnerSeasons SubPartnerSeasons = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons();
+                  SubPartnerSeasons.setSubPartnerSeasonId(partnerSeason.getPartnerSeasonId());
+                  SubPartnerSeasons.setSubPartnerSeasonProgramId(partnerSeason.getDepartmentProgram().getDepartmentProgramId());
+                  SubPartnerSeasons.setSubPartnerSeasonProgram(partnerSeason.getDepartmentProgram().getProgramName());
+                  subPartnerSeasonsList.add(SubPartnerSeasons);
+               }
+            }
+            sp.getSubPartnerSeasons().addAll(subPartnerSeasonsList);
+            subPartnerDetails.getSubPartners().add(sp);
+            subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         }
+      } catch (CcighgoException e) {
+         subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_SUB_PARTNER_DETAILS.getValue(),
+               messageUtil.getMessage(SubPartnerMessageConstants.ERROR_GET_SUB_PARTNER_DETAILS));
+         LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.ERROR_GET_SUB_PARTNER_DETAILS));
+      }
+
+      return subPartnerDetails;
    }
 
    @Override
@@ -464,6 +533,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartner = new SubPartner();
       subPartner.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return subPartner;
+   }
+
+   private PartnerSubPartners setSubPartnerDetailsStatus(PartnerSubPartners subPartnerDetails, String code, String type, int serviceCode, String message) {
+      if (subPartnerDetails == null)
+         subPartnerDetails = new PartnerSubPartners();
+      subPartnerDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return subPartnerDetails;
    }
 
    private SubPartnerDetails setSubPartnerDetailsStatus(SubPartnerDetails subPartnerDetails, String code, String type, int serviceCode, String message) {
@@ -1045,6 +1121,29 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.FAILED_UPDATE_SUB_PARTNER));
       }
       return responce;
+   }
+
+   @Override
+   public AllSalutations getAllSalutation() {
+      AllSalutations as = new AllSalutations();
+      try {
+         List<Salutation> salutations = salutationRepository.findAll();
+         if (salutations != null)
+            for (Salutation salutation : salutations) {
+               SalutationList sl=new SalutationList();
+               sl.setSalutationId(salutation.getSalutationId());
+               sl.setSalutationValue(salutation.getSalutationName());
+               as.getSalutationList().add(sl);
+            }
+         as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         as.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCH_SALUTATION.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FETCH_SALUTATION)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FETCH_SALUTATION));
+      }
+      return as;
    }
 
 }
