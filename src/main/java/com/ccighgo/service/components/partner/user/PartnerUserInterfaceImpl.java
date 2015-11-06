@@ -92,6 +92,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                for (PartnerUser user : partnerUsersDBList) {
                   com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser puser = new com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser();
                   puser.setPartnerUserId(user.getPartnerUserId());
+                  puser.setPartnerUserPhotoUrl(user.getPhoto());
                   puser.setPartnerUserFirstName(user.getFirstName());
                   puser.setPartnerUserLastName(user.getLastName());
                   puser.setPartnerUserLoginName(user.getLogin().getLoginName());
