@@ -332,6 +332,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return resp;
+      }if (newPartnerOffice.getOfficeAddressCountry() == null || newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId() == 0 || newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId() < 0) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+               "Please select country"));
+         LOGGER.error("No country specified while adding partner office");
+         return resp;
       } else {
          try {
             com.ccighgo.db.entities.PartnerOffice partnerOffice = new com.ccighgo.db.entities.PartnerOffice();
