@@ -1008,7 +1008,7 @@
 		</java>
 	</target>
 	
-	<!--******************************************************************************************** -->
+	<!--**********************************************Partner Seasons********************************************** -->
 	
 	<target name="AddNewDeadlineRequest">
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -1016,7 +1016,7 @@
 				<arg value="${java.dir}" />
 				<arg value="${xsd.dir}/partner/seasons/PartnerSeasonDeadlineRequest.xsd" />
 			</java>
-		</target>
+	</target>
 		
 	<target name="AddNewPartnerAllocationRequest">
 				<java classname="com.sun.tools.internal.xjc.XJCFacade">
@@ -1033,6 +1033,13 @@
 					</java>
 				</target>
 	
-	
+	<!--**********************************************subpartner salutations********************************************** -->
 
+	<target name="Salutations">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/partner/subpartner/AllSalutation.xsd" />
+					</java>
+	</target>
 </project>
