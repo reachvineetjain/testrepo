@@ -680,9 +680,9 @@
 			<arg value="${xsd.dir}/generic/PartnerGenericTopic.xsd" />
 		</java>
 	</target>
-	
+
 	<!--*************************************************Generic Documents*************************************************-->
-	
+
 	<target name="GenericSeasonsDocuments">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
@@ -1031,7 +1031,7 @@
 			<arg value="${xsd.dir}/Participants/GetAllAvailableSubPartnersForParticipants.xsd" />
 		</java>
 	</target>
-<<<<<<< HEAD
+
 
 	<!--******************************************************************************************** -->
 
@@ -1043,19 +1043,10 @@
 		</java>
 	</target>
 
-=======
-	
+
+
 	<!--**********************************************Partner Seasons********************************************** -->
-	
-	<target name="AddNewDeadlineRequest">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/partner/seasons/PartnerSeasonDeadlineRequest.xsd" />
-			</java>
-	</target>
-		
->>>>>>> master/master
+
 	<target name="AddNewPartnerAllocationRequest">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
@@ -1064,7 +1055,6 @@
 		</java>
 	</target>
 	<target name="PartnerLeadViewForPartnerInquiryData">
-<<<<<<< HEAD
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
@@ -1073,22 +1063,16 @@
 	</target>
 
 
-=======
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/PartnerLeadViewForPartnerInquiryData.xsd" />
-					</java>
-				</target>
-	
+
+
 	<!--**********************************************subpartner salutations********************************************** -->
->>>>>>> master/master
+
 
 	<target name="Salutations">
-					<java classname="com.sun.tools.internal.xjc.XJCFacade">
-						<arg value="-d" />
-						<arg value="${java.dir}" />
-						<arg value="${xsd.dir}/partner/subpartner/AllSalutation.xsd" />
-					</java>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/subpartner/AllSalutation.xsd" />
+		</java>
 	</target>
 </project>
