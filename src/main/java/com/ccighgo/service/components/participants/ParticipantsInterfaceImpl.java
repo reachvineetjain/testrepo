@@ -31,6 +31,12 @@ import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.db.entities.SeasonLSDetail;
+import com.ccighgo.db.entities.SeasonTADetail;
+import com.ccighgo.db.entities.SeasonVADetail;
+import com.ccighgo.db.entities.SeasonWADetail;
+import com.ccighgo.db.entities.SeasonWnTSpringDetail;
+import com.ccighgo.db.entities.SeasonWnTSummerDetail;
+import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CountryRepository;
@@ -365,6 +371,30 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                      seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
                      seasons.getDetails().add(seasonsForParticipantDetails);
                   }
+               if (s.getSeasonWnTsummerDetails() != null)
+                  for (SeasonWnTSummerDetail summer : s.getSeasonWnTsummerDetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(summer.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_SUMMER_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonWnTwinterDetails() != null)
+                  for (SeasonWnTWinterDetail winter : s.getSeasonWnTwinterDetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(winter.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonWnTspringDetails() != null)
+                  for (SeasonWnTSpringDetail spring : s.getSeasonWnTspringDetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(spring.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_SPRING_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
                if (s.getSeasonHsadetails() != null)
                   for (SeasonHSADetail hsa : s.getSeasonHsadetails()) {
                      SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
@@ -373,6 +403,39 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                      seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_HS_ABRD_ID);
                      seasons.getDetails().add(seasonsForParticipantDetails);
                   }
+               if (s.getSeasonWadetails() != null)
+                  for (SeasonWADetail wa : s.getSeasonWadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(wa.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_WRK_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonTadetails() != null)
+                  for (SeasonTADetail ta : s.getSeasonTadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(ta.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_TEACH_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonLsdetails() != null)
+                  for (SeasonLSDetail ls : s.getSeasonLsdetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(ls.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_LANG_SCL_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeasonVadetails()!= null)
+                  for (SeasonVADetail va : s.getSeasonVadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(va.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_VOL_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               
                if (s.getSeasonIhpdetails() != null)
                   for (SeasonIHPDetail ihp : s.getSeasonIhpdetails()) {
                      SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
@@ -381,7 +444,6 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                      seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
                      seasons.getDetails().add(seasonsForParticipantDetails);
                   }
-
             }
          }
          seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
