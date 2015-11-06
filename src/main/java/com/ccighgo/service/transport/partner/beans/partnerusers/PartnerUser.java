@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerUser", propOrder = {
     "partnerUserId",
+    "partnerUserPhotoUrl",
     "partnerUserFirstName",
     "partnerUserLastName",
     "partnerUserLoginName",
@@ -50,6 +51,8 @@ import javax.xml.bind.annotation.XmlType;
 public class PartnerUser {
 
     protected int partnerUserId;
+    @XmlElement(required = true)
+    protected String partnerUserPhotoUrl;
     @XmlElement(required = true)
     protected String partnerUserFirstName;
     @XmlElement(required = true)
@@ -74,6 +77,30 @@ public class PartnerUser {
      */
     public void setPartnerUserId(int value) {
         this.partnerUserId = value;
+    }
+    
+    /**
+     * Gets the value of the partnerUserPhotoUrl property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPartnerUserPhotoUrl() {
+        return partnerUserPhotoUrl;
+    }
+
+    /**
+     * Sets the value of the partnerUserPhotoUrl property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPartnerUserPhotoUrl(String value) {
+        this.partnerUserPhotoUrl = value;
     }
 
     /**
