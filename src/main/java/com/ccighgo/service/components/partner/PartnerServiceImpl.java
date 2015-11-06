@@ -171,39 +171,36 @@ public class PartnerServiceImpl implements PartnerService {
                   for (PartnerSeason partnerSeason : partnerSeasons) {
                      com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram prg = new com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerProgram();
                      prg.setPartnerSeasonId(partnerSeason.getSeason().getSeasonId());
-                     List<LookupDepartmentProgram> lkDeptPrgList = lookupDepartmentProgramRepository.findAll();
-                     for (LookupDepartmentProgram deptPrg : lkDeptPrgList) {
-                        if (deptPrg.getProgramName().equals(CCIConstants.HSP_J1_HS) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+                        if (partnerSeason.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS) && partnerSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                            prg.setPartnerDepartmentProgramName("J1HS");
                            prg.setProgramDetailsUrl("partner/j1/program/details/");
                         }
-                        if (deptPrg.getProgramName().equals(CCIConstants.HSP_F1) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                        if (partnerSeason.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1) && partnerSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.HSP_F1_ID);
                            prg.setPartnerDepartmentProgramName("F1");
                            prg.setProgramDetailsUrl("partner/f1/program/details/");
                         }
-                        if (deptPrg.getProgramName().equals(CCIConstants.HSP_STP_IHP) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
+                        if (partnerSeason.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_STP_IHP) && partnerSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
                            prg.setPartnerDepartmentProgramName("IHP");
                            prg.setProgramDetailsUrl("partner/ihp/program/details/");
                         }
-                        if (deptPrg.getProgramName().equals(CCIConstants.WP_WT_CAP) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.WP_WT_CAP_ID) {
+                        if (partnerSeason.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_CAP) && partnerSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_CAP_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
                            prg.setPartnerDepartmentProgramName(CCIConstants.WP_WT_CAP);
                            prg.setProgramDetailsUrl("partner/cap/program/details/");
                         }
-                        if (deptPrg.getProgramName().equals(CCIConstants.WP_WT_SUMMER) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.WP_WT_SUMMER_ID) {
+                        if (partnerSeason.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SUMMER) && partnerSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_SUMMER_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.WP_WT_SUMMER_ID);
                            prg.setPartnerDepartmentProgramName(CCIConstants.WP_WT_SUMMER);
                            prg.setProgramDetailsUrl("partner/wnt/summer/program/details/");
                         }
-                        if (deptPrg.getProgramName().equals(CCIConstants.WP_WT_WINTER) && deptPrg.getLookupDepartmentProgramId() == CCIConstants.WP_WT_WINTER_ID) {
+                        if (partnerSeason.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_WINTER) && partnerSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.WP_WT_WINTER_ID) {
                            prg.setPartnerDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
                            prg.setPartnerDepartmentProgramName(CCIConstants.WP_WT_WINTER);
                            prg.setProgramDetailsUrl("partner/wnt/winter/program/details/");
                         }
-                     }
                      partnerProgramsList.add(prg);
                   }
                   partnerDashboard.getPartnerPrograms().addAll(partnerProgramsList);
