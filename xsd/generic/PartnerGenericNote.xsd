@@ -13,9 +13,9 @@
 	</xsd:annotation>
 	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-	<xsd:element name="note" type="cd:screeNote" />
+	<xsd:element name="note" type="cd:screenNote" />
 
-	<xsd:complexType name="screeNote">
+	<xsd:complexType name="screenNote">
 		<xsd:complexContent>
 			<xsd:extension base="common:Response">
 				<xsd:sequence>

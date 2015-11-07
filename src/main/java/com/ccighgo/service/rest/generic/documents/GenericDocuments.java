@@ -29,32 +29,34 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Produces("application/json")
 @Consumes("application/json")
 public class GenericDocuments {
-	@Autowired
-	GenericDocumentsInterface genericDocumentsInterface;
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(GenericDocuments.class);
+   
+   @Autowired
+   GenericDocumentsInterface genericDocumentsInterface;
+   
+   //TODO use logger
 
-	@GET
-	@Path("ping/{input}")
-	@Produces("text/plain")
-	public String ping(@PathParam("input") String input) {
-		return input;
-	}
+   /**
+    * @param  partner ID
+    * @return List of PartnerGenericDocuments
+    */
+   @GET
+   @Path("viewPartnerDocument/{partnerId}")
+   @Produces("application/json")
+   public List<PartnerGenericDocuments> viewPartnerDocument(@PathParam("partnerId") String partnerId) {
+      return genericDocumentsInterface.viewPartnerDocument(partnerId);
+   }
 
-	@GET
-	@Path("viewPartnerDocument/{partnerId}")
-	@Produces("application/json")
-	public List<PartnerGenericDocuments> viewPartnerDocument(
-			@PathParam("partnerId") String partnerId) {
-		return genericDocumentsInterface.viewPartnerDocument(partnerId);
-	}
-
-	@POST
-	@Path("addPartnerDocument")
-	@Produces("application/json")
-	@Consumes("application/json")
-	public WSDefaultResponse addPartnerDocument(
-			PartnerGenericDocuments partnerGenericDocuments) {
-		return null;
-	}
+   /**
+    * @param partnerGenericDocuments
+    * @return Response status 
+    */
+   @POST
+   @Path("addPartnerDocument")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public WSDefaultResponse addPartnerDocument(PartnerGenericDocuments partnerGenericDocuments) {
+      return null;
+   }
+   
+   private static final Logger LOGGER = LoggerFactory.getLogger(GenericDocuments.class);
 }
