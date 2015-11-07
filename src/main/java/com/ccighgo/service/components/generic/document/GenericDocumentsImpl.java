@@ -2,10 +2,8 @@ package com.ccighgo.service.components.generic.document;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerDocument;
@@ -74,7 +72,6 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
       documentInformation.setActive(CCIConstants.ACTIVE);
       documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
 
-
       DocumentInformation d = documentInformationRepository.saveAndFlush(documentInformation);
       PartnerDocument p = new PartnerDocument();
       p.setDescription(partnerGenericDocuments.getDescription());
@@ -83,5 +80,4 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
       partnerDocumentsRepository.saveAndFlush(p);
       return null;
    }
-
 }

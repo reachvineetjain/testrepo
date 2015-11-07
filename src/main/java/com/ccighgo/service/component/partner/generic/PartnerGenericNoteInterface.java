@@ -30,7 +30,7 @@ public interface PartnerGenericNoteInterface {
    public WSDefaultResponse deleteNote(DeleteNote deleteNote);
 
    /**
-    * Method {@code viewTopics} returns Default Response
+    * Method {@code viewTopics} returns topics 
     * 
     * @param partnerId
     * @return Topics object which has list topic 

@@ -1,12 +1,9 @@
 package com.ccighgo.service.component.partner.generic;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
