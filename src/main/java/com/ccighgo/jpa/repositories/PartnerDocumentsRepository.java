@@ -12,7 +12,6 @@ import com.ccighgo.db.entities.PartnerDocument;
  * @author ravi
  *
  */
-
 @Repository
 public interface PartnerDocumentsRepository extends JpaRepository<PartnerDocument, Integer> {
    
