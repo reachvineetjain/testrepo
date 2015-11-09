@@ -54,6 +54,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "partnerPhysicalAddress",
     "partnerMailingAddressSame",
     "partnerMailingAddress",
+    "partnerOfficesCount",
     "partnerOffices"
 })
 public class PartnerCompanyDetail
@@ -74,6 +75,7 @@ public class PartnerCompanyDetail
     protected Boolean partnerMailingAddressSame;
     @XmlElement(required = true)
     protected PartnerMailingAddress partnerMailingAddress;
+    protected int partnerOfficesCount;
     @XmlElement(required = true)
     protected List<PartnerOffice> partnerOffices;
 
@@ -259,6 +261,22 @@ public class PartnerCompanyDetail
      */
     public void setPartnerMailingAddress(PartnerMailingAddress value) {
         this.partnerMailingAddress = value;
+    }
+    
+    /**
+     * Gets the value of the partnerOfficesCount property.
+     * 
+     */
+    public int getPartnerOfficesCount() {
+        return partnerOfficesCount;
+    }
+
+    /**
+     * Sets the value of the partnerGoId property.
+     * 
+     */
+    public void setPartnerOfficesCount(int value) {
+        this.partnerOfficesCount = value;
     }
 
     /**
