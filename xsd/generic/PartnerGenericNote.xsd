@@ -27,30 +27,15 @@
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="createdOn" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="createdBy" type="cd:NoteUserCreator"
+					<xsd:element name="createdBy" type="xsd:int"
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="topicId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
 					<xsd:element name="partnerId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
-					<xsd:element name="userId" type="xsd:int" minOccurs="0"
-						maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:complexType name="NoteUserCreator">
-		<xsd:complexContent>
-			<xsd:extension base="common:Response">
-				<xsd:sequence>
-					<xsd:element name="userName" type="xsd:string"
-						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="role" type="xsd:string" minOccurs="0"
-						maxOccurs="1" />
-					<xsd:element name="photoUrl" type="xsd:string"
-						minOccurs="0" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+	
 </xsd:schema>
