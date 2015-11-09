@@ -137,76 +137,41 @@ public class SeasonServiceImplUtil {
 
    private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
 
-   @Autowired
-   SeasonStatusRepository seasonStatusRepository;
-   @Autowired
-   DepartmentRepository departmentRepository;
-   @Autowired
-   SeasonHSPConfigurationRepsitory seasonHSPConfigurationRepsitory;
-   @Autowired
-   SeasonF1DetailsRepository seasonF1DetailsRepository;
-   @Autowired
-   SeasonJ1DetailsRepository seasonJ1DetailsRepository;
-   @Autowired
-   SeasonRepository seasonRepository;
-   @Autowired
-   SeasonHSADetailsRepository seasonHSADetailsRepository;
-   @Autowired
-   SeasonLSDetailsRepository seasonLSDetailsRepository;
-   @Autowired
-   SeasonTADetailsRepository seasonTADetailsRepository;
-   @Autowired
-   SeasonVADetailsRepository seasonVADetailsRepository;
-   @Autowired
-   SeasonWADetailsRepository seasonWADetailsRepository;
-   @Autowired
-   SeasonCAPDetailsRepository seasonCAPDetailsRepository;
-   @Autowired
-   SeasonWTWinterRepository seasonWinterRepository;
-   @Autowired
-   SeasonDepartmentNotesRepository seasonDepartmentNotesRepository;
-   @Autowired
-   SeasonProgramNotesRepository seasonProgramNotesRepository;
-   @Autowired
-   SeasonProgramDocumentRepository seasonProgramDocumentRepository;
-   @Autowired
-   DepartmentProgramRepository departmentProgramRepository;
-   @Autowired
-   SeasonDepartmentDocumentRepository seasonDepartmentDocumentRepository;
-   @Autowired
-   LoginRepository loginRepository;
-   @Autowired
-   DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
-   @Autowired
-   DocumentInformationRepository documentInformationRepository;
-   @Autowired
-   SeasonWPAllocationRepository seasonWPAllocationRepository;
-   @Autowired
-   SeasonWTWinterRepository seasonWTWinterRepository;
-   @Autowired
-   SeasonServiceInterface seasonServiceInterface;
-   @Autowired
-   SeasonIHPDetailRepository seasonIHPDetailRepository;
-   @Autowired
-   SeasonWPConfigurationRepository seasonWPConfigurationRepository;
-   @Autowired
-   SeasonGHTConfigurationRepository seasonGHTConfigurationRepository;
-   @Autowired
-   DepartmentProgramOptionRepository departmentProgramOptionRepository;
-   @Autowired
-   SeasonWTSpringRepository seasonWTSpringRepository;
-   @Autowired
-   SeasonWTSummerRepository seasonWTSummerRepository;
-   @Autowired
-   SeasonHSPAllocationRepository seasonHSPAllocationRepository;
-   @Autowired
-   RegionIHPRepository regionIHPRepository;
-   @Autowired
-   SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
-   @Autowired
-   SeasonIHPGeographyConfigurationRepository seasonIHPGeographyConfigurationRepository;
-   @Autowired
-   SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
+   @Autowired SeasonStatusRepository seasonStatusRepository;
+   @Autowired DepartmentRepository departmentRepository;
+   @Autowired SeasonHSPConfigurationRepsitory seasonHSPConfigurationRepsitory;
+   @Autowired SeasonF1DetailsRepository seasonF1DetailsRepository;
+   @Autowired SeasonJ1DetailsRepository seasonJ1DetailsRepository;
+   @Autowired SeasonRepository seasonRepository;
+   @Autowired SeasonHSADetailsRepository seasonHSADetailsRepository;
+   @Autowired SeasonLSDetailsRepository seasonLSDetailsRepository;
+   @Autowired SeasonTADetailsRepository seasonTADetailsRepository;
+   @Autowired SeasonVADetailsRepository seasonVADetailsRepository;
+   @Autowired SeasonWADetailsRepository seasonWADetailsRepository;
+   @Autowired SeasonCAPDetailsRepository seasonCAPDetailsRepository;
+   @Autowired SeasonWTWinterRepository seasonWinterRepository;
+   @Autowired SeasonDepartmentNotesRepository seasonDepartmentNotesRepository;
+   @Autowired SeasonProgramNotesRepository seasonProgramNotesRepository;
+   @Autowired SeasonProgramDocumentRepository seasonProgramDocumentRepository;
+   @Autowired DepartmentProgramRepository departmentProgramRepository;
+   @Autowired SeasonDepartmentDocumentRepository seasonDepartmentDocumentRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
+   @Autowired DocumentInformationRepository documentInformationRepository;
+   @Autowired SeasonWPAllocationRepository seasonWPAllocationRepository;
+   @Autowired SeasonWTWinterRepository seasonWTWinterRepository;
+   @Autowired SeasonServiceInterface seasonServiceInterface;
+   @Autowired SeasonIHPDetailRepository seasonIHPDetailRepository;
+   @Autowired SeasonWPConfigurationRepository seasonWPConfigurationRepository;
+   @Autowired SeasonGHTConfigurationRepository seasonGHTConfigurationRepository;
+   @Autowired DepartmentProgramOptionRepository departmentProgramOptionRepository;
+   @Autowired SeasonWTSpringRepository seasonWTSpringRepository;
+   @Autowired SeasonWTSummerRepository seasonWTSummerRepository;
+   @Autowired SeasonHSPAllocationRepository seasonHSPAllocationRepository;
+   @Autowired RegionIHPRepository regionIHPRepository;
+   @Autowired SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
+   @Autowired SeasonIHPGeographyConfigurationRepository seasonIHPGeographyConfigurationRepository;
+   @Autowired SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
 
    /**
     * @param seasonBean
@@ -3858,12 +3823,8 @@ public class SeasonServiceImplUtil {
    }
 
    public void updateHSPF1ProgramAllocation(HSPF1ProgramAllocations hspF1ProgramAllocation, List<SeasonHSPAllocation> updatedList, SeasonHSPAllocation seasonHSPAllocation) {
-      HSPF1ProgramAllocations returnObject = null;
       try {
          if (hspF1ProgramAllocation != null) {
-            // List<SeasonHSPAllocation> hspAllocations =
-            // seasonHSPAllocationRepository.findSeasonHSPAllocationBySeasonId(hspF1ProgramAllocation.getSeasonId());
-            // for (SeasonHSPAllocation hspAllocation : hspAllocations) {
             if (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
                SeasonHSPAllocation allocation = new SeasonHSPAllocation();
                allocation = seasonHSPAllocation;
@@ -3876,38 +3837,11 @@ public class SeasonServiceImplUtil {
                allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
                updatedList.add(allocation);
             }
-            // }
-            // seasonHSPAllocationRepository.save(updatedList);
-            // seasonHSPAllocationRepository.flush();
          }
 
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, logger);
       }
-
-      /*
-       * try { if
-       * (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-       * SeasonHSPAllocation allocation = new SeasonHSPAllocation(); allocation = seasonHSPAllocation;
-       * allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants()); //
-       * allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
-       * updatedList.add(allocation); } else if
-       * (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-       * SeasonHSPAllocation allocation = new SeasonHSPAllocation(); allocation = seasonHSPAllocation;
-       * allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants()); //
-       * allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
-       * updatedList.add(allocation); } else if
-       * (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FSEM_F1)) {
-       * SeasonHSPAllocation allocation = new SeasonHSPAllocation(); allocation = seasonHSPAllocation;
-       * allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants()); //
-       * allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getAugustStartMaximumParticipants());
-       * updatedList.add(allocation); } else if
-       * (seasonHSPAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_SSEM_F1))
-       * { SeasonHSPAllocation allocation = new SeasonHSPAllocation(); allocation = seasonHSPAllocation;
-       * allocation.setMaxGuaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants()); //
-       * allocation.setMaxUnguaranteedPax(hspF1ProgramAllocation.getJanuaryStartMaximumParticipants());
-       * updatedList.add(allocation); } } catch (Exception ex) { ExceptionUtil.logException(ex, logger); }
-       */
    }
 
    public void updateSeasonDocuments(SeasonBean seasonBean, Season seasonEntity) {

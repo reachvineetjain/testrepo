@@ -47,7 +47,6 @@ import com.ccighgo.service.transport.partner.beans.partner.user.details.UserSalu
 import com.ccighgo.service.transport.partner.beans.partner.user.office.PartnerUserOffices;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
 import com.ccighgo.utils.CCIConstants;
-import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
@@ -547,9 +546,16 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                newUser.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                     messageUtil.getMessage("User with same login name or email already exists")));
-               LOGGER.error(messageUtil.getMessage("User with same login name or email already exists"));
+               if(checkLoginNameExists!=null){
+                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                        messageUtil.getMessage("User with same login already exists")));
+                  LOGGER.error(messageUtil.getMessage("User with same login already exists"));
+               }
+               if(checkEmailExists!=null){
+                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                        messageUtil.getMessage("User with same email already exists")));
+                  LOGGER.error(messageUtil.getMessage("User with same email already exists"));
+               }
             }
          } catch (CcighgoException e) {
             newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
@@ -581,11 +587,22 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
       } else {
          try {
             PartnerUser partnerUser = partnerUserRepository.findOne(partnerUserDetails.getPartnerUserId());
-            //check if username has changed
+            //check if user name has changed
             Login partnerUserLogin = partnerUser.getLogin();
             if(partnerUserLogin.getLoginName().equals(partnerUserDetails.getUserLoginName())){
                //just update email
-               partnerUserLogin.setEmail(partnerUserDetails.getUserEmail());
+               String email = partnerUserDetails.getUserEmail();
+               if(partnerUserLogin.getEmail().equals(email)){
+                  partnerUserLogin.setEmail(email); 
+               }
+               if(!(partnerUserLogin.getEmail().equals(email))){
+                  Login checkExisting = loginRepository.findByEmail(email);
+                  if(checkExisting!=null){
+                     throw new CcighgoException("Please select different email, a user already exists with specified email");
+                  }else{
+                     partnerUserLogin.setEmail(email);
+                  }
+               }
             }else{
                //check if login name selected is available
                Login checkExistingLoginName = loginRepository.findByLoginName(partnerUserDetails.getUserLoginName().toLowerCase());
@@ -605,6 +622,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUser.setFirstName(partnerUserDetails.getUserFirstName());
             partnerUser.setLastName(partnerUserDetails.getUserLastName());
             partnerUser.setEmail(partnerUserDetails.getUserEmail());
+            partnerUser.setPhoto(partnerUserDetails.getUserPictureUrl());
             partnerUser.setPhone(partnerUserDetails.getUserPhone());
             partnerUser.setEmergencyPhone(partnerUserDetails.getUserEmergencyPhone());
             partnerUser.setFax(partnerUserDetails.getUserFax());

@@ -125,7 +125,9 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 
          // Partner Offices
          List<PartnerOffice> partnerOfficeList = null;
+         int count =0;
          if (partner.getPartnerOffices() != null && partner.getPartnerOffices().size() > 0) {
+            count= partner.getPartnerOffices().size();
             partnerOfficeList = new ArrayList<PartnerOffice>();
             for (com.ccighgo.db.entities.PartnerOffice pOffice : partner.getPartnerOffices()) {
                PartnerOffice partOffice = new PartnerOffice();
@@ -151,6 +153,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partnerOfficeList.add(partOffice);
             }
          }
+         partnerCompanyDetail.setPartnerOfficesCount(count);
          partnerCompanyDetail.getPartnerOffices().addAll(partnerOfficeList);
 
          if (partnerContact != null) {
@@ -266,6 +269,17 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   return updatedObject;
                }
             } else {
+               if(partnerCompanyDetail.getPartnerOffices()!=null){
+                  for(PartnerOffice po:partnerCompanyDetail.getPartnerOffices()){
+                     if(po.isIsPrimary()){
+                        com.ccighgo.db.entities.PartnerOffice poff= partnerOfficeRepository.findOne(po.getPartnerOfficeId());
+                        //id 1 is of main office
+                        poff.setPartnerOfficeType(partnerOfficeTypeRepository.findOne(1));
+                        partnerOfficeRepository.saveAndFlush(poff);
+                        break;
+                     }
+                  }
+               }
                partnerContact.setSalutation(salutationRepository.findOne(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSalutation().getSalutationId()));
                partnerContact.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
                partnerContact.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
