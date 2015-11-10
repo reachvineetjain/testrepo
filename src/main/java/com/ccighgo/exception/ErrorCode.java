@@ -378,6 +378,11 @@ public enum ErrorCode {
 	  FAILED_TO_DELETE_NOTE(8000243),
 	  FAILED_TO_VIEW_NOTE(8000244),
 	  NOTE_VIEW(8000245),
+	  
+	  //generic document
+	  DOCUMENT_CREATED(8000253),
+	  FAILED_TO_CREATE_DOCUMENT(8000254),
+	  
 	  //keep your error code above this
 	  NO_ERROR(9999999),
 	  CHANGE_PARTICIPANT_EMAIL(8000242), 

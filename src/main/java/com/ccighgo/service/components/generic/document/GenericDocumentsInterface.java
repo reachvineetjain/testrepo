@@ -1,7 +1,10 @@
 package com.ccighgo.service.components.generic.document;
 
 import java.util.List;
+
+import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
+import com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters.PartnerSeasonDocumentParameters;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -25,4 +28,12 @@ public interface GenericDocumentsInterface {
     * @return Object of WSDefaultResponse
     */
    public WSDefaultResponse addPartnerDocument(PartnerGenericDocuments partnerGenericDocuments);
+   
+   /**
+    * Method {@code viewSeasonDocument} returns GenericSeasonDocuments object  
+    * 
+    * @param partnerSeasonDocumentParameters object
+    * @return GenericSeasonDocuments object
+    */
+   public GenericSeasonDocuments viewSeasonDocument(PartnerSeasonDocumentParameters partnerSeasonDocumentParameters);
 }
