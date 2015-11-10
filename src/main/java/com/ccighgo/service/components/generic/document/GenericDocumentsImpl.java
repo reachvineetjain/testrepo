@@ -166,8 +166,14 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                      documentType.setDocumentTypeId(dt.getDocumentTypeId());
                      gsd.setDocumentType(documentType);
                   }
-                  GenericSeasonDocumentUpLoadedBy upLoadedBy = new GenericSeasonDocumentUpLoadedBy();
-                  // TODO uploaded by
+                  UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(psd.getDocumentInformation().getCreatedBy());
+                  if (userInformation != null) {
+                     GenericSeasonDocumentUpLoadedBy documentUploadUser = new GenericSeasonDocumentUpLoadedBy();
+                     documentUploadUser.setPicUrl(userInformation.getPhotoUrl());
+                     documentUploadUser.setDesignation(userInformation.getRole());
+                     documentUploadUser.setFirstName(userInformation.getUserName());
+                     gsd.setUpLoadedBy(documentUploadUser);
+                  }
                   gsd.setDocUrl(di.getUrl());
                   gsd.setFileName(di.getFileName());
                   gsd.setUploadDate(DateUtils.getDateAndTime(di.getCreatedOn()));
