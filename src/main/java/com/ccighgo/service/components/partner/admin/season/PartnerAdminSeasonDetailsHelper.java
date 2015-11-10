@@ -159,11 +159,12 @@ public class PartnerAdminSeasonDetailsHelper {
          for (PartnerSeasonContract contract : contractList) {
             OperatingAgreement oa = new OperatingAgreement();
             operatingDocCount += 1;
-            oa.setOperatingAgreementdocumentIde(contract.getDocumentInformation().getDocumentInformationId());
+            oa.setOperatingAgreementContractId(contract.getPartnerSeasonContractId());
+            oa.setOperatingAgreementdocumentId(contract.getDocumentInformation().getDocumentInformationId());
             oa.setOperatingAgreementdocumentName(contract.getDocumentInformation().getDocumentName());
             oa.setOperatingAgreementdocumentUrl(contract.getDocumentInformation().getUrl());
             oa.setOperatingAgreementUpploadedOn(DateUtils.getTimestamp(contract.getDocumentInformation().getCreatedOn()));
-            oa.setSigned(true);
+            oa.setSigned(contract.getIsSigned() == CCIConstants.ACTIVE ? true : false);
             if (contract.getDocumentInformation() != null && contract.getDocumentInformation().getCreatedBy() != null) {
                Login login = loginRepository.findOne(contract.getDocumentInformation().getCreatedBy());
                if (login != null && login.getActive() == CCIConstants.ACTIVE) {
@@ -218,8 +219,11 @@ public class PartnerAdminSeasonDetailsHelper {
          for (PartnerSeasonDocument doc : docs) {
             Document d = new Document();
             docCount += 1;
+            d.setPartnerSeasonDocumentId(doc.getPartnerSeasonDocumentId());
+            d.setDocumentId(doc.getDocumentInformation().getDocumentInformationId());
             d.setDocumentDescription(doc.getDescription());
             d.setDocumentName(doc.getDocumentInformation().getDocumentName());
+            d.setDocumentUrl(doc.getDocumentInformation().getUrl());
             DocumentType documentType = new DocumentType();
             documentType.setDocumentTypeId(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeId());
             documentType.setDocumentType(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
@@ -324,7 +328,6 @@ public class PartnerAdminSeasonDetailsHelper {
       }
       return partnerSeasonNotes;
    }
-   
 
    /**
     * @param partnerSeason
@@ -424,13 +427,12 @@ public class PartnerAdminSeasonDetailsHelper {
          for (PartnerSeasonContract contract : contractList) {
             com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.OperatingAgreement oa = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.OperatingAgreement();
             operatingDocCount += 1;
-            oa.setOperatingAgreementdocumentIde(contract.getDocumentInformation().getDocumentInformationId());
+            oa.setOperatingAgreementContractId(contract.getPartnerSeasonContractId());
+            oa.setOperatingAgreementdocumentId(contract.getDocumentInformation().getDocumentInformationId());
             oa.setOperatingAgreementdocumentName(contract.getDocumentInformation().getDocumentName());
             oa.setOperatingAgreementdocumentUrl(contract.getDocumentInformation().getUrl());
             oa.setOperatingAgreementUpploadedOn(DateUtils.getTimestamp(contract.getDocumentInformation().getCreatedOn()));
-            // TODO needs DB field
-            oa.setSigned(true);
-            // find doc uploaded by
+            oa.setSigned(contract.getIsSigned() == CCIConstants.ACTIVE ? true : false);
             if (contract.getDocumentInformation() != null && contract.getDocumentInformation().getCreatedBy() != null) {
                Login login = loginRepository.findOne(contract.getDocumentInformation().getCreatedBy());
                if (login != null && login.getActive() == CCIConstants.ACTIVE) {
@@ -474,19 +476,19 @@ public class PartnerAdminSeasonDetailsHelper {
     * @return
     */
    public com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.Documents getF1ProgramDocuments(PartnerSeason partnerSeason) {
-      List<com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.OperatingAgreement> operatingAggrementList;
       com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.Documents documents = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.Documents();
       int docCount = 0;
       List<com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.Document> documentsList = null;
       List<PartnerSeasonDocument> docs = partnerSeason.getPartnerSeasonDocuments();
       if (docs != null) {
-         operatingAggrementList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.OperatingAgreement>();
          documentsList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.Document>();
          for (PartnerSeasonDocument doc : docs) {
             com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.Document d = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.Document();
             docCount += 1;
+            d.setPartnerSeasonDocumentId(doc.getPartnerSeasonDocumentId());
             d.setDocumentDescription(doc.getDescription());
             d.setDocumentName(doc.getDocumentInformation().getDocumentName());
+            d.setDocumentUrl(doc.getDocumentInformation().getUrl());
             com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.DocumentType documentType = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.DocumentType();
             documentType.setDocumentTypeId(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeId());
             documentType.setDocumentType(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
@@ -497,7 +499,7 @@ public class PartnerAdminSeasonDetailsHelper {
                   for (LoginUserType loginUsrType : login.getLoginUserTypes()) {
                      if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
                         d.setUploadedByDesignation(login.getGoIdSequence().getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-                        d.setUploaddedByFirstName(login.getGoIdSequence().getCcistaffUser().getFirstName());
+                        d.setUploadedByFirstName(login.getGoIdSequence().getCcistaffUser().getFirstName());
                         d.setUploadedByLastName(login.getGoIdSequence().getCcistaffUser().getLastName());
                         d.setUploadedByPicUrl(login.getGoIdSequence().getCcistaffUser().getPhoto());
                      }
@@ -509,7 +511,7 @@ public class PartnerAdminSeasonDetailsHelper {
                               for (PartnerUser pu : partnerUserslist) {
                                  if (pu.getLogin().getLoginId() == login.getLoginId()) {
                                     d.setUploadedByDesignation(pu.getTitle());
-                                    d.setUploaddedByFirstName(pu.getFirstName());
+                                    d.setUploadedByFirstName(pu.getFirstName());
                                     d.setUploadedByLastName(pu.getLastName());
                                     d.setUploadedByPicUrl(pu.getPhoto());
                                  }
@@ -559,8 +561,7 @@ public class PartnerAdminSeasonDetailsHelper {
                         if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
                            noteCreator.setCreatedBy(login.getGoIdSequence().getCcistaffUser().getFirstName() + " " + login.getGoIdSequence().getCcistaffUser().getLastName());
                            noteCreator.setCreatedByPicUrl(login.getGoIdSequence().getCcistaffUser().getPhoto());
-                           noteCreator.setDesignation(login.getGoIdSequence().getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
-                                 .getCciStaffRoleName());
+                           noteCreator.setDesignation(login.getGoIdSequence().getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
                         }
                         if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
                            Partner partner = login.getGoIdSequence().getPartner();

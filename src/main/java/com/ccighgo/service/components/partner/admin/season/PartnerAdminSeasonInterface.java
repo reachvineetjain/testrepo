@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Document;
+import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.OperatingAgreement;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerAdminJ1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerAdminSeasonList;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
@@ -37,6 +38,12 @@ public interface PartnerAdminSeasonInterface {
 
    public PartnerAdminF1SeasonDetails updateF1AdminSeason(PartnerAdminF1SeasonDetails partnerAdminF1SeasonDetails);
 
-   public Document addAdminSeasonDocument(String loginId, String partnerSeasonId, Document doc);
+   public Response addAdminSeasonDocument(String loginId, String partnerSeasonId, Document doc);
+
+   public Response addSeasonOperatingAgreement(String loginId, String partnerSeasonId, OperatingAgreement contract);
+
+   public Response deleteAdminSeasonDocument(String partnerSeasonDocumentId);
+
+   public Response deleteAdminSeasonAgreement(String partnerSeasonContractId);
 
 }
