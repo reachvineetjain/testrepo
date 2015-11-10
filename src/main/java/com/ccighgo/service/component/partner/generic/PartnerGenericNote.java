@@ -1,14 +1,16 @@
 package com.ccighgo.service.component.partner.generic;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
-import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
@@ -22,11 +24,14 @@ import com.ccighgo.service.transport.partner.beans.generic.notes.ScreenNote;
 import com.ccighgo.service.transport.partner.beans.generic.topic.NoteUserCreator;
 import com.ccighgo.service.transport.partner.beans.generic.topic.SubPartnerScreeningNotes;
 import com.ccighgo.service.transport.partner.beans.generic.topic.Topic;
+import com.ccighgo.service.transport.partner.beans.generic.topic.TopicUserCreator;
 import com.ccighgo.service.transport.partner.beans.generic.topic.Topics;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
+import com.ccighgo.utils.reuse.function.ReusedFunctions;
+import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 
 @Component
 public class PartnerGenericNote implements PartnerGenericNoteInterface {
@@ -50,15 +55,19 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    @Autowired
    PartnerUserRepository partnerUserRepository;
+   @Autowired
+   LoginRepository loginRepository;
+   @Autowired
+   ReusedFunctions reusedFunctions;
 
    @Override
    public WSDefaultResponse addNote(ScreenNote note) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerNote noteEntity = new PartnerNote();
-         noteEntity.setCreatedBy(note.getUserId());
+         noteEntity.setCreatedBy(note.getCreatedBy());
          noteEntity.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         noteEntity.setModifiedBy(note.getUserId());
+         noteEntity.setModifiedBy(note.getCreatedBy());
 
          noteEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Partner partner = partnerRepository.findOne(note.getPartnerId());
@@ -86,8 +95,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    public WSDefaultResponse deleteNote(DeleteNote deleteNote) {
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
-         PartnerNote noteEntity = partnerNoteRepository.findOne(deleteNote.getNoteId());
-         partnerNoteRepository.delete(noteEntity);
+         partnerNoteRepository.delete(deleteNote.getNoteId());
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_DELETED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
@@ -102,14 +110,13 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    @Override
    public Topics viewTopics(int partnerId) {
-
       Topics topicsList = new Topics();
       try {
          List<PartnerNoteTopic> partnerTopics = partnerNoteTopicRepository.findAllPartnerNoteTopicByPartnerId(Integer.valueOf(partnerId));
          if (partnerTopics == null) {
             topicsList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_VIEW_NOTE.getValue(),
-                  messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE)));
-            LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE));
+                  messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE)));
+            LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE));
             return topicsList;
          }
          if (partnerTopics != null) {
@@ -133,14 +140,14 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                if (partnerNotes != null) {
                   for (PartnerNote partnerNote : partnerNotes) {
                      SubPartnerScreeningNotes note = new SubPartnerScreeningNotes();
-                     PartnerUser notePartnerUser = partnerUserRepository.findOne(partnerNote.getCreatedBy());
-                     if (notePartnerUser != null) {
+                     UserInformationOfCreatedBy userInformationOfCreatedBy = reusedFunctions.getPartnerCreatedByInformation(partnerNote.getCreatedBy());
+                     if (userInformationOfCreatedBy != null) {
                         NoteUserCreator noteCreator = new NoteUserCreator();
-                        noteCreator.setPhotoUrl(notePartnerUser.getPhoto());
-                        noteCreator.setRole(notePartnerUser.getTitle());
-                        noteCreator.setUserName(notePartnerUser.getFirstName() + " " + notePartnerUser.getLastName());
+                        noteCreator.setPhotoUrl(userInformationOfCreatedBy.getPhotoUrl());
+                        noteCreator.setRole(userInformationOfCreatedBy.getRole());
+                        noteCreator.setUserName(userInformationOfCreatedBy.getUserName());
                         note.setCreatedBy(noteCreator);
-                        note.setUserId(notePartnerUser.getPartnerUserId());
+                        note.setUserId(userInformationOfCreatedBy.getUserId());
                      }
                      note.setNoteId(partnerNote.getPartnerNotesId());
                      note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
@@ -148,6 +155,16 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                      note.setTopicId(tpc.getPartnerNoteTopicId());
                      note.setPartnerId(Integer.valueOf(partnerId));
                      tpc.getPartnerNotes().add(note);
+                  }
+               }
+               if (partnerTopic.getCreatedBy() != null) {
+                  UserInformationOfCreatedBy userInformationOfCreatedBy = reusedFunctions.getPartnerCreatedByInformation(partnerTopic.getCreatedBy());
+                  if (userInformationOfCreatedBy != null) {
+                     TopicUserCreator topicCreator = new TopicUserCreator();
+                     topicCreator.setPhotoUrl(userInformationOfCreatedBy.getPhotoUrl());
+                     topicCreator.setRole(userInformationOfCreatedBy.getRole());
+                     topicCreator.setUserName(userInformationOfCreatedBy.getUserName());
+                     tpc.setCreatedBy(topicCreator);
                   }
                }
                topicsList.getTopics().add(tpc);
