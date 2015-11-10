@@ -18,6 +18,7 @@ import com.ccighgo.service.components.partner.admin.season.PartnerAdminSeasonInt
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Document;
+import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.OperatingAgreement;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerAdminJ1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerAdminSeasonList;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
@@ -149,8 +150,44 @@ public class PartnerAdminSeason {
    @Path("add/document/{loginId}/{partnerSeasonId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public Document addAdminSeasonDocument(@PathParam("loginId") String loginId, @PathParam("partnerSeasonId") String partnerSeasonId, Document doc) {
+   public Response addAdminSeasonDocument(@PathParam("loginId") String loginId, @PathParam("partnerSeasonId") String partnerSeasonId, Document doc) {
       return partnerAdminSeasonInterface.addAdminSeasonDocument(loginId, partnerSeasonId, doc);
+   }
+   
+   /**
+    * @param partnerAdminJ1SeasonDetails
+    * @return
+    */
+   @POST
+   @Path("add/operating/agreement/{loginId}/{partnerSeasonId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Response addSeasonOperatingAgreement(@PathParam("loginId") String loginId, @PathParam("partnerSeasonId") String partnerSeasonId, OperatingAgreement contract) {
+      return partnerAdminSeasonInterface.addSeasonOperatingAgreement(loginId, partnerSeasonId, contract);
+   }
+   
+   /**
+    * @param partnerAdminJ1SeasonDetails
+    * @return
+    */
+   @GET
+   @Path("delete/document/{partnerSeasonDocumentId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Response deleteAdminSeasonDocument(@PathParam("partnerSeasonDocumentId") String partnerSeasonDocumentId) {
+      return partnerAdminSeasonInterface.deleteAdminSeasonDocument(partnerSeasonDocumentId);
+   }
+   
+   /**
+    * @param partnerAdminJ1SeasonDetails
+    * @return
+    */
+   @GET
+   @Path("delete/operating/agreement/{partnerSeasonContractId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Response deleteAdminSeasonAgreement(@PathParam("partnerSeasonContractId") String partnerSeasonContractId) {
+      return partnerAdminSeasonInterface.deleteAdminSeasonAgreement(partnerSeasonContractId);
    }
 
 }
