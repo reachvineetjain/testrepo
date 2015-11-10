@@ -27,5 +27,8 @@ public interface PartnerSeasonsRepository extends JpaRepository<PartnerSeason, I
    
    @Query("SELECT p FROM PartnerSeason p WHERE p.partner.partnerGoId = ?1 AND p.season.seasonId=?2")
    List<PartnerSeason>  findPartnerSeasonByPartnerGoIdAndSeasonId(int partnerId, int seasonId);
+   
+   @Query("SELECT p FROM PartnerSeason p WHERE p.season.seasonId=?1 AND p.departmentProgram.departmentProgramId= ?2 AND p.partner.partnerGoId = ?3")
+   PartnerSeason findPartnerSeasonBySeasonIdProgramIdPartnerGoId(int SeasonId,int ProgramId,int PartnerGoId);
 
 }

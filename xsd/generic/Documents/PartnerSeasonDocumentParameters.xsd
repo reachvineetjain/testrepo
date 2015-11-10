@@ -1,0 +1,20 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerseasonparameters"
+   elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/partnerseasonparameters"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:complexType name="PartnerSeasonDocumentParameters">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" />
+         <xsd:element name="programId" type="xsd:int" />
+         <xsd:element name="partnerGoId" type="xsd:int" />
+      </xsd:sequence>
+   </xsd:complexType>
+   </xsd:schema>
