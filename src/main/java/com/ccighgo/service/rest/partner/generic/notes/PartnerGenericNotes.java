@@ -18,6 +18,7 @@ import com.ccighgo.service.component.partner.generic.PartnerGenericNoteInterface
 import com.ccighgo.service.components.partnerinquiry.PartnerInquiryService;
 import com.ccighgo.service.transport.partner.beans.generic.deletenote.DeleteNote;
 import com.ccighgo.service.transport.partner.beans.generic.notes.ScreenNote;
+import com.ccighgo.service.transport.partner.beans.generic.topic.Topic;
 import com.ccighgo.service.transport.partner.beans.generic.topic.Topics;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -29,7 +30,7 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Produces("application/json")
 @Consumes("application/json")
 public class PartnerGenericNotes {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerGenericNotes.class);
 
    @Autowired
@@ -65,7 +66,22 @@ public class PartnerGenericNotes {
     */
    @GET
    @Path("view/{partnerId}")
+   @Produces("application/json")
+   @Consumes("application/json")
    public Topics viewTopics(@PathParam("partnerId") String partnerId) {
       return partnerGenericNoteInterface.viewTopics(Integer.parseInt(partnerId));
+   }
+
+ /**
+  * 
+  * @param topic
+  * @return
+  */
+   @POST
+   @Path("tagTopic")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public WSDefaultResponse tagTopic(Topic topic) {
+      return partnerGenericNoteInterface.tagTopic(topic);
    }
 }
