@@ -100,7 +100,8 @@
 
    <xsd:complexType name="OperatingAgreement">
       <xsd:sequence>
-         <xsd:element name="operatingAgreementdocumentIde" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="operatingAgreementContractId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="operatingAgreementdocumentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="operatingAgreementdocumentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="operatingAgreementdocumentUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="operatingAgreementUploadedByFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -121,12 +122,15 @@
 
    <xsd:complexType name="Document">
       <xsd:sequence>
+         <xsd:element name="partnerSeasonDocumentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="documentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="uploaddedByFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="uploadedByFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadedByLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadedByPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="uploadedByDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="documentDescription" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="documentType" type="psd:DocumentType" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
@@ -171,7 +175,7 @@
          <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="creator" type="psd:Creator" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="note" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="note" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
