@@ -20,6 +20,8 @@ import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.DocumentInformationRepository;
+import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTagRepository;
@@ -80,6 +82,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    @Autowired PartnerRepository partnerRepository;
    @Autowired DepartmentProgramRepository departmentProgramRepository;
    @Autowired PartnerAdminSeasonDetailsHelper partnerAdminSeasonDetailsHelper;
+   @Autowired DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
+   @Autowired DocumentInformationRepository documentInformationRepository;
 
    @Autowired EntityManager entityManager;
 
