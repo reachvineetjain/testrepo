@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * <p>Java class for Document complex type.
@@ -49,7 +51,7 @@ import javax.xml.bind.annotation.XmlType;
     "documentDescription",
     "documentType"
 })
-public class Document {
+public class Document extends Response{
 
     @XmlElement(required = true)
     protected String documentName;
