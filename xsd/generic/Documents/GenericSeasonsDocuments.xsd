@@ -26,6 +26,7 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
+               <xsd:element name="documentId" type="xsd:int" maxOccurs="1"/>
                <xsd:element name="documentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="documentDescription" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="documentType" type="cd:DocumentType" minOccurs="1" maxOccurs="1" />
@@ -34,6 +35,8 @@
                <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="upLoadedBy" type="cd:GenericSeasonDocumentUpLoadedBy" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="partnerSeasonParametrs" type="cd:PartnerSeasonParametrs"/>
+               <xsd:element name="active" type="xsd:boolean"/>
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
@@ -54,6 +57,13 @@
       <xsd:sequence>
          <xsd:element name="documentTypeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="documentType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+    <xsd:complexType name="PartnerSeasonParametrs">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="PartnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 </xsd:schema>
