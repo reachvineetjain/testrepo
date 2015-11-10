@@ -87,7 +87,6 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_NOTE.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_CREATE_GENERIC_NOTE)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_CREATE_GENERIC_NOTE));
-
       }
       return wsDefaultResponse;
    }

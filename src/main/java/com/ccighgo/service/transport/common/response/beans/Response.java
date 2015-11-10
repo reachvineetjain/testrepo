@@ -13,7 +13,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.partner.beans.generic.notes.ScreenNote;
+import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocument;
+import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocumentUpLoadedBy;
+import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
 
 
 /**
@@ -42,7 +44,9 @@ import com.ccighgo.service.transport.partner.beans.generic.notes.ScreenNote;
     "status"
 })
 @XmlSeeAlso({
-    ScreenNote.class
+    GenericSeasonDocuments.class,
+    GenericSeasonDocument.class,
+    GenericSeasonDocumentUpLoadedBy.class
 })
 public class Response {
 

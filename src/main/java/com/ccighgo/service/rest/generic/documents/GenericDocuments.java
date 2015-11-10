@@ -20,7 +20,8 @@ import com.ccighgo.service.components.generic.document.GenericDocumentsInterface
 import com.ccighgo.service.components.partnerinquiry.PartnerInquiryService;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
 import com.ccighgo.utils.WSDefaultResponse;
-
+import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
+import com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters.PartnerSeasonDocumentParameters;;
 /**
  * @author Ahmed
  *
@@ -55,8 +56,19 @@ public class GenericDocuments {
    @Produces("application/json")
    @Consumes("application/json")
    public WSDefaultResponse addPartnerDocument(PartnerGenericDocuments partnerGenericDocuments) {
-      return null;
+      return genericDocumentsInterface.addPartnerDocument(partnerGenericDocuments);
    }
    
-   private static final Logger LOGGER = LoggerFactory.getLogger(GenericDocuments.class);
+   /**
+    * @param partnerSeasonDocumentParameters
+    * @return GenericSeasonDocuments object
+    */
+   @POST
+   @Path("viewSeasonDocument")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public GenericSeasonDocuments viewSeasonDocument(PartnerSeasonDocumentParameters partnerSeasonDocumentParameters)
+   {
+      return genericDocumentsInterface.viewSeasonDocument(partnerSeasonDocumentParameters);
+   }
 }
