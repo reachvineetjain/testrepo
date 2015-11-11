@@ -43,6 +43,7 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
+import com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerAdminIHPSeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Dates;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Document;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Documents;
@@ -698,6 +699,104 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          LOGGER.error("error occured while deleting document");
       }
       return resp;
+   }
+
+   @Override
+   @Transactional(readOnly=true)
+   public PartnerAdminIHPSeasonDetails getPartnerAdminIHPDetails(String partnerGoId, String partnerSeasonId) {
+      PartnerAdminIHPSeasonDetails adminIHPSeasonDetails = new PartnerAdminIHPSeasonDetails();
+      if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
+         adminIHPSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_GO_ID));
+         return adminIHPSeasonDetails;
+      }
+      if (partnerSeasonId == null || Integer.valueOf(partnerSeasonId) == 0 || Integer.valueOf(partnerSeasonId) < 0) {
+         adminIHPSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
+         return adminIHPSeasonDetails;
+      } else {
+         try {
+            PartnerSeason partnerSeason = partnerSeasonsRepository.findByGoIdandPartnerSeasoonId(Integer.valueOf(partnerGoId), Integer.valueOf(partnerSeasonId));
+            adminIHPSeasonDetails.setPartnerSeasonId(partnerSeason.getPartnerSeasonId());
+            adminIHPSeasonDetails.setPartnerAgencyName(partnerSeason.getPartner().getCompanyName());
+            adminIHPSeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
+            // partner season status
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus();
+            partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
+            partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
+            adminIHPSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
+            // Season status
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.SeasonStatus seasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.SeasonStatus();
+            seasonStatus.setSeasonStatusId(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getSeasonStatus().getSeasonStatusId());
+            seasonStatus.setSeasonStatus(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getSeasonStatus().getStatus());
+            adminIHPSeasonDetails.setSeasonStatus(seasonStatus);
+
+            adminIHPSeasonDetails.setPartnerActiveForSeason(partnerSeason.getActive() == CCIConstants.ACTIVE ? true : false);
+            // partner season details
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonDetails partnerSeasonDetails = partnerAdminSeasonDetailsHelper
+                  .getIHPProgramBasicDetails(partnerSeason);
+            adminIHPSeasonDetails.setPartnerSeasonDetails(partnerSeasonDetails);
+
+            // operating agreements
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreements operatingAgreements = partnerAdminSeasonDetailsHelper
+                  .getIHPOperatingAgreement(partnerSeason);
+            adminIHPSeasonDetails.setOperatingAgreements(operatingAgreements);
+
+            // program documents
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Documents documents = partnerAdminSeasonDetailsHelper.getIHPProgramDocuments(partnerSeason);
+            adminIHPSeasonDetails.setDocuments(documents);
+
+            // Notes
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.NoteTopics partnerSeasonNotes = partnerAdminSeasonDetailsHelper
+                  .getIHPProgramNotes(partnerGoId);
+            adminIHPSeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
+            adminIHPSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } catch (CcighgoException e) {
+            adminIHPSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_F1_DETAILS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_GET_PARTNER_ADMIN_F1_DETAILS));
+         }
+      }
+      return adminIHPSeasonDetails;
+   }
+
+   @Override
+   @Transactional
+   public PartnerAdminIHPSeasonDetails updateIHPAdminSeason(PartnerAdminIHPSeasonDetails partnerAdminIHPSeasonDetails) {
+      PartnerAdminIHPSeasonDetails updatedObject = new PartnerAdminIHPSeasonDetails();
+      if (partnerAdminIHPSeasonDetails == null) {
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               "cannot add null values, please check the object"));
+         LOGGER.error("ihp object is null");
+         return updatedObject;
+      } else {
+         try {
+            PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(partnerAdminIHPSeasonDetails.getPartnerSeasonId());
+            if (partnerSeason != null) {
+               partnerSeason.setQuestionaireRequired(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().isQuestionireRequired() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               partnerSeason.setDisableAddParticipant(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().isDisableAddParticipants() ? CCIConstants.ACTIVE
+                     : CCIConstants.INACTIVE);
+               partnerSeason.setCanCreateSubPartner(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().isCanCreateSubpartner() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               partnerSeason.setInsuranceCarrierName(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().getInsuranceCarrierName());
+               partnerSeason.setInsurancePhoneNumber(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().getInsurancePhoneNumber());
+               partnerSeason.setInsurancePolicyNumber(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().getInsurancePolicyNumber());
+               updatedObject = getPartnerAdminIHPDetails(String.valueOf(partnerSeason.getPartner().getPartnerGoId()), String.valueOf(partnerSeason.getPartnerSeasonId()));
+               updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            } else {
+               updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            }
+         } catch (CcighgoException e) {
+            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  "error occured while updating ihp season details"));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+         }
+      }
+      return updatedObject;
    }
    
 }

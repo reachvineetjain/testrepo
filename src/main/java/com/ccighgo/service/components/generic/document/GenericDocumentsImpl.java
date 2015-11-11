@@ -29,6 +29,7 @@ import com.ccighgo.service.components.errormessages.constants.GenericMessageCons
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocument;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocumentUpLoadedBy;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
+import com.ccighgo.service.transport.generic.beans.documents.partner.DocumentUploadUser;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters.PartnerSeasonDocumentParameters;
 import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.GenericPartnerSeasonContract;
@@ -37,6 +38,8 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
+import com.ccighgo.utils.reuse.function.ReusedFunctions;
+import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 
 @Component
 public class GenericDocumentsImpl implements GenericDocumentsInterface {
@@ -66,9 +69,11 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
 
    @Autowired
    PartnerSeasonDocumentRepository partnerSeasonDocumentRepository;
-
    @Autowired
    PartnerSeasonContractRepository partnerSeasonContractRepository;
+   
+   @Autowired
+   ReusedFunctions reusedFunctions;
 
    @Override
    public List<PartnerGenericDocuments> viewPartnerDocument(String partnerId) {
@@ -83,14 +88,24 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                   doc.setActive(p.getDocumentInformation().getActive() == CCIConstants.ACTIVE ? true : false);
                   doc.setDescription(p.getDescription());
                   doc.setDocName(p.getDocumentInformation().getDocumentName());
-                  doc.setDocType(p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                  if (p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess() != null) {
+                     doc.setDocType(p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+                     doc.setFileType(p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentTypeRole());
+                  }
                   doc.setDocUrl(p.getDocumentInformation().getUrl());
                   doc.setFileName(p.getDocumentInformation().getFileName());
-                  doc.setFileType(p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentTypeRole());
                   doc.setUploadDate(DateUtils.getDateAndTime(p.getDocumentInformation().getCreatedOn()));
                }
-               // TODO needs to be fixed
                Integer createdBy = p.getDocumentInformation().getCreatedBy();
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(createdBy);
+               if (userInformation != null) {
+                  DocumentUploadUser documentUploadUser = new DocumentUploadUser();
+                  documentUploadUser.setPhotoUrl(userInformation.getPhotoUrl());
+                  documentUploadUser.setRole(userInformation.getRole());
+                  documentUploadUser.setUserName(userInformation.getUserName());
+                  doc.setUploadedBy(documentUploadUser);
+               }
+
                doc.setGoId(Integer.parseInt(partnerId));
                pgd.add(doc);
             }
@@ -158,8 +173,14 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                      documentType.setDocumentTypeId(dt.getDocumentTypeId());
                      gsd.setDocumentType(documentType);
                   }
-                  GenericSeasonDocumentUpLoadedBy upLoadedBy = new GenericSeasonDocumentUpLoadedBy();
-                  // TODO uploaded by
+                  UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(psd.getDocumentInformation().getCreatedBy());
+                  if (userInformation != null) {
+                     GenericSeasonDocumentUpLoadedBy documentUploadUser = new GenericSeasonDocumentUpLoadedBy();
+                     documentUploadUser.setPicUrl(userInformation.getPhotoUrl());
+                     documentUploadUser.setDesignation(userInformation.getRole());
+                     documentUploadUser.setFirstName(userInformation.getUserName());
+                     gsd.setUpLoadedBy(documentUploadUser);
+                  }
                   gsd.setDocUrl(di.getUrl());
                   gsd.setFileName(di.getFileName());
                   gsd.setUploadDate(DateUtils.getDateAndTime(di.getCreatedOn()));

@@ -592,4 +592,198 @@ public class PartnerAdminSeasonDetailsHelper {
       return partnerSeasonNotes;
    }
 
+   /**
+    * @param partnerSeason
+    * @return
+    */
+   public com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonDetails getIHPProgramBasicDetails(PartnerSeason partnerSeason) {
+      com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonDetails partnerSeasonDetails = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonDetails();
+      partnerSeasonDetails.setCanCreateSubpartner(partnerSeason.getCanCreateSubPartner() == CCIConstants.ACTIVE ? true : false);
+      partnerSeasonDetails.setDisableAddParticipants(partnerSeason.getDisableAddParticipant() == CCIConstants.ACTIVE ? true : false);
+      partnerSeasonDetails.setInsuranceCarrierName(partnerSeason.getInsuranceCarrierName());
+      partnerSeasonDetails.setInsurancePhoneNumber(partnerSeason.getInsurancePhoneNumber());
+      partnerSeasonDetails.setInsurancePolicyNumber(String.valueOf(partnerSeason.getInsurancePolicyNumber()));
+      partnerSeasonDetails.setQuestionireRequired(partnerSeason.getQuestionaireRequired() == CCIConstants.ACTIVE ? true : false);
+      return partnerSeasonDetails;
+   }
+
+   /**
+    * @param partnerSeason
+    * @return
+    */
+   public com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreements getIHPOperatingAgreement(PartnerSeason partnerSeason) {
+      com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreements operatingAgreements = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreements();
+      int operatingDocCount = 0;
+      List<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreement> operatingAggrementList = null;
+      List<PartnerSeasonContract> contractList = partnerSeason.getPartnerSeasonContracts();
+      if (contractList != null) {
+         operatingAggrementList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreement>();
+         for (PartnerSeasonContract contract : contractList) {
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreement oa = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.OperatingAgreement();
+            operatingDocCount += 1;
+            oa.setOperatingAgreementContractId(contract.getPartnerSeasonContractId());
+            oa.setOperatingAgreementdocumentId(contract.getDocumentInformation().getDocumentInformationId());
+            oa.setOperatingAgreementdocumentName(contract.getDocumentInformation().getDocumentName());
+            oa.setOperatingAgreementdocumentUrl(contract.getDocumentInformation().getUrl());
+            oa.setOperatingAgreementUpploadedOn(DateUtils.getTimestamp(contract.getDocumentInformation().getCreatedOn()));
+            oa.setSigned(contract.getIsSigned() == CCIConstants.ACTIVE ? true : false);
+            if (contract.getDocumentInformation() != null && contract.getDocumentInformation().getCreatedBy() != null) {
+               Login login = loginRepository.findOne(contract.getDocumentInformation().getCreatedBy());
+               if (login != null && login.getActive() == CCIConstants.ACTIVE) {
+                  for (LoginUserType loginUsrType : login.getLoginUserTypes()) {
+                     if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
+                        oa.setOperatingAgreementUploadedByDesignation(login.getGoIdSequence().getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                              .getCciStaffRoleName());
+                        oa.setOperatingAgreementUploadedByFirstName(login.getGoIdSequence().getCcistaffUser().getFirstName());
+                        oa.setOperatingAgreementUploadedByLastName(login.getGoIdSequence().getCcistaffUser().getLastName());
+                        oa.setOperatingAgreementUploadedByPicUrl(login.getGoIdSequence().getCcistaffUser().getPhoto());
+                     }
+                     if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
+                        Partner partner = login.getGoIdSequence().getPartner();
+                        if (partner != null) {
+                           List<PartnerUser> partnerUserslist = partner.getPartnerUsers();
+                           if (partnerUserslist != null) {
+                              for (PartnerUser pu : partnerUserslist) {
+                                 if (pu.getLogin().getLoginId() == login.getLoginId()) {
+                                    oa.setOperatingAgreementUploadedByDesignation(pu.getTitle());
+                                    oa.setOperatingAgreementUploadedByFirstName(pu.getFirstName());
+                                    oa.setOperatingAgreementUploadedByLastName(pu.getLastName());
+                                    oa.setOperatingAgreementUploadedByPicUrl(pu.getPhoto());
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+            operatingAggrementList.add(oa);
+         }
+      }
+      operatingAgreements.setCount(operatingDocCount);
+      operatingAgreements.getOperatingAggrements().addAll(operatingAggrementList);
+      return operatingAgreements;
+   }
+
+   /**
+    * @param partnerSeason
+    * @return
+    */
+   public com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Documents getIHPProgramDocuments(PartnerSeason partnerSeason) {
+      com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Documents documents = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Documents();
+      int docCount = 0;
+      List<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Document> documentsList = null;
+      List<PartnerSeasonDocument> docs = partnerSeason.getPartnerSeasonDocuments();
+      if (docs != null) {
+         documentsList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Document>();
+         for (PartnerSeasonDocument doc : docs) {
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Document d = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Document();
+            docCount += 1;
+            d.setPartnerSeasonDocumentId(doc.getPartnerSeasonDocumentId());
+            d.setDocumentDescription(doc.getDescription());
+            d.setDocumentName(doc.getDocumentInformation().getDocumentName());
+            d.setDocumentUrl(doc.getDocumentInformation().getUrl());
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.DocumentType documentType = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.DocumentType();
+            documentType.setDocumentTypeId(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeId());
+            documentType.setDocumentType(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+            d.setDocumentType(documentType);
+            if (doc.getDocumentInformation() != null && doc.getDocumentInformation().getCreatedBy() != null) {
+               Login login = loginRepository.findOne(doc.getDocumentInformation().getCreatedBy());
+               if (login != null && login.getActive() == CCIConstants.ACTIVE) {
+                  for (LoginUserType loginUsrType : login.getLoginUserTypes()) {
+                     if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
+                        d.setUploadedByDesignation(login.getGoIdSequence().getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                        d.setUploadedByFirstName(login.getGoIdSequence().getCcistaffUser().getFirstName());
+                        d.setUploadedByLastName(login.getGoIdSequence().getCcistaffUser().getLastName());
+                        d.setUploadedByPicUrl(login.getGoIdSequence().getCcistaffUser().getPhoto());
+                     }
+                     if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
+                        Partner partner = login.getGoIdSequence().getPartner();
+                        if (partner != null) {
+                           List<PartnerUser> partnerUserslist = partner.getPartnerUsers();
+                           if (partnerUserslist != null) {
+                              for (PartnerUser pu : partnerUserslist) {
+                                 if (pu.getLogin().getLoginId() == login.getLoginId()) {
+                                    d.setUploadedByDesignation(pu.getTitle());
+                                    d.setUploadedByFirstName(pu.getFirstName());
+                                    d.setUploadedByLastName(pu.getLastName());
+                                    d.setUploadedByPicUrl(pu.getPhoto());
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+            documentsList.add(d);
+         }
+      }
+      documents.setCount(docCount);
+      documents.getDocuments().addAll(documentsList);
+      return documents;
+   }
+
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   public com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.NoteTopics getIHPProgramNotes(String partnerGoId) {
+      com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.NoteTopics partnerSeasonNotes = null;
+      List<PartnerNoteTopic> partnerNoteTopicsList = partnerNoteTopicRepository.findByPartnerGoId(Integer.valueOf(partnerGoId));
+      if (partnerNoteTopicsList != null) {
+         partnerSeasonNotes = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.NoteTopics();
+         partnerSeasonNotes.setTopicCount(partnerNoteTopicsList.size());
+         List<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Topic> topicList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Topic>();
+         for (PartnerNoteTopic pnt : partnerNoteTopicsList) {
+            com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Topic topic = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Topic();
+            topic.setTopicId(pnt.getPartnerNoteTopicId());
+            topic.setTopicTitle(pnt.getPartnerNoteTopicName());
+            List<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Note> notesList = null;
+            List<PartnerNote> partNoteList = pnt.getPartnerNotes();
+            if (partNoteList != null) {
+               notesList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Note>();
+               for (PartnerNote pn : partNoteList) {
+                  com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Note note = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Note();
+                  note.setNoteId(pn.getPartnerNotesId());
+                  note.setTopicId(pnt.getPartnerNoteTopicId());
+                  note.setNote(pn.getPartnerNote());
+                  com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Creator noteCreator = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Creator();
+                  Login login = loginRepository.findOne(pn.getCreatedBy());
+                  if (login != null && login.getActive() == CCIConstants.ACTIVE) {
+                     for (LoginUserType loginUsrType : login.getLoginUserTypes()) {
+                        if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
+                           noteCreator.setCreatedBy(login.getGoIdSequence().getCcistaffUser().getFirstName() + " " + login.getGoIdSequence().getCcistaffUser().getLastName());
+                           noteCreator.setCreatedByPicUrl(login.getGoIdSequence().getCcistaffUser().getPhoto());
+                           noteCreator.setDesignation(login.getGoIdSequence().getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                        }
+                        if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
+                           Partner partner = login.getGoIdSequence().getPartner();
+                           if (partner != null) {
+                              List<PartnerUser> partnerUserslist = partner.getPartnerUsers();
+                              if (partnerUserslist != null) {
+                                 for (PartnerUser pu : partnerUserslist) {
+                                    if (pu.getLogin().getLoginId() == login.getLoginId()) {
+                                       noteCreator.setCreatedBy(pu.getFirstName() + " " + pu.getLastName());
+                                       noteCreator.setCreatedByPicUrl(pu.getPhoto());
+                                       noteCreator.setDesignation(pu.getTitle());
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+                  note.setCreator(noteCreator);
+                  note.setTimestamp(DateUtils.getTimestamp(pn.getCreatedOn()));
+                  notesList.add(note);
+               }
+            }
+            topic.getNotes().addAll(notesList);
+            topicList.add(topic);
+         }
+      }
+      return partnerSeasonNotes;
+   }
+
 }

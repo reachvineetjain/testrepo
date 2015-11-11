@@ -36,4 +36,8 @@ public interface PartnerGenericNoteInterface {
     * @return Topics object which has list topic 
     */
    public Topics viewTopics(int partnerId);
+
+   public WSDefaultResponse tagTopic(Topic topic);
+
+   public WSDefaultResponse createTopic(Topic topic);
 }
