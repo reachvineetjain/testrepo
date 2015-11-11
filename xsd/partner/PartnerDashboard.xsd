@@ -25,6 +25,7 @@
                <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photoPath" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerPrograms" type="pdl:PartnerProgram" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="userProgramsAndPermissions" type="pdl:Programs" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
@@ -36,6 +37,27 @@
          <xsd:element name="partnerDepartmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerDepartmentProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programDetailsUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Programs">
+      <xsd:sequence>
+         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="permissions" type="pdl:Permissions" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Permissions">
+      <xsd:sequence>
+         <xsd:element name="admin" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="applications" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="flights" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="placementInfo" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="monitoring" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="accounting" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="studentsPreProgram" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contracting" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="insurance" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
