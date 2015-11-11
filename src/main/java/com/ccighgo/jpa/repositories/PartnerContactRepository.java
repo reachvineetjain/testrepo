@@ -8,18 +8,20 @@ import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.PartnerContact;
 
-
 /**
  * @author ravi
  *
  */
 @Repository
 public interface PartnerContactRepository extends JpaRepository<PartnerContact, Integer> {
-   
+
    @Query("SELECT p FROM PartnerContact p WHERE p.partner.partnerGoId = ?1")
    public PartnerContact getCCIContact(Integer partnerGoId);
 
    @Query("SELECT p FROM PartnerContact p WHERE p.partner.partnerGoId = ?1")
    public List<PartnerContact> findPartnerContactsByPartnerId(int goId);
+
+   @Query("SELECT p FROM PartnerContact p WHERE p.partner.partnerGoId = ?1 AND p.partnerOffice.partnerOfficeId = ?2")
+   public List<PartnerContact> findPartnerContactsByPartnerIdAndOfficceId(Integer goId, Integer officeId);
 
 }
