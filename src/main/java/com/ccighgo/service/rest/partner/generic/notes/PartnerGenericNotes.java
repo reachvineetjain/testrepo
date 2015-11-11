@@ -84,4 +84,13 @@ public class PartnerGenericNotes {
    public WSDefaultResponse tagTopic(Topic topic) {
       return partnerGenericNoteInterface.tagTopic(topic);
    }
+   
+   @POST
+   @Path("createTopic")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public WSDefaultResponse createTopic(Topic topic) {
+      return partnerGenericNoteInterface.createTopic(topic);
+   }
+   
 }

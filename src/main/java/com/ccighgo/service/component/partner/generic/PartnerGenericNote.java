@@ -235,5 +235,61 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       }
       return responce;
    }
+   @Override
+   public WSDefaultResponse createTopic(Topic topic) {
+      WSDefaultResponse responce = new WSDefaultResponse();
+      try {
+         PartnerNoteTopic topicData = new PartnerNoteTopic();
+         topicData.setPartnerNoteTopicName(topic.getPartnerNoteTopicName());
+         topicData.setCreatedBy(topic.getLoginId());
+         if (topic.isCompetitorInfo() != null) {
+            topicData.setCompetitorInfo(topic.isCompetitorInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isEmbassyVisaInfo() != null) {
+            topicData.setEmbassy_VisaInfo(topic.isEmbassyVisaInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isF1() != null) {
+            topicData.setF1(topic.isF1() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isGht() != null) {
+            topicData.setGht(topic.isGht() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isIntern() != null) {
+            topicData.setIntern(topic.isIntern() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isIsPublic() != null) {
+            topicData.setIsPublic(topic.isIsPublic() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isJ1() != null) {
+            topicData.setJ1(topic.isJ1() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isMeetingVisit() != null) {
+            topicData.setMeeting_visit(topic.isMeetingVisit() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isSeasonInfo() != null) {
+            topicData.setSeasonInfo(topic.isSeasonInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isStInbound() != null) {
+            topicData.setStInbound(topic.isStInbound() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isTrainee() != null) {
+            topicData.setTrainee(topic.isTrainee() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+         if (topic.isWT() != null) {
+            topicData.setW_t(topic.isWT() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         }
+
+         partnerNoteTopicRepository.saveAndFlush(topicData);
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_TOPIC.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC));
+      }
+      return responce;
+   }
 
 }
