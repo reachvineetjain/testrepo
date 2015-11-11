@@ -281,7 +281,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
             topicData.setW_t(topic.isWT() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          }
 
-         partnerNoteTopicRepository.saveAndFlush(topicData);
+         PartnerNoteTopic result = partnerNoteTopicRepository.saveAndFlush(topicData);
+         responce.setTopicOfNotesId(result.getPartnerNoteTopicId());
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
