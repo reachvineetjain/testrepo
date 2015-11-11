@@ -13,12 +13,14 @@ import com.ccighgo.db.entities.DocumentType;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerDocument;
 import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerSeasonContract;
 import com.ccighgo.db.entities.PartnerSeasonDocument;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
+import com.ccighgo.jpa.repositories.PartnerSeasonContractRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonDocumentRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
@@ -29,6 +31,8 @@ import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeaso
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters.PartnerSeasonDocumentParameters;
+import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.GenericPartnerSeasonContract;
+import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.GenericPartnerSeasonContracts;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -41,10 +45,10 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
 
    @Autowired
    CommonComponentUtils componentUtils;
-   
+
    @Autowired
    MessageUtils messageUtil;
-   
+
    @Autowired
    PartnerDocumentsRepository partnerDocumentsRepository;
 
@@ -59,10 +63,13 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
 
    @Autowired
    PartnerSeasonsRepository partnerSeasonsRepository;
-   
+
    @Autowired
    PartnerSeasonDocumentRepository partnerSeasonDocumentRepository;
-   
+
+   @Autowired
+   PartnerSeasonContractRepository partnerSeasonContractRepository;
+
    @Override
    public List<PartnerGenericDocuments> viewPartnerDocument(String partnerId) {
       List<PartnerGenericDocuments> pgd = new ArrayList<PartnerGenericDocuments>();
@@ -96,37 +103,35 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
 
    @Override
    public WSDefaultResponse addPartnerDocument(PartnerGenericDocuments partnerGenericDocuments) {
-      WSDefaultResponse responce =new WSDefaultResponse();
-      try
-     {
-      Partner partner = partnerRepository.findOne(partnerGenericDocuments.getGoId());
-      DocumentInformation documentInformation = new DocumentInformation();
-      documentInformation.setFileName(partnerGenericDocuments.getFileName());
-      documentInformation.setDocumentName(partnerGenericDocuments.getDocName());
-      documentInformation.setUrl(partnerGenericDocuments.getDocUrl());
-      documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(partnerGenericDocuments.getDocType()));
-      // TODO needs to be fixed
-      documentInformation.setCreatedBy(18);
-      documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      // TODO needs to be fixed
-      documentInformation.setModifiedBy(18);
-      documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      documentInformation.setActive(CCIConstants.ACTIVE);
-      DocumentInformation d = documentInformationRepository.saveAndFlush(documentInformation);
-      PartnerDocument p = new PartnerDocument();
-      p.setDescription(partnerGenericDocuments.getDescription());
-      p.setDocumentInformation(d);
-      p.setPartner(partner);
-      partnerDocumentsRepository.saveAndFlush(p);
-      responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_CREATED.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-     }catch(Exception e)
-     {
-        responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_DOCUMENT.getValue(),
-              messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT)));
-        LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
-        ExceptionUtil.logException(e, LOGGER);
-     }
+      WSDefaultResponse responce = new WSDefaultResponse();
+      try {
+         Partner partner = partnerRepository.findOne(partnerGenericDocuments.getGoId());
+         DocumentInformation documentInformation = new DocumentInformation();
+         documentInformation.setFileName(partnerGenericDocuments.getFileName());
+         documentInformation.setDocumentName(partnerGenericDocuments.getDocName());
+         documentInformation.setUrl(partnerGenericDocuments.getDocUrl());
+         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(partnerGenericDocuments.getDocType()));
+         // TODO needs to be fixed
+         documentInformation.setCreatedBy(18);
+         documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         // TODO needs to be fixed
+         documentInformation.setModifiedBy(18);
+         documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         documentInformation.setActive(CCIConstants.ACTIVE);
+         DocumentInformation d = documentInformationRepository.saveAndFlush(documentInformation);
+         PartnerDocument p = new PartnerDocument();
+         p.setDescription(partnerGenericDocuments.getDescription());
+         p.setDocumentInformation(d);
+         p.setPartner(partner);
+         partnerDocumentsRepository.saveAndFlush(p);
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_CREATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
+         ExceptionUtil.logException(e, LOGGER);
+      }
       return responce;
    }
 
@@ -138,7 +143,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
          PartnerSeason partnerSeason = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(partnerSeasonDocumentParameters.getSeasonId(),
                partnerSeasonDocumentParameters.getProgramId(), partnerSeasonDocumentParameters.getPartnerGoId());
          if (partnerSeason != null) {
-            int count=0;
+            int count = 0;
             List<PartnerSeasonDocument> partnerSeasonDocuments = partnerSeasonDocumentRepository.findPartnerSeasonDocumentbyPartnerSeasonId(partnerSeason.getPartnerSeasonId());
             for (PartnerSeasonDocument psd : partnerSeasonDocuments) {
                GenericSeasonDocument gsd = new GenericSeasonDocument();
@@ -257,7 +262,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
    public WSDefaultResponse deleteSeasonDocument(String seasonDocumentId) {
       WSDefaultResponse response = new WSDefaultResponse();
       try {
-         PartnerSeasonDocument partnerSeasonDocument=  partnerSeasonDocumentRepository.findOne(Integer.parseInt(seasonDocumentId));
+         PartnerSeasonDocument partnerSeasonDocument = partnerSeasonDocumentRepository.findOne(Integer.parseInt(seasonDocumentId));
          partnerSeasonDocumentRepository.delete(Integer.parseInt(seasonDocumentId));
          documentInformationRepository.delete(partnerSeasonDocument.getDocumentInformation());
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
@@ -293,7 +298,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_UPDATED.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             return response;
-         } 
+         }
       } catch (Exception e) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_UPDATE_DOCUMENT.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_UPDATE_GENERIC_DOCUMENT)));
@@ -309,9 +314,153 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
    public WSDefaultResponse deletePartnerDocument(String partnerDocumentId) {
       WSDefaultResponse response = new WSDefaultResponse();
       try {
-         PartnerDocument partnerDocument=  partnerDocumentsRepository.findOne(Integer.parseInt(partnerDocumentId));
+         PartnerDocument partnerDocument = partnerDocumentsRepository.findOne(Integer.parseInt(partnerDocumentId));
          partnerDocumentsRepository.delete(Integer.parseInt(partnerDocumentId));
          documentInformationRepository.delete(partnerDocument.getDocumentInformation());
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_DELETE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT));
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return response;
+   }
+
+   @Override
+   public GenericPartnerSeasonContracts viewSeasonContractDocument(PartnerSeasonDocumentParameters partnerSeasonDocumentParameters) {
+      GenericPartnerSeasonContracts genericSeasonContract = new GenericPartnerSeasonContracts();
+      try {
+         PartnerSeason partnerSeason = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(partnerSeasonDocumentParameters.getSeasonId(),
+               partnerSeasonDocumentParameters.getProgramId(), partnerSeasonDocumentParameters.getPartnerGoId());
+         if (partnerSeason != null) {
+            List<PartnerSeasonContract> partnerSeasonContracts = partnerSeasonContractRepository.findPartnerSeasonContractByPartnerSeasonId(partnerSeason.getPartnerSeasonId());
+            for (PartnerSeasonContract psd : partnerSeasonContracts) {
+               GenericPartnerSeasonContract gsc = new GenericPartnerSeasonContract();
+               gsc.setDescription(psd.getDescription());
+               gsc.setIsSigned(psd.getIsSigned() == CCIConstants.ACTIVE);
+               gsc.setPartnerSeasonContractId(psd.getPartnerSeasonContractId());
+               DocumentInformation di = psd.getDocumentInformation();
+               if (di != null) {
+                  gsc.setDocName(di.getDocumentName());
+                  DocumentType dt = di.getDocumentTypeDocumentCategoryProcess().getDocumentType();
+                  if (dt != null) {
+                     gsc.setDocType(dt.getDocumentTypeName());
+                  }
+                  gsc.setDocUrl(di.getUrl());
+                  gsc.setFileName(di.getFileName());
+                  gsc.setUploadDate(DateUtils.getDateAndTime(di.getCreatedOn()));
+                  gsc.setActive(di.getActive() == CCIConstants.ACTIVE);
+                  // TODO
+                  gsc.setUploadedBy("");
+                  // TODO
+                  gsc.setModifiedBy("");
+                  gsc.setModifiedDate(DateUtils.getDateAndTime(di.getModifiedOn()));
+                  gsc.setDocUrl(di.getUrl());
+                  gsc.setFileName(di.getFileName());
+               }
+               genericSeasonContract.getDocuments().add(gsc);
+            }
+
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return genericSeasonContract;
+   }
+
+   @Override
+   public WSDefaultResponse addSeasonContractDocument(GenericPartnerSeasonContract genericSeasonContract) {
+      WSDefaultResponse response = new WSDefaultResponse();
+      try {
+         if (genericSeasonContract != null) {
+            PartnerSeasonContract partnerSeasonCotract = new PartnerSeasonContract();
+            DocumentInformation documentInformation = new DocumentInformation();
+            documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(genericSeasonContract.getDocType()));
+            documentInformation.setFileName(genericSeasonContract.getFileName());
+            documentInformation.setDocumentName(genericSeasonContract.getDocName());
+            documentInformation.setUrl(genericSeasonContract.getDocUrl());
+            // TODO needs to be fixed
+            documentInformation.setCreatedBy(18);
+            documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            // TODO needs to be fixed
+            documentInformation.setModifiedBy(18);
+            documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            documentInformation.setActive(CCIConstants.ACTIVE);
+            DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
+            PartnerSeason partnerSeason = null;
+            if (genericSeasonContract.getPartnerSeasonParametrs() != null) {
+               partnerSeason = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(genericSeasonContract.getPartnerSeasonParametrs().getSeasonId(),
+                     genericSeasonContract.getPartnerSeasonParametrs().getProgramId(), genericSeasonContract.getPartnerSeasonParametrs().getPartnerGoId());
+            }
+            if (partnerSeason != null) {
+
+               partnerSeasonCotract.setIsSigned((byte) (genericSeasonContract.isIsSigned() ? 1 : 0));
+               partnerSeasonCotract.setDescription(genericSeasonContract.getDescription());
+               partnerSeasonCotract.setDocumentInformation(di);
+               partnerSeasonCotract.setPartnerSeason(partnerSeason);
+               partnerSeasonContractRepository.saveAndFlush(partnerSeasonCotract);
+               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_CREATED.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+               return response;
+            }
+         }
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return response;
+   }
+
+   @Override
+   public WSDefaultResponse updateSeasonContractDocument(GenericPartnerSeasonContract genericSeasonContract) {
+      WSDefaultResponse response = new WSDefaultResponse();
+      try {
+         if (genericSeasonContract != null) {
+            PartnerSeasonContract partnerSeasonContract = partnerSeasonContractRepository.findOne(genericSeasonContract.getPartnerSeasonContractId());
+            if (partnerSeasonContract != null) {
+               DocumentInformation documentInformation = partnerSeasonContract.getDocumentInformation();
+               documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(genericSeasonContract.getDocType()));
+               documentInformation.setFileName(genericSeasonContract.getFileName());
+               documentInformation.setDocumentName(genericSeasonContract.getDocName());
+               documentInformation.setUrl(genericSeasonContract.getDocUrl());
+               // TODO needs to be fixed
+               documentInformation.setModifiedBy(18);
+               documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               documentInformation.setActive((byte) ((genericSeasonContract.isActive()) ? 1 : 0));
+               DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
+               partnerSeasonContract.setDescription(genericSeasonContract.getDescription());
+               partnerSeasonContract.setIsSigned((byte) (genericSeasonContract.isIsSigned() ? 1 : 0));
+               partnerSeasonContract.setDocumentInformation(di);
+               partnerSeasonContractRepository.saveAndFlush(partnerSeasonContract);
+               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_UPDATED.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+               return response;
+            }
+         }
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_UPDATE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_UPDATE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_UPDATE_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_UPDATE_GENERIC_DOCUMENT));
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return response;
+   }
+
+   @Override
+   public WSDefaultResponse deleteSeasonContractDocument(String seasonContractId) {
+      WSDefaultResponse response = new WSDefaultResponse();
+      try {
+         PartnerSeasonContract partnerSeasonContract = partnerSeasonContractRepository.findOne(Integer.parseInt(seasonContractId));
+         partnerSeasonContractRepository.delete(Integer.parseInt(seasonContractId));
+         documentInformationRepository.delete(partnerSeasonContract.getDocumentInformation());
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {

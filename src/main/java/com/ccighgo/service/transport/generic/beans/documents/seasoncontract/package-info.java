@@ -5,5 +5,5 @@
 // Generated on: 2015.11.11 at 09:49:04 AM CST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/common")
-package com.ccighgo.service.transport.common.response.beans;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/genericseasonsdocuments")
+package com.ccighgo.service.transport.generic.beans.documents.seasoncontract;
