@@ -43,7 +43,7 @@ public class PartnerCompany {
    @Path("update/details")
    @Consumes("application/json")
    @Produces("application/json")
-   public PartnerCompanyDetail addNewPartnerCompany(PartnerCompanyDetail partnerCompanyDetail) {
+   public PartnerCompanyDetail updatePartnerCompanyDetails(PartnerCompanyDetail partnerCompanyDetail) {
       LOGGER.info("calling PartnerCompany.updatePartnerCompanyDetails");
       return partnerCompanyService.updatePartnerCompanyDetails(partnerCompanyDetail);
    }

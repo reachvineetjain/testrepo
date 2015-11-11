@@ -82,13 +82,18 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerGoId(partner.getPartnerGoId());
          partnerCompanyDetail.setPartnerCompanyNameHeader(partner.getCompanyName());
 
+         Login partnerLogin = null;
+         for (Login login : partner.getGoIdSequence().getLogins()) {
+            for (PartnerUser partUser : login.getPartnerUsers()) {
+               if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
+                  partnerLogin = login;
+                  break;
+               }
+            }
+         }
+
          PartnerCompanyStatus partnerCompanyStatus = new PartnerCompanyStatus();
-         /*
-          * partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerReviewStatus().getPartnerStatus2().
-          * getPartnerStatusId());
-          * partnerCompanyStatus.setPartnerCompanyStatus(partner.getPartnerReviewStatus().getPartnerStatus2
-          * ().getPartnerStatusName());
-          */
+         partnerCompanyStatus.setPartnerCompanyStatuId(partnerLogin.getActive() == CCIConstants.ACTIVE ? 1 : 0);
          partnerCompanyDetail.setPartnerCompanyStatus(partnerCompanyStatus);
 
          PartnerCompanyDetails partnerCompanyDetails = new PartnerCompanyDetails();
@@ -101,15 +106,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetails.setSubscribeCCINewsletter(partner.getSubscribeToCCINewsletter() == CCIConstants.ACTIVE ? true : false);
          partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
          partnerCompanyDetails.setGeneralEmail(partner.getEmail());
-         Login partnerLogin = null;
-         for (Login login : partner.getGoIdSequence().getLogins()) {
-            for (PartnerUser partUser : login.getPartnerUsers()) {
-               if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
-                  partnerLogin = login;
-                  break;
-               }
-            }
-         }
+
          if (partnerLogin != null) {
             partnerCompanyDetails.setUserName(partnerLogin.getLoginName());
          }
@@ -145,7 +142,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partOffice.setOfficeFax(pOffice.getFaxNumber());
                partOffice.setOfficeEmail(pOffice.getPartner().getEmail());
                partOffice.setOfficeWebsite(pOffice.getWebsite());
-               if (pOffice.getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
+               if (pOffice.getPartnerOfficeType().getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
                   partOffice.setIsPrimary(true);
                } else {
                   partOffice.setIsPrimary(false);
@@ -410,7 +407,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   break;
                }
             }
-            if(partnerMainOffice!=null){
+            if (partnerMainOffice != null) {
                if (Integer.valueOf(partnerOfficeId) == partnerMainOffice.getPartnerOfficeId()) {
                   throw new CcighgoException("The office you were trying to delete is marked as primary office. "
                         + "Please dissociate the users from this office and mark any other office of your choice as primary first");
@@ -418,10 +415,10 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             }
             List<PartnerContact> partnerContactList = partnerOffice.getPartnerContacts();
             List<PartnerUser> partnerUserList = partnerOffice.getPartnerUsers();
-            if(partnerContactList!=null ||partnerUserList!=null){
+            if (partnerContactList != null || partnerUserList != null) {
                throw new CcighgoException("The office you were trying to delete has users associated. "
                      + "Please dissociate the users from this office from User tab and then try deleting later.");
-            }else{
+            } else {
                partnerOfficeRepository.delete(partnerOffice.getPartnerOfficeId());
                resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

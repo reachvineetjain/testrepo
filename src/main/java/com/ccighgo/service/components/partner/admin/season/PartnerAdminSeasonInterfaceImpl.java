@@ -721,7 +721,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             PartnerSeason partnerSeason = partnerSeasonsRepository.findByGoIdandPartnerSeasoonId(Integer.valueOf(partnerGoId), Integer.valueOf(partnerSeasonId));
             adminIHPSeasonDetails.setPartnerSeasonId(partnerSeason.getPartnerSeasonId());
             adminIHPSeasonDetails.setPartnerAgencyName(partnerSeason.getPartner().getCompanyName());
-            adminIHPSeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonF1details().get(0).getProgramName());
+            adminIHPSeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
             // partner season status
             com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus();
             partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
