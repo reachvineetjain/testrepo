@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.partner.admin.season.PartnerAdminSeasonInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
+import com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerAdminIHPSeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Document;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.OperatingAgreement;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerAdminJ1SeasonDetails;
@@ -93,6 +94,18 @@ public class PartnerAdminSeason {
    public PartnerAdminF1SeasonDetails getPartnerAdminF1Details(@PathParam("partnerGoId") String partnerGoId, @PathParam("partnerSeasonId") String partnerSeasonId) {
       return partnerAdminSeasonInterface.getPartnerAdminF1Details(partnerGoId, partnerSeasonId);
    }
+   
+   /**
+    * @param partnerGoId
+    * @param partnerSeasonId
+    * @return
+    */
+   @GET
+   @Path("get/ihp/details/{partnerGoId}/{partnerSeasonId}")
+   @Produces("application/json")
+   public PartnerAdminIHPSeasonDetails getPartnerAdminIHPDetails(@PathParam("partnerGoId") String partnerGoId, @PathParam("partnerSeasonId") String partnerSeasonId) {
+      return partnerAdminSeasonInterface.getPartnerAdminIHPDetails(partnerGoId, partnerSeasonId);
+   }
 
    /**
     * @param statusVal
@@ -140,6 +153,18 @@ public class PartnerAdminSeason {
    @Produces("application/json")
    public PartnerAdminF1SeasonDetails updateF1AdminSeason(PartnerAdminF1SeasonDetails partnerAdminF1SeasonDetails) {
       return partnerAdminSeasonInterface.updateF1AdminSeason(partnerAdminF1SeasonDetails);
+   }
+   
+   /**
+    * @param partnerAdminIHPSeasonDetails
+    * @return
+    */
+   @POST
+   @Path("update/ihp")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public PartnerAdminIHPSeasonDetails updateIHPAdminSeason(PartnerAdminIHPSeasonDetails partnerAdminIHPSeasonDetails) {
+      return partnerAdminSeasonInterface.updateIHPAdminSeason(partnerAdminIHPSeasonDetails);
    }
 
    /**
