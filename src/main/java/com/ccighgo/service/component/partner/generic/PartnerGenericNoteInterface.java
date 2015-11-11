@@ -38,4 +38,6 @@ public interface PartnerGenericNoteInterface {
    public Topics viewTopics(int partnerId);
 
    public WSDefaultResponse tagTopic(Topic topic);
+
+   public WSDefaultResponse createTopic(Topic topic);
 }
