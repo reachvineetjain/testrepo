@@ -82,13 +82,18 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerGoId(partner.getPartnerGoId());
          partnerCompanyDetail.setPartnerCompanyNameHeader(partner.getCompanyName());
 
+         Login partnerLogin = null;
+         for (Login login : partner.getGoIdSequence().getLogins()) {
+            for (PartnerUser partUser : login.getPartnerUsers()) {
+               if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
+                  partnerLogin = login;
+                  break;
+               }
+            }
+         }
+
          PartnerCompanyStatus partnerCompanyStatus = new PartnerCompanyStatus();
-         /*
-          * partnerCompanyStatus.setPartnerCompanyStatuId(partner.getPartnerReviewStatus().getPartnerStatus2().
-          * getPartnerStatusId());
-          * partnerCompanyStatus.setPartnerCompanyStatus(partner.getPartnerReviewStatus().getPartnerStatus2
-          * ().getPartnerStatusName());
-          */
+         partnerCompanyStatus.setPartnerCompanyStatuId(partnerLogin.getActive() == CCIConstants.ACTIVE ? 1 : 0);
          partnerCompanyDetail.setPartnerCompanyStatus(partnerCompanyStatus);
 
          PartnerCompanyDetails partnerCompanyDetails = new PartnerCompanyDetails();
@@ -101,15 +106,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetails.setSubscribeCCINewsletter(partner.getSubscribeToCCINewsletter() == CCIConstants.ACTIVE ? true : false);
          partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
          partnerCompanyDetails.setGeneralEmail(partner.getEmail());
-         Login partnerLogin = null;
-         for (Login login : partner.getGoIdSequence().getLogins()) {
-            for (PartnerUser partUser : login.getPartnerUsers()) {
-               if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
-                  partnerLogin = login;
-                  break;
-               }
-            }
-         }
+
          if (partnerLogin != null) {
             partnerCompanyDetails.setUserName(partnerLogin.getLoginName());
          }
@@ -125,7 +122,9 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 
          // Partner Offices
          List<PartnerOffice> partnerOfficeList = null;
+         int count = 0;
          if (partner.getPartnerOffices() != null && partner.getPartnerOffices().size() > 0) {
+            count = partner.getPartnerOffices().size();
             partnerOfficeList = new ArrayList<PartnerOffice>();
             for (com.ccighgo.db.entities.PartnerOffice pOffice : partner.getPartnerOffices()) {
                PartnerOffice partOffice = new PartnerOffice();
@@ -143,7 +142,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partOffice.setOfficeFax(pOffice.getFaxNumber());
                partOffice.setOfficeEmail(pOffice.getPartner().getEmail());
                partOffice.setOfficeWebsite(pOffice.getWebsite());
-               if (pOffice.getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
+               if (pOffice.getPartnerOfficeType().getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
                   partOffice.setIsPrimary(true);
                } else {
                   partOffice.setIsPrimary(false);
@@ -151,6 +150,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partnerOfficeList.add(partOffice);
             }
          }
+         partnerCompanyDetail.setPartnerOfficesCount(count);
          partnerCompanyDetail.getPartnerOffices().addAll(partnerOfficeList);
 
          if (partnerContact != null) {
@@ -266,6 +266,17 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   return updatedObject;
                }
             } else {
+               if (partnerCompanyDetail.getPartnerOffices() != null) {
+                  for (PartnerOffice po : partnerCompanyDetail.getPartnerOffices()) {
+                     if (po.isIsPrimary()) {
+                        com.ccighgo.db.entities.PartnerOffice poff = partnerOfficeRepository.findOne(po.getPartnerOfficeId());
+                        // id 1 is of main office
+                        poff.setPartnerOfficeType(partnerOfficeTypeRepository.findOne(1));
+                        partnerOfficeRepository.saveAndFlush(poff);
+                        break;
+                     }
+                  }
+               }
                partnerContact.setSalutation(salutationRepository.findOne(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSalutation().getSalutationId()));
                partnerContact.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
                partnerContact.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
@@ -332,9 +343,10 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return resp;
-      }if (newPartnerOffice.getOfficeAddressCountry() == null || newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId() == 0 || newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId() < 0) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
-               "Please select country"));
+      }
+      if (newPartnerOffice.getOfficeAddressCountry() == null || newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId() == 0
+            || newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId() < 0) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(), "Please select country"));
          LOGGER.error("No country specified while adding partner office");
          return resp;
       } else {
@@ -379,28 +391,40 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
       } else {
          try {
             com.ccighgo.db.entities.PartnerOffice partnerOffice = partnerOfficeRepository.findOne(Integer.valueOf(partnerOfficeId));
-            if (partnerOffice != null) {
-               // remove references of the office to be deleted
-               if(partnerOffice.getPartnerContacts()!=null){
-                  for (PartnerContact contact : partnerOffice.getPartnerContacts()) {
-                     contact.setPartnerOffice(null);
-                     partnerContactRepository.saveAndFlush(contact);
-                  }
+            /*
+             * As per Tushad and Phani, 1. Check if the office getting deleted is partner primary office: --If yes
+             * return message to set another office as primary and move all associated users to the new office 2. If
+             * office is not primary office but users are associated with the office: --Return message saying move users
+             * to some other office and then delete
+             */
+            // get the partner
+            Partner partner = partnerOffice.getPartner();
+            com.ccighgo.db.entities.PartnerOffice partnerMainOffice = null;
+            List<com.ccighgo.db.entities.PartnerOffice> partnerOfficeList = partner.getPartnerOffices();
+            for (com.ccighgo.db.entities.PartnerOffice po : partnerOfficeList) {
+               if (po.getPartnerOfficeType().getPartnerOfficeType().equals("MAIN")) {
+                  partnerMainOffice = po;
+                  break;
                }
-               if(partnerOffice.getPartnerUsers()!=null){
-                  for(PartnerUser user:partnerOffice.getPartnerUsers()){
-                     user.setPartnerOffice(null);
-                     partnerUserRepository.saveAndFlush(user);
-                  }
+            }
+            if (partnerMainOffice != null) {
+               if (Integer.valueOf(partnerOfficeId) == partnerMainOffice.getPartnerOfficeId()) {
+                  throw new CcighgoException("The office you were trying to delete is marked as primary office. "
+                        + "Please dissociate the users from this office and mark any other office of your choice as primary first");
                }
-               //finally delete the office
+            }
+            List<PartnerContact> partnerContactList = partnerOffice.getPartnerContacts();
+            List<PartnerUser> partnerUserList = partnerOffice.getPartnerUsers();
+            if (partnerContactList != null || partnerUserList != null) {
+               throw new CcighgoException("The office you were trying to delete has users associated. "
+                     + "Please dissociate the users from this office from User tab and then try deleting later.");
+            } else {
                partnerOfficeRepository.delete(partnerOffice.getPartnerOfficeId());
                resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             }
          } catch (CcighgoException e) {
-            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
-                  messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL)));
+            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(), e.getMessage()));
             LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL), e);
          }
       }

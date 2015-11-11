@@ -282,11 +282,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                sp.setSubPartnerFirstName(subPartner.getPartnerContacts().iterator().next().getFirstName());
                sp.setSubPartnerLastName(subPartner.getPartnerContacts().iterator().next().getLastName());
             }
-            SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
-            subPartnerCountry2.setSubPartnerCountry(subPartner.getLookupCountry2().getCountryName());
-            subPartnerCountry2.setSubPartnerCountryId(subPartner.getLookupCountry2().getCountryId());
+            if (subPartner.getLookupCountry2() != null) {
+               SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
+               subPartnerCountry2.setSubPartnerCountry(subPartner.getLookupCountry2().getCountryName());
+               subPartnerCountry2.setSubPartnerCountryId(subPartner.getLookupCountry2().getCountryId());
 
-            sp.setSubPartnerCountry(subPartnerCountry2);
+               sp.setSubPartnerCountry(subPartnerCountry2);
+            }
 
             SubPartnerStatus subPartnerStatus = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus();
             List<PartnerUser> partnerUsers = subPartner.getPartnerUsers();
@@ -1130,7 +1132,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          List<Salutation> salutations = salutationRepository.findAll();
          if (salutations != null)
             for (Salutation salutation : salutations) {
-               SalutationList sl=new SalutationList();
+               SalutationList sl = new SalutationList();
                sl.setSalutationId(salutation.getSalutationId());
                sl.setSalutationValue(salutation.getSalutationName());
                as.getSalutationList().add(sl);

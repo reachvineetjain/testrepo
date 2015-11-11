@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.component.partner.generic.PartnerGenericNoteInterface;
 import com.ccighgo.service.components.partnerinquiry.PartnerInquiryService;
 import com.ccighgo.service.transport.partner.beans.generic.deletenote.DeleteNote;
-import com.ccighgo.service.transport.partner.beans.generic.notes.ScreeNote;
+import com.ccighgo.service.transport.partner.beans.generic.notes.ScreenNote;
+import com.ccighgo.service.transport.partner.beans.generic.topic.Topic;
+import com.ccighgo.service.transport.partner.beans.generic.topic.Topics;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -29,34 +31,66 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Consumes("application/json")
 public class PartnerGenericNotes {
 
-	@Autowired
-	PartnerGenericNoteInterface partnerGenericNoteInterface;
-	
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerGenericNotes.class);
 
+   @Autowired
+   PartnerGenericNoteInterface partnerGenericNoteInterface;
 
+   /**
+    * @param note
+    * @return
+    */
+   @POST
+   @Path("add")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public WSDefaultResponse addNote(ScreenNote note) {
+      return partnerGenericNoteInterface.addNote(note);
+   }
+
+   /**
+    * @param deleteNote
+    * @return
+    */
+   @POST
+   @Path("delete")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public WSDefaultResponse deleteNote(DeleteNote deleteNote) {
+      return partnerGenericNoteInterface.deleteNote(deleteNote);
+   }
+
+   /**
+    * @param partnerId
+    * @return
+    */
    @GET
-   @Path("ping/{input}")
-   @Produces("text/plain")
-   public String ping(@PathParam("input") String input) {
-       return input;
+   @Path("view/{partnerId}")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public Topics viewTopics(@PathParam("partnerId") String partnerId) {
+      return partnerGenericNoteInterface.viewTopics(Integer.parseInt(partnerId));
    }
-  @POST
-  @Path("add")
-  @Produces("application/json")
-  @Consumes("application/json")
-   public WSDefaultResponse addNote(ScreeNote note)
-   {
-	   return partnerGenericNoteInterface.addNote(note);
+
+ /**
+  * 
+  * @param topic
+  * @return
+  */
+   @POST
+   @Path("tagTopic")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public WSDefaultResponse tagTopic(Topic topic) {
+      return partnerGenericNoteInterface.tagTopic(topic);
    }
-  
-  @POST
-  @Path("delete")
-  @Produces("application/json")
-  @Consumes("application/json")
-  public WSDefaultResponse deleteNote(DeleteNote deleteNote)
-  {
-	  return partnerGenericNoteInterface.deleteNote(deleteNote);
-  }
+   
+   @POST
+   @Path("createTopic")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public WSDefaultResponse createTopic(Topic topic) {
+      return partnerGenericNoteInterface.createTopic(topic);
+   }
    
 }

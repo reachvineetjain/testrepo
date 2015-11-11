@@ -55,6 +55,7 @@
             /services/partnerGenericNotes/**=anon
             /services/pushData/**=anon
             /services/partner/admin/season/**=anon
+            /services/genericDocuments/**=anon
             /services/**=authc
          </value>
       </property>
