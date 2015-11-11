@@ -240,6 +240,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          PartnerNoteTopic topicData = new PartnerNoteTopic();
+         Partner partner = partnerRepository.findOne(topic.getGoId());
+         topicData.setPartner(partner );
          topicData.setPartnerNoteTopicName(topic.getPartnerNoteTopicName());
          topicData.setCreatedBy(topic.getLoginId());
          if (topic.isCompetitorInfo() != null) {
