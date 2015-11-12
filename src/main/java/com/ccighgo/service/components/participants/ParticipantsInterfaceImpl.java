@@ -520,7 +520,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
                String programName = participant.getDepartmentProgram().getProgramName();
                try {
-                  details.setParticipantSeasonName("");
+                  details.setParticipantSeasonName(programName);
                   if (participant.getSeason().getSeasonF1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_F1)) {
                      if (participant.getSeason().getSeasonF1details() != null && participant.getSeason().getSeasonF1details().get(0) != null)
                         details.setParticipantSeasonName(participant.getSeason().getSeasonF1details().get(0).getProgramName());
