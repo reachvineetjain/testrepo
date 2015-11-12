@@ -16,8 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewPartnerApplicationDeadLineDate;
 import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
+import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
@@ -112,6 +114,17 @@ public class PartnerSeason {
    @Path("apply/new/{partnerId}")
    public PartnerSeasonApplicationList getPartnerSeasonApplicationList(@PathParam("partnerId") String partnerId){
       return partnerSeasonInterface.getPartnerSeasonApplicationList(partnerId);
+   }
+   
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   @GET
+   @Path("add/new/")
+   @Produces("application/json")
+   public Response addNewSeasonsToPartner(PartnerSeasonApplicationList partnerSeasonApplicationList) {
+      return partnerSeasonInterface.addNewSeasonsToPartner(partnerSeasonApplicationList);
    }
    
    @POST

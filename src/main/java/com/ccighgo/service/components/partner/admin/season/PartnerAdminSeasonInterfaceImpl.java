@@ -444,6 +444,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                ps.setPartner(partnerRepository.findOne(partnerAdminSeasonApplicationList.getPartnerId()));
                ps.setSeason(seasonRepository.findOne(Integer.valueOf(season.getSeasonId())));
                ps.setDepartmentProgram(departmentProgramRepository.findOne(Integer.valueOf(season.getDepartmentProgramId())));
+               ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
                ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
                ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
                ps.setQuestionaireRequired(CCIConstants.INACTIVE);

@@ -56,16 +56,26 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerCompanyServiceImpl.class);
 
-   @Autowired MessageUtils messageUtil;
-   @Autowired CommonComponentUtils componentUtils;
-   @Autowired PartnerRepository partnerRepository;
-   @Autowired LoginRepository loginRepository;
-   @Autowired CountryRepository countryRepository;
-   @Autowired PartnerContactRepository partnerContactRepository;
-   @Autowired PartnerOfficeRepository partnerOfficeRepository;
-   @Autowired PartnerOfficeTypeRepository partnerOfficeTypeRepository;
-   @Autowired SalutationRepository salutationRepository;
-   @Autowired PartnerUserRepository partnerUserRepository;
+   @Autowired
+   MessageUtils messageUtil;
+   @Autowired
+   CommonComponentUtils componentUtils;
+   @Autowired
+   PartnerRepository partnerRepository;
+   @Autowired
+   LoginRepository loginRepository;
+   @Autowired
+   CountryRepository countryRepository;
+   @Autowired
+   PartnerContactRepository partnerContactRepository;
+   @Autowired
+   PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired
+   PartnerOfficeTypeRepository partnerOfficeTypeRepository;
+   @Autowired
+   SalutationRepository salutationRepository;
+   @Autowired
+   PartnerUserRepository partnerUserRepository;
 
    @Override
    @Transactional(readOnly = true)
@@ -151,7 +161,9 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             }
          }
          partnerCompanyDetail.setPartnerOfficesCount(count);
-         partnerCompanyDetail.getPartnerOffices().addAll(partnerOfficeList);
+         if (partnerOfficeList != null) {
+            partnerCompanyDetail.getPartnerOffices().addAll(partnerOfficeList);
+         }
 
          if (partnerContact != null) {
             PrimaryContactSalutation primaryContactSalutation = new PrimaryContactSalutation();
@@ -413,9 +425,10 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                         + "Please dissociate the users from this office and mark any other office of your choice as primary first");
                }
             }
-            List<PartnerContact> partnerContactList = partnerContactRepository.findPartnerContactsByPartnerIdAndOfficceId(partner.getPartnerGoId(), Integer.valueOf(partnerOfficeId));
+            List<PartnerContact> partnerContactList = partnerContactRepository.findPartnerContactsByPartnerIdAndOfficceId(partner.getPartnerGoId(),
+                  Integer.valueOf(partnerOfficeId));
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(partner.getPartnerGoId(), Integer.valueOf(partnerOfficeId));
-            if (partnerContactList != null || partnerUserList != null) {
+            if (!(partnerContactList.isEmpty()) || !(partnerUserList.isEmpty())) {
                throw new CcighgoException("The office you were trying to delete has users associated. "
                      + "Please dissociate the users from this office from User tab and then try deleting later.");
             } else {

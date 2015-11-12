@@ -13,6 +13,9 @@ public interface ParticipantRepository  extends JpaRepository<Participant, Integ
 
    @Query("select s from Participant s  where s.partner1.partnerGoId = ?1")
    List<Participant> findAddedParticipantByPartnerId(int partnerId);
+   
+   @Query("select s from Participant s  where s.partner2.partnerGoId = ?1")
+   List<Participant> findAddedParticipantBySubPartnerId(int partnerId);
 
   /* @Query("select s from Participant s  where s.partner.partnerGoId = ?1 and s.isLead=0 ")*/   
    //List<Participant> findActiveParticipantByPartnerId(String partnerId);
