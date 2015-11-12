@@ -490,7 +490,13 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       AddedParticipantsList addedParticipants = new AddedParticipantsList();
       try {
          // TODO
-         List<Participant> participants = participantRepository.findAddedParticipantByPartnerId(Integer.parseInt(partnerId));
+         List<Participant> participants = null;
+         Partner partner = partnerRepository.findOne(Integer.parseInt(partnerId));
+         if (partner.getIsSubPartner() == CCIConstants.TRUE_BYTE) {
+            participants = participantRepository.findAddedParticipantBySubPartnerId(Integer.parseInt(partnerId));
+         } else {
+            participants = participantRepository.findAddedParticipantByPartnerId(Integer.parseInt(partnerId));
+         }
          if (participants != null) {
             for (Participant participant : participants) {
                AddedParticipantsDetails details = new AddedParticipantsDetails();
