@@ -12,28 +12,39 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.PartnerAnnouncement;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.SeasonF1Detail;
+import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonAllocationRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonContractRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonDocumentRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
+import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SeasonF1DetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonIHPDetailRepository;
 import com.ccighgo.jpa.repositories.SeasonJ1DetailsRepository;
+import com.ccighgo.jpa.repositories.SeasonRepository;
+import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewPartnerApplicationDeadLineDate;
 import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.SeasonStatus;
+import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplication;
+import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplication;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeason;
@@ -66,27 +77,22 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
    private static final Logger LOGGER = Logger.getLogger(PartnerSeasonInterfaceImpl.class);
 
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired CommonComponentUtils componentUtils;
 
-   @Autowired
-   PartnerRepository partnerRepository;
-   @Autowired
-   PartnerSeasonsRepository partnerSeasonsRepository;
-   @Autowired
-   PartnerSeasonAllocationRepository partnerSeasonAllocationRepository;
-   @Autowired
-   PartnerSeasonContractRepository partnerSeasonContractRepository;
-   @Autowired
-   PartnerSeasonDocumentRepository partnerSeasonDocumentRepository;
-   @Autowired
-   SeasonF1DetailsRepository seasonF1DetailsRepository;
-   @Autowired
-   SeasonJ1DetailsRepository seasonJ1DetailsRepository;
-   @Autowired
-   EntityManager entityManager;
+   @Autowired PartnerRepository partnerRepository;
+   @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
+   @Autowired PartnerSeasonAllocationRepository partnerSeasonAllocationRepository;
+   @Autowired PartnerSeasonContractRepository partnerSeasonContractRepository;
+   @Autowired PartnerSeasonDocumentRepository partnerSeasonDocumentRepository;
+   @Autowired SeasonF1DetailsRepository seasonF1DetailsRepository;
+   @Autowired SeasonJ1DetailsRepository seasonJ1DetailsRepository;
+   @Autowired SeasonIHPDetailRepository seasonIHPDetailRepository;
+   @Autowired EntityManager entityManager;
+   @Autowired SeasonStatusRepository seasonStatusRepository;
+   @Autowired SeasonRepository seasonRepository;
+   @Autowired DepartmentProgramRepository departmentProgramRepository;
+   @Autowired PartnerStatusRepository partnerStatusRepository;
 
    private static final String SP_PARTNER_SEASON_APPLICATION_LIST = "call SPPartnerSeasonAplication(?)";
 
@@ -136,8 +142,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                   if (entity.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
                      SeasonJ1Detail j1detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(entity.getSeason().getSeasonId());
                      if (j1detail != null) {
-                     pSeason.setPartnerSeasonProgramName(j1detail.getProgramName());
-                     pSeason.setDetailsUrl("/partner/season/view/j1hs/");
+                        pSeason.setPartnerSeasonProgramName(j1detail.getProgramName());
+                        pSeason.setDetailsUrl("/partner/season/view/j1hs/");
 
                         seasonProgramStatus.setPartnerSeasonProgramStatusId(j1detail.getSeasonStatus().getSeasonStatusId());
                         seasonProgramStatus.setPartnerSeasonProgramStatus(j1detail.getSeasonStatus().getStatus());
@@ -162,8 +168,18 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      }
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
-                     pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonIhpdetails().get(0).getProgramName());
-                     pSeason.setDetailsUrl("comming soon");
+                     SeasonIHPDetail ihpSeason = seasonIHPDetailRepository.findIHPDetailsBySeasonId(entity.getSeason().getSeasonId());
+                     if(ihpSeason!=null){
+                        pSeason.setPartnerSeasonProgramName(ihpSeason.getProgramName());
+                        pSeason.setDetailsUrl("/partner/season/view/ihp/");
+
+                        seasonProgramStatus.setPartnerSeasonProgramStatusId(ihpSeason.getSeasonStatus().getSeasonStatusId());
+                        seasonProgramStatus.setPartnerSeasonProgramStatus(ihpSeason.getSeasonStatus().getStatus());
+
+                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(ihpSeason.getStartDate()));
+                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(ihpSeason.getEndDate()));
+                        //pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(ihpSeason.getFirstSemAppDeadlineDate()));
+                     }
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SUMMER)) {
                      pSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName());
@@ -475,7 +491,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
                         programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
                               + programAllocations.getAugustStartMaxguaranteedParticipants());
-                       
+
                      }
                      if (guaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
                         programAllocations.setJanuaryStartMaxguaranteedParticipants(guaranteedAllocation.getMaxGuaranteedPax());
@@ -486,7 +502,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
                         programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
                               + programAllocations.getJanuaryStartMaxguaranteedParticipants());
-                       
+
                      }
                   }
                }
@@ -565,5 +581,49 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_NEW_DEALINE_DATE_REQUEST));
       }
       return wsDefaultResponse;
+   }
+   
+   
+   @Override
+   @Transactional
+   public Response addNewSeasonsToPartner(PartnerSeasonApplicationList partnerSeasonApplicationList) {
+      Response response = new Response();
+      if (partnerSeasonApplicationList == null) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               "cannot add null values, please check the list"));
+         LOGGER.error("empty list to add seasons");
+         return response;
+      } else {
+         try {
+            List<com.ccighgo.db.entities.PartnerSeason> partnerSeasonsList = new ArrayList<com.ccighgo.db.entities.PartnerSeason>();
+            for (PartnerSeasonApplication season : partnerSeasonApplicationList.getPartnerSeasonApplication()) {
+               // discussed with phani setting only season, department program and boolean fields to false
+               com.ccighgo.db.entities.PartnerSeason ps = new com.ccighgo.db.entities.PartnerSeason();
+               ps.setPartner(partnerRepository.findOne(partnerSeasonApplicationList.getPartnerId()));
+               ps.setSeason(seasonRepository.findOne(Integer.valueOf(season.getSeasonId())));
+               ps.setDepartmentProgram(departmentProgramRepository.findOne(Integer.valueOf(season.getDepartmentProgramId())));
+               ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
+               ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
+               ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
+               ps.setQuestionaireRequired(CCIConstants.INACTIVE);
+               ps.setDisableAddParticipant(CCIConstants.INACTIVE);
+               ps.setParticipantPaysDeposit(CCIConstants.INACTIVE);
+               ps.setCanAccessJobBoard(CCIConstants.INACTIVE);
+               ps.setCanCreateSubPartner(CCIConstants.INACTIVE);
+               ps.setIsSignedContract(CCIConstants.INACTIVE);
+               ps.setActive(CCIConstants.ACTIVE);
+               partnerSeasonsList.add(ps);
+            }
+            partnerSeasonsRepository.save(partnerSeasonsList);
+            partnerSeasonsRepository.flush();
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } catch (CcighgoException e) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
+            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+         }
+      }
+      return response;
    }
 }
