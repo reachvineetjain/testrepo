@@ -518,9 +518,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
-               details.setParticipantSeasonName(participant.getSeason().getSeasonName());
+               details.setParticipantSeasonName(participant.getDepartmentProgram().getProgramName());
                details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
                details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
+               if(participant.getPartner2()!=null)
+               details.setSubPartnerGoId(participant.getPartner2().getPartnerGoId());               
                addedParticipants.getParticipants().add(details);
             }
             addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
