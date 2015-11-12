@@ -5,6 +5,7 @@ package com.ccighgo.service.components.partner.season;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewPartnerApplicationDeadLineDate;
 import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
@@ -44,6 +45,12 @@ public interface PartnerSeasonInterface {
     * @return
     */
    public PartnerSeasonF1Detail viewF1PartnerSeason(String partnerSeasonId);
+   
+   /**
+    * @param partnerSeasonApplicationList
+    * @return
+    */
+   public Response addNewSeasonsToPartner(PartnerSeasonApplicationList partnerSeasonApplicationList);
 
    public WSDefaultResponse createNewPartnerAllocationRequest(NewPartnerSeasonAllocationRequest newPartnerSeasonAllocationRequest);
 

@@ -790,9 +790,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             login.setLoginName(subPartnerDetailInfo.getUsername());
             login.setPassword(PasswordUtil.hashKey(subPartnerDetailInfo.getPassword()));
             login.setKeyValue(UuidUtils.nextHexUUID());
-            login.setCreatedBy(Integer.parseInt(subPartner.getGoId()));
+            login.setCreatedBy(subPartner.getLoginId());
             login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            login.setModifiedBy(Integer.parseInt(subPartner.getGoId()));
+            login.setModifiedBy(subPartner.getLoginId());
             login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             login.setGoIdSequence(goIdSequence);
             login.setEmail(subPartnerPrimaryContact.getEmail());
@@ -803,9 +803,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             LoginUserType loginUserType = new LoginUserType();
             loginUserType.setActive(CCIConstants.ACTIVE);
             loginUserType.setUserType(ParticipantUserType);
-            loginUserType.setCreatedBy(Integer.parseInt(subPartner.getGoId()));
+            loginUserType.setCreatedBy(subPartner.getLoginId());
             loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            loginUserType.setModifiedBy(Integer.parseInt(subPartner.getGoId()));
+            loginUserType.setModifiedBy(subPartner.getLoginId());
             loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
             loginUserType.setLogin(login);
@@ -1070,9 +1070,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerDetails.setAddressLineTwo(subPartnersMailingAddress.getMailingAddress2());
             subPartnerDetails.setCity(subPartnersMailingAddress.getMailingAddressCity());
             subPartnerDetails.setState(subPartnersMailingAddress.getMailingAddressStateOrProvince());
-            subPartnerDetails.setCreatedBy(Integer.parseInt(subPartner.getGoId()));
+            subPartnerDetails.setCreatedBy(subPartner.getLoginId());
             subPartnerDetails.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            subPartnerDetails.setModifiedBy(Integer.parseInt(subPartner.getGoId()));
+            subPartnerDetails.setModifiedBy(subPartner.getLoginId());
             subPartnerDetails.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
             Country c = subPartnersMailingAddress.getMailingAddressCountry();
@@ -1111,7 +1111,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerContact.setReceiveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
             partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
             partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
-            partnerContact.setModifiedBy(Integer.parseInt(subPartner.getGoId()));
+            partnerContact.setModifiedBy(subPartner.getLoginId());
             partnerContactRepository.saveAndFlush(partnerContact);
          }
 

@@ -27,7 +27,7 @@
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="createdOn" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="createdBy" type="xsd:int"
+					<xsd:element name="loginId" type="xsd:int"
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="topicId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
