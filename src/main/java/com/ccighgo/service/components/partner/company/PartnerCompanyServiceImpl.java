@@ -355,9 +355,9 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerOffice.setAdressOne(newPartnerOffice.getOfficeAddressLineOne());
             partnerOffice.setAdressTwo(newPartnerOffice.getOfficeAddressLineTwo());
             partnerOffice.setCity(newPartnerOffice.getCity());
-            partnerOffice.setCreatedBy(1000);
+            partnerOffice.setCreatedBy(newPartnerOffice.getLoginId());
             partnerOffice.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            partnerOffice.setModifiedBy(1000);
+            partnerOffice.setModifiedBy(newPartnerOffice.getLoginId());
             partnerOffice.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             partnerOffice.setFaxNumber(newPartnerOffice.getOfficeFax());
             partnerOffice.setPartner(partnerRepository.findOne(Integer.valueOf(partnerGoId)));

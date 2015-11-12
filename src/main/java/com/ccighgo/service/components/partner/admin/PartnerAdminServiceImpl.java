@@ -1158,9 +1158,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          documentInformation.setDocumentName(document.getDocName());
          documentInformation.setUrl(document.getDocUrl());
          documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(document.getDocType()));
-         documentInformation.setCreatedBy(1);
+         documentInformation.setCreatedBy(document.getLoginId());
          documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         documentInformation.setModifiedBy(1);
+         documentInformation.setModifiedBy(document.getLoginId());
          documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
      
          documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
@@ -1247,7 +1247,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          po.setAdressOne(officesDetails.getAddress1());
          po.setAdressTwo(officesDetails.getAddress2());
          po.setCity(officesDetails.getCity());
-         po.setCreatedBy(1);
+         po.setCreatedBy(officesDetails.getLoginId());
          po.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          po.setFaxNumber(officesDetails.getFax());
          LookupCountry country = lookupCountryRepository.findByCountryName(officesDetails.getCountry());
@@ -1256,7 +1256,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          po.setPartner(partner);
          PartnerOfficeType officeType = partnerOfficeTypeRepository.findByPartnerOfficeType(officesDetails.getOfficeType());
          po.setPartnerOfficeType(officeType);
-         po.setModifiedBy(1);
+         po.setModifiedBy(officesDetails.getLoginId());
          po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));        
          po.setPhoneNumber(officesDetails.getPhone());
          po.setPostalCode(officesDetails.getZipCode());       
@@ -1335,7 +1335,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
          PartnerContact pc = new PartnerContact();
          pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
-         pc.setCreatedBy(1);
+         pc.setCreatedBy(contactsDetails.getLoginId());
          pc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          pc.setEmail(contactsDetails.getEmail());
          pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
@@ -1343,7 +1343,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pc.setFirstName(contactsDetails.getFirstName());
          pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
          pc.setLastName(contactsDetails.getLastName());
-         pc.setModifiedBy(1);
+         pc.setModifiedBy(contactsDetails.getGoId());
          pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
          pc.setPartner(partner);
@@ -1421,9 +1421,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       PartnerAdminOverviewNotes pn = new PartnerAdminOverviewNotes();
       try {
          PartnerNote note = new PartnerNote();
-         note.setCreatedBy(1);
+         note.setCreatedBy(notesDetails.getLoginId());
          note.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         note.setModifiedBy(1);
+         note.setModifiedBy(notesDetails.getLoginId());
          note.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Partner partner = partnerRepository.findOne(notesDetails.getGoId());
          note.setPartner(partner);
