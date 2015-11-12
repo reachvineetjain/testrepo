@@ -566,9 +566,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          com.ccighgo.db.entities.PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(newApplicationDeadlineDatesAllocations.getPartnerSeasonId());
-         if (newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested() != null)
+         if (newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested() != null&&!newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested().isEmpty())
             partnerSeason.setPartnerSeasonExtAppDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested()));
-         if (newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested() != null)
+         if (newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested() != null&&!newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested().isEmpty())
             partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested()));
 
          partnerSeasonsRepository.saveAndFlush(partnerSeason);
