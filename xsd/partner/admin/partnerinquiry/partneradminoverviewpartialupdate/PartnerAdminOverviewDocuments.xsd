@@ -41,7 +41,8 @@
          <xsd:element name="uploadedBy" type="partnerAdminOverviewDocuments:DocumentUploadUser" minOccurs="1" maxOccurs="1" />
          <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 		<xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
-		<xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1" />         
+		<xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1" />  
+        <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />       
       </xsd:sequence>
    </xsd:complexType>
             

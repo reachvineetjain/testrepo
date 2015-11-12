@@ -6,6 +6,8 @@ import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeaso
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters.PartnerSeasonDocumentParameters;
+import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.GenericPartnerSeasonContract;
+import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.GenericPartnerSeasonContracts;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -76,5 +78,39 @@ public interface GenericDocumentsInterface {
     * @param partnerDocumentId
     * @return
     */
+   
    public WSDefaultResponse deletePartnerDocument(String partnerDocumentId);
+   
+   /**
+    * Method {@code viewSeasonContractDocument} returns GenericPartnerSeasonContracts object
+    * 
+    * @param partnerSeasonDocumentParameters
+    * @return
+    */
+   public GenericPartnerSeasonContracts viewSeasonContractDocument(PartnerSeasonDocumentParameters partnerSeasonDocumentParameters);
+  
+   /**
+    * Method {@code addSeasonContractDocument} returns WSDefaultResponse object
+    * 
+    * @param genericSeasonDocument
+    * @return
+    */
+  
+   public WSDefaultResponse addSeasonContractDocument(GenericPartnerSeasonContract genericSeasonContract);
+   
+   /**
+    * Method {@code updateSeasonContractDocument} returns WSDefaultResponse object
+    * 
+    * @param genericSeasonDocument
+    * @return
+    */
+   public WSDefaultResponse updateSeasonContractDocument(GenericPartnerSeasonContract genericSeasonContract);
+  
+   /**
+    * Method {@code deleteSeasonContractDocument} returns WSDefaultResponse object
+    * 
+    * @param seasonContractDocumentId
+    * @return
+    */
+   public WSDefaultResponse deleteSeasonContractDocument(String seasonContractId);
 }
