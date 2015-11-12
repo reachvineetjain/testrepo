@@ -524,7 +524,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   if (participant.getSeason().getSeasonF1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_F1)) {
                      if (participant.getSeason().getSeasonF1details() != null && participant.getSeason().getSeasonF1details().get(0) != null)
                         details.setParticipantSeasonName(participant.getSeason().getSeasonF1details().get(0).getProgramName());
-                  } else if (participant.getSeason().getSeasonJ1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_J1)) {
+                  } else if (participant.getSeason().getSeasonJ1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_J1_HS)) {
                      if (participant.getSeason().getSeasonJ1details() != null && participant.getSeason().getSeasonJ1details().get(0) != null)
                         details.setParticipantSeasonName(participant.getSeason().getSeasonJ1details().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonCapdetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_CAP)) {
