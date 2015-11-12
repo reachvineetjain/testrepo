@@ -65,9 +65,9 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerNote noteEntity = new PartnerNote();
-         noteEntity.setCreatedBy(note.getCreatedBy());
+         noteEntity.setCreatedBy(note.getLoginId());
          noteEntity.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         noteEntity.setModifiedBy(note.getCreatedBy());
+         noteEntity.setModifiedBy(note.getLoginId());
 
          noteEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Partner partner = partnerRepository.findOne(note.getPartnerId());
