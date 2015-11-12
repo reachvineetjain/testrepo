@@ -736,11 +736,12 @@ public class PartnerServiceImpl implements PartnerService {
                   for (PartnerSeason partSeason : partnerSeasonList) {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
                         PartnerIHPProgram prg = new PartnerIHPProgram();
-                        prg.setProgramName(partSeason.getSeason().getSeasonName() + " - IHP");
+                        prg.setProgramName(partSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonStatus().getStatus());
                         partnerIHPProgramsList.add(prg);
                      }
                   }
+                  ihpDashboard.getPartnerIHPPrograms().addAll(partnerIHPProgramsList); 
                }
             } else {
                ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
