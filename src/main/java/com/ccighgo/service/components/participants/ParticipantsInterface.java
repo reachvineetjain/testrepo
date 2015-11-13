@@ -69,5 +69,7 @@ public interface ParticipantsInterface {
     */
    public Response resetParticipantPassword(String participantGoId, HttpServletRequest request);
 
+   public SeasonsForParticipants getAllAvailableSeasons(String partnerId);
+
 
 }
