@@ -321,7 +321,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
             sp.getSubPartnerSeasons().addAll(subPartnerSeasonsList);
             subPartnerDetails.getSubPartners().add(sp);
-            if (subPartnerDetails.getSubPartners()==null && subPartnerDetails.getSubPartners().isEmpty())
+            if (subPartnerDetails.getSubPartners() == null && subPartnerDetails.getSubPartners().isEmpty())
                subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.NO_RECORD));
             else
@@ -376,14 +376,12 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
             subPartnerDetail.getSubPartnerSeasons().addAll(subPartnerSeasonsList);
             subPartnerDetails.getSubPartnerDetails().add(subPartnerDetail);
-            if(subPartnerDetails.getSubPartnerDetails() ==null && subPartnerDetails.getSubPartnerDetails().isEmpty() )
-            {
+            if (subPartnerDetails.getSubPartnerDetails() == null && subPartnerDetails.getSubPartnerDetails().isEmpty()) {
                subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)); 
-            }
-            else
-            subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+                     messageUtil.getMessage(CCIConstants.NO_RECORD));
+            } else
+               subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
          subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_SUB_PARTNER_DETAILS.getValue(),
@@ -529,8 +527,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartnerDetail.setSubPartnerPrimaryContact(subPartnerPrimaryContact);
          subPartnerDetail.setSubPartnerPhysicalAddress(subPartnerPhysicalAddress);
          subPartnerDetail.setSubPartnerMailingAddress(subPartnersMailingAddress);
-            subPartnerDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         subPartnerDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (CcighgoException e) {
          subPartnerDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_PARTNER_GET_DETAILS.getValue(),
@@ -880,9 +878,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                sl.setSalutationValue(salutation.getSalutationName());
                as.getSalutationList().add(sl);
             }
-         if( as.getSalutationList()==null && as.getSalutationList().isEmpty())
-         as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         if (as.getSalutationList() == null && as.getSalutationList().isEmpty())
+            as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          else
             as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
@@ -893,6 +891,43 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FETCH_SALUTATION));
       }
       return as;
+   }
+
+   @Override
+   public WSDefaultResponse updatePartnerStatus(String goId, String loginId, String status) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Partner partner = partnerRepository.findOne(Integer.parseInt(goId));
+         List<PartnerUser> partnerUsers = partner.getPartnerUsers();
+         PartnerUser partnerUser = new PartnerUser();
+         if (partnerUsers != null && partnerUsers.size() > 0) {
+            for (PartnerUser puser : partnerUsers) {
+               if (puser.getPartner() != null)
+                  if (puser.getPartner().getPartnerGoId() == Integer.valueOf(goId)) {
+                     partnerUser = puser;
+                     break;
+                  }
+            }
+            Login login = partnerUser.getLogin();
+            if (login != null) {
+               login.setActive(status.equalsIgnoreCase("Active") ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               loginRepository.save(login);
+            } else {
+               wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_CHANGE_HAPPEN.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            }
+         }
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_APPLICATION_STATUS_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
+         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
+
+      }
+      return wsDefaultResponse;
    }
 
 }
