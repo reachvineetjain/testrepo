@@ -143,7 +143,6 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
                   PartnerSeason pSeason = new PartnerSeason();
 
-                  pSeason.setParticipantAllocated("TODO:need clarification");
                   if (entity.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
                      SeasonJ1Detail j1detail = seasonJ1DetailsRepository.findJ1DetailsBySeasonId(entity.getSeason().getSeasonId());
                      if (j1detail != null) {
@@ -153,7 +152,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         query.setParameter(3, CCIConstants.HSP_J1_HS_ID);
                         List<Object[]> results = query.getResultList();
                         if (results != null && results.size() > 0) {
-                           pSeason.setParticipantAllocated(results.get(0).toString());
+                           for(Object[] obj:results){
+                              pSeason.setParticipantAllocated(obj[0].toString()); 
+                           }
                         }
                         pSeason.setPartnerSeasonProgramName(j1detail.getProgramName());
                         pSeason.setDetailsUrl("/partner/season/view/j1hs/");
@@ -175,7 +176,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         query.setParameter(3, CCIConstants.HSP_F1_ID);
                         List<Object[]> results = query.getResultList();
                         if (results != null && results.size() > 0) {
-                           pSeason.setParticipantAllocated(results.get(0).toString());
+                           for(Object[] obj:results){
+                              pSeason.setParticipantAllocated(obj[0].toString()); 
+                           }
                         }
                         pSeason.setPartnerSeasonProgramName(f1Detail.getProgramName());
                         pSeason.setDetailsUrl("/partner/season/view/f1/");
@@ -197,7 +200,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         query.setParameter(3, CCIConstants.HSP_STP_IHP_ID);
                         List<Object[]> results = query.getResultList();
                         if (results != null && results.size() > 0) {
-                           pSeason.setParticipantAllocated(results.get(0).toString());
+                           for(Object[] obj:results){
+                              pSeason.setParticipantAllocated(obj[0].toString()); 
+                           }
                         }
                         pSeason.setPartnerSeasonProgramName(ihpSeason.getProgramName());
                         pSeason.setDetailsUrl("/partner/season/view/ihp/");
