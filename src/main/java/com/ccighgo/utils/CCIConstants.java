@@ -207,7 +207,7 @@ public class CCIConstants {
    // Field Staff Code
    public static final Integer FieldStaffTypeCode_ERD = 5;
    public static final Integer FieldStaffTypeCode_RD = 3;
-   public static final String SERVICE_FAILURE = "Service Failure";
+   public static final String SERVICE_FAILURE = "service.failure";
    public static final String EQUAL = "=";
    public static final String BITWISE_AND = "&";
 
