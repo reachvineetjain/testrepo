@@ -247,9 +247,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                login.setLoginName("");
                login.setPassword(PasswordUtil.hashKey("password"));
                login.setKeyValue(UuidUtils.nextHexUUID());
-               login.setCreatedBy(goIdSequence.getGoId());
+               login.setCreatedBy(p.getLoginId());
                login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               login.setModifiedBy(goIdSequence.getGoId());
+               login.setModifiedBy(p.getLoginId());
                login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                login.setGoIdSequence(goIdSequence);
                login.setEmail(p.getEmail());
@@ -260,9 +260,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                LoginUserType loginUserType = new LoginUserType();
                loginUserType.setActive(CCIConstants.ACTIVE);
                loginUserType.setUserType(ParticipantUserType);
-               loginUserType.setCreatedBy(goIdSequence.getGoId());
+               loginUserType.setCreatedBy(p.getLoginId());
                loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               loginUserType.setModifiedBy(goIdSequence.getGoId());
+               loginUserType.setModifiedBy(p.getLoginId());
                loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
                loginUserType.setLogin(login);
