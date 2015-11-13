@@ -150,12 +150,12 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         query.setParameter(1, Integer.valueOf(partnerId));
                         query.setParameter(2, entity.getSeason().getSeasonId());
                         query.setParameter(3, CCIConstants.HSP_J1_HS_ID);
-                        List<Object[]> results = query.getResultList();
-                        if (results != null && results.size() > 0) {
-                           for(Object[] obj:results){
-                              pSeason.setParticipantAllocated(obj[0].toString()); 
-                           }
+                        String allocation = "none";
+                        Object result = query.getResultList();
+                        if (result != null) {
+                           allocation = result.toString();
                         }
+                        pSeason.setParticipantAllocated(allocation);
                         pSeason.setPartnerSeasonProgramName(j1detail.getProgramName());
                         pSeason.setDetailsUrl("/partner/season/view/j1hs/");
 
@@ -174,12 +174,12 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         query.setParameter(1, Integer.valueOf(partnerId));
                         query.setParameter(2, entity.getSeason().getSeasonId());
                         query.setParameter(3, CCIConstants.HSP_F1_ID);
-                        List<Object[]> results = query.getResultList();
-                        if (results != null && results.size() > 0) {
-                           for(Object[] obj:results){
-                              pSeason.setParticipantAllocated(obj[0].toString()); 
-                           }
+                        String allocation = "none";
+                        Object result = query.getResultList();
+                        if (result != null) {
+                           allocation = result.toString();
                         }
+                        pSeason.setParticipantAllocated(allocation);
                         pSeason.setPartnerSeasonProgramName(f1Detail.getProgramName());
                         pSeason.setDetailsUrl("/partner/season/view/f1/");
 
@@ -198,12 +198,13 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         query.setParameter(1, Integer.valueOf(partnerId));
                         query.setParameter(2, entity.getSeason().getSeasonId());
                         query.setParameter(3, CCIConstants.HSP_STP_IHP_ID);
-                        List<Object[]> results = query.getResultList();
-                        if (results != null && results.size() > 0) {
-                           for(Object[] obj:results){
-                              pSeason.setParticipantAllocated(obj[0].toString()); 
-                           }
+                        String allocation = "none";
+                        Object result = query.getResultList();
+                        if (result != null) {
+                           allocation = result.toString();
                         }
+                        pSeason.setParticipantAllocated(allocation);
+                        pSeason.setParticipantAllocated(allocation);
                         pSeason.setPartnerSeasonProgramName(ihpSeason.getProgramName());
                         pSeason.setDetailsUrl("/partner/season/view/ihp/");
 
@@ -557,9 +558,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setSevisFeesPaidBy(seasonDetail.getSevisFeesPaidByCCI() == CCIConstants.ACTIVE ? true : false);
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
-         
-         com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getF1ProgramNotes(String.valueOf(seasonDetail.getPartner()
-               .getPartnerGoId()));
+
+         com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getF1ProgramNotes(String.valueOf(seasonDetail
+               .getPartner().getPartnerGoId()));
          partnersSeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
 
          partnersSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
@@ -746,11 +747,11 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
-         
-         com.ccighgo.service.transport.partner.beans.partnerseasonihpdetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getIHPProgramNotes(String.valueOf(seasonDetail.getPartner()
-               .getPartnerGoId()));
+
+         com.ccighgo.service.transport.partner.beans.partnerseasonihpdetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getIHPProgramNotes(String.valueOf(seasonDetail
+               .getPartner().getPartnerGoId()));
          partnersSeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
-         
+
          partnersSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
