@@ -438,7 +438,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             Login login = partnerUser.getLogin();
             if (login != null) {
                details.setUsername(login.getLoginName());
-               details.setPassword(login.getPassword());
+               details.setPassword("*****************");
                subPartnerDetail.setActive(login.getActive() == 1);
             }
          }
