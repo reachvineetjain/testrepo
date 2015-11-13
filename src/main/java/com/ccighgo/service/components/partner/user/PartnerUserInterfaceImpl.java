@@ -449,6 +449,19 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                newUserLogin.setModifiedBy(partnerLogin.getLoginId());
                newUserLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                Login partnerUserLogin = loginRepository.saveAndFlush(newUserLogin);
+               
+               // set login user type
+               LoginUserType loginUserType = new LoginUserType();
+               loginUserType.setLogin(partnerUserLogin);
+               loginUserType.setUserType(userTypeRepository.findOne(2));// UserType 2 is Partner user
+               loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
+               loginUserType.setActive(CCIConstants.ACTIVE);
+               newUserLogin.setCreatedBy(partnerLogin.getLoginId());
+               newUserLogin.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               newUserLogin.setModifiedBy(partnerLogin.getLoginId());
+               newUserLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               loginUserTypeRepository.saveAndFlush(loginUserType);
+               
                // save partner user details
                PartnerUser pUser = new PartnerUser();
                pUser.setPartner(partner);
