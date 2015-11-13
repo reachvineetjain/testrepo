@@ -238,7 +238,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                }
                Login login = new Login();
                login.setActive(CCIConstants.INACTIVE);
-               login.setLoginName("");
+               login.setLoginName(p.getEmail());
                login.setPassword(PasswordUtil.hashKey("password"));
                login.setKeyValue(UuidUtils.nextHexUUID());
                login.setCreatedBy(p.getLoginId());
@@ -523,44 +523,44 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                try {
                   details.setParticipantSeasonName(programName);
                   if (participant.getSeason().getSeasonF1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_F1)) {
-                     if (participant.getSeason().getSeasonF1details() != null && participant.getSeason().getSeasonF1details().get(0) != null)
+                     if (participant.getSeason().getSeasonF1details() != null && !participant.getSeason().getSeasonF1details().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonF1details().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonJ1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_J1_HS)) {
-                     if (participant.getSeason().getSeasonJ1details() != null && participant.getSeason().getSeasonJ1details().get(0) != null)
+                     if (participant.getSeason().getSeasonJ1details() != null && !participant.getSeason().getSeasonJ1details().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonJ1details().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonCapdetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_CAP)) {
-                     if (participant.getSeason().getSeasonCapdetails() != null && participant.getSeason().getSeasonCapdetails().get(0) != null)
+                     if (participant.getSeason().getSeasonCapdetails() != null && !participant.getSeason().getSeasonCapdetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonCapdetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWnTsummerDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_SUMMER)) {
-                     if (participant.getSeason().getSeasonWnTsummerDetails() != null && participant.getSeason().getSeasonWnTsummerDetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWnTsummerDetails() != null && !participant.getSeason().getSeasonWnTsummerDetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWnTwinterDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_WINTER)) {
-                     if (participant.getSeason().getSeasonWnTwinterDetails() != null && participant.getSeason().getSeasonWnTwinterDetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWnTwinterDetails() != null && !participant.getSeason().getSeasonWnTwinterDetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWnTwinterDetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWnTspringDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_SPRING)) {
-                     if (participant.getSeason().getSeasonWnTspringDetails() != null && participant.getSeason().getSeasonWnTspringDetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWnTspringDetails() != null && !participant.getSeason().getSeasonWnTspringDetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWnTspringDetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonHsadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_HS_ABRD)) {
-                     if (participant.getSeason().getSeasonHsadetails() != null && participant.getSeason().getSeasonHsadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonHsadetails() != null && !participant.getSeason().getSeasonHsadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonHsadetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_WRK_ABRD)) {
-                     if (participant.getSeason().getSeasonWadetails() != null && participant.getSeason().getSeasonWadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWadetails() != null && !participant.getSeason().getSeasonWadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWadetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonTadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_TEACH_ABRD)) {
-                     if (participant.getSeason().getSeasonTadetails() != null && participant.getSeason().getSeasonTadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonTadetails() != null && !participant.getSeason().getSeasonTadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonTadetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonLsdetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_LANG_SCL)) {
-                     if (participant.getSeason().getSeasonLsdetails() != null && participant.getSeason().getSeasonLsdetails().get(0) != null)
+                     if (participant.getSeason().getSeasonLsdetails() != null && !participant.getSeason().getSeasonLsdetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonLsdetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonVadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_VOL_ABRD)) {
-                     if (participant.getSeason().getSeasonVadetails() != null && participant.getSeason().getSeasonVadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonVadetails() != null && !participant.getSeason().getSeasonVadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonVadetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonIhpdetails() != null && programName.equalsIgnoreCase(CCIConstants.HSP_STP_IHP)) {
-                     if (participant.getSeason().getSeasonIhpdetails() != null && participant.getSeason().getSeasonIhpdetails().get(0) != null)
+                     if (participant.getSeason().getSeasonIhpdetails() != null && !participant.getSeason().getSeasonIhpdetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonIhpdetails().get(0).getProgramName());
                   }
                } catch (Exception e) {
