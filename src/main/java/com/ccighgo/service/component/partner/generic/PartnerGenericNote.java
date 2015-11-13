@@ -78,6 +78,15 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          noteEntity.setPartnerNoteTopic(partnerNoteTopic);
 
          partnerNoteRepository.saveAndFlush(noteEntity);
+         UserInformationOfCreatedBy userInformationOfCreatedBy = reusedFunctions.getPartnerCreatedByInformation(note.getLoginId());
+         if (userInformationOfCreatedBy != null) {
+            NoteUserCreator noteCreator = new NoteUserCreator();
+            noteCreator.setPhotoUrl(userInformationOfCreatedBy.getPhotoUrl());
+            noteCreator.setRole(userInformationOfCreatedBy.getRole());
+            noteCreator.setUserName(userInformationOfCreatedBy.getUserName());
+            wsDefaultResponse.setCreatedBy(noteCreator);
+         }
+         
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_CREATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
