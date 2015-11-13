@@ -573,8 +573,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                }
                details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
                details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
-               if (participant.getPartner2() != null)
+               if (participant.getPartner2() != null){
                   details.setSubPartnerGoId(participant.getPartner2().getPartnerGoId());
+                  details.setSubPartnerName(participant.getPartner2().getCompanyName());
+               }
 
                addedParticipants.getParticipants().add(details);
             }

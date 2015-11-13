@@ -282,6 +282,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                sp.setSubPartnerFirstName(subPartner.getPartnerContacts().iterator().next().getFirstName());
                sp.setSubPartnerLastName(subPartner.getPartnerContacts().iterator().next().getLastName());
             }
+            sp.setSubPartnerCompanyName(subPartner.getCompanyName());
             if (subPartner.getLookupCountry2() != null) {
                SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
                subPartnerCountry2.setSubPartnerCountry(subPartner.getLookupCountry2().getCountryName());
