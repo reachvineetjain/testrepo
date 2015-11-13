@@ -17,6 +17,7 @@ import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Participant;
+import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.Season;
@@ -41,6 +42,7 @@ import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
+import com.ccighgo.jpa.repositories.ParticipantStatusRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
@@ -110,6 +112,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    LoginRepository loginRepository;
    @Autowired
    EmailServiceImpl email;
+   @Autowired
+   ParticipantStatusRepository participantStatusRepository;
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
    @Override
@@ -134,10 +138,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                participantSeason.setParticipantSeasonProgram(participant.getDepartmentProgram().getProgramName());
 
                com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry participantCountry = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry();
-               participantCountry.setParticipantCountryId(participant.getLookupCountry().getCountryId());
-               participantCountry.setParticipantCountryCode(participant.getLookupCountry().getCountryCode());
-               participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
-
+               if (participant.getLookupCountry() != null) {
+                  participantCountry.setParticipantCountryId(participant.getLookupCountry().getCountryId());
+                  participantCountry.setParticipantCountryCode(participant.getLookupCountry().getCountryCode());
+                  participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
+               }
                com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSubPartner participantSubPartner = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSubPartner();
                // participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
                participantSubPartner.setPartnerGoId(participant.getParticipantGoId());
@@ -264,6 +269,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
                Participant participant = new Participant();
                try {
+                  ParticipantStatus participantStatus = participantStatusRepository.findOne(CCIConstants.PARTICIPANT_STATUS_PENDING_VERIFICATION);
+                  participant.setParticipantStatus(participantStatus);
                   participant.setFirstName(p.getFirstName());
                   participant.setEmail(p.getEmail());
                   participant.setLastName(p.getLastName());
@@ -503,19 +510,24 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   ExceptionUtil.logException(e, logger);
                }
                details.setParticipantGoId(participant.getParticipantGoId() + "");
-
-               details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
-               details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
-               details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
-
-               details.setParticipantCountry(participant.getLookupCountry().getCountryName());
-               details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
+               if (participant.getParticipantStatus() != null) {
+                  details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
+                  details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
+                  details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
+               }
+               if (participant.getLookupCountry() != null) {
+                  details.setParticipantCountry(participant.getLookupCountry().getCountryName());
+                  details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
+               }
                details.setParticipantEmail(participant.getEmail());
-               details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
+               if (participant.getEndDate() != null)
+                  details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
                details.setParticipantFirstName(participant.getFirstName());
-               details.setParticipantGuranteed(participant.getGuaranteed() == 1);
+               if (participant.getGuaranteed() != null)
+                  details.setParticipantGuranteed(participant.getGuaranteed() == 1);
                details.setParticipantlastName(participant.getLastName());
-               details.setParticipantPicUrl(participant.getPhoto());
+               if (participant.getPhoto() != null)
+                  details.setParticipantPicUrl(participant.getPhoto());
                details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
@@ -566,9 +578,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
-               details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
-               details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
-               if (participant.getPartner2() != null){
+               if (participant.getStartDate() != null)
+                  details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
+               if (participant.getSubmittedFlightInfo() != null)
+                  details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
+               if (participant.getPartner2() != null) {
                   details.setSubPartnerGoId(participant.getPartner2().getPartnerGoId());
                   details.setSubPartnerName(participant.getPartner2().getCompanyName());
                }

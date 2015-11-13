@@ -243,4 +243,5 @@ public class CCIConstants {
    public static final String OPERATING_AGGREMENT = "Operating Agreement";
    public static final byte TRUE_BYTE = 1;
    public static final byte FALSE_BYTE = 0;
+   public static final Integer PARTICIPANT_STATUS_PENDING_VERIFICATION = 10;
 }
