@@ -308,7 +308,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
                }
             }
-
+            sp.setSubPartnerStatus(subPartnerStatus);
             List<SubPartnerSeasons> subPartnerSeasonsList = new ArrayList<SubPartnerSeasons>();
             if (subPartner.getPartnerSeasons() != null && subPartner.getPartnerSeasons().size() > 0) {
                for (PartnerSeason partnerSeason : subPartner.getPartnerSeasons()) {
