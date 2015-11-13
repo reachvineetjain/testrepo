@@ -426,7 +426,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                }
             }
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(partner.getPartnerGoId(), Integer.valueOf(partnerOfficeId));
-            if (!(partnerContactList.isEmpty()) || !(partnerUserList.isEmpty())) {
+            if ( !partnerUserList.isEmpty()) {
                throw new CcighgoException("The office you were trying to delete has users associated. "
                      + "Please dissociate the users from this office from User tab and then try deleting later.");
             } else {
