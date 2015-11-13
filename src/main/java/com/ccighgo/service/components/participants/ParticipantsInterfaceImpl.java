@@ -273,7 +273,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   participant.setDepartmentProgram(departmentProgram);
                   Season season = seasonRepository.findOne(p.getSeasonId());
                   participant.setSeason(season);
-
+                  Partner partner = partnerRepository.findOne(p.getPartnerId());
+                  participant.setPartner1(partner);
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
                   participant.setParticipantGoId(goIdSequence.getGoId());
                   participantRepository.saveAndFlush(participant);
