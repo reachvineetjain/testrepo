@@ -89,6 +89,14 @@ public class SubPartner {
     return subPartnerInterface.updatePartnerUserStatus(partnerUserId,statusVal);
    }
    
+   @GET
+   @Path("update/status/{goId}/{loginId}/{status}")
+   @Produces("application/json")
+   public WSDefaultResponse updateSubPartnerStatus(@PathParam("goId") String goId, @PathParam("loginId") String loginId,@PathParam("status") String status) {
+    LOGGER.debug("calling PartnerUser.updatePartnerUserStatus");
+    return subPartnerInterface.updatePartnerStatus(goId,loginId,status);
+   }
+   
    @POST
    @Path("update/addSubPartnerNote")
    @Produces("application/json")

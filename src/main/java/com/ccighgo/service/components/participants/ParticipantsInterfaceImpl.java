@@ -247,9 +247,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                login.setLoginName("");
                login.setPassword(PasswordUtil.hashKey("password"));
                login.setKeyValue(UuidUtils.nextHexUUID());
-               login.setCreatedBy(goIdSequence.getGoId());
+               login.setCreatedBy(p.getLoginId());
                login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               login.setModifiedBy(goIdSequence.getGoId());
+               login.setModifiedBy(p.getLoginId());
                login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                login.setGoIdSequence(goIdSequence);
                login.setEmail(p.getEmail());
@@ -260,9 +260,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                LoginUserType loginUserType = new LoginUserType();
                loginUserType.setActive(CCIConstants.ACTIVE);
                loginUserType.setUserType(ParticipantUserType);
-               loginUserType.setCreatedBy(goIdSequence.getGoId());
+               loginUserType.setCreatedBy(p.getLoginId());
                loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               loginUserType.setModifiedBy(goIdSequence.getGoId());
+               loginUserType.setModifiedBy(p.getLoginId());
                loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
                loginUserType.setLogin(login);
@@ -347,7 +347,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          List<Season> allSeasons = seasonRepository.findAll();
          if (allSeasons != null && !allSeasons.isEmpty()) {
             for (Season s : allSeasons) {
-               if(s.getSeasonF1details()!= null)
+               if (s.getSeasonF1details() != null)
                   for (SeasonF1Detail f1 : s.getSeasonF1details()) {
                      SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
                      seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
@@ -427,7 +427,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                      seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_LANG_SCL_ID);
                      seasons.getDetails().add(seasonsForParticipantDetails);
                   }
-               if (s.getSeasonVadetails()!= null)
+               if (s.getSeasonVadetails() != null)
                   for (SeasonVADetail va : s.getSeasonVadetails()) {
                      SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
                      seasonsForParticipantDetails.setSeasonId(s.getSeasonId());
@@ -435,7 +435,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                      seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_VOL_ABRD_ID);
                      seasons.getDetails().add(seasonsForParticipantDetails);
                   }
-               
+
                if (s.getSeasonIhpdetails() != null)
                   for (SeasonIHPDetail ihp : s.getSeasonIhpdetails()) {
                      SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
@@ -490,7 +490,13 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       AddedParticipantsList addedParticipants = new AddedParticipantsList();
       try {
          // TODO
-         List<Participant> participants = participantRepository.findAddedParticipantByPartnerId(Integer.parseInt(partnerId));
+         List<Participant> participants = null;
+         Partner partner = partnerRepository.findOne(Integer.parseInt(partnerId));
+         if (partner.getIsSubPartner() == CCIConstants.TRUE_BYTE) {
+            participants = participantRepository.findAddedParticipantBySubPartnerId(Integer.parseInt(partnerId));
+         } else {
+            participants = participantRepository.findAddedParticipantByPartnerId(Integer.parseInt(partnerId));
+         }
          if (participants != null) {
             for (Participant participant : participants) {
                AddedParticipantsDetails details = new AddedParticipantsDetails();
@@ -518,11 +524,60 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
-               details.setParticipantSeasonName(participant.getDepartmentProgram().getProgramName());
+               String programName = participant.getDepartmentProgram().getProgramName();
+               try {
+                  details.setParticipantSeasonName(programName);
+                  if (participant.getSeason().getSeasonF1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_F1)) {
+                     if (participant.getSeason().getSeasonF1details() != null && participant.getSeason().getSeasonF1details().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonF1details().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonJ1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_J1_HS)) {
+                     if (participant.getSeason().getSeasonJ1details() != null && participant.getSeason().getSeasonJ1details().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonJ1details().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonCapdetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_CAP)) {
+                     if (participant.getSeason().getSeasonCapdetails() != null && participant.getSeason().getSeasonCapdetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonCapdetails().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonWnTsummerDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_SUMMER)) {
+                     if (participant.getSeason().getSeasonWnTsummerDetails() != null && participant.getSeason().getSeasonWnTsummerDetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonWnTwinterDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_WINTER)) {
+                     if (participant.getSeason().getSeasonWnTwinterDetails() != null && participant.getSeason().getSeasonWnTwinterDetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonWnTwinterDetails().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonWnTspringDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_SPRING)) {
+                     if (participant.getSeason().getSeasonWnTspringDetails() != null && participant.getSeason().getSeasonWnTspringDetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonWnTspringDetails().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonHsadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_HS_ABRD)) {
+                     if (participant.getSeason().getSeasonHsadetails() != null && participant.getSeason().getSeasonHsadetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonHsadetails().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonWadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_WRK_ABRD)) {
+                     if (participant.getSeason().getSeasonWadetails() != null && participant.getSeason().getSeasonWadetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonWadetails().get(0).getProgramName());
+
+                  } else if (participant.getSeason().getSeasonTadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_TEACH_ABRD)) {
+                     if (participant.getSeason().getSeasonTadetails() != null && participant.getSeason().getSeasonTadetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonTadetails().get(0).getProgramName());
+
+                  } else if (participant.getSeason().getSeasonLsdetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_LANG_SCL)) {
+                     if (participant.getSeason().getSeasonLsdetails() != null && participant.getSeason().getSeasonLsdetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonLsdetails().get(0).getProgramName());
+
+                  } else if (participant.getSeason().getSeasonVadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_VOL_ABRD)) {
+                     if (participant.getSeason().getSeasonVadetails() != null && participant.getSeason().getSeasonVadetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonVadetails().get(0).getProgramName());
+
+                  } else if (participant.getSeason().getSeasonIhpdetails() != null && programName.equalsIgnoreCase(CCIConstants.HSP_STP_IHP)) {
+                     if (participant.getSeason().getSeasonIhpdetails() != null && participant.getSeason().getSeasonIhpdetails().get(0) != null)
+                        details.setParticipantSeasonName(participant.getSeason().getSeasonIhpdetails().get(0).getProgramName());
+                  }
+               } catch (Exception e) {
+                  ExceptionUtil.logException(e, logger);
+               }
                details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
                details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
-               if(participant.getPartner2()!=null)
-               details.setSubPartnerGoId(participant.getPartner2().getPartnerGoId());               
+               if (participant.getPartner2() != null){
+                  details.setSubPartnerGoId(participant.getPartner2().getPartnerGoId());
+                  details.setSubPartnerName(participant.getPartner2().getCompanyName());
+               }
+
                addedParticipants.getParticipants().add(details);
             }
             addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),

@@ -15,14 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.DepartmentProgramOption;
-import com.ccighgo.db.entities.Login;
-import com.ccighgo.db.entities.LoginUserType;
-import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAnnouncement;
-import com.ccighgo.db.entities.PartnerNote;
-import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
-import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonIHPDetail;
 import com.ccighgo.db.entities.SeasonJ1Detail;
@@ -50,13 +44,6 @@ import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessa
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewPartnerApplicationDeadLineDate;
 import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
-import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Creator;
-import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Note;
-import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.NoteTopics;
-import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.SeasonStatus;
-import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Topic;
-import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplication;
-import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplication;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeason;
@@ -86,6 +73,7 @@ import com.ccighgo.utils.WSDefaultResponse;
  *
  */
 @Component
+@SuppressWarnings("unchecked")
 public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
    private static final Logger LOGGER = Logger.getLogger(PartnerSeasonInterfaceImpl.class);
@@ -614,16 +602,28 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          com.ccighgo.db.entities.PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(newApplicationDeadlineDatesAllocations.getPartnerSeasonId());
-         if (newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested() != null
-               && !newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested().isEmpty())
-            partnerSeason.setPartnerSeasonExtAppDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested()));
-         if (newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested() != null
-               && !newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested().isEmpty())
-            partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested()));
+         boolean extAppDeadlineModified = false;
+         boolean extSecSemDeadlineModified = false;
 
-         partnerSeasonsRepository.saveAndFlush(partnerSeason);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_NEWDEADLINE_DATE_REQUEST.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         if (newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested() != null
+               && !newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested().isEmpty()) {
+            partnerSeason.setPartnerSeasonExtAppDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested()));
+            extAppDeadlineModified = true;
+         }
+
+         if (newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested() != null
+               && !newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested().isEmpty()) {
+            partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested()));
+            extSecSemDeadlineModified = true;
+         }
+         if (extAppDeadlineModified || extSecSemDeadlineModified) {
+            partnerSeasonsRepository.saveAndFlush(partnerSeason);
+            wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_NEWDEADLINE_DATE_REQUEST.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_CHANGE_HAPPEN.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CREATE_NEW_DEALINE_DATE_REQUEST.getValue(),

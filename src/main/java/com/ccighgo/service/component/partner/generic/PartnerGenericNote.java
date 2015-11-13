@@ -66,10 +66,10 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       try {
          PartnerNote noteEntity = new PartnerNote();
          noteEntity.setCreatedBy(note.getLoginId());
-         noteEntity.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         noteEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         noteEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
          noteEntity.setModifiedBy(note.getLoginId());
-
-         noteEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         
          Partner partner = partnerRepository.findOne(note.getPartnerId());
          noteEntity.setPartner(partner);
          noteEntity.setPartnerNote(note.getNoteValue());
@@ -77,10 +77,10 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          PartnerNoteTopic partnerNoteTopic = partnerNoteTopicRepository.findOne(note.getTopicId());
          noteEntity.setPartnerNoteTopic(partnerNoteTopic);
 
+         partnerNoteRepository.saveAndFlush(noteEntity);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_CREATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
-         partnerNoteRepository.saveAndFlush(noteEntity);
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
 
@@ -122,6 +122,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          if (partnerTopics != null) {
             for (PartnerNoteTopic partnerTopic : partnerTopics) {
                Topic tpc = new Topic();
+               tpc.setLoginId(partnerTopic.getCreatedBy());
+               tpc.setGoId(partnerTopic.getPartner().getGoIdSequence().getGoId());
                tpc.setPartnerNoteTopicName(partnerTopic.getPartnerNoteTopicName());
                tpc.setPartnerNoteTopicId(partnerTopic.getPartnerNoteTopicId());
                tpc.setCompetitorInfo(partnerTopic.getCompetitorInfo() == CCIConstants.ACTIVE ? true : false);
@@ -235,15 +237,21 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       }
       return responce;
    }
+
    @Override
    public WSDefaultResponse createTopic(Topic topic) {
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          PartnerNoteTopic topicData = new PartnerNoteTopic();
          Partner partner = partnerRepository.findOne(topic.getGoId());
-         topicData.setPartner(partner );
+         topicData.setPartner(partner);
          topicData.setPartnerNoteTopicName(topic.getPartnerNoteTopicName());
+         topicData.setIsPublic(topic.isIsPublic() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         topicData.setIsVisibleToPartner(CCIConstants.TRUE_BYTE);
          topicData.setCreatedBy(topic.getLoginId());
+         topicData.setModifiedBy(topic.getLoginId());
+         topicData.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+
          if (topic.isCompetitorInfo() != null) {
             topicData.setCompetitorInfo(topic.isCompetitorInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          }
