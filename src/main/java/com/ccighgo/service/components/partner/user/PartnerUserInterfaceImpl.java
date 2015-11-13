@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerPermission;
@@ -449,6 +450,19 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                newUserLogin.setModifiedBy(partnerLogin.getLoginId());
                newUserLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                Login partnerUserLogin = loginRepository.saveAndFlush(newUserLogin);
+               
+               // set login user type
+               LoginUserType loginUserType = new LoginUserType();
+               loginUserType.setLogin(partnerUserLogin);
+               loginUserType.setUserType(userTypeRepository.findOne(2));// UserType 2 is Partner user
+               loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
+               loginUserType.setActive(CCIConstants.ACTIVE);
+               loginUserType.setCreatedBy(partnerLogin.getLoginId());
+               loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               loginUserType.setModifiedBy(partnerLogin.getLoginId());
+               loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               loginUserTypeRepository.saveAndFlush(loginUserType);
+               
                // save partner user details
                PartnerUser pUser = new PartnerUser();
                pUser.setPartner(partner);
