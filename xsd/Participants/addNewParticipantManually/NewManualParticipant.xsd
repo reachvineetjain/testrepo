@@ -33,6 +33,8 @@
          <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="guranteed" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="added" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
    </xsd:complexType>
    

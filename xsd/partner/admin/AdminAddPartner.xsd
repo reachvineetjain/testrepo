@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/adminaddpartner" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/adminaddpartner"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.admin.add.partner" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="AdminAddPartner" type="pdl:AdminAddPartner" />
+
+   <xsd:complexType name="AdminAddPartner">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="companyLogo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="companyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="quickbookCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="acronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="generalEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="salutation" type="pdl:Salutation" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="canHaveSubpartners" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="generalContact" type="pdl:CCIContact" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="sendLogin" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="notes" type="pdl:NoteTopics" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="Salutation">
+      <xsd:sequence>
+         <xsd:element name="salutationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="CCIContact">
+      <xsd:sequence>
+         <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserPhotoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="NoteTopics">
+      <xsd:sequence>
+         <xsd:element name="topicCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="topicList" type="pdl:Topic" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Topic">
+      <xsd:sequence>
+         <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="topicTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="creator" type="pdl:Creator" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="addedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="privacy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteTags" type="pdl:NoteTags" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="notes" type="pdl:Note" minOccurs="1" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="NoteTags">
+      <xsd:sequence>
+         <xsd:element name="noteTagId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="noteTag" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Note">
+      <xsd:sequence>
+         <xsd:element name="noteId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="creator" type="pdl:Creator" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="note" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Creator">
+      <xsd:sequence>
+         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="createdByPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="designation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

@@ -425,10 +425,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                         + "Please dissociate the users from this office and mark any other office of your choice as primary first");
                }
             }
-            List<PartnerContact> partnerContactList = partnerContactRepository.findPartnerContactsByPartnerIdAndOfficceId(partner.getPartnerGoId(),
-                  Integer.valueOf(partnerOfficeId));
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(partner.getPartnerGoId(), Integer.valueOf(partnerOfficeId));
-            if (partnerContactList != null || partnerUserList != null) {
+            if (!(partnerUserList.isEmpty())) {
                throw new CcighgoException("The office you were trying to delete has users associated. "
                      + "Please dissociate the users from this office from User tab and then try deleting later.");
             } else {

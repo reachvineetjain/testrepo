@@ -12,6 +12,7 @@ import com.ccighgo.service.transport.partner.beans.partner.season.application.Pa
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
 import com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.PartnerSeasonF1Detail;
+import com.ccighgo.service.transport.partner.beans.partnerseasonihpdetail.PartnerSeasonIHPDetail;
 import com.ccighgo.utils.WSDefaultResponse;
 
 
@@ -55,5 +56,11 @@ public interface PartnerSeasonInterface {
    public WSDefaultResponse createNewPartnerAllocationRequest(NewPartnerSeasonAllocationRequest newPartnerSeasonAllocationRequest);
 
    public WSDefaultResponse createNewDeadlineDateRequest(NewPartnerApplicationDeadLineDate newApplicationDeadlineDatesAllocations);
+
+   /**
+    * @param partnerSeasonId
+    * @return
+    */
+   public PartnerSeasonIHPDetail viewIHPPartnerSeason(String partnerSeasonId);
 
 }
