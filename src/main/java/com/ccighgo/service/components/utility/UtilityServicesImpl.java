@@ -852,11 +852,14 @@ public class UtilityServicesImpl implements UtilityServices {
             for (CCIStaffUser cciuser : cciStaffUsersList) {
                CCIUser user = new CCIUser();
                Login cciLogin = loginRepository.findByCCIGoId(cciuser.getCciStaffUserId());
-               user.setLoginId(cciLogin.getLoginId());
+               if(cciLogin!=null){
+                  user.setLoginId(cciLogin.getLoginId());
+               }
                user.setCciUserId(cciuser.getCciStaffUserId());
                user.setCciUserFirstName(cciuser.getFirstName());
                user.setCciUserLastName(cciuser.getLastName());
-               user.setCciUserDesignation(cciuser.getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+               //TODO: not all users have designation and it is throwing exception
+               user.setCciUserDesignation("TODO");
                user.setCciUserPhotoUrl(cciuser.getPhoto());
                cciUsers.add(user);
             }
