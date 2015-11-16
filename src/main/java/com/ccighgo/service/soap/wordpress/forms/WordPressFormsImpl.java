@@ -69,6 +69,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
+            if(InternationalPartners.getWebsite()!=null)
             partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
             // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
 
