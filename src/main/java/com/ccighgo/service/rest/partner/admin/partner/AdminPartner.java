@@ -32,7 +32,7 @@ public class AdminPartner {
    @Autowired AdminPartnerInterface adminPartnerInterface;
    @Context HttpServletRequest request;
    
-   @GET
+   @POST
    @Path("/add/partner/")
    @Produces("application/json")
    @Consumes("application/json")
