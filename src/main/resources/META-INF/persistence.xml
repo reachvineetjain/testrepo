@@ -5,6 +5,15 @@
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
       <mapping-file>META-INF/orm.xml</mapping-file>
       <class>com.ccighgo.db.entities.AddendumDocumentInformation</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsCategory</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsType</class>
+      <class>com.ccighgo.db.entities.AdminQuickStatsTypeAggregate</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueue</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueCategory</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueType</class>
+      <class>com.ccighgo.db.entities.AdminWorkQueueTypeAggregate</class>
       <class>com.ccighgo.db.entities.CCIStaffRole</class>
       <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission</class>
       <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermissionPK</class>
@@ -17,7 +26,6 @@
       <class>com.ccighgo.db.entities.CCIStaffUsersCCIStaffRolePK</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermission</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermissionPK</class>
-      <class>com.ccighgo.db.entities.DepartmentFunction</class>
       <class>com.ccighgo.db.entities.DepartmentProgramOption</class>
       <class>com.ccighgo.db.entities.DepartmentProgram</class>
       <class>com.ccighgo.db.entities.DepartmentResourceGroup</class>
@@ -25,12 +33,18 @@
       <class>com.ccighgo.db.entities.DocumentInformation</class>
       <class>com.ccighgo.db.entities.DocumentType</class>
       <class>com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess</class>
+      <class>com.ccighgo.db.entities.Employer</class>
+      <class>com.ccighgo.db.entities.EmployerPermission</class>
       <class>com.ccighgo.db.entities.FieldStaff</class>
       <class>com.ccighgo.db.entities.FieldStaffAgreement</class>
       <class>com.ccighgo.db.entities.FieldStaffLCSeason</class>
       <class>com.ccighgo.db.entities.FieldStaffLeadershipSeason</class>
+      <class>com.ccighgo.db.entities.FieldStaffPermission</class>
       <class>com.ccighgo.db.entities.FieldStaffType</class>
       <class>com.ccighgo.db.entities.GoIdSequence</class>
+      <class>com.ccighgo.db.entities.HelpContactMode</class>
+      <class>com.ccighgo.db.entities.HostFamily</class>
+      <class>com.ccighgo.db.entities.HostFamilyPermission</class>
       <class>com.ccighgo.db.entities.Login</class>
       <class>com.ccighgo.db.entities.LoginHistory</class>
       <class>com.ccighgo.db.entities.LoginUserType</class>
@@ -39,20 +53,17 @@
       <class>com.ccighgo.db.entities.LookupDepartment</class>
       <class>com.ccighgo.db.entities.LookupGender</class>
       <class>com.ccighgo.db.entities.LookupUSState</class>
-      <class>com.ccighgo.db.entities.OauthHistory</class>
-      <class>com.ccighgo.db.entities.OauthHistoryPK</class>
+      <class>com.ccighgo.db.entities.ParticipantPermission</class>
+      <class>com.ccighgo.db.entities.ParticipantStatus</class>
       <class>com.ccighgo.db.entities.Participant</class>
       <class>com.ccighgo.db.entities.Partner</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiry</class>
-      <class>com.ccighgo.db.entities.PartnerAgentInquiryDocument</class>
-      <class>com.ccighgo.db.entities.PartnerAgentInquiryNote</class>
-      <class>com.ccighgo.db.entities.PartnerAgentInquiryStatus</class>
-      <class>com.ccighgo.db.entities.PartnerAgentProgram</class>
-      <class>com.ccighgo.db.entities.PartnerAgentReview</class>
       <class>com.ccighgo.db.entities.PartnerAnnouncement</class>
-      <class>com.ccighgo.db.entities.PartnerCCIContact</class>
       <class>com.ccighgo.db.entities.PartnerContact</class>
       <class>com.ccighgo.db.entities.PartnerDocument</class>
+      <class>com.ccighgo.db.entities.PartnerHelpOption</class>
+      <class>com.ccighgo.db.entities.PartnerHelpOptionProgram</class>
+      <class>com.ccighgo.db.entities.PartnerHelpRequest</class>
       <class>com.ccighgo.db.entities.PartnerMessage</class>
       <class>com.ccighgo.db.entities.PartnerNoteTag</class>
       <class>com.ccighgo.db.entities.PartnerNoteTopic</class>
@@ -61,6 +72,10 @@
       <class>com.ccighgo.db.entities.PartnerOfficeType</class>
       <class>com.ccighgo.db.entities.PartnerPermission</class>
       <class>com.ccighgo.db.entities.PartnerProgram</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsCategory</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsType</class>
+      <class>com.ccighgo.db.entities.PartnerQuickStatsTypeAggregate</class>
       <class>com.ccighgo.db.entities.PartnerReferenceCheck</class>
       <class>com.ccighgo.db.entities.PartnerReviewStatus</class>
       <class>com.ccighgo.db.entities.PartnerSeason</class>
@@ -70,12 +85,18 @@
       <class>com.ccighgo.db.entities.PartnerStatus</class>
       <class>com.ccighgo.db.entities.PartnerUser</class>
       <class>com.ccighgo.db.entities.PartnerUserRole</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueue</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueCategory</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueType</class>
+      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class>
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>
       <class>com.ccighgo.db.entities.RegionIHP</class>
       <class>com.ccighgo.db.entities.ResourceAction</class>
       <class>com.ccighgo.db.entities.ResourcePermission</class>
+      <class>com.ccighgo.db.entities.Salutation</class>
       <class>com.ccighgo.db.entities.Season</class>
       <class>com.ccighgo.db.entities.SeasonCAPDetail</class>
       <class>com.ccighgo.db.entities.SeasonDepartmentDocument</class>
@@ -104,8 +125,12 @@
       <class>com.ccighgo.db.entities.SeasonWnTSpringDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTSummerDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTWinterDetail</class>
+      <class>com.ccighgo.db.entities.StateAction</class>
+      <class>com.ccighgo.db.entities.StateProcess</class>
+      <class>com.ccighgo.db.entities.StateTransition</class>
+      <class>com.ccighgo.db.entities.StateTypeResourcePermission</class>
+      <class>com.ccighgo.db.entities.StateType</class>
       <class>com.ccighgo.db.entities.SuperRegion</class>
-      <class>com.ccighgo.db.entities.SysDiagram</class>
       <class>com.ccighgo.db.entities.USSchool</class>
       <class>com.ccighgo.db.entities.USSchoolSeason</class>
       <class>com.ccighgo.db.entities.UserType</class>
@@ -117,7 +142,7 @@
          <property name="javax.persistence.jdbc.password" value="creodev" />
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
          <property name="hibernate.show_sql" value="false" />
-         <property name="hibernate.hbm2ddl.auto" value="update" />
+         <property name="hibernate.hbm2ddl.auto" value="none" />
          <property name="hibernate.c3p0.min_size" value="5" />
          <property name="hibernate.c3p0.max_size" value="100" />
          <property name="hibernate.c3p0.acquireIncrement " value="5" />

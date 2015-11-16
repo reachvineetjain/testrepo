@@ -20,13 +20,9 @@ public class PartnerProgram implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerProgramId;
 
-	private byte hasApplied;
+	private Byte hasApplied;
 
-	private byte isEligible;
-
-	private byte isOther;
-
-	private byte isPDNotified;
+	private Byte isEligible;
 
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="partnerProgram")
@@ -34,18 +30,13 @@ public class PartnerProgram implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="markedEligibleBy")
+	@JoinColumn(name="cciStaffUserId")
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram1;
-
-	//bi-directional many-to-one association to LookupDepartmentProgram
-	@ManyToOne
 	@JoinColumn(name="lookupDepartmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram2;
+	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
@@ -63,36 +54,20 @@ public class PartnerProgram implements Serializable {
 		this.partnerProgramId = partnerProgramId;
 	}
 
-	public byte getHasApplied() {
+	public Byte getHasApplied() {
 		return this.hasApplied;
 	}
 
-	public void setHasApplied(byte hasApplied) {
+	public void setHasApplied(Byte hasApplied) {
 		this.hasApplied = hasApplied;
 	}
 
-	public byte getIsEligible() {
+	public Byte getIsEligible() {
 		return this.isEligible;
 	}
 
-	public void setIsEligible(byte isEligible) {
+	public void setIsEligible(Byte isEligible) {
 		this.isEligible = isEligible;
-	}
-
-	public byte getIsOther() {
-		return this.isOther;
-	}
-
-	public void setIsOther(byte isOther) {
-		this.isOther = isOther;
-	}
-
-	public byte getIsPDNotified() {
-		return this.isPDNotified;
-	}
-
-	public void setIsPDNotified(byte isPDNotified) {
-		this.isPDNotified = isPDNotified;
 	}
 
 	public List<PartnerDocument> getPartnerDocuments() {
@@ -125,20 +100,12 @@ public class PartnerProgram implements Serializable {
 		this.ccistaffUser = ccistaffUser;
 	}
 
-	public LookupDepartmentProgram getLookupDepartmentProgram1() {
-		return this.lookupDepartmentProgram1;
+	public LookupDepartmentProgram getLookupDepartmentProgram() {
+		return this.lookupDepartmentProgram;
 	}
 
-	public void setLookupDepartmentProgram1(LookupDepartmentProgram lookupDepartmentProgram1) {
-		this.lookupDepartmentProgram1 = lookupDepartmentProgram1;
-	}
-
-	public LookupDepartmentProgram getLookupDepartmentProgram2() {
-		return this.lookupDepartmentProgram2;
-	}
-
-	public void setLookupDepartmentProgram2(LookupDepartmentProgram lookupDepartmentProgram2) {
-		this.lookupDepartmentProgram2 = lookupDepartmentProgram2;
+	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		this.lookupDepartmentProgram = lookupDepartmentProgram;
 	}
 
 	public Partner getPartner() {

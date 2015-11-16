@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/addedParticipantList" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pal="http://www.ccighgo.com/addedParticipantList"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.participant.beans.addedParticipantList" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="AddedParticipantsList" type="pal:AddedParticipantsList" />
+
+   <xsd:complexType name="AddedParticipantsList">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="participantCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="participants" type="pal:AddedParticipantsDetails" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="AddedParticipantsDetails">
+      <xsd:sequence>
+         <xsd:element name="participantGoId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantlastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="participantSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSeasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+ 		<xsd:element name="participantProgramOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantProgramOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+          <xsd:element name="participantEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="participantCountryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantCountry" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
+ 		<xsd:element name="subPartnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+ 		<xsd:element name="subPartnerName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		 <xsd:element name="participantPlacementStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantPlacementStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+  		<xsd:element name="participantApplicationStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantApplicationStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+          <xsd:element name="participantGuranteed" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantSubmittedFlightInfo" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+
+ 
+
+
+</xsd:schema>

@@ -331,35 +331,6 @@ VALUES
 (5,'EMP','Employer',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (6,'PARTICIPANT','Participant',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
  
-INSERT INTO `cci_gh_go`.`OauthHistory` (`nonce`, `timevalue`) 
-VALUES
-('38lBbL8ewrq1Xbiv98xf', 1332924812),
-('4ApqhLt5kb558LTvvs3c', 1332925216),
-('7Rb0kgWT6Qyipv7hTqZ2', 1333014111),
-('8bHTeUdCXRqbm2dFHH98', 1333350611),
-('8t3BdNwuuXmXrOWanTlG', 1333020877),
-('D5SLy4zpCINZRZDxUgvt', 1332924804),
-('FKCIJSJE3uI15lJEdTEI', 1333017452),
-('h7Uv8ip8yFwiKs28roaK', 1333432723),
-('IiKflm1pXOqepufPqqBR', 1333351017),
-('KboCbqX0RVSJoJ2CyBmd', 1333347193),
-('l1yAAs7HkwoXm1HOv2Qa', 1333107548),
-('lgXKmDK2e60C6WQxwLBU', 1333454344),
-('MMfXAex7IlriE2uD6b81', 1333348794),
-('NGbfsyb8srlzml6M9Pkg', 1333454726),
-('pH8TEAy8DKSrm1MGuiuP', 1333350602),
-('RcNFKrJkGvlZhJ8blRx6', 1333432718),
-('SAHnZRm3JeuP1XGeuwsU', 1333362417),
-('tWeBTZXqO9hfvHZrrr8R', 1333455386),
-('UdTAaBoeLEiyJQxpCbO6', 1333357111),
-('uGZXiJVvlv4el6Zz6SOO', 1333351009),
-('UqDMKr1Qnc28dhH6xvl6', 1333349902),
-('uV2OaQQ7OJu0HFTM5Sx3', 1333349888),
-('UZts4D3hKwWszdWnmwEb', 1333107562),
-('Wv1ySIhfA6Sd1A4kr3Pk', 1333454352),
-('XQmPF0kh2OJIyR8lM2Tq', 1333020936),
-('yKmVMypeizwLB8bFC02n', 1333017588),
-('yqEBziV6rkQzXlHlZKf4', 1333348807);
 
 INSERT INTO `cci_gh_go`.`Login`(`loginId`,`goId`,`loginName`,`password`,`passwordSalt`,createdOn,createdBy,modifiedBy)
 VALUES
@@ -424,12 +395,6 @@ VALUES
 (19, 9,'Int-SP', 'Internship - Self Placed'),
 (20, 9,'Trn-SP', 'Trainee - Self Placed');
 
-INSERT INTO `cci_gh_go`.`DepartmentFunctions`(`deptFunctionID`,`departmentId`,`functionName`,`functionDescription`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
-VALUES 
-(1,1,'Operations','Operation Activities for HSP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(2,2,'Recruitment','Recruitment Activity for WP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(3,2,'Operations','Operations tasks for WP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(4,2,'Services','Service Related activities for WP',CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
 
 
 INSERT INTO `cci_gh_go`.`LookupDepartmentPrograms`(`lookupdepartmentProgramId`,`departmentId`,`programName`,`description`,`createdBy`,`createdOn`,`modifiedBy`,`modifiedOn`) 
@@ -1669,27 +1634,6 @@ VALUES
 (3,1,2,6,1,CURRENT_TIMESTAMP,1),
 (3,1,2,7,1,CURRENT_TIMESTAMP,1);
 
-INSERT INTO `cci_gh_go`.`Partner` (partnerGoId,partnerStatusId,isSubPartner)
-VALUES   
-(1500,1,1),
-(1501,1,0),
-(1502,2,1),
-(1503,1,1),
-(1504,1,0),
-(1505,1,0),
-(1506,1,0),
-(1507,2,0);
-
-INSERT INTO `cci_gh_go`. `PartnerPermissions` (partnerPermissionsId,partnerGoId,viewParticipants,editParticipants,viewPrograms,editPrograms,viewResources,addUsers,viewHelp)
-VALUES   
-(1500,1,1,1,1,1,1,1),
-(1501,1,1,1,1,1,1,1),
-(1502,1,1,1,1,1,1,1),
-(1503,1,1,1,1,1,1,1),
-(1504,1,1,1,1,1,1,1),
-(1505,1,1,1,1,1,1,1),
-(1506,1,1,1,1,1,1,1),
-(1507,1,1,1,1,1,1,1);
 		 
 INSERT INTO `cci_gh_go`. `HostFamily` (hostFamilyGoId,hostFamilyStatusId)
 VALUES   
@@ -1720,15 +1664,6 @@ VALUES
 (4),
 (5);
 		 
-INSERT INTO `cci_gh_go`. `Participant` (participantGoId,participantStatusId)
-VALUES   
-(1800,1),
-(1801,1),
-(1802,1),
-(1803,1),
-(1804,1),
-(1805,1),
-(1806,1);
 		 
 INSERT INTO `cci_gh_go`. `ParticipantPermissions` (participantGoId)
 VALUES  
@@ -1755,3 +1690,397 @@ VALUES
 (1902),
 (1903),
 (1904); 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------Partner Load Queries--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO cci_gh_go.PartnerStatus (partnerStatusName,active)
+VALUES 
+('Approved',1),
+('Not Approved',1),
+('BlackListed',1),
+('Awaiting Approval',1),
+('Active',1),
+('Questionnaire Due',1),
+('Questionnaire Under Review',1),
+('Needs Signed Agreement',1),
+('Rejected',1),
+('Closed',1),
+('Junk',1),
+('Valid',1),
+('Invalid',1);
+
+INSERT  INTO cci_gh_go.`ParticipantStatus`(`participantStatusId`,`participantStatusName`,`active`) 
+VALUES
+(1,'Participant Review',1),
+(2,'SubPartner Review',1),
+(3,'Partner Review',1),
+(4,'CCI review',1),
+(5,'Accepted',1),
+(6,'Cancelled',1),
+(7,'Rejected',1),
+(8,'Application Withdrawn',1),
+(9,'Repatriated',0),
+(10,'Pending Verification',1),
+(11,'On Program',1),
+(12,'Program Complete',0),
+(13,'Deferred',1);
+
+
+INSERT INTO cci_gh_go.`PartnerNoteTags` (`tagName`)
+VALUES 
+('Work&Travels'),
+('HSP-J1'),
+('GHT'),
+('STBound'),
+('Intern'),
+('Trainee'),
+('Meeting/Visit'),
+('CompitetorInfo'),
+('Embassy/VisaInfo'),
+('SeasonInfo'),
+('HSPF1');
+
+INSERT INTO cci_gh_go.`GoIdSequence` VALUES 
+(5351),
+(5352),
+(5354),
+(5355),
+(5358),
+(5359),
+(5360);
+
+INSERT INTO cci_gh_go.`Login`(`loginId`,`goId`,`loginName`,`password`,`keyValue`,`email`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,`active`) 
+VALUES
+(144749,5351,'Maarianparis020eewa','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','E9EAFADAB13E48A9A83A735929AF830F','virginija1@ziptravqel.ltsxszd','2015-10-12 15:12:02',5358,'2015-10-12 15:12:02',5358,1),
+(144750,5359,'Maara2','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','DF39939567DC4A80907C56544342947F','virginija19@ziptravqel.ltsxszd','2015-10-12 17:35:06',5359,'2015-10-12 17:40:24',5359,1),
+(28624,5351,'Maria','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','15f69b2c-533d-11e5-885d-feff819cdc9f','ravi.mishra@creospan.com','2015-10-13 14:17:30',1,'2015-10-13 14:17:30',1,1),
+(144752,5352,'dhoni','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','DF39939567DC4A80907C56544342947F','phani.p@creospan.com','2015-10-13 07:11:13',5360,'2015-10-13 07:15:13',5360,1);
+(144753,5354,'chris','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','DF39939567DC4A80907C56544342947F','chris@gmail.com','2015-10-13 07:11:13',5360,'2015-10-13 07:15:13',5360,1);
+(144754,5355,'david','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','DF39939567DC4A80907C56544342947F','david@gmail.com','2015-10-13 07:11:13',5360,'2015-10-13 07:15:13',5360,1);
+(144755,5360,'morris','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','DF39939567DC4A80907C56544342947F','morris@gmail.com','2015-10-13 07:11:13',5360,'2015-10-13 07:15:13',5360,1);
+(144751,5360,'rahim','e38ad214943daad1d64c102faec29de4afe9da3d','2300331E2B5840FCAE698A1D9D1EFCA9','rahimoddin.naikwade@creospan.com','2015-10-13 07:11:13',5360,'2015-10-13 07:15:13',5360,1); 
+
+
+
+INSERT INTO cci_gh_go.`LoginUserType`(`loginId`,`userTypeId`,`defaultUserType`,`active`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
+VALUES
+(144749,2,1,1,'2015-10-12 15:12:03',5358,'2015-10-12 15:12:03',5358),
+(144750,2,1,1,'2015-10-12 17:35:07',5359,'2015-10-12 17:35:07',5359),
+(28624,2,1,1,'2015-10-13 14:21:57',1,'2015-10-13 14:21:57',1),
+(144751,2,1,1,'2015-10-13 07:11:13',5360,'2015-10-13 07:11:13',5360),
+(144752,2,1,1,'2015-10-13 07:11:13',1,'2015-10-13 07:11:13',1),
+(144753,2,1,1,'2015-10-13 07:11:13',1,'2015-10-13 07:11:13',1),
+(144754,2,1,1,'2015-10-13 07:11:13',1,'2015-10-13 07:11:13',1),
+(144755,2,1,1,'2015-10-13 07:11:13',1,'2015-10-13 07:11:13',1);
+
+INSERT  INTO cci_gh_go.`Partner`(`partnerGoId`,`companyName`,`acronym`,`dandBNumber`,`receiveAYPMails`,`subscribeToCCINewsletter`,`contractSigner`,`quickbooksCode`,`canHaveSubPartner`,`hasSubPartners`,`invoiceMail`,`multiCountrySender`,`isSubPartner`,`parentPartnerGoId`,`payGreenheartDirectly`,`deliverDSForms`,`needPartnerReview`,`mailingAddressIsSameAsPhysicalAdress`,`addressLineOne`,`addressLineTwo`,`city`,`zipcode`,`state`,`countryId`,`email`,`partnerLogo`,`physicalAddressLineOne`,`physicalAddressLineTwo`,`physicalCity`,`physicalZipcode`,`physicalstate`,`physicalcountryId`,`partnerGuid`,`contactNotes`,`billingNotes`,`lastSelectedProgramId`,`participantMedicalReleaseRequired`,`participantSLEPRequired`,`participantTranscriptRequired`,`oldId`,`unguaranteedFormRequired`,`participantELTISRequired`,`createdBy`,`createdOn`,`modifiedBy`,`modifiedOn`)
+VALUES 
+(5351,'Link Communications','LNC',0,1,1,'Ruslan Galkin','Link Communications',0,0,'lc_inv@lc.co.in',0,1,NULL,0,0,0,0,'Park Hotel Noskva, 5th Floor, 25 Nezabravka Str.','Mezabravka 25','Sofia','0090909','goa',37,'lc@lc.co.on','','','','',NULL,'',NULL,'23BAB9BD-22B1-49DB-A7F9-394147653000','','',0,0,1,1,166,1,0,0,'2015-10-09 10:46:19',0,'2015-10-09 10:46:19'),
+(5352,'Step In GmbH','SInG',0,1,0,'Melanie Gerlach','Step In GmbH',0,0,'hanna.exter@stepin.de',1,0,NULL,0,0,0,1,'Beethovenallee 21','','Bonn','53173','TEXAS',98,'melanie.gerlach@step-in.de','','','','',NULL,'',NULL,'23C777DE-D7E2-43AA-B5D6-34FEFF4E6855','','',3,0,1,1,0,0,0,24283,'2015-10-09 10:46:19',49474,'2015-10-09 10:46:19'),
+(5353,'Conservation Volunteers','cv',0,1,1,'Jessica','Conservation Volunteers',0,0,'mtownsend@conservationvolunteers.com.au',0,0,NULL,0,0,0,1,'asdfdf','gftftgfvg','gjjjjj','8980908','goa',14,'mtownsend@conservationvolunteers.com.au','','','','',NULL,'',NULL,'23CDE474-E10B-4411-9EEC-F58A713C3E3E','','',0,0,1,1,1518,1,0,1,'2015-10-09 10:46:19',49474,'2015-10-09 10:46:19'),
+(5354,'Inter-Air Kazakhstan, LLC','InterAirKaz',0,1,1,'Ruslan Galkin','Inter-Air Kazakhstan, LLC',0,0,'ruslan@interair.ru',0,0,NULL,0,0,0,1,'8 Beybitshilik Street','Office 2','Shymkent','160000','',141,'igor@interair.kz','','','','',NULL,'',NULL,'24013991-7ADE-4A0C-AE59-E01B9E6A1887','','',0,0,1,1,0,1,0,88350,'2015-10-09 10:46:19',88350,'2015-10-09 10:46:19'),
+(5358,'Zip Travel International',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0,0,0,NULL,'Kestucio str. 57-1','','Kaunas','LT-44003','',154,NULL,NULL,'Kestucio str. 57-1','','Kaunas','LT-44003','',154,'A24547D4C7574C5E8BED7F36188B8973',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5358,'2015-10-12 15:12:03',5358,'2015-10-12 15:12:03'),
+(5359,'Zip Travel International',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,0,0,0,NULL,'Kestucio str. 57-1','','Kaunas','LT-44003','',154,NULL,NULL,'Kestucio str. 57-1','','Kaunas','LT-44003','',154,'614D06EE87F9435E8DEDB513A5CB71FE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5359,'2015-10-12 17:35:07',5359,'2015-10-12 17:40:24');
+
+INSERT INTO cci_gh_go.`PartnerSeason`(`partnerSeasonId`,`seasonId`,`partnerGoId`,`departmentProgramId`,`partnerSeasonStatusId`,`insuranceProvidedByCCI`,`sevisFeesPaidByCCI`,`insuranceCarrierName`,`insurancePhoneNumber`,`insurancePolicyNumber`,`questionaireRequired`,`questionnaireSubmittedOn`,`disableAddParticipant`,`partnerSeasonStartDate`,`partnerSeasonEndDate`,`partnerSeasonAppDeadlineDate`,`partnerSeasonExtAppDeadlineDate`,`partnerSeasonSecSemDeadlineDate`,`partnerSeasonExtSecSemDeadlineDate`,`contractScheduleId`,`canAccessJobBoard`,`partnerTaxCompanyId`,`timelyReturnReportReceivedDate`,`originalsReceivedDate`,`participantPaysDeposit`,`exceptionComments`,`cciStaffUserId`,`active`,`createdBy`,`createdOn`,`modifiedBy`,`modifiedOn`)
+VALUES 
+(1,8,5351,6,5,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2009-05-01 00:00:00','2009-10-31 00:00:00','2009-05-16 00:00:00','2009-07-01 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',1,1,NULL,'2010-12-23 00:00:00','2010-12-23 00:00:00',0,'',1000,1,18,'2015-10-09 10:46:19',88350,'2015-10-09 10:46:19'),
+(2,1,5352,1,2,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2010-01-15 00:00:00','2010-06-28 00:00:00','2009-10-15 00:00:00','9999-09-09 00:00:00','2009-10-15 00:00:00','2009-12-15 00:00:00',45,1,NULL,'9999-09-09 00:00:00','9999-09-09 00:00:00',0,'',1003,1,17782,'2015-10-09 10:46:19',17782,'2015-10-09 10:46:19'),
+(3,16,5353,13,2,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2009-10-01 00:00:00','2010-12-31 00:00:00','2010-12-31 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',0,1,NULL,'9999-09-09 00:00:00','9999-09-09 00:00:00',0,'',1025,1,17782,'2015-10-09 10:46:19',17782,'2015-10-09 10:46:19'),
+(4,10,5354,6,2,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2011-04-15 00:00:00','2011-11-15 00:00:00','2011-06-15 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',124,1,NULL,'9999-09-09 00:00:00','9999-09-09 00:00:00',0,'',1003,1,15334,'2015-10-09 10:46:19',15338,'2015-10-09 10:46:19'),
+(5,9,5351,6,5,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2009-05-01 00:00:00','2009-10-31 00:00:00','2009-05-16 00:00:00','2009-07-01 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',1,1,NULL,'2010-12-23 00:00:00','2010-12-23 00:00:00',0,'',1000,1,18,'2015-10-09 14:18:36',88350,'2015-10-09 14:18:36'),
+(6,10,5351,6,5,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2009-05-01 00:00:00','2009-10-31 00:00:00','2009-05-16 00:00:00','2009-07-01 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',1,1,NULL,'2010-12-23 00:00:00','2010-12-23 00:00:00',0,'',1000,1,18,'2015-10-09 14:18:44',88350,'2015-10-09 14:18:44'),
+(7,1,5351,2,5,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2009-05-01 00:00:00','2009-10-31 00:00:00','2009-05-16 00:00:00','2009-07-01 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',1,1,NULL,'2010-12-23 00:00:00','2010-12-23 00:00:00',0,'',1000,1,18,'2015-10-09 14:18:54',88350,'2015-10-09 14:18:54'),
+(8,2,5351,1,5,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2009-05-01 00:00:00','2009-10-31 00:00:00','2009-05-16 00:00:00','2009-07-01 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',1,1,NULL,'2010-12-23 00:00:00','2010-12-23 00:00:00',0,'',1000,1,18,'2015-10-09 14:19:04',88350,'2015-10-09 14:19:04'),
+(9,3,5351,1,5,0,0,'Aetna Student Health','1-888-294-6050','299949',0,'9999-09-09 00:00:00',0,'2009-05-01 00:00:00','2009-10-31 00:00:00','2009-05-16 00:00:00','2009-07-01 00:00:00','9999-09-09 00:00:00','9999-09-09 00:00:00',1,1,NULL,'2010-12-23 00:00:00','2010-12-23 00:00:00',0,'',1000,1,18,'2015-10-09 14:19:19',88350,'2015-10-09 14:19:19');
+
+INSERT INTO cci_gh_go.`PartnerCCIContact`(`partnerCCIContactId`,`partnerGoId`,`cciStaffUserId`,`lookupDepartmentProgramId`) 
+VALUES 
+(1,5351,1000,6),
+(2,5351,1001,1),
+(3,5352,1002,2),
+(4,5352,1003,1),
+(5,5353,1020,13),
+(6,5353,1025,2),
+(7,5354,1000,6),
+(8,5358,1003,1),
+(9,5359,1005,2);
+
+INSERT  INTO cci_gh_go.`PartnerSeasonAllocation`(`partnerSeasonAllocationId`,`partnerSeasonId`,`departmentProgramOptionId`,`maxPax`,`maxGuaranteedPax`,`expectedPaxCount`,`createdBy`,`createdOn`,`modifiedBy`,`modifiedOn`) 
+VALUES 
+(1,1,10,100,20,20,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(2,1,11,120,90,30,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(3,1,12,100,100,20,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(4,2,1,100,12,11,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(5,2,3,100,50,50,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(6,4,10,200,20,20,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(7,4,11,300,150,150,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(8,4,12,200,20,20,1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(10,7,5,0,35,NULL,0,'2015-10-13 14:32:48',0,'2015-10-13 14:32:48'),
+(11,8,1,150,20,NULL,0,'2015-10-13 14:32:55',0,'2015-10-13 14:32:55'),
+(12,9,3,123,12,NULL,0,'2015-10-13 14:35:32',0,'2015-10-13 14:35:32'),
+(13,8,3,123,23,NULL,0,'2015-10-13 14:35:46',0,'2015-10-13 14:35:46'),
+(14,9,1,1234,12,NULL,0,'2015-10-13 14:35:54',0,'2015-10-13 14:35:54');
+
+INSERT INTO cci_gh_go.PartnerOfficeType (partnerOfficeType)
+VALUES
+('Main'),
+('Satellite'),
+('Other');
+
+INSERT INTO cci_gh_go.`PartnerOffice`(`partnerOfficeId`,`partnerOfficeTypeId`,`partnerGoId`,`adressOne`,`adressTwo`,`city`,`state`,`postalCode`,`countryId`,`faxNumber`,`phoneNumber`,`website`,`officeNotes`,`createdBy`,`createdOn`,`modifiedBy`,`modifiedOn`) 
+VALUES 
+(1,1,5351,'Park Hotel Noskva, 5th Floor, 25 Nezabravka Str.','Mezabravka 25','Sofia','Goa','1113',37,'359-2-66-56-73','359-2-65-73-41 or 65-80-19','','',1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(2,1,5352,'Beethovenallee 21 ','','Bonn','','53173',98,'','','www.Stepin.de','',1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(3,1,5353,'','','Ballarat','Victoria','',14,'','','','',1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(4,1,5354,'8 Beybitshilik Street','Office 2','Shymkent','','160000',141,'','','http://www.interair.kz/','',1,'2015-10-09 10:46:20',1,'2015-10-09 10:46:20'),
+(6,1,5358,'Kestucio str. 57-1','','Kaunas','','LT-44003',154,'370 37 750197','370 37 22055255',NULL,NULL,5358,'2015-10-12 15:12:04',5358,'2015-10-12 15:12:04'),
+(7,1,5359,'Kestucio str. 57-1','','Kaunas','','LT-44003',154,'370 37 750197','370 37 22055255',NULL,NULL,5359,'2015-10-12 17:35:12',5359,'2015-10-12 17:40:30');
+
+INSERT  INTO cci_gh_go.`PartnerAgentInquiries`(`partnerAgentInquiriesId`,`partnerAgentGoId`,`companyName`,`salutationId`,`firstName`,`lastName`,`adressLineOne`,`adressLineTwo`,`city`,`state`,`countryId`,`phone`,`email`,`website`,`submittedOn`,`teachAbroad`,`volunteerAbroad`,`highSchoolAbroad`,`other`,`ambassadorScholershipParticipants`,`currentlySendingParticipantToUS`,`businessYears`,`currentlyOfferingPrograms`,`howDidYouHearAboutCCI`,`followUpDate`,`businessName`,`countryFlag`,`logo`,`participantsForHomeCountry`) 
+VALUES 
+(1,5351,'Link Communications',1,'Maria','Giurova','Park Hotel Noskva, 5th Floor, 25 Nezabravka Str.','Mezabravka 25','Sofia','Goa',37,'359-2-65-73-41','lc@lc.co.on','','2008-09-01 00:00:00',0,0,0,0,0,1,'9','','WEBSITE','2008-09-25 00:00:00','Link Communications','','',1),
+(2,5352,'Step In GmbH',1,'Jutta','Brenner','Beethovenallee 21 ','','Bonn','',98,'','jutta.br@step-in.de','www.stepin.de','2007-09-01 00:00:00',0,0,0,0,0,0,'10','','Website','2008-09-30 00:00:00','Step In GmbH','','',1),
+(3,5353,'Conservation Volunteers',1,'Madeline','Townsend','','','Ballarat','Victoria',14,'','mtownsend@conservationvolunteers.com.au','','2007-09-01 00:00:00',0,0,0,0,0,1,'15','','Website','2008-09-28 00:00:00','Conservation Volunteers','','',1),
+(4,5354,'Inter-Air Kazakhstan, LLC',1,'Lara','Sozvick','8 Beybitshilik Street','Office 2','Shymkent','',141,'','lara@interair.kz','www.interair.kz','2010-08-07 00:00:00',0,0,0,0,0,1,'12','','Website','2010-12-31 00:00:00','Inter-Air Kazakhstan, LLC','','',1);
+
+INSERT INTO cci_gh_go.`PartnerProgram`(`partnerProgramId`,`partnerGoId`,`lookupDepartmentProgramId`,`hasApplied`,`markedEligibleBy`,`isOther`,`isEligible`,`isPDNotified`) 
+VALUES 
+(1,5351,6,1,1000,0,1,1),
+(2,5352,2,1,1003,0,1,1),
+(3,5353,11,1,1025,1,1,1),
+(4,5354,6,1,1003,0,1,1),
+(5,5351,1,1,1000,0,1,0),
+(6,5351,2,1,1000,0,1,0),
+(7,5351,3,0,NULL,0,0,0),
+(8,5351,4,1,1000,0,1,1),
+(9,5351,5,1,1000,0,1,1),
+(10,5351,7,1,1003,0,1,1),
+(11,5351,8,1,1000,0,1,1);
+
+
+INSERT INTO cci_gh_go.`PartnerMessages`(`partnerInquiryMessageId`,`partnerInquiryMessage`,`partnerGoId`,`cciStaffUserId`,`createdOn`)
+VALUES 
+(1,'qwerty is spmething',5351,1000,'2009-12-01 00:00:00'),
+(2,'qwerty is something',5352,1003,'2009-12-01 00:00:00'),
+(3,'qwerty is something',5353,1025,'2009-12-01 00:00:00'),
+(4,'qwerty is something',5354,1003,'2009-12-01 00:00:00'),
+(5,'qwert',5351,1004,'2015-10-13 19:45:46');
+
+INSERT  INTO cci_gh_go.`PartnerUser`(`partnerUserId`,`partnerGoId`,`loginId`,`genderId`,`salutationId`,`title`,`firstName`,`lastName`,`email`,`photo`,`phone`,`emergencyPhone`,`isPrimary`,`fax`,`skypeId`,`active`) 
+VALUES 
+(1,5351,28624,2,2,'Head','Maria','Giurova','lc@lc.co.on','','359-2-65-73-41','359-2-65-73-41',1,'359-2-66-56-73','maria.g',1),
+(2,5352,25957,NULL,1,'Head','Hanna','Exter','henna@setp.in','','49-(0)228-95695-334','49 173 729 88 89',1,'49-(0)228-95695-28','henna.e',1),
+(3,5353,27732,NULL,1,'Director Enterprises','Madeline','Townsend','mtownsend@conservationvolunteers.com.au','','','',1,'','',1),
+(4,5354,139494,NULL,1,'Head','Igor','Sereda','igor@interair.kz','','359-2-00-00-00','359-2-88-73-53',1,'359-2-43-56-84','i.g',1),
+(5,5351,144749,1,1,'Admin','Ricky','Ponting','abc@abc.com',' ','359-256-666','144-555-444',0,'36589-789-789','123456',1);
+
+INSERT INTO cci_gh_go.PartnerDocument (`partnerGoId`,`documentInformationId`,`partnerProgramId`,`description`)
+VALUES
+(5351,28,4,'Document');
+
+INSERT INTO cci_gh_go.PartnerAnnouncement (`partnerGoId`,`seasonId`,`departmentProgramId`,`announcement`,`title`,`active`,`createdBy`,`createdOn`,`modifiedBy`,`modifiedOn`)
+VALUES 
+(5351,8,6,'','',1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP),
+(5352,1,2,'','',1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP),
+(5353,16,13,'','',1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP),
+(5354,10,6,'','',1,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP);
+
+
+INSERT INTO cci_gh_go.`PartnerPermissions`(`partnerPermissionsId`,`partnerUserId`,`j1Admin`,`j1Applications`,`j1Flights`,`j1PlacementInfo`,`j1Monitoring`,`j1AccountingInsurance`,`j1StudentsPreProgram`,`j1Contracting`,`j1Insurance`,`f1Admin`,`f1Applications`,`f1Flights`,`f1PlacementInfo`,`f1Monitoring`,`f1AccountingInsurance`,`f1StudentsPreProgram`,`f1Contracting`,`f1Insurance`,`ihpAdmin`,`ihpApplications`,`ihpFlights`,`ihpPlacementInfo`,`ihpMonitoring`,`ihpAccountingInsurance`,`ihpStudentsPreProgram`,`ihpContracting`,`ihpInsurance`,`wtAdmin`,`wtApplications`,`wtFlights`,`wtPlacementInfo`,`wtMonitoring`,`wtAccountingInsurance`,`wtStudentsPreProgram`,`wtContracting`,`wtInsurance`,`capAdmin`,`capApplications`,`capFlights`,`capPlacementInfo`,`capMonitoring`,`capAccountingInsurance`,`capStudentsPreProgram`,`capContracting`,`capInsurance`) 
+VALUES 
+(1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0),
+(2,2,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+(3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+(4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0),
+(5,5,0,0,1,0,1,1,1,1,0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+
+INSERT  INTO cci_gh_go.`Participants`(`participantGoId`,`firstName`,`lastName`,`partnerGoId`,`countryId`,`participantStatusId`,`seasonId`,`departmentProgramId`,`startDate`,`endDate`,`guaranteed`,`submittedFlightInfo`,`subPartnerId`,`email`,`isLead`,`departmentProgramOptionId`,`photo`)
+VALUES 
+(10000,'Eve','Moertin',5351,37,1,8,6,'2009-05-01 00:00:00','2009-10-31 00:00:00',1,1,NULL,'eve.fff@gmail.com',0,10,''),
+(10001,'Dorm','Josef',5351,98,1,1,1,'2010-01-15 00:00:00','2010-06-28 00:00:00',1,1,NULL,'d.j@gmail.com',0,1,''),
+(10002,'sona','Kej',5353,14,1,16,9,'2009-10-01 00:00:00','2010-12-31 00:00:00',1,1,NULL,'sd.kj@hg.in',0,19,''),
+(10003,'Hoss','toss',5354,141,1,10,6,'2011-04-15 00:00:00','2011-11-15 00:00:00',1,1,NULL,'ghdfg@ghg.com',0,11,''),
+(10004,'Ricky','Ponting',5352,98,5,1,1,'2010-01-15 00:00:00','2010-06-28 00:00:00',1,0,NULL,'ricky.ponting@gmail.com',0,1,NULL),
+(10005,'Damien','Martin',5352,98,5,1,1,'2010-01-15 00:00:00','2010-06-28 00:00:00',0,1,NULL,'d.martin@yahoo.com',1,3,NULL),
+(10006,'Adam','Gilly',5353,14,5,16,9,'2009-10-01 00:00:00','2010-12-31 00:00:00',0,1,NULL,'adam.g@yaho.com',0,19,NULL),
+(10007,'Ricky','Martin',5351,14,3,2,1,'2015-10-14 15:23:33','2015-10-23 15:23:41',1,1,NULL,'abc@hgj.com',0,1,NULL),
+(10008,'Andrew','Flintoff',5351,14,3,3,1,'2015-10-14 15:27:39','2015-10-29 15:27:42',1,1,NULL,'abc@hgqwj.com',0,3,NULL),
+(10009,'Alister','Cook',5351,14,3,1,2,'2015-10-14 15:29:00','2015-10-29 15:29:04',1,1,NULL,'qwe@qwe.asd',0,5,NULL),
+(10010,'Michael','Clark',5351,14,1,1,2,'2015-10-14 15:31:57','2015-10-14 15:32:00',1,1,NULL,'asdfasd@asdf.casdf',0,5,NULL),
+(10011,'Nasser ','Hossain',5351,14,4,1,2,'2015-10-14 15:33:20','2015-10-29 15:33:23',1,1,NULL,'asfas@adfas.asdf',0,5,NULL),
+(10012,'Chris','Gayle',5351,14,8,2,1,'2015-10-14 15:43:22','2015-10-30 15:43:25',0,1,NULL,'fasdas@sadfs.cfd',0,3,NULL),
+(10013,'Dwayne','Bravo',5351,14,8,1,2,'2015-10-14 15:45:05','2015-10-29 15:45:07',1,1,NULL,'asdfasd@asdf.com',0,7,NULL),
+(10014,'Hussain','Bolt',5351,14,3,1,2,'2015-10-14 15:54:33','2015-10-30 15:54:39',1,1,NULL,'sdfsd@asfasd.com',0,5,NULL),
+(10015,'jonty','Rhodes',5351,14,3,2,1,'2015-10-14 15:56:01','2015-10-29 15:56:03',0,1,NULL,'asdfasdf@fasd.com',0,3,NULL);
+
+INSERT INTO cci_gh_go.`PartnerReviewStatus`(`partnerReviewStatusId`,`partnerGoId`,`partnerLeadStatusId`,`partnerAgentStatusId`,`partnerStatusReason`,`cciStaffUserId`) VALUES 
+(1,5351,12,1,'Good Experience',1000),
+(2,5358,12,1,'Good Experience',1003),
+(3,5352,12,1,'Good Experience',1025),
+(4,5354,12,1,'Good Experience',1003),
+(5,5359,1,1,'',1004);
+
+INSERT INTO cci_gh_go.`PartnerNoteTopics`(`partnerNoteTopicId`,`PartnerNoteTopicName`,`partnerGoId`,`isPublic`,`w&t`,`j1`,`ght`,`stInbound`,`intern`,`trainee`,`meeting/visit`,`competitorInfo`,`embassy/VisaInfo`,`seasonInfo`,`f1`)
+VALUES 
+(1,'xyz',5351,0,1,0,0,0,0,0,0,0,0,0,0),
+(2,'abc',5352,0,0,0,0,0,0,0,0,0,0,1,1),
+(3,'pqr',5353,0,0,0,1,0,0,0,0,0,0,0,0),
+(4,'def',5354,0,1,0,0,0,0,0,0,0,0,0,0),
+(5,'title',5358,0,0,0,0,0,0,0,1,0,0,0,0),
+(6,'title',5359,0,0,0,0,0,0,0,1,0,0,0,0),
+(7,'ABC',5351,1,0,1,0,1,1,0,0,0,0,0,0);
+
+
+
+INSERT INTO cci_gh_go.`PartnerNotes`(`partnerNotesId`,`partnerNoteTopicId`,`partnerGoId`,`partnerNote`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
+VALUES 
+(1,1,5351,' recieved follow up from Bibi regarding SWT 14. Sent to DE/Moz for further guidance. JN','2010-09-09 00:00:00',1,'2010-09-09 00:00:00',1),
+(2,2,5352,' Sent PSPP Booklet to Hannah. JN','2011-09-15 00:00:00',1,'2011-09-15 00:00:00',1),
+(3,2,5353,'WYSTC 2011: AYP:  After expressing dissatisfaction with our pricing structure (we offered him a G price of $5880 with $2500 for G for 30 pax.   $8580 total price ÔÇô 45% increase, no wonder unhappy!)  allowed me to explain our rationale. He got it.  He agreed at dinner to all G at a price of $7500, and offered to take any spots that MAP doesnÔÇÖt send, eg 100ish pax.    Next day, however, he emailed me saying IÔÇÖd charmed into agreeing too readily and is still asking for a reduced price, not surprising.  I thought he gave in too quickly that night.  Likely that we will offer him $7000 with all G (wonÔÇÖt take UG).  We should consider reducing MAP pax and taking more Step-in.  Lower maintenance pax and less exposure by having all eggs in one partnerÔÇÖs basket.  Will discuss further with MM and get back to him.\nGHT, HS:   Willingly agreed to offer free German language classes for first four weeks.   We should get pricing from him for their HS and compare with STS before making final decision.','2010-09-09 00:00:00',1,'2010-09-09 00:00:00',1),
+(4,3,5354,'From overseas emergency #: +61.3.5330.2600\nFrom Australia: (03) 5330.2600.\n11/05:Inbound to Australia - Volunteer/Conservation Programs	Have been in business since 1982 / 50% of the participants are international / programs begin every Friday from any of the locations they have offices in / include meals, accommodations & predeparture orientations / no specific skills needed / 140 full-time employees w/ 24 offices across Australia (all easily accessible via public transportation from airports) 	\nMadeline forwarded Juliet & I a partner agreement w/ programmatic info. Waiting to discuss w/ Juliet when she returns from vacation next week. (SK - WYSTC).\nWYSTC 2008: JJ met with Madeleine. She told me about some exciting new programs, the most interesting a sea bird project in New Zealand. The land that encompasses the sea birds habitat is owned by a corporation that is donating it to Conservation Volunteers, along with two new buildings to house conservationsists and volunteers, plus two years worth of operating expenses. The project will be ready to receive volunteers next year. They are also working on a new database (also funded from corporate donations) that once complete will provide a more efficient booking system. Otherwise their programs have stayed the same, no price increases, and we are very happy working with them.','2009-10-26 15:24:29',1,'2009-10-26 15:24:29',1),
+(5,4,5354,'2/26/10: This organization was introduced to us by Nick Deng.','2009-09-01 00:00:00',1,'2009-09-01 00:00:00',1),
+(6,5,5358,'6/2003: false promises last year; do not work with.\r\nJune 2009, removed Blacklist status! Monica Yates visit notes: I missed my connection the night before so had to spend the night in SP and arrive to Curitiba in the afternoon on June 8. I was running late to my appointments because of this, so asked Erin to email Marcelo from World Study to let him know. Due to the later meeting time, Marcelo was not able to meet with me but send Camila and Thiago in his place. Camila works directly with WT and manages the ops there, and Thiago manages marketing for WS. They met me in the hotel lobby at 1 pm and from there we went to lunch.\r\nI got the impression that World Study had a tough season last year, not just because of placement cancellations, but because of the dollar increase. It is my understanding from Carlos that many winter partners had a problem where students paid for programs/DS forms when the dollar was lower than the dollar value went up and that partners were not able to pay for the DS forms. Anyway, Camila and Thiago were telling me that WS had just moved from a house to an office, less space now. \r\nI would consider a trial season with World Study, allotting 40 maximum, in order to get an idea of how they work. Although they have a lot of experience with WT, they also work with a number of other sponsors (9?), as we know from CI and STB, it can be confusing for partners to acclimate to yet another system for things. In addition, I am convinced they are still affected by last season’s crash. Worth noting is that after my meeting with them, Carlos told me it would be good for CCI to work with WS, but that we should be careful as they have a reputation for not paying.  No DS forms for WS w/o payment!  \r\nWorth noting is that Jose from ICCE had worked with Thiago in the past and had good things to say about him. I liked Camila, as she seemed to have a good head on her shoulders. She reminded me of June Poon, quiet, work-focused, and straight-forward.\r\nWorld Study indicated that they would not have many for the SP program. They work with various sponsors and were thrilled to hear that our application system is online – no paper!  They were also amazed to hear that CCI issues the DS-2019 overnight and that we have a very quick application turnaround. I told them that reviewing the application and issuing the form is never a time issue, from the time a complete application is received and payment is received, the DS process only takes a few days.  \r\nFollow-up: \r\nAllocation: 20/10/10   Melissa and I emailed Camila and Janaina possible numbers, but Camila thinks they will need to send their SP to another sponsor. They will review our materials and get back to us. Will follow-up again in another week or two this July.\r\nWTC: only if they agree to work with us this winter and sign the agreement','2015-10-12 15:12:08',5358,'2015-10-12 15:12:08',5358),
+(7,6,5359,'6/2003: false promises last year; do not work with.\r\nJune 2009, removed Blacklist status! Monica Yates visit notes: I missed my connection the night before so had to spend the night in SP and arrive to Curitiba in the afternoon on June 8. I was running late to my appointments because of this, so asked Erin to email Marcelo from World Study to let him know. Due to the later meeting time, Marcelo was not able to meet with me but send Camila and Thiago in his place. Camila works directly with WT and manages the ops there, and Thiago manages marketing for WS. They met me in the hotel lobby at 1 pm and from there we went to lunch.\r\nI got the impression that World Study had a tough season last year, not just because of placement cancellations, but because of the dollar increase. It is my understanding from Carlos that many winter partners had a problem where students paid for programs/DS forms when the dollar was lower than the dollar value went up and that partners were not able to pay for the DS forms. Anyway, Camila and Thiago were telling me that WS had just moved from a house to an office, less space now. \r\nI would consider a trial season with World Study, allotting 40 maximum, in order to get an idea of how they work. Although they have a lot of experience with WT, they also work with a number of other sponsors (9?), as we know from CI and STB, it can be confusing for partners to acclimate to yet another system for things. In addition, I am convinced they are still affected by last season’s crash. Worth noting is that after my meeting with them, Carlos told me it would be good for CCI to work with WS, but that we should be careful as they have a reputation for not paying.  No DS forms for WS w/o payment!  \r\nWorth noting is that Jose from ICCE had worked with Thiago in the past and had good things to say about him. I liked Camila, as she seemed to have a good head on her shoulders. She reminded me of June Poon, quiet, work-focused, and straight-forward.\r\nWorld Study indicated that they would not have many for the SP program. They work with various sponsors and were thrilled to hear that our application system is online – no paper!  They were also amazed to hear that CCI issues the DS-2019 overnight and that we have a very quick application turnaround. I told them that reviewing the application and issuing the form is never a time issue, from the time a complete application is received and payment is received, the DS process only takes a few days.  \r\nFollow-up: \r\nAllocation: 20/10/10   Melissa and I emailed Camila and Janaina possible numbers, but Camila thinks they will need to send their SP to another sponsor. They will review our materials and get back to us. Will follow-up again in another week or two this July.\r\nWTC: only if they agree to work with us this winter and sign the agreement','2015-10-12 17:35:14',5359,'2015-10-12 17:35:14',5359),
+(8,7,5351,'asdfasfasdfasdfasdfasdfasdfasdf','2015-10-13 14:13:48',1,'2015-10-13 14:13:48',1);
+
+
+INSERT INTO cci_gh_go.`PartnerContact`(`partnerContactId`,`partnerGoId`,`salutationId`,`firstName`,`lastName`,`title`,`partnerOfficeId`,`email`,`phone`,`emergencyPhone`,`fax`,`receiveNotificationEmails`,`website`,`skypeId`,`active`,`createdBy`,`createdOn`,`modifiedBy`,`modifiedOn`) 
+VALUES 
+(1,5351,1,'Maria','Giurova','Head',1,'lc@lc.co.on','359-2-65-73-41','359-2-65-73-41','359-2-66-56-73',1,'','maria.g',1,1,'2009-10-10 00:00:00',1,'2009-10-10 00:00:00'),
+(2,5352,1,'Hanna','Exter','Head',2,'henna@setp.in','49-(0)228-95695-334','49 173 729 88 89','49-(0)228-95695-28',1,'www.Stepin.de','henna.e',1,1,'2010-02-01 00:00:00',1,'2010-02-01 00:00:00'),
+(3,5353,1,'Madeline','Townsend','Director Enterprises',3,'mtownsend@conservationvolunteers.com.au','','','',1,'','',1,1,'2009-11-11 00:00:00',1,'2009-11-11 00:00:00'),
+(4,5354,1,'Igor','Sereda','Head',4,'igor@interair.kz','359-2-00-00-00','359-2-88-73-53','359-2-43-56-84',1,'http://www.interair.kz/','i.g',1,1,'2011-08-15 00:00:00',1,'2011-08-15 00:00:00'),
+(5,5358,1,'Egidijus','Budrevicius','President',6,'virginija1@ziptravqel.ltsxszd','370 37 22055255','370 37 220552','370 37 750197',NULL,NULL,'',NULL,5358,'2015-10-12 15:12:07',5358,'2015-10-12 15:12:07'),
+(6,5359,1,'Egidijus','Budrevicius','President',7,'virginija19@ziptravqel.ltsxszd','370 37 22055255','370 37 220552','370 37 750197',NULL,NULL,'',NULL,5359,'2015-10-12 17:35:13',5359,'2015-10-12 17:35:13');
+
+
+INSERT INTO cci_gh_go.`PartnerReferenceChecks`(`partnerReferenceCheckId`,`partnerGoId`,`referenceCompletedOn`,`referenceCompletedBy`,`referenceApprovedOn`,`referenceApprovedBy`,`businessLicenseExpiryDate`,`referenceCheckNotes`) 
+VALUES 
+(1,5351,'2009-08-10 00:00:00','Megan McGaughey','2009-08-15 00:00:00','JAMES','9999-09-09 00:00:00',''),
+(2,5352,'2009-08-17 00:00:00','Jason Nusser','2009-08-17 00:00:00','Megan McGaughey','9999-09-09 00:00:00','Agent was referred by James Alexander (DOS). Agent was screened by PIE. JN'),
+(3,5353,'2009-03-16 00:00:00','Jason Nusser','2009-04-04 00:00:00','Daniel Ebert','9999-09-09 00:00:00',''),
+(4,5354,'2011-05-31 00:00:00','Jason Nusser','2011-05-31 00:00:00','JAMES','9999-09-09 00:00:00','Erica Maynard from Ritz Carlton in the Virgin Islands says, \"have been working with PG for recruitment.  Recieve 5-6 pax per year. Yes, they screen their pax adequately.  Per company policy unable to state whether or not they can recommend PG as a reliable business partner.  No payment issues.\" ');
+
+INSERT INTO cci_gh_go.PartnerUserRoles (`partnerUserRoleName`,`partnerUserId`)
+VALUES
+('Admin',1),
+('Flights',1),
+('Admin',2),
+('PlacementInfo',2),
+('Insurance',2),
+('Admin',3),
+('Applications',3),
+('Contracting',3),
+('Admin',4),
+('Flights',4),
+('Insurance',4);
+
+INSERT INTO cci_gh_go.`PartnerSeasonContract`(`partnerSeasonContractId`,`partnerSeasonId`,`isSigned`,`documentInformationId`,`description`) 
+VALUES 
+(1,1,1,109,'Contract Document'),
+(2,2,1,110,'Contract Document'),
+(3,3,1,111,'Contract Document'),
+(4,4,1,112,'Contract Document');
+
+INSERT INTO cci_gh_go.PartnerSeasonDocument (`partnerSeasonId`,`documentInformationId`,`description`)
+VALUES
+(1,113,'Season Related Document'),
+(2,114,'Season Related Document');
+
+INSERT INTO cci_gh_go.`StateProcess` (stateProcessName,workQueue)
+VALUES 
+('Participant Application','partner');
+
+INSERT  INTO cci_gh_go.`StateTypes`(`stateTypeId`,`stateName`,`stateProcessId`,`isLastStep`,`workQueueRoleType`,`workQueueTypeId`,`workQueueCategoryId`,`isVisibleToAdmin`,`isVisibleToPartner`,`isVisibleToParticipant`) 
+VALUES  
+(1,'Partner Review',1,0,'partner',1,1,1,0,0),
+(2,'Participant Review',1,0,'partner',1,1,1,0,0),
+(3,'CCI Review',1,0,'admin',1,1,0,1,0),
+(4,'End of Process Step',NULL,0,'partner',NULL,NULL,0,0,0);
+
+INSERT  INTO cci_gh_go.`StateTransitions`(`stateTransitionId`,`fromStateTypeId`,`toStateTypeId`,`fromRoletype`,`toRoleType`) 
+VALUES  
+(1,1,2,'partner','participant'),
+(2,2,1,'participant','partner'),
+(3,1,3,'partner','admin'),
+(4,3,1,'partner','admin'),
+(5,3,4,'admin','partner');
+	
+INSERT  INTO cci_gh_go.`StateActions`(`stateActionId`,`action`,`stateTypeId`) 
+VALUES  
+(1,'Accepted',1),
+(2,'Rejected',1),
+(3,'Require More Info from Participant',1),
+(4,'Accepted',3),
+(5,'Rejected',3),
+(6,'Return to partner',3);	
+
+INSERT INTO cci_gh_go.`PartnerWorkQueueType` (partnerWQTypeName,lookupDepartmentProgramId,stateProcessId)
+VALUES 
+('Participant Application',1,1),
+('Participant Application',2,1);
+	
+INSERT INTO cci_gh_go.`PartnerWorkQueueCategories` (partnerWQCategoryName,partnerWQTypeId)
+VALUES  
+('Participant Submitted',1),
+('Admin Return',1),
+('Participant Submitted',2),
+('Admin Return',2);
+	
+	
+INSERT INTO cci_gh_go.`PartnerWorkQueue` (createdDate,partnerGoId,seasonId,departmentProgramId,partnerWQTypeId,partnerWQCategoryId,stateTypeId,lookupDepartmentProgramId,targetGoId,targetRoleType)
+VALUES  
+(CURRENT_TIMESTAMP,5351,2,1,1,1,1,1,10007,'participant'),
+(CURRENT_TIMESTAMP,5351,3,1,1,1,1,1,10008,'participant'),
+(CURRENT_TIMESTAMP,5351,1,2,2,4,1,2,10009,'participant'),
+(CURRENT_TIMESTAMP,5351,1,2,2,3,1,2,10014,'participant'),
+(CURRENT_TIMESTAMP,5351,2,1,1,2,1,1,10015,'participant');
+
+INSERT INTO cci_gh_go.`PartnerWorkQueueTypeAggregate` (partnerWQTypeId,partnerWQTypeName,partnerGoId,lookupDepartmentProgramId,partnerWQTypeAggregate,modifiedDate)
+VALUES 	
+(1,'Particiant Application',5351,1,3,CURRENT_TIMESTAMP),
+(2,'Particiant Application',5351,2,2,CURRENT_TIMESTAMP);
+	
+INSERT INTO cci_gh_go.`PartnerWorkQueueCategoryAggregate` (partnerWQCategoryId,partnerWQTypeId,partnerWQCategoryName,partnerGoId,lookupDepartmentProgramId,partnerWQCategoryAggregate,modifiedDate)
+VALUES	
+(1,1,'Participant Submitted',5351,1,2,CURRENT_TIMESTAMP),
+(2,1,'Admin Return',5351,1,1,CURRENT_TIMESTAMP),
+(3,2,'Participant Submitted',5351,2,1,CURRENT_TIMESTAMP),
+(4,2,'Admin Return',5351,2,1,CURRENT_TIMESTAMP);
+	
+
+INSERT INTO cci_gh_go.`PartnerQuickStatsType` (partnerQSTypeName)
+VALUES
+('Participants J1'),
+('Participants F1');
+	
+INSERT INTO cci_gh_go.`PartnerQuickStatsCategories` (partnerQSCategoryName,partnerQSTypeId)
+VALUES
+('Participant Review',1),
+('Greenheart Review',1),
+('Accepted',1),
+('Pre Application Withdrawn',1),
+('Participant Review',2),
+('Greenheart Review',2),
+('Accepted',2),
+('Pre Application Withdrawn',2);
+	
+INSERT INTO cci_gh_go.`PartnerQuickStatsTypeAggregate` (partnerQSTypeId,partnerQSTypeName,partnerQSTypeAggregate,partnerGoId,lookupDepartmentProgramId,modifiedDate)
+VALUES
+(1,'Participants J1',5,5351,1,CURRENT_TIMESTAMP),
+(2,'Participants F1',5,5351,2,CURRENT_TIMESTAMP);
+
+INSERT INTO cci_gh_go.`PartnerQuickStatsCategoryAggregate` (partnerQSCategoryId,partnerQSCategoryName,partnerQSTypeId,partnerGoId,lookupDepartmentProgramId,modifiedDate,partnerQSCategoryAggregate)
+VALUES	
+(1,'Participant Review',1,5351,1,CURRENT_TIMESTAMP,1),
+(2,'Greenheart Review',1,5351,1,CURRENT_TIMESTAMP,0),
+(3,'Accepted',1,5351,1,CURRENT_TIMESTAMP,0),
+(4,'Application Withdrawn',1,5351,1,CURRENT_TIMESTAMP,1),
+(5,'Participant Review',1,5351,2,CURRENT_TIMESTAMP,1),
+(6,'Greenheart Review',1,5351,2,CURRENT_TIMESTAMP,1),
+(7,'Accepted',1,5351,2,CURRENT_TIMESTAMP,0),
+(8,'Application Withdrawn',1,5351,2,CURRENT_TIMESTAMP,1);
+
+

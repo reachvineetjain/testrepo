@@ -3,7 +3,6 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -21,33 +20,32 @@ public class SeasonProgramDocument implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer seasonProgramDocumentId;
 
-	private byte active;
+	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to PartnerSeasonDocument
-	@OneToMany(mappedBy="seasonProgramDocument")
-	private List<PartnerSeasonDocument> partnerSeasonDocuments;
-
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
+	@JoinColumn(name="departmentProgramId", nullable=false)
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId")
+	@JoinColumn(name="documentInformationId", nullable=false)
 	private DocumentInformation documentInformation;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonProgramDocument() {
@@ -61,11 +59,11 @@ public class SeasonProgramDocument implements Serializable {
 		this.seasonProgramDocumentId = seasonProgramDocumentId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -99,28 +97,6 @@ public class SeasonProgramDocument implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
-		return this.partnerSeasonDocuments;
-	}
-
-	public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
-		this.partnerSeasonDocuments = partnerSeasonDocuments;
-	}
-
-	public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
-		getPartnerSeasonDocuments().add(partnerSeasonDocument);
-		partnerSeasonDocument.setSeasonProgramDocument(this);
-
-		return partnerSeasonDocument;
-	}
-
-	public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
-		getPartnerSeasonDocuments().remove(partnerSeasonDocument);
-		partnerSeasonDocument.setSeasonProgramDocument(null);
-
-		return partnerSeasonDocument;
 	}
 
 	public DepartmentProgram getDepartmentProgram() {

@@ -20,10 +20,12 @@ public class PartnerContact implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerContactId;
 
-	private byte active;
+	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=150)
@@ -38,20 +40,21 @@ public class PartnerContact implements Serializable {
 	@Column(length=150)
 	private String firstName;
 
+	private Byte isPrimary;
+
 	@Column(length=150)
 	private String lastName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=150)
 	private String phone;
 
-	private byte receiveNotificationEmails;
-
-	@Column(length=10)
-	private String salutation;
+	private Byte receiveNotificationEmails;
 
 	@Column(length=50)
 	private String skypeId;
@@ -72,6 +75,11 @@ public class PartnerContact implements Serializable {
 	@JoinColumn(name="partnerOfficeId")
 	private PartnerOffice partnerOffice;
 
+	//bi-directional many-to-one association to Salutation
+	@ManyToOne
+	@JoinColumn(name="salutationId")
+	private Salutation salutation;
+
 	public PartnerContact() {
 	}
 
@@ -83,11 +91,11 @@ public class PartnerContact implements Serializable {
 		this.partnerContactId = partnerContactId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -139,6 +147,14 @@ public class PartnerContact implements Serializable {
 		this.firstName = firstName;
 	}
 
+	public Byte getIsPrimary() {
+		return this.isPrimary;
+	}
+
+	public void setIsPrimary(Byte isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -171,20 +187,12 @@ public class PartnerContact implements Serializable {
 		this.phone = phone;
 	}
 
-	public byte getReceiveNotificationEmails() {
+	public Byte getReceiveNotificationEmails() {
 		return this.receiveNotificationEmails;
 	}
 
-	public void setReceiveNotificationEmails(byte receiveNotificationEmails) {
+	public void setReceiveNotificationEmails(Byte receiveNotificationEmails) {
 		this.receiveNotificationEmails = receiveNotificationEmails;
-	}
-
-	public String getSalutation() {
-		return this.salutation;
-	}
-
-	public void setSalutation(String salutation) {
-		this.salutation = salutation;
 	}
 
 	public String getSkypeId() {
@@ -225,6 +233,14 @@ public class PartnerContact implements Serializable {
 
 	public void setPartnerOffice(PartnerOffice partnerOffice) {
 		this.partnerOffice = partnerOffice;
+	}
+
+	public Salutation getSalutation() {
+		return this.salutation;
+	}
+
+	public void setSalutation(Salutation salutation) {
+		this.salutation = salutation;
 	}
 
 }

@@ -5,7 +5,6 @@
 // Generated on: 2015.09.04 at 12:00:04 PM CDT 
 //
 
-
 package com.ccighgo.service.transport.partner.beans.partnerseason;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PartnerSeason complex type.
+ * <p>
+ * Java class for PartnerSeason complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="PartnerSeason">
@@ -44,270 +44,246 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PartnerSeason", propOrder = {
-    "partnerId",
-    "partnerSeasonId",
-    "partnerSeasonProgramName",
-    "partnerSeasonDepartment",
-    "partnerProgramOption",
-    "partnerStartDate",
-    "partnerEndDate",
-    "partnerApplicationDeadlineDate",
-    "participantAllocated",
-    "seasonProgramStatus"
-})
+@XmlType(name = "PartnerSeason", propOrder = { "partnerId", "partnerSeasonId", "partnerSeasonProgramName", "partnerSeasonDepartment", "partnerProgramOption", "partnerStartDate",
+      "partnerEndDate", "partnerApplicationDeadlineDate", "participantAllocated", "seasonProgramStatus", "detailsUrl" })
 public class PartnerSeason {
 
-    @XmlElement(required = true)
-    protected String partnerId;
-    protected int partnerSeasonId;
-    @XmlElement(required = true)
-    protected String partnerSeasonProgramName;
-    @XmlElement(required = true)
-    protected PartnerSeasonDepartment partnerSeasonDepartment;
-    @XmlElement(required = true)
-    protected PartnerSeasonProgramOption partnerProgramOption;
-    @XmlElement(required = true)
-    protected String partnerStartDate;
-    @XmlElement(required = true)
-    protected String partnerEndDate;
-    @XmlElement(required = true)
-    protected String partnerApplicationDeadlineDate;
-    @XmlElement(required = true)
-    protected String participantAllocated;
-    @XmlElement(required = true)
-    protected PartnerSeasonProgramStatus seasonProgramStatus;
+   @XmlElement(required = true) protected String partnerId;
+   protected int partnerSeasonId;
+   @XmlElement(required = true) protected String partnerSeasonProgramName;
+   @XmlElement(required = true) protected PartnerSeasonDepartment partnerSeasonDepartment;
+   @XmlElement(required = true) protected PartnerSeasonProgramOption partnerProgramOption;
+   @XmlElement(required = true) protected String partnerStartDate;
+   @XmlElement(required = true) protected String partnerEndDate;
+   @XmlElement(required = true) protected String partnerApplicationDeadlineDate;
+   @XmlElement(required = true) protected String participantAllocated;
+   @XmlElement(required = true) protected PartnerSeasonProgramStatus seasonProgramStatus;
+   @XmlElement(required = true) protected String detailsUrl;
 
-    /**
-     * Gets the value of the partnerId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPartnerId() {
-        return partnerId;
-    }
+   /**
+    * Gets the value of the partnerId property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getPartnerId() {
+      return partnerId;
+   }
 
-    /**
-     * Sets the value of the partnerId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPartnerId(String value) {
-        this.partnerId = value;
-    }
+   /**
+    * Sets the value of the partnerId property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setPartnerId(String value) {
+      this.partnerId = value;
+   }
 
-    /**
-     * Gets the value of the partnerSeasonId property.
-     * 
-     */
-    public int getPartnerSeasonId() {
-        return partnerSeasonId;
-    }
+   /**
+    * Gets the value of the partnerSeasonId property.
+    * 
+    */
+   public int getPartnerSeasonId() {
+      return partnerSeasonId;
+   }
 
-    /**
-     * Sets the value of the partnerSeasonId property.
-     * 
-     */
-    public void setPartnerSeasonId(int value) {
-        this.partnerSeasonId = value;
-    }
+   /**
+    * Sets the value of the partnerSeasonId property.
+    * 
+    */
+   public void setPartnerSeasonId(int value) {
+      this.partnerSeasonId = value;
+   }
 
-    /**
-     * Gets the value of the partnerSeasonProgramName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPartnerSeasonProgramName() {
-        return partnerSeasonProgramName;
-    }
+   /**
+    * Gets the value of the partnerSeasonProgramName property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getPartnerSeasonProgramName() {
+      return partnerSeasonProgramName;
+   }
 
-    /**
-     * Sets the value of the partnerSeasonProgramName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPartnerSeasonProgramName(String value) {
-        this.partnerSeasonProgramName = value;
-    }
+   /**
+    * Sets the value of the partnerSeasonProgramName property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setPartnerSeasonProgramName(String value) {
+      this.partnerSeasonProgramName = value;
+   }
 
-    /**
-     * Gets the value of the partnerSeasonDepartment property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PartnerSeasonDepartment }
-     *     
-     */
-    public PartnerSeasonDepartment getPartnerSeasonDepartment() {
-        return partnerSeasonDepartment;
-    }
+   /**
+    * Gets the value of the partnerSeasonDepartment property.
+    * 
+    * @return possible object is {@link PartnerSeasonDepartment }
+    * 
+    */
+   public PartnerSeasonDepartment getPartnerSeasonDepartment() {
+      return partnerSeasonDepartment;
+   }
 
-    /**
-     * Sets the value of the partnerSeasonDepartment property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PartnerSeasonDepartment }
-     *     
-     */
-    public void setPartnerSeasonDepartment(PartnerSeasonDepartment value) {
-        this.partnerSeasonDepartment = value;
-    }
+   /**
+    * Sets the value of the partnerSeasonDepartment property.
+    * 
+    * @param value
+    *           allowed object is {@link PartnerSeasonDepartment }
+    * 
+    */
+   public void setPartnerSeasonDepartment(PartnerSeasonDepartment value) {
+      this.partnerSeasonDepartment = value;
+   }
 
-    /**
-     * Gets the value of the partnerProgramOption property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PartnerSeasonProgramOption }
-     *     
-     */
-    public PartnerSeasonProgramOption getPartnerProgramOption() {
-        return partnerProgramOption;
-    }
+   /**
+    * Gets the value of the partnerProgramOption property.
+    * 
+    * @return possible object is {@link PartnerSeasonProgramOption }
+    * 
+    */
+   public PartnerSeasonProgramOption getPartnerProgramOption() {
+      return partnerProgramOption;
+   }
 
-    /**
-     * Sets the value of the partnerProgramOption property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PartnerSeasonProgramOption }
-     *     
-     */
-    public void setPartnerProgramOption(PartnerSeasonProgramOption value) {
-        this.partnerProgramOption = value;
-    }
+   /**
+    * Sets the value of the partnerProgramOption property.
+    * 
+    * @param value
+    *           allowed object is {@link PartnerSeasonProgramOption }
+    * 
+    */
+   public void setPartnerProgramOption(PartnerSeasonProgramOption value) {
+      this.partnerProgramOption = value;
+   }
 
-    /**
-     * Gets the value of the partnerStartDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPartnerStartDate() {
-        return partnerStartDate;
-    }
+   /**
+    * Gets the value of the partnerStartDate property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getPartnerStartDate() {
+      return partnerStartDate;
+   }
 
-    /**
-     * Sets the value of the partnerStartDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPartnerStartDate(String value) {
-        this.partnerStartDate = value;
-    }
+   /**
+    * Sets the value of the partnerStartDate property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setPartnerStartDate(String value) {
+      this.partnerStartDate = value;
+   }
 
-    /**
-     * Gets the value of the partnerEndDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPartnerEndDate() {
-        return partnerEndDate;
-    }
+   /**
+    * Gets the value of the partnerEndDate property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getPartnerEndDate() {
+      return partnerEndDate;
+   }
 
-    /**
-     * Sets the value of the partnerEndDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPartnerEndDate(String value) {
-        this.partnerEndDate = value;
-    }
+   /**
+    * Sets the value of the partnerEndDate property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setPartnerEndDate(String value) {
+      this.partnerEndDate = value;
+   }
 
-    /**
-     * Gets the value of the partnerApplicationDeadlineDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPartnerApplicationDeadlineDate() {
-        return partnerApplicationDeadlineDate;
-    }
+   /**
+    * Gets the value of the partnerApplicationDeadlineDate property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getPartnerApplicationDeadlineDate() {
+      return partnerApplicationDeadlineDate;
+   }
 
-    /**
-     * Sets the value of the partnerApplicationDeadlineDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPartnerApplicationDeadlineDate(String value) {
-        this.partnerApplicationDeadlineDate = value;
-    }
+   /**
+    * Sets the value of the partnerApplicationDeadlineDate property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setPartnerApplicationDeadlineDate(String value) {
+      this.partnerApplicationDeadlineDate = value;
+   }
 
-    /**
-     * Gets the value of the participantAllocated property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getParticipantAllocated() {
-        return participantAllocated;
-    }
+   /**
+    * Gets the value of the participantAllocated property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getParticipantAllocated() {
+      return participantAllocated;
+   }
 
-    /**
-     * Sets the value of the participantAllocated property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setParticipantAllocated(String value) {
-        this.participantAllocated = value;
-    }
+   /**
+    * Sets the value of the participantAllocated property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setParticipantAllocated(String value) {
+      this.participantAllocated = value;
+   }
 
-    /**
-     * Gets the value of the seasonProgramStatus property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PartnerSeasonProgramStatus }
-     *     
-     */
-    public PartnerSeasonProgramStatus getSeasonProgramStatus() {
-        return seasonProgramStatus;
-    }
+   /**
+    * Gets the value of the seasonProgramStatus property.
+    * 
+    * @return possible object is {@link PartnerSeasonProgramStatus }
+    * 
+    */
+   public PartnerSeasonProgramStatus getSeasonProgramStatus() {
+      return seasonProgramStatus;
+   }
 
-    /**
-     * Sets the value of the seasonProgramStatus property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PartnerSeasonProgramStatus }
-     *     
-     */
-    public void setSeasonProgramStatus(PartnerSeasonProgramStatus value) {
-        this.seasonProgramStatus = value;
-    }
+   /**
+    * Sets the value of the seasonProgramStatus property.
+    * 
+    * @param value
+    *           allowed object is {@link PartnerSeasonProgramStatus }
+    * 
+    */
+   public void setSeasonProgramStatus(PartnerSeasonProgramStatus value) {
+      this.seasonProgramStatus = value;
+   }
+
+   /**
+    * Gets the value of the detailsUrl property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getDetailsUrl() {
+      return detailsUrl;
+   }
+
+   /**
+    * Sets the value of the detailsUrl property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setDetailsUrl(String detailsUrl) {
+      this.detailsUrl = detailsUrl;
+   }
 
 }

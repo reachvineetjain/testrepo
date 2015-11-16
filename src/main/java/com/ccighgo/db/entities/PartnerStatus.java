@@ -20,14 +20,10 @@ public class PartnerStatus implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerStatusId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(length=50)
 	private String partnerStatusName;
-
-	//bi-directional many-to-one association to Partner
-	@OneToMany(mappedBy="partnerStatus")
-	private List<Partner> partners;
 
 	//bi-directional many-to-one association to PartnerReviewStatus
 	@OneToMany(mappedBy="partnerStatus1")
@@ -38,8 +34,20 @@ public class PartnerStatus implements Serializable {
 	private List<PartnerReviewStatus> partnerReviewStatuses2;
 
 	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="partnerStatus1")
+	private List<PartnerSeason> partnerSeasons1;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="partnerStatus2")
+	private List<PartnerSeason> partnerSeasons2;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="partnerStatus3")
+	private List<PartnerSeason> partnerSeasons3;
+
+	//bi-directional many-to-one association to PartnerSeasonAllocation
 	@OneToMany(mappedBy="partnerStatus")
-	private List<PartnerSeason> partnerSeasons;
+	private List<PartnerSeasonAllocation> partnerSeasonAllocations;
 
 	public PartnerStatus() {
 	}
@@ -52,11 +60,11 @@ public class PartnerStatus implements Serializable {
 		this.partnerStatusId = partnerStatusId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -66,28 +74,6 @@ public class PartnerStatus implements Serializable {
 
 	public void setPartnerStatusName(String partnerStatusName) {
 		this.partnerStatusName = partnerStatusName;
-	}
-
-	public List<Partner> getPartners() {
-		return this.partners;
-	}
-
-	public void setPartners(List<Partner> partners) {
-		this.partners = partners;
-	}
-
-	public Partner addPartner(Partner partner) {
-		getPartners().add(partner);
-		partner.setPartnerStatus(this);
-
-		return partner;
-	}
-
-	public Partner removePartner(Partner partner) {
-		getPartners().remove(partner);
-		partner.setPartnerStatus(null);
-
-		return partner;
 	}
 
 	public List<PartnerReviewStatus> getPartnerReviewStatuses1() {
@@ -134,26 +120,92 @@ public class PartnerStatus implements Serializable {
 		return partnerReviewStatuses2;
 	}
 
-	public List<PartnerSeason> getPartnerSeasons() {
-		return this.partnerSeasons;
+	public List<PartnerSeason> getPartnerSeasons1() {
+		return this.partnerSeasons1;
 	}
 
-	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
-		this.partnerSeasons = partnerSeasons;
+	public void setPartnerSeasons1(List<PartnerSeason> partnerSeasons1) {
+		this.partnerSeasons1 = partnerSeasons1;
 	}
 
-	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().add(partnerSeason);
-		partnerSeason.setPartnerStatus(this);
+	public PartnerSeason addPartnerSeasons1(PartnerSeason partnerSeasons1) {
+		getPartnerSeasons1().add(partnerSeasons1);
+		partnerSeasons1.setPartnerStatus1(this);
 
-		return partnerSeason;
+		return partnerSeasons1;
 	}
 
-	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().remove(partnerSeason);
-		partnerSeason.setPartnerStatus(null);
+	public PartnerSeason removePartnerSeasons1(PartnerSeason partnerSeasons1) {
+		getPartnerSeasons1().remove(partnerSeasons1);
+		partnerSeasons1.setPartnerStatus1(null);
 
-		return partnerSeason;
+		return partnerSeasons1;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons2() {
+		return this.partnerSeasons2;
+	}
+
+	public void setPartnerSeasons2(List<PartnerSeason> partnerSeasons2) {
+		this.partnerSeasons2 = partnerSeasons2;
+	}
+
+	public PartnerSeason addPartnerSeasons2(PartnerSeason partnerSeasons2) {
+		getPartnerSeasons2().add(partnerSeasons2);
+		partnerSeasons2.setPartnerStatus2(this);
+
+		return partnerSeasons2;
+	}
+
+	public PartnerSeason removePartnerSeasons2(PartnerSeason partnerSeasons2) {
+		getPartnerSeasons2().remove(partnerSeasons2);
+		partnerSeasons2.setPartnerStatus2(null);
+
+		return partnerSeasons2;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons3() {
+		return this.partnerSeasons3;
+	}
+
+	public void setPartnerSeasons3(List<PartnerSeason> partnerSeasons3) {
+		this.partnerSeasons3 = partnerSeasons3;
+	}
+
+	public PartnerSeason addPartnerSeasons3(PartnerSeason partnerSeasons3) {
+		getPartnerSeasons3().add(partnerSeasons3);
+		partnerSeasons3.setPartnerStatus3(this);
+
+		return partnerSeasons3;
+	}
+
+	public PartnerSeason removePartnerSeasons3(PartnerSeason partnerSeasons3) {
+		getPartnerSeasons3().remove(partnerSeasons3);
+		partnerSeasons3.setPartnerStatus3(null);
+
+		return partnerSeasons3;
+	}
+
+	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations() {
+		return this.partnerSeasonAllocations;
+	}
+
+	public void setPartnerSeasonAllocations(List<PartnerSeasonAllocation> partnerSeasonAllocations) {
+		this.partnerSeasonAllocations = partnerSeasonAllocations;
+	}
+
+	public PartnerSeasonAllocation addPartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().add(partnerSeasonAllocation);
+		partnerSeasonAllocation.setPartnerStatus(this);
+
+		return partnerSeasonAllocation;
+	}
+
+	public PartnerSeasonAllocation removePartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().remove(partnerSeasonAllocation);
+		partnerSeasonAllocation.setPartnerStatus(null);
+
+		return partnerSeasonAllocation;
 	}
 
 }

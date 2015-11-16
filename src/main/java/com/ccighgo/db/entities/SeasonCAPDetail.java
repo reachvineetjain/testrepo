@@ -24,6 +24,7 @@ public class SeasonCAPDetail implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -41,7 +42,7 @@ public class SeasonCAPDetail implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=55)
+	@Column(length=45)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)

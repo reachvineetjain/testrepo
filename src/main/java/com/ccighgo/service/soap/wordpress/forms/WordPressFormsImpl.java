@@ -7,6 +7,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
+import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;
@@ -20,52 +21,89 @@ public class WordPressFormsImpl implements IWordPressForms {
    PartnerAgentInquiryRepository partnerAgentInquiryRepository;
    @Autowired
    LoginRepository loginRepository;
+   @Autowired
+   PartnerRepository partnerRepository;
+
    @Override
    public String InquiryPartner(InternationalPartners InternationalPartners) {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
-         Login user =loginRepository.findByEmail(InternationalPartners.getEmail());
-         if(user!=null){
-            String string = "400:Duplicate Row (User Already Exist ):400:Duplicate Row ( User Already Exist)";
-            System.out.println(string);
-            return string;
-         }
          if (InternationalPartners != null) {
+            Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
+            if (user != null) {
+               String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist)";
+               System.out.println(message);
+               return message;
+            }
+            String secondFormatOfWebSite = "";
+            if(InternationalPartners.getWebsite().toLowerCase().startsWith("www"))
+               secondFormatOfWebSite = InternationalPartners.getWebsite().replaceAll("^www\\.", "");
+            else 
+               secondFormatOfWebSite= "www."+InternationalPartners.getWebsite();
+            PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(),secondFormatOfWebSite);
+            if (webSiteDuplicate != null) {
+               String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
+               System.out.println(message);
+               return message;
+            }
+
+            PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
+            if (legalNameDuplicate != null) {
+               String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
+               System.out.println(message);
+               return message;
+            }
+
             PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
             partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
             partnerAgentInquiry.setAdressLineTwo(InternationalPartners.getAddress2());
             partnerAgentInquiry.setBusinessName(InternationalPartners.getLegalBusinessName());
-            partnerAgentInquiry.setBusinessYears(InternationalPartners.getYearsInBusiness()+"");
+            partnerAgentInquiry.setBusinessYears(InternationalPartners.getYearsInBusiness() + "");
             partnerAgentInquiry.setCity(InternationalPartners.getCity());
             partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
             partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
             partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
-           // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
+            partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
+            partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
+            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
+
+            // GoIdSequence goIdSequence = new GoIdSequence();
+            // goIdSequence = goIdSequenceRepository.save(goIdSequence);
+            // partnerAgentInquiry.setpartn
+            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
-         }
-         if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
-            String string = "200:Success:300:Missing Information";
-            System.out.println(string);
-            return string;
-         } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-            String string = "400:Duplicate Row:400:Duplicate Row";
-            System.out.println(string);
-            return string;
-         } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-            String string = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
-            System.out.println(string);
-            return string;
+            String s = "200:Success:200:Success";
+            System.out.println(s);
+            return s;
          } else {
-            String string = "300:Missing Information:300:Missing Information";
-            System.out.println(string);
-            return string;
+            // if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
+            // String string = "200:Success:300:Missing Information";
+            // System.out.println(string);
+            // return string;
+            // } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
+            // String string = "400:Duplicate Row:400:Duplicate Row";
+            // System.out.println(string);
+            // return string;
+            // } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
+            // String string =
+            // "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
+            // System.out.println(string);
+            // return string;
+            // } else {
+            // String string = "300:Missing Information:300:Missing Information";
+            // System.out.println(string);
+            // return string;
+            // }
+            String s = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
+            System.out.println(s);
+            return s;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         String string = "700:Internal Error:700:"+e.getMessage();
+         String string = "700:Internal Error:700:" + e.getMessage();
          System.out.println(string);
          return string;
       }
@@ -152,9 +190,11 @@ public class WordPressFormsImpl implements IWordPressForms {
    @Override
    public Boolean IsEmailExist(String Email) {
       try {
-          System.out.println("IsEmailExist is Called !!! ");
-         Login user =loginRepository.findByEmail(Email);
-         if(user!=null){
+         System.out.println("IsEmailExist is Called !!! ");
+         System.out.println("Email : " + Email);
+         Login user = loginRepository.findByEmail(Email.trim());
+         System.out.println(user);
+         if (user != null) {
             return true;
          }
       } catch (Exception e) {
@@ -164,4 +204,50 @@ public class WordPressFormsImpl implements IWordPressForms {
       return false;
    }
 
+   @Override
+   public Boolean IsLegalNameExist(String LegalName) {
+      try {
+         System.out.println("IsLegalNameExist is Called !!! ");
+         System.out.println("Legal Name:" + LegalName);
+         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName.trim());
+         if (legalNameDuplicate != null) {
+            System.out.println("TRUE");
+            return true;
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         System.out.println("FALSE");
+         return false;
+      }
+      System.out.println("FALSE");
+      return false;
+   }
+
+   @Override
+   public Boolean IsWebSiteExist(String WebSite) {
+      try {
+         System.out.println("IsWebSiteExist is Called !!! ");
+         WebSite = WebSite.replaceAll("http://|https://|/$", "");
+         String secondFormatOfWebSite = "";
+         if(WebSite.toLowerCase().startsWith("www"))
+            secondFormatOfWebSite = WebSite.replaceAll("^www\\.", "");
+         else 
+            secondFormatOfWebSite= "www."+WebSite;
+         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(),secondFormatOfWebSite.toLowerCase().trim());
+         if (webSiteDuplicate != null) {
+            System.out.println("TRUE");
+            return true;
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         System.out.println("FALSE");
+         return false;
+      }
+      System.out.println("FALSE");
+      return false;
+   }
+
+   public static void main(String[] args) {
+      System.out.println("www.google.com".replaceAll("^www\\.", ""));
+   }
 }

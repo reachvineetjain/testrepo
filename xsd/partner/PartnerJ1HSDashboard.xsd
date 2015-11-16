@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerj1hs" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partnerj1hs" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partnerj1details" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="PartnerJ1HSDashboard" type="pdl:PartnerJ1HSDashboard" />
+
+   <xsd:complexType name="PartnerJ1HSDashboard">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerLogo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerCompany" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerAnnouncements" type="pdl:PartnerJ1HSAnnouncement" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="cciContact" type="pdl:PartnerJ1HSCCIContact" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerWorkQueueTypes" type="pdl:PartnerJ1HSWorkQueueType" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="partnerStatistics" type="pdl:PartnerStatistics" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerJ1HSPrograms" type="pdl:PartnerJ1HSProgram" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerJ1HSAnnouncement">
+      <xsd:sequence>
+         <xsd:element name="announcement" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerJ1HSCCIContact">
+      <xsd:sequence>
+         <xsd:element name="partnerProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactImageUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerCCIContactExtentionNo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerJ1HSWorkQueueType">
+      <xsd:sequence>
+         <xsd:element name="partnerWorkQueueTypeName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerWorkQueueTypeNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerWorkQueueCategories" type="pdl:PartnerJ1HSWorkQueueCategory" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerJ1HSWorkQueueCategory">
+      <xsd:sequence>
+         <xsd:element name="partnerWorkQueueCategoryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerWorkQueueCategoryNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerWorkQueueCategoryUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+     
+   <xsd:complexType name="PartnerStatistics">
+      <xsd:sequence>
+         <xsd:element name="applicationStats" type="pdl:PartnerApplicationStats" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programStats" type="pdl:PartnerProgramStats" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerApplicationStats">
+      <xsd:sequence>
+         <xsd:element name="submitted" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="greenheartReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="approved" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="notApproved" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerProgramStats">
+      <xsd:sequence>
+      <xsd:element name="submitted" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="greenheartReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="approved" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="notApproved" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerJ1HSProgram">
+      <xsd:sequence>
+         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="secondSemDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="allocationStats" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="allocation" type="pdl:J1HSAllocation" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="J1HSAllocation">
+      <xsd:sequence>
+         <xsd:element name="augStartUnguaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartUnguaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalUnguaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+</xsd:schema>

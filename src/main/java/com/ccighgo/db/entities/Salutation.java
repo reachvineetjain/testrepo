@@ -1,70 +1,133 @@
 package com.ccighgo.db.entities;
 
+import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
+/**
+ * The persistent class for the Salutation database table.
+ * 
+ */
 @Entity
 @Table(name="Salutation")
-@NamedQuery(name="Salutation.findAll", query="SELECT l FROM Salutation l")
-public class Salutation {
+@NamedQuery(name="Salutation.findAll", query="SELECT s FROM Salutation s")
+public class Salutation implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-   private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Integer salutationId;
 
-   @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   @Column(unique=true, nullable=false)
-   private Integer salutationId;
-   
-   @Column(length=30)
-   private String salutationName;
-   
-   @Column(length=1)
-   private Byte active;
+	private Byte active;
 
-   public Integer getSalutationId() {
-      return salutationId;
-   }
+	@Column(length=30)
+	private String salutationName;
 
-   public void setSalutationId(Integer salutationId) {
-      this.salutationId = salutationId;
-   }
+	//bi-directional many-to-one association to PartnerAgentInquiry
+	@OneToMany(mappedBy="salutation")
+	private List<PartnerAgentInquiry> partnerAgentInquiries;
 
-   public String getSalutationName() {
-      return salutationName;
-   }
-   
-   @OneToMany(mappedBy="salutation")
-   private List<PartnerUser> partnerUser;
+	//bi-directional many-to-one association to PartnerContact
+	@OneToMany(mappedBy="salutation")
+	private List<PartnerContact> partnerContacts;
 
-   public void setSalutationName(String salutationName) {
-      this.salutationName = salutationName;
-   }
+	//bi-directional many-to-one association to PartnerUser
+	@OneToMany(mappedBy="salutation")
+	private List<PartnerUser> partnerUsers;
 
-   public Byte getActive() {
-      return active;
-   }
+	public Salutation() {
+	}
 
-   public void setActive(Byte active) {
-      this.active = active;
-   }
+	public Integer getSalutationId() {
+		return this.salutationId;
+	}
 
-   public List<PartnerUser> getPartnerUser() {
-      return partnerUser;
-   }
+	public void setSalutationId(Integer salutationId) {
+		this.salutationId = salutationId;
+	}
 
-   public void setPartnerUser(List<PartnerUser> partnerUser) {
-      this.partnerUser = partnerUser;
-   }
-   
-   
-   
-   
+	public Byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(Byte active) {
+		this.active = active;
+	}
+
+	public String getSalutationName() {
+		return this.salutationName;
+	}
+
+	public void setSalutationName(String salutationName) {
+		this.salutationName = salutationName;
+	}
+
+	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
+		return this.partnerAgentInquiries;
+	}
+
+	public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
+		this.partnerAgentInquiries = partnerAgentInquiries;
+	}
+
+	public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+		getPartnerAgentInquiries().add(partnerAgentInquiry);
+		partnerAgentInquiry.setSalutation(this);
+
+		return partnerAgentInquiry;
+	}
+
+	public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+		getPartnerAgentInquiries().remove(partnerAgentInquiry);
+		partnerAgentInquiry.setSalutation(null);
+
+		return partnerAgentInquiry;
+	}
+
+	public List<PartnerContact> getPartnerContacts() {
+		return this.partnerContacts;
+	}
+
+	public void setPartnerContacts(List<PartnerContact> partnerContacts) {
+		this.partnerContacts = partnerContacts;
+	}
+
+	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
+		getPartnerContacts().add(partnerContact);
+		partnerContact.setSalutation(this);
+
+		return partnerContact;
+	}
+
+	public PartnerContact removePartnerContact(PartnerContact partnerContact) {
+		getPartnerContacts().remove(partnerContact);
+		partnerContact.setSalutation(null);
+
+		return partnerContact;
+	}
+
+	public List<PartnerUser> getPartnerUsers() {
+		return this.partnerUsers;
+	}
+
+	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+		this.partnerUsers = partnerUsers;
+	}
+
+	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().add(partnerUser);
+		partnerUser.setSalutation(this);
+
+		return partnerUser;
+	}
+
+	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().remove(partnerUser);
+		partnerUser.setSalutation(null);
+
+		return partnerUser;
+	}
+
 }

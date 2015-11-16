@@ -1,14 +1,24 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -29,6 +39,7 @@ public class SeasonGeographyConfiguration implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -39,32 +50,32 @@ public class SeasonGeographyConfiguration implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaffLCSeason
 	@OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
 	@OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY,cascade = { CascadeType.REMOVE })
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "usStatesId")
+	@JoinColumn(name="usStatesId")
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to Region
 	@ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "regionId")
+	@JoinColumn(name="regionId")
 	private Region region;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "seasonId")
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to SuperRegion
 	@ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "superRegionId")
+	@JoinColumn(name="superRegionId")
 	private SuperRegion superRegion;
 
 	public SeasonGeographyConfiguration() {

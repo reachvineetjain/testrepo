@@ -1,14 +1,21 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -30,17 +37,19 @@ public class LookupDepartment implements Serializable {
 	private String acronym;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
-	private Integer createdBy;
+	private int createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false, length=50)
 	private String departmentName;
 
-	private byte isVisibleToSeason;
+	@Column(nullable=false)
+	private Byte isVisibleToSeason;
 
 	@Column(nullable=false)
 	private Integer modifiedBy;
@@ -53,8 +62,8 @@ public class LookupDepartment implements Serializable {
 	private List<CCIStaffRolesDepartment> ccistaffRolesDepartments;
 
 	//bi-directional many-to-one association to DepartmentProgram
-	@OneToMany(mappedBy = "lookupDepartment", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	 @OneToMany(mappedBy = "lookupDepartment", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgram> departmentPrograms;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
@@ -63,7 +72,7 @@ public class LookupDepartment implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@OneToMany(mappedBy = "lookupDepartment", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<LookupDepartmentProgram> lookupDepartmentPrograms;
 
 	//bi-directional many-to-one association to Season
@@ -89,19 +98,19 @@ public class LookupDepartment implements Serializable {
 		this.acronym = acronym;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
-	public Integer getCreatedBy() {
+	public int getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -121,11 +130,11 @@ public class LookupDepartment implements Serializable {
 		this.departmentName = departmentName;
 	}
 
-	public byte getIsVisibleToSeason() {
+	public Byte getIsVisibleToSeason() {
 		return this.isVisibleToSeason;
 	}
 
-	public void setIsVisibleToSeason(byte isVisibleToSeason) {
+	public void setIsVisibleToSeason(Byte isVisibleToSeason) {
 		this.isVisibleToSeason = isVisibleToSeason;
 	}
 

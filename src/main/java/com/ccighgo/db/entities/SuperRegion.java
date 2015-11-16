@@ -1,12 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -26,11 +21,12 @@ public class SuperRegion implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer superRegionId;
 
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -39,12 +35,11 @@ public class SuperRegion implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String superRegionName;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
-	@OneToMany(mappedBy = "superRegion", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="superRegion")
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
 	public SuperRegion() {
@@ -58,11 +53,11 @@ public class SuperRegion implements Serializable {
 		this.superRegionId = superRegionId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

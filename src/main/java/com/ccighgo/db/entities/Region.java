@@ -1,14 +1,21 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -27,11 +34,12 @@ public class Region implements Serializable {
 	private Integer regionId;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -45,7 +53,7 @@ public class Region implements Serializable {
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
 	@OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
 	public Region() {
@@ -59,11 +67,11 @@ public class Region implements Serializable {
 		this.regionId = regionId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

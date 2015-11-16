@@ -1,14 +1,24 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -23,10 +33,7 @@ public class CCIStaffUser implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int cciStaffUserId;
-
-	@Column(nullable=false)
-	private byte active;
+	private Integer cciStaffUserId;
 
 	@Column(nullable=false, length=64)
 	private String cciAdminGuid;
@@ -37,6 +44,7 @@ public class CCIStaffUser implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=15)
@@ -60,14 +68,14 @@ public class CCIStaffUser implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(length=10)
+	private String phoneExtension;
+
 	@Column(length=300)
 	private String photo;
 
 	@Column(length=15)
 	private String primaryPhone;
-	
-	@Column(length=10)
-   private String phoneExtension;
 
 	@Column(length=20)
 	private String sevisId;
@@ -77,14 +85,30 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=50)
 	private String zip;
 
+	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to AdminWorkQueueCategoryAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates;
+
+	//bi-directional many-to-one association to AdminWorkQueueTypeAggregate
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
+
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional one-to-one association to GoIdSequence
@@ -108,22 +132,13 @@ public class CCIStaffUser implements Serializable {
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="ccistaffUser")
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
-
-	//bi-directional many-to-one association to PartnerAgentReview
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<PartnerAgentReview> partnerAgentReviews;
-
-	//bi-directional many-to-one association to PartnerCCIContact
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<PartnerCCIContact> partnerCcicontacts;
 
 	//bi-directional many-to-one association to PartnerMessage
 	@OneToMany(mappedBy="ccistaffUser")
@@ -138,26 +153,26 @@ public class CCIStaffUser implements Serializable {
 	private List<PartnerReviewStatus> partnerReviewStatuses;
 
 	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="ccistaffUser1")
+	private List<PartnerSeason> partnerSeasons1;
+
+	//bi-directional many-to-one association to PartnerSeason
+	@OneToMany(mappedBy="ccistaffUser2")
+	private List<PartnerSeason> partnerSeasons2;
+
+	//bi-directional many-to-one association to PartnerSeasonAllocation
 	@OneToMany(mappedBy="ccistaffUser")
-	private List<PartnerSeason> partnerSeasons;
+	private List<PartnerSeasonAllocation> partnerSeasonAllocations;
 
 	public CCIStaffUser() {
 	}
 
-	public int getCciStaffUserId() {
+	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(int cciStaffUserId) {
+	public void setCciStaffUserId(Integer cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
-	}
-
-	public byte getActive() {
-		return this.active;
-	}
-
-	public void setActive(byte active) {
-		this.active = active;
 	}
 
 	public String getCciAdminGuid() {
@@ -248,6 +263,14 @@ public class CCIStaffUser implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
+	public String getPhoneExtension() {
+		return this.phoneExtension;
+	}
+
+	public void setPhoneExtension(String phoneExtension) {
+		this.phoneExtension = phoneExtension;
+	}
+
 	public String getPhoto() {
 		return this.photo;
 	}
@@ -263,16 +286,8 @@ public class CCIStaffUser implements Serializable {
 	public void setPrimaryPhone(String primaryPhone) {
 		this.primaryPhone = primaryPhone;
 	}
-	
-	public String getPhoneExtension() {
-      return phoneExtension;
-   }
 
-   public void setPhoneExtension(String phoneExtension) {
-      this.phoneExtension = phoneExtension;
-   }
-
-   public String getSevisId() {
+	public String getSevisId() {
 		return this.sevisId;
 	}
 
@@ -294,6 +309,94 @@ public class CCIStaffUser implements Serializable {
 
 	public void setZip(String zip) {
 		this.zip = zip;
+	}
+
+	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
+		return this.adminQuickStatsCategoryAggregates;
+	}
+
+	public void setAdminQuickStatsCategoryAggregates(List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates) {
+		this.adminQuickStatsCategoryAggregates = adminQuickStatsCategoryAggregates;
+	}
+
+	public AdminQuickStatsCategoryAggregate addAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
+		getAdminQuickStatsCategoryAggregates().add(adminQuickStatsCategoryAggregate);
+		adminQuickStatsCategoryAggregate.setCcistaffUser(this);
+
+		return adminQuickStatsCategoryAggregate;
+	}
+
+	public AdminQuickStatsCategoryAggregate removeAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
+		getAdminQuickStatsCategoryAggregates().remove(adminQuickStatsCategoryAggregate);
+		adminQuickStatsCategoryAggregate.setCcistaffUser(null);
+
+		return adminQuickStatsCategoryAggregate;
+	}
+
+	public List<AdminQuickStatsTypeAggregate> getAdminQuickStatsTypeAggregates() {
+		return this.adminQuickStatsTypeAggregates;
+	}
+
+	public void setAdminQuickStatsTypeAggregates(List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates) {
+		this.adminQuickStatsTypeAggregates = adminQuickStatsTypeAggregates;
+	}
+
+	public AdminQuickStatsTypeAggregate addAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
+		getAdminQuickStatsTypeAggregates().add(adminQuickStatsTypeAggregate);
+		adminQuickStatsTypeAggregate.setCcistaffUser(this);
+
+		return adminQuickStatsTypeAggregate;
+	}
+
+	public AdminQuickStatsTypeAggregate removeAdminQuickStatsTypeAggregate(AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate) {
+		getAdminQuickStatsTypeAggregates().remove(adminQuickStatsTypeAggregate);
+		adminQuickStatsTypeAggregate.setCcistaffUser(null);
+
+		return adminQuickStatsTypeAggregate;
+	}
+
+	public List<AdminWorkQueueCategoryAggregate> getAdminWorkQueueCategoryAggregates() {
+		return this.adminWorkQueueCategoryAggregates;
+	}
+
+	public void setAdminWorkQueueCategoryAggregates(List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates) {
+		this.adminWorkQueueCategoryAggregates = adminWorkQueueCategoryAggregates;
+	}
+
+	public AdminWorkQueueCategoryAggregate addAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
+		getAdminWorkQueueCategoryAggregates().add(adminWorkQueueCategoryAggregate);
+		adminWorkQueueCategoryAggregate.setCcistaffUser(this);
+
+		return adminWorkQueueCategoryAggregate;
+	}
+
+	public AdminWorkQueueCategoryAggregate removeAdminWorkQueueCategoryAggregate(AdminWorkQueueCategoryAggregate adminWorkQueueCategoryAggregate) {
+		getAdminWorkQueueCategoryAggregates().remove(adminWorkQueueCategoryAggregate);
+		adminWorkQueueCategoryAggregate.setCcistaffUser(null);
+
+		return adminWorkQueueCategoryAggregate;
+	}
+
+	public List<AdminWorkQueueTypeAggregate> getAdminWorkQueueTypeAggregates() {
+		return this.adminWorkQueueTypeAggregates;
+	}
+
+	public void setAdminWorkQueueTypeAggregates(List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates) {
+		this.adminWorkQueueTypeAggregates = adminWorkQueueTypeAggregates;
+	}
+
+	public AdminWorkQueueTypeAggregate addAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
+		getAdminWorkQueueTypeAggregates().add(adminWorkQueueTypeAggregate);
+		adminWorkQueueTypeAggregate.setCcistaffUser(this);
+
+		return adminWorkQueueTypeAggregate;
+	}
+
+	public AdminWorkQueueTypeAggregate removeAdminWorkQueueTypeAggregate(AdminWorkQueueTypeAggregate adminWorkQueueTypeAggregate) {
+		getAdminWorkQueueTypeAggregates().remove(adminWorkQueueTypeAggregate);
+		adminWorkQueueTypeAggregate.setCcistaffUser(null);
+
+		return adminWorkQueueTypeAggregate;
 	}
 
 	public List<CCIStaffUserNote> getCcistaffUserNotes() {
@@ -416,50 +519,6 @@ public class CCIStaffUser implements Serializable {
 		return ccistaffUsersResourcePermission;
 	}
 
-	public List<PartnerAgentReview> getPartnerAgentReviews() {
-		return this.partnerAgentReviews;
-	}
-
-	public void setPartnerAgentReviews(List<PartnerAgentReview> partnerAgentReviews) {
-		this.partnerAgentReviews = partnerAgentReviews;
-	}
-
-	public PartnerAgentReview addPartnerAgentReview(PartnerAgentReview partnerAgentReview) {
-		getPartnerAgentReviews().add(partnerAgentReview);
-		partnerAgentReview.setCcistaffUser(this);
-
-		return partnerAgentReview;
-	}
-
-	public PartnerAgentReview removePartnerAgentReview(PartnerAgentReview partnerAgentReview) {
-		getPartnerAgentReviews().remove(partnerAgentReview);
-		partnerAgentReview.setCcistaffUser(null);
-
-		return partnerAgentReview;
-	}
-
-	public List<PartnerCCIContact> getPartnerCcicontacts() {
-		return this.partnerCcicontacts;
-	}
-
-	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
-		this.partnerCcicontacts = partnerCcicontacts;
-	}
-
-	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().add(partnerCcicontact);
-		partnerCcicontact.setCcistaffUser(this);
-
-		return partnerCcicontact;
-	}
-
-	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().remove(partnerCcicontact);
-		partnerCcicontact.setCcistaffUser(null);
-
-		return partnerCcicontact;
-	}
-
 	public List<PartnerMessage> getPartnerMessages() {
 		return this.partnerMessages;
 	}
@@ -526,26 +585,70 @@ public class CCIStaffUser implements Serializable {
 		return partnerReviewStatus;
 	}
 
-	public List<PartnerSeason> getPartnerSeasons() {
-		return this.partnerSeasons;
+	public List<PartnerSeason> getPartnerSeasons1() {
+		return this.partnerSeasons1;
 	}
 
-	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
-		this.partnerSeasons = partnerSeasons;
+	public void setPartnerSeasons1(List<PartnerSeason> partnerSeasons1) {
+		this.partnerSeasons1 = partnerSeasons1;
 	}
 
-	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().add(partnerSeason);
-		partnerSeason.setCcistaffUser(this);
+	public PartnerSeason addPartnerSeasons1(PartnerSeason partnerSeasons1) {
+		getPartnerSeasons1().add(partnerSeasons1);
+		partnerSeasons1.setCcistaffUser1(this);
 
-		return partnerSeason;
+		return partnerSeasons1;
 	}
 
-	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().remove(partnerSeason);
-		partnerSeason.setCcistaffUser(null);
+	public PartnerSeason removePartnerSeasons1(PartnerSeason partnerSeasons1) {
+		getPartnerSeasons1().remove(partnerSeasons1);
+		partnerSeasons1.setCcistaffUser1(null);
 
-		return partnerSeason;
+		return partnerSeasons1;
+	}
+
+	public List<PartnerSeason> getPartnerSeasons2() {
+		return this.partnerSeasons2;
+	}
+
+	public void setPartnerSeasons2(List<PartnerSeason> partnerSeasons2) {
+		this.partnerSeasons2 = partnerSeasons2;
+	}
+
+	public PartnerSeason addPartnerSeasons2(PartnerSeason partnerSeasons2) {
+		getPartnerSeasons2().add(partnerSeasons2);
+		partnerSeasons2.setCcistaffUser2(this);
+
+		return partnerSeasons2;
+	}
+
+	public PartnerSeason removePartnerSeasons2(PartnerSeason partnerSeasons2) {
+		getPartnerSeasons2().remove(partnerSeasons2);
+		partnerSeasons2.setCcistaffUser2(null);
+
+		return partnerSeasons2;
+	}
+
+	public List<PartnerSeasonAllocation> getPartnerSeasonAllocations() {
+		return this.partnerSeasonAllocations;
+	}
+
+	public void setPartnerSeasonAllocations(List<PartnerSeasonAllocation> partnerSeasonAllocations) {
+		this.partnerSeasonAllocations = partnerSeasonAllocations;
+	}
+
+	public PartnerSeasonAllocation addPartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().add(partnerSeasonAllocation);
+		partnerSeasonAllocation.setCcistaffUser(this);
+
+		return partnerSeasonAllocation;
+	}
+
+	public PartnerSeasonAllocation removePartnerSeasonAllocation(PartnerSeasonAllocation partnerSeasonAllocation) {
+		getPartnerSeasonAllocations().remove(partnerSeasonAllocation);
+		partnerSeasonAllocation.setCcistaffUser(null);
+
+		return partnerSeasonAllocation;
 	}
 
 }

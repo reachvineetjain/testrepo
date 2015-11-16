@@ -1,0 +1,69 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/genericseasonsdocuments" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/genericseasonsdocuments"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.generic.beans.documents.Season" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:complexType name="GenericSeasonDocuments">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="documents" type="cd:GenericSeasonDocument" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="GenericSeasonDocument">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="documentId" type="xsd:int" maxOccurs="1"/>
+               <xsd:element name="documentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="documentDescription" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="documentType" type="cd:DocumentType" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="upLoadedBy" type="cd:GenericSeasonDocumentUpLoadedBy" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="partnerSeasonParametrs" type="cd:PartnerSeasonParametrs"/>
+               <xsd:element name="active" type="xsd:boolean"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GenericSeasonDocumentUpLoadedBy">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="picUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="designation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="DocumentType">
+      <xsd:sequence>
+         <xsd:element name="documentTypeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+    <xsd:complexType name="PartnerSeasonParametrs">
+      <xsd:sequence>
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="PartnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

@@ -3,7 +3,6 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -27,9 +26,9 @@ public class PartnerAgentInquiry implements Serializable {
 	@Column(length=150)
 	private String adressLineTwo;
 
-	private byte ambassadorScholershipParticipants;
+	private Byte ambassadorScholershipParticipants;
 
-	@Column(length=255)
+	@Column(length=250)
 	private String businessName;
 
 	@Column(length=50)
@@ -41,13 +40,13 @@ public class PartnerAgentInquiry implements Serializable {
 	@Column(length=250)
 	private String companyName;
 
-	@Column(length=255)
+	@Column(length=300)
 	private String countryFlag;
 
 	@Column(length=150)
 	private String currentlyOfferingPrograms;
 
-	private byte currentlySendingParticipantToUS;
+	private Byte currentlySendingParticipantToUS;
 
 	@Column(length=50)
 	private String email;
@@ -58,28 +57,35 @@ public class PartnerAgentInquiry implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date followUpDate;
 
+	private Byte highSchoolAbroad;
+
 	@Column(length=100)
 	private String howDidYouHearAboutCCI;
 
 	@Column(length=50)
 	private String lastName;
 
-	@Column(length=255)
+	@Column(length=300)
 	private String logo;
 
-	private byte participantsForHomeCountry;
+	private Byte other;
+
+	private Byte participantsForHomeCountry;
 
 	@Column(length=25)
 	private String phone;
 
-	@Column(length=10)
-	private String salutation;
+	private Integer rating;
 
 	@Column(length=30)
 	private String state;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date submittedOn;
+
+	private Byte teachAbroad;
+
+	private Byte volunteerAbroad;
 
 	@Column(length=50)
 	private String website;
@@ -91,20 +97,13 @@ public class PartnerAgentInquiry implements Serializable {
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerAgentGoId", unique=true)
+	@JoinColumn(name="partnerAgentGoId")
 	private Partner partner;
 
-	//bi-directional many-to-one association to PartnerAgentInquiryDocument
-	@OneToMany(mappedBy="partnerAgentInquiry")
-	private List<PartnerAgentInquiryDocument> partnerAgentInquiryDocuments;
-
-	//bi-directional many-to-one association to PartnerAgentInquiryNote
-	@OneToMany(mappedBy="partnerAgentInquiry")
-	private List<PartnerAgentInquiryNote> partnerAgentInquiryNotes;
-
-	//bi-directional many-to-one association to PartnerAgentProgram
-	@OneToMany(mappedBy="partnerAgentInquiry")
-	private List<PartnerAgentProgram> partnerAgentPrograms;
+	//bi-directional many-to-one association to Salutation
+	@ManyToOne
+	@JoinColumn(name="salutationId")
+	private Salutation salutation;
 
 	public PartnerAgentInquiry() {
 	}
@@ -133,11 +132,11 @@ public class PartnerAgentInquiry implements Serializable {
 		this.adressLineTwo = adressLineTwo;
 	}
 
-	public byte getAmbassadorScholershipParticipants() {
+	public Byte getAmbassadorScholershipParticipants() {
 		return this.ambassadorScholershipParticipants;
 	}
 
-	public void setAmbassadorScholershipParticipants(byte ambassadorScholershipParticipants) {
+	public void setAmbassadorScholershipParticipants(Byte ambassadorScholershipParticipants) {
 		this.ambassadorScholershipParticipants = ambassadorScholershipParticipants;
 	}
 
@@ -189,11 +188,11 @@ public class PartnerAgentInquiry implements Serializable {
 		this.currentlyOfferingPrograms = currentlyOfferingPrograms;
 	}
 
-	public byte getCurrentlySendingParticipantToUS() {
+	public Byte getCurrentlySendingParticipantToUS() {
 		return this.currentlySendingParticipantToUS;
 	}
 
-	public void setCurrentlySendingParticipantToUS(byte currentlySendingParticipantToUS) {
+	public void setCurrentlySendingParticipantToUS(Byte currentlySendingParticipantToUS) {
 		this.currentlySendingParticipantToUS = currentlySendingParticipantToUS;
 	}
 
@@ -221,6 +220,14 @@ public class PartnerAgentInquiry implements Serializable {
 		this.followUpDate = followUpDate;
 	}
 
+	public Byte getHighSchoolAbroad() {
+		return this.highSchoolAbroad;
+	}
+
+	public void setHighSchoolAbroad(Byte highSchoolAbroad) {
+		this.highSchoolAbroad = highSchoolAbroad;
+	}
+
 	public String getHowDidYouHearAboutCCI() {
 		return this.howDidYouHearAboutCCI;
 	}
@@ -245,11 +252,19 @@ public class PartnerAgentInquiry implements Serializable {
 		this.logo = logo;
 	}
 
-	public byte getParticipantsForHomeCountry() {
+	public Byte getOther() {
+		return this.other;
+	}
+
+	public void setOther(Byte other) {
+		this.other = other;
+	}
+
+	public Byte getParticipantsForHomeCountry() {
 		return this.participantsForHomeCountry;
 	}
 
-	public void setParticipantsForHomeCountry(byte participantsForHomeCountry) {
+	public void setParticipantsForHomeCountry(Byte participantsForHomeCountry) {
 		this.participantsForHomeCountry = participantsForHomeCountry;
 	}
 
@@ -261,12 +276,12 @@ public class PartnerAgentInquiry implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getSalutation() {
-		return this.salutation;
+	public Integer getRating() {
+		return this.rating;
 	}
 
-	public void setSalutation(String salutation) {
-		this.salutation = salutation;
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 
 	public String getState() {
@@ -283,6 +298,22 @@ public class PartnerAgentInquiry implements Serializable {
 
 	public void setSubmittedOn(Date submittedOn) {
 		this.submittedOn = submittedOn;
+	}
+
+	public Byte getTeachAbroad() {
+		return this.teachAbroad;
+	}
+
+	public void setTeachAbroad(Byte teachAbroad) {
+		this.teachAbroad = teachAbroad;
+	}
+
+	public Byte getVolunteerAbroad() {
+		return this.volunteerAbroad;
+	}
+
+	public void setVolunteerAbroad(Byte volunteerAbroad) {
+		this.volunteerAbroad = volunteerAbroad;
 	}
 
 	public String getWebsite() {
@@ -309,70 +340,12 @@ public class PartnerAgentInquiry implements Serializable {
 		this.partner = partner;
 	}
 
-	public List<PartnerAgentInquiryDocument> getPartnerAgentInquiryDocuments() {
-		return this.partnerAgentInquiryDocuments;
+	public Salutation getSalutation() {
+		return this.salutation;
 	}
 
-	public void setPartnerAgentInquiryDocuments(List<PartnerAgentInquiryDocument> partnerAgentInquiryDocuments) {
-		this.partnerAgentInquiryDocuments = partnerAgentInquiryDocuments;
-	}
-
-	public PartnerAgentInquiryDocument addPartnerAgentInquiryDocument(PartnerAgentInquiryDocument partnerAgentInquiryDocument) {
-		getPartnerAgentInquiryDocuments().add(partnerAgentInquiryDocument);
-		partnerAgentInquiryDocument.setPartnerAgentInquiry(this);
-
-		return partnerAgentInquiryDocument;
-	}
-
-	public PartnerAgentInquiryDocument removePartnerAgentInquiryDocument(PartnerAgentInquiryDocument partnerAgentInquiryDocument) {
-		getPartnerAgentInquiryDocuments().remove(partnerAgentInquiryDocument);
-		partnerAgentInquiryDocument.setPartnerAgentInquiry(null);
-
-		return partnerAgentInquiryDocument;
-	}
-
-	public List<PartnerAgentInquiryNote> getPartnerAgentInquiryNotes() {
-		return this.partnerAgentInquiryNotes;
-	}
-
-	public void setPartnerAgentInquiryNotes(List<PartnerAgentInquiryNote> partnerAgentInquiryNotes) {
-		this.partnerAgentInquiryNotes = partnerAgentInquiryNotes;
-	}
-
-	public PartnerAgentInquiryNote addPartnerAgentInquiryNote(PartnerAgentInquiryNote partnerAgentInquiryNote) {
-		getPartnerAgentInquiryNotes().add(partnerAgentInquiryNote);
-		partnerAgentInquiryNote.setPartnerAgentInquiry(this);
-
-		return partnerAgentInquiryNote;
-	}
-
-	public PartnerAgentInquiryNote removePartnerAgentInquiryNote(PartnerAgentInquiryNote partnerAgentInquiryNote) {
-		getPartnerAgentInquiryNotes().remove(partnerAgentInquiryNote);
-		partnerAgentInquiryNote.setPartnerAgentInquiry(null);
-
-		return partnerAgentInquiryNote;
-	}
-
-	public List<PartnerAgentProgram> getPartnerAgentPrograms() {
-		return this.partnerAgentPrograms;
-	}
-
-	public void setPartnerAgentPrograms(List<PartnerAgentProgram> partnerAgentPrograms) {
-		this.partnerAgentPrograms = partnerAgentPrograms;
-	}
-
-	public PartnerAgentProgram addPartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
-		getPartnerAgentPrograms().add(partnerAgentProgram);
-		partnerAgentProgram.setPartnerAgentInquiry(this);
-
-		return partnerAgentProgram;
-	}
-
-	public PartnerAgentProgram removePartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
-		getPartnerAgentPrograms().remove(partnerAgentProgram);
-		partnerAgentProgram.setPartnerAgentInquiry(null);
-
-		return partnerAgentProgram;
+	public void setSalutation(Salutation salutation) {
+		this.salutation = salutation;
 	}
 
 }
