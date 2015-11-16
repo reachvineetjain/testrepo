@@ -3,9 +3,11 @@
  */
 package com.ccighgo.service.rest.partner.admin.partner;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +29,9 @@ public class AdminPartner {
    private static final Logger LOGGER = LoggerFactory.getLogger(AdminPartner.class);
    
    @Autowired AdminPartnerInterface adminPartnerInterface;
+   @Context HttpServletRequest request;
    
    public Response addPartner(AdminAddPartner partner){
-      return adminPartnerInterface.addPartner(partner);
+      return adminPartnerInterface.addPartner(partner, request);
    }
 }
