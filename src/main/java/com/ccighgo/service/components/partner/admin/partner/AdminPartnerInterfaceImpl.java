@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
@@ -70,6 +71,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    @Autowired EmailServiceImpl email;
 
    @Override
+   @Transactional
    public Response addPartner(AdminAddPartner partner, HttpServletRequest request) {
       Response resp = new Response();
       try {
