@@ -25,6 +25,7 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="loginId" type="xsd:int" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="isTopicPublic" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="goId" type="xsd:int" minOccurs="0" maxOccurs="1" />
                <xsd:element name="partnerNoteTopicId" type="xsd:int" minOccurs="0" maxOccurs="1" />
                <xsd:element name="partnerNoteTopicName" type="xsd:string" minOccurs="0" maxOccurs="1" />

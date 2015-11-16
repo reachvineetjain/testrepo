@@ -94,6 +94,13 @@ public class Participants {
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
       return participantsInterface.getAllAvailableSeasons();
    }
+   @GET
+   @Path("allSeasons/{partnerId}")
+   @Produces("application/json")
+   public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId")  String partnerId){
+      LOGGER.info("calling Participants.getAllAvailableSeasons ");
+      return participantsInterface.getAllAvailableSeasons(partnerId);
+   }
    
    @GET
    @Path("allProgramOptions/{partnerId}/{seasonId}")

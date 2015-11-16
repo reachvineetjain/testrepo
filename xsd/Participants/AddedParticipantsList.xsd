@@ -41,6 +41,7 @@
 		<xsd:element name="participantCountryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantCountry" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
  		<xsd:element name="subPartnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+ 		<xsd:element name="subPartnerName" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		 <xsd:element name="participantPlacementStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantPlacementStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
   		<xsd:element name="participantApplicationStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />

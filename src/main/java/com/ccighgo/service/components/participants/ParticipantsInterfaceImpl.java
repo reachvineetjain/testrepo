@@ -19,11 +19,7 @@ import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
-import com.ccighgo.db.entities.PartnerProgram;
-import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
-import com.ccighgo.db.entities.PartnerStatus;
-import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
@@ -46,6 +42,7 @@ import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
+import com.ccighgo.jpa.repositories.ParticipantStatusRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
@@ -56,7 +53,6 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
-import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsDetails;
 import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
@@ -116,6 +112,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    LoginRepository loginRepository;
    @Autowired
    EmailServiceImpl email;
+   @Autowired
+   ParticipantStatusRepository participantStatusRepository;
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
    @Override
@@ -140,10 +138,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                participantSeason.setParticipantSeasonProgram(participant.getDepartmentProgram().getProgramName());
 
                com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry participantCountry = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantCountry();
-               participantCountry.setParticipantCountryId(participant.getLookupCountry().getCountryId());
-               participantCountry.setParticipantCountryCode(participant.getLookupCountry().getCountryCode());
-               participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
-
+               if (participant.getLookupCountry() != null) {
+                  participantCountry.setParticipantCountryId(participant.getLookupCountry().getCountryId());
+                  participantCountry.setParticipantCountryCode(participant.getLookupCountry().getCountryCode());
+                  participantCountry.setParticipantCountry(participant.getLookupCountry().getCountryName());
+               }
                com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSubPartner participantSubPartner = new com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantSubPartner();
                // participantSubPartner.setParticipantSubPartnerId(participant.getSubPartner());
                participantSubPartner.setPartnerGoId(participant.getParticipantGoId());
@@ -244,7 +243,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                }
                Login login = new Login();
                login.setActive(CCIConstants.INACTIVE);
-               login.setLoginName("");
+               login.setLoginName(p.getEmail());
                login.setPassword(PasswordUtil.hashKey("password"));
                login.setKeyValue(UuidUtils.nextHexUUID());
                login.setCreatedBy(p.getLoginId());
@@ -270,6 +269,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
                Participant participant = new Participant();
                try {
+                  ParticipantStatus participantStatus = participantStatusRepository.findOne(CCIConstants.PARTICIPANT_STATUS_PENDING_VERIFICATION);
+                  participant.setParticipantStatus(participantStatus);
                   participant.setFirstName(p.getFirstName());
                   participant.setEmail(p.getEmail());
                   participant.setLastName(p.getLastName());
@@ -279,7 +280,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   participant.setDepartmentProgram(departmentProgram);
                   Season season = seasonRepository.findOne(p.getSeasonId());
                   participant.setSeason(season);
-
+                  Partner partner = partnerRepository.findOne(p.getPartnerId());
+                  participant.setPartner1(partner);
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
                   participant.setParticipantGoId(goIdSequence.getGoId());
                   participantRepository.saveAndFlush(participant);
@@ -508,19 +510,24 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   ExceptionUtil.logException(e, logger);
                }
                details.setParticipantGoId(participant.getParticipantGoId() + "");
-
-               details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
-               details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
-               details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
-
-               details.setParticipantCountry(participant.getLookupCountry().getCountryName());
-               details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
+               if (participant.getParticipantStatus() != null) {
+                  details.setParticipantApplicationStatus(participant.getParticipantStatus().getParticipantStatusName());
+                  details.setParticipantApplicationStatusId(participant.getParticipantStatus().getParticipantStatusId());
+                  details.setParticipantPlacementStatus(participant.getParticipantStatus().getActive() == 1 ? "Active" : "InActive");
+               }
+               if (participant.getLookupCountry() != null) {
+                  details.setParticipantCountry(participant.getLookupCountry().getCountryName());
+                  details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
+               }
                details.setParticipantEmail(participant.getEmail());
-               details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
+               if (participant.getEndDate() != null)
+                  details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
                details.setParticipantFirstName(participant.getFirstName());
-               details.setParticipantGuranteed(participant.getGuaranteed() == 1);
+               if (participant.getGuaranteed() != null)
+                  details.setParticipantGuranteed(participant.getGuaranteed() == 1);
                details.setParticipantlastName(participant.getLastName());
-               details.setParticipantPicUrl(participant.getPhoto());
+               if (participant.getPhoto() != null)
+                  details.setParticipantPicUrl(participant.getPhoto());
                details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
@@ -528,53 +535,57 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                try {
                   details.setParticipantSeasonName(programName);
                   if (participant.getSeason().getSeasonF1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_F1)) {
-                     if (participant.getSeason().getSeasonF1details() != null && participant.getSeason().getSeasonF1details().get(0) != null)
+                     if (participant.getSeason().getSeasonF1details() != null && !participant.getSeason().getSeasonF1details().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonF1details().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonJ1details() != null && programName.equalsIgnoreCase(CCIConstants.HSP_J1_HS)) {
-                     if (participant.getSeason().getSeasonJ1details() != null && participant.getSeason().getSeasonJ1details().get(0) != null)
+                     if (participant.getSeason().getSeasonJ1details() != null && !participant.getSeason().getSeasonJ1details().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonJ1details().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonCapdetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_CAP)) {
-                     if (participant.getSeason().getSeasonCapdetails() != null && participant.getSeason().getSeasonCapdetails().get(0) != null)
+                     if (participant.getSeason().getSeasonCapdetails() != null && !participant.getSeason().getSeasonCapdetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonCapdetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWnTsummerDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_SUMMER)) {
-                     if (participant.getSeason().getSeasonWnTsummerDetails() != null && participant.getSeason().getSeasonWnTsummerDetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWnTsummerDetails() != null && !participant.getSeason().getSeasonWnTsummerDetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWnTwinterDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_WINTER)) {
-                     if (participant.getSeason().getSeasonWnTwinterDetails() != null && participant.getSeason().getSeasonWnTwinterDetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWnTwinterDetails() != null && !participant.getSeason().getSeasonWnTwinterDetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWnTwinterDetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWnTspringDetails() != null && programName.equalsIgnoreCase(CCIConstants.WP_WT_SPRING)) {
-                     if (participant.getSeason().getSeasonWnTspringDetails() != null && participant.getSeason().getSeasonWnTspringDetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWnTspringDetails() != null && !participant.getSeason().getSeasonWnTspringDetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWnTspringDetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonHsadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_HS_ABRD)) {
-                     if (participant.getSeason().getSeasonHsadetails() != null && participant.getSeason().getSeasonHsadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonHsadetails() != null && !participant.getSeason().getSeasonHsadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonHsadetails().get(0).getProgramName());
                   } else if (participant.getSeason().getSeasonWadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_WRK_ABRD)) {
-                     if (participant.getSeason().getSeasonWadetails() != null && participant.getSeason().getSeasonWadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonWadetails() != null && !participant.getSeason().getSeasonWadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonWadetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonTadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_TEACH_ABRD)) {
-                     if (participant.getSeason().getSeasonTadetails() != null && participant.getSeason().getSeasonTadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonTadetails() != null && !participant.getSeason().getSeasonTadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonTadetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonLsdetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_LANG_SCL)) {
-                     if (participant.getSeason().getSeasonLsdetails() != null && participant.getSeason().getSeasonLsdetails().get(0) != null)
+                     if (participant.getSeason().getSeasonLsdetails() != null && !participant.getSeason().getSeasonLsdetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonLsdetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonVadetails() != null && programName.equalsIgnoreCase(CCIConstants.GHT_VOL_ABRD)) {
-                     if (participant.getSeason().getSeasonVadetails() != null && participant.getSeason().getSeasonVadetails().get(0) != null)
+                     if (participant.getSeason().getSeasonVadetails() != null && !participant.getSeason().getSeasonVadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonVadetails().get(0).getProgramName());
 
                   } else if (participant.getSeason().getSeasonIhpdetails() != null && programName.equalsIgnoreCase(CCIConstants.HSP_STP_IHP)) {
-                     if (participant.getSeason().getSeasonIhpdetails() != null && participant.getSeason().getSeasonIhpdetails().get(0) != null)
+                     if (participant.getSeason().getSeasonIhpdetails() != null && !participant.getSeason().getSeasonIhpdetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonIhpdetails().get(0).getProgramName());
                   }
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
-               details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
-               details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
-               if (participant.getPartner2() != null)
+               if (participant.getStartDate() != null)
+                  details.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
+               if (participant.getSubmittedFlightInfo() != null)
+                  details.setParticipantSubmittedFlightInfo(participant.getSubmittedFlightInfo() == 1);
+               if (participant.getPartner2() != null) {
                   details.setSubPartnerGoId(participant.getPartner2().getPartnerGoId());
+                  details.setSubPartnerName(participant.getPartner2().getCompanyName());
+               }
 
                addedParticipants.getParticipants().add(details);
             }
@@ -738,6 +749,122 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          e.printStackTrace();
       }
       return url;
+   }
+
+   @Override
+   public SeasonsForParticipants getAllAvailableSeasons(String partnerId) {
+      SeasonsForParticipants seasons = new SeasonsForParticipants();
+      try {
+         List<PartnerSeason> allSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoId(Integer.parseInt(partnerId));
+         if (allSeasons != null && !allSeasons.isEmpty()) {
+            for (PartnerSeason s : allSeasons) {
+               if (s.getSeason().getSeasonF1details() != null)
+                  for (SeasonF1Detail f1 : s.getSeason().getSeasonF1details()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(f1.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonJ1details() != null)
+                  for (SeasonJ1Detail j1 : s.getSeason().getSeasonJ1details()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(j1.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonCapdetails() != null)
+                  for (SeasonCAPDetail cap : s.getSeason().getSeasonCapdetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(cap.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonWnTsummerDetails() != null)
+                  for (SeasonWnTSummerDetail summer : s.getSeason().getSeasonWnTsummerDetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(summer.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_SUMMER_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonWnTwinterDetails() != null)
+                  for (SeasonWnTWinterDetail winter : s.getSeason().getSeasonWnTwinterDetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(winter.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonWnTspringDetails() != null)
+                  for (SeasonWnTSpringDetail spring : s.getSeason().getSeasonWnTspringDetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(spring.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.WP_WT_SPRING_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonHsadetails() != null)
+                  for (SeasonHSADetail hsa : s.getSeason().getSeasonHsadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(hsa.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_HS_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonWadetails() != null)
+                  for (SeasonWADetail wa : s.getSeason().getSeasonWadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(wa.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_WRK_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonTadetails() != null)
+                  for (SeasonTADetail ta : s.getSeason().getSeasonTadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(ta.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_TEACH_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonLsdetails() != null)
+                  for (SeasonLSDetail ls : s.getSeason().getSeasonLsdetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(ls.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_LANG_SCL_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+               if (s.getSeason().getSeasonVadetails() != null)
+                  for (SeasonVADetail va : s.getSeason().getSeasonVadetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(va.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.GHT_VOL_ABRD_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+
+               if (s.getSeason().getSeasonIhpdetails() != null)
+                  for (SeasonIHPDetail ihp : s.getSeason().getSeasonIhpdetails()) {
+                     SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+                     seasonsForParticipantDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForParticipantDetails.setSeasonName(ihp.getProgramName());
+                     seasonsForParticipantDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
+                     seasons.getDetails().add(seasonsForParticipantDetails);
+                  }
+            }
+         }
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return seasons;
    }
 
 }

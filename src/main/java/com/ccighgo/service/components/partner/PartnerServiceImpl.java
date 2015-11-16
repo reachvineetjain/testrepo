@@ -801,8 +801,8 @@ public class PartnerServiceImpl implements PartnerService {
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
             if (partnerReviewStatus != null) {
-               if (partnerReviewStatus.getPartnerStatus2() != null)
-                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
+               if (partnerReviewStatus.getPartnerStatus1() != null)
+                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, LOGGER);

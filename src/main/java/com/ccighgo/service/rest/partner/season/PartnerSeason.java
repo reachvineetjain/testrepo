@@ -24,6 +24,7 @@ import com.ccighgo.service.transport.partner.beans.partner.season.application.Pa
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
 import com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.PartnerSeasonF1Detail;
+import com.ccighgo.service.transport.partner.beans.partnerseasonihpdetail.PartnerSeasonIHPDetail;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -104,6 +105,21 @@ public class PartnerSeason {
    public PartnerSeasonF1Detail viewF1PartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
       LOGGER.debug("calling PartnerUser.viewPartnerSeason");
       return partnerSeasonInterface.viewF1PartnerSeason(partnerSeasonId);
+   }
+   
+   /**
+    * Get details of partner IHP season
+    * 
+    * @param partnerId
+    * @param seasonId
+    * @return
+    */
+   @GET
+   @Path("view/ihp/{partnerSeasonId}")
+   @Produces("application/json")
+   public PartnerSeasonIHPDetail viewIHPPartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
+      LOGGER.debug("calling PartnerUser.viewIHPPartnerSeason");
+      return partnerSeasonInterface.viewIHPPartnerSeason(partnerSeasonId);
    }
    
    /**
