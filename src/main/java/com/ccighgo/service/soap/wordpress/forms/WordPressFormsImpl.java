@@ -37,15 +37,17 @@ public class WordPressFormsImpl implements IWordPressForms {
                return message;
             }
             String secondFormatOfWebSite = "";
-            if(InternationalPartners.getWebsite().toLowerCase().startsWith("www"))
-               secondFormatOfWebSite = InternationalPartners.getWebsite().replaceAll("^www\\.", "");
-            else 
-               secondFormatOfWebSite= "www."+InternationalPartners.getWebsite();
-            PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(),secondFormatOfWebSite);
-            if (webSiteDuplicate != null) {
-               String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
-               System.out.println(message);
-               return message;
+            if (InternationalPartners.getWebsite() != null) {
+               if (InternationalPartners.getWebsite().toLowerCase().startsWith("www"))
+                  secondFormatOfWebSite = InternationalPartners.getWebsite().replaceAll("^www\\.", "");
+               else
+                  secondFormatOfWebSite = "www." + InternationalPartners.getWebsite();
+               PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(), secondFormatOfWebSite);
+               if (webSiteDuplicate != null) {
+                  String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
+                  System.out.println(message);
+                  return message;
+               }
             }
 
             PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
@@ -229,11 +231,11 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println("IsWebSiteExist is Called !!! ");
          WebSite = WebSite.replaceAll("http://|https://|/$", "");
          String secondFormatOfWebSite = "";
-         if(WebSite.toLowerCase().startsWith("www"))
+         if (WebSite.toLowerCase().startsWith("www"))
             secondFormatOfWebSite = WebSite.replaceAll("^www\\.", "");
-         else 
-            secondFormatOfWebSite= "www."+WebSite;
-         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(),secondFormatOfWebSite.toLowerCase().trim());
+         else
+            secondFormatOfWebSite = "www." + WebSite;
+         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(), secondFormatOfWebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
             System.out.println("TRUE");
             return true;
