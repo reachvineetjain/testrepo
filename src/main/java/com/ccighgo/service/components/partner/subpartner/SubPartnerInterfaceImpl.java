@@ -314,8 +314,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                for (PartnerSeason partnerSeason : subPartner.getPartnerSeasons()) {
                   SubPartnerSeasons SubPartnerSeasons = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons();
                   SubPartnerSeasons.setSubPartnerSeasonId(partnerSeason.getPartnerSeasonId());
-                  SubPartnerSeasons.setSubPartnerSeasonProgramId(partnerSeason.getDepartmentProgram().getDepartmentProgramId());
-                  SubPartnerSeasons.setSubPartnerSeasonProgram(partnerSeason.getDepartmentProgram().getProgramName());
+                  SubPartnerSeasons.setSubPartnerSeasonProgramId(partnerSeason.getSeason().getSeasonId());
+                  SubPartnerSeasons.setSubPartnerSeasonProgram(partnerSeason.getSeason().getSeasonName());
                   subPartnerSeasonsList.add(SubPartnerSeasons);
                }
             }
