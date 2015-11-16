@@ -721,6 +721,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
                partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
                partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+               if(subPartnerPrimaryContact.isReciveNotificationemailfromcc()!=null)
                partnerContact.setReceiveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
                partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
                partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
@@ -849,6 +850,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
             partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
             partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+            if(subPartnerPrimaryContact.isReciveNotificationemailfromcc()!=null)
             partnerContact.setReceiveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
             partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
             partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
