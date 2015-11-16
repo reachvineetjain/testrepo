@@ -1,0 +1,37 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/cciuserlist" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/cciuserlist" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.utility.beans.cciuserlist" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="CCIUsersList" type="cd:CCIUsersList" />
+
+   <xsd:complexType name="CCIUsersList">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="cciUsers" type="cd:CCIUser" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="CCIUser">
+      <xsd:sequence>
+         <xsd:element name="loginId" type="xsd:int" />
+         <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserPhotoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+</xsd:schema>

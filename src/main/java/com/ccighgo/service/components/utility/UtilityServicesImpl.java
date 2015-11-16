@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
@@ -31,6 +32,7 @@ import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
@@ -50,6 +52,7 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
 import com.ccighgo.service.components.errormessages.constants.SeasonMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
@@ -58,6 +61,8 @@ import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonPr
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUser;
+import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
@@ -116,6 +121,7 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired PartnerStatusRepository partnerStatusRepository;
    @Autowired PartnerNoteTagRepository partnerNoteTagRepository;
    @Autowired DocumentTypeRepository documentTypeRepository;
+   @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -641,13 +647,9 @@ public class UtilityServicesImpl implements UtilityServices {
             loginUser = loginRepository.findByLoginName(req.getUsername().toLowerCase());
          }
          if (loginUser != null) {
-            String body = "<p>Ciao! </p>" 
-                  + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" 
-                  + "<p>"+ "Your username is : " + req.getUsername() + "</p>" 
-                  + "<p>Please click on the link below to create a new password:</p> " 
-                  + "<p>"+ formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"
-                  + "<p>If you didn't request a new password, please let us know.</p>"
-                  + "<p>Thank you,</p>"
+            String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
+                  + "Your username is : " + req.getUsername() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
+                  + formResetURL(request).concat(loginUser.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
                   + "<p>CCI Greenheart.</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
@@ -835,5 +837,36 @@ public class UtilityServicesImpl implements UtilityServices {
          documentType = new DocumentTypes();
       documentType.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return documentType;
+   }
+
+   @Override
+   @Transactional(readOnly=true)
+   public CCIUsersList getCCIUsers() {
+      CCIUsersList usersList = new CCIUsersList();
+      try {
+         List<CCIStaffUser> cciStaffUsersList = cciStaffUsersRepository.findAll();
+         if (cciStaffUsersList == null) {
+            throw new CcighgoException("No users found");
+         } else {
+            List<CCIUser> cciUsers = new ArrayList<CCIUser>();
+            for (CCIStaffUser cciuser : cciStaffUsersList) {
+               CCIUser user = new CCIUser();
+               Login cciLogin = loginRepository.findByCCIGoId(cciuser.getCciStaffUserId());
+               user.setLoginId(cciLogin.getLoginId());
+               user.setCciUserId(cciuser.getCciStaffUserId());
+               user.setCciUserFirstName(cciuser.getFirstName());
+               user.setCciUserLastName(cciuser.getLastName());
+               user.setCciUserDesignation(cciuser.getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+               user.setCciUserPhotoUrl(cciuser.getPhoto());
+               cciUsers.add(user);
+            }
+            usersList.getCciUsers().addAll(cciUsers);
+            usersList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (CcighgoException e) {
+         usersList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+      }
+      return usersList;
    }
 }

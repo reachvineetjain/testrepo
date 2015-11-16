@@ -5,6 +5,7 @@ package com.ccighgo.service.rest.partner.admin.partner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -31,6 +32,10 @@ public class AdminPartner {
    @Autowired AdminPartnerInterface adminPartnerInterface;
    @Context HttpServletRequest request;
    
+   @GET
+   @Path("/add/partner/")
+   @Produces("application/json")
+   @Consumes("application/json")
    public Response addPartner(AdminAddPartner partner){
       return adminPartnerInterface.addPartner(partner, request);
    }

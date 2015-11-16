@@ -13,6 +13,7 @@ import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonPr
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
@@ -181,4 +182,9 @@ public interface UtilityServices {
     * @return
     */
    public DocumentTypes getDocumentTypes();
+
+   /**
+    * @return
+    */
+   public CCIUsersList getCCIUsers();
 }
