@@ -416,10 +416,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (partner != null) {
                partner.setCompanyName(detail.getCompanyName());
                partner.setBillingNotes(detail.getBillingNotes());
-               partner.setCanHaveSubPartner((byte) (detail.getCanHaveSubPartner() == "true" ? 1 : 0));
+               partner.setCanHaveSubPartner((byte) (detail.isCanHaveSubPartner() ? 1 : 0));
                partner.setEmail(detail.getGeneralEmail());
                partner.setInvoiceMail(detail.getInvoiceEmail());
-               partner.setMultiCountrySender((byte) (detail.getMultiCountrySender() == "true" ? 1 : 0));
+               partner.setMultiCountrySender((byte) (detail.isMultiCountrySender()? 1 : 0));
                partner.setQuickbooksCode(detail.getQuickbooksCode());
             }
 
@@ -428,11 +428,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             AdminPartnerHspSettings hsp = pwt.getHspSettings();
+            if(hsp!=null)
+            {
             partner.setParticipantTranscriptRequired((byte) (hsp.isAypParticipantTranscriptRequired() ? 1 : 0));
             partner.setParticipantELTISRequired((byte) (hsp.isHspParticipantEltisRequired() ? 1 : 0));
             partner.setParticipantMedicalReleaseRequired((byte) (hsp.isHspParticipantMedicalReleaseRequired() ? 1 : 0));
-            partner.setParticipantSLEPRequired((byte) (hsp.isHspParticipantSlepRequired() ? 1 : 0));
+          //  partner.setParticipantSLEPRequired((byte) (hsp.isHspParticipantSlepRequired() ? 1 : 0));
             partner.setUnguaranteedFormRequired((byte) (hsp.isHspParticipantUnquaranteedFromRequired() ? 1 : 0));
+            }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -480,10 +483,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partnerRecruitmentAdminScreeningDetail.setCompanyName(partnerAgentInquiry.getCompanyName());
             if (partnerAgentInquiry.getPartner() != null) {
                partnerRecruitmentAdminScreeningDetail.setBillingNotes(partnerAgentInquiry.getPartner().getBillingNotes());
-               partnerRecruitmentAdminScreeningDetail.setCanHaveSubPartner(partnerAgentInquiry.getPartner().getCanHaveSubPartner() == 1 ? "true" : "false");
+               partnerRecruitmentAdminScreeningDetail.setCanHaveSubPartner(partnerAgentInquiry.getPartner().getCanHaveSubPartner() == CCIConstants.ACTIVE ? true : false);
                partnerRecruitmentAdminScreeningDetail.setGeneralEmail(partnerAgentInquiry.getPartner().getEmail());
                partnerRecruitmentAdminScreeningDetail.setInvoiceEmail(partnerAgentInquiry.getPartner().getInvoiceMail());
-               partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partnerAgentInquiry.getPartner().getMultiCountrySender() == 1 ? "true" : "false");
+               partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partnerAgentInquiry.getPartner().getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
                partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partnerAgentInquiry.getPartner().getQuickbooksCode());
             }
             try {
@@ -540,7 +543,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             adminPartnerHspSettings.setAypParticipantTranscriptRequired(partnerAgentInquiry.getPartner().getParticipantTranscriptRequired() == 1);
             adminPartnerHspSettings.setHspParticipantEltisRequired(partnerAgentInquiry.getPartner().getParticipantELTISRequired() == 1);
             adminPartnerHspSettings.setHspParticipantMedicalReleaseRequired(partnerAgentInquiry.getPartner().getParticipantMedicalReleaseRequired() == 1);
-            adminPartnerHspSettings.setHspParticipantSlepRequired(partnerAgentInquiry.getPartner().getParticipantSLEPRequired() == 1);
+            //adminPartnerHspSettings.setHspParticipantSlepRequired(partnerAgentInquiry.getPartner().getParticipantSLEPRequired() == 1);
             adminPartnerHspSettings.setHspParticipantUnquaranteedFromRequired(partnerAgentInquiry.getPartner().getUnguaranteedFormRequired() == 1);
             pwt.setHspSettings(adminPartnerHspSettings);
          } catch (Exception e) {
@@ -614,7 +617,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         try {
+ /*        try {
             List<PartnerDocument> partnerDocuments = partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(goId);
             if (partnerDocuments != null) {
                for (PartnerDocument p : partnerDocuments) {
@@ -649,7 +652,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
-         }
+         }*/
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_OVERVIEW.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -1273,24 +1276,24 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    {
 	   PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
  	  List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
-       if (offices != null) {
-          for (PartnerOffice partnerOffice : offices) {
-             PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
-             office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
-             office.setAddress1(partnerOffice.getAdressOne());
-             office.setAddress2(partnerOffice.getAdressTwo());
-             office.setCity(partnerOffice.getCity());
+      if (offices != null) {
+         for (PartnerOffice partnerOffice : offices) {
+            PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
+            office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
+            office.setAddress1(partnerOffice.getAdressOne());
+            office.setAddress2(partnerOffice.getAdressTwo());
+            office.setCity(partnerOffice.getCity());
             String countryName = partnerOffice.getLookupCountry().getCountryName();
-            if(countryName!=null)
-             office.setCountry(countryName);
-             office.setEmail(partnerOffice.getPartner().getEmail());
-             office.setFax(partnerOffice.getFaxNumber());
-             office.setPhone(partnerOffice.getPhoneNumber());
-             office.setWebsite(partnerOffice.getWebsite());
-             office.setZipCode(partnerOffice.getPostalCode());
-             office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
-             pOffices.getOffices().add(office);
-          }
+            if (countryName != null)
+               office.setCountry(countryName);
+            office.setEmail(partnerOffice.getPartner().getEmail());
+            office.setFax(partnerOffice.getFaxNumber());
+            office.setPhone(partnerOffice.getPhoneNumber());
+            office.setWebsite(partnerOffice.getWebsite());
+            office.setZipCode(partnerOffice.getPostalCode());
+            office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
+            pOffices.getOffices().add(office);
+         }
           
    }
        return pOffices;
@@ -1524,9 +1527,79 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return userManagementService.findAllUsers();
    }
 
+   @Override
+   public PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
+      PartnerAdminOverviewOffices pOffices;
+      try {
+         PartnerOffice po = partnerOfficeRepository.findOne(officesDetails.getPartnerOfficeId());
+         po.setAdressOne(officesDetails.getAddress1());
+         po.setAdressTwo(officesDetails.getAddress2());
+         po.setCity(officesDetails.getCity());
+         po.setCreatedBy(officesDetails.getLoginId());
+         po.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         po.setFaxNumber(officesDetails.getFax());
+         LookupCountry country = lookupCountryRepository.findByCountryName(officesDetails.getCountry());
+         po.setLookupCountry(country);
+         PartnerOfficeType officeType = partnerOfficeTypeRepository.findByPartnerOfficeType(officesDetails.getOfficeType());
+         po.setPartnerOfficeType(officeType);
+         po.setModifiedBy(officesDetails.getLoginId());
+         po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         po.setPhoneNumber(officesDetails.getPhone());
+         po.setPostalCode(officesDetails.getZipCode());
+         po.setWebsite(officesDetails.getWebsite());
+         partnerOfficeRepository.saveAndFlush(po);
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      pOffices = getListofOffices(officesDetails.getGoId());
+      return pOffices;
+   }
 
+   @Override
+   public PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
+      PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
+      try {
+         PartnerContact pc = partnerContactRepository.findOne(contactsDetails.getPartnerContactId());
+         pc.setActive((byte) (contactsDetails.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
+         pc.setEmail(contactsDetails.getEmail());
+         pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+         pc.setFax(contactsDetails.getFax());
+         pc.setFirstName(contactsDetails.getFirstName());
+         pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
+         pc.setLastName(contactsDetails.getLastName());
+         pc.setModifiedBy(contactsDetails.getGoId());
+         pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         pc.setPhone(contactsDetails.getPhone());
+         pc.setReceiveNotificationEmails(contactsDetails.isReceiveNotificationEmails() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
+         pc.setSalutation(salutation);
+         pc.setSkypeId(contactsDetails.getSkypeId());
+         pc.setTitle(contactsDetails.getTitile());
+         partnerContactRepository.saveAndFlush(pc);
 
-
-
+         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
+         if (contacts != null) {
+            for (PartnerContact partnerContact : contacts) {
+               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
+               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+               contact.setActive(partnerContact.getActive() == CCIConstants.ACTIVE);
+               contact.setEmail(partnerContact.getEmail());
+               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+               contact.setFax(partnerContact.getFax());
+               contact.setFirstName(partnerContact.getFirstName());
+               contact.setLastName(partnerContact.getLastName());
+               contact.setPhone(partnerContact.getPhone());
+               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+               contact.setSkypeId(partnerContact.getSkypeId());
+               contact.setTitile(partnerContact.getTitle());
+               contact.setPrimaryContact(partnerContact.getIsPrimary() == CCIConstants.ACTIVE);
+               pContacts.getContacts().add(contact);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return pContacts;
+   }
 
 }

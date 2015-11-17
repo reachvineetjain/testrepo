@@ -262,6 +262,13 @@ public class PartnerAdmin {
       LOGGER.debug("fun : addNewPartnerInquiryOffice");
       return partnerAdminService.addNewPartnerInquiryOffice(officesDetails);
    }
+   @POST
+   @Path("updatePartnerInquiryOffice/")
+   @Produces("application/json")
+   public PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
+      LOGGER.debug("fun : updatePartnerInquiryOffice");
+      return partnerAdminService.updatePartnerInquiryOffice(officesDetails);
+   }
    
    @POST
    @Path("removeNewPartnerInquiryOffice")
@@ -281,6 +288,13 @@ public class PartnerAdmin {
    public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails ContactsDetails) {
       LOGGER.debug("fun : addNewPartnerInquiryContact");
       return partnerAdminService.addNewPartnerInquiryContact(ContactsDetails);
+   }
+   @POST
+   @Path("updatePartnerInquiryContacts/")
+   @Produces("application/json")
+   public PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails ContactsDetails) {
+      LOGGER.debug("fun : updatePartnerInquiryContact");
+      return partnerAdminService.updatePartnerInquiryContact(ContactsDetails);
    }
    
    @POST
