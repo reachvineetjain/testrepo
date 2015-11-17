@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/addedpartner" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/addedpartner" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.admin.lead.partner" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="LeadPartners" type="pdl:LeadPartners" />
+
+   <xsd:complexType name="LeadPartners">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="leadPartners" type="pdl:LeadPartner" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="LeadPartner">
+      <xsd:sequence>
+         <xsd:element name="companyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="rating" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="extenstion" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="website" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="leadCountry" type="pdl:LeadCountry" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programs" type="pdl:PartnerProgram" minOccurs="1" maxOccurs="unbounded" />
+      </xsd:sequence>
+
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerType">
+      <xsd:sequence>
+         <xsd:element name="typeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="LeadCountry">
+      <xsd:sequence>
+         <xsd:element name="countryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryFlagUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Status">
+      <xsd:sequence>
+         <xsd:element name="statusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="PartnerProgram">
+      <xsd:sequence>
+         <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="proggramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

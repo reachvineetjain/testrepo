@@ -262,36 +262,35 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
           */
          try {
             PartnerRecruitmentAdminScreeningAdditionalInfo additional = new PartnerRecruitmentAdminScreeningAdditionalInfo();
-            additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-            additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
+            additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
-            additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-            additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
+            additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
+            additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
             pwt.setAdditionalInformation(additional);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
 
-         /*
-          * Notes
-          */
-         try {
-            List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(goId);
-            if (partnerNotes != null) {
-               for (PartnerNote partnerNote : partnerNotes) {
-                  com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes note = new com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes();
-                  note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
-                  note.setPartnerNoteId(partnerNote.getPartnerNotesId());
-                  note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
-                  note.setNoteValue(partnerNote.getPartnerNote());
-                  pwt.getNotes().add(note);
-               }
-            }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
-         }
+//         /*
+//          * Notes
+//          */
+//         try {
+//            List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(goId);
+//            if (partnerNotes != null) {
+//               for (PartnerNote partnerNote : partnerNotes) {
+//                  com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes note = new com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes();
+//                  note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
+//                  note.setPartnerNoteId(partnerNote.getPartnerNotesId());
+//                  note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
+//                  note.setNoteValue(partnerNote.getPartnerNote());
+//                  pwt.getNotes().add(note);
+//               }
+//            }
+//         } catch (Exception e) {
+//            ExceptionUtil.logException(e, logger);
+//         }
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -318,7 +317,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(pwt.getGoId());
             if (partnerReviewStatus != null) {
                PartnerStatus activeStatus = partnerStatusRepository.findStatusByName(pwt.getLeadStatus());
-               partnerReviewStatus.setPartnerStatus1(activeStatus);
+               partnerReviewStatus.setPartnerStatus2(activeStatus);
+               partnerReviewStatusRepository.save(partnerReviewStatus);
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
