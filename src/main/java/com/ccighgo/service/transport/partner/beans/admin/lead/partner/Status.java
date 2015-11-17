@@ -6,28 +6,26 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.partner.beans.admin.lead.partner;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
 
 
 /**
- * <p>Java class for Response complex type.
+ * <p>Java class for Status complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Response">
+ * &lt;complexType name="Status">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="header" type="{http://www.ccighgo.com/common}Header"/>
- *         &lt;element name="status" type="{http://www.ccighgo.com/common}Status"/>
+ *         &lt;element name="statusId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,42 +35,30 @@ import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartne
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Response", propOrder = {
-    "header",
+@XmlType(name = "Status", propOrder = {
+    "statusId",
     "status"
 })
-@XmlSeeAlso({
-    LeadPartners.class
-})
-public class Response {
+public class Status {
 
+    protected int statusId;
     @XmlElement(required = true)
-    protected Header header;
-    @XmlElement(required = true)
-    protected Status status;
+    protected String status;
 
     /**
-     * Gets the value of the header property.
+     * Gets the value of the statusId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Header }
-     *     
      */
-    public Header getHeader() {
-        return header;
+    public int getStatusId() {
+        return statusId;
     }
 
     /**
-     * Sets the value of the header property.
+     * Sets the value of the statusId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Header }
-     *     
      */
-    public void setHeader(Header value) {
-        this.header = value;
+    public void setStatusId(int value) {
+        this.statusId = value;
     }
 
     /**
@@ -80,10 +66,10 @@ public class Response {
      * 
      * @return
      *     possible object is
-     *     {@link Status }
+     *     {@link String }
      *     
      */
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -92,10 +78,10 @@ public class Response {
      * 
      * @param value
      *     allowed object is
-     *     {@link Status }
+     *     {@link String }
      *     
      */
-    public void setStatus(Status value) {
+    public void setStatus(String value) {
         this.status = value;
     }
 
