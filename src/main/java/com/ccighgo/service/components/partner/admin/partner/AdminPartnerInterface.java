@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPartner;
+import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 
 /**
  * @author ravi
@@ -17,6 +18,30 @@ import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPar
 @Service
 public interface AdminPartnerInterface {
 
+   /**
+    * @param partner
+    * @param request
+    * @return
+    */
    public Response addPartner(AdminAddPartner partner,HttpServletRequest request);
+
+   /**
+    * @return
+    */
+   public AddedPartners getAddedPartnerList();
+
+   /**
+    * @param loggedinUserLoginId
+    * @param partnerLoginId
+    * @return
+    */
+   public Response toggleActiveStatus(String statusVal,String loggedinUserLoginId, String partnerLoginId);
+
+   /**
+    * @param partnerUserId
+    * @param request
+    * @return
+    */
+   public Response sendLogin(String partnerUserId, HttpServletRequest request);
 
 }
