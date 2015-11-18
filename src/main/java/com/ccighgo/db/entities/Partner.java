@@ -1,15 +1,25 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 /**
@@ -23,6 +33,7 @@ public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int partnerGoId;
 
@@ -223,7 +234,7 @@ public class Partner implements Serializable {
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerUser> partnerUsers;
 
 	//bi-directional many-to-one association to PartnerWorkQueue
@@ -706,8 +717,8 @@ public class Partner implements Serializable {
 	}
 
 	public List<PartnerContact> getPartnerContacts() {
-	   if(this.partnerContacts==null)
-	      this.partnerContacts=new ArrayList<PartnerContact>();
+		if(this.partnerContacts==null)
+		      this.partnerContacts=new ArrayList<PartnerContact>();
 		return this.partnerContacts;
 	}
 
@@ -718,7 +729,6 @@ public class Partner implements Serializable {
 	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
 		partnerContact.setPartner(this);
 		getPartnerContacts().add(partnerContact);
-		
 
 		return partnerContact;
 	}

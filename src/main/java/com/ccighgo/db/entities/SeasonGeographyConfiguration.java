@@ -64,17 +64,17 @@ public class SeasonGeographyConfiguration implements Serializable {
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to Region
-	@ManyToOne(fetch = FetchType.LAZY)
+		@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="regionId")
 	private Region region;
 
 	//bi-directional many-to-one association to Season
-	@ManyToOne(fetch = FetchType.LAZY)
+		@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to SuperRegion
-	@ManyToOne(fetch = FetchType.LAZY)
+		@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="superRegionId")
 	private SuperRegion superRegion;
 

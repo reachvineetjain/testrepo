@@ -32,8 +32,9 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer cciStaffUserId;
+	private int cciStaffUserId;
 
 	@Column(nullable=false, length=64)
 	private String cciAdminGuid;
@@ -85,10 +86,6 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=50)
 	private String zip;
 
-	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
-
 	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates;
@@ -107,7 +104,7 @@ public class CCIStaffUser implements Serializable {
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
-	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
@@ -132,7 +129,7 @@ public class CCIStaffUser implements Serializable {
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
-	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
@@ -167,11 +164,11 @@ public class CCIStaffUser implements Serializable {
 	public CCIStaffUser() {
 	}
 
-	public Integer getCciStaffUserId() {
+	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(Integer cciStaffUserId) {
+	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 
@@ -309,28 +306,6 @@ public class CCIStaffUser implements Serializable {
 
 	public void setZip(String zip) {
 		this.zip = zip;
-	}
-
-	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
-		return this.adminQuickStatsCategoryAggregates;
-	}
-
-	public void setAdminQuickStatsCategoryAggregates(List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates) {
-		this.adminQuickStatsCategoryAggregates = adminQuickStatsCategoryAggregates;
-	}
-
-	public AdminQuickStatsCategoryAggregate addAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().add(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setCcistaffUser(this);
-
-		return adminQuickStatsCategoryAggregate;
-	}
-
-	public AdminQuickStatsCategoryAggregate removeAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().remove(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setCcistaffUser(null);
-
-		return adminQuickStatsCategoryAggregate;
 	}
 
 	public List<AdminQuickStatsTypeAggregate> getAdminQuickStatsTypeAggregates() {
