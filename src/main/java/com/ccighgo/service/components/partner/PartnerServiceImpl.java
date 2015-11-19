@@ -97,31 +97,54 @@ public class PartnerServiceImpl implements PartnerService {
 
    private static final Logger LOGGER = Logger.getLogger(PartnerServiceImpl.class);
 
-   @Autowired MessageUtils messageUtil;
-   @Autowired CommonComponentUtils componentUtils;
+   @Autowired
+   MessageUtils messageUtil;
+   @Autowired
+   CommonComponentUtils componentUtils;
 
-   @Autowired PartnerRepository partnerRepository;
-   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
-   @Autowired PartnerContactRepository partnerContactRepository;
-   @Autowired PartnerWorkQueueRepository partnerWorkQueueRepository;
-   @Autowired PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
-   @Autowired PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
-   @Autowired PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
-   @Autowired PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
-   @Autowired PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
-   @Autowired PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
-   @Autowired PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
-   @Autowired PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
+   @Autowired
+   PartnerRepository partnerRepository;
+   @Autowired
+   LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
+   @Autowired
+   PartnerContactRepository partnerContactRepository;
+   @Autowired
+   PartnerWorkQueueRepository partnerWorkQueueRepository;
+   @Autowired
+   PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
+   @Autowired
+   PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
+   @Autowired
+   PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
+   @Autowired
+   PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
+   @Autowired
+   PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
+   @Autowired
+   PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
+   @Autowired
+   PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
+   @Autowired
+   PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
 
-   @Autowired PartnerAgentInquiryRepository partnerAgentInquiryRepository;
-   @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
-   @Autowired PartnerProgramRepository partnerProgramRepository;
-   @Autowired PartnerMessagesRepository partnerMessagesRepository;
-   @Autowired PartnerOfficeRepository partnerOfficeRepository;
-   @Autowired PartnerReferenceCheckRepository partnerReferenceCheckRepository;
-   @Autowired PartnerDocumentsRepository partnerDocumentsRepository;
-   @Autowired PartnerNoteRepository partnerNoteRepository;
-   @Autowired PartnerPermissionRepository partnerPermissionRepository;
+   @Autowired
+   PartnerAgentInquiryRepository partnerAgentInquiryRepository;
+   @Autowired
+   PartnerReviewStatusRepository partnerReviewStatusRepository;
+   @Autowired
+   PartnerProgramRepository partnerProgramRepository;
+   @Autowired
+   PartnerMessagesRepository partnerMessagesRepository;
+   @Autowired
+   PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired
+   PartnerReferenceCheckRepository partnerReferenceCheckRepository;
+   @Autowired
+   PartnerDocumentsRepository partnerDocumentsRepository;
+   @Autowired
+   PartnerNoteRepository partnerNoteRepository;
+   @Autowired
+   PartnerPermissionRepository partnerPermissionRepository;
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
@@ -195,7 +218,7 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerProgramsList.add(prg);
                   }
                   partnerDashboard.getPartnerPrograms().addAll(partnerProgramsList);
-                  
+
                   List<Programs> userProgramsAndPermissions = new ArrayList<Programs>();
                   PartnerPermission partnerPermission = partnerPermissionRepository.findByPartnerUserId(partnerUser.getPartnerUserId());
                   if (partnerPermission != null) {
@@ -275,7 +298,7 @@ public class PartnerServiceImpl implements PartnerService {
                      userProgramsAndPermissions.add(capProgram);
                   }
                   partnerDashboard.getUserProgramsAndPermissions().addAll(userProgramsAndPermissions);
-                  
+
                } else {
                   // no programs found for this partner
                }
@@ -741,7 +764,7 @@ public class PartnerServiceImpl implements PartnerService {
                         partnerIHPProgramsList.add(prg);
                      }
                   }
-                  ihpDashboard.getPartnerIHPPrograms().addAll(partnerIHPProgramsList); 
+                  ihpDashboard.getPartnerIHPPrograms().addAll(partnerIHPProgramsList);
                }
             } else {
                ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
@@ -857,9 +880,8 @@ public class PartnerServiceImpl implements PartnerService {
                for (PartnerProgram partnerProgram : partnerPrograms) {
                   if (i++ > 0) {
                      st.append(",");
-                  } else {
-                     st.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
                   }
+                  st.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
                }
                additional.setProgramsYouLikeToParticipate(st.toString());
             }

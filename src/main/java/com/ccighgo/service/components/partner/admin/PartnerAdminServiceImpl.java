@@ -3,6 +3,7 @@
  */
 package com.ccighgo.service.components.partner.admin;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -219,7 +220,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
+         pwt.setFollowUpDate(DateUtils.getTimestamp(partnerAgentInquiry.getFollowUpDate()));
 
          /**
           * Details
@@ -262,12 +263,30 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
           */
          try {
             PartnerRecruitmentAdminScreeningAdditionalInfo additional = new PartnerRecruitmentAdminScreeningAdditionalInfo();
+            List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(goId);
+            if (partnerPrograms != null) {
+               StringBuilder st = new StringBuilder();
+               int i = 0;
+               for (PartnerProgram partnerProgram : partnerPrograms) {
+                  if (i++ > 0) {
+                     st.append(",");
+                  }
+                  st.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
+               }
+               additional.setProgramsYouLikeToParticipate(st.toString());
+            }
             additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
             additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
             additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
             additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
+
+            additional.setInterestedInHighSchoolAbroad(partnerAgentInquiry.getHighSchoolAbroad() == 1);
+            additional.setInterestedInTeachAbroad(partnerAgentInquiry.getTeachAbroad() == 1);
+            additional.setInterestedInVolunteerAbroad(partnerAgentInquiry.getVolunteerAbroad() == 1);
+
+            // additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
             pwt.setAdditionalInformation(additional);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -326,7 +345,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             ExceptionUtil.logException(e, logger);
          }
          try {
-            partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString(pwt.getFollowUpDate()));
+            if (pwt.getFollowUpDate() != null)
+               partnerAgentInquiry.setFollowUpDate(new Date(Long.parseLong(pwt.getFollowUpDate())));
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
