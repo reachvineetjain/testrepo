@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPartner;
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
+import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
 
 /**
  * @author ravi
@@ -43,5 +44,10 @@ public interface AdminPartnerInterface {
     * @return
     */
    public Response sendLogin(String partnerUserId, HttpServletRequest request);
+
+   /**
+    * @return
+    */
+   public LeadPartners getLeadPartnerList();
 
 }

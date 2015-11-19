@@ -65,8 +65,9 @@ public class PartnerAdminSeason {
     * @param partnerGoId
     * @return
     */
-   @GET
-   @Path("add/new/")
+   @POST
+   @Path("add/new")
+   @Consumes("application/json")
    @Produces("application/json")
    public Response addNewSeasonsToPartner(PartnerAdminSeasonApplicationList partnerAdminSeasonApplicationList) {
       return partnerAdminSeasonInterface.addNewSeasonsToPartner(partnerAdminSeasonApplicationList);

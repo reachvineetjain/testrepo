@@ -19,6 +19,7 @@
             <xsd:sequence>
                <xsd:sequence>
                   <xsd:element name="partnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="loggedInUserLoginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonApplication" type="sa:PartnerSeasonApplication" minOccurs="1" maxOccurs="unbounded" />
                   <xsd:element name="comments" type="xsd:string" minOccurs="1" maxOccurs="1" />
                </xsd:sequence>
@@ -30,8 +31,8 @@
    <xsd:complexType name="PartnerSeasonApplication">
       <xsd:sequence>
          <xsd:sequence>
-            <xsd:element name="seasonId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="departmentProgramId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
             <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          </xsd:sequence>
       </xsd:sequence>

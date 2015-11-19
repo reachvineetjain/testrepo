@@ -18,6 +18,7 @@ import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
@@ -30,6 +31,7 @@ import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerUserRepository;
@@ -38,7 +40,6 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPartner;
 import com.ccighgo.service.transport.partner.beans.admin.add.partner.ProgramContacts;
@@ -46,6 +47,9 @@ import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPart
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.PartnerCountry;
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.PartnerSeasons;
+import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadCountry;
+import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartner;
+import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
@@ -74,6 +78,9 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
    @Autowired LookupDepartmentProgramRepository departmentProgramRepository;
    @Autowired EmailServiceImpl email;
+   @Autowired PartnerAgentInquiryRepository partnerAgentInquiryRepository;
+
+   public static final Integer PENDING_STATUS = 4;
 
    @Override
    @Transactional
@@ -196,7 +203,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public AddedPartners getAddedPartnerList() {
       AddedPartners addedPartners = new AddedPartners();
       try {
@@ -207,7 +214,6 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          addedPartners.setCount(partnerList.size());
          List<AddedPartner> addedPartnersList = new ArrayList<AddedPartner>();
          for (Partner p : partnerList) {
-            AddedPartner ap = new AddedPartner();
             PartnerUser puser = null;
             List<PartnerUser> partnerUserList = p.getPartnerUsers();
             if (partnerUserList != null) {
@@ -218,39 +224,42 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                   }
                }
             }
-            ap.setCompanyName(p.getCompanyName());
-            ap.setType(p.getIsSubPartner() == CCIConstants.ACTIVE ? "Sub Partner" : "Partner");
-            ap.setFirstName(puser.getFirstName());
-            ap.setLastName(puser.getLastName());
-            ap.setEmail(puser.getEmail());
-            PartnerCountry pCountry = new PartnerCountry();
-            pCountry.setCountryId(p.getLookupCountry1().getCountryId());
-            pCountry.setCountryCode(p.getLookupCountry1().getCountryCode());
-            pCountry.setCountryName(p.getLookupCountry1().getCountryName());
-            pCountry.setCountryFlagUrl(p.getLookupCountry1().getCountryFlag());
-            ap.setPartnerCountry(pCountry);
-            ap.setActive(puser.getLogin().getActive() == CCIConstants.ACTIVE ? 1 : 0);
-            ap.setPartnerLoginId(puser.getLogin().getLoginId());
+            if(puser!=null){
+               AddedPartner ap = new AddedPartner();
+               ap.setCompanyName(p.getCompanyName());
+               ap.setType(p.getIsSubPartner() == CCIConstants.ACTIVE ? "Sub Partner" : "Partner");
+               ap.setFirstName(puser.getFirstName());
+               ap.setLastName(puser.getLastName());
+               ap.setEmail(puser.getEmail());
+               PartnerCountry pCountry = new PartnerCountry();
+               pCountry.setCountryId(p.getLookupCountry1().getCountryId());
+               pCountry.setCountryCode(p.getLookupCountry1().getCountryCode());
+               pCountry.setCountryName(p.getLookupCountry1().getCountryName());
+               pCountry.setCountryFlagUrl(p.getLookupCountry1().getCountryFlag());
+               ap.setPartnerCountry(pCountry);
+               ap.setActive(puser.getLogin().getActive() == CCIConstants.ACTIVE ? 1 : 0);
+               ap.setPartnerLoginId(puser.getLogin().getLoginId());
 
-            // partner status
-            String status = null;
-            List<PartnerReviewStatus> partnerReviewStatuses = p.getPartnerReviewStatuses();
-            if (partnerReviewStatuses != null && !partnerReviewStatuses.isEmpty()) {
-               status = partnerReviewStatuses.get(0).getPartnerStatus1().getPartnerStatusName();
-            }
-            ap.setStatus(status);
-            List<PartnerSeasons> psList = null;
-            List<PartnerSeason> seasonsList = p.getPartnerSeasons();
-            if (seasonsList != null) {
-               psList = new ArrayList<PartnerSeasons>();
-               for (PartnerSeason ps : seasonsList) {
-                  PartnerSeasons pSeason = new PartnerSeasons();
-                  pSeason.setSeasonName(ps.getSeason().getSeasonName());
-                  psList.add(pSeason);
+               // partner status
+               String status = null;
+               List<PartnerReviewStatus> partnerReviewStatuses = p.getPartnerReviewStatuses();
+               if (partnerReviewStatuses != null && !partnerReviewStatuses.isEmpty()) {
+                  status = partnerReviewStatuses.get(0).getPartnerStatus1().getPartnerStatusName();
                }
+               ap.setStatus(status);
+               List<PartnerSeasons> psList = null;
+               List<PartnerSeason> seasonsList = p.getPartnerSeasons();
+               if (seasonsList != null) {
+                  psList = new ArrayList<PartnerSeasons>();
+                  for (PartnerSeason ps : seasonsList) {
+                     PartnerSeasons pSeason = new PartnerSeasons();
+                     pSeason.setSeasonName(ps.getSeason().getSeasonName());
+                     psList.add(pSeason);
+                  }
+               }
+               ap.getSeasons().addAll(psList);
+               addedPartnersList.add(ap);
             }
-            ap.getSeasons().addAll(psList);
-            addedPartnersList.add(ap);
             addedPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
@@ -263,83 +272,80 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
    @Override
    @Transactional
-   public Response toggleActiveStatus(String statusVal,String loggedinUserLoginId, String partnerLoginId) {
+   public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String partnerLoginId) {
       Response resp = new Response();
-     try{
-        if(!(Integer.valueOf(statusVal)==0) || !(Integer.valueOf(statusVal)==1)){
-           throw new CcighgoException("invalid status value, can be either 0 or 1");
-        }
-        if(loggedinUserLoginId ==null || Integer.valueOf(loggedinUserLoginId)==0 || Integer.valueOf(loggedinUserLoginId)<0){
-           throw new CcighgoException("logged in user info is required to update the record");
-        }
-        if(partnerLoginId ==null || Integer.valueOf(partnerLoginId)==0 || Integer.valueOf(partnerLoginId)<0){
-           throw new CcighgoException("login info of partner is required update the record");
-        }
-        Login partnerLogin = loginRepository.findOne(Integer.valueOf(partnerLoginId));
-        if(partnerLogin==null){
-           throw new CcighgoException("no record found to update status with the login info provided, please check request url");
-        }
-        Byte activeStatus = null;
-        if(Integer.valueOf(statusVal)==1){
-           activeStatus = CCIConstants.ACTIVE;
-        }
-        if(Integer.valueOf(statusVal)==0){
-           activeStatus = CCIConstants.INACTIVE;
-        }
-        partnerLogin.setActive(activeStatus);
-        loginRepository.saveAndFlush(partnerLogin);
-        resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
-              messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-     }catch (CcighgoException e) {
-        resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(), e.getMessage()));
-        LOGGER.error(e.getMessage());
-     }
+      try {
+         if (!(Integer.valueOf(statusVal) == 0) || !(Integer.valueOf(statusVal) == 1)) {
+            throw new CcighgoException("invalid status value, can be either 0 or 1");
+         }
+         if (loggedinUserLoginId == null || Integer.valueOf(loggedinUserLoginId) == 0 || Integer.valueOf(loggedinUserLoginId) < 0) {
+            throw new CcighgoException("logged in user info is required to update the record");
+         }
+         if (partnerLoginId == null || Integer.valueOf(partnerLoginId) == 0 || Integer.valueOf(partnerLoginId) < 0) {
+            throw new CcighgoException("login info of partner is required update the record");
+         }
+         Login partnerLogin = loginRepository.findOne(Integer.valueOf(partnerLoginId));
+         if (partnerLogin == null) {
+            throw new CcighgoException("no record found to update status with the login info provided, please check request url");
+         }
+         Byte activeStatus = null;
+         if (Integer.valueOf(statusVal) == 1) {
+            activeStatus = CCIConstants.ACTIVE;
+         }
+         if (Integer.valueOf(statusVal) == 0) {
+            activeStatus = CCIConstants.INACTIVE;
+         }
+         partnerLogin.setActive(activeStatus);
+         loginRepository.saveAndFlush(partnerLogin);
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
       return resp;
    }
 
    @Override
+   @Transactional(readOnly=true)
    public Response sendLogin(String partnerGoId, HttpServletRequest request) {
       Response response = new Response();
-         try{
-            if(partnerGoId ==null || Integer.valueOf(partnerGoId)==0 || Integer.valueOf(partnerGoId)<0){
-               throw new CcighgoException("invalid partner info, cannot send login");
-            }
-            Partner partner = partnerRepository.findOne(Integer.valueOf(partnerGoId));
-            PartnerUser partnerUser = null;
-            List<PartnerUser> partnerUserList = partner.getPartnerUsers();
-            if (partnerUserList != null) {
-               for (PartnerUser pu : partnerUserList) {
-                  if (pu.getIsPrimary() == CCIConstants.ACTIVE) {
-                     partnerUser = pu;
-                     break;
-                  }
+      try {
+         if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
+            throw new CcighgoException("invalid partner info, cannot send login");
+         }
+         Partner partner = partnerRepository.findOne(Integer.valueOf(partnerGoId));
+         PartnerUser partnerUser = null;
+         List<PartnerUser> partnerUserList = partner.getPartnerUsers();
+         if (partnerUserList != null) {
+            for (PartnerUser pu : partnerUserList) {
+               if (pu.getIsPrimary() == CCIConstants.ACTIVE) {
+                  partnerUser = pu;
+                  break;
                }
             }
-            if(partnerUser!=null && partnerUser.getLogin()!=null){
-                  String body = "<p>Ciao! </p>" 
-                        + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" 
-                        + "<p>"+ "Your username is : " + partnerUser.getLogin().getLoginName() + "</p>" 
-                        + "<p>Please click on the link below to create a new password:</p> " 
-                        + "<p>"+ formResetURL(request).concat(partnerUser.getLogin().getKeyValue()) + "</p>"
-                        + "<p>If you didn't request a new password, please let us know.</p>"
-                        + "<p>Thank you,</p>"
-                        + "<p>CCI Greenheart.</p>";
-                  email.send(partnerUser.getLogin().getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
-                  response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
-                        "An email has been sent to address "+"\'"+partnerUser.getLogin().getEmail()+ "\'"+" for login name "+"\'"+partnerUser.getLogin().getLoginName()+"\'"+" with instructions to reset password"));
-            }else{
-               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
-               LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
-            }
-         }catch (CcighgoException e) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  e.getMessage()));
-            LOGGER.error(e.getMessage());
          }
+         if (partnerUser != null && partnerUser.getLogin() != null) {
+            String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
+                  + "Your username is : " + partnerUser.getLogin().getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
+                  + formResetURL(request).concat(partnerUser.getLogin().getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>"
+                  + "<p>Thank you,</p>" + "<p>CCI Greenheart.</p>";
+            email.send(partnerUser.getLogin().getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  "An email has been sent to address " + "\'" + partnerUser.getLogin().getEmail() + "\'" + " for login name " + "\'" + partnerUser.getLogin().getLoginName() + "\'"
+                        + " with instructions to reset password"));
+         } else {
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+         }
+      } catch (CcighgoException e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
       return response;
    }
-   
+
    private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
@@ -350,5 +356,54 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
       return url;
    }
 
+   @Override
+   @Transactional(readOnly=true)
+   public LeadPartners getLeadPartnerList() {
+      LeadPartners leadPartners = new LeadPartners();
+      try {
+         List<PartnerAgentInquiry> partnerAgentList = partnerAgentInquiryRepository.findAll();
+         if (partnerAgentList == null) {
+            throw new CcighgoException("No Leads found.");
+         }
+         leadPartners.setCount(partnerAgentList.size());
+         List<LeadPartner> leadPartnersList = new ArrayList<LeadPartner>();
+         for (PartnerAgentInquiry p : partnerAgentList) {
+            LeadPartner lp = new LeadPartner();
+            lp.setCompanyName(p.getCompanyName());
+            lp.setRating(p.getRating());
+            lp.setFirstName(p.getFirstName());
+            lp.setLastName(p.getLastName());
+            lp.setPhone(p.getPhone());
+            lp.setExtenstion("");
+            lp.setWebsite(p.getWebsite());
+            LeadCountry pCountry = new LeadCountry();
+            pCountry.setCountryId(p.getLookupCountry().getCountryId());
+            pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
+            pCountry.setCountryName(p.getLookupCountry().getCountryName());
+            pCountry.setCountryFlagUrl(p.getLookupCountry().getCountryFlag());
+            lp.setLeadCountry(pCountry);
+            List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
+            List<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram> programs = null;
+            if (partnerProgramList != null) {
+               programs = new ArrayList<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram>();
+               for (PartnerProgram pp : partnerProgramList) {
+                  com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram ppr = new com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram();
+                  ppr.setProgramId(pp.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+                  ppr.setProgramName(pp.getLookupDepartmentProgram().getProgramName());
+                  programs.add(ppr);
+               }
+            }
+            lp.getPrograms().addAll(programs);
+            leadPartnersList.add(lp);
+         }
+         leadPartners.getLeadPartners().addAll(leadPartnersList);
+         leadPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         leadPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return leadPartners;
+   }
 
 }

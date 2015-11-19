@@ -43,7 +43,7 @@ public class PartnerProgram {
 
     protected int programId;
     @XmlElement(required = true)
-    protected String proggramName;
+    protected String programName;
 
     /**
      * Gets the value of the programId property.
@@ -62,27 +62,27 @@ public class PartnerProgram {
     }
 
     /**
-     * Gets the value of the proggramName property.
+     * Gets the value of the programName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getProggramName() {
-        return proggramName;
+    public String getProgramName() {
+        return programName;
     }
 
     /**
-     * Sets the value of the proggramName property.
+     * Sets the value of the programName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setProggramName(String value) {
-        this.proggramName = value;
+    public void setProgramName(String value) {
+        this.programName = value;
     }
 
 }

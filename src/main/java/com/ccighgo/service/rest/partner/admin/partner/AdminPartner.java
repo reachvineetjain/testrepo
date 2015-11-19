@@ -16,12 +16,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccighgo.service.components.partner.admin.PartnerAdminService;
 import com.ccighgo.service.components.partner.admin.partner.AdminPartnerInterface;
 import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPartner;
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
+import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -34,9 +37,11 @@ public class AdminPartner {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(AdminPartner.class);
 
+   @Context HttpServletRequest request;
+   
    @Autowired AdminPartnerInterface adminPartnerInterface;
    @Autowired PartnerSeasonInterface partnerSeasonInterface;
-   @Context HttpServletRequest request;
+   @Autowired PartnerAdminService partnerAdminService;
 
    @POST
    @Path("/add/partner/")
@@ -69,28 +74,28 @@ public class AdminPartner {
          @PathParam("partnerLoginId") String partnerLoginId) {
       return adminPartnerInterface.toggleActiveStatus(statusVal, loggedinUserLoginId, partnerLoginId);
    }
-   
+
    /**
     * @param partnerId
     * @return
     */
    @GET
-   @Path("apply/new/{partnerGoId}")
-   public PartnerSeasonApplicationList getPartnerSeasonApplicationList(@PathParam("partnerGoId") String partnerGoId){
+   @Path("get/available/seasons/{partnerGoId}")
+   public PartnerSeasonApplicationList getPartnerSeasonApplicationList(@PathParam("partnerGoId") String partnerGoId) {
       return partnerSeasonInterface.getPartnerSeasonApplicationList(partnerGoId);
    }
-   
+
    /**
     * @param partnerGoId
     * @return
     */
    @POST
-   @Path("add/new/")
+   @Path("apply/new/")
    @Produces("application/json")
    public Response addNewSeasonsToPartner(PartnerSeasonApplicationList partnerSeasonApplicationList) {
       return partnerSeasonInterface.addNewSeasonsToPartner(partnerSeasonApplicationList);
    }
-   
+
    /**
     * @param partnerUserId
     * @return
@@ -100,5 +105,29 @@ public class AdminPartner {
    @Produces("application/json")
    public Response sendLogin(@PathParam("partnerGoId") String partnerUserId) {
       return adminPartnerInterface.sendLogin(partnerUserId, request);
+   }
+
+   /**
+    * @return
+    */
+   @GET
+   @Path("lead/partner/list/")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public LeadPartners getLeadPartnerList() {
+      return adminPartnerInterface.getLeadPartnerList();
+   }
+
+   /**
+    * @param goId
+    * @param newStatus
+    * @return
+    */
+   @GET
+   @Path("changeApplicationStatus/{goId}/{newStatus}")
+   @Produces("application/json")
+   public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus) {
+      LOGGER.debug("fun : changePartnerApplicationStatus []");
+      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus);
    }
 }
