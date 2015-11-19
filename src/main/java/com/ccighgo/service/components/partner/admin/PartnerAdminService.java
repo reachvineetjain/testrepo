@@ -68,7 +68,7 @@ public interface PartnerAdminService {
 
    PartnerAdminDashboardQuickStatsTitles getQuickStatsTitle();
 
-   PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(int quickStatsTypeID, String roleName);
+   PartnerAdminDashboardQuickStatsCategory getApplicationQuickStatsCategory(int quickStatsTypeID, int categoryId);
 
    PartnerAdminDashboardBenchmarks getBenchmark();
 
@@ -101,5 +101,7 @@ public interface PartnerAdminService {
    WSDefaultResponse sendLogin();
 
    CCIUsers getAllCCIUsers();
+
+   WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
 
 }

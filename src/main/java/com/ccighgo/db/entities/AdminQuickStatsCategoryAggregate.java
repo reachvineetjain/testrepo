@@ -20,11 +20,16 @@ public class AdminQuickStatsCategoryAggregate implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer adminQSCategoryAggregateId;
 
+	private Integer adminQSCategoryAggregate;
+
 	@Column(length=50)
 	private String adminQSCategoryName;
 
 	@Column(nullable=false)
 	private Timestamp modifiedDate;
+
+	@Column(length=50)
+	private String status;
 
 	//bi-directional many-to-one association to AdminQuickStatsCategory
 	@ManyToOne
@@ -36,16 +41,6 @@ public class AdminQuickStatsCategoryAggregate implements Serializable {
 	@JoinColumn(name="adminQSTypeId")
 	private AdminQuickStatsType adminQuickStatsType;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@ManyToOne
-	@JoinColumn(name="adminGoId")
-	private CCIStaffUser ccistaffUser;
-
-	//bi-directional many-to-one association to LookupDepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="lookupdepartmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram;
-
 	public AdminQuickStatsCategoryAggregate() {
 	}
 
@@ -55,6 +50,14 @@ public class AdminQuickStatsCategoryAggregate implements Serializable {
 
 	public void setAdminQSCategoryAggregateId(Integer adminQSCategoryAggregateId) {
 		this.adminQSCategoryAggregateId = adminQSCategoryAggregateId;
+	}
+
+	public Integer getAdminQSCategoryAggregate() {
+		return this.adminQSCategoryAggregate;
+	}
+
+	public void setAdminQSCategoryAggregate(Integer adminQSCategoryAggregate) {
+		this.adminQSCategoryAggregate = adminQSCategoryAggregate;
 	}
 
 	public String getAdminQSCategoryName() {
@@ -73,6 +76,14 @@ public class AdminQuickStatsCategoryAggregate implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public AdminQuickStatsCategory getAdminQuickStatsCategory() {
 		return this.adminQuickStatsCategory;
 	}
@@ -87,22 +98,6 @@ public class AdminQuickStatsCategoryAggregate implements Serializable {
 
 	public void setAdminQuickStatsType(AdminQuickStatsType adminQuickStatsType) {
 		this.adminQuickStatsType = adminQuickStatsType;
-	}
-
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
-	}
-
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
-	}
-
-	public LookupDepartmentProgram getLookupDepartmentProgram() {
-		return this.lookupDepartmentProgram;
-	}
-
-	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
-		this.lookupDepartmentProgram = lookupDepartmentProgram;
 	}
 
 }

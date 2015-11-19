@@ -17,7 +17,7 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="loggedinUserLoginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="addedPartners" type="pdl:AddedPartner" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
@@ -27,26 +27,20 @@
 
    <xsd:complexType name="AddedPartner">
       <xsd:sequence>
+         <xsd:element name="partnerLoginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="companyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerType" type="pdl:PartnerType" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="partnerCountry" type="pdl:PartnerCountry" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="status" type="pdl:Status" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasons" type="pdl:PartnerSeasons" minOccurs="1" maxOccurs="unbounded" />
-         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-
-   </xsd:complexType>
-
-   <xsd:complexType name="PartnerType">
-      <xsd:sequence>
-         <xsd:element name="typeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="active" type="xsd:int" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
+
 
    <xsd:complexType name="PartnerCountry">
       <xsd:sequence>
@@ -57,16 +51,9 @@
       </xsd:sequence>
    </xsd:complexType>
 
-   <xsd:complexType name="Status">
-      <xsd:sequence>
-         <xsd:element name="statusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
 
    <xsd:complexType name="PartnerSeasons">
       <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>

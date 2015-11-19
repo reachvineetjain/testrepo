@@ -165,9 +165,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         seasonProgramStatus.setPartnerSeasonProgramStatusId(j1detail.getSeasonStatus().getSeasonStatusId());
                         seasonProgramStatus.setPartnerSeasonProgramStatus(j1detail.getSeasonStatus().getStatus());
 
-                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(j1detail.getFirstSemStartDate()));
-                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(j1detail.getSecondSemEndDate()));
-                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(j1detail.getFirstSemAppDeadlineDate()));
+                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
+                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonEndDate()));
+                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonAppDeadlineDate()));
                      }
                   }
                   if (entity.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1)) {
@@ -189,9 +189,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         seasonProgramStatus.setPartnerSeasonProgramStatusId(f1Detail.getSeasonStatus().getSeasonStatusId());
                         seasonProgramStatus.setPartnerSeasonProgramStatus(f1Detail.getSeasonStatus().getStatus());
 
-                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(f1Detail.getFirstSemStartDate()));
-                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(f1Detail.getSecondSemEndDate()));
-                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(f1Detail.getFirstSemAppDeadlineDate()));
+                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
+                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonEndDate()));
+                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonAppDeadlineDate()));
                      }
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
@@ -214,9 +214,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         seasonProgramStatus.setPartnerSeasonProgramStatusId(ihpSeason.getSeasonStatus().getSeasonStatusId());
                         seasonProgramStatus.setPartnerSeasonProgramStatus(ihpSeason.getSeasonStatus().getStatus());
 
-                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(ihpSeason.getStartDate()));
-                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(ihpSeason.getEndDate()));
-                        pSeason.setPartnerApplicationDeadlineDate("Not Applicable");
+                        pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
+                        pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonEndDate()));
+                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonAppDeadlineDate()));
                      }
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SUMMER)) {
@@ -456,8 +456,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                // departmentProgramId
                PartnerSeasonApplication application = new PartnerSeasonApplication();
                application.setProgramName(obj[0].toString());
-               application.setSeasonId(obj[1].toString());
-               application.setDepartmentProgramId(obj[2].toString());
+               application.setSeasonId(Integer.valueOf(obj[1].toString()));
+               application.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
                partnerSeasonApplication.add(application);
             }
             partnerSeasonApplicationList.getPartnerSeasonApplication().addAll(partnerSeasonApplication);
@@ -706,6 +706,10 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                ps.setCanCreateSubPartner(CCIConstants.INACTIVE);
                ps.setIsSignedContract(CCIConstants.INACTIVE);
                ps.setActive(CCIConstants.ACTIVE);
+               ps.setCreatedBy(partnerSeasonApplicationList.getLoggedInUserLoginId());
+               ps.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               ps.setModifiedBy(partnerSeasonApplicationList.getLoggedInUserLoginId());
+               ps.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                partnerSeasonsList.add(ps);
             }
             partnerSeasonsRepository.save(partnerSeasonsList);

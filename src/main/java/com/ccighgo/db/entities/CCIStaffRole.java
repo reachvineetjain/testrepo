@@ -51,8 +51,8 @@ public class CCIStaffRole implements Serializable {
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment
-	  @OneToMany(mappedBy = "ccistaffRole", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "ccistaffRole", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffRolesDepartment> ccistaffRolesDepartments;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
