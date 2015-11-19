@@ -108,7 +108,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          Login login = new Login();
          login.setActive(partner.isSendLogin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          GoIdSequence goIdSequence = new GoIdSequence();
-         goIdSequence = goIdSequenceRepository.save(goIdSequence);
+         goIdSequence = goIdSequenceRepository.saveAndFlush(goIdSequence);
          login.setGoIdSequence(goIdSequence);
          login.setLoginName(partner.getUserName());
          login.setKeyValue(UuidUtils.nextHexUUID());
@@ -171,6 +171,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          pUser.setLastName(partner.getLastName());
          pUser.setEmail(partner.getEmail());
          pUser.setActive(CCIConstants.ACTIVE);
+         pUser.setIsPrimary(CCIConstants.ACTIVE);
          pUser = partnerUserRepository.saveAndFlush(pUser);
 
          if (partner.getProgramContacts() != null) {
@@ -211,8 +212,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (partnerList == null) {
             throw new CcighgoException("No Partners found.");
          }
-         addedPartners.setCount(partnerList.size());
          List<AddedPartner> addedPartnersList = new ArrayList<AddedPartner>();
+         int count = 0;
          for (Partner p : partnerList) {
             PartnerUser puser = null;
             List<PartnerUser> partnerUserList = p.getPartnerUsers();
@@ -224,9 +225,11 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                   }
                }
             }
-            if(puser!=null){
+            if (puser != null) {
+               count += 1;
                AddedPartner ap = new AddedPartner();
                ap.setCompanyName(p.getCompanyName());
+               ap.setGoId(p.getPartnerGoId());
                ap.setType(p.getIsSubPartner() == CCIConstants.ACTIVE ? "Sub Partner" : "Partner");
                ap.setFirstName(puser.getFirstName());
                ap.setLastName(puser.getLastName());
@@ -260,9 +263,11 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                ap.getSeasons().addAll(psList);
                addedPartnersList.add(ap);
             }
-            addedPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
+         addedPartners.setCount(count);
+         addedPartners.getAddedPartners().addAll(addedPartnersList);
+         addedPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          addedPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -307,7 +312,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public Response sendLogin(String partnerGoId, HttpServletRequest request) {
       Response response = new Response();
       try {
@@ -357,7 +362,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public LeadPartners getLeadPartnerList() {
       LeadPartners leadPartners = new LeadPartners();
       try {
