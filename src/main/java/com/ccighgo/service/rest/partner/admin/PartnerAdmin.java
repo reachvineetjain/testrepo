@@ -169,7 +169,13 @@ public class PartnerAdmin {
       LOGGER.debug("fun : changePartnerApplicationStatus []");
       return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus);
    }
-
+   @GET
+   @Path("changeApplicationStatus/{goId}/{newStatus}/{note}")
+   @Produces("application/json")
+   public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus, @PathParam("note") String note) {
+      LOGGER.debug("fun : changePartnerApplicationStatus []");
+      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus,note);
+   }
    @GET
    @Path("updatePartnerApplicationFollowUpDate/{goId}/{followUpdate}")
    @Produces("application/json")
@@ -258,7 +264,14 @@ public class PartnerAdmin {
       LOGGER.debug("fun : addNewPartnerInquiryOffice");
       return partnerAdminService.addNewPartnerInquiryOffice(officesDetails);
    }
-
+   @POST
+   @Path("updatePartnerInquiryOffice/")
+   @Produces("application/json")
+   public PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
+      LOGGER.debug("fun : updatePartnerInquiryOffice");
+      return partnerAdminService.updatePartnerInquiryOffice(officesDetails);
+   }
+   
    @POST
    @Path("removeNewPartnerInquiryOffice")
    @Produces("application/json")
@@ -278,7 +291,14 @@ public class PartnerAdmin {
       LOGGER.debug("fun : addNewPartnerInquiryContact");
       return partnerAdminService.addNewPartnerInquiryContact(ContactsDetails);
    }
-
+   @POST
+   @Path("updatePartnerInquiryContacts/")
+   @Produces("application/json")
+   public PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails ContactsDetails) {
+      LOGGER.debug("fun : updatePartnerInquiryContact");
+      return partnerAdminService.updatePartnerInquiryContact(ContactsDetails);
+   }
+   
    @POST
    @Path("removeNewPartnerInquiryContact")
    @Produces("application/json")
