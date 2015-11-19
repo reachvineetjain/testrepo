@@ -783,7 +783,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   pd.setGoId(Integer.parseInt(String.valueOf(wq[12])));
 
                PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(pd.getGoId());
-               if (partnerReviewStatus != null) {
+               if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1()!=null) {
                   pd.setStatusOfInquiry(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
                }
 
