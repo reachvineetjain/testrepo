@@ -116,7 +116,7 @@ public class PartnerAdmin {
    }
 
    /**
-    * will use SPAdminWQPartnerSearch stored procedure
+    * Will use SPAdminWQPartnerSearch stored procedure
     * 
     * @param typeId
     * @return
