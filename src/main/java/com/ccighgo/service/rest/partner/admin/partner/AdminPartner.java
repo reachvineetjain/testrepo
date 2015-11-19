@@ -38,7 +38,7 @@ public class AdminPartner {
    private static final Logger LOGGER = LoggerFactory.getLogger(AdminPartner.class);
 
    @Context HttpServletRequest request;
-   
+
    @Autowired AdminPartnerInterface adminPartnerInterface;
    @Autowired PartnerSeasonInterface partnerSeasonInterface;
    @Autowired PartnerAdminService partnerAdminService;
@@ -119,15 +119,47 @@ public class AdminPartner {
    }
 
    /**
-    * @param goId
-    * @param newStatus
+    * @param partnerGoId
     * @return
     */
    @GET
-   @Path("changeApplicationStatus/{goId}/{newStatus}")
+   @Path("junk/{partnerGoId}")
    @Produces("application/json")
-   public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus) {
-      LOGGER.debug("fun : changePartnerApplicationStatus []");
-      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus);
+   public Response junkPartnerLead(@PathParam("partnerGoId") String partnerGoId) {
+      return adminPartnerInterface.junkPartnerLead(partnerGoId);
+   }
+
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   @GET
+   @Path("blacklist/{partnerGoId}")
+   @Produces("application/json")
+   public Response blacklistPartnerLead(@PathParam("partnerGoId") String partnerGoId) {
+      return adminPartnerInterface.blacklistPartnerLead(partnerGoId);
+   }
+
+   /**
+    * @param partnerGoId
+    * @param reason
+    * @return
+    */
+   @POST
+   @Path("invalid/{partnerGoId}")
+   @Produces("application/json")
+   public Response invalidatePartnerLead(@PathParam("partnerGoId") String partnerGoId, String reason) {
+      return adminPartnerInterface.invalidatePartnerLead(partnerGoId, reason);
+   }
+
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   @GET
+   @Path("sendlogin/{partnerGoId}/{loginVal}")
+   @Produces("application/json")
+   public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal) {
+      return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal, request);
    }
 }

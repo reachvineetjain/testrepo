@@ -24,7 +24,7 @@ public interface AdminPartnerInterface {
     * @param request
     * @return
     */
-   public Response addPartner(AdminAddPartner partner,HttpServletRequest request);
+   public Response addPartner(AdminAddPartner partner, HttpServletRequest request);
 
    /**
     * @return
@@ -36,7 +36,7 @@ public interface AdminPartnerInterface {
     * @param partnerLoginId
     * @return
     */
-   public Response toggleActiveStatus(String statusVal,String loggedinUserLoginId, String partnerLoginId);
+   public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String partnerLoginId);
 
    /**
     * @param partnerUserId
@@ -49,5 +49,31 @@ public interface AdminPartnerInterface {
     * @return
     */
    public LeadPartners getLeadPartnerList();
+
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   public Response junkPartnerLead(String partnerGoId);
+
+   /**
+    * @param partnerGoId
+    * @return
+    */
+   public Response blacklistPartnerLead(String partnerGoId);
+
+   /**
+    * @param partnerGoId
+    * @param reason
+    * @return
+    */
+   public Response invalidatePartnerLead(String partnerGoId, String reason);
+
+   /**
+    * @param partnerGoId
+    * @param loginVal
+    * @return
+    */
+   public Response partnerLeadSendLogin(String partnerGoId, String loginVal, HttpServletRequest request);
 
 }
