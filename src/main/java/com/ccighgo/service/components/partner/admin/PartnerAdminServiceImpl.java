@@ -876,6 +876,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  ad.setCurrentSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[6]));
 				  ad.setRequestedSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[7]));
 				  ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[8]));
+				  ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[12]));
+				  ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
 				 
 				  }
 				  else if (ProgramOptionId==3||ProgramOptionId==8)
@@ -884,22 +886,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					  ad.setCurrentSeasonJanStartguarantedParticipantNume(String.valueOf(dr[6]));
 					  ad.setRequestedSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[7]));
 					  ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[8]));
+					  ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[12]));
+					  ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
 				  }
 				  }
 				  ad.setCountry(String.valueOf(dr[9]));
-				  ad.setFlagUrl(String.valueOf(dr[11]));
-				  
-				  ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[12]));
-				  ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[12]));
-				  ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
-				  ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
-				  //department program option id
-				  //maxPax
-				  //maxGuranteedPax
-				 /*
-				  * 
-				  * 
-				  * */
+				  ad.setFlagUrl(String.valueOf(dr[11]));	 
 				  rca.getChangeInAllocation().add(ad);
 			   }
 			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
@@ -913,10 +905,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 			   
 	   }catch(Exception e)
 	   {
-		  /* ExceptionUtil.logException(e, logger);
+		   ExceptionUtil.logException(e, logger);
 		   rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
 				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)); */
+		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)); 
 	  
 	   }
    	return rca;
@@ -943,14 +935,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  nrd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
 				  nrd.setCountry(String.valueOf(dr[2]));
 				  nrd.setFlagUrl(String.valueOf(dr[3]));
-				  nrd.setPartnerStatus(String.valueOf(dr[4]));
-				  nrd.setNoteTopic(String.valueOf(dr[5]));
-				  if(dr[6]!=null)
-				  {
-					/*  boolean  pub= (Byte.valueOf(String.valueOf(dr[6]))==(CCIConstants.ACTIVE))?true:false;
-				  nrd.setIsPublic(pub);*/
-				  }
-				  nrd.setNoteCreatedOn(String.valueOf(dr[7]));
+              nrd.setPartnerStatus(String.valueOf(dr[4]));
+              nrd.setNoteTopic(String.valueOf(dr[5]));
+               if (dr[6] != null) {
+                  nrd.setIsPublic(String.valueOf(dr[6]));
+               }
+              nrd.setNoteCreatedOn(String.valueOf(dr[7]));
 				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
 				 
 				  nrd.setNoteValue(String.valueOf(dr[9]));
@@ -967,12 +957,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 			   nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
 		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 		   }
-	   }catch( ClassCastException e)
+	   }catch( Exception e)
 	   {
-		  /* ExceptionUtil.logException(e, logger);
+		   ExceptionUtil.logException(e, logger);
 		   nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
 				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)); */
+		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)); 
 	  
 	   }
    	return nr;
@@ -1003,13 +993,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          PartnerStatus partnerStatus = partnerStatusRepository.findStatusByName(newStatus);
          partnerReviewStatus.setPartnerStatus1(partnerStatus);
          partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_APPLICATION_STATUS_UPDATED.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_REQUEST_STATUS_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
-         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_REQUEST_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS));
       }
       return wsDefaultResponse;
    }
@@ -1601,5 +1591,4 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pContacts;
    }
-
 }

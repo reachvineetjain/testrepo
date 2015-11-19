@@ -40,18 +40,22 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Service
 public interface PartnerAdminService {
 
- 
    WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus);
+
    WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String followUpdate);
+
    AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType);
-   AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests( int typeId, int categoryId, int staffUserId, String roleType);
-   AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests( int typeId, int categoryId, int staffUserId, String roleType);
-   AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview( int typeId, int categoryId, int staffUserId, String roleType);
+
+   AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(int typeId, int categoryId, int staffUserId, String roleType);
+
+   AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(int typeId, int categoryId, int staffUserId, String roleType);
+
+   AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(int typeId, int categoryId, int staffUserId, String roleType);
+
    AdminPartnerWorkQueueType getWorkQueueType(String roleType);
+
    AdminPartnerWorkQueueCategory getWorkQueueCategory(int typeId);
 
-   
-   
    PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int agentId);
 
    PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int parseInt);
@@ -77,13 +81,13 @@ public interface PartnerAdminService {
    PartnerAdminOverviewDocuments removeNewPartnerInquiryDocument(PartnerAdminOverviewDeletedDocuments deletedItems);
 
    PartnerAdminOverviewOffices addNewPartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails);
-   
+
    PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails);
 
    PartnerAdminOverviewOffices removeNewPartnerInquiryOffice(PartnerAdminOverviewDeletedOffices deletedItems);
 
    PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails);
-   
+
    PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails);
 
    PartnerAdminOverviewContacts removeNewPartnerInquiryContact(PartnerAdminOverviewDeletedContacts deletedItems);
@@ -97,6 +101,5 @@ public interface PartnerAdminService {
    WSDefaultResponse sendLogin();
 
    CCIUsers getAllCCIUsers();
-   
 
 }
