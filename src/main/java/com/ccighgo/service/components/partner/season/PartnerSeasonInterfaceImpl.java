@@ -456,8 +456,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                // departmentProgramId
                PartnerSeasonApplication application = new PartnerSeasonApplication();
                application.setProgramName(obj[0].toString());
-               application.setSeasonId(obj[1].toString());
-               application.setDepartmentProgramId(obj[2].toString());
+               application.setSeasonId(Integer.valueOf(obj[1].toString()));
+               application.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
                partnerSeasonApplication.add(application);
             }
             partnerSeasonApplicationList.getPartnerSeasonApplication().addAll(partnerSeasonApplication);
@@ -706,6 +706,10 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                ps.setCanCreateSubPartner(CCIConstants.INACTIVE);
                ps.setIsSignedContract(CCIConstants.INACTIVE);
                ps.setActive(CCIConstants.ACTIVE);
+               ps.setCreatedBy(partnerSeasonApplicationList.getLoggedInUserLoginId());
+               ps.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               ps.setModifiedBy(partnerSeasonApplicationList.getLoggedInUserLoginId());
+               ps.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                partnerSeasonsList.add(ps);
             }
             partnerSeasonsRepository.save(partnerSeasonsList);
