@@ -354,5 +354,13 @@ public class PartnerAdmin {
       LOGGER.debug("fun : getAllCCIUsers");
       return partnerAdminService.getAllCCIUsers();
    }
+   
+   @GET
+   @Path("markAsRead/{noteId}/{loginId}")
+   @Produces("application/json")
+   public WSDefaultResponse markNoteRead(@PathParam("noteId") String noteId, @PathParam("loginId") String loginId) {
+      LOGGER.debug("fun : markNoteRead []");
+      return partnerAdminService.markNoteRead(noteId,loginId);
+   }
 
 }
