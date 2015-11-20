@@ -3054,46 +3054,19 @@ CREATE TABLE IF NOT EXISTS `AdminQuickStatsCategories` (
   REFERENCES `AdminQuickStatsType` (`adminQSTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `AdminQuickStatsTypeAggregate`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AdminQuickStatsTypeAggregate` (
-  `adminQSTypeAggregateId` int(11) NOT NULL AUTO_INCREMENT,
-  `adminQSTypeId` int(11) DEFAULT NULL,
-  `adminQSTypeName` varchar(50) DEFAULT NULL,
-  `adminQSTypeAggregate` int(11) DEFAULT NULL,
-  `adminGoId` int(11) DEFAULT NULL,
-  `lookupDepartmentProgramId` int(11) DEFAULT NULL,
-  `modifiedDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`adminQSTypeAggregateId`),
-  KEY `FK_AdminQSTypeAggregate_AdminQSType` (`adminQSTypeId`),
-  KEY `FK_AdminQSTypeAggregate_CCIStaffUsers` (`adminGoId`),
-  KEY `FK_AdminQSTypeAggregate_LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
-  CONSTRAINT `FK_AdminQSTypeAggregate_AdminQSType` 
-  FOREIGN KEY (`adminQSTypeId`) 
-  REFERENCES `AdminQuickStatsType` (`adminQSTypeId`),
-  CONSTRAINT `FK_AdminQSTypeAggregate_CCIStaffUsers` 
-  FOREIGN KEY (`adminGoId`) 
-  REFERENCES `CCIStaffUsers` (`cciStaffUserId`),
-  CONSTRAINT `FK_AdminQSTypeAggregate_LookupDepartmentPrograms` 
-  FOREIGN KEY (`lookupDepartmentProgramId`) 
-  REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
 -- Table `AdminQuickStatsCategoryAggregate`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AdminQuickStatsCategoryAggregate` (
   `adminQSCategoryAggregateId` int(11) NOT NULL AUTO_INCREMENT,
-  `adminGoId` int(11) DEFAULT NULL,
-  `lookupdepartmentProgramId` int(11) DEFAULT NULL,
   `adminQSCategoryId` int(11) DEFAULT NULL,
   `adminQSCategoryName` varchar(50) DEFAULT NULL,
+  `adminQSCategoryAggregate` INT NULL,
+  `status` VARCHAR(50) NULL,
   `adminQSTypeId` int(11) DEFAULT NULL,
   `modifiedDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`adminQSCategoryAggregateId`),
-  KEY `FK_AdminQSCategoryAggregate_CCIStaffUSers` (`adminGoId`),
-  KEY `FK_AdminQSCategoryAggregate_LookupDepartmentPrograms` (`lookupdepartmentProgramId`),
   KEY `FK_AdminQSCategoryAggregate_AdminQSCategories` (`adminQSCategoryId`),
   KEY `FK_AdminQSCategoryAggregate_AdminQSType` (`adminQSTypeId`),
   CONSTRAINT `FK_AdminQSCategoryAggregate_AdminQSCategories` 
@@ -3101,13 +3074,8 @@ CREATE TABLE IF NOT EXISTS `AdminQuickStatsCategoryAggregate` (
   REFERENCES `AdminQuickStatsCategories` (`adminQSCategoryId`),
   CONSTRAINT `FK_AdminQSCategoryAggregate_AdminQSType` 
   FOREIGN KEY (`adminQSTypeId`) 
-  REFERENCES `AdminQuickStatsType` (`adminQSTypeId`),
-  CONSTRAINT `FK_AdminQSCategoryAggregate_CCIStaffUSers` 
-  FOREIGN KEY (`adminGoId`) 
-  REFERENCES `CCIStaffUsers` (`cciStaffUserId`),
-  CONSTRAINT `FK_AdminQSCategoryAggregate_LookupDepartmentPrograms` 
-  FOREIGN KEY (`lookupdepartmentProgramId`) 
-  REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+  REFERENCES `AdminQuickStatsType` (`adminQSTypeId`)
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
