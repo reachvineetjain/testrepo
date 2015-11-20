@@ -26,6 +26,7 @@
          <xsd:element name="wpProgramAllocations" type="wp:WPProgramAllocations" minOccurs="1" maxOccurs="1" />
          <xsd:element name="wpDocuments" type="wp:WPDocuments" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="wpNotes" type="wp:WPNotes" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
       </xsd:extension>
 		</xsd:complexContent>
@@ -56,6 +57,7 @@
          <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="isJobBoardOpen" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
          <xsd:element name="maxPendingJobAppls" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
       </xsd:extension>
 		</xsd:complexContent>

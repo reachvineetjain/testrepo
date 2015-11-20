@@ -24,6 +24,7 @@
          <xsd:element name="ghtBaseDetails" type="ght:GHTSection1Base" minOccurs="1" maxOccurs="1" />
          <xsd:element name="ghtDates" type="ght:GHTSection2Dates" minOccurs="1" maxOccurs="1" />
          <xsd:element name="ghtNotes" type="ght:GHTSection3Notes" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
       </xsd:extension>
 	</xsd:complexContent>
