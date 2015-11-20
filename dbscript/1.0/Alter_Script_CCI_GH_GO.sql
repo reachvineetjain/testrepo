@@ -163,3 +163,21 @@ ADD COLUMN modifiedBy INT NULL AFTER modifiedOn;
 ALTER TABLE PartnerNotes
 ADD COLUMN hasRead TINYINT(1) DEFAULT 0 AFTER `partnerNote`;
 
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------- Alter script for Admin QS on 17th November 2015-------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+DROP TABLE `AdminQuickStatsTypeAggregate`;
+
+ALTER TABLE `cci_gh_go_login`.`AdminQuickStatsCategoryAggregate` 
+DROP INDEX `FK_AdminQSCategoryAggregate_LookupDepartmentPrograms`, 
+DROP FOREIGN KEY `FK_AdminQSCategoryAggregate_LookupDepartmentPrograms`,
+DROP COLUMN `lookupdepartmentProgramId`,
+ADD COLUMN `adminQSCategoryAggregate` INT NULL AFTER `adminQSCategoryName`, 
+ADD COLUMN `status` VARCHAR(50) NULL AFTER `adminQSCategoryAggregate`; 
+
+ALTER TABLE `cci_gh_go_login`.`AdminQuickStatsCategoryAggregate` 
+DROP INDEX `FK_AdminQSCategoryAggregate_CCIStaffUSers`, 
+DROP FOREIGN KEY `FK_AdminQSCategoryAggregate_CCIStaffUSers`,
+DROP COLUMN `adminGoId`;
+
