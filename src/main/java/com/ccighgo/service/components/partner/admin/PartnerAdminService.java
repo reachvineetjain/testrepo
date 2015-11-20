@@ -104,4 +104,6 @@ public interface PartnerAdminService {
 
    WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
 
+   WSDefaultResponse markNoteRead(String noteId, String loginId);
+
 }

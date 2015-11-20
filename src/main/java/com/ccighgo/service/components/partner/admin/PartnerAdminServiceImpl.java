@@ -1628,4 +1628,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return wsDefaultResponse;
    }
+
+   @Override
+   public WSDefaultResponse markNoteRead(String noteId, String loginId) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         PartnerNote note = partnerNoteRepository.findOne(Integer.parseInt(noteId));
+         note.setHasRead(CCIConstants.TRUE_BYTE);
+         note.setModifiedBy(Integer.parseInt(loginId));
+         partnerNoteRepository.saveAndFlush(note);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.MARK_NOTE_AS_READ.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.MARK_NOTE_AS_READ.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_MARKING_NOTE_AS_READ)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_MARKING_NOTE_AS_READ));
+      }
+      return wsDefaultResponse;
+   }
 }
