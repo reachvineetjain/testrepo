@@ -38,6 +38,8 @@
 						minOccurs="1" maxOccurs="unbounded" />
 					<xsd:element name="j1hsNotes" type="j1hs:J1HSNotes"
 						minOccurs="1" maxOccurs="unbounded" />
+                    <xsd:element name="loginId" type="xsd:int" 
+                        minOccurs="1" maxOccurs="1"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

@@ -6,7 +6,7 @@ public class CommonNotesObject {
    private Integer seasonId;
    private Integer departmentProgramId;
    private List<String> notes;
-
+   private int loginId;
    public Integer getSeasonId() {
       return seasonId;
    }
@@ -29,6 +29,14 @@ public class CommonNotesObject {
 
    public void setDepartmentProgramId(Integer departmentProgramId) {
       this.departmentProgramId = departmentProgramId;
+   }
+
+   public int getLoginId() {
+      return loginId;
+   }
+
+   public void setLoginId(int loginId) {
+      this.loginId = loginId;
    }
 
 }
