@@ -825,7 +825,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   drd.setPartnerStatus(String.valueOf(dr[2]));
                   drd.setSeasonName(String.valueOf(dr[3]));
                   drd.setCountry(String.valueOf(dr[4]));
-                  drd.setSunmittedOn(String.valueOf(dr[5]));
+                  if (dr[5] != null)
+                     drd.setSunmittedOn(String.valueOf(dr[5]));
+                  else
+                     drd.setSunmittedOn("");
                   drd.setFlagUrl(String.valueOf(dr[6]));
                   drd.setNewDateRequested(String.valueOf(dr[8]));
                   drd.setCurrentDate(String.valueOf(dr[7]));
@@ -953,16 +956,19 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  nrd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
 				  nrd.setCountry(String.valueOf(dr[2]));
 				  nrd.setFlagUrl(String.valueOf(dr[3]));
-              nrd.setPartnerStatus(String.valueOf(dr[4]));
+               if (dr[4] != null) {
+                  int partnerAgentStatusId = Integer.parseInt(String.valueOf(dr[4]));
+                  PartnerStatus ps = partnerStatusRepository.findOne(partnerAgentStatusId);
+                  nrd.setPartnerStatus(ps.getPartnerStatusName());
+               }
               nrd.setNoteTopic(String.valueOf(dr[5]));
                if (dr[6] != null) {
                   nrd.setIsPublic(String.valueOf(dr[6]));
                }
               nrd.setNoteCreatedOn(String.valueOf(dr[7]));
 				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
-				 
-				  nrd.setNoteValue(String.valueOf(dr[9]));
-				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[10]));
+				  nrd.setNoteValue(String.valueOf(dr[10]));
+				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[11]));
 				  nrd.setNoteTopicRoll(String.valueOf(dr[12]));
 				  nrd.setNoteRoll(String.valueOf(dr[13]));
 				 nr.getNotesReview().add(nrd);
