@@ -25,6 +25,7 @@ import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickst
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles.PartnerAdminDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminPartnerWorkQueueDeadlineRequests;
 import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReview;
+import com.ccighgo.service.transport.partner.beans.partnerstatusaspattern.PartnerStatusAsPatterns;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
@@ -105,5 +106,7 @@ public interface PartnerAdminService {
    WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
 
    WSDefaultResponse markNoteRead(String noteId, String loginId);
+   
+   PartnerStatusAsPatterns getPartnerStatusAsPattern();
 
 }

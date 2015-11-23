@@ -26,6 +26,7 @@
          <xsd:element name="ihpProgramConfiguration" type="ihp:IHPProgramConfiguration" minOccurs="1" maxOccurs="1" />
          <xsd:element name="ihpDocuments" type="ihp:IHPDocuments" minOccurs="1" maxOccurs="unbounded" />
          <xsd:element name="ihpNotes" type="ihp:IHPNotes" minOccurs="1" maxOccurs="unbounded" />
+         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
       </xsd:extension>
 	</xsd:complexContent>
