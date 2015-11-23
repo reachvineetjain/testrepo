@@ -106,6 +106,8 @@ import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminP
 import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminPartnerWorkQueueDeadlineRequestsDetail;
 import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReview;
 import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReviewDetail;
+import com.ccighgo.service.transport.partner.beans.partnerstatusaspattern.PartnerStatusAsPattern;
+import com.ccighgo.service.transport.partner.beans.partnerstatusaspattern.PartnerStatusAsPatterns;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
@@ -1646,5 +1648,28 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_MARKING_NOTE_AS_READ));
       }
       return wsDefaultResponse;
+   }
+
+   @Override
+   public PartnerStatusAsPatterns getPartnerStatusAsPattern() {
+      PartnerStatusAsPatterns partnerStatusAsPatterns = new PartnerStatusAsPatterns();
+      try {
+         List<PartnerStatus> partnerStatuses = partnerStatusRepository.getAllpartnerStatusAsPattern();
+         for (PartnerStatus p : partnerStatuses) {
+            PartnerStatusAsPattern psp = new PartnerStatusAsPattern();
+            psp.setStatusId(p.getPartnerStatusId());
+            psp.setStatusName(p.getPartnerStatusName());
+            partnerStatusAsPatterns.getPartnerStatusAsPatterns().add(psp);
+         }
+         partnerStatusAsPatterns.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GET_ALL_PARTNER_STATUS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         partnerStatusAsPatterns.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.GET_ALL_PARTNER_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_ALL_PARTNER_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_ALL_PARTNER_STATUS));
+      }
+
+      return partnerStatusAsPatterns;
    }
 }
