@@ -288,7 +288,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String partnerLoginId) {
       Response resp = new Response();
       try {
-         if (!(Integer.valueOf(statusVal) == 0) || !(Integer.valueOf(statusVal) == 1)) {
+         if (!(Integer.valueOf(statusVal) == 0) && !(Integer.valueOf(statusVal) == 1)) {
             throw new CcighgoException("invalid status value, can be either 0 or 1");
          }
          if (loggedinUserLoginId == null || Integer.valueOf(loggedinUserLoginId) == 0 || Integer.valueOf(loggedinUserLoginId) < 0) {
