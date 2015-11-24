@@ -390,6 +390,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             lp.setExtenstion("");
             lp.setWebsite(p.getWebsite());
             lp.setEmail(p.getEmail());
+            lp.setGoId(p.getPartner()!=null?p.getPartner().getPartnerGoId():0);
             LeadCountry pCountry = new LeadCountry();
             pCountry.setCountryId(p.getLookupCountry().getCountryId());
             pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
