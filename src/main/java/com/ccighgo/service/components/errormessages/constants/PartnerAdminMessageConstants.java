@@ -23,5 +23,9 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_CREATING_NEW_DEALINE_DATE_REQUEST = "error.creating.newdeadline.date.request";
    public static final String EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE="error.get.workqueue.submitted.deadline";
    public static final String EXCEPTION_FETCH_SALUTATION = "error.fetching.salutation";
+   public static final String EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS = "error.updating.partner.request.status";
+   public static final String EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE="error.get.workqueue.allocation.change";
+   public static final String EXCEPTION_MARKING_NOTE_AS_READ = "error.marking.note.as.read";
+   public static final String EXCEPTION_GETTING_ALL_PARTNER_STATUS = "error.get.all.partner.status";
 
 }

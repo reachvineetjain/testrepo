@@ -116,33 +116,33 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                   PartnerAdminSeason pas = new PartnerAdminSeason();
                   Integer departmentProgramId = 0;
                   String programName = null;
-                  if (ps.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_J1_HS)) {
+                  if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
                      departmentProgramId = CCIConstants.HSP_J1_HS_ID;
                      programName = ps.getSeason().getSeasonJ1details().get(0).getProgramName();
                   }
-                  if (ps.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_F1)) {
+                  if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1)) {
                      departmentProgramId = CCIConstants.HSP_F1_ID;
                      programName = ps.getSeason().getSeasonF1details().get(0).getProgramName();
                   }
-                  if (ps.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
+                  if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_STP_IHP)) {
                      departmentProgramId = CCIConstants.HSP_STP_IHP_ID;
-                     programName = ps.getSeason().getSeasonJ1details().get(0).getProgramName();
+                     programName = ps.getSeason().getSeasonIhpdetails().get(0).getProgramName();
                   }
-                  if (ps.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SUMMER)) {
+                  if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SUMMER)) {
                      departmentProgramId = CCIConstants.WP_WT_SUMMER_ID;
-                     programName = ps.getSeason().getSeasonF1details().get(0).getProgramName();
+                     programName = ps.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName();
                   }
-                  if (ps.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_WINTER)) {
+                  if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_WINTER)) {
                      departmentProgramId = CCIConstants.WP_WT_WINTER_ID;
-                     programName = ps.getSeason().getSeasonJ1details().get(0).getProgramName();
+                     programName = ps.getSeason().getSeasonWnTwinterDetails().get(0).getProgramName();
                   }
-                  if (ps.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SPRING)) {
+                  if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SPRING)) {
                      departmentProgramId = CCIConstants.WP_WT_SPRING_ID;
-                     programName = ps.getSeason().getSeasonF1details().get(0).getProgramName();
+                     programName = ps.getSeason().getSeasonWnTspringDetails().get(0).getProgramName();
                   }
-                  if (ps.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_CAP)) {
+                  if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_CAP)) {
                      departmentProgramId = CCIConstants.WP_WT_CAP_ID;
-                     programName = ps.getSeason().getSeasonF1details().get(0).getProgramName();
+                     programName = ps.getSeason().getSeasonCapdetails().get(0).getProgramName();
                   }
                   PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus();
                   partnerSeasonStatus.setSeasonStatusId(ps.getPartnerStatus1().getPartnerStatusId());
@@ -163,7 +163,9 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                   pas.setProgramStartDate(DateUtils.getTimestamp(ps.getPartnerSeasonStartDate()));
                   pas.setProgramEndDate(DateUtils.getTimestamp(ps.getPartnerSeasonEndDate()));
                   pas.setAppDeadlineDate(DateUtils.getTimestamp(ps.getPartnerSeasonAppDeadlineDate()));
-                  pas.setSignedContract(ps.getPartnerSeasonContracts().get(0).getIsSigned() == CCIConstants.ACTIVE ? true : false);
+                  if(ps.getPartnerSeasonContracts()!=null && !ps.getPartnerSeasonContracts().isEmpty()){
+                     pas.setSignedContract(ps.getPartnerSeasonContracts().get(0).getIsSigned() == CCIConstants.ACTIVE ? true : false); 
+                  }
                   partnerAdminSeasons.add(pas);
                }
             }
@@ -199,13 +201,13 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          @SuppressWarnings("unchecked")
          List<Object[]> results = query.getResultList();
          if (results != null && results.size() > 0) {
-            adminSeasonApplicationList.setPartnerId(Integer.valueOf(partnerGoId));
+            adminSeasonApplicationList.setPartnerGoId(Integer.valueOf(partnerGoId));
             List<PartnerAdminSeasonApplication> partnerSeasonApplication = new ArrayList<PartnerAdminSeasonApplication>();
             for (Object[] obj : results) {
                PartnerAdminSeasonApplication application = new PartnerAdminSeasonApplication();
                application.setProgramName(obj[0].toString());
-               application.setSeasonId(obj[1].toString());
-               application.setDepartmentProgramId(obj[2].toString());
+               application.setSeasonId(Integer.valueOf(obj[1].toString()));
+               application.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
                partnerSeasonApplication.add(application);
             }
             adminSeasonApplicationList.getPartnerSeasonApplication().addAll(partnerSeasonApplication);
@@ -441,7 +443,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             for (PartnerAdminSeasonApplication season : partnerAdminSeasonApplicationList.getPartnerSeasonApplication()) {
                // discussed with phani setting only season, department program and boolean fields to false
                PartnerSeason ps = new PartnerSeason();
-               ps.setPartner(partnerRepository.findOne(partnerAdminSeasonApplicationList.getPartnerId()));
+               ps.setPartner(partnerRepository.findOne(partnerAdminSeasonApplicationList.getPartnerGoId()));
                ps.setSeason(seasonRepository.findOne(Integer.valueOf(season.getSeasonId())));
                ps.setDepartmentProgram(departmentProgramRepository.findOne(Integer.valueOf(season.getDepartmentProgramId())));
                ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
@@ -454,6 +456,10 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                ps.setCanCreateSubPartner(CCIConstants.INACTIVE);
                ps.setIsSignedContract(CCIConstants.INACTIVE);
                ps.setActive(CCIConstants.ACTIVE);
+               ps.setCreatedBy(partnerAdminSeasonApplicationList.getLoggedInUserLoginId());
+               ps.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               ps.setModifiedBy(partnerAdminSeasonApplicationList.getLoggedInUserLoginId());
+               ps.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                partnerSeasonsList.add(ps);
             }
             partnerSeasonsRepository.save(partnerSeasonsList);

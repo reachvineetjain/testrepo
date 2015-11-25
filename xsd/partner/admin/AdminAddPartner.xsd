@@ -27,12 +27,12 @@
                <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="partnerCountry" type="pdl:PartnerCountry" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="canHaveSubpartners" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="generalContact" type="pdl:CCIContact" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programContacts" type="pdl:ProgramContacts" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="sendLogin" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="notes" type="pdl:NoteTopics" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
@@ -42,6 +42,14 @@
       <xsd:sequence>
          <xsd:element name="salutationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="PartnerCountry">
+      <xsd:sequence>
+         <xsd:element name="countryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
    
@@ -55,48 +63,10 @@
       </xsd:sequence>
    </xsd:complexType>
    
-   <xsd:complexType name="NoteTopics">
+   <xsd:complexType name="ProgramContacts">
       <xsd:sequence>
-         <xsd:element name="topicCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="topicList" type="pdl:Topic" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="Topic">
-      <xsd:sequence>
-         <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="topicTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="creator" type="pdl:Creator" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="addedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="privacy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="noteTags" type="pdl:NoteTags" minOccurs="0" maxOccurs="unbounded" />
-         <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="notes" type="pdl:Note" minOccurs="1" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="NoteTags">
-      <xsd:sequence>
-         <xsd:element name="noteTagId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="noteTag" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="Note">
-      <xsd:sequence>
-         <xsd:element name="noteId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="creator" type="pdl:Creator" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="note" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-   <xsd:complexType name="Creator">
-      <xsd:sequence>
-         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="createdByPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="designation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      	 <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

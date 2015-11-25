@@ -50,8 +50,8 @@
 	               <xsd:element name="username" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="generalEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="invoiceEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="canHaveSubPartner" type="xsd:string" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="multiCountrySender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="canHaveSubPartner" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="multiCountrySender" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="cciContact" type="adminViewForPartnerInquiryData:CCIInquiryFormPerson" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="billingNotes" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
@@ -77,8 +77,7 @@
 	   <xsd:complexType name="AdminPartnerHspSettings">
 	            <xsd:sequence>
 	               <xsd:element name="hspParticipantUnquaranteedFromRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="hspParticipantMedicalReleaseRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-	               <xsd:element name="hspParticipantSlepRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="hspParticipantMedicalReleaseRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />            
 	               <xsd:element name="hspParticipantEltisRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="aypParticipantTranscriptRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>

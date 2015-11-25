@@ -39,10 +39,6 @@ public class LookupDepartmentProgram implements Serializable {
 	@Column(nullable=false, length=50)
 	private String programName;
 
-	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
-	@OneToMany(mappedBy="lookupDepartmentProgram")
-	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
-
 	//bi-directional many-to-one association to AdminQuickStatsType
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<AdminQuickStatsType> adminQuickStatsTypes;
@@ -173,28 +169,6 @@ public class LookupDepartmentProgram implements Serializable {
 
 	public void setProgramName(String programName) {
 		this.programName = programName;
-	}
-
-	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
-		return this.adminQuickStatsCategoryAggregates;
-	}
-
-	public void setAdminQuickStatsCategoryAggregates(List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates) {
-		this.adminQuickStatsCategoryAggregates = adminQuickStatsCategoryAggregates;
-	}
-
-	public AdminQuickStatsCategoryAggregate addAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().add(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setLookupDepartmentProgram(this);
-
-		return adminQuickStatsCategoryAggregate;
-	}
-
-	public AdminQuickStatsCategoryAggregate removeAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().remove(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setLookupDepartmentProgram(null);
-
-		return adminQuickStatsCategoryAggregate;
 	}
 
 	public List<AdminQuickStatsType> getAdminQuickStatsTypes() {

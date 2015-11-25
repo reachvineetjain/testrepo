@@ -67,6 +67,8 @@
 						minOccurs="1" maxOccurs="1" />
 					<xsd:element name="noteCreatedOn" type="xsd:string"
 						minOccurs="1" maxOccurs="1" />
+                    <xsd:element name="noteTopicCreatedOn" type="xsd:string"
+                        minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
