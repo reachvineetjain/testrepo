@@ -45,7 +45,19 @@ public class DateUtils {
          }
       return date;
    }
+   public static Date getMysqlDateFromString(String endDate) {
+      DateFormat format = new SimpleDateFormat(CCIConstants.MYSQL_DATE_FORMAT, Locale.US);
+      Date date = null;
+      if (endDate != null && !endDate.trim().isEmpty())
+         try {
+            date = format.parse(endDate);
+         } catch (ParseException e) {
+            ExceptionUtil.logException(e, logger);
+         }
+      return date;
+   }
 
+   
    /**
     * Method takes input as date and converts into String date in MM-DD-YY format
     * 
