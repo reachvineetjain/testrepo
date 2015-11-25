@@ -971,6 +971,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                }
               nrd.setNoteCreatedOn(String.valueOf(dr[7]));
 				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
+				  nrd.setPartnerNoteId(String.valueOf(dr[9]));
 				  nrd.setNoteValue(String.valueOf(dr[11]));
 				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
 				  nrd.setNoteTopicCreatedOn(String.valueOf(dr[13]));
