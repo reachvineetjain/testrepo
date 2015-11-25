@@ -832,6 +832,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   drd.setFlagUrl(String.valueOf(dr[6]));
                   drd.setNewDateRequested(String.valueOf(dr[8]));
                   drd.setCurrentDate(String.valueOf(dr[7]));
+                  drd.setFollowUpDate(String.valueOf(dr[11]));
                   adr.getDeadlineRequests().add(drd);
                }
                if (dr[9] != null && dr[10] != null) {
@@ -845,6 +846,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   drd2.setFlagUrl(String.valueOf(dr[6]));
                   drd2.setNewDateRequested(String.valueOf(dr[9]));
                   drd2.setCurrentDate(String.valueOf(dr[10]));
+                  drd2.setFollowUpDate(String.valueOf(dr[12]));
                   adr.getDeadlineRequests().add(drd2);
                }
 
@@ -895,9 +897,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  ad.setCurrentSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[5]));
 				  ad.setCurrentSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[6]));
 				  ad.setRequestedSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[7]));
-				  ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[8]));
-				  ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[12]));
-				  ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
+				  ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[9]));
+				  ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[13]));
+				  ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
 				 
 				  }
 				  else if (ProgramOptionId==3||ProgramOptionId==8)
@@ -905,13 +907,15 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					  ad.setCurrentSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[5]));
 					  ad.setCurrentSeasonJanStartguarantedParticipantNume(String.valueOf(dr[6]));
 					  ad.setRequestedSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[7]));
-					  ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[8]));
-					  ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[12]));
-					  ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
+					  ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[9]));
+					  ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[13]));
+					  ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
 				  }
 				  }
-				  ad.setCountry(String.valueOf(dr[9]));
-				  ad.setFlagUrl(String.valueOf(dr[11]));	 
+				  ad.setCountry(String.valueOf(dr[10]));
+				  ad.setFlagUrl(String.valueOf(dr[12]));	
+				  ad.setSunmittedOn(String.valueOf(dr[11]));
+				  ad.setFollowUpDate(String.valueOf(dr[8]));
 				  rca.getChangeInAllocation().add(ad);
 			   }
 			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
@@ -967,11 +971,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                }
               nrd.setNoteCreatedOn(String.valueOf(dr[7]));
 				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
-				  nrd.setNoteValue(String.valueOf(dr[10]));
-				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[11]));
-				  nrd.setNoteTopicRoll(String.valueOf(dr[12]));
-				  nrd.setNoteRoll(String.valueOf(dr[13]));
-				 nr.getNotesReview().add(nrd);
+				  nrd.setNoteValue(String.valueOf(dr[11]));
+				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
+				  nrd.setNoteTopicCreatedOn(String.valueOf(dr[13]));
+				  nrd.setNoteTopicRoll(String.valueOf(dr[14]));
+				  nrd.setNoteRoll(String.valueOf(dr[15]));
+				  nrd.setFollowUpDate(String.valueOf(dr[10]));
+				  nr.getNotesReview().add(nrd);
 			   }
 			  nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
 		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
