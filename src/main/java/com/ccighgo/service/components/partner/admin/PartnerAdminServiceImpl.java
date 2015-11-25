@@ -826,13 +826,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   drd.setSeasonName(String.valueOf(dr[3]));
                   drd.setCountry(String.valueOf(dr[4]));
                   if (dr[5] != null)
-                     drd.setSunmittedOn(String.valueOf(dr[5]));
+                     drd.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[5]))));
                   else
                      drd.setSunmittedOn("");
                   drd.setFlagUrl(String.valueOf(dr[6]));
-                  drd.setNewDateRequested(String.valueOf(dr[8]));
-                  drd.setCurrentDate(String.valueOf(dr[7]));
-                  drd.setFollowUpDate(String.valueOf(dr[11]));
+                  drd.setNewDateRequested(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+                  drd.setCurrentDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
+                  drd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
                   adr.getDeadlineRequests().add(drd);
                }
                if (dr[9] != null && dr[10] != null) {
@@ -842,11 +842,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   drd2.setPartnerStatus(String.valueOf(dr[2]));
                   drd2.setSeasonName(String.valueOf(dr[3]));
                   drd2.setCountry(String.valueOf(dr[4]));
-                  drd2.setSunmittedOn(String.valueOf(dr[5]));
+                  drd2.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[5]))));
                   drd2.setFlagUrl(String.valueOf(dr[6]));
-                  drd2.setNewDateRequested(String.valueOf(dr[9]));
-                  drd2.setCurrentDate(String.valueOf(dr[10]));
-                  drd2.setFollowUpDate(String.valueOf(dr[12]));
+                  drd2.setNewDateRequested(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[9]))));
+                  drd2.setCurrentDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
+                  drd2.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[12]))));
                   adr.getDeadlineRequests().add(drd2);
                }
 
@@ -914,8 +914,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  }
 				  ad.setCountry(String.valueOf(dr[10]));
 				  ad.setFlagUrl(String.valueOf(dr[12]));	
-				  ad.setSunmittedOn(String.valueOf(dr[11]));
-				  ad.setFollowUpDate(String.valueOf(dr[8]));
+				  ad.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
+				  ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
 				  rca.getChangeInAllocation().add(ad);
 			   }
 			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
@@ -969,7 +969,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                if (dr[6] != null) {
                   nrd.setIsPublic(String.valueOf(dr[6]));
                }
-              nrd.setNoteCreatedOn(String.valueOf(dr[7]));
+              nrd.setNoteCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
 				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
 				  nrd.setPartnerNoteId(String.valueOf(dr[9]));
 				  nrd.setNoteValue(String.valueOf(dr[11]));
@@ -977,7 +977,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  nrd.setNoteTopicCreatedOn(String.valueOf(dr[13]));
 				  nrd.setNoteTopicRoll(String.valueOf(dr[14]));
 				  nrd.setNoteRoll(String.valueOf(dr[15]));
-				  nrd.setFollowUpDate(String.valueOf(dr[10]));
+				  nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
 				  nr.getNotesReview().add(nrd);
 			   }
 			  nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
