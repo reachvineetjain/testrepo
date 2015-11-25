@@ -771,11 +771,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                pd.setCountry(String.valueOf(wq[6]));
                if (wq[7] != null) {
                   String followUpdate = String.valueOf(wq[7]);
-                  pd.setFollowUpDate(followUpdate.split("\\s+")[0]);
+                  pd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(followUpdate)));
                }
                if (wq[8] != null) {
                   String submittedOn = String.valueOf(wq[8]);
-                  pd.setSunmittedOn(submittedOn.split("\\s+")[0]);
+                  pd.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(submittedOn)));
                }
                pd.setFlagUrl(String.valueOf(wq[9]));
                pd.setPrograms(String.valueOf(wq[10]));
