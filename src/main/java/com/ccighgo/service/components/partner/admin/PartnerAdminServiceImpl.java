@@ -974,7 +974,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  nrd.setPartnerNoteId(String.valueOf(dr[9]));
 				  nrd.setNoteValue(String.valueOf(dr[11]));
 				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
-				  nrd.setNoteTopicCreatedOn(String.valueOf(dr[13]));
+				  nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
 				  nrd.setNoteTopicRoll(String.valueOf(dr[14]));
 				  nrd.setNoteRoll(String.valueOf(dr[15]));
 				  nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
