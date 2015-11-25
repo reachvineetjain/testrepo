@@ -242,12 +242,14 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                ap.setFirstName(puser.getFirstName());
                ap.setLastName(puser.getLastName());
                ap.setEmail(puser.getEmail());
-               PartnerCountry pCountry = new PartnerCountry();
-               pCountry.setCountryId(p.getLookupCountry1().getCountryId());
-               pCountry.setCountryCode(p.getLookupCountry1().getCountryCode());
-               pCountry.setCountryName(p.getLookupCountry1().getCountryName());
-               pCountry.setCountryFlagUrl(p.getLookupCountry1().getCountryFlag());
-               ap.setPartnerCountry(pCountry);
+              PartnerCountry pCountry=null;
+               if(p.getLookupCountry1()!=null){
+                  pCountry = new PartnerCountry();
+                  pCountry.setCountryId(p.getLookupCountry1().getCountryId());
+                  pCountry.setCountryCode(p.getLookupCountry1().getCountryCode());
+                  pCountry.setCountryName(p.getLookupCountry1().getCountryName());
+                  pCountry.setCountryFlagUrl(p.getLookupCountry1().getCountryFlag());
+               }
                ap.setActive(puser.getLogin().getActive() == CCIConstants.ACTIVE ? 1 : 0);
                ap.setPartnerLoginId(puser.getLogin().getLoginId());
 
