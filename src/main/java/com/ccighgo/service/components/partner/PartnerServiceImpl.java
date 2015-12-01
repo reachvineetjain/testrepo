@@ -337,7 +337,7 @@ public class PartnerServiceImpl implements PartnerService {
 
                // announcements
                List<PartnerAnnouncement> partnerAnnouncementList = partner.getPartnerAnnouncements();
-                List<PartnerJ1HSAnnouncement> partnerJ1HSAnnouncements = new ArrayList<PartnerJ1HSAnnouncement>();
+               List<PartnerJ1HSAnnouncement> partnerJ1HSAnnouncements = new ArrayList<PartnerJ1HSAnnouncement>();
                if (partnerAnnouncementList != null && partnerAnnouncementList.size() > 0) {
                   for (PartnerAnnouncement ann : partnerAnnouncementList) {
                      PartnerJ1HSAnnouncement j1hsAnn = new PartnerJ1HSAnnouncement();
