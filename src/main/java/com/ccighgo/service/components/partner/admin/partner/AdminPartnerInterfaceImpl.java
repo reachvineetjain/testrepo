@@ -242,12 +242,14 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                ap.setFirstName(puser.getFirstName());
                ap.setLastName(puser.getLastName());
                ap.setEmail(puser.getEmail());
-               PartnerCountry pCountry = new PartnerCountry();
-               pCountry.setCountryId(p.getLookupCountry1().getCountryId());
-               pCountry.setCountryCode(p.getLookupCountry1().getCountryCode());
-               pCountry.setCountryName(p.getLookupCountry1().getCountryName());
-               pCountry.setCountryFlagUrl(p.getLookupCountry1().getCountryFlag());
-               ap.setPartnerCountry(pCountry);
+             if(p.getLookupCountry1()!=null){
+                  PartnerCountry pCountry = new PartnerCountry();
+                  pCountry.setCountryId(p.getLookupCountry1().getCountryId());
+                  pCountry.setCountryCode(p.getLookupCountry1().getCountryCode());
+                  pCountry.setCountryName(p.getLookupCountry1().getCountryName());
+                  pCountry.setCountryFlagUrl(p.getLookupCountry1().getCountryFlag());
+                  ap.setPartnerCountry(pCountry);
+               }
                ap.setActive(puser.getLogin().getActive() == CCIConstants.ACTIVE ? 1 : 0);
                ap.setPartnerLoginId(puser.getLogin().getLoginId());
 
@@ -288,7 +290,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String partnerLoginId) {
       Response resp = new Response();
       try {
-         if (!(Integer.valueOf(statusVal) == 0) || !(Integer.valueOf(statusVal) == 1)) {
+         if (!(Integer.valueOf(statusVal) == 0) && !(Integer.valueOf(statusVal) == 1)) {
             throw new CcighgoException("invalid status value, can be either 0 or 1");
          }
          if (loggedinUserLoginId == null || Integer.valueOf(loggedinUserLoginId) == 0 || Integer.valueOf(loggedinUserLoginId) < 0) {
@@ -390,6 +392,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             lp.setExtenstion("");
             lp.setWebsite(p.getWebsite());
             lp.setEmail(p.getEmail());
+            lp.setGoId(p.getPartner()!=null?p.getPartner().getPartnerGoId():0);
             LeadCountry pCountry = new LeadCountry();
             pCountry.setCountryId(p.getLookupCountry().getCountryId());
             pCountry.setCountryCode(p.getLookupCountry().getCountryCode());

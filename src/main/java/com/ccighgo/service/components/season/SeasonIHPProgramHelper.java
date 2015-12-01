@@ -489,18 +489,18 @@ public class SeasonIHPProgramHelper {
                LOGGER.debug("update HSP_STP_IHP documents failed because document type selected is not found in system: " + ihpDocument.getDocType());
             }
          }
-         documentInformation.setCreatedBy(1);
+         documentInformation.setCreatedBy(seasonHspStpIhpDetails.getLoginId());
          documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         documentInformation.setModifiedBy(1);
+         documentInformation.setModifiedBy(seasonHspStpIhpDetails.getLoginId());
          documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
          sprgDoc.setActive(CCIConstants.ACTIVE);
          sprgDoc.setSeason(season);
          sprgDoc.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_STP_IHP_ID));
          sprgDoc.setDocumentInformation(documentInformation);
-         sprgDoc.setCreatedBy(1);
+         sprgDoc.setCreatedBy(seasonHspStpIhpDetails.getLoginId());
          sprgDoc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         sprgDoc.setModifiedBy(1);
+         sprgDoc.setModifiedBy(seasonHspStpIhpDetails.getLoginId());
          sprgDoc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          newDocList.add(sprgDoc);
       }
@@ -520,9 +520,9 @@ public class SeasonIHPProgramHelper {
          sprNote.setSeason(season);
          sprNote.setProgramNote(ihpNote.getNoteValue());
          sprNote.setDepartmentProgram(departmentProgramRepository.findOne(CCIConstants.HSP_STP_IHP_ID));
-         sprNote.setCreatedBy(1);
+         sprNote.setCreatedBy(seasonHspStpIhpDetails.getLoginId());
          sprNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         sprNote.setModifiedBy(1);
+         sprNote.setModifiedBy(seasonHspStpIhpDetails.getLoginId());
          sprNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          updatedNotes.add(sprNote);
       }

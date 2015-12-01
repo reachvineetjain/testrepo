@@ -37,6 +37,7 @@ import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickst
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatstitles.PartnerAdminDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminPartnerWorkQueueDeadlineRequests;
 import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReview;
+import com.ccighgo.service.transport.partner.beans.partnerstatusaspattern.PartnerStatusAsPatterns;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
@@ -363,4 +364,10 @@ public class PartnerAdmin {
       return partnerAdminService.markNoteRead(noteId,loginId);
    }
 
+   @GET
+   @Path("getPartnerStatusAsPattern")
+   @Produces("application/json")
+   public PartnerStatusAsPatterns getPartnerStatusAsPattern() {
+      return partnerAdminService.getPartnerStatusAsPattern();
+   }
 }
