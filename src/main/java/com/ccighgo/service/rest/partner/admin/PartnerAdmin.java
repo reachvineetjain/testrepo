@@ -393,8 +393,8 @@ public class PartnerAdmin {
    @GET
    @Path("updatePartnerAllocationNotesReviewUpDate/{partnerNotesId}/{followUpdate}")
    @Produces("application/json")
-   public WSDefaultResponse updatePartnerAllocationNotesReviewUpDate(@PathParam("partnerNotesId") String partnerNotesId, @PathParam("followUpdate") String followUpdate) {
+   public WSDefaultResponse updatePartnerNotesReviewFollowUpDate(@PathParam("partnerNotesId") String partnerNotesId, @PathParam("followUpdate") String followUpdate) {
       LOGGER.debug("fun : updatePartnerAllocationNotesReviewUpDate");
-      return partnerAdminService.updatePartnerAllocationNotesReviewUpDate(Integer.valueOf(partnerNotesId), followUpdate);
+      return partnerAdminService.updatePartnerNotesReviewFollowUpDate(Integer.valueOf(partnerNotesId), followUpdate);
    }
 }

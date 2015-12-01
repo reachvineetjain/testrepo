@@ -1725,7 +1725,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public WSDefaultResponse updatePartnerAllocationNotesReviewUpDate(int partnerNotesId, String followUpdate) {
+   public WSDefaultResponse updatePartnerNotesReviewFollowUpDate(int partnerNotesId, String followUpdate) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
      //TODO

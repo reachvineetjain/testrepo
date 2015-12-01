@@ -113,6 +113,6 @@ public interface PartnerAdminService {
 
    WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(int partnerSeasonAllocationId, String followUpdate);
 
-   WSDefaultResponse updatePartnerAllocationNotesReviewUpDate(int partnerNotesId, String followUpdate);
+   WSDefaultResponse updatePartnerNotesReviewFollowUpDate(int partnerNotesId, String followUpdate);
 
 }
