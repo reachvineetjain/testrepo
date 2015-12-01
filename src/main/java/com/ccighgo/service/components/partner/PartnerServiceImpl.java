@@ -162,6 +162,7 @@ public class PartnerServiceImpl implements PartnerService {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
                partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
+               partnerDashboard.setIsSubpartner(partner.getIsSubPartner()==CCIConstants.ACTIVE?true:false);
                List<PartnerUser> partnerUsers = partner.getPartnerUsers();
                for (PartnerUser pu : partnerUsers) {
                   if (partner.getPartnerGoId() == pu.getPartner().getPartnerGoId() && pu.getIsPrimary() == CCIConstants.ACTIVE) {
@@ -336,9 +337,8 @@ public class PartnerServiceImpl implements PartnerService {
 
                // announcements
                List<PartnerAnnouncement> partnerAnnouncementList = partner.getPartnerAnnouncements();
-               List<PartnerJ1HSAnnouncement> partnerJ1HSAnnouncements = null;
+                List<PartnerJ1HSAnnouncement> partnerJ1HSAnnouncements = new ArrayList<PartnerJ1HSAnnouncement>();
                if (partnerAnnouncementList != null && partnerAnnouncementList.size() > 0) {
-                  partnerJ1HSAnnouncements = new ArrayList<PartnerJ1HSAnnouncement>();
                   for (PartnerAnnouncement ann : partnerAnnouncementList) {
                      PartnerJ1HSAnnouncement j1hsAnn = new PartnerJ1HSAnnouncement();
                      j1hsAnn.setAnnouncement(ann.getAnnouncement());

@@ -39,6 +39,8 @@
          <xsd:element name="flagUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="sunmittedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />  
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
       </xsd:extension>
      </xsd:complexContent>
