@@ -34,6 +34,7 @@ import com.ccighgo.db.entities.PartnerOfficeType;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
+import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.ErrorCode;
@@ -63,6 +64,7 @@ import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
+import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
@@ -199,6 +201,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    UserManagementService userManagementService;
    @PersistenceContext
    EntityManager em;
+   @Autowired
+   PartnerSeasonsRepository partnerSeasonsRepository;
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
@@ -833,6 +837,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   drd.setNewDateRequested(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
                   drd.setCurrentDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
                   drd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
+                  drd.setSeasonId(Integer.valueOf(String.valueOf(dr[13])));
+                  drd.setDepartmentProgramId(Integer.valueOf(String.valueOf(dr[14])));
                   adr.getDeadlineRequests().add(drd);
                }
                if (dr[9] != null && dr[10] != null) {
@@ -847,6 +853,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   drd2.setNewDateRequested(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[9]))));
                   drd2.setCurrentDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
                   drd2.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[12]))));
+                  drd2.setSeasonId(Integer.valueOf(String.valueOf(dr[13])));
+                  drd2.setDepartmentProgramId(Integer.valueOf(String.valueOf(dr[14])));
                   adr.getDeadlineRequests().add(drd2);
                }
 
@@ -916,6 +924,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				  ad.setFlagUrl(String.valueOf(dr[12]));	
 				  ad.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
 				  ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+				  ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
 				  rca.getChangeInAllocation().add(ad);
 			   }
 			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
@@ -971,7 +980,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                }
               nrd.setNoteCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
 				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
-				  nrd.setPartnerNoteId(String.valueOf(dr[9]));
+				  nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
 				  nrd.setNoteValue(String.valueOf(dr[11]));
 				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
 				  nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
@@ -1685,4 +1694,48 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
       return partnerStatusAsPatterns;
    }
+
+   @Override
+   public WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(int SeasonId,int ProgramId,int PartnerGoId, String followUpdate) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+     //TODO
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(int partnerSeasonAllocationId, String followUpdate) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+      
+         //TODO
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse updatePartnerAllocationNotesReviewUpDate(int partnerNotesId, String followUpdate) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+     //TODO
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
+      }
+      return wsDefaultResponse;
+   }
+   
 }

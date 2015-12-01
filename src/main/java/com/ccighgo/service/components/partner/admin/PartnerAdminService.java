@@ -109,4 +109,10 @@ public interface PartnerAdminService {
    
    PartnerStatusAsPatterns getPartnerStatusAsPattern();
 
+   WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(int SeasonId, int ProgramId, int PartnerGoId, String followUpdate);
+
+   WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(int partnerSeasonAllocationId, String followUpdate);
+
+   WSDefaultResponse updatePartnerAllocationNotesReviewUpDate(int partnerNotesId, String followUpdate);
+
 }
