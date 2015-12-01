@@ -1,6 +1,10 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -13,9 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 
 /**
