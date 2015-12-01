@@ -3,7 +3,6 @@
 // See <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2015.12.01 at 04:52:31 PM CST 
-//
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/common")
 package com.ccighgo.service.transport.common.response.beans;

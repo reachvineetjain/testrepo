@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedContacts;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedDocuments;
@@ -369,5 +370,31 @@ public class PartnerAdmin {
    @Produces("application/json")
    public PartnerStatusAsPatterns getPartnerStatusAsPattern() {
       return partnerAdminService.getPartnerStatusAsPattern();
+   }
+   
+   @GET
+   @Path("updatePartnerDeadLineChangeFollowUpDate/{SeasonId}/{ProgramId}/{PartnerGoId}/{followUpdate}")
+   @Produces("application/json")
+   public WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(@PathParam("SeasonId") String SeasonId, @PathParam("ProgramId") String ProgramId,
+         @PathParam("PartnerGoId") String PartnerGoId, @PathParam("followUpdate") String followUpdate) {
+      LOGGER.debug("fun : updatePartnerDeadLineChangeFollowUpDate");
+      return partnerAdminService.updatePartnerDeadLineChangeFollowUpDate(Integer.valueOf(SeasonId), Integer.valueOf(ProgramId), Integer.valueOf(PartnerGoId), followUpdate);
+   }
+
+   @GET
+   @Path("updatePartnerAllocationChangeFollowUpDate/{partnerSeasonAllocationId}/{followUpdate}")
+   @Produces("application/json")
+   public WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(@PathParam("partnerSeasonAllocationId") String partnerSeasonAllocationId,
+         @PathParam("followUpdate") String followUpdate) {
+      LOGGER.debug("fun : updatePartnerAllocationChangeFollowUpDate");
+      return partnerAdminService.updatePartnerAllocationChangeFollowUpDate(Integer.valueOf(partnerSeasonAllocationId), followUpdate);
+   }
+
+   @GET
+   @Path("updatePartnerAllocationNotesReviewUpDate/{partnerNotesId}/{followUpdate}")
+   @Produces("application/json")
+   public WSDefaultResponse updatePartnerAllocationNotesReviewUpDate(@PathParam("partnerNotesId") String partnerNotesId, @PathParam("followUpdate") String followUpdate) {
+      LOGGER.debug("fun : updatePartnerAllocationNotesReviewUpDate");
+      return partnerAdminService.updatePartnerAllocationNotesReviewUpDate(Integer.valueOf(partnerNotesId), followUpdate);
    }
 }
