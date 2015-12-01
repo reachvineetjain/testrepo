@@ -35,6 +35,9 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	private Integer expectedPaxCount;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date followupDate;
+
 	private Integer maxGuaranteedPax;
 
 	private Integer maxPax;
@@ -56,7 +59,7 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId", nullable=false, insertable =false, updatable=false)
+	@JoinColumn(name="departmentProgramOptionId")
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Login
@@ -123,6 +126,14 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	public void setExpectedPaxCount(Integer expectedPaxCount) {
 		this.expectedPaxCount = expectedPaxCount;
+	}
+
+	public Date getFollowupDate() {
+		return this.followupDate;
+	}
+
+	public void setFollowupDate(Date followupDate) {
+		this.followupDate = followupDate;
 	}
 
 	public Integer getMaxGuaranteedPax() {

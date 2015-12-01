@@ -159,5 +159,12 @@ public class Participants {
    public Response resetParticipantPassword(@PathParam("participantGoId") String participantGoId) {
       return participantsInterface.resetParticipantPassword(participantGoId, request);
    }
+   
+   @GET
+   @Path("sendLogin/{participantGoId}")
+   @Produces("application/json")
+   public Response sendLogin(@PathParam("participantGoId") String participantGoId) {
+      return participantsInterface.sendLogin(participantGoId, request);
+   }
 
 }

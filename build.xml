@@ -9,7 +9,8 @@
 		ForgotRequest,ResetRequest,PartnerQuickStats,PartnerSeasonApplicationList,PartnerSeasonF1Detail,PartnerDashboard,PartnerJ1HSDashboard,PartnerF1Dashboard,
 		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard,AddNewPartnerOffice,PartnerAdminSeasonsList,PartnerAdminSeasonApplicationList,PartnerAdminJ1SeasonDetails,
 		PartnerAdminF1SeasonDetails,PartnerUserDetails, PartnerUserOffices,PartnerGenericNote,PartnerGenericDeleteNote,PartnerGenericTopic,GenericSeasonsDocuments,GenericPartnerDocument,
-		PartnerSeasonDocumentParameters,PartnerAdminIHPSeasonDetails,GenericPartnerSeasonContracts,AdminAddPartner,PartnerSeasonIHPDetail,CCIUsersList,AddedPartners,LeadPartners,PartnerStatusAsPattern" />
+		PartnerStatus,PartnerSeasonDocumentParameters,PartnerAdminIHPSeasonDetails,GenericPartnerSeasonContracts,AdminAddPartner,PartnerSeasonIHPDetail,CCIUsersList,AddedPartners,
+		LeadPartners,PartnerStatusAsPattern" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -149,6 +150,14 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/generic/CCIUsersList.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerStatus">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/generic/PartnerStatus.xsd" />
 		</java>
 	</target>
 

@@ -21,6 +21,7 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
+import com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatuses;
 import com.ccighgo.service.transport.utility.beans.program.ProgramOptions;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
@@ -187,4 +188,9 @@ public interface UtilityServices {
     * @return
     */
    public CCIUsersList getCCIUsers();
+
+   /**
+    * @return
+    */
+   public PartnerStatuses getPartnerStatus();
 }

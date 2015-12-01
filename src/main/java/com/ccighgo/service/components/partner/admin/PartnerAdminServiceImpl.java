@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -1331,6 +1332,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Transactional
    @Override
+   @Modifying
    public PartnerAdminOverviewOffices removeNewPartnerInquiryOffice(PartnerAdminOverviewDeletedOffices deletedItems) {
       PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
       try {
