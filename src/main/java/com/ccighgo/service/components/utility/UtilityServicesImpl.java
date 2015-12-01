@@ -641,9 +641,9 @@ public class UtilityServicesImpl implements UtilityServices {
             return response;
          }
          Login loginUser = null;
-         if (req.getUsername() == null) {
+         if (req.getUsername() != null) {
             loginUser = loginRepository.findByEmail(req.getEmail());
-         } else if (req.getEmail() == null) {
+         } else if (req.getEmail() != null) {
             loginUser = loginRepository.findByLoginName(req.getUsername().toLowerCase());
          }
          if (loginUser != null) {
