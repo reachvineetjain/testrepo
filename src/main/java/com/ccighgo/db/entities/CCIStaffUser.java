@@ -1,24 +1,14 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -100,12 +90,12 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional one-to-one association to GoIdSequence

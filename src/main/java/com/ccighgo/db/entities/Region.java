@@ -1,21 +1,9 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 
 /**
@@ -52,8 +40,7 @@ public class Region implements Serializable {
 	private String regionName;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
-	@OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="region")
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
 	public Region() {
