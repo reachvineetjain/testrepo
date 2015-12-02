@@ -36,6 +36,7 @@ import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.ErrorCode;
@@ -65,6 +66,7 @@ import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
+import com.ccighgo.jpa.repositories.PartnerSeasonAllocationRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
@@ -204,6 +206,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    EntityManager em;
    @Autowired
    PartnerSeasonsRepository partnerSeasonsRepository;
+   @Autowired
+   PartnerSeasonAllocationRepository partnerSeasonAllocationRepository;
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
@@ -1698,10 +1702,18 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(int SeasonId,int ProgramId,int PartnerGoId, String followUpdate) {
+   public WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(int SeasonId, int ProgramId, int PartnerGoId, String followUpdate) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-     //TODO
+         PartnerSeason partnerSeason = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(SeasonId, ProgramId, PartnerGoId);
+         if (partnerSeason.getAppSecSemDeadlineFollowupDate() != null)
+            partnerSeason.setAppSecSemDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         else
+            partnerSeason.setAppDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerSeasonsRepository.saveAndFlush(partnerSeason);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
@@ -1715,8 +1727,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    public WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(int partnerSeasonAllocationId, String followUpdate) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-      
-         //TODO
+
+         PartnerSeasonAllocation partnerSeasonAllocation = partnerSeasonAllocationRepository.findOne(partnerSeasonAllocationId);
+         partnerSeasonAllocation.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerSeasonAllocationRepository.saveAndFlush(partnerSeasonAllocation);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
@@ -1727,10 +1743,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public WSDefaultResponse updatePartnerAllocationNotesReviewUpDate(int partnerNotesId, String followUpdate) {
+   public WSDefaultResponse updatePartnerNotesReviewFollowUpDate(int partnerNotesId, String followUpdate) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-     //TODO
+         PartnerNote partnerNote = partnerNoteRepository.findOne(partnerNotesId);
+         partnerNote.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerNoteRepository.saveAndFlush(partnerNote);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
@@ -1739,5 +1759,5 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return wsDefaultResponse;
    }
-   
+
 }
