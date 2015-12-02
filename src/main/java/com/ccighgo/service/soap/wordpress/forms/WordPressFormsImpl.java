@@ -56,7 +56,7 @@ public class WordPressFormsImpl implements IWordPressForms {
                System.out.println(message);
                return message;
             }
-
+            print (InternationalPartners);
             PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
             partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
             partnerAgentInquiry.setAdressLineTwo(InternationalPartners.getAddress2());
@@ -110,6 +110,35 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println(string);
          return string;
       }
+   }
+
+   private void print(InternationalPartners internationalPartners) {
+      System.out.println(internationalPartners.getAddress());
+      System.out.println(internationalPartners.getAddress2());
+      System.out.println(internationalPartners.getCity());
+      System.out.println(internationalPartners.getCounrty());
+      System.out.println(internationalPartners.getDescriptionOfPrograms());
+      System.out.println(internationalPartners.getEmail());
+      System.out.println(internationalPartners.getFirstName());
+      System.out.println(internationalPartners.getHearedAboutUs());
+      System.out.println(internationalPartners.getLastName());
+      System.out.println(internationalPartners.getLegalBusinessName());
+      System.out.println(internationalPartners.getPhone());
+      System.out.println(internationalPartners.getPrefix());
+      System.out.println(internationalPartners.getStateOrProvince());
+      System.out.println(internationalPartners.getWebsite());
+      System.out.println(internationalPartners.getCurrentlySendingParticipant());
+
+      if (internationalPartners.getTypeOfPrograms() != null || internationalPartners.getTypeOfPrograms().size() > 0)
+         for (String s : internationalPartners.getTypeOfPrograms()) {
+            System.out.println(s);
+         }
+      if (internationalPartners.getPrograms() != null || internationalPartners.getPrograms().size() > 0)
+         for (String s : internationalPartners.getPrograms()) {
+            System.out.println(s);
+         }
+      System.out.println(internationalPartners.getCurrentlySendingParticipant());
+      System.out.println(internationalPartners.getYearsInBusiness());
    }
 
    @Override
