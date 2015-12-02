@@ -24,6 +24,12 @@ public class PartnerSeason implements Serializable {
 
 	private Byte active;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date appDeadlineFollowupDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date appSecSemDeadlineFollowupDate;
+
 	private Byte canAccessJobBoard;
 
 	private Byte canCreateSubPartner;
@@ -176,6 +182,22 @@ public class PartnerSeason implements Serializable {
 
 	public void setActive(Byte active) {
 		this.active = active;
+	}
+
+	public Date getAppDeadlineFollowupDate() {
+		return this.appDeadlineFollowupDate;
+	}
+
+	public void setAppDeadlineFollowupDate(Date appDeadlineFollowupDate) {
+		this.appDeadlineFollowupDate = appDeadlineFollowupDate;
+	}
+
+	public Date getAppSecSemDeadlineFollowupDate() {
+		return this.appSecSemDeadlineFollowupDate;
+	}
+
+	public void setAppSecSemDeadlineFollowupDate(Date appSecSemDeadlineFollowupDate) {
+		this.appSecSemDeadlineFollowupDate = appSecSemDeadlineFollowupDate;
 	}
 
 	public Byte getCanAccessJobBoard() {

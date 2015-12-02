@@ -257,7 +257,9 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                String status = null;
                List<PartnerReviewStatus> partnerReviewStatuses = p.getPartnerReviewStatuses();
                if (partnerReviewStatuses != null && !partnerReviewStatuses.isEmpty()) {
-                  status = partnerReviewStatuses.get(0).getPartnerStatus1().getPartnerStatusName();
+                  if(partnerReviewStatuses.get(0).getPartnerStatus1()!=null){
+                     status = partnerReviewStatuses.get(0).getPartnerStatus1().getPartnerStatusName();
+                  }
                }
                ap.setStatus(status);
                List<PartnerSeasons> psList = null;

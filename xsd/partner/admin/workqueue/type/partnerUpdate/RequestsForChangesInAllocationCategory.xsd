@@ -63,6 +63,7 @@
 		
          <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />  
+         <xsd:element name="partnerSeasonAllocationId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
       </xsd:extension>
         </xsd:complexContent>

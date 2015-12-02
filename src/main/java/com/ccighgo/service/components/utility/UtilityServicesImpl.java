@@ -73,6 +73,7 @@ import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutation;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
+import com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatuses;
 import com.ccighgo.service.transport.utility.beans.program.Program;
 import com.ccighgo.service.transport.utility.beans.program.ProgramOption;
 import com.ccighgo.service.transport.utility.beans.program.ProgramOptions;
@@ -641,9 +642,9 @@ public class UtilityServicesImpl implements UtilityServices {
             return response;
          }
          Login loginUser = null;
-         if (req.getUsername() == null) {
+         if (req.getUsername() != null) {
             loginUser = loginRepository.findByEmail(req.getEmail());
-         } else if (req.getEmail() == null) {
+         } else if (req.getEmail() != null) {
             loginUser = loginRepository.findByLoginName(req.getUsername().toLowerCase());
          }
          if (loginUser != null) {
@@ -840,7 +841,7 @@ public class UtilityServicesImpl implements UtilityServices {
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public CCIUsersList getCCIUsers() {
       CCIUsersList usersList = new CCIUsersList();
       try {
@@ -852,13 +853,14 @@ public class UtilityServicesImpl implements UtilityServices {
             for (CCIStaffUser cciuser : cciStaffUsersList) {
                CCIUser user = new CCIUser();
                Login cciLogin = loginRepository.findByCCIGoId(cciuser.getCciStaffUserId());
-               if(cciLogin!=null){
+               if (cciLogin != null) {
                   user.setLoginId(cciLogin.getLoginId());
                }
                user.setCciUserId(cciuser.getCciStaffUserId());
                user.setCciUserFirstName(cciuser.getFirstName());
                user.setCciUserLastName(cciuser.getLastName());
-               //TODO: not all users have designation and it is throwing exception
+               // TODO: not all users have designation and it is throwing
+               // exception
                user.setCciUserDesignation("TODO");
                user.setCciUserPhotoUrl(cciuser.getPhoto());
                cciUsers.add(user);
@@ -871,5 +873,27 @@ public class UtilityServicesImpl implements UtilityServices {
          usersList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
       }
       return usersList;
+   }
+
+   @Override
+   public PartnerStatuses getPartnerStatus() {
+      PartnerStatuses status = new PartnerStatuses();
+      try {
+         List<PartnerStatus> partnerStatusList = partnerStatusRepository.findAll();
+         List<com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus> partnerStatuses = new ArrayList<com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus>();
+         for (PartnerStatus ps : partnerStatusList) {
+            com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus s = new com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus();
+            s.setPartnerStatusId(ps.getPartnerStatusId());
+            s.setPartnerStatus(ps.getPartnerStatusName());
+            partnerStatuses.add(s);
+         }
+         status.getPartnerStatuses().addAll(partnerStatuses);
+         status.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         status.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+      }
+      return status;
    }
 }

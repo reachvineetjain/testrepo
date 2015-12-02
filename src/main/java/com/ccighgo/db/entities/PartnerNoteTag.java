@@ -17,7 +17,7 @@ public class PartnerNoteTag implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int partnerNoteTagId;
+	private Integer partnerNoteTagId;
 
 	@Column(length=50)
 	private String tagName;
@@ -25,11 +25,11 @@ public class PartnerNoteTag implements Serializable {
 	public PartnerNoteTag() {
 	}
 
-	public int getPartnerNoteTagId() {
+	public Integer getPartnerNoteTagId() {
 		return this.partnerNoteTagId;
 	}
 
-	public void setPartnerNoteTagId(int partnerNoteTagId) {
+	public void setPartnerNoteTagId(Integer partnerNoteTagId) {
 		this.partnerNoteTagId = partnerNoteTagId;
 	}
 

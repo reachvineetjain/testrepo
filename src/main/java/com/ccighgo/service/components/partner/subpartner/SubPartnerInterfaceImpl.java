@@ -306,6 +306,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                if (login != null) {
                   subPartnerStatus.setSubPartnerStatus(login.getActive() == 1 ? "Active" : "Inactive");
                   subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
+                  sp.setSubPartnerEmail(login.getEmail());
+                  sp.setSubPartnerUserName(login.getLoginName());
                }
             }
             sp.setSubPartnerStatus(subPartnerStatus);
