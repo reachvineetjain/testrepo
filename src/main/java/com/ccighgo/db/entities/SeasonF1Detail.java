@@ -55,7 +55,7 @@ public class SeasonF1Detail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date firstSemStartDate;
 
-	private Integer greenHeartMargin;
+	private int greenHeartMargin;
 
 	@Temporal(TemporalType.DATE)
 	private Date hfInquiryDate;
@@ -236,11 +236,11 @@ public class SeasonF1Detail implements Serializable {
 		this.firstSemStartDate = firstSemStartDate;
 	}
 
-	public Integer getGreenHeartMargin() {
+	public int getGreenHeartMargin() {
 		return this.greenHeartMargin;
 	}
 
-	public void setGreenHeartMargin(Integer greenHeartMargin) {
+	public void setGreenHeartMargin(int greenHeartMargin) {
 		this.greenHeartMargin = greenHeartMargin;
 	}
 

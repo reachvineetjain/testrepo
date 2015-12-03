@@ -90,12 +90,12 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional one-to-one association to GoIdSequence
@@ -120,12 +120,16 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
+
+	//bi-directional many-to-one association to FieldStaff
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<FieldStaff> fieldStaffs;
 
 	//bi-directional many-to-one association to PartnerMessage
 	@OneToMany(mappedBy="ccistaffUser")
@@ -482,6 +486,28 @@ public class CCIStaffUser implements Serializable {
 		ccistaffUsersResourcePermission.setCcistaffUser(null);
 
 		return ccistaffUsersResourcePermission;
+	}
+
+	public List<FieldStaff> getFieldStaffs() {
+		return this.fieldStaffs;
+	}
+
+	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+		this.fieldStaffs = fieldStaffs;
+	}
+
+	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().add(fieldStaff);
+		fieldStaff.setCcistaffUser(this);
+
+		return fieldStaff;
+	}
+
+	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().remove(fieldStaff);
+		fieldStaff.setCcistaffUser(null);
+
+		return fieldStaff;
 	}
 
 	public List<PartnerMessage> getPartnerMessages() {
