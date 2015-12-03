@@ -181,3 +181,12 @@ DROP INDEX `FK_AdminQSCategoryAggregate_CCIStaffUSers`,
 DROP FOREIGN KEY `FK_AdminQSCategoryAggregate_CCIStaffUSers`,
 DROP COLUMN `adminGoId`;
 
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-- Alter script for adding followup Date column in PartnerSeason,PartnerSeasonAllocations, Partner Notes tables on 25th November 2015 -------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE PartnerNotes ADD COLUMN followupDate DATETIME;
+
+ALTER TABLE `PartnerSeason` ADD COLUMN appDeadlineFollowupDate DATETIME, ADD COLUMN appSecSemDeadlineFollowupDate DATETIME;
+
+ALTER TABLE `PartnerSeasonAllocation` ADD COLUMN janStartFollowupDate DATETIME, ADD COLUMN augStartFollowupDate DATETIME;

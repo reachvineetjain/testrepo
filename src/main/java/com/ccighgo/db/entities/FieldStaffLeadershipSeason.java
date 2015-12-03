@@ -2,7 +2,8 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -20,21 +21,19 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer fieldStaffLeadershipSeasonId;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedOn;
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffId")
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to Season
@@ -46,6 +45,10 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="seasonGeographyConfigurationId")
 	private SeasonGeographyConfiguration seasonGeographyConfiguration;
+
+	//bi-directional many-to-one association to FieldStaffLeadershipSeasonDetail
+	@OneToMany(mappedBy="fieldStaffLeadershipSeason")
+	private List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails;
 
 	public FieldStaffLeadershipSeason() {
 	}
@@ -66,11 +69,11 @@ public class FieldStaffLeadershipSeason implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public Timestamp getCreatedOn() {
+	public Date getCreatedOn() {
 		return this.createdOn;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
@@ -82,11 +85,11 @@ public class FieldStaffLeadershipSeason implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Timestamp getModifiedOn() {
+	public Date getModifiedOn() {
 		return this.modifiedOn;
 	}
 
-	public void setModifiedOn(Timestamp modifiedOn) {
+	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 
@@ -112,6 +115,28 @@ public class FieldStaffLeadershipSeason implements Serializable {
 
 	public void setSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
 		this.seasonGeographyConfiguration = seasonGeographyConfiguration;
+	}
+
+	public List<FieldStaffLeadershipSeasonDetail> getFieldStaffLeadershipSeasonDetails() {
+		return this.fieldStaffLeadershipSeasonDetails;
+	}
+
+	public void setFieldStaffLeadershipSeasonDetails(List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails) {
+		this.fieldStaffLeadershipSeasonDetails = fieldStaffLeadershipSeasonDetails;
+	}
+
+	public FieldStaffLeadershipSeasonDetail addFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
+		getFieldStaffLeadershipSeasonDetails().add(fieldStaffLeadershipSeasonDetail);
+		fieldStaffLeadershipSeasonDetail.setFieldStaffLeadershipSeason(this);
+
+		return fieldStaffLeadershipSeasonDetail;
+	}
+
+	public FieldStaffLeadershipSeasonDetail removeFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
+		getFieldStaffLeadershipSeasonDetails().remove(fieldStaffLeadershipSeasonDetail);
+		fieldStaffLeadershipSeasonDetail.setFieldStaffLeadershipSeason(null);
+
+		return fieldStaffLeadershipSeasonDetail;
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DepartmentProgramOption;
@@ -20,6 +21,7 @@ import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
@@ -865,6 +867,38 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
+   }
+
+   @Override
+   @Transactional(readOnly = true)
+   public Response sendLogin(String participantGoId, HttpServletRequest request) {
+      Response response = new Response();
+      try {
+         if (participantGoId == null || Integer.valueOf(participantGoId) == 0 || Integer.valueOf(participantGoId) < 0) {
+            throw new CcighgoException("invalid Participant info, cannot send login");
+         }
+          Login participantLoginData = loginRepository.findByCCIGoId(Integer.parseInt(participantGoId));
+         
+         
+         if (participantLoginData != null  ) {
+            String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
+                  + "Your username is : " + participantLoginData.getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
+                  + formResetURL(request).concat(participantLoginData.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>"
+                  + "<p>Thank you,</p>" + "<p>CCI Greenheart.</p>";
+            email.send(participantLoginData.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  "An email has been sent to address " + "\'" + participantLoginData.getEmail() + "\'" + " for login name " + "\'" + participantLoginData.getLoginName() + "\'"
+                        + " with instructions to reset password"));
+         } else {
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            logger.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+         }
+      } catch (CcighgoException e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         logger.error(e.getMessage());
+      }
+      return response;
    }
 
 }

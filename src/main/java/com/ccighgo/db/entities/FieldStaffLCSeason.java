@@ -2,7 +2,9 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -20,17 +22,29 @@ public class FieldStaffLCSeason implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer fieldStaffLCSeasonId;
 
-	@Column(nullable=false)
+	private Byte active;
+
+	private Byte agreeToTerms;
+
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
+	private Integer defaultMonitoringStipendId;
+
+	private Byte isFLEXStaff;
+
+	private Byte isYESStaff;
+
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
+
+	@Column(length=100)
+	private String signature;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date signedDate;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
@@ -39,8 +53,13 @@ public class FieldStaffLCSeason implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffId")
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
+
+	//bi-directional many-to-one association to PaymentSchedule
+	@ManyToOne
+	@JoinColumn(name="paymentScheduleId")
+	private PaymentSchedule paymentSchedule;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -52,6 +71,10 @@ public class FieldStaffLCSeason implements Serializable {
 	@JoinColumn(name="seasonGeographyConfigurationId")
 	private SeasonGeographyConfiguration seasonGeographyConfiguration;
 
+	//bi-directional many-to-one association to FieldStaffLCSeasonDocument
+	@OneToMany(mappedBy="fieldStaffLcseason")
+	private List<FieldStaffLCSeasonDocument> fieldStaffLcseasonDocuments;
+
 	public FieldStaffLCSeason() {
 	}
 
@@ -61,6 +84,22 @@ public class FieldStaffLCSeason implements Serializable {
 
 	public void setFieldStaffLCSeasonId(Integer fieldStaffLCSeasonId) {
 		this.fieldStaffLCSeasonId = fieldStaffLCSeasonId;
+	}
+
+	public Byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(Byte active) {
+		this.active = active;
+	}
+
+	public Byte getAgreeToTerms() {
+		return this.agreeToTerms;
+	}
+
+	public void setAgreeToTerms(Byte agreeToTerms) {
+		this.agreeToTerms = agreeToTerms;
 	}
 
 	public Integer getCreatedBy() {
@@ -79,6 +118,30 @@ public class FieldStaffLCSeason implements Serializable {
 		this.createdOn = createdOn;
 	}
 
+	public Integer getDefaultMonitoringStipendId() {
+		return this.defaultMonitoringStipendId;
+	}
+
+	public void setDefaultMonitoringStipendId(Integer defaultMonitoringStipendId) {
+		this.defaultMonitoringStipendId = defaultMonitoringStipendId;
+	}
+
+	public Byte getIsFLEXStaff() {
+		return this.isFLEXStaff;
+	}
+
+	public void setIsFLEXStaff(Byte isFLEXStaff) {
+		this.isFLEXStaff = isFLEXStaff;
+	}
+
+	public Byte getIsYESStaff() {
+		return this.isYESStaff;
+	}
+
+	public void setIsYESStaff(Byte isYESStaff) {
+		this.isYESStaff = isYESStaff;
+	}
+
 	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -93,6 +156,22 @@ public class FieldStaffLCSeason implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public String getSignature() {
+		return this.signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public Date getSignedDate() {
+		return this.signedDate;
+	}
+
+	public void setSignedDate(Date signedDate) {
+		this.signedDate = signedDate;
 	}
 
 	public DepartmentProgram getDepartmentProgram() {
@@ -111,6 +190,14 @@ public class FieldStaffLCSeason implements Serializable {
 		this.fieldStaff = fieldStaff;
 	}
 
+	public PaymentSchedule getPaymentSchedule() {
+		return this.paymentSchedule;
+	}
+
+	public void setPaymentSchedule(PaymentSchedule paymentSchedule) {
+		this.paymentSchedule = paymentSchedule;
+	}
+
 	public Season getSeason() {
 		return this.season;
 	}
@@ -125,6 +212,28 @@ public class FieldStaffLCSeason implements Serializable {
 
 	public void setSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
 		this.seasonGeographyConfiguration = seasonGeographyConfiguration;
+	}
+
+	public List<FieldStaffLCSeasonDocument> getFieldStaffLcseasonDocuments() {
+		return this.fieldStaffLcseasonDocuments;
+	}
+
+	public void setFieldStaffLcseasonDocuments(List<FieldStaffLCSeasonDocument> fieldStaffLcseasonDocuments) {
+		this.fieldStaffLcseasonDocuments = fieldStaffLcseasonDocuments;
+	}
+
+	public FieldStaffLCSeasonDocument addFieldStaffLcseasonDocument(FieldStaffLCSeasonDocument fieldStaffLcseasonDocument) {
+		getFieldStaffLcseasonDocuments().add(fieldStaffLcseasonDocument);
+		fieldStaffLcseasonDocument.setFieldStaffLcseason(this);
+
+		return fieldStaffLcseasonDocument;
+	}
+
+	public FieldStaffLCSeasonDocument removeFieldStaffLcseasonDocument(FieldStaffLCSeasonDocument fieldStaffLcseasonDocument) {
+		getFieldStaffLcseasonDocuments().remove(fieldStaffLcseasonDocument);
+		fieldStaffLcseasonDocument.setFieldStaffLcseason(null);
+
+		return fieldStaffLcseasonDocument;
 	}
 
 }

@@ -36,7 +36,7 @@ public class StateType implements Serializable {
 	@Column(length=50)
 	private String workQueueRoleType;
 
-	private Integer workQueueTypeId;
+	private int workQueueTypeId;
 
 	//bi-directional many-to-one association to AdminWorkQueue
 	@OneToMany(mappedBy="stateType")
@@ -134,11 +134,11 @@ public class StateType implements Serializable {
 		this.workQueueRoleType = workQueueRoleType;
 	}
 
-	public Integer getWorkQueueTypeId() {
+	public int getWorkQueueTypeId() {
 		return this.workQueueTypeId;
 	}
 
-	public void setWorkQueueTypeId(Integer workQueueTypeId) {
+	public void setWorkQueueTypeId(int workQueueTypeId) {
 		this.workQueueTypeId = workQueueTypeId;
 	}
 
