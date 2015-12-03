@@ -38,7 +38,9 @@ import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerStatus;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Salutation;
+import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesRepository;
@@ -69,6 +71,7 @@ import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonAllocationRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
+import com.ccighgo.jpa.repositories.PartnerUserRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
@@ -208,6 +211,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    PartnerSeasonsRepository partnerSeasonsRepository;
    @Autowired
    PartnerSeasonAllocationRepository partnerSeasonAllocationRepository;
+   @Autowired
+   PartnerUserRepository partnerUserRepository;
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
@@ -452,7 +457,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partner.setCanHaveSubPartner((byte) (detail.isCanHaveSubPartner() ? 1 : 0));
                partner.setEmail(detail.getGeneralEmail());
                partner.setInvoiceMail(detail.getInvoiceEmail());
-               partner.setMultiCountrySender((byte) (detail.isMultiCountrySender()? 1 : 0));
+               partner.setMultiCountrySender((byte) (detail.isMultiCountrySender() ? 1 : 0));
                partner.setQuickbooksCode(detail.getQuickbooksCode());
             }
 
@@ -461,13 +466,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             AdminPartnerHspSettings hsp = pwt.getHspSettings();
-            if(hsp!=null)
-            {
-            partner.setParticipantTranscriptRequired((byte) (hsp.isAypParticipantTranscriptRequired() ? 1 : 0));
-            partner.setParticipantELTISRequired((byte) (hsp.isHspParticipantEltisRequired() ? 1 : 0));
-            partner.setParticipantMedicalReleaseRequired((byte) (hsp.isHspParticipantMedicalReleaseRequired() ? 1 : 0));
-          //  partner.setParticipantSLEPRequired((byte) (hsp.isHspParticipantSlepRequired() ? 1 : 0));
-            partner.setUnguaranteedFormRequired((byte) (hsp.isHspParticipantUnquaranteedFromRequired() ? 1 : 0));
+            if (hsp != null) {
+               partner.setParticipantTranscriptRequired((byte) (hsp.isAypParticipantTranscriptRequired() ? 1 : 0));
+               partner.setParticipantELTISRequired((byte) (hsp.isHspParticipantEltisRequired() ? 1 : 0));
+               partner.setParticipantMedicalReleaseRequired((byte) (hsp.isHspParticipantMedicalReleaseRequired() ? 1 : 0));
+               // partner.setParticipantSLEPRequired((byte) (hsp.isHspParticipantSlepRequired() ? 1 : 0));
+               partner.setUnguaranteedFormRequired((byte) (hsp.isHspParticipantUnquaranteedFromRequired() ? 1 : 0));
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -576,7 +580,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             adminPartnerHspSettings.setAypParticipantTranscriptRequired(partnerAgentInquiry.getPartner().getParticipantTranscriptRequired() == 1);
             adminPartnerHspSettings.setHspParticipantEltisRequired(partnerAgentInquiry.getPartner().getParticipantELTISRequired() == 1);
             adminPartnerHspSettings.setHspParticipantMedicalReleaseRequired(partnerAgentInquiry.getPartner().getParticipantMedicalReleaseRequired() == 1);
-            //adminPartnerHspSettings.setHspParticipantSlepRequired(partnerAgentInquiry.getPartner().getParticipantSLEPRequired() == 1);
+            // adminPartnerHspSettings.setHspParticipantSlepRequired(partnerAgentInquiry.getPartner().getParticipantSLEPRequired()
+            // == 1);
             adminPartnerHspSettings.setHspParticipantUnquaranteedFromRequired(partnerAgentInquiry.getPartner().getUnguaranteedFormRequired() == 1);
             pwt.setHspSettings(adminPartnerHspSettings);
          } catch (Exception e) {
@@ -650,42 +655,29 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
- /*        try {
-            List<PartnerDocument> partnerDocuments = partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(goId);
-            if (partnerDocuments != null) {
-               for (PartnerDocument p : partnerDocuments) {
-                  PartnerRecruitmentAdminScreeningDocuments doc = new PartnerRecruitmentAdminScreeningDocuments();
-                  doc.setPartnerDocumentId(p.getPartnerDocumentId());
-                  doc.setActive(p.getDocumentInformation().getActive() == CCIConstants.ACTIVE ? true : false);
-                  doc.setDescription("");
-                  doc.setDocName(p.getDocumentInformation().getDocumentName());
-                  doc.setDocType(p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-                  doc.setDocUrl(p.getDocumentInformation().getUrl());
-                  doc.setFileName(p.getDocumentInformation().getFileName());
-                  doc.setFileType("");
-                  doc.setUploadDate(DateUtils.getDateAndTime(p.getDocumentInformation().getCreatedOn()));
-                  Integer createdBy = p.getDocumentInformation().getCreatedBy();
-                  pwt.getDocuments().add(doc);
-               }
-            }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
-         }
-         try {
-            List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(goId);
-            if (partnerNotes != null) {
-               for (PartnerNote partnerNote : partnerNotes) {
-                  PartnerRecruitmentAdminScreeningNotes note = new PartnerRecruitmentAdminScreeningNotes();
-                  note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
-                  note.setPartnerNoteId(partnerNote.getPartnerNotesId());
-                  note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
-                  note.setNoteValue(partnerNote.getPartnerNote());
-                  pwt.getNotes().add(note);
-               }
-            }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
-         }*/
+         /*
+          * try { List<PartnerDocument> partnerDocuments =
+          * partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(goId); if (partnerDocuments != null) { for
+          * (PartnerDocument p : partnerDocuments) { PartnerRecruitmentAdminScreeningDocuments doc = new
+          * PartnerRecruitmentAdminScreeningDocuments(); doc.setPartnerDocumentId(p.getPartnerDocumentId());
+          * doc.setActive(p.getDocumentInformation().getActive() == CCIConstants.ACTIVE ? true : false);
+          * doc.setDescription(""); doc.setDocName(p.getDocumentInformation().getDocumentName());
+          * doc.setDocType(p.getDocumentInformation
+          * ().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+          * doc.setDocUrl(p.getDocumentInformation().getUrl());
+          * doc.setFileName(p.getDocumentInformation().getFileName()); doc.setFileType("");
+          * doc.setUploadDate(DateUtils.getDateAndTime(p.getDocumentInformation().getCreatedOn())); Integer createdBy =
+          * p.getDocumentInformation().getCreatedBy(); pwt.getDocuments().add(doc); } } } catch (Exception e) {
+          * ExceptionUtil.logException(e, logger); } try { List<PartnerNote> partnerNotes =
+          * partnerNoteRepository.findAllPartnerNoteByPartnerId(goId); if (partnerNotes != null) { for (PartnerNote
+          * partnerNote : partnerNotes) { PartnerRecruitmentAdminScreeningNotes note = new
+          * PartnerRecruitmentAdminScreeningNotes();
+          * note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
+          * note.setPartnerNoteId(partnerNote.getPartnerNotesId());
+          * note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
+          * note.setNoteValue(partnerNote.getPartnerNote()); pwt.getNotes().add(note); } } } catch (Exception e) {
+          * ExceptionUtil.logException(e, logger); }
+          */
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_OVERVIEW.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -794,7 +786,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   pd.setGoId(Integer.parseInt(String.valueOf(wq[12])));
 
                PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(pd.getGoId());
-               if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1()!=null) {
+               if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1() != null) {
                   pd.setStatusOfInquiry(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
                }
 
@@ -880,137 +872,119 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(
-   		int typeId, int categoryId, int staffUserId, String roleType) {
-   
-	   AdminPartnerWorkQueueRequestChangeInAllocation rca= new AdminPartnerWorkQueueRequestChangeInAllocation();
-	   try
-	   {
-		   @SuppressWarnings("unchecked")
-		   List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerAllocationChange(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
-		   .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
-		   if(result !=null)
-		   {
-			   
-			   for(Object[]dr :result)
-			   {
-				  
-				   AdminPartnerWorkQueueRequestChangeInAllocationDetails ad=new AdminPartnerWorkQueueRequestChangeInAllocationDetails();
-				   ad.setCompanyName(String.valueOf(dr[0]));
-				   if(dr[1]!=null)
-				   ad.setGoId(Integer.valueOf(String.valueOf(dr[1])));
-				   ad.setPartnerStatus(String.valueOf(dr[2]));
-				  ad.setSeasonName(String.valueOf(dr[3]));
-				  
-				  if(dr[4]!=null)
-				  {
-				  int ProgramOptionId =Integer.valueOf(String.valueOf(dr[4]));
-				  if(ProgramOptionId==1||ProgramOptionId==5)
-				  {
-				  ad.setCurrentSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[5]));
-				  ad.setCurrentSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[6]));
-				  ad.setRequestedSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[7]));
-				  ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[9]));
-				  ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[13]));
-				  ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
-				 
-				  }
-				  else if (ProgramOptionId==3||ProgramOptionId==8)
-				  {
-					  ad.setCurrentSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[5]));
-					  ad.setCurrentSeasonJanStartguarantedParticipantNume(String.valueOf(dr[6]));
-					  ad.setRequestedSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[7]));
-					  ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[9]));
-					  ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[13]));
-					  ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
-				  }
-				  }
-				  ad.setCountry(String.valueOf(dr[10]));
-				  ad.setFlagUrl(String.valueOf(dr[12]));	
-				  ad.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
-				  ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
-				  ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
-				  rca.getChangeInAllocation().add(ad);
-			   }
-			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-		   else
-		   {
-			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-			   
-	   }catch(Exception e)
-	   {
-		   ExceptionUtil.logException(e, logger);
-		   rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
-				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)); 
-	  
-	   }
-   	return rca;
+   public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(int typeId, int categoryId, int staffUserId, String roleType) {
+
+      AdminPartnerWorkQueueRequestChangeInAllocation rca = new AdminPartnerWorkQueueRequestChangeInAllocation();
+      try {
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerAllocationChange(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+               .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
+         if (result != null) {
+
+            for (Object[] dr : result) {
+
+               AdminPartnerWorkQueueRequestChangeInAllocationDetails ad = new AdminPartnerWorkQueueRequestChangeInAllocationDetails();
+               ad.setCompanyName(String.valueOf(dr[0]));
+               if (dr[1] != null)
+                  ad.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+               ad.setPartnerStatus(String.valueOf(dr[2]));
+               ad.setSeasonName(String.valueOf(dr[3]));
+
+               if (dr[4] != null) {
+                  int ProgramOptionId = Integer.valueOf(String.valueOf(dr[4]));
+                  if (ProgramOptionId == 1 || ProgramOptionId == 5) {
+                     ad.setCurrentSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[5]));
+                     ad.setCurrentSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[6]));
+                     ad.setRequestedSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[7]));
+                     ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[9]));
+                     ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[13]));
+                     ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
+
+                  } else if (ProgramOptionId == 3 || ProgramOptionId == 8) {
+                     ad.setCurrentSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[5]));
+                     ad.setCurrentSeasonJanStartguarantedParticipantNume(String.valueOf(dr[6]));
+                     ad.setRequestedSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[7]));
+                     ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[9]));
+                     ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[13]));
+                     ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
+                  }
+               }
+               ad.setCountry(String.valueOf(dr[10]));
+               ad.setFlagUrl(String.valueOf(dr[12]));
+               ad.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
+               ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+               ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
+               rca.getChangeInAllocation().add(ad);
+            }
+            rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE));
+
+      }
+      return rca;
    }
 
    @Override
    @Transactional
-   public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(
-   		int typeId, int categoryId, int staffUserId, String roleType) {
-	   
-	   AdminPartnerWorkQueueNotesReview nr=new AdminPartnerWorkQueueNotesReview();
-	   try
-	   {
-		   @SuppressWarnings("unchecked")
-		   List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerNotesReview(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
-		   .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
-		   if(result !=null)
-		   {
-			   
-			   for(Object[]dr :result)
-			   {
-				   AdminPartnerWorkQueueNotesReviewDetail nrd=new AdminPartnerWorkQueueNotesReviewDetail();
-				  nrd.setCompanyName(String.valueOf(dr[0]));
-				  if(dr[1]!=null)
-				  nrd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
-				  nrd.setCountry(String.valueOf(dr[2]));
-				  nrd.setFlagUrl(String.valueOf(dr[3]));
+   public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(int typeId, int categoryId, int staffUserId, String roleType) {
+
+      AdminPartnerWorkQueueNotesReview nr = new AdminPartnerWorkQueueNotesReview();
+      try {
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerNotesReview(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+               .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
+         if (result != null) {
+
+            for (Object[] dr : result) {
+               AdminPartnerWorkQueueNotesReviewDetail nrd = new AdminPartnerWorkQueueNotesReviewDetail();
+               nrd.setCompanyName(String.valueOf(dr[0]));
+               if (dr[1] != null)
+                  nrd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+               nrd.setCountry(String.valueOf(dr[2]));
+               nrd.setFlagUrl(String.valueOf(dr[3]));
                if (dr[4] != null) {
                   int partnerAgentStatusId = Integer.parseInt(String.valueOf(dr[4]));
                   PartnerStatus ps = partnerStatusRepository.findOne(partnerAgentStatusId);
                   nrd.setPartnerStatus(ps.getPartnerStatusName());
                }
-              nrd.setNoteTopic(String.valueOf(dr[5]));
+               nrd.setNoteTopic(String.valueOf(dr[5]));
                if (dr[6] != null) {
                   nrd.setIsPublic(String.valueOf(dr[6]));
                }
-              nrd.setNoteCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
-				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
-				  nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
-				  nrd.setNoteValue(String.valueOf(dr[11]));
-				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
-				  nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
-				  nrd.setNoteTopicRoll(String.valueOf(dr[14]));
-				  nrd.setNoteRoll(String.valueOf(dr[15]));
-				  nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
-				  nr.getNotesReview().add(nrd);
-			   }
-			  nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-		   else
-		   {
-			   nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-	   }catch( Exception e)
-	   {
-		   ExceptionUtil.logException(e, logger);
-		   nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
-				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)); 
-	  
-	   }
-   	return nr;
+               nrd.setNoteCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
+               nrd.setNoteCreatedBy(String.valueOf(dr[8]));
+               nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
+               nrd.setNoteValue(String.valueOf(dr[11]));
+               nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
+               nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
+               nrd.setNoteTopicRoll(String.valueOf(dr[14]));
+               nrd.setNoteRoll(String.valueOf(dr[15]));
+               nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
+               nr.getNotesReview().add(nrd);
+            }
+            nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE));
+
+      }
+      return nr;
    }
 
    @Override
@@ -1306,11 +1280,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       pOffices = getListofOffices(officesDetails.getGoId());
       return pOffices;
    }
-   
- private PartnerAdminOverviewOffices getListofOffices(int goId)
-   {
-	   PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
- 	  List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
+
+   private PartnerAdminOverviewOffices getListofOffices(int goId) {
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
+      List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
       if (offices != null) {
          for (PartnerOffice partnerOffice : offices) {
             PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
@@ -1329,9 +1302,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
             pOffices.getOffices().add(office);
          }
-          
-   }
-       return pOffices;
+
+      }
+      return pOffices;
    }
 
    @Transactional
@@ -1341,7 +1314,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
       try {
          for (Integer item : deletedItems.getOffices()) {
-            partnerOfficeRepository.delete(item);
+            List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(deletedItems.getGoId(), item);
+            if (!(partnerUserList.isEmpty())) {
+               throw new CcighgoException("The office you were trying to delete has users associated. "
+                     + "Please dissociate the users from this office from User tab and then try deleting later.");
+            } else {
+               partnerOfficeRepository.delete(item);
+            }
          }
          partnerOfficeRepository.flush();
 
@@ -1713,7 +1692,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          partnerSeasonsRepository.saveAndFlush(partnerSeason);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         
+
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
