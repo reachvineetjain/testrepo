@@ -116,7 +116,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       System.out.println("address : "+internationalPartners.getAddress());
       System.out.println("address2 : "+internationalPartners.getAddress2());
       System.out.println("city :"+internationalPartners.getCity());
-      System.out.println("country"+internationalPartners.getCounrty());
+      System.out.println("country"+internationalPartners.getCountry());
       System.out.println("description OF programs :"+internationalPartners.getDescriptionOfPrograms());
       System.out.println("Email: "+internationalPartners.getEmail());
       System.out.println("first Name: "+internationalPartners.getFirstName());
