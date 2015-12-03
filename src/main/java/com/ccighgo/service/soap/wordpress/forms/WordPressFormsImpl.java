@@ -29,7 +29,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
-         System.out.println(" country : "+InternationalPartners.getCountry());
+         System.out.println(" country : " + InternationalPartners.getCountry());
          if (InternationalPartners != null) {
             Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
             if (user != null) {
@@ -57,7 +57,7 @@ public class WordPressFormsImpl implements IWordPressForms {
                System.out.println(message);
                return message;
             }
-            print (InternationalPartners);
+            print(InternationalPartners);
             PartnerAgentInquiry partnerAgentInquiry = new PartnerAgentInquiry();
             partnerAgentInquiry.setAdressLineOne(InternationalPartners.getAddress());
             partnerAgentInquiry.setAdressLineTwo(InternationalPartners.getAddress2());
@@ -70,8 +70,8 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
-            if(InternationalPartners.getWebsite()!=null)
-            partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
+            if (InternationalPartners.getWebsite() != null)
+               partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
             // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
 
             // GoIdSequence goIdSequence = new GoIdSequence();
@@ -114,32 +114,34 @@ public class WordPressFormsImpl implements IWordPressForms {
    }
 
    private void print(InternationalPartners internationalPartners) {
-      System.out.println("address : "+internationalPartners.getAddress());
-      System.out.println("address2 : "+internationalPartners.getAddress2());
-      System.out.println("city :"+internationalPartners.getCity());
-      System.out.println("country : "+internationalPartners.getCountry());
-      System.out.println("description OF programs :"+internationalPartners.getDescriptionOfPrograms());
-      System.out.println("Email: "+internationalPartners.getEmail());
-      System.out.println("first Name: "+internationalPartners.getFirstName());
-      System.out.println("heardAbout Us:"+internationalPartners.getHearedAboutUs());
-      System.out.println("Last Name: "+internationalPartners.getLastName());
-      System.out.println("Business Name :"+internationalPartners.getLegalBusinessName());
-      System.out.println("Phone : "+internationalPartners.getPhone());
-      System.out.println(" prefix :"+internationalPartners.getPrefix());
-      System.out.println("State:"+internationalPartners.getStateOrProvince());
-      System.out.println("webSite"+internationalPartners.getWebsite());
-      System.out.println("Sending Currently : "+internationalPartners.getCurrentlySendingParticipant());
+      System.out.println("address : " + internationalPartners.getAddress());
+      System.out.println("address2 : " + internationalPartners.getAddress2());
+      System.out.println("city :" + internationalPartners.getCity());
+      System.out.println("country : " + internationalPartners.getCountry());
+      System.out.println("country2 : " + internationalPartners.getCountry2());
+
+      System.out.println("description OF programs :" + internationalPartners.getDescriptionOfPrograms());
+      System.out.println("Email: " + internationalPartners.getEmail());
+      System.out.println("first Name: " + internationalPartners.getFirstName());
+      System.out.println("heardAbout Us:" + internationalPartners.getHearedAboutUs());
+      System.out.println("Last Name: " + internationalPartners.getLastName());
+      System.out.println("Business Name :" + internationalPartners.getLegalBusinessName());
+      System.out.println("Phone : " + internationalPartners.getPhone());
+      System.out.println(" prefix :" + internationalPartners.getPrefix());
+      System.out.println("State:" + internationalPartners.getStateOrProvince());
+      System.out.println("webSite" + internationalPartners.getWebsite());
+      System.out.println("Sending Currently : " + internationalPartners.getCurrentlySendingParticipant());
 
       if (internationalPartners.getTypeOfPrograms() != null && internationalPartners.getTypeOfPrograms().size() > 0)
          for (String s : internationalPartners.getTypeOfPrograms()) {
-            System.out.println("Type Of program : "+s);
+            System.out.println("Type Of program : " + s);
          }
       if (internationalPartners.getPrograms() != null && internationalPartners.getPrograms().size() > 0)
          for (String s : internationalPartners.getPrograms()) {
-            System.out.println("Programs"+s);
+            System.out.println("Programs" + s);
          }
-      System.out.println("Sending Currently : "+internationalPartners.getCurrentlySendingParticipant());
-      System.out.println("Years  IN Business :"+internationalPartners.getYearsInBusiness());
+      System.out.println("Sending Currently : " + internationalPartners.getCurrentlySendingParticipant());
+      System.out.println("Years  IN Business :" + internationalPartners.getYearsInBusiness());
    }
 
    @Override
