@@ -25,8 +25,7 @@ public class InternationalPartners {
    protected String address2;
    protected String city;
    protected String stateOrProvince;
-   protected String country;
-   protected String country2;
+   protected String valueOfCountry;
    protected String phone;
    protected String email;
    protected String website;
@@ -101,13 +100,7 @@ public class InternationalPartners {
       this.stateOrProvince = stateOrProvince;
    }
 
-   public String getCountry() {
-      return country;
-   }
-
-   public void setCountry(String country) {
-      this.country = country;
-   }
+   
 
    public String getPhone() {
       return phone;
@@ -181,13 +174,15 @@ public class InternationalPartners {
       this.hearedAboutUs = hearedAboutUs;
    }
 
-   public String getCountry2() {
-      return country2;
+   public String getValueOfCountry() {
+      return valueOfCountry;
    }
 
-   public void setCountry2(String country2) {
-      this.country2 = country2;
+   public void setValueOfCountry(String valueOfCountry) {
+      this.valueOfCountry = valueOfCountry;
    }
+
+   
 
    
 }

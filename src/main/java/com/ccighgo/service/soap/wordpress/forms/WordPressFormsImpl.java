@@ -29,7 +29,6 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Inquiry partner Is Called !!!");
-         System.out.println(" country : " + InternationalPartners.getCountry());
          if (InternationalPartners != null) {
             Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
             if (user != null) {
@@ -117,8 +116,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       System.out.println("address : " + internationalPartners.getAddress());
       System.out.println("address2 : " + internationalPartners.getAddress2());
       System.out.println("city :" + internationalPartners.getCity());
-      System.out.println("country : " + internationalPartners.getCountry());
-      System.out.println("country2 : " + internationalPartners.getCountry2());
+      System.out.println("country : " + internationalPartners.getValueOfCountry());
 
       System.out.println("description OF programs :" + internationalPartners.getDescriptionOfPrograms());
       System.out.println("Email: " + internationalPartners.getEmail());
