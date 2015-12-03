@@ -113,32 +113,32 @@ public class WordPressFormsImpl implements IWordPressForms {
    }
 
    private void print(InternationalPartners internationalPartners) {
-      System.out.println(internationalPartners.getAddress());
-      System.out.println(internationalPartners.getAddress2());
-      System.out.println(internationalPartners.getCity());
-      System.out.println(internationalPartners.getCounrty());
-      System.out.println(internationalPartners.getDescriptionOfPrograms());
-      System.out.println(internationalPartners.getEmail());
-      System.out.println(internationalPartners.getFirstName());
-      System.out.println(internationalPartners.getHearedAboutUs());
-      System.out.println(internationalPartners.getLastName());
-      System.out.println(internationalPartners.getLegalBusinessName());
-      System.out.println(internationalPartners.getPhone());
-      System.out.println(internationalPartners.getPrefix());
-      System.out.println(internationalPartners.getStateOrProvince());
-      System.out.println(internationalPartners.getWebsite());
-      System.out.println(internationalPartners.getCurrentlySendingParticipant());
+      System.out.println("address : "+internationalPartners.getAddress());
+      System.out.println("address2 : "+internationalPartners.getAddress2());
+      System.out.println("city :"+internationalPartners.getCity());
+      System.out.println("country"+internationalPartners.getCounrty());
+      System.out.println("description OF programs :"+internationalPartners.getDescriptionOfPrograms());
+      System.out.println("Email: "+internationalPartners.getEmail());
+      System.out.println("first Name: "+internationalPartners.getFirstName());
+      System.out.println("heardAbout Us:"+internationalPartners.getHearedAboutUs());
+      System.out.println("Last Name: "+internationalPartners.getLastName());
+      System.out.println("Business Name :"+internationalPartners.getLegalBusinessName());
+      System.out.println("Phone : "+internationalPartners.getPhone());
+      System.out.println(" prefix :"+internationalPartners.getPrefix());
+      System.out.println("State:"+internationalPartners.getStateOrProvince());
+      System.out.println("webSite"+internationalPartners.getWebsite());
+      System.out.println("Sending Currently : "+internationalPartners.getCurrentlySendingParticipant());
 
-      if (internationalPartners.getTypeOfPrograms() != null || internationalPartners.getTypeOfPrograms().size() > 0)
+      if (internationalPartners.getTypeOfPrograms() != null && internationalPartners.getTypeOfPrograms().size() > 0)
          for (String s : internationalPartners.getTypeOfPrograms()) {
-            System.out.println(s);
+            System.out.println("Type Of program : "+s);
          }
-      if (internationalPartners.getPrograms() != null || internationalPartners.getPrograms().size() > 0)
+      if (internationalPartners.getPrograms() != null && internationalPartners.getPrograms().size() > 0)
          for (String s : internationalPartners.getPrograms()) {
-            System.out.println(s);
+            System.out.println("Programs"+s);
          }
-      System.out.println(internationalPartners.getCurrentlySendingParticipant());
-      System.out.println(internationalPartners.getYearsInBusiness());
+      System.out.println("Sending Currently : "+internationalPartners.getCurrentlySendingParticipant());
+      System.out.println("Years  IN Business :"+internationalPartners.getYearsInBusiness());
    }
 
    @Override
