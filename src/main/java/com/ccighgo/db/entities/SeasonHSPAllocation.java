@@ -31,7 +31,7 @@ public class SeasonHSPAllocation implements Serializable {
 	private Integer maxUnguaranteedPax;
 
 	@Column(nullable=false)
-	private Integer modifiedBy;
+	private int modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -89,11 +89,11 @@ public class SeasonHSPAllocation implements Serializable {
 		this.maxUnguaranteedPax = maxUnguaranteedPax;
 	}
 
-	public Integer getModifiedBy() {
+	public int getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(Integer modifiedBy) {
+	public void setModifiedBy(int modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

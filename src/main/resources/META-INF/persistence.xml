@@ -37,9 +37,19 @@
       <class>com.ccighgo.db.entities.EmployerPermission</class>
       <class>com.ccighgo.db.entities.FieldStaff</class>
       <class>com.ccighgo.db.entities.FieldStaffAgreement</class>
+      <class>com.ccighgo.db.entities.FieldStaffAnnouncement</class>
+      <class>com.ccighgo.db.entities.FieldStaffDocument</class>
+      <class>com.ccighgo.db.entities.FieldStaffFamilyMember</class>
       <class>com.ccighgo.db.entities.FieldStaffLCSeason</class>
+      <class>com.ccighgo.db.entities.FieldStaffLCSeasonDocument</class>
       <class>com.ccighgo.db.entities.FieldStaffLeadershipSeason</class>
+      <class>com.ccighgo.db.entities.FieldStaffLeadershipSeasonDetail</class>
+      <class>com.ccighgo.db.entities.FieldStaffLeadershipSeasonDocument</class>
+      <class>com.ccighgo.db.entities.FieldStaffNote</class>
+      <class>com.ccighgo.db.entities.FieldStaffParticipant</class>
       <class>com.ccighgo.db.entities.FieldStaffPermission</class>
+      <class>com.ccighgo.db.entities.FieldStaffReference</class>
+      <class>com.ccighgo.db.entities.FieldStaffStatus</class>
       <class>com.ccighgo.db.entities.FieldStaffType</class>
       <class>com.ccighgo.db.entities.GoIdSequence</class>
       <class>com.ccighgo.db.entities.HelpContactMode</class>

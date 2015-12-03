@@ -8,7 +8,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -223,7 +222,7 @@ public class Partner implements Serializable {
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerUser> partnerUsers;
 
 	//bi-directional many-to-one association to PartnerWorkQueue
@@ -706,8 +705,6 @@ public class Partner implements Serializable {
 	}
 
 	public List<PartnerContact> getPartnerContacts() {
-		if(this.partnerContacts==null)
-	      this.partnerContacts=new ArrayList<PartnerContact>();
 		return this.partnerContacts;
 	}
 
@@ -716,8 +713,8 @@ public class Partner implements Serializable {
 	}
 
 	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
-		partnerContact.setPartner(this);
 		getPartnerContacts().add(partnerContact);
+		partnerContact.setPartner(this);
 
 		return partnerContact;
 	}

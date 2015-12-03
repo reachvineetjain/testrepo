@@ -26,7 +26,7 @@ public class PartnerWorkQueue implements Serializable {
 	@Lob
 	private String queueData;
 
-	private Integer targetGoId;
+	private int targetGoId;
 
 	@Column(length=45)
 	private String targetRoleType;
@@ -93,11 +93,11 @@ public class PartnerWorkQueue implements Serializable {
 		this.queueData = queueData;
 	}
 
-	public Integer getTargetGoId() {
+	public int getTargetGoId() {
 		return this.targetGoId;
 	}
 
-	public void setTargetGoId(Integer targetGoId) {
+	public void setTargetGoId(int targetGoId) {
 		this.targetGoId = targetGoId;
 	}
 

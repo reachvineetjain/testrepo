@@ -27,6 +27,14 @@ public class LookupGender implements Serializable {
 	@OneToMany(mappedBy="lookupGender")
 	private List<CCIStaffUser> ccistaffUsers;
 
+	//bi-directional many-to-one association to FieldStaff
+	@OneToMany(mappedBy="lookupGender")
+	private List<FieldStaff> fieldStaffs;
+
+	//bi-directional many-to-one association to FieldStaffFamilyMember
+	@OneToMany(mappedBy="lookupGender")
+	private List<FieldStaffFamilyMember> fieldStaffFamilyMembers;
+
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="lookupGender")
 	private List<PartnerUser> partnerUsers;
@@ -74,6 +82,50 @@ public class LookupGender implements Serializable {
 		ccistaffUser.setLookupGender(null);
 
 		return ccistaffUser;
+	}
+
+	public List<FieldStaff> getFieldStaffs() {
+		return this.fieldStaffs;
+	}
+
+	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+		this.fieldStaffs = fieldStaffs;
+	}
+
+	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().add(fieldStaff);
+		fieldStaff.setLookupGender(this);
+
+		return fieldStaff;
+	}
+
+	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().remove(fieldStaff);
+		fieldStaff.setLookupGender(null);
+
+		return fieldStaff;
+	}
+
+	public List<FieldStaffFamilyMember> getFieldStaffFamilyMembers() {
+		return this.fieldStaffFamilyMembers;
+	}
+
+	public void setFieldStaffFamilyMembers(List<FieldStaffFamilyMember> fieldStaffFamilyMembers) {
+		this.fieldStaffFamilyMembers = fieldStaffFamilyMembers;
+	}
+
+	public FieldStaffFamilyMember addFieldStaffFamilyMember(FieldStaffFamilyMember fieldStaffFamilyMember) {
+		getFieldStaffFamilyMembers().add(fieldStaffFamilyMember);
+		fieldStaffFamilyMember.setLookupGender(this);
+
+		return fieldStaffFamilyMember;
+	}
+
+	public FieldStaffFamilyMember removeFieldStaffFamilyMember(FieldStaffFamilyMember fieldStaffFamilyMember) {
+		getFieldStaffFamilyMembers().remove(fieldStaffFamilyMember);
+		fieldStaffFamilyMember.setLookupGender(null);
+
+		return fieldStaffFamilyMember;
 	}
 
 	public List<PartnerUser> getPartnerUsers() {
