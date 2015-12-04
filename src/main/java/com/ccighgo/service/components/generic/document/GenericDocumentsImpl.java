@@ -126,11 +126,10 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
          documentInformation.setDocumentName(partnerGenericDocuments.getDocName());
          documentInformation.setUrl(partnerGenericDocuments.getDocUrl());
          documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(partnerGenericDocuments.getDocType()));
-         // TODO needs to be fixed
-         documentInformation.setCreatedBy(18);
+
+         documentInformation.setCreatedBy(partnerGenericDocuments.getLoginId());
          documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         // TODO needs to be fixed
-         documentInformation.setModifiedBy(18);
+         documentInformation.setModifiedBy(partnerGenericDocuments.getLoginId());
          documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation.setActive(CCIConstants.ACTIVE);
          DocumentInformation d = documentInformationRepository.saveAndFlush(documentInformation);
@@ -209,10 +208,10 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
             documentInformation.setDocumentName(genericSeasonDocument.getDocName());
             documentInformation.setUrl(genericSeasonDocument.getDocUrl());
             // TODO needs to be fixed
-            documentInformation.setCreatedBy(18);
+            documentInformation.setCreatedBy(genericSeasonDocument.getLoginId());
             documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             // TODO needs to be fixed
-            documentInformation.setModifiedBy(18);
+            documentInformation.setModifiedBy(genericSeasonDocument.getLoginId());
             documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation.setActive(CCIConstants.ACTIVE);
             DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
@@ -256,7 +255,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                documentInformation.setDocumentName(genericSeasonDocument.getDocName());
                documentInformation.setUrl(genericSeasonDocument.getDocUrl());
                // TODO needs to be fixed
-               documentInformation.setModifiedBy(18);
+               documentInformation.setModifiedBy(genericSeasonDocument.getLoginId());
                documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                documentInformation.setActive((byte) ((genericSeasonDocument.isActive()) ? 1 : 0));
                DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
@@ -308,8 +307,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
             documentInformation.setDocumentName(partnerGenericDocuments.getDocName());
             documentInformation.setUrl(partnerGenericDocuments.getDocUrl());
             documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(partnerGenericDocuments.getDocType()));
-            // TODO needs to be fixed
-            documentInformation.setModifiedBy(18);
+            documentInformation.setModifiedBy(partnerGenericDocuments.getLoginId());
             documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation.setActive((byte) (partnerGenericDocuments.isActive() ? 1 : 0));
             DocumentInformation d = documentInformationRepository.saveAndFlush(documentInformation);
@@ -336,8 +334,18 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
       WSDefaultResponse response = new WSDefaultResponse();
       try {
          PartnerDocument partnerDocument = partnerDocumentsRepository.findOne(Integer.parseInt(partnerDocumentId));
+         if(partnerDocument!=null)
+         {
          partnerDocumentsRepository.delete(Integer.parseInt(partnerDocumentId));
          documentInformationRepository.delete(partnerDocument.getDocumentInformation());
+         }
+         else
+         {
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_NOT_FOUND.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+            return response;
+         }
+        
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -373,10 +381,12 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                   gsc.setFileName(di.getFileName());
                   gsc.setUploadDate(DateUtils.getDateAndTime(di.getCreatedOn()));
                   gsc.setActive(di.getActive() == CCIConstants.ACTIVE);
-                  // TODO
-                  gsc.setUploadedBy("");
-                  // TODO
-                  gsc.setModifiedBy("");
+                  UserInformationOfCreatedBy uic=reusedFunctions.getPartnerCreatedByInformation(di.getCreatedBy());
+                  if(uic!=null)
+                  gsc.setUploadedBy(uic.getUserName());
+                  UserInformationOfCreatedBy uim=reusedFunctions.getPartnerCreatedByInformation(di.getModifiedBy());
+                  if(uim!=null)
+                  gsc.setModifiedBy(uic.getUserName());
                   gsc.setModifiedDate(DateUtils.getDateAndTime(di.getModifiedOn()));
                   gsc.setDocUrl(di.getUrl());
                   gsc.setFileName(di.getFileName());
@@ -402,11 +412,9 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
             documentInformation.setFileName(genericSeasonContract.getFileName());
             documentInformation.setDocumentName(genericSeasonContract.getDocName());
             documentInformation.setUrl(genericSeasonContract.getDocUrl());
-            // TODO needs to be fixed
-            documentInformation.setCreatedBy(18);
+            documentInformation.setCreatedBy(genericSeasonContract.getLoginId());
             documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            // TODO needs to be fixed
-            documentInformation.setModifiedBy(18);
+            documentInformation.setModifiedBy(genericSeasonContract.getLoginId());
             documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation.setActive(CCIConstants.ACTIVE);
             DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
@@ -451,7 +459,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                documentInformation.setDocumentName(genericSeasonContract.getDocName());
                documentInformation.setUrl(genericSeasonContract.getDocUrl());
                // TODO needs to be fixed
-               documentInformation.setModifiedBy(18);
+               documentInformation.setModifiedBy(genericSeasonContract.getLoginId());
                documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                documentInformation.setActive((byte) ((genericSeasonContract.isActive()) ? 1 : 0));
                DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);

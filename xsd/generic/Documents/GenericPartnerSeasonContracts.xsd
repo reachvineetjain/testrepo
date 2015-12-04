@@ -37,7 +37,8 @@
             <xsd:element name="active" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
             <xsd:element name="isSigned" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
             <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1" />  
-            <xsd:element name="partnerSeasonParametrs" type="cd:PartnerSeasonParametrs"/>       
+            <xsd:element name="partnerSeasonParametrs" type="cd:PartnerSeasonParametrs"/>  
+            <xsd:element name="loginId" type="xsd:int"/>     
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>    
