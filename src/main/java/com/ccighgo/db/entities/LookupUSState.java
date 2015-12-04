@@ -30,6 +30,18 @@ public class LookupUSState implements Serializable {
 	@OneToMany(mappedBy="lookupUsstate")
 	private List<CCIStaffUser> ccistaffUsers;
 
+	//bi-directional many-to-one association to FieldStaff
+	@OneToMany(mappedBy="lookupUsstate1")
+	private List<FieldStaff> fieldStaffs1;
+
+	//bi-directional many-to-one association to FieldStaff
+	@OneToMany(mappedBy="lookupUsstate2")
+	private List<FieldStaff> fieldStaffs2;
+
+	//bi-directional many-to-one association to FieldStaffReference
+	@OneToMany(mappedBy="lookupUsstate")
+	private List<FieldStaffReference> fieldStaffReferences;
+
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
 	@OneToMany(mappedBy="lookupUsstate")
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
@@ -85,6 +97,72 @@ public class LookupUSState implements Serializable {
 		ccistaffUser.setLookupUsstate(null);
 
 		return ccistaffUser;
+	}
+
+	public List<FieldStaff> getFieldStaffs1() {
+		return this.fieldStaffs1;
+	}
+
+	public void setFieldStaffs1(List<FieldStaff> fieldStaffs1) {
+		this.fieldStaffs1 = fieldStaffs1;
+	}
+
+	public FieldStaff addFieldStaffs1(FieldStaff fieldStaffs1) {
+		getFieldStaffs1().add(fieldStaffs1);
+		fieldStaffs1.setLookupUsstate1(this);
+
+		return fieldStaffs1;
+	}
+
+	public FieldStaff removeFieldStaffs1(FieldStaff fieldStaffs1) {
+		getFieldStaffs1().remove(fieldStaffs1);
+		fieldStaffs1.setLookupUsstate1(null);
+
+		return fieldStaffs1;
+	}
+
+	public List<FieldStaff> getFieldStaffs2() {
+		return this.fieldStaffs2;
+	}
+
+	public void setFieldStaffs2(List<FieldStaff> fieldStaffs2) {
+		this.fieldStaffs2 = fieldStaffs2;
+	}
+
+	public FieldStaff addFieldStaffs2(FieldStaff fieldStaffs2) {
+		getFieldStaffs2().add(fieldStaffs2);
+		fieldStaffs2.setLookupUsstate2(this);
+
+		return fieldStaffs2;
+	}
+
+	public FieldStaff removeFieldStaffs2(FieldStaff fieldStaffs2) {
+		getFieldStaffs2().remove(fieldStaffs2);
+		fieldStaffs2.setLookupUsstate2(null);
+
+		return fieldStaffs2;
+	}
+
+	public List<FieldStaffReference> getFieldStaffReferences() {
+		return this.fieldStaffReferences;
+	}
+
+	public void setFieldStaffReferences(List<FieldStaffReference> fieldStaffReferences) {
+		this.fieldStaffReferences = fieldStaffReferences;
+	}
+
+	public FieldStaffReference addFieldStaffReference(FieldStaffReference fieldStaffReference) {
+		getFieldStaffReferences().add(fieldStaffReference);
+		fieldStaffReference.setLookupUsstate(this);
+
+		return fieldStaffReference;
+	}
+
+	public FieldStaffReference removeFieldStaffReference(FieldStaffReference fieldStaffReference) {
+		getFieldStaffReferences().remove(fieldStaffReference);
+		fieldStaffReference.setLookupUsstate(null);
+
+		return fieldStaffReference;
 	}
 
 	public List<SeasonGeographyConfiguration> getSeasonGeographyConfigurations() {

@@ -24,7 +24,7 @@ public class SeasonGeographyConfiguration implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer seasonGeographyConfigurationId;
+	private int seasonGeographyConfigurationId;
 
 	@Column(nullable=false)
 	private Integer createdBy;
@@ -40,12 +40,12 @@ public class SeasonGeographyConfiguration implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaffLCSeason
 	@OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLCSeason> fieldStaffLcseasons;
 
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
 	@OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY,cascade = { CascadeType.REMOVE })
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
 	//bi-directional many-to-one association to LookupUSState
@@ -71,11 +71,11 @@ public class SeasonGeographyConfiguration implements Serializable {
 	public SeasonGeographyConfiguration() {
 	}
 
-	public Integer getSeasonGeographyConfigurationId() {
+	public int getSeasonGeographyConfigurationId() {
 		return this.seasonGeographyConfigurationId;
 	}
 
-	public void setSeasonGeographyConfigurationId(Integer seasonGeographyConfigurationId) {
+	public void setSeasonGeographyConfigurationId(int seasonGeographyConfigurationId) {
 		this.seasonGeographyConfigurationId = seasonGeographyConfigurationId;
 	}
 

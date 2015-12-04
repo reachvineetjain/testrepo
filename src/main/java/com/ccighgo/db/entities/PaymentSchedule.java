@@ -23,6 +23,10 @@ public class PaymentSchedule implements Serializable {
 	@Column(nullable=false, length=50)
 	private String scheduleName;
 
+	//bi-directional many-to-one association to FieldStaffLCSeason
+	@OneToMany(mappedBy="paymentSchedule")
+	private List<FieldStaffLCSeason> fieldStaffLcseasons;
+
 	//bi-directional many-to-one association to SeasonF1Detail
 	@OneToMany(mappedBy="paymentSchedule")
 	private List<SeasonF1Detail> seasonF1details;
@@ -48,6 +52,28 @@ public class PaymentSchedule implements Serializable {
 
 	public void setScheduleName(String scheduleName) {
 		this.scheduleName = scheduleName;
+	}
+
+	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
+		return this.fieldStaffLcseasons;
+	}
+
+	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
+		this.fieldStaffLcseasons = fieldStaffLcseasons;
+	}
+
+	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+		getFieldStaffLcseasons().add(fieldStaffLcseason);
+		fieldStaffLcseason.setPaymentSchedule(this);
+
+		return fieldStaffLcseason;
+	}
+
+	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
+		getFieldStaffLcseasons().remove(fieldStaffLcseason);
+		fieldStaffLcseason.setPaymentSchedule(null);
+
+		return fieldStaffLcseason;
 	}
 
 	public List<SeasonF1Detail> getSeasonF1details() {

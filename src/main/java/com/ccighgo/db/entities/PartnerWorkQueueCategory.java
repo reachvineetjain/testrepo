@@ -18,7 +18,7 @@ public class PartnerWorkQueueCategory implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer partnerWQCategoryId;
+	private int partnerWQCategoryId;
 
 	@Column(length=50)
 	private String partnerWQCategoryName;
@@ -39,11 +39,11 @@ public class PartnerWorkQueueCategory implements Serializable {
 	public PartnerWorkQueueCategory() {
 	}
 
-	public Integer getPartnerWQCategoryId() {
+	public int getPartnerWQCategoryId() {
 		return this.partnerWQCategoryId;
 	}
 
-	public void setPartnerWQCategoryId(Integer partnerWQCategoryId) {
+	public void setPartnerWQCategoryId(int partnerWQCategoryId) {
 		this.partnerWQCategoryId = partnerWQCategoryId;
 	}
 

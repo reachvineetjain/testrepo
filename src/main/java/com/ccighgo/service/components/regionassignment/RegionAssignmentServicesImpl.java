@@ -506,7 +506,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedStateStaff.setLastName(fieldStaff.getFieldStaff().getLastName());
                         assignedStateStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
                         assignedStateStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffId());
-                        assignedStateStaff.setRole(fieldStaff.getFieldStaff().getFieldStaffType().getFieldStaffType());
+                        assignedStateStaff.setRole(fieldStaff.getFieldStaff().getFieldStaffType().getFieldStaffTypeName());
                         assignedStateStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
                         assignedStateStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
                         RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
@@ -540,7 +540,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   assignedStateStaff.setLastName(fieldStaff.getLastName());
                   assignedStateStaff.setPhoto(fieldStaff.getPhoto());
                   assignedStateStaff.setStaffId(fieldStaff.getFieldStaffId());
-                  assignedStateStaff.setRole(fieldStaff.getFieldStaffType().getFieldStaffType());
+                  assignedStateStaff.setRole(fieldStaff.getFieldStaffType().getFieldStaffTypeName());
                   if (staffExist.get(fieldStaff.getFieldStaffId()) == null) {
                      staffExist.put(fieldStaff.getFieldStaffId(), assignedStateStaff);
                   }
