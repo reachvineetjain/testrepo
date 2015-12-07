@@ -25,6 +25,10 @@ public class Salutation implements Serializable {
 	@Column(length=30)
 	private String salutationName;
 
+	//bi-directional many-to-one association to FieldStaff
+	@OneToMany(mappedBy="salutation")
+	private List<FieldStaff> fieldStaffs;
+
 	//bi-directional many-to-one association to PartnerAgentInquiry
 	@OneToMany(mappedBy="salutation")
 	private List<PartnerAgentInquiry> partnerAgentInquiries;
@@ -62,6 +66,28 @@ public class Salutation implements Serializable {
 
 	public void setSalutationName(String salutationName) {
 		this.salutationName = salutationName;
+	}
+
+	public List<FieldStaff> getFieldStaffs() {
+		return this.fieldStaffs;
+	}
+
+	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+		this.fieldStaffs = fieldStaffs;
+	}
+
+	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().add(fieldStaff);
+		fieldStaff.setSalutation(this);
+
+		return fieldStaff;
+	}
+
+	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().remove(fieldStaff);
+		fieldStaff.setSalutation(null);
+
+		return fieldStaff;
 	}
 
 	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {

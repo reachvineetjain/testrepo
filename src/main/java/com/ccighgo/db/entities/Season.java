@@ -223,6 +223,10 @@ public class Season implements Serializable {
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<USSchoolSeason> usschoolSeasons;
 
+	//bi-directional many-to-one association to FieldStaffWorkQueue
+	@OneToMany(mappedBy="season")
+	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
 	public Season() {
 	}
 
@@ -1052,6 +1056,28 @@ public class Season implements Serializable {
 		usschoolSeason.setSeason(null);
 
 		return usschoolSeason;
+	}
+
+	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+		return this.fieldStaffWorkQueues;
+	}
+
+	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+	}
+
+	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setSeason(this);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setSeason(null);
+
+		return fieldStaffWorkQueue;
 	}
 
 }

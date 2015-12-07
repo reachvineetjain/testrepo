@@ -26,17 +26,15 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 
 	private Byte agreeToTerms;
 
+	private Byte canPresentGrantPax;
+
 	private Integer createdBy;
 
 	private Timestamp createdOn;
 
 	private Integer defaultMonotoringStipendId;
 
-	private Byte isFlexStaff;
-
 	private Byte isRecruiterLC;
-
-	private Byte isYesStaff;
 
 	private Integer modifiedBy;
 
@@ -74,6 +72,11 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 	@OneToMany(mappedBy="fieldStaffLeadershipSeasonDetail")
 	private List<FieldStaffLeadershipSeasonDocument> fieldStaffLeadershipSeasonDocuments;
 
+	//bi-directional many-to-one association to HostFamilyStatus
+	@ManyToOne
+	@JoinColumn(name="hostfamilyStatusId")
+	private HostFamilyStatus hostFamilyStatus;
+
 	public FieldStaffLeadershipSeasonDetail() {
 	}
 
@@ -101,6 +104,14 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 		this.agreeToTerms = agreeToTerms;
 	}
 
+	public Byte getCanPresentGrantPax() {
+		return this.canPresentGrantPax;
+	}
+
+	public void setCanPresentGrantPax(Byte canPresentGrantPax) {
+		this.canPresentGrantPax = canPresentGrantPax;
+	}
+
 	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
@@ -125,28 +136,12 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 		this.defaultMonotoringStipendId = defaultMonotoringStipendId;
 	}
 
-	public Byte getIsFlexStaff() {
-		return this.isFlexStaff;
-	}
-
-	public void setIsFlexStaff(Byte isFlexStaff) {
-		this.isFlexStaff = isFlexStaff;
-	}
-
 	public Byte getIsRecruiterLC() {
 		return this.isRecruiterLC;
 	}
 
 	public void setIsRecruiterLC(Byte isRecruiterLC) {
 		this.isRecruiterLC = isRecruiterLC;
-	}
-
-	public Byte getIsYesStaff() {
-		return this.isYesStaff;
-	}
-
-	public void setIsYesStaff(Byte isYesStaff) {
-		this.isYesStaff = isYesStaff;
 	}
 
 	public Integer getModifiedBy() {
@@ -241,6 +236,14 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 		fieldStaffLeadershipSeasonDocument.setFieldStaffLeadershipSeasonDetail(null);
 
 		return fieldStaffLeadershipSeasonDocument;
+	}
+
+	public HostFamilyStatus getHostFamilyStatus() {
+		return this.hostFamilyStatus;
+	}
+
+	public void setHostFamilyStatus(HostFamilyStatus hostFamilyStatus) {
+		this.hostFamilyStatus = hostFamilyStatus;
 	}
 
 }
