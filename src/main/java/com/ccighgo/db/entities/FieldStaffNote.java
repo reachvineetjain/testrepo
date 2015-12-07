@@ -29,6 +29,8 @@ public class FieldStaffNote implements Serializable {
 	@Lob
 	private String fieldStaffNote;
 
+	private Byte hasRead;
+
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
@@ -37,6 +39,11 @@ public class FieldStaffNote implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
+
+	//bi-directional many-to-one association to FieldStaffNoteTopic
+	@ManyToOne
+	@JoinColumn(name="fieldStaffNoteTopicsId")
+	private FieldStaffNoteTopic fieldStaffNoteTopic;
 
 	public FieldStaffNote() {
 	}
@@ -81,6 +88,14 @@ public class FieldStaffNote implements Serializable {
 		this.fieldStaffNote = fieldStaffNote;
 	}
 
+	public Byte getHasRead() {
+		return this.hasRead;
+	}
+
+	public void setHasRead(Byte hasRead) {
+		this.hasRead = hasRead;
+	}
+
 	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -103,6 +118,14 @@ public class FieldStaffNote implements Serializable {
 
 	public void setFieldStaff(FieldStaff fieldStaff) {
 		this.fieldStaff = fieldStaff;
+	}
+
+	public FieldStaffNoteTopic getFieldStaffNoteTopic() {
+		return this.fieldStaffNoteTopic;
+	}
+
+	public void setFieldStaffNoteTopic(FieldStaffNoteTopic fieldStaffNoteTopic) {
+		this.fieldStaffNoteTopic = fieldStaffNoteTopic;
 	}
 
 }

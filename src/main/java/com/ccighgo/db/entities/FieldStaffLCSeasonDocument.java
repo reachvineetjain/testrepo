@@ -19,16 +19,16 @@ public class FieldStaffLCSeasonDocument implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int fieldStaffLCSeasonDocumentId;
+	private Integer fieldStaffLCSeasonDocumentId;
 
-	private byte active;
+	private Byte active;
 
-	private byte approvedByCCI;
+	private Byte approvedByCCI;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date approvedDate;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -43,7 +43,7 @@ public class FieldStaffLCSeasonDocument implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date submittedDate;
 
-	private byte submittedToCCI;
+	private Byte submittedToCCI;
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
@@ -58,27 +58,27 @@ public class FieldStaffLCSeasonDocument implements Serializable {
 	public FieldStaffLCSeasonDocument() {
 	}
 
-	public int getFieldStaffLCSeasonDocumentId() {
+	public Integer getFieldStaffLCSeasonDocumentId() {
 		return this.fieldStaffLCSeasonDocumentId;
 	}
 
-	public void setFieldStaffLCSeasonDocumentId(int fieldStaffLCSeasonDocumentId) {
+	public void setFieldStaffLCSeasonDocumentId(Integer fieldStaffLCSeasonDocumentId) {
 		this.fieldStaffLCSeasonDocumentId = fieldStaffLCSeasonDocumentId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
-	public byte getApprovedByCCI() {
+	public Byte getApprovedByCCI() {
 		return this.approvedByCCI;
 	}
 
-	public void setApprovedByCCI(byte approvedByCCI) {
+	public void setApprovedByCCI(Byte approvedByCCI) {
 		this.approvedByCCI = approvedByCCI;
 	}
 
@@ -90,11 +90,11 @@ public class FieldStaffLCSeasonDocument implements Serializable {
 		this.approvedDate = approvedDate;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -138,11 +138,11 @@ public class FieldStaffLCSeasonDocument implements Serializable {
 		this.submittedDate = submittedDate;
 	}
 
-	public byte getSubmittedToCCI() {
+	public Byte getSubmittedToCCI() {
 		return this.submittedToCCI;
 	}
 
-	public void setSubmittedToCCI(byte submittedToCCI) {
+	public void setSubmittedToCCI(Byte submittedToCCI) {
 		this.submittedToCCI = submittedToCCI;
 	}
 
