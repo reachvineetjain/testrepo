@@ -24,7 +24,7 @@ public class SeasonGeographyConfiguration implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int seasonGeographyConfigurationId;
+	private Integer seasonGeographyConfigurationId;
 
 	@Column(nullable=false)
 	private Integer createdBy;
@@ -71,11 +71,11 @@ public class SeasonGeographyConfiguration implements Serializable {
 	public SeasonGeographyConfiguration() {
 	}
 
-	public int getSeasonGeographyConfigurationId() {
+	public Integer getSeasonGeographyConfigurationId() {
 		return this.seasonGeographyConfigurationId;
 	}
 
-	public void setSeasonGeographyConfigurationId(int seasonGeographyConfigurationId) {
+	public void setSeasonGeographyConfigurationId(Integer seasonGeographyConfigurationId) {
 		this.seasonGeographyConfigurationId = seasonGeographyConfigurationId;
 	}
 

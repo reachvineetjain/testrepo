@@ -20,7 +20,7 @@ public class FieldStaff implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int fieldStaffGoId;
+	private Integer fieldStaffGoId;
 
 	private Byte agreementNoticeSent;
 
@@ -308,11 +308,11 @@ public class FieldStaff implements Serializable {
 	public FieldStaff() {
 	}
 
-	public int getFieldStaffGoId() {
+	public Integer getFieldStaffGoId() {
 		return this.fieldStaffGoId;
 	}
 
-	public void setFieldStaffGoId(int fieldStaffGoId) {
+	public void setFieldStaffGoId(Integer fieldStaffGoId) {
 		this.fieldStaffGoId = fieldStaffGoId;
 	}
 

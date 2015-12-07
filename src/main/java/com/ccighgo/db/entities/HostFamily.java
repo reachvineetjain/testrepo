@@ -18,7 +18,7 @@ public class HostFamily implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int hostFamilyGoId;
+	private Integer hostFamilyGoId;
 
 	private Integer hostFamilyStatusId;
 
@@ -34,11 +34,11 @@ public class HostFamily implements Serializable {
 	public HostFamily() {
 	}
 
-	public int getHostFamilyGoId() {
+	public Integer getHostFamilyGoId() {
 		return this.hostFamilyGoId;
 	}
 
-	public void setHostFamilyGoId(int hostFamilyGoId) {
+	public void setHostFamilyGoId(Integer hostFamilyGoId) {
 		this.hostFamilyGoId = hostFamilyGoId;
 	}
 
