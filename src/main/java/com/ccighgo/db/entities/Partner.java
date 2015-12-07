@@ -23,7 +23,7 @@ public class Partner implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int partnerGoId;
+	private Integer partnerGoId;
 
 	@Column(length=150)
 	private String acronym;
@@ -240,11 +240,11 @@ public class Partner implements Serializable {
 	public Partner() {
 	}
 
-	public int getPartnerGoId() {
+	public Integer getPartnerGoId() {
 		return this.partnerGoId;
 	}
 
-	public void setPartnerGoId(int partnerGoId) {
+	public void setPartnerGoId(Integer partnerGoId) {
 		this.partnerGoId = partnerGoId;
 	}
 
