@@ -32,10 +32,10 @@ public interface FieldStaffLeadershipSeasonRepository extends JpaRepository<Fiel
    List<FieldStaffLeadershipSeason> findStateFieldStaffBySeasonIdSuperRegionIdRegionIdAndStateId(Integer seasonId, Integer superRegionId, Integer regionId, Integer stateId);
 
    @Modifying
-   @Query(value = "delete from FieldStaffLeadershipSeason s where  s.fieldStaff.fieldStaffId =?1 AND  s.season.seasonId = ?2 AND  s.seasonGeographyConfiguration.seasonGeographyConfigurationId =?3 ", nativeQuery = true)
+   @Query(value = "delete from FieldStaffLeadershipSeason s where  s.fieldStaff.fieldStaffGoId =?1 AND  s.season.seasonId = ?2 AND  s.seasonGeographyConfiguration.seasonGeographyConfigurationId =?3 ", nativeQuery = true)
    void deleteRowByFieldStaffIdAndSeasonIdAndSeasonGeographic(Integer fieldStaffId, Integer seasonId, Integer seasonGeographicConfigRow);
 
-   @Query("SELECT DISTINCT s.fieldStaffLeadershipSeasonId FROM FieldStaffLeadershipSeason s WHERE s.fieldStaff.fieldStaffId =?1 AND  s.season.seasonId = ?2 AND  s.seasonGeographyConfiguration.seasonGeographyConfigurationId =?3")
+   @Query("SELECT DISTINCT s.fieldStaffLeadershipSeasonId FROM FieldStaffLeadershipSeason s WHERE s.fieldStaff.fieldStaffGoId =?1 AND  s.season.seasonId = ?2 AND  s.seasonGeographyConfiguration.seasonGeographyConfigurationId =?3")
    Integer findRowByStaffIdAndSeasonIdAndSeasonGeographicId(Integer oldFieldStaffId, Integer seasonId, Integer seasonGeographyConfigurationId);
 
 }
