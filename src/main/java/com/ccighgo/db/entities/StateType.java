@@ -67,6 +67,10 @@ public class StateType implements Serializable {
 	@JoinColumn(name="stateProcessId")
 	private StateProcess stateProcess;
 
+	//bi-directional many-to-one association to FieldStaffWorkQueue
+	@OneToMany(mappedBy="stateType")
+	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
 	public StateType() {
 	}
 
@@ -280,6 +284,28 @@ public class StateType implements Serializable {
 
 	public void setStateProcess(StateProcess stateProcess) {
 		this.stateProcess = stateProcess;
+	}
+
+	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+		return this.fieldStaffWorkQueues;
+	}
+
+	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+	}
+
+	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setStateType(this);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setStateType(null);
+
+		return fieldStaffWorkQueue;
 	}
 
 }
