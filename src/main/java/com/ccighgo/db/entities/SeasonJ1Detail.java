@@ -72,7 +72,7 @@ public class SeasonJ1Detail implements Serializable {
 	private Date janFullYearStartDate;
 
 	@Column(nullable=false)
-	private int modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -97,13 +97,13 @@ public class SeasonJ1Detail implements Serializable {
 
 	private Byte showAugFullYearToNewHF;
 
-	private byte showFirstSemToNewHF;
+	private Byte showFirstSemToNewHF;
 
 	private Byte showGuaranteed;
 
 	private Byte showJanFullYearToNewHF;
 
-	private byte showSeasonToCurrentHF;
+	private Byte showSeasonToCurrentHF;
 
 	private Byte showSecondSemToNewHF;
 
@@ -111,7 +111,7 @@ public class SeasonJ1Detail implements Serializable {
 
 	private Byte showUnguaranteed;
 
-	private byte showWelcomeFamily;
+	private Byte showWelcomeFamily;
 
 	//bi-directional many-to-one association to FieldStaffAgreement
 	@ManyToOne
@@ -288,11 +288,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.janFullYearStartDate = janFullYearStartDate;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -360,11 +360,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.showAugFullYearToNewHF = showAugFullYearToNewHF;
 	}
 
-	public byte getShowFirstSemToNewHF() {
+	public Byte getShowFirstSemToNewHF() {
 		return this.showFirstSemToNewHF;
 	}
 
-	public void setShowFirstSemToNewHF(byte showFirstSemToNewHF) {
+	public void setShowFirstSemToNewHF(Byte showFirstSemToNewHF) {
 		this.showFirstSemToNewHF = showFirstSemToNewHF;
 	}
 
@@ -384,11 +384,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.showJanFullYearToNewHF = showJanFullYearToNewHF;
 	}
 
-	public byte getShowSeasonToCurrentHF() {
+	public Byte getShowSeasonToCurrentHF() {
 		return this.showSeasonToCurrentHF;
 	}
 
-	public void setShowSeasonToCurrentHF(byte showSeasonToCurrentHF) {
+	public void setShowSeasonToCurrentHF(Byte showSeasonToCurrentHF) {
 		this.showSeasonToCurrentHF = showSeasonToCurrentHF;
 	}
 
@@ -416,11 +416,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.showUnguaranteed = showUnguaranteed;
 	}
 
-	public byte getShowWelcomeFamily() {
+	public Byte getShowWelcomeFamily() {
 		return this.showWelcomeFamily;
 	}
 
-	public void setShowWelcomeFamily(byte showWelcomeFamily) {
+	public void setShowWelcomeFamily(Byte showWelcomeFamily) {
 		this.showWelcomeFamily = showWelcomeFamily;
 	}
 

@@ -22,9 +22,9 @@ public class ParticipantStatus implements Serializable {
 
 	private Byte active;
 
-	private byte isApplicationStatus;
+	private Byte isApplicationStatus;
 
-	private byte isPlacementStatus;
+	private Byte isPlacementStatus;
 
 	@Column(nullable=false, length=50)
 	private String participantStatusName;
@@ -52,19 +52,19 @@ public class ParticipantStatus implements Serializable {
 		this.active = active;
 	}
 
-	public byte getIsApplicationStatus() {
+	public Byte getIsApplicationStatus() {
 		return this.isApplicationStatus;
 	}
 
-	public void setIsApplicationStatus(byte isApplicationStatus) {
+	public void setIsApplicationStatus(Byte isApplicationStatus) {
 		this.isApplicationStatus = isApplicationStatus;
 	}
 
-	public byte getIsPlacementStatus() {
+	public Byte getIsPlacementStatus() {
 		return this.isPlacementStatus;
 	}
 
-	public void setIsPlacementStatus(byte isPlacementStatus) {
+	public void setIsPlacementStatus(Byte isPlacementStatus) {
 		this.isPlacementStatus = isPlacementStatus;
 	}
 
