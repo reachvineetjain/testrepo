@@ -90,6 +90,10 @@ public class DepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="departmentProgram")
 	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
+	//bi-directional many-to-one association to FieldStaffWorkQueue
+	@OneToMany(mappedBy="departmentProgram")
+	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
 	public DepartmentProgram() {
 	}
 
@@ -375,6 +379,28 @@ public class DepartmentProgram implements Serializable {
 		seasonProgramUpdateLog.setDepartmentProgram(null);
 
 		return seasonProgramUpdateLog;
+	}
+
+	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+		return this.fieldStaffWorkQueues;
+	}
+
+	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+	}
+
+	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setDepartmentProgram(this);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setDepartmentProgram(null);
+
+		return fieldStaffWorkQueue;
 	}
 
 }

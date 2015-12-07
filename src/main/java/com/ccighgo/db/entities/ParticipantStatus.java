@@ -22,6 +22,10 @@ public class ParticipantStatus implements Serializable {
 
 	private Byte active;
 
+	private byte isApplicationStatus;
+
+	private byte isPlacementStatus;
+
 	@Column(nullable=false, length=50)
 	private String participantStatusName;
 
@@ -46,6 +50,22 @@ public class ParticipantStatus implements Serializable {
 
 	public void setActive(Byte active) {
 		this.active = active;
+	}
+
+	public byte getIsApplicationStatus() {
+		return this.isApplicationStatus;
+	}
+
+	public void setIsApplicationStatus(byte isApplicationStatus) {
+		this.isApplicationStatus = isApplicationStatus;
+	}
+
+	public byte getIsPlacementStatus() {
+		return this.isPlacementStatus;
+	}
+
+	public void setIsPlacementStatus(byte isPlacementStatus) {
+		this.isPlacementStatus = isPlacementStatus;
 	}
 
 	public String getParticipantStatusName() {

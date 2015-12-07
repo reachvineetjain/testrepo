@@ -20,11 +20,13 @@ public class FieldStaff implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer fieldStaffId;
+	private int fieldStaffGoId;
 
 	private Byte agreementNoticeSent;
 
 	private Byte agreeToTerms;
+
+	private Integer approvedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date approvedDate;
@@ -86,9 +88,6 @@ public class FieldStaff implements Serializable {
 	private String currentZipCode;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date darknessToLightTrainingDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateDOSCertTestTaken;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -124,7 +123,7 @@ public class FieldStaff implements Serializable {
 
 	private Integer isCurrentlyAR;
 
-	private byte isDoNotContact;
+	private Byte isDoNotContact;
 
 	private Byte isFlexStaff;
 
@@ -149,13 +148,8 @@ public class FieldStaff implements Serializable {
 
 	private Timestamp modifiedOn;
 
-	private int myHostFamilyId;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date originalStartDate;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date packetMailedDate;
 
 	@Lob
 	private String pastARExperience;
@@ -169,9 +163,6 @@ public class FieldStaff implements Serializable {
 	@Column(length=25)
 	private String phone;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date phoneTrainingDate;
-
 	@Column(length=300)
 	private String photo;
 
@@ -183,9 +174,6 @@ public class FieldStaff implements Serializable {
 	private String reasonsForApplying;
 
 	private Byte receiveEmails;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date regionalTrainingDate;
 
 	private Byte residesAlone;
 
@@ -238,7 +226,7 @@ public class FieldStaff implements Serializable {
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="fieldStaffId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="fieldStaffGoId", nullable=false, insertable=false, updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LookupGender
@@ -255,6 +243,11 @@ public class FieldStaff implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="currentStateId")
 	private LookupUSState lookupUsstate2;
+
+	//bi-directional many-to-one association to Salutation
+	@ManyToOne
+	@JoinColumn(name="salutationId")
+	private Salutation salutation;
 
 	//bi-directional many-to-one association to FieldStaffDocument
 	@OneToMany(mappedBy="fieldStaff")
@@ -288,15 +281,39 @@ public class FieldStaff implements Serializable {
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffReference> fieldStaffReferences;
 
+	//bi-directional many-to-one association to FieldStaffNoteTopic
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffNoteTopic> fieldStaffNoteTopics;
+
+	//bi-directional many-to-one association to FieldStaffQuickStatsCategoryAggregate
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffQuickStatsCategoryAggregate> fieldStaffQuickStatsCategoryAggregates;
+
+	//bi-directional many-to-one association to FieldStaffQuickStatsTypeAggregate
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffQuickStatsTypeAggregate> fieldStaffQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to FieldStaffWorkQueue
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
+	//bi-directional many-to-one association to FieldStaffWorkQueueCategoryAggregate
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffWorkQueueCategoryAggregate> fieldStaffWorkQueueCategoryAggregates;
+
+	//bi-directional many-to-one association to FieldStaffWorkQueueTypeAggregate
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffWorkQueueTypeAggregate> fieldStaffWorkQueueTypeAggregates;
+
 	public FieldStaff() {
 	}
 
-	public Integer getFieldStaffId() {
-		return this.fieldStaffId;
+	public int getFieldStaffGoId() {
+		return this.fieldStaffGoId;
 	}
 
-	public void setFieldStaffId(Integer fieldStaffId) {
-		this.fieldStaffId = fieldStaffId;
+	public void setFieldStaffGoId(int fieldStaffGoId) {
+		this.fieldStaffGoId = fieldStaffGoId;
 	}
 
 	public Byte getAgreementNoticeSent() {
@@ -313,6 +330,14 @@ public class FieldStaff implements Serializable {
 
 	public void setAgreeToTerms(Byte agreeToTerms) {
 		this.agreeToTerms = agreeToTerms;
+	}
+
+	public Integer getApprovedBy() {
+		return this.approvedBy;
+	}
+
+	public void setApprovedBy(Integer approvedBy) {
+		this.approvedBy = approvedBy;
 	}
 
 	public Date getApprovedDate() {
@@ -491,14 +516,6 @@ public class FieldStaff implements Serializable {
 		this.currentZipCode = currentZipCode;
 	}
 
-	public Date getDarknessToLightTrainingDate() {
-		return this.darknessToLightTrainingDate;
-	}
-
-	public void setDarknessToLightTrainingDate(Date darknessToLightTrainingDate) {
-		this.darknessToLightTrainingDate = darknessToLightTrainingDate;
-	}
-
 	public Date getDateDOSCertTestTaken() {
 		return this.dateDOSCertTestTaken;
 	}
@@ -619,11 +636,11 @@ public class FieldStaff implements Serializable {
 		this.isCurrentlyAR = isCurrentlyAR;
 	}
 
-	public byte getIsDoNotContact() {
+	public Byte getIsDoNotContact() {
 		return this.isDoNotContact;
 	}
 
-	public void setIsDoNotContact(byte isDoNotContact) {
+	public void setIsDoNotContact(Byte isDoNotContact) {
 		this.isDoNotContact = isDoNotContact;
 	}
 
@@ -699,28 +716,12 @@ public class FieldStaff implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public int getMyHostFamilyId() {
-		return this.myHostFamilyId;
-	}
-
-	public void setMyHostFamilyId(int myHostFamilyId) {
-		this.myHostFamilyId = myHostFamilyId;
-	}
-
 	public Date getOriginalStartDate() {
 		return this.originalStartDate;
 	}
 
 	public void setOriginalStartDate(Date originalStartDate) {
 		this.originalStartDate = originalStartDate;
-	}
-
-	public Date getPacketMailedDate() {
-		return this.packetMailedDate;
-	}
-
-	public void setPacketMailedDate(Date packetMailedDate) {
-		this.packetMailedDate = packetMailedDate;
 	}
 
 	public String getPastARExperience() {
@@ -753,14 +754,6 @@ public class FieldStaff implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public Date getPhoneTrainingDate() {
-		return this.phoneTrainingDate;
-	}
-
-	public void setPhoneTrainingDate(Date phoneTrainingDate) {
-		this.phoneTrainingDate = phoneTrainingDate;
 	}
 
 	public String getPhoto() {
@@ -801,14 +794,6 @@ public class FieldStaff implements Serializable {
 
 	public void setReceiveEmails(Byte receiveEmails) {
 		this.receiveEmails = receiveEmails;
-	}
-
-	public Date getRegionalTrainingDate() {
-		return this.regionalTrainingDate;
-	}
-
-	public void setRegionalTrainingDate(Date regionalTrainingDate) {
-		this.regionalTrainingDate = regionalTrainingDate;
 	}
 
 	public Byte getResidesAlone() {
@@ -969,6 +954,14 @@ public class FieldStaff implements Serializable {
 
 	public void setLookupUsstate2(LookupUSState lookupUsstate2) {
 		this.lookupUsstate2 = lookupUsstate2;
+	}
+
+	public Salutation getSalutation() {
+		return this.salutation;
+	}
+
+	public void setSalutation(Salutation salutation) {
+		this.salutation = salutation;
 	}
 
 	public List<FieldStaffDocument> getFieldStaffDocuments() {
@@ -1145,6 +1138,138 @@ public class FieldStaff implements Serializable {
 		fieldStaffReference.setFieldStaff(null);
 
 		return fieldStaffReference;
+	}
+
+	public List<FieldStaffNoteTopic> getFieldStaffNoteTopics() {
+		return this.fieldStaffNoteTopics;
+	}
+
+	public void setFieldStaffNoteTopics(List<FieldStaffNoteTopic> fieldStaffNoteTopics) {
+		this.fieldStaffNoteTopics = fieldStaffNoteTopics;
+	}
+
+	public FieldStaffNoteTopic addFieldStaffNoteTopic(FieldStaffNoteTopic fieldStaffNoteTopic) {
+		getFieldStaffNoteTopics().add(fieldStaffNoteTopic);
+		fieldStaffNoteTopic.setFieldStaff(this);
+
+		return fieldStaffNoteTopic;
+	}
+
+	public FieldStaffNoteTopic removeFieldStaffNoteTopic(FieldStaffNoteTopic fieldStaffNoteTopic) {
+		getFieldStaffNoteTopics().remove(fieldStaffNoteTopic);
+		fieldStaffNoteTopic.setFieldStaff(null);
+
+		return fieldStaffNoteTopic;
+	}
+
+	public List<FieldStaffQuickStatsCategoryAggregate> getFieldStaffQuickStatsCategoryAggregates() {
+		return this.fieldStaffQuickStatsCategoryAggregates;
+	}
+
+	public void setFieldStaffQuickStatsCategoryAggregates(List<FieldStaffQuickStatsCategoryAggregate> fieldStaffQuickStatsCategoryAggregates) {
+		this.fieldStaffQuickStatsCategoryAggregates = fieldStaffQuickStatsCategoryAggregates;
+	}
+
+	public FieldStaffQuickStatsCategoryAggregate addFieldStaffQuickStatsCategoryAggregate(FieldStaffQuickStatsCategoryAggregate fieldStaffQuickStatsCategoryAggregate) {
+		getFieldStaffQuickStatsCategoryAggregates().add(fieldStaffQuickStatsCategoryAggregate);
+		fieldStaffQuickStatsCategoryAggregate.setFieldStaff(this);
+
+		return fieldStaffQuickStatsCategoryAggregate;
+	}
+
+	public FieldStaffQuickStatsCategoryAggregate removeFieldStaffQuickStatsCategoryAggregate(FieldStaffQuickStatsCategoryAggregate fieldStaffQuickStatsCategoryAggregate) {
+		getFieldStaffQuickStatsCategoryAggregates().remove(fieldStaffQuickStatsCategoryAggregate);
+		fieldStaffQuickStatsCategoryAggregate.setFieldStaff(null);
+
+		return fieldStaffQuickStatsCategoryAggregate;
+	}
+
+	public List<FieldStaffQuickStatsTypeAggregate> getFieldStaffQuickStatsTypeAggregates() {
+		return this.fieldStaffQuickStatsTypeAggregates;
+	}
+
+	public void setFieldStaffQuickStatsTypeAggregates(List<FieldStaffQuickStatsTypeAggregate> fieldStaffQuickStatsTypeAggregates) {
+		this.fieldStaffQuickStatsTypeAggregates = fieldStaffQuickStatsTypeAggregates;
+	}
+
+	public FieldStaffQuickStatsTypeAggregate addFieldStaffQuickStatsTypeAggregate(FieldStaffQuickStatsTypeAggregate fieldStaffQuickStatsTypeAggregate) {
+		getFieldStaffQuickStatsTypeAggregates().add(fieldStaffQuickStatsTypeAggregate);
+		fieldStaffQuickStatsTypeAggregate.setFieldStaff(this);
+
+		return fieldStaffQuickStatsTypeAggregate;
+	}
+
+	public FieldStaffQuickStatsTypeAggregate removeFieldStaffQuickStatsTypeAggregate(FieldStaffQuickStatsTypeAggregate fieldStaffQuickStatsTypeAggregate) {
+		getFieldStaffQuickStatsTypeAggregates().remove(fieldStaffQuickStatsTypeAggregate);
+		fieldStaffQuickStatsTypeAggregate.setFieldStaff(null);
+
+		return fieldStaffQuickStatsTypeAggregate;
+	}
+
+	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+		return this.fieldStaffWorkQueues;
+	}
+
+	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+	}
+
+	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setFieldStaff(this);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setFieldStaff(null);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public List<FieldStaffWorkQueueCategoryAggregate> getFieldStaffWorkQueueCategoryAggregates() {
+		return this.fieldStaffWorkQueueCategoryAggregates;
+	}
+
+	public void setFieldStaffWorkQueueCategoryAggregates(List<FieldStaffWorkQueueCategoryAggregate> fieldStaffWorkQueueCategoryAggregates) {
+		this.fieldStaffWorkQueueCategoryAggregates = fieldStaffWorkQueueCategoryAggregates;
+	}
+
+	public FieldStaffWorkQueueCategoryAggregate addFieldStaffWorkQueueCategoryAggregate(FieldStaffWorkQueueCategoryAggregate fieldStaffWorkQueueCategoryAggregate) {
+		getFieldStaffWorkQueueCategoryAggregates().add(fieldStaffWorkQueueCategoryAggregate);
+		fieldStaffWorkQueueCategoryAggregate.setFieldStaff(this);
+
+		return fieldStaffWorkQueueCategoryAggregate;
+	}
+
+	public FieldStaffWorkQueueCategoryAggregate removeFieldStaffWorkQueueCategoryAggregate(FieldStaffWorkQueueCategoryAggregate fieldStaffWorkQueueCategoryAggregate) {
+		getFieldStaffWorkQueueCategoryAggregates().remove(fieldStaffWorkQueueCategoryAggregate);
+		fieldStaffWorkQueueCategoryAggregate.setFieldStaff(null);
+
+		return fieldStaffWorkQueueCategoryAggregate;
+	}
+
+	public List<FieldStaffWorkQueueTypeAggregate> getFieldStaffWorkQueueTypeAggregates() {
+		return this.fieldStaffWorkQueueTypeAggregates;
+	}
+
+	public void setFieldStaffWorkQueueTypeAggregates(List<FieldStaffWorkQueueTypeAggregate> fieldStaffWorkQueueTypeAggregates) {
+		this.fieldStaffWorkQueueTypeAggregates = fieldStaffWorkQueueTypeAggregates;
+	}
+
+	public FieldStaffWorkQueueTypeAggregate addFieldStaffWorkQueueTypeAggregate(FieldStaffWorkQueueTypeAggregate fieldStaffWorkQueueTypeAggregate) {
+		getFieldStaffWorkQueueTypeAggregates().add(fieldStaffWorkQueueTypeAggregate);
+		fieldStaffWorkQueueTypeAggregate.setFieldStaff(this);
+
+		return fieldStaffWorkQueueTypeAggregate;
+	}
+
+	public FieldStaffWorkQueueTypeAggregate removeFieldStaffWorkQueueTypeAggregate(FieldStaffWorkQueueTypeAggregate fieldStaffWorkQueueTypeAggregate) {
+		getFieldStaffWorkQueueTypeAggregates().remove(fieldStaffWorkQueueTypeAggregate);
+		fieldStaffWorkQueueTypeAggregate.setFieldStaff(null);
+
+		return fieldStaffWorkQueueTypeAggregate;
 	}
 
 }

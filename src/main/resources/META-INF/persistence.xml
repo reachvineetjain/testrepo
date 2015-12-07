@@ -46,15 +46,26 @@
       <class>com.ccighgo.db.entities.FieldStaffLeadershipSeasonDetail</class>
       <class>com.ccighgo.db.entities.FieldStaffLeadershipSeasonDocument</class>
       <class>com.ccighgo.db.entities.FieldStaffNote</class>
+      <class>com.ccighgo.db.entities.FieldStaffNoteTopic</class>
       <class>com.ccighgo.db.entities.FieldStaffParticipant</class>
       <class>com.ccighgo.db.entities.FieldStaffPermission</class>
+      <class>com.ccighgo.db.entities.FieldStaffQuickStatsCategory</class>
+      <class>com.ccighgo.db.entities.FieldStaffQuickStatsCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.FieldStaffQuickStatsType</class>
+      <class>com.ccighgo.db.entities.FieldStaffQuickStatsTypeAggregate</class>
       <class>com.ccighgo.db.entities.FieldStaffReference</class>
       <class>com.ccighgo.db.entities.FieldStaffStatus</class>
       <class>com.ccighgo.db.entities.FieldStaffType</class>
+      <class>com.ccighgo.db.entities.FieldStaffWorkQueue</class>
+      <class>com.ccighgo.db.entities.FieldStaffWorkQueueCategory</class>
+      <class>com.ccighgo.db.entities.FieldStaffWorkQueueCategoryAggregate</class>
+      <class>com.ccighgo.db.entities.FieldStaffWorkQueueType</class>
+      <class>com.ccighgo.db.entities.FieldStaffWorkQueueTypeAggregate</class>
       <class>com.ccighgo.db.entities.GoIdSequence</class>
       <class>com.ccighgo.db.entities.HelpContactMode</class>
       <class>com.ccighgo.db.entities.HostFamily</class>
       <class>com.ccighgo.db.entities.HostFamilyPermission</class>
+      <class>com.ccighgo.db.entities.HostFamilyStatus</class>
       <class>com.ccighgo.db.entities.Login</class>
       <class>com.ccighgo.db.entities.LoginHistory</class>
       <class>com.ccighgo.db.entities.LoginUserType</class>
