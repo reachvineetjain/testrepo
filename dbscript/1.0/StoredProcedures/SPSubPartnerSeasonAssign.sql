@@ -2,7 +2,7 @@ DELIMITER $$
 
 CREATE
     /*[DEFINER = { user | CURRENT_USER }]*/
-    PROCEDURE `cci_gh_go_login`.`SPSubPartnerSeasonAssign`(IN subPartnerId INT)
+    PROCEDURE `cci_gh_go`.`SPSubPartnerSeasonAssign`(IN subPartnerId INT)
     /*LANGUAGE SQL
     | [NOT] DETERMINISTIC
     | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
