@@ -424,7 +424,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          Details details = new Details();
          details.setAgencyName(partnerSubPartner.getCompanyName());
          details.setLogoImageURL(partnerSubPartner.getPartnerLogo());
-
+         SubPartnersPrimaryContact subPartnerPrimaryContact = new SubPartnersPrimaryContact();
          List<PartnerUser> partnerUsers = partnerSubPartner.getPartnerUsers();
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
@@ -439,6 +439,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if (login != null) {
                details.setUsername(login.getLoginName());
                details.setPassword("*****************");
+               subPartnerPrimaryContact.setEmail(login.getEmail());
                subPartnerDetail.setActive(login.getActive() == 1);
             }
          }
@@ -452,7 +453,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             details.setPayGreenHeartDirectly(partnerSubPartner.getPayGreenheartDirectly() == CCIConstants.ACTIVE ? true : false);
 
          PartnerContact partnerContact = new PartnerContact();
-         SubPartnersPrimaryContact subPartnerPrimaryContact = new SubPartnersPrimaryContact();
+        
          if (partnerSubPartner.getPartnerContacts() != null && partnerSubPartner.getPartnerContacts().size() > 0) {
             List<PartnerContact> partnerContactList = partnerSubPartner.getPartnerContacts();
             for (PartnerContact ptc : partnerContactList) {
@@ -473,7 +474,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                subPartnerPrimaryContact.setTitle(partnerContact.getTitle());
                subPartnerPrimaryContact.setFirstName(partnerContact.getFirstName());
                subPartnerPrimaryContact.setLastName(partnerContact.getLastName());
-               subPartnerPrimaryContact.setEmail(partnerContact.getEmail());
+//               subPartnerPrimaryContact.setEmail(partnerContact.getEmail());
                subPartnerPrimaryContact.setPhone(partnerContact.getPhone());
                subPartnerPrimaryContact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                subPartnerPrimaryContact.setFax(partnerContact.getFax());
