@@ -704,6 +704,22 @@
 		</java>
 	</target>
 
+	<target name="genericFieldStaffNote">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/generic/genericFieldStaffNote.xsd" />
+		</java>
+	</target>
+
+	<target name="genericFieldStaffNoteTopic.xsd">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/generic/genericFieldStaffNoteTopic.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************Generic Documents*************************************************-->
 
 	<target name="GenericSeasonsDocuments">
@@ -735,6 +751,14 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/generic/Documents/GenericPartnerSeasonContracts.xsd" />
+		</java>
+	</target>
+
+	<target name="GenericFieldStaffDocument">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/generic/Documents/GenericFieldStaffDocument.xsd" />
 		</java>
 	</target>
 
@@ -1182,4 +1206,21 @@
 		</java>
 	</target>
 
+	<!--**********************************************Field Staff****************************************************** -->
+
+	<target name="AddedFieldStaff">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/AddedFieldStaff.xsd" />
+		</java>
+	</target>
+
+	<target name="FieldSatffOverview">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldSatffOverview.xsd" />
+		</java>
+	</target>
 </project>

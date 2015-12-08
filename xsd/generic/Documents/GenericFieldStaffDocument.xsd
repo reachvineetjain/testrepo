@@ -1,0 +1,42 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/genericfieldstaffdocuments" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/genericfieldstaffdocuments"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.generic.beans.documents.fieldstaff" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:complexType name="fieldStaffGenericDocuments">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="fieldStaffDocumentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="fieldStaffGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="uploadedBy" type="cd:DocumentUploadUser" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="DocumentUploadUser">
+      <xsd:sequence>
+         <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>
