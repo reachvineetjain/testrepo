@@ -54,6 +54,11 @@ public class HostFamilyData {
    private Boolean IsLCApplicant;
    @XmlElement(name = "LCEmailAddress")
    private String LCEmailAddress;
+   
+   @XmlElement(name = "HaveHosted")
+   private String HaveHosted;
+   
+   
 
    public String getFirstName() {
       return FirstName;
@@ -231,4 +236,21 @@ public class HostFamilyData {
       LCEmailAddress = lCEmailAddress;
    }
 
+   public String getHaveHosted() {
+      return HaveHosted;
+   }
+
+   public void setHaveHosted(String haveHosted) {
+      HaveHosted = haveHosted;
+   }
+
+   public Boolean getIsAdult() {
+      return IsAdult;
+   }
+
+   public Boolean getIsLCApplicant() {
+      return IsLCApplicant;
+   }
+
+   
 }
