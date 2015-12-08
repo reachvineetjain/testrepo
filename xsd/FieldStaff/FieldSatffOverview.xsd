@@ -1,0 +1,71 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/fieldstaffoverview" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/fieldstaffoverview"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+   <xsd:element name="fieldStaffOverview" type="cd:fieldStaffOverview" />
+   
+   <xsd:complexType name="fieldStaffOverview">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="lastLoginDate" type="xsd:string" />
+               <xsd:element name="fieldStaffCurrentStatus" type="cd:fieldStaffCurrentStatus"/>
+               <xsd:element name="fieldStaffDetail" type="cd:fieldStaffDetail" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="fieldStaffCurrentStatus">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="fieldStaffStatus" type="cd:fieldStaffStatus" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="active" type="xsd:boolean" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+      <xsd:complexType name="fieldStaffStatus">
+         <xsd:sequence>
+            <xsd:element name="statusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="statusName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="fieldStaffDetail">
+         <xsd:complexContent>
+            <xsd:extension base="common:Response">
+               <xsd:sequence>
+                  <xsd:element name="goId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="roll" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="imageURL" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="homePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="workPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="cellPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="tollFreePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="fax" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="originalStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="totalPlacementManual" type="xsd:int" />
+                  <xsd:element name="dateApplicationSubmitted" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="dateApplicatiionApproved" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="dateDosCertificationTestTaken" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="dateW9formReceived" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="approvedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               </xsd:sequence>
+            </xsd:extension>
+         </xsd:complexContent>
+      </xsd:complexType>
+</xsd:schema>
