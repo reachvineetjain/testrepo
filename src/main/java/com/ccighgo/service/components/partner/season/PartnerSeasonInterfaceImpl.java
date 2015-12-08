@@ -194,7 +194,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                         pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonAppDeadlineDate()));
                      }
                   }
-                  if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.HSP_STP_IHP)) {
+                  if (entity.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_STP_IHP)) {
                      SeasonIHPDetail ihpSeason = seasonIHPDetailRepository.findIHPDetailsBySeasonId(entity.getSeason().getSeasonId());
                      if (ihpSeason != null) {
                         Query query = entityManager.createNativeQuery(SP_PARTNER_SEASON_ALLOCATION);
@@ -216,7 +216,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
                         pSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
                         pSeason.setPartnerEndDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonEndDate()));
-                        pSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonAppDeadlineDate()));
+                        pSeason.setPartnerApplicationDeadlineDate("N/A");
                      }
                   }
                   if (entity.getDepartmentProgram().getLookupDepartment().getAcronym().equals(CCIConstants.WP_WT_SUMMER)) {
