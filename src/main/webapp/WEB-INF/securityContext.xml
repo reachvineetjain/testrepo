@@ -57,6 +57,7 @@
             /services/partner/admin/season/**=anon
             /services/genericDocuments/**=anon
             /services/admin/partner/**=anon
+            /services/fs/**=anon
             /services/**=authc
          </value>
       </property>

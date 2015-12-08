@@ -10,7 +10,7 @@
 		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard,AddNewPartnerOffice,PartnerAdminSeasonsList,PartnerAdminSeasonApplicationList,PartnerAdminJ1SeasonDetails,
 		PartnerAdminF1SeasonDetails,PartnerUserDetails, PartnerUserOffices,PartnerGenericNote,PartnerGenericDeleteNote,PartnerGenericTopic,GenericSeasonsDocuments,GenericPartnerDocument,
 		PartnerStatus,PartnerSeasonDocumentParameters,PartnerAdminIHPSeasonDetails,GenericPartnerSeasonContracts,AdminAddPartner,PartnerSeasonIHPDetail,CCIUsersList,AddedPartners,
-		LeadPartners,PartnerStatusAsPattern" />
+		LeadPartners,PartnerStatusAsPattern,FieldStaffLCList,FieldStaffRMList" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -1221,6 +1221,26 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/fieldstaff/FieldSatffOverview.xsd" />
+		</java>
+	</target>
+
+	<!--*******Field staff local coordinator listing**********-->
+
+	<target name="FieldStaffLCList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffLCList.xsd" />
+		</java>
+	</target>
+
+	<!--*******Field staff regional manager listing**********-->
+
+	<target name="FieldStaffRMList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffRMList.xsd" />
 		</java>
 	</target>
 </project>
