@@ -283,13 +283,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                sp.setSubPartnerLastName(subPartner.getPartnerContacts().iterator().next().getLastName());
             }
             sp.setSubPartnerCompanyName(subPartner.getCompanyName());
-            if (subPartner.getLookupCountry2() != null) {
-               SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
-               subPartnerCountry2.setSubPartnerCountry(subPartner.getLookupCountry2().getCountryName());
-               subPartnerCountry2.setSubPartnerCountryId(subPartner.getLookupCountry2().getCountryId());
-
-               sp.setSubPartnerCountry(subPartnerCountry2);
+            SubPartnerCountry subPartnerCountry = null;
+            if (subPartner.getLookupCountry1() != null) {
+               subPartnerCountry = new SubPartnerCountry();
+               subPartnerCountry.setSubPartnerCountry(subPartner.getLookupCountry1().getCountryName());
+               subPartnerCountry.setSubPartnerCountryId(subPartner.getLookupCountry1().getCountryId());
             }
+            sp.setSubPartnerCountry(subPartnerCountry);
 
             SubPartnerStatus subPartnerStatus = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus();
             List<PartnerUser> partnerUsers = subPartner.getPartnerUsers();
@@ -424,13 +424,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          Details details = new Details();
          details.setAgencyName(partnerSubPartner.getCompanyName());
          details.setLogoImageURL(partnerSubPartner.getPartnerLogo());
-
+         SubPartnersPrimaryContact subPartnerPrimaryContact = new SubPartnersPrimaryContact();
          List<PartnerUser> partnerUsers = partnerSubPartner.getPartnerUsers();
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
             for (PartnerUser puser : partnerUsers) {
                if (puser.getPartner() != null)
-                  if (puser.getPartner().getPartnerGoId() == Integer.valueOf(subPartnerId)) {
+                  if (puser.getPartner().getPartnerGoId().equals(Integer.valueOf(subPartnerId))) {
                      partnerUser = puser;
                      break;
                   }
@@ -439,6 +439,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if (login != null) {
                details.setUsername(login.getLoginName());
                details.setPassword("*****************");
+               subPartnerPrimaryContact.setEmail(login.getEmail());
                subPartnerDetail.setActive(login.getActive() == 1);
             }
          }
@@ -452,7 +453,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             details.setPayGreenHeartDirectly(partnerSubPartner.getPayGreenheartDirectly() == CCIConstants.ACTIVE ? true : false);
 
          PartnerContact partnerContact = new PartnerContact();
-         SubPartnersPrimaryContact subPartnerPrimaryContact = new SubPartnersPrimaryContact();
+        
          if (partnerSubPartner.getPartnerContacts() != null && partnerSubPartner.getPartnerContacts().size() > 0) {
             List<PartnerContact> partnerContactList = partnerSubPartner.getPartnerContacts();
             for (PartnerContact ptc : partnerContactList) {
@@ -473,7 +474,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                subPartnerPrimaryContact.setTitle(partnerContact.getTitle());
                subPartnerPrimaryContact.setFirstName(partnerContact.getFirstName());
                subPartnerPrimaryContact.setLastName(partnerContact.getLastName());
-               subPartnerPrimaryContact.setEmail(partnerContact.getEmail());
+//               subPartnerPrimaryContact.setEmail(partnerContact.getEmail());
                subPartnerPrimaryContact.setPhone(partnerContact.getPhone());
                subPartnerPrimaryContact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                subPartnerPrimaryContact.setFax(partnerContact.getFax());

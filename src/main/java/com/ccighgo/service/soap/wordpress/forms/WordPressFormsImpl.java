@@ -71,35 +71,12 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
             if (InternationalPartners.getWebsite() != null)
                partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
-            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
-
-            // GoIdSequence goIdSequence = new GoIdSequence();
-            // goIdSequence = goIdSequenceRepository.save(goIdSequence);
-            // partnerAgentInquiry.setpartn
-            // partnerAgentInquiry.setPartnerAgentInquiriesId(new Random().nextInt());
             partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
             String s = "200:Success:200:Success";
             System.out.println(s);
             return s;
          } else {
-            // if (InternationalPartners.getEmail().equalsIgnoreCase("success@gmail.com")) {
-            // String string = "200:Success:300:Missing Information";
-            // System.out.println(string);
-            // return string;
-            // } else if (InternationalPartners.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-            // String string = "400:Duplicate Row:400:Duplicate Row";
-            // System.out.println(string);
-            // return string;
-            // } else if (InternationalPartners.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-            // String string =
-            // "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
-            // System.out.println(string);
-            // return string;
-            // } else {
-            // String string = "300:Missing Information:300:Missing Information";
-            // System.out.println(string);
-            // return string;
-            // }
+
             String s = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
             System.out.println(s);
             return s;
@@ -155,6 +132,25 @@ public class WordPressFormsImpl implements IWordPressForms {
             System.out.println("Email :" + HostFamilyData.getEmail());
             System.out.println("City :" + HostFamilyData.getCity());
             System.out.println("State : " + HostFamilyData.getState());
+            System.out.println("Address1 : " + HostFamilyData.getAddress1());
+            System.out.println("Address2 : " + HostFamilyData.getAddress2());
+            System.out.println("Area Representative :" + HostFamilyData.getAreaRepresentativeName());
+            System.out.println("Comments : " + HostFamilyData.getComments());
+            System.out.println("Day Phone : " + HostFamilyData.getDayPhone());
+            System.out.println("Evening Phone: " + HostFamilyData.getEveningPhone());
+            System.out.println("Have Hosted: " + HostFamilyData.getHaveHosted());
+            System.out.println("Hosting Experience :" + HostFamilyData.getHostingExperience());
+            System.out.println("Interested In Student Form: " + HostFamilyData.getInterestedInStudentFrom());
+            System.out.println("Interested In Student Gender:" + HostFamilyData.getInterestedInStudentGender());
+            System.out.println("LC Email Address : " + HostFamilyData.getLCEmailAddress());
+            System.out.println("Nearest Large City:" + HostFamilyData.getNearestLargeCity());
+            System.out.println("Postal Code:" + HostFamilyData.getPostalCode());
+            System.out.println("Referred Form: " + HostFamilyData.getReferredFrom());
+            System.out.println("School City:" + HostFamilyData.getSchoolCity());
+            System.out.println("School Name: " + HostFamilyData.getSchoolName());
+            System.out.println("Adult : " + HostFamilyData.getIsAdult());
+            System.out.println("LC Applicant : " + HostFamilyData.getIsLCApplicant());
+
          }
          if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {
             String string = "200:Success";
