@@ -283,13 +283,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                sp.setSubPartnerLastName(subPartner.getPartnerContacts().iterator().next().getLastName());
             }
             sp.setSubPartnerCompanyName(subPartner.getCompanyName());
-            if (subPartner.getLookupCountry2() != null) {
-               SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
-               subPartnerCountry2.setSubPartnerCountry(subPartner.getLookupCountry2().getCountryName());
-               subPartnerCountry2.setSubPartnerCountryId(subPartner.getLookupCountry2().getCountryId());
-
-               sp.setSubPartnerCountry(subPartnerCountry2);
+            SubPartnerCountry subPartnerCountry = null;
+            if (subPartner.getLookupCountry1() != null) {
+               subPartnerCountry = new SubPartnerCountry();
+               subPartnerCountry.setSubPartnerCountry(subPartner.getLookupCountry1().getCountryName());
+               subPartnerCountry.setSubPartnerCountryId(subPartner.getLookupCountry1().getCountryId());
             }
+            sp.setSubPartnerCountry(subPartnerCountry);
 
             SubPartnerStatus subPartnerStatus = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus();
             List<PartnerUser> partnerUsers = subPartner.getPartnerUsers();
