@@ -245,4 +245,5 @@ public class CCIConstants {
    public static final byte FALSE_BYTE = 0;
    public static final Integer PARTICIPANT_STATUS_PENDING_VERIFICATION = 10;
    public static final String MYSQL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+   
 }
