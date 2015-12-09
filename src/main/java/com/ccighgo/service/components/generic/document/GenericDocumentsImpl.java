@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.DocumentType;
+import com.ccighgo.db.entities.FieldStaff;
+import com.ccighgo.db.entities.FieldStaffDocument;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerDocument;
 import com.ccighgo.db.entities.PartnerSeason;
@@ -18,6 +20,8 @@ import com.ccighgo.db.entities.PartnerSeasonDocument;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
+import com.ccighgo.jpa.repositories.FieldStaffDocumentRepository;
+import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerSeasonContractRepository;
@@ -26,9 +30,12 @@ import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.GenericMessageConstants;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocument;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocumentUpLoadedBy;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
+import com.ccighgo.service.transport.generic.beans.documents.fieldstaff.FieldStaffGenericDocument;
+import com.ccighgo.service.transport.generic.beans.documents.fieldstaff.FieldStaffGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partner.DocumentUploadUser;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters.PartnerSeasonDocumentParameters;
@@ -69,8 +76,15 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
 
    @Autowired
    PartnerSeasonDocumentRepository partnerSeasonDocumentRepository;
+   
    @Autowired
    PartnerSeasonContractRepository partnerSeasonContractRepository;
+   
+   @Autowired
+   FieldStaffDocumentRepository fieldStaffDocumentRepository;
+ 
+   @Autowired
+   FieldStaffRepository fieldStaffRepository;
    
    @Autowired
    ReusedFunctions reusedFunctions;
@@ -499,5 +513,81 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
          ExceptionUtil.logException(e, LOGGER);
       }
       return response;
+   }
+
+   @Override
+   public FieldStaffGenericDocuments viewFieldStaffDocument(int fieldStaffGoId) {
+
+      FieldStaffGenericDocuments documents = new FieldStaffGenericDocuments();
+
+      List<FieldStaffDocument> fieldStaffDocuments = fieldStaffDocumentRepository.getFieldStaffDocumentsByFieldStaffGoId(fieldStaffGoId);
+      if (fieldStaffDocuments == null) {
+         return documents;
+      }
+      for (FieldStaffDocument fsd : fieldStaffDocuments) {
+         FieldStaffGenericDocument doc = new FieldStaffGenericDocument();
+         doc.setFieldStaffDocumentId(fsd.getFieldStaffDocumentId());
+         DocumentInformation di = fsd.getDocumentInformation();
+         if (di != null) {
+            doc.setDocType(di.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+            doc.setDocUrl(di.getUrl());
+            doc.setDocName(di.getDocumentName());
+         }
+         // TODO
+         doc.setDescription("");
+         UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fsd.getDocumentInformation().getCreatedBy());
+         if (userInformation != null) {
+            com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser documentUploadUser = new com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser();
+            documentUploadUser.setPhotoUrl(userInformation.getPhotoUrl());
+            documentUploadUser.setRole(userInformation.getRole());
+            documentUploadUser.setUserName(userInformation.getUserName());
+            doc.setUploadedBy(documentUploadUser);
+         }
+         doc.setUploadDate(DateUtils.getDateAndTime(fsd.getCreatedOn()));
+         documents.getFieldStaffGenericDocuments().add(doc);
+      }
+      return documents;
+   }
+
+   @Override
+   public Response addFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocument) {
+
+      Response response = new Response();
+      DocumentInformation documentInformation = new DocumentInformation();
+      FieldStaff fieldstaff = fieldStaffRepository.findOne(fieldStaffGenericDocument.getFieldStaffGoId());
+
+      documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(fieldStaffGenericDocument.getDocType()));
+      documentInformation.setFileName(fieldStaffGenericDocument.getFileName());
+      documentInformation.setDocumentName(fieldStaffGenericDocument.getDocName());
+      documentInformation.setUrl(fieldStaffGenericDocument.getDocUrl());
+      documentInformation.setCreatedBy(fieldStaffGenericDocument.getLoginId());
+      documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      documentInformation.setModifiedBy(fieldStaffGenericDocument.getLoginId());
+      documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      documentInformation.setActive(CCIConstants.ACTIVE);
+      DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
+
+      FieldStaffDocument fieldstaffDocument = new FieldStaffDocument();
+      fieldstaffDocument.setFieldStaff(fieldstaff);
+      fieldstaffDocument.setDocumentInformation(di);
+      fieldstaffDocument.setCreatedBy(fieldStaffGenericDocument.getLoginId());
+      fieldstaffDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      fieldstaffDocument.setModifiedBy(fieldStaffGenericDocument.getLoginId());
+      fieldstaffDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      fieldstaffDocument.setActive(CCIConstants.ACTIVE);
+      fieldStaffDocumentRepository.saveAndFlush(fieldstaffDocument);
+      return response;
+   }
+
+   @Override
+   public Response updateFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocuments) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public Response deleteFieldStaffDocument(int fieldStaffDocumentId) {
+      // TODO Auto-generated method stub
+      return null;
    }
 }

@@ -10,7 +10,7 @@
 		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard,AddNewPartnerOffice,PartnerAdminSeasonsList,PartnerAdminSeasonApplicationList,PartnerAdminJ1SeasonDetails,
 		PartnerAdminF1SeasonDetails,PartnerUserDetails, PartnerUserOffices,PartnerGenericNote,PartnerGenericDeleteNote,PartnerGenericTopic,GenericSeasonsDocuments,GenericPartnerDocument,
 		PartnerStatus,PartnerSeasonDocumentParameters,PartnerAdminIHPSeasonDetails,GenericPartnerSeasonContracts,AdminAddPartner,PartnerSeasonIHPDetail,CCIUsersList,AddedPartners,
-		LeadPartners,PartnerStatusAsPattern,FieldStaffLCList,FieldStaffRMList" />
+		LeadPartners,PartnerStatusAsPattern,FieldStaffLCList,FieldStaffRMList,FieldSatffOverview, AddedFieldStaff,GenericFieldStaffNoteTopic" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -704,15 +704,7 @@
 		</java>
 	</target>
 
-	<target name="genericFieldStaffNote">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/generic/genericFieldStaffNote.xsd" />
-		</java>
-	</target>
-
-	<target name="genericFieldStaffNoteTopic.xsd">
+	<target name="GenericFieldStaffNoteTopic">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />

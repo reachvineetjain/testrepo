@@ -58,6 +58,8 @@
             /services/genericDocuments/**=anon
             /services/admin/partner/**=anon
             /services/fs/**=anon
+            /services/fieldstaff/**=anon
+            /services/fieldstaffgenericnote/**=anon
             /services/**=authc
          </value>
       </property>
