@@ -1316,7 +1316,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          for (Integer item : deletedItems.getOffices()) {
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(deletedItems.getGoId(), item);
             if (!(partnerUserList.isEmpty())) {
-               pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+               pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
                      messageUtil.getMessage(PartnerAdminMessageConstants.CANT_REMOVE_PARTNER_OFFICE)));
             } else {
                pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
