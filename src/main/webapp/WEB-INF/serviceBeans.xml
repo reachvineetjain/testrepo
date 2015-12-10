@@ -53,6 +53,7 @@
          <bean id="genericDocuments" class="com.ccighgo.service.rest.generic.documents.GenericDocuments" />
          <bean id="adminPartner" class="com.ccighgo.service.rest.partner.admin.partner.AdminPartner" />
          <bean id="fieldStaffListing" class="com.ccighgo.service.rest.fieldstaff.listing.FieldStaffListing" />
+         <bean id="fieldStaffSeason" class="com.ccighgo.service.rest.fieldstaff.season.FieldStaffSeason" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />
