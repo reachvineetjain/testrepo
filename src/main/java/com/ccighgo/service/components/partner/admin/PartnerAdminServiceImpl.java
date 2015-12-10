@@ -1316,13 +1316,15 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          for (Integer item : deletedItems.getOffices()) {
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(deletedItems.getGoId(), item);
             if (!(partnerUserList.isEmpty())) {
-               throw new CcighgoException("The office you were trying to delete has users associated. "
-                     + "Please dissociate the users from this office from User tab and then try deleting later.");
+               pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+                     messageUtil.getMessage(PartnerAdminMessageConstants.CANT_REMOVE_PARTNER_OFFICE)));
             } else {
+               pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
                partnerOfficeRepository.delete(item);
+               partnerOfficeRepository.flush();
             }
          }
-         partnerOfficeRepository.flush();
 
          List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(deletedItems.getGoId());
          if (offices != null) {
@@ -1341,9 +1343,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
                pOffices.getOffices().add(office);
             }
+
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVE_PARTNER_OFFICE)));
       }
       return pOffices;
    }
