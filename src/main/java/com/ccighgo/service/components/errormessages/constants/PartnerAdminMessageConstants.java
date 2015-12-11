@@ -29,6 +29,16 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_GETTING_ALL_PARTNER_STATUS = "error.get.all.partner.status";
    public static final String CANT_REMOVE_PARTNER_OFFICE = "error.remove.partner.office";
    public static final String EXCEPTION_REMOVE_PARTNER_OFFICE = "exception.remove.partner.office";
-   public static final String EXCEPTION_UPDATEING_PARTNER_SEASON = "exception.update.partner.season";
-
+   public static final String EXCEPTION_CREATE_PARTNER_CONTACT="exception.create.partner.contact" ;
+   public static final String EXCEPTION_REMOVING_PARTNER_CONTACT="exception.removing.partner.contact";
+   public static final String EXCEPTION_CREATING_PARTNER_NOTE="exception.creating.partner.note" ;
+   public static final String EXCEPTION_CREATING_PARTNER_REFERENCE ="exception.creating.partner.reference";
+   public static final String EXCEPTION_UPDATING_PARTNER_OFFICE ="exception.updating.partner.office";
+   public static final String EXCEPTION_UPDATING_PARTNER_CONTACT ="exception.updating.partner.contact";
+   public static final String EXCEPTION_REMOVING_PARTNER_REFERENCE ="exception.removing.partner.reference";
+   public static final String EXCEPTION_CREATING_PARTNER_DOCUMENT ="exception.creating.partner.document";
+   public static final String EXCEPTION_REMOVING_PARTNER_DOCUMENT = "exception.removing.partner.document";
+   public static final String EXCEPTION_CREATING_PARTNER_OFFICE = "exception.creating.partner.office";
+   public static final String EXCEPTION_GETTING_PARTNER_OFFICE = "exception.getting.partner.office";
+public static final String EXCEPTION_UPDATEING_PARTNER_SEASON = "exception.update.partner.season";
 }

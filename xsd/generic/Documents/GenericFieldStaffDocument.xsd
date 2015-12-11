@@ -10,8 +10,19 @@
    </xsd:annotation>
 
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
-
+   
+   
    <xsd:complexType name="fieldStaffGenericDocuments">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="fieldStaffGenericDocuments" type="cd:fieldStaffGenericDocument" minOccurs="1" maxOccurs="unbounded"></xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="fieldStaffGenericDocument">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>

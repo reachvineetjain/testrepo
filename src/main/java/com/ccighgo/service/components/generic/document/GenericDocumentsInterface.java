@@ -2,8 +2,12 @@ package com.ccighgo.service.components.generic.document;
 
 import java.util.List;
 
+import com.ccighgo.db.entities.FieldStaffDocument;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocument;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocuments;
+import com.ccighgo.service.transport.generic.beans.documents.fieldstaff.FieldStaffGenericDocument;
+import com.ccighgo.service.transport.generic.beans.documents.fieldstaff.FieldStaffGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partnerseasonparameters.PartnerSeasonDocumentParameters;
 import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.GenericPartnerSeasonContract;
@@ -113,4 +117,32 @@ public interface GenericDocumentsInterface {
     * @return
     */
    public WSDefaultResponse deleteSeasonContractDocument(String seasonContractId);
+   
+   /**
+    * 
+    * @param fieldStaffGoId
+    * @return
+    */
+   public FieldStaffGenericDocuments viewFieldStaffDocument(int fieldStaffGoId);
+
+   /**
+    * @param fieldStaffGenericDocuments
+    * @return
+    */
+   public Response addFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocuments);
+
+   /**
+    * 
+    * @param fieldStaffGenericDocuments
+    * @return
+    */
+   public Response updateFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocuments);
+
+   /**
+    * 
+    * @param fieldStaffDocumentId
+    * @return
+    */
+   public Response deleteFieldStaffDocument(int fieldStaffDocumentId);
+
 }

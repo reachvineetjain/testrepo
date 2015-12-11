@@ -25,7 +25,7 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="goId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
                <xsd:element name="firstName" type="xsd:string"  minOccurs="1" maxOccurs="1"/>
                <xsd:element name="lastName" type="xsd:string"  minOccurs="1" maxOccurs="1"/>
                <xsd:element name="imageURL" type="xsd:string" minOccurs="1" maxOccurs="1"/>
