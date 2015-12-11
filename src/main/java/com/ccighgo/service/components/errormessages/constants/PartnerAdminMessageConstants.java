@@ -29,5 +29,6 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_GETTING_ALL_PARTNER_STATUS = "error.get.all.partner.status";
    public static final String CANT_REMOVE_PARTNER_OFFICE = "error.remove.partner.office";
    public static final String EXCEPTION_REMOVE_PARTNER_OFFICE = "exception.remove.partner.office";
+   public static final String EXCEPTION_UPDATEING_PARTNER_SEASON = "exception.update.partner.season";
 
 }

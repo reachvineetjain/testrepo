@@ -1243,4 +1243,16 @@
 			<arg value="${xsd.dir}/fieldstaff/FieldStaffRMList.xsd" />
 		</java>
 	</target>
+	<!--    -->
+
+	<target name="GetAllAvailableSeasonsForPartner">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/GetAllAvailableSeasonsForPartner.xsd" />
+		</java>
+	</target>
+
+
+	
 </project>
