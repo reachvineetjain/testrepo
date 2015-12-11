@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ccighgo.service.components.partner.admin.AssignSubpartnerToSeason;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedContacts;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedDocuments;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedOffices;
@@ -32,6 +33,8 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOv
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
+import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartners;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quickstatscategory.PartnerAdminDashboardQuickStatsCategory;
@@ -397,4 +400,37 @@ public class PartnerAdmin {
       LOGGER.debug("fun : updatePartnerAllocationNotesReviewUpDate");
       return partnerAdminService.updatePartnerNotesReviewFollowUpDate(Integer.valueOf(partnerNotesId), followUpdate);
    }
+   @GET
+   @Path("assignSeason/{seasonId}/{subPartner}/{departmentProgramId}/{loginId}")
+   @Produces("application/json")
+   public WSDefaultResponse assignSeasonToSubPartner(@PathParam("seasonId") String seasonId,@PathParam("subPartner")String subpartnerId,@PathParam("departmentProgramId")String departmentProgramId,@PathParam("loginId")String loginId){
+      LOGGER.info("calling assignSeasonToSubPartner ");
+      return partnerAdminService.assignSeasonToSubPartner(seasonId,subpartnerId, departmentProgramId,loginId);
+   }
+   
+   @POST
+   @Path("assignSeason")
+   @Produces("application/json")
+   public WSDefaultResponse assignSeasonToSubPartner(AssignSubpartnerToSeason assignSubpartnerToSeason){
+      LOGGER.info("calling assignSeasonToSubPartner ");
+      return partnerAdminService.assignSeasonToSubPartner(assignSubpartnerToSeason);
+   }
+   
+   @GET
+   @Path("allSeasons")
+   @Produces("application/json")
+   public SeasonsForPartners getAllAvailableSeasons(){
+      LOGGER.info("calling getAllAvailableSeasons ");
+      return partnerAdminService.getAllAvailableSeasons();
+   }
+   @GET
+   @Path("allSeasons/{partnerId}")
+   @Produces("application/json")
+   public SeasonsForPartners getAllAvailableSeasons(@PathParam("partnerId")  String partnerId){
+      LOGGER.info("calling getAllAvailableSeasons ");
+      return partnerAdminService.getAllAvailableSeasons(partnerId);
+   }
+   
+   
+   
 }

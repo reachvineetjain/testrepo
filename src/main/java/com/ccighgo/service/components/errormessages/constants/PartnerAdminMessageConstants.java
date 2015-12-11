@@ -40,5 +40,5 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_REMOVING_PARTNER_DOCUMENT = "exception.removing.partner.document";
    public static final String EXCEPTION_CREATING_PARTNER_OFFICE = "exception.creating.partner.office";
    public static final String EXCEPTION_GETTING_PARTNER_OFFICE = "exception.getting.partner.office";
-
+public static final String EXCEPTION_UPDATEING_PARTNER_SEASON = "exception.update.partner.season";
 }
