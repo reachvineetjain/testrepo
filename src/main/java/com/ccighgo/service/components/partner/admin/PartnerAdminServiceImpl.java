@@ -1185,7 +1185,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          p.setDocumentInformation(d);
          p.setPartner(partner);
          p.setPartnerProgram(partnerProgram);
-
+         documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          partnerDocumentsRepository.saveAndFlush(p);
          /**
           * Fetching All Documents
@@ -1208,6 +1209,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_DOCUMENT)));
+        
       }
       return documents;
    }
@@ -1226,6 +1230,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
          }
          partnerDocumentsRepository.flush();
+         documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVING_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          /**
           * Fetching All Documents
           */
@@ -1247,13 +1253,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVING_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_DOCUMENT)));
+        
       }
       return documents;
    }
 
    @Override
    public PartnerAdminOverviewOffices addNewPartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
-      PartnerAdminOverviewOffices pOffices;
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
       try {
          PartnerOffice po = new PartnerOffice();
          po.setAdressOne(officesDetails.getAddress1());
@@ -1274,15 +1283,22 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          po.setPostalCode(officesDetails.getZipCode());
          po.setWebsite(officesDetails.getWebsite());
          partnerOfficeRepository.saveAndFlush(po);
+         pOffices = getListofOffices(officesDetails.getGoId());
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));        
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_OFFICE)));
       }
-      pOffices = getListofOffices(officesDetails.getGoId());
+      
       return pOffices;
    }
 
    private PartnerAdminOverviewOffices getListofOffices(int goId) {
       PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
+      try
+      {
       List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
       if (offices != null) {
          for (PartnerOffice partnerOffice : offices) {
@@ -1302,7 +1318,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
             pOffices.getOffices().add(office);
          }
-
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GET_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));        
+      }
+      }catch(Exception e)
+      {
+         ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_PARTNER_OFFICE)));
       }
       return pOffices;
    }
@@ -1378,7 +1401,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pc.setSkypeId(contactsDetails.getSkypeId());
          pc.setTitle(contactsDetails.getTitile());
          partnerContactRepository.saveAndFlush(pc);
-
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
          if (contacts != null) {
             for (PartnerContact partnerContact : contacts) {
@@ -1401,6 +1425,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATE_PARTNER_CONTACT)));
       }
       return pContacts;
    }
@@ -1414,7 +1440,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             partnerContactRepository.delete(item);
          }
          partnerContactRepository.flush();
-
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode. REMOVE_PARTNER_CONTACT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS))); 
          List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(deletedItems.getGoId());
          if (contacts != null) {
             for (PartnerContact partnerContact : contacts) {
@@ -1436,6 +1463,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_CONTACT)));
       }
       return pContacts;
    }
@@ -1455,7 +1484,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          PartnerNoteTopic partnerNoteTopic = partnerNoteTopicRepository.findByPartnerNoteTopicName(notesDetails.getTopic());
          note.setPartnerNoteTopic(partnerNoteTopic);
          partnerNoteRepository.saveAndFlush(note);
-
+         pn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_NOTE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(notesDetails.getGoId());
          if (partnerNotes != null) {
             for (PartnerNote partnerNote : partnerNotes) {
@@ -1468,6 +1498,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_NOTE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_NOTE)));
       }
       return pn;
    }
@@ -1485,9 +1517,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          refcheck.setReferenceCheckNotes(referenceChecksDetails.getNote());
          refcheck.setReferenceCompletedBy(referenceChecksDetails.getCompletedBy());
          refcheck.setReferenceCompletedOn(DateUtils.getDateFromString(referenceChecksDetails.getCompletedOn()));
-
          partnerReferenceCheckRepository.saveAndFlush(refcheck);
-
+         prc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(referenceChecksDetails.getGoId());
          if (partnerReferenceChecks != null) {
             for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
@@ -1504,6 +1536,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_REFERENCE)));
       }
       return prc;
    }
@@ -1516,7 +1550,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             partnerReferenceCheckRepository.delete(item);
          }
          partnerReferenceCheckRepository.flush();
-
+         prc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(deletedItems.getGoId());
          if (partnerReferenceChecks != null) {
             for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
@@ -1533,6 +1568,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_REFERENCE)));
       }
       return prc;
    }
@@ -1550,7 +1587,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
-      PartnerAdminOverviewOffices pOffices;
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
       try {
          PartnerOffice po = partnerOfficeRepository.findOne(officesDetails.getPartnerOfficeId());
          po.setAdressOne(officesDetails.getAddress1());
@@ -1569,10 +1606,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          po.setPostalCode(officesDetails.getZipCode());
          po.setWebsite(officesDetails.getWebsite());
          partnerOfficeRepository.saveAndFlush(po);
+         pOffices = getListofOffices(officesDetails.getGoId());
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_OFFICE)));
       }
-      pOffices = getListofOffices(officesDetails.getGoId());
       return pOffices;
    }
 
@@ -1597,7 +1638,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pc.setSkypeId(contactsDetails.getSkypeId());
          pc.setTitle(contactsDetails.getTitile());
          partnerContactRepository.saveAndFlush(pc);
-
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
          if (contacts != null) {
             for (PartnerContact partnerContact : contacts) {
@@ -1619,6 +1661,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_CONTACT)));
       }
       return pContacts;
    }
