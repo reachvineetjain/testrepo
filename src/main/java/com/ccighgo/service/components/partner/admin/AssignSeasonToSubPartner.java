@@ -2,7 +2,7 @@ package com.ccighgo.service.components.partner.admin;
 
 import java.util.List;
 
-public class AssignSubpartnerToSeason {
+public class AssignSeasonToSubPartner {
 
    private List<AssignedSeasonData> assignedSeasonData;
    private Integer subPartner;

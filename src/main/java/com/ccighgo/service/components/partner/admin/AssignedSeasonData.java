@@ -4,6 +4,15 @@ public class AssignedSeasonData {
 
    private Integer seasonId;;
    private Integer departmentProgramId;
+   
+   public AssignedSeasonData(Integer seasonId, Integer departmentProgramId) {
+      super();
+      this.seasonId = seasonId;
+      this.departmentProgramId = departmentProgramId;
+   }
+   public AssignedSeasonData() {
+      // TODO Auto-generated constructor stub
+   }
    public Integer getSeasonId() {
       return seasonId;
    }

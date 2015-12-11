@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ccighgo.service.components.partner.admin.AssignSubpartnerToSeason;
+import com.ccighgo.service.components.partner.admin.AssignSeasonToSubPartner;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedContacts;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedDocuments;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedOffices;
@@ -411,7 +411,7 @@ public class PartnerAdmin {
    @POST
    @Path("assignSeason")
    @Produces("application/json")
-   public WSDefaultResponse assignSeasonToSubPartner(AssignSubpartnerToSeason assignSubpartnerToSeason){
+   public WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason){
       LOGGER.info("calling assignSeasonToSubPartner ");
       return partnerAdminService.assignSeasonToSubPartner(assignSubpartnerToSeason);
    }
