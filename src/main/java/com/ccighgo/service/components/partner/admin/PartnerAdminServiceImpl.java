@@ -1228,7 +1228,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          ExceptionUtil.logException(e, logger);
          documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_DOCUMENT.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_DOCUMENT)));
-        
+
       }
       return documents;
    }
@@ -1272,7 +1272,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          ExceptionUtil.logException(e, logger);
          documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVING_PARTNER_DOCUMENT.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_DOCUMENT)));
-        
+
       }
       return documents;
    }
@@ -1302,44 +1302,42 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          partnerOfficeRepository.saveAndFlush(po);
          pOffices = getListofOffices(officesDetails.getGoId());
          pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_OFFICE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));        
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_OFFICE)));
       }
-      
+
       return pOffices;
    }
 
    private PartnerAdminOverviewOffices getListofOffices(int goId) {
       PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
-      try
-      {
-      List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
-      if (offices != null) {
-         for (PartnerOffice partnerOffice : offices) {
-            PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
-            office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
-            office.setAddress1(partnerOffice.getAdressOne());
-            office.setAddress2(partnerOffice.getAdressTwo());
-            office.setCity(partnerOffice.getCity());
-            String countryName = partnerOffice.getLookupCountry().getCountryName();
-            if (countryName != null)
-               office.setCountry(countryName);
-            office.setEmail(partnerOffice.getPartner().getEmail());
-            office.setFax(partnerOffice.getFaxNumber());
-            office.setPhone(partnerOffice.getPhoneNumber());
-            office.setWebsite(partnerOffice.getWebsite());
-            office.setZipCode(partnerOffice.getPostalCode());
-            office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
-            pOffices.getOffices().add(office);
+      try {
+         List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
+         if (offices != null) {
+            for (PartnerOffice partnerOffice : offices) {
+               PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
+               office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
+               office.setAddress1(partnerOffice.getAdressOne());
+               office.setAddress2(partnerOffice.getAdressTwo());
+               office.setCity(partnerOffice.getCity());
+               String countryName = partnerOffice.getLookupCountry().getCountryName();
+               if (countryName != null)
+                  office.setCountry(countryName);
+               office.setEmail(partnerOffice.getPartner().getEmail());
+               office.setFax(partnerOffice.getFaxNumber());
+               office.setPhone(partnerOffice.getPhoneNumber());
+               office.setWebsite(partnerOffice.getWebsite());
+               office.setZipCode(partnerOffice.getPostalCode());
+               office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
+               pOffices.getOffices().add(office);
+            }
+            pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GET_PARTNER_OFFICE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
-         pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GET_PARTNER_OFFICE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));        
-      }
-      }catch(Exception e)
-      {
+      } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_PARTNER_OFFICE)));
@@ -1457,8 +1455,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             partnerContactRepository.delete(item);
          }
          partnerContactRepository.flush();
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode. REMOVE_PARTNER_CONTACT.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS))); 
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(deletedItems.getGoId());
          if (contacts != null) {
             for (PartnerContact partnerContact : contacts) {
@@ -2087,8 +2085,48 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public WSDefaultResponse assignSeasonToSubPartner(AssignSubpartnerToSeason assignSubpartnerToSeason) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Partner p = partnerRepository.findOne(assignSubpartnerToSeason.getSubPartner());
+         if (assignSubpartnerToSeason.getAssignedSeasonData() != null && !assignSubpartnerToSeason.getAssignedSeasonData().isEmpty())
+            for (AssignedSeasonData data : assignSubpartnerToSeason.getAssignedSeasonData()) {
+               PartnerSeason ps = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(data.getSeasonId(), data.getDepartmentProgramId(),
+                     assignSubpartnerToSeason.getSubPartner());
+               partnerSeasonsRepository.delete(ps);
+               ps = new PartnerSeason();
+               Season season = seasonRepository.findOne(data.getSeasonId());
+               DepartmentProgram departmentProgram2 = departmentProgramRepository.findOne(data.getDepartmentProgramId());
 
-      return null;
+               ps.setSeason(season);
+               ps.setPartner(p);
+               ps.setDepartmentProgram(departmentProgram2);
+
+               ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
+               ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
+               ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
+               ps.setQuestionaireRequired(CCIConstants.INACTIVE);
+               ps.setDisableAddParticipant(CCIConstants.INACTIVE);
+               ps.setParticipantPaysDeposit(CCIConstants.INACTIVE);
+               ps.setCanAccessJobBoard(CCIConstants.INACTIVE);
+               ps.setCanCreateSubPartner(CCIConstants.INACTIVE);
+               ps.setIsSignedContract(CCIConstants.INACTIVE);
+               ps.setActive(CCIConstants.ACTIVE);
+               ps.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               ps.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               ps.setCreatedBy(assignSubpartnerToSeason.getLoginId());
+               ps.setModifiedBy(assignSubpartnerToSeason.getLoginId());
+
+               partnerSeasonsRepository.saveAndFlush(ps);
+            }
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON));
+      }
+      return wsDefaultResponse;
    }
 
 }
