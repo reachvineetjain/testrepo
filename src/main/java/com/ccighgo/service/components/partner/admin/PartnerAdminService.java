@@ -122,6 +122,6 @@ public interface PartnerAdminService {
 
    SeasonsForPartners getAllAvailableSeasons(String partnerId);
 
-   WSDefaultResponse assignSeasonToSubPartner(AssignSubpartnerToSeason assignSubpartnerToSeason);
+   WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason);
 
 }

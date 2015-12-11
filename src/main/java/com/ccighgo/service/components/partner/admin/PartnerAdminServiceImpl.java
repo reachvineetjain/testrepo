@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.partner.admin;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -141,6 +142,7 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
+import com.google.gson.Gson;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -2084,7 +2086,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public WSDefaultResponse assignSeasonToSubPartner(AssignSubpartnerToSeason assignSubpartnerToSeason) {
+   public WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          Partner p = partnerRepository.findOne(assignSubpartnerToSeason.getSubPartner());
@@ -2127,6 +2129,20 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON));
       }
       return wsDefaultResponse;
+   }
+   
+   public static void main(String[] args) {
+      Gson gson = new Gson();
+      AssignSeasonToSubPartner a = new AssignSeasonToSubPartner();
+      a.setLoginId(333);
+      a.setSubPartner(333);
+      List<AssignedSeasonData> ll = new ArrayList<AssignedSeasonData>();
+      ll.add(new AssignedSeasonData(33,44));
+      ll.add(new AssignedSeasonData(33,44));
+      ll.add(new AssignedSeasonData(33,44));
+      ll.add(new AssignedSeasonData(33,44));
+      a.setAssignedSeasonData(ll);
+      System.out.println(gson.toJson(a));
    }
 
 }
