@@ -472,7 +472,6 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                documentInformation.setFileName(genericSeasonContract.getFileName());
                documentInformation.setDocumentName(genericSeasonContract.getDocName());
                documentInformation.setUrl(genericSeasonContract.getDocUrl());
-               // TODO needs to be fixed
                documentInformation.setModifiedBy(genericSeasonContract.getLoginId());
                documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                documentInformation.setActive((byte) ((genericSeasonContract.isActive()) ? 1 : 0));
@@ -519,32 +518,44 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
    public FieldStaffGenericDocuments viewFieldStaffDocument(int fieldStaffGoId) {
 
       FieldStaffGenericDocuments documents = new FieldStaffGenericDocuments();
-
-      List<FieldStaffDocument> fieldStaffDocuments = fieldStaffDocumentRepository.getFieldStaffDocumentsByFieldStaffGoId(fieldStaffGoId);
-      if (fieldStaffDocuments == null) {
-         return documents;
-      }
-      for (FieldStaffDocument fsd : fieldStaffDocuments) {
-         FieldStaffGenericDocument doc = new FieldStaffGenericDocument();
-         doc.setFieldStaffDocumentId(fsd.getFieldStaffDocumentId());
-         DocumentInformation di = fsd.getDocumentInformation();
-         if (di != null) {
-            doc.setDocType(di.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-            doc.setDocUrl(di.getUrl());
-            doc.setDocName(di.getDocumentName());
+      try {
+         List<FieldStaffDocument> fieldStaffDocuments = fieldStaffDocumentRepository.getFieldStaffDocumentsByFieldStaffGoId(fieldStaffGoId);
+         if (fieldStaffDocuments == null) {
+            documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_NOT_FOUND.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+            return documents;
          }
-         // TODO
-         doc.setDescription("");
-         UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fsd.getDocumentInformation().getCreatedBy());
-         if (userInformation != null) {
-            com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser documentUploadUser = new com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser();
-            documentUploadUser.setPhotoUrl(userInformation.getPhotoUrl());
-            documentUploadUser.setRole(userInformation.getRole());
-            documentUploadUser.setUserName(userInformation.getUserName());
-            doc.setUploadedBy(documentUploadUser);
+         for (FieldStaffDocument fsd : fieldStaffDocuments) {
+            FieldStaffGenericDocument doc = new FieldStaffGenericDocument();
+            doc.setFieldStaffDocumentId(fsd.getFieldStaffDocumentId());
+            DocumentInformation di = fsd.getDocumentInformation();
+            if (di != null) {
+               doc.setDocType(di.getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+               doc.setDocUrl(di.getUrl());
+               doc.setDocName(di.getDocumentName());
+               doc.setFileName(di.getFileName());
+            }
+            // TODO
+            doc.setDescription("");
+            doc.setFieldStaffGoId(fsd.getFieldStaff().getFieldStaffGoId());
+            doc.setActive(CCIConstants.ACTIVE==fsd.getActive());
+            UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fsd.getDocumentInformation().getCreatedBy());
+            if (userInformation != null) {
+               com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser documentUploadUser = new com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser();
+               documentUploadUser.setPhotoUrl(userInformation.getPhotoUrl());
+               documentUploadUser.setRole(userInformation.getRole());
+               documentUploadUser.setUserName(userInformation.getUserName());
+               doc.setUploadedBy(documentUploadUser);
+            }
+            doc.setUploadDate(DateUtils.getDateAndTime(fsd.getCreatedOn()));
+            documents.getFieldStaffGenericDocuments().add(doc);
          }
-         doc.setUploadDate(DateUtils.getDateAndTime(fsd.getCreatedOn()));
-         documents.getFieldStaffGenericDocuments().add(doc);
+         documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
       }
       return documents;
    }
@@ -553,41 +564,94 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
    public Response addFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocument) {
 
       Response response = new Response();
-      DocumentInformation documentInformation = new DocumentInformation();
-      FieldStaff fieldstaff = fieldStaffRepository.findOne(fieldStaffGenericDocument.getFieldStaffGoId());
+      try {
+         DocumentInformation documentInformation = new DocumentInformation();
+         FieldStaff fieldstaff = fieldStaffRepository.findOne(fieldStaffGenericDocument.getFieldStaffGoId());
+         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(fieldStaffGenericDocument.getDocType()));
+         documentInformation.setFileName(fieldStaffGenericDocument.getFileName());
+         documentInformation.setDocumentName(fieldStaffGenericDocument.getDocName());
+         documentInformation.setUrl(fieldStaffGenericDocument.getDocUrl());
+         documentInformation.setCreatedBy(fieldStaffGenericDocument.getLoginId());
+         documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         documentInformation.setModifiedBy(fieldStaffGenericDocument.getLoginId());
+         documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         documentInformation.setActive(CCIConstants.ACTIVE);
+         DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
 
-      documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(fieldStaffGenericDocument.getDocType()));
-      documentInformation.setFileName(fieldStaffGenericDocument.getFileName());
-      documentInformation.setDocumentName(fieldStaffGenericDocument.getDocName());
-      documentInformation.setUrl(fieldStaffGenericDocument.getDocUrl());
-      documentInformation.setCreatedBy(fieldStaffGenericDocument.getLoginId());
-      documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      documentInformation.setModifiedBy(fieldStaffGenericDocument.getLoginId());
-      documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      documentInformation.setActive(CCIConstants.ACTIVE);
-      DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
+         FieldStaffDocument fieldstaffDocument = new FieldStaffDocument();
+         fieldstaffDocument.setFieldStaff(fieldstaff);
+         fieldstaffDocument.setDocumentInformation(di);
+         fieldstaffDocument.setCreatedBy(fieldStaffGenericDocument.getLoginId());
+         fieldstaffDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         fieldstaffDocument.setModifiedBy(fieldStaffGenericDocument.getLoginId());
+         fieldstaffDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         fieldstaffDocument.setActive(CCIConstants.ACTIVE);
+         fieldStaffDocumentRepository.saveAndFlush(fieldstaffDocument);
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_CREATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
+         e.printStackTrace();
 
-      FieldStaffDocument fieldstaffDocument = new FieldStaffDocument();
-      fieldstaffDocument.setFieldStaff(fieldstaff);
-      fieldstaffDocument.setDocumentInformation(di);
-      fieldstaffDocument.setCreatedBy(fieldStaffGenericDocument.getLoginId());
-      fieldstaffDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      fieldstaffDocument.setModifiedBy(fieldStaffGenericDocument.getLoginId());
-      fieldstaffDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      fieldstaffDocument.setActive(CCIConstants.ACTIVE);
-      fieldStaffDocumentRepository.saveAndFlush(fieldstaffDocument);
+      }
       return response;
    }
 
    @Override
    public Response updateFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocuments) {
-      // TODO Auto-generated method stub
-      return null;
+      Response response = new Response();
+      try {
+         FieldStaffDocument fieldstaffDocument = fieldStaffDocumentRepository.findOne(fieldStaffGenericDocuments.getFieldStaffDocumentId());
+         if (fieldstaffDocument == null) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_UPDATE_DOCUMENT.getValue(),
+                  messageUtil.getMessage(GenericMessageConstants.FAILED_TO_UPDATE_GENERIC_DOCUMENT)));
+            return response;
+         }
+         DocumentInformation documentInformation = fieldstaffDocument.getDocumentInformation();
+         FieldStaff fieldstaff = fieldStaffRepository.findOne(fieldStaffGenericDocuments.getFieldStaffGoId());
+
+         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(fieldStaffGenericDocuments.getDocType()));
+         documentInformation.setFileName(fieldStaffGenericDocuments.getFileName());
+         documentInformation.setDocumentName(fieldStaffGenericDocuments.getDocName());
+         documentInformation.setUrl(fieldStaffGenericDocuments.getDocUrl());
+         documentInformation.setModifiedBy(fieldStaffGenericDocuments.getLoginId());
+         documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         documentInformation.setActive(CCIConstants.ACTIVE);
+
+         DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
+         fieldstaffDocument.setFieldStaff(fieldstaff);
+         fieldstaffDocument.setDocumentInformation(di);
+         fieldstaffDocument.setModifiedBy(fieldStaffGenericDocuments.getLoginId());
+         fieldstaffDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         fieldstaffDocument.setActive(CCIConstants.ACTIVE);
+         fieldStaffDocumentRepository.saveAndFlush(fieldstaffDocument);
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_UPDATE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_UPDATE_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_UPDATE_GENERIC_DOCUMENT));
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return response;
    }
 
    @Override
    public Response deleteFieldStaffDocument(int fieldStaffDocumentId) {
-      // TODO Auto-generated method stub
-      return null;
+      Response response = new Response();
+      try {
+         fieldStaffDocumentRepository.delete(fieldStaffDocumentId);
+         documentInformationRepository.delete(fieldStaffDocumentId);
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_DELETE_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT));
+      }
+      return response;
    }
 }

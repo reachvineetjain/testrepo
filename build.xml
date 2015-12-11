@@ -708,7 +708,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/generic/genericFieldStaffNoteTopic.xsd" />
+			<arg value="${xsd.dir}/generic/GenericFieldStaffNoteTopic.xsd" />
 		</java>
 	</target>
 

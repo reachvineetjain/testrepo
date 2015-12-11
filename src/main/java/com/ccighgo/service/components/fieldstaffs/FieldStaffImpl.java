@@ -9,9 +9,15 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffStatus;
+import com.ccighgo.db.entities.GoIdSequence;
+import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LoginHistory;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffStatusRepository;
+import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
+import com.ccighgo.jpa.repositories.LoginHistoryRepository;
+import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
@@ -22,6 +28,8 @@ import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.reuse.function.ReusedFunctions;
+import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 
 @Component
 public class FieldStaffImpl implements FieldStaffsInterface {
@@ -33,12 +41,24 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 
    @Autowired
    FieldStaffStatusRepository fieldStaffStatusRepository;
+   
+   @Autowired
+   LoginRepository loginRepository;
+   
+   @Autowired
+   GoIdSequenceRepository goIdSequenceRepository;
 
    @Autowired
    CommonComponentUtils componentUtils;
 
    @Autowired
    MessageUtils messageUtil;
+   
+   @Autowired
+   ReusedFunctions reusedFunctions;
+   
+   @Autowired
+   LoginHistoryRepository loginHistoryRepository;
 
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
@@ -49,6 +69,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             addedFieldStaff.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSATFF_BY_ROLL.getValue(),
                   messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ROLL)));
             LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ROLL));
+            return addedFieldStaff;
          }
          for (FieldStaff fs : fieldstaffs) {
             com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.FieldStaff fieldstaff = new com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.FieldStaff();
@@ -56,14 +77,12 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             fieldstaff.setFirstName(fs.getFirstName());
             fieldstaff.setLastName(fs.getLastName());
             fieldstaff.setPhone(fs.getPhone());
-            // TODO
-            fieldstaff.setEmail("");
+            Login login= loginRepository.findByGoId(fs.getGoIdSequence());
+            fieldstaff.setEmail(login.getEmail());
             fieldstaff.setCity(fs.getCurrentCity());
-            // TODO
             fieldstaff.setState(fs.getLookupUsstate2().getStateCode());
-            fieldstaff.setZip(fs.getCurrentZipCode());
-            // TODO
-            fieldstaff.setActive(false);
+            fieldstaff.setZip(fs.getCurrentZipCode()); 
+            fieldstaff.setActive(login.getActive()==CCIConstants.ACTIVE);
 
             List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons = fs.getFieldStaffLeadershipSeasons();
             String seasonsName = "";
@@ -117,7 +136,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setCellPhone(fs.getCellPhone());
          fsd.setTollFreePhone(fs.getTollFreePhone());
          fsd.setFax(fs.getFax());
-         fsd.setUserName("");
+         Login login= loginRepository.findByGoId(fs.getGoIdSequence());
+         fsd.setUserName(login.getLoginName());
          fsd.setOriginalStartDate(DateUtils.getMMddyyDate(fs.getOriginalStartDate()));
          fsd.setTotalPlacementManual(fs.getTotalPlacementsManual());
          // TODO
@@ -128,14 +148,15 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setDateApplicatiionApproved(DateUtils.getMMddyyDate(fs.getApprovedDate()));
          fsd.setDateDosCertificationTestTaken(DateUtils.getMMddyyDate(fs.getDateDOSCertTestTaken()));
          fsd.setDateW9FormReceived(DateUtils.getMMddyyDate(fs.getDateW9FormReceived()));
-         // TODO
-         fsd.setApprovedBy("");
+         
+         UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fs.getApprovedBy());
+         if(userInformation!=null)
+         fsd.setApprovedBy(userInformation.getUserName());
          fieldStaffOverview.setFieldStaffDetail(fsd);
 
          FieldStaffCurrentStatus fscs = new FieldStaffCurrentStatus();
          fscs.setFieldStaffStatus(fs.getFieldStaffStatus().getFieldStaffStatusName());
-         // TODO
-         fscs.setActive(true);
+         fscs.setActive(login.getActive()==CCIConstants.ACTIVE);
          fieldStaffOverview.setFieldStaffCurrentStatus(fscs);
          // TODO
          fieldStaffOverview.setLastLoginDate("");
@@ -152,7 +173,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 
    @Override
    public FieldStaffStatuses getAllFieldStaffStatuses() {
-
       FieldStaffStatuses fieldStaffStatuses = new FieldStaffStatuses();
       try {
          List<FieldStaffStatus> statuses = fieldStaffStatusRepository.findAll();

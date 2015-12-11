@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.generic.document.GenericDocumentsInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.generic.beans.documents.fieldstaff.FieldStaffGenericDocument;
+import com.ccighgo.service.transport.generic.beans.documents.fieldstaff.FieldStaffGenericDocuments;
 import com.ccighgo.service.transport.generic.beans.documents.partner.PartnerGenericDocuments;
 import com.ccighgo.utils.WSDefaultResponse;
 import com.ccighgo.service.transport.generic.beans.documents.Season.GenericSeasonDocument;
@@ -207,5 +208,13 @@ public class GenericDocuments {
    public Response deleteFieldStaffDocument(@PathParam("fieldStaffDocumentId")String fieldStaffDocumentId)
    {
       return genericDocumentsInterface.deleteFieldStaffDocument(Integer.valueOf(fieldStaffDocumentId));
+   }
+   
+   @GET
+   @Path("viewFieldStaffDocument/{fieldStaffDocumentId}")
+   @Produces("application/json")
+   public FieldStaffGenericDocuments viewFieldStaffDocument(@PathParam("fieldStaffDocumentId")String fieldStaffGoId)
+   {
+      return genericDocumentsInterface.viewFieldStaffDocument(Integer.valueOf(fieldStaffGoId));
    }
 }
