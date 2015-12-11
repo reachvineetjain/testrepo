@@ -4,15 +4,14 @@ import java.util.List;
 
 public class AssignSubpartnerToSeason {
 
-   private List<Integer> seasonId;
+   private List<AssignedSeasonData> assignedSeasonData;
    private Integer subPartner;
-   private Integer departmentProgramId;
    private Integer loginId;
-   public List<Integer> getSeasonId() {
-      return seasonId;
+   public List<AssignedSeasonData> getAssignedSeasonData() {
+      return assignedSeasonData;
    }
-   public void setSeasonId(List<Integer> seasonId) {
-      this.seasonId = seasonId;
+   public void setAssignedSeasonData(List<AssignedSeasonData> assignedSeasonData) {
+      this.assignedSeasonData = assignedSeasonData;
    }
    public Integer getSubPartner() {
       return subPartner;
@@ -20,18 +19,12 @@ public class AssignSubpartnerToSeason {
    public void setSubPartner(Integer subPartner) {
       this.subPartner = subPartner;
    }
-   public Integer getDepartmentProgramId() {
-      return departmentProgramId;
-   }
-   public void setDepartmentProgramId(Integer departmentProgramId) {
-      this.departmentProgramId = departmentProgramId;
-   }
    public Integer getLoginId() {
       return loginId;
    }
    public void setLoginId(Integer loginId) {
       this.loginId = loginId;
    }
-
    
+
 }
