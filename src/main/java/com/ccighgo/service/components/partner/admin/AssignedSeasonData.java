@@ -4,7 +4,8 @@ public class AssignedSeasonData {
 
    private Integer seasonId;;
    private Integer departmentProgramId;
-   
+   private String seasonName;
+
    public AssignedSeasonData(Integer seasonId, Integer departmentProgramId) {
       super();
       this.seasonId = seasonId;
@@ -26,5 +27,10 @@ public class AssignedSeasonData {
       this.departmentProgramId = departmentProgramId;
    }
    
-   
+   public String getSeasonName() {
+      return seasonName;
+   }
+   public void setSeasonName(String seasonName) {
+      this.seasonName = seasonName;
+   }
 }
