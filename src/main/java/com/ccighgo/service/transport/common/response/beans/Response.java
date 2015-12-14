@@ -13,7 +13,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeasons;
+import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffNote;
+import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffTopic;
+import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffTopics;
 
 
 /**
@@ -42,7 +44,9 @@ import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeasons;
     "status"
 })
 @XmlSeeAlso({
-    FieldStaffSeasons.class
+    FieldStaffTopics.class,
+    FieldStaffTopic.class,
+    FieldStaffNote.class
 })
 public class Response {
 
