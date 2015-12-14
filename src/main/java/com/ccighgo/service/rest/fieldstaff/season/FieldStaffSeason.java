@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaff.season.FieldStaffSeasonService;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeasons;
 
 /**
@@ -24,17 +25,26 @@ import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeasons;
 @Produces("application/json")
 @Consumes("application/json")
 public class FieldStaffSeason {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(FieldStaffSeason.class);
-   
+
    @Autowired FieldStaffSeasonService fieldStaffSeasonService;
-   
+
    @GET
-   @Path("list/{fsGoId}")
+   @Path("list/{fieldStaffGoId}")
    @Produces("application/json")
-   public FieldStaffSeasons getFieldStaffSeasons(@PathParam("fsGoId") String fsGoId){
+   public FieldStaffSeasons getFieldStaffSeasons(@PathParam("fieldStaffGoId") String fieldStaffGoId) {
       LOGGER.info("calling FieldStaffSeason.getFieldStaffLCList ");
-      return fieldStaffSeasonService.getFieldStaffSeasons(Integer.valueOf(fsGoId));
+      return fieldStaffSeasonService.getFieldStaffSeasons(fieldStaffGoId);
+   }
+
+   @GET
+   @Path("signed/contract/{fslSeasonId}/{seasonId}/{deparmentProgramId}/{statusVal}")
+   @Produces("application/json")
+   public Response updateSignedContract(@PathParam("fslSeasonId") String fslSeasonId, @PathParam("seasonId") String seasonId,
+         @PathParam("deparmentProgramId") String deparmentProgramId, @PathParam("statusVal") String statusVal) {
+      LOGGER.info("calling FieldStaffSeason.updateSignedContract ");
+      return fieldStaffSeasonService.updateSignedContract(fslSeasonId,seasonId,deparmentProgramId,statusVal);
    }
 
 }
