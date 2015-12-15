@@ -428,7 +428,7 @@ public class PartnerAdmin {
    @Produces("application/json")
    public SeasonsForPartners getAllAvailableSeasons(@PathParam("partnerId")  String partnerId){
       LOGGER.info("calling getAllAvailableSeasons ");
-      return partnerAdminService.getAllAvailableSeasons(partnerId);
+      return partnerAdminService.getAllAvailableSeasons2(partnerId);
    }
    
    
