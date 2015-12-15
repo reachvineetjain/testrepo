@@ -2264,17 +2264,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          }
          seasonGHTDetails = seasonServiceImplUtil.getGHTHSAbroad(seasonHSADetail);
          if (seasonGHTDetails == null) {
-            seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_GHT_DEAILS.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
+            seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_GHT_DETAILS.getValue(),
+                  messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
+            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
             return seasonGHTDetails;
          }
          seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
          seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_GHT_DEAILS.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
+               messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
       }
       return seasonGHTDetails;
    }
