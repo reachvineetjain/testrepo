@@ -20,6 +20,7 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonDetailRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeason;
 import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeasons;
@@ -49,7 +50,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
       FieldStaffSeasons fsSeasonList = new FieldStaffSeasons();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0) {
-            throw new CcighgoException("invalid field staff id");
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID));
          }
          int count = 0;
          Query query = entityManager.createNativeQuery(SP_FS_SEASON_LIST);
@@ -76,10 +77,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
             }
          }
          fsSeasonList.setCount(count);
-         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_FSL_SEASON.getValue(), e.getMessage()));
       }
       return fsSeasonList;
    }
@@ -90,28 +91,28 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
       Response resp = new Response();
       try {
          if (fslSeasonId == null || Integer.valueOf(fslSeasonId) == 0 || Integer.valueOf(fslSeasonId) < 0) {
-            throw new CcighgoException("invalid field staff season id");
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FSLSEASONID));
          }
          if (seasonId == null || Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
-            throw new CcighgoException("invalid season id");
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_SEASONID));
          }
          if (deparmentProgramId == null || Integer.valueOf(deparmentProgramId) == 0 || Integer.valueOf(deparmentProgramId) < 0) {
-            throw new CcighgoException("invalid department program id");
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_DEPT_PRG_ID));
          }
          if (statusVal == null) {
-            throw new CcighgoException("invalid value");
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_SIGNNED_CONTRACT_VALUE));
          }
          FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail = fieldStaffLeadershipSeasonDetailRepository.getFslSeasonDetailByIdSeasonIdAndDeptPrgId(
                Integer.valueOf(fslSeasonId), Integer.valueOf(seasonId), Integer.valueOf(deparmentProgramId));
          if (fieldStaffLeadershipSeasonDetail == null) {
-            throw new CcighgoException("no record found");
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.NO_FSL_RECORD_FOUND_TO_UPDATE));
          }
          fieldStaffLeadershipSeasonDetail.setAgreeToTerms(Integer.valueOf(seasonId) == 1 ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fieldStaffLeadershipSeasonDetailRepository.saveAndFlush(fieldStaffLeadershipSeasonDetail);
-         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
       }
       return resp;
    }
