@@ -760,7 +760,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             LookupUSState userState = stateRepository.findOne(user.getUserState().getStateId());
             cciUser.setLookupUsstate(userState);
          }
-         cciUser.setModifiedBy(1);
+         cciUser.setModifiedBy(user.getLoginId());
          cciUser.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          cciUsersRepository.saveAndFlush(cciUser);
 
@@ -1776,9 +1776,9 @@ public class UserManagementServiceImpl implements UserManagementService {
             staffUserProgramPK.setCciStaffUserId(cUser.getCciStaffUserId());
             staffUserProgramPK.setLookupDepartmentProgramId(usrDeptPrg.getProgramId());
             cciUsrPrg.setId(staffUserProgramPK);
-            cciUsrPrg.setCreatedBy(1);
+            cciUsrPrg.setCreatedBy(user.getLoginId());
             cciUsrPrg.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            cciUsrPrg.setModifiedBy(1);
+            cciUsrPrg.setModifiedBy(user.getLoginId());
             cciUsrPrg.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             cciUsrPrg.setCcistaffUser(cUser);
             userPrograms.add(cciUsrPrg);
@@ -1805,9 +1805,9 @@ public class UserManagementServiceImpl implements UserManagementService {
             staffUserProgramPK.setLookupDepartmentProgramId(usrDeptPrg.getProgramId());
             cciUsrPrg.setId(staffUserProgramPK);
             cciUsrPrg.setLookupDepartmentProgram(deptProgram);
-            cciUsrPrg.setCreatedBy(1);
+            cciUsrPrg.setCreatedBy(user.getLoginId());
             cciUsrPrg.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            cciUsrPrg.setModifiedBy(1);
+            cciUsrPrg.setModifiedBy(user.getLoginId());
             cciUsrPrg.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             cciUsrPrg.setCcistaffUser(cUser);
             userPrograms.add(cciUsrPrg);
@@ -1831,10 +1831,10 @@ public class UserManagementServiceImpl implements UserManagementService {
             if (cciStaffRole != null) {
                staffUsersCCIStaffRole.setCcistaffRole(cciStaffRole);
             }
-            staffUsersCCIStaffRole.setCreatedBy(1);
+            staffUsersCCIStaffRole.setCreatedBy(user.getLoginId());
             staffUsersCCIStaffRole.setCcistaffUser(cUser);
             staffUsersCCIStaffRole.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            staffUsersCCIStaffRole.setModifiedBy(1);
+            staffUsersCCIStaffRole.setModifiedBy(user.getLoginId());
             staffUsersCCIStaffRole.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             CCIStaffUsersCCIStaffRolePK pk = new CCIStaffUsersCCIStaffRolePK();
             pk.setCciStaffUserId(cUser.getCciStaffUserId());
@@ -1861,10 +1861,10 @@ public class UserManagementServiceImpl implements UserManagementService {
          if (cciStaffRole != null) {
             staffUsersCCIStaffRole.setCcistaffRole(cciStaffRole);
          }
-         staffUsersCCIStaffRole.setCreatedBy(1);
+         staffUsersCCIStaffRole.setCreatedBy(user.getLoginId());
          staffUsersCCIStaffRole.setCcistaffUser(cUser);
          staffUsersCCIStaffRole.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         staffUsersCCIStaffRole.setModifiedBy(1);
+         staffUsersCCIStaffRole.setModifiedBy(user.getLoginId());
          staffUsersCCIStaffRole.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          CCIStaffUsersCCIStaffRolePK pk = new CCIStaffUsersCCIStaffRolePK();
          pk.setCciStaffUserId(cUser.getCciStaffUserId());
@@ -1902,9 +1902,9 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
                cciUserPermission.setResourcePermission(resourcePermission);
                cciUserPermission.setResourceAction(resourceAction);
-               cciUserPermission.setCreatedBy(1);
+               cciUserPermission.setCreatedBy(user.getLoginId());
                cciUserPermission.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               cciUserPermission.setModifiedBy(1);
+               cciUserPermission.setModifiedBy(user.getLoginId());
                cciUserPermission.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                cciUserPermissionsList.add(cciUserPermission);
             }

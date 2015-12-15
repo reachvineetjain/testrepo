@@ -116,6 +116,7 @@ public class User
     protected List<UserPermissions> permissions;
     protected List<UserNotes> userNotes;
     protected Gender gender;
+    protected Integer loginId;
 
     /**
      * Gets the value of the cciUserId property.
@@ -657,4 +658,13 @@ public class User
         this.gender = value;
     }
 
+   public Integer getLoginId() {
+      return loginId;
+   }
+
+   public void setLoginId(Integer loginId) {
+      this.loginId = loginId;
+   }
+
+    
 }

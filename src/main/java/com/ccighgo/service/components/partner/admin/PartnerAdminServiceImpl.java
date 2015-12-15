@@ -326,27 +326,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-
-         // /*
-         // * Notes
-         // */
-         // try {
-         // List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(goId);
-         // if (partnerNotes != null) {
-         // for (PartnerNote partnerNote : partnerNotes) {
-         // com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes
-         // note = new
-         // com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes();
-         // note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
-         // note.setPartnerNoteId(partnerNote.getPartnerNotesId());
-         // note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
-         // note.setNoteValue(partnerNote.getPartnerNote());
-         // pwt.getNotes().add(note);
-         // }
-         // }
-         // } catch (Exception e) {
-         // ExceptionUtil.logException(e, logger);
-         // }
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
