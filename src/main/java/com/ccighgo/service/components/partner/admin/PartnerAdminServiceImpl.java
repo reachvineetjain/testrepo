@@ -2073,6 +2073,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             for (AssignedSeasonData data : assignSubpartnerToSeason.getAssignedSeasonData()) {
                PartnerSeason ps = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(data.getSeasonId(), data.getDepartmentProgramId(),
                      assignSubpartnerToSeason.getSubPartner());
+               if(ps!=null)
                partnerSeasonsRepository.delete(ps);
                ps = new PartnerSeason();
                Season season = seasonRepository.findOne(data.getSeasonId());
