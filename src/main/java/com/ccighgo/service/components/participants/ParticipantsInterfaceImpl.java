@@ -507,6 +507,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                try {
                   GoIdSequence goIdSequence = goIdSequenceRepository.findOne(participant.getParticipantGoId());
                   Login p = loginRepository.findByGoId(goIdSequence);
+                  if(p!=null)
                   details.setActive(p.getActive() != null && p.getActive() == 1);
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
