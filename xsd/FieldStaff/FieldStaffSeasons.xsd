@@ -28,9 +28,10 @@
       <xsd:sequence>
          <xsd:element name="fsGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="fsSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="department" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="startDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="endDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />

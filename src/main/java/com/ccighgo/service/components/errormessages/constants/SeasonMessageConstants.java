@@ -13,7 +13,7 @@ public class SeasonMessageConstants {
    // SeasonBean
    public static final String FAILED_EDIT_SEASON_BEAN_SERVICE = "error.edit.seasonbean.service";
    public static final String FAILED_TO_GET_SEASON_PROGRAMS ="error.get.season.programs";
-   public static final String FAILED_TO_GET_SEASON_STATUS="error.get.season.status";
+   public static final String FAILED_TO_GET_SEASON_STATUS="error.get.season.status.value";
    public static final String FAILED_TO_GET_HSP_J1_HS_SEASON_DETAILS="error.get.hsp.j1.hs.season.details";
    public static final String FAILED_TO_GET_J1_HS_SEASON_NAME_AND_STATUS="error.get.j1.hs.season.name.status";
    public static final String FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS="error.get.j1.hs.season.jan.start.details";
