@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeasonDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
@@ -42,7 +41,6 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
    @Autowired FieldStaffLeadershipSeasonDetailRepository fieldStaffLeadershipSeasonDetailRepository;
 
    private static final String SP_FS_SEASON_LIST = "CALL SPFieldStaffSeasonsList(?)";
-   private static final String SP_PARTNER_SEASON_APPLICATION_LIST = "call SPPartnerSeasonAplication(?)";
 
    @Override
    @Transactional(readOnly = true)
@@ -55,6 +53,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          int count = 0;
          Query query = entityManager.createNativeQuery(SP_FS_SEASON_LIST);
          query.setParameter(1, Integer.valueOf(fsGoId));
+         @SuppressWarnings("unchecked")
          List<Object[]> results = query.getResultList();
          if (results != null && results.size() > 0) {
             for (Object[] obj : results) {
@@ -81,6 +80,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_FSL_SEASON.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
       }
       return fsSeasonList;
    }
@@ -96,7 +96,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          if (seasonId == null || Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
             throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_SEASONID));
          }
-         if (deparmentProgramId == null || Integer.valueOf(deparmentProgramId) == 0 || Integer.valueOf(deparmentProgramId) < 0) {
+         if (deparmentProgramId == null || Integer.valueOf(deparmentProgramId) == 0 || Integer.valueOf(deparmentProgramId) < 0) {   
             throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_DEPT_PRG_ID));
          }
          if (statusVal == null) {
