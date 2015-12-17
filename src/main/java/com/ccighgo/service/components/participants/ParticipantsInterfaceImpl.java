@@ -511,7 +511,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                try {
                   GoIdSequence goIdSequence = goIdSequenceRepository.findOne(participant.getParticipantGoId());
                   Login p = loginRepository.findByGoId(goIdSequence);
-                  details.setActive(p.getActive() == 1);
+                  if(p!=null)
+                  details.setActive(p.getActive() != null && p.getActive() == 1);
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
@@ -534,8 +535,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantlastName(participant.getLastName());
                if (participant.getPhoto() != null)
                   details.setParticipantPicUrl(participant.getPhoto());
-               details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
-               details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+               if (participant.getDepartmentProgramOption() != null) {
+                  details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
+                  details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+               }
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
                String programName = participant.getDepartmentProgram().getProgramName();
                try {
@@ -881,10 +884,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          if (participantGoId == null || Integer.valueOf(participantGoId) == 0 || Integer.valueOf(participantGoId) < 0) {
             throw new CcighgoException("invalid Participant info, cannot send login");
          }
-          Login participantLoginData = loginRepository.findByCCIGoId(Integer.parseInt(participantGoId));
-         
-         
-         if (participantLoginData != null  ) {
+         Login participantLoginData = loginRepository.findByCCIGoId(Integer.parseInt(participantGoId));
+
+         if (participantLoginData != null) {
             String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
                   + "Your username is : " + participantLoginData.getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
                   + formResetURL(request).concat(participantLoginData.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>"
