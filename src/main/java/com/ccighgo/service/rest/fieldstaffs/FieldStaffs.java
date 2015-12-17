@@ -9,9 +9,15 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.FieldStaffsInterface;
+import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuecategory.FieldStaffWorkQueueCategory;
+import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuetype.FieldStaffWorkQueueType;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quicklinks.FieldStaffDashboardQuickLinks;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatscategory.FieldStaffDashboardQuickStatsCategory;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatstitles.FieldStaffDashboardQuickStatsTitles;
+import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
 
 /**
  * @author sinshaw.demisse
@@ -49,5 +55,48 @@ public class FieldStaffs {
    {
       return fieldStaffsInterface.getAllFieldStaffStatuses();
       
+   }
+
+   @GET
+   @Path("quickstatsCategory/{typeId}/{categoryId}")
+   @Produces("application/json")
+   public FieldStaffDashboardQuickStatsCategory getQuickStatsCategory(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId) {
+      return null;
+   }
+
+   @GET
+   @Path("workQueueType/{roleType}")
+   @Produces("application/json")
+   public FieldStaffWorkQueueType getWorkQueueType(@PathParam("roleType") String roleType) {
+      return null;
+   }
+
+   @GET
+   @Path("workQueueCategory/{adminWorkQueueTypeId}")
+   @Produces("application/json")
+   public FieldStaffWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId) {
+      return null;
+   }
+
+   @GET
+   @Path("quicklinks")
+   @Produces("application/json")
+   public FieldStaffDashboardQuickLinks getQuickLinks() {
+      return null;
+   }
+
+   @GET
+   @Path("quickstatsTitle")
+   @Produces("application/json")
+   public FieldStaffDashboardQuickStatsTitles getQuickStatsTitle() {
+
+      return null;
+   }
+
+   @GET
+   @Path("benchmark")
+   @Produces("application/json")
+   public PartnerAdminDashboardBenchmarks getBenchmark() {
+      return null;
    }
 }
