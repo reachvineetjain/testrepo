@@ -3,6 +3,8 @@ package com.ccighgo.service.components.updatelog;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +18,13 @@ import com.ccighgo.service.transport.seasons.beans.seasondepartmentupdatelog.Sea
 import com.ccighgo.service.transport.seasons.beans.seasonprogramupdatelog.SeasonProgramUpdateLog;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.reuse.function.ReusedFunctions;
+import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 
 @Component
 public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
+   private static final Logger LOGGER = LoggerFactory.getLogger(UpdateLogServiceInterface.class);
 
    @Autowired
    SeasonProgramUpdateLogRepository seasonProgramUpdateLogRepository;
@@ -29,39 +35,53 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
    @Autowired
    DepartmentProgramRepository departmentProgramRepository;
 
+   @Autowired
+   ReusedFunctions reusedFunctions;
+
    @Override
    public List<SeasonProgramUpdateLog> viewSeasonProgramLog(String programId, String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            Integer.parseInt(programId), Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               Integer.parseInt(programId), Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonDepartmentUpdateLog> viewSeasonDepartmentLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonDepartmentUpdateLog> seasonDepartmentUpdateLog = seasonDepartmentUpdateLogRepository.findUpdateLogBySeasonId(Integer.parseInt(seasonId));
       List<SeasonDepartmentUpdateLog> listSeasonDepartmentUpdateLogBean = new ArrayList<SeasonDepartmentUpdateLog>();
-      if (seasonDepartmentUpdateLog != null && !seasonDepartmentUpdateLog.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonDepartmentUpdateLog seasonDepartmentUpdateLog2 : seasonDepartmentUpdateLog) {
-            SeasonDepartmentUpdateLog sdl = new SeasonDepartmentUpdateLog();
-            sdl.setModifiedBy(seasonDepartmentUpdateLog2.getModifiedBy() + "");
-            sdl.setModifiedOn(DateUtils.getTimeStamp(seasonDepartmentUpdateLog2.getModifiedOn()));
-            sdl.setSeasonId(seasonDepartmentUpdateLog2.getSeason().getSeasonId());
-            sdl.setUpdateLogObject(seasonDepartmentUpdateLog2.getUpdateLogObject());
-            listSeasonDepartmentUpdateLogBean.add(sdl);
+      try {
+         List<com.ccighgo.db.entities.SeasonDepartmentUpdateLog> seasonDepartmentUpdateLog = seasonDepartmentUpdateLogRepository
+               .findUpdateLogBySeasonId(Integer.parseInt(seasonId));
+         if (seasonDepartmentUpdateLog != null && !seasonDepartmentUpdateLog.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonDepartmentUpdateLog seasonDepartmentUpdateLog2 : seasonDepartmentUpdateLog) {
+               SeasonDepartmentUpdateLog sdl = new SeasonDepartmentUpdateLog();
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonDepartmentUpdateLog2.getModifiedBy());
+               sdl.setModifiedBy(userInformation.getUserName());
+               sdl.setModifiedOn(DateUtils.getTimeStamp(seasonDepartmentUpdateLog2.getModifiedOn()));
+               sdl.setSeasonId(seasonDepartmentUpdateLog2.getSeason().getSeasonId());
+               sdl.setUpdateLogObject(seasonDepartmentUpdateLog2.getUpdateLogObject());
+               listSeasonDepartmentUpdateLogBean.add(sdl);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonDepartmentUpdateLogBean;
    }
@@ -69,12 +89,16 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
    @Override
    public List<SeasonDepartmentUpdateLog> saveSeasonDepartmentLog(SeasonDepartmentUpdateLog seasonDepartmentUpdateLog) {
       com.ccighgo.db.entities.SeasonDepartmentUpdateLog seasonDepartmentUpdateLogEntity = new com.ccighgo.db.entities.SeasonDepartmentUpdateLog();
-      seasonDepartmentUpdateLogEntity.setModifiedBy(1);
-      seasonDepartmentUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      Season season = seasonRepository.findOne(seasonDepartmentUpdateLog.getSeasonId());
-      seasonDepartmentUpdateLogEntity.setSeason(season);
-      seasonDepartmentUpdateLogEntity.setUpdateLogObject(seasonDepartmentUpdateLog.getUpdateLogObject());
-      seasonDepartmentUpdateLogRepository.saveAndFlush(seasonDepartmentUpdateLogEntity);
+      try {
+         seasonDepartmentUpdateLogEntity.setModifiedBy(seasonDepartmentUpdateLog.getLoginId());
+         seasonDepartmentUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         Season season = seasonRepository.findOne(seasonDepartmentUpdateLog.getSeasonId());
+         seasonDepartmentUpdateLogEntity.setSeason(season);
+         seasonDepartmentUpdateLogEntity.setUpdateLogObject(seasonDepartmentUpdateLog.getUpdateLogObject());
+         seasonDepartmentUpdateLogRepository.saveAndFlush(seasonDepartmentUpdateLogEntity);
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
       return viewSeasonDepartmentLog(seasonDepartmentUpdateLog.getSeasonId() + "");
    }
 
@@ -83,7 +107,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(seasonProgramUpdateLog.getDepartmentProgramId());
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -94,60 +118,78 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
 
    @Override
    public List<SeasonProgramUpdateLog> viewHSPF1SeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(CCIConstants.HSP_F1_ID,
-            Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.HSP_F1_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewWPCAPSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.WP_WT_CAP_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.WP_WT_CAP_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewHSPJ1SeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.HSP_J1_HS_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.HSP_J1_HS_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
@@ -157,7 +199,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.HSP_F1_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -171,7 +213,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.WP_WT_CAP_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -185,7 +227,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.HSP_J1_HS_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -196,60 +238,78 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
 
    @Override
    public List<SeasonProgramUpdateLog> viewWPSummerSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.WP_WT_SUMMER_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.WP_WT_SUMMER_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewWPWinterSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.WP_WT_WINTER_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.WP_WT_WINTER_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewWPSpringSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.WP_WT_SPRING_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.WP_WT_SPRING_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
@@ -259,7 +319,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.WP_WT_SUMMER_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -273,7 +333,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.WP_WT_WINTER_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -287,7 +347,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.WP_WT_SPRING_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -301,7 +361,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.GHT_LANG_SCL_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -315,7 +375,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.GHT_TEACH_ABRD_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -329,7 +389,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.GHT_HS_ABRD_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -343,7 +403,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.GHT_VOL_ABRD_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -357,7 +417,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.GHT_WRK_ABRD_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -368,100 +428,130 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
 
    @Override
    public List<SeasonProgramUpdateLog> viewGHTHSAbroadSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.GHT_HS_ABRD_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.GHT_HS_ABRD_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewGHTLanguageSchoolSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.GHT_LANG_SCL_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.GHT_LANG_SCL_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewGHTTeachAbroadSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.GHT_TEACH_ABRD_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.GHT_TEACH_ABRD_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewGHTVOLAbroadSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.GHT_VOL_ABRD_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.GHT_VOL_ABRD_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
 
    @Override
    public List<SeasonProgramUpdateLog> viewGHTWorkAbroadSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.GHT_WRK_ABRD_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.GHT_WRK_ABRD_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
@@ -471,7 +561,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLogEntity = new com.ccighgo.db.entities.SeasonProgramUpdateLog();
       DepartmentProgram departmentProgram = departmentProgramRepository.findOne(CCIConstants.HSP_STP_IHP_ID);
       seasonProgramUpdateLogEntity.setDepartmentProgram(departmentProgram);
-      seasonProgramUpdateLogEntity.setModifiedBy(1);
+      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
       seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
@@ -482,20 +572,26 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
 
    @Override
    public List<SeasonProgramUpdateLog> viewIHPSeasonProgramLog(String seasonId) {
-      List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
-            CCIConstants.HSP_STP_IHP_ID, Integer.parseInt(seasonId));
       List<SeasonProgramUpdateLog> listSeasonProgramUpdateLog = new ArrayList<SeasonProgramUpdateLog>();
-      if (seasonProgram != null && !seasonProgram.isEmpty()) {
-         for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
-            SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
-            if (seasonProgramUpdateLog.getDepartmentProgram() != null)
-               spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
-            spu.setModifiedBy(seasonProgramUpdateLog.getModifiedBy() + "");
-            spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
-            spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
-            spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
-            listSeasonProgramUpdateLog.add(spu);
+      try {
+         List<com.ccighgo.db.entities.SeasonProgramUpdateLog> seasonProgram = seasonProgramUpdateLogRepository.findUpdateLogByDepartmentProgramIdAndSeasonID(
+               CCIConstants.HSP_STP_IHP_ID, Integer.parseInt(seasonId));
+         if (seasonProgram != null && !seasonProgram.isEmpty()) {
+            for (com.ccighgo.db.entities.SeasonProgramUpdateLog seasonProgramUpdateLog : seasonProgram) {
+               SeasonProgramUpdateLog spu = new SeasonProgramUpdateLog();
+               if (seasonProgramUpdateLog.getDepartmentProgram() != null)
+                  spu.setDepartmentProgramId(seasonProgramUpdateLog.getDepartmentProgram().getDepartmentProgramId());
+               UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonProgramUpdateLog.getModifiedBy());
+               if (userInformation != null)
+                  spu.setModifiedBy(userInformation.getUserName());
+               spu.setModifiedOn(DateUtils.getTimeStamp(seasonProgramUpdateLog.getModifiedOn()));
+               spu.setSeasonId(seasonProgramUpdateLog.getSeason().getSeasonId());
+               spu.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+               listSeasonProgramUpdateLog.add(spu);
+            }
          }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
       }
       return listSeasonProgramUpdateLog;
    }
