@@ -14,6 +14,10 @@ import javax.ws.rs.core.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -126,11 +130,12 @@ public class UtilityServicesImpl implements UtilityServices {
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
-      List<LookupCountry> countriesDbList = countryRepository.findAll();
+      final Pageable page= new PageRequest(0, 350, Direction.ASC, "countryName");
+      Page<LookupCountry> countriesDbList = countryRepository.findAll(page);
       com.ccighgo.service.transport.utility.beans.country.Countries countries = null;
       List<com.ccighgo.service.transport.utility.beans.country.Country> countriesFrontList = null;
       try {
-         if (countriesDbList.size() > 0) {
+         if (countriesDbList!=null) {
             countries = new com.ccighgo.service.transport.utility.beans.country.Countries();
             countriesFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.country.Country>();
             for (LookupCountry c : countriesDbList) {
