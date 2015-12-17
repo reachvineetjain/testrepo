@@ -157,6 +157,9 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                   pas.setPartnerGoId(partnerGoId);
                   pas.setPartnerSeasonId(ps.getPartnerSeasonId());
                   pas.setSeasonId(ps.getSeason().getSeasonId());
+                  pas.setDepartmentId(ps.getDepartmentProgram().getLookupDepartment().getDepartmentId());
+                  pas.setAcronym(ps.getDepartmentProgram().getLookupDepartment().getAcronym());
+                  pas.setDepartmentName(ps.getDepartmentProgram().getLookupDepartment().getDepartmentName());
                   pas.setDepartmentProgramId(departmentProgramId);
                   pas.setProgramName(programName);
                   pas.setPartnerActiveForSeason(ps.getActive() == CCIConstants.ACTIVE ? true : false);
