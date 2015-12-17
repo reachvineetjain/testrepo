@@ -126,7 +126,7 @@ public class UtilityServicesImpl implements UtilityServices {
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
-      List<LookupCountry> countriesDbList = countryRepository.findAll();
+      List<LookupCountry> countriesDbList = countryRepository.findAllCountryByNameOrderAsc();
       com.ccighgo.service.transport.utility.beans.country.Countries countries = null;
       List<com.ccighgo.service.transport.utility.beans.country.Country> countriesFrontList = null;
       try {
