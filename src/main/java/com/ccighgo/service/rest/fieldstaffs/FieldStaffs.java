@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.FieldStaffsInterface;
+import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffapplication.FieldStaffapplication;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuecategory.FieldStaffWorkQueueCategory;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuetype.FieldStaffWorkQueueType;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
@@ -18,6 +19,7 @@ import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quicklink
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatscategory.FieldStaffDashboardQuickStatsCategory;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatstitles.FieldStaffDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 
 /**
  * @author sinshaw.demisse
@@ -97,6 +99,14 @@ public class FieldStaffs {
    @Path("benchmark")
    @Produces("application/json")
    public PartnerAdminDashboardBenchmarks getBenchmark() {
+      return null;
+   }
+   
+   @GET
+   @Path("SubmittedApplications/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
+   @Produces("application/json")
+   public FieldStaffapplication getSubmittedApplications(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
+         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
       return null;
    }
 }
