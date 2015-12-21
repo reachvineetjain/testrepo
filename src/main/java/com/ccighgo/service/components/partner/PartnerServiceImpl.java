@@ -363,7 +363,7 @@ public class PartnerServiceImpl implements PartnerService {
                j1hsDashboard.setCciContact(cciContact);
 
                // work queue types and categories
-               List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
+              List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
                List<PartnerWorkQueueType> partnerWorkQueueTypes = partnerWorkQueueTypeRepository.getPartnerWorkQueueTypesByDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                if (partnerWorkQueueTypes != null) {
                   for (PartnerWorkQueueType pqType : partnerWorkQueueTypes) {
