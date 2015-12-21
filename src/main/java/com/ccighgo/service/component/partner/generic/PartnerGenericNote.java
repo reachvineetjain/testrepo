@@ -66,8 +66,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       try {
          PartnerNote noteEntity = new PartnerNote();
          noteEntity.setCreatedBy(note.getLoginId());
-         noteEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-         noteEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         noteEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP_M);
+         noteEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP_M);
          noteEntity.setModifiedBy(note.getLoginId());
          
          Partner partner = partnerRepository.findOne(note.getPartnerId());
