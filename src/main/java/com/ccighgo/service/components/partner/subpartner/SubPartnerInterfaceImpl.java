@@ -409,6 +409,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnersMailingAddress.setMailingAddress2(partnerSubPartner.getPhysicalAddressLineTwo());
             subPartnersMailingAddress.setMailingAddressCity(partnerSubPartner.getPhysicalCity());
             subPartnersMailingAddress.setMailingAddressZipCode(partnerSubPartner.getPhysicalZipcode());
+            subPartnersMailingAddress.setMailingAddressStateOrProvince(partnerSubPartner.getPhysicalstate());
             LookupCountry lcm = partnerSubPartner.getLookupCountry2();
             if (lcm != null) {
                Country cn = new Country();
@@ -421,6 +422,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnersMailingAddress.setMailingAddress1(partnerSubPartner.getAddressLineOne());
             subPartnersMailingAddress.setMailingAddress2(partnerSubPartner.getAddressLineTwo());
             subPartnersMailingAddress.setMailingAddressCity(partnerSubPartner.getCity());
+            subPartnersMailingAddress.setMailingAddressZipCode(partnerSubPartner.getZipcode());
             subPartnersMailingAddress.setMailingAddressStateOrProvince(partnerSubPartner.getState());
             LookupCountry lcm = partnerSubPartner.getLookupCountry2();
             if (lcm != null) {
