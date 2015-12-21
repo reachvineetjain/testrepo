@@ -99,7 +99,7 @@ public class Participants {
    @Produces("application/json")
    public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId")  String partnerId){
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
-      return participantsInterface.getAllAvailableSeasons(partnerId);
+      return participantsInterface.getAllAvailableSeasons2(partnerId);
    }
    
    @GET

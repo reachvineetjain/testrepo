@@ -40,6 +40,8 @@ public class CCIConstants {
    public static final String DEFAULT_PAGE = "0";
    public static final String DEFAULT_NO_OF_RECORDS_SIZE = "10";
    public static Timestamp CURRENT_TIMESTAMP = new java.sql.Timestamp(System.currentTimeMillis());
+   public static Timestamp CURRENT_TIMESTAMP_M = new Timestamp(System.currentTimeMillis());
+
    public static final Integer MIN_PASS_LEN = 8;
    public static final Integer MAX_PASS_LEN = 8;
    public static final Integer MAX_UPPER_CASE = 1;
@@ -245,5 +247,7 @@ public class CCIConstants {
    public static final byte FALSE_BYTE = 0;
    public static final Integer PARTICIPANT_STATUS_PENDING_VERIFICATION = 10;
    public static final String MYSQL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+   
+   public static final String MYSQL_DATE_FORMAT_SLASH = "MM/dd/yyyy HH:mm:ss";
    
 }
