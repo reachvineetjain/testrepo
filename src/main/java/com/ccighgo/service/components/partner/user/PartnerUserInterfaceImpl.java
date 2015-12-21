@@ -364,50 +364,55 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             PartnerUser partnerUser = null;
             if (partnerUsersDBList != null) {
                for (PartnerUser pUser : partnerUsersDBList) {
-                  if (Integer.valueOf(partnerGoId) == pUser.getPartner().getPartnerGoId() && pUser.getIsPrimary() == CCIConstants.ACTIVE) {
+                  if (Integer.valueOf(partnerGoId).equals(pUser.getPartner().getPartnerGoId()) && pUser.getIsPrimary().equals(CCIConstants.ACTIVE)) {
                      partnerUser = pUser;
                      break;
                   }
                }
             }
             List<com.ccighgo.service.transport.partner.beans.partner.user.office.UserOffice> userOfficesList = null;
-            if (partnerUser.getPartner().getPartnerOffices() != null) {
-               partnerUserOffices.setPartnerGoId(partnerUser.getPartner().getPartnerGoId());
-               partnerUserOffices.setCount(partnerUser.getPartner().getPartnerOffices().size());
-               userOfficesList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.user.office.UserOffice>();
-               for (PartnerOffice pOffice : partnerUser.getPartner().getPartnerOffices()) {
-                  com.ccighgo.service.transport.partner.beans.partner.user.office.UserOffice usrOffice = new com.ccighgo.service.transport.partner.beans.partner.user.office.UserOffice();
-                  usrOffice.setUserOfficeId(pOffice.getPartnerOfficeId());
-                  usrOffice.setOfficeAddressLineOne(pOffice.getAdressOne());
-                  usrOffice.setOfficeAddressLineTwo(pOffice.getAdressTwo());
-                  usrOffice.setCity(pOffice.getCity());
-                  usrOffice.setZipCode(pOffice.getPostalCode());
+            if(partnerUser!=null){
+               if (partnerUser.getPartner().getPartnerOffices() != null) {
+                  partnerUserOffices.setPartnerGoId(partnerUser.getPartner().getPartnerGoId());
+                  partnerUserOffices.setCount(partnerUser.getPartner().getPartnerOffices().size());
+                  userOfficesList = new ArrayList<com.ccighgo.service.transport.partner.beans.partner.user.office.UserOffice>();
+                  for (PartnerOffice pOffice : partnerUser.getPartner().getPartnerOffices()) {
+                     com.ccighgo.service.transport.partner.beans.partner.user.office.UserOffice usrOffice = new com.ccighgo.service.transport.partner.beans.partner.user.office.UserOffice();
+                     usrOffice.setUserOfficeId(pOffice.getPartnerOfficeId());
+                     usrOffice.setOfficeAddressLineOne(pOffice.getAdressOne());
+                     usrOffice.setOfficeAddressLineTwo(pOffice.getAdressTwo());
+                     usrOffice.setCity(pOffice.getCity());
+                     usrOffice.setZipCode(pOffice.getPostalCode());
 
-                  com.ccighgo.service.transport.partner.beans.partner.user.office.UserAddressCountry userAddressCountry = new com.ccighgo.service.transport.partner.beans.partner.user.office.UserAddressCountry();
-                  userAddressCountry.setOfficeAddressCountryId(pOffice.getLookupCountry().getCountryId());
-                  userAddressCountry.setOfficeAddressCountryISOCode(pOffice.getLookupCountry().getCountryCode());
-                  userAddressCountry.setOfficeAddressCountryName(pOffice.getLookupCountry().getCountryName());
-                  usrOffice.setOfficeAddressCountry(userAddressCountry);
+                     com.ccighgo.service.transport.partner.beans.partner.user.office.UserAddressCountry userAddressCountry = new com.ccighgo.service.transport.partner.beans.partner.user.office.UserAddressCountry();
+                     userAddressCountry.setOfficeAddressCountryId(pOffice.getLookupCountry().getCountryId());
+                     userAddressCountry.setOfficeAddressCountryISOCode(pOffice.getLookupCountry().getCountryCode());
+                     userAddressCountry.setOfficeAddressCountryName(pOffice.getLookupCountry().getCountryName());
+                     usrOffice.setOfficeAddressCountry(userAddressCountry);
 
-                  usrOffice.setOfficePhone(pOffice.getPhoneNumber());
-                  usrOffice.setOfficeFax(pOffice.getFaxNumber());
-                  usrOffice.setOfficeEmail(pOffice.getPartner().getEmail());
-                  usrOffice.setOfficeWebsite(pOffice.getWebsite());
-                  if (pOffice.getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
-                     usrOffice.setIsPrimary(true);
-                  } else {
-                     usrOffice.setIsPrimary(false);
+                     usrOffice.setOfficePhone(pOffice.getPhoneNumber());
+                     usrOffice.setOfficeFax(pOffice.getFaxNumber());
+                     usrOffice.setOfficeEmail(pOffice.getPartner().getEmail());
+                     usrOffice.setOfficeWebsite(pOffice.getWebsite());
+                     if (pOffice.getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
+                        usrOffice.setIsPrimary(true);
+                     } else {
+                        usrOffice.setIsPrimary(false);
+                     }
+                     userOfficesList.add(usrOffice);
                   }
-                  userOfficesList.add(usrOffice);
+                  partnerUserOffices.getUserOffices().addAll(userOfficesList);
+                  partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                        messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
                }
-               partnerUserOffices.getUserOffices().addAll(userOfficesList);
-               partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
-                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            }
+            else{
+               throw new CcighgoException("no partner user found");
             }
          } catch (CcighgoException e) {
             partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
-            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+                  e.getMessage()));
+            LOGGER.error(e.getMessage());
          }
       }
       return partnerUserOffices;
