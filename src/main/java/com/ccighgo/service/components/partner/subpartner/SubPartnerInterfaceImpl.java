@@ -547,7 +547,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
             List<Login> loginList = new ArrayList<Login>();
             goIdSequence = goIdSequenceRepository.save(goIdSequence);
-            com.ccighgo.db.entities.UserType ParticipantUserType = userTypeRepository.findOne(CCIConstants.PARTICIPANT_USER_TYPE);
+            com.ccighgo.db.entities.UserType ParticipantUserType = userTypeRepository.findOne(CCIConstants.PARTNER_USER_TYPE);
             if (ParticipantUserType == null) {
                ParticipantUserType = new com.ccighgo.db.entities.UserType();
             }
