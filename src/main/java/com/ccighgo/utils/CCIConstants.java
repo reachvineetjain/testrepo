@@ -25,6 +25,8 @@ public class CCIConstants {
    // date utility constants
    public static final String MM_DD_YY = "MM/dd/yy";
    public static final String DATE_TIME = "MM/dd/yy HH:mm:ss";
+   public static final String DATE_TIME2 = "MM/dd/yyyy HH:mm:ss";
+
    public static final String MM_dd_yyy = "MM-dd-yyyy";
 
    public static final String ALPHABETS_UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
