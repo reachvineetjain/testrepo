@@ -120,6 +120,17 @@ public class DateUtils {
       return date;
    }
    
+   public static String getDateAndTime2(Date inputDate) {
+	      String date = null;
+	      try {
+	         if (inputDate != null)
+	            date = DateFormatUtils.format(inputDate, CCIConstants.DATE_TIME2, Locale.US);
+	      } catch (CcighgoException e) {
+	         ExceptionUtil.logException(e, logger);
+	      }
+	      return date;
+	   }
+   
    public static String getTimestamp(Date inputDate) {
       String date = null;
       try {
