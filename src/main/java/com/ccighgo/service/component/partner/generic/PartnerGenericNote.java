@@ -66,8 +66,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       try {
          PartnerNote noteEntity = new PartnerNote();
          noteEntity.setCreatedBy(note.getLoginId());
-         noteEntity.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString(note.getCreatedOn()).getTime()));
-         noteEntity.setModifiedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString(note.getCreatedOn()).getTime()));
+         noteEntity.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
+         noteEntity.setModifiedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
          noteEntity.setModifiedBy(note.getLoginId());
          
          Partner partner = partnerRepository.findOne(note.getPartnerId());
