@@ -1,5 +1,7 @@
 package com.ccighgo.jpa.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,4 +14,8 @@ public interface PartnerReviewStatusRepository extends JpaRepository<PartnerRevi
    PartnerReviewStatus findStatusByPartnerId(int agentId);
    @Query("SELECT p FROM PartnerReviewStatus p WHERE p.partner.partnerGoId =?1")
    PartnerReviewStatus findApplicationStatusByGoId(int goId);
+   
+   
+   @Query("SELECT p FROM PartnerReviewStatus p WHERE p.partner.partnerStatus1.partnerLeadStatusId =?1")
+   List<PartnerReviewStatus> findReviewStatusByStatus(Integer leadStatusId);
 }
