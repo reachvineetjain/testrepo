@@ -363,24 +363,24 @@ public class PartnerServiceImpl implements PartnerService {
                j1hsDashboard.setCciContact(cciContact);
 
                // work queue types and categories
-               List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
+              List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
                List<PartnerWorkQueueType> partnerWorkQueueTypes = partnerWorkQueueTypeRepository.getPartnerWorkQueueTypesByDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                if (partnerWorkQueueTypes != null) {
                   for (PartnerWorkQueueType pqType : partnerWorkQueueTypes) {
                      PartnerJ1HSWorkQueueType j1wqType = new PartnerJ1HSWorkQueueType();
-                     j1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName());
+                     j1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName()!=null?pqType.getPartnerWQTypeName():"");
                      PartnerWorkQueueTypeAggregate typeAgg = partnerWorkQueueTypeAggregateRepository.getWorkQueueTypeAggregateByDepartmentProgramId(pqType.getPartnerWQTypeId(),
                            partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                     j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate());
+                     j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate()!=null?typeAgg.getPartnerWQTypeAggregate():0);
                      List<PartnerWorkQueueCategory> caregoryList = partnerWorkQueueCategoryRepository.getWorkQueueCategoryForType(pqType.getPartnerWQTypeId());
                      if (caregoryList != null) {
                         List<PartnerJ1HSWorkQueueCategory> partnerWorkQueueCategories = new ArrayList<PartnerJ1HSWorkQueueCategory>();
                         for (PartnerWorkQueueCategory category : caregoryList) {
                            PartnerJ1HSWorkQueueCategory cat = new PartnerJ1HSWorkQueueCategory();
-                           cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName());
+                           cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName()!=null?category.getPartnerWQCategoryName():"");
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
+                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate()!=null?catAgg.getPartnerWQCategoryAggregate():0);
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }

@@ -11,29 +11,48 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "InternationalPartners")
 public class InternationalPartners {
 
+   @XmlElement(name = "legalBusinessName")
    protected String legalBusinessName;
+   @XmlElement(name = "prefix")
    protected String prefix;
+   @XmlElement(name = "firstName")
    protected String firstName;
+   @XmlElement(name = "lastName")
    protected String lastName;
+   @XmlElement(name = "address")
    protected String address;
+   @XmlElement(name = "address2")
    protected String address2;
+   @XmlElement(name = "city")
    protected String city;
+   @XmlElement(name = "stateOrProvince")
    protected String stateOrProvince;
+   @XmlElement(name = "valueOfCountry")
    protected String valueOfCountry;
+   @XmlElement(name = "phone")
    protected String phone;
+   @XmlElement(name = "email")
    protected String email;
+   @XmlElement(name = "website")
    protected String website;
+   @XmlElement(name = "programs")
    protected List<String> programs;
+   @XmlElement(name = "typeOfPrograms")
    protected List<String> typeOfPrograms;
+   @XmlElement(name = "currentlySendingParticipant")
    protected Boolean currentlySendingParticipant;
+   @XmlElement(name = "yearsInBusiness")
    protected Integer yearsInBusiness;
+   @XmlElement(name = "descriptionOfPrograms")
    protected String descriptionOfPrograms;
+   @XmlElement(name = "hearedAboutUs")
    protected String hearedAboutUs;
 
    public String getLegalBusinessName() {

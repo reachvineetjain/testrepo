@@ -6,6 +6,8 @@ package com.ccighgo.service.components.participants;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,6 @@ import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerSeason;
-import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
@@ -116,6 +117,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    EmailServiceImpl email;
    @Autowired
    ParticipantStatusRepository participantStatusRepository;
+   @PersistenceContext
+   EntityManager em;
+   
    private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ParticipantsInterfaceImpl.class);
 
    @Override
@@ -507,7 +511,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                try {
                   GoIdSequence goIdSequence = goIdSequenceRepository.findOne(participant.getParticipantGoId());
                   Login p = loginRepository.findByGoId(goIdSequence);
-                  details.setActive(p.getActive() == 1);
+                  if(p!=null)
+                  details.setActive(p.getActive() != null && p.getActive() == 1);
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
@@ -530,8 +535,10 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantlastName(participant.getLastName());
                if (participant.getPhoto() != null)
                   details.setParticipantPicUrl(participant.getPhoto());
-               details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
-               details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+               if (participant.getDepartmentProgramOption() != null) {
+                  details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
+                  details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+               }
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
                String programName = participant.getDepartmentProgram().getProgramName();
                try {
@@ -877,10 +884,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          if (participantGoId == null || Integer.valueOf(participantGoId) == 0 || Integer.valueOf(participantGoId) < 0) {
             throw new CcighgoException("invalid Participant info, cannot send login");
          }
-          Login participantLoginData = loginRepository.findByCCIGoId(Integer.parseInt(participantGoId));
-         
-         
-         if (participantLoginData != null  ) {
+         Login participantLoginData = loginRepository.findByCCIGoId(Integer.parseInt(participantGoId));
+
+         if (participantLoginData != null) {
             String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
                   + "Your username is : " + participantLoginData.getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
                   + formResetURL(request).concat(participantLoginData.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>"
@@ -901,4 +907,32 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       return response;
    }
 
+   @Override
+   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId) {
+      SeasonsForParticipants seasons = new SeasonsForParticipants();
+      try {
+
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons(:partnerId)").setParameter("partnerId", partnerId).getResultList();
+         if (result != null) {
+            for (Object[] dt : result) {
+               SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
+               seasonsForParticipantDetails.setSeasonName(String.valueOf(dt[0]));
+               if (dt[1] != null)
+                  seasonsForParticipantDetails.setSeasonId(Integer.valueOf(String.valueOf(dt[1])));
+               if (dt[2] != null)
+                  seasonsForParticipantDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
+               seasons.getDetails().add(seasonsForParticipantDetails);
+            }
+         }
+         
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return seasons;
+   }
 }
