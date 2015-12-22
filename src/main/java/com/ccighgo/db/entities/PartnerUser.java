@@ -45,11 +45,16 @@ public class PartnerUser implements Serializable {
 	@Column(length=300)
 	private String photo;
 
+	private byte recieveNotificationEmails;
+
 	@Column(length=150)
 	private String skypeId;
 
 	@Column(length=150)
 	private String title;
+
+	@Column(length=50)
+	private String website;
 
 	//bi-directional many-to-one association to PartnerPermission
 	@OneToMany(mappedBy="partnerUser")
@@ -167,6 +172,14 @@ public class PartnerUser implements Serializable {
 		this.photo = photo;
 	}
 
+	public byte getRecieveNotificationEmails() {
+		return this.recieveNotificationEmails;
+	}
+
+	public void setRecieveNotificationEmails(byte recieveNotificationEmails) {
+		this.recieveNotificationEmails = recieveNotificationEmails;
+	}
+
 	public String getSkypeId() {
 		return this.skypeId;
 	}
@@ -181,6 +194,14 @@ public class PartnerUser implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getWebsite() {
+		return this.website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
 	public List<PartnerPermission> getPartnerPermissions() {

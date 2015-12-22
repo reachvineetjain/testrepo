@@ -58,10 +58,6 @@ public class PartnerOffice implements Serializable {
 	@Column(length=150)
 	private String website;
 
-	//bi-directional many-to-one association to PartnerContact
-	@OneToMany(mappedBy="partnerOffice")
-	private List<PartnerContact> partnerContacts;
-
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
 	@JoinColumn(name="countryId")
@@ -194,28 +190,6 @@ public class PartnerOffice implements Serializable {
 
 	public void setWebsite(String website) {
 		this.website = website;
-	}
-
-	public List<PartnerContact> getPartnerContacts() {
-		return this.partnerContacts;
-	}
-
-	public void setPartnerContacts(List<PartnerContact> partnerContacts) {
-		this.partnerContacts = partnerContacts;
-	}
-
-	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().add(partnerContact);
-		partnerContact.setPartnerOffice(this);
-
-		return partnerContact;
-	}
-
-	public PartnerContact removePartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().remove(partnerContact);
-		partnerContact.setPartnerOffice(null);
-
-		return partnerContact;
 	}
 
 	public LookupCountry getLookupCountry() {
