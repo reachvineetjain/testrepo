@@ -61,6 +61,8 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Transactional(readOnly = true)
    public Auth getUserLogin(String userName) {
       Auth auth = new Auth();
+      try
+      {
       if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
          if (login != null && login.getActive() == CCIConstants.ACTIVE) {
@@ -107,8 +109,13 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
             LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_DISABLED));
          }
          return auth;
+         }
+      } catch (Exception e) {
+         auth.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(AuthConstants.LOGIN_FAILED)));
+         LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_FAILED));
       }
-      return null;
+      return auth;
    }
 
    @Transactional

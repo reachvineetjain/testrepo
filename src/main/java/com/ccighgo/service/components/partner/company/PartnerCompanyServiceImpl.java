@@ -89,10 +89,12 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetail.setPartnerCompanyNameHeader(partner.getCompanyName());
 
          Login partnerLogin = null;
+         PartnerUser pUser = null;
          for (Login login : partner.getGoIdSequence().getLogins()) {
             for (PartnerUser partUser : login.getPartnerUsers()) {
-               if (partUser.getIsPrimary() == CCIConstants.ACTIVE) {
+               if (partUser.getIsPrimary().equals(CCIConstants.ACTIVE)) {
                   partnerLogin = login;
+                  pUser = partUser;
                   break;
                }
             }

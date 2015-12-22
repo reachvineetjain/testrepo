@@ -123,5 +123,7 @@ public interface PartnerAdminService {
    SeasonsForPartners getAllAvailableSeasons(String partnerId);
 
    WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason);
+   
+   public SeasonsForPartners getAllAvailableSeasons2(String partnerId);
 
 }

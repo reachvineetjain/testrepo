@@ -202,9 +202,17 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                genericSeasonDocuments.getDocuments().add(gsd);
             }
             genericSeasonDocuments.setCount(count);
+            genericSeasonDocuments.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+         } else {
+            genericSeasonDocuments.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_NOT_FOUND.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          }
       } catch (Exception e) {
-         ExceptionUtil.logException(e, LOGGER);
+         genericSeasonDocuments.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
       }
       return genericSeasonDocuments;
    }
@@ -221,10 +229,8 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
             documentInformation.setFileName(genericSeasonDocument.getFileName());
             documentInformation.setDocumentName(genericSeasonDocument.getDocName());
             documentInformation.setUrl(genericSeasonDocument.getDocUrl());
-            // TODO needs to be fixed
             documentInformation.setCreatedBy(genericSeasonDocument.getLoginId());
             documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            // TODO needs to be fixed
             documentInformation.setModifiedBy(genericSeasonDocument.getLoginId());
             documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation.setActive(CCIConstants.ACTIVE);
@@ -407,10 +413,20 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                }
                genericSeasonContract.getDocuments().add(gsc);
             }
-
+            genericSeasonContract.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+         else
+         {
+            genericSeasonContract.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_NOT_FOUND.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+            return genericSeasonContract;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         genericSeasonContract.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_DOCUMENT)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
       }
       return genericSeasonContract;
    }

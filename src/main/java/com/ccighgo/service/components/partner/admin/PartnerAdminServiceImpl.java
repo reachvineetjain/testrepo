@@ -111,6 +111,7 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOv
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipantDetails;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartners;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartnersDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
@@ -322,27 +323,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-
-         // /*
-         // * Notes
-         // */
-         // try {
-         // List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(goId);
-         // if (partnerNotes != null) {
-         // for (PartnerNote partnerNote : partnerNotes) {
-         // com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes
-         // note = new
-         // com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes();
-         // note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
-         // note.setPartnerNoteId(partnerNote.getPartnerNotesId());
-         // note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
-         // note.setNoteValue(partnerNote.getPartnerNote());
-         // pwt.getNotes().add(note);
-         // }
-         // }
-         // } catch (Exception e) {
-         // ExceptionUtil.logException(e, logger);
-         // }
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -2140,6 +2120,33 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       ll.add(new AssignedSeasonData(33,44));
       a.setAssignedSeasonData(ll);
       System.out.println(gson.toJson(a));
+   }
+   @Override
+   public SeasonsForPartners getAllAvailableSeasons2(String partnerId) {
+      SeasonsForPartners seasons = new SeasonsForPartners();
+      
+      try {
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPSubPartnerSeasonAssign(:partnerId)").setParameter("partnerId", partnerId).getResultList();
+         if (result != null) {
+            for (Object[] dt : result) {
+               SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+               seasonsForPartnersDetails.setSeasonName(String.valueOf(dt[1]));
+               if (dt[1] != null)
+                  seasonsForPartnersDetails.setSeasonId(Integer.valueOf(String.valueOf(dt[0])));
+               if (dt[2] != null)
+                  seasonsForPartnersDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
+               seasons.getDetails().add(seasonsForPartnersDetails);
+            }
+         }
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return seasons;
    }
 
 }
