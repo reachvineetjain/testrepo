@@ -26,7 +26,6 @@ import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
-import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerDocument;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
@@ -70,7 +69,6 @@ import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
-import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
@@ -197,8 +195,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    PartnerStatusRepository partnerStatusRepository;
    @Autowired
    PartnerProgramRepository partnerProgRepository;
-   @Autowired
-   PartnerContactRepository partnerContactRepository;
    @Autowired
    LoginRepository loginRepository;
    @Autowired
@@ -630,31 +626,31 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             ExceptionUtil.logException(e, logger);
          }
 
-         try {
-            List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(goId);
-            if (contacts != null) {
-               for (PartnerContact partnerContact : contacts) {
-                  PartnerRecruitmentAdminScreeningContacts contact = new PartnerRecruitmentAdminScreeningContacts();
-                  contact.setPartnerContactId(partnerContact.getPartnerContactId());
-                  contact.setActive(partnerContact.getActive() == 1);
-                  contact.setEmail(partnerContact.getEmail());
-                  contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
-                  contact.setFax(partnerContact.getFax());
-                  contact.setFirstName(partnerContact.getFirstName());
-                  contact.setLastName(partnerContact.getLastName());
-                  contact.setPhone(partnerContact.getPhone());
-                  // contact.setPrograms(partnerContact.get);
-                  contact.setSalutation(partnerContact.getSalutation().getSalutationName());
-                  contact.setSkypeId(partnerContact.getSkypeId());
-                  contact.setTitile(partnerContact.getTitle());
-                  // contact.setUsername(partnerContact.get);
-                  contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
-                  pwt.getContacts().add(contact);
-               }
-            }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
-         }
+//         try {
+//            List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(goId);
+//            if (contacts != null) {
+//               for (PartnerContact partnerContact : contacts) {
+//                  PartnerRecruitmentAdminScreeningContacts contact = new PartnerRecruitmentAdminScreeningContacts();
+//                  contact.setPartnerContactId(partnerContact.getPartnerContactId());
+//                  contact.setActive(partnerContact.getActive() == 1);
+//                  contact.setEmail(partnerContact.getEmail());
+//                  contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+//                  contact.setFax(partnerContact.getFax());
+//                  contact.setFirstName(partnerContact.getFirstName());
+//                  contact.setLastName(partnerContact.getLastName());
+//                  contact.setPhone(partnerContact.getPhone());
+//                  // contact.setPrograms(partnerContact.get);
+//                  contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+//                  contact.setSkypeId(partnerContact.getSkypeId());
+//                  contact.setTitile(partnerContact.getTitle());
+//                  // contact.setUsername(partnerContact.get);
+//                  contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
+//                  pwt.getContacts().add(contact);
+//               }
+//            }
+//         } catch (Exception e) {
+//            ExceptionUtil.logException(e, logger);
+//         }
 
          try {
             List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(goId);
@@ -1396,93 +1392,93 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Override
    public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
       PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
-      try {
-         PartnerContact pc = new PartnerContact();
-         pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
-         pc.setCreatedBy(contactsDetails.getLoginId());
-         pc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         pc.setEmail(contactsDetails.getEmail());
-         pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
-         pc.setFax(contactsDetails.getFax());
-         pc.setFirstName(contactsDetails.getFirstName());
-         pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
-         pc.setLastName(contactsDetails.getLastName());
-         pc.setModifiedBy(contactsDetails.getGoId());
-         pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
-         pc.setPartner(partner);
-         pc.setPhone(contactsDetails.getPhone());
-         pc.setReceiveNotificationEmails(CCIConstants.INACTIVE);
-         Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
-         pc.setSalutation(salutation);
-         pc.setSkypeId(contactsDetails.getSkypeId());
-         pc.setTitle(contactsDetails.getTitile());
-         partnerContactRepository.saveAndFlush(pc);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
-         if (contacts != null) {
-            for (PartnerContact partnerContact : contacts) {
-               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
-               contact.setPartnerContactId(partnerContact.getPartnerContactId());
-               contact.setActive(partnerContact.getActive() == 1);
-               contact.setEmail(partnerContact.getEmail());
-               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
-               contact.setFax(partnerContact.getFax());
-               contact.setFirstName(partnerContact.getFirstName());
-               contact.setLastName(partnerContact.getLastName());
-               contact.setPhone(partnerContact.getPhone());
-               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
-               contact.setSkypeId(partnerContact.getSkypeId());
-               contact.setTitile(partnerContact.getTitle());
-
-               contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
-               pContacts.getContacts().add(contact);
-            }
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATE_PARTNER_CONTACT)));
-      }
+//      try {
+//         PartnerContact pc = new PartnerContact();
+//         pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
+//         pc.setCreatedBy(contactsDetails.getLoginId());
+//         pc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+//         pc.setEmail(contactsDetails.getEmail());
+//         pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+//         pc.setFax(contactsDetails.getFax());
+//         pc.setFirstName(contactsDetails.getFirstName());
+//         pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
+//         pc.setLastName(contactsDetails.getLastName());
+//         pc.setModifiedBy(contactsDetails.getGoId());
+//         pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+//         Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
+//         pc.setPartner(partner);
+//         pc.setPhone(contactsDetails.getPhone());
+//         pc.setReceiveNotificationEmails(CCIConstants.INACTIVE);
+//         Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
+//         pc.setSalutation(salutation);
+//         pc.setSkypeId(contactsDetails.getSkypeId());
+//         pc.setTitle(contactsDetails.getTitile());
+//         partnerContactRepository.saveAndFlush(pc);
+//         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
+//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
+//         if (contacts != null) {
+//            for (PartnerContact partnerContact : contacts) {
+//               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
+//               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+//               contact.setActive(partnerContact.getActive() == 1);
+//               contact.setEmail(partnerContact.getEmail());
+//               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+//               contact.setFax(partnerContact.getFax());
+//               contact.setFirstName(partnerContact.getFirstName());
+//               contact.setLastName(partnerContact.getLastName());
+//               contact.setPhone(partnerContact.getPhone());
+//               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+//               contact.setSkypeId(partnerContact.getSkypeId());
+//               contact.setTitile(partnerContact.getTitle());
+//
+//               contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
+//               pContacts.getContacts().add(contact);
+//            }
+//         }
+//      } catch (Exception e) {
+//         ExceptionUtil.logException(e, logger);
+//         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
+//               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATE_PARTNER_CONTACT)));
+//      }
       return pContacts;
    }
 
    @Override
    public PartnerAdminOverviewContacts removeNewPartnerInquiryContact(PartnerAdminOverviewDeletedContacts deletedItems) {
       PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
-      try {
-
-         for (Integer item : deletedItems.getContacts()) {
-            partnerContactRepository.delete(item);
-         }
-         partnerContactRepository.flush();
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(deletedItems.getGoId());
-         if (contacts != null) {
-            for (PartnerContact partnerContact : contacts) {
-               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
-               contact.setPartnerContactId(partnerContact.getPartnerContactId());
-               contact.setActive(partnerContact.getActive() == 1);
-               contact.setEmail(partnerContact.getEmail());
-               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
-               contact.setFax(partnerContact.getFax());
-               contact.setFirstName(partnerContact.getFirstName());
-               contact.setLastName(partnerContact.getLastName());
-               contact.setPhone(partnerContact.getPhone());
-               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
-               contact.setSkypeId(partnerContact.getSkypeId());
-               contact.setTitile(partnerContact.getTitle());
-               contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
-               pContacts.getContacts().add(contact);
-            }
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_CONTACT)));
-      }
+//      try {
+//
+//         for (Integer item : deletedItems.getContacts()) {
+//            partnerContactRepository.delete(item);
+//         }
+//         partnerContactRepository.flush();
+//         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
+//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(deletedItems.getGoId());
+//         if (contacts != null) {
+//            for (PartnerContact partnerContact : contacts) {
+//               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
+//               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+//               contact.setActive(partnerContact.getActive() == 1);
+//               contact.setEmail(partnerContact.getEmail());
+//               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+//               contact.setFax(partnerContact.getFax());
+//               contact.setFirstName(partnerContact.getFirstName());
+//               contact.setLastName(partnerContact.getLastName());
+//               contact.setPhone(partnerContact.getPhone());
+//               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+//               contact.setSkypeId(partnerContact.getSkypeId());
+//               contact.setTitile(partnerContact.getTitle());
+//               contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
+//               pContacts.getContacts().add(contact);
+//            }
+//         }
+//      } catch (Exception e) {
+//         ExceptionUtil.logException(e, logger);
+//         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
+//               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_CONTACT)));
+//      }
       return pContacts;
    }
 
@@ -1637,50 +1633,50 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Override
    public PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
       PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
-      try {
-         PartnerContact pc = partnerContactRepository.findOne(contactsDetails.getPartnerContactId());
-         pc.setActive((byte) (contactsDetails.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
-         pc.setEmail(contactsDetails.getEmail());
-         pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
-         pc.setFax(contactsDetails.getFax());
-         pc.setFirstName(contactsDetails.getFirstName());
-         pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
-         pc.setLastName(contactsDetails.getLastName());
-         pc.setModifiedBy(contactsDetails.getGoId());
-         pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         pc.setPhone(contactsDetails.getPhone());
-         pc.setReceiveNotificationEmails(contactsDetails.isReceiveNotificationEmails() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
-         pc.setSalutation(salutation);
-         pc.setSkypeId(contactsDetails.getSkypeId());
-         pc.setTitle(contactsDetails.getTitile());
-         partnerContactRepository.saveAndFlush(pc);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_PARTNER_REFERENCE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
-         if (contacts != null) {
-            for (PartnerContact partnerContact : contacts) {
-               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
-               contact.setPartnerContactId(partnerContact.getPartnerContactId());
-               contact.setActive(partnerContact.getActive() == CCIConstants.ACTIVE);
-               contact.setEmail(partnerContact.getEmail());
-               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
-               contact.setFax(partnerContact.getFax());
-               contact.setFirstName(partnerContact.getFirstName());
-               contact.setLastName(partnerContact.getLastName());
-               contact.setPhone(partnerContact.getPhone());
-               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
-               contact.setSkypeId(partnerContact.getSkypeId());
-               contact.setTitile(partnerContact.getTitle());
-               contact.setPrimaryContact(partnerContact.getIsPrimary() == CCIConstants.ACTIVE);
-               pContacts.getContacts().add(contact);
-            }
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_CONTACT)));
-      }
+//      try {
+//         PartnerContact pc = partnerContactRepository.findOne(contactsDetails.getPartnerContactId());
+//         pc.setActive((byte) (contactsDetails.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
+//         pc.setEmail(contactsDetails.getEmail());
+//         pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+//         pc.setFax(contactsDetails.getFax());
+//         pc.setFirstName(contactsDetails.getFirstName());
+//         pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
+//         pc.setLastName(contactsDetails.getLastName());
+//         pc.setModifiedBy(contactsDetails.getGoId());
+//         pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+//         pc.setPhone(contactsDetails.getPhone());
+//         pc.setReceiveNotificationEmails(contactsDetails.isReceiveNotificationEmails() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+//         Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
+//         pc.setSalutation(salutation);
+//         pc.setSkypeId(contactsDetails.getSkypeId());
+//         pc.setTitle(contactsDetails.getTitile());
+//         partnerContactRepository.saveAndFlush(pc);
+//         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_PARTNER_REFERENCE.getValue(),
+//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
+//         if (contacts != null) {
+//            for (PartnerContact partnerContact : contacts) {
+//               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
+//               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+//               contact.setActive(partnerContact.getActive() == CCIConstants.ACTIVE);
+//               contact.setEmail(partnerContact.getEmail());
+//               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+//               contact.setFax(partnerContact.getFax());
+//               contact.setFirstName(partnerContact.getFirstName());
+//               contact.setLastName(partnerContact.getLastName());
+//               contact.setPhone(partnerContact.getPhone());
+//               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+//               contact.setSkypeId(partnerContact.getSkypeId());
+//               contact.setTitile(partnerContact.getTitle());
+//               contact.setPrimaryContact(partnerContact.getIsPrimary() == CCIConstants.ACTIVE);
+//               pContacts.getContacts().add(contact);
+//            }
+//         }
+//      } catch (Exception e) {
+//         ExceptionUtil.logException(e, logger);
+//         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+//               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_CONTACT)));
+//      }
       return pContacts;
    }
 
