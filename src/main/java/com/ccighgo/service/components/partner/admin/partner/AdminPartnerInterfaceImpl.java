@@ -378,13 +378,15 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public LeadPartners getLeadPartnerList() {
       LeadPartners leadPartners = new LeadPartners();
       try {
-         List<PartnerAgentInquiry> partnerAgentList = partnerAgentInquiryRepository.findAll();
-         if (partnerAgentList == null) {
+         // 4 is pending status
+         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findReviewStatusByStatus(4);
+         if (partnerReviewStatusList == null) {
             throw new CcighgoException("No Leads found.");
          }
-         leadPartners.setCount(partnerAgentList.size());
+         leadPartners.setCount(partnerReviewStatusList.size());
          List<LeadPartner> leadPartnersList = new ArrayList<LeadPartner>();
-         for (PartnerAgentInquiry p : partnerAgentList) {
+         for (PartnerReviewStatus prs : partnerReviewStatusList) {
+            PartnerAgentInquiry p = partnerAgentInquiryRepository.findPartnerByGoId(prs.getPartner().getPartnerGoId());
             LeadPartner lp = new LeadPartner();
             lp.setCompanyName(p.getCompanyName());
             lp.setRating(p.getRating());
