@@ -28,15 +28,15 @@ public class FieldStaffWorkQueueTypeAggregate implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
-	//bi-directional many-to-one association to FieldStaffWorkQueueType
-	@ManyToOne
-	@JoinColumn(name="fieldStaffWQTypeId")
-	private FieldStaffWorkQueueType fieldStaffWorkQueueType;
-
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
 	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
+
+	//bi-directional many-to-one association to FieldStaffWorkQueueType
+	@ManyToOne
+	@JoinColumn(name="fieldStaffWQTypeId")
+	private FieldStaffWorkQueueType fieldStaffWorkQueueType;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
@@ -78,20 +78,20 @@ public class FieldStaffWorkQueueTypeAggregate implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public FieldStaffWorkQueueType getFieldStaffWorkQueueType() {
-		return this.fieldStaffWorkQueueType;
-	}
-
-	public void setFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
-		this.fieldStaffWorkQueueType = fieldStaffWorkQueueType;
-	}
-
 	public FieldStaff getFieldStaff() {
 		return this.fieldStaff;
 	}
 
 	public void setFieldStaff(FieldStaff fieldStaff) {
 		this.fieldStaff = fieldStaff;
+	}
+
+	public FieldStaffWorkQueueType getFieldStaffWorkQueueType() {
+		return this.fieldStaffWorkQueueType;
+	}
+
+	public void setFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
+		this.fieldStaffWorkQueueType = fieldStaffWorkQueueType;
 	}
 
 	public LookupDepartmentProgram getLookupDepartmentProgram() {

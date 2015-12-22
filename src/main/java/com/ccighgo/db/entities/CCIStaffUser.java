@@ -90,12 +90,12 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional one-to-one association to GoIdSequence
@@ -120,7 +120,7 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
