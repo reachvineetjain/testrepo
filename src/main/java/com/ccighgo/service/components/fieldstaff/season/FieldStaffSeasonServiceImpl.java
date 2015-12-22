@@ -60,7 +60,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                count += 1;
                // 0.fs season id, 1.seasonid,2 department program id, 3.
                // season/program name,4. start date, 5.end date, 6.status, 7. is
-               // signed, 8.departmentid
+               // signed, 8.departmentid, 9. DepartProgName, 10. FS Type
                FieldStaffSeason season = new FieldStaffSeason();
                season.setFsGoId(Integer.valueOf(fsGoId));
                season.setFsSeasonId(Integer.valueOf(obj[0].toString()));
@@ -72,6 +72,8 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                season.setStatus(obj[6].toString());
                season.setSignedContract(obj[7].toString().equals("true") ? 1 : 0);
                season.setDepartmentId(Integer.valueOf(obj[8].toString()));
+               season.setDepartmentProgramName(obj[9].toString());
+               season.setFsType(obj[10].toString());
                fsSeasonList.getFieldStaffSeasons().add(season);
             }
          }

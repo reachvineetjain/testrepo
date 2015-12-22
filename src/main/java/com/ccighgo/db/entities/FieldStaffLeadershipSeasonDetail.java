@@ -63,6 +63,11 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 	@JoinColumn(name="fieldStaffSeasonStatusId")
 	private FieldStaffStatus fieldStaffStatus;
 
+	//bi-directional many-to-one association to HostFamilyStatus
+	@ManyToOne
+	@JoinColumn(name="hostfamilyStatusId")
+	private HostFamilyStatus hostFamilyStatus;
+
 	//bi-directional many-to-one association to Season
 	@ManyToOne
 	@JoinColumn(name="seasonId")
@@ -71,11 +76,6 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 	//bi-directional many-to-one association to FieldStaffLeadershipSeasonDocument
 	@OneToMany(mappedBy="fieldStaffLeadershipSeasonDetail")
 	private List<FieldStaffLeadershipSeasonDocument> fieldStaffLeadershipSeasonDocuments;
-
-	//bi-directional many-to-one association to HostFamilyStatus
-	@ManyToOne
-	@JoinColumn(name="hostfamilyStatusId")
-	private HostFamilyStatus hostFamilyStatus;
 
 	public FieldStaffLeadershipSeasonDetail() {
 	}
@@ -208,6 +208,14 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 		this.fieldStaffStatus = fieldStaffStatus;
 	}
 
+	public HostFamilyStatus getHostFamilyStatus() {
+		return this.hostFamilyStatus;
+	}
+
+	public void setHostFamilyStatus(HostFamilyStatus hostFamilyStatus) {
+		this.hostFamilyStatus = hostFamilyStatus;
+	}
+
 	public Season getSeason() {
 		return this.season;
 	}
@@ -236,14 +244,6 @@ public class FieldStaffLeadershipSeasonDetail implements Serializable {
 		fieldStaffLeadershipSeasonDocument.setFieldStaffLeadershipSeasonDetail(null);
 
 		return fieldStaffLeadershipSeasonDocument;
-	}
-
-	public HostFamilyStatus getHostFamilyStatus() {
-		return this.hostFamilyStatus;
-	}
-
-	public void setHostFamilyStatus(HostFamilyStatus hostFamilyStatus) {
-		this.hostFamilyStatus = hostFamilyStatus;
 	}
 
 }

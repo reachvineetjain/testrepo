@@ -33,7 +33,7 @@ public class SeasonJ1Detail implements Serializable {
 	private Date augFullYearStartDate;
 
 	@Column(nullable=false)
-	private long createdBy;
+	private Integer createdBy;
 
 	@Column(nullable=false)
 	private Timestamp createdOn;
@@ -176,11 +176,11 @@ public class SeasonJ1Detail implements Serializable {
 		this.augFullYearStartDate = augFullYearStartDate;
 	}
 
-	public long getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(long createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 

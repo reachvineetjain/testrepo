@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerAnnouncement;
@@ -29,7 +28,6 @@ import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
-import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
@@ -52,8 +50,6 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerDashboardMessageConstants;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLeadScreeningDetail;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLeadScreeningDetail;
 import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPDashboard;
@@ -106,8 +102,6 @@ public class PartnerServiceImpl implements PartnerService {
    PartnerRepository partnerRepository;
    @Autowired
    LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
-   @Autowired
-   PartnerContactRepository partnerContactRepository;
    @Autowired
    PartnerWorkQueueRepository partnerWorkQueueRepository;
    @Autowired
@@ -363,24 +357,24 @@ public class PartnerServiceImpl implements PartnerService {
                j1hsDashboard.setCciContact(cciContact);
 
                // work queue types and categories
-               List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
+              List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
                List<PartnerWorkQueueType> partnerWorkQueueTypes = partnerWorkQueueTypeRepository.getPartnerWorkQueueTypesByDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                if (partnerWorkQueueTypes != null) {
                   for (PartnerWorkQueueType pqType : partnerWorkQueueTypes) {
                      PartnerJ1HSWorkQueueType j1wqType = new PartnerJ1HSWorkQueueType();
-                     j1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName());
+                     j1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName()!=null?pqType.getPartnerWQTypeName():"");
                      PartnerWorkQueueTypeAggregate typeAgg = partnerWorkQueueTypeAggregateRepository.getWorkQueueTypeAggregateByDepartmentProgramId(pqType.getPartnerWQTypeId(),
                            partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                     j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate());
+                     j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate()!=null?typeAgg.getPartnerWQTypeAggregate():0);
                      List<PartnerWorkQueueCategory> caregoryList = partnerWorkQueueCategoryRepository.getWorkQueueCategoryForType(pqType.getPartnerWQTypeId());
                      if (caregoryList != null) {
                         List<PartnerJ1HSWorkQueueCategory> partnerWorkQueueCategories = new ArrayList<PartnerJ1HSWorkQueueCategory>();
                         for (PartnerWorkQueueCategory category : caregoryList) {
                            PartnerJ1HSWorkQueueCategory cat = new PartnerJ1HSWorkQueueCategory();
-                           cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName());
+                           cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName()!=null?category.getPartnerWQCategoryName():"");
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
+                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate()!=null?catAgg.getPartnerWQCategoryAggregate():0);
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }

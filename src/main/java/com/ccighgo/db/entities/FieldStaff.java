@@ -269,6 +269,10 @@ public class FieldStaff implements Serializable {
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffNote> fieldStaffNotes;
 
+	//bi-directional many-to-one association to FieldStaffNoteTopic
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffNoteTopic> fieldStaffNoteTopics;
+
 	//bi-directional many-to-one association to FieldStaffParticipant
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffParticipant> fieldStaffParticipants;
@@ -277,14 +281,6 @@ public class FieldStaff implements Serializable {
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffPermission> fieldStaffPermissions;
 
-	//bi-directional many-to-one association to FieldStaffReference
-	@OneToMany(mappedBy="fieldStaff")
-	private List<FieldStaffReference> fieldStaffReferences;
-
-	//bi-directional many-to-one association to FieldStaffNoteTopic
-	@OneToMany(mappedBy="fieldStaff")
-	private List<FieldStaffNoteTopic> fieldStaffNoteTopics;
-
 	//bi-directional many-to-one association to FieldStaffQuickStatsCategoryAggregate
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffQuickStatsCategoryAggregate> fieldStaffQuickStatsCategoryAggregates;
@@ -292,6 +288,10 @@ public class FieldStaff implements Serializable {
 	//bi-directional many-to-one association to FieldStaffQuickStatsTypeAggregate
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffQuickStatsTypeAggregate> fieldStaffQuickStatsTypeAggregates;
+
+	//bi-directional many-to-one association to FieldStaffReference
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffReference> fieldStaffReferences;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueue
 	@OneToMany(mappedBy="fieldStaff")
@@ -1074,6 +1074,28 @@ public class FieldStaff implements Serializable {
 		return fieldStaffNote;
 	}
 
+	public List<FieldStaffNoteTopic> getFieldStaffNoteTopics() {
+		return this.fieldStaffNoteTopics;
+	}
+
+	public void setFieldStaffNoteTopics(List<FieldStaffNoteTopic> fieldStaffNoteTopics) {
+		this.fieldStaffNoteTopics = fieldStaffNoteTopics;
+	}
+
+	public FieldStaffNoteTopic addFieldStaffNoteTopic(FieldStaffNoteTopic fieldStaffNoteTopic) {
+		getFieldStaffNoteTopics().add(fieldStaffNoteTopic);
+		fieldStaffNoteTopic.setFieldStaff(this);
+
+		return fieldStaffNoteTopic;
+	}
+
+	public FieldStaffNoteTopic removeFieldStaffNoteTopic(FieldStaffNoteTopic fieldStaffNoteTopic) {
+		getFieldStaffNoteTopics().remove(fieldStaffNoteTopic);
+		fieldStaffNoteTopic.setFieldStaff(null);
+
+		return fieldStaffNoteTopic;
+	}
+
 	public List<FieldStaffParticipant> getFieldStaffParticipants() {
 		return this.fieldStaffParticipants;
 	}
@@ -1118,50 +1140,6 @@ public class FieldStaff implements Serializable {
 		return fieldStaffPermission;
 	}
 
-	public List<FieldStaffReference> getFieldStaffReferences() {
-		return this.fieldStaffReferences;
-	}
-
-	public void setFieldStaffReferences(List<FieldStaffReference> fieldStaffReferences) {
-		this.fieldStaffReferences = fieldStaffReferences;
-	}
-
-	public FieldStaffReference addFieldStaffReference(FieldStaffReference fieldStaffReference) {
-		getFieldStaffReferences().add(fieldStaffReference);
-		fieldStaffReference.setFieldStaff(this);
-
-		return fieldStaffReference;
-	}
-
-	public FieldStaffReference removeFieldStaffReference(FieldStaffReference fieldStaffReference) {
-		getFieldStaffReferences().remove(fieldStaffReference);
-		fieldStaffReference.setFieldStaff(null);
-
-		return fieldStaffReference;
-	}
-
-	public List<FieldStaffNoteTopic> getFieldStaffNoteTopics() {
-		return this.fieldStaffNoteTopics;
-	}
-
-	public void setFieldStaffNoteTopics(List<FieldStaffNoteTopic> fieldStaffNoteTopics) {
-		this.fieldStaffNoteTopics = fieldStaffNoteTopics;
-	}
-
-	public FieldStaffNoteTopic addFieldStaffNoteTopic(FieldStaffNoteTopic fieldStaffNoteTopic) {
-		getFieldStaffNoteTopics().add(fieldStaffNoteTopic);
-		fieldStaffNoteTopic.setFieldStaff(this);
-
-		return fieldStaffNoteTopic;
-	}
-
-	public FieldStaffNoteTopic removeFieldStaffNoteTopic(FieldStaffNoteTopic fieldStaffNoteTopic) {
-		getFieldStaffNoteTopics().remove(fieldStaffNoteTopic);
-		fieldStaffNoteTopic.setFieldStaff(null);
-
-		return fieldStaffNoteTopic;
-	}
-
 	public List<FieldStaffQuickStatsCategoryAggregate> getFieldStaffQuickStatsCategoryAggregates() {
 		return this.fieldStaffQuickStatsCategoryAggregates;
 	}
@@ -1204,6 +1182,28 @@ public class FieldStaff implements Serializable {
 		fieldStaffQuickStatsTypeAggregate.setFieldStaff(null);
 
 		return fieldStaffQuickStatsTypeAggregate;
+	}
+
+	public List<FieldStaffReference> getFieldStaffReferences() {
+		return this.fieldStaffReferences;
+	}
+
+	public void setFieldStaffReferences(List<FieldStaffReference> fieldStaffReferences) {
+		this.fieldStaffReferences = fieldStaffReferences;
+	}
+
+	public FieldStaffReference addFieldStaffReference(FieldStaffReference fieldStaffReference) {
+		getFieldStaffReferences().add(fieldStaffReference);
+		fieldStaffReference.setFieldStaff(this);
+
+		return fieldStaffReference;
+	}
+
+	public FieldStaffReference removeFieldStaffReference(FieldStaffReference fieldStaffReference) {
+		getFieldStaffReferences().remove(fieldStaffReference);
+		fieldStaffReference.setFieldStaff(null);
+
+		return fieldStaffReference;
 	}
 
 	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {

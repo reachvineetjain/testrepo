@@ -80,7 +80,6 @@
       <class>com.ccighgo.db.entities.Partner</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiry</class>
       <class>com.ccighgo.db.entities.PartnerAnnouncement</class>
-      <class>com.ccighgo.db.entities.PartnerContact</class>
       <class>com.ccighgo.db.entities.PartnerDocument</class>
       <class>com.ccighgo.db.entities.PartnerHelpOption</class>
       <class>com.ccighgo.db.entities.PartnerHelpOptionProgram</class>

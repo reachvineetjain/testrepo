@@ -1,5 +1,6 @@
 package com.ccighgo.service.component.partner.generic;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -66,8 +67,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       try {
          PartnerNote noteEntity = new PartnerNote();
          noteEntity.setCreatedBy(note.getLoginId());
-         noteEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-         noteEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         if(note.getCreatedOn()==null){
+        	 note.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
+         }
+         noteEntity.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
+         noteEntity.setModifiedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
          noteEntity.setModifiedBy(note.getLoginId());
          
          Partner partner = partnerRepository.findOne(note.getPartnerId());
