@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerAnnouncement;
@@ -29,7 +28,6 @@ import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
-import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
@@ -52,8 +50,6 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerDashboardMessageConstants;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLeadScreeningDetail;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningAdditionalInfo;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLeadScreeningDetail;
 import com.ccighgo.service.transport.partner.beans.partnercapdetails.PartnerCAPDashboard;
@@ -97,31 +93,52 @@ public class PartnerServiceImpl implements PartnerService {
 
    private static final Logger LOGGER = Logger.getLogger(PartnerServiceImpl.class);
 
-   @Autowired MessageUtils messageUtil;
-   @Autowired CommonComponentUtils componentUtils;
+   @Autowired
+   MessageUtils messageUtil;
+   @Autowired
+   CommonComponentUtils componentUtils;
 
-   @Autowired PartnerRepository partnerRepository;
-   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
-   @Autowired PartnerContactRepository partnerContactRepository;
-   @Autowired PartnerWorkQueueRepository partnerWorkQueueRepository;
-   @Autowired PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
-   @Autowired PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
-   @Autowired PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
-   @Autowired PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
-   @Autowired PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
-   @Autowired PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
-   @Autowired PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
-   @Autowired PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
+   @Autowired
+   PartnerRepository partnerRepository;
+   @Autowired
+   LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
+   @Autowired
+   PartnerWorkQueueRepository partnerWorkQueueRepository;
+   @Autowired
+   PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
+   @Autowired
+   PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
+   @Autowired
+   PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
+   @Autowired
+   PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
+   @Autowired
+   PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
+   @Autowired
+   PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
+   @Autowired
+   PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
+   @Autowired
+   PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
 
-   @Autowired PartnerAgentInquiryRepository partnerAgentInquiryRepository;
-   @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
-   @Autowired PartnerProgramRepository partnerProgramRepository;
-   @Autowired PartnerMessagesRepository partnerMessagesRepository;
-   @Autowired PartnerOfficeRepository partnerOfficeRepository;
-   @Autowired PartnerReferenceCheckRepository partnerReferenceCheckRepository;
-   @Autowired PartnerDocumentsRepository partnerDocumentsRepository;
-   @Autowired PartnerNoteRepository partnerNoteRepository;
-   @Autowired PartnerPermissionRepository partnerPermissionRepository;
+   @Autowired
+   PartnerAgentInquiryRepository partnerAgentInquiryRepository;
+   @Autowired
+   PartnerReviewStatusRepository partnerReviewStatusRepository;
+   @Autowired
+   PartnerProgramRepository partnerProgramRepository;
+   @Autowired
+   PartnerMessagesRepository partnerMessagesRepository;
+   @Autowired
+   PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired
+   PartnerReferenceCheckRepository partnerReferenceCheckRepository;
+   @Autowired
+   PartnerDocumentsRepository partnerDocumentsRepository;
+   @Autowired
+   PartnerNoteRepository partnerNoteRepository;
+   @Autowired
+   PartnerPermissionRepository partnerPermissionRepository;
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
