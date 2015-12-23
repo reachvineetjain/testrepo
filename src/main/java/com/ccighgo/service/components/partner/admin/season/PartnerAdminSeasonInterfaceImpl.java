@@ -115,33 +115,41 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                   count += 1;
                   PartnerAdminSeason pas = new PartnerAdminSeason();
                   Integer departmentProgramId = 0;
+                  String departmentProgramName = null;
                   String programName = null;
                   if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
                      departmentProgramId = CCIConstants.HSP_J1_HS_ID;
+                     departmentProgramName = CCIConstants.HSP_J1_HS;
                      programName = ps.getSeason().getSeasonJ1details().get(0).getProgramName();
                   }
                   if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1)) {
                      departmentProgramId = CCIConstants.HSP_F1_ID;
+                     departmentProgramName = CCIConstants.HSP_F1;
                      programName = ps.getSeason().getSeasonF1details().get(0).getProgramName();
                   }
                   if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_STP_IHP)) {
                      departmentProgramId = CCIConstants.HSP_STP_IHP_ID;
+                     departmentProgramName = CCIConstants.HSP_STP_IHP;
                      programName = ps.getSeason().getSeasonIhpdetails().get(0).getProgramName();
                   }
                   if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SUMMER)) {
                      departmentProgramId = CCIConstants.WP_WT_SUMMER_ID;
+                     departmentProgramName = CCIConstants.WP_WT_SUMMER;
                      programName = ps.getSeason().getSeasonWnTsummerDetails().get(0).getProgramName();
                   }
                   if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_WINTER)) {
                      departmentProgramId = CCIConstants.WP_WT_WINTER_ID;
+                     departmentProgramName = CCIConstants.WP_WT_WINTER;
                      programName = ps.getSeason().getSeasonWnTwinterDetails().get(0).getProgramName();
                   }
                   if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SPRING)) {
                      departmentProgramId = CCIConstants.WP_WT_SPRING_ID;
+                     departmentProgramName = CCIConstants.WP_WT_SPRING;
                      programName = ps.getSeason().getSeasonWnTspringDetails().get(0).getProgramName();
                   }
                   if (ps.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_CAP)) {
                      departmentProgramId = CCIConstants.WP_WT_CAP_ID;
+                     departmentProgramName = CCIConstants.WP_WT_CAP;
                      programName = ps.getSeason().getSeasonCapdetails().get(0).getProgramName();
                   }
                   PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus();
@@ -161,6 +169,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                   pas.setAcronym(ps.getDepartmentProgram().getLookupDepartment().getAcronym());
                   pas.setDepartmentName(ps.getDepartmentProgram().getLookupDepartment().getDepartmentName());
                   pas.setDepartmentProgramId(departmentProgramId);
+                  pas.setDepartmentProgramName(departmentProgramName);
                   pas.setProgramName(programName);
                   pas.setPartnerActiveForSeason(ps.getActive() == CCIConstants.ACTIVE ? true : false);
                   pas.setProgramStartDate(DateUtils.getTimestamp(ps.getPartnerSeasonStartDate()));
