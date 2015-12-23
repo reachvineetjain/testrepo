@@ -373,7 +373,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
       return url;
    }
 
-   @Override
+  @Override
    @Transactional(readOnly = true)
    public LeadPartners getLeadPartnerList() {
       LeadPartners leadPartners = new LeadPartners();
@@ -387,39 +387,41 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          List<LeadPartner> leadPartnersList = new ArrayList<LeadPartner>();
          for (PartnerReviewStatus prs : partnerReviewStatusList) {
             PartnerAgentInquiry p = partnerAgentInquiryRepository.findPartnerByGoId(prs.getPartner().getPartnerGoId());
-            LeadPartner lp = new LeadPartner();
-            lp.setCompanyName(p.getCompanyName());
-            lp.setRating(p.getRating());
-            lp.setFirstName(p.getFirstName());
-            lp.setLastName(p.getLastName());
-            lp.setPhone(p.getPhone());
-            lp.setExtenstion("");
-            lp.setWebsite(p.getWebsite());
-            lp.setEmail(p.getEmail());
-            lp.setGoId(p.getPartner()!=null?p.getPartner().getPartnerGoId():0);
-            LeadCountry pCountry = new LeadCountry();
-            pCountry.setCountryId(p.getLookupCountry().getCountryId());
-            pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
-            pCountry.setCountryName(p.getLookupCountry().getCountryName());
-            pCountry.setCountryFlagUrl(p.getLookupCountry().getCountryFlag());
-            lp.setLeadCountry(pCountry);
-            if (p.getPartner() != null) {
-               if (p.getPartner().getPartnerPrograms() != null) {
-                  List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
-                  List<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram> programs = null;
-                  if (partnerProgramList != null) {
-                     programs = new ArrayList<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram>();
-                     for (PartnerProgram pp : partnerProgramList) {
-                        com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram ppr = new com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram();
-                        ppr.setProgramId(pp.getLookupDepartmentProgram().getLookupDepartmentProgramId());
-                        ppr.setProgramName(pp.getLookupDepartmentProgram().getProgramName());
-                        programs.add(ppr);
+            if(p!=null){
+               LeadPartner lp = new LeadPartner();
+               lp.setCompanyName(p.getCompanyName());
+               lp.setRating(p.getRating());
+               lp.setFirstName(p.getFirstName());
+               lp.setLastName(p.getLastName());
+               lp.setPhone(p.getPhone());
+               lp.setExtenstion("");
+               lp.setWebsite(p.getWebsite());
+               lp.setEmail(p.getEmail());
+               lp.setGoId(p.getPartner()!=null?p.getPartner().getPartnerGoId():0);
+               LeadCountry pCountry = new LeadCountry();
+               pCountry.setCountryId(p.getLookupCountry().getCountryId());
+               pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
+               pCountry.setCountryName(p.getLookupCountry().getCountryName());
+               pCountry.setCountryFlagUrl(p.getLookupCountry().getCountryFlag());
+               lp.setLeadCountry(pCountry);
+               if (p.getPartner() != null) {
+                  if (p.getPartner().getPartnerPrograms() != null) {
+                     List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
+                     List<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram> programs = null;
+                     if (partnerProgramList != null) {
+                        programs = new ArrayList<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram>();
+                        for (PartnerProgram pp : partnerProgramList) {
+                           com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram ppr = new com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram();
+                           ppr.setProgramId(pp.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+                           ppr.setProgramName(pp.getLookupDepartmentProgram().getProgramName());
+                           programs.add(ppr);
+                        }
                      }
+                     lp.getPrograms().addAll(programs);
                   }
-                  lp.getPrograms().addAll(programs);
                }
+               leadPartnersList.add(lp);
             }
-            leadPartnersList.add(lp);
          }
          leadPartners.getLeadPartners().addAll(leadPartnersList);
          leadPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
@@ -430,6 +432,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
       }
       return leadPartners;
    }
+
 
    @Override
    public Response junkPartnerLead(String partnerGoId) {
