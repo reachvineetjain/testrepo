@@ -384,7 +384,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
       return url;
    }
 
-   @Override
+  @Override
    @Transactional(readOnly = true)
    public LeadPartners getLeadPartnerList() {
       LeadPartners leadPartners = new LeadPartners();
@@ -443,6 +443,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
       }
       return leadPartners;
    }
+
 
    @Override
    public Response junkPartnerLead(String partnerGoId) {

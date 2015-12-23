@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPDashboard;
 
 
 /**
@@ -41,9 +40,7 @@ import com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerIHPD
     "header",
     "status"
 })
-@XmlSeeAlso({
-    PartnerIHPDashboard.class
-})
+
 public class Response {
 
     @XmlElement(required = true)

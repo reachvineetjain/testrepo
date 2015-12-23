@@ -16,6 +16,6 @@ public interface PartnerReviewStatusRepository extends JpaRepository<PartnerRevi
    PartnerReviewStatus findApplicationStatusByGoId(int goId);
    
    
-   @Query("SELECT p FROM PartnerReviewStatus p WHERE p.partner.partnerStatus1.partnerLeadStatusId =?1")
+  @Query(value="SELECT * FROM PartnerReviewStatus p JOIN PartnerStatus ps where p.partnerLeadStatusId=ps.partnerStatusId AND p.partnerLeadStatusId=?1", nativeQuery = true)
    List<PartnerReviewStatus> findReviewStatusByStatus(Integer leadStatusId);
 }
