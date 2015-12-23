@@ -6,6 +6,8 @@ package com.ccighgo.service.components.partner.admin.partner;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -83,12 +85,17 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    @Autowired PartnerAgentInquiryRepository partnerAgentInquiryRepository;
    @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
    @Autowired PartnerStatusRepository partnerStatusRepository;
+   @Autowired EntityManager entityManager;
 
    public static final Integer PENDING_STATUS = 4;
    public static final Integer JUNK = 10;
    public static final Integer BLACKLIST = 3;
    public static final Integer INVALID = 12;
    public static final Integer VALID = 11;
+   public static final Integer SEND_LOGIN = 1;
+   
+   private static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
+   private static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
 
    @Override
    @Transactional
@@ -201,6 +208,10 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                   + "<p>Please go to the following page and follow the instructions to login to the system. </p> " + "<p>" + formResetURL(request).concat(loginEmail.getKeyValue())
                   + "</p></br>" + "<p>Thank you,</p><p>GO System Support.</p>";
             email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body, true);
+            Query q1 = entityManager.createNativeQuery(SPPartnerWQCategoryAggregate);
+            Query q2 = entityManager.createNativeQuery(SPPartnerWQTypeAggregate);
+            q1.executeUpdate();
+            q2.executeUpdate();
          }
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -387,39 +398,41 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          List<LeadPartner> leadPartnersList = new ArrayList<LeadPartner>();
          for (PartnerReviewStatus prs : partnerReviewStatusList) {
             PartnerAgentInquiry p = partnerAgentInquiryRepository.findPartnerByGoId(prs.getPartner().getPartnerGoId());
-            LeadPartner lp = new LeadPartner();
-            lp.setCompanyName(p.getCompanyName());
-            lp.setRating(p.getRating());
-            lp.setFirstName(p.getFirstName());
-            lp.setLastName(p.getLastName());
-            lp.setPhone(p.getPhone());
-            lp.setExtenstion("");
-            lp.setWebsite(p.getWebsite());
-            lp.setEmail(p.getEmail());
-            lp.setGoId(p.getPartner()!=null?p.getPartner().getPartnerGoId():0);
-            LeadCountry pCountry = new LeadCountry();
-            pCountry.setCountryId(p.getLookupCountry().getCountryId());
-            pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
-            pCountry.setCountryName(p.getLookupCountry().getCountryName());
-            pCountry.setCountryFlagUrl(p.getLookupCountry().getCountryFlag());
-            lp.setLeadCountry(pCountry);
-            if (p.getPartner() != null) {
-               if (p.getPartner().getPartnerPrograms() != null) {
-                  List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
-                  List<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram> programs = null;
-                  if (partnerProgramList != null) {
-                     programs = new ArrayList<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram>();
-                     for (PartnerProgram pp : partnerProgramList) {
-                        com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram ppr = new com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram();
-                        ppr.setProgramId(pp.getLookupDepartmentProgram().getLookupDepartmentProgramId());
-                        ppr.setProgramName(pp.getLookupDepartmentProgram().getProgramName());
-                        programs.add(ppr);
+            if(p!=null){
+               LeadPartner lp = new LeadPartner();
+               lp.setCompanyName(p.getCompanyName());
+               lp.setRating(p.getRating());
+               lp.setFirstName(p.getFirstName());
+               lp.setLastName(p.getLastName());
+               lp.setPhone(p.getPhone());
+               lp.setExtenstion("");
+               lp.setWebsite(p.getWebsite());
+               lp.setEmail(p.getEmail());
+               lp.setGoId(p.getPartner()!=null?p.getPartner().getPartnerGoId():0);
+               LeadCountry pCountry = new LeadCountry();
+               pCountry.setCountryId(p.getLookupCountry().getCountryId());
+               pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
+               pCountry.setCountryName(p.getLookupCountry().getCountryName());
+               pCountry.setCountryFlagUrl(p.getLookupCountry().getCountryFlag());
+               lp.setLeadCountry(pCountry);
+               if (p.getPartner() != null) {
+                  if (p.getPartner().getPartnerPrograms() != null) {
+                     List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
+                     List<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram> programs = null;
+                     if (partnerProgramList != null) {
+                        programs = new ArrayList<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram>();
+                        for (PartnerProgram pp : partnerProgramList) {
+                           com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram ppr = new com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram();
+                           ppr.setProgramId(pp.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+                           ppr.setProgramName(pp.getLookupDepartmentProgram().getProgramName());
+                           programs.add(ppr);
+                        }
                      }
+                     lp.getPrograms().addAll(programs);
                   }
-                  lp.getPrograms().addAll(programs);
                }
+               leadPartnersList.add(lp);
             }
-            leadPartnersList.add(lp);
          }
          leadPartners.getLeadPartners().addAll(leadPartnersList);
          leadPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
@@ -488,7 +501,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             throw new CcighgoException("send login value is required");
          }
          PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
-         if (Integer.valueOf(loginVal) == 1) {
+         if (Integer.valueOf(loginVal).equals(SEND_LOGIN)) {
             sendLogin(partnerGoId, request);
             partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
          } else {
