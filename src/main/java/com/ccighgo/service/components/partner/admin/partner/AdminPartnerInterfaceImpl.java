@@ -6,6 +6,8 @@ package com.ccighgo.service.components.partner.admin.partner;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -83,12 +85,17 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    @Autowired PartnerAgentInquiryRepository partnerAgentInquiryRepository;
    @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
    @Autowired PartnerStatusRepository partnerStatusRepository;
+   @Autowired EntityManager entityManager;
 
    public static final Integer PENDING_STATUS = 4;
    public static final Integer JUNK = 10;
    public static final Integer BLACKLIST = 3;
    public static final Integer INVALID = 12;
    public static final Integer VALID = 11;
+   public static final Integer SEND_LOGIN = 1;
+   
+   private static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
+   private static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
 
    @Override
    @Transactional
@@ -201,6 +208,10 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                   + "<p>Please go to the following page and follow the instructions to login to the system. </p> " + "<p>" + formResetURL(request).concat(loginEmail.getKeyValue())
                   + "</p></br>" + "<p>Thank you,</p><p>GO System Support.</p>";
             email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body, true);
+            Query q1 = entityManager.createNativeQuery(SPPartnerWQCategoryAggregate);
+            Query q2 = entityManager.createNativeQuery(SPPartnerWQTypeAggregate);
+            q1.executeUpdate();
+            q2.executeUpdate();
          }
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -491,7 +502,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             throw new CcighgoException("send login value is required");
          }
          PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
-         if (Integer.valueOf(loginVal) == 1) {
+         if (Integer.valueOf(loginVal).equals(SEND_LOGIN)) {
             sendLogin(partnerGoId, request);
             partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
          } else {
