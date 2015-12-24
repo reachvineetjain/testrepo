@@ -17,7 +17,7 @@ public class PartnerQuickStatsCategoryAggregate implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
+	@Column(name="PartnerQSCategoryAggregateId", unique=true, nullable=false)
 	private Integer partnerQSCategoryAggregateId;
 
 	@Column(nullable=false)

@@ -33,10 +33,6 @@ public class Salutation implements Serializable {
 	@OneToMany(mappedBy="salutation")
 	private List<PartnerAgentInquiry> partnerAgentInquiries;
 
-	//bi-directional many-to-one association to PartnerContact
-	@OneToMany(mappedBy="salutation")
-	private List<PartnerContact> partnerContacts;
-
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="salutation")
 	private List<PartnerUser> partnerUsers;
@@ -110,28 +106,6 @@ public class Salutation implements Serializable {
 		partnerAgentInquiry.setSalutation(null);
 
 		return partnerAgentInquiry;
-	}
-
-	public List<PartnerContact> getPartnerContacts() {
-		return this.partnerContacts;
-	}
-
-	public void setPartnerContacts(List<PartnerContact> partnerContacts) {
-		this.partnerContacts = partnerContacts;
-	}
-
-	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().add(partnerContact);
-		partnerContact.setSalutation(this);
-
-		return partnerContact;
-	}
-
-	public PartnerContact removePartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().remove(partnerContact);
-		partnerContact.setSalutation(null);
-
-		return partnerContact;
 	}
 
 	public List<PartnerUser> getPartnerUsers() {
