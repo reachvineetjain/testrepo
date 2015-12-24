@@ -261,7 +261,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                   pCountry.setCountryFlagUrl(p.getLookupCountry1().getCountryFlag());
                   ap.setPartnerCountry(pCountry);
                }
-               ap.setActive(puser.getLogin().getActive() == CCIConstants.ACTIVE ? 1 : 0);
+               ap.setActive(puser.getLogin().getActive().equals(CCIConstants.ACTIVE) ? 1 : 0);
                ap.setPartnerLoginId(puser.getLogin().getLoginId());
 
                // partner status
