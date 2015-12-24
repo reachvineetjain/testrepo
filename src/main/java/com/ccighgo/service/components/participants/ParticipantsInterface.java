@@ -48,6 +48,7 @@ public interface ParticipantsInterface {
    
    public SeasonsForParticipants getAllAvailableSeasons();
 
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId,int departmentProgramId);
    public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId);
 
    public AddedParticipantsList getAddedParticipant(String partnerId);
