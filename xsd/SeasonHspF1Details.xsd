@@ -31,6 +31,7 @@
          <xsd:element name="programAllocations" type="seasonhspf1details:HSPF1ProgramAllocations" minOccurs="0" maxOccurs="1" />
          <xsd:element name="documents" type="seasonhspf1details:HSPF1SeasonHspF1Documents" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="notes" type="seasonhspf1details:HSPF1SeasonHspF1Notes" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
       </xsd:extension>
 	</xsd:complexContent>

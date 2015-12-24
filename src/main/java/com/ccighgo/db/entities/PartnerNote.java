@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
 
 
@@ -25,6 +26,9 @@ public class PartnerNote implements Serializable {
 
 	@Column(nullable=false)
 	private Timestamp createdOn;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date followupDate;
 
 	private Byte hasRead;
 
@@ -72,6 +76,14 @@ public class PartnerNote implements Serializable {
 
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public Date getFollowupDate() {
+		return this.followupDate;
+	}
+
+	public void setFollowupDate(Date followupDate) {
+		this.followupDate = followupDate;
 	}
 
 	public Byte getHasRead() {

@@ -56,7 +56,12 @@
 	   <xsd:complexType name="PartnerRecruitmentAdminScreeningAdditionalInfo">
 	            <xsd:sequence>
 	            	<xsd:element name="programsYouLikeToParticipate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	            	
+	            	<xsd:element name="interestedInTeachAbroad" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	            	<xsd:element name="interestedInVolunteerAbroad" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	            	<xsd:element name="interestedInHighSchoolAbroad" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	            	<xsd:element name="programsYouOffer" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	            	
 		            <xsd:element name="sendPartnersToUSA" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="isYourOrganizationSendingParticipantstoUSA" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 		            <xsd:element name="likeToKnowMoreAboutAmbassadorScholarship" type="xsd:boolean" minOccurs="1" maxOccurs="1" />

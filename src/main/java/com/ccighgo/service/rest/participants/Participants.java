@@ -99,7 +99,7 @@ public class Participants {
    @Produces("application/json")
    public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId")  String partnerId){
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
-      return participantsInterface.getAllAvailableSeasons(partnerId);
+      return participantsInterface.getAllAvailableSeasons2(partnerId);
    }
    
    @GET
@@ -158,6 +158,13 @@ public class Participants {
    @Produces("application/json")
    public Response resetParticipantPassword(@PathParam("participantGoId") String participantGoId) {
       return participantsInterface.resetParticipantPassword(participantGoId, request);
+   }
+   
+   @GET
+   @Path("sendLogin/{participantGoId}")
+   @Produces("application/json")
+   public Response sendLogin(@PathParam("participantGoId") String participantGoId) {
+      return participantsInterface.sendLogin(participantGoId, request);
    }
 
 }

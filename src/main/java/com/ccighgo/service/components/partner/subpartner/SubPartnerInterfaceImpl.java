@@ -6,39 +6,29 @@ package com.ccighgo.service.components.partner.subpartner;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
-import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerNote;
-import com.ccighgo.db.entities.PartnerNoteTag;
 import com.ccighgo.db.entities.PartnerNoteTopic;
-import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.PartnerUser;
-import com.ccighgo.db.entities.PartnerUserRole;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
-import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
-import com.ccighgo.jpa.repositories.CCIStaffUsersCCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
-import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTagRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
@@ -54,30 +44,15 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.SubPartnerMessageConstants;
 import com.ccighgo.service.components.utility.UtilityServices;
-import com.ccighgo.service.transport.common.response.beans.Response;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.NoteUserCreator;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
 import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
 import com.ccighgo.service.transport.partner.beans.allsalutation.SalutationList;
-import com.ccighgo.service.transport.partner.beans.companydetail.PartnerMailingAddress;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Creator;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Note;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics;
-import com.ccighgo.service.transport.partner.beans.partnerseasondetail.Topic;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartner;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerAgency;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerCountry;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerCountryStatus;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetail;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerMailingAddress;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerPhysicalAddress;
-import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerPrimaryContact;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartners;
@@ -87,11 +62,7 @@ import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerSc
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersMailingAddress;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersPhysicalAddress;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersPrimaryContact;
-import com.ccighgo.service.transport.partner.beans.subpartnerdetail.Topics;
-import com.ccighgo.service.transport.partner.beans.subpartnerdetail.TypeofPartnerUser;
 import com.ccighgo.utils.CCIConstants;
-import com.ccighgo.utils.CCIUtils;
-import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
@@ -106,161 +77,25 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
    private static final Logger LOGGER = Logger.getLogger(SubPartnerInterfaceImpl.class);
 
-   @Autowired
-   PartnerRepository partnerRepository;
-
-   @Autowired
-   GoIdSequenceRepository goIdSequenceRepository;
-
-   @Autowired
-   LoginRepository loginRepository;
-
-   @Autowired
-   UserTypeRepository userTypeRepository;
-
-   @Autowired
-   LoginUserTypeRepository loginUserTypeRepository;
-
-   @Autowired
-   PartnerNoteTopicRepository partnerNoteTopicRepository;
-
-   @Autowired
-   PartnerNoteRepository partnerNoteRepository;
-
-   @Autowired
-   PartnerNoteTagRepository partnerNoteTagRepository;
-
-   @Autowired
-   PartnerOfficeTypeRepository partnerOfficeTypeRepository;
-
-   @Autowired
-   PartnerOfficeRepository partnerOfficeRepository;
-
-   @Autowired
-   PartnerContactRepository partnerContactRepository;
-
-   @Autowired
-   CommonComponentUtils componentUtils;
-
-   @Autowired
-   MessageUtils messageUtil;
-
-   @Autowired
-   EmailServiceImpl email;
-
-   @Autowired
-   SalutationRepository salutationRepository;
-
-   @Autowired
-   UtilityServices utilityServices;
-
-   @Autowired
-   PartnerStatusRepository partnerStatusRepository;
-   // TODO
-   // @Autowired PartnerCCIContactRepository partnerCCIContactRepository;
-
-   @Autowired
-   PartnerReviewStatusRepository partnerReviewStatusRepository;
-
-   @Autowired
-   PartnerUserRepository partnerUserRepository;
-
-   @Autowired
-   CountryRepository countryRepository;
-
-   public PartnerSubPartners getSubPartnersOfpartners2(String partnerId) {
-      PartnerSubPartners psp = new PartnerSubPartners();
-      psp.setCount(2);
-      psp.setPartnerGoId(1111);
-      List<SubPartners> subPartners = new ArrayList<SubPartners>();
-
-      SubPartnerCountry subPartnerCountry1 = new SubPartnerCountry();
-      subPartnerCountry1.setSubPartnerCountry("United States");
-      subPartnerCountry1.setSubPartnerCountryId(233);
-
-      SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
-      subPartnerCountry2.setSubPartnerCountry("Taiwan");
-      subPartnerCountry2.setSubPartnerCountryId(228);
-
-      SubPartnerCountry subPartnerCountry3 = new SubPartnerCountry();
-      subPartnerCountry3.setSubPartnerCountry("Romania");
-      subPartnerCountry3.setSubPartnerCountryId(189);
-
-      SubPartnerCountry subPartnerCountry4 = new SubPartnerCountry();
-      subPartnerCountry4.setSubPartnerCountry("New Zealand");
-      subPartnerCountry4.setSubPartnerCountryId(171);
-
-      SubPartnerCountry subPartnerCountry5 = new SubPartnerCountry();
-      subPartnerCountry5.setSubPartnerCountry("Norway");
-      subPartnerCountry5.setSubPartnerCountryId(167);
-
-      SubPartnerStatus subPartnerStatus1 = new SubPartnerStatus();
-      subPartnerStatus1.setSubPartnerStatusId(1);
-      subPartnerStatus1.setSubPartnerStatus("Active");
-
-      SubPartnerStatus subPartnerStatus2 = new SubPartnerStatus();
-      subPartnerStatus2.setSubPartnerStatusId(2);
-      subPartnerStatus2.setSubPartnerStatus("Inactive");
-
-      List<SubPartnerSeasons> subPartnerSeasons = new ArrayList<SubPartnerSeasons>();
-      SubPartnerSeasons partnerSeasons = new SubPartnerSeasons();
-      partnerSeasons.setSubPartnerSeasonId(1);
-      partnerSeasons.setSubPartnerSeasonProgramId(1);
-      partnerSeasons.setSubPartnerSeasonProgram("J1HS");
-
-      SubPartnerSeasons partnerSeasons1 = new SubPartnerSeasons();
-      partnerSeasons1.setSubPartnerSeasonId(2);
-      partnerSeasons1.setSubPartnerSeasonProgramId(2);
-      partnerSeasons1.setSubPartnerSeasonProgram("F1");
-      subPartnerSeasons.add(partnerSeasons);
-      subPartnerSeasons.add(partnerSeasons1);
-
-      SubPartners sPart = new SubPartners();
-      sPart.setSubPartnerId(123);
-      sPart.setSubPartnerFirstName("Super");
-      sPart.setSubPartnerLastName("Man");
-      sPart.setSubPartnerCountry(subPartnerCountry1);
-      sPart.setSubPartnerStatus(subPartnerStatus1);
-      sPart.getSubPartnerSeasons().addAll(subPartnerSeasons);
-
-      SubPartners sPart1 = new SubPartners();
-      sPart1.setSubPartnerId(1234);
-      sPart1.setSubPartnerFirstName("Bat");
-      sPart1.setSubPartnerLastName("Man");
-      sPart1.setSubPartnerCountry(subPartnerCountry2);
-      sPart1.setSubPartnerStatus(subPartnerStatus2);
-      sPart1.getSubPartnerSeasons().addAll(subPartnerSeasons);
-
-      SubPartners sPart2 = new SubPartners();
-      sPart2.setSubPartnerId(1234);
-      sPart2.setSubPartnerFirstName("Iron");
-      sPart2.setSubPartnerLastName("Man");
-      sPart2.setSubPartnerCountry(subPartnerCountry3);
-      sPart2.setSubPartnerStatus(subPartnerStatus2);
-
-      SubPartners sPart3 = new SubPartners();
-      sPart3.setSubPartnerId(1234);
-      sPart3.setSubPartnerFirstName("Ant");
-      sPart3.setSubPartnerLastName("Man");
-      sPart3.setSubPartnerCountry(subPartnerCountry4);
-      sPart3.setSubPartnerStatus(subPartnerStatus1);
-
-      SubPartners sPart4 = new SubPartners();
-      sPart4.setSubPartnerId(1234);
-      sPart4.setSubPartnerFirstName("Milk");
-      sPart4.setSubPartnerLastName("Man");
-      sPart4.setSubPartnerCountry(subPartnerCountry5);
-      sPart4.setSubPartnerStatus(subPartnerStatus2);
-      sPart4.getSubPartnerSeasons().addAll(subPartnerSeasons);
-
-      subPartners.add(sPart);
-      subPartners.add(sPart1);
-      subPartners.add(sPart2);
-      subPartners.add(sPart3);
-      subPartners.add(sPart4);
-      psp.getSubPartners().addAll(subPartners);
-      return psp;
-   }
+   @Autowired PartnerRepository partnerRepository;
+   @Autowired GoIdSequenceRepository goIdSequenceRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired UserTypeRepository userTypeRepository;
+   @Autowired LoginUserTypeRepository loginUserTypeRepository;
+   @Autowired PartnerNoteTopicRepository partnerNoteTopicRepository;
+   @Autowired PartnerNoteRepository partnerNoteRepository;
+   @Autowired PartnerNoteTagRepository partnerNoteTagRepository;
+   @Autowired PartnerOfficeTypeRepository partnerOfficeTypeRepository;
+   @Autowired PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired EmailServiceImpl email;
+   @Autowired SalutationRepository salutationRepository;
+   @Autowired UtilityServices utilityServices;
+   @Autowired PartnerStatusRepository partnerStatusRepository;
+   @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
+   @Autowired PartnerUserRepository partnerUserRepository;
+   @Autowired CountryRepository countryRepository;
 
    @Override
    @Transactional
@@ -278,18 +113,18 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          for (Partner subPartner : subPartnerList) {
             SubPartners sp = new SubPartners();
             sp.setSubPartnerId(subPartner.getPartnerGoId());
-            if (subPartner.getPartnerContacts() != null && subPartner.getPartnerContacts().size() > 0) {
-               sp.setSubPartnerFirstName(subPartner.getPartnerContacts().iterator().next().getFirstName());
-               sp.setSubPartnerLastName(subPartner.getPartnerContacts().iterator().next().getLastName());
+            if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
+               sp.setSubPartnerFirstName(subPartner.getPartnerUsers().iterator().next().getFirstName());
+               sp.setSubPartnerLastName(subPartner.getPartnerUsers().iterator().next().getLastName());
             }
             sp.setSubPartnerCompanyName(subPartner.getCompanyName());
-            if (subPartner.getLookupCountry2() != null) {
-               SubPartnerCountry subPartnerCountry2 = new SubPartnerCountry();
-               subPartnerCountry2.setSubPartnerCountry(subPartner.getLookupCountry2().getCountryName());
-               subPartnerCountry2.setSubPartnerCountryId(subPartner.getLookupCountry2().getCountryId());
-
-               sp.setSubPartnerCountry(subPartnerCountry2);
+            SubPartnerCountry subPartnerCountry = null;
+            if (subPartner.getLookupCountry1() != null) {
+               subPartnerCountry = new SubPartnerCountry();
+               subPartnerCountry.setSubPartnerCountry(subPartner.getLookupCountry1().getCountryName());
+               subPartnerCountry.setSubPartnerCountryId(subPartner.getLookupCountry1().getCountryId());
             }
+            sp.setSubPartnerCountry(subPartnerCountry);
 
             SubPartnerStatus subPartnerStatus = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus();
             List<PartnerUser> partnerUsers = subPartner.getPartnerUsers();
@@ -306,6 +141,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                if (login != null) {
                   subPartnerStatus.setSubPartnerStatus(login.getActive() == 1 ? "Active" : "Inactive");
                   subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
+                  sp.setSubPartnerEmail(login.getEmail());
+                  sp.setSubPartnerUserName(login.getLoginName());
                }
             }
             sp.setSubPartnerStatus(subPartnerStatus);
@@ -353,9 +190,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          for (Partner subPartner : subPartnerList) {
             SubPartnerDetail subPartnerDetail = new SubPartnerDetail();
             subPartnerDetail.setSubPartnerId(subPartner.getPartnerGoId());
-            if (subPartner.getPartnerContacts() != null && subPartner.getPartnerContacts().size() > 0) {
-               subPartnerDetail.setSubPartnerFirstName(subPartner.getPartnerContacts().iterator().next().getFirstName());
-               subPartnerDetail.setSubPartnerLastName(subPartner.getPartnerContacts().iterator().next().getLastName());
+            if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
+               subPartnerDetail.setSubPartnerFirstName(subPartner.getPartnerUsers().iterator().next().getFirstName());
+               subPartnerDetail.setSubPartnerLastName(subPartner.getPartnerUsers().iterator().next().getLastName());
             }
             SubPartnerCountryStatus subPartnerCountryStatus = new SubPartnerCountryStatus();
             subPartnerCountryStatus.setSubPartnerCountryId(subPartner.getLookupCountry1().getCountryId());
@@ -422,13 +259,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          Details details = new Details();
          details.setAgencyName(partnerSubPartner.getCompanyName());
          details.setLogoImageURL(partnerSubPartner.getPartnerLogo());
-
+         SubPartnersPrimaryContact subPartnerPrimaryContact = new SubPartnersPrimaryContact();
          List<PartnerUser> partnerUsers = partnerSubPartner.getPartnerUsers();
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
             for (PartnerUser puser : partnerUsers) {
                if (puser.getPartner() != null)
-                  if (puser.getPartner().getPartnerGoId() == Integer.valueOf(subPartnerId)) {
+                  if (puser.getPartner().getPartnerGoId().equals(Integer.valueOf(subPartnerId))) {
                      partnerUser = puser;
                      break;
                   }
@@ -437,6 +274,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if (login != null) {
                details.setUsername(login.getLoginName());
                details.setPassword("*****************");
+               subPartnerPrimaryContact.setEmail(login.getEmail());
                subPartnerDetail.setActive(login.getActive() == 1);
             }
          }
@@ -449,11 +287,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (partnerSubPartner.getPayGreenheartDirectly() != null)
             details.setPayGreenHeartDirectly(partnerSubPartner.getPayGreenheartDirectly() == CCIConstants.ACTIVE ? true : false);
 
-         PartnerContact partnerContact = new PartnerContact();
-         SubPartnersPrimaryContact subPartnerPrimaryContact = new SubPartnersPrimaryContact();
-         if (partnerSubPartner.getPartnerContacts() != null && partnerSubPartner.getPartnerContacts().size() > 0) {
-            List<PartnerContact> partnerContactList = partnerSubPartner.getPartnerContacts();
-            for (PartnerContact ptc : partnerContactList) {
+         PartnerUser partnerContact = new PartnerUser();
+
+         if (partnerSubPartner.getPartnerUsers() != null && partnerSubPartner.getPartnerUsers().size() > 0) {
+            List<PartnerUser> partnerContactList = partnerSubPartner.getPartnerUsers();
+            for (PartnerUser ptc : partnerContactList) {
                if (ptc.getIsPrimary() == CCIConstants.ACTIVE) {
                   partnerContact = ptc;
                   break;
@@ -462,7 +300,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if (partnerContact != null) {
                Salutation subPartnerSalutation = partnerContact.getSalutation();
                com.ccighgo.service.transport.partner.beans.subpartnerdetail.Salutation salutation = new com.ccighgo.service.transport.partner.beans.subpartnerdetail.Salutation();
-
                if (subPartnerSalutation != null) {
                   salutation.setSalutationId(subPartnerSalutation.getSalutationId());
                   salutation.setSalutationName(subPartnerSalutation.getSalutationName());
@@ -475,8 +312,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                subPartnerPrimaryContact.setPhone(partnerContact.getPhone());
                subPartnerPrimaryContact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                subPartnerPrimaryContact.setFax(partnerContact.getFax());
-               if (partnerContact.getReceiveNotificationEmails() != null)
-                  subPartnerPrimaryContact.setReciveNotificationemailfromcc(partnerContact.getReceiveNotificationEmails() == CCIConstants.ACTIVE);
+               subPartnerPrimaryContact.setReciveNotificationemailfromcc(partnerContact.getRecieveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
                subPartnerPrimaryContact.setSkypeId(partnerContact.getSkypeId());
                subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
             }
@@ -500,6 +336,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnersMailingAddress.setMailingAddress2(partnerSubPartner.getPhysicalAddressLineTwo());
             subPartnersMailingAddress.setMailingAddressCity(partnerSubPartner.getPhysicalCity());
             subPartnersMailingAddress.setMailingAddressZipCode(partnerSubPartner.getPhysicalZipcode());
+            subPartnersMailingAddress.setMailingAddressStateOrProvince(partnerSubPartner.getPhysicalstate());
             LookupCountry lcm = partnerSubPartner.getLookupCountry2();
             if (lcm != null) {
                Country cn = new Country();
@@ -512,6 +349,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnersMailingAddress.setMailingAddress1(partnerSubPartner.getAddressLineOne());
             subPartnersMailingAddress.setMailingAddress2(partnerSubPartner.getAddressLineTwo());
             subPartnersMailingAddress.setMailingAddressCity(partnerSubPartner.getCity());
+            subPartnersMailingAddress.setMailingAddressZipCode(partnerSubPartner.getZipcode());
             subPartnersMailingAddress.setMailingAddressStateOrProvince(partnerSubPartner.getState());
             LookupCountry lcm = partnerSubPartner.getLookupCountry2();
             if (lcm != null) {
@@ -636,7 +474,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
             List<Login> loginList = new ArrayList<Login>();
             goIdSequence = goIdSequenceRepository.save(goIdSequence);
-            com.ccighgo.db.entities.UserType ParticipantUserType = userTypeRepository.findOne(CCIConstants.PARTICIPANT_USER_TYPE);
+            com.ccighgo.db.entities.UserType ParticipantUserType = userTypeRepository.findOne(CCIConstants.PARTNER_USER_TYPE);
             if (ParticipantUserType == null) {
                ParticipantUserType = new com.ccighgo.db.entities.UserType();
             }
@@ -706,10 +544,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          partnerRepository.save(subPartnerDetails);
 
          try {
-            PartnerContact partnerContact = null;
-
+            PartnerUser partnerContact = null;
             if (subPartnerPrimaryContact != null) {
-               partnerContact = new PartnerContact();
+               partnerContact = new PartnerUser();
                com.ccighgo.service.transport.partner.beans.subpartnerdetail.Salutation slt = subPartnerPrimaryContact.getSalutation();
                if (slt != null) {
                   Salutation s = salutationRepository.findBySalutationName(slt.getSalutationName());
@@ -721,19 +558,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
                partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
                partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
-               if(subPartnerPrimaryContact.isReciveNotificationemailfromcc()!=null)
-               partnerContact.setReceiveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
+               if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
+                  partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
                partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
                partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
                partnerContact.setIsPrimary((byte) 1);
-               partnerContact.setCreatedBy(subPartner.getLoginId());
-               partnerContact.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               partnerContact.setModifiedBy(subPartner.getLoginId());
-               partnerContact.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                partnerContact.setPartner(subPartnerDetails);
-
-               partnerContactRepository.save(partnerContact);
-
+               partnerUserRepository.save(partnerContact);
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, LOGGER);
@@ -827,16 +658,16 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          }
          partnerRepository.save(subPartnerDetails);
 
-         List<PartnerContact> partnerContacts = subPartnerDetails.getPartnerContacts();
-         PartnerContact partnerContact = null;
-         for (PartnerContact contact : partnerContacts) {
+         List<PartnerUser> partnerContacts = subPartnerDetails.getPartnerUsers();
+         PartnerUser partnerContact = null;
+         for (PartnerUser contact : partnerContacts) {
             if (contact.getIsPrimary() == 1) {
                partnerContact = contact;
                break;
             }
          }
          if (partnerContact == null)
-            partnerContact = new PartnerContact();
+            partnerContact = new PartnerUser();
 
          if (subPartnerPrimaryContact != null) {
             com.ccighgo.service.transport.partner.beans.subpartnerdetail.Salutation slt = subPartnerPrimaryContact.getSalutation();
@@ -850,12 +681,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
             partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
             partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
-            if(subPartnerPrimaryContact.isReciveNotificationemailfromcc()!=null)
-            partnerContact.setReceiveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
+            if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
+               partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
             partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
             partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
-            partnerContact.setModifiedBy(subPartner.getLoginId());
-            partnerContactRepository.saveAndFlush(partnerContact);
+            partnerUserRepository.saveAndFlush(partnerContact);
          }
 
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),

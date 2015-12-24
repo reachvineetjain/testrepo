@@ -136,7 +136,7 @@ public class PartnerSeason {
     * @param partnerGoId
     * @return
     */
-   @GET
+   @POST
    @Path("add/new/")
    @Produces("application/json")
    public Response addNewSeasonsToPartner(PartnerSeasonApplicationList partnerSeasonApplicationList) {

@@ -1,24 +1,14 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -32,6 +22,7 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer cciStaffUserId;
 
@@ -85,10 +76,6 @@ public class CCIStaffUser implements Serializable {
 	@Column(length=50)
 	private String zip;
 
-	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate
-	@OneToMany(mappedBy="ccistaffUser")
-	private List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates;
-
 	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<AdminQuickStatsTypeAggregate> adminQuickStatsTypeAggregates;
@@ -103,11 +90,11 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
-	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
 	   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
@@ -132,13 +119,17 @@ public class CCIStaffUser implements Serializable {
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
-	 @OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<CCIStaffUsersResourcePermission> ccistaffUsersResourcePermissions;
+
+	//bi-directional many-to-one association to FieldStaff
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<FieldStaff> fieldStaffs;
 
 	//bi-directional many-to-one association to PartnerMessage
 	@OneToMany(mappedBy="ccistaffUser")
@@ -309,28 +300,6 @@ public class CCIStaffUser implements Serializable {
 
 	public void setZip(String zip) {
 		this.zip = zip;
-	}
-
-	public List<AdminQuickStatsCategoryAggregate> getAdminQuickStatsCategoryAggregates() {
-		return this.adminQuickStatsCategoryAggregates;
-	}
-
-	public void setAdminQuickStatsCategoryAggregates(List<AdminQuickStatsCategoryAggregate> adminQuickStatsCategoryAggregates) {
-		this.adminQuickStatsCategoryAggregates = adminQuickStatsCategoryAggregates;
-	}
-
-	public AdminQuickStatsCategoryAggregate addAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().add(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setCcistaffUser(this);
-
-		return adminQuickStatsCategoryAggregate;
-	}
-
-	public AdminQuickStatsCategoryAggregate removeAdminQuickStatsCategoryAggregate(AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate) {
-		getAdminQuickStatsCategoryAggregates().remove(adminQuickStatsCategoryAggregate);
-		adminQuickStatsCategoryAggregate.setCcistaffUser(null);
-
-		return adminQuickStatsCategoryAggregate;
 	}
 
 	public List<AdminQuickStatsTypeAggregate> getAdminQuickStatsTypeAggregates() {
@@ -517,6 +486,28 @@ public class CCIStaffUser implements Serializable {
 		ccistaffUsersResourcePermission.setCcistaffUser(null);
 
 		return ccistaffUsersResourcePermission;
+	}
+
+	public List<FieldStaff> getFieldStaffs() {
+		return this.fieldStaffs;
+	}
+
+	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+		this.fieldStaffs = fieldStaffs;
+	}
+
+	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().add(fieldStaff);
+		fieldStaff.setCcistaffUser(this);
+
+		return fieldStaff;
+	}
+
+	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().remove(fieldStaff);
+		fieldStaff.setCcistaffUser(null);
+
+		return fieldStaff;
 	}
 
 	public List<PartnerMessage> getPartnerMessages() {

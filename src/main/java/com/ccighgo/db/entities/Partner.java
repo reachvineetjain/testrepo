@@ -8,7 +8,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,7 +23,7 @@ public class Partner implements Serializable {
 
 	@Id
 	@Column(unique=true, nullable=false)
-	private int partnerGoId;
+	private Integer partnerGoId;
 
 	@Column(length=150)
 	private String acronym;
@@ -165,10 +164,6 @@ public class Partner implements Serializable {
 	@OneToMany(mappedBy="partner")
 	private List<PartnerAnnouncement> partnerAnnouncements;
 
-	//bi-directional many-to-one association to PartnerContact
-	@OneToMany(mappedBy="partner")
-	private List<PartnerContact> partnerContacts;
-
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="partner")
 	private List<PartnerDocument> partnerDocuments;
@@ -223,7 +218,7 @@ public class Partner implements Serializable {
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerUser> partnerUsers;
 
 	//bi-directional many-to-one association to PartnerWorkQueue
@@ -241,11 +236,11 @@ public class Partner implements Serializable {
 	public Partner() {
 	}
 
-	public int getPartnerGoId() {
+	public Integer getPartnerGoId() {
 		return this.partnerGoId;
 	}
 
-	public void setPartnerGoId(int partnerGoId) {
+	public void setPartnerGoId(Integer partnerGoId) {
 		this.partnerGoId = partnerGoId;
 	}
 
@@ -703,31 +698,6 @@ public class Partner implements Serializable {
 		partnerAnnouncement.setPartner(null);
 
 		return partnerAnnouncement;
-	}
-
-	public List<PartnerContact> getPartnerContacts() {
-	   if(this.partnerContacts==null)
-	      this.partnerContacts=new ArrayList<PartnerContact>();
-		return this.partnerContacts;
-	}
-
-	public void setPartnerContacts(List<PartnerContact> partnerContacts) {
-		this.partnerContacts = partnerContacts;
-	}
-
-	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
-		partnerContact.setPartner(this);
-		getPartnerContacts().add(partnerContact);
-		
-
-		return partnerContact;
-	}
-
-	public PartnerContact removePartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().remove(partnerContact);
-		partnerContact.setPartner(null);
-
-		return partnerContact;
 	}
 
 	public List<PartnerDocument> getPartnerDocuments() {

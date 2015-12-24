@@ -3,28 +3,30 @@
  */
 package com.ccighgo.service.components.partner.admin;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.AdminQuickStatsCategory;
 import com.ccighgo.db.entities.AdminQuickStatsCategoryAggregate;
 import com.ccighgo.db.entities.AdminQuickStatsType;
 import com.ccighgo.db.entities.AdminQuickStatsTypeAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueCategory;
 import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueType;
-import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
+import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DocumentInformation;
+import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
-import com.ccighgo.db.entities.PartnerContact;
 import com.ccighgo.db.entities.PartnerDocument;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
@@ -33,8 +35,24 @@ import com.ccighgo.db.entities.PartnerOfficeType;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
+import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerStatus;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Salutation;
+import com.ccighgo.db.entities.Season;
+import com.ccighgo.db.entities.SeasonCAPDetail;
+import com.ccighgo.db.entities.SeasonF1Detail;
+import com.ccighgo.db.entities.SeasonHSADetail;
+import com.ccighgo.db.entities.SeasonIHPDetail;
+import com.ccighgo.db.entities.SeasonJ1Detail;
+import com.ccighgo.db.entities.SeasonLSDetail;
+import com.ccighgo.db.entities.SeasonTADetail;
+import com.ccighgo.db.entities.SeasonVADetail;
+import com.ccighgo.db.entities.SeasonWADetail;
+import com.ccighgo.db.entities.SeasonWnTSpringDetail;
+import com.ccighgo.db.entities.SeasonWnTSummerDetail;
+import com.ccighgo.db.entities.SeasonWnTWinterDetail;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesRepository;
@@ -45,13 +63,13 @@ import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueTypeRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUsersCCIStaffRolesRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
+import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
-import com.ccighgo.jpa.repositories.PartnerContactRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
@@ -62,8 +80,13 @@ import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
+import com.ccighgo.jpa.repositories.PartnerSeasonAllocationRepository;
+import com.ccighgo.jpa.repositories.PartnerSeasonsRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
+import com.ccighgo.jpa.repositories.PartnerUserRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
+import com.ccighgo.jpa.repositories.SeasonRepository;
+import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
@@ -75,12 +98,8 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpa
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.AdminPartnerProgramsElgibilityAndCCIContact;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.AdminPartnerRecruitmentScreeningDetail;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.CCIInquiryFormPerson;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.DocumentUploadUser;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.NoteUserCreator;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningContacts;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningDocuments;
-import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningOffices;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewContacts.PartnerAdminOverviewContacts;
@@ -93,6 +112,9 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOv
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipantDetails;
+import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartners;
+import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartnersDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarksDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
@@ -105,6 +127,8 @@ import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminP
 import com.ccighgo.service.transport.partner.beans.partnerdeadlinerequest.AdminPartnerWorkQueueDeadlineRequestsDetail;
 import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReview;
 import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartnerWorkQueueNotesReviewDetail;
+import com.ccighgo.service.transport.partner.beans.partnerstatusaspattern.PartnerStatusAsPattern;
+import com.ccighgo.service.transport.partner.beans.partnerstatusaspattern.PartnerStatusAsPatterns;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
@@ -118,6 +142,7 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
+import com.google.gson.Gson;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -173,8 +198,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Autowired
    PartnerProgramRepository partnerProgRepository;
    @Autowired
-   PartnerContactRepository partnerContactRepository;
-   @Autowired
    LoginRepository loginRepository;
    @Autowired
    GoIdSequenceRepository goIdSequenceRepository;
@@ -196,6 +219,17 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    UserManagementService userManagementService;
    @PersistenceContext
    EntityManager em;
+   @Autowired
+   PartnerSeasonsRepository partnerSeasonsRepository;
+   @Autowired
+   PartnerSeasonAllocationRepository partnerSeasonAllocationRepository;
+   @Autowired
+   PartnerUserRepository partnerUserRepository;
+   @Autowired
+   SeasonRepository seasonRepository;
+   SeasonStatusRepository seasonStatusRepository;
+   @Autowired
+   DepartmentProgramRepository departmentProgramRepository;
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
@@ -219,7 +253,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         pwt.setFollowUpDate(DateUtils.getDateAndTime(partnerAgentInquiry.getFollowUpDate()));
+         pwt.setFollowUpDate(DateUtils.getTimestamp(partnerAgentInquiry.getFollowUpDate()));
 
          /**
           * Details
@@ -262,33 +296,31 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
           */
          try {
             PartnerRecruitmentAdminScreeningAdditionalInfo additional = new PartnerRecruitmentAdminScreeningAdditionalInfo();
-            additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-            additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
+            List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(goId);
+            if (partnerPrograms != null) {
+               StringBuilder st = new StringBuilder();
+               int i = 0;
+               for (PartnerProgram partnerProgram : partnerPrograms) {
+                  if (i++ > 0) {
+                     st.append(",");
+                  }
+                  st.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
+               }
+               additional.setProgramsYouLikeToParticipate(st.toString());
+            }
+            additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
-            additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-            additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
-            pwt.setAdditionalInformation(additional);
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
-         }
+            additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
+            additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
 
-         /*
-          * Notes
-          */
-         try {
-            List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(goId);
-            if (partnerNotes != null) {
-               for (PartnerNote partnerNote : partnerNotes) {
-                  com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes note = new com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminScreeningNotes();
-                  note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
-                  note.setPartnerNoteId(partnerNote.getPartnerNotesId());
-                  note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
-                  note.setNoteValue(partnerNote.getPartnerNote());
-                  pwt.getNotes().add(note);
-               }
-            }
+            additional.setInterestedInHighSchoolAbroad(partnerAgentInquiry.getHighSchoolAbroad() == 1);
+            additional.setInterestedInTeachAbroad(partnerAgentInquiry.getTeachAbroad() == 1);
+            additional.setInterestedInVolunteerAbroad(partnerAgentInquiry.getVolunteerAbroad() == 1);
+
+            // additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
+            pwt.setAdditionalInformation(additional);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -305,7 +337,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead pwt) {
-       try {
+      try {
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(pwt.getGoId());
          if (partnerAgentInquiry == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATING__WOEKQUEUE_PARTNER_INQUIRY_LEAD.getValue(),
@@ -318,13 +350,15 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(pwt.getGoId());
             if (partnerReviewStatus != null) {
                PartnerStatus activeStatus = partnerStatusRepository.findStatusByName(pwt.getLeadStatus());
-               partnerReviewStatus.setPartnerStatus1(activeStatus);
+               partnerReviewStatus.setPartnerStatus2(activeStatus);
+               partnerReviewStatusRepository.save(partnerReviewStatus);
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
          try {
-            partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString(pwt.getFollowUpDate()));
+            if (pwt.getFollowUpDate() != null)
+               partnerAgentInquiry.setFollowUpDate(new Date(Long.parseLong(pwt.getFollowUpDate())));
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -350,11 +384,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             ExceptionUtil.logException(e, logger);
          }
          try {
-            //TODO
+            // TODO
             PartnerRecruitmentAdminScreeningAdditionalInfo additionalInformation = pwt.getAdditionalInformation();
             partnerAgentInquiry.setCurrentlyOfferingPrograms(additionalInformation.getProgramsYouOffer());
-            partnerAgentInquiry.setCurrentlySendingParticipantToUS((byte) (additionalInformation.isIsYourOrganizationSendingParticipantstoUSA()?1:0));
-            partnerAgentInquiry.setBusinessYears(additionalInformation.getYearsInBusiness()+"");
+            partnerAgentInquiry.setCurrentlySendingParticipantToUS((byte) (additionalInformation.isIsYourOrganizationSendingParticipantstoUSA() ? 1 : 0));
+            partnerAgentInquiry.setBusinessYears(additionalInformation.getYearsInBusiness() + "");
             partnerAgentInquiry.setHowDidYouHearAboutCCI(additionalInformation.getHearAboutUsFrom());
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -416,10 +450,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             if (partner != null) {
                partner.setCompanyName(detail.getCompanyName());
                partner.setBillingNotes(detail.getBillingNotes());
-               partner.setCanHaveSubPartner((byte) (detail.getCanHaveSubPartner() == "true" ? 1 : 0));
+               partner.setCanHaveSubPartner((byte) (detail.isCanHaveSubPartner() ? 1 : 0));
                partner.setEmail(detail.getGeneralEmail());
                partner.setInvoiceMail(detail.getInvoiceEmail());
-               partner.setMultiCountrySender((byte) (detail.getMultiCountrySender() == "true" ? 1 : 0));
+               partner.setMultiCountrySender((byte) (detail.isMultiCountrySender() ? 1 : 0));
                partner.setQuickbooksCode(detail.getQuickbooksCode());
             }
 
@@ -428,11 +462,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             AdminPartnerHspSettings hsp = pwt.getHspSettings();
-            partner.setParticipantTranscriptRequired((byte) (hsp.isAypParticipantTranscriptRequired() ? 1 : 0));
-            partner.setParticipantELTISRequired((byte) (hsp.isHspParticipantEltisRequired() ? 1 : 0));
-            partner.setParticipantMedicalReleaseRequired((byte) (hsp.isHspParticipantMedicalReleaseRequired() ? 1 : 0));
-            partner.setParticipantSLEPRequired((byte) (hsp.isHspParticipantSlepRequired() ? 1 : 0));
-            partner.setUnguaranteedFormRequired((byte) (hsp.isHspParticipantUnquaranteedFromRequired() ? 1 : 0));
+            if (hsp != null) {
+               partner.setParticipantTranscriptRequired((byte) (hsp.isAypParticipantTranscriptRequired() ? 1 : 0));
+               partner.setParticipantELTISRequired((byte) (hsp.isHspParticipantEltisRequired() ? 1 : 0));
+               partner.setParticipantMedicalReleaseRequired((byte) (hsp.isHspParticipantMedicalReleaseRequired() ? 1 : 0));
+               // partner.setParticipantSLEPRequired((byte) (hsp.isHspParticipantSlepRequired() ? 1 : 0));
+               partner.setUnguaranteedFormRequired((byte) (hsp.isHspParticipantUnquaranteedFromRequired() ? 1 : 0));
+            }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -480,10 +516,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partnerRecruitmentAdminScreeningDetail.setCompanyName(partnerAgentInquiry.getCompanyName());
             if (partnerAgentInquiry.getPartner() != null) {
                partnerRecruitmentAdminScreeningDetail.setBillingNotes(partnerAgentInquiry.getPartner().getBillingNotes());
-               partnerRecruitmentAdminScreeningDetail.setCanHaveSubPartner(partnerAgentInquiry.getPartner().getCanHaveSubPartner() == 1 ? "true" : "false");
+               partnerRecruitmentAdminScreeningDetail.setCanHaveSubPartner(partnerAgentInquiry.getPartner().getCanHaveSubPartner() == CCIConstants.ACTIVE ? true : false);
                partnerRecruitmentAdminScreeningDetail.setGeneralEmail(partnerAgentInquiry.getPartner().getEmail());
                partnerRecruitmentAdminScreeningDetail.setInvoiceEmail(partnerAgentInquiry.getPartner().getInvoiceMail());
-               partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partnerAgentInquiry.getPartner().getMultiCountrySender() == 1 ? "true" : "false");
+               partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partnerAgentInquiry.getPartner().getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
                partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partnerAgentInquiry.getPartner().getQuickbooksCode());
             }
             try {
@@ -540,7 +576,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             adminPartnerHspSettings.setAypParticipantTranscriptRequired(partnerAgentInquiry.getPartner().getParticipantTranscriptRequired() == 1);
             adminPartnerHspSettings.setHspParticipantEltisRequired(partnerAgentInquiry.getPartner().getParticipantELTISRequired() == 1);
             adminPartnerHspSettings.setHspParticipantMedicalReleaseRequired(partnerAgentInquiry.getPartner().getParticipantMedicalReleaseRequired() == 1);
-            adminPartnerHspSettings.setHspParticipantSlepRequired(partnerAgentInquiry.getPartner().getParticipantSLEPRequired() == 1);
+            // adminPartnerHspSettings.setHspParticipantSlepRequired(partnerAgentInquiry.getPartner().getParticipantSLEPRequired()
+            // == 1);
             adminPartnerHspSettings.setHspParticipantUnquaranteedFromRequired(partnerAgentInquiry.getPartner().getUnguaranteedFormRequired() == 1);
             pwt.setHspSettings(adminPartnerHspSettings);
          } catch (Exception e) {
@@ -571,11 +608,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
 
          try {
-            List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(goId);
+            List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(goId);
             if (contacts != null) {
-               for (PartnerContact partnerContact : contacts) {
+               for (PartnerUser partnerContact : contacts) {
                   PartnerRecruitmentAdminScreeningContacts contact = new PartnerRecruitmentAdminScreeningContacts();
-                  contact.setPartnerContactId(partnerContact.getPartnerContactId());
+                  contact.setPartnerContactId(partnerContact.getPartnerUserId());
                   contact.setActive(partnerContact.getActive() == 1);
                   contact.setEmail(partnerContact.getEmail());
                   contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
@@ -614,42 +651,29 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         try {
-            List<PartnerDocument> partnerDocuments = partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(goId);
-            if (partnerDocuments != null) {
-               for (PartnerDocument p : partnerDocuments) {
-                  PartnerRecruitmentAdminScreeningDocuments doc = new PartnerRecruitmentAdminScreeningDocuments();
-                  doc.setPartnerDocumentId(p.getPartnerDocumentId());
-                  doc.setActive(p.getDocumentInformation().getActive() == CCIConstants.ACTIVE?true:false);
-                  doc.setDescription("");
-                  doc.setDocName(p.getDocumentInformation().getDocumentName());
-                  doc.setDocType(p.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-                  doc.setDocUrl(p.getDocumentInformation().getUrl());
-                  doc.setFileName(p.getDocumentInformation().getFileName());
-                  doc.setFileType("");
-                  doc.setUploadDate(DateUtils.getDateAndTime(p.getDocumentInformation().getCreatedOn()));
-                  Integer createdBy = p.getDocumentInformation().getCreatedBy();
-                  pwt.getDocuments().add(doc);
-               }
-            }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
-         }
-         try {
-            List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(goId);
-            if (partnerNotes != null) {
-               for (PartnerNote partnerNote : partnerNotes) {
-                  PartnerRecruitmentAdminScreeningNotes note = new PartnerRecruitmentAdminScreeningNotes();
-                  note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
-                  note.setPartnerNoteId(partnerNote.getPartnerNotesId());
-                  note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
-                  note.setNoteValue(partnerNote.getPartnerNote());
-                  pwt.getNotes().add(note);
-               }
-            }
-         } catch (Exception e) {
-            ExceptionUtil.logException(e, logger);
-         }
+         /*
+          * try { List<PartnerDocument> partnerDocuments =
+          * partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(goId); if (partnerDocuments != null) { for
+          * (PartnerDocument p : partnerDocuments) { PartnerRecruitmentAdminScreeningDocuments doc = new
+          * PartnerRecruitmentAdminScreeningDocuments(); doc.setPartnerDocumentId(p.getPartnerDocumentId());
+          * doc.setActive(p.getDocumentInformation().getActive() == CCIConstants.ACTIVE ? true : false);
+          * doc.setDescription(""); doc.setDocName(p.getDocumentInformation().getDocumentName());
+          * doc.setDocType(p.getDocumentInformation
+          * ().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
+          * doc.setDocUrl(p.getDocumentInformation().getUrl());
+          * doc.setFileName(p.getDocumentInformation().getFileName()); doc.setFileType("");
+          * doc.setUploadDate(DateUtils.getDateAndTime(p.getDocumentInformation().getCreatedOn())); Integer createdBy =
+          * p.getDocumentInformation().getCreatedBy(); pwt.getDocuments().add(doc); } } } catch (Exception e) {
+          * ExceptionUtil.logException(e, logger); } try { List<PartnerNote> partnerNotes =
+          * partnerNoteRepository.findAllPartnerNoteByPartnerId(goId); if (partnerNotes != null) { for (PartnerNote
+          * partnerNote : partnerNotes) { PartnerRecruitmentAdminScreeningNotes note = new
+          * PartnerRecruitmentAdminScreeningNotes();
+          * note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
+          * note.setPartnerNoteId(partnerNote.getPartnerNotesId());
+          * note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
+          * note.setNoteValue(partnerNote.getPartnerNote()); pwt.getNotes().add(note); } } } catch (Exception e) {
+          * ExceptionUtil.logException(e, logger); }
+          */
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_OVERVIEW.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -660,6 +684,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pwt;
    }
+
    @Override
    public AdminPartnerWorkQueueType getWorkQueueType(String roleType) {
       AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
@@ -743,11 +768,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                pd.setCountry(String.valueOf(wq[6]));
                if (wq[7] != null) {
                   String followUpdate = String.valueOf(wq[7]);
-                  pd.setFollowUpDate(followUpdate.split("\\s+")[0]);
+                  pd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(followUpdate)));
                }
                if (wq[8] != null) {
                   String submittedOn = String.valueOf(wq[8]);
-                  pd.setSunmittedOn(submittedOn.split("\\s+")[0]);
+                  pd.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(submittedOn)));
                }
                pd.setFlagUrl(String.valueOf(wq[9]));
                pd.setPrograms(String.valueOf(wq[10]));
@@ -757,7 +782,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   pd.setGoId(Integer.parseInt(String.valueOf(wq[12])));
 
                PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(pd.getGoId());
-               if (partnerReviewStatus != null) {
+               if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1() != null) {
                   pd.setStatusOfInquiry(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
                }
 
@@ -777,203 +802,187 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return pwqa;
    }
-   @Override
-   public AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(
-		   int typeId, int categoryId, int staffUserId, String roleType) {
-	   AdminPartnerWorkQueueDeadlineRequests adr =new AdminPartnerWorkQueueDeadlineRequests();
-	   try
-	   {
 
-		   @SuppressWarnings("unchecked")
-		   List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerDeadlineChange(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
-		   .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
-		   if(result !=null)
-		   {
-			   for(Object[] dr:result)
-			   {
-				   AdminPartnerWorkQueueDeadlineRequestsDetail drd = new AdminPartnerWorkQueueDeadlineRequestsDetail();
-				   AdminPartnerWorkQueueDeadlineRequestsDetail drd2 = new AdminPartnerWorkQueueDeadlineRequestsDetail();
-				   if(dr[8]!=null && dr[7]!=null) 
-				   {
-					   drd.setCompanyName(String.valueOf(dr[0]));
-					   if(dr[1]!=null)
-						   drd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
-					   drd.setPartnerStatus(String.valueOf(dr[2]));
-					   drd.setSeasonName(String.valueOf(dr[3]));
-					   drd.setCountry(String.valueOf(dr[4]));
-					   drd.setSunmittedOn(String.valueOf(dr[5]));
-					   drd.setFlagUrl(String.valueOf(dr[6])); 
-					   drd.setNewDateRequested(String.valueOf(dr[8]));
-					   drd.setCurrentDate(String.valueOf(dr[7]));
-					   adr.getDeadlineRequests().add(drd);
-				   }
-				   if(dr[9]!=null && dr[10]!=null) 
-				   {
-					   drd2.setCompanyName(String.valueOf(dr[0]));
-					   if(dr[1]!=null)
-						   drd2.setGoId(Integer.valueOf(String.valueOf(dr[1])));
-					   drd2.setPartnerStatus(String.valueOf(dr[2]));
-					   drd2.setSeasonName(String.valueOf(dr[3]));
-					   drd2.setCountry(String.valueOf(dr[4]));
-					   drd2.setSunmittedOn(String.valueOf(dr[5]));
-					   drd2.setFlagUrl(String.valueOf(dr[6])); 
-					   drd2.setNewDateRequested(String.valueOf(dr[9]));
-					   drd2.setCurrentDate(String.valueOf(dr[10]));
-					   adr.getDeadlineRequests().add(drd2);
-				   }
-				  
-			   }
-			   adr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-		   else
-		   {
-			   adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
-		                  messageUtil.getMessage(CCIConstants.FAILURE)));
-		   }
-	   }catch(Exception e)
-	   {
-		   ExceptionUtil.logException(e, logger);
-		   adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
-				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE));
-	   }
-	   return adr;
-   }
-   
    @Override
-   public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(
-   		int typeId, int categoryId, int staffUserId, String roleType) {
-   
-	   AdminPartnerWorkQueueRequestChangeInAllocation rca= new AdminPartnerWorkQueueRequestChangeInAllocation();
-	   try
-	   {
-		   @SuppressWarnings("unchecked")
-		   List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerAllocationChange(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
-		   .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
-		   if(result !=null)
-		   {
-			   
-			   for(Object[]dr :result)
-			   {
-				  
-				   AdminPartnerWorkQueueRequestChangeInAllocationDetails ad=new AdminPartnerWorkQueueRequestChangeInAllocationDetails();
-				   ad.setCompanyName(String.valueOf(dr[0]));
-				   if(dr[1]!=null)
-				   ad.setGoId(Integer.valueOf(String.valueOf(dr[1])));
-				   ad.setPartnerStatus(String.valueOf(dr[2]));
-				  ad.setSeasonName(String.valueOf(dr[3]));
-				  
-				  if(dr[4]!=null)
-				  {
-				  int ProgramOptionId =Integer.valueOf(String.valueOf(dr[4]));
-				  if(ProgramOptionId==1||ProgramOptionId==5)
-				  {
-				  ad.setCurrentSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[5]));
-				  ad.setCurrentSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[6]));
-				  ad.setRequestedSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[7]));
-				  ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[8]));
-				 
-				  }
-				  else if (ProgramOptionId==3||ProgramOptionId==8)
-				  {
-					  ad.setCurrentSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[5]));
-					  ad.setCurrentSeasonJanStartguarantedParticipantNume(String.valueOf(dr[6]));
-					  ad.setRequestedSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[7]));
-					  ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[8]));
-				  }
-				  }
-				  ad.setCountry(String.valueOf(dr[9]));
-				  ad.setFlagUrl(String.valueOf(dr[11]));
-				  
-				  ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[12]));
-				  ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[12]));
-				  ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
-				  ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[13]));
-				  //department program option id
-				  //maxPax
-				  //maxGuranteedPax
-				 /*
-				  * 
-				  * 
-				  * */
-				  rca.getChangeInAllocation().add(ad);
-			   }
-			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-		   else
-		   {
-			   rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-			   
-	   }catch(Exception e)
-	   {
-		  /* ExceptionUtil.logException(e, logger);
-		   rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
-				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)); */
-	  
-	   }
-   	return rca;
+   public AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(int typeId, int categoryId, int staffUserId, String roleType) {
+      AdminPartnerWorkQueueDeadlineRequests adr = new AdminPartnerWorkQueueDeadlineRequests();
+      try {
+
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerDeadlineChange(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+               .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
+         if (result != null) {
+            for (Object[] dr : result) {
+               AdminPartnerWorkQueueDeadlineRequestsDetail drd = new AdminPartnerWorkQueueDeadlineRequestsDetail();
+               AdminPartnerWorkQueueDeadlineRequestsDetail drd2 = new AdminPartnerWorkQueueDeadlineRequestsDetail();
+               if (dr[8] != null && dr[7] != null) {
+                  drd.setCompanyName(String.valueOf(dr[0]));
+                  if (dr[1] != null)
+                     drd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+                  drd.setPartnerStatus(String.valueOf(dr[2]));
+                  drd.setSeasonName(String.valueOf(dr[3]));
+                  drd.setCountry(String.valueOf(dr[4]));
+                  if (dr[5] != null)
+                     drd.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[5]))));
+                  else
+                     drd.setSunmittedOn("");
+                  drd.setFlagUrl(String.valueOf(dr[6]));
+                  drd.setNewDateRequested(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+                  drd.setCurrentDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
+                  drd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
+                  drd.setSeasonId(Integer.valueOf(String.valueOf(dr[13])));
+                  drd.setDepartmentProgramId(Integer.valueOf(String.valueOf(dr[14])));
+                  adr.getDeadlineRequests().add(drd);
+               }
+               if (dr[9] != null && dr[10] != null) {
+                  drd2.setCompanyName(String.valueOf(dr[0]));
+                  if (dr[1] != null)
+                     drd2.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+                  drd2.setPartnerStatus(String.valueOf(dr[2]));
+                  drd2.setSeasonName(String.valueOf(dr[3]));
+                  drd2.setCountry(String.valueOf(dr[4]));
+                  drd2.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[5]))));
+                  drd2.setFlagUrl(String.valueOf(dr[6]));
+                  drd2.setNewDateRequested(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[9]))));
+                  drd2.setCurrentDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
+                  drd2.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[12]))));
+                  drd2.setSeasonId(Integer.valueOf(String.valueOf(dr[13])));
+                  drd2.setDepartmentProgramId(Integer.valueOf(String.valueOf(dr[14])));
+                  adr.getDeadlineRequests().add(drd2);
+               }
+
+            }
+            adr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
+                  messageUtil.getMessage(CCIConstants.FAILURE)));
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE));
+      }
+      return adr;
    }
+
+   @Override
+   public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(int typeId, int categoryId, int staffUserId, String roleType) {
+
+      AdminPartnerWorkQueueRequestChangeInAllocation rca = new AdminPartnerWorkQueueRequestChangeInAllocation();
+      try {
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerAllocationChange(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+               .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
+         if (result != null) {
+
+            for (Object[] dr : result) {
+
+               AdminPartnerWorkQueueRequestChangeInAllocationDetails ad = new AdminPartnerWorkQueueRequestChangeInAllocationDetails();
+               ad.setCompanyName(String.valueOf(dr[0]));
+               if (dr[1] != null)
+                  ad.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+               ad.setPartnerStatus(String.valueOf(dr[2]));
+               ad.setSeasonName(String.valueOf(dr[3]));
+
+               if (dr[4] != null) {
+                  int ProgramOptionId = Integer.valueOf(String.valueOf(dr[4]));
+                  if (ProgramOptionId == 1 || ProgramOptionId == 5) {
+                     ad.setCurrentSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[5]));
+                     ad.setCurrentSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[6]));
+                     ad.setRequestedSeasonAugustStartUnguarantedParticipantNume(String.valueOf(dr[7]));
+                     ad.setRequestedSeasonAugustStartguarantedParticipantNume(String.valueOf(dr[9]));
+                     ad.setCurrentSeasonAugustStartguarantedParticipantDeno(String.valueOf(dr[13]));
+                     ad.setRequestedSeasonAugustStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
+
+                  } else if (ProgramOptionId == 3 || ProgramOptionId == 8) {
+                     ad.setCurrentSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[5]));
+                     ad.setCurrentSeasonJanStartguarantedParticipantNume(String.valueOf(dr[6]));
+                     ad.setRequestedSeasonJanStartUnguarantedParticipantNume(String.valueOf(dr[7]));
+                     ad.setRequestedSeasonJanStartguarantedParticipantNume(String.valueOf(dr[9]));
+                     ad.setCurrentSeasonJanStartguarantedParticipantDeno(String.valueOf(dr[13]));
+                     ad.setRequestedSeasonJanStartUnguarantedParticipantDeno(String.valueOf(dr[14]));
+                  }
+               }
+               ad.setCountry(String.valueOf(dr[10]));
+               ad.setFlagUrl(String.valueOf(dr[12]));
+               ad.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
+               ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+               ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
+               rca.getChangeInAllocation().add(ad);
+            }
+            rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE));
+
+      }
+      return rca;
+   }
+
    @Override
    @Transactional
-   public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(
-   		int typeId, int categoryId, int staffUserId, String roleType) {
-	   
-	   AdminPartnerWorkQueueNotesReview nr=new AdminPartnerWorkQueueNotesReview();
-	   try
-	   {
-		   @SuppressWarnings("unchecked")
-		   List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerNotesReview(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
-		   .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
-		   if(result !=null)
-		   {
-			   
-			   for(Object[]dr :result)
-			   {
-				   AdminPartnerWorkQueueNotesReviewDetail nrd=new AdminPartnerWorkQueueNotesReviewDetail();
-				  nrd.setCompanyName(String.valueOf(dr[0]));
-				  if(dr[1]!=null)
-				  nrd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
-				  nrd.setCountry(String.valueOf(dr[2]));
-				  nrd.setFlagUrl(String.valueOf(dr[3]));
-				  nrd.setPartnerStatus(String.valueOf(dr[4]));
-				  nrd.setNoteTopic(String.valueOf(dr[5]));
-				  if(dr[6]!=null)
-				  {
-					/*  boolean  pub= (Byte.valueOf(String.valueOf(dr[6]))==(CCIConstants.ACTIVE))?true:false;
-				  nrd.setIsPublic(pub);*/
-				  }
-				  nrd.setNoteCreatedOn(String.valueOf(dr[7]));
-				  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
-				 
-				  nrd.setNoteValue(String.valueOf(dr[9]));
-				  nrd.setNoteTopicCreatedBy(String.valueOf(dr[10]));
-				  nrd.setNoteTopicRoll(String.valueOf(dr[12]));
-				  nrd.setNoteRoll(String.valueOf(dr[13]));
-				 nr.getNotesReview().add(nrd);
-			   }
-			  nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-		   else
-		   {
-			   nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
-		                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-		   }
-	   }catch( ClassCastException e)
-	   {
-		  /* ExceptionUtil.logException(e, logger);
-		   nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
-				   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
-		   logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)); */
-	  
-	   }
-   	return nr;
+   public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(int typeId, int categoryId, int staffUserId, String roleType) {
+
+      AdminPartnerWorkQueueNotesReview nr = new AdminPartnerWorkQueueNotesReview();
+      try {
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPAdminWQPartnerNotesReview(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+               .setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
+         if (result != null) {
+
+            for (Object[] dr : result) {
+               AdminPartnerWorkQueueNotesReviewDetail nrd = new AdminPartnerWorkQueueNotesReviewDetail();
+               nrd.setCompanyName(String.valueOf(dr[0]));
+               if (dr[1] != null)
+                  nrd.setGoId(Integer.valueOf(String.valueOf(dr[1])));
+               nrd.setCountry(String.valueOf(dr[2]));
+               nrd.setFlagUrl(String.valueOf(dr[3]));
+               if (dr[4] != null) {
+                  int partnerAgentStatusId = Integer.parseInt(String.valueOf(dr[4]));
+                  PartnerStatus ps = partnerStatusRepository.findOne(partnerAgentStatusId);
+                  nrd.setPartnerStatus(ps.getPartnerStatusName());
+               }
+               nrd.setNoteTopic(String.valueOf(dr[5]));
+               if (dr[6] != null) {
+                  nrd.setIsPublic(String.valueOf(dr[6]));
+               }
+               nrd.setNoteCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
+               nrd.setNoteCreatedBy(String.valueOf(dr[8]));
+               nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
+               nrd.setNoteValue(String.valueOf(dr[11]));
+               nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
+               nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
+               nrd.setNoteTopicRoll(String.valueOf(dr[14]));
+               nrd.setNoteRoll(String.valueOf(dr[15]));
+               nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
+               nr.getNotesReview().add(nrd);
+            }
+            nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE));
+
+      }
+      return nr;
    }
+
    @Override
    public WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String newFollowUpDate) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
@@ -1000,13 +1009,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          PartnerStatus partnerStatus = partnerStatusRepository.findStatusByName(newStatus);
          partnerReviewStatus.setPartnerStatus1(partnerStatus);
          partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_APPLICATION_STATUS_UPDATED.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_REQUEST_STATUS_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
-         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_REQUEST_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS));
       }
       return wsDefaultResponse;
    }
@@ -1080,26 +1089,25 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(int quickStatsTypeID, String roleName) {
+   public PartnerAdminDashboardQuickStatsCategory getApplicationQuickStatsCategory(int typeID, int categoryId) {
       PartnerAdminDashboardQuickStatsCategory pwt = new PartnerAdminDashboardQuickStatsCategory();
       try {
-         // TODO add rolename to the query
-         List<AdminQuickStatsCategory> adminQuickStatsCategories = adminQuickStatsCategoriesRepository.findAllCategoriesByTypeId(quickStatsTypeID);
-         if (adminQuickStatsCategories != null) {
-            for (AdminQuickStatsCategory adminQuickStatsCategory : adminQuickStatsCategories) {
+         List<AdminQuickStatsCategoryAggregate> aggregates = adminQuickStatsCategoriesAggregateRepository.findAllAggregateValueForCategory(typeID, categoryId);
+         if (aggregates != null && !aggregates.isEmpty()) {
+            for (AdminQuickStatsCategoryAggregate adminQuickStatsCategoryAggregate : aggregates) {
                PartnerAdminDashboardQuickStatsCategoryDetail partnerAdminDashboardQuickStatsCategory = new PartnerAdminDashboardQuickStatsCategoryDetail();
-               partnerAdminDashboardQuickStatsCategory.setTitle(adminQuickStatsCategory.getAdminQSCategoryName());
-               AdminQuickStatsCategoryAggregate aggregates = adminQuickStatsCategoriesAggregateRepository.findAggregateValueForCategory(quickStatsTypeID,
-                     adminQuickStatsCategory.getAdminQSCategoryId());
-               if (aggregates != null) {
-                  // TODO
-                  partnerAdminDashboardQuickStatsCategory.setNum(50);
-               }
+               partnerAdminDashboardQuickStatsCategory.setName(adminQuickStatsCategoryAggregate.getAdminQSCategoryName());
+               partnerAdminDashboardQuickStatsCategory.setNum(adminQuickStatsCategoryAggregate.getAdminQSCategoryAggregate());
+               partnerAdminDashboardQuickStatsCategory.setCategoryAggregate(adminQuickStatsCategoryAggregate.getAdminQSCategoryAggregate());
+               partnerAdminDashboardQuickStatsCategory.setStatus(adminQuickStatsCategoryAggregate.getStatus());
                pwt.getQuickStatsDetail().add(partnerAdminDashboardQuickStatsCategory);
             }
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_QUICK_STATS_CATEGORY.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_QUICK_STATS_CATEGORY.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_QUICK_STATS_CATEGORY.getValue(),
@@ -1109,6 +1117,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return pwt;
    }
 
+   @Deprecated
    @Override
    public PartnerAdminDashboardBenchmarks getBenchmark() {
       PartnerAdminDashboardBenchmarks benchMark = new PartnerAdminDashboardBenchmarks();
@@ -1162,9 +1171,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation.setModifiedBy(document.getLoginId());
          documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-     
+
          documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
-         
+
          documentInformation.setActive(CCIConstants.ACTIVE);
          DocumentInformation d = documentInformationRepository.saveAndFlush(documentInformation);
          PartnerDocument p = new PartnerDocument();
@@ -1172,7 +1181,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          p.setDocumentInformation(d);
          p.setPartner(partner);
          p.setPartnerProgram(partnerProgram);
-
+         documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          partnerDocumentsRepository.saveAndFlush(p);
          /**
           * Fetching All Documents
@@ -1195,6 +1205,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_DOCUMENT)));
+
       }
       return documents;
    }
@@ -1213,6 +1226,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
          }
          partnerDocumentsRepository.flush();
+         documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVING_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          /**
           * Fetching All Documents
           */
@@ -1234,14 +1249,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVING_PARTNER_DOCUMENT.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_DOCUMENT)));
+
       }
       return documents;
    }
 
    @Override
- 
    public PartnerAdminOverviewOffices addNewPartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
-      PartnerAdminOverviewOffices pOffices ;
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
       try {
          PartnerOffice po = new PartnerOffice();
          po.setAdressOne(officesDetails.getAddress1());
@@ -1257,53 +1274,74 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          PartnerOfficeType officeType = partnerOfficeTypeRepository.findByPartnerOfficeType(officesDetails.getOfficeType());
          po.setPartnerOfficeType(officeType);
          po.setModifiedBy(officesDetails.getLoginId());
-         po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));        
+         po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          po.setPhoneNumber(officesDetails.getPhone());
-         po.setPostalCode(officesDetails.getZipCode());       
+         po.setPostalCode(officesDetails.getZipCode());
          po.setWebsite(officesDetails.getWebsite());
-         partnerOfficeRepository.saveAndFlush(po);     
+         partnerOfficeRepository.saveAndFlush(po);
+         pOffices = getListofOffices(officesDetails.getGoId());
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_OFFICE)));
       }
-      pOffices=getListofOffices(officesDetails.getGoId());
+
       return pOffices;
    }
-   
- private PartnerAdminOverviewOffices getListofOffices(int goId)
-   {
-	   PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
- 	  List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
-       if (offices != null) {
-          for (PartnerOffice partnerOffice : offices) {
-             PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
-             office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
-             office.setAddress1(partnerOffice.getAdressOne());
-             office.setAddress2(partnerOffice.getAdressTwo());
-             office.setCity(partnerOffice.getCity());
-            String countryName = partnerOffice.getLookupCountry().getCountryName();
-            if(countryName!=null)
-             office.setCountry(countryName);
-             office.setEmail(partnerOffice.getPartner().getEmail());
-             office.setFax(partnerOffice.getFaxNumber());
-             office.setPhone(partnerOffice.getPhoneNumber());
-             office.setWebsite(partnerOffice.getWebsite());
-             office.setZipCode(partnerOffice.getPostalCode());
-             office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
-             pOffices.getOffices().add(office);
-          }
-          
+
+   private PartnerAdminOverviewOffices getListofOffices(int goId) {
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
+      try {
+         List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(goId);
+         if (offices != null) {
+            for (PartnerOffice partnerOffice : offices) {
+               PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
+               office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
+               office.setAddress1(partnerOffice.getAdressOne());
+               office.setAddress2(partnerOffice.getAdressTwo());
+               office.setCity(partnerOffice.getCity());
+               String countryName = partnerOffice.getLookupCountry().getCountryName();
+               if (countryName != null)
+                  office.setCountry(countryName);
+               office.setEmail(partnerOffice.getPartner().getEmail());
+               office.setFax(partnerOffice.getFaxNumber());
+               office.setPhone(partnerOffice.getPhoneNumber());
+               office.setWebsite(partnerOffice.getWebsite());
+               office.setZipCode(partnerOffice.getPostalCode());
+               office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
+               pOffices.getOffices().add(office);
+            }
+            pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GET_PARTNER_OFFICE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_PARTNER_OFFICE)));
+      }
+      return pOffices;
    }
-       return pOffices;
-   }
+
    @Transactional
    @Override
+   @Modifying
    public PartnerAdminOverviewOffices removeNewPartnerInquiryOffice(PartnerAdminOverviewDeletedOffices deletedItems) {
       PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
       try {
          for (Integer item : deletedItems.getOffices()) {
-            partnerOfficeRepository.delete(item);
+            List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(deletedItems.getGoId(), item);
+            if (!(partnerUserList.isEmpty())) {
+               pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+                     messageUtil.getMessage(PartnerAdminMessageConstants.CANT_REMOVE_PARTNER_OFFICE)));
+            } else {
+               pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+               partnerOfficeRepository.delete(item);
+               partnerOfficeRepository.flush();
+            }
          }
-         partnerOfficeRepository.flush();
 
          List<PartnerOffice> offices = partnerOfficeRepository.findPartnerOfficeByPartnerId(deletedItems.getGoId());
          if (offices != null) {
@@ -1322,9 +1360,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
                pOffices.getOffices().add(office);
             }
+
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVE_PARTNER_OFFICE)));
       }
       return pOffices;
    }
@@ -1333,50 +1374,54 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
       PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
       try {
-         PartnerContact pc = new PartnerContact();
+    	  
+         PartnerUser pc = new PartnerUser();
+         Login login= loginRepository.findOne(contactsDetails.getLoginId());
+		 pc.setLogin(login);
          pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
-         pc.setCreatedBy(contactsDetails.getLoginId());
-         pc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          pc.setEmail(contactsDetails.getEmail());
          pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
          pc.setFax(contactsDetails.getFax());
          pc.setFirstName(contactsDetails.getFirstName());
          pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
          pc.setLastName(contactsDetails.getLastName());
-         pc.setModifiedBy(contactsDetails.getGoId());
-         pc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
          pc.setPartner(partner);
          pc.setPhone(contactsDetails.getPhone());
-         pc.setReceiveNotificationEmails(CCIConstants.INACTIVE);
+         pc.setRecieveNotificationEmails(CCIConstants.INACTIVE);
          Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
          pc.setSalutation(salutation);
          pc.setSkypeId(contactsDetails.getSkypeId());
          pc.setTitle(contactsDetails.getTitile());
-         partnerContactRepository.saveAndFlush(pc);
-
-         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(contactsDetails.getGoId());
+         partnerUserRepository.saveAndFlush(pc);
+         
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         
+         List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(contactsDetails.getGoId());
          if (contacts != null) {
-            for (PartnerContact partnerContact : contacts) {
+            for (PartnerUser partnerContact : contacts) {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
-               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+               contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == 1);
                contact.setEmail(partnerContact.getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
                contact.setLastName(partnerContact.getLastName());
-               contact.setPhone(partnerContact.getPhone());            
+               contact.setPhone(partnerContact.getPhone());
                contact.setSalutation(partnerContact.getSalutation().getSalutationName());
                contact.setSkypeId(partnerContact.getSkypeId());
                contact.setTitile(partnerContact.getTitle());
-              
+
                contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
                pContacts.getContacts().add(contact);
             }
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATE_PARTNER_CONTACT)));
       }
       return pContacts;
    }
@@ -1387,15 +1432,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
 
          for (Integer item : deletedItems.getContacts()) {
-            partnerContactRepository.delete(item);
+            partnerUserRepository.delete(item);
          }
-         partnerContactRepository.flush();
-
-         List<PartnerContact> contacts = partnerContactRepository.findPartnerContactsByPartnerId(deletedItems.getGoId());
+         partnerUserRepository.flush();
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(deletedItems.getGoId());
          if (contacts != null) {
-            for (PartnerContact partnerContact : contacts) {
+            for (PartnerUser partnerContact : contacts) {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
-               contact.setPartnerContactId(partnerContact.getPartnerContactId());
+               contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == 1);
                contact.setEmail(partnerContact.getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
@@ -1412,6 +1458,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_CONTACT)));
       }
       return pContacts;
    }
@@ -1431,12 +1479,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          PartnerNoteTopic partnerNoteTopic = partnerNoteTopicRepository.findByPartnerNoteTopicName(notesDetails.getTopic());
          note.setPartnerNoteTopic(partnerNoteTopic);
          partnerNoteRepository.saveAndFlush(note);
-
+         pn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_NOTE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerNote> partnerNotes = partnerNoteRepository.findAllPartnerNoteByPartnerId(notesDetails.getGoId());
          if (partnerNotes != null) {
             for (PartnerNote partnerNote : partnerNotes) {
                PartnerAdminOverviewNotesDetails nd = new PartnerAdminOverviewNotesDetails();
-                nd.setPartnerNoteId(partnerNote.getPartnerNotesId());
+               nd.setPartnerNoteId(partnerNote.getPartnerNotesId());
                nd.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
                nd.setNoteValue(partnerNote.getPartnerNote());
                pn.getNotes().add(nd);
@@ -1444,6 +1493,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         pn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_NOTE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_NOTE)));
       }
       return pn;
    }
@@ -1461,9 +1512,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          refcheck.setReferenceCheckNotes(referenceChecksDetails.getNote());
          refcheck.setReferenceCompletedBy(referenceChecksDetails.getCompletedBy());
          refcheck.setReferenceCompletedOn(DateUtils.getDateFromString(referenceChecksDetails.getCompletedOn()));
-        
          partnerReferenceCheckRepository.saveAndFlush(refcheck);
-
+         prc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(referenceChecksDetails.getGoId());
          if (partnerReferenceChecks != null) {
             for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
@@ -1480,6 +1531,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_REFERENCE)));
       }
       return prc;
    }
@@ -1492,7 +1545,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             partnerReferenceCheckRepository.delete(item);
          }
          partnerReferenceCheckRepository.flush();
-
+         prc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          List<PartnerReferenceCheck> partnerReferenceChecks = partnerReferenceCheckRepository.findAllPartnerReferenceCheckByPartnerId(deletedItems.getGoId());
          if (partnerReferenceChecks != null) {
             for (PartnerReferenceCheck partnerReferenceCheck : partnerReferenceChecks) {
@@ -1509,6 +1563,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
+         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_REFERENCE)));
       }
       return prc;
    }
@@ -1524,9 +1580,573 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return userManagementService.findAllUsers();
    }
 
+   @Override
+   public PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails) {
+      PartnerAdminOverviewOffices pOffices = new PartnerAdminOverviewOffices();
+      try {
+         PartnerOffice po = partnerOfficeRepository.findOne(officesDetails.getPartnerOfficeId());
+         po.setAdressOne(officesDetails.getAddress1());
+         po.setAdressTwo(officesDetails.getAddress2());
+         po.setCity(officesDetails.getCity());
+         po.setCreatedBy(officesDetails.getLoginId());
+         po.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         po.setFaxNumber(officesDetails.getFax());
+         LookupCountry country = lookupCountryRepository.findByCountryName(officesDetails.getCountry());
+         po.setLookupCountry(country);
+         PartnerOfficeType officeType = partnerOfficeTypeRepository.findByPartnerOfficeType(officesDetails.getOfficeType());
+         po.setPartnerOfficeType(officeType);
+         po.setModifiedBy(officesDetails.getLoginId());
+         po.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         po.setPhoneNumber(officesDetails.getPhone());
+         po.setPostalCode(officesDetails.getZipCode());
+         po.setWebsite(officesDetails.getWebsite());
+         partnerOfficeRepository.saveAndFlush(po);
+         pOffices = getListofOffices(officesDetails.getGoId());
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_OFFICE)));
+      }
+      return pOffices;
+   }
 
+   @Override
+   public PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
+      PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
+      try {
+         PartnerUser pc = partnerUserRepository.findOne(contactsDetails.getPartnerContactId());
+         pc.setActive((byte) (contactsDetails.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
+         pc.setEmail(contactsDetails.getEmail());
+         pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+         pc.setFax(contactsDetails.getFax());
+         pc.setFirstName(contactsDetails.getFirstName());
+         pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
+         pc.setLastName(contactsDetails.getLastName());
+         pc.setPhone(contactsDetails.getPhone());
+         pc.setRecieveNotificationEmails(contactsDetails.isReceiveNotificationEmails() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         Salutation salutation = salutationRepository.findBySalutationName(contactsDetails.getSalutation());
+         pc.setSalutation(salutation);
+         pc.setSkypeId(contactsDetails.getSkypeId());
+         pc.setTitle(contactsDetails.getTitile());
+         partnerUserRepository.saveAndFlush(pc);
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_PARTNER_REFERENCE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(contactsDetails.getGoId());
+         if (contacts != null) {
+            for (PartnerUser partnerContact : contacts) {
+               PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
+               contact.setPartnerContactId(partnerContact.getPartnerUserId());
+               contact.setActive(partnerContact.getActive() == CCIConstants.ACTIVE);
+               contact.setEmail(partnerContact.getEmail());
+               contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
+               contact.setFax(partnerContact.getFax());
+               contact.setFirstName(partnerContact.getFirstName());
+               contact.setLastName(partnerContact.getLastName());
+               contact.setPhone(partnerContact.getPhone());
+               contact.setSalutation(partnerContact.getSalutation().getSalutationName());
+               contact.setSkypeId(partnerContact.getSkypeId());
+               contact.setTitile(partnerContact.getTitle());
+               contact.setPrimaryContact(partnerContact.getIsPrimary() == CCIConstants.ACTIVE);
+               pContacts.getContacts().add(contact);
+            }
+         }
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_CONTACT)));
+      }
+      return pContacts;
+   }
 
+   @Override
+   public WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus, String note) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(goId);
+         PartnerStatus partnerStatus = partnerStatusRepository.findStatusByName(newStatus);
+         partnerReviewStatus.setPartnerStatus1(partnerStatus);
+         partnerReviewStatus.setPartnerStatusReason(note);
+         partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_REQUEST_STATUS_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_REQUEST_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS));
+      }
+      return wsDefaultResponse;
+   }
 
+   @Override
+   public WSDefaultResponse markNoteRead(String noteId, String loginId) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         PartnerNote note = partnerNoteRepository.findOne(Integer.parseInt(noteId));
+         note.setHasRead(CCIConstants.TRUE_BYTE);
+         note.setModifiedBy(Integer.parseInt(loginId));
+         partnerNoteRepository.saveAndFlush(note);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.MARK_NOTE_AS_READ.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.MARK_NOTE_AS_READ.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_MARKING_NOTE_AS_READ)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_MARKING_NOTE_AS_READ));
+      }
+      return wsDefaultResponse;
+   }
 
+   @Override
+   public PartnerStatusAsPatterns getPartnerStatusAsPattern() {
+      PartnerStatusAsPatterns partnerStatusAsPatterns = new PartnerStatusAsPatterns();
+      try {
+         List<PartnerStatus> partnerStatuses = partnerStatusRepository.getAllpartnerStatusAsPattern();
+         for (PartnerStatus p : partnerStatuses) {
+            PartnerStatusAsPattern psp = new PartnerStatusAsPattern();
+            psp.setStatusId(p.getPartnerStatusId());
+            psp.setStatusName(p.getPartnerStatusName());
+            partnerStatusAsPatterns.getPartnerStatusAsPatterns().add(psp);
+         }
+         partnerStatusAsPatterns.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GET_ALL_PARTNER_STATUS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         partnerStatusAsPatterns.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.GET_ALL_PARTNER_STATUS.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_ALL_PARTNER_STATUS)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_ALL_PARTNER_STATUS));
+      }
+
+      return partnerStatusAsPatterns;
+   }
+
+   @Override
+   public WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(int SeasonId, int ProgramId, int PartnerGoId, String followUpdate) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         PartnerSeason partnerSeason = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(SeasonId, ProgramId, PartnerGoId);
+         if (partnerSeason.getAppSecSemDeadlineFollowupDate() != null)
+            partnerSeason.setAppSecSemDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         else
+            partnerSeason.setAppDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerSeasonsRepository.saveAndFlush(partnerSeason);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(int partnerSeasonAllocationId, String followUpdate) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+
+         PartnerSeasonAllocation partnerSeasonAllocation = partnerSeasonAllocationRepository.findOne(partnerSeasonAllocationId);
+         partnerSeasonAllocation.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerSeasonAllocationRepository.saveAndFlush(partnerSeasonAllocation);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public WSDefaultResponse updatePartnerNotesReviewFollowUpDate(int partnerNotesId, String followUpdate) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         PartnerNote partnerNote = partnerNoteRepository.findOne(partnerNotesId);
+         partnerNote.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerNoteRepository.saveAndFlush(partnerNote);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Transactional
+   @Override
+   public WSDefaultResponse assignSeasonToSubPartner(String seasonId, String subpartnerId, String departmentProgramId, String loginId) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         int sId = Integer.parseInt(seasonId);
+         int goId = Integer.parseInt(subpartnerId);
+         int programId = Integer.parseInt(departmentProgramId);
+         PartnerSeason ps = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(sId, programId, goId);
+         if (ps != null) {
+            partnerSeasonsRepository.delete(ps);
+         }
+         ps = new PartnerSeason();
+         Partner p = partnerRepository.findOne(goId);
+         Season season = seasonRepository.findOne(sId);
+         DepartmentProgram departmentProgram2 = departmentProgramRepository.findOne(Integer.parseInt(departmentProgramId));
+
+         ps.setSeason(season);
+         ps.setPartner(p);
+         ps.setDepartmentProgram(departmentProgram2);
+
+         ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
+         ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
+         ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
+         ps.setQuestionaireRequired(CCIConstants.INACTIVE);
+         ps.setDisableAddParticipant(CCIConstants.INACTIVE);
+         ps.setParticipantPaysDeposit(CCIConstants.INACTIVE);
+         ps.setCanAccessJobBoard(CCIConstants.INACTIVE);
+         ps.setCanCreateSubPartner(CCIConstants.INACTIVE);
+         ps.setIsSignedContract(CCIConstants.INACTIVE);
+         ps.setActive(CCIConstants.ACTIVE);
+         ps.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         ps.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         ps.setCreatedBy(Integer.parseInt(loginId));
+         ps.setModifiedBy(Integer.parseInt(loginId));
+
+         partnerSeasonsRepository.saveAndFlush(ps);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON));
+      }
+      return wsDefaultResponse;
+   }
+
+   @Override
+   public SeasonsForPartners getAllAvailableSeasons() {
+      SeasonsForPartners seasons = new SeasonsForPartners();
+      try {
+         List<Season> allSeasons = seasonRepository.findAll();
+         if (allSeasons != null && !allSeasons.isEmpty()) {
+            for (Season s : allSeasons) {
+               if (s.getSeasonF1details() != null)
+                  for (SeasonF1Detail f1 : s.getSeasonF1details()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(f1.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonJ1details() != null)
+                  for (SeasonJ1Detail j1 : s.getSeasonJ1details()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(j1.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonCapdetails() != null)
+                  for (SeasonCAPDetail cap : s.getSeasonCapdetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(cap.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonWnTsummerDetails() != null)
+                  for (SeasonWnTSummerDetail summer : s.getSeasonWnTsummerDetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(summer.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_SUMMER_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonWnTwinterDetails() != null)
+                  for (SeasonWnTWinterDetail winter : s.getSeasonWnTwinterDetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(winter.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonWnTspringDetails() != null)
+                  for (SeasonWnTSpringDetail spring : s.getSeasonWnTspringDetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(spring.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_SPRING_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonHsadetails() != null)
+                  for (SeasonHSADetail hsa : s.getSeasonHsadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(hsa.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_HS_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonWadetails() != null)
+                  for (SeasonWADetail wa : s.getSeasonWadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(wa.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_WRK_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonTadetails() != null)
+                  for (SeasonTADetail ta : s.getSeasonTadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(ta.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_TEACH_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonLsdetails() != null)
+                  for (SeasonLSDetail ls : s.getSeasonLsdetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(ls.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_LANG_SCL_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeasonVadetails() != null)
+                  for (SeasonVADetail va : s.getSeasonVadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(va.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_VOL_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+
+               if (s.getSeasonIhpdetails() != null)
+                  for (SeasonIHPDetail ihp : s.getSeasonIhpdetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(ihp.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+            }
+         }
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return seasons;
+   }
+
+   @Override
+   public SeasonsForPartners getAllAvailableSeasons(String partnerId) {
+      SeasonsForPartners seasons = new SeasonsForPartners();
+      try {
+         List<PartnerSeason> allSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoId(Integer.parseInt(partnerId));
+         if (allSeasons != null && !allSeasons.isEmpty()) {
+            for (PartnerSeason s : allSeasons) {
+               if (s.getSeason().getSeasonF1details() != null)
+                  for (SeasonF1Detail f1 : s.getSeason().getSeasonF1details()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(f1.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonJ1details() != null)
+                  for (SeasonJ1Detail j1 : s.getSeason().getSeasonJ1details()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(j1.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonCapdetails() != null)
+                  for (SeasonCAPDetail cap : s.getSeason().getSeasonCapdetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(cap.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_CAP_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonWnTsummerDetails() != null)
+                  for (SeasonWnTSummerDetail summer : s.getSeason().getSeasonWnTsummerDetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(summer.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_SUMMER_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonWnTwinterDetails() != null)
+                  for (SeasonWnTWinterDetail winter : s.getSeason().getSeasonWnTwinterDetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(winter.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_WINTER_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonWnTspringDetails() != null)
+                  for (SeasonWnTSpringDetail spring : s.getSeason().getSeasonWnTspringDetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(spring.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.WP_WT_SPRING_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonHsadetails() != null)
+                  for (SeasonHSADetail hsa : s.getSeason().getSeasonHsadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(hsa.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_HS_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonWadetails() != null)
+                  for (SeasonWADetail wa : s.getSeason().getSeasonWadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(wa.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_WRK_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonTadetails() != null)
+                  for (SeasonTADetail ta : s.getSeason().getSeasonTadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(ta.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_TEACH_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonLsdetails() != null)
+                  for (SeasonLSDetail ls : s.getSeason().getSeasonLsdetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(ls.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_LANG_SCL_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+               if (s.getSeason().getSeasonVadetails() != null)
+                  for (SeasonVADetail va : s.getSeason().getSeasonVadetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(va.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.GHT_VOL_ABRD_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+
+               if (s.getSeason().getSeasonIhpdetails() != null)
+                  for (SeasonIHPDetail ihp : s.getSeason().getSeasonIhpdetails()) {
+                     SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+                     seasonsForPartnersDetails.setSeasonId(s.getSeason().getSeasonId());
+                     seasonsForPartnersDetails.setSeasonName(ihp.getProgramName());
+                     seasonsForPartnersDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
+                     seasons.getDetails().add(seasonsForPartnersDetails);
+                  }
+            }
+         }
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return seasons;
+   }
+
+   @Override
+   public WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Partner p = partnerRepository.findOne(assignSubpartnerToSeason.getSubPartner());
+         if (assignSubpartnerToSeason.getAssignedSeasonData() != null && !assignSubpartnerToSeason.getAssignedSeasonData().isEmpty())
+            for (AssignedSeasonData data : assignSubpartnerToSeason.getAssignedSeasonData()) {
+               PartnerSeason ps = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(data.getSeasonId(), data.getDepartmentProgramId(),
+                     assignSubpartnerToSeason.getSubPartner());
+               if(ps!=null)
+               partnerSeasonsRepository.delete(ps);
+               ps = new PartnerSeason();
+               Season season = seasonRepository.findOne(data.getSeasonId());
+               DepartmentProgram departmentProgram2 = departmentProgramRepository.findOne(data.getDepartmentProgramId());
+
+               ps.setSeason(season);
+               ps.setPartner(p);
+               ps.setDepartmentProgram(departmentProgram2);
+
+               ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
+               ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
+               ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
+               ps.setQuestionaireRequired(CCIConstants.INACTIVE);
+               ps.setDisableAddParticipant(CCIConstants.INACTIVE);
+               ps.setParticipantPaysDeposit(CCIConstants.INACTIVE);
+               ps.setCanAccessJobBoard(CCIConstants.INACTIVE);
+               ps.setCanCreateSubPartner(CCIConstants.INACTIVE);
+               ps.setIsSignedContract(CCIConstants.INACTIVE);
+               ps.setActive(CCIConstants.ACTIVE);
+               ps.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               ps.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               ps.setCreatedBy(assignSubpartnerToSeason.getLoginId());
+               ps.setModifiedBy(assignSubpartnerToSeason.getLoginId());
+
+               partnerSeasonsRepository.saveAndFlush(ps);
+            }
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTNER_SEASON.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON));
+      }
+      return wsDefaultResponse;
+   }
+   
+   public static void main(String[] args) {
+      Gson gson = new Gson();
+      AssignSeasonToSubPartner a = new AssignSeasonToSubPartner();
+      a.setLoginId(333);
+      a.setSubPartner(333);
+      List<AssignedSeasonData> ll = new ArrayList<AssignedSeasonData>();
+      ll.add(new AssignedSeasonData(33,44));
+      ll.add(new AssignedSeasonData(33,44));
+      ll.add(new AssignedSeasonData(33,44));
+      ll.add(new AssignedSeasonData(33,44));
+      a.setAssignedSeasonData(ll);
+      System.out.println(gson.toJson(a));
+   }
+   @Override
+   public SeasonsForPartners getAllAvailableSeasons2(String partnerId) {
+      SeasonsForPartners seasons = new SeasonsForPartners();
+      
+      try {
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = em.createNativeQuery("call SPSubPartnerSeasonAssign(:partnerId)").setParameter("partnerId", partnerId).getResultList();
+         if (result != null) {
+            for (Object[] dt : result) {
+               SeasonsForPartnersDetails seasonsForPartnersDetails = new SeasonsForPartnersDetails();
+               seasonsForPartnersDetails.setSeasonName(String.valueOf(dt[1]));
+               if (dt[1] != null)
+                  seasonsForPartnersDetails.setSeasonId(Integer.valueOf(String.valueOf(dt[0])));
+               if (dt[2] != null)
+                  seasonsForPartnersDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
+               seasons.getDetails().add(seasonsForPartnersDetails);
+            }
+         }
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return seasons;
+   }
 
 }

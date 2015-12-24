@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.admin.season.PartnerAdminSeasonInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerAdminIHPSeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Document;
@@ -64,8 +65,9 @@ public class PartnerAdminSeason {
     * @param partnerGoId
     * @return
     */
-   @GET
-   @Path("add/new/")
+   @POST
+   @Path("add/new")
+   @Consumes("application/json")
    @Produces("application/json")
    public Response addNewSeasonsToPartner(PartnerAdminSeasonApplicationList partnerAdminSeasonApplicationList) {
       return partnerAdminSeasonInterface.addNewSeasonsToPartner(partnerAdminSeasonApplicationList);

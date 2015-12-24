@@ -1093,7 +1093,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional
-   public void createJ1ProgramAllocation(Season season) {
+   public void createJ1ProgramAllocation(Season season, int loginId) {
       try {
          List<SeasonHSPAllocation> seasonhspAllocations = new ArrayList<SeasonHSPAllocation>();
          SeasonHSPAllocation august_FY = new SeasonHSPAllocation();
@@ -1102,9 +1102,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          august_FY.setMaxGuaranteedPax(0);
          august_FY.setMaxUnguaranteedPax(0);
          august_FY.setSeason(season);
-         august_FY.setCreatedBy(1);
+         august_FY.setCreatedBy(loginId);
          august_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         august_FY.setModifiedBy(1);
+         august_FY.setModifiedBy(loginId);
          august_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(august_FY);
 
@@ -1114,9 +1114,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          Jan_FY.setMaxGuaranteedPax(0);
          Jan_FY.setMaxUnguaranteedPax(0);
          Jan_FY.setSeason(season);
-         Jan_FY.setCreatedBy(1);
+         Jan_FY.setCreatedBy(loginId);
          Jan_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         Jan_FY.setModifiedBy(1);
+         Jan_FY.setModifiedBy(loginId);
          Jan_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(Jan_FY);
          seasonHSPAllocationRepository.save(seasonhspAllocations);
@@ -1787,7 +1787,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional
-   public void createF1ProgramAllocation(Season season) {
+   public void createF1ProgramAllocation(Season season, int loginId) {
       try {
          List<SeasonHSPAllocation> seasonhspAllocations = new ArrayList<SeasonHSPAllocation>();
          SeasonHSPAllocation august_FY = new SeasonHSPAllocation();
@@ -1796,9 +1796,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          august_FY.setMaxGuaranteedPax(0);
          august_FY.setMaxUnguaranteedPax(0);
          august_FY.setSeason(season);
-         august_FY.setCreatedBy(1);
+         august_FY.setCreatedBy(loginId);
          august_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         august_FY.setModifiedBy(1);
+         august_FY.setModifiedBy(loginId);
          august_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(august_FY);
 
@@ -1808,9 +1808,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          Jan_FY.setMaxGuaranteedPax(0);
          Jan_FY.setMaxUnguaranteedPax(0);
          Jan_FY.setSeason(season);
-         Jan_FY.setCreatedBy(1);
+         Jan_FY.setCreatedBy(loginId);
          Jan_FY.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         Jan_FY.setModifiedBy(1);
+         Jan_FY.setModifiedBy(loginId);
          Jan_FY.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonhspAllocations.add(Jan_FY);
          seasonHSPAllocationRepository.save(seasonhspAllocations);
@@ -2264,17 +2264,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          }
          seasonGHTDetails = seasonServiceImplUtil.getGHTHSAbroad(seasonHSADetail);
          if (seasonGHTDetails == null) {
-            seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_GHT_DEAILS.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
+            seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_GHT_DETAILS.getValue(),
+                  messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
+            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
             return seasonGHTDetails;
          }
          seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
          seasonGHTDetails = setSeasonGHTDetailsStatus(seasonGHTDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_GHT_DEAILS.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DEAILS));
+               messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_GHT_DETAILS));
       }
       return seasonGHTDetails;
    }
@@ -3282,7 +3282,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional
-   public void createWPSumProgramAllocation(Season season) {
+   public void createWPSumProgramAllocation(Season season, int loginId) {
       try {
          List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
          SeasonWPAllocation jobFairSummer = new SeasonWPAllocation();
@@ -3290,9 +3290,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          jobFairSummer.setDepartmentProgramOption(departmentProgramOption_JobFair);
          jobFairSummer.setMaxPax(0);
          jobFairSummer.setSeason(season);
-         jobFairSummer.setCreatedBy(1);
+         jobFairSummer.setCreatedBy(loginId);
          jobFairSummer.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         jobFairSummer.setModifiedBy(1);
+         jobFairSummer.setModifiedBy(loginId);
          jobFairSummer.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
          seasonWpAllocations.add(jobFairSummer);
@@ -3302,9 +3302,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          selfPlacedSummer.setDepartmentProgramOption(departmentProgramOption_SelfPlaceSpring);
          selfPlacedSummer.setMaxPax(0);
          selfPlacedSummer.setSeason(season);
-         selfPlacedSummer.setCreatedBy(1);
+         selfPlacedSummer.setCreatedBy(loginId);
          selfPlacedSummer.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         selfPlacedSummer.setModifiedBy(1);
+         selfPlacedSummer.setModifiedBy(loginId);
          selfPlacedSummer.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(selfPlacedSummer);
 
@@ -3313,9 +3313,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          directPlacementSummer.setDepartmentProgramOption(departmentProgramOption_DirectPlacementSummer);
          directPlacementSummer.setMaxPax(0);
          directPlacementSummer.setSeason(season);
-         directPlacementSummer.setCreatedBy(1);
+         directPlacementSummer.setCreatedBy(loginId);
          directPlacementSummer.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         directPlacementSummer.setModifiedBy(1);
+         directPlacementSummer.setModifiedBy(loginId);
          directPlacementSummer.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(directPlacementSummer);
 
@@ -3675,7 +3675,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    }
 
    @Transactional
-   public void createWPSpringProgramAllocation(Season season) {
+   public void createWPSpringProgramAllocation(Season season, int loginId) {
       try {
          List<SeasonWPAllocation> seasonWpAllocations = new ArrayList<SeasonWPAllocation>();
          SeasonWPAllocation jobFairSpring = new SeasonWPAllocation();
@@ -3683,9 +3683,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          jobFairSpring.setDepartmentProgramOption(departmentProgramOption_JobFair);
          jobFairSpring.setMaxPax(0);
          jobFairSpring.setSeason(season);
-         jobFairSpring.setCreatedBy(1);
+         jobFairSpring.setCreatedBy(loginId);
          jobFairSpring.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         jobFairSpring.setModifiedBy(1);
+         jobFairSpring.setModifiedBy(loginId);
          jobFairSpring.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(jobFairSpring);
 
@@ -3694,9 +3694,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          selfPlacedSpring.setDepartmentProgramOption(departmentProgramOption_SelfPlaceSpring);
          selfPlacedSpring.setMaxPax(0);
          selfPlacedSpring.setSeason(season);
-         selfPlacedSpring.setCreatedBy(1);
+         selfPlacedSpring.setCreatedBy(loginId);
          selfPlacedSpring.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         selfPlacedSpring.setModifiedBy(1);
+         selfPlacedSpring.setModifiedBy(loginId);
          selfPlacedSpring.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(selfPlacedSpring);
 
@@ -3705,9 +3705,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          directPlacementSpring.setDepartmentProgramOption(departmentProgramOption_DirectPlacementSpring);
          directPlacementSpring.setMaxPax(0);
          directPlacementSpring.setSeason(season);
-         directPlacementSpring.setCreatedBy(1);
+         directPlacementSpring.setCreatedBy(loginId);
          directPlacementSpring.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         directPlacementSpring.setModifiedBy(1);
+         directPlacementSpring.setModifiedBy(loginId);
          directPlacementSpring.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWpAllocations.add(directPlacementSpring);
 
@@ -4077,9 +4077,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               seasonNote.setDepartmentNote(notes.getNoteValue());
                               seasonNote.setActive(CCIConstants.ACTIVE);
                               seasonNote.setSeason(season);
-                              seasonNote.setCreatedBy(1);
+                              seasonNote.setCreatedBy(cloneSeason.getLoginId());
                               seasonNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-                              seasonNote.setModifiedBy(1);
+                              seasonNote.setModifiedBy(cloneSeason.getLoginId());
                               seasonNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                               notesList.add(seasonNote);
                            }
@@ -4095,17 +4095,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               documentInformation.setDocumentName(doc.getDocName());
                               documentInformation.setUrl(doc.getDocUrl());
                               documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(doc.getDocType()));
-                              documentInformation.setCreatedBy(1);
+                              documentInformation.setCreatedBy(cloneSeason.getLoginId());
                               documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-                              documentInformation.setModifiedBy(1);
+                              documentInformation.setModifiedBy(cloneSeason.getLoginId());
                               documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                               documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
                               sprgDoc.setActive(CCIConstants.ACTIVE);
                               sprgDoc.setSeason(season);
                               sprgDoc.setDocumentInformation(documentInformation);
-                              sprgDoc.setCreatedBy(1);
+                              sprgDoc.setCreatedBy(cloneSeason.getLoginId());
                               sprgDoc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-                              sprgDoc.setModifiedBy(1);
+                              sprgDoc.setModifiedBy(cloneSeason.getLoginId());
                               sprgDoc.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                               newDocList.add(sprgDoc);
                            }
@@ -4118,7 +4118,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                            clonedSeasonDocs = new ArrayList<SeasonDepartmentDocument>();
                            for (SeasonDepartmentDocument doc : existingSeasonDocs) {
                               if (doc.getSeason().getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-                                 clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedHSPSeason));
+                                 clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedHSPSeason,cloneSeason.getLoginId()));
                               }
                            }
                            seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
@@ -4148,12 +4148,12 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         List<SeasonHSPAllocation> seasonHspallocations = existingSeason.getSeasonHspallocations();
                         List<SeasonHSPAllocation> seasonHspallocationNewList = null;
                         if (seasonHspallocations != null && seasonHspallocations.size() > 0) {
-                           seasonHspallocationNewList = seasonCloningHelper.cloneHSPAllocations(clonedHSPSeason, seasonHspallocations);
+                           seasonHspallocationNewList = seasonCloningHelper.cloneHSPAllocations(clonedHSPSeason, seasonHspallocations,cloneSeason.getLoginId());
                         }
                         SeasonHSPConfiguration seasonHSPConfiguration = seasonCloningHelper.cloneHSPConfiguration(cloneSeason, clonedHSPSeason);
-                        SeasonJ1Detail seasonJ1Detail = seasonCloningHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason);
-                        SeasonF1Detail seasonF1Detail = seasonCloningHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason);
-                        SeasonIHPDetail seasonIHPDetail = seasonCloningHelper.cloneHSPIHPProgram(existingSeason, clonedHSPSeason, cloneSeason);
+                        SeasonJ1Detail seasonJ1Detail = seasonCloningHelper.cloneHSPJ1seasonProgram(existingSeason, clonedHSPSeason,cloneSeason.getLoginId());
+                        SeasonF1Detail seasonF1Detail = seasonCloningHelper.cloneHSPF1SeasonProgram(existingSeason, clonedHSPSeason,cloneSeason.getLoginId());
+                        SeasonIHPDetail seasonIHPDetail = seasonCloningHelper.cloneHSPIHPProgram(existingSeason, clonedHSPSeason, cloneSeason, cloneSeason.getLoginId());
                         if (seasonHspallocationNewList != null) {
                            seasonHSPAllocationRepository.save(seasonHspallocationNewList);
                         }
@@ -4164,7 +4164,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                               for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                                  if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_J1_HS)) {
-                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason));
+                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason,cloneSeason.getLoginId()));
                                  }
                               }
                               seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -4176,7 +4176,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                               for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                                  if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_F1)) {
-                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason));
+                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason,cloneSeason.getLoginId()));
                                  }
                               }
                               seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -4188,7 +4188,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                               for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                                  if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.HSP_STP_IHP)) {
-                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason));
+                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedHSPSeason,cloneSeason.getLoginId()));
                                  }
                               }
                               seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -4212,7 +4212,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                            clonedSeasonDocs = new ArrayList<SeasonDepartmentDocument>();
                            for (SeasonDepartmentDocument doc : existingSeasonDocs) {
                               if (doc.getSeason().getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_WORK_PROGRAMS)) {
-                                 clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedWPSeason));
+                                 clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedWPSeason,cloneSeason.getLoginId()));
                               }
                            }
                            seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
@@ -4220,13 +4220,13 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                         List<SeasonWPAllocation> seasonWPAllocations = existingSeason.getSeasonWpallocations();
                         List<SeasonWPAllocation> seasonWPAallocationCloneList = null;
                         if (seasonWPAllocations != null && seasonWPAllocations.size() > 0) {
-                           seasonWPAallocationCloneList = seasonCloningHelper.cloneWPAllocations(clonedWPSeason, seasonWPAllocations);
+                           seasonWPAallocationCloneList = seasonCloningHelper.cloneWPAllocations(clonedWPSeason, seasonWPAllocations, cloneSeason.getLoginId());
                         }
                         SeasonWPConfiguration seasonWPConfiguration = seasonCloningHelper.cloneWPConfigurations(cloneSeason, clonedWPSeason);
-                        SeasonWnTSpringDetail seasonWnTSpringDetail = seasonCloningHelper.cloneWPSpringProgram(existingSeason, clonedWPSeason);
-                        SeasonWnTSummerDetail seasonWnTSummerDetail = seasonCloningHelper.cloneWPSummerProgram(existingSeason, clonedWPSeason);
-                        SeasonWnTWinterDetail seasonWnTWinterDetail = seasonCloningHelper.cloneWPWinterProgram(existingSeason, clonedWPSeason);
-                        SeasonCAPDetail seasonCAPDetail = seasonCloningHelper.cloneWPCapProgram(existingSeason, clonedWPSeason);
+                        SeasonWnTSpringDetail seasonWnTSpringDetail = seasonCloningHelper.cloneWPSpringProgram(existingSeason, clonedWPSeason, cloneSeason.getLoginId());
+                        SeasonWnTSummerDetail seasonWnTSummerDetail = seasonCloningHelper.cloneWPSummerProgram(existingSeason, clonedWPSeason, cloneSeason.getLoginId());
+                        SeasonWnTWinterDetail seasonWnTWinterDetail = seasonCloningHelper.cloneWPWinterProgram(existingSeason, clonedWPSeason, cloneSeason.getLoginId());
+                        SeasonCAPDetail seasonCAPDetail = seasonCloningHelper.cloneWPCapProgram(existingSeason, clonedWPSeason, cloneSeason.getLoginId());
                         seasonWPAllocationRepository.save(seasonWPAallocationCloneList);
                         seasonWPConfigurationRepository.save(seasonWPConfiguration);
                         if (seasonWnTSpringDetail != null) {
@@ -4235,7 +4235,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                               for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                                  if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SPRING)) {
-                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
+                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason,cloneSeason.getLoginId()));
                                  }
                               }
                               seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -4247,7 +4247,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                               for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                                  if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_SUMMER)) {
-                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
+                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason,cloneSeason.getLoginId()));
                                  }
                               }
                               seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -4259,7 +4259,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                               for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                                  if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_WINTER)) {
-                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
+                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason,cloneSeason.getLoginId()));
                                  }
                               }
                               seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -4271,7 +4271,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                               clonedPrgDocs = new ArrayList<com.ccighgo.db.entities.SeasonProgramDocument>();
                               for (com.ccighgo.db.entities.SeasonProgramDocument doc : existingDocs) {
                                  if (doc.getDepartmentProgram().getProgramName().equals(CCIConstants.WP_WT_CAP)) {
-                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason));
+                                    clonedPrgDocs.add(seasonCloningHelper.getSeasonProgramDocument(doc, clonedWPSeason,cloneSeason.getLoginId()));
                                  }
                               }
                               seasonProgramDocumentRepository.save(clonedPrgDocs);
@@ -4292,17 +4292,17 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                            clonedSeasonDocs = new ArrayList<SeasonDepartmentDocument>();
                            for (SeasonDepartmentDocument doc : existingSeasonDocs) {
                               if (doc.getSeason().getLookupDepartment().getDepartmentName().equals(CCIConstants.DEPT_GREEN_HEART_TRAVEL)) {
-                                 clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedGHTSeason));
+                                 clonedSeasonDocs.add(seasonCloningHelper.getSeasonDepartmentDocument(doc, clonedGHTSeason,cloneSeason.getLoginId()));
                               }
                            }
                            seasonDepartmentDocumentRepository.save(clonedSeasonDocs);
                         }
                         SeasonGHTConfiguration seasonGHTConfiguration = seasonCloningHelper.cloneGHTConfiguration(cloneSeason, clonedGHTSeason);
-                        SeasonHSADetail seasonHSADetail = seasonCloningHelper.cloneGHTHSAProgram(existingSeason, clonedGHTSeason);
-                        SeasonLSDetail seasonLSDetail = seasonCloningHelper.cloneGHTLSProgram(existingSeason, clonedGHTSeason);
-                        SeasonTADetail seasonTADetail = seasonCloningHelper.cloneGHTTAProgram(existingSeason, clonedGHTSeason);
-                        SeasonVADetail seasonVADetail = seasonCloningHelper.cloneGHTVAProgram(existingSeason, clonedGHTSeason);
-                        SeasonWADetail seasonWADetail = seasonCloningHelper.cloneGHTWAProgram(existingSeason, clonedGHTSeason);
+                        SeasonHSADetail seasonHSADetail = seasonCloningHelper.cloneGHTHSAProgram(existingSeason, clonedGHTSeason, cloneSeason.getLoginId());
+                        SeasonLSDetail seasonLSDetail = seasonCloningHelper.cloneGHTLSProgram(existingSeason, clonedGHTSeason, cloneSeason.getLoginId());
+                        SeasonTADetail seasonTADetail = seasonCloningHelper.cloneGHTTAProgram(existingSeason, clonedGHTSeason, cloneSeason.getLoginId());
+                        SeasonVADetail seasonVADetail = seasonCloningHelper.cloneGHTVAProgram(existingSeason, clonedGHTSeason, cloneSeason.getLoginId());
+                        SeasonWADetail seasonWADetail = seasonCloningHelper.cloneGHTWAProgram(existingSeason, clonedGHTSeason, cloneSeason.getLoginId());
                         seasonGHTConfigurationRepository.save(seasonGHTConfiguration);
                         if (seasonHSADetail != null) {
                            seasonHSADetailsRepository.save(seasonHSADetail);
@@ -4367,9 +4367,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             departmentNote.setActive(CCIConstants.ACTIVE);
             departmentNote.setSeason(seasonRepository.findOne(seasonDepartmentNotes.getSeasonId()));
             departmentNote.setDepartmentNote(seasonDepartmentNotes.getNoteValue());
-            departmentNote.setCreatedBy(1);
+            departmentNote.setCreatedBy(seasonDepartmentNotes.getLoginId());
             departmentNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            departmentNote.setModifiedBy(1);
+            departmentNote.setModifiedBy(seasonDepartmentNotes.getLoginId());
             departmentNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonDepartmentNotesRepository.saveAndFlush(departmentNote);
             returnObject = seasonDepartmentNotes;
@@ -4399,9 +4399,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             documentInformation.setDocumentName(seasonDepartmentDocument.getDocName() != null ? seasonDepartmentDocument.getDocName() : null);
             documentInformation.setUrl(seasonDepartmentDocument.getDocUrl());
             documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(seasonDepartmentDocument.getDocType()));
-            documentInformation.setCreatedBy(1);
+            documentInformation.setCreatedBy(seasonDepartmentDocument.getLoginId());
             documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            documentInformation.setModifiedBy(1);
+            documentInformation.setModifiedBy(seasonDepartmentDocument.getLoginId());
             documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
 
@@ -4409,9 +4409,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             departmentDocument.setActive(CCIConstants.ACTIVE);
             departmentDocument.setDocumentInformation(documentInformation);
             departmentDocument.setSeason(seasonRepository.findOne(seasonDepartmentDocument.getSeasonId()));
-            departmentDocument.setCreatedBy(1);
+            departmentDocument.setCreatedBy(seasonDepartmentDocument.getLoginId());
             departmentDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            departmentDocument.setModifiedBy(1);
+            departmentDocument.setModifiedBy(seasonDepartmentDocument.getLoginId());
             departmentDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonDepartmentDocumentRepository.saveAndFlush(departmentDocument);
             returnObject = seasonDepartmentDocument;
@@ -4440,9 +4440,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             programNote.setSeason(seasonRepository.findOne(seasonProgramNote.getSeasonId()));
             programNote.setDepartmentProgram(departmentProgramRepository.findOne(seasonProgramNote.getDepartmentProgramId()));
             programNote.setProgramNote(seasonProgramNote.getNoteValue());
-            programNote.setCreatedBy(1);
+            programNote.setCreatedBy(seasonProgramNote.getLoginId());
             programNote.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            programNote.setModifiedBy(1);
+            programNote.setModifiedBy(seasonProgramNote.getLoginId());
             programNote.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonProgramNotesRepository.saveAndFlush(programNote);
             returnObject = seasonProgramNote;
@@ -4472,9 +4472,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             documentInformation.setDocumentName(seasonProgramDocument.getDocName() != null ? seasonProgramDocument.getDocName() : null);
             documentInformation.setUrl(seasonProgramDocument.getDocUrl());
             documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(seasonProgramDocument.getDocType()));
-            documentInformation.setCreatedBy(1);
+            documentInformation.setCreatedBy(seasonProgramDocument.getLoginId());
             documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            documentInformation.setModifiedBy(1);
+            documentInformation.setModifiedBy(seasonProgramDocument.getLoginId());
             documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             documentInformation = documentInformationRepository.saveAndFlush(documentInformation);
 
@@ -4482,9 +4482,9 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
             programDocument.setSeason(seasonRepository.findOne(seasonProgramDocument.getSeasonId()));
             programDocument.setDocumentInformation(documentInformation);
             programDocument.setDepartmentProgram(departmentProgramRepository.findOne(seasonProgramDocument.getDepartmentProgramId()));
-            programDocument.setCreatedBy(1);
+            programDocument.setCreatedBy(seasonProgramDocument.getLoginId());
             programDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            programDocument.setModifiedBy(1);
+            programDocument.setModifiedBy(seasonProgramDocument.getLoginId());
             programDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonProgramDocumentRepository.saveAndFlush(programDocument);
             returnObject = seasonProgramDocument;

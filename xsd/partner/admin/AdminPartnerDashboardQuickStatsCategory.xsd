@@ -25,8 +25,10 @@
 
    <xsd:complexType name="PartnerAdminDashboardQuickStatsCategoryDetail">
             <xsd:sequence>
-                 <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                 <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
                  <xsd:element name="num" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                 <xsd:element name="categoryAggregate" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                 <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
    </xsd:complexType>
  

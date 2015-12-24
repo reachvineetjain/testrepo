@@ -1876,6 +1876,14 @@ CREATE TABLE IF NOT EXISTS  `PartnerSeason` (
   `participantPaysDeposit` TINYINT(1)  DEFAULT 0,
   `exceptionComments` VARCHAR(2000) NULL,
   `cciStaffUserId` INT(11) DEFAULT NULL,
+  `partnerDeadlineRequestStatusId`  INT ,
+  `partnerSecSemDeadlineRequestStatusId`  INT ,
+  `deadlineRequestedBy`  INT,
+  `deadlineRequestedOn` DATETIME,
+  `deadlineRequestReviewedBy` INT,
+  `deadlineRequestReviewedOn`  DATETIME,
+  `appDeadlineFollowupDate` DATETIME,
+  `appSecSemDeadlineFollowupDate` DATETIME,
   `active` TINYINT(1)  DEFAULT 0,
   `createdBy` INT(11) NOT NULL,
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -1906,6 +1914,26 @@ CREATE TABLE IF NOT EXISTS  `PartnerSeason` (
     REFERENCES `DepartmentPrograms` (`departmentProgramId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_PartnerStatus1`
+    FOREIGN KEY (partnerDeadlineRequestStatusId)
+    REFERENCES `PartnerStatus` (`partnerStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_PartnerStatus2`
+    FOREIGN KEY (partnerSecSemDeadlineRequestStatusId)
+    REFERENCES `PartnerStatus` (`partnerStatusId`)	
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_Login`
+    FOREIGN KEY (deadlineRequestedBy)
+    REFERENCES `Login` (`loginId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeason_CCIStaffUsers1`
+    FOREIGN KEY (deadlineRequestReviewedBy)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,	
   CONSTRAINT `FK_PartnerSeason_CCIStaffUsers`
     FOREIGN KEY (`cciStaffUserId`)
     REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
@@ -1926,6 +1954,15 @@ CREATE TABLE IF NOT EXISTS  `PartnerSeasonAllocation` (
   `maxPax` INT NULL,
   `maxGuaranteedPax` INT NULL,
   `expectedPaxCount` INT NULL,
+  `requestedMaxPax`  INT NULL,
+  `requestedMaxGuaranteedPax` INT NULL,
+  `allocationRequestStatusId` INT,
+  `allocationRequestedBy`  INT,
+  `allocationRequestedOn`  DATETIME,
+  `allocationRequestReviewedBy` INT,
+  `allocationRequestReviewedOn` DATETIME,
+  `janStartFollowupDate` DATETIME,
+  `augStartFollowupDate` DATETIME,
   `createdBy` INT(11) NOT NULL,
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `modifiedBy` INT(11) NOT NULL,
@@ -1937,6 +1974,21 @@ CREATE TABLE IF NOT EXISTS  `PartnerSeasonAllocation` (
     FOREIGN KEY (`partnerSeasonId`)
     REFERENCES `PartnerSeason` (`partnerSeasonId`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeasonAllocation_PartnerStatus`
+    FOREIGN KEY (allocationRequestStatusId)
+    REFERENCES PartnerStatus (partnerStatusId)
+  	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeasonAllocation_Login`
+    FOREIGN KEY (allocationRequestedBy)
+    REFERENCES `Login` (`loginId`)
+	ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PartnerSeasonAllocation_CCIStaffUsers`
+    FOREIGN KEY (allocationRequestReviewedBy)
+    REFERENCES `CCIStaffUsers` (`cciStaffUserId`)
+	ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_PartnerSeasonAllocation_DepartmentProgramOptions`
     FOREIGN KEY (`departmentProgramOptionId`)
@@ -2449,6 +2501,7 @@ CREATE TABLE IF NOT EXISTS  `PartnerNotes` (
   `partnerNoteTopicId` INT NULL,
   `partnerGoId` INT NULL,
   `partnerNote` LONGTEXT NULL,
+  `followupDate` DATETIME,
   `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `createdBy` INT(11) NOT NULL,
   `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -3054,46 +3107,19 @@ CREATE TABLE IF NOT EXISTS `AdminQuickStatsCategories` (
   REFERENCES `AdminQuickStatsType` (`adminQSTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `AdminQuickStatsTypeAggregate`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `AdminQuickStatsTypeAggregate` (
-  `adminQSTypeAggregateId` int(11) NOT NULL AUTO_INCREMENT,
-  `adminQSTypeId` int(11) DEFAULT NULL,
-  `adminQSTypeName` varchar(50) DEFAULT NULL,
-  `adminQSTypeAggregate` int(11) DEFAULT NULL,
-  `adminGoId` int(11) DEFAULT NULL,
-  `lookupDepartmentProgramId` int(11) DEFAULT NULL,
-  `modifiedDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`adminQSTypeAggregateId`),
-  KEY `FK_AdminQSTypeAggregate_AdminQSType` (`adminQSTypeId`),
-  KEY `FK_AdminQSTypeAggregate_CCIStaffUsers` (`adminGoId`),
-  KEY `FK_AdminQSTypeAggregate_LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
-  CONSTRAINT `FK_AdminQSTypeAggregate_AdminQSType` 
-  FOREIGN KEY (`adminQSTypeId`) 
-  REFERENCES `AdminQuickStatsType` (`adminQSTypeId`),
-  CONSTRAINT `FK_AdminQSTypeAggregate_CCIStaffUsers` 
-  FOREIGN KEY (`adminGoId`) 
-  REFERENCES `CCIStaffUsers` (`cciStaffUserId`),
-  CONSTRAINT `FK_AdminQSTypeAggregate_LookupDepartmentPrograms` 
-  FOREIGN KEY (`lookupDepartmentProgramId`) 
-  REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
 -- Table `AdminQuickStatsCategoryAggregate`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AdminQuickStatsCategoryAggregate` (
   `adminQSCategoryAggregateId` int(11) NOT NULL AUTO_INCREMENT,
-  `adminGoId` int(11) DEFAULT NULL,
-  `lookupdepartmentProgramId` int(11) DEFAULT NULL,
   `adminQSCategoryId` int(11) DEFAULT NULL,
   `adminQSCategoryName` varchar(50) DEFAULT NULL,
+  `adminQSCategoryAggregate` INT NULL,
+  `status` VARCHAR(50) NULL,
   `adminQSTypeId` int(11) DEFAULT NULL,
   `modifiedDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`adminQSCategoryAggregateId`),
-  KEY `FK_AdminQSCategoryAggregate_CCIStaffUSers` (`adminGoId`),
-  KEY `FK_AdminQSCategoryAggregate_LookupDepartmentPrograms` (`lookupdepartmentProgramId`),
   KEY `FK_AdminQSCategoryAggregate_AdminQSCategories` (`adminQSCategoryId`),
   KEY `FK_AdminQSCategoryAggregate_AdminQSType` (`adminQSTypeId`),
   CONSTRAINT `FK_AdminQSCategoryAggregate_AdminQSCategories` 
@@ -3101,13 +3127,8 @@ CREATE TABLE IF NOT EXISTS `AdminQuickStatsCategoryAggregate` (
   REFERENCES `AdminQuickStatsCategories` (`adminQSCategoryId`),
   CONSTRAINT `FK_AdminQSCategoryAggregate_AdminQSType` 
   FOREIGN KEY (`adminQSTypeId`) 
-  REFERENCES `AdminQuickStatsType` (`adminQSTypeId`),
-  CONSTRAINT `FK_AdminQSCategoryAggregate_CCIStaffUSers` 
-  FOREIGN KEY (`adminGoId`) 
-  REFERENCES `CCIStaffUsers` (`cciStaffUserId`),
-  CONSTRAINT `FK_AdminQSCategoryAggregate_LookupDepartmentPrograms` 
-  FOREIGN KEY (`lookupdepartmentProgramId`) 
-  REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+  REFERENCES `AdminQuickStatsType` (`adminQSTypeId`)
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------

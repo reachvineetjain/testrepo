@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -20,8 +21,21 @@ public class FieldStaffAgreement implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer fieldStaffAgreementId;
 
-	@Column(nullable=false, length=50)
+	private Byte active;
+
+	@Lob
+	private String agreementHTML;
+
+	@Column(length=50)
 	private String agreementName;
+
+	private Integer createdBy;
+
+	private Timestamp createdOn;
+
+	private Integer modifiedBy;
+
+	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to SeasonF1Detail
 	@OneToMany(mappedBy="fieldStaffAgreement")
@@ -42,12 +56,60 @@ public class FieldStaffAgreement implements Serializable {
 		this.fieldStaffAgreementId = fieldStaffAgreementId;
 	}
 
+	public Byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(Byte active) {
+		this.active = active;
+	}
+
+	public String getAgreementHTML() {
+		return this.agreementHTML;
+	}
+
+	public void setAgreementHTML(String agreementHTML) {
+		this.agreementHTML = agreementHTML;
+	}
+
 	public String getAgreementName() {
 		return this.agreementName;
 	}
 
 	public void setAgreementName(String agreementName) {
 		this.agreementName = agreementName;
+	}
+
+	public Integer getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return this.createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Integer getModifiedBy() {
+		return this.modifiedBy;
+	}
+
+	public void setModifiedBy(Integer modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public Timestamp getModifiedOn() {
+		return this.modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 
 	public List<SeasonF1Detail> getSeasonF1details() {

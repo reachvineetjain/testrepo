@@ -71,5 +71,9 @@ public interface ParticipantsInterface {
 
    public SeasonsForParticipants getAllAvailableSeasons(String partnerId);
 
+   public Response sendLogin(String participantGoId, HttpServletRequest request);
+   
+   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId);
+
 
 }

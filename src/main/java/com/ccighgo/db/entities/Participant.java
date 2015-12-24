@@ -44,6 +44,10 @@ public class Participant implements Serializable {
 
 	private Byte submittedFlightInfo;
 
+	//bi-directional many-to-one association to FieldStaffParticipant
+	@OneToMany(mappedBy="participant")
+	private List<FieldStaffParticipant> fieldStaffParticipants;
+
 	//bi-directional many-to-one association to ParticipantPermission
 	@OneToMany(mappedBy="participant")
 	private List<ParticipantPermission> participantPermissions;
@@ -164,6 +168,28 @@ public class Participant implements Serializable {
 
 	public void setSubmittedFlightInfo(Byte submittedFlightInfo) {
 		this.submittedFlightInfo = submittedFlightInfo;
+	}
+
+	public List<FieldStaffParticipant> getFieldStaffParticipants() {
+		return this.fieldStaffParticipants;
+	}
+
+	public void setFieldStaffParticipants(List<FieldStaffParticipant> fieldStaffParticipants) {
+		this.fieldStaffParticipants = fieldStaffParticipants;
+	}
+
+	public FieldStaffParticipant addFieldStaffParticipant(FieldStaffParticipant fieldStaffParticipant) {
+		getFieldStaffParticipants().add(fieldStaffParticipant);
+		fieldStaffParticipant.setParticipant(this);
+
+		return fieldStaffParticipant;
+	}
+
+	public FieldStaffParticipant removeFieldStaffParticipant(FieldStaffParticipant fieldStaffParticipant) {
+		getFieldStaffParticipants().remove(fieldStaffParticipant);
+		fieldStaffParticipant.setParticipant(null);
+
+		return fieldStaffParticipant;
 	}
 
 	public List<ParticipantPermission> getParticipantPermissions() {

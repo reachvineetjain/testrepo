@@ -28,6 +28,10 @@ public class GoIdSequence implements Serializable {
 	@OneToOne(mappedBy="goIdSequence")
 	private Employer employer;
 
+	//bi-directional one-to-one association to FieldStaff
+	@OneToOne(mappedBy="goIdSequence")
+	private FieldStaff fieldStaff;
+
 	//bi-directional one-to-one association to HostFamily
 	@OneToOne(mappedBy="goIdSequence")
 	private HostFamily hostFamily;
@@ -43,10 +47,7 @@ public class GoIdSequence implements Serializable {
 	public GoIdSequence() {
 	}
 
-	public GoIdSequence(int partnerGoId) {
-   }
-
-   public Integer getGoId() {
+	public Integer getGoId() {
 		return this.goId;
 	}
 
@@ -68,6 +69,14 @@ public class GoIdSequence implements Serializable {
 
 	public void setEmployer(Employer employer) {
 		this.employer = employer;
+	}
+
+	public FieldStaff getFieldStaff() {
+		return this.fieldStaff;
+	}
+
+	public void setFieldStaff(FieldStaff fieldStaff) {
+		this.fieldStaff = fieldStaff;
 	}
 
 	public HostFamily getHostFamily() {

@@ -20,11 +20,11 @@ public class FieldStaffType implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer fieldStaffTypeId;
 
-	@Column(length=50)
-	private String fieldStaffType;
-
-	@Column(length=10)
+	@Column(length=45)
 	private String fieldStaffTypeCode;
+
+	@Column(length=45)
+	private String fieldStaffTypeName;
 
 	//bi-directional many-to-one association to FieldStaff
 	@OneToMany(mappedBy="fieldStaffType")
@@ -41,20 +41,20 @@ public class FieldStaffType implements Serializable {
 		this.fieldStaffTypeId = fieldStaffTypeId;
 	}
 
-	public String getFieldStaffType() {
-		return this.fieldStaffType;
-	}
-
-	public void setFieldStaffType(String fieldStaffType) {
-		this.fieldStaffType = fieldStaffType;
-	}
-
 	public String getFieldStaffTypeCode() {
 		return this.fieldStaffTypeCode;
 	}
 
 	public void setFieldStaffTypeCode(String fieldStaffTypeCode) {
 		this.fieldStaffTypeCode = fieldStaffTypeCode;
+	}
+
+	public String getFieldStaffTypeName() {
+		return this.fieldStaffTypeName;
+	}
+
+	public void setFieldStaffTypeName(String fieldStaffTypeName) {
+		this.fieldStaffTypeName = fieldStaffTypeName;
 	}
 
 	public List<FieldStaff> getFieldStaffs() {

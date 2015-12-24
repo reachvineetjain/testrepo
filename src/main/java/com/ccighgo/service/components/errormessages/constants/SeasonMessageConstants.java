@@ -13,7 +13,7 @@ public class SeasonMessageConstants {
    // SeasonBean
    public static final String FAILED_EDIT_SEASON_BEAN_SERVICE = "error.edit.seasonbean.service";
    public static final String FAILED_TO_GET_SEASON_PROGRAMS ="error.get.season.programs";
-   public static final String FAILED_TO_GET_SEASON_STATUS="error.get.season.status";
+   public static final String FAILED_TO_GET_SEASON_STATUS="error.get.season.status.value";
    public static final String FAILED_TO_GET_HSP_J1_HS_SEASON_DETAILS="error.get.hsp.j1.hs.season.details";
    public static final String FAILED_TO_GET_J1_HS_SEASON_NAME_AND_STATUS="error.get.j1.hs.season.name.status";
    public static final String FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS="error.get.j1.hs.season.jan.start.details";
@@ -54,9 +54,8 @@ public class SeasonMessageConstants {
    public static final String FAILED_get_GHTWA_SEASON_NAME_STATUS="error.get.ghtwa.season.name.status";
    public static final String FAILED_GET_GHTWA_SEASON_DATE_DEAILS="error.get.ghtwa.season.date.details";
    public static final String FAILED_UPDATE_GHTWA_SEASON_DEAILS="error.update.ghtv.season.details";
-   public static final String FAILED_UPDATE_GHTWA_SEASON_NAME_STATUS="error.update.ghtv.season.name.status";
+   public static final String FAILED_UPDATE_GHTWA_SEASON_NAME_STATUS="error.update.ghtwa.season.name.status";
    public static final String FAILED_UPDATE_GHTWA_SEASON_DATE_DEAILS="error.update.ghtv.season.date.details";
-   public static final String FAILED_GET_SEASON_GHT_DEAILS="error.get.season.ght.details";
    public static final String FAILED_UPDATE_SEASON_GHT_DEAILS="error.update.season.ght.details";
    public static final String FAILED_GET_GHTHS_SECTION_ONE_BASE_ABROAD="error.get.ghths.section.one.base.abroad";
    public static final String FAILED_UPDATE_GHTHS_SECTION_ONE_BASE_ABROAD="error.update.ghths.section.one.base.abroad";

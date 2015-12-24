@@ -25,13 +25,13 @@ public class Salutation implements Serializable {
 	@Column(length=30)
 	private String salutationName;
 
+	//bi-directional many-to-one association to FieldStaff
+	@OneToMany(mappedBy="salutation")
+	private List<FieldStaff> fieldStaffs;
+
 	//bi-directional many-to-one association to PartnerAgentInquiry
 	@OneToMany(mappedBy="salutation")
 	private List<PartnerAgentInquiry> partnerAgentInquiries;
-
-	//bi-directional many-to-one association to PartnerContact
-	@OneToMany(mappedBy="salutation")
-	private List<PartnerContact> partnerContacts;
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="salutation")
@@ -64,6 +64,28 @@ public class Salutation implements Serializable {
 		this.salutationName = salutationName;
 	}
 
+	public List<FieldStaff> getFieldStaffs() {
+		return this.fieldStaffs;
+	}
+
+	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+		this.fieldStaffs = fieldStaffs;
+	}
+
+	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().add(fieldStaff);
+		fieldStaff.setSalutation(this);
+
+		return fieldStaff;
+	}
+
+	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+		getFieldStaffs().remove(fieldStaff);
+		fieldStaff.setSalutation(null);
+
+		return fieldStaff;
+	}
+
 	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
 		return this.partnerAgentInquiries;
 	}
@@ -84,28 +106,6 @@ public class Salutation implements Serializable {
 		partnerAgentInquiry.setSalutation(null);
 
 		return partnerAgentInquiry;
-	}
-
-	public List<PartnerContact> getPartnerContacts() {
-		return this.partnerContacts;
-	}
-
-	public void setPartnerContacts(List<PartnerContact> partnerContacts) {
-		this.partnerContacts = partnerContacts;
-	}
-
-	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().add(partnerContact);
-		partnerContact.setSalutation(this);
-
-		return partnerContact;
-	}
-
-	public PartnerContact removePartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().remove(partnerContact);
-		partnerContact.setSalutation(null);
-
-		return partnerContact;
 	}
 
 	public List<PartnerUser> getPartnerUsers() {

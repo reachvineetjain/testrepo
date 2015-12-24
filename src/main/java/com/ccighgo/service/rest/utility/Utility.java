@@ -20,6 +20,7 @@ import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonPr
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
@@ -27,6 +28,7 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
+import com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatuses;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
 import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
@@ -292,5 +294,19 @@ public class Utility {
    @Produces("application/json")
    public DocumentTypes getDocumentTypes(){
       return utilityServices.getDocumentTypes();
+   }
+   
+   @GET
+   @Path("get/cciusers")
+   @Produces("application/json")
+   public CCIUsersList getCCIUsers(){
+      return utilityServices.getCCIUsers();
+   }
+   
+   @GET
+   @Path("partner/status")
+   @Produces("application/json")
+   public PartnerStatuses getPartnerStatus(){
+      return utilityServices.getPartnerStatus();
    }
 }
