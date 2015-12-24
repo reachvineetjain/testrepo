@@ -4,7 +4,9 @@
 package com.ccighgo.service.components.participants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -469,7 +471,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();
       try {
          List<PartnerSeason> partnerSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoIdAndSeasonId(partnerId, seasonId);
-
+         Map<Integer, Boolean> visit = new HashMap<Integer, Boolean>();
          if (partnerSeasons != null) {
             for (PartnerSeason partnerSeason : partnerSeasons) {
                DepartmentProgram departmentProgram = partnerSeason.getDepartmentProgram();
@@ -479,7 +481,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   details.setDepartmentProgramId(departmentProgram.getDepartmentProgramId());
                   details.setDepartmentProgramOption(o.getProgramOptionName());
                   details.setProgramOptionId(o.getDepartmentProgramOptionId());
+                 if(visit.get(o.getDepartmentProgramOptionId())==null){
                   programOptionsForParticipants.getDetails().add(details);
+                 visit.put(o.getDepartmentProgramOptionId(), true);
+                 }
+                 
                }
             }
          }
