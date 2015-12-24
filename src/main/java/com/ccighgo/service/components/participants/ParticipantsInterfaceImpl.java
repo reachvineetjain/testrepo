@@ -4,9 +4,7 @@
 package com.ccighgo.service.components.participants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -465,13 +463,33 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       }
       return seasons;
    }
-
+   @Override
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId,int departmentProgramId) {
+      ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();
+      try {
+       List<DepartmentProgramOption> options = departmentProgramOptions.findProgramOptionsByDepartmentProgramId(departmentProgramId);
+       for (DepartmentProgramOption o : options) {
+          ProgramOptionsForParticipantsDetails details = new ProgramOptionsForParticipantsDetails();
+          details.setDepartmentProgramId(departmentProgramId);
+          details.setDepartmentProgramOption(o.getProgramOptionName());
+          details.setProgramOptionId(o.getDepartmentProgramOptionId());
+           programOptionsForParticipants.getDetails().add(details);
+         }
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return programOptionsForParticipants;
+   }
    @Override
    public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId) {
       ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();
       try {
          List<PartnerSeason> partnerSeasons = partnerSeasonsRepository.findPartnerSeasonByPartnerGoIdAndSeasonId(partnerId, seasonId);
-         Map<Integer, Boolean> visit = new HashMap<Integer, Boolean>();
+
          if (partnerSeasons != null) {
             for (PartnerSeason partnerSeason : partnerSeasons) {
                DepartmentProgram departmentProgram = partnerSeason.getDepartmentProgram();
@@ -481,11 +499,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   details.setDepartmentProgramId(departmentProgram.getDepartmentProgramId());
                   details.setDepartmentProgramOption(o.getProgramOptionName());
                   details.setProgramOptionId(o.getDepartmentProgramOptionId());
-                 if(visit.get(o.getDepartmentProgramOptionId())==null){
                   programOptionsForParticipants.getDetails().add(details);
-                 visit.put(o.getDepartmentProgramOptionId(), true);
-                 }
-                 
                }
             }
          }

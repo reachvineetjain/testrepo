@@ -103,6 +103,14 @@ public class Participants {
    }
    
    @GET
+   @Path("allProgramOptions/{partnerId}/{seasonId}/{departmentProgramId}")
+   @Produces("application/json")
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions2(@PathParam("partnerId")  String partnerId, @PathParam("seasonId") String seasonId,@PathParam("departmentProgramId")String departmentProgramId){
+      LOGGER.info("calling Participants.getAllAvailableProgramOptions ");
+      return participantsInterface.getAllAvailableProgramOptions(Integer.parseInt(partnerId),Integer.parseInt(seasonId),Integer.parseInt(departmentProgramId));
+   }
+   
+   @GET
    @Path("allProgramOptions/{partnerId}/{seasonId}")
    @Produces("application/json")
    public ProgramOptionsForParticipants getAllAvailableProgramOptions(@PathParam("partnerId")  String partnerId, @PathParam("seasonId") String seasonId){
