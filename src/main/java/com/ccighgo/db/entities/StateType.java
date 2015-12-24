@@ -42,6 +42,10 @@ public class StateType implements Serializable {
 	@OneToMany(mappedBy="stateType")
 	private List<AdminWorkQueue> adminWorkQueues;
 
+	//bi-directional many-to-one association to FieldStaffWorkQueue
+	@OneToMany(mappedBy="stateType")
+	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
 	//bi-directional many-to-one association to PartnerWorkQueue
 	@OneToMany(mappedBy="stateType")
 	private List<PartnerWorkQueue> partnerWorkQueues;
@@ -66,10 +70,6 @@ public class StateType implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="stateProcessId")
 	private StateProcess stateProcess;
-
-	//bi-directional many-to-one association to FieldStaffWorkQueue
-	@OneToMany(mappedBy="stateType")
-	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
 
 	public StateType() {
 	}
@@ -166,6 +166,28 @@ public class StateType implements Serializable {
 		adminWorkQueue.setStateType(null);
 
 		return adminWorkQueue;
+	}
+
+	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+		return this.fieldStaffWorkQueues;
+	}
+
+	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+	}
+
+	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setStateType(this);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setStateType(null);
+
+		return fieldStaffWorkQueue;
 	}
 
 	public List<PartnerWorkQueue> getPartnerWorkQueues() {
@@ -284,28 +306,6 @@ public class StateType implements Serializable {
 
 	public void setStateProcess(StateProcess stateProcess) {
 		this.stateProcess = stateProcess;
-	}
-
-	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
-		return this.fieldStaffWorkQueues;
-	}
-
-	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
-		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
-	}
-
-	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
-		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
-		fieldStaffWorkQueue.setStateType(this);
-
-		return fieldStaffWorkQueue;
-	}
-
-	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
-		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
-		fieldStaffWorkQueue.setStateType(null);
-
-		return fieldStaffWorkQueue;
 	}
 
 }

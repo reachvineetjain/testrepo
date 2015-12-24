@@ -28,6 +28,11 @@ public class FieldStaffQuickStatsCategoryAggregate implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
+	//bi-directional many-to-one association to FieldStaff
+	@ManyToOne
+	@JoinColumn(name="fieldStaffGoId")
+	private FieldStaff fieldStaff;
+
 	//bi-directional many-to-one association to FieldStaffQuickStatsCategory
 	@ManyToOne
 	@JoinColumn(name="fieldStaffQSCategoryId")
@@ -37,11 +42,6 @@ public class FieldStaffQuickStatsCategoryAggregate implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="fieldStaffQSTypeId")
 	private FieldStaffQuickStatsType fieldStaffQuickStatsType;
-
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
-	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
@@ -83,6 +83,14 @@ public class FieldStaffQuickStatsCategoryAggregate implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public FieldStaff getFieldStaff() {
+		return this.fieldStaff;
+	}
+
+	public void setFieldStaff(FieldStaff fieldStaff) {
+		this.fieldStaff = fieldStaff;
+	}
+
 	public FieldStaffQuickStatsCategory getFieldStaffQuickStatsCategory() {
 		return this.fieldStaffQuickStatsCategory;
 	}
@@ -97,14 +105,6 @@ public class FieldStaffQuickStatsCategoryAggregate implements Serializable {
 
 	public void setFieldStaffQuickStatsType(FieldStaffQuickStatsType fieldStaffQuickStatsType) {
 		this.fieldStaffQuickStatsType = fieldStaffQuickStatsType;
-	}
-
-	public FieldStaff getFieldStaff() {
-		return this.fieldStaff;
-	}
-
-	public void setFieldStaff(FieldStaff fieldStaff) {
-		this.fieldStaff = fieldStaff;
 	}
 
 	public LookupDepartmentProgram getLookupDepartmentProgram() {

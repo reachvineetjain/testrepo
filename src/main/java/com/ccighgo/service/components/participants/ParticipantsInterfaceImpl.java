@@ -463,7 +463,27 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       }
       return seasons;
    }
-
+   @Override
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId,int departmentProgramId) {
+      ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();
+      try {
+       List<DepartmentProgramOption> options = departmentProgramOptions.findProgramOptionsByDepartmentProgramId(departmentProgramId);
+       for (DepartmentProgramOption o : options) {
+          ProgramOptionsForParticipantsDetails details = new ProgramOptionsForParticipantsDetails();
+          details.setDepartmentProgramId(departmentProgramId);
+          details.setDepartmentProgramOption(o.getProgramOptionName());
+          details.setProgramOptionId(o.getDepartmentProgramOptionId());
+           programOptionsForParticipants.getDetails().add(details);
+         }
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         ExceptionUtil.logException(e, logger);
+      }
+      return programOptionsForParticipants;
+   }
    @Override
    public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId) {
       ProgramOptionsForParticipants programOptionsForParticipants = new ProgramOptionsForParticipants();

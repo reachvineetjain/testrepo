@@ -46,7 +46,7 @@ public class DepartmentProgram implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	 @Fetch(value = FetchMode.SUBSELECT)
 	private List<DepartmentProgramOption> departmentProgramOptions;
 
 	//bi-directional many-to-one association to LookupDepartment
@@ -61,6 +61,10 @@ public class DepartmentProgram implements Serializable {
 	//bi-directional many-to-one association to FieldStaffLeadershipSeasonDetail
 	@OneToMany(mappedBy="departmentProgram")
 	private List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails;
+
+	//bi-directional many-to-one association to FieldStaffWorkQueue
+	@OneToMany(mappedBy="departmentProgram")
+	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
 
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="departmentProgram")
@@ -89,10 +93,6 @@ public class DepartmentProgram implements Serializable {
 	//bi-directional many-to-one association to SeasonProgramUpdateLog
 	@OneToMany(mappedBy="departmentProgram")
 	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
-
-	//bi-directional many-to-one association to FieldStaffWorkQueue
-	@OneToMany(mappedBy="departmentProgram")
-	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
 
 	public DepartmentProgram() {
 	}
@@ -225,6 +225,28 @@ public class DepartmentProgram implements Serializable {
 		fieldStaffLeadershipSeasonDetail.setDepartmentProgram(null);
 
 		return fieldStaffLeadershipSeasonDetail;
+	}
+
+	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+		return this.fieldStaffWorkQueues;
+	}
+
+	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+	}
+
+	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setDepartmentProgram(this);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setDepartmentProgram(null);
+
+		return fieldStaffWorkQueue;
 	}
 
 	public List<Participant> getParticipants() {
@@ -379,28 +401,6 @@ public class DepartmentProgram implements Serializable {
 		seasonProgramUpdateLog.setDepartmentProgram(null);
 
 		return seasonProgramUpdateLog;
-	}
-
-	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
-		return this.fieldStaffWorkQueues;
-	}
-
-	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
-		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
-	}
-
-	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
-		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
-		fieldStaffWorkQueue.setDepartmentProgram(this);
-
-		return fieldStaffWorkQueue;
-	}
-
-	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
-		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
-		fieldStaffWorkQueue.setDepartmentProgram(null);
-
-		return fieldStaffWorkQueue;
 	}
 
 }

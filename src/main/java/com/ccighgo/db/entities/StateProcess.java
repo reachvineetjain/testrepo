@@ -26,6 +26,10 @@ public class StateProcess implements Serializable {
 	@Column(length=50)
 	private String workQueue;
 
+	//bi-directional many-to-one association to FieldStaffWorkQueueType
+	@OneToMany(mappedBy="stateProcess")
+	private List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes;
+
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@OneToMany(mappedBy="stateProcess")
 	private List<PartnerWorkQueueType> partnerWorkQueueTypes;
@@ -33,10 +37,6 @@ public class StateProcess implements Serializable {
 	//bi-directional many-to-one association to StateType
 	@OneToMany(mappedBy="stateProcess")
 	private List<StateType> stateTypes;
-
-	//bi-directional many-to-one association to FieldStaffWorkQueueType
-	@OneToMany(mappedBy="stateProcess")
-	private List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes;
 
 	public StateProcess() {
 	}
@@ -63,6 +63,28 @@ public class StateProcess implements Serializable {
 
 	public void setWorkQueue(String workQueue) {
 		this.workQueue = workQueue;
+	}
+
+	public List<FieldStaffWorkQueueType> getFieldStaffWorkQueueTypes() {
+		return this.fieldStaffWorkQueueTypes;
+	}
+
+	public void setFieldStaffWorkQueueTypes(List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes) {
+		this.fieldStaffWorkQueueTypes = fieldStaffWorkQueueTypes;
+	}
+
+	public FieldStaffWorkQueueType addFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
+		getFieldStaffWorkQueueTypes().add(fieldStaffWorkQueueType);
+		fieldStaffWorkQueueType.setStateProcess(this);
+
+		return fieldStaffWorkQueueType;
+	}
+
+	public FieldStaffWorkQueueType removeFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
+		getFieldStaffWorkQueueTypes().remove(fieldStaffWorkQueueType);
+		fieldStaffWorkQueueType.setStateProcess(null);
+
+		return fieldStaffWorkQueueType;
 	}
 
 	public List<PartnerWorkQueueType> getPartnerWorkQueueTypes() {
@@ -107,28 +129,6 @@ public class StateProcess implements Serializable {
 		stateType.setStateProcess(null);
 
 		return stateType;
-	}
-
-	public List<FieldStaffWorkQueueType> getFieldStaffWorkQueueTypes() {
-		return this.fieldStaffWorkQueueTypes;
-	}
-
-	public void setFieldStaffWorkQueueTypes(List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes) {
-		this.fieldStaffWorkQueueTypes = fieldStaffWorkQueueTypes;
-	}
-
-	public FieldStaffWorkQueueType addFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
-		getFieldStaffWorkQueueTypes().add(fieldStaffWorkQueueType);
-		fieldStaffWorkQueueType.setStateProcess(this);
-
-		return fieldStaffWorkQueueType;
-	}
-
-	public FieldStaffWorkQueueType removeFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
-		getFieldStaffWorkQueueTypes().remove(fieldStaffWorkQueueType);
-		fieldStaffWorkQueueType.setStateProcess(null);
-
-		return fieldStaffWorkQueueType;
 	}
 
 }

@@ -49,7 +49,7 @@ public class PartnerNoteTopic implements Serializable {
 
 	private Timestamp modifiedOn;
 
-	@Column(length=50)
+	@Column(name="PartnerNoteTopicName", length=50)
 	private String partnerNoteTopicName;
 
 	private Byte seasonInfo;
