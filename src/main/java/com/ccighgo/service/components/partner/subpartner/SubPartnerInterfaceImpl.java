@@ -286,7 +286,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             details.setRecivevisaforms(partnerSubPartner.getDeliverDSForms() == CCIConstants.ACTIVE ? true : false);
          if (partnerSubPartner.getPayGreenheartDirectly() != null)
             details.setPayGreenHeartDirectly(partnerSubPartner.getPayGreenheartDirectly() == CCIConstants.ACTIVE ? true : false);
-
+         
          PartnerUser partnerContact = new PartnerUser();
 
          if (partnerSubPartner.getPartnerUsers() != null && partnerSubPartner.getPartnerUsers().size() > 0) {
@@ -360,6 +360,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
 
          }
+         if(partnerSubPartner.getMailingAddressIsSameAsPhysicalAdress()!=null)
+            subPartnerDetail.setMailingAddressIsSameAsPhysicalAdress(partnerSubPartner.getMailingAddressIsSameAsPhysicalAdress()==CCIConstants.ACTIVE);
          subPartnerDetail.setGoId(subPartnerId);
          subPartnerDetail.setPartnerDetail(details);
          subPartnerDetail.setSubPartnerPrimaryContact(subPartnerPrimaryContact);
@@ -623,7 +625,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                loginRepository.save(login);
             }
          }
-
+         subPartnerDetails.setMailingAddressIsSameAsPhysicalAdress(subPartner.isMailingAddressIsSameAsPhysicalAdress()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
          SubPartnersPhysicalAddress subPartnersPhysicalAddress = subPartner.getSubPartnerPhysicalAddress();
          if (subPartnersPhysicalAddress != null) {
             subPartnerDetails.setPhysicalAddressLineOne(subPartnersPhysicalAddress.getPhysicalAddress1());
