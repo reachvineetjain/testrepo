@@ -156,7 +156,7 @@ public class PartnerServiceImpl implements PartnerService {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
                partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
-               partnerDashboard.setIsSubpartner(partner.getIsSubPartner()==CCIConstants.ACTIVE?true:false);
+               partnerDashboard.setIsSubpartner(partner.getIsSubPartner() == CCIConstants.ACTIVE ? true : false);
                List<PartnerUser> partnerUsers = partner.getPartnerUsers();
                for (PartnerUser pu : partnerUsers) {
                   if (partner.getPartnerGoId() == pu.getPartner().getPartnerGoId() && pu.getIsPrimary() == CCIConstants.ACTIVE) {
@@ -330,14 +330,15 @@ public class PartnerServiceImpl implements PartnerService {
                j1hsDashboard.setPartnerLogo(partner.getPartnerLogo());
 
                // announcements
-               List<PartnerAnnouncement> partnerAnnouncementList = partner.getPartnerAnnouncements();
                List<PartnerJ1HSAnnouncement> partnerJ1HSAnnouncements = new ArrayList<PartnerJ1HSAnnouncement>();
-               if (partnerAnnouncementList != null && partnerAnnouncementList.size() > 0) {
-                  for (PartnerAnnouncement ann : partnerAnnouncementList) {
-                     PartnerJ1HSAnnouncement j1hsAnn = new PartnerJ1HSAnnouncement();
-                     j1hsAnn.setAnnouncement(ann.getAnnouncement());
-                     j1hsAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
-                     partnerJ1HSAnnouncements.add(j1hsAnn);
+               if (partner.getPartnerAnnouncements() != null && !partner.getPartnerAnnouncements().isEmpty()) {
+                  for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
+                     if (ann.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+                        PartnerJ1HSAnnouncement j1hsAnn = new PartnerJ1HSAnnouncement();
+                        j1hsAnn.setAnnouncement(ann.getAnnouncement());
+                        j1hsAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
+                        partnerJ1HSAnnouncements.add(j1hsAnn);
+                     }
                   }
                }
                j1hsDashboard.getPartnerAnnouncements().addAll(partnerJ1HSAnnouncements);
@@ -348,33 +349,34 @@ public class PartnerServiceImpl implements PartnerService {
                if (partnerCCIJ1Contact != null) {
                   cciContact = new PartnerJ1HSCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIJ1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIJ1Contact.getCcistaffUser().getLastName());
-                  cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " CCI Contact");
+                  cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " Contact");
                   cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
+                  cciContact.setPartnerCCIContactEmail(partnerCCIJ1Contact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
                   cciContact.setPartnerCCIContactExtentionNo(partnerCCIJ1Contact.getCcistaffUser().getPhoneExtension());
                }
                j1hsDashboard.setCciContact(cciContact);
 
                // work queue types and categories
-              List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
+               List<PartnerJ1HSWorkQueueType> partnerWorkQueueTypesList = new ArrayList<PartnerJ1HSWorkQueueType>();
                List<PartnerWorkQueueType> partnerWorkQueueTypes = partnerWorkQueueTypeRepository.getPartnerWorkQueueTypesByDepartmentProgramId(CCIConstants.HSP_J1_HS_ID);
                if (partnerWorkQueueTypes != null) {
                   for (PartnerWorkQueueType pqType : partnerWorkQueueTypes) {
                      PartnerJ1HSWorkQueueType j1wqType = new PartnerJ1HSWorkQueueType();
-                     j1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName()!=null?pqType.getPartnerWQTypeName():"");
+                     j1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName() != null ? pqType.getPartnerWQTypeName() : "");
                      PartnerWorkQueueTypeAggregate typeAgg = partnerWorkQueueTypeAggregateRepository.getWorkQueueTypeAggregateByDepartmentProgramId(pqType.getPartnerWQTypeId(),
                            partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                     j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate()!=null?typeAgg.getPartnerWQTypeAggregate():0);
+                     j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate() != null ? typeAgg.getPartnerWQTypeAggregate() : 0);
                      List<PartnerWorkQueueCategory> caregoryList = partnerWorkQueueCategoryRepository.getWorkQueueCategoryForType(pqType.getPartnerWQTypeId());
                      if (caregoryList != null) {
                         List<PartnerJ1HSWorkQueueCategory> partnerWorkQueueCategories = new ArrayList<PartnerJ1HSWorkQueueCategory>();
                         for (PartnerWorkQueueCategory category : caregoryList) {
                            PartnerJ1HSWorkQueueCategory cat = new PartnerJ1HSWorkQueueCategory();
-                           cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName()!=null?category.getPartnerWQCategoryName():"");
+                           cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName() != null ? category.getPartnerWQCategoryName() : "");
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate()!=null?catAgg.getPartnerWQCategoryAggregate():0);
+                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate() != null ? catAgg.getPartnerWQCategoryAggregate() : 0);
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }
@@ -391,26 +393,33 @@ public class PartnerServiceImpl implements PartnerService {
                      CCIConstants.HSP_J1_HS_ID);
                if (partnerStatsDetails != null && partnerStatsDetails.size() > 0) {
                   partnerStatistics = new PartnerStatistics();
-                  PartnerApplicationStats applicationStats = new PartnerApplicationStats();
+                  List<PartnerApplicationStats> statsList = new ArrayList<PartnerApplicationStats>();
                   PartnerProgramStats programStats = new PartnerProgramStats();
                   for (PartnerQuickStatsCategoryAggregate categoryAggregate : partnerStatsDetails) {
+                     PartnerApplicationStats applicationStats = new PartnerApplicationStats();
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.SUBMITTED)) {
-                        applicationStats.setSubmitted(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.SUBMITTED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.PARTNER_REVIEW)) {
-                        applicationStats.setPartnerReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.PARTNER_REVIEW);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.GREENHEART_REVIEW)) {
-                        applicationStats.setGreenheartReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.GREENHEART_REVIEW);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.APPROVED)) {
-                        applicationStats.setApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.APPROVED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.NOT_APPROVED)) {
-                        applicationStats.setNotApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.NOT_APPROVED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
+                     statsList.add(applicationStats);
                   }
-                  partnerStatistics.setApplicationStats(applicationStats);
+                  partnerStatistics.getApplicationStats().addAll(statsList);
                   partnerStatistics.setProgramStats(programStats);
                }
                j1hsDashboard.setPartnerStatistics(partnerStatistics);
@@ -500,15 +509,16 @@ public class PartnerServiceImpl implements PartnerService {
                f1Dashboard.setPartnerLogo(partner.getPartnerLogo());
 
                // announcements
-               List<PartnerAnnouncement> partnerAnnouncementList = partner.getPartnerAnnouncements();
                List<PartnerF1Announcement> partnerF1Announcements = null;
-               if (partnerAnnouncementList != null && partnerAnnouncementList.size() > 0) {
+               if (partner.getPartnerAnnouncements() != null && !(partner.getPartnerAnnouncements().isEmpty())) {
                   partnerF1Announcements = new ArrayList<PartnerF1Announcement>();
-                  for (PartnerAnnouncement ann : partnerAnnouncementList) {
-                     PartnerF1Announcement f1Ann = new PartnerF1Announcement();
-                     f1Ann.setAnnouncement(ann.getAnnouncement());
-                     f1Ann.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
-                     partnerF1Announcements.add(f1Ann);
+                  for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
+                     if (ann.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                        PartnerF1Announcement f1Ann = new PartnerF1Announcement();
+                        f1Ann.setAnnouncement(ann.getAnnouncement());
+                        f1Ann.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
+                        partnerF1Announcements.add(f1Ann);
+                     }
                   }
                }
                f1Dashboard.getPartnerAnnouncements().addAll(partnerF1Announcements);
@@ -519,10 +529,11 @@ public class PartnerServiceImpl implements PartnerService {
                if (partnerCCIF1Contact != null) {
                   cciContact = new PartnerF1CCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIF1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIF1Contact.getCcistaffUser().getLastName());
-                  cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " CCI Contact");
+                  cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " Contact");
                   cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
+                  cciContact.setPartnerCCIContactEmail(partnerCCIF1Contact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
                   cciContact.setPartnerCCIContactExtentionNo(partnerCCIF1Contact.getCcistaffUser().getPhoneExtension());
                }
                f1Dashboard.setCciContact(cciContact);
@@ -562,26 +573,33 @@ public class PartnerServiceImpl implements PartnerService {
                      CCIConstants.HSP_F1_ID);
                if (partnerStatsDetails != null && partnerStatsDetails.size() > 0) {
                   partnerStatistics = new com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerStatistics();
-                  com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats applicationStats = new com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats();
+                  List<com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats> statsList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats>();
                   com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerProgramStats programStats = new com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerProgramStats();
                   for (PartnerQuickStatsCategoryAggregate categoryAggregate : partnerStatsDetails) {
+                     com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats applicationStats = new com.ccighgo.service.transport.partner.beans.partnerf1details.PartnerApplicationStats();
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.SUBMITTED)) {
-                        applicationStats.setSubmitted(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.SUBMITTED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.PARTNER_REVIEW)) {
-                        applicationStats.setPartnerReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.PARTNER_REVIEW);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.GREENHEART_REVIEW)) {
-                        applicationStats.setGreenheartReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.GREENHEART_REVIEW);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.APPROVED)) {
-                        applicationStats.setApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.APPROVED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.NOT_APPROVED)) {
-                        applicationStats.setNotApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.NOT_APPROVED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
+                     statsList.add(applicationStats);
                   }
-                  partnerStatistics.setApplicationStats(applicationStats);
+                  partnerStatistics.getApplicationStats().addAll(statsList);
                   partnerStatistics.setProgramStats(programStats);
                }
                f1Dashboard.setPartnerStatistics(partnerStatistics);
@@ -660,15 +678,16 @@ public class PartnerServiceImpl implements PartnerService {
                ihpDashboard.setPartnerCompany(partner.getCompanyName());
                ihpDashboard.setPartnerLogo(partner.getPartnerLogo());
                // announcements
-               List<PartnerAnnouncement> partnerAnnouncementList = partner.getPartnerAnnouncements();
                List<PartnerIHPAnnouncement> partnerIHPAnnouncements = null;
-               if (partnerAnnouncementList != null && partnerAnnouncementList.size() > 0) {
+               if (partner.getPartnerAnnouncements() != null && !(partner.getPartnerAnnouncements().isEmpty())) {
                   partnerIHPAnnouncements = new ArrayList<PartnerIHPAnnouncement>();
-                  for (PartnerAnnouncement ann : partnerAnnouncementList) {
-                     PartnerIHPAnnouncement f1Ann = new PartnerIHPAnnouncement();
-                     f1Ann.setAnnouncement(ann.getAnnouncement());
-                     f1Ann.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
-                     partnerIHPAnnouncements.add(f1Ann);
+                  for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
+                     if (ann.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
+                        PartnerIHPAnnouncement f1Ann = new PartnerIHPAnnouncement();
+                        f1Ann.setAnnouncement(ann.getAnnouncement());
+                        f1Ann.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
+                        partnerIHPAnnouncements.add(f1Ann);
+                     }
                   }
                }
                ihpDashboard.getPartnerAnnouncements().addAll(partnerIHPAnnouncements);
@@ -679,10 +698,11 @@ public class PartnerServiceImpl implements PartnerService {
                if (partnerCCIIHPContact != null) {
                   cciContact = new PartnerIHPCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIIHPContact.getCcistaffUser().getFirstName() + " " + partnerCCIIHPContact.getCcistaffUser().getLastName());
-                  cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " CCI Contact");
+                  cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " Contact");
                   cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
+                  cciContact.setPartnerCCIContactEmail(partnerCCIIHPContact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
                   cciContact.setPartnerCCIContactExtentionNo(partnerCCIIHPContact.getCcistaffUser().getPhoneExtension());
                }
                ihpDashboard.setCciContact(cciContact);
@@ -721,26 +741,33 @@ public class PartnerServiceImpl implements PartnerService {
                      partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
                if (partnerStatsDetails != null && partnerStatsDetails.size() > 0) {
                   partnerStatistics = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerStatistics();
-                  com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats applicationStats = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats();
+                  List<com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats> statList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats>();
                   com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerProgramStats programStats = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerProgramStats();
                   for (PartnerQuickStatsCategoryAggregate categoryAggregate : partnerStatsDetails) {
+                     com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats applicationStats = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats();
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.SUBMITTED)) {
-                        applicationStats.setSubmitted(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.SUBMITTED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.PARTNER_REVIEW)) {
-                        applicationStats.setPartnerReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.PARTNER_REVIEW);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.GREENHEART_REVIEW)) {
-                        applicationStats.setGreenheartReview(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.GREENHEART_REVIEW);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.APPROVED)) {
-                        applicationStats.setApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.APPROVED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
                      if (categoryAggregate.getPartnerQSCategoryName().equals(CCIConstants.NOT_APPROVED)) {
-                        applicationStats.setNotApproved(categoryAggregate.getPartnerQSCategoryAggregate());
+                        applicationStats.setKey(CCIConstants.NOT_APPROVED);
+                        applicationStats.setValue(categoryAggregate.getPartnerQSCategoryAggregate());
                      }
+                     statList.add(applicationStats);
                   }
-                  partnerStatistics.setApplicationStats(applicationStats);
+                  partnerStatistics.getApplicationStats().addAll(statList);
                   partnerStatistics.setProgramStats(programStats);
                }
                ihpDashboard.setPartnerStatistics(partnerStatistics);
