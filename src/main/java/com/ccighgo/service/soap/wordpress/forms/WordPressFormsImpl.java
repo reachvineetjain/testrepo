@@ -103,8 +103,10 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
 				partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
 				partnerAgentInquiry.setPhone(InternationalPartners.getPhone());
-				partnerAgentInquiry.setCurrentlySendingParticipantToUS(InternationalPartners.getCurrentlySendingParticipant() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-				partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholershipParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+				if (InternationalPartners.getCurrentlySendingParticipant() != null)
+					partnerAgentInquiry.setCurrentlySendingParticipantToUS(InternationalPartners.getCurrentlySendingParticipant() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+				if (InternationalPartners.getAmbassadorScholershipParticipants() != null)
+					partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholershipParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
 				if (InternationalPartners.getWebsite() != null)
 					partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
 
