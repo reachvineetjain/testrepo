@@ -145,6 +145,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 				newPartner = partnerRepository.saveAndFlush(newPartner);
 
 				partnerAgentInquiry.setPartner(newPartner);
+				partnerAgentInquiry.setSubmittedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 
 				/**
 				 * add Lookup Country
