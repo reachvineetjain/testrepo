@@ -102,6 +102,9 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
 				partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
+				partnerAgentInquiry.setPhone(InternationalPartners.getPhone());
+				partnerAgentInquiry.setCurrentlySendingParticipantToUS(InternationalPartners.getCurrentlySendingParticipant() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+				partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholershipParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
 				if (InternationalPartners.getWebsite() != null)
 					partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
 
@@ -152,6 +155,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 				if (InternationalPartners.getPrograms() != null && !InternationalPartners.getPrograms().isEmpty()) {
 					List<PartnerProgram> partnerProgramList = new ArrayList<PartnerProgram>();
 					for (String pCon : InternationalPartners.getPrograms()) {
+						System.out.println("PCon : " + pCon);
 						PartnerProgram pp = new PartnerProgram();
 						if (pCon.equalsIgnoreCase("J-1 High School Program")) {
 							pp.setLookupDepartmentProgram(dpr.findOne(1));
@@ -178,6 +182,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 				}
 				if (InternationalPartners.getTypeOfPrograms() != null && !InternationalPartners.getTypeOfPrograms().isEmpty()) {
 					for (String item : InternationalPartners.getTypeOfPrograms()) {
+						System.out.println("Item : " + item);
 						if (item.equalsIgnoreCase("Teach Abroad")) {
 							partnerAgentInquiry.setTeachAbroad(CCIConstants.ACTIVE);
 						} else if (item.equalsIgnoreCase("Volunteer Abroad")) {
@@ -199,7 +204,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 					}
 				}
 				/**
-				 * Parter Status
+				 * Partner Status
 				 * 
 				 */
 				PartnerStatus status = partnerStatusRepository.findStatusByName("Pending");
