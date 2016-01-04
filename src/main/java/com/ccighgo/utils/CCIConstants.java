@@ -23,8 +23,8 @@ public class CCIConstants {
    public static final String SEASON_ID_INVALID = "season.id.zero.or.negative";
 
    // date utility constants
-   public static final String MM_DD_YY = "MM/dd/yy";
-   public static final String DATE_TIME = "MM/dd/yy HH:mm:ss";
+   public static final String MM_DD_YY = "MM/dd/yyyy";
+   public static final String DATE_TIME = "MM/dd/yyyy HH:mm:ss";
    public static final String DATE_TIME2 = "MM/dd/yyyy HH:mm:ss";
 
    public static final String MM_dd_yyy = "MM-dd-yyyy";
