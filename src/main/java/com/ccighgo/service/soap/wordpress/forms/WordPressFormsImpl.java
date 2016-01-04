@@ -156,43 +156,54 @@ public class WordPressFormsImpl implements IWordPressForms {
 				 */
 				if (InternationalPartners.getPrograms() != null && !InternationalPartners.getPrograms().isEmpty()) {
 					List<PartnerProgram> partnerProgramList = new ArrayList<PartnerProgram>();
-					for (String pCon : InternationalPartners.getPrograms()) {
-						System.out.println("PCon : " + pCon);
-						PartnerProgram pp = new PartnerProgram();
-						if (pCon.equalsIgnoreCase("J-1 High School Program")) {
-							pp.setLookupDepartmentProgram(dpr.findOne(1));
-						} else if (pCon.equalsIgnoreCase("F-1 Visa Program")) {
-							pp.setLookupDepartmentProgram(dpr.findOne(2));
-						} else if (pCon.equalsIgnoreCase("Summer English Academy (ESL Summer Camp)")) {
-							// TODO changed after adding new department program
-							pp.setLookupDepartmentProgram(dpr.findOne(5));
-						} else if (pCon.equalsIgnoreCase("Short-term Group Homestay Programs")) {
-							pp.setLookupDepartmentProgram(dpr.findOne(4));
-						} else if (pCon.equalsIgnoreCase("Short-term Individual Homestay Program")) {
-							pp.setLookupDepartmentProgram(dpr.findOne(3));
-						} else if (pCon.equalsIgnoreCase("J-1 Intern/Trainee")) {
-							pp.setLookupDepartmentProgram(dpr.findOne(7));
-						} else if (pCon.equalsIgnoreCase("J-1 Summer Work Travel")) {
-							pp.setLookupDepartmentProgram(dpr.findOne(6));
+					for (String it : InternationalPartners.getPrograms()) {
+						String[] v = it.split(",");
+						if (v != null) {
+							for (String pCon : v) {
+								pCon = pCon.trim();
+								PartnerProgram pp = new PartnerProgram();
+								if (pCon.equalsIgnoreCase("J-1 High School Program")) {
+									pp.setLookupDepartmentProgram(dpr.findOne(1));
+								} else if (pCon.equalsIgnoreCase("F-1 Visa Program")) {
+									pp.setLookupDepartmentProgram(dpr.findOne(2));
+								} else if (pCon.equalsIgnoreCase("Summer English Academy (ESL Summer Camp)")) {
+									// TODO changed after adding new department
+									// program
+									pp.setLookupDepartmentProgram(dpr.findOne(5));
+								} else if (pCon.equalsIgnoreCase("Short-term Group Homestay Programs")) {
+									pp.setLookupDepartmentProgram(dpr.findOne(4));
+								} else if (pCon.equalsIgnoreCase("Short-term Individual Homestay Program")) {
+									pp.setLookupDepartmentProgram(dpr.findOne(3));
+								} else if (pCon.equalsIgnoreCase("J-1 Intern/Trainee")) {
+									pp.setLookupDepartmentProgram(dpr.findOne(7));
+								} else if (pCon.equalsIgnoreCase("J-1 Summer Work Travel")) {
+									pp.setLookupDepartmentProgram(dpr.findOne(6));
+								}
+								pp.setPartner(newPartner);
+								pp.setHasApplied(CCIConstants.ACTIVE);
+								pp.setIsEligible(CCIConstants.ACTIVE);
+								partnerProgramList.add(pp);
+							}
 						}
-						pp.setPartner(newPartner);
-						pp.setHasApplied(CCIConstants.ACTIVE);
-						pp.setIsEligible(CCIConstants.ACTIVE);
-						partnerProgramList.add(pp);
 					}
 					partnerProgramRepository.save(partnerProgramList);
 				}
 				if (InternationalPartners.getTypeOfPrograms() != null && !InternationalPartners.getTypeOfPrograms().isEmpty()) {
-					for (String item : InternationalPartners.getTypeOfPrograms()) {
-						System.out.println("Item : " + item);
-						if (item.equalsIgnoreCase("Teach Abroad")) {
-							partnerAgentInquiry.setTeachAbroad(CCIConstants.ACTIVE);
-						} else if (item.equalsIgnoreCase("Volunteer Abroad")) {
-							partnerAgentInquiry.setVolunteerAbroad(CCIConstants.ACTIVE);
-						} else if (item.equalsIgnoreCase("High School Abroad")) {
-							partnerAgentInquiry.setHighSchoolAbroad(CCIConstants.ACTIVE);
-						} else if (item.equalsIgnoreCase("Other (please explain below)")) {
-							partnerAgentInquiry.setOther(CCIConstants.ACTIVE);
+					for (String it : InternationalPartners.getTypeOfPrograms()) {
+						String[] v = it.split(",");
+						if (v != null) {
+							for (String item : v) {
+								item = item.trim();
+								if (item.equalsIgnoreCase("Teach Abroad")) {
+									partnerAgentInquiry.setTeachAbroad(CCIConstants.ACTIVE);
+								} else if (item.equalsIgnoreCase("Volunteer Abroad")) {
+									partnerAgentInquiry.setVolunteerAbroad(CCIConstants.ACTIVE);
+								} else if (item.equalsIgnoreCase("High School Abroad")) {
+									partnerAgentInquiry.setHighSchoolAbroad(CCIConstants.ACTIVE);
+								} else if (item.equalsIgnoreCase("Other (please explain below)")) {
+									partnerAgentInquiry.setOther(CCIConstants.ACTIVE);
+								}
+							}
 						}
 					}
 				}
