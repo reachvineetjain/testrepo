@@ -611,10 +611,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(goId);
             if (contacts != null) {
                for (PartnerUser partnerContact : contacts) {
+                  Login login = partnerContact.getLogin();
                   PartnerRecruitmentAdminScreeningContacts contact = new PartnerRecruitmentAdminScreeningContacts();
                   contact.setPartnerContactId(partnerContact.getPartnerUserId());
                   contact.setActive(partnerContact.getActive() == 1);
-                //TODO contact.setEmail(partnerContact.getEmail());
+                  if (login != null)
+                     contact.setEmail(login.getEmail());
                   contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                   contact.setFax(partnerContact.getFax());
                   contact.setFirstName(partnerContact.getFirstName());
@@ -1377,9 +1379,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
     	  
          PartnerUser pc = new PartnerUser();
          Login login= loginRepository.findOne(contactsDetails.getLoginId());
-		 pc.setLogin(login);
+         login.setEmail(contactsDetails.getEmail());
+		   pc.setLogin(login);
          pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
-       //TODO pc.setEmail(contactsDetails.getEmail());
          pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
          pc.setFax(contactsDetails.getFax());
          pc.setFirstName(contactsDetails.getFirstName());
@@ -1404,7 +1406,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
                contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == 1);
-             //TODO contact.setEmail(partnerContact.getEmail());
+               if(partnerContact.getLogin()!=null)
+               contact.setEmail(partnerContact.getLogin().getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
@@ -1443,7 +1446,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
                contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == 1);
-             //TODO contact.setEmail(partnerContact.getEmail());
+               if(partnerContact.getLogin()!=null)
+               contact.setEmail(partnerContact.getLogin().getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
@@ -1618,7 +1622,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
          PartnerUser pc = partnerUserRepository.findOne(contactsDetails.getPartnerContactId());
          pc.setActive((byte) (contactsDetails.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
-       //TODO pc.setEmail(contactsDetails.getEmail());
+         if (pc.getLogin() != null)
+            pc.getLogin().setEmail(contactsDetails.getEmail());
          pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
          pc.setFax(contactsDetails.getFax());
          pc.setFirstName(contactsDetails.getFirstName());
@@ -1639,7 +1644,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
                contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == CCIConstants.ACTIVE);
-             //TODO contact.setEmail(partnerContact.getEmail());
+               if(partnerContact.getLogin()!=null)
+               contact.setEmail(partnerContact.getLogin().getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
