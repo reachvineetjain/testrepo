@@ -96,7 +96,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   puser.setPartnerUserFirstName(user.getFirstName());
                   puser.setPartnerUserLastName(user.getLastName());
                   puser.setPartnerUserLoginName(user.getLogin().getLoginName());
-                  puser.setPartnerUserEmail(user.getEmail());
+                 //TODO puser.setPartnerUserEmail(user.getEmail());
                   puser.setPartnerUserStatus(user.getActive() == CCIConstants.ACTIVE ? 1 : 0);
                   partnerUsersUIList.add(puser);
                }
@@ -214,7 +214,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUserDetails.setUserSalutation(salutation);
 
             partnerUserDetails.setUserDesignation(partnerUser.getTitle());
-            partnerUserDetails.setUserEmail(partnerUser.getEmail());
+          //TODO partnerUserDetails.setUserEmail(partnerUser.getEmail());
             partnerUserDetails.setUserPhone(partnerUser.getPhone());
             partnerUserDetails.setUserEmergencyPhone(partnerUser.getEmergencyPhone());
             partnerUserDetails.setUserFax(partnerUser.getFax());
@@ -477,7 +477,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                pUser.setTitle(partnerUserDetails.getUserDesignation());
                pUser.setFirstName(partnerUserDetails.getUserFirstName());
                pUser.setLastName(partnerUserDetails.getUserLastName());
-               pUser.setEmail(partnerUserDetails.getUserEmail());
+             //TODO pUser.setEmail(partnerUserDetails.getUserEmail());
                pUser.setPhoto(partnerUserDetails.getUserPictureUrl());
                pUser.setPhone(partnerUserDetails.getUserPhone());
                pUser.setEmergencyPhone(partnerUserDetails.getUserEmergencyPhone());
@@ -640,7 +640,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUser.setTitle(partnerUserDetails.getUserDesignation());
             partnerUser.setFirstName(partnerUserDetails.getUserFirstName());
             partnerUser.setLastName(partnerUserDetails.getUserLastName());
-            partnerUser.setEmail(partnerUserDetails.getUserEmail());
+          //TODO partnerUser.setEmail(partnerUserDetails.getUserEmail());
             partnerUser.setPhoto(partnerUserDetails.getUserPictureUrl());
             partnerUser.setPhone(partnerUserDetails.getUserPhone());
             partnerUser.setEmergencyPhone(partnerUserDetails.getUserEmergencyPhone());

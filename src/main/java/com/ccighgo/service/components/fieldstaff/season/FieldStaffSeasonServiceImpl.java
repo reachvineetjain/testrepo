@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.FieldStaffLeadershipSeasonDetail;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
-import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonDetailRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
@@ -38,7 +36,6 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
 
    @Autowired MessageUtils messageUtil;
    @Autowired CommonComponentUtils componentUtils;
-   @Autowired FieldStaffLeadershipSeasonDetailRepository fieldStaffLeadershipSeasonDetailRepository;
 
    private static final String SP_FS_SEASON_LIST = "CALL SPFieldStaffSeasonsList(?)";
 
@@ -104,13 +101,14 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          if (statusVal == null) {
             throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_SIGNNED_CONTRACT_VALUE));
          }
-         FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail = fieldStaffLeadershipSeasonDetailRepository.getFslSeasonDetailByIdSeasonIdAndDeptPrgId(
+         //TODO
+         /*FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail = fieldStaffLeadershipSeasonDetailRepository.getFslSeasonDetailByIdSeasonIdAndDeptPrgId(
                Integer.valueOf(fslSeasonId), Integer.valueOf(seasonId), Integer.valueOf(deparmentProgramId));
          if (fieldStaffLeadershipSeasonDetail == null) {
             throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.NO_FSL_RECORD_FOUND_TO_UPDATE));
          }
          fieldStaffLeadershipSeasonDetail.setAgreeToTerms(Integer.valueOf(seasonId) == 1 ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         fieldStaffLeadershipSeasonDetailRepository.saveAndFlush(fieldStaffLeadershipSeasonDetail);
+         fieldStaffLeadershipSeasonDetailRepository.saveAndFlush(fieldStaffLeadershipSeasonDetail);*/
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {

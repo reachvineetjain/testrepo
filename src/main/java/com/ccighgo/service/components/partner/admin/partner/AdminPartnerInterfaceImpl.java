@@ -184,7 +184,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          pUser.setSalutation(salutationRepositotry.findOne(partner.getSalutation().getSalutationId()));
          pUser.setFirstName(partner.getFirstName());
          pUser.setLastName(partner.getLastName());
-         pUser.setEmail(partner.getEmail());
+       //TODO pUser.setEmail(partner.getEmail());
          pUser.setActive(CCIConstants.ACTIVE);
          pUser.setIsPrimary(CCIConstants.ACTIVE);
          pUser = partnerUserRepository.saveAndFlush(pUser);
@@ -252,7 +252,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                ap.setType(p.getIsSubPartner() == CCIConstants.ACTIVE ? "Sub Partner" : "Partner");
                ap.setFirstName(puser.getFirstName());
                ap.setLastName(puser.getLastName());
-               ap.setEmail(puser.getEmail());
+             //TODO ap.setEmail(puser.getEmail());
              if(p.getLookupCountry1()!=null){
                   PartnerCountry pCountry = new PartnerCountry();
                   pCountry.setCountryId(p.getLookupCountry1().getCountryId());

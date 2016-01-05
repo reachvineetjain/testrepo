@@ -46,7 +46,7 @@ public class Region implements Serializable {
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
 	@OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
 	public Region() {

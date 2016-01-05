@@ -218,7 +218,7 @@ public class Partner implements Serializable {
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerUser> partnerUsers;
 
 	//bi-directional many-to-one association to PartnerWorkQueue
