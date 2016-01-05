@@ -23,9 +23,6 @@ public class PartnerUser implements Serializable {
 	private Byte active;
 
 	@Column(length=150)
-	private String email;
-
-	@Column(length=150)
 	private String emergencyPhone;
 
 	@Column(length=150)
@@ -45,7 +42,7 @@ public class PartnerUser implements Serializable {
 	@Column(length=300)
 	private String photo;
 
-	private byte recieveNotificationEmails;
+	private Byte recieveNotificationEmails;
 
 	@Column(length=150)
 	private String skypeId;
@@ -108,14 +105,6 @@ public class PartnerUser implements Serializable {
 		this.active = active;
 	}
 
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getEmergencyPhone() {
 		return this.emergencyPhone;
 	}
@@ -172,11 +161,11 @@ public class PartnerUser implements Serializable {
 		this.photo = photo;
 	}
 
-	public byte getRecieveNotificationEmails() {
+	public Byte getRecieveNotificationEmails() {
 		return this.recieveNotificationEmails;
 	}
 
-	public void setRecieveNotificationEmails(byte recieveNotificationEmails) {
+	public void setRecieveNotificationEmails(Byte recieveNotificationEmails) {
 		this.recieveNotificationEmails = recieveNotificationEmails;
 	}
 

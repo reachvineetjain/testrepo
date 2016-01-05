@@ -18,7 +18,7 @@ public class Employer implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer employerGoId;
+	private int employerGoId;
 
 	private Integer employerStatusId;
 
@@ -34,11 +34,11 @@ public class Employer implements Serializable {
 	public Employer() {
 	}
 
-	public Integer getEmployerGoId() {
+	public int getEmployerGoId() {
 		return this.employerGoId;
 	}
 
-	public void setEmployerGoId(Integer employerGoId) {
+	public void setEmployerGoId(int employerGoId) {
 		this.employerGoId = employerGoId;
 	}
 

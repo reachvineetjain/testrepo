@@ -13,23 +13,23 @@ public class CCIStaffUsersResourcePermissionPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private Integer cciStaffUserId;
+	private int cciStaffUserId;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private Integer resourcePermissionId;
+	private int resourcePermissionId;
 
 	public CCIStaffUsersResourcePermissionPK() {
 	}
-	public Integer getCciStaffUserId() {
+	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
-	public void setCciStaffUserId(Integer cciStaffUserId) {
+	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
-	public Integer getResourcePermissionId() {
+	public int getResourcePermissionId() {
 		return this.resourcePermissionId;
 	}
-	public void setResourcePermissionId(Integer resourcePermissionId) {
+	public void setResourcePermissionId(int resourcePermissionId) {
 		this.resourcePermissionId = resourcePermissionId;
 	}
 

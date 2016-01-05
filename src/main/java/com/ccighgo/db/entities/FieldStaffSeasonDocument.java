@@ -7,19 +7,19 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the FieldStaffLCSeasonDocument database table.
+ * The persistent class for the FieldStaffSeasonDocument database table.
  * 
  */
 @Entity
-@Table(name="FieldStaffLCSeasonDocument")
-@NamedQuery(name="FieldStaffLCSeasonDocument.findAll", query="SELECT f FROM FieldStaffLCSeasonDocument f")
-public class FieldStaffLCSeasonDocument implements Serializable {
+@Table(name="FieldStaffSeasonDocument")
+@NamedQuery(name="FieldStaffSeasonDocument.findAll", query="SELECT f FROM FieldStaffSeasonDocument f")
+public class FieldStaffSeasonDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer fieldStaffLCSeasonDocumentId;
+	private Integer fieldStaffSeasonDocumentId;
 
 	private Byte active;
 
@@ -50,20 +50,20 @@ public class FieldStaffLCSeasonDocument implements Serializable {
 	@JoinColumn(name="documentInformationId")
 	private DocumentInformation documentInformation;
 
-	//bi-directional many-to-one association to FieldStaffLCSeason
+	//bi-directional many-to-one association to FieldStaffSeason
 	@ManyToOne
-	@JoinColumn(name="fieldStaffLCSeasonId")
-	private FieldStaffLCSeason fieldStaffLcseason;
+	@JoinColumn(name="fieldStaffSeasonId")
+	private FieldStaffSeason fieldStaffSeason;
 
-	public FieldStaffLCSeasonDocument() {
+	public FieldStaffSeasonDocument() {
 	}
 
-	public Integer getFieldStaffLCSeasonDocumentId() {
-		return this.fieldStaffLCSeasonDocumentId;
+	public Integer getFieldStaffSeasonDocumentId() {
+		return this.fieldStaffSeasonDocumentId;
 	}
 
-	public void setFieldStaffLCSeasonDocumentId(Integer fieldStaffLCSeasonDocumentId) {
-		this.fieldStaffLCSeasonDocumentId = fieldStaffLCSeasonDocumentId;
+	public void setFieldStaffSeasonDocumentId(Integer fieldStaffSeasonDocumentId) {
+		this.fieldStaffSeasonDocumentId = fieldStaffSeasonDocumentId;
 	}
 
 	public Byte getActive() {
@@ -154,12 +154,12 @@ public class FieldStaffLCSeasonDocument implements Serializable {
 		this.documentInformation = documentInformation;
 	}
 
-	public FieldStaffLCSeason getFieldStaffLcseason() {
-		return this.fieldStaffLcseason;
+	public FieldStaffSeason getFieldStaffSeason() {
+		return this.fieldStaffSeason;
 	}
 
-	public void setFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		this.fieldStaffLcseason = fieldStaffLcseason;
+	public void setFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		this.fieldStaffSeason = fieldStaffSeason;
 	}
 
 }

@@ -3,7 +3,6 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -45,10 +44,6 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="seasonGeographyConfigurationId")
 	private SeasonGeographyConfiguration seasonGeographyConfiguration;
-
-	//bi-directional many-to-one association to FieldStaffLeadershipSeasonDetail
-	@OneToMany(mappedBy="fieldStaffLeadershipSeason")
-	private List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails;
 
 	public FieldStaffLeadershipSeason() {
 	}
@@ -115,28 +110,6 @@ public class FieldStaffLeadershipSeason implements Serializable {
 
 	public void setSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
 		this.seasonGeographyConfiguration = seasonGeographyConfiguration;
-	}
-
-	public List<FieldStaffLeadershipSeasonDetail> getFieldStaffLeadershipSeasonDetails() {
-		return this.fieldStaffLeadershipSeasonDetails;
-	}
-
-	public void setFieldStaffLeadershipSeasonDetails(List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails) {
-		this.fieldStaffLeadershipSeasonDetails = fieldStaffLeadershipSeasonDetails;
-	}
-
-	public FieldStaffLeadershipSeasonDetail addFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
-		getFieldStaffLeadershipSeasonDetails().add(fieldStaffLeadershipSeasonDetail);
-		fieldStaffLeadershipSeasonDetail.setFieldStaffLeadershipSeason(this);
-
-		return fieldStaffLeadershipSeasonDetail;
-	}
-
-	public FieldStaffLeadershipSeasonDetail removeFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
-		getFieldStaffLeadershipSeasonDetails().remove(fieldStaffLeadershipSeasonDetail);
-		fieldStaffLeadershipSeasonDetail.setFieldStaffLeadershipSeason(null);
-
-		return fieldStaffLeadershipSeasonDetail;
 	}
 
 }

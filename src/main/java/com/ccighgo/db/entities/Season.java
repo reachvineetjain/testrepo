@@ -51,44 +51,50 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<FieldStaffAnnouncement> fieldStaffAnnouncements;
 
-	//bi-directional many-to-one association to FieldStaffLCSeason
-	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
-	private List<FieldStaffLCSeason> fieldStaffLcseasons;
+	//bi-directional many-to-one association to FieldStaffHistory
+	@OneToMany(mappedBy="season")
+	private List<FieldStaffHistory> fieldStaffHistories;
 
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
-	//bi-directional many-to-one association to FieldStaffLeadershipSeasonDetail
-	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
-	private List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails;
+	//bi-directional many-to-one association to FieldStaffSeason
+	@OneToMany(mappedBy="season")
+	private List<FieldStaffSeason> fieldStaffSeasons;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueue
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
+	//bi-directional many-to-one association to HostFamilyAnnouncement
+	@OneToMany(mappedBy="season")
+	private List<HostFamilyAnnouncement> hostFamilyAnnouncements;
+
+	//bi-directional many-to-one association to HostFamilySeason
+	@OneToMany(mappedBy="season")
+	private List<HostFamilySeason> hostFamilySeasons;
 
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<Participant> participants;
 
 	//bi-directional many-to-one association to PartnerAnnouncement
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerAnnouncement> partnerAnnouncements;
 
 	//bi-directional many-to-one association to PartnerSeason
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerSeason> partnerSeasons;
 
 	//bi-directional many-to-one association to PartnerWorkQueue
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerWorkQueue> partnerWorkQueues;
 
 	//bi-directional many-to-one association to LookupDepartment
@@ -103,130 +109,131 @@ public class Season implements Serializable {
 
 	//bi-directional many-to-one association to SeasonCAPDetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonCAPDetail> seasonCapdetails;
 
 	//bi-directional many-to-one association to SeasonDepartmentDocument
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
 
 	//bi-directional many-to-one association to SeasonDepartmentNote
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonDepartmentNote> seasonDepartmentNotes;
 
 	//bi-directional many-to-one association to SeasonDepartmentUpdateLog
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonDepartmentUpdateLog> seasonDepartmentUpdateLogs;
 
 	//bi-directional many-to-one association to SeasonF1Detail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonF1Detail> seasonF1details;
 
 	//bi-directional many-to-one association to SeasonGHTConfiguration
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonGHTConfiguration> seasonGhtconfigurations;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
 
 	//bi-directional many-to-one association to SeasonHSADetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSADetail> seasonHsadetails;
 
 	//bi-directional many-to-one association to SeasonHSPAllocation
-	@OneToMany(mappedBy="season")
+	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSPAllocation> seasonHspallocations;
 
 	//bi-directional many-to-one association to SeasonHSPConfiguration
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonHSPConfiguration> seasonHspconfigurations;
 
 	//bi-directional many-to-one association to SeasonIHPDetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonIHPDetail> seasonIhpdetails;
 
 	//bi-directional many-to-one association to SeasonIHPGeographyConfiguration
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
 
 	//bi-directional many-to-one association to SeasonJ1Detail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonJ1Detail> seasonJ1details;
 
 	//bi-directional many-to-one association to SeasonLSDetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonLSDetail> seasonLsdetails;
 
 	//bi-directional many-to-one association to SeasonProgramDocument
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonProgramDocument> seasonProgramDocuments;
 
 	//bi-directional many-to-one association to SeasonProgramNote
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonProgramNote> seasonProgramNotes;
 
 	//bi-directional many-to-one association to SeasonProgramUpdateLog
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonProgramUpdateLog> seasonProgramUpdateLogs;
 
 	//bi-directional many-to-one association to SeasonTADetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonTADetail> seasonTadetails;
 
 	//bi-directional many-to-one association to SeasonVADetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonVADetail> seasonVadetails;
 
 	//bi-directional many-to-one association to SeasonWADetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWADetail> seasonWadetails;
 
 	//bi-directional many-to-one association to SeasonWPAllocation
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWPAllocation> seasonWpallocations;
 
 	//bi-directional many-to-one association to SeasonWPConfiguration
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWPConfiguration> seasonWpconfigurations;
 
 	//bi-directional many-to-one association to SeasonWnTSpringDetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWnTSpringDetail> seasonWnTspringDetails;
 
 	//bi-directional many-to-one association to SeasonWnTSummerDetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWnTSummerDetail> seasonWnTsummerDetails;
 
 	//bi-directional many-to-one association to SeasonWnTWinterDetail
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<SeasonWnTWinterDetail> seasonWnTwinterDetails;
 
 	//bi-directional many-to-one association to USSchoolSeason
-	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="season")
 	private List<USSchoolSeason> usschoolSeasons;
 
 	public Season() {
@@ -318,26 +325,26 @@ public class Season implements Serializable {
 		return fieldStaffAnnouncement;
 	}
 
-	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-		return this.fieldStaffLcseasons;
+	public List<FieldStaffHistory> getFieldStaffHistories() {
+		return this.fieldStaffHistories;
 	}
 
-	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-		this.fieldStaffLcseasons = fieldStaffLcseasons;
+	public void setFieldStaffHistories(List<FieldStaffHistory> fieldStaffHistories) {
+		this.fieldStaffHistories = fieldStaffHistories;
 	}
 
-	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().add(fieldStaffLcseason);
-		fieldStaffLcseason.setSeason(this);
+	public FieldStaffHistory addFieldStaffHistory(FieldStaffHistory fieldStaffHistory) {
+		getFieldStaffHistories().add(fieldStaffHistory);
+		fieldStaffHistory.setSeason(this);
 
-		return fieldStaffLcseason;
+		return fieldStaffHistory;
 	}
 
-	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().remove(fieldStaffLcseason);
-		fieldStaffLcseason.setSeason(null);
+	public FieldStaffHistory removeFieldStaffHistory(FieldStaffHistory fieldStaffHistory) {
+		getFieldStaffHistories().remove(fieldStaffHistory);
+		fieldStaffHistory.setSeason(null);
 
-		return fieldStaffLcseason;
+		return fieldStaffHistory;
 	}
 
 	public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {
@@ -362,26 +369,26 @@ public class Season implements Serializable {
 		return fieldStaffLeadershipSeason;
 	}
 
-	public List<FieldStaffLeadershipSeasonDetail> getFieldStaffLeadershipSeasonDetails() {
-		return this.fieldStaffLeadershipSeasonDetails;
+	public List<FieldStaffSeason> getFieldStaffSeasons() {
+		return this.fieldStaffSeasons;
 	}
 
-	public void setFieldStaffLeadershipSeasonDetails(List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails) {
-		this.fieldStaffLeadershipSeasonDetails = fieldStaffLeadershipSeasonDetails;
+	public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
+		this.fieldStaffSeasons = fieldStaffSeasons;
 	}
 
-	public FieldStaffLeadershipSeasonDetail addFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
-		getFieldStaffLeadershipSeasonDetails().add(fieldStaffLeadershipSeasonDetail);
-		fieldStaffLeadershipSeasonDetail.setSeason(this);
+	public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().add(fieldStaffSeason);
+		fieldStaffSeason.setSeason(this);
 
-		return fieldStaffLeadershipSeasonDetail;
+		return fieldStaffSeason;
 	}
 
-	public FieldStaffLeadershipSeasonDetail removeFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
-		getFieldStaffLeadershipSeasonDetails().remove(fieldStaffLeadershipSeasonDetail);
-		fieldStaffLeadershipSeasonDetail.setSeason(null);
+	public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().remove(fieldStaffSeason);
+		fieldStaffSeason.setSeason(null);
 
-		return fieldStaffLeadershipSeasonDetail;
+		return fieldStaffSeason;
 	}
 
 	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
@@ -404,6 +411,50 @@ public class Season implements Serializable {
 		fieldStaffWorkQueue.setSeason(null);
 
 		return fieldStaffWorkQueue;
+	}
+
+	public List<HostFamilyAnnouncement> getHostFamilyAnnouncements() {
+		return this.hostFamilyAnnouncements;
+	}
+
+	public void setHostFamilyAnnouncements(List<HostFamilyAnnouncement> hostFamilyAnnouncements) {
+		this.hostFamilyAnnouncements = hostFamilyAnnouncements;
+	}
+
+	public HostFamilyAnnouncement addHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+		getHostFamilyAnnouncements().add(hostFamilyAnnouncement);
+		hostFamilyAnnouncement.setSeason(this);
+
+		return hostFamilyAnnouncement;
+	}
+
+	public HostFamilyAnnouncement removeHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+		getHostFamilyAnnouncements().remove(hostFamilyAnnouncement);
+		hostFamilyAnnouncement.setSeason(null);
+
+		return hostFamilyAnnouncement;
+	}
+
+	public List<HostFamilySeason> getHostFamilySeasons() {
+		return this.hostFamilySeasons;
+	}
+
+	public void setHostFamilySeasons(List<HostFamilySeason> hostFamilySeasons) {
+		this.hostFamilySeasons = hostFamilySeasons;
+	}
+
+	public HostFamilySeason addHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().add(hostFamilySeason);
+		hostFamilySeason.setSeason(this);
+
+		return hostFamilySeason;
+	}
+
+	public HostFamilySeason removeHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().remove(hostFamilySeason);
+		hostFamilySeason.setSeason(null);
+
+		return hostFamilySeason;
 	}
 
 	public List<Participant> getParticipants() {

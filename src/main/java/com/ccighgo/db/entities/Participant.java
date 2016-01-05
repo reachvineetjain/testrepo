@@ -48,6 +48,14 @@ public class Participant implements Serializable {
 	@OneToMany(mappedBy="participant")
 	private List<FieldStaffParticipant> fieldStaffParticipants;
 
+	//bi-directional many-to-one association to HostFamilyParticipant
+	@OneToMany(mappedBy="participant")
+	private List<HostFamilyParticipant> hostFamilyParticipants;
+
+	//bi-directional many-to-one association to HostFamilyParticipantHistory
+	@OneToMany(mappedBy="participant")
+	private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
+
 	//bi-directional many-to-one association to ParticipantPermission
 	@OneToMany(mappedBy="participant")
 	private List<ParticipantPermission> participantPermissions;
@@ -190,6 +198,50 @@ public class Participant implements Serializable {
 		fieldStaffParticipant.setParticipant(null);
 
 		return fieldStaffParticipant;
+	}
+
+	public List<HostFamilyParticipant> getHostFamilyParticipants() {
+		return this.hostFamilyParticipants;
+	}
+
+	public void setHostFamilyParticipants(List<HostFamilyParticipant> hostFamilyParticipants) {
+		this.hostFamilyParticipants = hostFamilyParticipants;
+	}
+
+	public HostFamilyParticipant addHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
+		getHostFamilyParticipants().add(hostFamilyParticipant);
+		hostFamilyParticipant.setParticipant(this);
+
+		return hostFamilyParticipant;
+	}
+
+	public HostFamilyParticipant removeHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
+		getHostFamilyParticipants().remove(hostFamilyParticipant);
+		hostFamilyParticipant.setParticipant(null);
+
+		return hostFamilyParticipant;
+	}
+
+	public List<HostFamilyParticipantHistory> getHostFamilyParticipantHistories() {
+		return this.hostFamilyParticipantHistories;
+	}
+
+	public void setHostFamilyParticipantHistories(List<HostFamilyParticipantHistory> hostFamilyParticipantHistories) {
+		this.hostFamilyParticipantHistories = hostFamilyParticipantHistories;
+	}
+
+	public HostFamilyParticipantHistory addHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+		getHostFamilyParticipantHistories().add(hostFamilyParticipantHistory);
+		hostFamilyParticipantHistory.setParticipant(this);
+
+		return hostFamilyParticipantHistory;
+	}
+
+	public HostFamilyParticipantHistory removeHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+		getHostFamilyParticipantHistories().remove(hostFamilyParticipantHistory);
+		hostFamilyParticipantHistory.setParticipant(null);
+
+		return hostFamilyParticipantHistory;
 	}
 
 	public List<ParticipantPermission> getParticipantPermissions() {

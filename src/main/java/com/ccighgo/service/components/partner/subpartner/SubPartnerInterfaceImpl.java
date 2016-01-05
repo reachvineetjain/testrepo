@@ -308,7 +308,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                subPartnerPrimaryContact.setTitle(partnerContact.getTitle());
                subPartnerPrimaryContact.setFirstName(partnerContact.getFirstName());
                subPartnerPrimaryContact.setLastName(partnerContact.getLastName());
-               subPartnerPrimaryContact.setEmail(partnerContact.getEmail());
+               //TODO subPartnerPrimaryContact.setEmail(partnerContact.getEmail());
                subPartnerPrimaryContact.setPhone(partnerContact.getPhone());
                subPartnerPrimaryContact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                subPartnerPrimaryContact.setFax(partnerContact.getFax());
@@ -557,7 +557,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
                partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
                partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
-               partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
+             //TODO partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
                partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
                partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
                if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
@@ -680,7 +680,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
             partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
             partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
-            partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
+          //TODO partnerContact.setEmail(subPartnerPrimaryContact.getEmail());
             partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
             partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
             if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
