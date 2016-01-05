@@ -60,6 +60,11 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Override
    @Transactional(readOnly = true)
    public Auth getUserLogin(String userName) {
+      try {
+         LOGGER.info("userName: "+userName);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       Auth auth = new Auth();
       try
       {
@@ -120,6 +125,11 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
 
    @Transactional
    private void updateHistory(String userName) {
+      try {
+         LOGGER.info("userName: "+userName);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       LoginHistory history = new LoginHistory();
       history.setLoggedOn(new Timestamp(System.currentTimeMillis()));
       Login loggedInUser = loginRepository.findByLoginName(userName);
@@ -130,18 +140,33 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Override
    @Transactional(readOnly = true)
    public User getCCIUserDetails(String userId) {
+      try {
+         LOGGER.info("userName: "+userId);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       return userManagementService.getUserById(userId);
    }
 
    @Override
    @Transactional(readOnly = true)
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
+      try {
+         LOGGER.info("userName: "+partnerGoId);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       return partnerService.getPartnerDashboard(partnerGoId);
    }
 
    @Override
    @Transactional(readOnly = true)
    public PartnerRecruitmentLead getPartnerAgentDashboard(int partnerGoId) {
+      try {
+         LOGGER.info("userName: "+partnerGoId);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       return partnerService.getPartnerInquiryLeadData(partnerGoId);
    }
 

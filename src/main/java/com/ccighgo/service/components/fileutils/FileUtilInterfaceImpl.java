@@ -37,6 +37,11 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
 
    @Override
    public String cloneUploadedFile(String filePath) {
+      try {
+         LOGGER.info("filePath: " + filePath);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       if(filePath==null || filePath.isEmpty()){
         //throw exception
       }
@@ -52,6 +57,11 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
 
    @Override
    public String uploadFile(String filePath) {
+      try {
+         LOGGER.info("filePath: " + filePath);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       if(filePath==null || filePath.isEmpty()){
          //throw exception
       }
@@ -66,6 +76,11 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
    }
 
    public String uploadFileToS3(String filePath, String keyPath) {
+      try {
+         LOGGER.info("filePath: " + filePath+"keyPath "+keyPath);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       String clonedUrl = null;
       try {
          AWSCredentials credentials = new BasicAWSCredentials(AWS_BUCKET_ID, AWS_BUCKET_KEY);
