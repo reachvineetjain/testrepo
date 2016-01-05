@@ -24,6 +24,12 @@ public class GCIAPIImpl implements IGCIAPI {
    @Override
    public GCIAPI_Response addUser(GCIAPI_AddUser_Param userParam) {
       try {
+         if(userParam!=null)
+         LOGGER.info(userParam.toString());
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      try {
          StringBuilder url = new StringBuilder();
          url.append(GCIAPI_Util.API_BASE).append("?");
          url.append("display_name").append(CCIConstants.EQUAL).append(userParam.getDisplay_name()).append(CCIConstants.BITWISE_AND);

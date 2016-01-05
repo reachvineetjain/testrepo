@@ -90,4 +90,10 @@ public class GCIAPI_AddUser_Param {
       this.last_name = last_name;
    }
 
+   @Override
+   public String toString() {
+      return "GCIAPI_AddUser_Param [token=" + token + ", u_key=" + u_key + ", username=" + username + ", password=" + password + ", email=" + email + ", program=" + program
+            + ", display_name=" + display_name + ", first_name=" + first_name + ", last_name=" + last_name + "]";
+   }
+
 }
