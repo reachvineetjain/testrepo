@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
@@ -64,6 +65,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 
 	private static final String SP_UPDATING_ADMIN_WORK_QUEUE = "CALL SPAdminWQPartnerApplicationSubmitted(?)";
 
+	@Transactional
 	@Override
 	public String InquiryPartner(InternationalPartners InternationalPartners) {
 		try {
@@ -240,7 +242,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 				reviewStatus.setPartnerStatus1(status);
 				partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 				partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
-				callTheStoredProcedure(newPartner.getGoIdSequence().getGoId());
+				callTheStoredProcedure(goIdSequence.getGoId());
 				String s = "200:Success:200:Success";
 				System.out.println(s);
 				return s;
