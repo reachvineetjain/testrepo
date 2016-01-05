@@ -171,7 +171,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerPrimaryContact.setPrimaryContactTitle(pUser.getTitle());
             partnerPrimaryContact.setPrimaryContactFirstName(pUser.getFirstName());
             partnerPrimaryContact.setPrimaryContactLastName(pUser.getLastName());
-            partnerPrimaryContact.setPrimaryContactEmail(pUser.getEmail());
+          //TODO partnerPrimaryContact.setPrimaryContactEmail(pUser.getEmail());
             partnerPrimaryContact.setPrimaryContactPhone(pUser.getPhone());
             partnerPrimaryContact.setPrimaryContactEmergencyPhone(pUser.getEmergencyPhone());
             partnerPrimaryContact.setPrimaryContactFax(pUser.getFax());
@@ -284,7 +284,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                pUser.setTitle(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactTitle());
                pUser.setFirstName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFirstName());
                pUser.setLastName(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactLastName());
-               pUser.setEmail(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmail());
+             //TODO pUser.setEmail(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmail());
                pUser.setPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactPhone());
                pUser.setEmergencyPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmergencyPhone());
                pUser.setFax(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFax());

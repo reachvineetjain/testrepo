@@ -190,6 +190,12 @@ public class WordPressFormsImpl implements IWordPressForms {
 					partnerProgramRepository.save(partnerProgramList);
 				}
 				if (InternationalPartners.getTypeOfPrograms() != null && !InternationalPartners.getTypeOfPrograms().isEmpty()) {
+
+					partnerAgentInquiry.setTeachAbroad(CCIConstants.INACTIVE);
+					partnerAgentInquiry.setVolunteerAbroad(CCIConstants.INACTIVE);
+					partnerAgentInquiry.setHighSchoolAbroad(CCIConstants.INACTIVE);
+					partnerAgentInquiry.setOther(CCIConstants.INACTIVE);
+
 					for (String it : InternationalPartners.getTypeOfPrograms()) {
 						String[] v = it.split(",");
 						if (v != null) {

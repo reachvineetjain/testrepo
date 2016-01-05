@@ -38,14 +38,9 @@ public class SeasonGeographyConfiguration implements Serializable {
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to FieldStaffLCSeason
-	@OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY)
-	   @Fetch(value = FetchMode.SUBSELECT)
-	private List<FieldStaffLCSeason> fieldStaffLcseasons;
-
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
 	@OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY,cascade = { CascadeType.REMOVE })
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
 	//bi-directional many-to-one association to LookupUSState
@@ -109,28 +104,6 @@ public class SeasonGeographyConfiguration implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-		return this.fieldStaffLcseasons;
-	}
-
-	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-		this.fieldStaffLcseasons = fieldStaffLcseasons;
-	}
-
-	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().add(fieldStaffLcseason);
-		fieldStaffLcseason.setSeasonGeographyConfiguration(this);
-
-		return fieldStaffLcseason;
-	}
-
-	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().remove(fieldStaffLcseason);
-		fieldStaffLcseason.setSeasonGeographyConfiguration(null);
-
-		return fieldStaffLcseason;
 	}
 
 	public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {

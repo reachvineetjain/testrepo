@@ -27,9 +27,9 @@ public class FieldStaffStatus implements Serializable {
 	@OneToMany(mappedBy="fieldStaffStatus")
 	private List<FieldStaff> fieldStaffs;
 
-	//bi-directional many-to-one association to FieldStaffLeadershipSeasonDetail
+	//bi-directional many-to-one association to FieldStaffSeason
 	@OneToMany(mappedBy="fieldStaffStatus")
-	private List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails;
+	private List<FieldStaffSeason> fieldStaffSeasons;
 
 	public FieldStaffStatus() {
 	}
@@ -72,26 +72,26 @@ public class FieldStaffStatus implements Serializable {
 		return fieldStaff;
 	}
 
-	public List<FieldStaffLeadershipSeasonDetail> getFieldStaffLeadershipSeasonDetails() {
-		return this.fieldStaffLeadershipSeasonDetails;
+	public List<FieldStaffSeason> getFieldStaffSeasons() {
+		return this.fieldStaffSeasons;
 	}
 
-	public void setFieldStaffLeadershipSeasonDetails(List<FieldStaffLeadershipSeasonDetail> fieldStaffLeadershipSeasonDetails) {
-		this.fieldStaffLeadershipSeasonDetails = fieldStaffLeadershipSeasonDetails;
+	public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
+		this.fieldStaffSeasons = fieldStaffSeasons;
 	}
 
-	public FieldStaffLeadershipSeasonDetail addFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
-		getFieldStaffLeadershipSeasonDetails().add(fieldStaffLeadershipSeasonDetail);
-		fieldStaffLeadershipSeasonDetail.setFieldStaffStatus(this);
+	public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().add(fieldStaffSeason);
+		fieldStaffSeason.setFieldStaffStatus(this);
 
-		return fieldStaffLeadershipSeasonDetail;
+		return fieldStaffSeason;
 	}
 
-	public FieldStaffLeadershipSeasonDetail removeFieldStaffLeadershipSeasonDetail(FieldStaffLeadershipSeasonDetail fieldStaffLeadershipSeasonDetail) {
-		getFieldStaffLeadershipSeasonDetails().remove(fieldStaffLeadershipSeasonDetail);
-		fieldStaffLeadershipSeasonDetail.setFieldStaffStatus(null);
+	public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().remove(fieldStaffSeason);
+		fieldStaffSeason.setFieldStaffStatus(null);
 
-		return fieldStaffLeadershipSeasonDetail;
+		return fieldStaffSeason;
 	}
 
 }
