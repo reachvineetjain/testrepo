@@ -749,7 +749,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 			if (partnerUsers != null && partnerUsers.size() > 0) {
 				for (PartnerUser puser : partnerUsers) {
 					if (puser.getPartner() != null)
-						if (puser.getPartner().getPartnerGoId() == Integer.valueOf(goId)) {
+						if (puser.getPartner().getPartnerGoId().equals(Integer.valueOf(goId))) {
 							partnerUser = puser;
 							break;
 						}
