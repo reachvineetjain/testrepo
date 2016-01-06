@@ -719,9 +719,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
          if (p != null)
             if (status.equalsIgnoreCase("active"))
-               p.setActive((byte) 1);
+               p.setActive(CCIConstants.ACTIVE);
             else
-               p.setActive((byte) 0);
+               p.setActive(CCIConstants.INACTIVE);
          loginRepository.saveAndFlush(p);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_STATUS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

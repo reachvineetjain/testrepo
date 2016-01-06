@@ -129,9 +129,11 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          login.setKeyValue(UuidUtils.nextHexUUID());
          login.setEmail(partner.getEmail());
          login.setPassword(PasswordUtil.hashKey(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString()));
-         login.setCreatedBy(partner.getLoginId());
+         if (login.getLoginId() != null)
+            login.setCreatedBy(partner.getLoginId());
          login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         login.setModifiedBy(partner.getLoginId());
+         if (login.getLoginId() != null)
+            login.setModifiedBy(partner.getLoginId());
          login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          login = loginRepository.saveAndFlush(login);
 
@@ -141,9 +143,11 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          loginUserType.setUserType(userTypeRepository.findOne(2));
          loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
          loginUserType.setActive(CCIConstants.ACTIVE);
-         loginUserType.setCreatedBy(login.getLoginId());
+         if (login.getLoginId() != null)
+            loginUserType.setCreatedBy(login.getLoginId());
          loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         loginUserType.setModifiedBy(login.getLoginId());
+         if (login.getLoginId() != null)
+            loginUserType.setModifiedBy(login.getLoginId());
          loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          loginUserTypeRepository.saveAndFlush(loginUserType);
 
