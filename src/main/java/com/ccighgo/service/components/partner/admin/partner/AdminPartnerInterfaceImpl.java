@@ -105,12 +105,15 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 	@Autowired
 	EntityManager entityManager;
 
-	public static final Integer PENDING_STATUS = 4;
-	public static final Integer JUNK = 10;
-	public static final Integer BLACKLIST = 3;
-	public static final Integer INVALID = 12;
-	public static final Integer VALID = 11;
-	public static final Integer SEND_LOGIN = 1;
+   public static final Integer PENDING_STATUS = 4;
+   public static final Integer JUNK = 10;
+   public static final Integer BLACKLIST = 3;
+   public static final Integer INVALID = 12;
+   public static final Integer VALID = 11;
+   public static final Integer SEND_LOGIN = 1;
+   
+   public static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
+   public static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
 
 	private static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
 	private static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
