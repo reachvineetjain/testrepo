@@ -11,7 +11,7 @@
 		PartnerAdminF1SeasonDetails,PartnerUserDetails, PartnerUserOffices,PartnerGenericNote,PartnerGenericDeleteNote,PartnerGenericTopic,GenericSeasonsDocuments,GenericPartnerDocument,
 		PartnerStatus,PartnerSeasonDocumentParameters,PartnerAdminIHPSeasonDetails,GenericPartnerSeasonContracts,AdminAddPartner,PartnerSeasonIHPDetail,CCIUsersList,AddedPartners,
 		LeadPartners,PartnerStatusAsPattern,FieldStaffLCList,FieldStaffRMList,FieldStaffSeasons,FieldSatffOverview, AddedFieldStaff,GenericFieldStaffNoteTopic,FieldStaffApplication,
-		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes" />
+		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -1303,6 +1303,14 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/fieldstaff/dashboard/FieldStaffWorkQueueTypes.xsd" />
+		</java>
+	</target>
+
+	<target name="PartnerSeasonStatus">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/PartnerSeasonStatus.xsd" />
 		</java>
 	</target>
 </project>

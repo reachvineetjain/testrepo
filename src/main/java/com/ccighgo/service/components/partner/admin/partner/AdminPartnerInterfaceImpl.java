@@ -94,8 +94,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public static final Integer VALID = 11;
    public static final Integer SEND_LOGIN = 1;
    
-   private static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
-   private static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
+   public static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
+   public static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
 
    @Override
    @Transactional
