@@ -115,8 +115,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
    public static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
 
-	private static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
-	private static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
+	
 
 	@Override
 	@Transactional
