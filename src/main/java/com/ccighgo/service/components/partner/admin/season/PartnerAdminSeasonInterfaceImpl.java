@@ -57,6 +57,7 @@ import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerA
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerAdminSeasonList;
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerSeasonStatus;
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.SeasonStatus;
+import com.ccighgo.service.transport.partner.beans.partner.admin.season.status.Status;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplication;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 import com.ccighgo.utils.CCIConstants;
@@ -816,6 +817,30 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          }
       }
       return updatedObject;
+   }
+
+   @Override
+   public com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus getPartnerSeasonStatuses() {
+      com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus seasonStatusList = new com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus();
+      try{
+         List<PartnerStatus> partnerStatusList = partnerStatusRepository.getPartnerSeasonStatus(CCIConstants.ACTIVE);
+         if(partnerStatusList!=null && !(partnerStatusList.isEmpty())){
+            List<Status> partnerSeasonStatuses = new ArrayList<Status>();
+            for(PartnerStatus ps:partnerStatusList){
+               Status s = new Status();
+               s.setStatusId(ps.getPartnerStatusId());
+               s.setStatusValue(ps.getPartnerStatusName());
+               partnerSeasonStatuses.add(s);
+            }
+            seasonStatusList.getPartnerSeasonStatuses().addAll(partnerSeasonStatuses);
+            seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      }catch (CcighgoException e) {
+         seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               "error occured while getting status list"));
+      }
+      return seasonStatusList;
    }
    
 }

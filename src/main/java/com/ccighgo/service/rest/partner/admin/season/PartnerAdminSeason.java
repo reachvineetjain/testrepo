@@ -23,6 +23,7 @@ import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.OperatingAgreement;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerAdminJ1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerAdminSeasonList;
+import com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 
 /**
@@ -215,6 +216,17 @@ public class PartnerAdminSeason {
    @Produces("application/json")
    public Response deleteAdminSeasonAgreement(@PathParam("partnerSeasonContractId") String partnerSeasonContractId) {
       return partnerAdminSeasonInterface.deleteAdminSeasonAgreement(partnerSeasonContractId);
+   }
+   
+   /**
+    * @return
+    */
+   @GET
+   @Path("status/list")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public PartnerSeasonStatus getPartnerSeasonStatuses() {
+      return partnerAdminSeasonInterface.getPartnerSeasonStatuses();
    }
 
 }
