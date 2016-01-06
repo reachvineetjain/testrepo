@@ -3,8 +3,12 @@ package com.ccighgo.service.soap.wordpress.forms;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
@@ -56,7 +60,12 @@ public class WordPressFormsImpl implements IWordPressForms {
 	PartnerReviewStatusRepository partnerReviewStatusRepository;
 	@Autowired
 	PartnerStatusRepository partnerStatusRepository;
+	@Autowired
+	EntityManager entityManager;
 
+	private static final String SP_UPDATING_ADMIN_WORK_QUEUE = "CALL SPAdminWQPartnerApplicationSubmitted(?)";
+
+	@Transactional
 	@Override
 	public String InquiryPartner(InternationalPartners InternationalPartners) {
 		try {
@@ -232,8 +241,8 @@ public class WordPressFormsImpl implements IWordPressForms {
 				reviewStatus.setPartner(newPartner);
 				reviewStatus.setPartnerStatus1(status);
 				partnerReviewStatusRepository.saveAndFlush(reviewStatus);
-
 				partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
+				callTheStoredProcedure(goIdSequence.getGoId());
 				String s = "200:Success:200:Success";
 				System.out.println(s);
 				return s;
@@ -249,6 +258,18 @@ public class WordPressFormsImpl implements IWordPressForms {
 			System.out.println(string);
 			return string;
 		}
+	}
+
+	private void callTheStoredProcedure(Integer goId) {
+		try {
+			Query query = entityManager.createNativeQuery(SP_UPDATING_ADMIN_WORK_QUEUE);
+			query.setParameter(1, Integer.valueOf(goId));
+			query.executeUpdate();
+		} catch (Exception e) {
+			ExceptionUtil.logException(e, LOGGER);
+			System.out.println("Error Executing the Stored Procedure !!");
+		}
+
 	}
 
 	private void print(InternationalPartners internationalPartners) {
