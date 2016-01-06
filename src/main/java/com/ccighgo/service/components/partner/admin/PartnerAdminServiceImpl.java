@@ -521,6 +521,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partner.getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
                partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partner.getQuickbooksCode());
             try {
+            	if(partnerPrograms!=null)
                for (PartnerProgram partnerProgram : partnerPrograms) {
                   CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
                   cciContact.setUserName(partnerProgram.getCcistaffUser().getFirstName());
