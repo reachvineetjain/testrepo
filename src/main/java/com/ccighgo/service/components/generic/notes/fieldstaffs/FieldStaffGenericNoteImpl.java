@@ -108,12 +108,15 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
          if (notes != null) {
             for (com.ccighgo.db.entities.FieldStaffNote n : notes) {
                FieldStaffNote note = new FieldStaffNote();
+               if(n.getFieldStaff()!=null)
+               {
                note.setFieldStaffNoteId(n.getFieldStaffNoteId());
                note.setFieldStaffGoId(n.getFieldStaff().getFieldStaffGoId());
                note.setFieldStaffNoteTopicId(n.getFieldStaffNoteTopic().getFieldStaffNoteTopicsId());;
                note.setNoteValue(n.getFieldStaffNote());
                note.setRead(n.getHasRead() == CCIConstants.ACTIVE);
                note.setCreatedOn(DateUtils.getDateAndTime(n.getCreatedOn()));
+               }
                UserInformationOfCreatedBy userInfo = reusedFunctions.getPartnerCreatedByInformation(n.getCreatedBy());
                if (userInfo != null) {
                   UploadedByUser user = new UploadedByUser();

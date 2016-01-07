@@ -909,6 +909,7 @@ public class PartnerServiceImpl implements PartnerService {
             additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
+           if( partnerAgentInquiry.getBusinessYears()!=null)
             additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
             additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
             additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
