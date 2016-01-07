@@ -879,7 +879,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                ad.setFlagUrl(String.valueOf(dr[12]));
                ad.setSunmittedOn(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
                ad.setFollowUpDate(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
-               ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
                if (String.valueOf(dr[15]) != null)
                   ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
                rca.getChangeInAllocation().add(ad);
