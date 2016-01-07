@@ -54,8 +54,8 @@ public class InternationalPartners {
 	protected String descriptionOfPrograms;
 	@XmlElement(name = "hearedAboutUs")
 	protected String hearedAboutUs;
-	@XmlElement(name = "ambassadorScholershipParticipants")
-	protected Boolean ambassadorScholershipParticipants;
+	@XmlElement(name = "ambassadorScholarship")
+	protected Boolean ambassadorScholarship;
 
 	public String getLegalBusinessName() {
 		return legalBusinessName;
@@ -201,12 +201,14 @@ public class InternationalPartners {
 		this.valueOfCountry = valueOfCountry;
 	}
 
-	public Boolean getAmbassadorScholershipParticipants() {
-		return ambassadorScholershipParticipants;
+	public Boolean getAmbassadorScholarship() {
+		return ambassadorScholarship;
 	}
 
-	public void setAmbassadorScholershipParticipants(Boolean ambassadorScholershipParticipants) {
-		this.ambassadorScholershipParticipants = ambassadorScholershipParticipants;
+	public void setAmbassadorScholarship(Boolean ambassadorScholarship) {
+		this.ambassadorScholarship = ambassadorScholarship;
 	}
+
+	
 
 }

@@ -116,8 +116,8 @@ public class WordPressFormsImpl implements IWordPressForms {
 					partnerAgentInquiry.setCurrentlyOfferingPrograms(InternationalPartners.getDescriptionOfPrograms());
 				if (InternationalPartners.getCurrentlySendingParticipant() != null)
 					partnerAgentInquiry.setCurrentlySendingParticipantToUS(InternationalPartners.getCurrentlySendingParticipant() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-				if (InternationalPartners.getAmbassadorScholershipParticipants() != null)
-					partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholershipParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+				if (InternationalPartners.getAmbassadorScholarship() != null)
+					partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholarship() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
 				if (InternationalPartners.getWebsite() != null)
 					partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
 
