@@ -107,7 +107,17 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setCity(InternationalPartners.getCity());
 				partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
 				partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-				partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
+				if(InternationalPartners.getHearedAboutUs()!=null){
+					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
+					if(val!=null && val.length >1){
+						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equals("1")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+					}
+					else{
+						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+					}
+					
+				}
 				partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
 				partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
