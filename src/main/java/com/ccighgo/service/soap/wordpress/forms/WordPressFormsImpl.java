@@ -111,7 +111,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
 					if(val!=null && val.length >1){
 						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equals("1")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
 					}
 					else{
 						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
