@@ -107,15 +107,27 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setCity(InternationalPartners.getCity());
 				partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
 				partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-				partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
+				if(InternationalPartners.getHearedAboutUs()!=null){
+					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
+					if(val!=null && val.length >1){
+						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+					}
+					else{
+						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+					}
+					
+				}
 				partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
 				partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
 				partnerAgentInquiry.setPhone(InternationalPartners.getPhone());
+				if (InternationalPartners.getDescriptionOfPrograms() != null)
+					partnerAgentInquiry.setCurrentlyOfferingPrograms(InternationalPartners.getDescriptionOfPrograms());
 				if (InternationalPartners.getCurrentlySendingParticipant() != null)
 					partnerAgentInquiry.setCurrentlySendingParticipantToUS(InternationalPartners.getCurrentlySendingParticipant() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-				if (InternationalPartners.getAmbassadorScholershipParticipants() != null)
-					partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholershipParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+				if (InternationalPartners.getAmbassadorScholarship() != null)
+					partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholarship() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
 				if (InternationalPartners.getWebsite() != null)
 					partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
 
@@ -277,7 +289,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 		System.out.println("address2 : " + internationalPartners.getAddress2());
 		System.out.println("city :" + internationalPartners.getCity());
 		System.out.println("country : " + internationalPartners.getValueOfCountry());
-
+System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarship());
 		System.out.println("description OF programs :" + internationalPartners.getDescriptionOfPrograms());
 		System.out.println("Email: " + internationalPartners.getEmail());
 		System.out.println("first Name: " + internationalPartners.getFirstName());
