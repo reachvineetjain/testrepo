@@ -55,6 +55,7 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 
                if (tempGoID != goId) {
                   FieldStaffLC fslc = new FieldStaffLC();
+                  if(String.valueOf(obj[0])!=null)
                   fslc.setFsLcGoId(Integer.valueOf(String.valueOf(obj[0])));
                   fslc.setFirstName(String.valueOf(obj[1]));
                   fslc.setLastName(String.valueOf(obj[2]));

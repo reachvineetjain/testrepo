@@ -115,58 +115,60 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
    public static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
 
-	
+   @Override
+   @Transactional
+   public Response addPartner(AdminAddPartner partner, HttpServletRequest request) {
+      Response resp = new Response();
+      try {
+         if (partner == null) {
+            throw new CcighgoException("null/empty data");
+         }
+         if (partner.getLoginId() == 0 || partner.getLoginId() < 0) {
+            throw new CcighgoException("Id of user adding the partner is required.");
+         }
+         if (partner.getPartnerCountry() == null) {
+            throw new CcighgoException("Country is required.");
+         }
+         Login checkLoginNameExists = loginRepository.findByLoginName(partner.getUserName());
+         if (checkLoginNameExists != null) {
+            throw new CcighgoException("A user with specified user/login name already exists, please specify different user/login name.");
+         }
+         Login checkEmailExists = loginRepository.findByEmail(partner.getEmail());
+         if (checkEmailExists != null) {
+            throw new CcighgoException("A user with specified email id already exists, please specify different email.");
+         }
+         // create login
+         Login login = new Login();
+         login.setActive(partner.isSendLogin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         GoIdSequence goIdSequence = new GoIdSequence();
+         goIdSequence = goIdSequenceRepository.saveAndFlush(goIdSequence);
+         login.setGoIdSequence(goIdSequence);
+         login.setLoginName(partner.getUserName());
+         login.setKeyValue(UuidUtils.nextHexUUID());
+         login.setEmail(partner.getEmail());
+         login.setPassword(PasswordUtil.hashKey(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString()));
+         if (login.getLoginId() != null)
+            login.setCreatedBy(partner.getLoginId());
+         login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         if (login.getLoginId() != null)
+            login.setModifiedBy(partner.getLoginId());
+         login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         login = loginRepository.saveAndFlush(login);
 
-	@Override
-	@Transactional
-	public Response addPartner(AdminAddPartner partner, HttpServletRequest request) {
-		Response resp = new Response();
-		try {
-			if (partner == null) {
-				throw new CcighgoException("null/empty data");
-			}
-			if (partner.getLoginId() == 0 || partner.getLoginId() < 0) {
-				throw new CcighgoException("Id of user adding the partner is required.");
-			}
-			if (partner.getPartnerCountry() == null) {
-				throw new CcighgoException("Country is required.");
-			}
-			Login checkLoginNameExists = loginRepository.findByLoginName(partner.getUserName());
-			if (checkLoginNameExists != null) {
-				throw new CcighgoException("A user with specified user/login name already exists, please specify different user/login name.");
-			}
-			Login checkEmailExists = loginRepository.findByEmail(partner.getEmail());
-			if (checkEmailExists != null) {
-				throw new CcighgoException("A user with specified email id already exists, please specify different email.");
-			}
-			// create login
-			Login login = new Login();
-			login.setActive(partner.isSendLogin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-			GoIdSequence goIdSequence = new GoIdSequence();
-			goIdSequence = goIdSequenceRepository.saveAndFlush(goIdSequence);
-			login.setGoIdSequence(goIdSequence);
-			login.setLoginName(partner.getUserName());
-			login.setKeyValue(UuidUtils.nextHexUUID());
-			login.setEmail(partner.getEmail());
-			login.setPassword(PasswordUtil.hashKey(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString()));
-			login.setCreatedBy(partner.getLoginId());
-			login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-			login.setModifiedBy(partner.getLoginId());
-			login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-			login = loginRepository.saveAndFlush(login);
-
-			// set login user type
-			LoginUserType loginUserType = new LoginUserType();
-			loginUserType.setLogin(login);
-			loginUserType.setUserType(userTypeRepository.findOne(2));
-			loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
-			loginUserType.setActive(CCIConstants.ACTIVE);
-			loginUserType.setCreatedBy(login.getLoginId());
-			loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-			loginUserType.setModifiedBy(login.getLoginId());
-			loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-			loginUserTypeRepository.saveAndFlush(loginUserType);
-
+         // set login user type
+         LoginUserType loginUserType = new LoginUserType();
+         loginUserType.setLogin(login);
+         loginUserType.setUserType(userTypeRepository.findOne(2));
+         loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
+         loginUserType.setActive(CCIConstants.ACTIVE);
+         if (login.getLoginId() != null)
+            loginUserType.setCreatedBy(login.getLoginId());
+         loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         if (login.getLoginId() != null)
+            loginUserType.setModifiedBy(login.getLoginId());
+         loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         loginUserTypeRepository.saveAndFlush(loginUserType);
+         
 			Partner newPartner = new Partner();
 			newPartner.setPartnerGoId(goIdSequence.getGoId());
 			newPartner.setPartnerLogo(partner.getCompanyLogo());
