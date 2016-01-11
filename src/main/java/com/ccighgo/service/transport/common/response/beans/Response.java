@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 
 
 /**
@@ -42,7 +41,7 @@ import com.ccighgo.service.transport.partner.beans.partner.season.admin.applicat
     "status"
 })
 @XmlSeeAlso({
-    PartnerAdminSeasonApplicationList.class
+
 })
 public class Response {
 

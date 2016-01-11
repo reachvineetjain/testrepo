@@ -80,11 +80,11 @@ public class PartnerAdmin {
    }
 
    @GET
-   @Path("workQueueCategory/{adminWorkQueueTypeId}")
+   @Path("workQueueCategory/{adminWorkQueueTypeId}/{loginId}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId) {
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId,@PathParam("loginId") String loginId) {
       LOGGER.debug("fun : getWorkQueueCategory []");
-      return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId));
+      return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId),Integer.parseInt(loginId));
    }
 
    // TODO

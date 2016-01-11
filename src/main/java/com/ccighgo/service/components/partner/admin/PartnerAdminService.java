@@ -56,7 +56,7 @@ public interface PartnerAdminService {
 
    AdminPartnerWorkQueueType getWorkQueueType(String roleType);
 
-   AdminPartnerWorkQueueCategory getWorkQueueCategory(int typeId);
+   AdminPartnerWorkQueueCategory getWorkQueueCategory(int typeId, int userId);
 
    PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int agentId);
 

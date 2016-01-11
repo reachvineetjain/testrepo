@@ -91,7 +91,6 @@ public class FieldStaffs {
    @Path("quickstatsTitle")
    @Produces("application/json")
    public FieldStaffDashboardQuickStatsTitles getQuickStatsTitle() {
-
       return null;
    }
 
