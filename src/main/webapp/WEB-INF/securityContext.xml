@@ -61,6 +61,7 @@
             /services/fs/season/**=anon
             /services/fieldstaffgenericnote/**=anon
             /services/fieldstaff/**=anon
+            /services/fsl/details/**=anon
             /services/**=authc
          </value>
       </property>

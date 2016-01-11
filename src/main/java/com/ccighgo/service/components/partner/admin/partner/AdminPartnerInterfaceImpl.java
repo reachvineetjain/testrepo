@@ -147,11 +147,9 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          login.setKeyValue(UuidUtils.nextHexUUID());
          login.setEmail(partner.getEmail());
          login.setPassword(PasswordUtil.hashKey(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString()));
-         if (login.getLoginId() != null)
-            login.setCreatedBy(partner.getLoginId());
+         login.setCreatedBy(partner.getLoginId());
          login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         if (login.getLoginId() != null)
-            login.setModifiedBy(partner.getLoginId());
+         login.setModifiedBy(partner.getLoginId());
          login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          login = loginRepository.saveAndFlush(login);
 
