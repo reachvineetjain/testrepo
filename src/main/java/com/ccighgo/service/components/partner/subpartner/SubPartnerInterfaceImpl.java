@@ -168,12 +168,15 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				List<SubPartnerSeasons> subPartnerSeasonsList = new ArrayList<SubPartnerSeasons>();
 				if (subPartner.getPartnerSeasons() != null && subPartner.getPartnerSeasons().size() > 0) {
 					for (PartnerSeason partnerSeason : subPartner.getPartnerSeasons()) {
-						SubPartnerSeasons SubPartnerSeasons = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons();
-						SubPartnerSeasons.setSubPartnerSeasonId(partnerSeason.getPartnerSeasonId());
-						SubPartnerSeasons.setSubPartnerSeasonProgramId(partnerSeason.getSeason().getSeasonId());
-						SubPartnerSeasons.setSubPartnerSeasonProgram(partnerSeason.getSeason().getSeasonName());
-						subPartnerSeasonsList.add(SubPartnerSeasons);
-					}
+                  if (partnerSeason.getPartnerStatus1() != null)
+                     if (partnerSeason.getPartnerStatus1().getPartnerStatusId() == 5) {
+                        SubPartnerSeasons SubPartnerSeasons = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons();
+                        SubPartnerSeasons.setSubPartnerSeasonId(partnerSeason.getPartnerSeasonId());
+                        SubPartnerSeasons.setSubPartnerSeasonProgramId(partnerSeason.getSeason().getSeasonId());
+                        SubPartnerSeasons.setSubPartnerSeasonProgram(partnerSeason.getSeason().getSeasonName());
+                        subPartnerSeasonsList.add(SubPartnerSeasons);
+                     }
+               }
 				}
 				sp.getSubPartnerSeasons().addAll(subPartnerSeasonsList);
 				subPartnerDetails.getSubPartners().add(sp);
