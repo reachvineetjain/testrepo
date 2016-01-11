@@ -27,6 +27,7 @@ import com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
+import com.ccighgo.jpa.repositories.ParticipantRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
 import com.ccighgo.jpa.repositories.PartnerMessagesRepository;
@@ -93,52 +94,32 @@ public class PartnerServiceImpl implements PartnerService {
 
    private static final Logger LOGGER = Logger.getLogger(PartnerServiceImpl.class);
 
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired CommonComponentUtils componentUtils;
 
-   @Autowired
-   PartnerRepository partnerRepository;
-   @Autowired
-   LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
-   @Autowired
-   PartnerWorkQueueRepository partnerWorkQueueRepository;
-   @Autowired
-   PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
-   @Autowired
-   PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
-   @Autowired
-   PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
-   @Autowired
-   PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
-   @Autowired
-   PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
-   @Autowired
-   PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
-   @Autowired
-   PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
-   @Autowired
-   PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
+   @Autowired PartnerRepository partnerRepository;
+   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
+   @Autowired PartnerWorkQueueRepository partnerWorkQueueRepository;
+   @Autowired PartnerWorkQueueTypeRepository partnerWorkQueueTypeRepository;
+   @Autowired PartnerWorkQueueTypeAggregateRepository partnerWorkQueueTypeAggregateRepository;
+   @Autowired PartnerWorkQueueCategoryRepository partnerWorkQueueCategoryRepository;
+   @Autowired PartnerWorkQueueCategoryAggregateRepository partnerWorkQueueCategoryAggregateRepository;
+   @Autowired PartnerQuickStatsTypeRepository partnerQuickStatsTypeRepository;
+   @Autowired PartnerQuickStatsCategoryRepository partnerQuickStatsCategoryRepository;
+   @Autowired PartnerQuickStatsTypeAggregateRepository partnerQuickStatsTypeAggregateRepository;
+   @Autowired PartnerQuickStatsCategoryAggregateRepository partnerQuickStatsCategoryAggregateRepository;
 
-   @Autowired
-   PartnerAgentInquiryRepository partnerAgentInquiryRepository;
-   @Autowired
-   PartnerReviewStatusRepository partnerReviewStatusRepository;
-   @Autowired
-   PartnerProgramRepository partnerProgramRepository;
-   @Autowired
-   PartnerMessagesRepository partnerMessagesRepository;
-   @Autowired
-   PartnerOfficeRepository partnerOfficeRepository;
-   @Autowired
-   PartnerReferenceCheckRepository partnerReferenceCheckRepository;
-   @Autowired
-   PartnerDocumentsRepository partnerDocumentsRepository;
-   @Autowired
-   PartnerNoteRepository partnerNoteRepository;
-   @Autowired
-   PartnerPermissionRepository partnerPermissionRepository;
+   @Autowired PartnerAgentInquiryRepository partnerAgentInquiryRepository;
+   @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
+   @Autowired PartnerProgramRepository partnerProgramRepository;
+   @Autowired PartnerMessagesRepository partnerMessagesRepository;
+   @Autowired PartnerOfficeRepository partnerOfficeRepository;
+   @Autowired PartnerReferenceCheckRepository partnerReferenceCheckRepository;
+   @Autowired PartnerDocumentsRepository partnerDocumentsRepository;
+   @Autowired PartnerNoteRepository partnerNoteRepository;
+   @Autowired PartnerPermissionRepository partnerPermissionRepository;
+
+   @Autowired ParticipantRepository participantRepository;
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
@@ -439,37 +420,62 @@ public class PartnerServiceImpl implements PartnerService {
                         List<PartnerSeasonAllocation> j1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (j1Allocations != null) {
                            J1HSAllocation allocation = new J1HSAllocation();
-                           int totalUnGuarant = 0;
-                           int augStartUnGuarnteedParticipants = 0;
-                           int janStartUnGuarnteedParticipants = 0;
-                           int totalGurant = 0;
-                           int augStartGuarnteedParticipants = 0;
-                           int janStartGuarnteedParticipants = 0;
+
+                           int totalUnGuarantNumerator = 0;
+                           int augStartUnGuarnteedParticipantsNumerator = 0;
+                           int janStartUnGuarnteedParticipantsNumerator = 0;
+                           int totalGurantNumerator = 0;
+                           int augStartGuarnteedParticipantsNumerator = 0;
+                           int janStartGuarnteedParticipantsNumerator = 0;
+                           int totalUnGuarantDenominator = 0;
+                           int augStartUnGuarnteedParticipantsDenominator = 0;
+                           int janStartUnGuarnteedParticipantsDenominator = 0;
+                           int totalGurantDenominator = 0;
+                           int augStartGuarnteedParticipantsDenominator = 0;
+                           int janStartGuarnteedParticipantsDenominator = 0;
                            for (PartnerSeasonAllocation psa : j1Allocations) {
                               if (psa.getDepartmentProgramOption() != null) {
                                  if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                                     if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                                       augStartUnGuarnteedParticipants = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
-                                       totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
-                                       augStartGuarnteedParticipants = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
-
+                                       augStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason
+                                             .getSeason().getSeasonId());
+                                       totalUnGuarantNumerator += augStartUnGuarnteedParticipantsNumerator;
+                                       augStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
+                                       totalUnGuarantDenominator += augStartUnGuarnteedParticipantsDenominator > 0 ? augStartUnGuarnteedParticipantsDenominator : 0;
+                                       augStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason
+                                             .getSeason().getSeasonId());
+                                       totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
+                                       augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                       totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
                                     }
                                     if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                                       janStartUnGuarnteedParticipants = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
-                                       totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
-                                       janStartGuarnteedParticipants = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
+                                       janStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason
+                                             .getSeason().getSeasonId());
+                                       totalUnGuarantNumerator += janStartUnGuarnteedParticipantsNumerator;
+                                       janStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
+                                       totalUnGuarantDenominator += janStartUnGuarnteedParticipantsDenominator > 0 ? janStartUnGuarnteedParticipantsDenominator : 0;
+                                       janStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason
+                                             .getSeason().getSeasonId());
+                                       totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
+                                       janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                       totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
                                     }
                                  }
                               }
                            }
-                           allocation.setAugStartUnguaranteed(augStartUnGuarnteedParticipants);
-                           allocation.setJanStartUnguaranteed(janStartUnGuarnteedParticipants);
-                           allocation.setTotalUnguaranteed(totalUnGuarant);
-                           allocation.setAugStartGuaranteed(augStartGuarnteedParticipants);
-                           allocation.setJanStartGuaranteed(janStartGuarnteedParticipants);
-                           allocation.setTotalGuaranteed(totalGurant);
+                           allocation.setAugStartUnguaranteedNumerator(augStartUnGuarnteedParticipantsNumerator);
+                           allocation.setJanStartUnguaranteedNumerator(janStartUnGuarnteedParticipantsNumerator);
+                           allocation.setTotalUnguaranteedNumerator(totalUnGuarantNumerator);
+                           allocation.setAugStartGuaranteedNumerator(augStartGuarnteedParticipantsNumerator);
+                           allocation.setJanStartGuaranteedNumerator(janStartGuarnteedParticipantsNumerator);
+                           allocation.setTotalGuaranteedNumerator(totalGurantNumerator);
+
+                           allocation.setAugStartUnguaranteedDenominator(augStartUnGuarnteedParticipantsDenominator);
+                           allocation.setJanStartUnguaranteedDenominator(janStartUnGuarnteedParticipantsDenominator);
+                           allocation.setTotalUnguaranteedDenominator(totalUnGuarantDenominator);
+                           allocation.setAugStartGuaranteedDenominator(augStartGuarnteedParticipantsDenominator);
+                           allocation.setJanStartGuaranteedDenominator(janStartGuarnteedParticipantsDenominator);
+                           allocation.setTotalGuaranteedDenominator(totalGurantDenominator);
                            prg.setAllocation(allocation);
                         }
                         partnerJ1HSProgramsList.add(prg);
@@ -619,27 +625,39 @@ public class PartnerServiceImpl implements PartnerService {
                         List<PartnerSeasonAllocation> f1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (f1Allocations != null) {
                            F1Allocation allocation = new F1Allocation();
-                           int totalGurant = 0;
-                           int augStartGuarnteedParticipants = 0;
-                           int janStartGuarnteedParticipants = 0;
+                           int totalGurantNumerator = 0;
+                           int augStartGuarnteedParticipantsNumerator = 0;
+                           int janStartGuarnteedParticipantsNumerator = 0;
+                           int totalGurantDenominator = 0;
+                           int augStartGuarnteedParticipantsDenominator = 0;
+                           int janStartGuarnteedParticipantsDenominator = 0;
                            for (PartnerSeasonAllocation psa : f1Allocations) {
                               if (psa.getDepartmentProgramOption() != null) {
                                  if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                                     if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-                                       augStartGuarnteedParticipants = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
+                                       augStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1AugParticipantCount(partner.getPartnerGoId(), partSeason
+                                             .getSeason().getSeasonId());
+                                       totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
+                                       augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                       totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
 
                                     }
                                     if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-                                       janStartGuarnteedParticipants = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
+                                       janStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1JanParticipantCount(partner.getPartnerGoId(), partSeason
+                                             .getSeason().getSeasonId());
+                                       totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
+                                       janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                       totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
                                     }
                                  }
                               }
                            }
-                           allocation.setAugStartGuaranteed(augStartGuarnteedParticipants);
-                           allocation.setJanStartGuaranteed(janStartGuarnteedParticipants);
-                           allocation.setTotalGuaranteed(totalGurant);
+                           allocation.setAugStartGuaranteedNumerator(augStartGuarnteedParticipantsNumerator);
+                           allocation.setJanStartGuaranteedNumerator(janStartGuarnteedParticipantsNumerator);
+                           allocation.setTotalGuaranteedNumerator(totalGurantNumerator);
+                           allocation.setAugStartGuaranteedDenominator(augStartGuarnteedParticipantsDenominator);
+                           allocation.setJanStartGuaranteedDenominator(janStartGuarnteedParticipantsDenominator);
+                           allocation.setTotalGuaranteedDenominator(totalGurantDenominator);
                            prg.setAllocation(allocation);
                         }
                         partnerF1ProgramsList.add(prg);
@@ -909,8 +927,8 @@ public class PartnerServiceImpl implements PartnerService {
             additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
             additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
-           if( partnerAgentInquiry.getBusinessYears()!=null)
-            additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
+            if (partnerAgentInquiry.getBusinessYears() != null)
+               additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
             additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
             additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
 

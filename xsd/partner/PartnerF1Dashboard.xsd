@@ -102,9 +102,12 @@
 
    <xsd:complexType name="F1Allocation">
       <xsd:sequence>
-         <xsd:element name="augStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="janStartGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalGuaranteed" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augStartGuaranteedNumerator" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="augStartGuaranteedDenominator" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartGuaranteedNumerator" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="janStartGuaranteedDenominator" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalGuaranteedNumerator" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalGuaranteedDenominator" type="xsd:int" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

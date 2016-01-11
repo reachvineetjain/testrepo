@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerSeasonContract;
 import com.ccighgo.db.entities.PartnerSeasonDocument;
 import com.ccighgo.db.entities.PartnerStatus;
@@ -176,8 +177,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                   pas.setProgramStartDate(DateUtils.getTimestamp(ps.getPartnerSeasonStartDate()));
                   pas.setProgramEndDate(DateUtils.getTimestamp(ps.getPartnerSeasonEndDate()));
                   pas.setAppDeadlineDate(DateUtils.getTimestamp(ps.getPartnerSeasonAppDeadlineDate()));
-                  if(ps.getPartnerSeasonContracts()!=null && !ps.getPartnerSeasonContracts().isEmpty()){
-                     pas.setSignedContract(ps.getPartnerSeasonContracts().get(0).getIsSigned() == CCIConstants.ACTIVE ? true : false); 
+                  if (ps.getPartnerSeasonContracts() != null && !ps.getPartnerSeasonContracts().isEmpty()) {
+                     pas.setSignedContract(ps.getPartnerSeasonContracts().get(0).getIsSigned() == CCIConstants.ACTIVE ? true : false);
                   }
                   partnerAdminSeasons.add(pas);
                }
@@ -223,7 +224,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                application.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
                application.setAcronym(obj[3].toString());
                application.setDeptProgramName(obj[4].toString());
-              // application.setDeptName(obj[5].toString());
+               // application.setDeptName(obj[5].toString());
                application.setStartDate(obj[5].toString());
                application.setEndDate(obj[6].toString());
                application.setAppDeadlineDate(obj[7].toString());
@@ -460,7 +461,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          try {
             List<PartnerSeason> partnerSeasonsList = new ArrayList<PartnerSeason>();
             for (PartnerAdminSeasonApplication season : partnerAdminSeasonApplicationList.getPartnerSeasonApplication()) {
-               // discussed with phani setting only season, department program and boolean fields to false
+               // discussed with phani setting only season, department program
+               // and boolean fields to false
                PartnerSeason ps = new PartnerSeason();
                ps.setPartner(partnerRepository.findOne(partnerAdminSeasonApplicationList.getPartnerGoId()));
                ps.setSeason(seasonRepository.findOne(Integer.valueOf(season.getSeasonId())));
@@ -526,6 +528,27 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(partnerAdminJ1SeasonDetails.getDates().getPartValExtSecondSemDeadlineDate()));
                partnerSeason.setPartnerSeasonSecSemDeadlineDate(DateUtils.getDateFromString(partnerAdminJ1SeasonDetails.getDates().getPartValSecondSemDeadlineDate()));
                partnerSeason = partnerSeasonsRepository.saveAndFlush(partnerSeason);
+
+               if (partnerAdminJ1SeasonDetails.getProgramAllocations() != null) {
+                  if (partnerAdminJ1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionAUGFYId() > 0) {
+                     PartnerSeasonAllocation allocation = partnerSeasonAllocationRepository.findByPartnerSeasonAndDepartmetProgramOptionId(partnerSeason.getPartnerSeasonId(),
+                           partnerAdminJ1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionAUGFYId());
+                     if (allocation != null) {
+                        allocation.setMaxPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getAugStartMaxUnguaranteedPax());
+                        allocation.setMaxGuaranteedPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getAugStartMaxGuaranteedPax());
+                        partnerSeasonAllocationRepository.saveAndFlush(allocation);
+                     }
+                  }
+                  if (partnerAdminJ1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionJANFYId() > 0) {
+                     PartnerSeasonAllocation allocation = partnerSeasonAllocationRepository.findByPartnerSeasonAndDepartmetProgramOptionId(partnerSeason.getPartnerSeasonId(),
+                           partnerAdminJ1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionJANFYId());
+                     if (allocation != null) {
+                        allocation.setMaxPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getAugStartMaxUnguaranteedPax());
+                        allocation.setMaxGuaranteedPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getAugStartMaxGuaranteedPax());
+                        partnerSeasonAllocationRepository.saveAndFlush(allocation);
+                     }
+                  }
+               }
                updatedObject = getPartnerAdminJ1Details(String.valueOf(partnerSeason.getPartner().getPartnerGoId()), String.valueOf(partnerSeason.getPartnerSeasonId()));
                updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -571,6 +594,25 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(partnerAdminF1SeasonDetails.getDates().getPartValExtSecondSemDeadlineDate()));
                partnerSeason.setPartnerSeasonSecSemDeadlineDate(DateUtils.getDateFromString(partnerAdminF1SeasonDetails.getDates().getPartValSecondSemDeadlineDate()));
                partnerSeason = partnerSeasonsRepository.saveAndFlush(partnerSeason);
+
+               if (partnerAdminF1SeasonDetails.getProgramAllocations() != null) {
+                  if (partnerAdminF1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionAUGFYId() > 0) {
+                     PartnerSeasonAllocation allocation = partnerSeasonAllocationRepository.findByPartnerSeasonAndDepartmetProgramOptionId(partnerSeason.getPartnerSeasonId(),
+                           partnerAdminF1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionAUGFYId());
+                     if (allocation != null) {
+                        allocation.setMaxGuaranteedPax(partnerAdminF1SeasonDetails.getProgramAllocations().getAugStartMaxGuaranteedPax());
+                        partnerSeasonAllocationRepository.saveAndFlush(allocation);
+                     }
+                  }
+                  if (partnerAdminF1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionJANFYId() > 0) {
+                     PartnerSeasonAllocation allocation = partnerSeasonAllocationRepository.findByPartnerSeasonAndDepartmetProgramOptionId(partnerSeason.getPartnerSeasonId(),
+                           partnerAdminF1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionJANFYId());
+                     if (allocation != null) {
+                        allocation.setMaxGuaranteedPax(partnerAdminF1SeasonDetails.getProgramAllocations().getAugStartMaxGuaranteedPax());
+                        partnerSeasonAllocationRepository.saveAndFlush(allocation);
+                     }
+                  }
+               }
                updatedObject = getPartnerAdminF1Details(String.valueOf(partnerSeason.getPartner().getPartnerGoId()), String.valueOf(partnerSeason.getPartnerSeasonId()));
                updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -706,7 +748,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
       }
       return resp;
    }
-   
+
    @Override
    @Modifying
    @Transactional
@@ -731,7 +773,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public PartnerAdminIHPSeasonDetails getPartnerAdminIHPDetails(String partnerGoId, String partnerSeasonId) {
       PartnerAdminIHPSeasonDetails adminIHPSeasonDetails = new PartnerAdminIHPSeasonDetails();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
@@ -831,11 +873,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    @Override
    public com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus getPartnerSeasonStatuses() {
       com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus seasonStatusList = new com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus();
-      try{
+      try {
          List<PartnerStatus> partnerStatusList = partnerStatusRepository.getPartnerSeasonStatus(CCIConstants.ACTIVE);
-         if(partnerStatusList!=null && !(partnerStatusList.isEmpty())){
+         if (partnerStatusList != null && !(partnerStatusList.isEmpty())) {
             List<Status> partnerSeasonStatuses = new ArrayList<Status>();
-            for(PartnerStatus ps:partnerStatusList){
+            for (PartnerStatus ps : partnerStatusList) {
                Status s = new Status();
                s.setStatusId(ps.getPartnerStatusId());
                s.setStatusValue(ps.getPartnerStatusName());
@@ -845,11 +887,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
-      }catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
                "error occured while getting status list"));
       }
       return seasonStatusList;
    }
-   
+
 }
