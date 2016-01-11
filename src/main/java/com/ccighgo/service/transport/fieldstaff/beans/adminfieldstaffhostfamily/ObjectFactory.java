@@ -6,7 +6,7 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the com.ccighgo.service.transport.common.response.beans package. 
+ * generated in the com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -30,42 +30,26 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ccighgo.service.transport.common.response.beans
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily
      * 
      */
     public ObjectFactory() {
     }
 
     /**
-     * Create an instance of {@link Response }
+     * Create an instance of {@link AdminFieldStaffHostFamily }
      * 
      */
-    public Response createResponse() {
-        return new Response();
+    public AdminFieldStaffHostFamily createAdminFieldStaffHostFamily() {
+        return new AdminFieldStaffHostFamily();
     }
 
     /**
-     * Create an instance of {@link Status }
+     * Create an instance of {@link FSHostFamilies }
      * 
      */
-    public Status createStatus() {
-        return new Status();
-    }
-
-    /**
-     * Create an instance of {@link Header }
-     * 
-     */
-    public Header createHeader() {
-        return new Header();
-    }
-
-    /**
-     * Create an instance of {@link Message }
-     * 
-     */
-    public Message createMessage() {
-        return new Message();
+    public FSHostFamilies createFSHostFamilies() {
+        return new FSHostFamilies();
     }
 
 }

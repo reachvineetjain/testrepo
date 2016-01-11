@@ -726,7 +726,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 	}
 
 	@Override
-	public AdminPartnerWorkQueueCategory getWorkQueueCategory(int adminWorkQueueTypeId) {
+	public AdminPartnerWorkQueueCategory getWorkQueueCategory(int adminWorkQueueTypeId, int userId) {
 		AdminPartnerWorkQueueCategory pwqc = new AdminPartnerWorkQueueCategory();
 		try {
 			List<AdminWorkQueueCategory> categories = adminWorkQueueCategoryRepository.findAllCategoriesByTypeId(adminWorkQueueTypeId);
@@ -746,7 +746,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 						newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
 					}
 					AdminWorkQueueCategoryAggregate categoryAggregate = adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
-							adminWorkQueueCategory.getAdminWorkQueueCategoryId());
+							adminWorkQueueCategory.getAdminWorkQueueCategoryId(),userId);
 					if (categoryAggregate != null) {
 						newCategory.setCategoryAggregate(categoryAggregate.getAdminWQCategoryAggregate());
 					}
