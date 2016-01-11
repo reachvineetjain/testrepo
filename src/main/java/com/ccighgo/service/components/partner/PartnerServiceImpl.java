@@ -118,7 +118,6 @@ public class PartnerServiceImpl implements PartnerService {
    @Autowired PartnerDocumentsRepository partnerDocumentsRepository;
    @Autowired PartnerNoteRepository partnerNoteRepository;
    @Autowired PartnerPermissionRepository partnerPermissionRepository;
-
    @Autowired ParticipantRepository participantRepository;
 
    @Override
