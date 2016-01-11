@@ -223,6 +223,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                application.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
                application.setAcronym(obj[3].toString());
                application.setDeptProgramName(obj[4].toString());
+              // application.setDeptName(obj[5].toString());
                application.setStartDate(obj[5].toString());
                application.setEndDate(obj[6].toString());
                application.setAppDeadlineDate(obj[7].toString());
