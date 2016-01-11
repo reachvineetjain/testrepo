@@ -60,8 +60,12 @@
             /services/fs/list/**=anon
             /services/fs/season/**=anon
             /services/fieldstaffgenericnote/**=anon
+             /services/fieldstaff/participant/**=anon
+             /services/fieldstaff/placement/**=anon
             /services/fieldstaff/**=anon
+            /services/erddashboard/**=anon
             /services/**=authc
+             
          </value>
       </property>
    </bean>
