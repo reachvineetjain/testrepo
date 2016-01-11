@@ -1330,4 +1330,23 @@
 			<arg value="${xsd.dir}/fieldstaff/FieldStaffNetworkList.xsd" />
 		</java>
 	</target>
+	
+	<!-- Field Staff Page 2  -->
+	<target name="FieldStaffAdminDashboardPendingApplications">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/Fieldstaff/admin/PendingApplications_category_Application_type.xsd" />
+			</java>
+		</target>
+	<!-- Field Staff  Page 13 -->
+	<target name="FieldStaffAdmin_HostFamilies">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/Fieldstaff/admin/AdminFieldStaffHostFamilies_13.xsd" />
+				</java>
+	</target>
+		
+	
 </project>
