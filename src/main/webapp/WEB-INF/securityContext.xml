@@ -63,6 +63,7 @@
              /services/fieldstaff/participant/**=anon
              /services/fieldstaff/placement/**=anon
             /services/fieldstaff/**=anon
+            /services/fsl/details/**=anon
             /services/erddashboard/**=anon
             /services/**=authc
              

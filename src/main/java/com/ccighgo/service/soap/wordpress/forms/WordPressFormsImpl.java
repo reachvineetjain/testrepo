@@ -107,17 +107,17 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setCity(InternationalPartners.getCity());
 				partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
 				partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-				if(InternationalPartners.getHearedAboutUs()!=null){
-					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
-					if(val!=null && val.length >1){
-						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-					}
-					else{
-						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-					}
-					
-				}
+//				if(InternationalPartners.getHearedAboutUs()!=null){
+//					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
+//					if(val!=null && val.length >1){
+//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+//						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+//					}
+//					else{
+//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+//					}
+//				}
+				partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
 				partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
 				partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
