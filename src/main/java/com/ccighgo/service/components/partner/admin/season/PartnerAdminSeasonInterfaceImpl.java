@@ -438,11 +438,10 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          return response;
       } else {
          try {
-            PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
-            com.ccighgo.db.entities.SeasonStatus seasonStatus = seasonStatusRepository.findOne(Integer.valueOf(statusVal));
-            Season season = partnerSeason.getSeason();
-            season.setSeasonStatus(seasonStatus);
-            seasonRepository.saveAndFlush(season);
+             PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
+            com.ccighgo.db.entities.PartnerStatus seasonStatus = partnerStatusRepository.findOne(Integer.valueOf(statusVal));
+            partnerSeason.setPartnerStatus1(seasonStatus);
+            partnerSeasonsRepository.saveAndFlush(partnerSeason);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
