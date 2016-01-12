@@ -1,5 +1,7 @@
 package com.ccighgo.service.transport.seasons.beans.soapservice;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -86,18 +88,19 @@ public String getEmail() {
 public void setEmail(String email) {
 	Email = email;
 }
-public String getStudents() {
-	return Students;
-}
-public void setStudents(String students) {
-	Students = students;
-}
 public String getComments() {
 	return Comments;
 }
 public void setComments(String comments) {
 	Comments = comments;
 }
+public String getStudents() {
+	return Students;
+}
+public void setStudents(String students) {
+	Students = students;
+}
+
    
   
    
