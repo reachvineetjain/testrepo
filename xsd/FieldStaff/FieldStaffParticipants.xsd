@@ -9,36 +9,34 @@
       </xsd:appinfo>
    </xsd:annotation>
    <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+   
+   <xsd:element name="FieldStaffParticipants" type="pu:FieldStaffParticipants" />
 
    <xsd:complexType name="FieldStaffParticipants">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="participants" type="pu:FieldStaffParticipants" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="participants" type="pu:FieldStaffParticipant" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
 
    <xsd:complexType name="FieldStaffParticipant">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="goId" type="xsd:string" />
-               <xsd:element name="firstName" type="xsd:string" />
-               <xsd:element name="lastName" type="xsd:string" />
-               <xsd:element name="lastName" type="xsd:string" />
-               <xsd:element name="country" type="xsd:string" />
-               <xsd:element name="program" type="xsd:string" />
-               <xsd:element name="gender" type="xsd:string" />
-               <xsd:element name="approvedDate" type="xsd:string" />
-               <xsd:element name="LC" type="xsd:string" />
-               <xsd:element name="RD" type="xsd:string" />
-               <xsd:element name="HS" type="xsd:string" />
-               <xsd:element name="roll" type="xsd:string" />
-               <xsd:element name="state" type="xsd:string" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:string" />
+         <xsd:element name="firstName" type="xsd:string" />
+         <xsd:element name="lastName" type="xsd:string" />
+         <xsd:element name="lastName" type="xsd:string" />
+         <xsd:element name="country" type="xsd:string" />
+         <xsd:element name="program" type="xsd:string" />
+         <xsd:element name="gender" type="xsd:string" />
+         <xsd:element name="approvedDate" type="xsd:string" />
+         <xsd:element name="LC" type="xsd:string" />
+         <xsd:element name="RD" type="xsd:string" />
+         <xsd:element name="HS" type="xsd:string" />
+         <xsd:element name="roll" type="xsd:string" />
+         <xsd:element name="state" type="xsd:string" />
+      </xsd:sequence>
+   </xsd:complexType>   
 </xsd:schema>

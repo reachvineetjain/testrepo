@@ -9,6 +9,9 @@
       </xsd:appinfo>
    </xsd:annotation>
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+   
+   <xsd:element name="ErdDashboardTypes" type="pdl:ErdDashboardTypes"/>
+   
    <xsd:complexType name="ErdDashboardTypes">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
@@ -18,16 +21,13 @@
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
+   
    <xsd:complexType name="ErdDashboardTypeDetails">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="typeId" type="xsd:int" />
                <xsd:element name="type" type="xsd:string" />
                <xsd:element name="number" type="xsd:string" />
             </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
    </xsd:complexType>
 
 </xsd:schema>
