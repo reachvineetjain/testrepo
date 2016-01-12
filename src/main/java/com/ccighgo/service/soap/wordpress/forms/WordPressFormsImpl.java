@@ -327,24 +327,13 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 				System.out.println("Email :" + HostFamilyData.getEmail());
 				System.out.println("City :" + HostFamilyData.getCity());
 				System.out.println("State : " + HostFamilyData.getState());
-				System.out.println("Address1 : " + HostFamilyData.getAddress1());
-				System.out.println("Address2 : " + HostFamilyData.getAddress2());
-				System.out.println("Area Representative :" + HostFamilyData.getAreaRepresentativeName());
-				System.out.println("Comments : " + HostFamilyData.getComments());
-				System.out.println("Day Phone : " + HostFamilyData.getDayPhone());
-				System.out.println("Evening Phone: " + HostFamilyData.getEveningPhone());
-				System.out.println("Have Hosted: " + HostFamilyData.getHaveHosted());
-				System.out.println("Hosting Experience :" + HostFamilyData.getHostingExperience());
-				System.out.println("Interested In Student Form: " + HostFamilyData.getInterestedInStudentFrom());
-				System.out.println("Interested In Student Gender:" + HostFamilyData.getInterestedInStudentGender());
-				System.out.println("LC Email Address : " + HostFamilyData.getLCEmailAddress());
-				System.out.println("Nearest Large City:" + HostFamilyData.getNearestLargeCity());
-				System.out.println("Postal Code:" + HostFamilyData.getPostalCode());
-				System.out.println("Referred Form: " + HostFamilyData.getReferredFrom());
-				System.out.println("School City:" + HostFamilyData.getSchoolCity());
-				System.out.println("School Name: " + HostFamilyData.getSchoolName());
-				System.out.println("Adult : " + HostFamilyData.getIsAdult());
-				System.out.println("LC Applicant : " + HostFamilyData.getIsLCApplicant());
+				System.out.println("PostalCode : "+ HostFamilyData.getPostalCode());
+				System.out.println("PreferredPhone: "+ HostFamilyData.getPreferredPhone());
+				System.out.println("OptionalPhone : "+ HostFamilyData.getOptionalPhone());
+				System.out.println("Email : "+ HostFamilyData.getEmail());
+				System.out.println("Students : "+ HostFamilyData.getStudents());
+				System.out.println("Comments : "+ HostFamilyData.getComments());
+				
 
 			}
 			if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {
