@@ -1,6 +1,7 @@
 package com.ccighgo.service.soap.wordpress.forms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -73,8 +74,14 @@ public class WordPressFormsImpl implements IWordPressForms {
 			System.out.println("Inquiry partner Is Called !!!");
 			if (InternationalPartners != null) {
 				Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
+				PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
 				if (user != null) {
-					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist)";
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
+					System.out.println(message);
+					return message;
+				}
+				if (pa != null) {
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [PartnerAgentInquiry Table ]";
 					System.out.println(message);
 					return message;
 				}
