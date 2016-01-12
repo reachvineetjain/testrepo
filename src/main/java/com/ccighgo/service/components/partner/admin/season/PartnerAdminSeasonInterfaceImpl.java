@@ -155,9 +155,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                      programName = ps.getSeason().getSeasonCapdetails().get(0).getProgramName();
                   }
                   PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus();
-                  partnerSeasonStatus.setSeasonStatusId(ps.getPartnerStatus1().getPartnerStatusId());
-                  partnerSeasonStatus.setSeasonStatus(ps.getPartnerStatus1().getPartnerStatusName());
-                  pas.setPartnerSeasonStatus(partnerSeasonStatus);
+                 if(ps.getPartnerStatus1()!=null){
+                     partnerSeasonStatus.setSeasonStatusId(ps.getPartnerStatus1().getPartnerStatusId());
+                     partnerSeasonStatus.setSeasonStatus(ps.getPartnerStatus1().getPartnerStatusName());
+                     pas.setPartnerSeasonStatus(partnerSeasonStatus);
+                  }
 
                   SeasonStatus seasonStatus = new SeasonStatus();
                   seasonStatus.setSeasonStatusId(ps.getSeason().getSeasonStatus().getSeasonStatusId());
