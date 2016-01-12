@@ -270,9 +270,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminJ1SeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonJ1details().get(0).getProgramName());
             // partner season status
             com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerSeasonStatus();
-            partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
-            partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
-            adminJ1SeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
+            if(partnerSeason.getPartnerStatus1()!=null){
+               partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
+               partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
+               adminJ1SeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus); 
+            }
             // Season status
             com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.SeasonStatus seasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.SeasonStatus();
             seasonStatus.setSeasonStatusId(partnerSeason.getSeason().getSeasonJ1details().get(0).getSeasonStatus().getSeasonStatusId());
@@ -336,9 +338,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminF1SeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonF1details().get(0).getProgramName());
             // partner season status
             com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerSeasonStatus();
-            partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
-            partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
-            adminF1SeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
+            if(partnerSeason.getPartnerStatus1()!=null){
+               partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
+               partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
+               adminF1SeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
+            }
             // Season status
             com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.SeasonStatus seasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.SeasonStatus();
             seasonStatus.setSeasonStatusId(partnerSeason.getSeason().getSeasonF1details().get(0).getSeasonStatus().getSeasonStatusId());
@@ -797,9 +801,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminIHPSeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
             // partner season status
             com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus();
-            partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
-            partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
-            adminIHPSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
+            if(partnerSeason.getPartnerStatus1()!=null){
+               partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
+               partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
+               adminIHPSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
+            }
             // Season status
             com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.SeasonStatus seasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.SeasonStatus();
             seasonStatus.setSeasonStatusId(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getSeasonStatus().getSeasonStatusId());
