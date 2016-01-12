@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://www.ccighgo.com/pendingapplication" elementFormDefault="unqualified" attributeFormDefault="unqualified"
    jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/pendingapplication"
    xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
