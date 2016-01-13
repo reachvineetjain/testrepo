@@ -1,0 +1,31 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/myteamparticipants" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/myteamparticipants"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.myteamparticipants" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+   <xsd:complexType name="MyTeamParticipants">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="teamParticipantsList" type="cd:MyTeamParticipantsDetail" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="MyTeamParticipantsDetail">
+            <xsd:sequence>
+               <xsd:element name="cciId" type="xsd:int" />
+               <xsd:element name="name" type="xsd:string" />
+               <xsd:element name="partner" type="xsd:string" />
+               <xsd:element name="country" type="xsd:string" />
+               <xsd:element name="programs" type="xsd:string" />
+               <xsd:element name="partner" type="xsd:string" />
+            </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>
