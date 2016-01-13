@@ -26,6 +26,7 @@
 
    <xsd:complexType name="FSLNetwork">
       <xsd:sequence>
+         <xsd:element name="fsGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="state" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -37,6 +38,7 @@
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="dateSubmittedToCCI" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasons" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
