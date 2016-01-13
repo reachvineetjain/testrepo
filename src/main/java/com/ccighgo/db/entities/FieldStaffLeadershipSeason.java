@@ -2,7 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -20,20 +20,19 @@ public class FieldStaffLeadershipSeason implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer fieldStaffLeadershipSeasonId;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	private Timestamp createdOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedOn;
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffId")
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to Season
@@ -65,11 +64,11 @@ public class FieldStaffLeadershipSeason implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public Timestamp getCreatedOn() {
+	public Date getCreatedOn() {
 		return this.createdOn;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
@@ -81,11 +80,11 @@ public class FieldStaffLeadershipSeason implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Timestamp getModifiedOn() {
+	public Date getModifiedOn() {
 		return this.modifiedOn;
 	}
 
-	public void setModifiedOn(Timestamp modifiedOn) {
+	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 

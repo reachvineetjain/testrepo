@@ -21,7 +21,7 @@ public class LookupCountry implements Serializable {
 	private Integer countryId;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false, length=5)
 	private String countryCode;
@@ -33,11 +33,15 @@ public class LookupCountry implements Serializable {
 	private String countryName;
 
 	@Column(nullable=false)
-	private byte isReqFinalSOAonDS;
+	private Byte isReqFinalSOAonDS;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@OneToMany(mappedBy="lookupCountry")
 	private List<CCIStaffUser> ccistaffUsers;
+
+	//bi-directional many-to-one association to HostFamily
+	@OneToMany(mappedBy="lookupCountry")
+	private List<HostFamily> hostFamilies;
 
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="lookupCountry")
@@ -70,11 +74,11 @@ public class LookupCountry implements Serializable {
 		this.countryId = countryId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -102,11 +106,11 @@ public class LookupCountry implements Serializable {
 		this.countryName = countryName;
 	}
 
-	public byte getIsReqFinalSOAonDS() {
+	public Byte getIsReqFinalSOAonDS() {
 		return this.isReqFinalSOAonDS;
 	}
 
-	public void setIsReqFinalSOAonDS(byte isReqFinalSOAonDS) {
+	public void setIsReqFinalSOAonDS(Byte isReqFinalSOAonDS) {
 		this.isReqFinalSOAonDS = isReqFinalSOAonDS;
 	}
 
@@ -130,6 +134,28 @@ public class LookupCountry implements Serializable {
 		ccistaffUser.setLookupCountry(null);
 
 		return ccistaffUser;
+	}
+
+	public List<HostFamily> getHostFamilies() {
+		return this.hostFamilies;
+	}
+
+	public void setHostFamilies(List<HostFamily> hostFamilies) {
+		this.hostFamilies = hostFamilies;
+	}
+
+	public HostFamily addHostFamily(HostFamily hostFamily) {
+		getHostFamilies().add(hostFamily);
+		hostFamily.setLookupCountry(this);
+
+		return hostFamily;
+	}
+
+	public HostFamily removeHostFamily(HostFamily hostFamily) {
+		getHostFamilies().remove(hostFamily);
+		hostFamily.setLookupCountry(null);
+
+		return hostFamily;
 	}
 
 	public List<Participant> getParticipants() {

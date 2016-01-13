@@ -32,9 +32,10 @@ public class CCIStaffRole implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	private int hierarchy;
+	private Integer hierarchy;
 
 	@Column(nullable=false)
 	private Integer modifiedBy;
@@ -86,11 +87,11 @@ public class CCIStaffRole implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public int getHierarchy() {
+	public Integer getHierarchy() {
 		return this.hierarchy;
 	}
 
-	public void setHierarchy(int hierarchy) {
+	public void setHierarchy(Integer hierarchy) {
 		this.hierarchy = hierarchy;
 	}
 

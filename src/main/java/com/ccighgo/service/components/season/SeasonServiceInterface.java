@@ -812,23 +812,23 @@ public interface SeasonServiceInterface {
     * 
     * @param season
     */
-   public void createJ1ProgramAllocation(Season season);
+   public void createJ1ProgramAllocation(Season season, int loginId);
 
    /**
     * 
     * @param season
     */
-   public void createF1ProgramAllocation(Season season);
+   public void createF1ProgramAllocation(Season season, int loginId);
 
    /**
     * 
     * @param season
     */
-   public void createWPSumProgramAllocation(Season season);
+   public void createWPSumProgramAllocation(Season season, int loginId);
 
    /**
     * 
     * @param season
     */
-   public void createWPSpringProgramAllocation(Season season);
+   public void createWPSpringProgramAllocation(Season season, int loginId);
 }

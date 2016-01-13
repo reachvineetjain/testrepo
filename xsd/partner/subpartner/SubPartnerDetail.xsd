@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/subpartnerdetail"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/subpartnerdetail"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.subpartnerdetail" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+	<xsd:element name="SubpartnerDetails" type="cd:SubPartnerDetail" />
+
+	<xsd:complexType name="SubPartnerDetail">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:sequence>
+						<xsd:element name="goId" type="xsd:string" minOccurs="0"
+							maxOccurs="1" />
+						<xsd:element name="active" type="xsd:boolean"
+							minOccurs="0" maxOccurs="1" />
+						<xsd:element name="partnerDetail" type="cd:Details"
+							minOccurs="0" maxOccurs="1" />
+						<xsd:element name="subPartnerPrimaryContact" type="cd:SubPartnersPrimaryContact"
+							minOccurs="0" maxOccurs="1" />
+						<xsd:element name="subPartnerPhysicalAddress" type="cd:SubPartnersPhysicalAddress"
+							minOccurs="0" maxOccurs="1" />
+						<xsd:element name="subPartnerMailingAddress" type="cd:SubPartnersMailingAddress"
+							minOccurs="0" maxOccurs="1" />
+                       <xsd:element name="loginId" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+                       <xsd:element name="mailingAddressIsSameAsPhysicalAdress" type="xsd:boolean"/>
+					</xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Details">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="logoImageURL" type="xsd:anyURI"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="agencyName" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="needsPartnerReview" type="xsd:boolean" />
+					<xsd:element name="recivevisaforms" type="xsd:boolean"/>
+					<xsd:element name="payGreenHeartDirectly" type="xsd:boolean"/>
+					<xsd:element name="username" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="password" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SubPartnersPrimaryContact">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="salutation" type="cd:Salutation"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="title" type="xsd:string" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="firstName" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="lastName" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="email" type="xsd:string" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="phone" type="xsd:string" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="emergencyPhone" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="fax" type="xsd:string" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="reciveNotificationemailfromcc" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="skypeId" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="website" type="xsd:anyURI"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="SubPartnersPhysicalAddress">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="physicalAddress1" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="physicalAddress2" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="physicalAddressCity" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="physicalAddressStateOrProvince"
+						type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="physicalAddressZipCode" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="physicalAddressCountry" type="cd:Country"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SubPartnersMailingAddress">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="mailingAddress1" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="mailingAddress2" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="mailingAddressCity" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="mailingAddressStateOrProvince" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="mailingAddressZipCode" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="mailingAddressCountry" type="cd:Country"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Country">
+
+		<xsd:sequence>
+			<xsd:element name="countryId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="countryName" type="xsd:string"
+				minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	
+	<xsd:complexType name="Salutation">
+		<xsd:sequence>
+			<xsd:element name="salutationId" type="xsd:int" />
+			<xsd:element name="salutationName" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+</xsd:schema>

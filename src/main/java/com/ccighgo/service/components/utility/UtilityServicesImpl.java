@@ -14,46 +14,73 @@ import javax.ws.rs.core.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.CCIStaffRole;
+import com.ccighgo.db.entities.CCIStaffUser;
+import com.ccighgo.db.entities.DepartmentProgramOption;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
+import com.ccighgo.db.entities.PartnerNoteTag;
+import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.RegionIHP;
+import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
+import com.ccighgo.jpa.repositories.DepartmentProgramOptionRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DepartmentRepository;
+import com.ccighgo.jpa.repositories.DocumentTypeRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.IHPRegionsRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
-import com.ccighgo.jpa.repositories.SalutationRepositotry;
+import com.ccighgo.jpa.repositories.PartnerNoteTagRepository;
+import com.ccighgo.jpa.repositories.PartnerStatusRepository;
+import com.ccighgo.jpa.repositories.SalutationRepository;
+import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
+import com.ccighgo.service.components.errormessages.constants.SeasonMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUser;
+import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentType;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Gender;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutation;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
+import com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatuses;
 import com.ccighgo.service.transport.utility.beans.program.Program;
+import com.ccighgo.service.transport.utility.beans.program.ProgramOption;
+import com.ccighgo.service.transport.utility.beans.program.ProgramOptions;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Region;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
@@ -93,15 +120,22 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired MessageUtils messageUtil;
    @Autowired LoginRepository loginRepository;
    @Autowired EmailServiceImpl email;
-   @Autowired SalutationRepositotry salutationRepositotry;
+   @Autowired SalutationRepository salutationRepositotry;
+   @Autowired SeasonRepository seasonRepository;
+   @Autowired DepartmentProgramOptionRepository departmentProgramOptionRepository;
+   @Autowired PartnerStatusRepository partnerStatusRepository;
+   @Autowired PartnerNoteTagRepository partnerNoteTagRepository;
+   @Autowired DocumentTypeRepository documentTypeRepository;
+   @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
-      List<LookupCountry> countriesDbList = countryRepository.findAll();
+      final Pageable page= new PageRequest(0, 350, Direction.ASC, "countryName");
+      Page<LookupCountry> countriesDbList = countryRepository.findAll(page);
       com.ccighgo.service.transport.utility.beans.country.Countries countries = null;
       List<com.ccighgo.service.transport.utility.beans.country.Country> countriesFrontList = null;
       try {
-         if (countriesDbList.size() > 0) {
+         if (countriesDbList!=null) {
             countries = new com.ccighgo.service.transport.utility.beans.country.Countries();
             countriesFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.country.Country>();
             for (LookupCountry c : countriesDbList) {
@@ -420,7 +454,7 @@ public class UtilityServicesImpl implements UtilityServices {
       }
 
    }
-   
+
    @Override
    public Salutations getSalutation() {
 
@@ -445,8 +479,6 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return salutations;
    }
-
-   
 
    @Override
    public Country getCountryById(int countryId) {
@@ -585,7 +617,15 @@ public class UtilityServicesImpl implements UtilityServices {
       salutations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
       return salutations;
    }
-   
+
+   // ProgramOptions
+   private ProgramOptions setProgramOptionsStatus(ProgramOptions programOptions, String code, String type, int serviceCode, String message) {
+      if (programOptions == null)
+         programOptions = new ProgramOptions();
+      programOptions.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return programOptions;
+   }
+
    private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
@@ -607,17 +647,17 @@ public class UtilityServicesImpl implements UtilityServices {
             return response;
          }
          Login loginUser = null;
-         if (req.getUsername() == null) {
+         if (req.getEmail() != null) {
             loginUser = loginRepository.findByEmail(req.getEmail());
-         }
-         else if(req.getEmail() == null){
-            loginUser = loginRepository.findByLoginName(req.getUsername());
+         }  
+         if (loginUser==null && req.getUsername() != null) {
+            loginUser = loginRepository.findByLoginName(req.getUsername().toLowerCase());
          }
          if (loginUser != null) {
-            String body = "<p>This email was sent automatically by CCI Greenheart Online system in response to your request to recover your online account password. </p>" +
-         "<p>Please go to the following page and choose a new password:</p> " + 
-                  "<p>"+formResetURL(request).concat(loginUser.getKeyValue()) + "</p>"  +
-         "<p>If you ignore this message, your password won't be changed.</p><p>If you didn't request a password reset, let us know.</p><p>Thank you,</p><p>GO System Support.</p>";
+            String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
+                  + "Your username is : " + req.getUsername() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
+                  + formResetURL(request).concat(loginUser.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
+                  + "<p>CCI Greenheart.</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
@@ -639,23 +679,16 @@ public class UtilityServicesImpl implements UtilityServices {
       try {
          Login login = loginRepository.findByKeyValue(req.getUniquekey());
          if (login == null) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_RESET_PASSWORD.getValue(),
-                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD)));
-            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_RESET_PASSWORD));
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.RESET_PASSWORD_LINK_EXPIRED.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED)));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.RESET_PASSWORD_LINK_EXPIRED));
             return response;
          }
-         Login tempLogin = new Login();
-         tempLogin.setLoginId(login.getLoginId());
-         tempLogin.setLoginName(login.getLoginName());
-         tempLogin.setEmail(login.getEmail());
-         tempLogin.setKeyValue(UuidUtils.nextHexUUID());
-         tempLogin.setPassword(PasswordUtil.hashKey(req.getPasskey()));
-         tempLogin.setCreatedBy(login.getCreatedBy());
-         tempLogin.setCreatedOn(login.getCreatedOn());
-         tempLogin.setModifiedBy(login.getGoIdSequence().getGoId());
-         tempLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         tempLogin.setGoIdSequence(login.getGoIdSequence());
-         login = loginRepository.save(tempLogin);
+         login.setKeyValue(UuidUtils.nextHexUUID());
+         login.setPassword(PasswordUtil.hashKey(req.getPasskey()));
+         login.setModifiedBy(login.getGoIdSequence().getGoId());
+         login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         login = loginRepository.saveAndFlush(login);
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
 
@@ -683,4 +716,190 @@ public class UtilityServicesImpl implements UtilityServices {
          return false;
    }
 
+   @Override
+   public Programs getProgramOptionsByDepartment(String deptId) {
+      List<com.ccighgo.db.entities.DepartmentProgram> departmentProgramsList = departmentProgramRepository.findAll();
+      Programs programs = null;
+      List<Program> programList = null;
+      try {
+         if (departmentProgramsList.size() > 0) {
+            programs = new Programs();
+            programList = new ArrayList<Program>();
+            for (com.ccighgo.db.entities.DepartmentProgram deptPrg : departmentProgramsList) {
+               if (deptPrg.getLookupDepartment().getDepartmentId() == Integer.valueOf(deptId)) {
+                  Program prg = new Program();
+                  prg.setDepartmentId(deptPrg.getLookupDepartment().getDepartmentId());
+                  prg.setDepartmentName(deptPrg.getLookupDepartment().getDepartmentName());
+                  prg.setAcronym(deptPrg.getLookupDepartment().getAcronym());
+                  prg.setProgramId(deptPrg.getDepartmentProgramId());
+                  prg.setProgramName(deptPrg.getProgramName());
+                  prg.setProgramDescription(deptPrg.getDescription());
+                  programList.add(prg);
+               }
+            }
+            programs.getPrograms().addAll(programList);
+         }
+         programs = setProgramsStatus(programs, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         return programs;
+      } catch (CcighgoException e) {
+         programs = setProgramsStatus(programs, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_BY_DEPARTMENT.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_BY_DEPARTMENT));
+      }
+      return programs;
+
+   }
+
+   @Override
+   public ProgramOptions getAllProgramOptions() {
+      ProgramOptions programOptions = new ProgramOptions();
+      try {
+         List<DepartmentProgramOption> departmentProgramOptionDBList = departmentProgramOptionRepository.findAll();
+         if (departmentProgramOptionDBList == null || departmentProgramOptionDBList.isEmpty()) {
+            programOptions = setProgramOptionsStatus(programOptions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_OPTIONS.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+            return programOptions;
+         }
+         List<ProgramOption> programOptionList = new ArrayList<ProgramOption>();
+         for (DepartmentProgramOption departmentProgramOption : departmentProgramOptionDBList) {
+            ProgramOption programOption = new ProgramOption();
+            programOption.setDepartmentProgramOptionId(departmentProgramOption.getDepartmentProgramOptionId());
+            programOption.setDepartmentProgramId(departmentProgramOption.getDepartmentProgram().getDepartmentProgramId());
+            programOption.setProgramOptionCode(departmentProgramOption.getProgramOptionCode());
+            programOption.setProgramOptionName(departmentProgramOption.getProgramOptionName());
+            programOptionList.add(programOption);
+         }
+         programOptions.getProgramOptions().addAll(programOptionList);
+         programOptions = setProgramOptionsStatus(programOptions, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+      } catch (CcighgoException e) {
+         programOptions = setProgramOptionsStatus(programOptions, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_PROGRAMS_OPTIONS.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_PROGRAMS_OPTIONS));
+      }
+      return programOptions;
+   }
+
+   public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus() {
+
+      List<PartnerStatus> partnerStatusDBList = partnerStatusRepository.findAll();
+      List<PartnerSeasonProgramStatus> partnerSeasonProgramStatusList = new ArrayList<PartnerSeasonProgramStatus>();
+      for (PartnerStatus partnerStatus : partnerStatusDBList) {
+         PartnerSeasonProgramStatus partnerSeasonProgramStatus = new PartnerSeasonProgramStatus();
+         partnerSeasonProgramStatus.setPartnerSeasonProgramStatusId(partnerStatus.getPartnerStatusId());
+         partnerSeasonProgramStatus.setPartnerSeasonProgramStatus(partnerStatus.getPartnerStatusName());
+         partnerSeasonProgramStatusList.add(partnerSeasonProgramStatus);
+      }
+      return partnerSeasonProgramStatusList;
+   }
+
+   public List<NoteTags> getAllTags() {
+
+      List<NoteTags> noteTagsList = new ArrayList<NoteTags>();
+      List<PartnerNoteTag> PartnerNoteTagDbList = partnerNoteTagRepository.findAll();
+      if (PartnerNoteTagDbList.size() > 0) {
+         for (PartnerNoteTag partnerNoteTag : PartnerNoteTagDbList) {
+            NoteTags noteTags = new NoteTags();
+            noteTags.setNoteTagId(partnerNoteTag.getPartnerNoteTagId());
+            noteTags.setNoteTag(partnerNoteTag.getTagName());
+            noteTagsList.add(noteTags);
+         }
+      }
+      return noteTagsList;
+   }
+
+   @Override
+   public DocumentTypes getDocumentTypes() {
+      DocumentTypes documentType = null;
+      try {
+         List<com.ccighgo.db.entities.DocumentType> typeList = documentTypeRepository.findAll();
+         if (typeList != null) {
+            documentType = new DocumentTypes();
+            for (com.ccighgo.db.entities.DocumentType docType : typeList) {
+               DocumentType dt = new DocumentType();
+               dt.setDocumentTypeId(docType.getDocumentTypeId());
+               dt.setDocumentTypeName(docType.getDocumentTypeName());
+               documentType.getDocumentTypes().add(dt);
+               documentType = setDocumentTypesStatus(documentType, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            }
+         } else {
+            documentType = setDocumentTypesStatus(documentType, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DOCUMENT_TYPES.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+            LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+         }
+      } catch (CcighgoException e) {
+         documentType = setDocumentTypesStatus(documentType, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DOCUMENT_TYPES.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.FAILED_GET_DOCUMENT_TYPES));
+      }
+
+      return documentType;
+   }
+
+   private DocumentTypes setDocumentTypesStatus(DocumentTypes documentType, String code, String type, int serviceCode, String message) {
+      if (documentType == null)
+         documentType = new DocumentTypes();
+      documentType.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
+      return documentType;
+   }
+
+   @Override
+   @Transactional(readOnly = true)
+   public CCIUsersList getCCIUsers() {
+      CCIUsersList usersList = new CCIUsersList();
+      try {
+         List<CCIStaffUser> cciStaffUsersList = cciStaffUsersRepository.findAll();
+         if (cciStaffUsersList == null) {
+            throw new CcighgoException("No users found");
+         } else {
+            List<CCIUser> cciUsers = new ArrayList<CCIUser>();
+            for (CCIStaffUser cciuser : cciStaffUsersList) {
+               CCIUser user = new CCIUser();
+               Login cciLogin = loginRepository.findByCCIGoId(cciuser.getCciStaffUserId());
+               if (cciLogin != null) {
+                  user.setLoginId(cciLogin.getLoginId());
+               }
+               user.setCciUserId(cciuser.getCciStaffUserId());
+               user.setCciUserFirstName(cciuser.getFirstName());
+               user.setCciUserLastName(cciuser.getLastName());
+               // TODO: not all users have designation and it is throwing
+               // exception
+               user.setCciUserDesignation("TODO");
+               user.setCciUserPhotoUrl(cciuser.getPhoto());
+               cciUsers.add(user);
+            }
+            usersList.getCciUsers().addAll(cciUsers);
+            usersList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (CcighgoException e) {
+         usersList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+      }
+      return usersList;
+   }
+
+   @Override
+   public PartnerStatuses getPartnerStatus() {
+      PartnerStatuses status = new PartnerStatuses();
+      try {
+         List<PartnerStatus> partnerStatusList = partnerStatusRepository.findAll();
+         List<com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus> partnerStatuses = new ArrayList<com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus>();
+         for (PartnerStatus ps : partnerStatusList) {
+            com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus s = new com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatus();
+            s.setPartnerStatusId(ps.getPartnerStatusId());
+            s.setPartnerStatus(ps.getPartnerStatusName());
+            partnerStatuses.add(s);
+         }
+         status.getPartnerStatuses().addAll(partnerStatuses);
+         status.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         status.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+      }
+      return status;
+   }
 }

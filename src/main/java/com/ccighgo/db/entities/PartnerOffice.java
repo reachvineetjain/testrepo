@@ -32,6 +32,7 @@ public class PartnerOffice implements Serializable {
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=150)
@@ -39,6 +40,7 @@ public class PartnerOffice implements Serializable {
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Column(length=2000)
@@ -56,10 +58,6 @@ public class PartnerOffice implements Serializable {
 	@Column(length=150)
 	private String website;
 
-	//bi-directional many-to-one association to PartnerContact
-	@OneToMany(mappedBy="partnerOffice")
-	private List<PartnerContact> partnerContacts;
-
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
 	@JoinColumn(name="countryId")
@@ -74,6 +72,10 @@ public class PartnerOffice implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="partnerOfficeTypeId")
 	private PartnerOfficeType partnerOfficeType;
+
+	//bi-directional many-to-one association to PartnerUser
+	@OneToMany(mappedBy="partnerOffice")
+	private List<PartnerUser> partnerUsers;
 
 	public PartnerOffice() {
 	}
@@ -190,28 +192,6 @@ public class PartnerOffice implements Serializable {
 		this.website = website;
 	}
 
-	public List<PartnerContact> getPartnerContacts() {
-		return this.partnerContacts;
-	}
-
-	public void setPartnerContacts(List<PartnerContact> partnerContacts) {
-		this.partnerContacts = partnerContacts;
-	}
-
-	public PartnerContact addPartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().add(partnerContact);
-		partnerContact.setPartnerOffice(this);
-
-		return partnerContact;
-	}
-
-	public PartnerContact removePartnerContact(PartnerContact partnerContact) {
-		getPartnerContacts().remove(partnerContact);
-		partnerContact.setPartnerOffice(null);
-
-		return partnerContact;
-	}
-
 	public LookupCountry getLookupCountry() {
 		return this.lookupCountry;
 	}
@@ -234,6 +214,28 @@ public class PartnerOffice implements Serializable {
 
 	public void setPartnerOfficeType(PartnerOfficeType partnerOfficeType) {
 		this.partnerOfficeType = partnerOfficeType;
+	}
+
+	public List<PartnerUser> getPartnerUsers() {
+		return this.partnerUsers;
+	}
+
+	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+		this.partnerUsers = partnerUsers;
+	}
+
+	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().add(partnerUser);
+		partnerUser.setPartnerOffice(this);
+
+		return partnerUser;
+	}
+
+	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+		getPartnerUsers().remove(partnerUser);
+		partnerUser.setPartnerOffice(null);
+
+		return partnerUser;
 	}
 
 }

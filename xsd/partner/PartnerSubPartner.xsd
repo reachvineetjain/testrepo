@@ -30,6 +30,9 @@
          <xsd:element name="subPartnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="subPartnerFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="subPartnerLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="subPartnerCompanyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="subPartnerEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="subPartnerUserName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="subPartnerSeasons" type="psp:SubPartnerSeasons" minOccurs="0" maxOccurs="unbounded" />
          <xsd:element name="subPartnerCountry" type="psp:SubPartnerCountry" minOccurs="1" maxOccurs="1" />
          <xsd:element name="subPartnerStatus" type="psp:SubPartnerStatus" minOccurs="1" maxOccurs="1" />

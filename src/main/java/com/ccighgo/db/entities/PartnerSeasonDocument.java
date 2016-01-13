@@ -2,7 +2,6 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 
 /**
@@ -20,25 +19,18 @@ public class PartnerSeasonDocument implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonDocumentId;
 
-	private byte active;
+	@Lob
+	private String description;
 
-	private Integer createdBy;
-
-	private Timestamp createdOn;
-
-	private Integer modifiedBy;
-
-	private Timestamp modifiedOn;
-
-	//bi-directional many-to-one association to Partner
+	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
-	private Partner partner;
+	@JoinColumn(name="documentInformationId")
+	private DocumentInformation documentInformation;
 
-	//bi-directional many-to-one association to SeasonProgramDocument
+	//bi-directional many-to-one association to PartnerSeason
 	@ManyToOne
-	@JoinColumn(name="seasonProgramDocumentId")
-	private SeasonProgramDocument seasonProgramDocument;
+	@JoinColumn(name="partnerSeasonId")
+	private PartnerSeason partnerSeason;
 
 	public PartnerSeasonDocument() {
 	}
@@ -51,60 +43,28 @@ public class PartnerSeasonDocument implements Serializable {
 		this.partnerSeasonDocumentId = partnerSeasonDocumentId;
 	}
 
-	public byte getActive() {
-		return this.active;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setActive(byte active) {
-		this.active = active;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
+	public DocumentInformation getDocumentInformation() {
+		return this.documentInformation;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
+	public void setDocumentInformation(DocumentInformation documentInformation) {
+		this.documentInformation = documentInformation;
 	}
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
+	public PartnerSeason getPartnerSeason() {
+		return this.partnerSeason;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
-
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
-
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-
-	public Partner getPartner() {
-		return this.partner;
-	}
-
-	public void setPartner(Partner partner) {
-		this.partner = partner;
-	}
-
-	public SeasonProgramDocument getSeasonProgramDocument() {
-		return this.seasonProgramDocument;
-	}
-
-	public void setSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
-		this.seasonProgramDocument = seasonProgramDocument;
+	public void setPartnerSeason(PartnerSeason partnerSeason) {
+		this.partnerSeason = partnerSeason;
 	}
 
 }

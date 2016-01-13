@@ -20,14 +20,17 @@ public class LoginUserType implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer loginUserTypeId;
 
-	private byte active;
+	@Column(nullable=false)
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	private byte defaultUserType;
+	@Column(nullable=false)
+	private Byte defaultUserType;
 
 	@Column(nullable=false)
 	private Integer modifiedBy;
@@ -37,12 +40,12 @@ public class LoginUserType implements Serializable {
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginId")
+	@JoinColumn(name="loginId", nullable=false)
 	private Login login;
 
 	//bi-directional many-to-one association to UserType
 	@ManyToOne
-	@JoinColumn(name="userTypeId")
+	@JoinColumn(name="userTypeId", nullable=false)
 	private UserType userType;
 
 	public LoginUserType() {
@@ -56,11 +59,11 @@ public class LoginUserType implements Serializable {
 		this.loginUserTypeId = loginUserTypeId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -80,11 +83,11 @@ public class LoginUserType implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public byte getDefaultUserType() {
+	public Byte getDefaultUserType() {
 		return this.defaultUserType;
 	}
 
-	public void setDefaultUserType(byte defaultUserType) {
+	public void setDefaultUserType(Byte defaultUserType) {
 		this.defaultUserType = defaultUserType;
 	}
 

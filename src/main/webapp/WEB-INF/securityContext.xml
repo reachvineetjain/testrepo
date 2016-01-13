@@ -48,11 +48,25 @@
             /services/partneruser/**=anon
             /services/insurance/**=anon
             /services/partner/season/**=anon
+            /services/partner/agent/**=anon
             /loginProxy/**=anon
             /services/partner/qs/**=anon
             /services/partner/wq/**=anon
+            /services/partnerAdmin/**=anon
+            /services/partnerGenericNotes/**=anon
+            /services/pushData/**=anon
+            /services/partner/admin/season/**=anon
+            /services/genericDocuments/**=anon
+            /services/admin/partner/**=anon
+            /services/fs/list/**=anon
+            /services/fs/season/**=anon
+            /services/fieldstaffgenericnote/**=anon
+             /services/fieldstaff/participant/**=anon
+             /services/fieldstaff/placement/**=anon
+            /services/fieldstaff/**=anon
+            /services/fsl/details/**=anon
+            /services/erddashboard/**=anon
             /services/**=authc
-            
          </value>
       </property>
    </bean>

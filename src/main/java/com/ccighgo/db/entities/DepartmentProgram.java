@@ -29,6 +29,7 @@ public class DepartmentProgram implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=100)
@@ -53,29 +54,41 @@ public class DepartmentProgram implements Serializable {
 	@JoinColumn(name="departmentId", nullable=false)
 	private LookupDepartment lookupDepartment;
 
-	//bi-directional many-to-one association to FieldStaffLCSeason
+	//bi-directional many-to-one association to FieldStaffHistory
 	@OneToMany(mappedBy="departmentProgram")
-	private List<FieldStaffLCSeason> fieldStaffLcseasons;
+	private List<FieldStaffHistory> fieldStaffHistories;
+
+	//bi-directional many-to-one association to FieldStaffSeason
+	@OneToMany(mappedBy="departmentProgram")
+	private List<FieldStaffSeason> fieldStaffSeasons;
+
+	//bi-directional many-to-one association to FieldStaffWorkQueue
+	@OneToMany(mappedBy="departmentProgram")
+	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
+	//bi-directional many-to-one association to HostFamilyAnnouncement
+	@OneToMany(mappedBy="departmentProgram")
+	private List<HostFamilyAnnouncement> hostFamilyAnnouncements;
+
+	//bi-directional many-to-one association to HostFamilySeason
+	@OneToMany(mappedBy="departmentProgram")
+	private List<HostFamilySeason> hostFamilySeasons;
 
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="departmentProgram")
 	private List<Participant> participants;
 
-	//bi-directional many-to-one association to PartnerAgentProgram
-	@OneToMany(mappedBy="departmentProgram")
-	private List<PartnerAgentProgram> partnerAgentPrograms;
-
 	//bi-directional many-to-one association to PartnerAnnouncement
 	@OneToMany(mappedBy="departmentProgram")
 	private List<PartnerAnnouncement> partnerAnnouncements;
 
-	//bi-directional many-to-one association to PartnerCCIContact
-	@OneToMany(mappedBy="departmentProgram")
-	private List<PartnerCCIContact> partnerCcicontacts;
-
 	//bi-directional many-to-one association to PartnerSeason
 	@OneToMany(mappedBy="departmentProgram")
 	private List<PartnerSeason> partnerSeasons;
+
+	//bi-directional many-to-one association to PartnerWorkQueue
+	@OneToMany(mappedBy="departmentProgram")
+	private List<PartnerWorkQueue> partnerWorkQueues;
 
 	//bi-directional many-to-one association to SeasonProgramDocument
 	@OneToMany(mappedBy="departmentProgram")
@@ -178,26 +191,114 @@ public class DepartmentProgram implements Serializable {
 		this.lookupDepartment = lookupDepartment;
 	}
 
-	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-		return this.fieldStaffLcseasons;
+	public List<FieldStaffHistory> getFieldStaffHistories() {
+		return this.fieldStaffHistories;
 	}
 
-	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-		this.fieldStaffLcseasons = fieldStaffLcseasons;
+	public void setFieldStaffHistories(List<FieldStaffHistory> fieldStaffHistories) {
+		this.fieldStaffHistories = fieldStaffHistories;
 	}
 
-	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().add(fieldStaffLcseason);
-		fieldStaffLcseason.setDepartmentProgram(this);
+	public FieldStaffHistory addFieldStaffHistory(FieldStaffHistory fieldStaffHistory) {
+		getFieldStaffHistories().add(fieldStaffHistory);
+		fieldStaffHistory.setDepartmentProgram(this);
 
-		return fieldStaffLcseason;
+		return fieldStaffHistory;
 	}
 
-	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().remove(fieldStaffLcseason);
-		fieldStaffLcseason.setDepartmentProgram(null);
+	public FieldStaffHistory removeFieldStaffHistory(FieldStaffHistory fieldStaffHistory) {
+		getFieldStaffHistories().remove(fieldStaffHistory);
+		fieldStaffHistory.setDepartmentProgram(null);
 
-		return fieldStaffLcseason;
+		return fieldStaffHistory;
+	}
+
+	public List<FieldStaffSeason> getFieldStaffSeasons() {
+		return this.fieldStaffSeasons;
+	}
+
+	public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
+		this.fieldStaffSeasons = fieldStaffSeasons;
+	}
+
+	public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().add(fieldStaffSeason);
+		fieldStaffSeason.setDepartmentProgram(this);
+
+		return fieldStaffSeason;
+	}
+
+	public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().remove(fieldStaffSeason);
+		fieldStaffSeason.setDepartmentProgram(null);
+
+		return fieldStaffSeason;
+	}
+
+	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+		return this.fieldStaffWorkQueues;
+	}
+
+	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+	}
+
+	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setDepartmentProgram(this);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+		fieldStaffWorkQueue.setDepartmentProgram(null);
+
+		return fieldStaffWorkQueue;
+	}
+
+	public List<HostFamilyAnnouncement> getHostFamilyAnnouncements() {
+		return this.hostFamilyAnnouncements;
+	}
+
+	public void setHostFamilyAnnouncements(List<HostFamilyAnnouncement> hostFamilyAnnouncements) {
+		this.hostFamilyAnnouncements = hostFamilyAnnouncements;
+	}
+
+	public HostFamilyAnnouncement addHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+		getHostFamilyAnnouncements().add(hostFamilyAnnouncement);
+		hostFamilyAnnouncement.setDepartmentProgram(this);
+
+		return hostFamilyAnnouncement;
+	}
+
+	public HostFamilyAnnouncement removeHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+		getHostFamilyAnnouncements().remove(hostFamilyAnnouncement);
+		hostFamilyAnnouncement.setDepartmentProgram(null);
+
+		return hostFamilyAnnouncement;
+	}
+
+	public List<HostFamilySeason> getHostFamilySeasons() {
+		return this.hostFamilySeasons;
+	}
+
+	public void setHostFamilySeasons(List<HostFamilySeason> hostFamilySeasons) {
+		this.hostFamilySeasons = hostFamilySeasons;
+	}
+
+	public HostFamilySeason addHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().add(hostFamilySeason);
+		hostFamilySeason.setDepartmentProgram(this);
+
+		return hostFamilySeason;
+	}
+
+	public HostFamilySeason removeHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().remove(hostFamilySeason);
+		hostFamilySeason.setDepartmentProgram(null);
+
+		return hostFamilySeason;
 	}
 
 	public List<Participant> getParticipants() {
@@ -222,28 +323,6 @@ public class DepartmentProgram implements Serializable {
 		return participant;
 	}
 
-	public List<PartnerAgentProgram> getPartnerAgentPrograms() {
-		return this.partnerAgentPrograms;
-	}
-
-	public void setPartnerAgentPrograms(List<PartnerAgentProgram> partnerAgentPrograms) {
-		this.partnerAgentPrograms = partnerAgentPrograms;
-	}
-
-	public PartnerAgentProgram addPartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
-		getPartnerAgentPrograms().add(partnerAgentProgram);
-		partnerAgentProgram.setDepartmentProgram(this);
-
-		return partnerAgentProgram;
-	}
-
-	public PartnerAgentProgram removePartnerAgentProgram(PartnerAgentProgram partnerAgentProgram) {
-		getPartnerAgentPrograms().remove(partnerAgentProgram);
-		partnerAgentProgram.setDepartmentProgram(null);
-
-		return partnerAgentProgram;
-	}
-
 	public List<PartnerAnnouncement> getPartnerAnnouncements() {
 		return this.partnerAnnouncements;
 	}
@@ -266,28 +345,6 @@ public class DepartmentProgram implements Serializable {
 		return partnerAnnouncement;
 	}
 
-	public List<PartnerCCIContact> getPartnerCcicontacts() {
-		return this.partnerCcicontacts;
-	}
-
-	public void setPartnerCcicontacts(List<PartnerCCIContact> partnerCcicontacts) {
-		this.partnerCcicontacts = partnerCcicontacts;
-	}
-
-	public PartnerCCIContact addPartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().add(partnerCcicontact);
-		partnerCcicontact.setDepartmentProgram(this);
-
-		return partnerCcicontact;
-	}
-
-	public PartnerCCIContact removePartnerCcicontact(PartnerCCIContact partnerCcicontact) {
-		getPartnerCcicontacts().remove(partnerCcicontact);
-		partnerCcicontact.setDepartmentProgram(null);
-
-		return partnerCcicontact;
-	}
-
 	public List<PartnerSeason> getPartnerSeasons() {
 		return this.partnerSeasons;
 	}
@@ -308,6 +365,28 @@ public class DepartmentProgram implements Serializable {
 		partnerSeason.setDepartmentProgram(null);
 
 		return partnerSeason;
+	}
+
+	public List<PartnerWorkQueue> getPartnerWorkQueues() {
+		return this.partnerWorkQueues;
+	}
+
+	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+		this.partnerWorkQueues = partnerWorkQueues;
+	}
+
+	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().add(partnerWorkQueue);
+		partnerWorkQueue.setDepartmentProgram(this);
+
+		return partnerWorkQueue;
+	}
+
+	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+		getPartnerWorkQueues().remove(partnerWorkQueue);
+		partnerWorkQueue.setDepartmentProgram(null);
+
+		return partnerWorkQueue;
 	}
 
 	public List<SeasonProgramDocument> getSeasonProgramDocuments() {

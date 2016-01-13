@@ -21,10 +21,12 @@ public class AddendumDocumentInformation implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer addendumDocumentInformationId;
 
-	private byte active;
+	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(length=50)
@@ -33,6 +35,7 @@ public class AddendumDocumentInformation implements Serializable {
 	@Column(length=50)
 	private String fileName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
@@ -59,11 +62,11 @@ public class AddendumDocumentInformation implements Serializable {
 		this.addendumDocumentInformationId = addendumDocumentInformationId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 

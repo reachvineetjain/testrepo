@@ -44,8 +44,23 @@
          <bean id="partnerUser" class="com.ccighgo.service.rest.partner.user.PartnerUser" />
          <bean id="subPartner" class="com.ccighgo.service.rest.partner.subpartner.SubPartner" />
          <bean id="partnerSeason" class="com.ccighgo.service.rest.partner.season.PartnerSeason" />
+         <bean id="partnerAgent" class="com.ccighgo.service.rest.partner.agent.PartnerAgent" />
          <bean id="partnerQuickStatistics" class="com.ccighgo.service.rest.partner.quick.stats.PartnerQuickStatistics" />
          <bean id="partnerWorkQueues" class="com.ccighgo.service.rest.partner.work.queue.PartnerWorkQueues" />
+         <bean id="partnerCompany" class="com.ccighgo.service.rest.partner.company.PartnerCompany" />
+         <bean id="partnerAdmin" class="com.ccighgo.service.rest.partner.admin.PartnerAdmin" />
+         <bean id="partnerAdminSeason" class="com.ccighgo.service.rest.partner.admin.season.PartnerAdminSeason" />
+         <bean id="partnerGenericNotes" class="com.ccighgo.service.rest.partner.generic.notes.PartnerGenericNotes" />
+         <bean id="genericDocuments" class="com.ccighgo.service.rest.generic.documents.GenericDocuments" />
+         <bean id="adminPartner" class="com.ccighgo.service.rest.partner.admin.partner.AdminPartner" />
+         <bean id="fieldStaffListing" class="com.ccighgo.service.rest.fieldstaff.listing.FieldStaffListing" />
+         <bean id="fieldStaffSeason" class="com.ccighgo.service.rest.fieldstaff.season.FieldStaffSeason" />
+         <bean id="fieldStaffs" class="com.ccighgo.service.rest.fieldstaffs.FieldStaffs"/>
+         <bean id="fieldStaffGenericNote" class="com.ccighgo.service.rest.generic.notes.fieldstaffs.FieldStaffGenericNote"/>
+         <bean id="fieldStaffLeadershipDetails" class="com.ccighgo.service.rest.fieldstaff.details.listing.FieldStaffLeadershipDetails" />
+         <bean id="fieldStaffParticipant" class="com.ccighgo.service.rest.fieldstaffs.participant.FieldStaffParticipant"/>
+         <bean id="fieldStaffERDDashboard" class="com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard"/>
+         <bean id="fieldStaffMyPlacements" class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements"/>
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />

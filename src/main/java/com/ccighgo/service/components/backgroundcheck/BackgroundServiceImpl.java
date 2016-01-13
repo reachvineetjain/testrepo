@@ -2,7 +2,7 @@ package com.ccighgo.service.components.backgroundcheck;
 
 import java.io.StringWriter;
 
-import javafx.scene.transform.Affine;
+
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -55,6 +55,13 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    @Override
    public ScreenResponse requestScreen(ScreenRequest screenRequest) {
       try {
+         if(screenRequest!=null)
+         LOGGER.info("partnerInfo: "+screenRequest.getPartnerInfo()+            
+               "account: "+screenRequest.getAccount());
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      try {
          @SuppressWarnings("deprecation")
          HttpClient client = new DefaultHttpClient();
          HttpPost post = new HttpPost("https://www.rhrtest.com/BatchScreensXML.cfm");
@@ -83,6 +90,13 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    }
 
    private void parseResult(JSONObject xmlJSONObj, ScreenResponse screenResponse) {
+      try {
+         if(screenResponse!=null)
+         LOGGER.info("dateTime: "+screenResponse.getDateTime()+" responseCode: "+screenResponse.getResponseCode()
+               +" account "+screenResponse.getAccount());
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       JSONObject screenResObject = xmlJSONObj.getJSONObject("ScreenResponse");
       JSONObject jsonAccountObject = screenResObject.getJSONObject("Account");
       try {

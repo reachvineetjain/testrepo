@@ -1,5 +1,7 @@
 package com.ccighgo.service.rest.utility;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,13 +16,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
+import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
+import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
+import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
 import com.ccighgo.service.transport.utility.beans.department.Departments;
+import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 import com.ccighgo.service.transport.utility.beans.forgot.request.ForgotRequest;
 import com.ccighgo.service.transport.utility.beans.gender.Genders;
 import com.ccighgo.service.transport.utility.beans.gender.Salutations;
+import com.ccighgo.service.transport.utility.beans.partner.status.PartnerStatuses;
 import com.ccighgo.service.transport.utility.beans.program.Programs;
 import com.ccighgo.service.transport.utility.beans.region.Regions;
 import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
@@ -251,5 +259,54 @@ public class Utility {
    @Path("duplicate-email/{email}")
    public  boolean checkEmail(@PathParam("email") String email){
       return utilityServices.checkEmail(email);
+   }
+  
+   @GET
+   @Path("department/program-options/{id}")
+   @Produces("application/json")
+   public Programs getProgramOptionsByDepartment(@PathParam("id") String id) {
+      return utilityServices.getProgramOptionsByDepartment(id);
+   }  
+   
+   @GET
+   @Path("program-options")
+   @Produces("application/json")
+   public com.ccighgo.service.transport.utility.beans.program.ProgramOptions getAllProgramOptions() {
+      return utilityServices.getAllProgramOptions();
+   }  
+   
+   @GET
+   @Path("partner-season-status")
+   @Produces("application/json")
+   public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus() {
+      return utilityServices.getPartnerSeasonStatus();
+   }  
+   
+   @GET
+   @Path("partner-note-tags")
+   @Produces("application/json")
+   public List<NoteTags> getAllTags() {
+      return utilityServices.getAllTags();
+   }  
+   
+   @GET
+   @Path("document-type")
+   @Produces("application/json")
+   public DocumentTypes getDocumentTypes(){
+      return utilityServices.getDocumentTypes();
+   }
+   
+   @GET
+   @Path("get/cciusers")
+   @Produces("application/json")
+   public CCIUsersList getCCIUsers(){
+      return utilityServices.getCCIUsers();
+   }
+   
+   @GET
+   @Path("partner/status")
+   @Produces("application/json")
+   public PartnerStatuses getPartnerStatus(){
+      return utilityServices.getPartnerStatus();
    }
 }

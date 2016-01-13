@@ -20,7 +20,8 @@ public class SeasonDepartmentUpdateLog implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer updateDepartmentLogId;
 
-	private int modifiedBy;
+	@Column(nullable=false)
+	private Integer modifiedBy;
 
 	@Column(nullable=false)
 	private Timestamp modifiedOn;
@@ -30,7 +31,7 @@ public class SeasonDepartmentUpdateLog implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonDepartmentUpdateLog() {
@@ -44,11 +45,11 @@ public class SeasonDepartmentUpdateLog implements Serializable {
 		this.updateDepartmentLogId = updateDepartmentLogId;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

@@ -2,6 +2,7 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
 
 
@@ -20,34 +21,61 @@ public class PartnerSeasonAllocation implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonAllocationId;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date allocationRequestedOn;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date allocationRequestReviewedOn;
+
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer expectedPaxCount;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date followupDate;
 
 	private Integer maxGuaranteedPax;
 
 	private Integer maxPax;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to DepartmentProgramOption
+	private Integer requestedMaxGuaranteedPax;
+
+	private Integer requestedMaxPax;
+
+	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="programOptionId")
-	private DepartmentProgramOption departmentProgramOption1;
+	@JoinColumn(name="allocationRequestReviewedBy")
+	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
 	@JoinColumn(name="departmentProgramOptionId")
-	private DepartmentProgramOption departmentProgramOption2;
+	private DepartmentProgramOption departmentProgramOption;
+
+	//bi-directional many-to-one association to Login
+	@ManyToOne
+	@JoinColumn(name="allocationRequestedBy")
+	private Login login;
 
 	//bi-directional many-to-one association to PartnerSeason
 	@ManyToOne
 	@JoinColumn(name="partnerSeasonId")
 	private PartnerSeason partnerSeason;
+
+	//bi-directional many-to-one association to PartnerStatus
+	@ManyToOne
+	@JoinColumn(name="allocationRequestStatusId")
+	private PartnerStatus partnerStatus;
 
 	public PartnerSeasonAllocation() {
 	}
@@ -58,6 +86,22 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	public void setPartnerSeasonAllocationId(Integer partnerSeasonAllocationId) {
 		this.partnerSeasonAllocationId = partnerSeasonAllocationId;
+	}
+
+	public Date getAllocationRequestedOn() {
+		return this.allocationRequestedOn;
+	}
+
+	public void setAllocationRequestedOn(Date allocationRequestedOn) {
+		this.allocationRequestedOn = allocationRequestedOn;
+	}
+
+	public Date getAllocationRequestReviewedOn() {
+		return this.allocationRequestReviewedOn;
+	}
+
+	public void setAllocationRequestReviewedOn(Date allocationRequestReviewedOn) {
+		this.allocationRequestReviewedOn = allocationRequestReviewedOn;
 	}
 
 	public Integer getCreatedBy() {
@@ -82,6 +126,14 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	public void setExpectedPaxCount(Integer expectedPaxCount) {
 		this.expectedPaxCount = expectedPaxCount;
+	}
+
+	public Date getFollowupDate() {
+		return this.followupDate;
+	}
+
+	public void setFollowupDate(Date followupDate) {
+		this.followupDate = followupDate;
 	}
 
 	public Integer getMaxGuaranteedPax() {
@@ -116,20 +168,44 @@ public class PartnerSeasonAllocation implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public DepartmentProgramOption getDepartmentProgramOption1() {
-		return this.departmentProgramOption1;
+	public Integer getRequestedMaxGuaranteedPax() {
+		return this.requestedMaxGuaranteedPax;
 	}
 
-	public void setDepartmentProgramOption1(DepartmentProgramOption departmentProgramOption1) {
-		this.departmentProgramOption1 = departmentProgramOption1;
+	public void setRequestedMaxGuaranteedPax(Integer requestedMaxGuaranteedPax) {
+		this.requestedMaxGuaranteedPax = requestedMaxGuaranteedPax;
 	}
 
-	public DepartmentProgramOption getDepartmentProgramOption2() {
-		return this.departmentProgramOption2;
+	public Integer getRequestedMaxPax() {
+		return this.requestedMaxPax;
 	}
 
-	public void setDepartmentProgramOption2(DepartmentProgramOption departmentProgramOption2) {
-		this.departmentProgramOption2 = departmentProgramOption2;
+	public void setRequestedMaxPax(Integer requestedMaxPax) {
+		this.requestedMaxPax = requestedMaxPax;
+	}
+
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
+	}
+
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
+	}
+
+	public DepartmentProgramOption getDepartmentProgramOption() {
+		return this.departmentProgramOption;
+	}
+
+	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+		this.departmentProgramOption = departmentProgramOption;
+	}
+
+	public Login getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	public PartnerSeason getPartnerSeason() {
@@ -138,6 +214,14 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	public void setPartnerSeason(PartnerSeason partnerSeason) {
 		this.partnerSeason = partnerSeason;
+	}
+
+	public PartnerStatus getPartnerStatus() {
+		return this.partnerStatus;
+	}
+
+	public void setPartnerStatus(PartnerStatus partnerStatus) {
+		this.partnerStatus = partnerStatus;
 	}
 
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/requestchangeinallocation" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/requestchangeinallocation" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.requestchangeinallocation" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../../../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="AdminPartnerWorkQueueRequestChangeInAllocation" type="pdl:AdminPartnerWorkQueueRequestChangeInAllocation" />
+
+   <xsd:complexType name="AdminPartnerWorkQueueRequestChangeInAllocation">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="changeInAllocation" type="pdl:AdminPartnerWorkQueueRequestChangeInAllocationDetails" minOccurs="1"   maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="AdminPartnerWorkQueueRequestChangeInAllocationDetails">
+    <xsd:complexContent>
+         <xsd:extension base="common:Response">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />                      
+      	 <xsd:element name="companyId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+   		 <xsd:element name="companyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="flagUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="sunmittedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="country" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partnerStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         
+	    <xsd:element name="currentSeasonAugustStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	    <xsd:element name="currentSeasonAugustStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	             
+		<xsd:element name="currentSeasonAugustStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="currentSeasonAugustStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		
+		<xsd:element name="currentSeasonJanStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />         
+		<xsd:element name="currentSeasonJanStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		
+		<xsd:element name="currentSeasonJanStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="currentSeasonJanStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		
+		<xsd:element name="requestedSeasonAugustStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="requestedSeasonAugustStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		         
+		<xsd:element name="requestedSeasonAugustStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="requestedSeasonAugustStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		
+		 <xsd:element name="requestedSeasonJanStartUnguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />         
+		 <xsd:element name="requestedSeasonJanStartUnguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		 
+		<xsd:element name="requestedSeasonJanStartguarantedParticipantDeno" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		<xsd:element name="requestedSeasonJanStartguarantedParticipantNume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		
+		
+         <xsd:element name="followUpDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />  
+         <xsd:element name="partnerSeasonAllocationId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+      </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>   
+   
+
+   
+</xsd:schema>

@@ -22,11 +22,12 @@ public class ResourcePermission implements Serializable {
 	private Integer resourcePermissionId;
 
 	@Column(nullable=false)
-	private byte active;
+	private Byte active;
 
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Column(nullable=false)
@@ -38,7 +39,7 @@ public class ResourcePermission implements Serializable {
 	@Column(length=200)
 	private String resourceDescription;
 
-	@Column(length=50)
+	@Column(nullable=false, length=50)
 	private String resourceName;
 
 	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
@@ -59,6 +60,10 @@ public class ResourcePermission implements Serializable {
 	@JoinColumn(name="resourceActionID", nullable=false)
 	private ResourceAction resourceAction;
 
+	//bi-directional many-to-one association to StateTypeResourcePermission
+	@OneToMany(mappedBy="resourcePermission")
+	private List<StateTypeResourcePermission> stateTypeResourcePermissions;
+
 	public ResourcePermission() {
 	}
 
@@ -70,11 +75,11 @@ public class ResourcePermission implements Serializable {
 		this.resourcePermissionId = resourcePermissionId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -184,6 +189,28 @@ public class ResourcePermission implements Serializable {
 
 	public void setResourceAction(ResourceAction resourceAction) {
 		this.resourceAction = resourceAction;
+	}
+
+	public List<StateTypeResourcePermission> getStateTypeResourcePermissions() {
+		return this.stateTypeResourcePermissions;
+	}
+
+	public void setStateTypeResourcePermissions(List<StateTypeResourcePermission> stateTypeResourcePermissions) {
+		this.stateTypeResourcePermissions = stateTypeResourcePermissions;
+	}
+
+	public StateTypeResourcePermission addStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
+		getStateTypeResourcePermissions().add(stateTypeResourcePermission);
+		stateTypeResourcePermission.setResourcePermission(this);
+
+		return stateTypeResourcePermission;
+	}
+
+	public StateTypeResourcePermission removeStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
+		getStateTypeResourcePermissions().remove(stateTypeResourcePermission);
+		stateTypeResourcePermission.setResourcePermission(null);
+
+		return stateTypeResourcePermission;
 	}
 
 }

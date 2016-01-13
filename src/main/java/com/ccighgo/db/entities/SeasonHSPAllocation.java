@@ -23,6 +23,7 @@ public class SeasonHSPAllocation implements Serializable {
 	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer maxGuaranteedPax;

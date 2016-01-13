@@ -3,9 +3,16 @@
  */
 package com.ccighgo.service.components.participants;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.participant.beans.newparticipant.NewParticipant;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.participant.beans.addedParticipantList.AddedParticipantsList;
+import com.ccighgo.service.transport.participant.beans.availableprogramOptionsforparticipant.ProgramOptionsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
+import com.ccighgo.service.transport.participant.beans.availablesubpartnerforparticipant.SubPartnersForParticipants;
+import com.ccighgo.service.transport.participant.beans.newmanualparticipant.NewManualParticipant;
 import com.ccighgo.service.transport.participant.beans.participantsactivelist.ParticipantsActiveList;
 import com.ccighgo.service.transport.participant.beans.participantsleadlist.ParticipantsLeadList;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -33,10 +40,41 @@ public interface ParticipantsInterface {
     */
    public ParticipantsLeadList getLeadParticipantsList(String partnerId);
 
-   public NewParticipant addNewParticipant(NewParticipant newParticipant);
+   public NewManualParticipant addNewParticipant(NewManualParticipant newParticipant);
 
-   public NewParticipant editNewParticipant(Integer participantId);
+   public NewManualParticipant editNewParticipant(Integer participantId);
 
-   public NewParticipant updateParticipant(NewParticipant participant);
+   public NewManualParticipant updateParticipant(NewManualParticipant participant);
+   
+   public SeasonsForParticipants getAllAvailableSeasons();
+
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId,int departmentProgramId);
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId);
+
+   public AddedParticipantsList getAddedParticipant(String partnerId);
+
+   public SubPartnersForParticipants getAllAvailableSubPartners(int partnerId);
+
+   public WSDefaultResponse assignSeasonToParticipant(String seasonId, String participantId, String departmentProgramId);
+
+   public WSDefaultResponse assignSubpartnerToParticipant(String subpartnerId, String participantId);
+
+   public WSDefaultResponse assignEmailToParticipant(String email, String email2);
+
+   public WSDefaultResponse changeParticipantStatus(String participantId, String status);
+
+   /**
+    * @param participantGoId
+    * @param request
+    * @return
+    */
+   public Response resetParticipantPassword(String participantGoId, HttpServletRequest request);
+
+   public SeasonsForParticipants getAllAvailableSeasons(String partnerId);
+
+   public Response sendLogin(String participantGoId, HttpServletRequest request);
+   
+   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId);
+
 
 }

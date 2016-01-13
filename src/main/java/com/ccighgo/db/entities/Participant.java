@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -16,7 +17,6 @@ public class Participant implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer participantGoId;
 
@@ -29,26 +29,41 @@ public class Participant implements Serializable {
 	@Column(length=50)
 	private String firstName;
 
-	private byte guaranteed;
+	private Byte guaranteed;
 
-	private byte isLead;
+	private Byte isLead;
 
 	@Column(length=50)
 	private String lastName;
 
-	private Integer participantStatusId;
+	@Column(length=300)
+	private String photo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
 
-	private byte submittedFlightInfo;
+	private Byte submittedFlightInfo;
 
-	private Integer subPartner;
+	//bi-directional many-to-one association to FieldStaffParticipant
+	@OneToMany(mappedBy="participant")
+	private List<FieldStaffParticipant> fieldStaffParticipants;
+
+	//bi-directional many-to-one association to HostFamilyParticipant
+	@OneToMany(mappedBy="participant")
+	private List<HostFamilyParticipant> hostFamilyParticipants;
+
+	//bi-directional many-to-one association to HostFamilyParticipantHistory
+	@OneToMany(mappedBy="participant")
+	private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
+
+	//bi-directional many-to-one association to ParticipantPermission
+	@OneToMany(mappedBy="participant")
+	private List<ParticipantPermission> participantPermissions;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="departmentProgramOption")
-	private DepartmentProgramOption departmentProgramOptionBean;
+	@JoinColumn(name="departmentProgramOptionId")
+	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
@@ -59,6 +74,11 @@ public class Participant implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="countryId")
 	private LookupCountry lookupCountry;
+
+	//bi-directional many-to-one association to ParticipantStatus
+	@ManyToOne
+	@JoinColumn(name="participantStatusId")
+	private ParticipantStatus participantStatus;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
@@ -110,19 +130,19 @@ public class Participant implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public byte getGuaranteed() {
+	public Byte getGuaranteed() {
 		return this.guaranteed;
 	}
 
-	public void setGuaranteed(byte guaranteed) {
+	public void setGuaranteed(Byte guaranteed) {
 		this.guaranteed = guaranteed;
 	}
 
-	public byte getIsLead() {
+	public Byte getIsLead() {
 		return this.isLead;
 	}
 
-	public void setIsLead(byte isLead) {
+	public void setIsLead(Byte isLead) {
 		this.isLead = isLead;
 	}
 
@@ -134,12 +154,12 @@ public class Participant implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Integer getParticipantStatusId() {
-		return this.participantStatusId;
+	public String getPhoto() {
+		return this.photo;
 	}
 
-	public void setParticipantStatusId(Integer participantStatusId) {
-		this.participantStatusId = participantStatusId;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public Date getStartDate() {
@@ -150,28 +170,108 @@ public class Participant implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public byte getSubmittedFlightInfo() {
+	public Byte getSubmittedFlightInfo() {
 		return this.submittedFlightInfo;
 	}
 
-	public void setSubmittedFlightInfo(byte submittedFlightInfo) {
+	public void setSubmittedFlightInfo(Byte submittedFlightInfo) {
 		this.submittedFlightInfo = submittedFlightInfo;
 	}
 
-	public Integer getSubPartner() {
-		return this.subPartner;
+	public List<FieldStaffParticipant> getFieldStaffParticipants() {
+		return this.fieldStaffParticipants;
 	}
 
-	public void setSubPartner(Integer subPartner) {
-		this.subPartner = subPartner;
+	public void setFieldStaffParticipants(List<FieldStaffParticipant> fieldStaffParticipants) {
+		this.fieldStaffParticipants = fieldStaffParticipants;
 	}
 
-	public DepartmentProgramOption getDepartmentProgramOptionBean() {
-		return this.departmentProgramOptionBean;
+	public FieldStaffParticipant addFieldStaffParticipant(FieldStaffParticipant fieldStaffParticipant) {
+		getFieldStaffParticipants().add(fieldStaffParticipant);
+		fieldStaffParticipant.setParticipant(this);
+
+		return fieldStaffParticipant;
 	}
 
-	public void setDepartmentProgramOptionBean(DepartmentProgramOption departmentProgramOptionBean) {
-		this.departmentProgramOptionBean = departmentProgramOptionBean;
+	public FieldStaffParticipant removeFieldStaffParticipant(FieldStaffParticipant fieldStaffParticipant) {
+		getFieldStaffParticipants().remove(fieldStaffParticipant);
+		fieldStaffParticipant.setParticipant(null);
+
+		return fieldStaffParticipant;
+	}
+
+	public List<HostFamilyParticipant> getHostFamilyParticipants() {
+		return this.hostFamilyParticipants;
+	}
+
+	public void setHostFamilyParticipants(List<HostFamilyParticipant> hostFamilyParticipants) {
+		this.hostFamilyParticipants = hostFamilyParticipants;
+	}
+
+	public HostFamilyParticipant addHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
+		getHostFamilyParticipants().add(hostFamilyParticipant);
+		hostFamilyParticipant.setParticipant(this);
+
+		return hostFamilyParticipant;
+	}
+
+	public HostFamilyParticipant removeHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
+		getHostFamilyParticipants().remove(hostFamilyParticipant);
+		hostFamilyParticipant.setParticipant(null);
+
+		return hostFamilyParticipant;
+	}
+
+	public List<HostFamilyParticipantHistory> getHostFamilyParticipantHistories() {
+		return this.hostFamilyParticipantHistories;
+	}
+
+	public void setHostFamilyParticipantHistories(List<HostFamilyParticipantHistory> hostFamilyParticipantHistories) {
+		this.hostFamilyParticipantHistories = hostFamilyParticipantHistories;
+	}
+
+	public HostFamilyParticipantHistory addHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+		getHostFamilyParticipantHistories().add(hostFamilyParticipantHistory);
+		hostFamilyParticipantHistory.setParticipant(this);
+
+		return hostFamilyParticipantHistory;
+	}
+
+	public HostFamilyParticipantHistory removeHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+		getHostFamilyParticipantHistories().remove(hostFamilyParticipantHistory);
+		hostFamilyParticipantHistory.setParticipant(null);
+
+		return hostFamilyParticipantHistory;
+	}
+
+	public List<ParticipantPermission> getParticipantPermissions() {
+		return this.participantPermissions;
+	}
+
+	public void setParticipantPermissions(List<ParticipantPermission> participantPermissions) {
+		this.participantPermissions = participantPermissions;
+	}
+
+	public ParticipantPermission addParticipantPermission(ParticipantPermission participantPermission) {
+		getParticipantPermissions().add(participantPermission);
+		participantPermission.setParticipant(this);
+
+		return participantPermission;
+	}
+
+	public ParticipantPermission removeParticipantPermission(ParticipantPermission participantPermission) {
+		getParticipantPermissions().remove(participantPermission);
+		participantPermission.setParticipant(null);
+
+		return participantPermission;
+	}
+
+	public DepartmentProgramOption getDepartmentProgramOption() {
+		return this.departmentProgramOption;
+	}
+
+	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+		this.departmentProgramOption = departmentProgramOption;
 	}
 
 	public DepartmentProgram getDepartmentProgram() {
@@ -188,6 +288,14 @@ public class Participant implements Serializable {
 
 	public void setLookupCountry(LookupCountry lookupCountry) {
 		this.lookupCountry = lookupCountry;
+	}
+
+	public ParticipantStatus getParticipantStatus() {
+		return this.participantStatus;
+	}
+
+	public void setParticipantStatus(ParticipantStatus participantStatus) {
+		this.participantStatus = participantStatus;
 	}
 
 	public Partner getPartner1() {

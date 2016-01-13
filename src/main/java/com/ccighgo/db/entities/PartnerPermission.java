@@ -55,6 +55,24 @@ public class PartnerPermission implements Serializable {
 
 	private Byte f1StudentsPreProgram;
 
+	private Byte ihpAccountingInsurance;
+
+	private Byte ihpAdmin;
+
+	private Byte ihpApplications;
+
+	private Byte ihpContracting;
+
+	private Byte ihpFlights;
+
+	private Byte ihpInsurance;
+
+	private Byte ihpMonitoring;
+
+	private Byte ihpPlacementInfo;
+
+	private Byte ihpStudentsPreProgram;
+
 	private Byte j1AccountingInsurance;
 
 	private Byte j1Admin;
@@ -90,28 +108,9 @@ public class PartnerPermission implements Serializable {
 	private Byte wtPlacementInfo;
 
 	private Byte wtStudentsPreProgram;
-	
-	private Byte ihpAdmin;
-	
-   private Byte ihpApplications;
-   
-   private Byte ihpFlights;
-   
-   private Byte ihpPlacementInfo;
-   
-   private Byte ihpMonitoring;
-   
-   private Byte ihpAccountingInsurance;
-   
-   private Byte ihpStudentsPreProgram;
-   
-   private Byte ihpContracting;
-   
-   private Byte ihpInsurance;
-   
 
 	//bi-directional many-to-one association to PartnerUser
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="partnerUserId", nullable=false)
 	private PartnerUser partnerUser;
 
@@ -270,6 +269,77 @@ public class PartnerPermission implements Serializable {
 		this.f1StudentsPreProgram = f1StudentsPreProgram;
 	}
 
+	public Byte getIhpAccountingInsurance() {
+		return this.ihpAccountingInsurance;
+	}
+
+	public void setIhpAccountingInsurance(Byte ihpAccountingInsurance) {
+		this.ihpAccountingInsurance = ihpAccountingInsurance;
+	}
+
+	public Byte getIhpAdmin() {
+		return this.ihpAdmin;
+	}
+
+	public void setIhpAdmin(Byte ihpAdmin) {
+		this.ihpAdmin = ihpAdmin;
+	}
+
+	public Byte getIhpApplications() {
+		return this.ihpApplications;
+	}
+
+	public void setIhpApplications(Byte ihpApplications) {
+		this.ihpApplications = ihpApplications;
+	}
+
+	public Byte getIhpContracting() {
+		return this.ihpContracting;
+	}
+
+	public void setIhpContracting(Byte ihpContracting) {
+		this.ihpContracting = ihpContracting;
+	}
+
+	public Byte getIhpFlights() {
+		return this.ihpFlights;
+	}
+
+	public void setIhpFlights(Byte ihpFlights) {
+		this.ihpFlights = ihpFlights;
+	}
+
+	public Byte getIhpInsurance() {
+		return this.ihpInsurance;
+	}
+
+	public void setIhpInsurance(Byte ihpInsurance) {
+		this.ihpInsurance = ihpInsurance;
+	}
+
+	public Byte getIhpMonitoring() {
+		return this.ihpMonitoring;
+	}
+
+	public void setIhpMonitoring(Byte ihpMonitoring) {
+		this.ihpMonitoring = ihpMonitoring;
+	}
+
+	public Byte getIhpPlacementInfo() {
+		return this.ihpPlacementInfo;
+	}
+
+	public void setIhpPlacementInfo(Byte ihpPlacementInfo) {
+		this.ihpPlacementInfo = ihpPlacementInfo;
+	}
+
+	public Byte getIhpStudentsPreProgram() {
+		return this.ihpStudentsPreProgram;
+	}
+
+	public void setIhpStudentsPreProgram(Byte ihpStudentsPreProgram) {
+		this.ihpStudentsPreProgram = ihpStudentsPreProgram;
+	}
 
 	public Byte getJ1AccountingInsurance() {
 		return this.j1AccountingInsurance;
@@ -422,77 +492,5 @@ public class PartnerPermission implements Serializable {
 	public void setPartnerUser(PartnerUser partnerUser) {
 		this.partnerUser = partnerUser;
 	}
-
-   public Byte getIhpAdmin() {
-      return ihpAdmin;
-   }
-
-   public void setIhpAdmin(Byte ihpAdmin) {
-      this.ihpAdmin = ihpAdmin;
-   }
-
-   public Byte getIhpApplications() {
-      return ihpApplications;
-   }
-
-   public void setIhpApplications(Byte ihpApplications) {
-      this.ihpApplications = ihpApplications;
-   }
-
-   public Byte getIhpFlights() {
-      return ihpFlights;
-   }
-
-   public void setIhpFlights(Byte ihpFlights) {
-      this.ihpFlights = ihpFlights;
-   }
-
-   public Byte getIhpPlacementInfo() {
-      return ihpPlacementInfo;
-   }
-
-   public void setIhpPlacementInfo(Byte ihpPlacementInfo) {
-      this.ihpPlacementInfo = ihpPlacementInfo;
-   }
-
-   public Byte getIhpMonitoring() {
-      return ihpMonitoring;
-   }
-
-   public void setIhpMonitoring(Byte ihpMonitoring) {
-      this.ihpMonitoring = ihpMonitoring;
-   }
-
-   public Byte getIhpAccountingInsurance() {
-      return ihpAccountingInsurance;
-   }
-
-   public void setIhpAccountingInsurance(Byte ihpAccountingInsurance) {
-      this.ihpAccountingInsurance = ihpAccountingInsurance;
-   }
-
-   public Byte getIhpStudentsPreProgram() {
-      return ihpStudentsPreProgram;
-   }
-
-   public void setIhpStudentsPreProgram(Byte ihpStudentsPreProgram) {
-      this.ihpStudentsPreProgram = ihpStudentsPreProgram;
-   }
-
-   public Byte getIhpContracting() {
-      return ihpContracting;
-   }
-
-   public void setIhpContracting(Byte ihpContracting) {
-      this.ihpContracting = ihpContracting;
-   }
-
-   public Byte getIhpInsurance() {
-      return ihpInsurance;
-   }
-
-   public void setIhpInsurance(Byte ihpInsurance) {
-      this.ihpInsurance = ihpInsurance;
-   }
 
 }

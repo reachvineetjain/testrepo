@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -22,10 +20,7 @@ public class PartnerUser implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerUserId;
 
-	private byte active;
-
-	@Column(length=50)
-	private String email;
+	private Byte active;
 
 	@Column(length=150)
 	private String emergencyPhone;
@@ -36,14 +31,18 @@ public class PartnerUser implements Serializable {
 	@Column(length=150)
 	private String firstName;
 
+	private Byte isPrimary;
+
 	@Column(length=150)
 	private String lastName;
 
 	@Column(length=150)
 	private String phone;
 
-	/*@Column(length=10)
-	private String salutation;*/
+	@Column(length=300)
+	private String photo;
+
+	private Byte recieveNotificationEmails;
 
 	@Column(length=150)
 	private String skypeId;
@@ -51,32 +50,41 @@ public class PartnerUser implements Serializable {
 	@Column(length=150)
 	private String title;
 
+	@Column(length=50)
+	private String website;
+
 	//bi-directional many-to-one association to PartnerPermission
-	@OneToOne(mappedBy="partnerUser", fetch = FetchType.EAGER , cascade = { CascadeType.ALL })
-	private PartnerPermission partnerPermissions;
+	@OneToMany(mappedBy="partnerUser")
+	private List<PartnerPermission> partnerPermissions;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
 	@JoinColumn(name="loginId")
 	private Login login;
 
+	//bi-directional many-to-one association to LookupGender
+	@ManyToOne
+	@JoinColumn(name="genderId")
+	private LookupGender lookupGender;
+
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
 	@JoinColumn(name="partnerGoId")
 	private Partner partner;
 
+	//bi-directional many-to-one association to PartnerOffice
+	@ManyToOne
+	@JoinColumn(name="partnerOfficeId")
+	private PartnerOffice partnerOffice;
+
+	//bi-directional many-to-one association to Salutation
+	@ManyToOne
+	@JoinColumn(name="salutationId")
+	private Salutation salutation;
+
 	//bi-directional many-to-one association to PartnerUserRole
 	@OneToMany(mappedBy="partnerUser")
 	private List<PartnerUserRole> partnerUserRoles;
-	
-	//bi-directional many-to-one association to LookupGender
-   @ManyToOne
-   @JoinColumn(name="genderId")
-   private LookupGender lookupGender;
-   
-   @ManyToOne
-   @JoinColumn(name="salutationId")
-   private Salutation salutation;
 
 	public PartnerUser() {
 	}
@@ -89,20 +97,12 @@ public class PartnerUser implements Serializable {
 		this.partnerUserId = partnerUserId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getEmergencyPhone() {
@@ -129,6 +129,14 @@ public class PartnerUser implements Serializable {
 		this.firstName = firstName;
 	}
 
+	public Byte getIsPrimary() {
+		return this.isPrimary;
+	}
+
+	public void setIsPrimary(Byte isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -145,13 +153,21 @@ public class PartnerUser implements Serializable {
 		this.phone = phone;
 	}
 
-/*	public String getSalutation() {
-		return this.salutation;
+	public String getPhoto() {
+		return this.photo;
 	}
 
-	public void setSalutation(String salutation) {
-		this.salutation = salutation;
-	}*/
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public Byte getRecieveNotificationEmails() {
+		return this.recieveNotificationEmails;
+	}
+
+	public void setRecieveNotificationEmails(Byte recieveNotificationEmails) {
+		this.recieveNotificationEmails = recieveNotificationEmails;
+	}
 
 	public String getSkypeId() {
 		return this.skypeId;
@@ -169,7 +185,15 @@ public class PartnerUser implements Serializable {
 		this.title = title;
 	}
 
-	/*public List<PartnerPermission> getPartnerPermissions() {
+	public String getWebsite() {
+		return this.website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public List<PartnerPermission> getPartnerPermissions() {
 		return this.partnerPermissions;
 	}
 
@@ -189,22 +213,22 @@ public class PartnerUser implements Serializable {
 		partnerPermission.setPartnerUser(null);
 
 		return partnerPermission;
-	}*/
+	}
 
 	public Login getLogin() {
 		return this.login;
 	}
 
-	public PartnerPermission getPartnerPermissions() {
-      return partnerPermissions;
-   }
-
-   public void setPartnerPermissions(PartnerPermission partnerPermissions) {
-      this.partnerPermissions = partnerPermissions;
-   }
-
-   public void setLogin(Login login) {
+	public void setLogin(Login login) {
 		this.login = login;
+	}
+
+	public LookupGender getLookupGender() {
+		return this.lookupGender;
+	}
+
+	public void setLookupGender(LookupGender lookupGender) {
+		this.lookupGender = lookupGender;
 	}
 
 	public Partner getPartner() {
@@ -213,6 +237,22 @@ public class PartnerUser implements Serializable {
 
 	public void setPartner(Partner partner) {
 		this.partner = partner;
+	}
+
+	public PartnerOffice getPartnerOffice() {
+		return this.partnerOffice;
+	}
+
+	public void setPartnerOffice(PartnerOffice partnerOffice) {
+		this.partnerOffice = partnerOffice;
+	}
+
+	public Salutation getSalutation() {
+		return this.salutation;
+	}
+
+	public void setSalutation(Salutation salutation) {
+		this.salutation = salutation;
 	}
 
 	public List<PartnerUserRole> getPartnerUserRoles() {
@@ -236,21 +276,5 @@ public class PartnerUser implements Serializable {
 
 		return partnerUserRole;
 	}
-
-   public LookupGender getLookupGender() {
-      return lookupGender;
-   }
-
-   public void setLookupGender(LookupGender lookupGender) {
-      this.lookupGender = lookupGender;
-   }
-
-   public Salutation getSalutation() {
-      return salutation;
-   }
-
-   public void setSalutation(Salutation salutation) {
-      this.salutation = salutation;
-   }
 
 }

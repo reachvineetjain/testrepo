@@ -23,6 +23,14 @@ public class PaymentSchedule implements Serializable {
 	@Column(nullable=false, length=50)
 	private String scheduleName;
 
+	//bi-directional many-to-one association to FieldStaffSeason
+	@OneToMany(mappedBy="paymentSchedule")
+	private List<FieldStaffSeason> fieldStaffSeasons;
+
+	//bi-directional many-to-one association to HostFamilySeason
+	@OneToMany(mappedBy="paymentSchedule")
+	private List<HostFamilySeason> hostFamilySeasons;
+
 	//bi-directional many-to-one association to SeasonF1Detail
 	@OneToMany(mappedBy="paymentSchedule")
 	private List<SeasonF1Detail> seasonF1details;
@@ -48,6 +56,50 @@ public class PaymentSchedule implements Serializable {
 
 	public void setScheduleName(String scheduleName) {
 		this.scheduleName = scheduleName;
+	}
+
+	public List<FieldStaffSeason> getFieldStaffSeasons() {
+		return this.fieldStaffSeasons;
+	}
+
+	public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
+		this.fieldStaffSeasons = fieldStaffSeasons;
+	}
+
+	public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().add(fieldStaffSeason);
+		fieldStaffSeason.setPaymentSchedule(this);
+
+		return fieldStaffSeason;
+	}
+
+	public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().remove(fieldStaffSeason);
+		fieldStaffSeason.setPaymentSchedule(null);
+
+		return fieldStaffSeason;
+	}
+
+	public List<HostFamilySeason> getHostFamilySeasons() {
+		return this.hostFamilySeasons;
+	}
+
+	public void setHostFamilySeasons(List<HostFamilySeason> hostFamilySeasons) {
+		this.hostFamilySeasons = hostFamilySeasons;
+	}
+
+	public HostFamilySeason addHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().add(hostFamilySeason);
+		hostFamilySeason.setPaymentSchedule(this);
+
+		return hostFamilySeason;
+	}
+
+	public HostFamilySeason removeHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().remove(hostFamilySeason);
+		hostFamilySeason.setPaymentSchedule(null);
+
+		return hostFamilySeason;
 	}
 
 	public List<SeasonF1Detail> getSeasonF1details() {

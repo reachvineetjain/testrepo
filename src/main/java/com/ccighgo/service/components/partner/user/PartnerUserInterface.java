@@ -3,13 +3,14 @@
  */
 package com.ccighgo.service.components.partner.user;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.partner.beans.partner.user.details.PartnerUserDetails;
+import com.ccighgo.service.transport.partner.beans.partner.user.office.PartnerUserOffices;
 import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserDetailAndRoles;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUserProgramsAndRoles;
-import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUsersDetailAndRoles;
 
 /**
  * @author ravi
@@ -19,22 +20,56 @@ import com.ccighgo.service.transport.partner.beans.userdetailandroles.PartnerUse
 public interface PartnerUserInterface {
 
    /**
+    * Get the list of all partner user for specified partner
+    * 
+    * @param partnerId
+    * @return list of Partner users active or inactive
+    */
+   public PartnerUsers getAllPartnerUsers(String partnerId);
+
+   /**
+    * Updates status of Partner user as active or inactive
+    * 
+    * @param statusVal
+    * @param partnerGoId
+    * @return Success or failure response
+    */
+   public Response updatePartnerUserStatus(String statusVal, String partnerUserId);
+
+   /**
+    * @param partnerUserId
     * @return
     */
- // public PartnerUsers getAllPartnerUsers(String partnerId);
+   public Response resetPartnerUserPassword(String partnerUserId, HttpServletRequest request);
 
-   public PartnerUserDetailAndRoles addNewPartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles);
+   /**
+    * View Partner user details and permissions
+    * 
+    * @param partnerUserId
+    * @return
+    */
+   public PartnerUserDetails getPartnerUserDetails(String partnerUserId);
 
-   public PartnerUserDetailAndRoles viewPartnerUser(String partnerUserId);
+   /**
+    * Service to pre-populate Partner offices before adding partner user
+    * 
+    * @param partnerGoId
+    * @return
+    */
+   public PartnerUserOffices getPartnerUserOffices(String partnerGoId);
 
-   public PartnerUsers getAllPartnerUsers(String partnerId);
-   
-   public PartnerUserDetailAndRoles updatePartnerUser(PartnerUserDetailAndRoles partnerUserDetailAndRoles);
-   
-   public PartnerUserProgramsAndRoles getProgramsAndRoles();
-   
-//   public PartnerUsersDetailAndRoles searchPartnerUser(com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser partnerUser);
-   
-   public DeleteRequest deletePartnerUser(String partnerUserId);
+   /**
+    * @param partnerUserDetails
+    * @param request
+    * @return
+    */
+   public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request);
+
+   /**
+    * @param partnerUserDetails
+    * @param request
+    * @return
+    */
+   public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request);
 
 }

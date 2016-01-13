@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerAdminOverviewContacts" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:partnerAdminOverviewContacts="http://www.ccighgo.com/partnerAdminOverviewContacts" xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
+   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewContacts" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+      <xsd:documentation></xsd:documentation>
+   </xsd:annotation>
+
+ 	<xsd:import schemaLocation="../../../../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+
+
+   <xsd:element name="PartnerAdminOverviewContacts" type="partnerAdminOverviewContacts:PartnerAdminOverviewContacts"></xsd:element>
+ 
+
+   <xsd:complexType name="PartnerAdminOverviewContacts">
+    <xsd:complexContent>
+     <xsd:extension base="common:Response">
+            <xsd:sequence>
+            	<xsd:element name="contacts" type="partnerAdminOverviewContacts:PartnerAdminOverviewContactsDetails" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+   </xsd:complexType>
+	   
+	   <xsd:complexType name="PartnerAdminOverviewContactsDetails">
+	            <xsd:sequence>
+				<xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+					            <xsd:element name="partnerContactId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="titile" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				   <xsd:element name="firstName"     type="xsd:string" minOccurs="1" maxOccurs="1" />	               
+	               <xsd:element name="lastName"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="email"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="phone"    type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="emergencyPhone"      type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="fax"    type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="skypeId"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="username"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="active"  type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="programs"  type="xsd:string" minOccurs="1" maxOccurs="1" />
+				   <xsd:element name="primaryContact"  type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+                   <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>	  
+                   <xsd:element name="receiveNotificationEmails" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>            
+	             </xsd:sequence>
+	   </xsd:complexType>
+   
+</xsd:schema>
