@@ -66,9 +66,10 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
          e.printStackTrace();
       }
       Auth auth = new Auth();
-         if (userName != null && !(userName.isEmpty())) {
+         
       try
       {
+         if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
          if (login != null && login.getActive() == CCIConstants.ACTIVE) {
             auth.setGoId(login.getGoIdSequence().getGoId());
@@ -81,7 +82,6 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                LoginType lt = new LoginType();
                if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.CCI_USR)) {
                   lt.setUserDetailUrl("/authorize/cciusr/");
-                  
                }
                if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
                   lt.setUserDetailUrl("/authorize/partner/");
