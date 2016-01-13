@@ -36,6 +36,7 @@
          <bean id="gciapi" class="com.ccighgo.service.rest.wordpress.forms.GCIAPI" />
          <bean id="cciResources" class="com.ccighgo.service.rest.cciresources.CCIResources" />
          <bean id="authentication" class="com.ccighgo.service.rest.authentication.Authentication" />
+         <bean id="notification" class="com.ccighgo.service.rest.pushnotification.PushNotification" />
          <bean id="authorization" class="com.ccighgo.service.rest.authorization.Authorization" />
          <bean id="backgroundcheck" class="com.ccighgo.service.rest.backgroundcheck.BackgroundCheck" />
          <bean id="partner" class="com.ccighgo.service.rest.partner.Partner" />
