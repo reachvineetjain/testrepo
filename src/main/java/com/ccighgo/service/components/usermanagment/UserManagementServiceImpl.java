@@ -330,9 +330,10 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Override
    @Transactional(readOnly = true)
    public User getUserById(String id) {
-      User user = new User();
+	   User user = new User();
+
       if (id == null || (Integer.valueOf(id)) == 0) {
-         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+    	 user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          return user;
@@ -340,7 +341,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       try {
          CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
          if (cciUser != null) {
-
             user.setCciUserId(cciUser.getCciStaffUserId());
             user.setFirstName(cciUser.getFirstName());
             user.setLastName(cciUser.getLastName());
@@ -401,7 +401,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          }
       } catch (CcighgoException e) {
-         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+    	 user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
       }
@@ -1886,7 +1886,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserPermission.setCcistaffUser(cUser);
                cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
                cciUserPermission.setResourcePermission(resourcePermission);
-               cciUserPermission.setResourceAction(resourceAction);
+               cciUserPermission.setResourceAction(resourceAction!=null?resourceAction:resourceActionRepository.findOne(7));//if null setting default as view
                cciUserPermission.setCreatedBy(user.getLoginId());
                cciUserPermission.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                cciUserPermission.setModifiedBy(user.getLoginId());

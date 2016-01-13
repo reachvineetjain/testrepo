@@ -42,6 +42,18 @@ public class LookupUSState implements Serializable {
 	@OneToMany(mappedBy="lookupUsstate")
 	private List<FieldStaffReference> fieldStaffReferences;
 
+	//bi-directional many-to-one association to HostFamily
+	@OneToMany(mappedBy="lookupUsstate1")
+	private List<HostFamily> hostFamilies1;
+
+	//bi-directional many-to-one association to HostFamily
+	@OneToMany(mappedBy="lookupUsstate2")
+	private List<HostFamily> hostFamilies2;
+
+	//bi-directional many-to-one association to HostFamilyReference
+	@OneToMany(mappedBy="lookupUsstate")
+	private List<HostFamilyReference> hostFamilyReferences;
+
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
 	@OneToMany(mappedBy="lookupUsstate")
 	private List<SeasonGeographyConfiguration> seasonGeographyConfigurations;
@@ -163,6 +175,72 @@ public class LookupUSState implements Serializable {
 		fieldStaffReference.setLookupUsstate(null);
 
 		return fieldStaffReference;
+	}
+
+	public List<HostFamily> getHostFamilies1() {
+		return this.hostFamilies1;
+	}
+
+	public void setHostFamilies1(List<HostFamily> hostFamilies1) {
+		this.hostFamilies1 = hostFamilies1;
+	}
+
+	public HostFamily addHostFamilies1(HostFamily hostFamilies1) {
+		getHostFamilies1().add(hostFamilies1);
+		hostFamilies1.setLookupUsstate1(this);
+
+		return hostFamilies1;
+	}
+
+	public HostFamily removeHostFamilies1(HostFamily hostFamilies1) {
+		getHostFamilies1().remove(hostFamilies1);
+		hostFamilies1.setLookupUsstate1(null);
+
+		return hostFamilies1;
+	}
+
+	public List<HostFamily> getHostFamilies2() {
+		return this.hostFamilies2;
+	}
+
+	public void setHostFamilies2(List<HostFamily> hostFamilies2) {
+		this.hostFamilies2 = hostFamilies2;
+	}
+
+	public HostFamily addHostFamilies2(HostFamily hostFamilies2) {
+		getHostFamilies2().add(hostFamilies2);
+		hostFamilies2.setLookupUsstate2(this);
+
+		return hostFamilies2;
+	}
+
+	public HostFamily removeHostFamilies2(HostFamily hostFamilies2) {
+		getHostFamilies2().remove(hostFamilies2);
+		hostFamilies2.setLookupUsstate2(null);
+
+		return hostFamilies2;
+	}
+
+	public List<HostFamilyReference> getHostFamilyReferences() {
+		return this.hostFamilyReferences;
+	}
+
+	public void setHostFamilyReferences(List<HostFamilyReference> hostFamilyReferences) {
+		this.hostFamilyReferences = hostFamilyReferences;
+	}
+
+	public HostFamilyReference addHostFamilyReference(HostFamilyReference hostFamilyReference) {
+		getHostFamilyReferences().add(hostFamilyReference);
+		hostFamilyReference.setLookupUsstate(this);
+
+		return hostFamilyReference;
+	}
+
+	public HostFamilyReference removeHostFamilyReference(HostFamilyReference hostFamilyReference) {
+		getHostFamilyReferences().remove(hostFamilyReference);
+		hostFamilyReference.setLookupUsstate(null);
+
+		return hostFamilyReference;
 	}
 
 	public List<SeasonGeographyConfiguration> getSeasonGeographyConfigurations() {

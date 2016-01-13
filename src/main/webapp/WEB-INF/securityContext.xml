@@ -40,6 +40,7 @@
             /services/backgroundcheck/**=anon
             /services/gciapi/**=anon
             /services/auth/logout=anon
+            /services/notification/**=anon
             /services/authorize/**=anon
             /services/partner/**=anon
             /services/participant/**=anon
@@ -54,13 +55,18 @@
             /services/partnerAdmin/**=anon
             /services/partnerGenericNotes/**=anon
             /services/pushData/**=anon
+            /services/notification/**=anon
             /services/partner/admin/season/**=anon
             /services/genericDocuments/**=anon
             /services/admin/partner/**=anon
             /services/fs/list/**=anon
             /services/fs/season/**=anon
             /services/fieldstaffgenericnote/**=anon
+             /services/fieldstaff/participant/**=anon
+             /services/fieldstaff/placement/**=anon
             /services/fieldstaff/**=anon
+            /services/fsl/details/**=anon
+            /services/erddashboard/**=anon
             /services/**=authc
          </value>
       </property>

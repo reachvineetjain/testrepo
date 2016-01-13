@@ -458,6 +458,12 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                application.setProgramName(obj[0].toString());
                application.setSeasonId(Integer.valueOf(obj[1].toString()));
                application.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
+               application.setAcronym(obj[3].toString());
+               application.setDeptProgramName(obj[4].toString());
+               //application.setDeptName(obj[5].toString());
+               application.setStartDate(obj[5].toString());
+               application.setEndDate(obj[6].toString());
+               application.setAppDeadlineDate(obj[7].toString());
                partnerSeasonApplication.add(application);
             }
             partnerSeasonApplicationList.getPartnerSeasonApplication().addAll(partnerSeasonApplication);
@@ -697,6 +703,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                ps.setSeason(seasonRepository.findOne(Integer.valueOf(season.getSeasonId())));
                ps.setDepartmentProgram(departmentProgramRepository.findOne(Integer.valueOf(season.getDepartmentProgramId())));
                ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
+               ps.setPartnerSeasonStartDate(DateUtils.getDateFromString(season.getStartDate()));
+               ps.setPartnerSeasonEndDate(DateUtils.getDateFromString(season.getEndDate()));
+               ps.setPartnerSeasonAppDeadlineDate(DateUtils.getDateFromString(season.getAppDeadlineDate()));
                ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
                ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
                ps.setQuestionaireRequired(CCIConstants.INACTIVE);

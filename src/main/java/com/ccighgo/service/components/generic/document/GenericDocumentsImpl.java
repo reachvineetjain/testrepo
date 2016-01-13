@@ -269,12 +269,12 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
             PartnerSeasonDocument partnerSeasonDocument = partnerSeasonDocumentRepository.findOne(genericSeasonDocument.getDocumentId());
             if (partnerSeasonDocument != null) {
                DocumentInformation documentInformation = partnerSeasonDocument.getDocumentInformation();
-               documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(genericSeasonDocument.getDocumentType()
-                     .getDocumentType()));
+               if (genericSeasonDocument.getDocumentType().getDocumentType() != null)
+                  documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(genericSeasonDocument
+                        .getDocumentType().getDocumentType()));
                documentInformation.setFileName(genericSeasonDocument.getFileName());
                documentInformation.setDocumentName(genericSeasonDocument.getDocName());
                documentInformation.setUrl(genericSeasonDocument.getDocUrl());
-               // TODO needs to be fixed
                documentInformation.setModifiedBy(genericSeasonDocument.getLoginId());
                documentInformation.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                documentInformation.setActive((byte) ((genericSeasonDocument.isActive()) ? 1 : 0));
@@ -302,11 +302,26 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
    public WSDefaultResponse deleteSeasonDocument(String seasonDocumentId) {
       WSDefaultResponse response = new WSDefaultResponse();
       try {
+         if (seasonDocumentId == null) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_DELETE_DOCUMENT.getValue(),
+                  messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT)));
+            LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT));
+            return response;
+         }
+
          PartnerSeasonDocument partnerSeasonDocument = partnerSeasonDocumentRepository.findOne(Integer.parseInt(seasonDocumentId));
+         if (partnerSeasonDocument == null) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_DELETE_DOCUMENT.getValue(),
+                  messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT)));
+            LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT));
+            return response;
+         }
+
          partnerSeasonDocumentRepository.delete(Integer.parseInt(seasonDocumentId));
          documentInformationRepository.delete(partnerSeasonDocument.getDocumentInformation());
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
       } catch (Exception e) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_DELETE_DOCUMENT.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_DOCUMENT)));
@@ -406,7 +421,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                   gsc.setUploadedBy(uic.getUserName());
                   UserInformationOfCreatedBy uim=reusedFunctions.getPartnerCreatedByInformation(di.getModifiedBy());
                   if(uim!=null)
-                  gsc.setModifiedBy(uic.getUserName());
+                  gsc.setModifiedBy(uim.getUserName());
                   gsc.setModifiedDate(DateUtils.getDateAndTime(di.getModifiedOn()));
                   gsc.setDocUrl(di.getUrl());
                   gsc.setFileName(di.getFileName());

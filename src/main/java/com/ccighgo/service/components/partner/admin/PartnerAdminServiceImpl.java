@@ -466,7 +466,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partner.setParticipantTranscriptRequired((byte) (hsp.isAypParticipantTranscriptRequired() ? 1 : 0));
                partner.setParticipantELTISRequired((byte) (hsp.isHspParticipantEltisRequired() ? 1 : 0));
                partner.setParticipantMedicalReleaseRequired((byte) (hsp.isHspParticipantMedicalReleaseRequired() ? 1 : 0));
-               // partner.setParticipantSLEPRequired((byte) (hsp.isHspParticipantSlepRequired() ? 1 : 0));
+               // partner.setParticipantSLEPRequired((byte)
+               // (hsp.isHspParticipantSlepRequired() ? 1 : 0));
                partner.setUnguaranteedFormRequired((byte) (hsp.isHspParticipantUnquaranteedFromRequired() ? 1 : 0));
             }
          } catch (Exception e) {
@@ -490,9 +491,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       PartnerRecruitmentAdmin pwt = new PartnerRecruitmentAdmin();
       try {
          pwt.setGoId(goId);
-         PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
+         Partner partner = partnerRepository.findOne(goId);
          List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(goId);
-         if (partnerAgentInquiry == null) {
+         if (partner == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL)));
             logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL));
@@ -512,17 +513,18 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             AdminPartnerRecruitmentScreeningDetail partnerRecruitmentAdminScreeningDetail = new AdminPartnerRecruitmentScreeningDetail();
-            if (partnerAgentInquiry.getCompanyName() != null)
-               partnerRecruitmentAdminScreeningDetail.setCompanyName(partnerAgentInquiry.getCompanyName());
-            if (partnerAgentInquiry.getPartner() != null) {
-               partnerRecruitmentAdminScreeningDetail.setBillingNotes(partnerAgentInquiry.getPartner().getBillingNotes());
-               partnerRecruitmentAdminScreeningDetail.setCanHaveSubPartner(partnerAgentInquiry.getPartner().getCanHaveSubPartner() == CCIConstants.ACTIVE ? true : false);
-               partnerRecruitmentAdminScreeningDetail.setGeneralEmail(partnerAgentInquiry.getPartner().getEmail());
-               partnerRecruitmentAdminScreeningDetail.setInvoiceEmail(partnerAgentInquiry.getPartner().getInvoiceMail());
-               partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partnerAgentInquiry.getPartner().getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
-               partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partnerAgentInquiry.getPartner().getQuickbooksCode());
-            }
+            if (partner.getCompanyName() != null)
+               partnerRecruitmentAdminScreeningDetail.setCompanyName(partner.getCompanyName());
+               partnerRecruitmentAdminScreeningDetail.setBillingNotes(partner.getBillingNotes());
+                if(partner.getCanHaveSubPartner()!=null)
+               partnerRecruitmentAdminScreeningDetail.setCanHaveSubPartner(partner.getCanHaveSubPartner() == CCIConstants.ACTIVE ? true : false);
+               partnerRecruitmentAdminScreeningDetail.setGeneralEmail(partner.getEmail());
+               partnerRecruitmentAdminScreeningDetail.setInvoiceEmail(partner.getInvoiceMail());
+               if(partner.getMultiCountrySender()!=null)
+               partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partner.getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
+               partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partner.getQuickbooksCode());
             try {
+            	if(partnerPrograms!=null)
                for (PartnerProgram partnerProgram : partnerPrograms) {
                   CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
                   cciContact.setUserName(partnerProgram.getCcistaffUser().getFirstName());
@@ -535,15 +537,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             } catch (Exception e) {
                ExceptionUtil.logException(e, logger);
             }
-            if (partnerAgentInquiry.getLogo() != null)
-               partnerRecruitmentAdminScreeningDetail.setLogo(partnerAgentInquiry.getLogo());
-
-            if (partnerAgentInquiry.getRating() != null)
-               partnerRecruitmentAdminScreeningDetail.setRating(partnerAgentInquiry.getRating());
-
-            if (partnerAgentInquiry.getBusinessName() != null)
-               partnerRecruitmentAdminScreeningDetail.setUsername(partnerAgentInquiry.getBusinessName());
-
+               partnerRecruitmentAdminScreeningDetail.setLogo(partner.getPartnerLogo());
+               partnerRecruitmentAdminScreeningDetail.setUsername(partner.getCompanyName());
             pwt.setDetail(partnerRecruitmentAdminScreeningDetail);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -573,12 +568,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
          try {
             AdminPartnerHspSettings adminPartnerHspSettings = new AdminPartnerHspSettings();
-            adminPartnerHspSettings.setAypParticipantTranscriptRequired(partnerAgentInquiry.getPartner().getParticipantTranscriptRequired() == 1);
-            adminPartnerHspSettings.setHspParticipantEltisRequired(partnerAgentInquiry.getPartner().getParticipantELTISRequired() == 1);
-            adminPartnerHspSettings.setHspParticipantMedicalReleaseRequired(partnerAgentInquiry.getPartner().getParticipantMedicalReleaseRequired() == 1);
-            // adminPartnerHspSettings.setHspParticipantSlepRequired(partnerAgentInquiry.getPartner().getParticipantSLEPRequired()
-            // == 1);
-            adminPartnerHspSettings.setHspParticipantUnquaranteedFromRequired(partnerAgentInquiry.getPartner().getUnguaranteedFormRequired() == 1);
+            adminPartnerHspSettings.setAypParticipantTranscriptRequired(partner.getParticipantTranscriptRequired() == 1);
+            adminPartnerHspSettings.setHspParticipantEltisRequired(partner.getParticipantELTISRequired() == 1);
+            adminPartnerHspSettings.setHspParticipantMedicalReleaseRequired(partner.getParticipantMedicalReleaseRequired() == 1);
+            adminPartnerHspSettings.setHspParticipantUnquaranteedFromRequired(partner.getUnguaranteedFormRequired() == 1);
             pwt.setHspSettings(adminPartnerHspSettings);
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -611,10 +604,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(goId);
             if (contacts != null) {
                for (PartnerUser partnerContact : contacts) {
+                  Login login = partnerContact.getLogin();
                   PartnerRecruitmentAdminScreeningContacts contact = new PartnerRecruitmentAdminScreeningContacts();
                   contact.setPartnerContactId(partnerContact.getPartnerUserId());
                   contact.setActive(partnerContact.getActive() == 1);
-                  contact.setEmail(partnerContact.getEmail());
+                  if (login != null)
+                     contact.setEmail(login.getEmail());
                   contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                   contact.setFax(partnerContact.getFax());
                   contact.setFirstName(partnerContact.getFirstName());
@@ -651,29 +646,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
-         /*
-          * try { List<PartnerDocument> partnerDocuments =
-          * partnerDocumentsRepository.findAllPartnerDocumentByPartnerId(goId); if (partnerDocuments != null) { for
-          * (PartnerDocument p : partnerDocuments) { PartnerRecruitmentAdminScreeningDocuments doc = new
-          * PartnerRecruitmentAdminScreeningDocuments(); doc.setPartnerDocumentId(p.getPartnerDocumentId());
-          * doc.setActive(p.getDocumentInformation().getActive() == CCIConstants.ACTIVE ? true : false);
-          * doc.setDescription(""); doc.setDocName(p.getDocumentInformation().getDocumentName());
-          * doc.setDocType(p.getDocumentInformation
-          * ().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
-          * doc.setDocUrl(p.getDocumentInformation().getUrl());
-          * doc.setFileName(p.getDocumentInformation().getFileName()); doc.setFileType("");
-          * doc.setUploadDate(DateUtils.getDateAndTime(p.getDocumentInformation().getCreatedOn())); Integer createdBy =
-          * p.getDocumentInformation().getCreatedBy(); pwt.getDocuments().add(doc); } } } catch (Exception e) {
-          * ExceptionUtil.logException(e, logger); } try { List<PartnerNote> partnerNotes =
-          * partnerNoteRepository.findAllPartnerNoteByPartnerId(goId); if (partnerNotes != null) { for (PartnerNote
-          * partnerNote : partnerNotes) { PartnerRecruitmentAdminScreeningNotes note = new
-          * PartnerRecruitmentAdminScreeningNotes();
-          * note.setTopic(partnerNote.getPartnerNoteTopic().getPartnerNoteTopicName());
-          * note.setPartnerNoteId(partnerNote.getPartnerNotesId());
-          * note.setCreatedOn(DateUtils.getDateAndTime(partnerNote.getCreatedOn()));
-          * note.setNoteValue(partnerNote.getPartnerNote()); pwt.getNotes().add(note); } } } catch (Exception e) {
-          * ExceptionUtil.logException(e, logger); }
-          */
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_OVERVIEW.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -710,7 +682,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    }
 
    @Override
-   public AdminPartnerWorkQueueCategory getWorkQueueCategory(int adminWorkQueueTypeId) {
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(int adminWorkQueueTypeId,int userId) {
       AdminPartnerWorkQueueCategory pwqc = new AdminPartnerWorkQueueCategory();
       try {
          List<AdminWorkQueueCategory> categories = adminWorkQueueCategoryRepository.findAllCategoriesByTypeId(adminWorkQueueTypeId);
@@ -730,7 +702,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
                }
                AdminWorkQueueCategoryAggregate categoryAggregate = adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
-                     adminWorkQueueCategory.getAdminWorkQueueCategoryId());
+                     adminWorkQueueCategory.getAdminWorkQueueCategoryId(), userId);
                if (categoryAggregate != null) {
                   newCategory.setCategoryAggregate(categoryAggregate.getAdminWQCategoryAggregate());
                }
@@ -907,9 +879,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                }
                ad.setCountry(String.valueOf(dr[10]));
                ad.setFlagUrl(String.valueOf(dr[12]));
-               ad.setSunmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
-               ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
-               ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
+               ad.setSunmittedOn(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
+               ad.setFollowUpDate(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+               if (String.valueOf(dr[15]) != null)
+                  ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
                rca.getChangeInAllocation().add(ad);
             }
             rca.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
@@ -957,11 +930,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   nrd.setIsPublic(String.valueOf(dr[6]));
                }
                nrd.setNoteCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[7]))));
-               nrd.setNoteCreatedBy(String.valueOf(dr[8]));
-               nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
+               if (String.valueOf(dr[8]) != null)
+                  nrd.setNoteCreatedBy(String.valueOf(dr[8]));
+               if (String.valueOf(dr[9]) != null)
+                  nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
                nrd.setNoteValue(String.valueOf(dr[11]));
                nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
-               nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
+               if (String.valueOf(dr[13]) != null)
+                  nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
                nrd.setNoteTopicRoll(String.valueOf(dr[14]));
                nrd.setNoteRoll(String.valueOf(dr[15]));
                nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
@@ -1159,7 +1135,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          /**
           * Adding the Document
           */
-         PartnerProgram partnerProgram = partnerProgramRepository.findOne(4); // TODO Ask Phani Why This Field is here
+         PartnerProgram partnerProgram = partnerProgramRepository.findOne(4); // TODO
+                                                                              // Ask
+                                                                              // Phani
+                                                                              // Why
+                                                                              // This
+                                                                              // Field
+                                                                              // is
+                                                                              // here
          Partner partner = partnerRepository.findOne(document.getGoId());
 
          DocumentInformation documentInformation = new DocumentInformation();
@@ -1374,12 +1357,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
       PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
       try {
-    	  
+
          PartnerUser pc = new PartnerUser();
-         Login login= loginRepository.findOne(contactsDetails.getLoginId());
-		 pc.setLogin(login);
+         Login login = loginRepository.findOne(contactsDetails.getLoginId());
+         login.setEmail(contactsDetails.getEmail());
+         pc.setLogin(login);
          pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
-         pc.setEmail(contactsDetails.getEmail());
          pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
          pc.setFax(contactsDetails.getFax());
          pc.setFirstName(contactsDetails.getFirstName());
@@ -1394,17 +1377,18 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pc.setSkypeId(contactsDetails.getSkypeId());
          pc.setTitle(contactsDetails.getTitile());
          partnerUserRepository.saveAndFlush(pc);
-         
+
          pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         
+
          List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(contactsDetails.getGoId());
          if (contacts != null) {
             for (PartnerUser partnerContact : contacts) {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
                contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == 1);
-               contact.setEmail(partnerContact.getEmail());
+               if (partnerContact.getLogin() != null)
+                  contact.setEmail(partnerContact.getLogin().getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
@@ -1443,7 +1427,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
                contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == 1);
-               contact.setEmail(partnerContact.getEmail());
+               if (partnerContact.getLogin() != null)
+                  contact.setEmail(partnerContact.getLogin().getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
@@ -1511,6 +1496,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          refcheck.setReferenceApprovedBy(referenceChecksDetails.getApprovedBy());
          refcheck.setReferenceCheckNotes(referenceChecksDetails.getNote());
          refcheck.setReferenceCompletedBy(referenceChecksDetails.getCompletedBy());
+         if(referenceChecksDetails.getCompletedOn()!=null)
          refcheck.setReferenceCompletedOn(DateUtils.getDateFromString(referenceChecksDetails.getCompletedOn()));
          partnerReferenceCheckRepository.saveAndFlush(refcheck);
          prc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_PARTNER_REFERENCE.getValue(),
@@ -1521,8 +1507,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                PartnerAdminOverviewReferenceCheckDetails refCheck = new PartnerAdminOverviewReferenceCheckDetails();
                refCheck.setPartnerCheckReferenceId(partnerReferenceCheck.getPartnerReferenceCheckId());
                refCheck.setApprovedBy(partnerReferenceCheck.getReferenceApprovedBy());
-               refCheck.setApprovedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceApprovedOn()));
+               if (partnerReferenceCheck.getReferenceApprovedOn() != null)
+                  refCheck.setApprovedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceApprovedOn()));
                refCheck.setCompletedBy(partnerReferenceCheck.getReferenceCompletedBy());
+               if (partnerReferenceCheck.getReferenceCompletedOn() != null)
                refCheck.setCompletedOn(DateUtils.getDateAndTime(partnerReferenceCheck.getReferenceCompletedOn()));
                refCheck.setLatestCopyOfBusinessExpires(DateUtils.getDateAndTime(partnerReferenceCheck.getBusinessLicenseExpiryDate()));
                refCheck.setNote(partnerReferenceCheck.getReferenceCheckNotes());
@@ -1618,7 +1606,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
          PartnerUser pc = partnerUserRepository.findOne(contactsDetails.getPartnerContactId());
          pc.setActive((byte) (contactsDetails.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
-         pc.setEmail(contactsDetails.getEmail());
+         if (pc.getLogin() != null)
+            pc.getLogin().setEmail(contactsDetails.getEmail());
          pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
          pc.setFax(contactsDetails.getFax());
          pc.setFirstName(contactsDetails.getFirstName());
@@ -1639,7 +1628,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
                contact.setPartnerContactId(partnerContact.getPartnerUserId());
                contact.setActive(partnerContact.getActive() == CCIConstants.ACTIVE);
-               contact.setEmail(partnerContact.getEmail());
+               if (partnerContact.getLogin() != null)
+                  contact.setEmail(partnerContact.getLogin().getEmail());
                contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
                contact.setFax(partnerContact.getFax());
                contact.setFirstName(partnerContact.getFirstName());
@@ -2070,8 +2060,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             for (AssignedSeasonData data : assignSubpartnerToSeason.getAssignedSeasonData()) {
                PartnerSeason ps = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(data.getSeasonId(), data.getDepartmentProgramId(),
                      assignSubpartnerToSeason.getSubPartner());
-               if(ps!=null)
-               partnerSeasonsRepository.delete(ps);
+               if (ps != null)
+                  partnerSeasonsRepository.delete(ps);
                ps = new PartnerSeason();
                Season season = seasonRepository.findOne(data.getSeasonId());
                DepartmentProgram departmentProgram2 = departmentProgramRepository.findOne(data.getDepartmentProgramId());
@@ -2107,24 +2097,25 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return wsDefaultResponse;
    }
-   
+
    public static void main(String[] args) {
       Gson gson = new Gson();
       AssignSeasonToSubPartner a = new AssignSeasonToSubPartner();
       a.setLoginId(333);
       a.setSubPartner(333);
       List<AssignedSeasonData> ll = new ArrayList<AssignedSeasonData>();
-      ll.add(new AssignedSeasonData(33,44));
-      ll.add(new AssignedSeasonData(33,44));
-      ll.add(new AssignedSeasonData(33,44));
-      ll.add(new AssignedSeasonData(33,44));
+      ll.add(new AssignedSeasonData(33, 44));
+      ll.add(new AssignedSeasonData(33, 44));
+      ll.add(new AssignedSeasonData(33, 44));
+      ll.add(new AssignedSeasonData(33, 44));
       a.setAssignedSeasonData(ll);
       System.out.println(gson.toJson(a));
    }
+
    @Override
    public SeasonsForPartners getAllAvailableSeasons2(String partnerId) {
       SeasonsForPartners seasons = new SeasonsForPartners();
-      
+
       try {
          @SuppressWarnings("unchecked")
          List<Object[]> result = em.createNativeQuery("call SPSubPartnerSeasonAssign(:partnerId)").setParameter("partnerId", partnerId).getResultList();

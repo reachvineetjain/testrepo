@@ -1,10 +1,15 @@
 package com.ccighgo.service.soap.wordpress.forms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
@@ -56,7 +61,12 @@ public class WordPressFormsImpl implements IWordPressForms {
 	PartnerReviewStatusRepository partnerReviewStatusRepository;
 	@Autowired
 	PartnerStatusRepository partnerStatusRepository;
+	@Autowired
+	EntityManager entityManager;
 
+	private static final String SP_UPDATING_ADMIN_WORK_QUEUE = "CALL SPAdminWQPartnerApplicationSubmitted(?)";
+
+	@Transactional
 	@Override
 	public String InquiryPartner(InternationalPartners InternationalPartners) {
 		try {
@@ -64,8 +74,14 @@ public class WordPressFormsImpl implements IWordPressForms {
 			System.out.println("Inquiry partner Is Called !!!");
 			if (InternationalPartners != null) {
 				Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
+				PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
 				if (user != null) {
-					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist)";
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
+					System.out.println(message);
+					return message;
+				}
+				if (pa != null) {
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [PartnerAgentInquiry Table ]";
 					System.out.println(message);
 					return message;
 				}
@@ -98,15 +114,27 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setCity(InternationalPartners.getCity());
 				partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
 				partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
+//				if(InternationalPartners.getHearedAboutUs()!=null){
+//					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
+//					if(val!=null && val.length >1){
+//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+//						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+//					}
+//					else{
+//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+//					}
+//				}
 				partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
 				partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
 				partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
 				partnerAgentInquiry.setPhone(InternationalPartners.getPhone());
+				if (InternationalPartners.getDescriptionOfPrograms() != null)
+					partnerAgentInquiry.setCurrentlyOfferingPrograms(InternationalPartners.getDescriptionOfPrograms());
 				if (InternationalPartners.getCurrentlySendingParticipant() != null)
 					partnerAgentInquiry.setCurrentlySendingParticipantToUS(InternationalPartners.getCurrentlySendingParticipant() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-				if (InternationalPartners.getAmbassadorScholershipParticipants() != null)
-					partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholershipParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+				if (InternationalPartners.getAmbassadorScholarship() != null)
+					partnerAgentInquiry.setAmbassadorScholershipParticipants(InternationalPartners.getAmbassadorScholarship() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
 				if (InternationalPartners.getWebsite() != null)
 					partnerAgentInquiry.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", "").toLowerCase());
 
@@ -232,8 +260,8 @@ public class WordPressFormsImpl implements IWordPressForms {
 				reviewStatus.setPartner(newPartner);
 				reviewStatus.setPartnerStatus1(status);
 				partnerReviewStatusRepository.saveAndFlush(reviewStatus);
-
 				partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
+				callTheStoredProcedure(goIdSequence.getGoId());
 				String s = "200:Success:200:Success";
 				System.out.println(s);
 				return s;
@@ -251,12 +279,24 @@ public class WordPressFormsImpl implements IWordPressForms {
 		}
 	}
 
+	private void callTheStoredProcedure(Integer goId) {
+		try {
+			Query query = entityManager.createNativeQuery(SP_UPDATING_ADMIN_WORK_QUEUE);
+			query.setParameter(1, Integer.valueOf(goId));
+			query.executeUpdate();
+		} catch (Exception e) {
+			ExceptionUtil.logException(e, LOGGER);
+			System.out.println("Error Executing the Stored Procedure !!");
+		}
+
+	}
+
 	private void print(InternationalPartners internationalPartners) {
 		System.out.println("address : " + internationalPartners.getAddress());
 		System.out.println("address2 : " + internationalPartners.getAddress2());
 		System.out.println("city :" + internationalPartners.getCity());
 		System.out.println("country : " + internationalPartners.getValueOfCountry());
-
+System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarship());
 		System.out.println("description OF programs :" + internationalPartners.getDescriptionOfPrograms());
 		System.out.println("Email: " + internationalPartners.getEmail());
 		System.out.println("first Name: " + internationalPartners.getFirstName());
@@ -294,24 +334,13 @@ public class WordPressFormsImpl implements IWordPressForms {
 				System.out.println("Email :" + HostFamilyData.getEmail());
 				System.out.println("City :" + HostFamilyData.getCity());
 				System.out.println("State : " + HostFamilyData.getState());
-				System.out.println("Address1 : " + HostFamilyData.getAddress1());
-				System.out.println("Address2 : " + HostFamilyData.getAddress2());
-				System.out.println("Area Representative :" + HostFamilyData.getAreaRepresentativeName());
-				System.out.println("Comments : " + HostFamilyData.getComments());
-				System.out.println("Day Phone : " + HostFamilyData.getDayPhone());
-				System.out.println("Evening Phone: " + HostFamilyData.getEveningPhone());
-				System.out.println("Have Hosted: " + HostFamilyData.getHaveHosted());
-				System.out.println("Hosting Experience :" + HostFamilyData.getHostingExperience());
-				System.out.println("Interested In Student Form: " + HostFamilyData.getInterestedInStudentFrom());
-				System.out.println("Interested In Student Gender:" + HostFamilyData.getInterestedInStudentGender());
-				System.out.println("LC Email Address : " + HostFamilyData.getLCEmailAddress());
-				System.out.println("Nearest Large City:" + HostFamilyData.getNearestLargeCity());
-				System.out.println("Postal Code:" + HostFamilyData.getPostalCode());
-				System.out.println("Referred Form: " + HostFamilyData.getReferredFrom());
-				System.out.println("School City:" + HostFamilyData.getSchoolCity());
-				System.out.println("School Name: " + HostFamilyData.getSchoolName());
-				System.out.println("Adult : " + HostFamilyData.getIsAdult());
-				System.out.println("LC Applicant : " + HostFamilyData.getIsLCApplicant());
+				System.out.println("PostalCode : "+ HostFamilyData.getPostalCode());
+				System.out.println("PreferredPhone: "+ HostFamilyData.getPreferredPhone());
+				System.out.println("OptionalPhone : "+ HostFamilyData.getOptionalPhone());
+				System.out.println("Email : "+ HostFamilyData.getEmail());
+				System.out.println("Students : "+ HostFamilyData.getStudents());
+				System.out.println("Comments : "+ HostFamilyData.getComments());
+				
 
 			}
 			if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {

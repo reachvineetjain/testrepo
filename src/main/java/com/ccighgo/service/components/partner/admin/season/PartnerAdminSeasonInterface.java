@@ -12,6 +12,7 @@ import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.OperatingAgreement;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerAdminJ1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.season.PartnerAdminSeasonList;
+import com.ccighgo.service.transport.partner.beans.partner.admin.season.status.PartnerSeasonStatus;
 import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 
 /**
@@ -119,4 +120,9 @@ public interface PartnerAdminSeasonInterface {
     * @return
     */
    public Response deleteAdminSeasonAgreement(String partnerSeasonContractId);
+
+   /**
+    * @return
+    */
+   public PartnerSeasonStatus getPartnerSeasonStatuses();
 }

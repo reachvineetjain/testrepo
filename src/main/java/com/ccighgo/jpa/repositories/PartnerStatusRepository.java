@@ -23,5 +23,8 @@ public interface PartnerStatusRepository extends JpaRepository<PartnerStatus, In
    
    @Query("SELECT p FROM PartnerStatus p WHERE p.partnerStatusId IN (3,10,11,12)")
    List<PartnerStatus> getAllpartnerStatusAsPattern(); 
+   
+   @Query(value="SELECT * FROM PartnerStatus WHERE isSeasonStatus = ?1", nativeQuery=true)
+   List<PartnerStatus> getPartnerSeasonStatus(Byte seasonStatus); 
 
 }

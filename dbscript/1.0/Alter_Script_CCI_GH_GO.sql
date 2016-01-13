@@ -190,3 +190,11 @@ ALTER TABLE PartnerNotes ADD COLUMN followupDate DATETIME;
 ALTER TABLE `PartnerSeason` ADD COLUMN appDeadlineFollowupDate DATETIME, ADD COLUMN appSecSemDeadlineFollowupDate DATETIME;
 
 ALTER TABLE `PartnerSeasonAllocation` ADD COLUMN janStartFollowupDate DATETIME, ADD COLUMN augStartFollowupDate DATETIME;
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-- Alter script for adding column in PartenrUser and delete PartnerContact tables on 23rd December 2015 -------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+ ALTER TABLE `PartnerUser` ADD COLUMN recieveNotificationEmails TINYINT(1) DEFAULT 0;
+ ALTER TABLE `PartnerUser` ADD COLUMN website VARCHAR (50);
+ DROP TABLE  `PartnerContact`;

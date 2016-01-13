@@ -22,7 +22,7 @@ public class ParticipantStatus implements Serializable {
 
 	private Byte active;
 
-	private Byte isApplicationStatus;
+	private byte isApplicationStatus;
 
 	private Byte isPlacementStatus;
 
@@ -52,11 +52,11 @@ public class ParticipantStatus implements Serializable {
 		this.active = active;
 	}
 
-	public Byte getIsApplicationStatus() {
+	public byte getIsApplicationStatus() {
 		return this.isApplicationStatus;
 	}
 
-	public void setIsApplicationStatus(Byte isApplicationStatus) {
+	public void setIsApplicationStatus(byte isApplicationStatus) {
 		this.isApplicationStatus = isApplicationStatus;
 	}
 

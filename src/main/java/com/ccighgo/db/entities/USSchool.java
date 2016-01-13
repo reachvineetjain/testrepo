@@ -20,6 +20,10 @@ public class USSchool implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer usSchoolId;
 
+	//bi-directional many-to-one association to HostFamilyParticipant
+	@OneToMany(mappedBy="usschool")
+	private List<HostFamilyParticipant> hostFamilyParticipants;
+
 	//bi-directional many-to-one association to USSchoolSeason
 	@OneToMany(mappedBy="usschool")
 	private List<USSchoolSeason> usschoolSeasons;
@@ -33,6 +37,28 @@ public class USSchool implements Serializable {
 
 	public void setUsSchoolId(Integer usSchoolId) {
 		this.usSchoolId = usSchoolId;
+	}
+
+	public List<HostFamilyParticipant> getHostFamilyParticipants() {
+		return this.hostFamilyParticipants;
+	}
+
+	public void setHostFamilyParticipants(List<HostFamilyParticipant> hostFamilyParticipants) {
+		this.hostFamilyParticipants = hostFamilyParticipants;
+	}
+
+	public HostFamilyParticipant addHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
+		getHostFamilyParticipants().add(hostFamilyParticipant);
+		hostFamilyParticipant.setUsschool(this);
+
+		return hostFamilyParticipant;
+	}
+
+	public HostFamilyParticipant removeHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
+		getHostFamilyParticipants().remove(hostFamilyParticipant);
+		hostFamilyParticipant.setUsschool(null);
+
+		return hostFamilyParticipant;
 	}
 
 	public List<USSchoolSeason> getUsschoolSeasons() {

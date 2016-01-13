@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/fsoverview" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/fsoverview"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+   
+   <xsd:element name="FieldStaffOverview" type="cd:FieldStaffOverview" />
+
+   <xsd:complexType name="FieldStaffOverview">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="lastLoginDate" type="xsd:string" />
+               <xsd:element name="fieldStaffStatus" type="cd:FieldStaffStatus" />
+               <xsd:element name="active" type="xsd:int" />
+               <xsd:element name="fieldStaffDetails" type="cd:FieldStaffDetails" />
+               <xsd:element name="documents" type="cd:Documents" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   
+   <xsd:complexType name="FieldStaffStatus">
+      <xsd:sequence>
+         <xsd:element name="fsStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fsStatusValue" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="FieldStaffDetails">
+      <xsd:sequence>
+         <xsd:element name="fsGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="picUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="role" type="cd:Role" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="salutation" type="cd:Salutation" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="homePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="workPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cellPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="bestNumberHome" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="bestNumberWork" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="bestNumberCell" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="tollFreeNumber" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fax" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="superRegion" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="region" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="states" type="cd:State" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="originalStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalPlacementManual" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalPlacementCalculated" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="totalPlacements" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="dateApplSubmitted" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="dateApplApproved" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="dateDOSTestTaken" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="dateW9Recieved" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="approvedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+    <xsd:complexType name="Role">
+      <xsd:sequence>
+         <xsd:element name="roleId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Salutation">
+      <xsd:sequence>
+         <xsd:element name="salutationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="State">
+      <xsd:sequence>
+         <xsd:element name="stateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="state" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stateCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Documents">
+      <xsd:sequence>
+         <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documents" type="cd:Document" minOccurs="0" maxOccurs="unbounded" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Document">
+      <xsd:sequence>
+         <xsd:element name="fsDocumentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="uploadedByFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="uploadedByLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="uploadedByPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="uploadedByDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentDescription" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentType" type="cd:DocumentType" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="DocumentType">
+      <xsd:sequence>
+         <xsd:element name="documentTypeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="documentType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

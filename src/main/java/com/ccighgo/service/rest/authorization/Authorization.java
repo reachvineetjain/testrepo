@@ -3,17 +3,33 @@
  */
 package com.ccighgo.service.rest.authorization;
 
+
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import javax.websocket.OnClose;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.apache.shiro.SecurityUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+
+
+
+
 
 import com.ccighgo.service.components.authorization.AuthorizationManagerInterface;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
@@ -28,9 +44,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 @Produces("application/json")
 @Consumes("application/json")
 public class Authorization {
-   
    private static final Logger LOGGER = LoggerFactory.getLogger(Authorization.class); 
-   
+  
    @Autowired AuthorizationManagerInterface authorizationManager;
    
    /**
@@ -43,7 +58,7 @@ public class Authorization {
    @Path("cciusr/{userId}")
    @Produces("application/json")
    public User getCCIUserDetails(@PathParam("userId") String userId) {
-       return authorizationManager.getCCIUserDetails(userId);
+	   return authorizationManager.getCCIUserDetails(userId);
    }
    
    /**
@@ -66,6 +81,4 @@ public class Authorization {
       return authorizationManager.getPartnerAgentDashboard(Integer.parseInt(partnerGoId));
    }
    
-   
-
 }

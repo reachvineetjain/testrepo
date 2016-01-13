@@ -35,6 +35,10 @@ public class LookupGender implements Serializable {
 	@OneToMany(mappedBy="lookupGender")
 	private List<FieldStaffFamilyMember> fieldStaffFamilyMembers;
 
+	//bi-directional many-to-one association to HostFamilyMember
+	@OneToMany(mappedBy="lookupGender")
+	private List<HostFamilyMember> hostFamilyMembers;
+
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy="lookupGender")
 	private List<PartnerUser> partnerUsers;
@@ -126,6 +130,28 @@ public class LookupGender implements Serializable {
 		fieldStaffFamilyMember.setLookupGender(null);
 
 		return fieldStaffFamilyMember;
+	}
+
+	public List<HostFamilyMember> getHostFamilyMembers() {
+		return this.hostFamilyMembers;
+	}
+
+	public void setHostFamilyMembers(List<HostFamilyMember> hostFamilyMembers) {
+		this.hostFamilyMembers = hostFamilyMembers;
+	}
+
+	public HostFamilyMember addHostFamilyMember(HostFamilyMember hostFamilyMember) {
+		getHostFamilyMembers().add(hostFamilyMember);
+		hostFamilyMember.setLookupGender(this);
+
+		return hostFamilyMember;
+	}
+
+	public HostFamilyMember removeHostFamilyMember(HostFamilyMember hostFamilyMember) {
+		getHostFamilyMembers().remove(hostFamilyMember);
+		hostFamilyMember.setLookupGender(null);
+
+		return hostFamilyMember;
 	}
 
 	public List<PartnerUser> getPartnerUsers() {

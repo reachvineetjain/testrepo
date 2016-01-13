@@ -21,6 +21,7 @@ import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
+import com.ccighgo.service.components.partner.admin.PartnerAdminServiceImpl;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffCurrentStatus;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffDetail;
@@ -62,6 +63,11 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
+    try {
+       LOGGER.info("fieldStaffTypeCode: "+fieldStaffTypeCode);
+   } catch (Exception e) {
+     e.printStackTrace();
+   }
       AddedFieldStaff addedFieldStaff = new AddedFieldStaff();
       try {
          List<FieldStaff> fieldstaffs = fieldStaffRepository.findAllByFieldStaffType(fieldStaffTypeCode);
@@ -114,6 +120,11 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 
    @Override
    public FieldStaffOverview getFieldStaffDetail(int goId) {
+      try {
+         LOGGER.info("goId: "+goId);
+     } catch (Exception e) {
+       e.printStackTrace();
+     }
       FieldStaffOverview fieldStaffOverview = new FieldStaffOverview();
       try {
          FieldStaff fs = fieldStaffRepository.findOne(goId);
