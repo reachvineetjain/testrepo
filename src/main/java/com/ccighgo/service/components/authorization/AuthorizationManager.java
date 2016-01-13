@@ -118,13 +118,13 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
             LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_DISABLED));
          }
          return auth;
-      }
+      }}
          catch (Exception e) {
          auth.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                messageUtil.getMessage(AuthConstants.LOGIN_FAILED)));
          LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_FAILED));
       }
-         }
+         
       return auth;
    }
 
