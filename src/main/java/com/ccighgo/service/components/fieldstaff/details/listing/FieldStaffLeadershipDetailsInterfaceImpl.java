@@ -53,9 +53,17 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
          if (results != null && results.size() > 0) {
             List<MyFieldStaff> myFieldStaffs = new ArrayList<MyFieldStaff>();
             int count = 0;
+            //0:goID, 1:firstName, 2:lastname, 3:email,4, current city, 5:state, 6: seasons, 7:role/type
             for (Object[] obj : results) {
                MyFieldStaff staff = new MyFieldStaff();
-
+               staff.setFsLcGoId(Integer.valueOf(obj[0].toString()));
+               staff.setFirstName(obj[1].toString());
+               staff.setLastName(obj[2].toString());
+               staff.setEmail(obj[3].toString());
+               staff.setCity(obj[4].toString());
+               staff.setState(obj[5].toString());
+               staff.setSeason(obj[6].toString());
+               staff.setRoleType(obj[7].toString());
                myFieldStaffs.add(staff);
                count++;
             }
@@ -85,12 +93,25 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
          query.setParameter(2, 1);// 1 for network
          @SuppressWarnings("unchecked")
          List<Object[]> results = query.getResultList();
+         //0:goId, 1:first name, 2:last name, 3:city, 4:state, 5:FS type, 6: home phone, 7:email, 8:date of inquiry, 9:status, 10:season status, 11:submitted to cci, 12: season name
          if (results != null && results.size() > 0) {
             List<FSLNetwork> fslNetworks = new ArrayList<FSLNetwork>();
             int count = 0;
             for (Object[] obj : results) {
                FSLNetwork fslNetwork = new FSLNetwork();
-
+               fslNetwork.setFsGoId(Integer.valueOf(obj[0].toString()));
+               fslNetwork.setFirstName(obj[1].toString());
+               fslNetwork.setLastName(obj[2].toString());
+               fslNetwork.setCity(obj[3].toString());
+               fslNetwork.setState(obj[4].toString());
+               fslNetwork.setType(obj[5].toString());
+               fslNetwork.setHomePhone(obj[6].toString());
+               fslNetwork.setEmail(obj[7].toString());
+               fslNetwork.setDateOfInquiry(obj[8].toString());
+               fslNetwork.setStatus(obj[9].toString());
+               fslNetwork.setSeasonStatus(obj[10].toString());
+               fslNetwork.setDateSubmittedToCCI(obj[11].toString());
+               fslNetwork.setSeasons(obj[12].toString());
                fslNetworks.add(fslNetwork);
                count++;
             }

@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FSLNetwork", propOrder = {
+    "fsGoId",
     "firstName",
     "lastName",
     "state",
@@ -55,10 +56,12 @@ import javax.xml.bind.annotation.XmlType;
     "dateOfInquiry",
     "status",
     "seasonStatus",
-    "dateSubmittedToCCI"
+    "dateSubmittedToCCI",
+    "seasons"
 })
 public class FSLNetwork {
 
+    protected int fsGoId;
     @XmlElement(required = true)
     protected String firstName;
     @XmlElement(required = true)
@@ -81,6 +84,24 @@ public class FSLNetwork {
     protected String seasonStatus;
     @XmlElement(required = true)
     protected String dateSubmittedToCCI;
+    @XmlElement(required = true)
+    protected String seasons;
+    
+    /**
+     * Gets the value of the fsGoId property.
+     * 
+     */
+    public int getFsGoId() {
+        return fsGoId;
+    }
+
+    /**
+     * Sets the value of the fsGoId property.
+     * 
+     */
+    public void setFsGoId(int value) {
+        this.fsGoId = value;
+    }
 
     /**
      * Gets the value of the firstName property.
@@ -344,6 +365,30 @@ public class FSLNetwork {
      */
     public void setDateSubmittedToCCI(String value) {
         this.dateSubmittedToCCI = value;
+    }
+    
+    /**
+     * Gets the value of the seasons property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSeasons() {
+        return seasons;
+    }
+
+    /**
+     * Sets the value of the seasons property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSeasons(String value) {
+        this.seasons = value;
     }
 
 }
