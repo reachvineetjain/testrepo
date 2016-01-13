@@ -40,7 +40,7 @@ public class Authentication {
 	@Path("logout")
 	public void logout(){
 		SecurityUtils.getSubject().logout();
-		LOGGER.debug("User logged out");
+		System.out.println("User logged out");
 	}
 
 }
