@@ -66,9 +66,10 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
          e.printStackTrace();
       }
       Auth auth = new Auth();
+         
       try
       {
-      if (userName != null && !(userName.isEmpty())) {
+         if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
          if (login != null && login.getActive() == CCIConstants.ACTIVE) {
             auth.setGoId(login.getGoIdSequence().getGoId());
@@ -143,6 +144,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Override
    @Transactional(readOnly = true)
    public User getCCIUserDetails(String userId) {
+
       try {
          LOGGER.info("userName: "+userId);
       } catch (Exception e) {
