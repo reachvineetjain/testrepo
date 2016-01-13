@@ -55,6 +55,7 @@
             /services/partnerAdmin/**=anon
             /services/partnerGenericNotes/**=anon
             /services/pushData/**=anon
+            /services/notification/**=anon
             /services/partner/admin/season/**=anon
             /services/genericDocuments/**=anon
             /services/admin/partner/**=anon
