@@ -1886,7 +1886,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserPermission.setCcistaffUser(cUser);
                cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
                cciUserPermission.setResourcePermission(resourcePermission);
-               cciUserPermission.setResourceAction(resourceAction);
+               cciUserPermission.setResourceAction(resourceAction!=null?resourceAction:resourceActionRepository.findOne(7));//if null setting default as view
                cciUserPermission.setCreatedBy(user.getLoginId());
                cciUserPermission.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                cciUserPermission.setModifiedBy(user.getLoginId());
