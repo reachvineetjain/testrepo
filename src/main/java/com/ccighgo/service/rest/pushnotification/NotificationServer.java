@@ -21,9 +21,6 @@ public class NotificationServer {
 	 */
 	@OnOpen
 	public void onOpen(@PathParam("uid") String uid, Session session) {
-		System.out.println("EchoServer :: " + session.getId() + " has opened a connection");
-		System.out.println("EchoServer :: id = " + uid);
-		
 		SessionRegistry.INSTANCE.addSession(uid, session);
 		
 		try {
@@ -40,7 +37,7 @@ public class NotificationServer {
 	 */
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		System.out.println("EchoServer :: Message from " + session.getId() + ": " + message);
+		System.out.println("NotificationServer :: Message from " + session.getId() + ": " + message);
 		try {
 			session.getBasicRemote().sendText(message);
 		} catch (IOException ex) {
@@ -55,7 +52,6 @@ public class NotificationServer {
 	 */
 	@OnClose
 	public void onClose(Session session) {
-		System.out.println("EchoServer :: Session " + session.getId() + " has ended");
 		SessionRegistry.INSTANCE.removeSession(session);
 	}
 	
@@ -65,13 +61,6 @@ public class NotificationServer {
 		
 		System.out.println("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
 		
-		for(Session s : SessionRegistry.INSTANCE.getSessions().values()) {
-			try {
-				s.getBasicRemote().sendText("$$ Notification from server $$");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		Notifications.broadcastMessage("$$ Notification from server $$", SessionRegistry.INSTANCE.getSessions().values());
 	}
 }
