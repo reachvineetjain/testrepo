@@ -407,8 +407,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
       } else {
          try {
             PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
-            PartnerStatus partnerStatus = partnerStatusRepository.findOne(Integer.valueOf(statusVal));
-            partnerSeason.setPartnerStatus1(partnerStatus);
+            partnerSeason.setActive(Integer.valueOf(statusVal)==1?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
             partnerSeasonsRepository.saveAndFlush(partnerSeason);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
