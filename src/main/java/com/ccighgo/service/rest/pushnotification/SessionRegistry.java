@@ -6,15 +6,14 @@ import java.util.Map;
 
 import javax.websocket.Session;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.google.common.base.Preconditions;
 
 public enum SessionRegistry {
 	INSTANCE;
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SessionRegistry.class);
+	private static final Logger LOGGER = Logger.getLogger(SessionRegistry.class);
 
 	// uid -> Session
 	private final Map<String, Session> sessions;

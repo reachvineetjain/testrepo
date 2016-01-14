@@ -9,10 +9,13 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @ServerEndpoint("/notify/{uid}")
 public class NotificationServer {
+	
+	private static final Logger LOGGER = Logger.getLogger(NotificationServer.class);
 
 	/**
 	 * @OnOpen allows us to intercept the creation of a new session. The session
@@ -38,6 +41,8 @@ public class NotificationServer {
 	@OnMessage
 	public void onMessage(String message, Session session) {
 		System.out.println("NotificationServer :: Message from " + session.getId() + ": " + message);
+		LOGGER.info("NotificationServer :: Message from " + session.getId() + ": " + message);
+		
 		try {
 			session.getBasicRemote().sendText(message);
 		} catch (IOException ex) {
@@ -58,8 +63,10 @@ public class NotificationServer {
 	@Scheduled(fixedDelay = 10000)
 	public void execute() {
 		System.out.println("........ scheduled notification task ..........");
-		
 		System.out.println("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
+		
+		LOGGER.info("........ Scheduled Notification Task ..........");
+		LOGGER.debug("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
 		
 		Notifications.broadcastMessage("$$ Notification from server $$", SessionRegistry.INSTANCE.getSessions().values());
 	}
