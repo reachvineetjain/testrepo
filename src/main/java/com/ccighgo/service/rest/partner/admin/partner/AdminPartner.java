@@ -47,7 +47,7 @@ public class AdminPartner {
    @Path("/add/partner/")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response addPartner(AdminAddPartner partner) {
+   public AdminAddPartner addPartner(AdminAddPartner partner) {
       return adminPartnerInterface.addPartner(partner, request);
    }
 

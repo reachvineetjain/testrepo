@@ -24,7 +24,7 @@ public interface AdminPartnerInterface {
     * @param request
     * @return
     */
-   public Response addPartner(AdminAddPartner partner, HttpServletRequest request);
+   public AdminAddPartner addPartner(AdminAddPartner partner, HttpServletRequest request);
 
    /**
     * @return
