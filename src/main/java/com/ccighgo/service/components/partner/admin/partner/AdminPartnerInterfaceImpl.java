@@ -117,8 +117,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
    @Override
    @Transactional
-   public Response addPartner(AdminAddPartner partner, HttpServletRequest request) {
-      Response resp = new Response();
+   public AdminAddPartner addPartner(AdminAddPartner partner, HttpServletRequest request) {
+      AdminAddPartner resp = new AdminAddPartner();
       try {
          if (partner == null) {
             throw new CcighgoException("null/empty data");
@@ -232,6 +232,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 				q1.executeUpdate();
 				q2.executeUpdate();
 			}
+			resp.setPartnerGoId(newPartner.getPartnerGoId());
+			resp.setLoginId(login.getLoginId());
 			resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 		} catch (CcighgoException e) {
 			resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(), e.getMessage()));
