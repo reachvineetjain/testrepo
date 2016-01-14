@@ -84,6 +84,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
                if (entity.getDepartmentProgram() != null && entity.getSeason() != null) {
                   count += 1;
                   PartnerSeasonProgramOption partnerProgramOption = new PartnerSeasonProgramOption();
+                  if(entity.getDepartmentProgram()!=null)
                   partnerProgramOption.setPartnerProgramOptionId(entity.getDepartmentProgram().getDepartmentProgramId());
                   partnerProgramOption.setPartnerProgramOption(entity.getDepartmentProgram().getProgramName());
 
@@ -104,10 +105,13 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
 
                   PartnerAgentAddedSeason partnerAgentAddedSeason = new PartnerAgentAddedSeason();
                   partnerAgentAddedSeason.setPartnerSeasonProgramName(entity.getSeason().getSeasonName()+"-"+entity.getDepartmentProgram().getProgramName());
-                  partnerAgentAddedSeason.setPartnerSeasonId(entity.getPartnerSeasonId());
+                  if (entity.getPartnerSeasonId() != null)
+                     partnerAgentAddedSeason.setPartnerSeasonId(entity.getPartnerSeasonId());
                   partnerAgentAddedSeason.setPartnerId(partnerGoId);
-                  partnerAgentAddedSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
-                  partnerAgentAddedSeason.setPartnerEndDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonEndDate()));
+                  if (entity.getPartnerSeasonStartDate() != null)
+                     partnerAgentAddedSeason.setPartnerStartDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonStartDate()));
+                  if (entity.getPartnerSeasonEndDate() != null)
+                     partnerAgentAddedSeason.setPartnerEndDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonEndDate()));
                   partnerAgentAddedSeason.setPartnerApplicationDeadlineDate(DateUtils.getMMddyyDate(entity.getPartnerSeasonAppDeadlineDate()));
                   partnerAgentAddedSeason.setPartnerSeasonDepartment(partnerSeasonDepartment);
                   partnerAgentAddedSeason.setPartnerProgramOption(partnerProgramOption);
@@ -198,9 +202,12 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
          if (partnerSeasonList != null) {
             for (PartnerSeason partnerSeason : partnerSeasonList) {
                PartnerAgentSeason partnerAgentSeason = new PartnerAgentSeason();
-               partnerAgentSeason.setSeasonId(partnerSeason.getSeason().getSeasonId());
-               partnerAgentSeason.setSeasonName(partnerSeason.getSeason().getSeasonName());
-               partnerAgentSeason.setSeasonFullName(partnerSeason.getSeason().getSeasonFullName());
+               if (partnerSeason.getSeason() != null) {
+                  if (partnerSeason.getSeason().getSeasonId() != null)
+                     partnerAgentSeason.setSeasonId(partnerSeason.getSeason().getSeasonId());
+                  partnerAgentSeason.setSeasonName(partnerSeason.getSeason().getSeasonName());
+                  partnerAgentSeason.setSeasonFullName(partnerSeason.getSeason().getSeasonFullName());
+               }
                partnerAgentSeasons.getPartnerAgentSeasons().add(partnerAgentSeason);
                partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_AGENT_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));

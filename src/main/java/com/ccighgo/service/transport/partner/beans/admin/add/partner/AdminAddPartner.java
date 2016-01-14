@@ -53,6 +53,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AdminAddPartner", propOrder = {
+    "partnerGoId",
     "loginId",
     "companyLogo",
     "companyName",
@@ -73,7 +74,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 public class AdminAddPartner
     extends Response
 {
-
+    protected int partnerGoId;
     protected int loginId;
     @XmlElement(required = true)
     protected String companyLogo;
@@ -103,6 +104,22 @@ public class AdminAddPartner
     @XmlElement(required = true)
     protected List<ProgramContacts> programContacts;
     protected boolean sendLogin;
+    
+    /**
+     * Gets the value of the partnerGoId property.
+     * 
+     */
+    public int getPartnerGoId() {
+        return partnerGoId;
+    }
+
+    /**
+     * Sets the value of the partnerGoId property.
+     * 
+     */
+    public void setPartnerGoId(int value) {
+        this.partnerGoId = value;
+    }
 
     /**
      * Gets the value of the loginId property.

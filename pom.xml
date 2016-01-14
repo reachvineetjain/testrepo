@@ -174,7 +174,8 @@
             <exclusion>
                <groupId>javax.servlet</groupId>
                <artifactId>servlet-api</artifactId>
-            </exclusion>
+               
+                 </exclusion>
          </exclusions>
       </dependency>
 
@@ -273,11 +274,26 @@
          <artifactId>cors-filter</artifactId>
          <version>1.3.2</version>
       </dependency>
+
+	<dependency>
+    	<groupId>javax.websocket</groupId>
+    	<artifactId>javax.websocket-api</artifactId>
+    	<version>1.0</version>
+    	<scope>provided</scope>
+	</dependency>
+
+	<dependency>
+    <groupId>org.glassfish.tyrus.bundles</groupId>
+    <artifactId>tyrus-standalone-client</artifactId>
+    <version>1.12</version>
+</dependency>
+
  <dependency>
 	<groupId>com.google.code.gson</groupId>
 	<artifactId>gson</artifactId>
 	<version>1.7.1</version>
   </dependency>
+
    </dependencies>
 
    <build>

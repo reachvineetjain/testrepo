@@ -23,9 +23,13 @@ public class PaymentSchedule implements Serializable {
 	@Column(nullable=false, length=50)
 	private String scheduleName;
 
-	//bi-directional many-to-one association to FieldStaffLCSeason
+	//bi-directional many-to-one association to FieldStaffSeason
 	@OneToMany(mappedBy="paymentSchedule")
-	private List<FieldStaffLCSeason> fieldStaffLcseasons;
+	private List<FieldStaffSeason> fieldStaffSeasons;
+
+	//bi-directional many-to-one association to HostFamilySeason
+	@OneToMany(mappedBy="paymentSchedule")
+	private List<HostFamilySeason> hostFamilySeasons;
 
 	//bi-directional many-to-one association to SeasonF1Detail
 	@OneToMany(mappedBy="paymentSchedule")
@@ -54,26 +58,48 @@ public class PaymentSchedule implements Serializable {
 		this.scheduleName = scheduleName;
 	}
 
-	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-		return this.fieldStaffLcseasons;
+	public List<FieldStaffSeason> getFieldStaffSeasons() {
+		return this.fieldStaffSeasons;
 	}
 
-	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-		this.fieldStaffLcseasons = fieldStaffLcseasons;
+	public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
+		this.fieldStaffSeasons = fieldStaffSeasons;
 	}
 
-	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().add(fieldStaffLcseason);
-		fieldStaffLcseason.setPaymentSchedule(this);
+	public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().add(fieldStaffSeason);
+		fieldStaffSeason.setPaymentSchedule(this);
 
-		return fieldStaffLcseason;
+		return fieldStaffSeason;
 	}
 
-	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().remove(fieldStaffLcseason);
-		fieldStaffLcseason.setPaymentSchedule(null);
+	public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().remove(fieldStaffSeason);
+		fieldStaffSeason.setPaymentSchedule(null);
 
-		return fieldStaffLcseason;
+		return fieldStaffSeason;
+	}
+
+	public List<HostFamilySeason> getHostFamilySeasons() {
+		return this.hostFamilySeasons;
+	}
+
+	public void setHostFamilySeasons(List<HostFamilySeason> hostFamilySeasons) {
+		this.hostFamilySeasons = hostFamilySeasons;
+	}
+
+	public HostFamilySeason addHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().add(hostFamilySeason);
+		hostFamilySeason.setPaymentSchedule(this);
+
+		return hostFamilySeason;
+	}
+
+	public HostFamilySeason removeHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		getHostFamilySeasons().remove(hostFamilySeason);
+		hostFamilySeason.setPaymentSchedule(null);
+
+		return hostFamilySeason;
 	}
 
 	public List<SeasonF1Detail> getSeasonF1details() {

@@ -8,23 +8,25 @@ import java.util.List;
 
 
 /**
- * The persistent class for the FieldStaffLCSeason database table.
+ * The persistent class for the FieldStaffSeason database table.
  * 
  */
 @Entity
-@Table(name="FieldStaffLCSeason")
-@NamedQuery(name="FieldStaffLCSeason.findAll", query="SELECT f FROM FieldStaffLCSeason f")
-public class FieldStaffLCSeason implements Serializable {
+@Table(name="FieldStaffSeason")
+@NamedQuery(name="FieldStaffSeason.findAll", query="SELECT f FROM FieldStaffSeason f")
+public class FieldStaffSeason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer fieldStaffLCSeasonId;
+	private Integer filedStaffSeasonId;
 
 	private Byte active;
 
 	private Byte agreeToTerms;
+
+	private Byte canRepresentGrantPax;
 
 	private Integer createdBy;
 
@@ -32,9 +34,7 @@ public class FieldStaffLCSeason implements Serializable {
 
 	private Integer defaultMonitoringStipendId;
 
-	private Byte isFLEXStaff;
-
-	private Byte isYESStaff;
+	private Byte isRecruiterLC;
 
 	private Integer modifiedBy;
 
@@ -56,6 +56,11 @@ public class FieldStaffLCSeason implements Serializable {
 	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
+	//bi-directional many-to-one association to FieldStaffStatus
+	@ManyToOne
+	@JoinColumn(name="fieldStaffSeasonStatusId")
+	private FieldStaffStatus fieldStaffStatus;
+
 	//bi-directional many-to-one association to PaymentSchedule
 	@ManyToOne
 	@JoinColumn(name="paymentScheduleId")
@@ -66,24 +71,19 @@ public class FieldStaffLCSeason implements Serializable {
 	@JoinColumn(name="seasonId")
 	private Season season;
 
-	//bi-directional many-to-one association to SeasonGeographyConfiguration
-	@ManyToOne
-	@JoinColumn(name="seasonGeographyConfigurationId")
-	private SeasonGeographyConfiguration seasonGeographyConfiguration;
+	//bi-directional many-to-one association to FieldStaffSeasonDocument
+	@OneToMany(mappedBy="fieldStaffSeason")
+	private List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments;
 
-	//bi-directional many-to-one association to FieldStaffLCSeasonDocument
-	@OneToMany(mappedBy="fieldStaffLcseason")
-	private List<FieldStaffLCSeasonDocument> fieldStaffLcseasonDocuments;
-
-	public FieldStaffLCSeason() {
+	public FieldStaffSeason() {
 	}
 
-	public Integer getFieldStaffLCSeasonId() {
-		return this.fieldStaffLCSeasonId;
+	public Integer getFiledStaffSeasonId() {
+		return this.filedStaffSeasonId;
 	}
 
-	public void setFieldStaffLCSeasonId(Integer fieldStaffLCSeasonId) {
-		this.fieldStaffLCSeasonId = fieldStaffLCSeasonId;
+	public void setFiledStaffSeasonId(Integer filedStaffSeasonId) {
+		this.filedStaffSeasonId = filedStaffSeasonId;
 	}
 
 	public Byte getActive() {
@@ -100,6 +100,14 @@ public class FieldStaffLCSeason implements Serializable {
 
 	public void setAgreeToTerms(Byte agreeToTerms) {
 		this.agreeToTerms = agreeToTerms;
+	}
+
+	public Byte getCanRepresentGrantPax() {
+		return this.canRepresentGrantPax;
+	}
+
+	public void setCanRepresentGrantPax(Byte canRepresentGrantPax) {
+		this.canRepresentGrantPax = canRepresentGrantPax;
 	}
 
 	public Integer getCreatedBy() {
@@ -126,20 +134,12 @@ public class FieldStaffLCSeason implements Serializable {
 		this.defaultMonitoringStipendId = defaultMonitoringStipendId;
 	}
 
-	public Byte getIsFLEXStaff() {
-		return this.isFLEXStaff;
+	public Byte getIsRecruiterLC() {
+		return this.isRecruiterLC;
 	}
 
-	public void setIsFLEXStaff(Byte isFLEXStaff) {
-		this.isFLEXStaff = isFLEXStaff;
-	}
-
-	public Byte getIsYESStaff() {
-		return this.isYESStaff;
-	}
-
-	public void setIsYESStaff(Byte isYESStaff) {
-		this.isYESStaff = isYESStaff;
+	public void setIsRecruiterLC(Byte isRecruiterLC) {
+		this.isRecruiterLC = isRecruiterLC;
 	}
 
 	public Integer getModifiedBy() {
@@ -190,6 +190,14 @@ public class FieldStaffLCSeason implements Serializable {
 		this.fieldStaff = fieldStaff;
 	}
 
+	public FieldStaffStatus getFieldStaffStatus() {
+		return this.fieldStaffStatus;
+	}
+
+	public void setFieldStaffStatus(FieldStaffStatus fieldStaffStatus) {
+		this.fieldStaffStatus = fieldStaffStatus;
+	}
+
 	public PaymentSchedule getPaymentSchedule() {
 		return this.paymentSchedule;
 	}
@@ -206,34 +214,26 @@ public class FieldStaffLCSeason implements Serializable {
 		this.season = season;
 	}
 
-	public SeasonGeographyConfiguration getSeasonGeographyConfiguration() {
-		return this.seasonGeographyConfiguration;
+	public List<FieldStaffSeasonDocument> getFieldStaffSeasonDocuments() {
+		return this.fieldStaffSeasonDocuments;
 	}
 
-	public void setSeasonGeographyConfiguration(SeasonGeographyConfiguration seasonGeographyConfiguration) {
-		this.seasonGeographyConfiguration = seasonGeographyConfiguration;
+	public void setFieldStaffSeasonDocuments(List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments) {
+		this.fieldStaffSeasonDocuments = fieldStaffSeasonDocuments;
 	}
 
-	public List<FieldStaffLCSeasonDocument> getFieldStaffLcseasonDocuments() {
-		return this.fieldStaffLcseasonDocuments;
+	public FieldStaffSeasonDocument addFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
+		getFieldStaffSeasonDocuments().add(fieldStaffSeasonDocument);
+		fieldStaffSeasonDocument.setFieldStaffSeason(this);
+
+		return fieldStaffSeasonDocument;
 	}
 
-	public void setFieldStaffLcseasonDocuments(List<FieldStaffLCSeasonDocument> fieldStaffLcseasonDocuments) {
-		this.fieldStaffLcseasonDocuments = fieldStaffLcseasonDocuments;
-	}
+	public FieldStaffSeasonDocument removeFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
+		getFieldStaffSeasonDocuments().remove(fieldStaffSeasonDocument);
+		fieldStaffSeasonDocument.setFieldStaffSeason(null);
 
-	public FieldStaffLCSeasonDocument addFieldStaffLcseasonDocument(FieldStaffLCSeasonDocument fieldStaffLcseasonDocument) {
-		getFieldStaffLcseasonDocuments().add(fieldStaffLcseasonDocument);
-		fieldStaffLcseasonDocument.setFieldStaffLcseason(this);
-
-		return fieldStaffLcseasonDocument;
-	}
-
-	public FieldStaffLCSeasonDocument removeFieldStaffLcseasonDocument(FieldStaffLCSeasonDocument fieldStaffLcseasonDocument) {
-		getFieldStaffLcseasonDocuments().remove(fieldStaffLcseasonDocument);
-		fieldStaffLcseasonDocument.setFieldStaffLcseason(null);
-
-		return fieldStaffLcseasonDocument;
+		return fieldStaffSeasonDocument;
 	}
 
 }

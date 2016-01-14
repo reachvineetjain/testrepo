@@ -24,6 +24,10 @@ public class PartnerStatus implements Serializable {
 
 	@Column(length=50)
 	private String partnerStatusName;
+	
+	private Byte isLeadStatus;
+	
+	private Byte isSeasonStatus;
 
 	//bi-directional many-to-one association to PartnerReviewStatus
 	@OneToMany(mappedBy="partnerStatus1")
@@ -76,7 +80,23 @@ public class PartnerStatus implements Serializable {
 		this.partnerStatusName = partnerStatusName;
 	}
 
-	public List<PartnerReviewStatus> getPartnerReviewStatuses1() {
+	public Byte getIsLeadStatus() {
+      return isLeadStatus;
+   }
+
+   public void setIsLeadStatus(Byte isLeadStatus) {
+      this.isLeadStatus = isLeadStatus;
+   }
+
+   public Byte getIsSeasonStatus() {
+      return isSeasonStatus;
+   }
+
+   public void setIsSeasonStatus(Byte isSeasonStatus) {
+      this.isSeasonStatus = isSeasonStatus;
+   }
+
+   public List<PartnerReviewStatus> getPartnerReviewStatuses1() {
 		return this.partnerReviewStatuses1;
 	}
 

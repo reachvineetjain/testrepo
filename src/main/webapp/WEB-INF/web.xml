@@ -7,6 +7,10 @@
       <param-name>contextConfigLocation</param-name>
       <param-value>WEB-INF/applicationContext.xml, WEB-INF/serviceBeans.xml,WEB-INF/securityContext.xml</param-value>
    </context-param>
+   
+   <listener>
+      <listener-class>com.ccighgo.utils.ContextFinalizer</listener-class>
+   </listener>
 
    <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -22,7 +26,7 @@
       <servlet-name>CXFServlet</servlet-name>
       <url-pattern>/services/*</url-pattern>
    </servlet-mapping>
-
+ 
    <filter>
       <filter-name>shiroFilter</filter-name>
       <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -31,7 +35,7 @@
    <filter-mapping>
       <filter-name>shiroFilter</filter-name>
       <servlet-name>CXFServlet</servlet-name>
-   </filter-mapping>
+   </filter-mapping> 
 
    <session-config>
       <session-timeout>120</session-timeout>

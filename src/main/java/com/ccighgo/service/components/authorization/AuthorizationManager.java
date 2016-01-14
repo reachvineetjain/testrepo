@@ -60,10 +60,16 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Override
    @Transactional(readOnly = true)
    public Auth getUserLogin(String userName) {
+      try {
+         LOGGER.info("userName: "+userName);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       Auth auth = new Auth();
+         
       try
       {
-      if (userName != null && !(userName.isEmpty())) {
+         if (userName != null && !(userName.isEmpty())) {
          Login login = loginRepository.findByLoginName(userName);
          if (login != null && login.getActive() == CCIConstants.ACTIVE) {
             auth.setGoId(login.getGoIdSequence().getGoId());
@@ -95,10 +101,13 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTICPANT_USER)) {
                   lt.setUserDetailUrl("/authorize/ptcpnt/");
                }
-               lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
-               lt.setLoginType(loginUsrType.getUserType().getUserTypeName());
-               lt.setDefault(loginUsrType.getDefaultUserType() == 0 ? false : true);
-               loginTypeList.add(lt);
+                  if (loginUsrType.getUserType() != null)
+                     if (loginUsrType.getUserType().getUserTypeId() != null)
+                        lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
+                  lt.setLoginType(loginUsrType.getUserType().getUserTypeName());
+                  if (loginUsrType.getUserType() != null)
+                     lt.setDefault(loginUsrType.getDefaultUserType() == 0 ? false : true);
+                  loginTypeList.add(lt);
             }
             auth.getLoginType().addAll(loginTypeList);
             auth.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
@@ -120,6 +129,11 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
 
    @Transactional
    private void updateHistory(String userName) {
+      try {
+         LOGGER.info("userName: "+userName);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       LoginHistory history = new LoginHistory();
       history.setLoggedOn(new Timestamp(System.currentTimeMillis()));
       Login loggedInUser = loginRepository.findByLoginName(userName);
@@ -130,18 +144,34 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Override
    @Transactional(readOnly = true)
    public User getCCIUserDetails(String userId) {
+
+      try {
+         LOGGER.info("userName: "+userId);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       return userManagementService.getUserById(userId);
    }
 
    @Override
    @Transactional(readOnly = true)
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
+      try {
+         LOGGER.info("userName: "+partnerGoId);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       return partnerService.getPartnerDashboard(partnerGoId);
    }
 
    @Override
    @Transactional(readOnly = true)
    public PartnerRecruitmentLead getPartnerAgentDashboard(int partnerGoId) {
+      try {
+         LOGGER.info("userName: "+partnerGoId);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       return partnerService.getPartnerInquiryLeadData(partnerGoId);
    }
 

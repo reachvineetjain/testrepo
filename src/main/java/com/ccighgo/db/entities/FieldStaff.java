@@ -20,7 +20,7 @@ public class FieldStaff implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer fieldStaffGoId;
+	private int fieldStaffGoId;
 
 	private Byte agreementNoticeSent;
 
@@ -44,6 +44,8 @@ public class FieldStaff implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date birthDate;
+
+	private Byte canPresentGrantPax;
 
 	@Column(length=25)
 	private String cellPhone;
@@ -124,10 +126,6 @@ public class FieldStaff implements Serializable {
 	private Integer isCurrentlyAR;
 
 	private Byte isDoNotContact;
-
-	private Byte isFlexStaff;
-
-	private Byte isYesStaff;
 
 	@Column(length=50)
 	private String lastName;
@@ -257,9 +255,9 @@ public class FieldStaff implements Serializable {
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffFamilyMember> fieldStaffFamilyMembers;
 
-	//bi-directional many-to-one association to FieldStaffLCSeason
+	//bi-directional many-to-one association to FieldStaffHistory
 	@OneToMany(mappedBy="fieldStaff")
-	private List<FieldStaffLCSeason> fieldStaffLcseasons;
+	private List<FieldStaffHistory> fieldStaffHistories;
 
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
 	@OneToMany(mappedBy="fieldStaff")
@@ -293,6 +291,10 @@ public class FieldStaff implements Serializable {
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffReference> fieldStaffReferences;
 
+	//bi-directional many-to-one association to FieldStaffSeason
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffSeason> fieldStaffSeasons;
+
 	//bi-directional many-to-one association to FieldStaffWorkQueue
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
@@ -305,14 +307,26 @@ public class FieldStaff implements Serializable {
 	@OneToMany(mappedBy="fieldStaff")
 	private List<FieldStaffWorkQueueTypeAggregate> fieldStaffWorkQueueTypeAggregates;
 
+	//bi-directional many-to-one association to HostFamilyParticipant
+	@OneToMany(mappedBy="fieldStaff1")
+	private List<HostFamilyParticipant> hostFamilyParticipants1;
+
+	//bi-directional many-to-one association to HostFamilyParticipant
+	@OneToMany(mappedBy="fieldStaff2")
+	private List<HostFamilyParticipant> hostFamilyParticipants2;
+
+	//bi-directional many-to-one association to HostFamilyParticipantHistory
+	@OneToMany(mappedBy="fieldStaff")
+	private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
+
 	public FieldStaff() {
 	}
 
-	public Integer getFieldStaffGoId() {
+	public int getFieldStaffGoId() {
 		return this.fieldStaffGoId;
 	}
 
-	public void setFieldStaffGoId(Integer fieldStaffGoId) {
+	public void setFieldStaffGoId(int fieldStaffGoId) {
 		this.fieldStaffGoId = fieldStaffGoId;
 	}
 
@@ -386,6 +400,14 @@ public class FieldStaff implements Serializable {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public Byte getCanPresentGrantPax() {
+		return this.canPresentGrantPax;
+	}
+
+	public void setCanPresentGrantPax(Byte canPresentGrantPax) {
+		this.canPresentGrantPax = canPresentGrantPax;
 	}
 
 	public String getCellPhone() {
@@ -642,22 +664,6 @@ public class FieldStaff implements Serializable {
 
 	public void setIsDoNotContact(Byte isDoNotContact) {
 		this.isDoNotContact = isDoNotContact;
-	}
-
-	public Byte getIsFlexStaff() {
-		return this.isFlexStaff;
-	}
-
-	public void setIsFlexStaff(Byte isFlexStaff) {
-		this.isFlexStaff = isFlexStaff;
-	}
-
-	public Byte getIsYesStaff() {
-		return this.isYesStaff;
-	}
-
-	public void setIsYesStaff(Byte isYesStaff) {
-		this.isYesStaff = isYesStaff;
 	}
 
 	public String getLastName() {
@@ -1008,26 +1014,26 @@ public class FieldStaff implements Serializable {
 		return fieldStaffFamilyMember;
 	}
 
-	public List<FieldStaffLCSeason> getFieldStaffLcseasons() {
-		return this.fieldStaffLcseasons;
+	public List<FieldStaffHistory> getFieldStaffHistories() {
+		return this.fieldStaffHistories;
 	}
 
-	public void setFieldStaffLcseasons(List<FieldStaffLCSeason> fieldStaffLcseasons) {
-		this.fieldStaffLcseasons = fieldStaffLcseasons;
+	public void setFieldStaffHistories(List<FieldStaffHistory> fieldStaffHistories) {
+		this.fieldStaffHistories = fieldStaffHistories;
 	}
 
-	public FieldStaffLCSeason addFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().add(fieldStaffLcseason);
-		fieldStaffLcseason.setFieldStaff(this);
+	public FieldStaffHistory addFieldStaffHistory(FieldStaffHistory fieldStaffHistory) {
+		getFieldStaffHistories().add(fieldStaffHistory);
+		fieldStaffHistory.setFieldStaff(this);
 
-		return fieldStaffLcseason;
+		return fieldStaffHistory;
 	}
 
-	public FieldStaffLCSeason removeFieldStaffLcseason(FieldStaffLCSeason fieldStaffLcseason) {
-		getFieldStaffLcseasons().remove(fieldStaffLcseason);
-		fieldStaffLcseason.setFieldStaff(null);
+	public FieldStaffHistory removeFieldStaffHistory(FieldStaffHistory fieldStaffHistory) {
+		getFieldStaffHistories().remove(fieldStaffHistory);
+		fieldStaffHistory.setFieldStaff(null);
 
-		return fieldStaffLcseason;
+		return fieldStaffHistory;
 	}
 
 	public List<FieldStaffLeadershipSeason> getFieldStaffLeadershipSeasons() {
@@ -1206,6 +1212,28 @@ public class FieldStaff implements Serializable {
 		return fieldStaffReference;
 	}
 
+	public List<FieldStaffSeason> getFieldStaffSeasons() {
+		return this.fieldStaffSeasons;
+	}
+
+	public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
+		this.fieldStaffSeasons = fieldStaffSeasons;
+	}
+
+	public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().add(fieldStaffSeason);
+		fieldStaffSeason.setFieldStaff(this);
+
+		return fieldStaffSeason;
+	}
+
+	public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+		getFieldStaffSeasons().remove(fieldStaffSeason);
+		fieldStaffSeason.setFieldStaff(null);
+
+		return fieldStaffSeason;
+	}
+
 	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
 		return this.fieldStaffWorkQueues;
 	}
@@ -1270,6 +1298,72 @@ public class FieldStaff implements Serializable {
 		fieldStaffWorkQueueTypeAggregate.setFieldStaff(null);
 
 		return fieldStaffWorkQueueTypeAggregate;
+	}
+
+	public List<HostFamilyParticipant> getHostFamilyParticipants1() {
+		return this.hostFamilyParticipants1;
+	}
+
+	public void setHostFamilyParticipants1(List<HostFamilyParticipant> hostFamilyParticipants1) {
+		this.hostFamilyParticipants1 = hostFamilyParticipants1;
+	}
+
+	public HostFamilyParticipant addHostFamilyParticipants1(HostFamilyParticipant hostFamilyParticipants1) {
+		getHostFamilyParticipants1().add(hostFamilyParticipants1);
+		hostFamilyParticipants1.setFieldStaff1(this);
+
+		return hostFamilyParticipants1;
+	}
+
+	public HostFamilyParticipant removeHostFamilyParticipants1(HostFamilyParticipant hostFamilyParticipants1) {
+		getHostFamilyParticipants1().remove(hostFamilyParticipants1);
+		hostFamilyParticipants1.setFieldStaff1(null);
+
+		return hostFamilyParticipants1;
+	}
+
+	public List<HostFamilyParticipant> getHostFamilyParticipants2() {
+		return this.hostFamilyParticipants2;
+	}
+
+	public void setHostFamilyParticipants2(List<HostFamilyParticipant> hostFamilyParticipants2) {
+		this.hostFamilyParticipants2 = hostFamilyParticipants2;
+	}
+
+	public HostFamilyParticipant addHostFamilyParticipants2(HostFamilyParticipant hostFamilyParticipants2) {
+		getHostFamilyParticipants2().add(hostFamilyParticipants2);
+		hostFamilyParticipants2.setFieldStaff2(this);
+
+		return hostFamilyParticipants2;
+	}
+
+	public HostFamilyParticipant removeHostFamilyParticipants2(HostFamilyParticipant hostFamilyParticipants2) {
+		getHostFamilyParticipants2().remove(hostFamilyParticipants2);
+		hostFamilyParticipants2.setFieldStaff2(null);
+
+		return hostFamilyParticipants2;
+	}
+
+	public List<HostFamilyParticipantHistory> getHostFamilyParticipantHistories() {
+		return this.hostFamilyParticipantHistories;
+	}
+
+	public void setHostFamilyParticipantHistories(List<HostFamilyParticipantHistory> hostFamilyParticipantHistories) {
+		this.hostFamilyParticipantHistories = hostFamilyParticipantHistories;
+	}
+
+	public HostFamilyParticipantHistory addHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+		getHostFamilyParticipantHistories().add(hostFamilyParticipantHistory);
+		hostFamilyParticipantHistory.setFieldStaff(this);
+
+		return hostFamilyParticipantHistory;
+	}
+
+	public HostFamilyParticipantHistory removeHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+		getHostFamilyParticipantHistories().remove(hostFamilyParticipantHistory);
+		hostFamilyParticipantHistory.setFieldStaff(null);
+
+		return hostFamilyParticipantHistory;
 	}
 
 }

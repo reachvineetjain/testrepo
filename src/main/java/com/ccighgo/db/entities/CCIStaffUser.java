@@ -22,9 +22,8 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer cciStaffUserId;
+	private int cciStaffUserId;
 
 	@Column(nullable=false, length=64)
 	private String cciAdminGuid;
@@ -90,12 +89,12 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUserNote
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	   @Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional one-to-one association to GoIdSequence
@@ -120,7 +119,7 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
 	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
@@ -158,11 +157,11 @@ public class CCIStaffUser implements Serializable {
 	public CCIStaffUser() {
 	}
 
-	public Integer getCciStaffUserId() {
+	public int getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(Integer cciStaffUserId) {
+	public void setCciStaffUserId(int cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 

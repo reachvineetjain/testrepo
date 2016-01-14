@@ -57,13 +57,13 @@ public class DocumentInformation implements Serializable {
 	@OneToMany(mappedBy="documentInformation")
 	private List<FieldStaffDocument> fieldStaffDocuments;
 
-	//bi-directional many-to-one association to FieldStaffLCSeasonDocument
+	//bi-directional many-to-one association to FieldStaffSeasonDocument
 	@OneToMany(mappedBy="documentInformation")
-	private List<FieldStaffLCSeasonDocument> fieldStaffLcseasonDocuments;
+	private List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments;
 
-	//bi-directional many-to-one association to FieldStaffLeadershipSeasonDocument
+	//bi-directional many-to-one association to HostFamilyDocument
 	@OneToMany(mappedBy="documentInformation")
-	private List<FieldStaffLeadershipSeasonDocument> fieldStaffLeadershipSeasonDocuments;
+	private List<HostFamilyDocument> hostFamilyDocuments;
 
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="documentInformation")
@@ -212,48 +212,48 @@ public class DocumentInformation implements Serializable {
 		return fieldStaffDocument;
 	}
 
-	public List<FieldStaffLCSeasonDocument> getFieldStaffLcseasonDocuments() {
-		return this.fieldStaffLcseasonDocuments;
+	public List<FieldStaffSeasonDocument> getFieldStaffSeasonDocuments() {
+		return this.fieldStaffSeasonDocuments;
 	}
 
-	public void setFieldStaffLcseasonDocuments(List<FieldStaffLCSeasonDocument> fieldStaffLcseasonDocuments) {
-		this.fieldStaffLcseasonDocuments = fieldStaffLcseasonDocuments;
+	public void setFieldStaffSeasonDocuments(List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments) {
+		this.fieldStaffSeasonDocuments = fieldStaffSeasonDocuments;
 	}
 
-	public FieldStaffLCSeasonDocument addFieldStaffLcseasonDocument(FieldStaffLCSeasonDocument fieldStaffLcseasonDocument) {
-		getFieldStaffLcseasonDocuments().add(fieldStaffLcseasonDocument);
-		fieldStaffLcseasonDocument.setDocumentInformation(this);
+	public FieldStaffSeasonDocument addFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
+		getFieldStaffSeasonDocuments().add(fieldStaffSeasonDocument);
+		fieldStaffSeasonDocument.setDocumentInformation(this);
 
-		return fieldStaffLcseasonDocument;
+		return fieldStaffSeasonDocument;
 	}
 
-	public FieldStaffLCSeasonDocument removeFieldStaffLcseasonDocument(FieldStaffLCSeasonDocument fieldStaffLcseasonDocument) {
-		getFieldStaffLcseasonDocuments().remove(fieldStaffLcseasonDocument);
-		fieldStaffLcseasonDocument.setDocumentInformation(null);
+	public FieldStaffSeasonDocument removeFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
+		getFieldStaffSeasonDocuments().remove(fieldStaffSeasonDocument);
+		fieldStaffSeasonDocument.setDocumentInformation(null);
 
-		return fieldStaffLcseasonDocument;
+		return fieldStaffSeasonDocument;
 	}
 
-	public List<FieldStaffLeadershipSeasonDocument> getFieldStaffLeadershipSeasonDocuments() {
-		return this.fieldStaffLeadershipSeasonDocuments;
+	public List<HostFamilyDocument> getHostFamilyDocuments() {
+		return this.hostFamilyDocuments;
 	}
 
-	public void setFieldStaffLeadershipSeasonDocuments(List<FieldStaffLeadershipSeasonDocument> fieldStaffLeadershipSeasonDocuments) {
-		this.fieldStaffLeadershipSeasonDocuments = fieldStaffLeadershipSeasonDocuments;
+	public void setHostFamilyDocuments(List<HostFamilyDocument> hostFamilyDocuments) {
+		this.hostFamilyDocuments = hostFamilyDocuments;
 	}
 
-	public FieldStaffLeadershipSeasonDocument addFieldStaffLeadershipSeasonDocument(FieldStaffLeadershipSeasonDocument fieldStaffLeadershipSeasonDocument) {
-		getFieldStaffLeadershipSeasonDocuments().add(fieldStaffLeadershipSeasonDocument);
-		fieldStaffLeadershipSeasonDocument.setDocumentInformation(this);
+	public HostFamilyDocument addHostFamilyDocument(HostFamilyDocument hostFamilyDocument) {
+		getHostFamilyDocuments().add(hostFamilyDocument);
+		hostFamilyDocument.setDocumentInformation(this);
 
-		return fieldStaffLeadershipSeasonDocument;
+		return hostFamilyDocument;
 	}
 
-	public FieldStaffLeadershipSeasonDocument removeFieldStaffLeadershipSeasonDocument(FieldStaffLeadershipSeasonDocument fieldStaffLeadershipSeasonDocument) {
-		getFieldStaffLeadershipSeasonDocuments().remove(fieldStaffLeadershipSeasonDocument);
-		fieldStaffLeadershipSeasonDocument.setDocumentInformation(null);
+	public HostFamilyDocument removeHostFamilyDocument(HostFamilyDocument hostFamilyDocument) {
+		getHostFamilyDocuments().remove(hostFamilyDocument);
+		hostFamilyDocument.setDocumentInformation(null);
 
-		return fieldStaffLeadershipSeasonDocument;
+		return hostFamilyDocument;
 	}
 
 	public List<PartnerDocument> getPartnerDocuments() {

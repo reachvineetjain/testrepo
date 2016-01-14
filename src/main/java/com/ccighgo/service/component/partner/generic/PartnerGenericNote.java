@@ -63,12 +63,19 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    @Override
    public WSDefaultResponse addNote(ScreenNote note) {
+      try {
+         if (note != null)
+            LOGGER.info("noteId: " + note.getNoteId() + " noteValue: " + note.getNoteValue() + "_public: " + note.isPublic() + " createdOn: " + note.getCreatedOn() + " loginId: "
+                  + note.getLoginId() + " topicId: " + note.getLoginId() + " partnerId: " + note.getPartnerId());
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerNote noteEntity = new PartnerNote();
          noteEntity.setCreatedBy(note.getLoginId());
-         if(note.getCreatedOn()==null){
-        	 note.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
+         if (note.getCreatedOn() == null) {
+            note.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
          }
          noteEntity.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
          noteEntity.setModifiedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
@@ -106,6 +113,12 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    @Override
    public WSDefaultResponse deleteNote(DeleteNote deleteNote) {
+      try {
+         if(deleteNote!=null)
+         LOGGER.info("noteId: "+deleteNote.getNoteId());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          partnerNoteRepository.delete(deleteNote.getNoteId());
@@ -123,6 +136,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    @Override
    public Topics viewTopics(int partnerId) {
+      try {
+         LOGGER.info("partnerId: "+partnerId);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
       Topics topicsList = new Topics();
       try {
          List<PartnerNoteTopic> partnerTopics = partnerNoteTopicRepository.findAllPartnerNoteTopicByPartnerId(Integer.valueOf(partnerId));
@@ -198,6 +216,17 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    @Override
    public WSDefaultResponse tagTopic(Topic topic) {
+      try {
+         if(topic!=null)
+         LOGGER.info("loginId: "+topic.getLoginId()+"isTopicPublic: "+topic.isIsTopicPublic()+"goId: "+topic.getGoId()+
+               "partnerNoteTopicId: "+topic.getPartnerNoteTopicId()+"partnerNoteTopicName: "+topic.getPartnerNoteTopicName()+
+               "embassyVisaInfo: "+topic.isEmbassyVisaInfo()+"f1: "+topic.isF1()+"ght: "+topic.isGht()+"intern: "+topic.isIntern()+
+               "isPublic: "+topic.isIsPublic()+"j1: "+topic.isMeetingVisit()+" meetingVisit: "+topic.isMeetingVisit()+
+               "seasonInfo: "+topic.isSeasonInfo()+"stInbound: "+topic.isStInbound()+"trainee: "+topic.isTrainee()+
+               "wt: "+topic.isWT()+" createdBy: "+topic.getCreatedBy());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          PartnerNoteTopic topicData = partnerNoteTopicRepository.findOne(topic.getPartnerNoteTopicId());
@@ -253,6 +282,17 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    @Override
    public WSDefaultResponse createTopic(Topic topic) {
+      try {
+         if(topic!=null)
+         LOGGER.info("loginId: "+topic.getLoginId()+"isTopicPublic: "+topic.isIsTopicPublic()+"goId: "+topic.getGoId()+
+               "partnerNoteTopicId: "+topic.getPartnerNoteTopicId()+"partnerNoteTopicName: "+topic.getPartnerNoteTopicName()+
+               "embassyVisaInfo: "+topic.isEmbassyVisaInfo()+"f1: "+topic.isF1()+"ght: "+topic.isGht()+"intern: "+topic.isIntern()+
+               "isPublic: "+topic.isIsPublic()+"j1: "+topic.isMeetingVisit()+" meetingVisit: "+topic.isMeetingVisit()+
+               "seasonInfo: "+topic.isSeasonInfo()+"stInbound: "+topic.isStInbound()+"trainee: "+topic.isTrainee()+
+               "wt: "+topic.isWT()+" createdBy: "+topic.getCreatedBy());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          PartnerNoteTopic topicData = new PartnerNoteTopic();
