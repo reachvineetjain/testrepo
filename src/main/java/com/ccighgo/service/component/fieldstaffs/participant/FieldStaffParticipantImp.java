@@ -32,7 +32,8 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
    MessageUtils messageUtil;
 
    private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?)";
-
+   private static final int ALL_PARTICIPANT_FLAG=1;
+   private static final int MY_TEAM_PARTICIPANT_FLAG=0;
    @Override
    public FieldStaffParticipants getAll(String goId) {
       LOGGER.info("goid: "+goId);
@@ -41,7 +42,7 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
          try {
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
-            query.setParameter(2, 1);
+            query.setParameter(2, ALL_PARTICIPANT_FLAG);
 
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
@@ -66,6 +67,9 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
                   fsp.setHS(String.valueOf(obj[10]));
                   fieldStaffParticipants.getParticipants().add(fsp);
                }
+            } else {
+               fieldStaffParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
             }
             fieldStaffParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -86,11 +90,14 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
          try {
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
-            query.setParameter(2, 0);
+            query.setParameter(2, MY_TEAM_PARTICIPANT_FLAG);
 
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
-            if (result != null) {
+            if (result == null) {
+               fieldStaffParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            } else {
                for (Object[] obj : result) {
                   /*
                    * 1 CCIID 2 firstName 3 IastName 4 Partner 5 countryName 6

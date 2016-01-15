@@ -103,6 +103,9 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                }
                tempGoID = goId;
             }
+         } else {
+            fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
          fieldStaffLCList.setCount(count);
          fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
@@ -111,6 +114,7 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
          fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
          LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
+         e.printStackTrace();
       }
       return fieldStaffLCList;
    }
@@ -168,6 +172,9 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                tempGoID = goId;
             }
 
+         } else {
+            fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
          fieldStaffRMList.setCount(count);
          fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
@@ -176,6 +183,7 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
          fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
          LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
+         e.printStackTrace();
       }
       return fieldStaffRMList;
    }
