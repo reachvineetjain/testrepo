@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FSLNetwork", propOrder = {
-    "fsGoId",
+    "goId",
     "firstName",
     "lastName",
     "state",
@@ -61,7 +61,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class FSLNetwork {
 
-    protected int fsGoId;
+    protected int goId;
     @XmlElement(required = true)
     protected String firstName;
     @XmlElement(required = true)
@@ -88,19 +88,19 @@ public class FSLNetwork {
     protected String seasons;
     
     /**
-     * Gets the value of the fsGoId property.
+     * Gets the value of the goId property.
      * 
      */
-    public int getFsGoId() {
-        return fsGoId;
+    public int getGoId() {
+        return goId;
     }
 
     /**
-     * Sets the value of the fsGoId property.
+     * Sets the value of the goId property.
      * 
      */
-    public void setFsGoId(int value) {
-        this.fsGoId = value;
+    public void setGoId(int value) {
+        this.goId = value;
     }
 
     /**
