@@ -9,7 +9,7 @@ public final class Notifications {
 	public static void broadcastMessage(String message, Collection<Session> sessions) {
 		for (Session s : sessions) {
 			if (s.isOpen()) {
-				s.getAsyncRemote().sendText("$$ Notification from server $$");
+				s.getAsyncRemote().sendText(message);
 			}
 		}
 	}

@@ -67,6 +67,7 @@
             /services/fieldstaff/**=anon
             /services/fsl/details/**=anon
             /services/erddashboard/**=anon
+            /services/push/notification/**=anon
             /services/**=authc
             /notify/**=anon
          </value>
