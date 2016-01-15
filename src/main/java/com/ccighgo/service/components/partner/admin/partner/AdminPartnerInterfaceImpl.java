@@ -246,13 +246,14 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 	public AddedPartners getAddedPartnerList() {
 		AddedPartners addedPartners = new AddedPartners();
 		try {
-			List<Partner> partnerList = partnerRepository.findAll();
-			if (partnerList == null) {
-				throw new CcighgoException("No Partners found.");
-			}
+		   List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findReviewStatusByStatus(11);
+         if (partnerReviewStatusList == null) {
+            throw new CcighgoException("No Active partners found.");
+         }
+         addedPartners.setCount(partnerReviewStatusList.size());
 			List<AddedPartner> addedPartnersList = new ArrayList<AddedPartner>();
-			int count = 0;
-			for (Partner p : partnerList) {
+			for (PartnerReviewStatus prs : partnerReviewStatusList) {
+			   Partner p = partnerRepository.findOne(prs.getPartner().getPartnerGoId());
 				PartnerUser puser = null;
 				List<PartnerUser> partnerUserList = p.getPartnerUsers();
 				if (partnerUserList != null) {
@@ -264,7 +265,6 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 					}
 				}
 				if (puser != null) {
-					count += 1;
 					AddedPartner ap = new AddedPartner();
 					ap.setCompanyName(p.getCompanyName());
 					ap.setGoId(p.getPartnerGoId());
@@ -307,7 +307,6 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 					addedPartnersList.add(ap);
 				}
 			}
-			addedPartners.setCount(count);
 			addedPartners.getAddedPartners().addAll(addedPartnersList);
 			addedPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
 					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
