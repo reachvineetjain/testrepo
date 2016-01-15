@@ -26,7 +26,7 @@
 
    <xsd:complexType name="MyFieldStaff">
       <xsd:sequence>
-         <xsd:element name="fsLcGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -34,7 +34,7 @@
          <xsd:element name="state" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="season" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="program" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="roleType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

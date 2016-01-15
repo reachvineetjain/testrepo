@@ -198,4 +198,9 @@ public class DateUtils {
          }
       return date;
    }
+   
+   public static String getFormattedStringDate(String date){
+      Date dt = getDateFromString(date);
+      return getMMddyyDate(dt);
+   }
 }
