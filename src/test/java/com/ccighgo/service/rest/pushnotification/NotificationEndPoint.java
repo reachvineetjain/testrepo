@@ -29,8 +29,7 @@ public class NotificationEndPoint {
 	@OnMessage
 	public void onMessage(String message, Session session) {
 		System.out.println("NotificationEndPoint :: onMessage ::");
-		System.out.println("Message received from server " + session.getRequestURI().toString() + " = " + message);
-
+		System.out.println("Message received from server = " + message);
 	}
 
 	@OnError
