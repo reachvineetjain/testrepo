@@ -69,8 +69,7 @@
             /services/erddashboard/**=anon
             /services/push/notification/**=anon
             /services/**=authc
-            /notify/**=anon
-         </value>
+          </value>
       </property>
    </bean>
 
