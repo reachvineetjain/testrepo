@@ -40,6 +40,7 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
 
    @Override
    public MyFieldStaffLeadershipList getMyFieldStaffLeadershipList(String fsGoId) {
+      LOGGER.info("fsGoId: " + fsGoId);
       MyFieldStaffLeadershipList myList = new MyFieldStaffLeadershipList();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0 || Integer.valueOf(fsGoId) < 0) {
@@ -56,14 +57,15 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
             //0:goID, 1:firstName, 2:lastname, 3:email,4, current city, 5:state, 6: seasons, 7:role/type
             for (Object[] obj : results) {
                MyFieldStaff staff = new MyFieldStaff();
-               staff.setFsLcGoId(Integer.valueOf(obj[0].toString()));
-               staff.setFirstName(obj[1].toString());
-               staff.setLastName(obj[2].toString());
-               staff.setEmail(obj[3].toString());
-               staff.setCity(obj[4].toString());
-               staff.setState(obj[5].toString());
-               staff.setSeason(obj[6].toString());
-               staff.setRoleType(obj[7].toString());
+               if(obj[0]!=null)
+               staff.setFsLcGoId(Integer.valueOf(String.valueOf(obj[0])));
+               staff.setFirstName(String.valueOf(obj[1]));
+               staff.setLastName(String.valueOf(obj[2]));
+               staff.setEmail(String.valueOf(obj[3]));
+               staff.setCity(String.valueOf(obj[4]));
+               staff.setState(String.valueOf(obj[5]));
+               staff.setSeason(String.valueOf(obj[6]));
+               staff.setRoleType(String.valueOf(obj[7]));
                myFieldStaffs.add(staff);
                count++;
             }
@@ -83,6 +85,7 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
 
    @Override
    public FieldStaffNetworkList getFieldStaffNetworkList(String fsGoId) {
+      LOGGER.info("fsGoId: "+fsGoId);
       FieldStaffNetworkList networkList = new FieldStaffNetworkList();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0 || Integer.valueOf(fsGoId) < 0) {
@@ -99,19 +102,20 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
             int count = 0;
             for (Object[] obj : results) {
                FSLNetwork fslNetwork = new FSLNetwork();
-               fslNetwork.setFsGoId(Integer.valueOf(obj[0].toString()));
-               fslNetwork.setFirstName(obj[1].toString());
-               fslNetwork.setLastName(obj[2].toString());
-               fslNetwork.setCity(obj[3].toString());
-               fslNetwork.setState(obj[4].toString());
-               fslNetwork.setType(obj[5].toString());
-               fslNetwork.setHomePhone(obj[6].toString());
-               fslNetwork.setEmail(obj[7].toString());
-               fslNetwork.setDateOfInquiry(obj[8].toString());
-               fslNetwork.setStatus(obj[9].toString());
-               fslNetwork.setSeasonStatus(obj[10].toString());
-               fslNetwork.setDateSubmittedToCCI(obj[11].toString());
-               fslNetwork.setSeasons(obj[12].toString());
+               if (obj[0] != null)
+                  fslNetwork.setFsGoId(Integer.valueOf(String.valueOf(obj[0])));
+               fslNetwork.setFirstName(String.valueOf(obj[1]));
+               fslNetwork.setLastName(String.valueOf(obj[2]));
+               fslNetwork.setCity(String.valueOf(obj[3]));
+               fslNetwork.setState(String.valueOf(obj[4]));
+               fslNetwork.setType(String.valueOf(obj[5]));
+               fslNetwork.setHomePhone(String.valueOf(obj[6]));
+               fslNetwork.setEmail(String.valueOf(obj[7]));
+               fslNetwork.setDateOfInquiry(String.valueOf(obj[8]));
+               fslNetwork.setStatus(String.valueOf(obj[9]));
+               fslNetwork.setSeasonStatus(String.valueOf(obj[10]));
+               fslNetwork.setDateSubmittedToCCI(String.valueOf(obj[11]));
+               fslNetwork.setSeasons(String.valueOf(obj[12]));
                fslNetworks.add(fslNetwork);
                count++;
             }

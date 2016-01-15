@@ -35,6 +35,7 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
 
    @Override
    public FieldStaffParticipants getAll(String goId) {
+      LOGGER.info("goid: "+goId);
       FieldStaffParticipants fieldStaffParticipants = new FieldStaffParticipants();
       if (goId != null)
          try {
@@ -52,17 +53,17 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
                    * RegionalDirector 11 HostFamily
                    */
                   FieldStaffParticipant fsp = new FieldStaffParticipant();
-                  fsp.setGoId(obj[0].toString());
-                  fsp.setFirstName(obj[1].toString());
-                  fsp.setLastName(obj[2].toString());
-                  fsp.setPartner(obj[3].toString());
-                  fsp.setCountry(obj[4].toString());
-                  fsp.setProgram(obj[5].toString());
-                  fsp.setGender(obj[6].toString());
-                  fsp.setApprovedDate(obj[7].toString());
-                  fsp.setLC(obj[8].toString());
-                  fsp.setRD(obj[9].toString());
-                  fsp.setHS(obj[10].toString());
+                  fsp.setGoId(String.valueOf(obj[0]));
+                  fsp.setFirstName(String.valueOf(obj[1]));
+                  fsp.setLastName(String.valueOf(obj[2]));
+                  fsp.setPartner(String.valueOf(obj[3]));
+                  fsp.setCountry(String.valueOf(obj[4]));
+                  fsp.setProgram(String.valueOf(obj[5]));
+                  fsp.setGender(String.valueOf(obj[6]));
+                  fsp.setApprovedDate(String.valueOf(obj[7]));
+                  fsp.setLC(String.valueOf(obj[8]));
+                  fsp.setRD(String.valueOf(obj[9]));
+                  fsp.setHS(String.valueOf(obj[10]));
                   fieldStaffParticipants.getParticipants().add(fsp);
                }
             }
@@ -79,6 +80,7 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
 
    @Override
    public FieldStaffParticipants getMyTeam(String goId) {
+      LOGGER.info("goid: "+goId);
       FieldStaffParticipants fieldStaffParticipants = new FieldStaffParticipants();
       if (goId != null)
          try {
@@ -97,16 +99,17 @@ public class FieldStaffParticipantImp implements FieldStaffParticipantInterface 
                    */
                   FieldStaffParticipant fsp = new FieldStaffParticipant();
                   fsp.setGoId(obj[0].toString());
-                  fsp.setFirstName(obj[1].toString());
-                  fsp.setLastName(obj[2].toString());
-                  fsp.setPartner(obj[3].toString());
-                  fsp.setCountry(obj[4].toString());
-                  fsp.setProgram(obj[5].toString());
-                  fsp.setGender(obj[6].toString());
-                  fsp.setApprovedDate(obj[7].toString());
-                  fsp.setLC(obj[8].toString());
-                  fsp.setRD(obj[9].toString());
-                  fsp.setHS(obj[10].toString());
+                  fsp.setGoId(String.valueOf(obj[0]));
+                  fsp.setFirstName(String.valueOf(obj[1]));
+                  fsp.setLastName(String.valueOf(obj[2]));
+                  fsp.setPartner(String.valueOf(obj[3]));
+                  fsp.setCountry(String.valueOf(obj[4]));
+                  fsp.setProgram(String.valueOf(obj[5]));
+                  fsp.setGender(String.valueOf(obj[6]));
+                  fsp.setApprovedDate(String.valueOf(obj[7]));
+                  fsp.setLC(String.valueOf(obj[8]));
+                  fsp.setRD(String.valueOf(obj[9]));
+                  fsp.setHS(String.valueOf(obj[10]));
                   fieldStaffParticipants.getParticipants().add(fsp);
                }
             }

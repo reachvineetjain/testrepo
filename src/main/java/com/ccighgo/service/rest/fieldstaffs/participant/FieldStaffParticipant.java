@@ -6,6 +6,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.component.fieldstaffs.participant.FieldStaffParticipantInterface;
@@ -19,28 +21,31 @@ import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffparticipant.Fiel
 @Produces("application/json")
 @Consumes("application/json")
 public class FieldStaffParticipant {
-   
-   @Autowired FieldStaffParticipantInterface fieldStaffParticipantInterface;
-   
+
+   private static final Logger LOGGER = LoggerFactory.getLogger(FieldStaffParticipant.class);
+
+   @Autowired
+   FieldStaffParticipantInterface fieldStaffParticipantInterface;
+
    /**
     * @return FieldStaffParticipants
     */
    @GET
    @Path("/listAll/{fsGoId}")
    @Produces("application/json")
-   public FieldStaffParticipants getAllParticipant(@PathParam("fsGoId")String fsGoId) { 
-      
+   public FieldStaffParticipants getAllParticipant(@PathParam("fsGoId") String fsGoId) {
+      LOGGER.info("calling fieldStaffParticipantInterface.getAll");
       return fieldStaffParticipantInterface.getAll(fsGoId);
    }
-   
+
    /**
     * @return FieldStaffParticipants
     */
    @GET
    @Path("/listMyTeam/{fsGoId}")
    @Produces("application/json")
-   public FieldStaffParticipants getMyTeam(@PathParam("fsGoId") String fsGoId)
-   {
+   public FieldStaffParticipants getMyTeam(@PathParam("fsGoId") String fsGoId) {
+      LOGGER.info("calling fieldStaffParticipantInterface.getMyTeam");
       return fieldStaffParticipantInterface.getMyTeam(fsGoId);
    }
 }
