@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.fieldstaff.details.listing;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -22,6 +23,7 @@ import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.network.details
 import com.ccighgo.service.transport.fieldstaff.beans.myfieldstaff.leadership.details.MyFieldStaff;
 import com.ccighgo.service.transport.fieldstaff.beans.myfieldstaff.leadership.details.MyFieldStaffLeadershipList;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
 
 /**
  * @author ravi
@@ -58,14 +60,14 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
             for (Object[] obj : results) {
                MyFieldStaff staff = new MyFieldStaff();
                if(obj[0]!=null)
-               staff.setFsLcGoId(Integer.valueOf(String.valueOf(obj[0])));
+               staff.setGoId(Integer.valueOf(String.valueOf(obj[0])));
                staff.setFirstName(String.valueOf(obj[1]));
                staff.setLastName(String.valueOf(obj[2]));
                staff.setEmail(String.valueOf(obj[3]));
                staff.setCity(String.valueOf(obj[4]));
                staff.setState(String.valueOf(obj[5]));
                staff.setSeason(String.valueOf(obj[6]));
-               staff.setRoleType(String.valueOf(obj[7]));
+               staff.setType(String.valueOf(obj[7]));
                myFieldStaffs.add(staff);
                count++;
             }
@@ -103,7 +105,7 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
             for (Object[] obj : results) {
                FSLNetwork fslNetwork = new FSLNetwork();
                if (obj[0] != null)
-                  fslNetwork.setFsGoId(Integer.valueOf(String.valueOf(obj[0])));
+                  fslNetwork.setGoId(Integer.valueOf(String.valueOf(obj[0])));
                fslNetwork.setFirstName(String.valueOf(obj[1]));
                fslNetwork.setLastName(String.valueOf(obj[2]));
                fslNetwork.setCity(String.valueOf(obj[3]));
@@ -111,10 +113,10 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
                fslNetwork.setType(String.valueOf(obj[5]));
                fslNetwork.setHomePhone(String.valueOf(obj[6]));
                fslNetwork.setEmail(String.valueOf(obj[7]));
-               fslNetwork.setDateOfInquiry(String.valueOf(obj[8]));
+               fslNetwork.setDateOfInquiry(DateUtils.getFormattedStringDate(String.valueOf(obj[8])));
                fslNetwork.setStatus(String.valueOf(obj[9]));
                fslNetwork.setSeasonStatus(String.valueOf(obj[10]));
-               fslNetwork.setDateSubmittedToCCI(String.valueOf(obj[11]));
+               fslNetwork.setDateSubmittedToCCI(DateUtils.getFormattedStringDate(String.valueOf(obj[11])));
                fslNetwork.setSeasons(String.valueOf(obj[12]));
                fslNetworks.add(fslNetwork);
                count++;
