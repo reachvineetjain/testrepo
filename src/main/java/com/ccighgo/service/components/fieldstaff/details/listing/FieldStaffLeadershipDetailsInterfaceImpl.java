@@ -4,7 +4,6 @@
 package com.ccighgo.service.components.fieldstaff.details.listing;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -39,6 +38,9 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
    private static final Logger LOGGER = Logger.getLogger(FieldStaffLeadershipDetailsInterfaceImpl.class);
 
    private static final String SP_FSL_DETAILS_LIST = "call SPFieldStaffFSLAndNetworkListing(?,?)";
+   private static final String EMPTY = "";
+   private static final Integer FIELD_STAFF_LIST = 0;
+   private static final Integer FIELD_STAFF_NETWORK_LIST = 1;
 
    @Override
    public MyFieldStaffLeadershipList getMyFieldStaffLeadershipList(String fsGoId) {
@@ -46,28 +48,29 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
       MyFieldStaffLeadershipList myList = new MyFieldStaffLeadershipList();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0 || Integer.valueOf(fsGoId) < 0) {
-            throw new CcighgoException("invalid fieldstaff id");
+            throw new CcighgoException("invalid field staff id");
          }
          Query query = entityManager.createNativeQuery(SP_FSL_DETAILS_LIST);
          query.setParameter(1, Integer.valueOf(fsGoId));
-         query.setParameter(2, 0);// 0 for listing
+         query.setParameter(2, FIELD_STAFF_LIST);// 0 for listing
          @SuppressWarnings("unchecked")
          List<Object[]> results = query.getResultList();
          if (results != null && results.size() > 0) {
             List<MyFieldStaff> myFieldStaffs = new ArrayList<MyFieldStaff>();
             int count = 0;
-            //0:goID, 1:firstName, 2:lastname, 3:email,4, current city, 5:state, 6: seasons, 7:role/type
+            // 0:goID, 1:firstName, 2:lastname, 3:email,4, current city,
+            // 5:state, 6: seasons, 7:role/type, 8: programs
             for (Object[] obj : results) {
                MyFieldStaff staff = new MyFieldStaff();
-               if(obj[0]!=null)
-               staff.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-               staff.setFirstName(String.valueOf(obj[1]));
-               staff.setLastName(String.valueOf(obj[2]));
-               staff.setEmail(String.valueOf(obj[3]));
-               staff.setCity(String.valueOf(obj[4]));
-               staff.setState(String.valueOf(obj[5]));
-               staff.setSeason(String.valueOf(obj[6]));
-               staff.setType(String.valueOf(obj[7]));
+               staff.setGoId(obj[0] != null ? Integer.valueOf(obj[0].toString()) : 0);
+               staff.setFirstName(obj[1] != null ? obj[1].toString() : EMPTY);
+               staff.setLastName(obj[2] != null ? obj[2].toString() : EMPTY);
+               staff.setEmail(obj[3] != null ? obj[3].toString() : EMPTY);
+               staff.setCity(obj[4] != null ? obj[4].toString() : EMPTY);
+               staff.setState(obj[5] != null ? obj[5].toString() : EMPTY);
+               staff.setSeason(obj[6] != null ? obj[6].toString() : EMPTY);
+               staff.setType(obj[7] != null ? obj[7].toString() : EMPTY);
+               staff.setProgram(obj[8] != null ? obj[8].toString() : EMPTY);
                myFieldStaffs.add(staff);
                count++;
             }
@@ -95,29 +98,30 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
          }
          Query query = entityManager.createNativeQuery(SP_FSL_DETAILS_LIST);
          query.setParameter(1, Integer.valueOf(fsGoId));
-         query.setParameter(2, 1);// 1 for network
+         query.setParameter(2, FIELD_STAFF_NETWORK_LIST);
          @SuppressWarnings("unchecked")
          List<Object[]> results = query.getResultList();
-         //0:goId, 1:first name, 2:last name, 3:city, 4:state, 5:FS type, 6: home phone, 7:email, 8:date of inquiry, 9:status, 10:season status, 11:submitted to cci, 12: season name
+         // 0:goId, 1:first name, 2:last name, 3:city, 4:state, 5:FS type, 6:
+         // home phone, 7:email, 8:date of inquiry, 9:status, 10:season status,
+         // 11:submitted to cci, 12: season name
          if (results != null && results.size() > 0) {
             List<FSLNetwork> fslNetworks = new ArrayList<FSLNetwork>();
             int count = 0;
             for (Object[] obj : results) {
                FSLNetwork fslNetwork = new FSLNetwork();
-               if (obj[0] != null)
-                  fslNetwork.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-               fslNetwork.setFirstName(String.valueOf(obj[1]));
-               fslNetwork.setLastName(String.valueOf(obj[2]));
-               fslNetwork.setCity(String.valueOf(obj[3]));
-               fslNetwork.setState(String.valueOf(obj[4]));
-               fslNetwork.setType(String.valueOf(obj[5]));
-               fslNetwork.setHomePhone(String.valueOf(obj[6]));
-               fslNetwork.setEmail(String.valueOf(obj[7]));
-               fslNetwork.setDateOfInquiry(DateUtils.getFormattedStringDate(String.valueOf(obj[8])));
-               fslNetwork.setStatus(String.valueOf(obj[9]));
-               fslNetwork.setSeasonStatus(String.valueOf(obj[10]));
-               fslNetwork.setDateSubmittedToCCI(DateUtils.getFormattedStringDate(String.valueOf(obj[11])));
-               fslNetwork.setSeasons(String.valueOf(obj[12]));
+               fslNetwork.setGoId(obj[0] != null ? Integer.valueOf(obj[0].toString()) : 0);
+               fslNetwork.setFirstName(obj[1] != null ? obj[1].toString() : EMPTY);
+               fslNetwork.setLastName(obj[2] != null ? obj[2].toString() : EMPTY);
+               fslNetwork.setCity(obj[3] != null ? obj[3].toString() : EMPTY);
+               fslNetwork.setState(obj[4] != null ? obj[4].toString() : EMPTY);
+               fslNetwork.setType(obj[5] != null ? obj[5].toString() : EMPTY);
+               fslNetwork.setHomePhone(obj[6] != null ? obj[6].toString() : EMPTY);
+               fslNetwork.setEmail(obj[7] != null ? obj[7].toString() : EMPTY);
+               fslNetwork.setDateOfInquiry(obj[8] != null ? DateUtils.getFormattedStringDate(obj[8].toString()) : EMPTY);
+               fslNetwork.setStatus(obj[9] != null ? obj[9].toString() : EMPTY);
+               fslNetwork.setSeasonStatus(obj[10] != null ? obj[10].toString() : EMPTY);
+               fslNetwork.setDateSubmittedToCCI(obj[11] != null ? DateUtils.getFormattedStringDate(obj[11].toString()) : EMPTY);
+               fslNetwork.setSeasons(obj[10] != null ? obj[10].toString() : EMPTY);
                fslNetworks.add(fslNetwork);
                count++;
             }
