@@ -413,8 +413,8 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                         PartnerJ1HSProgram prg = new PartnerJ1HSProgram();
                         prg.setProgramName(partSeason.getSeason().getSeasonJ1details().get(0).getProgramName());
-                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonJ1details().get(0).getFirstSemAppDeadlineDate()));
-                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonJ1details().get(0).getSecondSemAppDeadlineDate()));
+                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonAppDeadlineDate()));
+                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonExtAppDeadlineDate()));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonJ1details().get(0).getSeasonStatus().getStatus());
                         List<PartnerSeasonAllocation> j1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (j1Allocations != null) {
@@ -618,8 +618,8 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                         PartnerF1Program prg = new PartnerF1Program();
                         prg.setProgramName(partSeason.getSeason().getSeasonF1details().get(0).getProgramName());
-                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonF1details().get(0).getFirstSemAppDeadlineDate()));
-                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonF1details().get(0).getSecondSemAppDeadlineDate()));
+                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonAppDeadlineDate()));
+                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonExtAppDeadlineDate()));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonF1details().get(0).getSeasonStatus().getStatus());
                         List<PartnerSeasonAllocation> f1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (f1Allocations != null) {

@@ -24,7 +24,6 @@ import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPar
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
-import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
