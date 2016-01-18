@@ -510,11 +510,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					}
 				}
 			}
+			if(partnerLogin!=null)
+				pwt.setActive(partnerLogin.getActive()!=null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
 			try {
 				PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
 				if (partnerReviewStatus != null) {
-					if (partnerReviewStatus.getPartnerStatus1() != null)
-						pwt.setActive(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName().equalsIgnoreCase("Valid"));
+//					if (partnerReviewStatus.getPartnerStatus1() != null)
+//						pwt.setActive(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName().equalsIgnoreCase("Valid"));
 					if (partnerReviewStatus.getPartnerStatus2() != null)
 						pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
 				}
