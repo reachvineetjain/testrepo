@@ -586,6 +586,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 					partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
 					partnerContact.setIsPrimary((byte) 1);
 					partnerContact.setPartner(subPartnerDetails);
+					partnerContact.setLogin(login);
 					partnerUserRepository.save(partnerContact);
 				}
 			} catch (Exception e) {
