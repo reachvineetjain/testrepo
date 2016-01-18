@@ -11,11 +11,7 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffStatus;
-import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
-import com.ccighgo.db.entities.LoginHistory;
-import com.ccighgo.db.entities.Partner;
-import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
@@ -27,7 +23,6 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
-import com.ccighgo.service.components.partner.admin.PartnerAdminServiceImpl;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffCurrentStatus;
@@ -144,7 +139,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setUserName(login.getLoginName());
          fsd.setOriginalStartDate(DateUtils.getMMddyyDate(fs.getOriginalStartDate()));
          fsd.setTotalPlacementManual(fs.getTotalPlacementsManual());
-         // TODO
          fsd.setTotalPlacementCalculated(0);
          fsd.setTotalPlacement(0);
 
@@ -162,7 +156,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fscs.setFieldStaffStatus(fs.getFieldStaffStatus().getFieldStaffStatusName());
          fscs.setActive(login.getActive() == CCIConstants.ACTIVE);
          fieldStaffOverview.setFieldStaffCurrentStatus(fscs);
-         // TODO
          fieldStaffOverview.setLastLoginDate("");
          fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

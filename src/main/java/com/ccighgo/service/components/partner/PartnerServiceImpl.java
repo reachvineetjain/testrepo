@@ -330,7 +330,9 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerJ1HSCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIJ1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIJ1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " Contact");
-                  cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                   if(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
                   cciContact.setPartnerCCIContactEmail(partnerCCIJ1Contact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
@@ -413,8 +415,8 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                         PartnerJ1HSProgram prg = new PartnerJ1HSProgram();
                         prg.setProgramName(partSeason.getSeason().getSeasonJ1details().get(0).getProgramName());
-                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonJ1details().get(0).getFirstSemAppDeadlineDate()));
-                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonJ1details().get(0).getSecondSemAppDeadlineDate()));
+                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonAppDeadlineDate()));
+                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonExtAppDeadlineDate()));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonJ1details().get(0).getSeasonStatus().getStatus());
                         List<PartnerSeasonAllocation> j1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (j1Allocations != null) {
@@ -535,7 +537,9 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerF1CCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIF1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIF1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " Contact");
-                  cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
                   cciContact.setPartnerCCIContactEmail(partnerCCIF1Contact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
@@ -618,8 +622,8 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                         PartnerF1Program prg = new PartnerF1Program();
                         prg.setProgramName(partSeason.getSeason().getSeasonF1details().get(0).getProgramName());
-                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonF1details().get(0).getFirstSemAppDeadlineDate()));
-                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getSeason().getSeasonF1details().get(0).getSecondSemAppDeadlineDate()));
+                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonAppDeadlineDate()));
+                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonExtAppDeadlineDate()));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonF1details().get(0).getSeasonStatus().getStatus());
                         List<PartnerSeasonAllocation> f1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (f1Allocations != null) {
@@ -716,7 +720,9 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerIHPCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIIHPContact.getCcistaffUser().getFirstName() + " " + partnerCCIIHPContact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " Contact");
-                  cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
                   cciContact.setPartnerCCIContactEmail(partnerCCIIHPContact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://www.ccighgo.com/fieldstaffdashboard" elementFormDefault="unqualified" attributeFormDefault="unqualified"
    jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/fieldstaffdashboard"
    xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
@@ -8,7 +9,11 @@
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
+
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="ErdDashboardCategories" type="pdl:ErdDashboardCategorieDetails" />
+
    <xsd:complexType name="ErdDashboardCategories">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
@@ -18,16 +23,13 @@
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
+
    <xsd:complexType name="ErdDashboardCategorieDetails">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="categorieId" type="xsd:int"/>
-               <xsd:element name="categorie" type="xsd:string" />
-               <xsd:element name="number" type="xsd:string" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
+      <xsd:sequence>
+         <xsd:element name="categorieId" type="xsd:int" />
+         <xsd:element name="categorie" type="xsd:string" />
+         <xsd:element name="number" type="xsd:string" />
+      </xsd:sequence>
    </xsd:complexType>
 </xsd:schema>
   
