@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FieldStaffDashboardInterface;
+import com.ccighgo.service.transport.fieldstaff.beans.erddashboardtitles.ErdDashboardTitles;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardcategories.ErdDashboardCategories;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardtype.ErdDashboardTypes;
 
@@ -40,5 +41,7 @@ public class FieldStaffERDDashboard {
    public ErdDashboardCategories getWorkQueuesCategories(@PathParam("typeId") String typeId) {
       return fieldStaffDashboardInterface.getErdDashboardWorkQueuesCategories(typeId);
    }
+   
+   //public ErdDashboardTitles getWorkQueuesCategories()
 
 }

@@ -8,9 +8,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
 import com.ccighgo.service.transport.fieldstaff.beans.lclist.Contact;
 import com.ccighgo.service.transport.fieldstaff.beans.lclist.FieldStaffLC;
 import com.ccighgo.service.transport.fieldstaff.beans.lclist.FieldStaffLCList;
@@ -18,6 +23,7 @@ import com.ccighgo.service.transport.fieldstaff.beans.lclist.LCSeasonContact;
 import com.ccighgo.service.transport.fieldstaff.beans.rmlist.FieldStaffRM;
 import com.ccighgo.service.transport.fieldstaff.beans.rmlist.FieldStaffRMList;
 import com.ccighgo.service.transport.fieldstaff.beans.rmlist.RMSeasonContact;
+import com.ccighgo.utils.CCIConstants;
 
 /**
  * @author ravi
@@ -26,9 +32,13 @@ import com.ccighgo.service.transport.fieldstaff.beans.rmlist.RMSeasonContact;
 @Component
 public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterface {
 
+   private static final Logger LOGGER = Logger.getLogger(FieldStaffListingInterface.class);
    @Autowired
    EntityManager em;
-
+   @Autowired
+   MessageUtils messageUtil;
+   @Autowired
+   CommonComponentUtils componentUtils;
    private static final String SP_FS_SEARCH_LIST = "CALL SPFieldStaffSearch(?)";
 
    @Override
@@ -55,8 +65,8 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 
                if (tempGoID != goId) {
                   FieldStaffLC fslc = new FieldStaffLC();
-                  if(String.valueOf(obj[0])!=null)
-                  fslc.setFsLcGoId(Integer.valueOf(String.valueOf(obj[0])));
+                  if (String.valueOf(obj[0]) != null)
+                     fslc.setFsLcGoId(Integer.valueOf(String.valueOf(obj[0])));
                   fslc.setFirstName(String.valueOf(obj[1]));
                   fslc.setLastName(String.valueOf(obj[2]));
                   fslc.setPhone(String.valueOf(obj[3]));
@@ -93,9 +103,17 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                }
                tempGoID = goId;
             }
+         } else {
+            fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
          fieldStaffLCList.setCount(count);
+         fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
+         fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
+               messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
+         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
          e.printStackTrace();
       }
       return fieldStaffLCList;
@@ -154,9 +172,17 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                tempGoID = goId;
             }
 
+         } else {
+            fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
          fieldStaffRMList.setCount(count);
+         fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
+         fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
+               messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
+         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
          e.printStackTrace();
       }
       return fieldStaffRMList;
