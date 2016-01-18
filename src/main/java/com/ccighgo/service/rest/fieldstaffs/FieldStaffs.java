@@ -1,14 +1,17 @@
 package com.ccighgo.service.rest.fieldstaffs;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.FieldStaffsInterface;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffapplication.FieldStaffapplication;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuecategory.FieldStaffWorkQueueCategory;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuetype.FieldStaffWorkQueueType;
@@ -19,7 +22,6 @@ import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quicklink
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatscategory.FieldStaffDashboardQuickStatsCategory;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatstitles.FieldStaffDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
 
 /**
  * @author sinshaw.demisse
@@ -30,33 +32,31 @@ import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedappl
 @Produces("application/json")
 @Consumes("application/json")
 public class FieldStaffs {
-   
-   @Autowired
-   FieldStaffsInterface fieldStaffsInterface;
-   
+
+   @Context HttpServletRequest request;
+
+   @Autowired FieldStaffsInterface fieldStaffsInterface;
+
    @GET
    @Path("/getByType/{fieldStaffTypeCode}")
    @Produces("application/json")
-   public AddedFieldStaff getAddedFieldStaffByType(@PathParam("fieldStaffTypeCode")String fieldStaffTypeCode) {
-      
+   public AddedFieldStaff getAddedFieldStaffByType(@PathParam("fieldStaffTypeCode") String fieldStaffTypeCode) {
       return fieldStaffsInterface.getAddedFieldStaffByType(fieldStaffTypeCode);
    }
-   
+
    @GET
    @Path("/detail/{goId}")
    @Produces("application/json")
-   public FieldStaffOverview getFieldStaffDetail(@PathParam("goId")String goId) {
-    
+   public FieldStaffOverview getFieldStaffDetail(@PathParam("goId") String goId) {
       return fieldStaffsInterface.getFieldStaffDetail(Integer.valueOf(goId));
    }
-   
+
    @GET
    @Path("/statuses")
    @Produces("application/json")
-   public FieldStaffStatuses getAllFieldStaffStatuses()
-   {
+   public FieldStaffStatuses getAllFieldStaffStatuses() {
       return fieldStaffsInterface.getAllFieldStaffStatuses();
-      
+
    }
 
    @GET
@@ -100,12 +100,23 @@ public class FieldStaffs {
    public PartnerAdminDashboardBenchmarks getBenchmark() {
       return null;
    }
-   
+
    @GET
    @Path("SubmittedApplications/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
    @Produces("application/json")
    public FieldStaffapplication getSubmittedApplications(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
       return null;
+   }
+
+   /**
+    * @param partnerUserId
+    * @return
+    */
+   @GET
+   @Path("reset/access/{goId}")
+   @Produces("application/json")
+   public Response resetPassword(@PathParam("goId") String goId) {
+      return fieldStaffsInterface.resetPassword(goId, request);
    }
 }

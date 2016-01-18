@@ -23,9 +23,6 @@
                <xsd:element name="cciId" type="xsd:int" />
                <xsd:element name="name" type="xsd:string" />
                <xsd:element name="partner" type="xsd:string" />
-               <xsd:element name="country" type="xsd:string" />
-               <xsd:element name="programs" type="xsd:string" />
-               <xsd:element name="partner" type="xsd:string" />
             </xsd:sequence>
    </xsd:complexType>
 </xsd:schema>

@@ -278,8 +278,25 @@
 	<dependency>
     	<groupId>javax.websocket</groupId>
     	<artifactId>javax.websocket-api</artifactId>
-    	<version>1.0</version>
+    	<version>1.1</version>
+    	<scope>provided</scope>
 	</dependency>
+
+	<!-- Added for Tomcat 7 server, Tomcat 8 don't need this -->
+	<dependency>
+		<groupId>org.apache.tomcat</groupId>
+		<artifactId>tomcat7-websocket</artifactId>
+		<version>7.0.67</version>
+		<scope>provided</scope>
+	</dependency>
+
+
+	<dependency>
+    <groupId>org.glassfish.tyrus.bundles</groupId>
+    <artifactId>tyrus-standalone-client</artifactId>
+    <version>1.12</version>
+    <scope>provided</scope>
+</dependency>
 
  <dependency>
 	<groupId>com.google.code.gson</groupId>

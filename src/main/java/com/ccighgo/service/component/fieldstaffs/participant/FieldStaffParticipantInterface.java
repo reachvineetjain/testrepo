@@ -13,7 +13,7 @@ public interface FieldStaffParticipantInterface {
    /**
     * @return FieldStaffParticipants
     */
-   public FieldStaffParticipants getAll();
+   public FieldStaffParticipants getAll(String goId);
    /**
     * @param goId
     * @return FieldStaffParticipants

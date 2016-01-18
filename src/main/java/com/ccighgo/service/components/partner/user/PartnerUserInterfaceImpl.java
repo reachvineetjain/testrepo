@@ -148,13 +148,17 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 		} else {
 			try {
 				PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
+				Login login = partnerUser.getLogin();
 				if (Integer.valueOf(statusVal) == 1) {
 					partnerUser.setActive(CCIConstants.ACTIVE);
+					login.setActive(CCIConstants.ACTIVE);
 				}
 				if (Integer.valueOf(statusVal) == 0) {
 					partnerUser.setActive(CCIConstants.INACTIVE);
+					login.setActive(CCIConstants.INACTIVE);
 				}
 				partnerUserRepository.saveAndFlush(partnerUser);
+				loginRepository.saveAndFlush(login);
 				response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
 						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 			} catch (CcighgoException e) {

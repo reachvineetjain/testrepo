@@ -24,7 +24,6 @@ import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPar
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
-import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -47,7 +46,7 @@ public class AdminPartner {
    @Path("/add/partner/")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response addPartner(AdminAddPartner partner) {
+   public AdminAddPartner addPartner(AdminAddPartner partner) {
       return adminPartnerInterface.addPartner(partner, request);
    }
 
