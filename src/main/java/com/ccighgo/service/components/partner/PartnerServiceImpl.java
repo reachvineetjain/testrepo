@@ -537,7 +537,9 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerF1CCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIF1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIF1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " Contact");
-                  cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
                   cciContact.setPartnerCCIContactEmail(partnerCCIF1Contact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
@@ -718,7 +720,9 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerIHPCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIIHPContact.getCcistaffUser().getFirstName() + " " + partnerCCIIHPContact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " Contact");
-                  cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
                   cciContact.setPartnerCCIContactEmail(partnerCCIIHPContact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
