@@ -1,36 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://www.ccighgo.com/fieldstaffdashboard" elementFormDefault="unqualified" attributeFormDefault="unqualified"
    jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/fieldstaffdashboard"
    xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardtype" />
+            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.erddashboardpoints" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
 
    <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="ErdDashboardTypes" type="pdl:ErdDashboardTypes" />
+   <xsd:element name="ErdDashboardPoints" type="pdl:ErdDashboardPoints" />
 
-   <xsd:complexType name="ErdDashboardTypes">
+   <xsd:complexType name="ErdDashboardPoints">
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
-               <xsd:element name="types" type="pdl:ErdDashboardTypeDetails" minOccurs="1" maxOccurs="unbounded" />
+               <xsd:element name="points" type="pdl:ErdDashboardPoint" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
 
-   <xsd:complexType name="ErdDashboardTypeDetails">
+   <xsd:complexType name="ErdDashboardPoint">
       <xsd:sequence>
-         <xsd:element name="typeId" type="xsd:int" />
-         <xsd:element name="type" type="xsd:string" />
-         <xsd:element name="number" type="xsd:string" />
+         <xsd:element name="schedule" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="action" type="xsd:string" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
    </xsd:complexType>
-
 </xsd:schema>

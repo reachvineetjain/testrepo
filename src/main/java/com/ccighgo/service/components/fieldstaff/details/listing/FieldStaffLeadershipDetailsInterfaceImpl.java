@@ -44,6 +44,7 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
 
    @Override
    public MyFieldStaffLeadershipList getMyFieldStaffLeadershipList(String fsGoId) {
+      LOGGER.info("fsGoId: " + fsGoId);
       MyFieldStaffLeadershipList myList = new MyFieldStaffLeadershipList();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0 || Integer.valueOf(fsGoId) < 0) {
@@ -89,6 +90,7 @@ public class FieldStaffLeadershipDetailsInterfaceImpl implements FieldStaffLeade
 
    @Override
    public FieldStaffNetworkList getFieldStaffNetworkList(String fsGoId) {
+      LOGGER.info("fsGoId: "+fsGoId);
       FieldStaffNetworkList networkList = new FieldStaffNetworkList();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0 || Integer.valueOf(fsGoId) < 0) {

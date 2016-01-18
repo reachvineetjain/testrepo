@@ -45,6 +45,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
    @Override
    @Transactional(readOnly = true)
    public FieldStaffSeasons getFieldStaffSeasons(String fsGoId) {
+      LOGGER.info("fsGoId " + fsGoId);
       FieldStaffSeasons fsSeasonList = new FieldStaffSeasons();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0) {
