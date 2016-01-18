@@ -330,7 +330,9 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerJ1HSCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIJ1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIJ1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " Contact");
-                  cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null?partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName():"");
+                   if(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
                   cciContact.setPartnerCCIContactEmail(partnerCCIJ1Contact.getCcistaffUser().getGoIdSequence().getLogins().get(0).getEmail());
