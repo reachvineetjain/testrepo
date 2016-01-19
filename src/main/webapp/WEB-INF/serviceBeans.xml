@@ -64,6 +64,7 @@
          <bean id="fieldStaffERDDashboard" class="com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard"/>
          <bean id="fieldStaffMyPlacements" class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements"/>
          <bean id="nonificationServer" class="com.ccighgo.service.rest.pushnotification.NotificationServer" />
+         <bean id="fSDetails" class="com.ccighgo.service.rest.fieldstaff.network.details.FSDetails" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />
