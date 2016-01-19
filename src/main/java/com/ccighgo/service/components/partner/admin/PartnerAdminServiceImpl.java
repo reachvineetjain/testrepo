@@ -455,7 +455,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 						}
 					}
 				}
-				if(partnerLogin!=null && detail.getUsername()!=null)
+				if (partnerLogin != null && detail.getUsername() != null)
 					partnerLogin.setLoginName(detail.getUsername());
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, logger);
@@ -492,7 +492,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 		try {
 			pwt.setGoId(goId);
 			Partner partner = partnerRepository.findOne(goId);
-			
+
 			List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(goId);
 			if (partner == null) {
 				pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL.getValue(),
@@ -510,13 +510,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					}
 				}
 			}
-			if(partnerLogin!=null)
-				pwt.setActive(partnerLogin.getActive()!=null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
+			if (partnerLogin != null)
+				pwt.setActive(partnerLogin.getActive() != null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
 			try {
 				PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
 				if (partnerReviewStatus != null) {
-//					if (partnerReviewStatus.getPartnerStatus1() != null)
-//						pwt.setActive(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName().equalsIgnoreCase("Valid"));
+					// if (partnerReviewStatus.getPartnerStatus1() != null)
+					// pwt.setActive(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName().equalsIgnoreCase("Valid"));
 					if (partnerReviewStatus.getPartnerStatus2() != null)
 						pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
 				}
@@ -539,10 +539,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					if (partnerPrograms != null)
 						for (PartnerProgram partnerProgram : partnerPrograms) {
 							CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
-							cciContact.setUserName(partnerProgram.getCcistaffUser().getFirstName());
-							if (partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null && !partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().isEmpty())
-								cciContact.setRole(partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-							cciContact.setImageUrl(partnerProgram.getCcistaffUser().getPhoto());
+							if (partnerProgram.getCcistaffUser() != null) {
+								cciContact.setUserName(partnerProgram.getCcistaffUser().getFirstName());
+								if (partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null && !partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().isEmpty())
+									cciContact.setRole(partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+								cciContact.setImageUrl(partnerProgram.getCcistaffUser().getPhoto());
+							}
 							partnerRecruitmentAdminScreeningDetail.setCciContact(cciContact);
 							break;
 						}
@@ -550,8 +552,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					ExceptionUtil.logException(e, logger);
 				}
 				partnerRecruitmentAdminScreeningDetail.setLogo(partner.getPartnerLogo());
-				if(partnerLogin!=null)
-				partnerRecruitmentAdminScreeningDetail.setUsername(partnerLogin.getLoginName());
+				if (partnerLogin != null)
+					partnerRecruitmentAdminScreeningDetail.setUsername(partnerLogin.getLoginName());
 				pwt.setDetail(partnerRecruitmentAdminScreeningDetail);
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, logger);
