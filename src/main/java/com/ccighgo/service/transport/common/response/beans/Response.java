@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.utility.beans.payment.schedule.PaymentScheduleList;
+import com.ccighgo.service.transport.fieldstaff.beans.placement.erdplacement.ERDPlacements;
 
 
 /**
@@ -42,7 +42,7 @@ import com.ccighgo.service.transport.utility.beans.payment.schedule.PaymentSched
     "status"
 })
 @XmlSeeAlso({
-    PaymentScheduleList.class
+    ERDPlacements.class
 })
 public class Response {
 

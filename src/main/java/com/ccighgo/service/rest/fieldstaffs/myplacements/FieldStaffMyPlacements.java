@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.service.components.fieldstaffs.myplacements.FieldStaffMyPlacementsInterface;
+import com.ccighgo.service.components.fieldstaffs.placements.FieldStaffMyPlacementsInterface;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.myplacement.MyPlacements;
 
 /**

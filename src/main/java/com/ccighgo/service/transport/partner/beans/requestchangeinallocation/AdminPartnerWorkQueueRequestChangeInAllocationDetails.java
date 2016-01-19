@@ -8,10 +8,13 @@
 
 package com.ccighgo.service.transport.partner.beans.requestchangeinallocation;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.ccighgo.service.transport.common.response.beans.Response;
 
 
@@ -720,13 +723,13 @@ public class AdminPartnerWorkQueueRequestChangeInAllocationDetails
     /**
      * Sets the value of the followUpDate property.
      * 
-     * @param value
+     * @param string
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setFollowUpDate(String value) {
-        this.followUpDate = value;
+    public void setFollowUpDate(String string) {
+        this.followUpDate = string;
     }
 
     /**
