@@ -78,6 +78,9 @@ public class AdminPartnerRecruitmentScreeningDetail {
     protected CCIInquiryFormPerson cciContact;
     @XmlElement(required = true)
     protected String billingNotes;
+    
+    @XmlElement(required = true)
+    protected String acronym;
 
     /**
      * Gets the value of the rating property.
@@ -319,4 +322,13 @@ public class AdminPartnerRecruitmentScreeningDetail {
         this.billingNotes = value;
     }
 
+	public String getAcronym() {
+		return acronym;
+	}
+
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
+	}
+
+    
 }

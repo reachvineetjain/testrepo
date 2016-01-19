@@ -445,7 +445,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				partner.setInvoiceMail(detail.getInvoiceEmail());
 				partner.setMultiCountrySender((byte) (detail.isMultiCountrySender() ? 1 : 0));
 				partner.setQuickbooksCode(detail.getQuickbooksCode());
-
+				partner.setAcronym(detail.getAcronym());
 				Login partnerLogin = null;
 				for (Login login : partner.getGoIdSequence().getLogins()) {
 					for (PartnerUser partUser : login.getPartnerUsers()) {
