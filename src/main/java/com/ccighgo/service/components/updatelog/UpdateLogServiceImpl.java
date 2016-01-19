@@ -73,6 +73,7 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
             for (com.ccighgo.db.entities.SeasonDepartmentUpdateLog seasonDepartmentUpdateLog2 : seasonDepartmentUpdateLog) {
                SeasonDepartmentUpdateLog sdl = new SeasonDepartmentUpdateLog();
                UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(seasonDepartmentUpdateLog2.getModifiedBy());
+               if(userInformation!=null)
                sdl.setModifiedBy(userInformation.getUserName());
                sdl.setModifiedOn(DateUtils.getTimeStamp(seasonDepartmentUpdateLog2.getModifiedOn()));
                sdl.setSeasonId(seasonDepartmentUpdateLog2.getSeason().getSeasonId());
