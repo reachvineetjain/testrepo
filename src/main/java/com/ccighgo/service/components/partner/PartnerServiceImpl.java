@@ -516,9 +516,8 @@ public class PartnerServiceImpl implements PartnerService {
                f1Dashboard.setPartnerLogo(partner.getPartnerLogo());
 
                // announcements
-               List<PartnerF1Announcement> partnerF1Announcements = null;
+                List<PartnerF1Announcement> partnerF1Announcements = new ArrayList<PartnerF1Announcement>();
                if (partner.getPartnerAnnouncements() != null && !(partner.getPartnerAnnouncements().isEmpty())) {
-                  partnerF1Announcements = new ArrayList<PartnerF1Announcement>();
                   for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
                      if (ann.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                         PartnerF1Announcement f1Ann = new PartnerF1Announcement();
@@ -699,9 +698,8 @@ public class PartnerServiceImpl implements PartnerService {
                ihpDashboard.setPartnerCompany(partner.getCompanyName());
                ihpDashboard.setPartnerLogo(partner.getPartnerLogo());
                // announcements
-               List<PartnerIHPAnnouncement> partnerIHPAnnouncements = null;
+               List<PartnerIHPAnnouncement> partnerIHPAnnouncements = new ArrayList<PartnerIHPAnnouncement>();
                if (partner.getPartnerAnnouncements() != null && !(partner.getPartnerAnnouncements().isEmpty())) {
-                  partnerIHPAnnouncements = new ArrayList<PartnerIHPAnnouncement>();
                   for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
                      if (ann.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
                         PartnerIHPAnnouncement f1Ann = new PartnerIHPAnnouncement();
