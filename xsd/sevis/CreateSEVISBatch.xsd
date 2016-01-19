@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/sevisbatch" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:sb="http://www.ccighgo.com/sevisbatch"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="com.ccighgo.service.transport.sevis" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+	<xsd:element name="CreateSEVISBatch" type="sb:CreateSEVISBatch" />
+
+	<xsd:complexType name="CreateSEVISBatch">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="batchType" type="sb:BatchType" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="userId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="seasonId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerGoId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="participant" minOccurs="1" maxOccurs="unbounded">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="participantGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="BatchType">
+		<xsd:restriction base="xsd:string">
+		
+			<!-- New Student -->
+			<xsd:enumeration value="Create.Student" />
+
+			<!-- Validation Housing -->
+			<!-- There is no such event. possibilities: ??? -->
+			<xsd:enumeration value="Update.EV.Validate.usAddress" />
+
+			<!-- Validation Site Of Activity -->
+			<!-- There is no validate event for SOA. SOA is EV specific. Available SOA update events are - Add, Delete, Edit -->
+			<!-- What's SOA validation ??? -->
+
+			<!-- Payment -->
+			<!-- There is no payment event, ??? -->
+
+			<!-- Bio -->
+			<xsd:enumeration value="Update.EV.Biographical" />
+
+			<!-- Update Housing -->
+			<!-- Two possibilities : ??? -->
+			<xsd:enumeration value="Update.EV.Biographical.usAddress" />
+			<xsd:enumeration value="Update.Student.PersonalInfo.usAddress" />
+
+			<!-- Update - Site of Activity -->
+			<xsd:enumeration value="Update.EV.SiteOfActivity.Edit" />
+
+			<!-- Program Date -->
+			<!-- ??? -->
+
+			<!-- Program Extension -->
+			<xsd:enumeration value="Update.EV.Program.Extension" />
+			<xsd:enumeration value="Update.Student.Program.Extension" />
+
+			<!-- Program Shorten -->
+			<xsd:enumeration value="Update.EV.Program.Shorten" />
+			<xsd:enumeration value="Update.Student.Program.Shorten" />
+
+			<!-- Reprint -->
+			<xsd:enumeration value="Update.EV.Reprint" />
+			<xsd:enumeration value="Update.EV.Dependent.Reprint" />
+			<xsd:enumeration value="Update.Student.Reprint" />
+			<xsd:enumeration value="Update.Student.Dependent.Reprint" />
+
+			<!-- Status End -->
+			<xsd:enumeration value="Update.EV.Dependent.EndStatus" />
+			<!-- What about this student event : ??? -->
+			<xsd:enumeration value="Update.Student.Status.Complete" />
+
+			<!-- Status Invalid -->
+			<xsd:enumeration value="Update.EV.Status.Invalid" />
+
+			<!-- Status Terminate -->
+			<xsd:enumeration value="Update.EV.Status.Terminate" />
+			<xsd:enumeration value="Update.Student.Status.Terminate" />
+
+			<!-- Update - Edit Subject -->
+			<xsd:enumeration value="Update.EV.Program.EditSubject" />
+
+			<!-- Financial Info -->
+			<xsd:enumeration value="Update.EV.FinancialInfo" />
+			<xsd:enumeration value="Update.Student.FinancialInfo" />
+
+			<!-- T/IIP -->
+			<xsd:enumeration value="Update.EV.TIPP" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+
+</xsd:schema>
+
