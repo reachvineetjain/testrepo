@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.network.FieldStaffNetwork;
+import com.ccighgo.service.transport.fieldstaff.beans.placement.erdplacement.ERDPlacements;
 
 
 /**
@@ -42,7 +42,7 @@ import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.network.FieldSt
     "status"
 })
 @XmlSeeAlso({
-    FieldStaffNetwork.class
+    ERDPlacements.class
 })
 public class Response {
 
