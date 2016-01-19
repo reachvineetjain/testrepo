@@ -54,6 +54,8 @@
 	               <xsd:element name="multiCountrySender" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="cciContact" type="adminViewForPartnerInquiryData:CCIInquiryFormPerson" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="billingNotes" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="acronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               
 	             </xsd:sequence>
 	   </xsd:complexType>
 	   
