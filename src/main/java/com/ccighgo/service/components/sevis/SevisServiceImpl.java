@@ -3,12 +3,12 @@ package com.ccighgo.service.components.sevis;
 import java.io.File;
 
 import javax.servlet.ServletContext;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
-import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -30,48 +30,48 @@ public class SevisServiceImpl implements SevisService {
 	@Autowired
 	MessageUtils messageUtil;
 
-	@Override
-	public Response createBatch(CreateSEVISBatch batchParam, ServletContext servletContext) {
-		SEVISBatchDetails batchDetails = new SEVISBatchDetails();
-
-		boolean invalidArgs = batchParam == null || servletContext == null;
-		if (invalidArgs) {
-			return createInvalidArgsResponse();
-		}
-
-		SevisBatchType batchType = SevisBatchType.fromValue(batchParam.getBatchType());
-		if (batchType == null) {
-			String msg = "Sevis batch type is not defined for " + batchParam.getBatchType()
-					+ " in SevisBatchType enum.";
-			Status status = componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-					SevisBatchErrorCode.POST_PARAM_NA.getValue(), msg);
-			batchDetails.setStatus(status);
-
-			return batchDetails;
-		}
-
-		try {
-			SEVISBatchCreateUpdateStudent jaxbObject = batchType.fetchBatchData(batchParam);
-
-			String fileName = jaxbObject.getBatchHeader().getBatchID() + ".xml";
-			String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
-
-			String schemaFile = servletContext.getRealPath(batchType.getSchemaFile());
-			SevisUtils.generateXMLBatchFile(jaxbObject, xmlFile, schemaFile);
-
-			batchDetails.setBatchId(jaxbObject.getBatchHeader().getBatchID());
-			batchDetails.setParticipantCount(getParticipantsCount(jaxbObject, batchType));
-
-			Status status = createSuccessStatus();
-			batchDetails.setStatus(status);
-
-		} catch (CcighgoException e) {
-			Status status = createFailureStatus();
-			batchDetails.setStatus(status);
-		}
-
-		return batchDetails;
-	}
+//	@Override
+//	public Response createBatch(CreateSEVISBatch batchParam, ServletContext servletContext) {
+//		SEVISBatchDetails batchDetails = new SEVISBatchDetails();
+//
+//		boolean invalidArgs = batchParam == null || servletContext == null;
+//		if (invalidArgs) {
+//			return createInvalidArgsResponse();
+//		}
+//
+//		SevisBatchType batchType = SevisBatchType.fromValue(batchParam.getBatchType());
+//		if (batchType == null) {
+//			String msg = "Sevis batch type is not defined for " + batchParam.getBatchType()
+//					+ " in SevisBatchType enum.";
+//			Status status = componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+//					SevisBatchErrorCode.POST_PARAM_NA.getValue(), msg);
+//			batchDetails.setStatus(status);
+//
+//			return batchDetails;
+//		}
+//
+//		try {
+//			SEVISBatchCreateUpdateStudent jaxbObject = batchType.fetchBatchData(batchParam);
+//
+//			String fileName = jaxbObject.getBatchHeader().getBatchID() + ".xml";
+//			String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
+//
+//			String schemaFile = servletContext.getRealPath(batchType.getSchemaFile());
+//			SevisUtils.generateXMLBatchFile(jaxbObject, xmlFile, schemaFile);
+//
+//			batchDetails.setBatchId(jaxbObject.getBatchHeader().getBatchID());
+//			batchDetails.setParticipantCount(getParticipantsCount(jaxbObject, batchType));
+//
+//			Status status = createSuccessStatus();
+//			batchDetails.setStatus(status);
+//
+//		} catch (CcighgoException e) {
+//			Status status = createFailureStatus();
+//			batchDetails.setStatus(status);
+//		}
+//
+//		return batchDetails;
+//	}
 
 	private Status createFailureStatus() {
 		Status status = componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
@@ -141,7 +141,9 @@ public class SevisServiceImpl implements SevisService {
 		System.out.println("Data fetch time = " + sw.getTotalTimeSeconds());
 
 		String fileName = jaxb.getBatchHeader().getBatchID() + ".xml";
-		String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
+//		String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
+//		String xmlDir = SevisUtils.getProperty(SevisConstants.XML_DIR);
+//		String xmlFile = xmlDir + File.separator + fileName; // test
 
 		System.out.println("schema file = " + dataService.getSchemaFile());
 		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
@@ -150,7 +152,8 @@ public class SevisServiceImpl implements SevisService {
 
 		StopWatch sw1 = new StopWatch();
 		sw1.start();
-		SevisUtils.generateXMLBatchFile(jaxb, xmlFile, schemaFile);
+//		SevisUtils.generateXMLBatchFile(jaxb, xmlFile, schemaFile);
+		SevisUtils.generateBatchFile(jaxb, batchFileRealPath(fileName, servletContext), schemaFile);
 		sw1.stop();
 		System.out.println("Batch file time = " + sw1.getTotalTimeSeconds());
 
@@ -160,6 +163,12 @@ public class SevisServiceImpl implements SevisService {
 		batchDetails.setStatus(status);
 
 		return batchDetails;
+	}
+	
+	private String batchFileRealPath(String file, ServletContext servletContext) {
+		String xmlDir = SevisUtils.getProperty(SevisConstants.XML_DIR);
+		String xmlFile = xmlDir + File.separator + file;
+		return servletContext.getRealPath(xmlFile);
 	}
 
 	@Override
@@ -212,14 +221,19 @@ public class SevisServiceImpl implements SevisService {
 			return createInvalidArgsResponse();
 		}
 
+		/*
+		 * get batch data
+		 */
 		SEVISBatchCreateUpdateEV jaxb = dataService.fetchBatchData(batchParam);
 
-		// SEVISBatchDetails batchDetails = new SEVISBatchDetails();
 		String fileName = jaxb.getBatchHeader().getBatchID() + ".xml";
-		String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
-
+		String outputFile = batchFileRealPath(fileName, servletContext);
 		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
-		SevisUtils.generateXMLBatchFile(jaxb, xmlFile, schemaFile);
+		
+		/*
+		 * generate batch file
+		 */
+		boolean success = SevisUtils.generateBatchFile(jaxb, outputFile, schemaFile);
 
 		SEVISBatchDetails batchDetails = createBatchDetailsFrom(jaxb, "update");
 		batchDetails.setStatus(createSuccessStatus());
@@ -279,10 +293,11 @@ public class SevisServiceImpl implements SevisService {
 
 		// SEVISBatchDetails batchDetails = new SEVISBatchDetails();
 		String fileName = jaxb.getBatchHeader().getBatchID() + ".xml";
-		String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
+//		String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
 
 		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
-		SevisUtils.generateXMLBatchFile(jaxb, xmlFile, schemaFile);
+//		SevisUtils.generateXMLBatchFile(jaxb, xmlFile, schemaFile);
+		SevisUtils.generateBatchFile(jaxb, batchFileRealPath(fileName, servletContext), schemaFile);
 
 		SEVISBatchDetails batchDetails = createBatchDetailsFrom(jaxb, "update");
 
@@ -379,6 +394,20 @@ public class SevisServiceImpl implements SevisService {
 				UpdateStudentProgramShortenBatchDataService.class);
 		SEVISBatchDetails batchDetails = updateStudentBatch(batchParam, dataService, servletContext);
 		return batchDetails;
+	}
+
+	@Override
+	public javax.ws.rs.core.Response downloadBatchFile(String file, ServletContext servletContext) {
+		String path = batchFileRealPath(file, servletContext);
+		File f = new File(path);
+		if (f.exists()) {
+			ResponseBuilder response = javax.ws.rs.core.Response.ok((Object) f);
+			response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
+			return response.build();
+		} else {
+			String msg = "<msg>" + file + " not found." + "</msg>";
+			return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.NOT_FOUND).entity(msg).build();
+		}
 	}
 
 }

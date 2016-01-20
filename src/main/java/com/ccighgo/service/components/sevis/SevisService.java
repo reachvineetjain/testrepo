@@ -17,7 +17,7 @@ public interface SevisService {
 		return ApplicationContextProvider.getContext().getBean(klass);
 	}
 
-	public Response createBatch(CreateSEVISBatch batchParam, ServletContext context);
+//	public Response createBatch(CreateSEVISBatch batchParam, ServletContext context);
 
 	public Response processSevisLog(File xmlFile);
 
@@ -167,5 +167,7 @@ public interface SevisService {
 	 * @return
 	 */
 	public Response updateStudentProgramShorten(CreateSEVISBatch batchParam, ServletContext servletContext);
+	
+	public javax.ws.rs.core.Response downloadBatchFile(String file, ServletContext servletContext);
 
 }

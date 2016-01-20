@@ -5,6 +5,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
@@ -24,12 +25,12 @@ public class SevisBatch {
 	@Context
 	ServletContext servletContext;
 
-	@POST
-	@Path("create/batch")
-	@Produces("application/json")
-	public Response createStudentBatch(CreateSEVISBatch batchData) {
-		return sevisBatchService.createBatch(batchData, servletContext);
-	}
+//	@POST
+//	@Path("create/batch")
+//	@Produces("application/json")
+//	public Response createStudentBatch(CreateSEVISBatch batchData) {
+//		return sevisBatchService.createBatch(batchData, servletContext);
+//	}
 
 	@GET
 	@Path("process/log")
@@ -158,12 +159,19 @@ public class SevisBatch {
 
 	}
 
-	// @GET
-	// @Path("ping")
-	// @Produces("application/json")
-	// public Response ping() {
-	// System.out.println(msgUtils.getMessage("S0010"));
-	// return new Response();
-	// }
+	@GET
+	@Path("ping")
+	@Produces("application/json")
+	public Response ping() {
+		return new Response();
+	}
+	
+	@GET
+	@Path("download/batch/{file}")
+	@Produces("application/xml")
+	public javax.ws.rs.core.Response download(@PathParam("file") String file) {
+		file = "AAAAAAAAAAAAFL.xml"; // test
+		return sevisBatchService.downloadBatchFile(file, servletContext);
+	}
 
 }
