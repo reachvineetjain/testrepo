@@ -41,4 +41,6 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_CREATING_PARTNER_OFFICE = "exception.creating.partner.office";
    public static final String EXCEPTION_GETTING_PARTNER_OFFICE = "exception.getting.partner.office";
 public static final String EXCEPTION_UPDATEING_PARTNER_SEASON = "exception.update.partner.season";
+public static final String EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL = "exception.fetching.fs.pending.approval.applications";
+public static final String NO_DATA_FOR_THAT_USER_ID = "no.data.for.goId";
 }

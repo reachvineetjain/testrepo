@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.fieldstaffs.FieldStaffsInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffapplication.FieldStaffapplication;
-import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuecategory.FieldStaffWorkQueueCategory;
-import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffworkqueuetype.FieldStaffWorkQueueType;
+import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
@@ -67,20 +66,6 @@ public class FieldStaffs {
    }
 
    @GET
-   @Path("workQueueType/{roleType}")
-   @Produces("application/json")
-   public FieldStaffWorkQueueType getWorkQueueType(@PathParam("roleType") String roleType) {
-      return null;
-   }
-
-   @GET
-   @Path("workQueueCategory/{adminWorkQueueTypeId}")
-   @Produces("application/json")
-   public FieldStaffWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId) {
-      return null;
-   }
-
-   @GET
    @Path("quicklinks")
    @Produces("application/json")
    public FieldStaffDashboardQuickLinks getQuickLinks() {
@@ -108,6 +93,15 @@ public class FieldStaffs {
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
       return null;
    }
+   @GET
+   @Path("PendingApplication/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
+   @Produces("application/json")
+   public PendingApplication getFSPendingApplication(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
+         @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
+      return fieldStaffsInterface.getFSPendingApplication(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType) ;
+   }
+   
+   
 
    /**
     * @param partnerUserId

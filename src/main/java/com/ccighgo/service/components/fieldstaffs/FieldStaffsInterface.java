@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.FSPendingApplication;
+import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
@@ -42,4 +44,6 @@ public interface FieldStaffsInterface {
     * @return
     */
    public Response resetPassword(String goId, HttpServletRequest request);
+
+public PendingApplication getFSPendingApplication(int parseInt, int parseInt2, int parseInt3, String roleType);
 }

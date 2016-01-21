@@ -535,6 +535,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				if (partner.getMultiCountrySender() != null)
 					partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partner.getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
 				partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partner.getQuickbooksCode());
+				partnerRecruitmentAdminScreeningDetail.setAcronym(partner.getAcronym());
 				try {
 					if (partnerPrograms != null)
 						for (PartnerProgram partnerProgram : partnerPrograms) {
@@ -1366,13 +1367,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
 			PartnerUser pc = new PartnerUser();
 			Login login = loginRepository.findOne(contactsDetails.getLoginId());
+			if(login==null){
+				pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_LOGIN_DATA.getValue(),
+						messageUtil.getMessage(PartnerAdminMessageConstants.NO_DATA_FOR_THAT_USER_ID)));
+ 				return pContacts;
+			}
+			if(contactsDetails.getEmail()!=null)
 			login.setEmail(contactsDetails.getEmail());
 			pc.setLogin(login);
 			pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
+			if(contactsDetails.getEmergencyPhone()!=null)
 			pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+			if(contactsDetails.getFax()!=null)
 			pc.setFax(contactsDetails.getFax());
+			if(contactsDetails.getFirstName()!=null)
 			pc.setFirstName(contactsDetails.getFirstName());
 			pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
+			if(contactsDetails.getLastName()!=null)
 			pc.setLastName(contactsDetails.getLastName());
 			Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
 			pc.setPartner(partner);

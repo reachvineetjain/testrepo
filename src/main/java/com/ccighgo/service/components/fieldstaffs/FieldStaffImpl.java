@@ -2,6 +2,8 @@ package com.ccighgo.service.components.fieldstaffs;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -12,6 +14,7 @@ import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffStatus;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
@@ -23,14 +26,20 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.FSPendingApplication;
+import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffCurrentStatus;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffDetail;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.reuse.function.ReusedFunctions;
 import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 
@@ -49,6 +58,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @Autowired LoginHistoryRepository loginHistoryRepository;
    @Autowired EmailServiceImpl emailingService;
 
+	@PersistenceContext
+	EntityManager em;
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
       try {
@@ -223,5 +234,56 @@ public class FieldStaffImpl implements FieldStaffsInterface {
       }
       return url;
    }
+
+@Override
+public PendingApplication getFSPendingApplication(int typeId, int categoryId, int staffUserId, String roleType) {
+	PendingApplication pwqa = new PendingApplication();
+	try {
+		@SuppressWarnings("unchecked")
+		List<Object[]> result = em.createNativeQuery("call SPAdminWQFieldStaffPendingApproval(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+				.setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
+		if (result != null) {
+			if(!result.isEmpty()){
+			for (Object[] wq : result) {
+				FSPendingApplication pd = new FSPendingApplication();
+				pd.setFieldStaffGoId(Integer.parseInt(String.valueOf(wq[0])));
+				pd.setFirstName(String.valueOf(wq[1]));
+				pd.setLastName(String.valueOf(wq[2]));
+				pd.setRole(String.valueOf(wq[3]));
+				pd.setStatusName(String.valueOf(wq[4]));
+				if (wq[5] != null) {
+					String submittedOn = String.valueOf(wq[5]);
+					pd.setSubmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(submittedOn)));
+				}
+				pd.setPhone(String.valueOf(wq[6]));
+				pd.setEmail(String.valueOf(wq[7]));
+				pd.setCity(String.valueOf(wq[8]));
+				pd.setState(String.valueOf(wq[9]));
+				pd.setZipcode(String.valueOf(wq[10]));
+				if (wq[11] != null) {
+					String followUpdate = String.valueOf(wq[11]);
+					pd.setFollowupDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(followUpdate)));
+				}
+				
+				pwqa.getFieldStaffPendingApplications().add(pd);
+			}
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}else{
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}
+		} else {
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+	} catch (Exception e) {
+		ExceptionUtil.logException(e, LOGGER);
+		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL)));
+		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL));
+	}
+	return pwqa;
+}
 
 }
