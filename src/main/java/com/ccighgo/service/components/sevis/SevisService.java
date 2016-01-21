@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.component.serviceutils.ApplicationContextProvider;
 import com.ccighgo.service.transport.common.response.beans.Response;
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 
 @Service
 public interface SevisService {
@@ -30,7 +30,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response createStudentBatch(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response createStudentBatch(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Edit exchange visitor biographical information.
@@ -42,7 +42,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVBiographical(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVBiographical(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Edit existing site of activity. Update.EV.SiteOfActivity.Edit
@@ -53,15 +53,15 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVSOAEdit(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVSOAEdit(BatchParam batchParam, ServletContext servletContext);
 
-	public Response updateEVStatusInvalid(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVStatusInvalid(BatchParam batchParam, ServletContext servletContext);
 
-	public Response updateEVDependentEndStatus(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVDependentEndStatus(BatchParam batchParam, ServletContext servletContext);
 
-	public Response updateEVStatusTerminate(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVStatusTerminate(BatchParam batchParam, ServletContext servletContext);
 
-	public Response updateStudentStatusTerminate(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateStudentStatusTerminate(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Edit EV's subject or field of study.
@@ -72,7 +72,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVProgramEditSubject(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVProgramEditSubject(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Update EV financial information
@@ -81,9 +81,9 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVFinancialInfo(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVFinancialInfo(BatchParam batchParam, ServletContext servletContext);
 
-	public Response updateEVTIPP(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVTIPP(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Reprint EV Form DS-2019
@@ -92,7 +92,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVReprint(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVReprint(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Reprint EV.Dependent DS-2019
@@ -101,7 +101,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVDependentReprint(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVDependentReprint(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Reprint Student I-20
@@ -110,7 +110,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateStudentReprint(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateStudentReprint(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Reprint Student.Dependent I-20
@@ -119,7 +119,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateStudentDependentReprint(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateStudentDependentReprint(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * EV Program Extension within maximum duration of stay.
@@ -131,7 +131,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVProgramExtension(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVProgramExtension(BatchParam batchParam, ServletContext servletContext);
 
 	/***
 	 * Shorten EV program.
@@ -142,7 +142,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateEVProgramShorten(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateEVProgramShorten(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Extend Student Program.
@@ -154,7 +154,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateStudentProgramExtension(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateStudentProgramExtension(BatchParam batchParam, ServletContext servletContext);
 
 	/**
 	 * Shorten Student program.
@@ -166,7 +166,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response updateStudentProgramShorten(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response updateStudentProgramShorten(BatchParam batchParam, ServletContext servletContext);
 	
 	public javax.ws.rs.core.Response downloadBatchFile(String file, ServletContext servletContext);
 

@@ -11,9 +11,9 @@
 	</xsd:annotation>
 	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-	<xsd:element name="CreateSEVISBatch" type="sb:CreateSEVISBatch" />
+	<xsd:element name="BatchParam" type="sb:BatchParam" />
 
-	<xsd:complexType name="CreateSEVISBatch">
+	<xsd:complexType name="BatchParam">
 		<xsd:complexContent>
 			<xsd:extension base="common:Response">
 				<xsd:sequence>

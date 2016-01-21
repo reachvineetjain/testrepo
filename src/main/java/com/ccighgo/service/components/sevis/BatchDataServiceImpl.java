@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.alpha.common.BatchHeaderType;
 import gov.ice.xmlschema.sevisbatch.alpha.common.ForeignAddrType;
@@ -43,7 +43,7 @@ public class BatchDataServiceImpl implements BatchDataService {
 	ParticipantRepository participantRepository;
 
 	@Override
-	public SEVISBatchCreateUpdateStudent getCreateStudentsBatchData(CreateSEVISBatch batchParam) {
+	public SEVISBatchCreateUpdateStudent getCreateStudentsBatchData(BatchParam batchParam) {
 
 		SEVISBatchCreateUpdateStudent batch = new SEVISBatchCreateUpdateStudent();
 		batch.setUserID(batchParam.getUserId());
@@ -163,7 +163,7 @@ public class BatchDataServiceImpl implements BatchDataService {
 	}
 
 	@Override
-	public SEVISBatchCreateUpdateEV getUpdateEVBiographicalBatchData(CreateSEVISBatch param) {
+	public SEVISBatchCreateUpdateEV getUpdateEVBiographicalBatchData(BatchParam param) {
 		// TODO Auto-generated method stub
 
 		SEVISBatchCreateUpdateEV batch = new SEVISBatchCreateUpdateEV();

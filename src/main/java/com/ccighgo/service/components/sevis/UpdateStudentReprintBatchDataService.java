@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.student.ReprintType;
 import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
@@ -22,7 +22,7 @@ public class UpdateStudentReprintBatchDataService implements IStudentBatchDataSe
 	ParticipantRepository participantRepository;
 
 	@Override
-	public SEVISBatchCreateUpdateStudent fetchBatchData(CreateSEVISBatch batchParam) {
+	public SEVISBatchCreateUpdateStudent fetchBatchData(BatchParam batchParam) {
 
 		// get EVs from DB
 		// @formatter:off

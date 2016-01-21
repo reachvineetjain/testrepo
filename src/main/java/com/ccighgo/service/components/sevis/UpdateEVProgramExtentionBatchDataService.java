@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
@@ -26,7 +26,7 @@ public class UpdateEVProgramExtentionBatchDataService implements IEVBatchDataSer
 	ParticipantRepository participantRepository;
 
 	@Override
-	public SEVISBatchCreateUpdateEV fetchBatchData(CreateSEVISBatch batchParam) {
+	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
 		// get EVs from DB
 		// @formatter:off
 		List<Integer> participantIds = batchParam.getParticipant()

@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 import com.google.common.base.Preconditions;
 
 import gov.ice.xmlschema.sevisbatch.alpha.common.BatchHeaderType;
@@ -15,7 +15,7 @@ import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.Ex
 
 @Service
 public interface IEVBatchDataService
-		extends IBatchDataService<SEVISBatchCreateUpdateEV, CreateSEVISBatch>, IBatchSchema {
+		extends IBatchDataService<SEVISBatchCreateUpdateEV, BatchParam>, IBatchSchema {
 
 	default String getSchemaFile() {
 		String schemaDir = SevisUtils.getProperty(SevisConstants.SCHEMA_DIR);

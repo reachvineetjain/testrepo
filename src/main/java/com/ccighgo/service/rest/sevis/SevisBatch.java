@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.sevis.SevisService;
 import com.ccighgo.service.transport.common.response.beans.Response;
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 
 @Path("/sevis/")
 @Produces("application/json")
@@ -28,7 +28,7 @@ public class SevisBatch {
 //	@POST
 //	@Path("create/batch")
 //	@Produces("application/json")
-//	public Response createStudentBatch(CreateSEVISBatch batchData) {
+//	public Response createStudentBatch(BatchParam batchData) {
 //		return sevisBatchService.createBatch(batchData, servletContext);
 //	}
 
@@ -43,7 +43,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/student")
 	@Produces("application/json")
-	public Response createStudent(CreateSEVISBatch batchParam) {
+	public Response createStudent(BatchParam batchParam) {
 		System.out.println("Service ...");
 		return sevisBatchService.createStudentBatch(batchParam, servletContext);
 	}
@@ -51,14 +51,14 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/bio")
 	@Produces("application/json")
-	public Response updateEVBio(CreateSEVISBatch batchParam) {
+	public Response updateEVBio(BatchParam batchParam) {
 		return sevisBatchService.updateEVBiographical(batchParam, servletContext);
 	}
 
 	@POST
 	@Path("create/batch/update/status/invalid")
 	@Produces("application/json")
-	public Response updateStatusInvalid(CreateSEVISBatch batchParam) {
+	public Response updateStatusInvalid(BatchParam batchParam) {
 		// Status Invalid
 		// Update.EV.Status.Invalid
 		return sevisBatchService.updateEVStatusInvalid(batchParam, servletContext);
@@ -67,7 +67,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/status/terminate")
 	@Produces("application/json")
-	public Response updateStatusTerminate(CreateSEVISBatch batchParam) {
+	public Response updateStatusTerminate(BatchParam batchParam) {
 		// Status Terminate
 		// Update.EV.Status.Terminate
 		// Update.Student.Status.Terminate
@@ -77,7 +77,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/editSubject")
 	@Produces("application/json")
-	public Response updateEditSubject(CreateSEVISBatch batchParam) {
+	public Response updateEditSubject(BatchParam batchParam) {
 		// Update - EditSubject
 		// Event - Update.EV.Program.EditSubject
 		return sevisBatchService.updateEVProgramEditSubject(batchParam, servletContext);
@@ -86,7 +86,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/financialInfo")
 	@Produces("application/json")
-	public Response updateFinancialInfo(CreateSEVISBatch batchParam) {
+	public Response updateFinancialInfo(BatchParam batchParam) {
 		// Financial Info
 		// Update.EV.FinancialInfo
 		// Update.Student.FinancialInfo
@@ -96,7 +96,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/tipp")
 	@Produces("application/json")
-	public Response updateTIPP(CreateSEVISBatch batchParam) {
+	public Response updateTIPP(BatchParam batchParam) {
 		// T/IPP
 		// Update.EV.TIPP
 		return sevisBatchService.updateEVTIPP(batchParam, servletContext);
@@ -105,7 +105,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/reprint")
 	@Produces("application/json")
-	public Response updateReprint(CreateSEVISBatch batchParam) {
+	public Response updateReprint(BatchParam batchParam) {
 		// Reprint
 		// Update.EV.Reprint
 		// Update.EV.Dependent.Reprint
@@ -123,7 +123,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/program/extension")
 	@Produces("application/json")
-	public Response updateProgramExtension(CreateSEVISBatch batchParam) {
+	public Response updateProgramExtension(BatchParam batchParam) {
 		// Program Extension
 		// Update.EV.Program.Extension
 		// Update.Student.Program.Extension
@@ -137,7 +137,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/program/shorten")
 	@Produces("application/json")
-	public Response updateProgramShorten(CreateSEVISBatch batchParam) {
+	public Response updateProgramShorten(BatchParam batchParam) {
 		// Program Shorten
 
 		// Update.EV.Program.Shorten
@@ -152,7 +152,7 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/update/soa")
 	@Produces("application/json")
-	public Response updateSOA(CreateSEVISBatch batchParam) {
+	public Response updateSOA(BatchParam batchParam) {
 		// Update - Site of Activity
 		// Update.EV.SiteOfActivity.Edit
 		return sevisBatchService.updateEVSOAEdit(batchParam, servletContext);

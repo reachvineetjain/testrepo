@@ -15,7 +15,7 @@ import com.ccighgo.service.rest.sevis.SevisBatch;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.common.response.beans.Status;
 import com.ccighgo.service.transport.sevis.BatchDetails;
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 import com.ccighgo.utils.CCIConstants;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
@@ -66,117 +66,117 @@ public class SevisServiceImpl implements SevisService {
 	}
 	
 	@Override
-	public Response createStudentBatch(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response createStudentBatch(BatchParam batchParam, ServletContext servletContext) {
 		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
 		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVBiographical(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVBiographical(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVBioBatchDataService dataService = getServiceBean(UpdateEVBioBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVStatusInvalid(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVStatusInvalid(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVStatusInvalidBatchDataService dataService = getServiceBean(UpdateEVStatusInvalidBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVDependentEndStatus(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVDependentEndStatus(BatchParam batchParam, ServletContext servletContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Response updateEVStatusTerminate(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVStatusTerminate(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVStatusTerminateBatchDataService dataService = getServiceBean(
 				UpdateEVStatusTerminateBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVSOAEdit(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVSOAEdit(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVSOAEditBatchDataService dataService = getServiceBean(
 				UpdateEVSOAEditBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateStudentStatusTerminate(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateStudentStatusTerminate(BatchParam batchParam, ServletContext servletContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Response updateEVProgramEditSubject(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVProgramEditSubject(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVProgramEditSubjectBatchDataService dataService = getServiceBean(
 				UpdateEVProgramEditSubjectBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVFinancialInfo(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVFinancialInfo(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVFinancialInfoBatchDataService dataService = getServiceBean(UpdateEVFinancialInfoBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVTIPP(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVTIPP(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVTIPPBatchDataService dataService = getServiceBean(UpdateEVTIPPBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVReprint(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVReprintBatchDataService dataService = getServiceBean(UpdateEVReprintBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVDependentReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVDependentReprint(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVDependentReprintBatchDataService dataService = getServiceBean(
 				UpdateEVDependentReprintBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateStudentReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateStudentReprint(BatchParam batchParam, ServletContext servletContext) {
 		UpdateStudentReprintBatchDataService dataService = getServiceBean(UpdateStudentReprintBatchDataService.class);
 		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateStudentDependentReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateStudentDependentReprint(BatchParam batchParam, ServletContext servletContext) {
 		UpdateStudentDependentReprintBatchDataService dataService = getServiceBean(
 				UpdateStudentDependentReprintBatchDataService.class);
 		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVProgramExtension(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVProgramExtension(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVProgramExtentionBatchDataService dataService = getServiceBean(
 				UpdateEVProgramExtentionBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateEVProgramShorten(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateEVProgramShorten(BatchParam batchParam, ServletContext servletContext) {
 		UpdateEVProgramShortenBatchDataService dataService = getServiceBean(
 				UpdateEVProgramShortenBatchDataService.class);
 		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateStudentProgramExtension(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateStudentProgramExtension(BatchParam batchParam, ServletContext servletContext) {
 		UpdateStudentProgramExtentionBatchDataService dataService = getServiceBean(
 				UpdateStudentProgramExtentionBatchDataService.class);
 		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
-	public Response updateStudentProgramShorten(CreateSEVISBatch batchParam, ServletContext servletContext) {
+	public Response updateStudentProgramShorten(BatchParam batchParam, ServletContext servletContext) {
 		UpdateStudentProgramShortenBatchDataService dataService = getServiceBean(
 				UpdateStudentProgramShortenBatchDataService.class);
 		return createStudentBatch(batchParam, dataService, servletContext);
@@ -196,7 +196,7 @@ public class SevisServiceImpl implements SevisService {
 		}
 	}
 	
-	private Response createEVBatch(CreateSEVISBatch batchParam, IEVBatchDataService dataService,
+	private Response createEVBatch(BatchParam batchParam, IEVBatchDataService dataService,
 			ServletContext servletContext) {
 
 		boolean invalidArgs = batchParam == null || dataService == null || servletContext == null;
@@ -234,7 +234,7 @@ public class SevisServiceImpl implements SevisService {
 		return batchDetails;
 	}
 
-	private Response createStudentBatch(CreateSEVISBatch batchParam, IStudentBatchDataService dataService,
+	private Response createStudentBatch(BatchParam batchParam, IStudentBatchDataService dataService,
 			ServletContext servletContext) {
 		boolean invalidArgs = batchParam == null || dataService == null || servletContext == null;
 		if (invalidArgs) {

@@ -8,8 +8,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.service.transport.sevis.BatchParam;
 import com.ccighgo.service.transport.sevis.BatchType;
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
@@ -27,7 +27,7 @@ public enum SevisBatchType implements SevisBatchSchema,SevisBatchDataProvider {
 		@SuppressWarnings("unchecked")
 		@Override
 		public SEVISBatchCreateUpdateStudent fetchBatchData(Object params) {
-			return dataService.getCreateStudentsBatchData((CreateSEVISBatch) params);
+			return dataService.getCreateStudentsBatchData((BatchParam) params);
 		}
 
 		@Override
@@ -50,7 +50,7 @@ public enum SevisBatchType implements SevisBatchSchema,SevisBatchDataProvider {
 		@SuppressWarnings("unchecked")
 		@Override
 		public SEVISBatchCreateUpdateEV fetchBatchData(Object params) {
-			return dataService.getUpdateEVBiographicalBatchData((CreateSEVISBatch) params);
+			return dataService.getUpdateEVBiographicalBatchData((BatchParam) params);
 		}
 
 	};

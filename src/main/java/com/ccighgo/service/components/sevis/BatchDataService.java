@@ -2,7 +2,7 @@ package com.ccighgo.service.components.sevis;
 
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
+import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
@@ -15,7 +15,7 @@ import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
 @Service
 public interface BatchDataService {
 
-	public SEVISBatchCreateUpdateStudent getCreateStudentsBatchData(CreateSEVISBatch batchParam);
-	public SEVISBatchCreateUpdateEV getUpdateEVBiographicalBatchData(CreateSEVISBatch batchParam);
+	public SEVISBatchCreateUpdateStudent getCreateStudentsBatchData(BatchParam batchParam);
+	public SEVISBatchCreateUpdateEV getUpdateEVBiographicalBatchData(BatchParam batchParam);
 
 }
