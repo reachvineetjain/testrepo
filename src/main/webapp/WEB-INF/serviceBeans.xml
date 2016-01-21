@@ -65,6 +65,7 @@
          <bean id="fieldStaffMyPlacements" class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements"/>
          <bean id="nonificationServer" class="com.ccighgo.service.rest.pushnotification.NotificationServer" />
          <bean id="sevisBatch" class="com.ccighgo.service.rest.sevis.SevisBatch" />
+         <bean id="fSDetails" class="com.ccighgo.service.rest.fieldstaff.network.details.FSDetails" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />
