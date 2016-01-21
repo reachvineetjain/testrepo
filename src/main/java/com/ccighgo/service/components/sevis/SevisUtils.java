@@ -3,6 +3,7 @@ package com.ccighgo.service.components.sevis;
 import java.io.File;
 import java.io.StringWriter;
 import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
@@ -68,6 +69,12 @@ public final class SevisUtils {
 		// TODO generate ID
 		String batchId = "AAAAAAAAAAAA" + fNameInitial + lNameInitial;
 		return batchId;
+	}
+	
+	public static String createBatchId() {
+		Instant timestamp = Instant.now();
+        String str = timestamp.toString().replace("-", "").replace("T", "").replace(":", "");
+        return str.substring(0, str.lastIndexOf("."));
 	}
 
 	// public static String generateXMLBatchFile(Object jaxbObj, String

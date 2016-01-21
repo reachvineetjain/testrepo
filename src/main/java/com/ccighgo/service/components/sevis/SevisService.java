@@ -168,6 +168,6 @@ public interface SevisService {
 	 */
 	public Response updateStudentProgramShorten(BatchParam batchParam, ServletContext servletContext);
 	
-	public javax.ws.rs.core.Response downloadBatchFile(String file, ServletContext servletContext);
+	public File getBatchFile(String file, ServletContext servletContext);
 
 }

@@ -19,9 +19,13 @@ import com.ccighgo.service.transport.sevis.BatchParam;
 import com.ccighgo.utils.CCIConstants;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.CreateEV;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV;
 import gov.ice.xmlschema.sevisbatch.log.TransactionLogType;
 import gov.ice.xmlschema.sevisbatch.log.TransactionLogType.BatchDetail.Process.Record;
 import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
+import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.CreateStudent;
+import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent;
 
 @Component
 public class SevisServiceImpl implements SevisService {
@@ -183,17 +187,9 @@ public class SevisServiceImpl implements SevisService {
 	}
 
 	@Override
-	public javax.ws.rs.core.Response downloadBatchFile(String file, ServletContext servletContext) {
+	public File getBatchFile(String file, ServletContext servletContext) {
 		String path = batchFileRealPath(file, servletContext);
-		File f = new File(path);
-		if (f.exists()) {
-			ResponseBuilder response = javax.ws.rs.core.Response.ok((Object) f);
-			response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
-			return response.build();
-		} else {
-			String msg = "<msg>" + file + " not found." + "</msg>";
-			return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.NOT_FOUND).entity(msg).build();
-		}
+		return new File(path);
 	}
 	
 	private Response createEVBatch(BatchParam batchParam, IEVBatchDataService dataService,
@@ -217,12 +213,8 @@ public class SevisServiceImpl implements SevisService {
 		 * generate batch file
 		 */
 		boolean success = SevisUtils.generateBatchFile(jaxb, outputFile, schemaFile);
-		BatchDetails batchDetails = new BatchDetails();
-		batchDetails.setBatchId(jaxb.getBatchHeader().getBatchID());
-		int createCount = jaxb.getCreateEV() != null && jaxb.getCreateEV().getExchangeVisitor() != null ? jaxb.getCreateEV().getExchangeVisitor().size() : 0;
-		int updateCount = jaxb.getCreateEV() != null && jaxb.getCreateEV().getExchangeVisitor() != null ? jaxb.getCreateEV().getExchangeVisitor().size() : 0;
-		batchDetails.setCreateCount(createCount);
-		batchDetails.setUpdateCount(updateCount);
+		
+		BatchDetails batchDetails = createEVBatchDetails(jaxb);
 		
 		if (success) {
 			batchDetails.setFileUrl(SevisBatch.BATCH_DOWNLOAD_LINK + file);
@@ -234,8 +226,21 @@ public class SevisServiceImpl implements SevisService {
 		return batchDetails;
 	}
 
+	private BatchDetails createEVBatchDetails(SEVISBatchCreateUpdateEV jaxb) {
+		BatchDetails batchDetails = new BatchDetails();
+		batchDetails.setBatchId(jaxb.getBatchHeader().getBatchID());
+		CreateEV createEV = jaxb.getCreateEV();
+		UpdateEV updateEV = jaxb.getUpdateEV();
+		int createCount = createEV != null && createEV.getExchangeVisitor() != null ? createEV.getExchangeVisitor().size() : 0;
+		int updateCount = updateEV != null && updateEV.getExchangeVisitor() != null ? updateEV.getExchangeVisitor().size() : 0;
+		batchDetails.setCreateCount(createCount);
+		batchDetails.setUpdateCount(updateCount);
+		return batchDetails;
+	}
+
 	private Response createStudentBatch(BatchParam batchParam, IStudentBatchDataService dataService,
 			ServletContext servletContext) {
+		
 		boolean invalidArgs = batchParam == null || dataService == null || servletContext == null;
 		if (invalidArgs) {
 			return createInvalidArgsResponse();
@@ -257,12 +262,7 @@ public class SevisServiceImpl implements SevisService {
 		sw1.stop();
 		System.out.println("Batch file time = " + sw1.getTotalTimeSeconds());
 
-		BatchDetails batchDetails = new BatchDetails();
-		batchDetails.setBatchId(jaxb.getBatchHeader().getBatchID());
-		int createCount = jaxb.getCreateStudent() != null && jaxb.getCreateStudent().getStudent() != null ? jaxb.getCreateStudent().getStudent().size() : 0;
-		int updateCount = jaxb.getUpdateStudent() != null && jaxb.getUpdateStudent().getStudent() != null ? jaxb.getUpdateStudent().getStudent().size() : 0;
-		batchDetails.setCreateCount(createCount);
-		batchDetails.setUpdateCount(updateCount);
+		BatchDetails batchDetails = createStudentBatchDetails(jaxb);
 		if (success) {
 			batchDetails.setFileUrl(SevisBatch.BATCH_DOWNLOAD_LINK + file);
 			batchDetails.setStatus(createSuccessStatus());
@@ -270,6 +270,18 @@ public class SevisServiceImpl implements SevisService {
 			batchDetails.setStatus(createFailureStatus());
 		}
 
+		return batchDetails;
+	}
+
+	private BatchDetails createStudentBatchDetails(SEVISBatchCreateUpdateStudent jaxb) {
+		BatchDetails batchDetails = new BatchDetails();
+		batchDetails.setBatchId(jaxb.getBatchHeader().getBatchID());
+		CreateStudent createStudent = jaxb.getCreateStudent();
+		int createCount = createStudent != null && createStudent.getStudent() != null ? createStudent.getStudent().size() : 0;
+		UpdateStudent updateStudent = jaxb.getUpdateStudent();
+		int updateCount = updateStudent != null && updateStudent.getStudent() != null ? updateStudent.getStudent().size() : 0;
+		batchDetails.setCreateCount(createCount);
+		batchDetails.setUpdateCount(updateCount);
 		return batchDetails;
 	}
 	

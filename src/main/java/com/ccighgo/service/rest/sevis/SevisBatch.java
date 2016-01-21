@@ -1,5 +1,7 @@
 package com.ccighgo.service.rest.sevis;
 
+import java.io.File;
+
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -8,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -172,8 +175,15 @@ public class SevisBatch {
 	@Path("download/batch/{file}")
 	@Produces("application/xml")
 	public javax.ws.rs.core.Response download(@PathParam("file") String file) {
-//		file = "AAAAAAAAAAAAFL.xml"; // test
-		return sevisBatchService.downloadBatchFile(file, servletContext);
+		File f = sevisBatchService.getBatchFile(file, servletContext);
+		if (f.exists()) {
+			ResponseBuilder response = javax.ws.rs.core.Response.ok((Object) f);
+			response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
+			return response.build();
+		} else {
+			String msg = "<msg>" + file + " not found." + "</msg>";
+			return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.NOT_FOUND).entity(msg).build();
+		}
 	}
 
 }

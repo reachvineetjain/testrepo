@@ -46,7 +46,8 @@ public class CreateStudentBatchDataService implements IStudentBatchDataService {
 		// generate new batch ID
 		// TODO may be a DB sequence to generate 12 digit number
 		// data length = 14
-		headerType.setBatchID(SevisUtils.generateBatchId("fName", "lName"));
+//		headerType.setBatchID(SevisUtils.generateBatchId("fName", "lName"));
+		headerType.setBatchID(SevisUtils.createBatchId());
 
 		// school code
 		headerType.setOrgID("P-1-12345");
