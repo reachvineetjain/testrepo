@@ -1394,5 +1394,34 @@
 			<arg value="${xsd.dir}/Fieldstaff/admin/AdminFieldStaffHostFamilies_13.xsd" />
 		</java>
 	</target>
+	<!-- FS  -->
+	<target name="FS_AllHostFamily">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_AllHostFamily_7.xsd" />
+			</java>
+		</target>
+	<target name="FS_MyHostFamily">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_MyHostFamily_7.xsd" />
+			</java>
+		</target>
+	<target name="FS_AddedSchools">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_AddedSchools_8.xsd" />
+			</java>
+		</target>
+	<target name="FS_AddNewSchool">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_AddNewSchool_8.xsd" />
+			</java>
+		</target>
 
 </project>
