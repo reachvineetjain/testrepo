@@ -512,7 +512,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             Login login = new Login();
             login.setActive(CCIConstants.ACTIVE);
             GoIdSequence goIdSequence = new GoIdSequence();
-            goIdSequence = goIdSequenceRepository.saveAndFlush(goIdSequence);
+            goIdSequence.setGoId(Integer.valueOf(partnerGoId));
             login.setGoIdSequence(goIdSequence);
             login.setLoginName(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString());
             login.setKeyValue(UuidUtils.nextHexUUID());
@@ -539,7 +539,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             loginUserTypeRepository.saveAndFlush(loginUserType);
 
             Partner newPartner = new Partner();
-            newPartner.setPartnerGoId(goIdSequence.getGoId());
+            newPartner.setPartnerGoId(Integer.valueOf(partnerGoId));
             newPartner.setPartnerLogo(p.getLogo());
             newPartner.setCompanyName(p.getBusinessName());
             newPartner.setEmail(p.getEmail());
