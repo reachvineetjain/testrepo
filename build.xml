@@ -13,7 +13,7 @@
 		LeadPartners,PartnerStatusAsPattern,FieldStaffLCList,FieldStaffRMList,FieldStaffSeasons,FieldSatffOverview, AddedFieldStaff,GenericFieldStaffNoteTopic,FieldStaffApplication,
 		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus,
         FieldStaffParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,ErdDashboardType,ErdDashboardCategories,MyPlacements,ErdDashboardTitle,ErdDashboardPoints,MyFieldStaffLeadership,
-	    AdminERDPlacement,ERDPlacementFieldStaffNetwork,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList" />
+	    AdminERDPlacement,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList" />
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
 
