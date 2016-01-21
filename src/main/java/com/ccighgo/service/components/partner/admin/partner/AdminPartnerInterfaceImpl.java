@@ -497,11 +497,14 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    }
 
    @Override
-   public Response partnerLeadSendLogin(String partnerGoId, String loginVal, HttpServletRequest request) {
+   public Response partnerLeadSendLogin(String partnerGoId, String loginVal,String loginId, HttpServletRequest request) {
       Response resp = new Response();
       try {
          if (loginVal == null) {
             throw new CcighgoException("send login value is required");
+         }
+         if(loginId==null){
+            throw new CcighgoException("login id is required");
          }
          PartnerAgentInquiry p = partnerAgentInquiryRepository.findPartnerByGoId(Integer.valueOf(partnerGoId));
          if(p!=null){
@@ -515,9 +518,9 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             login.setKeyValue(UuidUtils.nextHexUUID());
             login.setEmail(p.getEmail());
             login.setPassword(PasswordUtil.hashKey(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString()));
-            login.setCreatedBy(18);//TODO
+            login.setCreatedBy(Integer.valueOf(loginId));
             login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            login.setModifiedBy(18);
+            login.setModifiedBy(Integer.valueOf(loginId));
             login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             login = loginRepository.saveAndFlush(login);
 
@@ -558,9 +561,9 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             newPartner.setParticipantELTISRequired(CCIConstants.INACTIVE);
             newPartner.setLookupCountry1(countryRepository.findOne(p.getLookupCountry().getCountryId()));
             newPartner.setLookupCountry2(countryRepository.findOne(p.getLookupCountry().getCountryId()));
-            newPartner.setCreatedBy(18);//TODO
+            newPartner.setCreatedBy(Integer.valueOf(loginId));
             newPartner.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            newPartner.setModifiedBy(18);
+            newPartner.setModifiedBy(Integer.valueOf(loginId));
             newPartner.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             newPartner = partnerRepository.saveAndFlush(newPartner);
 
