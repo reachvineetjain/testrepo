@@ -25,6 +25,7 @@
                <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photoPath" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="isSubpartner" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="canHaveSubpartners" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="partnerPrograms" type="pdl:PartnerProgram" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="userProgramsAndPermissions" type="pdl:Programs" minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
