@@ -30,7 +30,7 @@ public interface SevisService {
 	 * @param servletContext
 	 * @return
 	 */
-	public Response createStudent(CreateSEVISBatch batchParam, ServletContext servletContext);
+	public Response createStudentBatch(CreateSEVISBatch batchParam, ServletContext servletContext);
 
 	/**
 	 * Edit exchange visitor biographical information.

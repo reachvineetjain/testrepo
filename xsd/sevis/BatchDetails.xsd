@@ -11,9 +11,9 @@
 	</xsd:annotation>
 	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-	<xsd:element name="SEVISBatchDetails" type="sb:SEVISBatchDetails" />
+	<xsd:element name="BatchDetails" type="sb:BatchDetails" />
 
-	<xsd:complexType name="SEVISBatchDetails">
+	<xsd:complexType name="BatchDetails">
 		<xsd:complexContent>
 			<xsd:extension base="common:Response">
 				<xsd:sequence>
@@ -24,8 +24,10 @@
 					<xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="exportedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="importedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="participantCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="createCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="updateCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="program" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="fileUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

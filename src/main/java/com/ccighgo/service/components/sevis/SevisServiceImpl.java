@@ -11,10 +11,11 @@ import org.springframework.util.StopWatch;
 
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.rest.sevis.SevisBatch;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.common.response.beans.Status;
+import com.ccighgo.service.transport.sevis.BatchDetails;
 import com.ccighgo.service.transport.sevis.CreateSEVISBatch;
-import com.ccighgo.service.transport.sevis.SEVISBatchDetails;
 import com.ccighgo.utils.CCIConstants;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
@@ -29,49 +30,6 @@ public class SevisServiceImpl implements SevisService {
 	CommonComponentUtils componentUtils;
 	@Autowired
 	MessageUtils messageUtil;
-
-//	@Override
-//	public Response createBatch(CreateSEVISBatch batchParam, ServletContext servletContext) {
-//		SEVISBatchDetails batchDetails = new SEVISBatchDetails();
-//
-//		boolean invalidArgs = batchParam == null || servletContext == null;
-//		if (invalidArgs) {
-//			return createInvalidArgsResponse();
-//		}
-//
-//		SevisBatchType batchType = SevisBatchType.fromValue(batchParam.getBatchType());
-//		if (batchType == null) {
-//			String msg = "Sevis batch type is not defined for " + batchParam.getBatchType()
-//					+ " in SevisBatchType enum.";
-//			Status status = componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-//					SevisBatchErrorCode.POST_PARAM_NA.getValue(), msg);
-//			batchDetails.setStatus(status);
-//
-//			return batchDetails;
-//		}
-//
-//		try {
-//			SEVISBatchCreateUpdateStudent jaxbObject = batchType.fetchBatchData(batchParam);
-//
-//			String fileName = jaxbObject.getBatchHeader().getBatchID() + ".xml";
-//			String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
-//
-//			String schemaFile = servletContext.getRealPath(batchType.getSchemaFile());
-//			SevisUtils.generateXMLBatchFile(jaxbObject, xmlFile, schemaFile);
-//
-//			batchDetails.setBatchId(jaxbObject.getBatchHeader().getBatchID());
-//			batchDetails.setParticipantCount(getParticipantsCount(jaxbObject, batchType));
-//
-//			Status status = createSuccessStatus();
-//			batchDetails.setStatus(status);
-//
-//		} catch (CcighgoException e) {
-//			Status status = createFailureStatus();
-//			batchDetails.setStatus(status);
-//		}
-//
-//		return batchDetails;
-//	}
 
 	private Status createFailureStatus() {
 		Status status = componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
@@ -106,85 +64,23 @@ public class SevisServiceImpl implements SevisService {
 
 		return new Response();
 	}
-
-	private static int getParticipantsCount(Object obj, SevisBatchType batchType) {
-		if (obj instanceof SEVISBatchCreateUpdateStudent) {
-			SEVISBatchCreateUpdateStudent stu = (SEVISBatchCreateUpdateStudent) obj;
-			if (batchType == SevisBatchType.CREATE_STUDENT) {
-				return stu.getCreateStudent().getStudent().size();
-			} else {
-				return stu.getUpdateStudent().getStudent().size();
-			}
-		} else if (obj instanceof SEVISBatchCreateUpdateEV) {
-			SEVISBatchCreateUpdateEV ev = (SEVISBatchCreateUpdateEV) obj;
-			// if (batchType == SevisBatchType.CREATE_EV) {
-			// return ev.getCreateEV().getExchangeVisitor().size();
-			// } else {
-			return ev.getUpdateEV().getExchangeVisitor().size();
-			// }
-		} else {
-			throw new IllegalArgumentException(obj.getClass().getName());
-		}
-	}
-
-	@Override
-	public Response createStudent(CreateSEVISBatch batchParam, ServletContext servletContext) {
-//		System.out.println("SevisServiceImpl ...");
-		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
-
-//		System.out.println("data service = " + dataService);
-
-		StopWatch sw = new StopWatch();
-		sw.start();
-		SEVISBatchCreateUpdateStudent jaxb = dataService.fetchBatchData(batchParam);
-		sw.stop();
-		System.out.println("Data fetch time = " + sw.getTotalTimeSeconds());
-
-		String fileName = jaxb.getBatchHeader().getBatchID() + ".xml";
-//		String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
-//		String xmlDir = SevisUtils.getProperty(SevisConstants.XML_DIR);
-//		String xmlFile = xmlDir + File.separator + fileName; // test
-
-		System.out.println("schema file = " + dataService.getSchemaFile());
-		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
-
-		System.out.println("schemaFile = " + schemaFile);
-
-		StopWatch sw1 = new StopWatch();
-		sw1.start();
-//		SevisUtils.generateXMLBatchFile(jaxb, xmlFile, schemaFile);
-		SevisUtils.generateBatchFile(jaxb, batchFileRealPath(fileName, servletContext), schemaFile);
-		sw1.stop();
-		System.out.println("Batch file time = " + sw1.getTotalTimeSeconds());
-
-		SEVISBatchDetails batchDetails = createBatchDetailsFrom(jaxb, "create");
-
-		Status status = createSuccessStatus();
-		batchDetails.setStatus(status);
-
-		return batchDetails;
-	}
 	
-	private String batchFileRealPath(String file, ServletContext servletContext) {
-		String xmlDir = SevisUtils.getProperty(SevisConstants.XML_DIR);
-		String xmlFile = xmlDir + File.separator + file;
-		return servletContext.getRealPath(xmlFile);
+	@Override
+	public Response createStudentBatch(CreateSEVISBatch batchParam, ServletContext servletContext) {
+		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
+		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVBiographical(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVBioBatchDataService dataService = getServiceBean(UpdateEVBioBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVStatusInvalid(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVStatusInvalidBatchDataService dataService = getServiceBean(UpdateEVStatusInvalidBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
@@ -197,14 +93,14 @@ public class SevisServiceImpl implements SevisService {
 	public Response updateEVStatusTerminate(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVStatusTerminateBatchDataService dataService = getServiceBean(
 				UpdateEVStatusTerminateBatchDataService.class);
-		return updateEVBatch(batchParam, dataService, servletContext);
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVSOAEdit(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVSOAEditBatchDataService dataService = getServiceBean(
 				UpdateEVSOAEditBatchDataService.class);
-		return updateEVBatch(batchParam, dataService, servletContext);
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
@@ -213,187 +109,77 @@ public class SevisServiceImpl implements SevisService {
 		return null;
 	}
 
-	private SEVISBatchDetails updateEVBatch(CreateSEVISBatch batchParam, IEVBatchDataService dataService,
-			ServletContext servletContext) {
-
-		boolean invalidArgs = batchParam == null || dataService == null || servletContext == null;
-		if (invalidArgs) {
-			return createInvalidArgsResponse();
-		}
-
-		/*
-		 * get batch data
-		 */
-		SEVISBatchCreateUpdateEV jaxb = dataService.fetchBatchData(batchParam);
-
-		String fileName = jaxb.getBatchHeader().getBatchID() + ".xml";
-		String outputFile = batchFileRealPath(fileName, servletContext);
-		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
-		
-		/*
-		 * generate batch file
-		 */
-		boolean success = SevisUtils.generateBatchFile(jaxb, outputFile, schemaFile);
-
-		SEVISBatchDetails batchDetails = createBatchDetailsFrom(jaxb, "update");
-		batchDetails.setStatus(createSuccessStatus());
-
-		return batchDetails;
-	}
-
-	private SEVISBatchDetails createBatchDetailsFrom(SEVISBatchCreateUpdateEV batch, String type) {
-		SEVISBatchDetails batchDetails = new SEVISBatchDetails();
-		batchDetails.setBatchId(batch.getBatchHeader().getBatchID());
-
-		if (type.equals("update")) {
-			batchDetails.setParticipantCount(batch.getUpdateEV().getExchangeVisitor().size());
-		} else {
-			batchDetails.setParticipantCount(batch.getCreateEV().getExchangeVisitor().size());
-		}
-
-		return batchDetails;
-	}
-
-	private SEVISBatchDetails createBatchDetailsFrom(SEVISBatchCreateUpdateStudent batch, String type) {
-		SEVISBatchDetails batchDetails = new SEVISBatchDetails();
-		batchDetails.setBatchId(batch.getBatchHeader().getBatchID());
-
-		if (type.equals("update")) {
-			batchDetails.setParticipantCount(batch.getUpdateStudent().getStudent().size());
-		} else {
-			batchDetails.setParticipantCount(batch.getCreateStudent().getStudent().size());
-		}
-
-		return batchDetails;
-	}
-
-	private Status createSuccessStatus() {
-		Status status = componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
-				SevisBatchErrorCode.POST_PARAM_NA.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-		return status;
-	}
-
-	private SEVISBatchDetails createInvalidArgsResponse() {
-		SEVISBatchDetails batchDetails = new SEVISBatchDetails();
-		Status status = componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-				SevisBatchErrorCode.POST_PARAM_NA.getValue(), "Invalid Arguments.");
-		batchDetails.setStatus(status);
-		return batchDetails;
-	}
-
-	private SEVISBatchDetails updateStudentBatch(CreateSEVISBatch batchParam,
-			IStudentBatchDataService dataService, ServletContext servletContext) {
-
-		boolean invalidArgs = batchParam == null || dataService == null || servletContext == null;
-		if (invalidArgs) {
-			return createInvalidArgsResponse();
-		}
-
-		SEVISBatchCreateUpdateStudent jaxb = dataService.fetchBatchData(batchParam);
-
-		// SEVISBatchDetails batchDetails = new SEVISBatchDetails();
-		String fileName = jaxb.getBatchHeader().getBatchID() + ".xml";
-//		String xmlFile = SevisConstants.BATCH_FILES_PATH + fileName; // test
-
-		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
-//		SevisUtils.generateXMLBatchFile(jaxb, xmlFile, schemaFile);
-		SevisUtils.generateBatchFile(jaxb, batchFileRealPath(fileName, servletContext), schemaFile);
-
-		SEVISBatchDetails batchDetails = createBatchDetailsFrom(jaxb, "update");
-
-		batchDetails.setStatus(createSuccessStatus());
-		return batchDetails;
-	}
-
 	@Override
 	public Response updateEVProgramEditSubject(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVProgramEditSubjectBatchDataService dataService = getServiceBean(
 				UpdateEVProgramEditSubjectBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVFinancialInfo(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVFinancialInfoBatchDataService dataService = getServiceBean(UpdateEVFinancialInfoBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVTIPP(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVTIPPBatchDataService dataService = getServiceBean(UpdateEVTIPPBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVReprintBatchDataService dataService = getServiceBean(UpdateEVReprintBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVDependentReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVDependentReprintBatchDataService dataService = getServiceBean(
 				UpdateEVDependentReprintBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateStudentReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateStudentReprintBatchDataService dataService = getServiceBean(UpdateStudentReprintBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateStudentBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateStudentDependentReprint(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateStudentDependentReprintBatchDataService dataService = getServiceBean(
 				UpdateStudentDependentReprintBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateStudentBatch(batchParam, dataService, servletContext);
-
-		return batchDetails;
+		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVProgramExtension(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVProgramExtentionBatchDataService dataService = getServiceBean(
 				UpdateEVProgramExtentionBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateEVProgramShorten(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateEVProgramShortenBatchDataService dataService = getServiceBean(
 				UpdateEVProgramShortenBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateEVBatch(batchParam, dataService, servletContext);
-		return batchDetails;
+		return createEVBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateStudentProgramExtension(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateStudentProgramExtentionBatchDataService dataService = getServiceBean(
 				UpdateStudentProgramExtentionBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateStudentBatch(batchParam, dataService, servletContext);
-		return batchDetails;
+		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
 	public Response updateStudentProgramShorten(CreateSEVISBatch batchParam, ServletContext servletContext) {
 		UpdateStudentProgramShortenBatchDataService dataService = getServiceBean(
 				UpdateStudentProgramShortenBatchDataService.class);
-		SEVISBatchDetails batchDetails = updateStudentBatch(batchParam, dataService, servletContext);
-		return batchDetails;
+		return createStudentBatch(batchParam, dataService, servletContext);
 	}
 
 	@Override
@@ -409,5 +195,97 @@ public class SevisServiceImpl implements SevisService {
 			return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.NOT_FOUND).entity(msg).build();
 		}
 	}
+	
+	private Response createEVBatch(CreateSEVISBatch batchParam, IEVBatchDataService dataService,
+			ServletContext servletContext) {
 
+		boolean invalidArgs = batchParam == null || dataService == null || servletContext == null;
+		if (invalidArgs) {
+			return createInvalidArgsResponse();
+		}
+
+		/*
+		 * get batch data
+		 */
+		SEVISBatchCreateUpdateEV jaxb = dataService.fetchBatchData(batchParam);
+
+		String file = jaxb.getBatchHeader().getBatchID() + ".xml";
+		String outputFile = batchFileRealPath(file, servletContext);
+		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
+
+		/*
+		 * generate batch file
+		 */
+		boolean success = SevisUtils.generateBatchFile(jaxb, outputFile, schemaFile);
+		BatchDetails batchDetails = new BatchDetails();
+		batchDetails.setBatchId(jaxb.getBatchHeader().getBatchID());
+		batchDetails.setCreateCount(jaxb.getCreateEV().getExchangeVisitor().size());
+		batchDetails.setUpdateCount(jaxb.getUpdateEV().getExchangeVisitor().size());
+		
+		if (success) {
+			batchDetails.setFileUrl(SevisBatch.BATCH_DOWNLOAD_LINK + file);
+			batchDetails.setStatus(createSuccessStatus());
+		} else {
+			batchDetails.setStatus(createFailureStatus());
+		}
+		
+		return batchDetails;
+	}
+
+	private Response createStudentBatch(CreateSEVISBatch batchParam, IStudentBatchDataService dataService,
+			ServletContext servletContext) {
+		boolean invalidArgs = batchParam == null || dataService == null || servletContext == null;
+		if (invalidArgs) {
+			return createInvalidArgsResponse();
+		}
+		
+		StopWatch sw = new StopWatch();
+		sw.start();
+		SEVISBatchCreateUpdateStudent jaxb = dataService.fetchBatchData(batchParam);
+		sw.stop();
+		System.out.println("Data fetch time = " + sw.getTotalTimeSeconds());
+
+		String file = jaxb.getBatchHeader().getBatchID() + ".xml";
+		String outputFile = batchFileRealPath(file, servletContext);
+		String schemaFile = servletContext.getRealPath(dataService.getSchemaFile());
+
+		StopWatch sw1 = new StopWatch();
+		sw1.start();
+		boolean success = SevisUtils.generateBatchFile(jaxb, outputFile, schemaFile);
+		sw1.stop();
+		System.out.println("Batch file time = " + sw1.getTotalTimeSeconds());
+
+		BatchDetails batchDetails = new BatchDetails();
+		batchDetails.setBatchId(jaxb.getBatchHeader().getBatchID());
+		batchDetails.setCreateCount(jaxb.getCreateStudent().getStudent().size());
+		batchDetails.setUpdateCount(jaxb.getUpdateStudent().getStudent().size());
+		if (success) {
+			batchDetails.setFileUrl(SevisBatch.BATCH_DOWNLOAD_LINK + file);
+			batchDetails.setStatus(createSuccessStatus());
+		} else {
+			batchDetails.setStatus(createFailureStatus());
+		}
+
+		return batchDetails;
+	}
+	
+	private String batchFileRealPath(String file, ServletContext servletContext) {
+		String xmlDir = SevisUtils.getProperty(SevisConstants.XML_DIR);
+		String xmlFile = xmlDir + File.separator + file;
+		return servletContext.getRealPath(xmlFile);
+	}
+	
+	private Status createSuccessStatus() {
+		Status status = componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
+				SevisBatchErrorCode.POST_PARAM_NA.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+		return status;
+	}
+
+	private BatchDetails createInvalidArgsResponse() {
+		BatchDetails batchDetails = new BatchDetails();
+		Status status = componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+				SevisBatchErrorCode.POST_PARAM_NA.getValue(), "Invalid Arguments.");
+		batchDetails.setStatus(status);
+		return batchDetails;
+	}
 }

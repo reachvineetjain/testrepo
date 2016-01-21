@@ -216,9 +216,10 @@ public final class SevisUtils {
 	 * @param jaxb
 	 * @param outputFile
 	 * @param schemaFile
-	 * @return
+	 * @return {@link Boolean}
 	 */
 	public static boolean generateBatchFile(Object jaxb, String outputFile, String schemaFile) {
+		Preconditions.checkNotNull(jaxb);
 		Preconditions.checkArgument(jaxb != null);
 		Preconditions.checkNotNull(outputFile);
 		Preconditions.checkArgument(!outputFile.isEmpty());
@@ -228,8 +229,7 @@ public final class SevisUtils {
 		try {
 			JAXBContext context = JAXBContext.newInstance(jaxb.getClass());
 			validate(context, jaxb, new File(schemaFile));
-			marshalToFile(context, jaxb, new File(outputFile));
-			return true;
+			return marshalToFile(context, jaxb, new File(outputFile));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {

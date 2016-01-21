@@ -45,7 +45,7 @@ public class SevisBatch {
 	@Produces("application/json")
 	public Response createStudent(CreateSEVISBatch batchParam) {
 		System.out.println("Service ...");
-		return sevisBatchService.createStudent(batchParam, servletContext);
+		return sevisBatchService.createStudentBatch(batchParam, servletContext);
 	}
 
 	@POST
@@ -166,11 +166,13 @@ public class SevisBatch {
 		return new Response();
 	}
 	
+	public static final String BATCH_DOWNLOAD_LINK = "/sevis/download/batch/";
+	
 	@GET
 	@Path("download/batch/{file}")
 	@Produces("application/xml")
 	public javax.ws.rs.core.Response download(@PathParam("file") String file) {
-		file = "AAAAAAAAAAAAFL.xml"; // test
+//		file = "AAAAAAAAAAAAFL.xml"; // test
 		return sevisBatchService.downloadBatchFile(file, servletContext);
 	}
 
