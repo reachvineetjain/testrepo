@@ -1,12 +1,9 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.data;
 
 import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,11 +14,11 @@ import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
 import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.Student;
-import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.Student.Program;
-import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.Student.Program.Extension;
+import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.Student.Dependent;
+import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.Student.Dependent.Reprint;
 
 @Component
-public class UpdateStudentProgramExtentionBatchDataService implements IStudentBatchDataService {
+public class UpdateStudentDependentReprintBatchDataService implements IStudentBatchDataService {
 	@Autowired
 	ParticipantRepository participantRepository;
 
@@ -45,9 +42,7 @@ public class UpdateStudentProgramExtentionBatchDataService implements IStudentBa
 				.collect(Collectors.toList());
 		// @formatter:on
 
-		students.forEach(
-				s -> s.setProgram(createProgramExtension(true, SevisUtils.convert(LocalDate.now()), "Explanation")));
-
+		students.forEach(s -> s.setDependent(createDependentReprint("N0000000000")));
 		String batchId = generateBatchId("fName", "lName");
 		SEVISBatchCreateUpdateStudent updateBatch = createUpdateStudentBatch(batchParam.getUserId(), "P-1-12345",
 				batchId);
@@ -56,30 +51,17 @@ public class UpdateStudentProgramExtentionBatchDataService implements IStudentBa
 		return updateBatch;
 	}
 
-	private Program createProgramExtension(boolean printForm, XMLGregorianCalendar newPrgEndDate, String explanation) {
-		Program program = new Program();
-		program.setExtension(createExtension(printForm, newPrgEndDate, explanation));
-		return program;
+	private Dependent createDependentReprint(String depSevisId) {
+		Dependent dependent = new Dependent();
+		dependent.setReprint(createReprint(depSevisId));
+		return dependent;
+
 	}
 
-	/**
-	 * 
-	 * @param printForm
-	 *            Print request indicator (Value: 1 or true; 0 or false)
-	 *            <p>
-	 *            Indicator used to request that I-20 in PDF document is
-	 *            returned with SEVIS Batch download.
-	 * @param newPrgEndDate
-	 * @param explanation
-	 *            Explanation for extension of program.
-	 * @return
-	 */
-	private Extension createExtension(boolean printForm, XMLGregorianCalendar newPrgEndDate, String explanation) {
-		Extension ext = new Extension();
-		ext.setPrintForm(printForm);
-		ext.setNewPrgEndDate(newPrgEndDate);
-		ext.setExplanation(explanation);
-		return ext;
+	private Reprint createReprint(String depSevisId) {
+		Reprint reprint = new Reprint();
+		reprint.setDependentSevisID(depSevisId);
+		return reprint;
 	}
 
 }

@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -243,6 +244,12 @@ public final class SevisUtils {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public static String batchFileRealPath(String file, ServletContext servletContext) {
+		String xmlDir = SevisUtils.getProperty(SevisConstants.XML_DIR);
+		String xmlFile = xmlDir + File.separator + file;
+		return servletContext.getRealPath(xmlFile);
 	}
 
 }

@@ -1,6 +1,4 @@
-package com.ccighgo.service.components.sevis;
-
-import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
+package com.ccighgo.service.components.sevis.data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.service.components.sevis.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.alpha.common.NameNullableType;
@@ -24,7 +23,8 @@ public class UpdateEVBioBatchDataService implements IEVBatchDataService {
 	@Override
 	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
 
-		String batchId = generateBatchId("fName", "lName");
+//		String batchId = generateBatchId("fName", "lName");
+		String batchId = SevisUtils.createBatchId();
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
 
 		ExchangeVisitor ev = createExchangeVisitor(batchParam.getUserId(), "N0000000000", "1");

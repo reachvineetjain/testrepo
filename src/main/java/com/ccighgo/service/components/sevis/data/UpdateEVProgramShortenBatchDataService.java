@@ -1,25 +1,29 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.data;
 
 import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
+import com.ccighgo.service.components.sevis.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
+import gov.ice.xmlschema.sevisbatch.alpha.table.EVCompletionCodeType;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.SiteOfActivity;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.SiteOfActivity.Edit;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Program;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Program.Shorten;
 
 @Component
-public class UpdateEVSOAEditBatchDataService implements IEVBatchDataService {
-
+public class UpdateEVProgramShortenBatchDataService implements IEVBatchDataService {
 	@Autowired
 	ParticipantRepository participantRepository;
 
@@ -41,7 +45,8 @@ public class UpdateEVSOAEditBatchDataService implements IEVBatchDataService {
 				.collect(Collectors.toList());
 		// @formatter:on
 
-		evs.forEach(ev -> ev.setSiteOfActivity(createSOAEdit(true, "Address 1", "60169")));
+		evs.forEach(ev -> ev.setProgram(
+				createProgramShorten(true, SevisUtils.convert(LocalDate.now()), "Remarks", EVCompletionCodeType.APED)));
 
 		String batchId = generateBatchId("fName", "lName");
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
@@ -55,18 +60,21 @@ public class UpdateEVSOAEditBatchDataService implements IEVBatchDataService {
 		return createExchangeVisitor(userId, sevisId, requestId);
 	}
 
-	private SiteOfActivity createSOAEdit(boolean printForm, String address1, String postalCode) {
-		SiteOfActivity soa = new SiteOfActivity();
-		soa.setEdit(createEdit(printForm, address1, postalCode));
-		return soa;
+	private Program createProgramShorten(boolean printForm, XMLGregorianCalendar newPrgEndDate, String remarks,
+			EVCompletionCodeType shortenReason) {
+		Program program = new Program();
+		program.setShorten(createShorten(printForm, newPrgEndDate, remarks, shortenReason));
+		return program;
 	}
 
-	private Edit createEdit(boolean printForm, String address1, String postalCode) {
-		Edit edit = new Edit();
-		edit.setPrintForm(printForm);
-		edit.setAddress1(address1);
-		edit.setPostalCode(postalCode);
-		return edit;
+	private Shorten createShorten(boolean printForm, XMLGregorianCalendar newPrgEndDate, String remarks,
+			EVCompletionCodeType shortenReason) {
+		Shorten shorten = new Shorten();
+		shorten.setPrintForm(printForm);
+		shorten.setNewPrgEndDate(newPrgEndDate);
+		shorten.setRemarks(remarks);
+		shorten.setShortenReason(shortenReason);
+		return shorten;
 	}
 
 }

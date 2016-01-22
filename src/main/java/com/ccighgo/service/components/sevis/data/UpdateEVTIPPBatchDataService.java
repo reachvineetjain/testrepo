@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.data;
 
 import org.springframework.stereotype.Component;
 

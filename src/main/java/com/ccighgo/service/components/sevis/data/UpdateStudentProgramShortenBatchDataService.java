@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.data;
 
 import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
 
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
+import com.ccighgo.service.components.sevis.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;

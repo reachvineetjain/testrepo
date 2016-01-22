@@ -1,29 +1,36 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.data;
 
 import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
+import com.ccighgo.service.components.sevis.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.ReprintType;
+import gov.ice.xmlschema.sevisbatch.alpha.table.EVTerminationReasonType;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Status;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Status.Terminate;
 
 @Component
-public class UpdateEVReprintBatchDataService implements IEVBatchDataService {
+public class UpdateEVStatusTerminateBatchDataService implements IEVBatchDataService {
 
 	@Autowired
 	ParticipantRepository participantRepository;
 
 	@Override
 	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
+
 		// get EVs from DB
 		// @formatter:off
 		List<Integer> participantIds = batchParam.getParticipant()
@@ -34,13 +41,11 @@ public class UpdateEVReprintBatchDataService implements IEVBatchDataService {
 
 		List<Participant> participants = participantRepository.findByParticipantGoIdIn(participantIds);
 
-		// @formatter:off
 		List<ExchangeVisitor> evs = participants.stream()
-				.map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1"))
-				.collect(Collectors.toList());
-		// @formatter:on
+				.map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1")).collect(Collectors.toList());
 
-		evs.forEach(ev -> ev.setReprint(createReprint(true, EVReprintReason.DAMAGED)));
+		evs.forEach(ev -> ev
+				.setStatus(createTerminateStatus(EVTerminationReasonType.CONVIC, SevisUtils.convert(LocalDate.now()))));
 
 		String batchId = generateBatchId("fName", "lName");
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
@@ -54,12 +59,15 @@ public class UpdateEVReprintBatchDataService implements IEVBatchDataService {
 		return createExchangeVisitor(userId, sevisId, requestId);
 	}
 
-	private ReprintType createReprint(boolean printForm, EVReprintReason reason) {
-		ReprintType reprint = new ReprintType();
-		reprint.setPrintForm(printForm);
-		reprint.setReason(reason.getCode());
+	private Status createTerminateStatus(EVTerminationReasonType reason, XMLGregorianCalendar effectiveDate) {
+		Status status = new Status();
+		Terminate terminate = new Terminate();
+		status.setTerminate(terminate);
 
-		return reprint;
+		terminate.setReason(reason);
+		terminate.setEffectiveDate(effectiveDate);
+
+		return status;
 	}
 
 }

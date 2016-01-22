@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.log;
 
 import static java.util.stream.Collectors.toList;
 

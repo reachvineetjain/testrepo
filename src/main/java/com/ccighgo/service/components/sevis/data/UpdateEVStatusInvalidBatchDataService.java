@@ -1,9 +1,10 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.data;
 
 import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
 
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.service.components.sevis.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
@@ -16,7 +17,8 @@ public class UpdateEVStatusInvalidBatchDataService implements IEVBatchDataServic
 
 	@Override
 	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
-		String batchId = generateBatchId("fName", "lName");
+//		String batchId = generateBatchId("fName", "lName");
+		String batchId = SevisUtils.createBatchId();
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
 
 		ExchangeVisitor ev = createExchangeVisitor(batchParam.getUserId(), "N0000000000", "1");

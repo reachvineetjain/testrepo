@@ -14,7 +14,22 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ccighgo.service.components.sevis.SevisService;
+import com.ccighgo.service.component.serviceutils.ApplicationContextProvider;
+import com.ccighgo.service.components.sevis.EVBatchGenerator;
+import com.ccighgo.service.components.sevis.SevisUtils;
+import com.ccighgo.service.components.sevis.StuBatchGenerator;
+import com.ccighgo.service.components.sevis.data.CreateStudentBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVBioBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVFinancialInfoBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVProgramEditSubjectBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVProgramExtentionBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVSOAEditBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVStatusInvalidBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVStatusTerminateBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVTIPPBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateStudentDependentReprintBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateStudentProgramShortenBatchDataService;
+import com.ccighgo.service.components.sevis.log.SevisLogProcessor;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
@@ -23,10 +38,14 @@ import com.ccighgo.service.transport.sevis.BatchParam;
 @Consumes("application/json")
 public class SevisBatch {
 
-	@Autowired
-	SevisService sevisBatchService;
+//	@Autowired
+//	SevisService sevisBatchService;
 	@Context
 	ServletContext servletContext;
+	
+	@Autowired StuBatchGenerator stuBatchGenerator;
+	@Autowired EVBatchGenerator evBatchGenerator;
+	@Autowired SevisLogProcessor logProcessor;
 
 //	@POST
 //	@Path("create/batch")
@@ -39,7 +58,7 @@ public class SevisBatch {
 	@Path("process/log")
 	@Produces("application/json")
 	public Response processLog() {
-		return sevisBatchService.processSevisLog(null); // test only, pass xml
+		return logProcessor.processLog(null); // test only, pass xml
 														// file URI or ....
 	}
 
@@ -48,14 +67,19 @@ public class SevisBatch {
 	@Produces("application/json")
 	public Response createStudent(BatchParam batchParam) {
 		System.out.println("Service ...");
-		return sevisBatchService.createStudentBatch(batchParam, servletContext);
+//		return sevisBatchService.createStudentBatch(batchParam, servletContext);
+		
+		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
+		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
 	@Path("create/batch/bio")
 	@Produces("application/json")
 	public Response updateEVBio(BatchParam batchParam) {
-		return sevisBatchService.updateEVBiographical(batchParam, servletContext);
+//		return sevisBatchService.updateEVBiographical(batchParam, servletContext);
+		UpdateEVBioBatchDataService dataService = getServiceBean(UpdateEVBioBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -64,7 +88,10 @@ public class SevisBatch {
 	public Response updateStatusInvalid(BatchParam batchParam) {
 		// Status Invalid
 		// Update.EV.Status.Invalid
-		return sevisBatchService.updateEVStatusInvalid(batchParam, servletContext);
+//		return sevisBatchService.updateEVStatusInvalid(batchParam, servletContext);
+		
+		UpdateEVStatusInvalidBatchDataService dataService = getServiceBean(UpdateEVStatusInvalidBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -74,7 +101,10 @@ public class SevisBatch {
 		// Status Terminate
 		// Update.EV.Status.Terminate
 		// Update.Student.Status.Terminate
-		return sevisBatchService.updateEVStatusTerminate(batchParam, servletContext);
+//		return sevisBatchService.updateEVStatusTerminate(batchParam, servletContext);
+		
+		UpdateEVStatusTerminateBatchDataService dataService = getServiceBean(UpdateEVStatusTerminateBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -83,7 +113,9 @@ public class SevisBatch {
 	public Response updateEditSubject(BatchParam batchParam) {
 		// Update - EditSubject
 		// Event - Update.EV.Program.EditSubject
-		return sevisBatchService.updateEVProgramEditSubject(batchParam, servletContext);
+//		return sevisBatchService.updateEVProgramEditSubject(batchParam, servletContext);
+		UpdateEVProgramEditSubjectBatchDataService dataService = getServiceBean(UpdateEVProgramEditSubjectBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -93,7 +125,9 @@ public class SevisBatch {
 		// Financial Info
 		// Update.EV.FinancialInfo
 		// Update.Student.FinancialInfo
-		return sevisBatchService.updateEVFinancialInfo(batchParam, servletContext);
+//		return sevisBatchService.updateEVFinancialInfo(batchParam, servletContext);
+		UpdateEVFinancialInfoBatchDataService dataService = getServiceBean(UpdateEVFinancialInfoBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -102,7 +136,9 @@ public class SevisBatch {
 	public Response updateTIPP(BatchParam batchParam) {
 		// T/IPP
 		// Update.EV.TIPP
-		return sevisBatchService.updateEVTIPP(batchParam, servletContext);
+//		return sevisBatchService.updateEVTIPP(batchParam, servletContext);
+		UpdateEVTIPPBatchDataService dataService = getServiceBean(UpdateEVTIPPBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -120,7 +156,10 @@ public class SevisBatch {
 		// servletContext);
 		// return sevisBatchService.updateStudentReprint(batchParam,
 		// servletContext);
-		return sevisBatchService.updateStudentDependentReprint(batchParam, servletContext);
+//		return sevisBatchService.updateStudentDependentReprint(batchParam, servletContext);
+		UpdateStudentDependentReprintBatchDataService dataService = getServiceBean(
+				UpdateStudentDependentReprintBatchDataService.class);
+		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -134,7 +173,10 @@ public class SevisBatch {
 		// return sevisBatchService.updateStudentProgramExtension(batchParam,
 		// servletContext);
 
-		return sevisBatchService.updateEVProgramExtension(batchParam, servletContext);
+//		return sevisBatchService.updateEVProgramExtension(batchParam, servletContext);
+		UpdateEVProgramExtentionBatchDataService dataService = getServiceBean(
+				UpdateEVProgramExtentionBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -148,7 +190,10 @@ public class SevisBatch {
 
 		// return sevisBatchService.updateEVProgramShorten(batchParam,
 		// servletContext);
-		return sevisBatchService.updateStudentProgramShorten(batchParam, servletContext);
+//		return sevisBatchService.updateStudentProgramShorten(batchParam, servletContext);
+		UpdateStudentProgramShortenBatchDataService dataService = getServiceBean(
+				UpdateStudentProgramShortenBatchDataService.class);
+		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
 
 	}
 
@@ -158,7 +203,10 @@ public class SevisBatch {
 	public Response updateSOA(BatchParam batchParam) {
 		// Update - Site of Activity
 		// Update.EV.SiteOfActivity.Edit
-		return sevisBatchService.updateEVSOAEdit(batchParam, servletContext);
+//		return sevisBatchService.updateEVSOAEdit(batchParam, servletContext);
+		
+		UpdateEVSOAEditBatchDataService dataService = getServiceBean(UpdateEVSOAEditBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 
 	}
 
@@ -175,7 +223,7 @@ public class SevisBatch {
 	@Path("download/batch/{file}")
 	@Produces("application/xml")
 	public javax.ws.rs.core.Response download(@PathParam("file") String file) {
-		File f = sevisBatchService.getBatchFile(file, servletContext);
+		File f = new File(SevisUtils.batchFileRealPath(file, servletContext));
 		if (f.exists()) {
 			ResponseBuilder response = javax.ws.rs.core.Response.ok((Object) f);
 			response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
@@ -184,6 +232,10 @@ public class SevisBatch {
 			String msg = "<msg>" + file + " not found." + "</msg>";
 			return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.NOT_FOUND).entity(msg).build();
 		}
+	}
+	
+	private static <T> T getServiceBean(Class<T> klass) {
+		return ApplicationContextProvider.getContext().getBean(klass);
 	}
 
 }

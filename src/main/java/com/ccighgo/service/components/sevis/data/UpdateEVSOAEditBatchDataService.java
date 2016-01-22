@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.data;
 
 import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
 
@@ -14,17 +14,17 @@ import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.FinancialInfo;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.SiteOfActivity;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.SiteOfActivity.Edit;
 
 @Component
-public class UpdateEVFinancialInfoBatchDataService implements IEVBatchDataService {
+public class UpdateEVSOAEditBatchDataService implements IEVBatchDataService {
 
 	@Autowired
 	ParticipantRepository participantRepository;
 
 	@Override
 	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
-
 		// get EVs from DB
 		// @formatter:off
 		List<Integer> participantIds = batchParam.getParticipant()
@@ -35,10 +35,13 @@ public class UpdateEVFinancialInfoBatchDataService implements IEVBatchDataServic
 
 		List<Participant> participants = participantRepository.findByParticipantGoIdIn(participantIds);
 
+		// @formatter:off
 		List<ExchangeVisitor> evs = participants.stream()
-				.map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1")).collect(Collectors.toList());
+				.map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1"))
+				.collect(Collectors.toList());
+		// @formatter:on
 
-		evs.forEach(ev -> ev.setFinancialInfo(createFinancialInfo(true)));
+		evs.forEach(ev -> ev.setSiteOfActivity(createSOAEdit(true, "Address 1", "60169")));
 
 		String batchId = generateBatchId("fName", "lName");
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
@@ -52,10 +55,18 @@ public class UpdateEVFinancialInfoBatchDataService implements IEVBatchDataServic
 		return createExchangeVisitor(userId, sevisId, requestId);
 	}
 
-	private FinancialInfo createFinancialInfo(boolean printForm) {
-		FinancialInfo fInfo = new FinancialInfo();
-		fInfo.setPrintForm(printForm);
-		return fInfo;
+	private SiteOfActivity createSOAEdit(boolean printForm, String address1, String postalCode) {
+		SiteOfActivity soa = new SiteOfActivity();
+		soa.setEdit(createEdit(printForm, address1, postalCode));
+		return soa;
+	}
+
+	private Edit createEdit(boolean printForm, String address1, String postalCode) {
+		Edit edit = new Edit();
+		edit.setPrintForm(printForm);
+		edit.setAddress1(address1);
+		edit.setPostalCode(postalCode);
+		return edit;
 	}
 
 }
