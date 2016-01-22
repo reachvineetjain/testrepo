@@ -15,7 +15,6 @@ import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffStatus;
 import com.ccighgo.db.entities.Login;
-import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
@@ -30,6 +29,8 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchool;
+import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchoolDetail;
 import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.AdminFieldStaffHostFamily;
 import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.FSHostFamilies;
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.FSPendingApplication;
@@ -43,8 +44,6 @@ import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicati
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStatsDetails;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStats;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStatsDetails;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
@@ -397,6 +396,45 @@ public FieldStaffDashboardProgramStats getFSProgramStats(int categoryId) {
 		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_PROGRAM_STATS.getValue(),
 				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_PROGRAM_STATS)));
 		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_PROGRAM_STATS));
+	}
+	return pwqa;
+}
+
+@Override
+public FSAddedSchool getAddedSchools(int fieldStaffId) {
+	FSAddedSchool pwqa = new FSAddedSchool();
+	try {
+		@SuppressWarnings("unchecked")
+		List<Object[]> result = em.createNativeQuery("call SPFieldStaffSchoolList(:fieldStaffId)").setParameter("fieldStaffId", fieldStaffId)
+				.getResultList();
+		if (result != null) {
+			if(!result.isEmpty()){
+			for (Object[] wq : result) {
+				FSAddedSchoolDetail pd = new FSAddedSchoolDetail();
+				pd.setGoId(Integer.valueOf(String.valueOf(wq[0])));
+				pd.setName(String.valueOf(wq[1]));
+				pd.setCity(String.valueOf(wq[2]));
+				pd.setState(String.valueOf(wq[3]));
+				pd.setContactName(String.valueOf(wq[4]));
+				pd.setContactPhone(String.valueOf(wq[5]));
+				pd.setContactEmail(String.valueOf(wq[6]));
+				pwqa.getAddedSchool().add(pd);
+			}
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_ADDED_SCHOOL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}else{
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_ADDED_SCHOOL.getValue(),
+						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}
+		} else {
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_ADDED_SCHOOL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+	} catch (Exception e) {
+		ExceptionUtil.logException(e, LOGGER);
+		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_ADDED_SCHOOL.getValue(),
+				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_ADDED_SCHOOL)));
+		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_ADDED_SCHOOL));
 	}
 	return pwqa;
 }

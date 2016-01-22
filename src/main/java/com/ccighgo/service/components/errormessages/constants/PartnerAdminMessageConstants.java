@@ -46,4 +46,5 @@ public static final String NO_DATA_FOR_THAT_USER_ID = "no.data.for.goId";
 public static final String EXCEPTION_FS_ADMIN_HOST_FAMILY = "exception.fetching.fieldstaff.hostfamily";
 public static final String EXCEPTION_FS_ADMIN_APPLICATION_STATS = "exception.fetching.fieldstaff.application.stats";
 public static final String EXCEPTION_FS_ADMIN_PROGRAM_STATS = "exception.fetching.fieldstaff.program.stats";
+public static final String EXCEPTION_FS_ADMIN_ADDED_SCHOOL = "exception.fetching.fieldstaff.addedschool";
 }

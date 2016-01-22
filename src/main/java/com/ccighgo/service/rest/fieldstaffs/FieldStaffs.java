@@ -1,5 +1,6 @@
 package com.ccighgo.service.rest.fieldstaffs;
 
+import javax.print.attribute.standard.Fidelity;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.FieldStaffsInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchool;
 import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.AdminFieldStaffHostFamily;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffapplication.FieldStaffapplication;
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
@@ -137,5 +139,43 @@ public class FieldStaffs {
    @Produces("application/json")
    public Response resetPassword(@PathParam("goId") String goId) {
       return fieldStaffsInterface.resetPassword(goId, request);
+   }
+   
+   /**
+    * Normal Field Staff Page 7,8 screens
+    */
+   
+   // 8
+   //Schools (Page 8 of CCI_VD_3_ERD_flow_WIP3.pdf):
+   
+//   CALL SPFieldStaffSchoolList (fieldStaffId);
+//   Ex: CALL SPFieldStaffSchoolList (50000);
+   
+   @GET
+   @Path("addedSchools/{fieldStaffId}")
+   @Produces("application/json")
+   public FSAddedSchool getAddedSchools(@PathParam("fieldStaffId") String fieldStaffId) {
+      return fieldStaffsInterface.getAddedSchools(Integer.parseInt(fieldStaffId));
+   }
+   
+//   Page 7 My HostFamilies:  CALL SPFieldStaffHostFamilyList(fieldStaffId INT,flag INT);
+//   
+//   Ex: CALL SPFieldStaffHostFamilyList(50001,0);
+//    
+//   Page 7 HostFamilies : CALL SPFieldStaffHostFamilyList(fieldStaffId INT,flag INT);
+//    
+//   Ex: CALL SPFieldStaffHostFamilyList(50001,1);
+   
+   @GET
+   @Path("myHostFamilies/{fieldStaffId}")
+   @Produces("application/json")
+   public AdminFieldStaffHostFamily  getMyHostFamilies(@PathParam("fieldStaffId") String fieldStaffId) {
+      return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),0,null);
+   }
+   @GET
+   @Path("allHostFamilies/{fieldStaffId}/{category}")
+   @Produces("application/json")
+   public AdminFieldStaffHostFamily  getAllHostFamilies(@PathParam("fieldStaffId") String fieldStaffId,@PathParam("category") String category) {
+      return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),1,category);
    }
 }

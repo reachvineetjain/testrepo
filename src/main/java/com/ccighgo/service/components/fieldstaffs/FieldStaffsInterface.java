@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchool;
 import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.AdminFieldStaffHostFamily;
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.FSPendingApplication;
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
@@ -55,4 +56,6 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 public FieldStaffDashboardApplicationStats getFSApplicationStats(int typeId, int categoryId);
 
 public FieldStaffDashboardProgramStats getFSProgramStats(int categotyId);
+
+public FSAddedSchool getAddedSchools(int fieldStaffId);
 }
