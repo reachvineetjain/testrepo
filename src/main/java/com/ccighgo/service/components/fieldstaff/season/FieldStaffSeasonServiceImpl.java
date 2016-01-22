@@ -52,6 +52,13 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
 
    private static final String SP_FS_SEASON_LIST = "CALL SPFieldStaffSeasonsList(?)";
 
+   private static final String SP_FS_SEASON_HIERARCHY = "CALL SPFieldStaffHeirarchy(?,?,?)";
+   private static final int some_value = 1;
+   private static final String RD = "Regional Director";
+   private static final String RM = "Regional Manager";
+   private static final String ERD = "Executive Regional Director";
+   private static final String SPACE = " ";
+
    @Override
    @Transactional(readOnly = true)
    public FieldStaffSeasons getFieldStaffSeasons(String fsGoId) {
@@ -155,6 +162,9 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
             paymentSchedule.setPaymentSchedule(season.getPaymentSchedule().getScheduleName());
          }
          DefaultMonitoringStipend defaultMonitoringStipend = new DefaultMonitoringStipend();
+         // TODO no value in DB setting dummy values
+         defaultMonitoringStipend.setDefaultMonitoringStipendId(1);
+         defaultMonitoringStipend.setDefaultMonitoringStipend("default");
 
          fsSeason.setFsSeasonId(season.getFiledStaffSeasonId());
          fsSeason.setSeasonId(season.getSeason().getSeasonId());
@@ -162,10 +172,32 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          fsSeason.setHostFamilyStatus("");// TODO no value in DB:setting empty object
          fsSeason.setSeasonStatus(seasonStatus);
          fsSeason.setPaymentSchedule(paymentSchedule);
-         fsSeason.setDefaultMonitoringStipend(defaultMonitoringStipend);// TODO no value in DB:setting empty object
-         fsSeason.setErd("");// TODO no value in DB:setting empty object
-         fsSeason.setRd("");// TODO no value in DB:setting empty object
-         fsSeason.setRm("");// TODO no value in DB:setting empty object
+         fsSeason.setDefaultMonitoringStipend(defaultMonitoringStipend);
+
+         Query query = entityManager.createNativeQuery(SP_FS_SEASON_HIERARCHY);
+         query.setParameter(1, Integer.valueOf(fieldStaffGoId));
+         query.setParameter(2, some_value);
+         query.setParameter(3, some_value);
+         List<Object[]> results = query.getResultList();
+         if (results != null && results.size() > 0) {
+            for (Object[] obj : results) {
+               if (obj[4] != null && obj[4].toString().equals(ERD)) {
+                  if (obj[2] != null && obj[3] != null) {
+                     fsSeason.setErd(obj[2].toString() + SPACE + obj[3].toString());
+                  }
+               }
+               if (obj[4] != null && obj[4].toString().equals(RD)) {
+                  if (obj[2] != null && obj[3] != null) {
+                     fsSeason.setRd(obj[2].toString() + SPACE + obj[3].toString());
+                  }
+               }
+               if (obj[4] != null && obj[4].toString().equals(RM)) {
+                  if (obj[2] != null && obj[3] != null) {
+                     fsSeason.setRm(obj[2].toString() + SPACE + obj[3].toString());
+                  }
+               }
+            }
+         }
          fsSeason.setRecruiterLC(season.getIsRecruiterLC().equals(CCIConstants.ACTIVE) ? true : false);
          fsSeason.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -228,28 +260,29 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
    @Override
    public FieldStaffAdminSeasonDetails updateFieldStaffAdminSeasonDetails(FieldStaffAdminSeasonDetails details) {
       FieldStaffAdminSeasonDetails updatedObject = new FieldStaffAdminSeasonDetails();
-      try{
-         if(details.getFsSeasonId()==0 ||details.getFsSeasonId()<0 ){
+      try {
+         if (details.getFsSeasonId() == 0 || details.getFsSeasonId() < 0) {
             throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FSLSEASONID));
          }
          com.ccighgo.db.entities.FieldStaffSeason fsSeason = fieldStaffSeasonRepository.findOne(details.getFsSeasonId());
-         if(fsSeason==null){
+         if (fsSeason == null) {
             throw new CcighgoException(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
-         if(details.getSeasonStatus()!=null){
+         if (details.getSeasonStatus() != null) {
             fsSeason.setFieldStaffStatus(fieldStaffStatusRepository.findOne(details.getSeasonStatus().getSeasonStatusId()));
          }
-         if(details.getPaymentSchedule()!=null){
+         if (details.getPaymentSchedule() != null) {
             fsSeason.setPaymentSchedule(paymentScheduleRepository.findOne(details.getPaymentSchedule().getPaymentScheduleId()));
          }
-         fsSeason.setAgreeToTerms(details.isAgreementSigned()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
-         fsSeason.setIsRecruiterLC(details.isRecruiterLC()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+         fsSeason.setAgreeToTerms(details.isAgreementSigned() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         fsSeason.setIsRecruiterLC(details.isRecruiterLC() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fsSeason = fieldStaffSeasonRepository.saveAndFlush(fsSeason);
          updatedObject = getFSSeasonDetails(String.valueOf(fsSeason.getFiledStaffSeasonId()), String.valueOf(fsSeason.getFiledStaffSeasonId()));
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      }catch (CcighgoException e) {
-         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
+      } catch (CcighgoException e) {
+         updatedObject
+               .setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
       }
       return updatedObject;
    }

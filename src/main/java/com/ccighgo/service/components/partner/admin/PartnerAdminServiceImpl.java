@@ -554,6 +554,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				partnerRecruitmentAdminScreeningDetail.setLogo(partner.getPartnerLogo());
 				if (partnerLogin != null)
 					partnerRecruitmentAdminScreeningDetail.setUsername(partnerLogin.getLoginName());
+				if(partner.getIsSubPartner()!=null){
+				   pwt.setType(partner.getIsSubPartner().equals(CCIConstants.ACTIVE)?"sub partner":"partner");
+				}
 				pwt.setDetail(partnerRecruitmentAdminScreeningDetail);
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, logger);
