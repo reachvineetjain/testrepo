@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.service.components.sevis.SevisUtils;
+import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.alpha.common.NameNullableType;

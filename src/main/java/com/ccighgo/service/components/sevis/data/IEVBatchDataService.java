@@ -1,12 +1,7 @@
 package com.ccighgo.service.components.sevis.data;
 
-import java.io.File;
-
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.components.sevis.IBatchSchema;
-import com.ccighgo.service.components.sevis.SevisConstants;
-import com.ccighgo.service.components.sevis.SevisUtils;
 import com.google.common.base.Preconditions;
 
 import gov.ice.xmlschema.sevisbatch.alpha.common.BatchHeaderType;
@@ -17,13 +12,13 @@ import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.Ex
 
 @Service
 public interface IEVBatchDataService
-		extends IBatchDataService<SEVISBatchCreateUpdateEV>, IBatchSchema {
+		extends IBatchDataService<SEVISBatchCreateUpdateEV> {
 
-	default String getSchemaFile() {
-		String schemaDir = SevisUtils.getProperty(SevisConstants.SCHEMA_DIR);
-		String schemaFile = SevisUtils.getProperty(SevisConstants.EV_SCHEMA);
-		return schemaDir + File.separator + schemaFile;
-	}
+//	default String getSchemaFile() {
+//		String schemaDir = SevisUtils.getProperty(SevisConstants.SCHEMA_DIR);
+//		String schemaFile = SevisUtils.getProperty(SevisConstants.EV_SCHEMA);
+//		return schemaDir + File.separator + schemaFile;
+//	}
 
 	/**
 	 * Creates EV with minimal attributes for updates.

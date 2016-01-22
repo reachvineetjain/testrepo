@@ -1,10 +1,11 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.batch;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.sevis.common.SevisBatchErrorCode;
 import com.ccighgo.service.transport.common.response.beans.Status;
 import com.ccighgo.service.transport.sevis.BatchDetails;
 import com.ccighgo.utils.CCIConstants;

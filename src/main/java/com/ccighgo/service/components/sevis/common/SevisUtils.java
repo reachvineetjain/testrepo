@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.common;
 
 import java.io.File;
 import java.io.StringWriter;
@@ -77,60 +77,6 @@ public final class SevisUtils {
         String str = timestamp.toString().replace("-", "").replace("T", "").replace(":", "");
         return str.substring(0, str.lastIndexOf("."));
 	}
-
-	// public static String generateXMLBatchFile(Object jaxbObj, String
-	// fileName, String schemaFile) {
-	//
-	// Preconditions.checkArgument(jaxbObj != null);
-	// Preconditions.checkNotNull(fileName);
-	// Preconditions.checkArgument(!fileName.isEmpty());
-	// Preconditions.checkNotNull(schemaFile);
-	// Preconditions.checkArgument(!schemaFile.isEmpty());
-	//
-	// try {
-	// StopWatch sw = new StopWatch();
-	// sw.start();
-	// JAXBContext context = JAXBContext.newInstance(jaxbObj.getClass());
-	// sw.stop();
-	// System.out.println("JAXB context time = " + sw.getTotalTimeSeconds());
-	//
-	// Marshaller marshaller = context.createMarshaller();
-	// marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-	//
-	// // Write to System.out for debugging
-	//// marshaller.marshal(jaxbObj, System.out);
-	//
-	// // Set Schema for Validation
-	// SchemaFactory sf =
-	// SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-	// Schema schema = sf.newSchema(new File(schemaFile));
-	// marshaller.setSchema(schema);
-	//
-	// // validate with schema
-	// marshaller.marshal(jaxbObj, new DefaultHandler());
-	//
-	// // if here then already validated, disable validation, just write to
-	// // file.
-	// marshaller.setSchema(null);
-	//
-	// // Write to File
-	// sw.start();
-	// File outputFile = new File(fileName);
-	// marshaller.marshal(jaxbObj, outputFile);
-	// sw.stop();
-	// System.out.println("File write = " + sw.getTotalTimeSeconds());
-	//
-	// // save file to DB
-	//
-	// return outputFile.getCanonicalPath();
-	// } catch (JAXBException e) {
-	// throw new RuntimeException(e.getCause());
-	// } catch (IOException e) {
-	// throw new RuntimeException(e.getCause());
-	// } catch (SAXException e) {
-	// throw new RuntimeException(e.getCause());
-	// }
-	// }
 
 	public static TransactionLogType unmarshalSevisLog(File xmlFile) {
 		Preconditions.checkNotNull(xmlFile);

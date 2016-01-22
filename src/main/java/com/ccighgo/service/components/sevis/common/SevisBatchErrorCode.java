@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.common;
 
 public enum SevisBatchErrorCode {
 	POST_PARAM_NA(999990), BATCH_CREATE_FAILED(999991);

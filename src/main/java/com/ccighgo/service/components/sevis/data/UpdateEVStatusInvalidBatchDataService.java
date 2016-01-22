@@ -1,10 +1,10 @@
 package com.ccighgo.service.components.sevis.data;
 
-import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
+import static com.ccighgo.service.components.sevis.common.SevisUtils.generateBatchId;
 
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.service.components.sevis.SevisUtils;
+import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;

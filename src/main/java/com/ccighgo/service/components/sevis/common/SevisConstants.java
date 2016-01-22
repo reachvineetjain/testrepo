@@ -1,4 +1,4 @@
-package com.ccighgo.service.components.sevis;
+package com.ccighgo.service.components.sevis.common;
 
 public interface SevisConstants {
 	public static final String BATCH_FILES_PATH = "C:\\git\\CCIGHGO\\xml\\"; // test

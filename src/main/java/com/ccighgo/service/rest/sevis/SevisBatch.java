@@ -15,9 +15,9 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.component.serviceutils.ApplicationContextProvider;
-import com.ccighgo.service.components.sevis.EVBatchGenerator;
-import com.ccighgo.service.components.sevis.SevisUtils;
-import com.ccighgo.service.components.sevis.StuBatchGenerator;
+import com.ccighgo.service.components.sevis.batch.EVBatchGenerator;
+import com.ccighgo.service.components.sevis.batch.StuBatchGenerator;
+import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.components.sevis.data.CreateStudentBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVBioBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVFinancialInfoBatchDataService;

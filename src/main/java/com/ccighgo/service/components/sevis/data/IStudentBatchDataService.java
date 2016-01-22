@@ -1,12 +1,7 @@
 package com.ccighgo.service.components.sevis.data;
 
-import java.io.File;
-
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.components.sevis.IBatchSchema;
-import com.ccighgo.service.components.sevis.SevisConstants;
-import com.ccighgo.service.components.sevis.SevisUtils;
 import com.google.common.base.Preconditions;
 
 import gov.ice.xmlschema.sevisbatch.alpha.common.BatchHeaderType;
@@ -17,13 +12,13 @@ import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.
 
 @Service
 public interface IStudentBatchDataService
-		extends IBatchDataService<SEVISBatchCreateUpdateStudent>, IBatchSchema {
+		extends IBatchDataService<SEVISBatchCreateUpdateStudent> {
 
-	default String getSchemaFile() {
-		String schemaDir = SevisUtils.getProperty(SevisConstants.SCHEMA_DIR);
-		String schemaFile = SevisUtils.getProperty(SevisConstants.STU_SCHEMA);
-		return schemaDir + File.separator + schemaFile;
-	}
+//	default String getSchemaFile() {
+//		String schemaDir = SevisUtils.getProperty(SevisConstants.SCHEMA_DIR);
+//		String schemaFile = SevisUtils.getProperty(SevisConstants.STU_SCHEMA);
+//		return schemaDir + File.separator + schemaFile;
+//	}
 
 	/**
 	 * Creates Update.Student batch with required attributes.

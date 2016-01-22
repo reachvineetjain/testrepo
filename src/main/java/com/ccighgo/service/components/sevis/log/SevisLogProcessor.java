@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.springframework.stereotype.Component;
 
-import com.ccighgo.service.components.sevis.SevisUtils;
+import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.common.response.beans.Response;
 
 import gov.ice.xmlschema.sevisbatch.log.TransactionLogType;

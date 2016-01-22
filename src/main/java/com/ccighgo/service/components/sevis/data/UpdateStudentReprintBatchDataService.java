@@ -1,6 +1,6 @@
 package com.ccighgo.service.components.sevis.data;
 
-import static com.ccighgo.service.components.sevis.SevisUtils.generateBatchId;
+import static com.ccighgo.service.components.sevis.common.SevisUtils.generateBatchId;
 
 import java.util.List;
 import java.util.stream.Collectors;
