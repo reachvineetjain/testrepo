@@ -24,4 +24,6 @@ public interface AdminQuickStatsCategoriesAggregateRepository extends JpaReposit
       
    @Query("SELECT c FROM AdminQuickStatsCategoryAggregate c WHERE c.adminQuickStatsType.adminQSTypeId= ?1 AND c.adminQuickStatsCategory.adminQSCategoryId=?2")
    List<AdminQuickStatsCategoryAggregate> findAllAggregateValueForCategory(int quickStatsTypeId, Integer quickStatsCategoryId);
+   @Query("SELECT c FROM AdminQuickStatsCategoryAggregate c WHERE  c.adminQuickStatsCategory.adminQSCategoryId=?1")
+   List<AdminQuickStatsCategoryAggregate> findAllAggregateValueForCategory(int categoryId);
 }
