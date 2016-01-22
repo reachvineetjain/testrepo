@@ -43,4 +43,7 @@ public class PartnerAdminMessageConstants {
 public static final String EXCEPTION_UPDATEING_PARTNER_SEASON = "exception.update.partner.season";
 public static final String EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL = "exception.fetching.fs.pending.approval.applications";
 public static final String NO_DATA_FOR_THAT_USER_ID = "no.data.for.goId";
+public static final String EXCEPTION_FS_ADMIN_HOST_FAMILY = "exception.fetching.fieldstaff.hostfamily";
+public static final String EXCEPTION_FS_ADMIN_APPLICATION_STATS = "exception.fetching.fieldstaff.application.stats";
+public static final String EXCEPTION_FS_ADMIN_PROGRAM_STATS = "exception.fetching.fieldstaff.program.stats";
 }

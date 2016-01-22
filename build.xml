@@ -1482,5 +1482,20 @@
 			<arg value="${xsd.dir}/fieldstaff/PaymentScheduleList.xsd" />
 		</java>
 	</target>
-
+	
+	<!--  Application Stats -->
+	<target name="FS Admin Application Stats ">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/dashboard/stats/ApplicationStats.xsd" />
+		</java>
+	</target>
+	<target name="FS Admin Program Stats ">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/dashboard/stats/ProgramStats.xsd" />
+		</java>
+	</target>
 </project>

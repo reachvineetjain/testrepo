@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.FieldStaffsInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.AdminFieldStaffHostFamily;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffapplication.FieldStaffapplication;
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStats;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStats;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quicklinks.FieldStaffDashboardQuickLinks;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatscategory.FieldStaffDashboardQuickStatsCategory;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatstitles.FieldStaffDashboardQuickStatsTitles;
@@ -101,8 +104,30 @@ public class FieldStaffs {
       return fieldStaffsInterface.getFSPendingApplication(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType) ;
    }
    
+   //Statistics
+   //Application Stats
+   @GET
+   @Path("applicationStats/{typeId}/{categoryId}/")
+   @Produces("application/json")
+   public FieldStaffDashboardApplicationStats getFSApplicationStats(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId) {
+	   return fieldStaffsInterface.getFSApplicationStats(Integer.parseInt(typeId),Integer.parseInt(categoryId)); 
+   }
+   @GET
+   @Path("programStats/{categoryId}/")
+   @Produces("application/json")
+   public FieldStaffDashboardProgramStats getFSProgramStats( @PathParam("categoryId") String categoryId) {
+	   return fieldStaffsInterface.getFSProgramStats(Integer.parseInt(categoryId)); 
+   }
    
-
+   
+   //Page 13
+   @GET
+   @Path("hostFamilies/{fieldStaffId}/{flagId}/{category}")
+   @Produces("application/json")
+   public AdminFieldStaffHostFamily getFSHostFamilies(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("flagId") String flagId, @PathParam("category") String category) {
+	   return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),Integer.parseInt(flagId),category);
+   }
+   
    /**
     * @param partnerUserId
     * @return
