@@ -14,12 +14,6 @@ import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.
 public interface IStudentBatchDataService
 		extends IBatchDataService<SEVISBatchCreateUpdateStudent> {
 
-//	default String getSchemaFile() {
-//		String schemaDir = SevisUtils.getProperty(SevisConstants.SCHEMA_DIR);
-//		String schemaFile = SevisUtils.getProperty(SevisConstants.STU_SCHEMA);
-//		return schemaDir + File.separator + schemaFile;
-//	}
-
 	/**
 	 * Creates Update.Student batch with required attributes.
 	 * 

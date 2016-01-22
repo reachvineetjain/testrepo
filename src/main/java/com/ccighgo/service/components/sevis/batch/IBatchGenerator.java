@@ -10,6 +10,4 @@ public interface IBatchGenerator<T> {
 	public BatchDetails createBatch(BatchParam batchParam, IBatchDataService<T> batchDataService,
 			ServletContext servletContext);
 
-	public String getBatchSchemaFile();
-
 }

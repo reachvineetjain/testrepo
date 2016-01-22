@@ -14,12 +14,6 @@ import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.Ex
 public interface IEVBatchDataService
 		extends IBatchDataService<SEVISBatchCreateUpdateEV> {
 
-//	default String getSchemaFile() {
-//		String schemaDir = SevisUtils.getProperty(SevisConstants.SCHEMA_DIR);
-//		String schemaFile = SevisUtils.getProperty(SevisConstants.EV_SCHEMA);
-//		return schemaDir + File.separator + schemaFile;
-//	}
-
 	/**
 	 * Creates EV with minimal attributes for updates.
 	 * 

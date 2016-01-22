@@ -129,6 +129,28 @@ public final class SevisUtils {
 
 		return true;
 	}
+	
+	public static boolean validateJaxb(JAXBContext ctx, Object jaxb, File schemaFile) {
+		Marshaller marshaller;
+		try {
+			marshaller = ctx.createMarshaller();
+
+			// Set Schema for Validation
+			SchemaFactory sf = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			marshaller.setSchema(sf.newSchema(schemaFile));
+
+			// validate with schema
+			marshaller.marshal(jaxb, new DefaultHandler());
+
+			return true;
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 
 	/**
 	 * Marshals JAXB object into XML file.
@@ -145,6 +167,19 @@ public final class SevisUtils {
 		marshaller.marshal(jaxb, file);
 
 		return true;
+	}
+	
+	public static boolean marshalJaxbToFile(JAXBContext ctx, Object jaxb, File file) {
+		Marshaller marshaller;
+		try {
+			marshaller = ctx.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaller.marshal(jaxb, file);
+			return true;
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	/**

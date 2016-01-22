@@ -70,7 +70,7 @@ public class NotificationServer {
 		SessionRegistry.INSTANCE.removeSession(session);
 	}
 	
-	@Scheduled(fixedDelay = 10000)
+//	@Scheduled(fixedDelay = 10000)
 	public void execute() {
 		System.out.println("........ scheduled notification task ..........");
 		System.out.println("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
