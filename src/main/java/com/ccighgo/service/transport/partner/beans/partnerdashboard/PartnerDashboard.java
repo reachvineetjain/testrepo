@@ -55,6 +55,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "lastName",
     "photoPath",
     "isSubpartner",
+    "canHaveSubpartners",
     "partnerPrograms",
     "userProgramsAndPermissions"
 })
@@ -76,6 +77,7 @@ public class PartnerDashboard
     @XmlElement(required = true)
     protected String photoPath;
     protected boolean isSubpartner;
+    protected boolean canHaveSubpartners;
     @XmlElement(required = true)
     protected List<PartnerProgram> partnerPrograms;
     @XmlElement(required = true)
@@ -255,6 +257,22 @@ public class PartnerDashboard
      */
     public void setIsSubpartner(boolean value) {
         this.isSubpartner = value;
+    }
+    
+    /**
+     * Gets the value of the canHaveSubpartners property.
+     * 
+     */
+    public boolean canHaveSubpartners() {
+        return canHaveSubpartners;
+    }
+
+    /**
+     * Sets the value of the canHaveSubpartners property.
+     * 
+     */
+    public void setCanHaveSubpartners(boolean value) {
+        this.canHaveSubpartners = value;
     }
 
     /**

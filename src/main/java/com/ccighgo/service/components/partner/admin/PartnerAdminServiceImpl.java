@@ -892,7 +892,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					ad.setCountry(String.valueOf(dr[10]));
 					ad.setFlagUrl(String.valueOf(dr[12]));
 					ad.setSunmittedOn(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
-					ad.setFollowUpDate(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+					ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
 					if (String.valueOf(dr[15]) != null)
 						ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
 					rca.getChangeInAllocation().add(ad);
@@ -948,11 +948,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 						nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
 					nrd.setNoteValue(String.valueOf(dr[11]));
 					nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
-					if (String.valueOf(dr[13]) != null)
+					if (dr[13] != null)
 						nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
 					nrd.setNoteTopicRoll(String.valueOf(dr[14]));
 					nrd.setNoteRoll(String.valueOf(dr[15]));
+					System.out.println(dr[10]);
 					nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
+					System.out.println(DateUtils.getMysqlDateFromString(String.valueOf(dr[10])));
 					nr.getNotesReview().add(nrd);
 				}
 				nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),

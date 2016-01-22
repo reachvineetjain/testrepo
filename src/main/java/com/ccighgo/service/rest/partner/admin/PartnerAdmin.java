@@ -13,7 +13,6 @@ import javax.ws.rs.Produces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccighgo.service.components.partner.admin.AssignSeasonToSubPartner;
 import com.ccighgo.service.components.partner.admin.PartnerAdminOverviewDeletedContacts;
@@ -33,7 +32,6 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOv
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
-import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipants;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartners;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.quicklinks.PartnerAdminDashboardQuickLinks;
