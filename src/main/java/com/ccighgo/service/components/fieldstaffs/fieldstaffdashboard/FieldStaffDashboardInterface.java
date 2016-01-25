@@ -1,7 +1,7 @@
 package com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard;
 
-import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardcategories.ErdDashboardCategories;
-import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardtype.ErdDashboardTypes;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
+
 
 /**
  * @author sinshaw.demisse
@@ -13,11 +13,6 @@ public interface FieldStaffDashboardInterface {
     * @param programId
     * @return ErdDashboardTypes
     */
-   ErdDashboardTypes getErdDashboardWorkQueuesType(String programId,String fieldStaffGoId);
+   ErdDashboard getErdDashboardWorkQueues(String fieldStaffGoId);
 
-   /**
-    * @param typeId
-    * @return ErdDashboardCategories
-    */
-   ErdDashboardCategories getErdDashboardWorkQueuesCategories(String typeId,String fieldStaffGoId);
 }

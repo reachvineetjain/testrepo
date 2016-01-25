@@ -3,8 +3,6 @@ package com.ccighgo.service.components.fieldstaffs.placements;
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants;
-import com.ccighgo.service.transport.fieldstaff.beans.placement.adminerdplacement.AdminERDPlacement;
-import com.ccighgo.service.transport.fieldstaff.beans.placement.adminerdplacement.AdminERDPlacements;
 import com.ccighgo.service.transport.fieldstaff.beans.placement.erdplacement.ERDPlacements;
 import com.ccighgo.service.transport.fieldstaff.beans.placement.participants.ERDPlacementParticipants;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.myplacement.MyPlacements;

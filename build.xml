@@ -12,7 +12,7 @@
 		PartnerStatus,PartnerSeasonDocumentParameters,PartnerAdminIHPSeasonDetails,GenericPartnerSeasonContracts,AdminAddPartner,PartnerSeasonIHPDetail,CCIUsersList,AddedPartners,
 		LeadPartners,PartnerStatusAsPattern,FieldStaffLCList,FieldStaffRMList,FieldStaffSeasons,FieldSatffOverview, AddedFieldStaff,GenericFieldStaffNoteTopic,FieldStaffApplication,
 		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus,
-        ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,ErdDashboardType,ErdDashboardCategories,MyPlacements,ErdDashboardTitle,ErdDashboardPoints,MyFieldStaffLeadership
+        ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,MyPlacements,MyFieldStaffLeadership
 		,AdminERDPlacement,ERDPlacement,FieldStaffNetwork,ERDPlacementParticipants,AdminERDParticipant,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList" />
 
 
@@ -1300,35 +1300,11 @@
 		</java>
 	</target>
 
-	<target name="ErdDashboardType">
+	<target name="ErdDashboard">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboardType.xsd" />
-		</java>
-	</target>
-
-	<target name="ErdDashboardCategories">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboardCategories.xsd" />
-		</java>
-	</target>
-
-	<target name="ErdDashboardTitle">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboardTitle.xsd" />
-		</java>
-	</target>
-
-	<target name="ErdDashboardPoints">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboardPoints.xsd" />
+			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboard.xsd" />
 		</java>
 	</target>
 
