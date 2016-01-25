@@ -66,7 +66,6 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
          e.printStackTrace();
       }
       Auth auth = new Auth();
-         
       try
       {
          if (userName != null && !(userName.isEmpty())) {
@@ -173,6 +172,12 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
          e.printStackTrace();
       }
       return partnerService.getPartnerInquiryLeadData(partnerGoId);
+   }
+
+   @Override
+   public PartnerRecruitmentLead getFSDashboard(int parseInt) {
+      // TODO Auto-generated method stub
+      return null;
    }
 
 }

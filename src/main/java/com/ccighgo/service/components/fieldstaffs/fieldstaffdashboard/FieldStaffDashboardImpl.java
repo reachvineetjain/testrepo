@@ -17,7 +17,6 @@ import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashbo
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardcategories.ErdDashboardCategories;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardtype.ErdDashboardTypeDetails;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardtype.ErdDashboardTypes;
-import com.sun.org.apache.xml.internal.security.encryption.AgreementMethod;
 
 @Component
 public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
@@ -33,7 +32,6 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
 
    @Override
    public ErdDashboardTypes getErdDashboardWorkQueuesType(String programId, String fieldStaffGoId) {
-
       ErdDashboardTypes erdDashboardTypes = new ErdDashboardTypes();
       List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes = fieldStaffWorkQueueTypeRepository.getFieldStaffWorkQueueTypesByDepartmentProgramId(Integer.valueOf(programId));
       if(fieldStaffWorkQueueTypes!=null)
