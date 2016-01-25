@@ -2,18 +2,22 @@ package com.ccighgo.service.components.fieldstaffs;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.AdminQuickStatsCategoryAggregate;
 import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffStatus;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffStatusRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
@@ -23,14 +27,26 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchool;
+import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchoolDetail;
+import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.AdminFieldStaffHostFamily;
+import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.FSHostFamilies;
+import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.FSPendingApplication;
+import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffCurrentStatus;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffDetail;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStats;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStatsDetails;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStats;
+import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStatsDetails;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.reuse.function.ReusedFunctions;
 import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 
@@ -48,7 +64,9 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @Autowired ReusedFunctions reusedFunctions;
    @Autowired LoginHistoryRepository loginHistoryRepository;
    @Autowired EmailServiceImpl emailingService;
-
+@Autowired AdminQuickStatsCategoriesAggregateRepository adminQuickStatsCategoriesAggregateRepository;
+	@PersistenceContext
+	EntityManager em;
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
       try {
@@ -223,5 +241,202 @@ public class FieldStaffImpl implements FieldStaffsInterface {
       }
       return url;
    }
+
+@Override
+public PendingApplication getFSPendingApplication(int typeId, int categoryId, int staffUserId, String roleType) {
+	PendingApplication pwqa = new PendingApplication();
+	try {
+		@SuppressWarnings("unchecked")
+		List<Object[]> result = em.createNativeQuery("call SPAdminWQFieldStaffPendingApproval(:typeId,:categoryId,:cciStaffUserId,:roleType)").setParameter("typeId", typeId)
+				.setParameter("categoryId", categoryId).setParameter("cciStaffUserId", staffUserId).setParameter("roleType", roleType).getResultList();
+		if (result != null) {
+			if(!result.isEmpty()){
+			for (Object[] wq : result) {
+				FSPendingApplication pd = new FSPendingApplication();
+				pd.setFieldStaffGoId(Integer.parseInt(String.valueOf(wq[0])));
+				pd.setFirstName(String.valueOf(wq[1]));
+				pd.setLastName(String.valueOf(wq[2]));
+				pd.setRole(String.valueOf(wq[3]));
+				pd.setStatusName(String.valueOf(wq[4]));
+				if (wq[5] != null) {
+					String submittedOn = String.valueOf(wq[5]);
+					pd.setSubmittedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(submittedOn)));
+				}
+				pd.setPhone(String.valueOf(wq[6]));
+				pd.setEmail(String.valueOf(wq[7]));
+				pd.setCity(String.valueOf(wq[8]));
+				pd.setState(String.valueOf(wq[9]));
+				pd.setZipcode(String.valueOf(wq[10]));
+				if (wq[11] != null) {
+					String followUpdate = String.valueOf(wq[11]);
+					pd.setFollowupDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(followUpdate)));
+				}
+				
+				pwqa.getFieldStaffPendingApplications().add(pd);
+			}
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}else{
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}
+		} else {
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+	} catch (Exception e) {
+		ExceptionUtil.logException(e, LOGGER);
+		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL)));
+		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL));
+	}
+	return pwqa;
+}
+
+@Override
+public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId, String category) {
+	AdminFieldStaffHostFamily pwqa = new AdminFieldStaffHostFamily();
+	try {
+		@SuppressWarnings("unchecked")
+		List<Object[]> result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
+				.setParameter("flagId", flagId).setParameter("category", category).getResultList();
+		if (result != null) {
+			if(!result.isEmpty()){
+			for (Object[] wq : result) {
+				FSHostFamilies pd = new FSHostFamilies();
+				pd.setGoId(Integer.valueOf(String.valueOf(wq[0])));
+				pd.setName(String.valueOf(wq[1]));
+				pd.setAddress(String.valueOf(wq[2]));
+				pd.setEmail(String.valueOf(wq[3]));
+				pd.setLocalCoordinator(String.valueOf(wq[4]));
+				pd.setSeasons(String.valueOf(wq[5]));
+				pd.setApplicationStatus(String.valueOf(wq[6]));
+				
+				pwqa.getHostFamilies().add(pd);
+			}
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}else{
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
+						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}
+		} else {
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+	} catch (Exception e) {
+		ExceptionUtil.logException(e, LOGGER);
+		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_HOST_FAMILY.getValue(),
+				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY)));
+		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY));
+	}
+	return pwqa;
+}
+
+@Override
+public FieldStaffDashboardApplicationStats getFSApplicationStats(int typeId, int categoryId) {
+	FieldStaffDashboardApplicationStats pwqa = new FieldStaffDashboardApplicationStats();
+	try {
+		List<AdminQuickStatsCategoryAggregate> result  =adminQuickStatsCategoriesAggregateRepository.findAllAggregateValueForCategory(typeId, categoryId) ;
+		if (result != null) {
+			if(!result.isEmpty()){
+			for (AdminQuickStatsCategoryAggregate wq : result) {
+				FieldStaffDashboardApplicationStatsDetails pd = new FieldStaffDashboardApplicationStatsDetails();
+				pd.setCategoryAggregate(wq.getAdminQSCategoryAggregate()+"");
+				pd.setCategoryName(wq.getAdminQSCategoryName());
+				pd.setRecordStatus(wq.getStatus());
+				pd.setTypeId(typeId);
+				pd.setCategoryId(categoryId);
+				pwqa.getApplicationStats().add(pd);
+			}
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_APPLICATION_STATS.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}else{
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_APPLICATION_STATS.getValue(),
+						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}
+		} else {
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_APPLICATION_STATS.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+	} catch (Exception e) {
+		ExceptionUtil.logException(e, LOGGER);
+		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_APPLICATION_STATS.getValue(),
+				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_APPLICATION_STATS)));
+		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_APPLICATION_STATS));
+	}
+	return pwqa;
+}
+
+@Override
+public FieldStaffDashboardProgramStats getFSProgramStats(int categoryId) {
+	FieldStaffDashboardProgramStats pwqa = new FieldStaffDashboardProgramStats();
+	try {
+		List<AdminQuickStatsCategoryAggregate> result  =adminQuickStatsCategoriesAggregateRepository.findAllAggregateValueForCategory(categoryId) ;
+		if (result != null) {
+			if(!result.isEmpty()){
+			for (AdminQuickStatsCategoryAggregate wq : result) {
+				FieldStaffDashboardProgramStatsDetails pd = new FieldStaffDashboardProgramStatsDetails();
+				pd.setCategoryAggregate(wq.getAdminQSCategoryAggregate()+"");
+ 				pd.setRecordStatus(wq.getStatus());
+ 				pwqa.getProgramStats().add(pd);
+			}
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_PROGRAM_STATS.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}else{
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_PROGRAM_STATS.getValue(),
+						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}
+		} else {
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_PROGRAM_STATS.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+	} catch (Exception e) {
+		ExceptionUtil.logException(e, LOGGER);
+		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_PROGRAM_STATS.getValue(),
+				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_PROGRAM_STATS)));
+		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_PROGRAM_STATS));
+	}
+	return pwqa;
+}
+
+@Override
+public FSAddedSchool getAddedSchools(int fieldStaffId) {
+	FSAddedSchool pwqa = new FSAddedSchool();
+	try {
+		@SuppressWarnings("unchecked")
+		List<Object[]> result = em.createNativeQuery("call SPFieldStaffSchoolList(:fieldStaffId)").setParameter("fieldStaffId", fieldStaffId)
+				.getResultList();
+		if (result != null) {
+			if(!result.isEmpty()){
+			for (Object[] wq : result) {
+				FSAddedSchoolDetail pd = new FSAddedSchoolDetail();
+				pd.setGoId(Integer.valueOf(String.valueOf(wq[0])));
+				pd.setName(String.valueOf(wq[1]));
+				pd.setCity(String.valueOf(wq[2]));
+				pd.setState(String.valueOf(wq[3]));
+				pd.setContactName(String.valueOf(wq[4]));
+				pd.setContactPhone(String.valueOf(wq[5]));
+				pd.setContactEmail(String.valueOf(wq[6]));
+				pwqa.getAddedSchool().add(pd);
+			}
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_ADDED_SCHOOL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}else{
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_ADDED_SCHOOL.getValue(),
+						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			}
+		} else {
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_ADDED_SCHOOL.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		}
+	} catch (Exception e) {
+		ExceptionUtil.logException(e, LOGGER);
+		pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_ADDED_SCHOOL.getValue(),
+				messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_ADDED_SCHOOL)));
+		LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_ADDED_SCHOOL));
+	}
+	return pwqa;
+}
 
 }

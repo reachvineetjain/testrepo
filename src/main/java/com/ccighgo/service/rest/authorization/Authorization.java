@@ -81,4 +81,11 @@ public class Authorization {
       return authorizationManager.getPartnerAgentDashboard(Integer.parseInt(partnerGoId));
    }
    
+   @GET
+   @Path("fs/{goId}")
+   @Produces("application/json")
+   public PartnerRecruitmentLead getFSDashboard(@PathParam("goId") String goId) {
+      return authorizationManager.getFSDashboard(Integer.parseInt(goId));
+   }
+   
 }

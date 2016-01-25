@@ -535,6 +535,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				if (partner.getMultiCountrySender() != null)
 					partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partner.getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
 				partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partner.getQuickbooksCode());
+				partnerRecruitmentAdminScreeningDetail.setAcronym(partner.getAcronym());
 				try {
 					if (partnerPrograms != null)
 						for (PartnerProgram partnerProgram : partnerPrograms) {
@@ -554,6 +555,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				partnerRecruitmentAdminScreeningDetail.setLogo(partner.getPartnerLogo());
 				if (partnerLogin != null)
 					partnerRecruitmentAdminScreeningDetail.setUsername(partnerLogin.getLoginName());
+				if(partner.getIsSubPartner()!=null){
+				   pwt.setType(partner.getIsSubPartner().equals(CCIConstants.ACTIVE)?"sub partner":"partner");
+				}
 				pwt.setDetail(partnerRecruitmentAdminScreeningDetail);
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, logger);
@@ -891,7 +895,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					ad.setCountry(String.valueOf(dr[10]));
 					ad.setFlagUrl(String.valueOf(dr[12]));
 					ad.setSunmittedOn(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[11]))));
-					ad.setFollowUpDate(DateUtils.getMMddyyDate(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
+					ad.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[8]))));
 					if (String.valueOf(dr[15]) != null)
 						ad.setPartnerSeasonAllocationId(Integer.valueOf(String.valueOf(dr[15])));
 					rca.getChangeInAllocation().add(ad);
@@ -947,11 +951,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 						nrd.setPartnerNoteId(Integer.valueOf(String.valueOf(dr[9])));
 					nrd.setNoteValue(String.valueOf(dr[11]));
 					nrd.setNoteTopicCreatedBy(String.valueOf(dr[12]));
-					if (String.valueOf(dr[13]) != null)
+					if (dr[13] != null)
 						nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
 					nrd.setNoteTopicRoll(String.valueOf(dr[14]));
 					nrd.setNoteRoll(String.valueOf(dr[15]));
+					System.out.println(dr[10]);
 					nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
+					System.out.println(DateUtils.getMysqlDateFromString(String.valueOf(dr[10])));
 					nr.getNotesReview().add(nrd);
 				}
 				nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
@@ -1366,13 +1372,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
 			PartnerUser pc = new PartnerUser();
 			Login login = loginRepository.findOne(contactsDetails.getLoginId());
+			if(login==null){
+				pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_LOGIN_DATA.getValue(),
+						messageUtil.getMessage(PartnerAdminMessageConstants.NO_DATA_FOR_THAT_USER_ID)));
+ 				return pContacts;
+			}
+			if(contactsDetails.getEmail()!=null)
 			login.setEmail(contactsDetails.getEmail());
 			pc.setLogin(login);
 			pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
+			if(contactsDetails.getEmergencyPhone()!=null)
 			pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+			if(contactsDetails.getFax()!=null)
 			pc.setFax(contactsDetails.getFax());
+			if(contactsDetails.getFirstName()!=null)
 			pc.setFirstName(contactsDetails.getFirstName());
 			pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
+			if(contactsDetails.getLastName()!=null)
 			pc.setLastName(contactsDetails.getLastName());
 			Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
 			pc.setPartner(partner);

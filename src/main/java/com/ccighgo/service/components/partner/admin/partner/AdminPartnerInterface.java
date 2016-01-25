@@ -74,6 +74,6 @@ public interface AdminPartnerInterface {
     * @param loginVal
     * @return
     */
-   public Response partnerLeadSendLogin(String partnerGoId, String loginVal, HttpServletRequest request);
+   public Response partnerLeadSendLogin(String partnerGoId, String loginVal,String loginId, HttpServletRequest request);
 
 }

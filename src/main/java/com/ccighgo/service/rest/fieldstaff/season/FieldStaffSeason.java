@@ -5,6 +5,7 @@ package com.ccighgo.service.rest.fieldstaff.season;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaff.season.FieldStaffSeasonService;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.fieldstaff.beans.season.details.FieldStaffAdminSeasonDetails;
 import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeasons;
+import com.ccighgo.service.transport.utility.beans.fs.status.list.FieldStaffStatusList;
+import com.ccighgo.service.transport.utility.beans.payment.schedule.PaymentScheduleList;
 
 /**
  * @author ravi
@@ -44,7 +48,39 @@ public class FieldStaffSeason {
    public Response updateSignedContract(@PathParam("fslSeasonId") String fslSeasonId, @PathParam("seasonId") String seasonId,
          @PathParam("deparmentProgramId") String deparmentProgramId, @PathParam("statusVal") String statusVal) {
       LOGGER.info("calling FieldStaffSeason.updateSignedContract ");
-      return fieldStaffSeasonService.updateSignedContract(fslSeasonId,seasonId,deparmentProgramId,statusVal);
+      return fieldStaffSeasonService.updateSignedContract(fslSeasonId, seasonId, deparmentProgramId, statusVal);
+   }
+
+   @GET
+   @Path("details/{fieldStaffGoId}/{fsSeasonId}")
+   @Produces("application/json")
+   public FieldStaffAdminSeasonDetails getFSSeasonDetails(@PathParam("fieldStaffGoId") String fieldStaffGoId, @PathParam("fsSeasonId") String fsSeasonId) {
+      LOGGER.info("calling FieldStaffSeason.getFSSeasonDetails ");
+      return fieldStaffSeasonService.getFSSeasonDetails(fieldStaffGoId, fsSeasonId);
+   }
+   
+   @GET
+   @Path("status/list")
+   @Produces("application/json")
+   public FieldStaffStatusList getFieldStaffStatusList() {
+      LOGGER.info("calling FieldStaffSeason.getFieldStaffStatusList ");
+      return fieldStaffSeasonService.getFieldStaffStatusList();
+   }
+   
+   @GET
+   @Path("payment/schedule/list")
+   @Produces("application/json")
+   public PaymentScheduleList getPaymentScheduleList() {
+      LOGGER.info("calling FieldStaffSeason.getPaymentScheduleList ");
+      return fieldStaffSeasonService.getPaymentScheduleList();
+   }
+   
+   @POST
+   @Path("update")
+   @Produces("application/json")
+   public FieldStaffAdminSeasonDetails updateFieldStaffAdminSeasonDetails(FieldStaffAdminSeasonDetails details) {
+      LOGGER.info("calling FieldStaffSeason.updateFieldStaffAdminSeasonDetails ");
+      return fieldStaffSeasonService.updateFieldStaffAdminSeasonDetails(details);
    }
 
 }

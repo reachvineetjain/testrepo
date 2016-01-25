@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -188,6 +189,18 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          pUser.setActive(CCIConstants.ACTIVE);
          pUser.setIsPrimary(CCIConstants.ACTIVE);
          pUser = partnerUserRepository.saveAndFlush(pUser);
+         
+         PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
+         reviewStatus.setPartner(newPartner);
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(11));
+         CCIStaffUser cciUser = null;
+         Login cciLogin = loginRepository.findOne(partner.getLoginId());
+         if(cciLogin!=null){
+            cciUser = cciStaffUsersRepository.findOne(cciLogin.getGoIdSequence().getGoId());
+         }
+         reviewStatus.setCcistaffUser(cciUser);
+         partnerReviewStatusRepository.saveAndFlush(reviewStatus);
+         
 
          if (partner.getProgramContacts() != null) {
             List<PartnerProgram> partnerProgramList = new ArrayList<PartnerProgram>();
@@ -241,7 +254,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             List<PartnerUser> partnerUserList = p.getPartnerUsers();
             if (partnerUserList != null) {
                for (PartnerUser pu : partnerUserList) {
-                  if (pu.getIsPrimary() == CCIConstants.ACTIVE) {
+                   if (pu.getIsPrimary().equals(CCIConstants.ACTIVE)) {
                      puser = pu;
                      break;
                   }
@@ -497,22 +510,97 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    }
 
    @Override
-   public Response partnerLeadSendLogin(String partnerGoId, String loginVal, HttpServletRequest request) {
+   public Response partnerLeadSendLogin(String partnerGoId, String loginVal,String loginId, HttpServletRequest request) {
       Response resp = new Response();
       try {
          if (loginVal == null) {
             throw new CcighgoException("send login value is required");
          }
-         PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
-         if (Integer.valueOf(loginVal).equals(SEND_LOGIN)) {
-            sendLogin(partnerGoId, request);
-            partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
-         } else {
-            partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
+         if(loginId==null){
+            throw new CcighgoException("login id is required");
          }
-         partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
-         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         PartnerAgentInquiry p = partnerAgentInquiryRepository.findPartnerByGoId(Integer.valueOf(partnerGoId));
+         if(p!=null){
+            // create login
+            Login login = new Login();
+            login.setActive(CCIConstants.ACTIVE);
+            GoIdSequence goIdSequence = new GoIdSequence();
+            goIdSequence.setGoId(Integer.valueOf(partnerGoId));
+            login.setGoIdSequence(goIdSequence);
+            login.setLoginName(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString());
+            login.setKeyValue(UuidUtils.nextHexUUID());
+            login.setEmail(p.getEmail());
+            login.setPassword(PasswordUtil.hashKey(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString()));
+            login.setCreatedBy(Integer.valueOf(loginId));
+            login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            login.setModifiedBy(Integer.valueOf(loginId));
+            login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            login = loginRepository.saveAndFlush(login);
+
+            // set login user type
+            LoginUserType loginUserType = new LoginUserType();
+            loginUserType.setLogin(login);
+            loginUserType.setUserType(userTypeRepository.findOne(2));
+            loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
+            loginUserType.setActive(CCIConstants.ACTIVE);
+            if (login.getLoginId() != null)
+               loginUserType.setCreatedBy(login.getLoginId());
+            loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            if (login.getLoginId() != null)
+               loginUserType.setModifiedBy(login.getLoginId());
+            loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            loginUserTypeRepository.saveAndFlush(loginUserType);
+
+            Partner newPartner = new Partner();
+            newPartner.setPartnerGoId(Integer.valueOf(partnerGoId));
+            newPartner.setPartnerLogo(p.getLogo());
+            newPartner.setCompanyName(p.getBusinessName());
+            newPartner.setEmail(p.getEmail());
+            newPartner.setCanHaveSubPartner(CCIConstants.ACTIVE);
+            // initializing all flags to false
+            newPartner.setReceiveAYPMails(CCIConstants.INACTIVE);
+            newPartner.setSubscribeToCCINewsletter(CCIConstants.INACTIVE);
+            newPartner.setHasSubPartners(CCIConstants.INACTIVE);
+            newPartner.setMultiCountrySender(CCIConstants.INACTIVE);
+            newPartner.setIsSubPartner(CCIConstants.INACTIVE);
+            newPartner.setPayGreenheartDirectly(CCIConstants.INACTIVE);
+            newPartner.setDeliverDSForms(CCIConstants.INACTIVE);
+            newPartner.setNeedPartnerReview(CCIConstants.INACTIVE);
+            newPartner.setMailingAddressIsSameAsPhysicalAdress(CCIConstants.ACTIVE);
+            newPartner.setParticipantMedicalReleaseRequired(CCIConstants.INACTIVE);
+            newPartner.setParticipantSLEPRequired(CCIConstants.INACTIVE);
+            newPartner.setParticipantTranscriptRequired(CCIConstants.INACTIVE);
+            newPartner.setUnguaranteedFormRequired(CCIConstants.INACTIVE);
+            newPartner.setParticipantELTISRequired(CCIConstants.INACTIVE);
+            newPartner.setLookupCountry1(countryRepository.findOne(p.getLookupCountry().getCountryId()));
+            newPartner.setLookupCountry2(countryRepository.findOne(p.getLookupCountry().getCountryId()));
+            newPartner.setCreatedBy(Integer.valueOf(loginId));
+            newPartner.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            newPartner.setModifiedBy(Integer.valueOf(loginId));
+            newPartner.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            newPartner = partnerRepository.saveAndFlush(newPartner);
+
+            PartnerUser pUser = new PartnerUser();
+            pUser.setPartner(newPartner);
+            pUser.setLogin(login);
+            pUser.setSalutation(salutationRepositotry.findOne(p.getSalutation().getSalutationId()));
+            pUser.setFirstName(p.getFirstName());
+            pUser.setLastName(p.getLastName());
+            pUser.setActive(CCIConstants.ACTIVE);
+            pUser.setIsPrimary(CCIConstants.ACTIVE);
+            pUser = partnerUserRepository.saveAndFlush(pUser);
+            
+            PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
+            if (Integer.valueOf(loginVal).equals(SEND_LOGIN)) {
+               sendLogin(String.valueOf(newPartner.getPartnerGoId()), request);
+               partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
+            } else {
+               partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
+            }
+            partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
       } catch (CcighgoException e) {
          resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
