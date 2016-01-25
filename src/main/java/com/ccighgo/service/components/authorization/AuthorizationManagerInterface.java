@@ -50,4 +50,10 @@ public interface AuthorizationManagerInterface {
     */
    public PartnerRecruitmentLead getPartnerAgentDashboard(int partnerGoId);
 
+   /**
+    * @param parseInt
+    * @return
+    */
+   public PartnerRecruitmentLead getFSDashboard(int parseInt);
+
 }
