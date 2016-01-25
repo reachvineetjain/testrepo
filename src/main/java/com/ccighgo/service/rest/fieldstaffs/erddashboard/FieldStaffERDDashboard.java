@@ -24,22 +24,29 @@ public class FieldStaffERDDashboard {
 
    @Autowired
    FieldStaffDashboardInterface fieldStaffDashboardInterface;
+   
+   @GET
+   @Path("ping/{name}")
+  public String ping( @PathParam("name")String name)
+   {
+      return name;
+   }
 
    /**
     * @return
     */
    @GET
-   @Path("workQueueType/{programId}")
+   @Path("workQueueType/{programId}/{fieldStaffGoId}")
    @Produces("application/json")
-   public ErdDashboardTypes getWorkQueuesType(@PathParam("programId")String programId) {
-      return fieldStaffDashboardInterface.getErdDashboardWorkQueuesType(programId);
+   public ErdDashboardTypes getWorkQueuesType(@PathParam("programId")String programId, @PathParam("fieldStaffGoId")String fieldStaffGoId) {
+      return fieldStaffDashboardInterface.getErdDashboardWorkQueuesType(programId,fieldStaffGoId);
    }
 
    @GET
-   @Path("workQueueCategory/{typeId}")
+   @Path("workQueueCategory/{typeId}/{fieldStaffGoId}")
    @Produces("application/json")
-   public ErdDashboardCategories getWorkQueuesCategories(@PathParam("typeId") String typeId) {
-      return fieldStaffDashboardInterface.getErdDashboardWorkQueuesCategories(typeId);
+   public ErdDashboardCategories getWorkQueuesCategories(@PathParam("typeId") String typeId, @PathParam("fieldStaffGoId")String fieldStaffGoId) {
+      return fieldStaffDashboardInterface.getErdDashboardWorkQueuesCategories(typeId,fieldStaffGoId);
    }
    
    //public ErdDashboardTitles getWorkQueuesCategories()

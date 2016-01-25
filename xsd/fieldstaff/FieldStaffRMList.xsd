@@ -26,7 +26,8 @@
 
    <xsd:complexType name="FieldStaffRM">
       <xsd:sequence>
-         <xsd:element name="fsLcGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+          <xsd:element name="fsGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fsPic" type="xsd:string" minOccurs="1" maxOccurs="1"/>
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -40,20 +41,20 @@
    </xsd:complexType>
    
    <xsd:complexType name="RMSeasonContact">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      <xsd:sequence>       
+         <xsd:element name="seasonProgramId" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="regionalDirector" type="pu:Contact" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="executiveRegionalDirector" type="pu:Contact" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fieldStaffType" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="fieldStaffDetail" type="pu:Contact" minOccurs="1" maxOccurs="1" /> 
       </xsd:sequence>
    </xsd:complexType>
    
    <xsd:complexType name="Contact">
-      <xsd:sequence>
-         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="fullName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        <xsd:sequence>
+         <xsd:element name="goId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
          <xsd:element name="picture" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>

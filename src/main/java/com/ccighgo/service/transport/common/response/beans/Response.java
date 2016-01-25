@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStats;
+import com.ccighgo.service.transport.fieldstaff.beans.rmlist.FieldStaffRMList;
 
 
 /**
@@ -42,7 +42,7 @@ import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programst
     "status"
 })
 @XmlSeeAlso({
-    FieldStaffDashboardProgramStats.class
+    FieldStaffRMList.class
 })
 public class Response {
 
