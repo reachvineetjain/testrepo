@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
 
-import gov.ice.xmlschema.sevisbatch.alpha.common.BatchHeaderType;
+import gov.ice.xmlschema.sevisbatch.common.BatchHeaderType;
 import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
 import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.CreateStudent;
 import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent;

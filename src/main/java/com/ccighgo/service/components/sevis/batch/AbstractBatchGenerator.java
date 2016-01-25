@@ -46,8 +46,16 @@ public abstract class AbstractBatchGenerator<T> implements IBatchGenerator<T> {
 			return createInvalidArgsResponse();
 		}
 		
+		/*
+		 * Fetch data.
+		 */
 		T jaxb = fetchBatchData(batchParam, dataService); // abstract
+		
+		/*
+		 * jaxb -> BatchDetails
+		 */
 		BatchDetails batchDetails = asBatchDetails(jaxb); // abstract
+		
 		String file = getBatchId(); // abstract
 		String schema = getBatchSchemaFile(); // abstract
 		

@@ -16,11 +16,11 @@ import com.ccighgo.jpa.repositories.ParticipantRepository;
 import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
-import gov.ice.xmlschema.sevisbatch.alpha.table.EVCompletionCodeType;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Program;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Program.Shorten;
+import gov.ice.xmlschema.sevisbatch.table.EVCompletionCodeType;
 
 @Component
 public class UpdateEVProgramShortenBatchDataService implements IEVBatchDataService {

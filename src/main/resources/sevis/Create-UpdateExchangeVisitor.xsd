@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" jaxb:version="2.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" xmlns:common="http://www.ice.gov/xmlschema/sevisbatch/alpha/Common" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
-	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" schemaLocation="SEVISTable.xsd"/>
-	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/alpha/Common" schemaLocation="Common.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" jaxb:version="2.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/Table" xmlns:common="http://www.ice.gov/xmlschema/sevisbatch/Common" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
+	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/Table" schemaLocation="SEVISTable.xsd"/>
+	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/Common" schemaLocation="Common.xsd"/>
 	
 	<!--  ADDED -->
 	<xs:annotation>

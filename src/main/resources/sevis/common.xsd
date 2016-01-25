@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://www.ice.gov/xmlschema/sevisbatch/alpha/Common" xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" targetNamespace="http://www.ice.gov/xmlschema/sevisbatch/alpha/Common" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
-	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" schemaLocation="SEVISTable.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://www.ice.gov/xmlschema/sevisbatch/Common" xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/Table" targetNamespace="http://www.ice.gov/xmlschema/sevisbatch/Common" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
+	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/Table" schemaLocation="SEVISTable.xsd"/>
 	<xs:simpleType name="BatchIDType">
 		<xs:annotation>
 			<xs:documentation>Unique 14-character Batch ID</xs:documentation>

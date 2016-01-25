@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
-import gov.ice.xmlschema.sevisbatch.alpha.common.NameNullableType;
-import gov.ice.xmlschema.sevisbatch.alpha.table.BirthCntryCodeType;
-import gov.ice.xmlschema.sevisbatch.alpha.table.CntryCodeWithoutType;
-import gov.ice.xmlschema.sevisbatch.alpha.table.GenderCodeType;
+import gov.ice.xmlschema.sevisbatch.common.NameNullableType;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Biographical;
+import gov.ice.xmlschema.sevisbatch.table.BirthCntryCodeType;
+import gov.ice.xmlschema.sevisbatch.table.CntryCodeWithoutType;
+import gov.ice.xmlschema.sevisbatch.table.GenderCodeType;
 
 @Component
 public class UpdateEVBioBatchDataService implements IEVBatchDataService {

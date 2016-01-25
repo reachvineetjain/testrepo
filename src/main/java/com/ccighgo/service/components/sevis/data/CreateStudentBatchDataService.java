@@ -12,14 +12,10 @@ import com.ccighgo.jpa.repositories.ParticipantRepository;
 import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
-import gov.ice.xmlschema.sevisbatch.alpha.common.BatchHeaderType;
-import gov.ice.xmlschema.sevisbatch.alpha.common.ForeignAddrType;
-import gov.ice.xmlschema.sevisbatch.alpha.common.NameType;
-import gov.ice.xmlschema.sevisbatch.alpha.common.USAddrDoctorType;
-import gov.ice.xmlschema.sevisbatch.alpha.table.BirthCntryCodeType;
-import gov.ice.xmlschema.sevisbatch.alpha.table.CntryCodeWithoutType;
-import gov.ice.xmlschema.sevisbatch.alpha.table.GenderCodeType;
-import gov.ice.xmlschema.sevisbatch.alpha.table.StudentCreationReason;
+import gov.ice.xmlschema.sevisbatch.common.BatchHeaderType;
+import gov.ice.xmlschema.sevisbatch.common.ForeignAddrType;
+import gov.ice.xmlschema.sevisbatch.common.NameType;
+import gov.ice.xmlschema.sevisbatch.common.USAddrDoctorType;
 import gov.ice.xmlschema.sevisbatch.student.EducationalInfoType;
 import gov.ice.xmlschema.sevisbatch.student.EducationalInfoType.EduLevel;
 import gov.ice.xmlschema.sevisbatch.student.EducationalInfoType.EngProficiency;
@@ -30,6 +26,10 @@ import gov.ice.xmlschema.sevisbatch.student.SEVISBatchCreateUpdateStudent;
 import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.CreateStudent;
 import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.CreateStudent.Student;
 import gov.ice.xmlschema.sevisbatch.student.StudentPersonType.PersonalInfo;
+import gov.ice.xmlschema.sevisbatch.table.BirthCntryCodeType;
+import gov.ice.xmlschema.sevisbatch.table.CntryCodeWithoutType;
+import gov.ice.xmlschema.sevisbatch.table.GenderCodeType;
+import gov.ice.xmlschema.sevisbatch.table.StudentCreationReason;
 
 @Component("createStudentBatchDataService")
 public class CreateStudentBatchDataService implements IStudentBatchDataService {

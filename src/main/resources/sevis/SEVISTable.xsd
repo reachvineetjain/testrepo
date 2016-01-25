@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" targetNamespace="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/Table" targetNamespace="http://www.ice.gov/xmlschema/sevisbatch/Table" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
 	<!--This schema contains necessary lookup table data-->
 	<!--General Global Information-->
 	<xs:simpleType name="emptyStringType">

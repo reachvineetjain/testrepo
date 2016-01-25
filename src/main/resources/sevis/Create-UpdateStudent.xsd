@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" jaxb:version="2.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:common="http://www.ice.gov/xmlschema/sevisbatch/alpha/Common"
-	xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
-	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" schemaLocation="SEVISTable.xsd" />
-	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/alpha/Common" schemaLocation="Common.xsd" />
-
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" jaxb:version="2.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:common="http://www.ice.gov/xmlschema/sevisbatch/Common" xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/Table" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="6.23">
+	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/Table" schemaLocation="SEVISTable.xsd"/>
+	<xs:import namespace="http://www.ice.gov/xmlschema/sevisbatch/Common" schemaLocation="Common.xsd"/>
+	
 	<!-- ADDED -->
 	<xs:annotation>
 		<xs:appinfo>
@@ -12,7 +11,7 @@
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>
-
+	
 	<xs:element name="SEVISBatchCreateUpdateStudent">
 		<xs:annotation>
 			<xs:documentation>This is the root element of the SEVIS Batch file</xs:documentation>
@@ -20,7 +19,7 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="SEVISStudentBatchType">
-					<xs:attribute name="userID" type="common:UserIdType" use="required" />
+					<xs:attribute name="userID" type="common:UserIdType" use="required"/>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -42,7 +41,7 @@
 					<xs:documentation>Current term/session end date</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+			<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CPTEmploymentType">
@@ -50,8 +49,8 @@
 			<xs:documentation>CPT Employment</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="StartDate" type="table:DateType" />
-			<xs:element name="EndDate" type="table:DateType" />
+			<xs:element name="StartDate" type="table:DateType"/>
+			<xs:element name="EndDate" type="table:DateType"/>
 			<xs:element name="FullPartTimeIndicator" type="table:EmploymentTimeType">
 				<xs:annotation>
 					<xs:documentation>Full time or part time employment</xs:documentation>
@@ -60,8 +59,8 @@
 			<xs:element name="EmployerName">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:minLength value="1" />
-						<xs:maxLength value="100" />
+						<xs:minLength value="1"/>
+						<xs:maxLength value="100"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -85,21 +84,21 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="PrimaryMajor" type="table:ProgSubjectCodeType" />
-			<xs:element name="SecondMajor" type="table:ProgSubjectCodeStudentType" minOccurs="0" />
-			<xs:element name="Minor" type="table:ProgSubjectCodeStudentType" minOccurs="0" />
+			<xs:element name="PrimaryMajor" type="table:ProgSubjectCodeType"/>
+			<xs:element name="SecondMajor" type="table:ProgSubjectCodeStudentType" minOccurs="0"/>
+			<xs:element name="Minor" type="table:ProgSubjectCodeStudentType" minOccurs="0"/>
 			<xs:element name="LengthOfStudy">
 				<xs:annotation>
 					<xs:documentation>Normal length of study in months (two digit month)</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:pattern value="\d{2}" />
+						<xs:pattern value="\d{2}"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="PrgStartDate" type="table:DateType" />
-			<xs:element name="PrgEndDate" type="table:DateType" />
+			<xs:element name="PrgStartDate" type="table:DateType"/>
+			<xs:element name="PrgEndDate" type="table:DateType"/>
 			<xs:element name="EngProficiency">
 				<xs:complexType>
 					<xs:sequence>
@@ -125,14 +124,14 @@
 	</xs:complexType>
 	<xs:complexType name="FinancialAmountType">
 		<xs:sequence>
-			<xs:element name="Amount" type="table:MonetaryType" />
-			<xs:element name="Remarks" type="common:RemarksType" />
+			<xs:element name="Amount" type="table:MonetaryType"/>
+			<xs:element name="Remarks" type="common:RemarksType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="FinancialAmountNullableType">
 		<xs:sequence>
-			<xs:element name="Amount" type="table:MonetaryNullableType" minOccurs="0" />
-			<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+			<xs:element name="Amount" type="table:MonetaryNullableType" minOccurs="0"/>
+			<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="FinancialType">
@@ -143,38 +142,38 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="01" />
-						<xs:enumeration value="02" />
-						<xs:enumeration value="03" />
-						<xs:enumeration value="04" />
-						<xs:enumeration value="05" />
-						<xs:enumeration value="06" />
-						<xs:enumeration value="07" />
-						<xs:enumeration value="08" />
-						<xs:enumeration value="09" />
-						<xs:enumeration value="10" />
-						<xs:enumeration value="11" />
-						<xs:enumeration value="12" />
+						<xs:enumeration value="01"/>
+						<xs:enumeration value="02"/>
+						<xs:enumeration value="03"/>
+						<xs:enumeration value="04"/>
+						<xs:enumeration value="05"/>
+						<xs:enumeration value="06"/>
+						<xs:enumeration value="07"/>
+						<xs:enumeration value="08"/>
+						<xs:enumeration value="09"/>
+						<xs:enumeration value="10"/>
+						<xs:enumeration value="11"/>
+						<xs:enumeration value="12"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="Expense">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Tuition" type="table:MonetaryType" />
-						<xs:element name="LivingExpense" type="table:MonetaryType" />
-						<xs:element name="DependentExp" type="table:MonetaryType" minOccurs="0" />
-						<xs:element name="Other" type="FinancialAmountType" minOccurs="0" />
+						<xs:element name="Tuition" type="table:MonetaryType"/>
+						<xs:element name="LivingExpense" type="table:MonetaryType"/>
+						<xs:element name="DependentExp" type="table:MonetaryType" minOccurs="0"/>
+						<xs:element name="Other" type="FinancialAmountType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="Funding">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Personal" type="table:MonetaryType" />
-						<xs:element name="School" type="FinancialAmountType" minOccurs="0" />
-						<xs:element name="Other" type="FinancialAmountType" minOccurs="0" />
-						<xs:element name="Employment" type="table:MonetaryType" minOccurs="0" />
+						<xs:element name="Personal" type="table:MonetaryType"/>
+						<xs:element name="School" type="FinancialAmountType" minOccurs="0"/>
+						<xs:element name="Other" type="FinancialAmountType" minOccurs="0"/>
+						<xs:element name="Employment" type="table:MonetaryType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -188,58 +187,58 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="01" />
-						<xs:enumeration value="02" />
-						<xs:enumeration value="03" />
-						<xs:enumeration value="04" />
-						<xs:enumeration value="05" />
-						<xs:enumeration value="06" />
-						<xs:enumeration value="07" />
-						<xs:enumeration value="08" />
-						<xs:enumeration value="09" />
-						<xs:enumeration value="10" />
-						<xs:enumeration value="11" />
-						<xs:enumeration value="12" />
+						<xs:enumeration value="01"/>
+						<xs:enumeration value="02"/>
+						<xs:enumeration value="03"/>
+						<xs:enumeration value="04"/>
+						<xs:enumeration value="05"/>
+						<xs:enumeration value="06"/>
+						<xs:enumeration value="07"/>
+						<xs:enumeration value="08"/>
+						<xs:enumeration value="09"/>
+						<xs:enumeration value="10"/>
+						<xs:enumeration value="11"/>
+						<xs:enumeration value="12"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="Expense" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Tuition" type="table:MonetaryType" minOccurs="0" />
-						<xs:element name="LivingExpense" type="table:MonetaryType" minOccurs="0" />
-						<xs:element name="DependentExp" type="table:MonetaryNullableType" minOccurs="0" />
-						<xs:element name="Other" type="FinancialAmountNullableType" minOccurs="0" />
+						<xs:element name="Tuition" type="table:MonetaryType" minOccurs="0"/>
+						<xs:element name="LivingExpense" type="table:MonetaryType" minOccurs="0"/>
+						<xs:element name="DependentExp" type="table:MonetaryNullableType" minOccurs="0"/>
+						<xs:element name="Other" type="FinancialAmountNullableType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="Funding" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Personal" type="table:MonetaryType" minOccurs="0" />
-						<xs:element name="School" type="FinancialAmountNullableType" minOccurs="0" />
-						<xs:element name="Other" type="FinancialAmountNullableType" minOccurs="0" />
-						<xs:element name="Employment" type="table:MonetaryNullableType" minOccurs="0" />
+						<xs:element name="Personal" type="table:MonetaryType" minOccurs="0"/>
+						<xs:element name="School" type="FinancialAmountNullableType" minOccurs="0"/>
+						<xs:element name="Other" type="FinancialAmountNullableType" minOccurs="0"/>
+						<xs:element name="Employment" type="table:MonetaryNullableType" minOccurs="0"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="NonImgBioType">
 		<xs:annotation>
 			<xs:documentation>Nonimmigrant bio information</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="FullName" type="common:NameType" />
-			<xs:element name="BirthDate" type="table:DateType" />
+			<xs:element name="FullName" type="common:NameType"/>
+			<xs:element name="BirthDate" type="table:DateType"/>
 			<xs:element name="Gender" type="table:GenderCodeType">
 				<xs:annotation>
 					<xs:documentation>Male, Female or Unknown</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType" />
-			<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutType" minOccurs="0" />
+			<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType"/>
+			<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="NonImgBioTypeRequired">
@@ -247,15 +246,15 @@
 			<xs:documentation>Nonimmigrant bio information</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="FullName" type="common:NameType" />
-			<xs:element name="BirthDate" type="table:DateType" />
+			<xs:element name="FullName" type="common:NameType"/>
+			<xs:element name="BirthDate" type="table:DateType"/>
 			<xs:element name="Gender" type="table:GenderCodeType">
 				<xs:annotation>
 					<xs:documentation>Male, Female or Unknown</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType" />
-			<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutType" />
+			<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType"/>
+			<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OCEmploymentType">
@@ -263,9 +262,9 @@
 			<xs:documentation>Off-campus Employment</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="StartDate" type="table:DateType" />
-			<xs:element name="EndDate" type="table:DateType" />
-			<xs:element name="EmploymentType" type="table:OffCampusEmploymentCodeType" />
+			<xs:element name="StartDate" type="table:DateType"/>
+			<xs:element name="EndDate" type="table:DateType"/>
+			<xs:element name="EmploymentType" type="table:OffCampusEmploymentCodeType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Employer">
@@ -273,43 +272,50 @@
 			<xs:documentation>Employer Information</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="EmployerName" type="common:OneToOneHundredTwentyChars" minOccurs="0" />
-			<xs:element name="EmployerAddress" type="common:USAddrDoctorType" />
-			<xs:element name="EmployerEIN" type="common:EmployerID" minOccurs="0" />
-			<xs:element name="SelfEmployed" type="table:IndicatorTypeYNNullableType" minOccurs="0" />
-			<xs:element name="CourseRelevance" type="common:OneToOneThousandChars" />
-			<xs:element name="FullPartTimeIndicator" type="table:EmploymentTimeType" />
-			<xs:element name="StartDate" type="table:DateType" />
-			<xs:element name="EndDate" type="table:DateType" minOccurs="0" />
+			<xs:element name="EmployerName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="121"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EmployerAddress" type="common:USAddrDoctorType"/>
+			<xs:element name="EmployerEIN" type="common:EmployerID" minOccurs="0"/>
+			<xs:element name="SelfEmployed" type="table:IndicatorTypeYNNullableType" minOccurs="0"/>
+			<xs:element name="CourseRelevance" type="common:OneToOneThousandChars"/>
+			<xs:element name="FullPartTimeIndicator" type="table:EmploymentTimeType"/>
+			<xs:element name="StartDate" type="table:DateType"/>
+			<xs:element name="EndDate" type="table:DateType" minOccurs="0"/>
 			<xs:element name="SupervisorFirstName" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:whiteSpace value="preserve" />
-						<xs:maxLength value="80" />
-						<xs:minLength value="1" />
-						<xs:pattern value="\D+" />
+						<xs:whiteSpace value="preserve"/>
+						<xs:maxLength value="80"/>
+						<xs:minLength value="1"/>
+						<xs:pattern value="\D+"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="SupervisorLastName" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:whiteSpace value="preserve" />
-						<xs:maxLength value="40" />
-						<xs:minLength value="1" />
-						<xs:pattern value="\D+" />
+						<xs:whiteSpace value="preserve"/>
+						<xs:maxLength value="40"/>
+						<xs:minLength value="1"/>
+						<xs:pattern value="\D+"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="SupervisorPhone" type="common:PhoneTenDigits" minOccurs="0" />
-			<xs:element name="SupervisorPhoneExt" type="common:PhoneExt" minOccurs="0" />
-			<xs:element name="SupervisorEmail" type="table:EmailType" minOccurs="0" />
+			<xs:element name="SupervisorPhone" type="common:PhoneTenDigits" minOccurs="0"/>
+			<xs:element name="SupervisorPhoneExt" type="common:PhoneExt" minOccurs="0"/>
+			<xs:element name="SupervisorEmail" type="table:EmailType" minOccurs="0"/>
 			<xs:element name="StudentsJobTitle" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:whiteSpace value="preserve" />
-						<xs:maxLength value="64" />
-						<xs:minLength value="1" />
+						<xs:whiteSpace value="preserve"/>
+						<xs:maxLength value="64"/>
+						<xs:minLength value="1"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -320,8 +326,15 @@
 			<xs:documentation>Fields that uniquely identify an employer</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="EmployerName" type="common:OneToOneHundredChars" />
-			<xs:element name="StartDate" type="table:DateType" />
+			<xs:element name="EmployerName">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="121"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StartDate" type="table:DateType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OPTEmploymentType">
@@ -329,29 +342,29 @@
 			<xs:documentation>OPT Employment</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="StartDate" type="table:DateType" />
-			<xs:element name="EndDate" type="table:DateType" />
+			<xs:element name="StartDate" type="table:DateType"/>
+			<xs:element name="EndDate" type="table:DateType"/>
 			<xs:element name="FullPartTimeIndicator" type="table:EmploymentTimeType">
 				<xs:annotation>
 					<xs:documentation>Full time or part time employment</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="EmploymentIdentifier">
 		<xs:annotation>
 			<xs:documentation>Employment Identifier (what makes an emplyment segment unique)</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="StartDate" type="table:DateType" />
-			<xs:element name="EndDate" type="table:DateType" />
+			<xs:element name="StartDate" type="table:DateType"/>
+			<xs:element name="EndDate" type="table:DateType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ProgramExtendType">
 		<xs:sequence>
-			<xs:element name="NewPrgEndDate" type="table:DateType" />
-			<xs:element name="Remarks" type="common:RemarksType" minOccurs="0" />
+			<xs:element name="NewPrgEndDate" type="table:DateType"/>
+			<xs:element name="Remarks" type="common:RemarksType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ReprintType">
@@ -359,10 +372,10 @@
 			<xs:documentation>Reprint Form</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Reason" type="table:StudentReprintRequestReasonType" />
-			<xs:element name="Remarks" type="common:RemarksType" minOccurs="0" />
+			<xs:element name="Reason" type="table:StudentReprintRequestReasonType"/>
+			<xs:element name="Remarks" type="common:RemarksType" minOccurs="0"/>
 		</xs:sequence>
-		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="optional" default="true" />
+		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="optional" default="true"/>
 	</xs:complexType>
 	<xs:complexType name="SEVISStudentBatchType">
 		<xs:sequence>
@@ -381,9 +394,9 @@
 							<xs:complexType>
 								<xs:complexContent>
 									<xs:extension base="StudentPersonType">
-										<xs:attribute name="requestID" type="common:RequestID" use="required" />
-										<xs:attribute name="userID" type="common:UserIdType" use="required" />
-										<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+										<xs:attribute name="requestID" type="common:RequestID" use="required"/>
+										<xs:attribute name="userID" type="common:UserIdType" use="required"/>
+										<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 									</xs:extension>
 								</xs:complexContent>
 							</xs:complexType>
@@ -393,7 +406,7 @@
 			</xs:element>
 			<xs:element name="UpdateStudent" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Update student information element. SEVIS ID information should match student in GeneralInformation element</xs:documentation>
+					<xs:documentation>Update student information element.  SEVIS ID information should match student in GeneralInformation element</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
@@ -430,7 +443,7 @@
 														<xs:complexType>
 															<xs:complexContent>
 																<xs:extension base="AuthDropBelowType">
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -457,7 +470,7 @@
 																	</xs:annotation>
 																</xs:element>
 															</xs:sequence>
-															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 													<xs:element name="Edit">
@@ -468,11 +481,11 @@
 															<xs:complexContent>
 																<xs:extension base="AuthDropBelowType">
 																	<xs:sequence>
-																		<xs:element name="NewReason" type="table:DropBlwfullType" minOccurs="0" />
-																		<xs:element name="NewStartDate" type="table:DateType" minOccurs="0" />
-																		<xs:element name="NewEndDate" type="table:DateType" minOccurs="0" />
+																		<xs:element name="NewReason" type="table:DropBlwfullType" minOccurs="0"/>
+																		<xs:element name="NewStartDate" type="table:DateType" minOccurs="0"/>
+																		<xs:element name="NewEndDate" type="table:DateType" minOccurs="0"/>
 																	</xs:sequence>
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -494,11 +507,11 @@
 															<xs:complexContent>
 																<xs:extension base="CPTEmploymentType">
 																	<xs:sequence>
-																		<xs:element name="EmployerAddress" type="common:USAddressType" />
-																		<xs:element name="CourseRelevance" type="common:Remarks250Type" minOccurs="0" />
-																		<xs:element name="Remarks" type="common:Remarks250Type" minOccurs="0" />
+																		<xs:element name="EmployerAddress" type="common:USAddressType"/>
+																		<xs:element name="CourseRelevance" type="common:Remarks250Type" minOccurs="0"/>
+																		<xs:element name="Remarks" type="common:Remarks250Type" minOccurs="0"/>
 																	</xs:sequence>
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -510,7 +523,7 @@
 														<xs:complexType>
 															<xs:complexContent>
 																<xs:extension base="CPTEmploymentType">
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -543,16 +556,16 @@
 																<xs:complexContent>
 																	<xs:extension base="NonImgBioType">
 																		<xs:sequence>
-																			<xs:element name="Email" type="table:EmailType" minOccurs="0" />
-																			<xs:element name="VisaType" type="table:DependentFMVisaType" />
+																			<xs:element name="Email" type="table:EmailType" minOccurs="0"/>
+																			<xs:element name="VisaType" type="table:DependentFMVisaType"/>
 																			<xs:element name="Relationship" type="table:DependentCodeType">
 																				<xs:annotation>
 																					<xs:documentation>Spouse or Child</xs:documentation>
 																				</xs:annotation>
 																			</xs:element>
-																			<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																			<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 																		</xs:sequence>
-																		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																		<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																	</xs:extension>
 																</xs:complexContent>
 															</xs:complexType>
@@ -563,10 +576,10 @@
 															</xs:annotation>
 															<xs:complexType>
 																<xs:sequence>
-																	<xs:element name="Reason" type="table:DependentCancelReasonType" />
-																	<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																	<xs:element name="Reason" type="table:DependentCancelReasonType"/>
+																	<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 																</xs:sequence>
-																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required" />
+																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required"/>
 															</xs:complexType>
 														</xs:element>
 														<xs:element name="Edit">
@@ -578,21 +591,21 @@
 																	<xs:annotation>
 																		<xs:documentation>Spouse and children</xs:documentation>
 																	</xs:annotation>
-																	<xs:element name="FullName" type="common:NameNullableType" minOccurs="0" />
-																	<xs:element name="BirthDate" type="table:DateType" minOccurs="0" />
+																	<xs:element name="FullName" type="common:NameNullableType" minOccurs="0"/>
+																	<xs:element name="BirthDate" type="table:DateType" minOccurs="0"/>
 																	<xs:element name="Gender" type="table:GenderCodeType" minOccurs="0">
 																		<xs:annotation>
 																			<xs:documentation>Male, Female or Unknown</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType" minOccurs="0" />
-																	<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutNullableType" minOccurs="0" />
-																	<xs:element name="Email" type="table:EmailType" minOccurs="0" />
-																	<xs:element name="Relationship" type="table:DependentCodeType" minOccurs="0" />
-																	<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																	<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType" minOccurs="0"/>
+																	<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutNullableType" minOccurs="0"/>
+																	<xs:element name="Email" type="table:EmailType" minOccurs="0"/>
+																	<xs:element name="Relationship" type="table:DependentCodeType" minOccurs="0"/>
+																	<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 																</xs:sequence>
-																<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
-																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required" />
+																<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
+																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required"/>
 															</xs:complexType>
 														</xs:element>
 														<xs:element name="Reactivate">
@@ -600,8 +613,8 @@
 																<xs:documentation>Reactivate Dependent</xs:documentation>
 															</xs:annotation>
 															<xs:complexType>
-																<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
-																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required" />
+																<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
+																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required"/>
 															</xs:complexType>
 														</xs:element>
 														<xs:element name="Reprint">
@@ -609,8 +622,8 @@
 																<xs:documentation>Reprint Dependent I-20 Form</xs:documentation>
 															</xs:annotation>
 															<xs:complexType>
-																<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="optional" />
-																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required" />
+																<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="optional"/>
+																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required"/>
 															</xs:complexType>
 														</xs:element>
 														<xs:element name="Terminate">
@@ -624,10 +637,10 @@
 																			<xs:documentation>Dependent termination codes</xs:documentation>
 																		</xs:annotation>
 																	</xs:element>
-																	<xs:element name="OtherRemarks" type="common:RemarksNullableType" minOccurs="0" />
-																	<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																	<xs:element name="OtherRemarks" type="common:RemarksNullableType" minOccurs="0"/>
+																	<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 																</xs:sequence>
-																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required" />
+																<xs:attribute name="dependentSevisID" type="common:SevisIDType" use="required"/>
 															</xs:complexType>
 														</xs:element>
 													</xs:choice>
@@ -640,7 +653,7 @@
 											</xs:annotation>
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="Explanation" type="common:RemarksType" />
+													<xs:element name="Explanation" type="common:RemarksType"/>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
@@ -656,7 +669,7 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="Remarks" type="common:RemarksType" minOccurs="0" />
+																<xs:element name="Remarks" type="common:RemarksType" minOccurs="0"/>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
@@ -666,11 +679,11 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="EducationalInfo" type="EducationalInfoType" />
-																<xs:element name="FinancialInfo" type="FinancialType" />
-																<xs:element name="Remarks" type="common:RemarksType" minOccurs="0" />
+																<xs:element name="EducationalInfo" type="EducationalInfoType"/>
+																<xs:element name="FinancialInfo" type="FinancialType"/>
+																<xs:element name="Remarks" type="common:RemarksType" minOccurs="0"/>
 															</xs:sequence>
-															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:choice>
@@ -684,7 +697,7 @@
 												<xs:complexContent>
 													<xs:extension base="FinancialNullableType">
 														<xs:sequence>
-															<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+															<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 														</xs:sequence>
 													</xs:extension>
 												</xs:complexContent>
@@ -704,9 +717,9 @@
 															<xs:complexContent>
 																<xs:extension base="OCEmploymentType">
 																	<xs:sequence>
-																		<xs:element name="Recommendation" type="common:Remarks250Type" minOccurs="0" />
+																		<xs:element name="Recommendation" type="common:Remarks250Type" minOccurs="0"/>
 																	</xs:sequence>
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -718,7 +731,7 @@
 														<xs:complexType>
 															<xs:complexContent>
 																<xs:extension base="OCEmploymentType">
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -731,12 +744,12 @@
 															<xs:complexContent>
 																<xs:extension base="OCEmploymentType">
 																	<xs:sequence>
-																		<xs:element name="NewStartDate" type="table:DateType" minOccurs="0" />
-																		<xs:element name="NewEndDate" type="table:DateType" minOccurs="0" />
-																		<xs:element name="NewEmploymentType" type="table:OffCampusEmploymentCodeType" minOccurs="0" />
-																		<xs:element name="Recommendation" type="common:RemarksNullable250Type" minOccurs="0" />
+																		<xs:element name="NewStartDate" type="table:DateType" minOccurs="0"/>
+																		<xs:element name="NewEndDate" type="table:DateType" minOccurs="0"/>
+																		<xs:element name="NewEmploymentType" type="table:OffCampusEmploymentCodeType" minOccurs="0"/>
+																		<xs:element name="Recommendation" type="common:RemarksNullable250Type" minOccurs="0"/>
 																	</xs:sequence>
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -758,11 +771,11 @@
 															<xs:complexContent>
 																<xs:extension base="OPTEmploymentType">
 																	<xs:sequence>
-																		<xs:element name="AcademicYearMet" type="table:IndicatorYesNoType" />
-																		<xs:element name="CompletionType" type="table:OPTCompletionType" minOccurs="0" />
-																		<xs:element name="StudentRemarks" type="common:RemarksType" minOccurs="0" />
-																		<xs:element name="Remarks" type="common:Remarks250Type" minOccurs="0" />
-																		<xs:element name="Employer" type="Employer" minOccurs="0" maxOccurs="unbounded" />
+																		<xs:element name="AcademicYearMet" type="table:IndicatorYesNoType"/>
+																		<xs:element name="CompletionType" type="table:OPTCompletionType" minOccurs="0"/>
+																		<xs:element name="StudentRemarks" type="common:RemarksType" minOccurs="0"/>
+																		<xs:element name="Remarks" type="common:Remarks250Type" minOccurs="0"/>
+																		<xs:element name="Employer" type="Employer" minOccurs="0" maxOccurs="unbounded"/>
 																	</xs:sequence>
 																</xs:extension>
 															</xs:complexContent>
@@ -774,19 +787,7 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:complexContent>
-																<xs:extension base="OPTEmploymentType">
-																	<xs:sequence>
-																		<xs:element name="EmployerName" minOccurs="0">
-																			<xs:simpleType>
-																				<xs:restriction base="xs:string">
-																					<xs:minLength value="1" />
-																					<xs:maxLength value="100" />
-																					<xs:whiteSpace value="preserve" />
-																				</xs:restriction>
-																			</xs:simpleType>
-																		</xs:element>
-																	</xs:sequence>
-																</xs:extension>
+																<xs:extension base="OPTEmploymentType"/>
 															</xs:complexContent>
 														</xs:complexType>
 													</xs:element>
@@ -798,11 +799,11 @@
 															<xs:complexContent>
 																<xs:extension base="OPTEmploymentType">
 																	<xs:sequence>
-																		<xs:element name="NewFullPartTimeIndicator" type="table:EmploymentTimeType" minOccurs="0" />
-																		<xs:element name="AcademicYearMet" type="table:IndicatorYesNoType" minOccurs="0" />
-																		<xs:element name="CompletionType" type="table:OPTCompletionType" minOccurs="0" />
-																		<xs:element name="StudentRemarks" type="common:RemarksNullableType" minOccurs="0" />
-																		<xs:element name="Remarks" type="common:RemarksNullable250Type" minOccurs="0" />
+																		<xs:element name="NewFullPartTimeIndicator" type="table:EmploymentTimeType" minOccurs="0"/>
+																		<xs:element name="AcademicYearMet" type="table:IndicatorYesNoType" minOccurs="0"/>
+																		<xs:element name="CompletionType" type="table:OPTCompletionType" minOccurs="0"/>
+																		<xs:element name="StudentRemarks" type="common:RemarksNullableType" minOccurs="0"/>
+																		<xs:element name="Remarks" type="common:RemarksNullable250Type" minOccurs="0"/>
 																	</xs:sequence>
 																</xs:extension>
 															</xs:complexContent>
@@ -816,7 +817,7 @@
 															<xs:complexContent>
 																<xs:extension base="OPTEmploymentType">
 																	<xs:sequence>
-																		<xs:element name="Employer" type="Employer" minOccurs="1" maxOccurs="unbounded" />
+																		<xs:element name="Employer" type="Employer" minOccurs="1" maxOccurs="unbounded"/>
 																	</xs:sequence>
 																</xs:extension>
 															</xs:complexContent>
@@ -842,10 +843,10 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="EmploymentIdentifier" type="EmploymentIdentifier" />
-																<xs:element name="Employer" type="Employer" minOccurs="0" maxOccurs="unbounded" />
+																<xs:element name="EmploymentIdentifier" type="EmploymentIdentifier"/>
+																<xs:element name="Employer" type="Employer" minOccurs="0" maxOccurs="unbounded"/>
 															</xs:sequence>
-															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 													<xs:element name="Edit">
@@ -854,11 +855,11 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="EmploymentIdentifier" type="EmploymentIdentifier" />
-																<xs:element name="EmployerIdentifier" type="EmployerIdentifier" />
-																<xs:element name="Employer" type="UpdateEmployerType" />
+																<xs:element name="EmploymentIdentifier" type="EmploymentIdentifier"/>
+																<xs:element name="EmployerIdentifier" type="EmployerIdentifier"/>
+																<xs:element name="Employer" type="UpdateEmployerType"/>
 															</xs:sequence>
-															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:choice>
@@ -870,25 +871,25 @@
 											</xs:annotation>
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="FullName" type="common:NameNullableType" minOccurs="0" />
-													<xs:element name="BirthDate" type="table:DateType" minOccurs="0" />
+													<xs:element name="FullName" type="common:NameNullableType" minOccurs="0"/>
+													<xs:element name="BirthDate" type="table:DateType" minOccurs="0"/>
 													<xs:element name="Gender" type="table:GenderCodeType" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>Male, Female or Unknown</xs:documentation>
 														</xs:annotation>
 													</xs:element>
-													<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType" minOccurs="0" />
-													<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutType" minOccurs="0" />
-													<xs:element name="Email" type="table:EmailType" minOccurs="0" />
+													<xs:element name="BirthCountryCode" type="table:BirthCntryCodeType" minOccurs="0"/>
+													<xs:element name="CitizenshipCountryCode" type="table:CntryCodeWithoutType" minOccurs="0"/>
+													<xs:element name="Email" type="table:EmailType" minOccurs="0"/>
 													<xs:element name="Telephone" minOccurs="0">
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="TelephoneExemptInd" type="table:IndicatorTypeYN" />
-																<xs:element name="Phone" type="TelephoneType" minOccurs="0" />
+																<xs:element name="TelephoneExemptInd" type="table:IndicatorTypeYN"/>
+																<xs:element name="Phone" type="TelephoneType" minOccurs="0"/>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
-													<xs:element name="Commuter" type="table:IndicatorYesNoType" minOccurs="0" />
+													<xs:element name="Commuter" type="table:IndicatorYesNoType" minOccurs="0"/>
 													<xs:element name="USAddress" type="common:USAddrDoctorType" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>US address information</xs:documentation>
@@ -899,9 +900,9 @@
 															<xs:documentation>Foreign address information</xs:documentation>
 														</xs:annotation>
 													</xs:element>
-													<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+													<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 												</xs:sequence>
-												<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+												<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 											</xs:complexType>
 										</xs:element>
 										<xs:element name="Program">
@@ -917,7 +918,7 @@
 														<xs:complexType>
 															<xs:complexContent>
 																<xs:extension base="ProgramExtendType">
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -928,11 +929,11 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="NewPrgStartDate" type="table:DateType" />
-																<xs:element name="NewPrgEndDate" type="table:DateType" />
-																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																<xs:element name="NewPrgStartDate" type="table:DateType"/>
+																<xs:element name="NewPrgEndDate" type="table:DateType"/>
+																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 															</xs:sequence>
-															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 													<xs:element name="Edit">
@@ -941,17 +942,17 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="Level" type="table:EduLevelCodeType" minOccurs="0" />
-																<xs:element name="PrimaryMajor" type="table:ProgSubjectCodeType" minOccurs="0" />
-																<xs:element name="SecondMajor" type="table:ProgSubjectCodeStudentType" minOccurs="0" />
-																<xs:element name="Minor" type="table:ProgSubjectCodeStudentType" minOccurs="0" />
+																<xs:element name="Level" type="table:EduLevelCodeType" minOccurs="0"/>
+																<xs:element name="PrimaryMajor" type="table:ProgSubjectCodeType" minOccurs="0"/>
+																<xs:element name="SecondMajor" type="table:ProgSubjectCodeStudentType" minOccurs="0"/>
+																<xs:element name="Minor" type="table:ProgSubjectCodeStudentType" minOccurs="0"/>
 																<xs:element name="LengthOfStudy" minOccurs="0">
 																	<xs:annotation>
 																		<xs:documentation>In months</xs:documentation>
 																	</xs:annotation>
 																	<xs:simpleType>
 																		<xs:restriction base="xs:string">
-																			<xs:pattern value="\d{2}" />
+																			<xs:pattern value="\d{2}"/>
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
@@ -976,9 +977,9 @@
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
-																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 															</xs:sequence>
-															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 													<xs:element name="Extension">
@@ -989,9 +990,9 @@
 															<xs:complexContent>
 																<xs:extension base="ProgramExtendType">
 																	<xs:sequence>
-																		<xs:element name="Explanation" type="common:RemarksType" />
+																		<xs:element name="Explanation" type="common:RemarksType"/>
 																	</xs:sequence>
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -1003,7 +1004,7 @@
 														<xs:complexType>
 															<xs:complexContent>
 																<xs:extension base="ProgramExtendType">
-																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+																	<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 																</xs:extension>
 															</xs:complexContent>
 														</xs:complexType>
@@ -1017,10 +1018,10 @@
 											</xs:annotation>
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="LastSession" type="table:IndicatorYesNoType" />
-													<xs:element name="CurrentSessionEndDate" type="table:DateType" />
-													<xs:element name="NextSessionStartDate" type="table:DateType" minOccurs="0" />
-													<xs:element name="Commuter" type="table:IndicatorYesNoType" minOccurs="0" />
+													<xs:element name="LastSession" type="table:IndicatorYesNoType"/>
+													<xs:element name="CurrentSessionEndDate" type="table:DateType"/>
+													<xs:element name="NextSessionStartDate" type="table:DateType" minOccurs="0"/>
+													<xs:element name="Commuter" type="table:IndicatorYesNoType" minOccurs="0"/>
 													<xs:element name="USAddress" type="common:USAddrDoctorType" minOccurs="0">
 														<xs:annotation>
 															<xs:documentation>US address information</xs:documentation>
@@ -1031,10 +1032,10 @@
 															<xs:documentation>Foreign address information</xs:documentation>
 														</xs:annotation>
 													</xs:element>
-													<xs:element name="TravelInfo" type="common:TravelNullableType" minOccurs="0" />
-													<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+													<xs:element name="TravelInfo" type="common:TravelNullableType" minOccurs="0"/>
+													<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 												</xs:sequence>
-												<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+												<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 											</xs:complexType>
 										</xs:element>
 										<xs:element name="Reprint" type="ReprintType">
@@ -1051,9 +1052,9 @@
 													<xs:element name="CapGapExtension">
 														<xs:complexType>
 															<xs:choice>
-																<xs:element name="Status" type="table:CapGapExtensionType" />
+																<xs:element name="Status" type="table:CapGapExtensionType"/>
 															</xs:choice>
-															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required" />
+															<xs:attribute name="printForm" type="table:IndicatorYesNoType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:choice>
@@ -1071,8 +1072,8 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="Reason" type="table:StudentCancelReasonType" />
-																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																<xs:element name="Reason" type="table:StudentCancelReasonType"/>
+																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
@@ -1082,7 +1083,7 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
@@ -1092,9 +1093,9 @@
 														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="Reason" type="table:StudentTerminationReasonType" />
-																<xs:element name="OtherRemarks" type="common:RemarksNullableType" minOccurs="0" />
-																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0" />
+																<xs:element name="Reason" type="table:StudentTerminationReasonType"/>
+																<xs:element name="OtherRemarks" type="common:RemarksNullableType" minOccurs="0"/>
+																<xs:element name="Remarks" type="common:RemarksNullableType" minOccurs="0"/>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
@@ -1108,14 +1109,14 @@
 										</xs:element>
 									</xs:choice>
 								</xs:sequence>
-								<xs:attribute name="sevisID" type="common:SevisIDType" use="required" />
+								<xs:attribute name="sevisID" type="common:SevisIDType" use="required"/>
 								<xs:attribute name="requestID" type="common:RequestID" use="required">
 									<xs:annotation>
 										<xs:documentation>This attribute defines a transaction number</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
-								<xs:attribute name="userID" type="common:UserIdType" use="required" />
-								<xs:attribute name="statusCode" type="table:StatusCodeType" use="optional" />
+								<xs:attribute name="userID" type="common:UserIdType" use="required"/>
+								<xs:attribute name="statusCode" type="table:StatusCodeType" use="optional"/>
 							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
@@ -1143,15 +1144,15 @@
 					<xs:complexContent>
 						<xs:extension base="NonImgBioTypeRequired">
 							<xs:sequence>
-								<xs:element name="Email" type="table:EmailType" minOccurs="0" />
-								<xs:element name="Commuter" type="table:IndicatorYesNoType" minOccurs="0" />
-								<xs:element name="VisaType" type="table:StudentVisaCodeType" />
+								<xs:element name="Email" type="table:EmailType" minOccurs="0"/>
+								<xs:element name="Commuter" type="table:IndicatorYesNoType" minOccurs="0"/>
+								<xs:element name="VisaType" type="table:StudentVisaCodeType"/>
 							</xs:sequence>
 						</xs:extension>
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="IssueReason" type="table:StudentCreationReason" />
+			<xs:element name="IssueReason" type="table:StudentCreationReason"/>
 			<xs:element name="USAddress" type="common:USAddrDoctorType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>US address information</xs:documentation>
@@ -1162,8 +1163,8 @@
 					<xs:documentation>Foreign address information</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="EducationalInfo" type="EducationalInfoType" />
-			<xs:element name="FinancialInfo" type="FinancialType" />
+			<xs:element name="EducationalInfo" type="EducationalInfoType"/>
+			<xs:element name="FinancialInfo" type="FinancialType"/>
 			<xs:element name="CreateDependent" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Spouse and children</xs:documentation>
@@ -1175,14 +1176,14 @@
 								<xs:complexContent>
 									<xs:extension base="NonImgBioType">
 										<xs:sequence>
-											<xs:element name="Email" type="table:EmailType" minOccurs="0" />
-											<xs:element name="VisaType" type="table:DependentFMVisaType" />
+											<xs:element name="Email" type="table:EmailType" minOccurs="0"/>
+											<xs:element name="VisaType" type="table:DependentFMVisaType"/>
 											<xs:element name="Relationship" type="table:DependentCodeType">
 												<xs:annotation>
 													<xs:documentation>Spouse or Child</xs:documentation>
 												</xs:annotation>
 											</xs:element>
-											<xs:element name="Remarks" type="common:RemarksType" minOccurs="0" />
+											<xs:element name="Remarks" type="common:RemarksType" minOccurs="0"/>
 											<xs:element name="UserDefinedA" type="common:UserDefinedAType" minOccurs="0">
 												<xs:annotation>
 													<xs:documentation>10 character</xs:documentation>
@@ -1201,26 +1202,28 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="Remarks" type="common:RemarksType" minOccurs="0" />
+			<xs:element name="Remarks" type="common:RemarksType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TelephoneType">
 		<xs:sequence>
-			<xs:element name="USNumber" type="common:PhoneTenDigits" minOccurs="0" />
+			<xs:element name="USNumber" type="common:PhoneTenDigits" minOccurs="0"/>
 			<xs:element name="Foreign" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="CountryNumber" minOccurs="0">
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
-									<xs:pattern value="\d{1,4}" />
+									<xs:maxLength value="4"/>
+									<xs:minLength value="1"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
 						<xs:element name="PhoneNumber">
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
-									<xs:pattern value="\d{1,20}" />
+									<xs:maxLength value="20"/>
+									<xs:minLength value="1"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
@@ -1234,43 +1237,50 @@
 			<xs:documentation>Employer Information</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="EmployerName" type="common:OneToOneHundredTwentyChars" minOccurs="0" />
-			<xs:element name="EmployerAddress" type="common:USAddrDoctorType" minOccurs="0" />
-			<xs:element name="EmployerEIN" type="common:EmployerID" minOccurs="0" />
-			<xs:element name="SelfEmployed" type="table:IndicatorTypeYNNullableType" minOccurs="0" />
-			<xs:element name="CourseRelevance" type="common:OneToOneThousandChars" minOccurs="0" />
-			<xs:element name="FullPartTimeIndicator" type="table:EmploymentTimeType" minOccurs="0" />
-			<xs:element name="StartDate" type="table:DateType" minOccurs="0" />
-			<xs:element name="EndDate" type="table:DateType" minOccurs="0" />
+			<xs:element name="EmployerName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="121"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EmployerAddress" type="common:USAddrDoctorType" minOccurs="0"/>
+			<xs:element name="EmployerEIN" type="common:EmployerID" minOccurs="0"/>
+			<xs:element name="SelfEmployed" type="table:IndicatorTypeYNNullableType" minOccurs="0"/>
+			<xs:element name="CourseRelevance" type="common:OneToOneThousandChars" minOccurs="0"/>
+			<xs:element name="FullPartTimeIndicator" type="table:EmploymentTimeType" minOccurs="0"/>
+			<xs:element name="StartDate" type="table:DateType" minOccurs="0"/>
+			<xs:element name="EndDate" type="table:DateType" minOccurs="0"/>
 			<xs:element name="SupervisorFirstName" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:whiteSpace value="preserve" />
-						<xs:maxLength value="80" />
-						<xs:minLength value="1" />
-						<xs:pattern value="\D+" />
+						<xs:whiteSpace value="preserve"/>
+						<xs:maxLength value="80"/>
+						<xs:minLength value="1"/>
+						<xs:pattern value="\D+"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="SupervisorLastName" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:whiteSpace value="preserve" />
-						<xs:maxLength value="40" />
-						<xs:minLength value="1" />
-						<xs:pattern value="\D+" />
+						<xs:whiteSpace value="preserve"/>
+						<xs:maxLength value="40"/>
+						<xs:minLength value="1"/>
+						<xs:pattern value="\D+"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="SupervisorPhone" type="common:PhoneTenDigits" minOccurs="0" />
-			<xs:element name="SupervisorPhoneExt" type="common:PhoneExt" minOccurs="0" />
-			<xs:element name="SupervisorEmail" type="table:EmailType" minOccurs="0" />
+			<xs:element name="SupervisorPhone" type="common:PhoneTenDigits" minOccurs="0"/>
+			<xs:element name="SupervisorPhoneExt" type="common:PhoneExt" minOccurs="0"/>
+			<xs:element name="SupervisorEmail" type="table:EmailType" minOccurs="0"/>
 			<xs:element name="StudentsJobTitle" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:whiteSpace value="preserve" />
-						<xs:maxLength value="64" />
-						<xs:minLength value="1" />
+						<xs:whiteSpace value="preserve"/>
+						<xs:maxLength value="64"/>
+						<xs:minLength value="1"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
