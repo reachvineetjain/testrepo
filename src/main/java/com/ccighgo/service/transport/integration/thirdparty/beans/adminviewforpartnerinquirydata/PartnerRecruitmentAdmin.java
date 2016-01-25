@@ -50,6 +50,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PartnerRecruitmentAdmin", propOrder = {
     "goId",
+    "type",
     "leadStatus",
     "active",
     "detail",
@@ -67,6 +68,8 @@ public class PartnerRecruitmentAdmin
 {
 
     protected int goId;
+    @XmlElement(required = true)
+    protected String type;
     @XmlElement(name = "LeadStatus", required = true)
     protected String leadStatus;
     protected boolean active;
@@ -103,6 +106,30 @@ public class PartnerRecruitmentAdmin
      */
     public void setGoId(int value) {
         this.goId = value;
+    }
+    
+    /**
+     * Gets the value of the type property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Sets the value of the type property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setType(String value) {
+        this.type = value;
     }
 
     /**

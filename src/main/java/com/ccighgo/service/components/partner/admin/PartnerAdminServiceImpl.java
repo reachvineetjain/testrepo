@@ -445,7 +445,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				partner.setInvoiceMail(detail.getInvoiceEmail());
 				partner.setMultiCountrySender((byte) (detail.isMultiCountrySender() ? 1 : 0));
 				partner.setQuickbooksCode(detail.getQuickbooksCode());
-
+				partner.setAcronym(detail.getAcronym());
 				Login partnerLogin = null;
 				for (Login login : partner.getGoIdSequence().getLogins()) {
 					for (PartnerUser partUser : login.getPartnerUsers()) {
@@ -535,6 +535,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				if (partner.getMultiCountrySender() != null)
 					partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partner.getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
 				partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partner.getQuickbooksCode());
+				partnerRecruitmentAdminScreeningDetail.setAcronym(partner.getAcronym());
 				try {
 					if (partnerPrograms != null)
 						for (PartnerProgram partnerProgram : partnerPrograms) {
@@ -554,6 +555,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				partnerRecruitmentAdminScreeningDetail.setLogo(partner.getPartnerLogo());
 				if (partnerLogin != null)
 					partnerRecruitmentAdminScreeningDetail.setUsername(partnerLogin.getLoginName());
+				if(partner.getIsSubPartner()!=null){
+				   pwt.setType(partner.getIsSubPartner().equals(CCIConstants.ACTIVE)?"sub partner":"partner");
+				}
 				pwt.setDetail(partnerRecruitmentAdminScreeningDetail);
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, logger);
@@ -1368,13 +1372,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
 			PartnerUser pc = new PartnerUser();
 			Login login = loginRepository.findOne(contactsDetails.getLoginId());
+			if(login==null){
+				pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_LOGIN_DATA.getValue(),
+						messageUtil.getMessage(PartnerAdminMessageConstants.NO_DATA_FOR_THAT_USER_ID)));
+ 				return pContacts;
+			}
+			if(contactsDetails.getEmail()!=null)
 			login.setEmail(contactsDetails.getEmail());
 			pc.setLogin(login);
 			pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
+			if(contactsDetails.getEmergencyPhone()!=null)
 			pc.setEmergencyPhone(contactsDetails.getEmergencyPhone());
+			if(contactsDetails.getFax()!=null)
 			pc.setFax(contactsDetails.getFax());
+			if(contactsDetails.getFirstName()!=null)
 			pc.setFirstName(contactsDetails.getFirstName());
 			pc.setIsPrimary((byte) (contactsDetails.isPrimaryContact() ? 1 : 0));
+			if(contactsDetails.getLastName()!=null)
 			pc.setLastName(contactsDetails.getLastName());
 			Partner partner = partnerRepository.findOne(contactsDetails.getGoId());
 			pc.setPartner(partner);

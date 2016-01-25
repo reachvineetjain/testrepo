@@ -156,9 +156,9 @@ public class AdminPartner {
     * @return
     */
    @GET
-   @Path("sendlogin/{partnerGoId}/{loginVal}")
+   @Path("sendlogin/{partnerGoId}/{loginVal}/{loginId}")
    @Produces("application/json")
-   public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal) {
-      return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal, request);
+   public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal, @PathParam("loginId") String loginId) {
+      return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal,loginId, request);
    }
 }
