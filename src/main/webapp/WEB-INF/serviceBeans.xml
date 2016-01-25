@@ -60,7 +60,7 @@
          <bean id="fieldStaffs" class="com.ccighgo.service.rest.fieldstaffs.FieldStaffs"/>
          <bean id="fieldStaffGenericNote" class="com.ccighgo.service.rest.generic.notes.fieldstaffs.FieldStaffGenericNote"/>
          <bean id="fieldStaffLeadershipDetails" class="com.ccighgo.service.rest.fieldstaff.details.listing.FieldStaffLeadershipDetails" />
-         <bean id="fieldStaffParticipant" class="com.ccighgo.service.rest.fieldstaffs.participant.FieldStaffParticipant"/>
+         <bean id="AdminERDParticipant" class="com.ccighgo.service.rest.fieldstaffs.participant.AdminERDParticipant"/>
          <bean id="fieldStaffERDDashboard" class="com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard"/>
          <bean id="fieldStaffMyPlacements" class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements"/>
          <bean id="nonificationServer" class="com.ccighgo.service.rest.pushnotification.NotificationServer" />

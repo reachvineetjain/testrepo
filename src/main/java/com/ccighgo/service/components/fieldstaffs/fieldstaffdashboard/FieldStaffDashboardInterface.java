@@ -13,11 +13,11 @@ public interface FieldStaffDashboardInterface {
     * @param programId
     * @return ErdDashboardTypes
     */
-   ErdDashboardTypes getErdDashboardWorkQueuesType(String programId);
+   ErdDashboardTypes getErdDashboardWorkQueuesType(String programId,String fieldStaffGoId);
 
    /**
     * @param typeId
     * @return ErdDashboardCategories
     */
-   ErdDashboardCategories getErdDashboardWorkQueuesCategories(String typeId);
+   ErdDashboardCategories getErdDashboardWorkQueuesCategories(String typeId,String fieldStaffGoId);
 }

@@ -50,8 +50,8 @@ public class NotificationServer {
 	 */
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		System.out.println("NotificationServer :: Message from " + session.getId() + ": " + message);
-		LOGGER.info("NotificationServer :: Message from " + session.getId() + ": " + message);
+		//System.out.println("NotificationServer :: Message from " + session.getId() + ": " + message);
+		//LOGGER.info("NotificationServer :: Message from " + session.getId() + ": " + message);
 		
 		try {
 			session.getBasicRemote().sendText(message);
@@ -72,11 +72,11 @@ public class NotificationServer {
 	
 	@Scheduled(fixedDelay = 10000)
 	public void execute() {
-		System.out.println("........ scheduled notification task ..........");
-		System.out.println("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
+	//	System.out.println("........ scheduled notification task ..........");
+	///	System.out.println("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
 		
-		LOGGER.info("........ Scheduled Notification Task ..........");
-		LOGGER.debug("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
+		//LOGGER.info("........ Scheduled Notification Task ..........");
+		//LOGGER.debug("Sessions count = " + SessionRegistry.INSTANCE.getSessions().size());
 		
 		Collection<Session> peers = SessionRegistry.INSTANCE.getSessions().values();
 		Notifications.broadcastMessage("$$ Notification from server $$", peers);
