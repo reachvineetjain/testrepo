@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/fieldstaffdashboardapplicationstats" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/fieldstaffdashboardapplicationstats" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="FieldStaffDashboardApplicationStats" type="pdl:FieldStaffDashboardApplicationStats" />
+
+   <xsd:complexType name="FieldStaffDashboardApplicationStats">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+	            <xsd:element name="applicationStats" type="pdl:FieldStaffDashboardApplicationStatsDetails" minOccurs="1" maxOccurs="unbounded" />
+       	   </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+
+   <xsd:complexType name="FieldStaffDashboardApplicationStatsDetails">
+            <xsd:sequence>
+					<xsd:element name="typeId" type="xsd:int"  maxOccurs="1" />
+					<xsd:element name="categoryId" type="xsd:int"  maxOccurs="1" />
+					<xsd:element name="categoryName" type="xsd:string"  maxOccurs="1" />
+					<xsd:element name="recordStatus" type="xsd:string"  maxOccurs="1" />
+					<xsd:element name="categoryAggregate" type="xsd:string"  maxOccurs="1" />
+       	   </xsd:sequence>
+   </xsd:complexType>  
+ 
+   
+   
+</xsd:schema>
