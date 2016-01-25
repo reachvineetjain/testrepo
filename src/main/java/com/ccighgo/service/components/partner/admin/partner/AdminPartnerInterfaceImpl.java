@@ -254,7 +254,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             List<PartnerUser> partnerUserList = p.getPartnerUsers();
             if (partnerUserList != null) {
                for (PartnerUser pu : partnerUserList) {
-                  if (pu.getIsPrimary() == CCIConstants.ACTIVE) {
+                   if (pu.getIsPrimary().equals(CCIConstants.ACTIVE)) {
                      puser = pu;
                      break;
                   }
