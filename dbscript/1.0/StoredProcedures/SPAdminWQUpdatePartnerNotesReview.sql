@@ -1,10 +1,10 @@
 DELIMITER $$
 
-USE `cci_gh_go_login`$$
+USE `cci_gh_go_dev`$$
 
 DROP PROCEDURE IF EXISTS `SPAdminWQUpdatePartnerNotesReview`$$
 
-CREATE DEFINER=`madhavi`@`%` PROCEDURE `SPAdminWQUpdatePartnerNotesReview`(IN pNotesId INT, IN pGoId INT, IN cciGoId INT)
+CREATE DEFINER=`phanipothula`@`%` PROCEDURE `SPAdminWQUpdatePartnerNotesReview`(IN pNotesId INT, IN pGoId INT, IN cciGoId INT)
 BEGIN
          DECLARE notesId INT;
          DECLARE goId INT;
