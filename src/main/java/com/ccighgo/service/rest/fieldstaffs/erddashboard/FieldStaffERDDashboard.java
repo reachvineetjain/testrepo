@@ -9,10 +9,7 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FieldStaffDashboardInterface;
-import com.ccighgo.service.transport.fieldstaff.beans.erddashboardtitles.ErdDashboardTitles;
-import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardcategories.ErdDashboardCategories;
-import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardtype.ErdDashboardTypes;
-
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 /**
  * @author sinshaw.demisse
  *
@@ -36,19 +33,9 @@ public class FieldStaffERDDashboard {
     * @return
     */
    @GET
-   @Path("workQueueType/{programId}/{fieldStaffGoId}")
+   @Path("workQueue/{fieldStaffGoId}")
    @Produces("application/json")
-   public ErdDashboardTypes getWorkQueuesType(@PathParam("programId")String programId, @PathParam("fieldStaffGoId")String fieldStaffGoId) {
-      return fieldStaffDashboardInterface.getErdDashboardWorkQueuesType(programId,fieldStaffGoId);
+   public ErdDashboard getWorkQueuesType( @PathParam("fieldStaffGoId")String fieldStaffGoId) {
+      return fieldStaffDashboardInterface.getErdDashboardWorkQueues(fieldStaffGoId);
    }
-
-   @GET
-   @Path("workQueueCategory/{typeId}/{fieldStaffGoId}")
-   @Produces("application/json")
-   public ErdDashboardCategories getWorkQueuesCategories(@PathParam("typeId") String typeId, @PathParam("fieldStaffGoId")String fieldStaffGoId) {
-      return fieldStaffDashboardInterface.getErdDashboardWorkQueuesCategories(typeId,fieldStaffGoId);
-   }
-   
-   //public ErdDashboardTitles getWorkQueuesCategories()
-
 }
