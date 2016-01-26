@@ -6,28 +6,27 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Status complex type.
+ * <p>Java class for Documents complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Status">
+ * &lt;complexType name="Documents">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="statusCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="messages" type="{http://www.ccighgo.com/common}Message" maxOccurs="unbounded"/>
+ *         &lt;element name="count" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="documents" type="{http://www.ccighgo.com/fsoverview}Document" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,68 +36,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Status", propOrder = {
-    "statusCode",
-    "messages"
+@XmlType(name = "Documents", propOrder = {
+    "count",
+    "documents"
 })
-public class Status {
+public class Documents {
 
-    @XmlElement(required = true)
-    protected String statusCode;
-    @XmlElement(required = true)
-    protected List<Message> messages;
+    protected int count;
+    protected List<Document> documents;
 
     /**
-     * Gets the value of the statusCode property.
+     * Gets the value of the count property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getStatusCode() {
-        return statusCode;
+    public int getCount() {
+        return count;
     }
 
     /**
-     * Sets the value of the statusCode property.
+     * Sets the value of the count property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setStatusCode(String value) {
-        this.statusCode = value;
+    public void setCount(int value) {
+        this.count = value;
     }
 
     /**
-     * Gets the value of the messages property.
+     * Gets the value of the documents property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the messages property.
+     * This is why there is not a <CODE>set</CODE> method for the documents property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMessages().add(newItem);
+     *    getDocuments().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Message }
+     * {@link Document }
      * 
      * 
      */
-    public List<Message> getMessages() {
-        if (messages == null) {
-            messages = new ArrayList<Message>();
+    public List<Document> getDocuments() {
+        if (documents == null) {
+            documents = new ArrayList<Document>();
         }
-        return this.messages;
+        return this.documents;
     }
 
 }
