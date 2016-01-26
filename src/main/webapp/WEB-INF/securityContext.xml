@@ -69,6 +69,7 @@
             /services/erddashboard/**=anon
             /services/push/notification/**=anon
             /services/fieldstaffs/list/**=anon
+            /services/hf/application/**=anon
             /services/**=authc
          </value>
       </property>
