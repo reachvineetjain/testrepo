@@ -49,7 +49,7 @@ public class UpdateStudentProgramShortenBatchDataService implements IStudentBatc
 
 		students.forEach(s -> s.setProgram(createProgramShorten(true, SevisUtils.convert(LocalDate.now()))));
 
-		String batchId = generateBatchId("fName", "lName");
+		String batchId = SevisUtils.createBatchId();
 		SEVISBatchCreateUpdateStudent updateBatch = createUpdateStudentBatch(batchParam.getUserId(), "P-1-12345",
 				batchId);
 		updateBatch.getUpdateStudent().getStudent().addAll(students);

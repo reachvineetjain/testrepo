@@ -5,7 +5,9 @@ import java.io.StringWriter;
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -38,6 +40,20 @@ public final class SevisUtils {
 		GregorianCalendar gcal = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
 		try {
 			XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+			return xcal;
+		} catch (DatatypeConfigurationException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public static XMLGregorianCalendar convert(LocalDateTime date) {
+		Preconditions.checkNotNull(date);
+		
+		String reqPattern = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS"));
+//		GregorianCalendar gcal = GregorianCalendar.from(date.atZone(ZoneId.systemDefault()));
+		
+		try {
+			XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(date.toString());
 			return xcal;
 		} catch (DatatypeConfigurationException e) {
 			throw new RuntimeException(e.getMessage());

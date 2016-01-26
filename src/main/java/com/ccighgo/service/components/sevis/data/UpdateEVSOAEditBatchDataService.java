@@ -1,7 +1,5 @@
 package com.ccighgo.service.components.sevis.data;
 
-import static com.ccighgo.service.components.sevis.common.SevisUtils.generateBatchId;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.jpa.repositories.ParticipantRepository;
+import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
@@ -43,7 +42,7 @@ public class UpdateEVSOAEditBatchDataService implements IEVBatchDataService {
 
 		evs.forEach(ev -> ev.setSiteOfActivity(createSOAEdit(true, "Address 1", "60169")));
 
-		String batchId = generateBatchId("fName", "lName");
+		String batchId = SevisUtils.createBatchId();
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
 		batch.getUpdateEV().getExchangeVisitor().addAll(evs);
 

@@ -1,9 +1,7 @@
 package com.ccighgo.service.components.sevis.data;
 
-import static com.ccighgo.service.components.sevis.common.SevisUtils.generateBatchId;
-import static java.util.stream.Collectors.toList;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,26 +11,26 @@ import com.ccighgo.jpa.repositories.ParticipantRepository;
 import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.transport.sevis.BatchParam;
 
+import gov.ice.xmlschema.sevisbatch.common.USAddrDoctorType;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Program;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Program.EditSubject;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Biographical;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Validate;
 
 @Component
-public class UpdateEVProgramEditSubjectBatchDataService implements IEVBatchDataService {
+public class UpdateEVUpdateHousingBatchDataService implements IEVBatchDataService {
 
 	@Autowired
 	ParticipantRepository participantRepository;
 
 	@Override
 	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
-
 		// get EVs from DB
 		// @formatter:off
 		List<Integer> participantIds = batchParam.getParticipant()
 				.stream()
 				.map(p -> p.getParticipantGoId())
-				.collect(toList());
+				.collect(Collectors.toList());
 		// @formatter:on
 
 		List<Participant> participants = participantRepository.findByParticipantGoIdIn(participantIds);
@@ -40,11 +38,11 @@ public class UpdateEVProgramEditSubjectBatchDataService implements IEVBatchDataS
 		// @formatter:off
 		List<ExchangeVisitor> evs = participants.stream()
 				.map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1"))
-				.collect(toList());
+				.collect(Collectors.toList());
 		// @formatter:on
 
-		evs.forEach(ev -> ev.setProgram(createEditSubjectProgram()));
-
+		evs.forEach(ev -> ev.setBiographical(createBiographical(true, createUSAddress("Address 1", "60169"))));
+		
 		String batchId = SevisUtils.createBatchId();
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
 		batch.getUpdateEV().getExchangeVisitor().addAll(evs);
@@ -56,35 +54,26 @@ public class UpdateEVProgramEditSubjectBatchDataService implements IEVBatchDataS
 		// p -> EV
 		return createExchangeVisitor(userId, sevisId, requestId);
 	}
-
-	private Program createEditSubjectProgram() {
-		Program program = new Program();
-		program.setEditSubject(createEditSubject());
-		return program;
+	
+	private Biographical createBiographical(boolean printForm, USAddrDoctorType usAddress) {
+		Biographical bio = new Biographical();
+		bio.setPrintForm(printForm);
+		
+		bio.setUSAddress(usAddress);
+		return bio;
 	}
-
-	private EditSubject createEditSubject() {
-		EditSubject editSub = new EditSubject();
-		editSub.setPrintForm(true);
-
-		/*
-		 * Business Rule: Code from CIP 2010 list of codes that represents
-		 * exchange visitor’s subject or field of study. (See table entitled
-		 * Primary Major Codes for Students and Subject/Field Codes for Exchange
-		 * Visitors)
-		 * 
-		 */
-
-		/*
-		 * Data Definition: Code for subject or field of study (Format: 12.1234)
-		 * (NOTE: The code sent to SEVIS must include the decimal point.)
-		 */
-		editSub.setSubjectFieldCode("01.0106");
-
-		editSub.setSubjectFieldRemarks("Subject Field Remarks");
-		editSub.setRemarks("Remarks");
-
-		return editSub;
+	
+	/**
+	 * 
+	 * @param address1
+	 * @param postalCode
+	 * @return
+	 */
+	private USAddrDoctorType createUSAddress(String address1, String postalCode) {
+		USAddrDoctorType usAddress = new USAddrDoctorType();
+		usAddress.setAddress1(address1);
+		usAddress.setPostalCode(postalCode);
+		return usAddress;
 	}
 
 }

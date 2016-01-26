@@ -18,15 +18,20 @@ import com.ccighgo.service.component.serviceutils.ApplicationContextProvider;
 import com.ccighgo.service.components.sevis.batch.EVBatchGenerator;
 import com.ccighgo.service.components.sevis.batch.StuBatchGenerator;
 import com.ccighgo.service.components.sevis.common.SevisUtils;
+import com.ccighgo.service.components.sevis.data.CreateNewEVBatchDataService;
 import com.ccighgo.service.components.sevis.data.CreateStudentBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVBioBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVFinancialInfoBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVProgramAmendDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramEditSubjectBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramExtentionBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVSOAEditBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVSoaAddBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVStatusInvalidBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVStatusTerminateBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVTIPPBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVUpdateHousingBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVValidateHousingBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateStudentDependentReprintBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateStudentProgramShortenBatchDataService;
 import com.ccighgo.service.components.sevis.log.SevisLogProcessor;
@@ -59,14 +64,18 @@ public class SevisBatch {
 	public Response createStudent(BatchParam batchParam) {
 		System.out.println("Service ...");
 		
-		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
-		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
+//		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
+//		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
+		CreateNewEVBatchDataService dataService = getServiceBean(CreateNewEVBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
-	@Path("create/batch/bio")
+	@Path("create/batch/update/bio")
 	@Produces("application/json")
 	public Response updateEVBio(BatchParam batchParam) {
+		// UpdateEV.ExchangeVisitor.Biographical
+		
 		UpdateEVBioBatchDataService dataService = getServiceBean(UpdateEVBioBatchDataService.class);
 		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
@@ -99,7 +108,7 @@ public class SevisBatch {
 	@Produces("application/json")
 	public Response updateEditSubject(BatchParam batchParam) {
 		// Update - EditSubject
-		// Event - Update.EV.Program.EditSubject
+		// Event - UpdateEV.ExchangeVisitor.Program.EditSubject
 		UpdateEVProgramEditSubjectBatchDataService dataService = getServiceBean(UpdateEVProgramEditSubjectBatchDataService.class);
 		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
@@ -109,8 +118,8 @@ public class SevisBatch {
 	@Produces("application/json")
 	public Response updateFinancialInfo(BatchParam batchParam) {
 		// Financial Info
-		// Update.EV.FinancialInfo
-		// Update.Student.FinancialInfo
+		// UpdateEV.ExchangeVisitor.FinancialInfo
+		// Update.Student.FinancialInfo ??
 		UpdateEVFinancialInfoBatchDataService dataService = getServiceBean(UpdateEVFinancialInfoBatchDataService.class);
 		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
@@ -177,6 +186,17 @@ public class SevisBatch {
 		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
 
 	}
+	
+	@POST
+	@Path("create/batch/update/programdate")
+	@Produces("application/json")
+	public Response updateProgramDate(BatchParam batchParam) {
+		// Program Date
+		// UpdateEV.ExchangeVisitor.Program.Amend
+		UpdateEVProgramAmendDataService dataService = getServiceBean(UpdateEVProgramAmendDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+
+	}
 
 	@POST
 	@Path("create/batch/update/soa")
@@ -189,6 +209,40 @@ public class SevisBatch {
 		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 
 	}
+	
+	@POST
+	@Path("create/batch/validate/housing")
+	@Produces("application/json")
+	public Response valiateHousing(BatchParam batchParam) {
+		// Validation - Housing
+		// Update.EV.Validate.USAddress
+		
+		UpdateEVValidateHousingBatchDataService dataService = getServiceBean(UpdateEVValidateHousingBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+	}
+	
+	@POST
+	@Path("create/batch/update/housing")
+	@Produces("application/json")
+	public Response updateHousing(BatchParam batchParam) {
+		// Update - Housing
+		// Update.EV.Biographical.USAddress
+		
+		UpdateEVUpdateHousingBatchDataService dataService = getServiceBean(UpdateEVUpdateHousingBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+	}
+	
+	@POST
+	@Path("create/batch/validate/soa")
+	@Produces("application/json")
+	public Response valiateSOA(BatchParam batchParam) {
+		// Validation - SOA
+		// UpdateEV.ExchangeVisitor.SiteOfActivity.Add
+		
+		UpdateEVSoaAddBatchDataService dataService = getServiceBean(UpdateEVSoaAddBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+	}
+
 
 	@GET
 	@Path("ping")
