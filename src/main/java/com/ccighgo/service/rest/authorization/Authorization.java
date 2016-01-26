@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -31,7 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+
 import com.ccighgo.service.components.authorization.AuthorizationManagerInterface;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
@@ -84,8 +87,8 @@ public class Authorization {
    @GET
    @Path("fs/{goId}")
    @Produces("application/json")
-   public PartnerRecruitmentLead getFSDashboard(@PathParam("goId") String goId) {
-      return authorizationManager.getFSDashboard(Integer.parseInt(goId));
+   public ErdDashboard getFSDashboard(@PathParam("goId") String goId) {
+      return authorizationManager.getFSDashboard(goId);
    }
    
 }
