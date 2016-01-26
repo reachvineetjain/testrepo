@@ -72,11 +72,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 	EntityManager em;
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
-      try {
-         LOGGER.info("fieldStaffTypeCode: " + fieldStaffTypeCode);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       AddedFieldStaff addedFieldStaff = new AddedFieldStaff();
       try {
          List<FieldStaff> fieldstaffs = fieldStaffRepository.findAllByFieldStaffType(fieldStaffTypeCode);
@@ -129,11 +124,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 
    @Override
    public com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview getFieldStaffDetail(int goId) {
-      try {
-         LOGGER.info("goId: " + goId);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       FieldStaffOverview fieldStaffOverview = new FieldStaffOverview();
       try {
          FieldStaff fs = fieldStaffRepository.findOne(goId);
@@ -230,7 +220,10 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         e.printStackTrace();
+         ExceptionUtil.logException(e, LOGGER);
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
       return response;
    }
@@ -248,7 +241,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             fss.add(fs);
          }
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
       return fss;
    }
@@ -287,7 +280,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
       try {
          url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
       } catch (Exception e) {
-         e.printStackTrace();
+         ExceptionUtil.logException(e, LOGGER);
       }
       return url;
    }
@@ -517,8 +510,10 @@ public FSAddedSchool getAddedSchools(int fieldStaffId) {
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
       return response;
    }
