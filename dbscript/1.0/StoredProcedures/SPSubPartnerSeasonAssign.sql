@@ -1,18 +1,15 @@
 DELIMITER $$
 
-CREATE
-    /*[DEFINER = { user | CURRENT_USER }]*/
-    PROCEDURE `cci_gh_go`.`SPSubPartnerSeasonAssign`(IN subPartnerId INT)
-    /*LANGUAGE SQL
-    | [NOT] DETERMINISTIC
-    | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
-    | SQL SECURITY { DEFINER | INVOKER }
-    | COMMENT 'string'*/
-    BEGIN
+USE `cci_gh_go_dev`$$
+
+DROP PROCEDURE IF EXISTS `SPSubPartnerSeasonAssign`$$
+
+CREATE DEFINER=`phanipothula`@`%` PROCEDURE `SPSubPartnerSeasonAssign`(IN subPartnerId INT)
+BEGIN
 	DECLARE spId,pId,pssId,scount INT;
 	SET @spId = subPartnerId;
 	SET @pId = (SELECT parentPartnerGoId FROM Partner WHERE partnerGoId = @spId);
-	SET @pssId = (SELECT partnerStatusId FROM `PartnerStatus` WHERE partnerStatusName = 'Active');
+	SET @pssId = (SELECT partnerStatusId FROM `PartnerStatus` WHERE partnerStatusName = 'Approved');
         SET @scount = (SELECT COUNT(*) FROM PartnerSeason WHERE partnerGoId = @spId);
 	
 	IF (@scount = 0) THEN

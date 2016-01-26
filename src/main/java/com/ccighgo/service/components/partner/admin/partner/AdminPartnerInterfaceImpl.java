@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -188,6 +189,18 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          pUser.setActive(CCIConstants.ACTIVE);
          pUser.setIsPrimary(CCIConstants.ACTIVE);
          pUser = partnerUserRepository.saveAndFlush(pUser);
+         
+         PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
+         reviewStatus.setPartner(newPartner);
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(11));
+         CCIStaffUser cciUser = null;
+         Login cciLogin = loginRepository.findOne(partner.getLoginId());
+         if(cciLogin!=null){
+            cciUser = cciStaffUsersRepository.findOne(cciLogin.getGoIdSequence().getGoId());
+         }
+         reviewStatus.setCcistaffUser(cciUser);
+         partnerReviewStatusRepository.saveAndFlush(reviewStatus);
+         
 
          if (partner.getProgramContacts() != null) {
             List<PartnerProgram> partnerProgramList = new ArrayList<PartnerProgram>();
@@ -241,7 +254,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             List<PartnerUser> partnerUserList = p.getPartnerUsers();
             if (partnerUserList != null) {
                for (PartnerUser pu : partnerUserList) {
-                  if (pu.getIsPrimary() == CCIConstants.ACTIVE) {
+                   if (pu.getIsPrimary().equals(CCIConstants.ACTIVE)) {
                      puser = pu;
                      break;
                   }

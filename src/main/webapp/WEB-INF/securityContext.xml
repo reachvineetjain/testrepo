@@ -70,6 +70,7 @@
             /services/push/notification/**=anon
             /services/sevis/**=anon
             /services/fieldstaffs/list/**=anon
+            /services/hf/application/**=anon
             /services/**=authc
          </value>
       </property>

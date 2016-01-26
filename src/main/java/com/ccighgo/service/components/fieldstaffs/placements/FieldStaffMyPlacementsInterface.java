@@ -2,9 +2,9 @@ package com.ccighgo.service.components.fieldstaffs.placements;
 
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.fieldstaff.beans.placement.adminerdplacement.AdminERDPlacement;
-import com.ccighgo.service.transport.fieldstaff.beans.placement.adminerdplacement.AdminERDPlacements;
+import com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants;
 import com.ccighgo.service.transport.fieldstaff.beans.placement.erdplacement.ERDPlacements;
+import com.ccighgo.service.transport.fieldstaff.beans.placement.participants.ERDPlacementParticipants;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.myplacement.MyPlacements;
 
 /**
@@ -14,15 +14,34 @@ import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.myplacem
 @Service
 public interface FieldStaffMyPlacementsInterface {
    /**
-    * @return list of MyPlacement
+    * @param goId
+    * @param catagories
+    * @return
     */
-   MyPlacements getAll();
+   MyPlacements getERDMyPlacement(String goId, String catagories);
    
-   AdminERDPlacements getAdminERDPlacementMyParticipant(String goId, String catagories);
+   /**
+    * @param goId
+    * @param catagories
+    * @return
+    */
+   ERDPlacementParticipants getERDPlacementParticipant(String goId, String catagories);
    
-   AdminERDPlacements getAdminERDPlacementMyTeamParticipant(String goId, String catagories);
-   
-   ERDPlacements getERDPlacementMyParticipant(String goId, String catagories);
-   
-   ERDPlacements getERDPlacementMyTeamParticipant(String goId, String catagories);
+   /**
+    * @param goId
+    * @param catagories
+    * @return
+    */
+   ERDPlacements getERDPlacementMyTeamPlacement(String goId, String catagories); 
+   /**
+    * 
+    * @return FieldStaffParticipants
+    */
+   public ERDParticipants getAllParticipant(String goId);
+   /**
+    * 
+    * @param goId
+    * @return FieldStaffParticipants
+    */
+   public ERDParticipants getMyTeamParticipant(String goId);
 }
