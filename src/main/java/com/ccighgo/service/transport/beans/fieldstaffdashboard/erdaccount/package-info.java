@@ -5,5 +5,5 @@
 // Generated on: 2016.01.27 at 03:11:04 PM CST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/common")
-package com.ccighgo.service.transport.common.response.beans;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/fieldstaffdashboard")
+package com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount;
