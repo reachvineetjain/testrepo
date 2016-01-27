@@ -56,6 +56,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "erd",
     "rd",
     "rm",
+    "canPresentGrantsParticipants",
     "isRecruiterLC"
 })
 public class FieldStaffAdminSeasonDetails
@@ -81,6 +82,7 @@ public class FieldStaffAdminSeasonDetails
     @XmlElement(required = true)
     protected String rm;
     @XmlElement(required = true)
+    protected boolean canPresentGrantsParticipants;
     protected boolean isRecruiterLC;
 
     /**
@@ -305,6 +307,22 @@ public class FieldStaffAdminSeasonDetails
      */
     public void setRm(String value) {
         this.rm = value;
+    }
+    
+    /**
+     * Gets the value of the canPresentGrantsParticipants property.
+     * 
+     */
+    public boolean isCanPresentGrantsParticipants() {
+        return canPresentGrantsParticipants;
+    }
+
+    /**
+     * Sets the value of the canPresentGrantsParticipants property.
+     * 
+     */
+    public void setCanPresentGrantsParticipants(boolean value) {
+        this.canPresentGrantsParticipants = value;
     }
     
     /**
