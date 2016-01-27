@@ -57,7 +57,7 @@ import javax.xml.bind.annotation.XmlType;
     "startDate",
     "endDate",
     "status",
-    "signedContract"
+    "fieldStaffStatus"
 })
 public class FieldStaffSeason {
 
@@ -78,7 +78,8 @@ public class FieldStaffSeason {
     protected String endDate;
     @XmlElement(required = true)
     protected String status;
-    protected int signedContract;
+    @XmlElement(required = true)
+    protected String fieldStaffStatus;
 
     /**
      * Gets the value of the fsGoId property.
@@ -305,19 +306,19 @@ public class FieldStaffSeason {
     }
 
     /**
-     * Gets the value of the signedContract property.
+     * Gets the value of the fieldStaffStatus property.
      * 
      */
-    public int getSignedContract() {
-        return signedContract;
+    public String getFieldStaffStatus() {
+        return fieldStaffStatus;
     }
 
     /**
-     * Sets the value of the signedContract property.
+     * Sets the value of the fieldStaffStatus property.
      * 
      */
-    public void setSignedContract(int value) {
-        this.signedContract = value;
+    public void setFieldStaffStatus(String value) {
+        this.fieldStaffStatus = value;
     }
 
 }
