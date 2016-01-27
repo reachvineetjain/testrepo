@@ -27,6 +27,7 @@
                <xsd:element name="erd" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="rd" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="rm" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="canPresentGrantsParticipants" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="isRecruiterLC" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>

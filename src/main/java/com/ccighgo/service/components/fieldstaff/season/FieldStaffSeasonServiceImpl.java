@@ -77,21 +77,22 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
             for (Object[] obj : results) {
                count += 1;
                // 0.fs season id, 1.seasonid,2 department program id, 3.
-               // season/program name,4. start date, 5.end date, 6.status, 7. is
-               // signed, 8.departmentid, 9. DepartProgName, 10. FS Type
+               // season/program name,4. start date, 5.end date, 6.status,
+               // 7.fsstatus
+               // 8.departmentid, 9. DepartProgName, 10. FS Type
                FieldStaffSeason season = new FieldStaffSeason();
                season.setFsGoId(Integer.valueOf(fsGoId));
-               season.setFsSeasonId(Integer.valueOf(obj[0].toString()));
-               season.setSeasonId(Integer.valueOf(obj[1].toString()));
-               season.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
-               season.setProgramName(obj[3].toString());
-               season.setStartDate(obj[4].toString());
-               season.setEndDate(obj[5].toString());
-               season.setStatus(obj[6].toString());
-               season.setSignedContract(obj[7].toString().equals("true") ? 1 : 0);
-               season.setDepartmentId(Integer.valueOf(obj[8].toString()));
-               season.setDepartmentProgramName(obj[9].toString());
-               season.setFsType(obj[10].toString());
+               season.setFsSeasonId(obj[0] != null ? Integer.valueOf(obj[0].toString()) : 0);
+               season.setSeasonId(obj[1] != null ? Integer.valueOf(obj[1].toString()) : 0);
+               season.setDepartmentProgramId(obj[2] != null ? Integer.valueOf(obj[2].toString()) : 0);
+               season.setProgramName(obj[3] != null ? obj[3].toString() : SPACE);
+               season.setStartDate(obj[4] != null ? obj[4].toString() : SPACE);
+               season.setEndDate(obj[5] != null ? obj[5].toString() : SPACE);
+               season.setStatus(obj[6] != null ? obj[6].toString() : SPACE);
+               season.setFieldStaffStatus(obj[7] != null ? obj[7].toString() : SPACE);
+               season.setDepartmentId(obj[8] != null ? Integer.valueOf(obj[8].toString()) : 0);
+               season.setDepartmentProgramName(obj[9] != null ? obj[9].toString() : SPACE);
+               season.setFsType(obj[10] != null ? obj[10].toString() : SPACE);
                fsSeasonList.getFieldStaffSeasons().add(season);
             }
          }
@@ -169,7 +170,8 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          fsSeason.setFsSeasonId(season.getFiledStaffSeasonId());
          fsSeason.setSeasonId(season.getSeason().getSeasonId());
          fsSeason.setAgreementSigned(season.getAgreeToTerms().equals(CCIConstants.ACTIVE) ? true : false);
-         fsSeason.setHostFamilyStatus("");// TODO no value in DB:setting empty object
+         fsSeason.setHostFamilyStatus("");// TODO no value in DB:setting empty
+                                          // object
          fsSeason.setSeasonStatus(seasonStatus);
          fsSeason.setPaymentSchedule(paymentSchedule);
          fsSeason.setDefaultMonitoringStipend(defaultMonitoringStipend);
