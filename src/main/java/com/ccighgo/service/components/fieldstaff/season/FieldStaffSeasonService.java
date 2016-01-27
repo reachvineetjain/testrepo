@@ -56,4 +56,16 @@ public interface FieldStaffSeasonService {
     */
    public FieldStaffAdminSeasonDetails updateFieldStaffAdminSeasonDetails(FieldStaffAdminSeasonDetails details);
 
+   /**
+    * @param fsSeasonId
+    * @return
+    */
+   public Response deleteFSAdminSeason(String fsSeasonId);
+
+   /**
+    * @param fsSeasonId
+    * @return
+    */
+   public Response deactivateFSAdminSeason(String fsSeasonId);
+
 }

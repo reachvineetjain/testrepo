@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -287,5 +288,42 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                .setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
       }
       return updatedObject;
+   }
+
+   @Override
+   @Modifying
+   @Transactional
+   public Response deleteFSAdminSeason(String fsSeasonId) {
+      Response resp = new Response();
+      try {
+         if (fsSeasonId == null) {
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FSLSEASONID));
+         }
+         fieldStaffSeasonRepository.delete(Integer.valueOf(fsSeasonId));
+         fieldStaffSeasonRepository.flush();
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_DELETE_FSL_SEASON.getValue(), e.getMessage()));
+      }
+      return resp;
+   }
+
+   @Override
+   public Response deactivateFSAdminSeason(String fsSeasonId) {
+      Response resp = new Response();
+      try {
+         if (fsSeasonId == null) {
+            throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FSLSEASONID));
+         }
+         com.ccighgo.db.entities.FieldStaffSeason season = fieldStaffSeasonRepository.findOne(Integer.valueOf(fsSeasonId));
+         season.setActive(CCIConstants.INACTIVE);
+         fieldStaffSeasonRepository.saveAndFlush(season);
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_DELETE_FSL_SEASON.getValue(), e.getMessage()));
+      }
+      return resp;
    }
 }
