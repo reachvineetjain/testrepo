@@ -1,7 +1,5 @@
 package com.ccighgo.service.components.sevis.data;
 
-import static com.ccighgo.service.components.sevis.common.SevisUtils.generateBatchId;
-
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.components.sevis.common.SevisUtils;

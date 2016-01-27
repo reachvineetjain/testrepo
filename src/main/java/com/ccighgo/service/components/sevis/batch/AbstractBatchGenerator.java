@@ -56,7 +56,7 @@ public abstract class AbstractBatchGenerator<T> implements IBatchGenerator<T> {
 		 */
 		BatchDetails batchDetails = asBatchDetails(jaxb); // abstract
 		
-		String file = getBatchId(); // abstract
+		String file = getBatchId() + ".xml"; // abstract
 		String schema = getBatchSchemaFile(); // abstract
 		
 		String outputFile = SevisUtils.batchFileRealPath(file, servletContext);

@@ -1,12 +1,7 @@
 package com.ccighgo.service.components.sevis.data;
 
-import static com.ccighgo.service.components.sevis.common.SevisUtils.generateBatchId;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,12 +13,11 @@ import com.ccighgo.service.transport.sevis.BatchParam;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Status;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Status.Terminate;
-import gov.ice.xmlschema.sevisbatch.table.EVTerminationReasonType;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Dependent;
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.Dependent.EndStatus;
 
 @Component
-public class UpdateEVStatusTerminateBatchDataService implements IEVBatchDataService {
+public class UpdateEVDependentEndStatusBatchDataService implements IEVBatchDataService {
 
 	@Autowired
 	ParticipantRepository participantRepository;
@@ -44,9 +38,11 @@ public class UpdateEVStatusTerminateBatchDataService implements IEVBatchDataServ
 		List<ExchangeVisitor> evs = participants.stream()
 				.map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1")).collect(Collectors.toList());
 
+		// EVDependent End Status Reason. 02: Death, 04: Divorce, 09: Other.
+		
 		evs.forEach(ev -> ev
-				.setStatus(createTerminateStatus(EVTerminationReasonType.CONVIC, SevisUtils.convert(LocalDate.now()))));
-
+				.setDependent(createDependent(createEndStatus("N0123456789", "09"))));
+		
 		String batchId = SevisUtils.createBatchId();
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
 		batch.getUpdateEV().getExchangeVisitor().addAll(evs);
@@ -58,16 +54,18 @@ public class UpdateEVStatusTerminateBatchDataService implements IEVBatchDataServ
 		// p -> EV
 		return createExchangeVisitor(userId, sevisId, requestId);
 	}
-
-	private Status createTerminateStatus(EVTerminationReasonType reason, XMLGregorianCalendar effectiveDate) {
-		Status status = new Status();
-		Terminate terminate = new Terminate();
-		status.setTerminate(terminate);
-
-		terminate.setReason(reason);
-		terminate.setEffectiveDate(effectiveDate);
-
-		return status;
+	
+	private Dependent createDependent(EndStatus endStatus) {
+		Dependent dependent = new Dependent();
+		dependent.setEndStatus(endStatus);
+		return dependent;
+	}
+	
+	private EndStatus createEndStatus(String dependentSevisId, String reason) {
+		EndStatus end = new EndStatus();
+		end.setDependentSevisID(dependentSevisId);
+		end.setReason(reason);
+		return end;
 	}
 
 }

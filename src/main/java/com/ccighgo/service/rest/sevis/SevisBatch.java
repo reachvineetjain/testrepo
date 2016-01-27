@@ -21,6 +21,7 @@ import com.ccighgo.service.components.sevis.common.SevisUtils;
 import com.ccighgo.service.components.sevis.data.CreateNewEVBatchDataService;
 import com.ccighgo.service.components.sevis.data.CreateStudentBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVBioBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVDependentEndStatusBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVFinancialInfoBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramAmendDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramEditSubjectBatchDataService;
@@ -59,15 +60,15 @@ public class SevisBatch {
 	}
 
 	@POST
-	@Path("create/batch/student")
+	@Path("create/batch/new/student")
 	@Produces("application/json")
 	public Response createStudent(BatchParam batchParam) {
 		System.out.println("Service ...");
 		
-//		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
-//		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
-		CreateNewEVBatchDataService dataService = getServiceBean(CreateNewEVBatchDataService.class);
-		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
+		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
+//		CreateNewEVBatchDataService dataService = getServiceBean(CreateNewEVBatchDataService.class);
+//		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -97,9 +98,20 @@ public class SevisBatch {
 	public Response updateStatusTerminate(BatchParam batchParam) {
 		// Status Terminate
 		// Update.EV.Status.Terminate
-		// Update.Student.Status.Terminate
+		// Update.Student.Status.Terminate ??
 		
 		UpdateEVStatusTerminateBatchDataService dataService = getServiceBean(UpdateEVStatusTerminateBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+	}
+	
+	@POST
+	@Path("create/batch/update/status/end")
+	@Produces("application/json")
+	public Response updateStatusEnd(BatchParam batchParam) {
+		// Status End
+		// UpdateEV.ExchangeVisitor.Dependent.EndStatus
+		
+		UpdateEVDependentEndStatusBatchDataService dataService = getServiceBean(UpdateEVDependentEndStatusBatchDataService.class);
 		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
