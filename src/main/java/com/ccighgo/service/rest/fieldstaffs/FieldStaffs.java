@@ -1,9 +1,12 @@
 package com.ccighgo.service.rest.fieldstaffs;
 
+import java.util.List;
+
 import javax.print.attribute.standard.Fidelity;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -12,14 +15,14 @@ import javax.ws.rs.core.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.FieldStaffsInterface;
+import com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffDetails;
+import com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchool;
 import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.AdminFieldStaffHostFamily;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaffapplication.FieldStaffapplication;
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
-import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
-import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStats;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStats;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quicklinks.FieldStaffDashboardQuickLinks;
@@ -51,14 +54,26 @@ public class FieldStaffs {
    @GET
    @Path("/detail/{goId}")
    @Produces("application/json")
-   public FieldStaffOverview getFieldStaffDetail(@PathParam("goId") String goId) {
+   public com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview getFieldStaffDetail(@PathParam("goId") String goId) {
       return fieldStaffsInterface.getFieldStaffDetail(Integer.valueOf(goId));
    }
 
+   @POST
+   @Path("/update/")
+   public Response updateFieldStaffDetail(FieldStaffDetails fieldStaffDetail)
+   {
+    return fieldStaffsInterface.updateFieldStaffDetail(fieldStaffDetail);  
+   }
+
+   @GET
+   @Path("/updatestatus/{fsGoId}/{loginId}/{statusId}")
+   public Response updateFieldStaffStatus(@PathParam("fsGoId") String fsgoId, @PathParam("loginId") String loginId, @PathParam("statusId") String statusId) {
+      return fieldStaffsInterface.updateFieldStaffStatus(fsgoId, loginId, statusId);
+   }
    @GET
    @Path("/statuses")
    @Produces("application/json")
-   public FieldStaffStatuses getAllFieldStaffStatuses() {
+   public List<FieldStaffStatus> getAllFieldStaffStatuses() {
       return fieldStaffsInterface.getAllFieldStaffStatuses();
 
    }

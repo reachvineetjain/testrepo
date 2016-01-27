@@ -1,5 +1,6 @@
 package com.ccighgo.service.components.fieldstaffs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,14 +21,18 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffStatusRepository;
+import com.ccighgo.jpa.repositories.FieldStaffTypeRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginHistoryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffDetails;
+import com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchool;
 import com.ccighgo.service.transport.fieldstaff.beans.addedSchool.FSAddedSchoolDetail;
@@ -36,10 +41,6 @@ import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.FSPendingApplication;
 import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.PendingApplication;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
-import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffCurrentStatus;
-import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffDetail;
-import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
-import com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatuses;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStats;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStatsDetails;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStats;
@@ -64,16 +65,13 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @Autowired ReusedFunctions reusedFunctions;
    @Autowired LoginHistoryRepository loginHistoryRepository;
    @Autowired EmailServiceImpl emailingService;
-@Autowired AdminQuickStatsCategoriesAggregateRepository adminQuickStatsCategoriesAggregateRepository;
+   @Autowired AdminQuickStatsCategoriesAggregateRepository adminQuickStatsCategoriesAggregateRepository;
+   @Autowired FieldStaffTypeRepository fieldStaffTypeRepository;
+   @Autowired SalutationRepository salutationRepository;
 	@PersistenceContext
 	EntityManager em;
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
-      try {
-         LOGGER.info("fieldStaffTypeCode: " + fieldStaffTypeCode);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       AddedFieldStaff addedFieldStaff = new AddedFieldStaff();
       try {
          List<FieldStaff> fieldstaffs = fieldStaffRepository.findAllByFieldStaffType(fieldStaffTypeCode);
@@ -125,12 +123,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    }
 
    @Override
-   public FieldStaffOverview getFieldStaffDetail(int goId) {
-      try {
-         LOGGER.info("goId: " + goId);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
+   public com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview getFieldStaffDetail(int goId) {
       FieldStaffOverview fieldStaffOverview = new FieldStaffOverview();
       try {
          FieldStaff fs = fieldStaffRepository.findOne(goId);
@@ -141,39 +134,40 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             return fieldStaffOverview;
          }
 
-         FieldStaffDetail fsd = new FieldStaffDetail();
-         fsd.setGoId(fs.getFieldStaffGoId());
+         FieldStaffDetails fsd = new FieldStaffDetails();
+         fsd.setFsGoId(fs.getFieldStaffGoId());
          fsd.setFirstName(fs.getFirstName());
          fsd.setLastName(fs.getLastName());
-         fsd.setImageURL(fs.getPhoto());
-         fsd.setRoll(fs.getFieldStaffType().getFieldStaffTypeCode());
+         fsd.setPicUrl(fs.getPhoto());
+         fsd.setRole(fs.getFieldStaffType().getFieldStaffTypeCode());
          if (fs.getSalutation() != null)
             fsd.setSalutation(fs.getSalutation().getSalutationName());
          fsd.setHomePhone(fs.getPhone());
          fsd.setCellPhone(fs.getCellPhone());
-         fsd.setTollFreePhone(fs.getTollFreePhone());
+         fsd.setTollFreeNumber(fs.getTollFreePhone());
          fsd.setFax(fs.getFax());
+         fsd.setStates("");
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
          fsd.setUserName(login.getLoginName());
+         fsd.setEmail(login.getEmail());
          fsd.setOriginalStartDate(DateUtils.getMMddyyDate(fs.getOriginalStartDate()));
          fsd.setTotalPlacementManual(fs.getTotalPlacementsManual());
          fsd.setTotalPlacementCalculated(0);
-         fsd.setTotalPlacement(0);
+         fsd.setTotalPlacements(0);
 
-         fsd.setDateApplicationSubmitted(DateUtils.getMMddyyDate(fs.getSubmittedDate()));
-         fsd.setDateApplicatiionApproved(DateUtils.getMMddyyDate(fs.getApprovedDate()));
-         fsd.setDateDosCertificationTestTaken(DateUtils.getMMddyyDate(fs.getDateDOSCertTestTaken()));
-         fsd.setDateW9FormReceived(DateUtils.getMMddyyDate(fs.getDateW9FormReceived()));
-
+         fsd.setDateApplSubmitted(DateUtils.getMMddyyDate(fs.getSubmittedDate()));
+         fsd.setDateApplApproved(DateUtils.getMMddyyDate(fs.getApprovedDate()));
+         fsd.setDateDOSTestTaken(DateUtils.getMMddyyDate(fs.getDateDOSCertTestTaken()));
+         fsd.setDateW9Recieved(DateUtils.getMMddyyDate(fs.getDateW9FormReceived()));
          UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fs.getApprovedBy());
          if (userInformation != null)
             fsd.setApprovedBy(userInformation.getUserName());
-         fieldStaffOverview.setFieldStaffDetail(fsd);
 
-         FieldStaffCurrentStatus fscs = new FieldStaffCurrentStatus();
-         fscs.setFieldStaffStatus(fs.getFieldStaffStatus().getFieldStaffStatusName());
-         fscs.setActive(login.getActive() == CCIConstants.ACTIVE);
-         fieldStaffOverview.setFieldStaffCurrentStatus(fscs);
+         com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus fscs = new com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus();
+         fscs.setFsStatusValue(fs.getFieldStaffStatus().getFieldStaffStatusName());
+         fieldStaffOverview.setActive(login.getActive() == CCIConstants.ACTIVE);
+         fieldStaffOverview.setFieldStaffDetails(fsd);
+         fieldStaffOverview.setFieldStaffStatus(fscs);
          fieldStaffOverview.setLastLoginDate("");
          fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -187,20 +181,69 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    }
 
    @Override
-   public FieldStaffStatuses getAllFieldStaffStatuses() {
-      FieldStaffStatuses fieldStaffStatuses = new FieldStaffStatuses();
+   public Response updateFieldStaffDetail(FieldStaffDetails fieldStaffDetail) {
+
+      Response response = new Response();
+      try {
+         FieldStaff fs = fieldStaffRepository.findOne(fieldStaffDetail.getFsGoId());
+         if (fs == null) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));            
+            return response;
+         }
+         fs.setFieldStaffType(fieldStaffTypeRepository.findByFieldStaffTypeCode(fieldStaffDetail.getRole()));
+         fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
+         fs.setFirstName(fieldStaffDetail.getFirstName());
+         fs.setLastName(fieldStaffDetail.getLastName());
+         fs.setPhone(fieldStaffDetail.getHomePhone());
+         fs.setCellPhone(fieldStaffDetail.getCellPhone());
+         fs.setFax(fieldStaffDetail.getFax());
+
+         Login login = loginRepository.findByGoId(fs.getGoIdSequence());
+         login.setEmail(fieldStaffDetail.getUserName());
+         login.setEmail(fieldStaffDetail.getEmail());
+         loginRepository.saveAndFlush(login);
+
+         FieldStaffStatus fieldStaffStatus = fieldStaffStatusRepository.getByFieldStaffStatusName(fieldStaffDetail.getFieldStaffStatus());
+         if (fieldStaffStatus != null)
+            fs.setFieldStaffStatus(fieldStaffStatus);
+
+         fs.setOriginalStartDate(DateUtils.getDateFromString(fieldStaffDetail.getOriginalStartDate()));
+         fs.setTotalPlacementsManual(fieldStaffDetail.getTotalPlacementManual());
+         fs.setSubmittedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplSubmitted()));
+         fs.setApprovedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplApproved()));
+         fs.setDateDOSCertTestTaken(DateUtils.getDateFromString(fieldStaffDetail.getDateDOSTestTaken()));
+         fs.setDateW9FormReceived(DateUtils.getDateFromString(fieldStaffDetail.getDateW9Recieved()));
+         fs.setModifiedBy(fieldStaffDetail.getLoginId());
+         fieldStaffRepository.saveAndFlush(fs);
+
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
+      }
+      return response;
+   }
+
+   @Override
+   public List<com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus> getAllFieldStaffStatuses() {
+      List<com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus> fss=new ArrayList<com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus>();
+       
       try {
          List<FieldStaffStatus> statuses = fieldStaffStatusRepository.findAll();
-         for (FieldStaffStatus s : statuses) {
-            com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus fs = new com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus();
-            fs.setStatusId(s.getFieldStaffStatusId());
-            fs.setStatusName(s.getFieldStaffStatusName());
-            fieldStaffStatuses.getFieldStaffStatuses().add(fs);
+        for (FieldStaffStatus s : statuses) {
+            com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus fs= new com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus(); 
+            fs.setFsStatusId(s.getFieldStaffStatusId());
+            fs.setFsStatusValue(s.getFieldStaffStatusName());
+            fss.add(fs);
          }
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
-      return fieldStaffStatuses;
+      return fss;
    }
 
    @Override
@@ -237,7 +280,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
       try {
          url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
       } catch (Exception e) {
-         e.printStackTrace();
+         ExceptionUtil.logException(e, LOGGER);
       }
       return url;
    }
@@ -439,4 +482,39 @@ public FSAddedSchool getAddedSchools(int fieldStaffId) {
 	return pwqa;
 }
 
+@Override
+   public Response updateFieldStaffStatus(String fsgoId, String loginId, String statusId) {
+      Response response = new Response();
+      try {
+         if (fsgoId == null || Integer.valueOf(fsgoId) == 0 || Integer.valueOf(fsgoId) < 0) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_DETAILE.getValue(),
+                  messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID)));
+            LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID));
+            return response;
+         }
+
+         FieldStaff fieldStaff = fieldStaffRepository.findOne(Integer.valueOf(fsgoId));
+         if (fieldStaff == null) {
+            response.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+         Login login = loginRepository.findByGoId(fieldStaff.getGoIdSequence());
+         Byte status;
+         if (Integer.valueOf(statusId) == 1)
+            status = CCIConstants.ACTIVE;
+         else
+            status = CCIConstants.INACTIVE;
+         login.setActive(status);
+         login.setModifiedBy(Integer.valueOf(loginId));
+         loginRepository.saveAndFlush(login);
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
+      }
+      return response;
+   }
 }
