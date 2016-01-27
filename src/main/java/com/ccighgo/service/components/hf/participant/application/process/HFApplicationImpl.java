@@ -53,7 +53,6 @@ public class HFApplicationImpl implements HFApplication {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
-      
       return updatedObject;
    }
 
