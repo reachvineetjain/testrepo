@@ -1,5 +1,6 @@
 package com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard;
 
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 
 
@@ -15,4 +16,9 @@ public interface FieldStaffDashboardInterface {
     */
    ErdDashboard getErdDashboardWorkQueues(String fieldStaffGoId);
 
+   /**
+    * @param fsGoId
+    * @return ErdMyAccount
+    */
+   ErdMyAccount getMyAccountDetail(String fsGoId); 
 }
