@@ -333,6 +333,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 					subPartnerPrimaryContact.setPhone(partnerContact.getPhone());
 					subPartnerPrimaryContact.setEmergencyPhone(partnerContact.getEmergencyPhone());
 					subPartnerPrimaryContact.setFax(partnerContact.getFax());
+					if(partnerContact.getRecieveNotificationEmails()!=null)
 					subPartnerPrimaryContact.setReciveNotificationemailfromcc(partnerContact.getRecieveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
 					subPartnerPrimaryContact.setSkypeId(partnerContact.getSkypeId());
 					subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
