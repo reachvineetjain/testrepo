@@ -86,6 +86,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
          acc.setLastName(fs.getLastName());
          acc.setEmail(login.getEmail());
          acc.setGoId(fieldStaffGoId);
+         acc.setFieldStaffType(fs.getFieldStaffType().getFieldStaffTypeCode());
          erdDashboard.setAccount(acc);
          erdDashboard.setErdDashboardTypes(erdDashboardTypes);
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
