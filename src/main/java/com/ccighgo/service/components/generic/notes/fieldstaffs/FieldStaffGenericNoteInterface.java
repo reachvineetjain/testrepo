@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffNote;
+import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffTopic;
 import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffTopics;
 
 /**
@@ -38,4 +39,10 @@ public interface FieldStaffGenericNoteInterface {
     * @return
     */
    Response removeNote(int noteId);
+   
+   /**
+    * @param fieldStaffTopic
+    * @return
+    */
+   Response addNewTopic(FieldStaffTopic fieldStaffTopic);
 }
