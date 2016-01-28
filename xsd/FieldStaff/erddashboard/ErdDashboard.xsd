@@ -82,6 +82,7 @@
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fieldStaffType" type="xsd:string" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
    </xsd:complexType>
 

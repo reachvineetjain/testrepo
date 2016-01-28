@@ -44,5 +44,5 @@ public interface FieldStaffGenericNoteInterface {
     * @param fieldStaffTopic
     * @return
     */
-   Response addNewTopic(FieldStaffTopic fieldStaffTopic);
+   FieldStaffTopic addNewTopic(FieldStaffTopic fieldStaffTopic);
 }
