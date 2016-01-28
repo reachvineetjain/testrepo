@@ -34,6 +34,7 @@ import com.ccighgo.service.transport.fieldstaff.beans.seasons.FieldStaffSeasons;
 import com.ccighgo.service.transport.utility.beans.fs.status.list.FieldStaffStatusList;
 import com.ccighgo.service.transport.utility.beans.payment.schedule.PaymentScheduleList;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
 
 /**
  * @author ravi
@@ -80,20 +81,21 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                // 0.fs season id, 1.seasonid,2 department program id, 3.
                // season/program name,4. start date, 5.end date, 6.status,
                // 7.fsstatus
-               // 8.departmentid, 9. DepartProgName, 10. FS Type
+               // 8.departmentid, 9. DepartProgName, 10. FS Type,acronym
                FieldStaffSeason season = new FieldStaffSeason();
-               season.setFsGoId(Integer.valueOf(fsGoId));
+               season.setGoId(Integer.valueOf(fsGoId));
                season.setFsSeasonId(obj[0] != null ? Integer.valueOf(obj[0].toString()) : 0);
                season.setSeasonId(obj[1] != null ? Integer.valueOf(obj[1].toString()) : 0);
                season.setDepartmentProgramId(obj[2] != null ? Integer.valueOf(obj[2].toString()) : 0);
                season.setProgramName(obj[3] != null ? obj[3].toString() : SPACE);
-               season.setStartDate(obj[4] != null ? obj[4].toString() : SPACE);
-               season.setEndDate(obj[5] != null ? obj[5].toString() : SPACE);
+               season.setStartDate(obj[4] != null ? DateUtils.getFormattedStringDate(obj[4].toString()) : SPACE);
+               season.setEndDate(obj[5] != null ? DateUtils.getFormattedStringDate(obj[5].toString()) : SPACE);
                season.setStatus(obj[6] != null ? obj[6].toString() : SPACE);
                season.setFieldStaffStatus(obj[7] != null ? obj[7].toString() : SPACE);
                season.setDepartmentId(obj[8] != null ? Integer.valueOf(obj[8].toString()) : 0);
                season.setDepartmentProgramName(obj[9] != null ? obj[9].toString() : SPACE);
                season.setFsType(obj[10] != null ? obj[10].toString() : SPACE);
+               season.setAcronym(obj[11] != null ? obj[11].toString() : SPACE);
                fsSeasonList.getFieldStaffSeasons().add(season);
             }
          }
