@@ -62,13 +62,21 @@ public class SevisBatch {
 	@POST
 	@Path("create/batch/new/student")
 	@Produces("application/json")
-	public Response createStudent(BatchParam batchParam) {
-		System.out.println("Service ...");
+	public Response createNewStudent(BatchParam batchParam) {
+		// CreateStudent.Student
 		
 		CreateStudentBatchDataService dataService = getServiceBean(CreateStudentBatchDataService.class);
 		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
-//		CreateNewEVBatchDataService dataService = getServiceBean(CreateNewEVBatchDataService.class);
-//		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+	}
+	
+	@POST
+	@Path("create/batch/new/ev")
+	@Produces("application/json")
+	public Response createNewExchangeVisitor(BatchParam batchParam) {
+		// CreateEV.ExchangeVisitor
+		
+		CreateNewEVBatchDataService dataService = getServiceBean(CreateNewEVBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
