@@ -37,10 +37,22 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="programSeasonStatus" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
-			<xsd:element name="lcName" type="xsd:string" minOccurs="1"
-				maxOccurs="1" />
-			<xsd:element name="rdName" type="xsd:string" minOccurs="1"
-				maxOccurs="1" />
+			<xsd:element name="rdFirstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="rdLastName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="rmFirstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="rmLastName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="acFirstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="acLastName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lcFirstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lcLastName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="hfSeasonStatus" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
