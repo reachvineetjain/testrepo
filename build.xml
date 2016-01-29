@@ -1519,14 +1519,14 @@
 			<arg value="${xsd.dir}/hostfamily/application/HFApplicationUploadPhotos.xsd" />
 		</java>
 	</target>
-	
+
 	<target name="HFParticipantSeasonList">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/hostfamily/seasons/HFParticipantSeasonList.xsd" />
-			</java>
-		</target>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/seasons/HFParticipantSeasonList.xsd" />
+		</java>
+	</target>
 
 </project>
 
