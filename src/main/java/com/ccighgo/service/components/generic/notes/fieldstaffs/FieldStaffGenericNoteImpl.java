@@ -188,8 +188,8 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
    }
 
    @Override
-   public Response addNewTopic(FieldStaffTopic fieldStaffTopic) {
-      Response response = new Response();
+   public FieldStaffTopic addNewTopic(FieldStaffTopic fieldStaffTopic) {
+      FieldStaffTopic response = new FieldStaffTopic();
       try {     
       FieldStaffNoteTopic fieldStaffNoteTopic = new FieldStaffNoteTopic();
       FieldStaff fs = fieldStaffRepository.findOne(fieldStaffTopic.getFieldStaffGoId());
@@ -201,7 +201,10 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
       fieldStaffNoteTopic.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       fieldStaffNoteTopic.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       fieldStaffNoteTopic.setIsPublic(fieldStaffTopic.isPublic() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-      fieldStaffNoteTopicRepository.saveAndFlush(fieldStaffNoteTopic);
+      FieldStaffNoteTopic res= fieldStaffNoteTopicRepository.saveAndFlush(fieldStaffNoteTopic);
+      response.setFieldStaffNoteTopicId(res.getFieldStaffNoteTopicsId());
+      response.setTitle(res.getTitle());
+      response.setFieldStaffNoteTopicName(res.getFieldStaffNoteTopicName());
       response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
             messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {

@@ -708,7 +708,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          documentInformation.setFileName(contract.getOperatingAgreementdocumentName() != null ? contract.getOperatingAgreementdocumentName() : null);
          documentInformation.setDocumentName(contract.getOperatingAgreementdocumentName() != null ? contract.getOperatingAgreementdocumentName() : null);
          documentInformation.setUrl(contract.getOperatingAgreementdocumentUrl());
-         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findOne(6));
+         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findOne(2));
          documentInformation.setCreatedBy(Integer.valueOf(loginId));
          documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation.setModifiedBy(Integer.valueOf(loginId));
