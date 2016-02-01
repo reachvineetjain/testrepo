@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
+import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 
 /**
  * 
@@ -37,5 +38,7 @@ public interface FieldStaffLeadershipSeasonRepository extends JpaRepository<Fiel
 
    @Query("SELECT DISTINCT s.fieldStaffLeadershipSeasonId FROM FieldStaffLeadershipSeason s WHERE s.fieldStaff.fieldStaffGoId =?1 AND  s.season.seasonId = ?2 AND  s.seasonGeographyConfiguration.seasonGeographyConfigurationId =?3")
    Integer findRowByStaffIdAndSeasonIdAndSeasonGeographicId(Integer oldFieldStaffId, Integer seasonId, Integer seasonGeographyConfigurationId);
+   @Query("SELECT s.seasonGeographyConfiguration FROM FieldStaffLeadershipSeason s WHERE s.fieldStaff.fieldStaffGoId =?1" )
+   List<SeasonGeographyConfiguration>  findByFieldStaffGoId(int i);
 
 }
