@@ -56,21 +56,21 @@ public class FieldStaffMyPlacements {
    }
    
    @GET
-   @Path("/monitoring/myParticipant/{fsGoId}")
+   @Path("/monitoring/myParticipant/{fsGoId}/{catagorie}")
    @Produces("application/json")
-   public ERDParticipants getAllParticipant(@PathParam("fsGoId") String fsGoId) {
+   public ERDParticipants getAllParticipant(@PathParam("fsGoId") String fsGoId, @PathParam("catagorie") String catagorie) {
       LOGGER.info("calling fieldStaffParticipantInterface.getAll");
-      return fieldStaffMyPlacementsInterface.getAllParticipant(fsGoId);
+      return fieldStaffMyPlacementsInterface.getAllParticipant(fsGoId,catagorie);
    }
 
    /**
     * @return FieldStaffParticipants
     */
    @GET
-   @Path("/monitoring/MyTeamParticipant/{fsGoId}")
+   @Path("/monitoring/MyTeamParticipant/{fsGoId}/{catagorie}")
    @Produces("application/json")
-   public ERDParticipants getMyTeam(@PathParam("fsGoId") String fsGoId) {
+   public ERDParticipants getMyTeam(@PathParam("fsGoId") String fsGoId, @PathParam("catagorie") String catagorie) {
       LOGGER.info("calling fieldStaffParticipantInterface.getMyTeam");
-      return fieldStaffMyPlacementsInterface.getMyTeamParticipant(fsGoId);
+      return fieldStaffMyPlacementsInterface.getMyTeamParticipant(fsGoId,catagorie);
    }
 }

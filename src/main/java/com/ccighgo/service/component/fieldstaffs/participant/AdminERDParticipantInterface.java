@@ -14,12 +14,12 @@ public interface AdminERDParticipantInterface {
    /**
     * @return FieldStaffParticipants
     */
-   public AdminERDParticipants getAll(String goId);
+   public AdminERDParticipants getAll(String goId,String catagories);
    /**
     * @param goId
     * @return FieldStaffParticipants
     */
-   public AdminERDParticipants getMyTeam(String goId);
+   public AdminERDParticipants getMyTeam(String goId, String catagories);
    /**
     * @param goId
     * @param catagories

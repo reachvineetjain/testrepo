@@ -32,22 +32,22 @@ public class AdminERDParticipant {
     * @return FieldStaffParticipants
     */
    @GET
-   @Path("monitoring/myparticipant/{fsGoId}")
+   @Path("monitoring/myparticipant/{fsGoId}/{catagories}")
    @Produces("application/json")
-   public AdminERDParticipants getAllParticipant(@PathParam("fsGoId") String fsGoId) {
+   public AdminERDParticipants getAllParticipant(@PathParam("fsGoId") String fsGoId,@PathParam("catagories") String catagories) {
       LOGGER.info("calling fieldStaffParticipantInterface.getAll");
-      return adminERDParticipantInterface.getAll(fsGoId);
+      return adminERDParticipantInterface.getAll(fsGoId,catagories);
    }
 
    /**
     * @return FieldStaffParticipants
     */
    @GET
-   @Path("monitorin/MyTeamParticipant/{fsGoId}")
+   @Path("monitorin/MyTeamParticipant/{fsGoId}/{catagories}")
    @Produces("application/json")
-   public AdminERDParticipants getMyTeam(@PathParam("fsGoId") String fsGoId) {
+   public AdminERDParticipants getMyTeam(@PathParam("fsGoId") String fsGoId, @PathParam("catagories") String catagories) {
       LOGGER.info("calling fieldStaffParticipantInterface.getMyTeam");
-      return adminERDParticipantInterface.getMyTeam(fsGoId);
+      return adminERDParticipantInterface.getMyTeam(fsGoId,catagories);
    }
    
    @GET
