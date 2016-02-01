@@ -12,7 +12,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.FieldStaff;
+import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
+import com.ccighgo.jpa.repositories.FieldStaffRepository;
+import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
@@ -39,6 +46,10 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
    MessageUtils messageUtil;
    @Autowired
    CommonComponentUtils componentUtils;
+   @Autowired FieldStaffRepository fieldStaffRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository ;
+   @Autowired  FieldStaffLeadershipSeasonRepository  fieldStaffLeadershipSeasonRepository;
    private static final String SP_FS_SEARCH_LIST = "CALL SPFieldStaffSearch(?)";
 
    @Override
@@ -187,4 +198,42 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
       return fieldStaffRMList;
    }
 
+   
+   
+   public FieldStaffLCList getFieldStaffLCList(Integer roleId) {
+      int count = 0;
+      FieldStaffLCList fieldStaffLCList = new FieldStaffLCList();
+      try {
+    	  List<FieldStaff> fieldStaffList = fieldStaffRepository.findAllRDStaff(1);
+//    	  SeasonGeographyConfigurationRepository s = seasonGeographyConfigurationRepository.findDistinctRegions()
+    	  
+    	  
+    	  for (FieldStaff fieldStaff : fieldStaffList) {
+    		  FieldStaffLC fsl = new FieldStaffLC();
+    		  fsl.setFirstName(fieldStaff.getFirstName());
+    		  fsl.setPhone(fieldStaff.getPhoto());
+    		  fsl.setLastName(fieldStaff.getLastName());
+    		  fsl.setPhone(fieldStaff.getPhone());
+    		  fsl.setCity(fieldStaff.getCurrentCity());
+    		  fsl.setState(fieldStaff.getLookupUsstate2().getStateName());
+    		  fsl.setZip(fieldStaff.getCurrentZipCode());
+    		  Login l = loginRepository.findByCCIGoId(fieldStaff.getFieldStaffGoId());
+    		  fsl.setActive(l.getActive()!=null && l.getActive()==1);
+    		  fsl.setEmail(l.getEmail());
+		}
+    	  List<SeasonGeographyConfiguration>  seasonGeographyConfigurationId= fieldStaffLeadershipSeasonRepository.findByFieldStaffGoId(50006);
+
+    	  for (SeasonGeographyConfiguration seasonGeographyConfiguration : seasonGeographyConfigurationId) {
+			
+		}
+    	  
+      } catch (Exception e) {
+         fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
+               messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
+         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
+         e.printStackTrace();
+      }
+      return fieldStaffLCList;
+   }
+   
 }
