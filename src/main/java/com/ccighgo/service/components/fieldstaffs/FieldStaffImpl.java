@@ -93,7 +93,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             fieldstaff.setState(fs.getLookupUsstate2().getStateCode());
             fieldstaff.setZip(fs.getCurrentZipCode());
             fieldstaff.setActive(login.getActive() == CCIConstants.ACTIVE);
-
+            if (fs.getFieldStaffStatus() != null)
+               fieldstaff.setFieldStaffStatus(fs.getFieldStaffStatus().getFieldStaffStatusName());
             List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons = fs.getFieldStaffLeadershipSeasons();
             String seasonsName = "";
             for (FieldStaffLeadershipSeason fsSeason : fieldStaffLeadershipSeasons) {
