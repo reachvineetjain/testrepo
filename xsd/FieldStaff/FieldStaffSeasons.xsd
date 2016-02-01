@@ -26,10 +26,11 @@
 
    <xsd:complexType name="FieldStaffSeason">
       <xsd:sequence>
-         <xsd:element name="fsGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="fsSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="acronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="departmentProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -37,7 +38,7 @@
          <xsd:element name="startDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="endDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="signedContract" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fieldStaffStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

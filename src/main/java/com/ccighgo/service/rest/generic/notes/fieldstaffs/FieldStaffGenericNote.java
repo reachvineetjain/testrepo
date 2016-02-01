@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.generic.notes.fieldstaffs.FieldStaffGenericNoteInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffNote;
+import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffTopic;
 import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldStaffTopics;
 
 /**
@@ -71,5 +72,14 @@ public class FieldStaffGenericNote {
    public Response removeNote(@PathParam("noteId")String noteId)
    {
       return fieldStaffGenericNoteInterface.removeNote(Integer.valueOf(noteId));
+   }
+   
+   @POST
+   @Path("addtopic")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public Response addNewTopic(FieldStaffTopic fieldStaffTopic)
+   {
+      return fieldStaffGenericNoteInterface.addNewTopic(fieldStaffTopic);
    }
 }

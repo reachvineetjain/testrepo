@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/fieldstaffdashboard" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/fieldstaffdashboard"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="myAccount" type="pdl:ErdMyAccount" />
+   <xsd:complexType name="ErdMyAccount">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="personalInfo" type="pdl:ERDPersonalInfo" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="ERDPersonalInfo">
+      <xsd:sequence>
+         <xsd:element name="fsGoId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="homePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="workPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="cellPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="reseiveEmail" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="physicalAddress1" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="physicalAddress2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="physicalCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="physicalSate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="physicalZip" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="mallingAddress1" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="mallingAddress2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="mallingCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="mallingZip" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="mallingState" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="linkDOSCertificate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

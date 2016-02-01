@@ -11,6 +11,7 @@ import javax.ws.rs.core.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FieldStaffDashboardInterface;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 import com.ccighgo.service.transport.common.response.beans.Response;
 /**
@@ -43,16 +44,10 @@ public class FieldStaffERDDashboard {
       return fieldStaffDashboardInterface.getErdDashboardWorkQueues(fieldStaffGoId);
    }
    
-   /**
-    * @param partnerUserId
-    * @return
-    */
    @GET
-   @Path("reset/access/{fsGoId}")
+   @Path("myaccount/{fsGoId}")
    @Produces("application/json")
-   public Response resetPartnerUserPassword(@PathParam("fsGoId") String fsGoId) {
-      return fieldStaffDashboardInterface.resetFieldStaffUserPassword(fsGoId, request);
+   public ErdMyAccount getMyAccountDetail(@PathParam("fsGoId")String fsGoId) {
+     return fieldStaffDashboardInterface.getMyAccountDetail(fsGoId);
    }
-   
-   
 }

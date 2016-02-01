@@ -109,7 +109,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 			partnerCompanyDetails.setPartnerCompanyName(partner.getCompanyName());
 			partnerCompanyDetails.setPartnerCompanyAcronym(partner.getAcronym());
 			partnerCompanyDetails.setCCIAccountingDesignation(partner.getQuickbooksCode());
-			partnerCompanyDetails.setDAndBNumber(partner.getDandBNumber());
+			partnerCompanyDetails.setDAndBNumber(partner.getDandBNumber()!=null?partner.getDandBNumber():0);
 			partnerCompanyDetails.setPersonToSignContract(partner.getContractSigner());
 			partnerCompanyDetails.setSubscribeCCINewsletter(partner.getSubscribeToCCINewsletter() == CCIConstants.ACTIVE ? true : false);
 			partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
@@ -177,7 +177,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 				partnerPrimaryContact.setPrimaryContactPhone(pUser.getPhone());
 				partnerPrimaryContact.setPrimaryContactEmergencyPhone(pUser.getEmergencyPhone());
 				partnerPrimaryContact.setPrimaryContactFax(pUser.getFax());
-				partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(pUser.getRecieveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
+				partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(pUser.getRecieveNotificationEmails()!=null?(pUser.getRecieveNotificationEmails().equals(CCIConstants.ACTIVE) ? true : false):false);
 				partnerPrimaryContact.setPrimaryContactSkypeId(pUser.getSkypeId());
 				partnerPrimaryContact.setPrimaryContactWebsite(pUser.getWebsite());
 				partnerCompanyDetail.setPartnerPrimaryContact(partnerPrimaryContact);
