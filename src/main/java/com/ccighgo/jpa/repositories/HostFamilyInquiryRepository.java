@@ -10,7 +10,7 @@ import com.ccighgo.db.entities.PartnerAgentInquiry;
 
 @Repository
 public interface HostFamilyInquiryRepository extends JpaRepository<HostFamilyInquiry, Integer> {
-	@Query("SELECT p FROM HostFamilyInquiry p WHERE p.email =?1")
+	@Query("SELECT p FROM HostFamilyInquiry p WHERE p.emailAddress =?1")
 	HostFamilyInquiry findByEmail(String email);
 
 }
