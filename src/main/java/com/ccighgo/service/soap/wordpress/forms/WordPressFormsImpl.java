@@ -298,7 +298,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 		System.out.println("address2 : " + internationalPartners.getAddress2());
 		System.out.println("city :" + internationalPartners.getCity());
 		System.out.println("country : " + internationalPartners.getValueOfCountry());
-System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarship());
+		System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarship());
 		System.out.println("description OF programs :" + internationalPartners.getDescriptionOfPrograms());
 		System.out.println("Email: " + internationalPartners.getEmail());
 		System.out.println("first Name: " + internationalPartners.getFirstName());
@@ -326,6 +326,7 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 	@Override
 	public String GenerateNewHostFamily(HostFamilyData HostFamilyData) {
 		try {
+			printDataCommingFromService(HostFamilyData);
 			LOGGER.info("Inquiry HostFamily Is Called !!d!");
 			System.out.println("Inquiry HostFamily Is Called !!!");
 			if (HostFamilyData != null) {
@@ -356,7 +357,7 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 				
 				hostFamilyInquiryRepository.saveAndFlush(pa);
 			}
-			return printDataCommingFromService(HostFamilyData);
+			return "200:Success";
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);
 			String string = "700:Internal Error";
@@ -365,7 +366,7 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 		}
 	}
 
-	private String printDataCommingFromService(HostFamilyData HostFamilyData) {
+	private void printDataCommingFromService(HostFamilyData HostFamilyData) {
 		LOGGER.info("Generate New Host Family");
 
 		System.out.println("Generate New Host Family");
@@ -384,24 +385,7 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 			System.out.println("Comments : "+ HostFamilyData.getComments());
 			
 
-		}
-		if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {
-			String string = "200:Success";
-			System.out.println(string);
-			return string;
-		} else if (HostFamilyData.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-			String string = "400:Duplicate Row";
-			System.out.println(string);
-			return string;
-		} else if (HostFamilyData.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-			String string = "500:Failed To Process Record ! Contact Admin";
-			System.out.println(string);
-			return string;
-		} else {
-			String string = "300:Missing Information";
-			System.out.println(string);
-			return string;
-		}
+		}		
 	}
 
 	@Override
