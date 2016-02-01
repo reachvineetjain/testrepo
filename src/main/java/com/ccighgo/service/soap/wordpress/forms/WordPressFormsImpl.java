@@ -355,6 +355,9 @@ public class WordPressFormsImpl implements IWordPressForms {
 				pa.setPreferredPhoneNumber(HostFamilyData.getPreferredPhone());
 				pa.setOptionalPhoneNumber(HostFamilyData.getOptionalPhone());
 				
+				GoIdSequence goIdSequence = new GoIdSequence();
+				goIdSequence = goIdSequenceRepository.saveAndFlush(goIdSequence);
+				pa.setHostFamilyInquiryId(goIdSequence.getGoId());
 				hostFamilyInquiryRepository.saveAndFlush(pa);
 			}
 			return "200:Success";
