@@ -35,7 +35,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
    @Autowired
    MessageUtils messageUtil;
 
-   private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?)";
+   private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?,?)";
    private static final String SP_FS_PLACEMENT_LIST = "CALL SPFieldStaffParticipantListing(?,?,?)";
    private static final int ALL_PARTICIPANT_FLAG = 1;
    private static final int MY_TEAM_PARTICIPANT_FLAG = 0;
@@ -43,7 +43,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
    private static final int MY_TEAM_PLACEMENT_FLAG = 1;
 
    @Override
-   public AdminERDParticipants getAll(String goId) {
+   public AdminERDParticipants getAll(String goId, String catagories) {
       LOGGER.info("goid: " + goId);
       AdminERDParticipants erdParticipants = new AdminERDParticipants();
       if (goId != null)
@@ -51,7 +51,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
             query.setParameter(2, ALL_PARTICIPANT_FLAG);
-
+            query.setParameter(3, catagories);
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result != null) {
@@ -91,7 +91,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
    }
 
    @Override
-   public AdminERDParticipants getMyTeam(String goId) {
+   public AdminERDParticipants getMyTeam(String goId, String catagories) {
       LOGGER.info("goid: " + goId);
       AdminERDParticipants erdParticipants = new AdminERDParticipants();
       if (goId != null)
@@ -99,7 +99,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
             query.setParameter(2, MY_TEAM_PARTICIPANT_FLAG);
-
+            query.setParameter(3, catagories);
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result == null) {

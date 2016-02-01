@@ -36,6 +36,7 @@
          <xsd:element name="zip" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="seasons" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fieldStaffStatus" type="xsd:string" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
    </xsd:complexType>
 </xsd:schema>
