@@ -192,7 +192,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          
          PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
          reviewStatus.setPartner(newPartner);
-         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(11));
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(4));
          CCIStaffUser cciUser = null;
          Login cciLogin = loginRepository.findOne(partner.getLoginId());
          if(cciLogin!=null){
