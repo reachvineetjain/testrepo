@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
+import com.ccighgo.db.entities.HostFamilyInquiry;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
@@ -22,6 +23,7 @@ import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
+import com.ccighgo.jpa.repositories.HostFamilyInquiryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
@@ -63,7 +65,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 	PartnerStatusRepository partnerStatusRepository;
 	@Autowired
 	EntityManager entityManager;
-
+	@Autowired HostFamilyInquiryRepository hostFamilyInquiryRepository;
 	private static final String SP_UPDATING_ADMIN_WORK_QUEUE = "CALL SPAdminWQPartnerApplicationSubmitted(?)";
 
 	@Transactional
@@ -324,49 +326,82 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 	@Override
 	public String GenerateNewHostFamily(HostFamilyData HostFamilyData) {
 		try {
-			LOGGER.info("Generate New Host Family");
-
-			System.out.println("Generate New Host Family");
-
+			LOGGER.info("Inquiry HostFamily Is Called !!d!");
+			System.out.println("Inquiry HostFamily Is Called !!!");
 			if (HostFamilyData != null) {
-				System.out.println("FName :" + HostFamilyData.getFirstName());
-				System.out.println("LName :" + HostFamilyData.getLastName());
-				System.out.println("Email :" + HostFamilyData.getEmail());
-				System.out.println("City :" + HostFamilyData.getCity());
-				System.out.println("State : " + HostFamilyData.getState());
-				System.out.println("PostalCode : "+ HostFamilyData.getPostalCode());
-				System.out.println("PreferredPhone: "+ HostFamilyData.getPreferredPhone());
-				System.out.println("OptionalPhone : "+ HostFamilyData.getOptionalPhone());
-				System.out.println("Email : "+ HostFamilyData.getEmail());
-				System.out.println("Students : "+ HostFamilyData.getStudents());
-				System.out.println("Comments : "+ HostFamilyData.getComments());
+				Login user = loginRepository.findByEmail(HostFamilyData.getEmail());
+				HostFamilyInquiry pa = hostFamilyInquiryRepository.findByEmail(HostFamilyData.getEmail());
+				if (user != null) {
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
+					System.out.println(message);
+					return message;
+				}
+				if (pa != null) {
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [HostFamilyInquiry Table ]";
+					System.out.println(message);
+					return message;
+				}
 				
-
+				pa =new HostFamilyInquiry();
+				pa.setAddress(HostFamilyData.getAddress());
+				pa.setCciComments(HostFamilyData.getComments());
+				pa.setCurrentCity(HostFamilyData.getCity());
+				pa.setCurrentState(HostFamilyData.getState());
+				pa.setFirstName(HostFamilyData.getFirstName());
+				pa.setEmailAddress(HostFamilyData.getEmail());
+				pa.setLastName(HostFamilyData.getLastName());
+				pa.setZipCode(HostFamilyData.getPostalCode());
+				pa.setPreferredPhoneNumber(HostFamilyData.getPreferredPhone());
+				pa.setOptionalPhoneNumber(HostFamilyData.getOptionalPhone());
+				
+				hostFamilyInquiryRepository.saveAndFlush(pa);
 			}
-			if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {
-				String string = "200:Success";
-				System.out.println(string);
-				return string;
-			} else if (HostFamilyData.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-				String string = "400:Duplicate Row";
-				System.out.println(string);
-				return string;
-			} else if (HostFamilyData.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-				String string = "500:Failed To Process Record ! Contact Admin";
-				System.out.println(string);
-				return string;
-			} else {
-				String string = "300:Missing Information";
-				System.out.println(string);
-				return string;
-			}
+			return printDataCommingFromService(HostFamilyData);
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);
 			String string = "700:Internal Error";
 			System.out.println(string);
 			return string;
 		}
+	}
 
+	private String printDataCommingFromService(HostFamilyData HostFamilyData) {
+		LOGGER.info("Generate New Host Family");
+
+		System.out.println("Generate New Host Family");
+
+		if (HostFamilyData != null) {
+			System.out.println("FName :" + HostFamilyData.getFirstName());
+			System.out.println("LName :" + HostFamilyData.getLastName());
+			System.out.println("Email :" + HostFamilyData.getEmail());
+			System.out.println("City :" + HostFamilyData.getCity());
+			System.out.println("State : " + HostFamilyData.getState());
+			System.out.println("PostalCode : "+ HostFamilyData.getPostalCode());
+			System.out.println("PreferredPhone: "+ HostFamilyData.getPreferredPhone());
+			System.out.println("OptionalPhone : "+ HostFamilyData.getOptionalPhone());
+			System.out.println("Email : "+ HostFamilyData.getEmail());
+			System.out.println("Students : "+ HostFamilyData.getStudents());
+			System.out.println("Comments : "+ HostFamilyData.getComments());
+			
+
+		}
+		if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {
+			String string = "200:Success";
+			System.out.println(string);
+			return string;
+		} else if (HostFamilyData.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
+			String string = "400:Duplicate Row";
+			System.out.println(string);
+			return string;
+		} else if (HostFamilyData.getEmail().equalsIgnoreCase("failed@gmail.com")) {
+			String string = "500:Failed To Process Record ! Contact Admin";
+			System.out.println(string);
+			return string;
+		} else {
+			String string = "300:Missing Information";
+			System.out.println(string);
+			return string;
+		}
 	}
 
 	@Override
