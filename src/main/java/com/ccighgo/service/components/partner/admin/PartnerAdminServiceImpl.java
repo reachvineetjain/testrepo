@@ -23,7 +23,9 @@ import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueType;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DocumentInformation;
+import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
@@ -68,6 +70,7 @@ import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
+import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
 import com.ccighgo.jpa.repositories.PartnerDocumentsRepository;
@@ -87,6 +90,7 @@ import com.ccighgo.jpa.repositories.PartnerUserRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
@@ -141,6 +145,9 @@ import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.PasscodeGenerator;
+import com.ccighgo.utils.PasswordUtil;
+import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.WSDefaultResponse;
 import com.google.gson.Gson;
 
@@ -230,6 +237,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 	SeasonStatusRepository seasonStatusRepository;
 	@Autowired
 	DepartmentProgramRepository departmentProgramRepository;
+	   @Autowired UserTypeRepository userTypeRepository;
+	   @Autowired LoginUserTypeRepository loginUserTypeRepository;
+
 
 	@Override
 	public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
@@ -1370,16 +1380,43 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 	public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails) {
 		PartnerAdminOverviewContacts pContacts = new PartnerAdminOverviewContacts();
 		try {
-
 			PartnerUser pc = new PartnerUser();
-			Login login = loginRepository.findOne(contactsDetails.getLoginId());
-			if(login==null){
-				pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_LOGIN_DATA.getValue(),
-						messageUtil.getMessage(PartnerAdminMessageConstants.NO_DATA_FOR_THAT_USER_ID)));
- 				return pContacts;
-			}
-			if(contactsDetails.getEmail()!=null)
-			login.setEmail(contactsDetails.getEmail());
+			 Login login = new Login();
+	            login.setActive((byte) (contactsDetails.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE));
+	            GoIdSequence goIdSequence = new GoIdSequence();
+	            goIdSequence.setGoId(Integer.valueOf(contactsDetails.getGoId()));
+	            login.setGoIdSequence(goIdSequence);
+	            login.setLoginName(contactsDetails.getUsername());
+	            login.setKeyValue(UuidUtils.nextHexUUID());
+	            if(contactsDetails.getEmail()!=null)
+	            login.setEmail(contactsDetails.getEmail());
+	            login.setPassword(PasswordUtil.hashKey(PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString()));
+	            login.setCreatedBy(Integer.valueOf(contactsDetails.getLoginId()));
+	            login.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+	            login.setModifiedBy(Integer.valueOf(contactsDetails.getLoginId()));
+	            login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+	            login = loginRepository.saveAndFlush(login);
+	            
+	            // set login user type
+	            LoginUserType loginUserType = new LoginUserType();
+	            loginUserType.setLogin(login);
+	            loginUserType.setUserType(userTypeRepository.findOne(2));
+	            loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
+	            loginUserType.setActive(CCIConstants.ACTIVE);
+	            if (login.getLoginId() != null)
+	               loginUserType.setCreatedBy(login.getLoginId());
+	            loginUserType.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+	            if (login.getLoginId() != null)
+	               loginUserType.setModifiedBy(login.getLoginId());
+	            loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+	            loginUserTypeRepository.saveAndFlush(loginUserType);
+	            
+//			if(login==null){
+//				pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_LOGIN_DATA.getValue(),
+//						messageUtil.getMessage(PartnerAdminMessageConstants.NO_DATA_FOR_THAT_USER_ID)));
+// 				return pContacts;
+//			}
+//			login.setEmail(contactsDetails.getEmail());
 			pc.setLogin(login);
 			pc.setActive((byte) (contactsDetails.isActive() ? 1 : 0));
 			if(contactsDetails.getEmergencyPhone()!=null)
@@ -1399,6 +1436,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 			pc.setSalutation(salutation);
 			pc.setSkypeId(contactsDetails.getSkypeId());
 			pc.setTitle(contactsDetails.getTitile());
+//			pc.set
 			partnerUserRepository.saveAndFlush(pc);
 
 			pContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
@@ -1407,11 +1445,15 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 			List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(contactsDetails.getGoId());
 			if (contacts != null) {
 				for (PartnerUser partnerContact : contacts) {
+					Login loginO = partnerContact.getLogin();
 					PartnerAdminOverviewContactsDetails contact = new PartnerAdminOverviewContactsDetails();
-					contact.setPartnerContactId(partnerContact.getPartnerUserId());
 					contact.setActive(partnerContact.getActive() == 1);
-					if (partnerContact.getLogin() != null)
-						contact.setEmail(partnerContact.getLogin().getEmail());
+					if(loginO!=null){
+						contact.setActive(loginO.getActive()== CCIConstants.ACTIVE);
+						contact.setUsername(login.getLoginName());
+						contact.setEmail(loginO.getEmail());
+					}
+					contact.setPartnerContactId(partnerContact.getPartnerUserId());
 					contact.setEmergencyPhone(partnerContact.getEmergencyPhone());
 					contact.setFax(partnerContact.getFax());
 					contact.setFirstName(partnerContact.getFirstName());
@@ -1421,7 +1463,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					contact.setSalutation(partnerContact.getSalutation().getSalutationName());
 					contact.setSkypeId(partnerContact.getSkypeId());
 					contact.setTitile(partnerContact.getTitle());
-
 					contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
 					pContacts.getContacts().add(contact);
 				}
