@@ -1416,6 +1416,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					contact.setFirstName(partnerContact.getFirstName());
 					contact.setLastName(partnerContact.getLastName());
 					contact.setPhone(partnerContact.getPhone());
+					if(partnerContact.getSalutation()!=null)
 					contact.setSalutation(partnerContact.getSalutation().getSalutationName());
 					contact.setSkypeId(partnerContact.getSkypeId());
 					contact.setTitile(partnerContact.getTitle());
