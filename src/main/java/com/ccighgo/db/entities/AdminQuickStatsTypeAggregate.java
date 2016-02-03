@@ -26,17 +26,17 @@ public class AdminQuickStatsTypeAggregate implements Serializable {
 
 	//bi-directional many-to-one association to AdminQuickStatsType
 	@ManyToOne
-	@JoinColumn(name="adminQSTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="adminQSTypeId")
 	private AdminQuickStatsType adminQuickStatsType;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="adminGoId",insertable=false,updatable=false)
+	@JoinColumn(name="adminGoId")
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
+	@JoinColumn(name="lookupDepartmentProgramId")
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	public AdminQuickStatsTypeAggregate() {

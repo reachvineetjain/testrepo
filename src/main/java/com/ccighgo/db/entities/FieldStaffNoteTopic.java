@@ -40,7 +40,7 @@ public class FieldStaffNoteTopic implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
 	public FieldStaffNoteTopic() {

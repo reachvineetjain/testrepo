@@ -124,27 +124,27 @@ public class HostFamilySeason implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId",insertable=false,updatable=false)
+	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to HostFamily
 	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
+	@JoinColumn(name="hostFamilyGoId")
 	private HostFamily hostFamily;
 
 	//bi-directional many-to-one association to HostFamilyStatus
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonStatusId",insertable=false,updatable=false)
+	@JoinColumn(name="hostFamilySeasonStatusId")
 	private HostFamilyStatus hostFamilyStatus;
 
 	//bi-directional many-to-one association to PaymentSchedule
 	@ManyToOne
-	@JoinColumn(name="paymentScheduleId",insertable=false,updatable=false)
+	@JoinColumn(name="paymentScheduleId")
 	private PaymentSchedule paymentSchedule;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to HostFamilySeasonNote

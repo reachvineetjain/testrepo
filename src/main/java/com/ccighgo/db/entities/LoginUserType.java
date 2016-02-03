@@ -32,12 +32,12 @@ public class LoginUserType implements Serializable {
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginId",insertable=false,updatable=false)
+	@JoinColumn(name="loginId")
 	private Login login;
 
 	//bi-directional many-to-one association to UserType
 	@ManyToOne
-	@JoinColumn(name="userTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="userTypeId")
 	private UserType userType;
 
 	public LoginUserType() {

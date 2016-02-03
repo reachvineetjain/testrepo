@@ -44,12 +44,12 @@ public class ResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
-	@JoinColumn(name="departmentResourceGroupId",insertable=false,updatable=false)
+	@JoinColumn(name="departmentResourceGroupId")
 	private DepartmentResourceGroup departmentResourceGroup;
 
 	//bi-directional many-to-one association to ResourceAction
 	@ManyToOne
-	@JoinColumn(name="resourceActionID",insertable=false,updatable=false)
+	@JoinColumn(name="resourceActionID")
 	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to StateTypeResourcePermission

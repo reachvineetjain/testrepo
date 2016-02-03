@@ -39,17 +39,17 @@ public class AdminWorkQueue implements Serializable {
 
 	//bi-directional many-to-one association to AdminWorkQueueCategory
 	@ManyToOne
-	@JoinColumn(name="adminWQCategoryId",insertable=false,updatable=false)
+	@JoinColumn(name="adminWQCategoryId")
 	private AdminWorkQueueCategory adminWorkQueueCategory;
 
 	//bi-directional many-to-one association to AdminWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="adminWQTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="adminWQTypeId")
 	private AdminWorkQueueType adminWorkQueueType;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="stateTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="stateTypeId")
 	private StateType stateType;
 
 	public AdminWorkQueue() {

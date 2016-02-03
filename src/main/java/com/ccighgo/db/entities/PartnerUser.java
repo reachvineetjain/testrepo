@@ -48,27 +48,27 @@ public class PartnerUser implements Serializable {
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginId",insertable=false,updatable=false)
+	@JoinColumn(name="loginId")
 	private Login login;
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
-	@JoinColumn(name="genderId",insertable=false,updatable=false)
+	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerGoId")
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerOffice
 	@ManyToOne
-	@JoinColumn(name="partnerOfficeId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerOfficeId")
 	private PartnerOffice partnerOffice;
 
 	//bi-directional many-to-one association to Salutation
 	@ManyToOne
-	@JoinColumn(name="salutationId",insertable=false,updatable=false)
+	@JoinColumn(name="salutationId")
 	private Salutation salutation;
 
 	//bi-directional many-to-one association to PartnerUserRole

@@ -75,17 +75,17 @@ public class PartnerAgentInquiry implements Serializable {
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="countryId",insertable=false,updatable=false)
+	@JoinColumn(name="countryId")
 	private LookupCountry lookupCountry;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerAgentGoId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerAgentGoId")
 	private Partner partner;
 
 	//bi-directional many-to-one association to Salutation
 	@ManyToOne
-	@JoinColumn(name="salutationId",insertable=false,updatable=false)
+	@JoinColumn(name="salutationId")
 	private Salutation salutation;
 
 	public PartnerAgentInquiry() {

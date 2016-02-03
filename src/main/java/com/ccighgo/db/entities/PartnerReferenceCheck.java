@@ -37,7 +37,7 @@ public class PartnerReferenceCheck implements Serializable {
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerGoId")
 	private Partner partner;
 
 	public PartnerReferenceCheck() {

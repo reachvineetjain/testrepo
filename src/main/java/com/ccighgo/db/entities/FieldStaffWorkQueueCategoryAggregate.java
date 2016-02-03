@@ -26,22 +26,22 @@ public class FieldStaffWorkQueueCategoryAggregate implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueCategory
 	@ManyToOne
-	@JoinColumn(name="fieldStaffWQCategoryId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffWQCategoryId")
 	private FieldStaffWorkQueueCategory fieldStaffWorkQueueCategory;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="fieldStaffWQTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffWQTypeId")
 	private FieldStaffWorkQueueType fieldStaffWorkQueueType;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
+	@JoinColumn(name="lookupDepartmentProgramId")
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	public FieldStaffWorkQueueCategoryAggregate() {

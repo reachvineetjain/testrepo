@@ -55,12 +55,12 @@ public class FieldStaffParticipant implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to Participant
 	@ManyToOne
-	@JoinColumn(name="participantGoId",insertable=false,updatable=false)
+	@JoinColumn(name="participantGoId")
 	private Participant participant;
 
 	public FieldStaffParticipant() {

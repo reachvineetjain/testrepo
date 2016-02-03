@@ -31,12 +31,12 @@ public class SeasonIHPDetailsRegionApplication implements Serializable {
 
 	//bi-directional many-to-one association to RegionIHP
 	@ManyToOne
-	@JoinColumn(name="regionIHPId",insertable=false,updatable=false)
+	@JoinColumn(name="regionIHPId")
 	private RegionIHP regionIhp;
 
 	//bi-directional many-to-one association to SeasonIHPDetail
 	@ManyToOne
-	@JoinColumn(name="seasonIHPDetailsId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonIHPDetailsId")
 	private SeasonIHPDetail seasonIhpdetail;
 
 	public SeasonIHPDetailsRegionApplication() {

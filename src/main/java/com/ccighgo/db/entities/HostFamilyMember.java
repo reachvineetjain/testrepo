@@ -76,17 +76,17 @@ public class HostFamilyMember implements Serializable {
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
+	@JoinColumn(name="hostFamilySeasonId")
 	private HostFamilySeason hostFamilySeason;
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
-	@JoinColumn(name="genderId",insertable=false,updatable=false)
+	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
 
 	//bi-directional many-to-one association to Relationship
 	@ManyToOne
-	@JoinColumn(name="relationshipId",insertable=false,updatable=false)
+	@JoinColumn(name="relationshipId")
 	private Relationship relationship;
 
 	public HostFamilyMember() {

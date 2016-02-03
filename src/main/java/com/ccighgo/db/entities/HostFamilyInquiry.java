@@ -70,12 +70,12 @@ public class HostFamilyInquiry implements Serializable {
 
 	//bi-directional many-to-one association to HostFamily
 	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
+	@JoinColumn(name="hostFamilyGoId")
 	private HostFamily hostFamily;
 
 	//bi-directional many-to-one association to HostFamilyStatus
 	@ManyToOne
-	@JoinColumn(name="leadStatusId",insertable=false,updatable=false)
+	@JoinColumn(name="leadStatusId")
 	private HostFamilyStatus hostFamilyStatus;
 
 	public HostFamilyInquiry() {

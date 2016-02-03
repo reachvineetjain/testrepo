@@ -66,7 +66,7 @@ public class HostFamilyInterview implements Serializable {
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
+	@JoinColumn(name="hostFamilySeasonId")
 	private HostFamilySeason hostFamilySeason;
 
 	public HostFamilyInterview() {

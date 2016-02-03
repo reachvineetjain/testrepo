@@ -30,37 +30,37 @@ public class PartnerWorkQueue implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId",insertable=false,updatable=false)
+	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
+	@JoinColumn(name="lookupDepartmentProgramId")
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerGoId")
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerWorkQueueCategory
 	@ManyToOne
-	@JoinColumn(name="partnerWQCategoryId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerWQCategoryId")
 	private PartnerWorkQueueCategory partnerWorkQueueCategory;
 
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="partnerWQTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerWQTypeId")
 	private PartnerWorkQueueType partnerWorkQueueType;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="stateTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="stateTypeId")
 	private StateType stateType;
 
 	public PartnerWorkQueue() {

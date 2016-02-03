@@ -85,12 +85,12 @@ public class FieldStaffReference implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="stateId",insertable=false,updatable=false)
+	@JoinColumn(name="stateId")
 	private LookupUSState lookupUsstate;
 
 	public FieldStaffReference() {

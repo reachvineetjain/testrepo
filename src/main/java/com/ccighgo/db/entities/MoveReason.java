@@ -32,7 +32,7 @@ public class MoveReason implements Serializable {
 
 	//bi-directional one-to-one association to HostFamilyParticipant
 	@OneToOne
-	@JoinColumn(name="moveReasonId",insertable=false,updatable=false)
+	@JoinColumn(name="moveReasonId", nullable=false, insertable=false, updatable=false)
 	private HostFamilyParticipant hostFamilyParticipant;
 
 	public MoveReason() {

@@ -43,12 +43,12 @@ public class FieldStaffSeasonDocument implements Serializable {
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId",insertable=false,updatable=false)
+	@JoinColumn(name="documentInformationId")
 	private DocumentInformation documentInformation;
 
 	//bi-directional many-to-one association to FieldStaffSeason
 	@ManyToOne
-	@JoinColumn(name="fieldStaffSeasonId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffSeasonId")
 	private FieldStaffSeason fieldStaffSeason;
 
 	public FieldStaffSeasonDocument() {

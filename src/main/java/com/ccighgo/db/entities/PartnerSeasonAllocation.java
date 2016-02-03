@@ -48,27 +48,27 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="allocationRequestReviewedBy",insertable=false,updatable=false)
+	@JoinColumn(name="allocationRequestReviewedBy")
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId",insertable=false,updatable=false)
+	@JoinColumn(name="departmentProgramOptionId")
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="allocationRequestedBy",insertable=false,updatable=false)
+	@JoinColumn(name="allocationRequestedBy")
 	private Login login;
 
 	//bi-directional many-to-one association to PartnerSeason
 	@ManyToOne
-	@JoinColumn(name="partnerSeasonId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerSeasonId")
 	private PartnerSeason partnerSeason;
 
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
-	@JoinColumn(name="allocationRequestStatusId",insertable=false,updatable=false)
+	@JoinColumn(name="allocationRequestStatusId")
 	private PartnerStatus partnerStatus;
 
 	public PartnerSeasonAllocation() {

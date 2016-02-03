@@ -20,7 +20,7 @@ public class HostFamilyPermission implements Serializable {
 
 	//bi-directional many-to-one association to HostFamily
 	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
+	@JoinColumn(name="hostFamilyGoId")
 	private HostFamily hostFamily;
 
 	public HostFamilyPermission() {

@@ -50,12 +50,12 @@ public class SeasonCAPDetail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId",insertable=false,updatable=false)
+	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
 	public SeasonCAPDetail() {
