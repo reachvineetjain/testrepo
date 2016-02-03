@@ -729,8 +729,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					} else {
 						newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
 					}
+					Login login=loginRepository.findByLoginId(Integer.valueOf(userId));
+					int goId=login.getGoIdSequence().getGoId().intValue();
 					AdminWorkQueueCategoryAggregate categoryAggregate = adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
-							adminWorkQueueCategory.getAdminWorkQueueCategoryId(), userId);
+							adminWorkQueueCategory.getAdminWorkQueueCategoryId(),goId);
 					if (categoryAggregate != null) {
 						newCategory.setCategoryAggregate(categoryAggregate.getAdminWQCategoryAggregate());
 					}
