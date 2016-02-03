@@ -171,7 +171,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             placement.setCountry(String.valueOf(obj[4]));
             placement.setSeason(String.valueOf(obj[5]));
             placement.setProgram(String.valueOf(obj[6]));
-            placement.setParticipantStatus(String.valueOf(obj[7]));
+            placement.setStatus(String.valueOf(obj[7]));
             placement.setHolds(String.valueOf(obj[8]));
             placement.setPicUrl(String.valueOf(obj[9]));
             placement.setFlagUrl(String.valueOf(obj[9]));
@@ -214,13 +214,13 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             placement.setGoId(String.valueOf(obj[0]));
             placement.setFieldstaffFirstName(String.valueOf(obj[1]));
             placement.setFieldstaffLastName(String.valueOf(obj[2]));
-            placement.setPaxFirstName(String.valueOf(obj[3]));
-            placement.setPaxLastName(String.valueOf(obj[4]));
+            placement.setFirstName(String.valueOf(obj[3]));
+            placement.setLastName(String.valueOf(obj[4]));
             placement.setPartner(String.valueOf(obj[5]));
-            placement.setCountryName(String.valueOf(obj[6]));
-            placement.setSeasonName(String.valueOf(obj[7]));
+            placement.setCountry(String.valueOf(obj[6]));
+            placement.setSeason(String.valueOf(obj[7]));
             placement.setProgram(String.valueOf(obj[8]));
-            placement.setFieldStaffStatus(String.valueOf(obj[9]));
+            placement.setStatus(String.valueOf(obj[9]));
             placement.setHolds(String.valueOf(obj[10]));
             placement.setPaxPhoto(String.valueOf(obj[11]));
             eRDPlacements.getPlacements().add(placement);

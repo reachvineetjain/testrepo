@@ -29,13 +29,13 @@
          <xsd:element name="goId" type="xsd:string" />
          <xsd:element name="fieldstaffFirstName" type="xsd:string" />
          <xsd:element name="fieldstaffLastName" type="xsd:string"/>
-         <xsd:element name="paxFirstName" type="xsd:string"/>
-         <xsd:element name="paxLastName" type="xsd:string"/>
+         <xsd:element name="firstName" type="xsd:string"/>
+         <xsd:element name="lastName" type="xsd:string"/>
          <xsd:element name="partner" type="xsd:string" />
-         <xsd:element name="countryName" type="xsd:string" />
-         <xsd:element name="seasonName" type="xsd:string" />
+         <xsd:element name="country" type="xsd:string" />
+         <xsd:element name="season" type="xsd:string" />
          <xsd:element name="program" type="xsd:string" />
-         <xsd:element name="fieldStaffStatus" type="xsd:string" />
+         <xsd:element name="status" type="xsd:string" />
          <xsd:element name="holds" type="xsd:string" />
          <xsd:element name="paxPhoto" type="xsd:string"/>
       </xsd:sequence>
