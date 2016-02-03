@@ -23,7 +23,7 @@ public class AdminQuickStatsCategory implements Serializable {
 
 	//bi-directional many-to-one association to AdminQuickStatsType
 	@ManyToOne
-	@JoinColumn(name="adminQSTypeId")
+	@JoinColumn(name="adminQSTypeId",insertable=false,updatable=false)
 	private AdminQuickStatsType adminQuickStatsType;
 
 	//bi-directional many-to-one association to AdminQuickStatsCategoryAggregate

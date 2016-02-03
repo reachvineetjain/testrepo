@@ -27,12 +27,12 @@ public class HostFamilyDocument implements Serializable {
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId")
+	@JoinColumn(name="documentInformationId",insertable=false,updatable=false)
 	private DocumentInformation documentInformation;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId")
+	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
 	private HostFamilySeason hostFamilySeason;
 
 	public HostFamilyDocument() {

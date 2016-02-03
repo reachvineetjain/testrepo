@@ -23,7 +23,7 @@ public class FieldStaffQuickStatsCategory implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaffQuickStatsType
 	@ManyToOne
-	@JoinColumn(name="fieldStaffQSTypeId")
+	@JoinColumn(name="fieldStaffQSTypeId",insertable=false,updatable=false)
 	private FieldStaffQuickStatsType fieldStaffQuickStatsType;
 
 	//bi-directional many-to-one association to FieldStaffQuickStatsCategoryAggregate

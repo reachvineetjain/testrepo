@@ -21,22 +21,22 @@ public class PartnerReviewStatus implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffUserId")
+	@JoinColumn(name="cciStaffUserId",insertable=false,updatable=false)
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
+	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
-	@JoinColumn(name="partnerLeadStatusId")
+	@JoinColumn(name="partnerLeadStatusId",insertable=false,updatable=false)
 	private PartnerStatus partnerStatus1;
 
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
-	@JoinColumn(name="partnerAgentStatusId")
+	@JoinColumn(name="partnerAgentStatusId",insertable=false,updatable=false)
 	private PartnerStatus partnerStatus2;
 
 	public PartnerReviewStatus() {

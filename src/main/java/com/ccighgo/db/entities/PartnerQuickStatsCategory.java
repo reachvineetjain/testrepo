@@ -23,7 +23,7 @@ public class PartnerQuickStatsCategory implements Serializable {
 
 	//bi-directional many-to-one association to PartnerQuickStatsType
 	@ManyToOne
-	@JoinColumn(name="partnerQSTypeId")
+	@JoinColumn(name="partnerQSTypeId",insertable=false,updatable=false)
 	private PartnerQuickStatsType partnerQuickStatsType;
 
 	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate

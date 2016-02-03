@@ -109,22 +109,22 @@ public class SeasonJ1Detail implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaffAgreement
 	@ManyToOne
-	@JoinColumn(name="fsAgreementId")
+	@JoinColumn(name="fsAgreementId",insertable=false,updatable=false)
 	private FieldStaffAgreement fieldStaffAgreement;
 
 	//bi-directional many-to-one association to PaymentSchedule
 	@ManyToOne
-	@JoinColumn(name="lcPaymentScheduleId")
+	@JoinColumn(name="lcPaymentScheduleId",insertable=false,updatable=false)
 	private PaymentSchedule paymentSchedule;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId",insertable=false,updatable=false)
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId")
+	@JoinColumn(name="programStatusId",insertable=false,updatable=false)
 	private SeasonStatus seasonStatus;
 
 	public SeasonJ1Detail() {

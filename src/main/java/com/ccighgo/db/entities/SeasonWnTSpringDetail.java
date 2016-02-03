@@ -45,12 +45,12 @@ public class SeasonWnTSpringDetail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId",insertable=false,updatable=false)
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId")
+	@JoinColumn(name="programStatusId",insertable=false,updatable=false)
 	private SeasonStatus seasonStatus;
 
 	public SeasonWnTSpringDetail() {

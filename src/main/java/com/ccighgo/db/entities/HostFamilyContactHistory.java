@@ -35,7 +35,7 @@ public class HostFamilyContactHistory implements Serializable {
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId")
+	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
 	private HostFamilySeason hostFamilySeason;
 
 	public HostFamilyContactHistory() {

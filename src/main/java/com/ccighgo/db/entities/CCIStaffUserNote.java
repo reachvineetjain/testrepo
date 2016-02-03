@@ -31,7 +31,7 @@ public class CCIStaffUserNote implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="ccistaffuserID")
+	@JoinColumn(name="ccistaffuserID",insertable=false,updatable=false)
 	private CCIStaffUser ccistaffUser;
 
 	public CCIStaffUserNote() {

@@ -41,12 +41,12 @@ public class HostFamilyAnnouncement implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
+	@JoinColumn(name="departmentProgramId",insertable=false,updatable=false)
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId",insertable=false,updatable=false)
 	private Season season;
 
 	public HostFamilyAnnouncement() {

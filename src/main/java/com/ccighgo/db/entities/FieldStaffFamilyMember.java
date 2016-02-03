@@ -48,12 +48,12 @@ public class FieldStaffFamilyMember implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
+	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
-	@JoinColumn(name="genderId")
+	@JoinColumn(name="genderId",insertable=false,updatable=false)
 	private LookupGender lookupGender;
 
 	public FieldStaffFamilyMember() {

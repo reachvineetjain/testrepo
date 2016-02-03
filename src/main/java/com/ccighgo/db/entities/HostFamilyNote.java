@@ -33,7 +33,7 @@ public class HostFamilyNote implements Serializable {
 
 	//bi-directional many-to-one association to HostFamily
 	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId")
+	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
 	private HostFamily hostFamily;
 
 	public HostFamilyNote() {

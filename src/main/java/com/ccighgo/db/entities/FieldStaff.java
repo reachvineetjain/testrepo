@@ -193,42 +193,42 @@ public class FieldStaff implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffUserId")
+	@JoinColumn(name="cciStaffUserId",insertable=false,updatable=false)
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to FieldStaffStatus
 	@ManyToOne
-	@JoinColumn(name="fieldStaffStatusId")
+	@JoinColumn(name="fieldStaffStatusId",insertable=false,updatable=false)
 	private FieldStaffStatus fieldStaffStatus;
 
 	//bi-directional many-to-one association to FieldStaffType
 	@ManyToOne
-	@JoinColumn(name="fieldStaffTypeId")
+	@JoinColumn(name="fieldStaffTypeId",insertable=false,updatable=false)
 	private FieldStaffType fieldStaffType;
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="fieldStaffGoId")
+	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
-	@JoinColumn(name="genderId")
+	@JoinColumn(name="genderId",insertable=false,updatable=false)
 	private LookupGender lookupGender;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="mailingStateId")
+	@JoinColumn(name="mailingStateId",insertable=false,updatable=false)
 	private LookupUSState lookupUsstate1;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="currentStateId")
+	@JoinColumn(name="currentStateId",insertable=false,updatable=false)
 	private LookupUSState lookupUsstate2;
 
 	//bi-directional many-to-one association to Salutation
 	@ManyToOne
-	@JoinColumn(name="salutationId")
+	@JoinColumn(name="salutationId",insertable=false,updatable=false)
 	private Salutation salutation;
 
 	//bi-directional many-to-one association to FieldStaffAnnouncement

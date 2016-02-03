@@ -20,7 +20,7 @@ public class FieldStaffPermission implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
+	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff;
 
 	public FieldStaffPermission() {

@@ -66,22 +66,22 @@ public class HostFamilyPotentialReference implements Serializable {
 
 	//bi-directional many-to-one association to HostFamily
 	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId")
+	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
 	private HostFamily hostFamily;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="referenceCountryId")
+	@JoinColumn(name="referenceCountryId",insertable=false,updatable=false)
 	private LookupCountry lookupCountry1;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="counrtyId")
+	@JoinColumn(name="counrtyId",insertable=false,updatable=false)
 	private LookupCountry lookupCountry2;
 
 	//bi-directional many-to-one association to UserType
 	@ManyToOne
-	@JoinColumn(name="userTypeId")
+	@JoinColumn(name="userTypeId",insertable=false,updatable=false)
 	private UserType userType;
 
 	public HostFamilyPotentialReference() {

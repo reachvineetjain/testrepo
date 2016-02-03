@@ -24,12 +24,12 @@ public class StateTransition implements Serializable {
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="fromStateTypeId")
+	@JoinColumn(name="fromStateTypeId",insertable=false,updatable=false)
 	private StateType stateType1;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="toStateTypeId")
+	@JoinColumn(name="toStateTypeId",insertable=false,updatable=false)
 	private StateType stateType2;
 
 	public StateTransition() {

@@ -32,12 +32,12 @@ public class HostFamilyAirport implements Serializable {
 
 	//bi-directional many-to-one association to Airport
 	@ManyToOne
-	@JoinColumn(name="airportId")
+	@JoinColumn(name="airportId",insertable=false,updatable=false)
 	private Airport airport;
 
 	//bi-directional many-to-one association to HostFamily
 	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId")
+	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
 	private HostFamily hostFamily;
 
 	public HostFamilyAirport() {

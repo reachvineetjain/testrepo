@@ -26,22 +26,22 @@ public class FieldStaffQuickStatsCategoryAggregate implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
+	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to FieldStaffQuickStatsCategory
 	@ManyToOne
-	@JoinColumn(name="fieldStaffQSCategoryId")
+	@JoinColumn(name="fieldStaffQSCategoryId",insertable=false,updatable=false)
 	private FieldStaffQuickStatsCategory fieldStaffQuickStatsCategory;
 
 	//bi-directional many-to-one association to FieldStaffQuickStatsType
 	@ManyToOne
-	@JoinColumn(name="fieldStaffQSTypeId")
+	@JoinColumn(name="fieldStaffQSTypeId",insertable=false,updatable=false)
 	private FieldStaffQuickStatsType fieldStaffQuickStatsType;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	public FieldStaffQuickStatsCategoryAggregate() {

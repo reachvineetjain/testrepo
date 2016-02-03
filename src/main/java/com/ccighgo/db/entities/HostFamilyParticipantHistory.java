@@ -42,22 +42,22 @@ public class HostFamilyParticipantHistory implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="localCoordinatorId")
+	@JoinColumn(name="localCoordinatorId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to HostFamily
 	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId")
+	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
 	private HostFamily hostFamily;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId")
+	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
 	private HostFamilySeason hostFamilySeason;
 
 	//bi-directional many-to-one association to Participant
 	@ManyToOne
-	@JoinColumn(name="participantGoId")
+	@JoinColumn(name="participantGoId",insertable=false,updatable=false)
 	private Participant participant;
 
 	public HostFamilyParticipantHistory() {

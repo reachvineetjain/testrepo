@@ -99,47 +99,47 @@ public class PartnerSeason implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffUserId")
+	@JoinColumn(name="cciStaffUserId",insertable=false,updatable=false)
 	private CCIStaffUser ccistaffUser1;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="deadlineRequestReviewedBy")
+	@JoinColumn(name="deadlineRequestReviewedBy",insertable=false,updatable=false)
 	private CCIStaffUser ccistaffUser2;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
+	@JoinColumn(name="departmentProgramId",insertable=false,updatable=false)
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="deadlineRequestedBy")
+	@JoinColumn(name="deadlineRequestedBy",insertable=false,updatable=false)
 	private Login login;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
+	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
-	@JoinColumn(name="partnerSeasonStatusId")
+	@JoinColumn(name="partnerSeasonStatusId",insertable=false,updatable=false)
 	private PartnerStatus partnerStatus1;
 
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
-	@JoinColumn(name="partnerDeadlineRequestStatusId")
+	@JoinColumn(name="partnerDeadlineRequestStatusId",insertable=false,updatable=false)
 	private PartnerStatus partnerStatus2;
 
 	//bi-directional many-to-one association to PartnerStatus
 	@ManyToOne
-	@JoinColumn(name="partnerSecSemDeadlineRequestStatusId")
+	@JoinColumn(name="partnerSecSemDeadlineRequestStatusId",insertable=false,updatable=false)
 	private PartnerStatus partnerStatus3;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId",insertable=false,updatable=false)
 	private Season season;
 
 	//bi-directional many-to-one association to PartnerSeasonAllocation

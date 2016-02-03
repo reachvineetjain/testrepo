@@ -36,12 +36,12 @@ public class FieldStaffWorkQueueType implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	//bi-directional many-to-one association to StateProcess
 	@ManyToOne
-	@JoinColumn(name="stateProcessId")
+	@JoinColumn(name="stateProcessId",insertable=false,updatable=false)
 	private StateProcess stateProcess;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueTypeAggregate

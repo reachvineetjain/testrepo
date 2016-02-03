@@ -41,7 +41,7 @@ public class DocumentInformation implements Serializable {
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess
 	@ManyToOne
-	@JoinColumn(name="documentTypeDocumentCategoryProcessId")
+	@JoinColumn(name="documentTypeDocumentCategoryProcessId",insertable=false,updatable=false)
 	private DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess;
 
 	//bi-directional many-to-one association to FieldStaffDocument

@@ -38,32 +38,32 @@ public class PartnerHelpRequest implements Serializable {
 
 	//bi-directional many-to-one association to HelpContactMode
 	@ManyToOne
-	@JoinColumn(name="helpContactModeId")
+	@JoinColumn(name="helpContactModeId",insertable=false,updatable=false)
 	private HelpContactMode helpContactMode;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginId")
+	@JoinColumn(name="loginId",insertable=false,updatable=false)
 	private Login login;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
+	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
 	private Partner partner1;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="subPartnerGoId")
+	@JoinColumn(name="subPartnerGoId",insertable=false,updatable=false)
 	private Partner partner2;
 
 	//bi-directional many-to-one association to PartnerHelpOption
 	@ManyToOne
-	@JoinColumn(name="partnerHelpOptionId")
+	@JoinColumn(name="partnerHelpOptionId",insertable=false,updatable=false)
 	private PartnerHelpOption partnerHelpOption;
 
 	public PartnerHelpRequest() {

@@ -26,17 +26,17 @@ public class FieldStaffQuickStatsTypeAggregate implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
+	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to FieldStaffQuickStatsType
 	@ManyToOne
-	@JoinColumn(name="fieldStaffQSTypeId")
+	@JoinColumn(name="fieldStaffQSTypeId",insertable=false,updatable=false)
 	private FieldStaffQuickStatsType fieldStaffQuickStatsType;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	public FieldStaffQuickStatsTypeAggregate() {

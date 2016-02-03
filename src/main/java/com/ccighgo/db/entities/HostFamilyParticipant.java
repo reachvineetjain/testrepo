@@ -89,37 +89,37 @@ public class HostFamilyParticipant implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="secondVisitLCId")
+	@JoinColumn(name="secondVisitLCId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff1;
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="isRecruiterLCLeadId")
+	@JoinColumn(name="isRecruiterLCLeadId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff2;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId")
+	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
 	private HostFamilySeason hostFamilySeason;
 
 	//bi-directional many-to-one association to HostFamilyStatus
 	@ManyToOne
-	@JoinColumn(name="hostFamilyParticipantStatusId")
+	@JoinColumn(name="hostFamilyParticipantStatusId",insertable=false,updatable=false)
 	private HostFamilyStatus hostFamilyStatus;
 
 	//bi-directional many-to-one association to MoveReason
 	@ManyToOne
-	@JoinColumn(name="moveReasonId")
+	@JoinColumn(name="moveReasonId",insertable=false,updatable=false)
 	private MoveReason moveReason1;
 
 	//bi-directional many-to-one association to Participant
 	@ManyToOne
-	@JoinColumn(name="participantGoId")
+	@JoinColumn(name="participantGoId",insertable=false,updatable=false)
 	private Participant participant;
 
 	//bi-directional many-to-one association to USSchool
 	@ManyToOne
-	@JoinColumn(name="usHighSchoolId")
+	@JoinColumn(name="usHighSchoolId",insertable=false,updatable=false)
 	private USSchool usschool;
 
 	//bi-directional one-to-one association to MoveReason
