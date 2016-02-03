@@ -84,22 +84,22 @@ public class CCIStaffUser implements Serializable {
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="cciStaffUserId",insertable=false,updatable=false)
+	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="countryId",insertable=false,updatable=false)
+	@JoinColumn(name="countryId")
 	private LookupCountry lookupCountry;
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
-	@JoinColumn(name="genderId",insertable=false,updatable=false)
+	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="usStatesId",insertable=false,updatable=false)
+	@JoinColumn(name="usStatesId")
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole

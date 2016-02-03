@@ -30,17 +30,17 @@ public class FieldStaffLeadershipSeason implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
+	@JoinColumn(name="fieldStaffGoId")
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration
 	@ManyToOne
-	@JoinColumn(name="seasonGeographyConfigurationId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonGeographyConfigurationId")
 	private SeasonGeographyConfiguration seasonGeographyConfiguration;
 
 	public FieldStaffLeadershipSeason() {

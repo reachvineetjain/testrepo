@@ -65,7 +65,7 @@ public class StateType implements Serializable {
 
 	//bi-directional many-to-one association to StateProcess
 	@ManyToOne
-	@JoinColumn(name="stateProcessId",insertable=false,updatable=false)
+	@JoinColumn(name="stateProcessId")
 	private StateProcess stateProcess;
 
 	public StateType() {

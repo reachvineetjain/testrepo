@@ -68,17 +68,17 @@ public class SeasonIHPDetail implements Serializable {
 
 	//bi-directional many-to-one association to LookupGender
 	@ManyToOne
-	@JoinColumn(name="genderId",insertable=false,updatable=false)
+	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="programStatusId",insertable=false,updatable=false)
+	@JoinColumn(name="programStatusId")
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication

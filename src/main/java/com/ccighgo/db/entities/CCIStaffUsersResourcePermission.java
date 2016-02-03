@@ -28,22 +28,22 @@ public class CCIStaffUsersResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffUserId",insertable=false,updatable=false)
+	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
-	@JoinColumn(name="departmentResourceGroupId",insertable=false,updatable=false)
+	@JoinColumn(name="departmentResourceGroupId")
 	private DepartmentResourceGroup departmentResourceGroup;
 
 	//bi-directional many-to-one association to ResourceAction
 	@ManyToOne
-	@JoinColumn(name="resourceActionId",insertable=false,updatable=false)
+	@JoinColumn(name="resourceActionId")
 	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
-	@JoinColumn(name="resourcePermissionId",insertable=false,updatable=false)
+	@JoinColumn(name="resourcePermissionId", nullable=false, insertable=false, updatable=false)
 	private ResourcePermission resourcePermission;
 
 	public CCIStaffUsersResourcePermission() {

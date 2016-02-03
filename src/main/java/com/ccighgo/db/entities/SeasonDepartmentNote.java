@@ -33,7 +33,7 @@ public class SeasonDepartmentNote implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	public SeasonDepartmentNote() {

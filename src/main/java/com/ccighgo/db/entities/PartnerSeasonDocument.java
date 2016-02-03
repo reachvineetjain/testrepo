@@ -22,12 +22,12 @@ public class PartnerSeasonDocument implements Serializable {
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId",insertable=false,updatable=false)
+	@JoinColumn(name="documentInformationId")
 	private DocumentInformation documentInformation;
 
 	//bi-directional many-to-one association to PartnerSeason
 	@ManyToOne
-	@JoinColumn(name="partnerSeasonId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerSeasonId")
 	private PartnerSeason partnerSeason;
 
 	public PartnerSeasonDocument() {

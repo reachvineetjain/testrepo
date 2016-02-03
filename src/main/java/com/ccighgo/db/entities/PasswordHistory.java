@@ -27,7 +27,7 @@ public class PasswordHistory implements Serializable {
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginId",insertable=false,updatable=false)
+	@JoinColumn(name="loginId")
 	private Login login;
 
 	public PasswordHistory() {

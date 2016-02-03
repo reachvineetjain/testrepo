@@ -32,12 +32,12 @@ public class SeasonHSPAllocation implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId",insertable=false,updatable=false)
+	@JoinColumn(name="departmentProgramOptionId")
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	public SeasonHSPAllocation() {

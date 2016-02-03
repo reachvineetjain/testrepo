@@ -22,17 +22,17 @@ public class PartnerDocument implements Serializable {
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId",insertable=false,updatable=false)
+	@JoinColumn(name="documentInformationId")
 	private DocumentInformation documentInformation;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerGoId")
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerProgram
 	@ManyToOne
-	@JoinColumn(name="partnerProgramId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerProgramId")
 	private PartnerProgram partnerProgram;
 
 	public PartnerDocument() {

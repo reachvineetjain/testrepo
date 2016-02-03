@@ -120,22 +120,22 @@ public class Partner implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciGeneralContact",insertable=false,updatable=false)
+	@JoinColumn(name="cciGeneralContact")
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerGoId", nullable=false, insertable=false, updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="physicalcountryId",insertable=false,updatable=false)
+	@JoinColumn(name="physicalcountryId")
 	private LookupCountry lookupCountry1;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="countryId",insertable=false,updatable=false)
+	@JoinColumn(name="countryId")
 	private LookupCountry lookupCountry2;
 
 	//bi-directional many-to-one association to PartnerAgentInquiry

@@ -28,17 +28,17 @@ public class SeasonIHPGeographyConfiguration implements Serializable {
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="usStatesId",insertable=false,updatable=false)
+	@JoinColumn(name="usStatesId")
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to RegionIHP
 	@ManyToOne
-	@JoinColumn(name="regionIHPId",insertable=false,updatable=false)
+	@JoinColumn(name="regionIHPId")
 	private RegionIHP regionIhp;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId",insertable=false,updatable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	public SeasonIHPGeographyConfiguration() {

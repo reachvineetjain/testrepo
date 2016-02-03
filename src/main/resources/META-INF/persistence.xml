@@ -4,58 +4,6 @@
    <persistence-unit name="cci_gh_go" transaction-type="RESOURCE_LOCAL">
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
       <mapping-file>META-INF/orm.xml</mapping-file>
-            <class>com.ccighgo.db.entities.PartnerWorkQueueCategoryAggregate</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueueType</class>
-      <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class>
-      <class>com.ccighgo.db.entities.PasswordHistory</class>
-      <class>com.ccighgo.db.entities.PaymentSchedule</class>
-      <class>com.ccighgo.db.entities.Region</class>
-      <class>com.ccighgo.db.entities.RegionIHP</class>
-      <class>com.ccighgo.db.entities.Relationship</class>
-      <class>com.ccighgo.db.entities.ResourceAction</class>
-      <class>com.ccighgo.db.entities.ResourcePermission</class>
-      <class>com.ccighgo.db.entities.Salutation</class>
-      <class>com.ccighgo.db.entities.Season</class>
-      <class>com.ccighgo.db.entities.SeasonACList</class>
-      <class>com.ccighgo.db.entities.SeasonCAPDetail</class>
-      <class>com.ccighgo.db.entities.SeasonDepartmentDocument</class>
-      <class>com.ccighgo.db.entities.SeasonDepartmentNote</class>
-      <class>com.ccighgo.db.entities.SeasonDepartmentUpdateLog</class>
-      <class>com.ccighgo.db.entities.SeasonERDList</class>
-      <class>com.ccighgo.db.entities.SeasonF1Detail</class>
-      <class>com.ccighgo.db.entities.SeasonGHTConfiguration</class>
-      <class>com.ccighgo.db.entities.SeasonGeographyConfiguration</class>
-      <class>com.ccighgo.db.entities.SeasonHSADetail</class>
-      <class>com.ccighgo.db.entities.SeasonHSPAllocation</class>
-      <class>com.ccighgo.db.entities.SeasonHSPConfiguration</class>
-      <class>com.ccighgo.db.entities.SeasonIHPDetail</class>
-      <class>com.ccighgo.db.entities.SeasonIHPDetailsRegionApplication</class>
-      <class>com.ccighgo.db.entities.SeasonIHPGeographyConfiguration</class>
-      <class>com.ccighgo.db.entities.SeasonJ1Detail</class>
-      <class>com.ccighgo.db.entities.SeasonLSDetail</class>
-      <class>com.ccighgo.db.entities.SeasonProgramDocument</class>
-      <class>com.ccighgo.db.entities.SeasonProgramNote</class>
-      <class>com.ccighgo.db.entities.SeasonProgramUpdateLog</class>
-      <class>com.ccighgo.db.entities.SeasonRDList</class>
-      <class>com.ccighgo.db.entities.SeasonRMList</class>
-      <class>com.ccighgo.db.entities.SeasonStatus</class>
-      <class>com.ccighgo.db.entities.SeasonTADetail</class>
-      <class>com.ccighgo.db.entities.SeasonVADetail</class>
-      <class>com.ccighgo.db.entities.SeasonWADetail</class>
-      <class>com.ccighgo.db.entities.SeasonWPAllocation</class>
-      <class>com.ccighgo.db.entities.SeasonWPConfiguration</class>
-      <class>com.ccighgo.db.entities.SeasonWnTSpringDetail</class>
-      <class>com.ccighgo.db.entities.SeasonWnTSummerDetail</class>
-      <class>com.ccighgo.db.entities.SeasonWnTWinterDetail</class>
-      <class>com.ccighgo.db.entities.StateAction</class>
-      <class>com.ccighgo.db.entities.StateProcess</class>
-      <class>com.ccighgo.db.entities.StateTransition</class>
-      <class>com.ccighgo.db.entities.StateTypeResourcePermission</class>
-      <class>com.ccighgo.db.entities.StateType</class>
-      <class>com.ccighgo.db.entities.SuperRegion</class>
-      <class>com.ccighgo.db.entities.USSchool</class>
-      <class>com.ccighgo.db.entities.USSchoolSeason</class>
-      <class>com.ccighgo.db.entities.UserType</class>
       <properties>
         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />

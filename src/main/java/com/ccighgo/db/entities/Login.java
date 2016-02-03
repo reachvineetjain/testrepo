@@ -39,7 +39,7 @@ public class Login implements Serializable {
 
 	//bi-directional many-to-one association to GoIdSequence
 	@ManyToOne
-	@JoinColumn(name="goId",insertable=false,updatable=false)
+	@JoinColumn(name="goId")
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LoginHistory

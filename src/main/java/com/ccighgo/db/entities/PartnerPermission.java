@@ -110,7 +110,7 @@ public class PartnerPermission implements Serializable {
 
 	//bi-directional many-to-one association to PartnerUser
 	@ManyToOne
-	@JoinColumn(name="partnerUserId",insertable=false,updatable=false)
+	@JoinColumn(name="partnerUserId")
 	private PartnerUser partnerUser;
 
 	public PartnerPermission() {

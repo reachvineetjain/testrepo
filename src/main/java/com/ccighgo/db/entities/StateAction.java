@@ -22,7 +22,7 @@ public class StateAction implements Serializable {
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="stateTypeId",insertable=false,updatable=false)
+	@JoinColumn(name="stateTypeId")
 	private StateType stateType;
 
 	public StateAction() {
