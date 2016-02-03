@@ -10,14 +10,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="FieldStaffWorkQueue")
 @NamedQuery(name="FieldStaffWorkQueue.findAll", query="SELECT f FROM FieldStaffWorkQueue f")
 public class FieldStaffWorkQueue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffWQId;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -25,7 +23,6 @@ public class FieldStaffWorkQueue implements Serializable {
 
 	private Integer targetGoId;
 
-	@Column(length=45)
 	private String targetRoleType;
 
 	//bi-directional many-to-one association to DepartmentProgram

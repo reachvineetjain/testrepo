@@ -10,17 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="DocumentTypeDocumentCategoryProcess")
 @NamedQuery(name="DocumentTypeDocumentCategoryProcess.findAll", query="SELECT d FROM DocumentTypeDocumentCategoryProcess d")
 public class DocumentTypeDocumentCategoryProcess implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer documentTypeDocumentCategoryProcessId;
 
-	@Column(length=50)
 	private String documentTypeRole;
 
 	//bi-directional many-to-one association to DocumentInformation
@@ -34,7 +31,7 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 
 	//bi-directional many-to-one association to DocumentType
 	@ManyToOne
-	@JoinColumn(name="documentTypeId", nullable=false)
+	@JoinColumn(name="documentTypeId")
 	private DocumentType documentType;
 
 	public DocumentTypeDocumentCategoryProcess() {

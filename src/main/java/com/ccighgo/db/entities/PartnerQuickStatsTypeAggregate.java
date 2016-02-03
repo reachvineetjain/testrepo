@@ -10,22 +10,18 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="PartnerQuickStatsTypeAggregate")
 @NamedQuery(name="PartnerQuickStatsTypeAggregate.findAll", query="SELECT p FROM PartnerQuickStatsTypeAggregate p")
 public class PartnerQuickStatsTypeAggregate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerQSTypeAggregateId;
 
-	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
 	private Integer partnerQSTypeAggregate;
 
-	@Column(length=50)
 	private String partnerQSTypeName;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram

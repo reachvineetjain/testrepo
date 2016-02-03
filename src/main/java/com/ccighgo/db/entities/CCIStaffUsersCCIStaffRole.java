@@ -18,26 +18,22 @@ public class CCIStaffUsersCCIStaffRole implements Serializable {
 	@EmbeddedId
 	private CCIStaffUsersCCIStaffRolePK id;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRole
 	@ManyToOne
-	@JoinColumn(name="cciStaffRoleId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="cciStaffRoleId")
 	private CCIStaffRole ccistaffRole;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="cciStaffUserId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="cciStaffUserId")
 	private CCIStaffUser ccistaffUser;
 
 	public CCIStaffUsersCCIStaffRole() {

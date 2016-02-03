@@ -10,14 +10,12 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="FieldStaffNote")
 @NamedQuery(name="FieldStaffNote.findAll", query="SELECT f FROM FieldStaffNote f")
 public class FieldStaffNote implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffNoteId;
 
 	private Byte active;

@@ -17,13 +17,10 @@ public class LookupUSState implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer usStatesId;
 
-	@Column(nullable=false, length=5)
 	private String stateCode;
 
-	@Column(nullable=false, length=50)
 	private String stateName;
 
 	//bi-directional many-to-one association to CCIStaffUser

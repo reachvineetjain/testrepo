@@ -11,17 +11,19 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="HostFamily")
 @NamedQuery(name="HostFamily.findAll", query="SELECT h FROM HostFamily h")
 public class HostFamily implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int hostFamilyGoId;
+	private Integer hostFamilyGoId;
 
 	private Byte active;
+
+	private String bestContactNumberToReach;
+
+	private String bestWayToReachYou;
 
 	private Integer createdBy;
 
@@ -29,58 +31,55 @@ public class HostFamily implements Serializable {
 
 	private Integer currentSeasonId;
 
-	private Integer distanceToAirport;
-
-	@Column(length=100)
 	private String emergencyContact;
 
-	@Column(length=30)
 	private String emergencyPhone;
 
-	@Column(length=50)
 	private String firstName;
 
 	private Byte hasHomeBusiness;
 
+	private Byte haveAHomePhone;
+
 	@Lob
 	private String homeBusinessType;
+
+	private Byte homePhone;
 
 	private Byte isBlacklisted;
 
 	private Byte isDoNotContact;
 
-	@Column(length=50)
+	private Byte isNotQuilified;
+
 	private String lastName;
 
 	private Byte liveAlone;
 
-	@Column(length=50)
-	private String mailingAddress;
+	private String mailingAddress1;
+
+	private String mailingAddress2;
 
 	private Byte mailingAddressSameAsCurrentAddress;
 
-	@Column(length=50)
 	private String mailingCity;
 
-	@Column(length=30)
 	private String mailingZipCode;
 
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
-	@Column(length=30)
 	private String phone;
 
-	@Column(length=50)
-	private String physicalAddress;
+	private String physicalAddress1;
 
-	@Column(length=50)
+	private String physicalAddress2;
+
 	private String physicalCity;
 
 	private Integer physicalCountryId;
 
-	@Column(length=30)
 	private String physicalZipCode;
 
 	private Byte receiveEmails;
@@ -89,7 +88,7 @@ public class HostFamily implements Serializable {
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="hostFamilyGoId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="hostFamilyGoId")
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to HostFamilyStatus
@@ -109,7 +108,7 @@ public class HostFamily implements Serializable {
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="physicalStateId", insertable=false, updatable=false)
+	@JoinColumn(name="physicalStateId")
 	private LookupUSState lookupUsstate2;
 
 	//bi-directional many-to-one association to HostFamilyAirport
@@ -132,6 +131,10 @@ public class HostFamily implements Serializable {
 	@OneToMany(mappedBy="hostFamily")
 	private List<HostFamilyPermission> hostFamilyPermissions;
 
+	//bi-directional many-to-one association to HostFamilyPotentialReference
+	@OneToMany(mappedBy="hostFamily")
+	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
+
 	//bi-directional many-to-one association to HostFamilySeason
 	@OneToMany(mappedBy="hostFamily")
 	private List<HostFamilySeason> hostFamilySeasons;
@@ -139,11 +142,11 @@ public class HostFamily implements Serializable {
 	public HostFamily() {
 	}
 
-	public int getHostFamilyGoId() {
+	public Integer getHostFamilyGoId() {
 		return this.hostFamilyGoId;
 	}
 
-	public void setHostFamilyGoId(int hostFamilyGoId) {
+	public void setHostFamilyGoId(Integer hostFamilyGoId) {
 		this.hostFamilyGoId = hostFamilyGoId;
 	}
 
@@ -153,6 +156,22 @@ public class HostFamily implements Serializable {
 
 	public void setActive(Byte active) {
 		this.active = active;
+	}
+
+	public String getBestContactNumberToReach() {
+		return this.bestContactNumberToReach;
+	}
+
+	public void setBestContactNumberToReach(String bestContactNumberToReach) {
+		this.bestContactNumberToReach = bestContactNumberToReach;
+	}
+
+	public String getBestWayToReachYou() {
+		return this.bestWayToReachYou;
+	}
+
+	public void setBestWayToReachYou(String bestWayToReachYou) {
+		this.bestWayToReachYou = bestWayToReachYou;
 	}
 
 	public Integer getCreatedBy() {
@@ -177,14 +196,6 @@ public class HostFamily implements Serializable {
 
 	public void setCurrentSeasonId(Integer currentSeasonId) {
 		this.currentSeasonId = currentSeasonId;
-	}
-
-	public Integer getDistanceToAirport() {
-		return this.distanceToAirport;
-	}
-
-	public void setDistanceToAirport(Integer distanceToAirport) {
-		this.distanceToAirport = distanceToAirport;
 	}
 
 	public String getEmergencyContact() {
@@ -219,12 +230,28 @@ public class HostFamily implements Serializable {
 		this.hasHomeBusiness = hasHomeBusiness;
 	}
 
+	public Byte getHaveAHomePhone() {
+		return this.haveAHomePhone;
+	}
+
+	public void setHaveAHomePhone(Byte haveAHomePhone) {
+		this.haveAHomePhone = haveAHomePhone;
+	}
+
 	public String getHomeBusinessType() {
 		return this.homeBusinessType;
 	}
 
 	public void setHomeBusinessType(String homeBusinessType) {
 		this.homeBusinessType = homeBusinessType;
+	}
+
+	public Byte getHomePhone() {
+		return this.homePhone;
+	}
+
+	public void setHomePhone(Byte homePhone) {
+		this.homePhone = homePhone;
 	}
 
 	public Byte getIsBlacklisted() {
@@ -243,6 +270,14 @@ public class HostFamily implements Serializable {
 		this.isDoNotContact = isDoNotContact;
 	}
 
+	public Byte getIsNotQuilified() {
+		return this.isNotQuilified;
+	}
+
+	public void setIsNotQuilified(Byte isNotQuilified) {
+		this.isNotQuilified = isNotQuilified;
+	}
+
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -259,12 +294,20 @@ public class HostFamily implements Serializable {
 		this.liveAlone = liveAlone;
 	}
 
-	public String getMailingAddress() {
-		return this.mailingAddress;
+	public String getMailingAddress1() {
+		return this.mailingAddress1;
 	}
 
-	public void setMailingAddress(String mailingAddress) {
-		this.mailingAddress = mailingAddress;
+	public void setMailingAddress1(String mailingAddress1) {
+		this.mailingAddress1 = mailingAddress1;
+	}
+
+	public String getMailingAddress2() {
+		return this.mailingAddress2;
+	}
+
+	public void setMailingAddress2(String mailingAddress2) {
+		this.mailingAddress2 = mailingAddress2;
 	}
 
 	public Byte getMailingAddressSameAsCurrentAddress() {
@@ -315,12 +358,20 @@ public class HostFamily implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getPhysicalAddress() {
-		return this.physicalAddress;
+	public String getPhysicalAddress1() {
+		return this.physicalAddress1;
 	}
 
-	public void setPhysicalAddress(String physicalAddress) {
-		this.physicalAddress = physicalAddress;
+	public void setPhysicalAddress1(String physicalAddress1) {
+		this.physicalAddress1 = physicalAddress1;
+	}
+
+	public String getPhysicalAddress2() {
+		return this.physicalAddress2;
+	}
+
+	public void setPhysicalAddress2(String physicalAddress2) {
+		this.physicalAddress2 = physicalAddress2;
 	}
 
 	public String getPhysicalCity() {
@@ -511,6 +562,28 @@ public class HostFamily implements Serializable {
 		hostFamilyPermission.setHostFamily(null);
 
 		return hostFamilyPermission;
+	}
+
+	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences() {
+		return this.hostFamilyPotentialReferences;
+	}
+
+	public void setHostFamilyPotentialReferences(List<HostFamilyPotentialReference> hostFamilyPotentialReferences) {
+		this.hostFamilyPotentialReferences = hostFamilyPotentialReferences;
+	}
+
+	public HostFamilyPotentialReference addHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
+		getHostFamilyPotentialReferences().add(hostFamilyPotentialReference);
+		hostFamilyPotentialReference.setHostFamily(this);
+
+		return hostFamilyPotentialReference;
+	}
+
+	public HostFamilyPotentialReference removeHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
+		getHostFamilyPotentialReferences().remove(hostFamilyPotentialReference);
+		hostFamilyPotentialReference.setHostFamily(null);
+
+		return hostFamilyPotentialReference;
 	}
 
 	public List<HostFamilySeason> getHostFamilySeasons() {
