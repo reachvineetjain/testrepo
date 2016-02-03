@@ -22,7 +22,7 @@ public class Employer implements Serializable {
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="employerGoId")
+	@JoinColumn(name="employerGoId",insertable=false,updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to EmployerPermission

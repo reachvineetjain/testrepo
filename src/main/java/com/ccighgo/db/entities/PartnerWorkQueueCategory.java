@@ -27,7 +27,7 @@ public class PartnerWorkQueueCategory implements Serializable {
 
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="partnerWQTypeId")
+	@JoinColumn(name="partnerWQTypeId",insertable=false,updatable=false)
 	private PartnerWorkQueueType partnerWorkQueueType;
 
 	//bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate

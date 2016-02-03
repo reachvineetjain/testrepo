@@ -38,12 +38,12 @@ public class PartnerNote implements Serializable {
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
+	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerNoteTopic
 	@ManyToOne
-	@JoinColumn(name="partnerNoteTopicId")
+	@JoinColumn(name="partnerNoteTopicId",insertable=false,updatable=false)
 	private PartnerNoteTopic partnerNoteTopic;
 
 	public PartnerNote() {

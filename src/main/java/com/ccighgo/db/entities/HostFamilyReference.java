@@ -92,12 +92,12 @@ public class HostFamilyReference implements Serializable {
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId")
+	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
 	private HostFamilySeason hostFamilySeason;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="usStatesId")
+	@JoinColumn(name="usStatesId",insertable=false,updatable=false)
 	private LookupUSState lookupUsstate;
 
 	public HostFamilyReference() {

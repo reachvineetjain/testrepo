@@ -19,17 +19,17 @@ public class StateTypeResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
-	@JoinColumn(name="resourcePermissionId")
+	@JoinColumn(name="resourcePermissionId",insertable=false,updatable=false)
 	private ResourcePermission resourcePermission;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="stateTypeId")
+	@JoinColumn(name="stateTypeId",insertable=false,updatable=false)
 	private StateType stateType;
 
 	public StateTypeResourcePermission() {

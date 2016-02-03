@@ -52,12 +52,12 @@ public class HostFamilyPhoto implements Serializable {
 
 	//bi-directional many-to-one association to HostFamilyPhotosType
 	@ManyToOne
-	@JoinColumn(name="hostFamilyPhotoTypeId")
+	@JoinColumn(name="hostFamilyPhotoTypeId",insertable=false,updatable=false)
 	private HostFamilyPhotosType hostFamilyPhotosType;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId")
+	@JoinColumn(name="hostFamilySeasonId",insertable=false,updatable=false)
 	private HostFamilySeason hostFamilySeason;
 
 	public HostFamilyPhoto() {

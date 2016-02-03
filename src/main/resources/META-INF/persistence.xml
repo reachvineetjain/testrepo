@@ -9,7 +9,6 @@
       <class>com.ccighgo.db.entities.PartnerWorkQueueTypeAggregate</class>
       <class>com.ccighgo.db.entities.PasswordHistory</class>
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
-      <class>com.ccighgo.db.entities.ProgramSeason</class>
       <class>com.ccighgo.db.entities.Region</class>
       <class>com.ccighgo.db.entities.RegionIHP</class>
       <class>com.ccighgo.db.entities.Relationship</class>

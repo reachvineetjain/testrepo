@@ -40,7 +40,7 @@ public class AddendumDocumentInformation implements Serializable {
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId")
+	@JoinColumn(name="documentInformationId",insertable=false,updatable=false)
 	private DocumentInformation documentInformation;
 
 	public AddendumDocumentInformation() {

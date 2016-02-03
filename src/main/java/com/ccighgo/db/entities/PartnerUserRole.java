@@ -22,7 +22,7 @@ public class PartnerUserRole implements Serializable {
 
 	//bi-directional many-to-one association to PartnerUser
 	@ManyToOne
-	@JoinColumn(name="partnerUserId")
+	@JoinColumn(name="partnerUserId",insertable=false,updatable=false)
 	private PartnerUser partnerUser;
 
 	public PartnerUserRole() {

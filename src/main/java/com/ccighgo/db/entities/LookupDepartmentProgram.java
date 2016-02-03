@@ -86,7 +86,7 @@ public class LookupDepartmentProgram implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId")
+	@JoinColumn(name="departmentId",insertable=false,updatable=false)
 	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to PartnerHelpOptionProgram

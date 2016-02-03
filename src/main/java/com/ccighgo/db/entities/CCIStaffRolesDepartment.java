@@ -34,12 +34,12 @@ public class CCIStaffRolesDepartment implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffRole
 	@ManyToOne
-	@JoinColumn(name="cciStaffRoleId")
+	@JoinColumn(name="cciStaffRoleId",insertable=false,updatable=false)
 	private CCIStaffRole ccistaffRole;
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId")
+	@JoinColumn(name="departmentId",insertable=false,updatable=false)
 	private LookupDepartment lookupDepartment;
 
 	public CCIStaffRolesDepartment() {

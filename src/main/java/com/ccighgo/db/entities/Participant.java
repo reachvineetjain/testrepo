@@ -56,37 +56,37 @@ public class Participant implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId")
+	@JoinColumn(name="departmentProgramOptionId",insertable=false,updatable=false)
 	private DepartmentProgramOption departmentProgramOption;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
+	@JoinColumn(name="departmentProgramId",insertable=false,updatable=false)
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="countryId")
+	@JoinColumn(name="countryId",insertable=false,updatable=false)
 	private LookupCountry lookupCountry;
 
 	//bi-directional many-to-one association to ParticipantStatus
 	@ManyToOne
-	@JoinColumn(name="participantStatusId")
+	@JoinColumn(name="participantStatusId",insertable=false,updatable=false)
 	private ParticipantStatus participantStatus;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
+	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
 	private Partner partner1;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="subPartnerId")
+	@JoinColumn(name="subPartnerId",insertable=false,updatable=false)
 	private Partner partner2;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId",insertable=false,updatable=false)
 	private Season season;
 
 	public Participant() {

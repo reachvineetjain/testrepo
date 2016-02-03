@@ -26,17 +26,17 @@ public class AdminWorkQueueTypeAggregate implements Serializable {
 
 	//bi-directional many-to-one association to AdminWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="adminWQTypeId")
+	@JoinColumn(name="adminWQTypeId",insertable=false,updatable=false)
 	private AdminWorkQueueType adminWorkQueueType;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="adminGoId")
+	@JoinColumn(name="adminGoId",insertable=false,updatable=false)
 	private CCIStaffUser ccistaffUser;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	public AdminWorkQueueTypeAggregate() {

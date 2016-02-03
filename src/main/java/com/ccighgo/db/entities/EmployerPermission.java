@@ -20,7 +20,7 @@ public class EmployerPermission implements Serializable {
 
 	//bi-directional many-to-one association to Employer
 	@ManyToOne
-	@JoinColumn(name="employerGoId")
+	@JoinColumn(name="employerGoId",insertable=false,updatable=false)
 	private Employer employer;
 
 	public EmployerPermission() {

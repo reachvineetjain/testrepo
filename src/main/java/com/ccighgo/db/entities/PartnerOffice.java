@@ -49,17 +49,17 @@ public class PartnerOffice implements Serializable {
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="countryId")
+	@JoinColumn(name="countryId",insertable=false,updatable=false)
 	private LookupCountry lookupCountry;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
+	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerOfficeType
 	@ManyToOne
-	@JoinColumn(name="partnerOfficeTypeId")
+	@JoinColumn(name="partnerOfficeTypeId",insertable=false,updatable=false)
 	private PartnerOfficeType partnerOfficeType;
 
 	//bi-directional many-to-one association to PartnerUser

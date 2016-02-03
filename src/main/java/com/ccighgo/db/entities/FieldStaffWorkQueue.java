@@ -27,37 +27,37 @@ public class FieldStaffWorkQueue implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
+	@JoinColumn(name="departmentProgramId",insertable=false,updatable=false)
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to FieldStaff
 	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
+	@JoinColumn(name="fieldStaffGoId",insertable=false,updatable=false)
 	private FieldStaff fieldStaff;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueCategory
 	@ManyToOne
-	@JoinColumn(name="fieldStaffWQCategoryId")
+	@JoinColumn(name="fieldStaffWQCategoryId",insertable=false,updatable=false)
 	private FieldStaffWorkQueueCategory fieldStaffWorkQueueCategory;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="fieldStaffWQTypeId")
+	@JoinColumn(name="fieldStaffWQTypeId",insertable=false,updatable=false)
 	private FieldStaffWorkQueueType fieldStaffWorkQueueType;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId",insertable=false,updatable=false)
 	private Season season;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="stateTypeId")
+	@JoinColumn(name="stateTypeId",insertable=false,updatable=false)
 	private StateType stateType;
 
 	public FieldStaffWorkQueue() {

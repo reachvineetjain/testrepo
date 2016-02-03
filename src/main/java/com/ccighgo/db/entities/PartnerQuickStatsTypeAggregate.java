@@ -26,17 +26,17 @@ public class PartnerQuickStatsTypeAggregate implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
+	@JoinColumn(name="lookupDepartmentProgramId",insertable=false,updatable=false)
 	private LookupDepartmentProgram lookupDepartmentProgram;
 
 	//bi-directional many-to-one association to Partner
 	@ManyToOne
-	@JoinColumn(name="partnerGoId")
+	@JoinColumn(name="partnerGoId",insertable=false,updatable=false)
 	private Partner partner;
 
 	//bi-directional many-to-one association to PartnerQuickStatsType
 	@ManyToOne
-	@JoinColumn(name="partnerQSTypeId")
+	@JoinColumn(name="partnerQSTypeId",insertable=false,updatable=false)
 	private PartnerQuickStatsType partnerQuickStatsType;
 
 	public PartnerQuickStatsTypeAggregate() {

@@ -88,27 +88,27 @@ public class HostFamily implements Serializable {
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="hostFamilyGoId")
+	@JoinColumn(name="hostFamilyGoId",insertable=false,updatable=false)
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to HostFamilyStatus
 	@ManyToOne
-	@JoinColumn(name="hostFamilyStatusId")
+	@JoinColumn(name="hostFamilyStatusId",insertable=false,updatable=false)
 	private HostFamilyStatus hostFamilyStatus;
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="physicalStateId")
+	@JoinColumn(name="physicalStateId",insertable=false,updatable=false)
 	private LookupCountry lookupCountry;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="mailingStateId")
+	@JoinColumn(name="mailingStateId",insertable=false,updatable=false)
 	private LookupUSState lookupUsstate1;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="physicalStateId")
+	@JoinColumn(name="physicalStateId",insertable=false,updatable=false)
 	private LookupUSState lookupUsstate2;
 
 	//bi-directional many-to-one association to HostFamilyAirport

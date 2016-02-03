@@ -26,12 +26,12 @@ public class DocumentTypeDocumentCategoryProcess implements Serializable {
 
 	//bi-directional many-to-one association to DocumentCategoryProcess
 	@ManyToOne
-	@JoinColumn(name="documentCategoryProcessId")
+	@JoinColumn(name="documentCategoryProcessId",insertable=false,updatable=false)
 	private DocumentCategoryProcess documentCategoryProcess;
 
 	//bi-directional many-to-one association to DocumentType
 	@ManyToOne
-	@JoinColumn(name="documentTypeId")
+	@JoinColumn(name="documentTypeId",insertable=false,updatable=false)
 	private DocumentType documentType;
 
 	public DocumentTypeDocumentCategoryProcess() {

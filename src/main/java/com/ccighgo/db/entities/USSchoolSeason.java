@@ -29,12 +29,12 @@ public class USSchoolSeason implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId",insertable=false,updatable=false)
 	private Season season;
 
 	//bi-directional many-to-one association to USSchool
 	@ManyToOne
-	@JoinColumn(name="usSchoolId")
+	@JoinColumn(name="usSchoolId",insertable=false,updatable=false)
 	private USSchool usschool;
 
 	public USSchoolSeason() {
