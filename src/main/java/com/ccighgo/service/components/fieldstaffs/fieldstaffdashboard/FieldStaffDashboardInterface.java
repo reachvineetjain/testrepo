@@ -2,6 +2,7 @@ package com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard;
 
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
+import com.ccighgo.service.transport.common.response.beans.Response;
 
 
 /**

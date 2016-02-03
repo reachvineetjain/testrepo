@@ -2,6 +2,8 @@ package com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,6 +31,7 @@ import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdD
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardCategorieDetails;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardType;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardTypes;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.utils.CCIConstants;
 
 @Component
@@ -79,15 +82,6 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                }
                erdDashboardTypes.getTypes().add(t);
             }
-         ErdDashboardAccount acc = new ErdDashboardAccount();
-         FieldStaff fs = fieldStaffRepository.findOne(Integer.valueOf(fieldStaffGoId));
-         Login login = loginRepository.findByGoId(fs.getGoIdSequence());
-         acc.setFirstName(fs.getFirstName());
-         acc.setLastName(fs.getLastName());
-         acc.setEmail(login.getEmail());
-         acc.setGoId(fieldStaffGoId);
-         acc.setFieldStaffType(fs.getFieldStaffType().getFieldStaffTypeCode());
-         erdDashboard.setAccount(acc);
          erdDashboard.setErdDashboardTypes(erdDashboardTypes);
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
