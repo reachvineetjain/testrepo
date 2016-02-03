@@ -10,24 +10,21 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="PartnerStatus")
 @NamedQuery(name="PartnerStatus.findAll", query="SELECT p FROM PartnerStatus p")
 public class PartnerStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerStatusId;
 
 	private Byte active;
 
-	@Column(length=50)
-	private String partnerStatusName;
-	
 	private Byte isLeadStatus;
-	
+
 	private Byte isSeasonStatus;
+
+	private String partnerStatusName;
 
 	//bi-directional many-to-one association to PartnerReviewStatus
 	@OneToMany(mappedBy="partnerStatus1")
@@ -72,6 +69,22 @@ public class PartnerStatus implements Serializable {
 		this.active = active;
 	}
 
+	public Byte getIsLeadStatus() {
+		return this.isLeadStatus;
+	}
+
+	public void setIsLeadStatus(Byte isLeadStatus) {
+		this.isLeadStatus = isLeadStatus;
+	}
+
+	public Byte getIsSeasonStatus() {
+		return this.isSeasonStatus;
+	}
+
+	public void setIsSeasonStatus(Byte isSeasonStatus) {
+		this.isSeasonStatus = isSeasonStatus;
+	}
+
 	public String getPartnerStatusName() {
 		return this.partnerStatusName;
 	}
@@ -80,23 +93,7 @@ public class PartnerStatus implements Serializable {
 		this.partnerStatusName = partnerStatusName;
 	}
 
-	public Byte getIsLeadStatus() {
-      return isLeadStatus;
-   }
-
-   public void setIsLeadStatus(Byte isLeadStatus) {
-      this.isLeadStatus = isLeadStatus;
-   }
-
-   public Byte getIsSeasonStatus() {
-      return isSeasonStatus;
-   }
-
-   public void setIsSeasonStatus(Byte isSeasonStatus) {
-      this.isSeasonStatus = isSeasonStatus;
-   }
-
-   public List<PartnerReviewStatus> getPartnerReviewStatuses1() {
+	public List<PartnerReviewStatus> getPartnerReviewStatuses1() {
 		return this.partnerReviewStatuses1;
 	}
 

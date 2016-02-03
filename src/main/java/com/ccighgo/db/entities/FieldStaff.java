@@ -12,15 +12,13 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="FieldStaff")
 @NamedQuery(name="FieldStaff.findAll", query="SELECT f FROM FieldStaff f")
 public class FieldStaff implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int fieldStaffGoId;
+	private Integer fieldStaffGoId;
 
 	private Byte agreementNoticeSent;
 
@@ -39,7 +37,12 @@ public class FieldStaff implements Serializable {
 
 	private Integer backgroundCheckPassed;
 
-	@Column(length=50)
+	private Byte bestNumberCell;
+
+	private Byte bestNumberHome;
+
+	private Byte bestNumberWork;
+
 	private String bestTimeToCall;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -47,7 +50,6 @@ public class FieldStaff implements Serializable {
 
 	private Byte canPresentGrantPax;
 
-	@Column(length=25)
 	private String cellPhone;
 
 	private Integer childServicesContact;
@@ -70,13 +72,10 @@ public class FieldStaff implements Serializable {
 	@Lob
 	private String crimeDetails;
 
-	@Column(length=100)
 	private String currentAddress1;
 
-	@Column(length=100)
 	private String currentAddress2;
 
-	@Column(length=100)
 	private String currentCity;
 
 	private Byte currentCommunityVolunteer;
@@ -86,7 +85,6 @@ public class FieldStaff implements Serializable {
 
 	private Integer currentSeasonId;
 
-	@Column(length=25)
 	private String currentZipCode;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -95,17 +93,14 @@ public class FieldStaff implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateW9FormReceived;
 
-	@Column(length=25)
 	private String emergencyPhone;
 
 	private Integer ERDId;
 
-	@Column(length=25)
 	private String fax;
 
 	private Integer fieldStaffWillingToHostId;
 
-	@Column(length=50)
 	private String firstName;
 
 	private Integer hasBeenARBefore;
@@ -127,19 +122,14 @@ public class FieldStaff implements Serializable {
 
 	private Byte isDoNotContact;
 
-	@Column(length=50)
 	private String lastName;
 
-	@Column(length=100)
 	private String mailingAddress1;
 
-	@Column(length=100)
 	private String mailingAddress2;
 
-	@Column(length=100)
 	private String mailingCity;
 
-	@Column(length=25)
 	private String mailingZipCode;
 
 	private Integer modifiedBy;
@@ -158,10 +148,8 @@ public class FieldStaff implements Serializable {
 	@Lob
 	private String pastHostingOverview;
 
-	@Column(length=25)
 	private String phone;
 
-	@Column(length=300)
 	private String photo;
 
 	private Integer RDId;
@@ -180,7 +168,6 @@ public class FieldStaff implements Serializable {
 	@Lob
 	private String selfDescription;
 
-	@Column(length=15)
 	private String ssNumber;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -189,7 +176,6 @@ public class FieldStaff implements Serializable {
 	@Lob
 	private String teenagerExperienceDetails;
 
-	@Column(length=25)
 	private String tollFreePhone;
 
 	private Integer totalPlacementsAuto;
@@ -201,10 +187,8 @@ public class FieldStaff implements Serializable {
 
 	private Integer voLastSlideViewed;
 
-	@Column(length=50)
 	private String whereToCall;
 
-	@Column(length=25)
 	private String workPhone;
 
 	//bi-directional many-to-one association to CCIStaffUser
@@ -224,7 +208,7 @@ public class FieldStaff implements Serializable {
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="fieldStaffGoId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="fieldStaffGoId")
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LookupGender
@@ -246,6 +230,10 @@ public class FieldStaff implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="salutationId")
 	private Salutation salutation;
+
+	//bi-directional many-to-one association to FieldStaffAnnouncement
+	@OneToMany(mappedBy="fieldStaff")
+	private List<FieldStaffAnnouncement> fieldStaffAnnouncements;
 
 	//bi-directional many-to-one association to FieldStaffDocument
 	@OneToMany(mappedBy="fieldStaff")
@@ -322,11 +310,11 @@ public class FieldStaff implements Serializable {
 	public FieldStaff() {
 	}
 
-	public int getFieldStaffGoId() {
+	public Integer getFieldStaffGoId() {
 		return this.fieldStaffGoId;
 	}
 
-	public void setFieldStaffGoId(int fieldStaffGoId) {
+	public void setFieldStaffGoId(Integer fieldStaffGoId) {
 		this.fieldStaffGoId = fieldStaffGoId;
 	}
 
@@ -384,6 +372,30 @@ public class FieldStaff implements Serializable {
 
 	public void setBackgroundCheckPassed(Integer backgroundCheckPassed) {
 		this.backgroundCheckPassed = backgroundCheckPassed;
+	}
+
+	public Byte getBestNumberCell() {
+		return this.bestNumberCell;
+	}
+
+	public void setBestNumberCell(Byte bestNumberCell) {
+		this.bestNumberCell = bestNumberCell;
+	}
+
+	public Byte getBestNumberHome() {
+		return this.bestNumberHome;
+	}
+
+	public void setBestNumberHome(Byte bestNumberHome) {
+		this.bestNumberHome = bestNumberHome;
+	}
+
+	public Byte getBestNumberWork() {
+		return this.bestNumberWork;
+	}
+
+	public void setBestNumberWork(Byte bestNumberWork) {
+		this.bestNumberWork = bestNumberWork;
 	}
 
 	public String getBestTimeToCall() {
@@ -968,6 +980,28 @@ public class FieldStaff implements Serializable {
 
 	public void setSalutation(Salutation salutation) {
 		this.salutation = salutation;
+	}
+
+	public List<FieldStaffAnnouncement> getFieldStaffAnnouncements() {
+		return this.fieldStaffAnnouncements;
+	}
+
+	public void setFieldStaffAnnouncements(List<FieldStaffAnnouncement> fieldStaffAnnouncements) {
+		this.fieldStaffAnnouncements = fieldStaffAnnouncements;
+	}
+
+	public FieldStaffAnnouncement addFieldStaffAnnouncement(FieldStaffAnnouncement fieldStaffAnnouncement) {
+		getFieldStaffAnnouncements().add(fieldStaffAnnouncement);
+		fieldStaffAnnouncement.setFieldStaff(this);
+
+		return fieldStaffAnnouncement;
+	}
+
+	public FieldStaffAnnouncement removeFieldStaffAnnouncement(FieldStaffAnnouncement fieldStaffAnnouncement) {
+		getFieldStaffAnnouncements().remove(fieldStaffAnnouncement);
+		fieldStaffAnnouncement.setFieldStaff(null);
+
+		return fieldStaffAnnouncement;
 	}
 
 	public List<FieldStaffDocument> getFieldStaffDocuments() {

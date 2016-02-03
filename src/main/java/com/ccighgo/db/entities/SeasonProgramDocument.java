@@ -10,42 +10,37 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="SeasonProgramDocument")
 @NamedQuery(name="SeasonProgramDocument.findAll", query="SELECT s FROM SeasonProgramDocument s")
 public class SeasonProgramDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer seasonProgramDocumentId;
 
 	private Byte active;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId", nullable=false)
+	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId", nullable=false)
+	@JoinColumn(name="documentInformationId")
 	private DocumentInformation documentInformation;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	public SeasonProgramDocument() {

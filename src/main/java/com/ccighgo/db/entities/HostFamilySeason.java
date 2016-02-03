@@ -11,19 +11,19 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="HostFamilySeason")
 @NamedQuery(name="HostFamilySeason.findAll", query="SELECT h FROM HostFamilySeason h")
 public class HostFamilySeason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilySeasonId;
 
 	private Byte active;
 
 	private Byte agreeToTerms;
+
+	private Integer applicationApprovedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date applicationApprovedDate;
@@ -40,16 +40,16 @@ public class HostFamilySeason implements Serializable {
 
 	private Byte hasNoChildren;
 
-	@Column(length=100)
 	private String hostRecommendationsName;
 
-	@Column(length=100)
 	private String hostRecommendationsPhone;
 
 	private Byte isDoublePlacement;
 
 	@Lob
 	private String learnAboutCCIMethod;
+
+	private Integer localCoordinatorId;
 
 	@Lob
 	private String localNewspaperName;
@@ -68,12 +68,15 @@ public class HostFamilySeason implements Serializable {
 	@Lob
 	private String rejectionReason;
 
-	@Column(length=100)
 	private String signature;
 
 	//bi-directional many-to-one association to HostFamilyCommunity
 	@OneToMany(mappedBy="hostFamilySeason")
 	private List<HostFamilyCommunity> hostFamilyCommunities;
+
+	//bi-directional many-to-one association to HostFamilyContactHistory
+	@OneToMany(mappedBy="hostFamilySeason")
+	private List<HostFamilyContactHistory> hostFamilyContactHistories;
 
 	//bi-directional many-to-one association to HostFamilyDetail
 	@OneToMany(mappedBy="hostFamilySeason")
@@ -82,10 +85,6 @@ public class HostFamilySeason implements Serializable {
 	//bi-directional many-to-one association to HostFamilyDocument
 	@OneToMany(mappedBy="hostFamilySeason")
 	private List<HostFamilyDocument> hostFamilyDocuments;
-
-	//bi-directional many-to-one association to HostFamilyEmployment
-	@OneToMany(mappedBy="hostFamilySeason")
-	private List<HostFamilyEmployment> hostFamilyEmployments;
 
 	//bi-directional many-to-one association to HostFamilyHome
 	@OneToMany(mappedBy="hostFamilySeason")
@@ -99,6 +98,10 @@ public class HostFamilySeason implements Serializable {
 	@OneToMany(mappedBy="hostFamilySeason")
 	private List<HostFamilyMember> hostFamilyMembers;
 
+	//bi-directional many-to-one association to HostFamilyMileageCheck
+	@OneToMany(mappedBy="hostFamilySeason")
+	private List<HostFamilyMileageCheck> hostFamilyMileageChecks;
+
 	//bi-directional many-to-one association to HostFamilyParticipant
 	@OneToMany(mappedBy="hostFamilySeason")
 	private List<HostFamilyParticipant> hostFamilyParticipants;
@@ -106,6 +109,10 @@ public class HostFamilySeason implements Serializable {
 	//bi-directional many-to-one association to HostFamilyParticipantHistory
 	@OneToMany(mappedBy="hostFamilySeason")
 	private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
+
+	//bi-directional many-to-one association to HostFamilyPet
+	@OneToMany(mappedBy="hostFamilySeason")
+	private List<HostFamilyPet> hostFamilyPets;
 
 	//bi-directional many-to-one association to HostFamilyPhoto
 	@OneToMany(mappedBy="hostFamilySeason")
@@ -169,6 +176,14 @@ public class HostFamilySeason implements Serializable {
 
 	public void setAgreeToTerms(Byte agreeToTerms) {
 		this.agreeToTerms = agreeToTerms;
+	}
+
+	public Integer getApplicationApprovedBy() {
+		return this.applicationApprovedBy;
+	}
+
+	public void setApplicationApprovedBy(Integer applicationApprovedBy) {
+		this.applicationApprovedBy = applicationApprovedBy;
 	}
 
 	public Date getApplicationApprovedDate() {
@@ -249,6 +264,14 @@ public class HostFamilySeason implements Serializable {
 
 	public void setLearnAboutCCIMethod(String learnAboutCCIMethod) {
 		this.learnAboutCCIMethod = learnAboutCCIMethod;
+	}
+
+	public Integer getLocalCoordinatorId() {
+		return this.localCoordinatorId;
+	}
+
+	public void setLocalCoordinatorId(Integer localCoordinatorId) {
+		this.localCoordinatorId = localCoordinatorId;
 	}
 
 	public String getLocalNewspaperName() {
@@ -337,6 +360,28 @@ public class HostFamilySeason implements Serializable {
 		return hostFamilyCommunity;
 	}
 
+	public List<HostFamilyContactHistory> getHostFamilyContactHistories() {
+		return this.hostFamilyContactHistories;
+	}
+
+	public void setHostFamilyContactHistories(List<HostFamilyContactHistory> hostFamilyContactHistories) {
+		this.hostFamilyContactHistories = hostFamilyContactHistories;
+	}
+
+	public HostFamilyContactHistory addHostFamilyContactHistory(HostFamilyContactHistory hostFamilyContactHistory) {
+		getHostFamilyContactHistories().add(hostFamilyContactHistory);
+		hostFamilyContactHistory.setHostFamilySeason(this);
+
+		return hostFamilyContactHistory;
+	}
+
+	public HostFamilyContactHistory removeHostFamilyContactHistory(HostFamilyContactHistory hostFamilyContactHistory) {
+		getHostFamilyContactHistories().remove(hostFamilyContactHistory);
+		hostFamilyContactHistory.setHostFamilySeason(null);
+
+		return hostFamilyContactHistory;
+	}
+
 	public List<HostFamilyDetail> getHostFamilyDetails() {
 		return this.hostFamilyDetails;
 	}
@@ -379,28 +424,6 @@ public class HostFamilySeason implements Serializable {
 		hostFamilyDocument.setHostFamilySeason(null);
 
 		return hostFamilyDocument;
-	}
-
-	public List<HostFamilyEmployment> getHostFamilyEmployments() {
-		return this.hostFamilyEmployments;
-	}
-
-	public void setHostFamilyEmployments(List<HostFamilyEmployment> hostFamilyEmployments) {
-		this.hostFamilyEmployments = hostFamilyEmployments;
-	}
-
-	public HostFamilyEmployment addHostFamilyEmployment(HostFamilyEmployment hostFamilyEmployment) {
-		getHostFamilyEmployments().add(hostFamilyEmployment);
-		hostFamilyEmployment.setHostFamilySeason(this);
-
-		return hostFamilyEmployment;
-	}
-
-	public HostFamilyEmployment removeHostFamilyEmployment(HostFamilyEmployment hostFamilyEmployment) {
-		getHostFamilyEmployments().remove(hostFamilyEmployment);
-		hostFamilyEmployment.setHostFamilySeason(null);
-
-		return hostFamilyEmployment;
 	}
 
 	public List<HostFamilyHome> getHostFamilyHomes() {
@@ -469,6 +492,28 @@ public class HostFamilySeason implements Serializable {
 		return hostFamilyMember;
 	}
 
+	public List<HostFamilyMileageCheck> getHostFamilyMileageChecks() {
+		return this.hostFamilyMileageChecks;
+	}
+
+	public void setHostFamilyMileageChecks(List<HostFamilyMileageCheck> hostFamilyMileageChecks) {
+		this.hostFamilyMileageChecks = hostFamilyMileageChecks;
+	}
+
+	public HostFamilyMileageCheck addHostFamilyMileageCheck(HostFamilyMileageCheck hostFamilyMileageCheck) {
+		getHostFamilyMileageChecks().add(hostFamilyMileageCheck);
+		hostFamilyMileageCheck.setHostFamilySeason(this);
+
+		return hostFamilyMileageCheck;
+	}
+
+	public HostFamilyMileageCheck removeHostFamilyMileageCheck(HostFamilyMileageCheck hostFamilyMileageCheck) {
+		getHostFamilyMileageChecks().remove(hostFamilyMileageCheck);
+		hostFamilyMileageCheck.setHostFamilySeason(null);
+
+		return hostFamilyMileageCheck;
+	}
+
 	public List<HostFamilyParticipant> getHostFamilyParticipants() {
 		return this.hostFamilyParticipants;
 	}
@@ -511,6 +556,28 @@ public class HostFamilySeason implements Serializable {
 		hostFamilyParticipantHistory.setHostFamilySeason(null);
 
 		return hostFamilyParticipantHistory;
+	}
+
+	public List<HostFamilyPet> getHostFamilyPets() {
+		return this.hostFamilyPets;
+	}
+
+	public void setHostFamilyPets(List<HostFamilyPet> hostFamilyPets) {
+		this.hostFamilyPets = hostFamilyPets;
+	}
+
+	public HostFamilyPet addHostFamilyPet(HostFamilyPet hostFamilyPet) {
+		getHostFamilyPets().add(hostFamilyPet);
+		hostFamilyPet.setHostFamilySeason(this);
+
+		return hostFamilyPet;
+	}
+
+	public HostFamilyPet removeHostFamilyPet(HostFamilyPet hostFamilyPet) {
+		getHostFamilyPets().remove(hostFamilyPet);
+		hostFamilyPet.setHostFamilySeason(null);
+
+		return hostFamilyPet;
 	}
 
 	public List<HostFamilyPhoto> getHostFamilyPhotos() {

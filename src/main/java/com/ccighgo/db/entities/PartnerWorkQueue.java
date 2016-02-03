@@ -10,14 +10,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="PartnerWorkQueue")
 @NamedQuery(name="PartnerWorkQueue.findAll", query="SELECT p FROM PartnerWorkQueue p")
 public class PartnerWorkQueue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerWQId;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -26,9 +24,8 @@ public class PartnerWorkQueue implements Serializable {
 	@Lob
 	private String queueData;
 
-	private int targetGoId;
+	private Integer targetGoId;
 
-	@Column(length=45)
 	private String targetRoleType;
 
 	//bi-directional many-to-one association to DepartmentProgram
@@ -93,11 +90,11 @@ public class PartnerWorkQueue implements Serializable {
 		this.queueData = queueData;
 	}
 
-	public int getTargetGoId() {
+	public Integer getTargetGoId() {
 		return this.targetGoId;
 	}
 
-	public void setTargetGoId(int targetGoId) {
+	public void setTargetGoId(Integer targetGoId) {
 		this.targetGoId = targetGoId;
 	}
 

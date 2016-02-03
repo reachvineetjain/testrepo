@@ -9,26 +9,20 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="PasswordHistory")
 @NamedQuery(name="PasswordHistory.findAll", query="SELECT p FROM PasswordHistory p")
 public class PasswordHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer passwordHistoryId;
 
-	@Column(length=40)
 	private String password1;
 
-	@Column(length=40)
 	private String password2;
 
-	@Column(length=40)
 	private String password3;
 
-	@Column(length=40)
 	private String password4;
 
 	//bi-directional many-to-one association to Login

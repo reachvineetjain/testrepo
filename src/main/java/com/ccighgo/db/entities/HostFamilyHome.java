@@ -10,14 +10,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="HostFamilyHome")
 @NamedQuery(name="HostFamilyHome.findAll", query="SELECT h FROM HostFamilyHome h")
 public class HostFamilyHome implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyHomeId;
 
 	private Byte active;
@@ -25,11 +23,6 @@ public class HostFamilyHome implements Serializable {
 	@Lob
 	private String amenities;
 
-	private Integer birdCount;
-
-	private Integer catCount;
-
-	@Column(length=50)
 	private String confirmStudentAdditionalAmenities;
 
 	private Integer createdBy;
@@ -37,7 +30,9 @@ public class HostFamilyHome implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
 
-	private Integer dogCount;
+	private Byte exitBasement;
+
+	private Byte exitOutOfBasement;
 
 	@Lob
 	private String expectedResponsibilities;
@@ -45,17 +40,14 @@ public class HostFamilyHome implements Serializable {
 	@Lob
 	private String extraActivities;
 
-	private Byte hasComputer;
-
-	private Byte hasPiano;
+	@Lob
+	private String extraFacilities;
 
 	@Lob
 	private String homeDescription;
 
-	@Column(length=30)
 	private String homeLocation;
 
-	@Column(length=30)
 	private String homeType;
 
 	@Lob
@@ -69,12 +61,12 @@ public class HostFamilyHome implements Serializable {
 	@Lob
 	private String hostingReason;
 
-	@Column(length=25)
 	private String houseHoldActivity;
+
+	private Byte isLocalCordinator;
 
 	private Byte isStudentsRoomBasement;
 
-	@Column(length=100)
 	private String languageSpoken;
 
 	private Integer localCoordinatorCCI;
@@ -89,25 +81,23 @@ public class HostFamilyHome implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
 
-	private Integer otherAnimalCount;
+	private String otherTypeOfBusiness;
 
-	@Column(length=100)
-	private String otherAnimalText;
-
-	@Column(length=30)
-	private String petLocation;
-
-	private Integer rabbitCount;
-
-	private Integer reptileCount;
+	private Byte residenceSiteFunctioningBusiness;
 
 	private Byte sharesBedroom;
 
-	@Column(length=100)
 	private String sharesBedroomWith;
 
-	@Column(length=50)
+	private Integer sharingAge;
+
+	private Integer sharingBedroomGenderId;
+
+	private String sharingOther;
+
 	private String specialFeaturesInHome;
+
+	private String specifyTypeOfBusiness;
 
 	@Lob
 	private String studentHomeNeighbourhood;
@@ -147,22 +137,6 @@ public class HostFamilyHome implements Serializable {
 		this.amenities = amenities;
 	}
 
-	public Integer getBirdCount() {
-		return this.birdCount;
-	}
-
-	public void setBirdCount(Integer birdCount) {
-		this.birdCount = birdCount;
-	}
-
-	public Integer getCatCount() {
-		return this.catCount;
-	}
-
-	public void setCatCount(Integer catCount) {
-		this.catCount = catCount;
-	}
-
 	public String getConfirmStudentAdditionalAmenities() {
 		return this.confirmStudentAdditionalAmenities;
 	}
@@ -187,12 +161,20 @@ public class HostFamilyHome implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Integer getDogCount() {
-		return this.dogCount;
+	public Byte getExitBasement() {
+		return this.exitBasement;
 	}
 
-	public void setDogCount(Integer dogCount) {
-		this.dogCount = dogCount;
+	public void setExitBasement(Byte exitBasement) {
+		this.exitBasement = exitBasement;
+	}
+
+	public Byte getExitOutOfBasement() {
+		return this.exitOutOfBasement;
+	}
+
+	public void setExitOutOfBasement(Byte exitOutOfBasement) {
+		this.exitOutOfBasement = exitOutOfBasement;
 	}
 
 	public String getExpectedResponsibilities() {
@@ -211,20 +193,12 @@ public class HostFamilyHome implements Serializable {
 		this.extraActivities = extraActivities;
 	}
 
-	public Byte getHasComputer() {
-		return this.hasComputer;
+	public String getExtraFacilities() {
+		return this.extraFacilities;
 	}
 
-	public void setHasComputer(Byte hasComputer) {
-		this.hasComputer = hasComputer;
-	}
-
-	public Byte getHasPiano() {
-		return this.hasPiano;
-	}
-
-	public void setHasPiano(Byte hasPiano) {
-		this.hasPiano = hasPiano;
+	public void setExtraFacilities(String extraFacilities) {
+		this.extraFacilities = extraFacilities;
 	}
 
 	public String getHomeDescription() {
@@ -291,6 +265,14 @@ public class HostFamilyHome implements Serializable {
 		this.houseHoldActivity = houseHoldActivity;
 	}
 
+	public Byte getIsLocalCordinator() {
+		return this.isLocalCordinator;
+	}
+
+	public void setIsLocalCordinator(Byte isLocalCordinator) {
+		this.isLocalCordinator = isLocalCordinator;
+	}
+
 	public Byte getIsStudentsRoomBasement() {
 		return this.isStudentsRoomBasement;
 	}
@@ -347,44 +329,20 @@ public class HostFamilyHome implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Integer getOtherAnimalCount() {
-		return this.otherAnimalCount;
+	public String getOtherTypeOfBusiness() {
+		return this.otherTypeOfBusiness;
 	}
 
-	public void setOtherAnimalCount(Integer otherAnimalCount) {
-		this.otherAnimalCount = otherAnimalCount;
+	public void setOtherTypeOfBusiness(String otherTypeOfBusiness) {
+		this.otherTypeOfBusiness = otherTypeOfBusiness;
 	}
 
-	public String getOtherAnimalText() {
-		return this.otherAnimalText;
+	public Byte getResidenceSiteFunctioningBusiness() {
+		return this.residenceSiteFunctioningBusiness;
 	}
 
-	public void setOtherAnimalText(String otherAnimalText) {
-		this.otherAnimalText = otherAnimalText;
-	}
-
-	public String getPetLocation() {
-		return this.petLocation;
-	}
-
-	public void setPetLocation(String petLocation) {
-		this.petLocation = petLocation;
-	}
-
-	public Integer getRabbitCount() {
-		return this.rabbitCount;
-	}
-
-	public void setRabbitCount(Integer rabbitCount) {
-		this.rabbitCount = rabbitCount;
-	}
-
-	public Integer getReptileCount() {
-		return this.reptileCount;
-	}
-
-	public void setReptileCount(Integer reptileCount) {
-		this.reptileCount = reptileCount;
+	public void setResidenceSiteFunctioningBusiness(Byte residenceSiteFunctioningBusiness) {
+		this.residenceSiteFunctioningBusiness = residenceSiteFunctioningBusiness;
 	}
 
 	public Byte getSharesBedroom() {
@@ -403,12 +361,44 @@ public class HostFamilyHome implements Serializable {
 		this.sharesBedroomWith = sharesBedroomWith;
 	}
 
+	public Integer getSharingAge() {
+		return this.sharingAge;
+	}
+
+	public void setSharingAge(Integer sharingAge) {
+		this.sharingAge = sharingAge;
+	}
+
+	public Integer getSharingBedroomGenderId() {
+		return this.sharingBedroomGenderId;
+	}
+
+	public void setSharingBedroomGenderId(Integer sharingBedroomGenderId) {
+		this.sharingBedroomGenderId = sharingBedroomGenderId;
+	}
+
+	public String getSharingOther() {
+		return this.sharingOther;
+	}
+
+	public void setSharingOther(String sharingOther) {
+		this.sharingOther = sharingOther;
+	}
+
 	public String getSpecialFeaturesInHome() {
 		return this.specialFeaturesInHome;
 	}
 
 	public void setSpecialFeaturesInHome(String specialFeaturesInHome) {
 		this.specialFeaturesInHome = specialFeaturesInHome;
+	}
+
+	public String getSpecifyTypeOfBusiness() {
+		return this.specifyTypeOfBusiness;
+	}
+
+	public void setSpecifyTypeOfBusiness(String specifyTypeOfBusiness) {
+		this.specifyTypeOfBusiness = specifyTypeOfBusiness;
 	}
 
 	public String getStudentHomeNeighbourhood() {

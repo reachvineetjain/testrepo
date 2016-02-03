@@ -10,14 +10,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="HostFamilyMember")
 @NamedQuery(name="HostFamilyMember.findAll", query="SELECT h FROM HostFamilyMember h")
 public class HostFamilyMember implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyMemberId;
 
 	private Byte active;
@@ -27,7 +25,6 @@ public class HostFamilyMember implements Serializable {
 
 	private Byte backGroundCheckPassed;
 
-	@Column(length=200)
 	private String backGroundCheckReportUrl;
 
 	private Byte backGroundCheckSubmitted;
@@ -38,18 +35,17 @@ public class HostFamilyMember implements Serializable {
 	@Lob
 	private String communityInvolvement;
 
+	private String contactName;
+
 	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
 
-	@Column(length=50)
 	private String educationLevel;
 
-	@Column(length=100)
-	private String employment;
+	private Byte employed;
 
-	@Column(length=50)
 	private String firstName;
 
 	@Lob
@@ -57,10 +53,12 @@ public class HostFamilyMember implements Serializable {
 
 	private Byte isFamilyChild;
 
-	@Column(length=100)
 	private String isHostParent;
 
-	@Column(length=50)
+	private Byte isSingleAdult;
+
+	private String jobTitle;
+
 	private String lastName;
 
 	private Byte livingAtHome;
@@ -70,12 +68,10 @@ public class HostFamilyMember implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
 
+	private String phone;
+
 	private Byte reasonForRejection;
 
-	@Column(length=100)
-	private String relationship;
-
-	@Column(length=20)
 	private String residencyTime;
 
 	//bi-directional many-to-one association to HostFamilySeason
@@ -87,6 +83,11 @@ public class HostFamilyMember implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
+
+	//bi-directional many-to-one association to Relationship
+	@ManyToOne
+	@JoinColumn(name="relationshipId")
+	private Relationship relationship;
 
 	public HostFamilyMember() {
 	}
@@ -155,6 +156,14 @@ public class HostFamilyMember implements Serializable {
 		this.communityInvolvement = communityInvolvement;
 	}
 
+	public String getContactName() {
+		return this.contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
 	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
@@ -179,12 +188,12 @@ public class HostFamilyMember implements Serializable {
 		this.educationLevel = educationLevel;
 	}
 
-	public String getEmployment() {
-		return this.employment;
+	public Byte getEmployed() {
+		return this.employed;
 	}
 
-	public void setEmployment(String employment) {
-		this.employment = employment;
+	public void setEmployed(Byte employed) {
+		this.employed = employed;
 	}
 
 	public String getFirstName() {
@@ -219,6 +228,22 @@ public class HostFamilyMember implements Serializable {
 		this.isHostParent = isHostParent;
 	}
 
+	public Byte getIsSingleAdult() {
+		return this.isSingleAdult;
+	}
+
+	public void setIsSingleAdult(Byte isSingleAdult) {
+		this.isSingleAdult = isSingleAdult;
+	}
+
+	public String getJobTitle() {
+		return this.jobTitle;
+	}
+
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -251,20 +276,20 @@ public class HostFamilyMember implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public Byte getReasonForRejection() {
 		return this.reasonForRejection;
 	}
 
 	public void setReasonForRejection(Byte reasonForRejection) {
 		this.reasonForRejection = reasonForRejection;
-	}
-
-	public String getRelationship() {
-		return this.relationship;
-	}
-
-	public void setRelationship(String relationship) {
-		this.relationship = relationship;
 	}
 
 	public String getResidencyTime() {
@@ -289,6 +314,14 @@ public class HostFamilyMember implements Serializable {
 
 	public void setLookupGender(LookupGender lookupGender) {
 		this.lookupGender = lookupGender;
+	}
+
+	public Relationship getRelationship() {
+		return this.relationship;
+	}
+
+	public void setRelationship(Relationship relationship) {
+		this.relationship = relationship;
 	}
 
 }

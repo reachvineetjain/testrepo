@@ -11,14 +11,12 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="FieldStaffFamilyMember")
 @NamedQuery(name="FieldStaffFamilyMember.findAll", query="SELECT f FROM FieldStaffFamilyMember f")
 public class FieldStaffFamilyMember implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffFamilyMemberId;
 
 	private Byte active;
@@ -34,10 +32,8 @@ public class FieldStaffFamilyMember implements Serializable {
 
 	private Timestamp createdOn;
 
-	@Column(length=100)
 	private String firstName;
 
-	@Column(length=100)
 	private String lastName;
 
 	private Byte livingAtHome;
@@ -48,7 +44,6 @@ public class FieldStaffFamilyMember implements Serializable {
 
 	private Byte reasonForRejection;
 
-	@Column(length=100)
 	private String relationship;
 
 	//bi-directional many-to-one association to FieldStaff

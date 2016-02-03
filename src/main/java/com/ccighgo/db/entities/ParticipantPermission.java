@@ -16,7 +16,6 @@ public class ParticipantPermission implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer participantPermissionsId;
 
 	//bi-directional many-to-one association to Participant

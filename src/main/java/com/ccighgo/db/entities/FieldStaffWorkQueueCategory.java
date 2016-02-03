@@ -17,10 +17,8 @@ public class FieldStaffWorkQueueCategory implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffWQCategoryId;
 
-	@Column(length=50)
 	private String fieldStaffWQCategoryName;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueue
@@ -29,7 +27,7 @@ public class FieldStaffWorkQueueCategory implements Serializable {
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="fieldStaffWQTypeId", nullable=false)
+	@JoinColumn(name="fieldStaffWQTypeId")
 	private FieldStaffWorkQueueType fieldStaffWorkQueueType;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueCategoryAggregate

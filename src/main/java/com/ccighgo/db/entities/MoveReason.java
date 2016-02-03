@@ -10,25 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="MoveReason")
 @NamedQuery(name="MoveReason.findAll", query="SELECT m FROM MoveReason m")
 public class MoveReason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int moveReasonId;
+	private Integer moveReasonId;
 
 	private Byte active;
 
-	@Column(length=2)
 	private String changeHomeCode;
 
-	@Column(length=100)
 	private String moveReasonName;
 
-	@Column(length=500)
 	private String reasonDescription;
 
 	//bi-directional many-to-one association to HostFamilyParticipant
@@ -37,17 +32,17 @@ public class MoveReason implements Serializable {
 
 	//bi-directional one-to-one association to HostFamilyParticipant
 	@OneToOne
-	@JoinColumn(name="moveReasonId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="moveReasonId")
 	private HostFamilyParticipant hostFamilyParticipant;
 
 	public MoveReason() {
 	}
 
-	public int getMoveReasonId() {
+	public Integer getMoveReasonId() {
 		return this.moveReasonId;
 	}
 
-	public void setMoveReasonId(int moveReasonId) {
+	public void setMoveReasonId(Integer moveReasonId) {
 		this.moveReasonId = moveReasonId;
 	}
 

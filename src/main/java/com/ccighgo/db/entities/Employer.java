@@ -10,21 +10,19 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="Employer")
 @NamedQuery(name="Employer.findAll", query="SELECT e FROM Employer e")
 public class Employer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int employerGoId;
+	private Integer employerGoId;
 
 	private Integer employerStatusId;
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
-	@JoinColumn(name="employerGoId", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="employerGoId")
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to EmployerPermission
@@ -34,11 +32,11 @@ public class Employer implements Serializable {
 	public Employer() {
 	}
 
-	public int getEmployerGoId() {
+	public Integer getEmployerGoId() {
 		return this.employerGoId;
 	}
 
-	public void setEmployerGoId(int employerGoId) {
+	public void setEmployerGoId(Integer employerGoId) {
 		this.employerGoId = employerGoId;
 	}
 

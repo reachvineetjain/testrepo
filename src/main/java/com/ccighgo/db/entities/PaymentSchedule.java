@@ -10,17 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="PaymentSchedule")
 @NamedQuery(name="PaymentSchedule.findAll", query="SELECT p FROM PaymentSchedule p")
 public class PaymentSchedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer paymentScheduleId;
 
-	@Column(nullable=false, length=50)
 	private String scheduleName;
 
 	//bi-directional many-to-one association to FieldStaffSeason

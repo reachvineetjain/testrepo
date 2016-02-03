@@ -18,25 +18,20 @@ public class FieldStaffNoteTopic implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffNoteTopicsId;
 
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(length=50)
 	private String fieldStaffNoteTopicName;
 
 	private Byte isPublic;
 
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=50)
 	private String title;
 
 	//bi-directional many-to-one association to FieldStaffNote

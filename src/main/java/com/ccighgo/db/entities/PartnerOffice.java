@@ -11,51 +11,40 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="PartnerOffice")
 @NamedQuery(name="PartnerOffice.findAll", query="SELECT p FROM PartnerOffice p")
 public class PartnerOffice implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerOfficeId;
 
-	@Column(length=150)
 	private String adressOne;
 
-	@Column(length=150)
 	private String adressTwo;
 
-	@Column(length=30)
 	private String city;
 
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(length=150)
+	private String email;
+
 	private String faxNumber;
 
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=2000)
 	private String officeNotes;
 
-	@Column(length=150)
 	private String phoneNumber;
 
-	@Column(length=13)
 	private String postalCode;
 
-	@Column(length=30)
 	private String state;
 
-	@Column(length=150)
 	private String website;
 
 	//bi-directional many-to-one association to LookupCountry
@@ -126,6 +115,14 @@ public class PartnerOffice implements Serializable {
 
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getFaxNumber() {

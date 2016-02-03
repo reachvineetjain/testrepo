@@ -10,20 +10,16 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="SeasonDepartmentUpdateLog")
 @NamedQuery(name="SeasonDepartmentUpdateLog.findAll", query="SELECT s FROM SeasonDepartmentUpdateLog s")
 public class SeasonDepartmentUpdateLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer updateDepartmentLogId;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Lob
@@ -31,7 +27,7 @@ public class SeasonDepartmentUpdateLog implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	public SeasonDepartmentUpdateLog() {

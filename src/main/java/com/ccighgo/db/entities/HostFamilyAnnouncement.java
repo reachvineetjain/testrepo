@@ -10,14 +10,12 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="HostFamilyAnnouncement")
 @NamedQuery(name="HostFamilyAnnouncement.findAll", query="SELECT h FROM HostFamilyAnnouncement h")
 public class HostFamilyAnnouncement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyAnnouncementId;
 
 	private Byte active;
@@ -27,7 +25,7 @@ public class HostFamilyAnnouncement implements Serializable {
 
 	private Byte archived;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	private Timestamp createdOn;
 
@@ -37,7 +35,6 @@ public class HostFamilyAnnouncement implements Serializable {
 
 	private Timestamp modifiedOn;
 
-	@Column(length=300)
 	private String title;
 
 	private Byte unplaced;
@@ -87,11 +84,11 @@ public class HostFamilyAnnouncement implements Serializable {
 		this.archived = archived;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 

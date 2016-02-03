@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Fetch;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,24 +23,18 @@ public class CCIStaffRole implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer cciStaffRoleId;
 
-	@Column(nullable=false, length=50)
 	private String cciStaffRoleName;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer hierarchy;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment

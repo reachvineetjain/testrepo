@@ -24,15 +24,12 @@ public class SeasonIHPDetail implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer seasonIHPDetailsId;
 
 	private Integer applicationDeadLineWeeks;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -42,15 +39,12 @@ public class SeasonIHPDetail implements Serializable {
 
 	private Integer maxParticipants;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	private Integer numberOfLCToRequestHold;
 
-	@Column(length=50)
 	private String programName;
 
 	private Integer splitPlacementPending;
@@ -79,7 +73,7 @@ public class SeasonIHPDetail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonStatus

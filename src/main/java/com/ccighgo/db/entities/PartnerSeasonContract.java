@@ -9,14 +9,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="PartnerSeasonContract")
 @NamedQuery(name="PartnerSeasonContract.findAll", query="SELECT p FROM PartnerSeasonContract p")
 public class PartnerSeasonContract implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonContractId;
 
 	@Lob
