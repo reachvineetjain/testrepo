@@ -58,7 +58,7 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 	private static final String SP_FS_SEARCH_Hierarchy = "CALL SPFieldStaffSeasonHierarchy(?)";
 
 	@Override
-	public FieldStaffLCList getFieldStaffLCList() {
+   public FieldStaffLCList getFieldStaffLCList() {
 		int count = 0;
 		FieldStaffLCList fieldStaffLCList = new FieldStaffLCList();
 		try {
