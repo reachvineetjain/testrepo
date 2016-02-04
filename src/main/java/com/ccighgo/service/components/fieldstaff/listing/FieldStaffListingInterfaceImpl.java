@@ -57,8 +57,8 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 	private static final String SP_FS_SEARCH_LIST = "CALL SPFieldStaffSearch(?)";
 	private static final String SP_FS_SEARCH_Hierarchy = "CALL SPFieldStaffSeasonHierarchy(?)";
 
-	@Override
-	public FieldStaffLCList getFieldStaffLCList() {
+	
+	public FieldStaffLCList getFieldStaffLCList(int x) {
 		int count = 0;
 		FieldStaffLCList fieldStaffLCList = new FieldStaffLCList();
 		try {
@@ -129,8 +129,8 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 		return fieldStaffLCList;
 	}
 
-	@Override
-	public FieldStaffRMList getFieldStaffRMList() {
+	 
+	public FieldStaffRMList getFieldStaffRMList(int x) {
 
 		FieldStaffRMList fieldStaffRMList = new FieldStaffRMList();
 		int count = 0;
@@ -199,8 +199,8 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 		}
 		return fieldStaffRMList;
 	}
-
-	public FieldStaffLCList getFieldStaffLCList(Integer roleId) {
+	@Override
+	public FieldStaffLCList getFieldStaffLCList() {
 		int count = 0;
 		FieldStaffLCList fieldStaffLCList = new FieldStaffLCList();
 		try {
@@ -229,10 +229,9 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 
 				if (fieldStaffLCList.getFieldStaffLcs() != null && !fieldStaffLCList.getFieldStaffLcs().isEmpty())
 					for (FieldStaffLC fs : fieldStaffLCList.getFieldStaffLcs()) {
-						query = em.createNativeQuery(SP_FS_SEARCH_Hierarchy);
-						query.setParameter(1, 1);
-						@SuppressWarnings("unchecked")
-						List<Object[]> result1 = query.getResultList();
+						Query query2 = em.createNativeQuery(SP_FS_SEARCH_Hierarchy);
+						query2.setParameter(1, fs.getGoId());
+						List<Object[]> result1 = query2.getResultList();
 						if (result1 != null) {
 							for (Object[] obj : result1) {
 								// SELECT
@@ -253,7 +252,6 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 							}
 						}
 					}
-
 			} else {
 				fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
 			}
@@ -267,6 +265,74 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 			e.printStackTrace();
 		}
 		return fieldStaffLCList;
+	}
+	
+	@Override
+	public FieldStaffRMList getFieldStaffRMList() {
+		int count = 0;
+		FieldStaffRMList fieldStaffRMList = new FieldStaffRMList();
+		try {
+			Query query = em.createNativeQuery(SP_FS_SEARCH_LIST);
+			query.setParameter(1, 2);
+			@SuppressWarnings("unchecked")
+			List<Object[]> result = query.getResultList();
+			if (result != null) {
+				for (Object[] obj : result) {
+					FieldStaffRM fslc = new FieldStaffRM();
+					if (String.valueOf(obj[0]) != null)
+						fslc.setGoId(Integer.valueOf(String.valueOf(obj[0])));
+					fslc.setFsPic(String.valueOf(obj[1]));
+					fslc.setFirstName(String.valueOf(obj[2]));
+					fslc.setLastName(String.valueOf(obj[3]));
+					fslc.setPhone(String.valueOf(obj[4]));
+					fslc.setCity(String.valueOf(obj[5]));
+					fslc.setZip(String.valueOf(obj[6]));
+					fslc.setState(String.valueOf(obj[7]));
+					if (String.valueOf(obj[7]) != null)
+						fslc.setActive(Boolean.valueOf(String.valueOf(obj[8])));
+					fslc.setEmail(String.valueOf(obj[9]));
+					count++;
+					fieldStaffRMList.getFieldStaffRms().add(fslc);
+				}
+
+				if (fieldStaffRMList.getFieldStaffRms() != null && !fieldStaffRMList.getFieldStaffRms().isEmpty())
+					for (FieldStaffRM fs : fieldStaffRMList.getFieldStaffRms()) {
+						Query query2 = em.createNativeQuery(SP_FS_SEARCH_Hierarchy);
+						query2.setParameter(1, fs.getGoId());
+						List<Object[]> result1 = query2.getResultList();
+						if (result1 != null) {
+							for (Object[] obj : result1) {
+								// SELECT
+								// fsGoId,firstName,lastName,fsType,photo,season
+								// FROM FSHierarchy;
+								RMSeasonContact lcSeasonContact = new RMSeasonContact();
+								com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact cont = new com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact();
+								cont.setGoId(String.valueOf(obj[0]));
+								cont.setFirstName(String.valueOf(obj[1]));
+								cont.setLastName(String.valueOf(obj[2]));
+								lcSeasonContact.setFieldStaffType(String.valueOf(obj[3]));
+								cont.setPicture(String.valueOf(obj[4]));
+								lcSeasonContact.setFieldStaffDetail(cont);
+
+								lcSeasonContact.setSeasonName(String.valueOf(obj[5]));
+								// lcSeasonContact.setSeasonStatus(String.valueOf(obj[11]));
+								fs.getRmSeasonContacts().add(lcSeasonContact);
+							}
+						}
+					}
+			}  else {
+				fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+			}
+			fieldStaffRMList.setCount(count);
+			fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+		} catch (Exception e) {
+			fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
+					messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
+			LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
+			e.printStackTrace();
+		}
+		return fieldStaffRMList;
 	}
 
 }
