@@ -6,28 +6,26 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 
 
 /**
- * <p>Java class for Response complex type.
+ * <p>Java class for ErdDashboardAnnouncements complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Response">
+ * &lt;complexType name="ErdDashboardAnnouncements">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="header" type="{http://www.ccighgo.com/common}Header"/>
- *         &lt;element name="status" type="{http://www.ccighgo.com/common}Status"/>
+ *         &lt;element name="announcement" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="timestamp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,66 +35,63 @@ import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdD
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Response", propOrder = {
-    "header",
-    "status"
+@XmlType(name = "ErdDashboardAnnouncements", propOrder = {
+    "announcement",
+    "timestamp"
 })
-@XmlSeeAlso({
-    ErdDashboard.class
-})
-public class Response {
+public class ErdDashboardAnnouncements {
 
     @XmlElement(required = true)
-    protected Header header;
+    protected String announcement;
     @XmlElement(required = true)
-    protected Status status;
+    protected String timestamp;
 
     /**
-     * Gets the value of the header property.
+     * Gets the value of the announcement property.
      * 
      * @return
      *     possible object is
-     *     {@link Header }
+     *     {@link String }
      *     
      */
-    public Header getHeader() {
-        return header;
+    public String getAnnouncement() {
+        return announcement;
     }
 
     /**
-     * Sets the value of the header property.
+     * Sets the value of the announcement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Header }
+     *     {@link String }
      *     
      */
-    public void setHeader(Header value) {
-        this.header = value;
+    public void setAnnouncement(String value) {
+        this.announcement = value;
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the timestamp property.
      * 
      * @return
      *     possible object is
-     *     {@link Status }
+     *     {@link String }
      *     
      */
-    public Status getStatus() {
-        return status;
+    public String getTimestamp() {
+        return timestamp;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the timestamp property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Status }
+     *     {@link String }
      *     
      */
-    public void setStatus(Status value) {
-        this.status = value;
+    public void setTimestamp(String value) {
+        this.timestamp = value;
     }
 
 }
