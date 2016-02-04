@@ -164,7 +164,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
 					ActiveParticipant aPart = new ActiveParticipant();
 					aPart.setParticipantId(participant.getParticipantGoId() + "");
-					aPart.setParticipantEmailId(participant.getEmail());
+//					aPart.setParticipantEmailId(participant.getEmail());
 					aPart.setParticipantStartDate(DateUtils.getDateAndTime(participant.getStartDate()));
 					aPart.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
 					aPart.setParticipantFirstName(participant.getFirstName());
@@ -216,7 +216,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 				lead.setParticipantId(participant.getParticipantGoId() + "");
 				lead.setParticipantFirstName(participant.getFirstName());
 				lead.setParticipantlastName(participant.getLastName());
-				lead.setParticipantEmailId(participant.getEmail());
+//				lead.setParticipantEmailId(participant.getEmail());
 				lead.setParticipantPicUrl("www.google.com");
 				lead.setParticipantGuranteed(participant.getGuaranteed() != 0);
 				lead.setParticipantType(participantType);
@@ -278,7 +278,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 						ParticipantStatus participantStatus = participantStatusRepository.findOne(CCIConstants.PARTICIPANT_STATUS_PENDING_VERIFICATION);
 						participant.setParticipantStatus(participantStatus);
 						participant.setFirstName(p.getFirstName());
-						participant.setEmail(p.getEmail());
+//						participant.setEmail(p.getEmail());
 						participant.setLastName(p.getLastName());
 						DepartmentProgramOption departmentProgramOption = departmentProgramOptions.findOne(p.getDepartmentProgramOptionId());
 						participant.setDepartmentProgramOption(departmentProgramOption);
@@ -553,7 +553,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 						details.setParticipantCountry(participant.getLookupCountry().getCountryName());
 						details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
 					}
-					details.setParticipantEmail(participant.getEmail());
+//					details.setParticipantEmail(participant.getEmail());
 					if (participant.getEndDate() != null)
 						details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
 					details.setParticipantFirstName(participant.getFirstName());
@@ -702,7 +702,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 		WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
 		try {
 			Participant p = participantRepository.findOne(Integer.parseInt(participantId));
-			p.setEmail(email2);
+//			p.setEmail(email2);
 			participantRepository.saveAndFlush(p);
 			wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
 					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

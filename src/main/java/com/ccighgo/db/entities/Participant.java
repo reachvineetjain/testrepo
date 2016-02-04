@@ -17,26 +17,20 @@ public class Participant implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer participantGoId;
-
-	@Column(length=50)
-	private String email;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
-	@Column(length=50)
 	private String firstName;
 
 	private Byte guaranteed;
 
 	private Byte isLead;
 
-	@Column(length=50)
 	private String lastName;
 
-	@Column(length=300)
 	private String photo;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -104,14 +98,6 @@ public class Participant implements Serializable {
 
 	public void setParticipantGoId(Integer participantGoId) {
 		this.participantGoId = participantGoId;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public Date getEndDate() {

@@ -10,20 +10,16 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="SeasonStatus")
 @NamedQuery(name="SeasonStatus.findAll", query="SELECT s FROM SeasonStatus s")
 public class SeasonStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer seasonStatusId;
 
-	@Column(nullable=false)
 	private Byte active;
 
-	@Column(nullable=false, length=50)
 	private String status;
 
 	//bi-directional many-to-one association to Season

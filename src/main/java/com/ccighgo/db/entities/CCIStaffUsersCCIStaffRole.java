@@ -18,16 +18,12 @@ public class CCIStaffUsersCCIStaffRole implements Serializable {
 	@EmbeddedId
 	private CCIStaffUsersCCIStaffRolePK id;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRole

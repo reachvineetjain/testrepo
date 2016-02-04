@@ -198,3 +198,28 @@ ALTER TABLE `PartnerSeasonAllocation` ADD COLUMN janStartFollowupDate DATETIME, 
  ALTER TABLE `PartnerUser` ADD COLUMN recieveNotificationEmails TINYINT(1) DEFAULT 0;
  ALTER TABLE `PartnerUser` ADD COLUMN website VARCHAR (50);
  DROP TABLE  `PartnerContact`;
+ 
+ --------------------------------------------------------------------------------------------------------------------------------------------
+-- Alter script for adding column in Partner, FS on 2nd Feb 2016  -------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE PartnerOffice ADD COLUMN email VARCHAR(100);
+
+ALTER TABLE Partner ADD COLUMN cciGeneralContact INT(11),
+ ADD CONSTRAINT `FK_Partner_CCIStaffUsers` FOREIGN KEY (`cciGeneralContact`) REFERENCES `CCIStaffUsers`(`cciStaffuserId`) ON UPDATE NO ACTION;
+ 
+
+ALTER TABLE FieldStaff ADD COLUMN bestNumberHome TINYINT(1) DEFAULT 0;
+ALTER TABLE FieldStaff ADD COLUMN bestNumberWork TINYINT(1) DEFAULT 0;
+ALTER TABLE FieldStaff ADD COLUMN bestNumberCell TINYINT(1) DEFAULT 0;
+
+ALTER TABLE FieldStaffStatus ADD COLUMN isSeasonStatus TINYINT(1);
+
+ALTER TABLE FieldStaffAnnouncement ADD COLUMN departmentProgramId INT,
+	ADD CONSTRAINT `FK_FieldStaffAnnouncement_DepartmentPrograms` FOREIGN KEY (`departmentProgramId`) REFERENCES `DepartmentPrograms`(`departmentProgramId`) ON UPDATE NO ACTION;
+	
+ALTER TABLE FieldStaffAnnouncement ADD COLUMN fieldStaffGoId INT,
+	ADD CONSTRAINT `FK_FieldStaffAnnouncement_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff`(`fieldStaffGoId`) ON UPDATE NO ACTION;
+	
+ALTER TABLE Participants DROP COLUMN email;
+
+

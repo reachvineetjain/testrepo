@@ -333,7 +333,12 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 					subPartnerPrimaryContact.setPhone(partnerContact.getPhone());
 					subPartnerPrimaryContact.setEmergencyPhone(partnerContact.getEmergencyPhone());
 					subPartnerPrimaryContact.setFax(partnerContact.getFax());
-					subPartnerPrimaryContact.setReciveNotificationemailfromcc(partnerContact.getRecieveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
+					try {
+						if(partnerContact.getRecieveNotificationEmails()!=null)
+							subPartnerPrimaryContact.setReciveNotificationemailfromcc(partnerContact.getRecieveNotificationEmails() == CCIConstants.ACTIVE ? true : false);						
+					} catch (Exception e) {
+						System.out.println("partner Contact 'Receive Notification Emails flag' error ");
+					}
 					subPartnerPrimaryContact.setSkypeId(partnerContact.getSkypeId());
 					subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
 				}
@@ -496,7 +501,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				subPartnerDetails.setIsSubPartner((byte) 1);
 
 				List<Login> loginList = new ArrayList<Login>();
-				goIdSequence = goIdSequenceRepository.save(goIdSequence);
+				goIdSequence = goIdSequenceRepository.saveAndFlush(goIdSequence);
 				com.ccighgo.db.entities.UserType ParticipantUserType = userTypeRepository.findOne(CCIConstants.PARTNER_USER_TYPE);
 				if (ParticipantUserType == null) {
 					ParticipantUserType = new com.ccighgo.db.entities.UserType();
@@ -511,7 +516,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 				login.setGoIdSequence(goIdSequence);
 				login.setEmail(subPartnerPrimaryContact.getEmail());
-				login = loginRepository.save(login);
+				login = loginRepository.saveAndFlush(login);
 				loginList.add(login);
 				goIdSequence.setLogins(loginList);
 
@@ -524,7 +529,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				loginUserType.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 				loginUserType.setDefaultUserType(CCIConstants.ACTIVE);
 				loginUserType.setLogin(login);
-				loginUserType = loginUserTypeRepository.save(loginUserType);
+				loginUserType = loginUserTypeRepository.saveAndFlush(loginUserType);
 
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, LOGGER);
@@ -564,7 +569,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				}
 			}
 			subPartnerDetails.setPartnerGoId(goIdSequence.getGoId());
-			partnerRepository.save(subPartnerDetails);
+			partnerRepository.saveAndFlush(subPartnerDetails);
 
 			try {
 				PartnerUser partnerContact = null;
@@ -587,7 +592,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 					partnerContact.setIsPrimary((byte) 1);
 					partnerContact.setPartner(subPartnerDetails);
 					partnerContact.setLogin(login);
-					partnerUserRepository.save(partnerContact);
+					partnerUserRepository.saveAndFlush(partnerContact);
 				}
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, LOGGER);

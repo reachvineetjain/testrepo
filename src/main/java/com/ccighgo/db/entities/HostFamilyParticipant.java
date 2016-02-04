@@ -10,14 +10,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="HostFamilyParticipant")
 @NamedQuery(name="HostFamilyParticipant.findAll", query="SELECT h FROM HostFamilyParticipant h")
 public class HostFamilyParticipant implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyParticipantId;
 
 	private Byte active;
@@ -64,13 +62,10 @@ public class HostFamilyParticipant implements Serializable {
 	@Lob
 	private String partnerRejectionMessage;
 
-	@Column(length=100)
 	private String permissionFormFileName;
 
-	@Column(length=100)
 	private String permissionFormFilePath;
 
-	@Column(length=50)
 	private String permissionFormName;
 
 	@Temporal(TemporalType.TIMESTAMP)

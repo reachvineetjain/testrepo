@@ -17,18 +17,15 @@ public class DepartmentProgramOption implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer departmentProgramOptionId;
 
-	@Column(nullable=false, length=10)
 	private String programOptionCode;
 
-	@Column(nullable=false, length=50)
 	private String programOptionName;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId", nullable=false)
+	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to Participant

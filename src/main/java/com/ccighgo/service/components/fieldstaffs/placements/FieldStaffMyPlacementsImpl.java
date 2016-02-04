@@ -190,7 +190,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    /*
     * Monitoring
     */
-   public ERDParticipants getAllParticipant(String goId) {
+   public ERDParticipants getAllParticipant(String goId,String catagorie) {
       LOGGER.info("goid: " + goId);
       ERDParticipants erdParticipants = new ERDParticipants();
       if (goId != null)
@@ -198,7 +198,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
             query.setParameter(2, ALL_PARTICIPANT_FLAG);
-
+            query.setParameter(3, catagorie);
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result != null) {
@@ -239,7 +239,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    }
 
    @Override
-   public com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants getMyTeamParticipant(String goId) {
+   public com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants getMyTeamParticipant(String goId,String catagorie) {
       LOGGER.info("goid: " + goId);
       com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants erdParticipants = new ERDParticipants();
       if (goId != null)
@@ -247,7 +247,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
             query.setParameter(2, MY_TEAM_PARTICIPANT_FLAG);
-
+            query.setParameter(3, catagorie);
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result == null) {

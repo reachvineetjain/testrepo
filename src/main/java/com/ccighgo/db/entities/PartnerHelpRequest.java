@@ -10,40 +10,30 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="PartnerHelpRequest")
 @NamedQuery(name="PartnerHelpRequest.findAll", query="SELECT p FROM PartnerHelpRequest p")
 public class PartnerHelpRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerHelpRequestId;
 
 	private Byte active;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=64)
 	private String partnerHelpRequestGUID;
 
-	@Column(length=50)
 	private String requestEmailAddress;
 
-	@Column(length=1000)
 	private String requestMessage;
 
-	@Column(length=200)
 	private String requestName;
 
 	//bi-directional many-to-one association to HelpContactMode

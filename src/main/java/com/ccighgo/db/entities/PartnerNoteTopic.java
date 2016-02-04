@@ -18,7 +18,6 @@ public class PartnerNoteTopic implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerNoteTopicId;
 
 	private Byte competitorInfo;
@@ -49,7 +48,6 @@ public class PartnerNoteTopic implements Serializable {
 
 	private Timestamp modifiedOn;
 
-	@Column(length=50)
 	private String partnerNoteTopicName;
 
 	private Byte seasonInfo;

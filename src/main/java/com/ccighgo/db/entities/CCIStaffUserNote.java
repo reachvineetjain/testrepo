@@ -17,27 +17,21 @@ public class CCIStaffUserNote implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer cciStaffUserNoteId;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=1000)
 	private String note;
 
 	//bi-directional many-to-one association to CCIStaffUser
 	@ManyToOne
-	@JoinColumn(name="ccistaffuserID", nullable=false)
+	@JoinColumn(name="ccistaffuserID")
 	private CCIStaffUser ccistaffUser;
 
 	public CCIStaffUserNote() {

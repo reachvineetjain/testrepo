@@ -82,5 +82,21 @@ public class FieldStaffSeason {
       LOGGER.info("calling FieldStaffSeason.updateFieldStaffAdminSeasonDetails ");
       return fieldStaffSeasonService.updateFieldStaffAdminSeasonDetails(details);
    }
+   
+   @GET
+   @Path("delete/{fsSeasonId}")
+   @Produces("application/json")
+   public Response deleteFSAdminSeason(@PathParam("fsSeasonId") String fsSeasonId) {
+      LOGGER.info("calling FieldStaffSeason.deleteFSAdminSeason ");
+      return fieldStaffSeasonService.deleteFSAdminSeason(fsSeasonId);
+   }
+   
+   @GET
+   @Path("deactivate/{fsSeasonId}")
+   @Produces("application/json")
+   public Response deactivateFSAdminSeason(@PathParam("fsSeasonId") String fsSeasonId) {
+      LOGGER.info("calling FieldStaffSeason.deactivateFSAdminSeason ");
+      return fieldStaffSeasonService.deactivateFSAdminSeason(fsSeasonId);
+   }
 
 }

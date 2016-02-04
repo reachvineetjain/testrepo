@@ -10,7 +10,6 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="CCIStaffUserProgram")
 @NamedQuery(name="CCIStaffUserProgram.findAll", query="SELECT c FROM CCIStaffUserProgram c")
 public class CCIStaffUserProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,16 +17,12 @@ public class CCIStaffUserProgram implements Serializable {
 	@EmbeddedId
 	private CCIStaffUserProgramPK id;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffUser

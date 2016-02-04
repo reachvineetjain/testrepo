@@ -26,8 +26,11 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.AuthConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
+import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FieldStaffDashboardInterface;
 import com.ccighgo.service.components.partner.PartnerService;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
+import com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
 import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDashboardSections;
@@ -56,15 +59,12 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Autowired PartnerService partnerService;
 
    @Autowired CommonComponentUtils componentUtils;
+   
+   @Autowired FieldStaffDashboardInterface  fieldStaffDashboardInterface;
 
    @Override
    @Transactional(readOnly = true)
    public Auth getUserLogin(String userName) {
-      try {
-         LOGGER.info("userName: "+userName);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       Auth auth = new Auth();
       try
       {
@@ -129,11 +129,6 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
 
    @Transactional
    private void updateHistory(String userName) {
-      try {
-         LOGGER.info("userName: "+userName);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       LoginHistory history = new LoginHistory();
       history.setLoggedOn(new Timestamp(System.currentTimeMillis()));
       Login loggedInUser = loginRepository.findByLoginName(userName);
@@ -144,41 +139,24 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Override
    @Transactional(readOnly = true)
    public User getCCIUserDetails(String userId) {
-
-      try {
-         LOGGER.info("userName: "+userId);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       return userManagementService.getUserById(userId);
    }
 
    @Override
    @Transactional(readOnly = true)
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
-      try {
-         LOGGER.info("userName: "+partnerGoId);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       return partnerService.getPartnerDashboard(partnerGoId);
    }
 
    @Override
    @Transactional(readOnly = true)
    public PartnerRecruitmentLead getPartnerAgentDashboard(int partnerGoId) {
-      try {
-         LOGGER.info("userName: "+partnerGoId);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
       return partnerService.getPartnerInquiryLeadData(partnerGoId);
    }
 
    @Override
-   public PartnerRecruitmentLead getFSDashboard(int parseInt) {
-      // TODO Auto-generated method stub
-      return null;
+   public ErdDashboard getFSDashboard(String goId) {
+      return fieldStaffDashboardInterface.getErdDashboardWorkQueues(goId);
    }
 
 }

@@ -187,4 +187,32 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
       return response;
    }
 
+   @Override
+   public FieldStaffTopic addNewTopic(FieldStaffTopic fieldStaffTopic) {
+      FieldStaffTopic response = new FieldStaffTopic();
+      try {     
+      FieldStaffNoteTopic fieldStaffNoteTopic = new FieldStaffNoteTopic();
+      FieldStaff fs = fieldStaffRepository.findOne(fieldStaffTopic.getFieldStaffGoId());
+      fieldStaffNoteTopic.setFieldStaff(fs);
+      fieldStaffNoteTopic.setTitle(fieldStaffTopic.getTitle());
+      fieldStaffNoteTopic.setFieldStaffNoteTopicName(fieldStaffTopic.getFieldStaffNoteTopicName());
+      fieldStaffNoteTopic.setCreatedBy(fieldStaffTopic.getLoginId());
+      fieldStaffNoteTopic.setModifiedBy(fieldStaffTopic.getLoginId());
+      fieldStaffNoteTopic.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      fieldStaffNoteTopic.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      fieldStaffNoteTopic.setIsPublic(fieldStaffTopic.isPublic() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+      FieldStaffNoteTopic res= fieldStaffNoteTopicRepository.saveAndFlush(fieldStaffNoteTopic);
+      response.setFieldStaffNoteTopicId(res.getFieldStaffNoteTopicsId());
+      response.setTitle(res.getTitle());
+      response.setFieldStaffNoteTopicName(res.getFieldStaffNoteTopicName());
+      response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
+            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_TOPIC.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC));
+      }
+      return response;
+   }
+
 }

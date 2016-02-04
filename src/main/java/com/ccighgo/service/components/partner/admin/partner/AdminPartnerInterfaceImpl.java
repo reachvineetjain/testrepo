@@ -192,7 +192,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          
          PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
          reviewStatus.setPartner(newPartner);
-         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(11));
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(4));
          CCIStaffUser cciUser = null;
          Login cciLogin = loginRepository.findOne(partner.getLoginId());
          if(cciLogin!=null){
@@ -210,7 +210,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                pp.setLookupDepartmentProgram(departmentProgramRepository.findOne(pCon.getDepartmentProgramId()));
                pp.setPartner(newPartner);
                pp.setHasApplied(CCIConstants.ACTIVE);
-               pp.setIsEligible(CCIConstants.ACTIVE);
+               pp.setIsEligible(pCon.getEligible());
                partnerProgramList.add(pp);
             }
             partnerProgramRepository.save(partnerProgramList);

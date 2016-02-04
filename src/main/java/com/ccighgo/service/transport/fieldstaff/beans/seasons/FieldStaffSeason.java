@@ -46,10 +46,11 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FieldStaffSeason", propOrder = {
-    "fsGoId",
+    "goId",
     "fsSeasonId",
     "seasonId",
     "programName",
+    "acronym",
     "departmentId",
     "departmentProgramId",
     "departmentProgramName",
@@ -57,15 +58,17 @@ import javax.xml.bind.annotation.XmlType;
     "startDate",
     "endDate",
     "status",
-    "signedContract"
+    "fieldStaffStatus"
 })
 public class FieldStaffSeason {
 
-    protected int fsGoId;
+    protected int goId;
     protected int fsSeasonId;
     protected int seasonId;
     @XmlElement(required = true)
     protected String programName;
+    @XmlElement(required = true)
+    protected String acronym;
     protected int departmentId;
     protected int departmentProgramId;
     @XmlElement(required = true)
@@ -78,22 +81,23 @@ public class FieldStaffSeason {
     protected String endDate;
     @XmlElement(required = true)
     protected String status;
-    protected int signedContract;
+    @XmlElement(required = true)
+    protected String fieldStaffStatus;
 
     /**
-     * Gets the value of the fsGoId property.
+     * Gets the value of the goId property.
      * 
      */
-    public int getFsGoId() {
-        return fsGoId;
+    public int getGoId() {
+        return goId;
     }
 
     /**
-     * Sets the value of the fsGoId property.
+     * Sets the value of the goId property.
      * 
      */
-    public void setFsGoId(int value) {
-        this.fsGoId = value;
+    public void setGoId(int value) {
+        this.goId = value;
     }
 
     /**
@@ -151,6 +155,31 @@ public class FieldStaffSeason {
     public void setProgramName(String value) {
         this.programName = value;
     }
+    
+    /**
+     * Gets the value of the acronym property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAcronym() {
+        return acronym;
+    }
+
+    /**
+     * Sets the value of the acronym property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAcronym(String value) {
+        this.acronym = value;
+    }
+
 
     /**
      * Gets the value of the departmentId property.
@@ -305,19 +334,19 @@ public class FieldStaffSeason {
     }
 
     /**
-     * Gets the value of the signedContract property.
+     * Gets the value of the fieldStaffStatus property.
      * 
      */
-    public int getSignedContract() {
-        return signedContract;
+    public String getFieldStaffStatus() {
+        return fieldStaffStatus;
     }
 
     /**
-     * Sets the value of the signedContract property.
+     * Sets the value of the fieldStaffStatus property.
      * 
      */
-    public void setSignedContract(int value) {
-        this.signedContract = value;
+    public void setFieldStaffStatus(String value) {
+        this.fieldStaffStatus = value;
     }
 
 }

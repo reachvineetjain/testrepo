@@ -37,11 +37,11 @@ public interface FieldStaffMyPlacementsInterface {
     * 
     * @return FieldStaffParticipants
     */
-   public ERDParticipants getAllParticipant(String goId);
+   public ERDParticipants getAllParticipant(String goId, String catagorie);
    /**
     * 
     * @param goId
     * @return FieldStaffParticipants
     */
-   public ERDParticipants getMyTeamParticipant(String goId);
+   public ERDParticipants getMyTeamParticipant(String goId,String catagorie);
 }
