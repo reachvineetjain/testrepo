@@ -214,10 +214,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
    }
 
    @Override
-   public FieldStaffStatusList getFieldStaffStatusList() {
+   public FieldStaffStatusList getFieldStaffStatusList(Byte fsSeasonStatus) {
       FieldStaffStatusList list = new FieldStaffStatusList();
       try {
-         List<FieldStaffStatus> fsStatusList = fieldStaffStatusRepository.findAll();
+         List<FieldStaffStatus> fsStatusList = fieldStaffStatusRepository.getByFieldStaffBySeasonStatus(fsSeasonStatus);
          if (fsStatusList == null) {
             throw new CcighgoException(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
