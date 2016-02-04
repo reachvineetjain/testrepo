@@ -516,6 +516,6 @@ public class WordPressFormsImpl implements IWordPressForms {
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);
 		}
-		return null;
+		return participantInfo;
 	}
 }
