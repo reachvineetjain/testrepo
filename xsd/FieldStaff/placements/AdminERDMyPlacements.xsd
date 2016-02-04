@@ -34,7 +34,7 @@
          <xsd:element name="season" type="xsd:string" />
          <xsd:element name="program" type="xsd:string" />
          <xsd:element name="holds" type="xsd:string" />
-         <xsd:element name="participantStatus" type="xsd:string" />
+         <xsd:element name="status" type="xsd:string" />
          <xsd:element name="country" type="xsd:string" />
          <xsd:element name="flagUrl" type="xsd:string" />
       </xsd:sequence>

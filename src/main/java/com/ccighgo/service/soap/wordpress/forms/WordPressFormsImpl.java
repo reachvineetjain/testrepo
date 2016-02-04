@@ -36,6 +36,7 @@ import com.ccighgo.service.transport.partner.beans.admin.add.partner.ProgramCont
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;
+import com.ccighgo.service.transport.seasons.beans.soapservice.ParticipantsInfo;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 
@@ -65,7 +66,8 @@ public class WordPressFormsImpl implements IWordPressForms {
 	PartnerStatusRepository partnerStatusRepository;
 	@Autowired
 	EntityManager entityManager;
-	@Autowired HostFamilyInquiryRepository hostFamilyInquiryRepository;
+	@Autowired
+	HostFamilyInquiryRepository hostFamilyInquiryRepository;
 	private static final String SP_UPDATING_ADMIN_WORK_QUEUE = "CALL SPAdminWQPartnerApplicationSubmitted(?)";
 
 	@Transactional
@@ -116,16 +118,18 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setCity(InternationalPartners.getCity());
 				partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
 				partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-//				if(InternationalPartners.getHearedAboutUs()!=null){
-//					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
-//					if(val!=null && val.length >1){
-//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-//						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-//					}
-//					else{
-//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-//					}
-//				}
+				// if(InternationalPartners.getHearedAboutUs()!=null){
+				// String [] val =
+				// InternationalPartners.getHearedAboutUs().split("\\|");
+				// if(val!=null && val.length >1){
+				// partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+				// partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE
+				// : CCIConstants.INACTIVE);
+				// }
+				// else{
+				// partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+				// }
+				// }
 				partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
 				partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
@@ -342,8 +346,8 @@ public class WordPressFormsImpl implements IWordPressForms {
 					System.out.println(message);
 					return message;
 				}
-				
-				pa =new HostFamilyInquiry();
+
+				pa = new HostFamilyInquiry();
 				pa.setAddress(HostFamilyData.getAddress());
 				pa.setCciComments(HostFamilyData.getComments());
 				pa.setCurrentCity(HostFamilyData.getCity());
@@ -354,10 +358,10 @@ public class WordPressFormsImpl implements IWordPressForms {
 				pa.setZipCode(HostFamilyData.getPostalCode());
 				pa.setPreferredPhoneNumber(HostFamilyData.getPreferredPhone());
 				pa.setOptionalPhoneNumber(HostFamilyData.getOptionalPhone());
-				
+
 				GoIdSequence goIdSequence = new GoIdSequence();
 				goIdSequence = goIdSequenceRepository.save(goIdSequence);
-				System.out.println("GoID : " +goIdSequence.getGoId());
+				System.out.println("GoID : " + goIdSequence.getGoId());
 				pa.setHostFamilyInquiryId(goIdSequence.getGoId());
 				hostFamilyInquiryRepository.saveAndFlush(pa);
 			}
@@ -381,15 +385,14 @@ public class WordPressFormsImpl implements IWordPressForms {
 			System.out.println("Email :" + HostFamilyData.getEmail());
 			System.out.println("City :" + HostFamilyData.getCity());
 			System.out.println("State : " + HostFamilyData.getState());
-			System.out.println("PostalCode : "+ HostFamilyData.getPostalCode());
-			System.out.println("PreferredPhone: "+ HostFamilyData.getPreferredPhone());
-			System.out.println("OptionalPhone : "+ HostFamilyData.getOptionalPhone());
-			System.out.println("Email : "+ HostFamilyData.getEmail());
-			System.out.println("Students : "+ HostFamilyData.getStudents());
-			System.out.println("Comments : "+ HostFamilyData.getComments());
-			
+			System.out.println("PostalCode : " + HostFamilyData.getPostalCode());
+			System.out.println("PreferredPhone: " + HostFamilyData.getPreferredPhone());
+			System.out.println("OptionalPhone : " + HostFamilyData.getOptionalPhone());
+			System.out.println("Email : " + HostFamilyData.getEmail());
+			System.out.println("Students : " + HostFamilyData.getStudents());
+			System.out.println("Comments : " + HostFamilyData.getComments());
 
-		}		
+		}
 	}
 
 	@Override
@@ -492,5 +495,27 @@ public class WordPressFormsImpl implements IWordPressForms {
 
 	public static void main(String[] args) {
 		System.out.println("www.google.com".replaceAll("^www\\.", ""));
+	}
+
+	@Override
+	public List<ParticipantsInfo> participantList() {
+		List<ParticipantsInfo> participantInfo = new ArrayList<ParticipantsInfo>();
+		try {
+			for (int i = 0; i < 20; i++) {
+				ParticipantsInfo p = new ParticipantsInfo();
+				p.setAge(25+i);
+				p.setBiography("Konrad enjoys fishing. He says he can fish for hours without even catching anything. He likes how relaxing it is to sit and wait for a bite. His favorite sport is tennis. He takes lessons every week, and plays in the Summer with his Father. Konrad also likes to play golf and read science fiction books like The Magician’s Guild or The Maze Runner. Konrad is very friendly, mature, and reliable. His dream is to study in the U.S. Konrad does have a severe allergy to cats, and a medium allergy to dogs."+(i+1));
+				p.setGender(i%2==0? "male":"female");
+				p.setID(34+i);
+				p.setInterests("Exercise/Sports, Reading/Writing"+(i+1));
+				p.setName("Konrad"+(i+1));
+				p.setNationality(i%2==0?"en":"fr");
+				p.setProgramStart("Fall 2016");
+				participantInfo.add(p);
+			}
+		} catch (Exception e) {
+			ExceptionUtil.logException(e, LOGGER);
+		}
+		return participantInfo;
 	}
 }

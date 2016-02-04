@@ -60,11 +60,11 @@ public class FieldStaffSeason {
    }
    
    @GET
-   @Path("status/list")
+   @Path("status/list/{fsSeasonStatus}")
    @Produces("application/json")
-   public FieldStaffStatusList getFieldStaffStatusList() {
+   public FieldStaffStatusList getFieldStaffStatusList(@PathParam("fsSeasonStatus") Byte fsSeasonStatus) {
       LOGGER.info("calling FieldStaffSeason.getFieldStaffStatusList ");
-      return fieldStaffSeasonService.getFieldStaffStatusList();
+      return fieldStaffSeasonService.getFieldStaffStatusList(fsSeasonStatus);
    }
    
    @GET
