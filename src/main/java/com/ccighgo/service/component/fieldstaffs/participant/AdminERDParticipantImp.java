@@ -1,5 +1,6 @@
 package com.ccighgo.service.component.fieldstaffs.participant;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,6 +21,7 @@ import com.ccighgo.service.transport.fieldstaff.beans.placement.adminerdplacemen
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.adminerdmyplacement.AdminMyPlacement;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.adminerdmyplacement.AdminMyPlacements;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
 
 @Component
 public class AdminERDParticipantImp implements AdminERDParticipantInterface {
@@ -69,7 +71,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   esp.setCountry(String.valueOf(obj[4]));
                   esp.setProgram(String.valueOf(obj[5]));
                   esp.setGender(String.valueOf(obj[6]));
-                  esp.setApprovedDate(String.valueOf(obj[7]));
+                  Date dateformat=(Date)obj[7];                 
+                  esp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));
                   esp.setLC(String.valueOf(obj[8]));
                   esp.setRD(String.valueOf(obj[9]));
                   esp.setHS(String.valueOf(obj[10]));
@@ -121,7 +124,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   fsp.setCountry(String.valueOf(obj[4]));
                   fsp.setProgram(String.valueOf(obj[5]));
                   fsp.setGender(String.valueOf(obj[6]));
-                  fsp.setApprovedDate(String.valueOf(obj[7]));
+                  Date dateformat=(Date)obj[7];                 
+                  fsp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));                 
                   fsp.setLC(String.valueOf(obj[8]));
                   fsp.setRD(String.valueOf(obj[9]));
                   fsp.setHS(String.valueOf(obj[10]));
