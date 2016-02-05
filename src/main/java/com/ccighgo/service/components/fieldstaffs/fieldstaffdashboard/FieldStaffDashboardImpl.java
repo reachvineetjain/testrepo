@@ -90,14 +90,15 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
             }
          erdDashboard.setErdDashboardTypes(erdDashboardTypes);
          
-         List<FieldStaffAnnouncement>  announcements = fieldStaffAnnouncementRepository.getERDStaffAnnouncements();
-         for(FieldStaffAnnouncement ann:announcements)
-         {
-            ErdDashboardAnnouncements erdAnn = new ErdDashboardAnnouncements();
-            erdAnn.setAnnouncement(ann.getAnnouncement());
-            erdAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
-            erdDashboard.getAnnouncements().add(erdAnn);
-         }
+         List<FieldStaffAnnouncement> announcements = fieldStaffAnnouncementRepository.getERDStaffAnnouncements();
+         if (announcements != null)
+            for (FieldStaffAnnouncement ann : announcements) {
+               ErdDashboardAnnouncements erdAnn = new ErdDashboardAnnouncements();
+               erdAnn.setAnnouncement(ann.getAnnouncement());
+               if (ann.getCreatedOn() != null)
+                  erdAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
+               erdDashboard.getAnnouncements().add(erdAnn);
+            }
          
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
