@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.db.entities.FieldStaff;
+import com.ccighgo.db.entities.FieldStaffAnnouncement;
 import com.ccighgo.db.entities.FieldStaffWorkQueueCategory;
 import com.ccighgo.db.entities.FieldStaffWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.FieldStaffWorkQueueType;
 import com.ccighgo.db.entities.FieldStaffWorkQueueTypeAggregate;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.FieldStaffAnnouncementRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffWorkQueueCategoriesRepository;
 import com.ccighgo.jpa.repositories.FieldStaffWorkQueueCategoryAggregateRepository;
@@ -28,11 +30,13 @@ import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ERDPer
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardAccount;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardAnnouncements;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardCategorieDetails;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardType;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardTypes;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
 
 @Component
 public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
@@ -50,6 +54,8 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
    FieldStaffRepository fieldStaffRepository;
    @Autowired
    LoginRepository loginRepository;
+   @Autowired
+   FieldStaffAnnouncementRepository fieldStaffAnnouncementRepository;
    @Autowired
    CommonComponentUtils componentUtils;
    @Autowired
@@ -83,6 +89,16 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                erdDashboardTypes.getTypes().add(t);
             }
          erdDashboard.setErdDashboardTypes(erdDashboardTypes);
+         
+         List<FieldStaffAnnouncement>  announcements = fieldStaffAnnouncementRepository.getERDStaffAnnouncements();
+         for(FieldStaffAnnouncement ann:announcements)
+         {
+            ErdDashboardAnnouncements erdAnn = new ErdDashboardAnnouncements();
+            erdAnn.setAnnouncement(ann.getAnnouncement());
+            erdAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
+            erdDashboard.getAnnouncements().add(erdAnn);
+         }
+         
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {

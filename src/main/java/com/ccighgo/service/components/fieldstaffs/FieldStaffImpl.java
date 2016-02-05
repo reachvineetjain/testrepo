@@ -153,8 +153,13 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setEmail(login.getEmail());
          fsd.setOriginalStartDate(DateUtils.getMMddyyDate(fs.getOriginalStartDate()));
          fsd.setTotalPlacementManual(fs.getTotalPlacementsManual());
-         fsd.setTotalPlacementCalculated(0);
-         fsd.setTotalPlacements(0);
+         
+         fsd.setTotalPlacementCalculated(0); //TODO
+         fsd.setTotalPlacements(0); //TODO
+         
+         fsd.setBestNumberCell(fs.getBestNumberCell() == CCIConstants.ACTIVE);
+         fsd.setBestNumberHome(fs.getBestNumberHome() == CCIConstants.ACTIVE);
+         fsd.setBestNumberWork(fs.getBestNumberWork() == CCIConstants.ACTIVE);
 
          fsd.setDateApplSubmitted(DateUtils.getMMddyyDate(fs.getSubmittedDate()));
          fsd.setDateApplApproved(DateUtils.getMMddyyDate(fs.getApprovedDate()));
@@ -208,7 +213,9 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          FieldStaffStatus fieldStaffStatus = fieldStaffStatusRepository.getByFieldStaffStatusName(fieldStaffDetail.getFieldStaffStatus());
          if (fieldStaffStatus != null)
             fs.setFieldStaffStatus(fieldStaffStatus);
-
+         fs.setBestNumberHome(fieldStaffDetail.isBestNumberHome() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         fs.setBestNumberWork(fieldStaffDetail.isBestNumberWork() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         fs.setBestNumberCell(fieldStaffDetail.isBestNumberCell() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fs.setOriginalStartDate(DateUtils.getDateFromString(fieldStaffDetail.getOriginalStartDate()));
          fs.setTotalPlacementsManual(fieldStaffDetail.getTotalPlacementManual());
          fs.setSubmittedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplSubmitted()));
