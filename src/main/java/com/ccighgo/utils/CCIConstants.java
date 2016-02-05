@@ -4,12 +4,16 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 /**
- * This class is used to keep all constants to be used across application Add a comment to categorize constants.
+ * This class is used to keep all constants to be used across application Add a
+ * comment to categorize constants.
  * 
  * @author ravimishra
  * 
  */
 public class CCIConstants {
+
+   // !Important: use this constant only for readonly fields
+   public static final String EMPTY = "";
 
    // service status codes
    public static final String SUCCESS = "Success";
@@ -26,7 +30,6 @@ public class CCIConstants {
    public static final String MM_DD_YY = "MM/dd/yyyy";
    public static final String DATE_TIME = "MM/dd/yyyy HH:mm:ss";
    public static final String DATE_TIME2 = "MM/dd/yyyy HH:mm:ss";
-
    public static final String MM_dd_yyy = "MM-dd-yyyy";
 
    public static final String ALPHABETS_UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -68,7 +71,6 @@ public class CCIConstants {
    public static final Integer DRAFT_STATUS_NO = 3;
 
    // constants for department programs
-   // TODO use enums
    public static final String HSP_J1_HS = "J-1HS";
    public static final String HSP_F1 = "F-1";
    public static final String HSP_STP_IHP = "STP-IHP";
@@ -249,7 +251,18 @@ public class CCIConstants {
    public static final byte FALSE_BYTE = 0;
    public static final Integer PARTICIPANT_STATUS_PENDING_VERIFICATION = 10;
    public static final String MYSQL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-   
+
    public static final String MYSQL_DATE_FORMAT_SLASH = "MM/dd/yyyy HH:mm:ss";
-   
+
+   // FieldStaff listings
+   public static final int LOCAL_COORDINATOR = 1;
+   public static final int REGIONAL_MANAGER = 2;
+   public static final int REGIONAL_DIRECTOR = 3;
+   public static final int AREA_COORDINATOR = 4;
+   public static final String LC = "Local Coordinator";
+   public static final String RM = "Regional Manager";
+   public static final String RD = "Regional Director";
+   public static final String AC = "Area Coordinator";
+   public static final String ERD = "Executive Regional Director";
+
 }
