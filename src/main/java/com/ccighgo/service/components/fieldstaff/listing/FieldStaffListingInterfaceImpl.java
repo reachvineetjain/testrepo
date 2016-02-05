@@ -3,6 +3,7 @@
  */
 package com.ccighgo.service.components.fieldstaff.listing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
@@ -45,7 +47,7 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
 
    private static final Logger LOGGER = Logger.getLogger(FieldStaffListingInterface.class);
 
-   @Autowired EntityManager em;
+   @Autowired EntityManager entityManager;
    @Autowired MessageUtils messageUtil;
    @Autowired CommonComponentUtils componentUtils;
 
@@ -54,343 +56,338 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
    @Autowired SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
    @Autowired FieldStaffLeadershipSeasonRepository fieldStaffLeadershipSeasonRepository;
 
+   // parameter:role id
    private static final String SP_FS_SEARCH_LIST = "CALL SPFieldStaffSearch(?)";
-   private static final String SP_FS_SEARCH_Hierarchy = "CALL SPFieldStaffSeasonHierarchy(?)";
-
-   private static final int REGIONAL_DIRECTOR = 3;
-   private static final int AREA_COORDINATOR = 4;
-
-   public FieldStaffLCList getFieldStaffLCList(int x) {
-      int count = 0;
-      FieldStaffLCList fieldStaffLCList = new FieldStaffLCList();
-      try {
-         Query query = em.createNativeQuery(SP_FS_SEARCH_LIST);
-         query.setParameter(1, 1);
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = query.getResultList();
-         if (result != null) {
-            int tempGoID = 0;
-            for (Object[] obj : result) {
-               /*
-                * 1 fieldStaffGold 2 fsGoldphoto 3 fsFirstName 4 fsLastName 5
-                * phone 6 city 7 zipCode 8 stateName 9 active 10 email II
-                * seasonName 12 seasonStatus 13 fsHierarchyGoId 14
-                * fsHierarchyGoldphoto 15 fieldStaffType 16 fsHierarchyFirstName
-                * 17 fsHierarchyLastName
-                */
-
-               int goId = Integer.valueOf(String.valueOf(obj[0]));
-
-               if (tempGoID != goId) {
-                  FieldStaffLC fslc = new FieldStaffLC();
-                  if (String.valueOf(obj[0]) != null)
-                     fslc.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-                  fslc.setFsPic(String.valueOf(obj[1]));
-                  fslc.setFirstName(String.valueOf(obj[2]));
-                  fslc.setLastName(String.valueOf(obj[3]));
-                  fslc.setPhone(String.valueOf(obj[4]));
-                  fslc.setCity(String.valueOf(obj[5]));
-                  fslc.setZip(String.valueOf(obj[6]));
-                  fslc.setState(String.valueOf(obj[7]));
-                  if (String.valueOf(obj[7]) != null)
-                     fslc.setActive(Boolean.valueOf(String.valueOf(obj[8])));
-                  fslc.setEmail(String.valueOf(obj[9]));
-                  count++;
-                  fieldStaffLCList.getFieldStaffLcs().add(fslc);
-               }
-               LCSeasonContact lcSeasonContact = new LCSeasonContact();
-               lcSeasonContact.setSeasonName(String.valueOf(obj[10]));
-               lcSeasonContact.setFieldStaffType(String.valueOf(obj[14]));
-               lcSeasonContact.setSeasonStatus(String.valueOf(obj[11]));
-
-               Contact cont = new Contact();
-               cont.setFirstName(String.valueOf(obj[15]));
-               cont.setLastName(String.valueOf(obj[16]));
-               cont.setGoId(String.valueOf(obj[12]));
-               cont.setPicture(String.valueOf(obj[13]));
-               lcSeasonContact.setFieldStaffDetail(cont);
-               if (fieldStaffLCList.getFieldStaffLcs() != null && !fieldStaffLCList.getFieldStaffLcs().isEmpty())
-                  fieldStaffLCList.getFieldStaffLcs().get(fieldStaffLCList.getFieldStaffLcs().size() - 1).getLcSeasonContacts().add(lcSeasonContact);
-               else if (fieldStaffLCList.getFieldStaffLcs().isEmpty()) {
-                  fieldStaffLCList.getFieldStaffLcs().get(0).getLcSeasonContacts().add(lcSeasonContact);
-               }
-               tempGoID = goId;
-            }
-         } else {
-            fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
-         }
-         fieldStaffLCList.setCount(count);
-         fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (Exception e) {
-         fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
-               messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
-         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
-         e.printStackTrace();
-      }
-      return fieldStaffLCList;
-   }
-
-   public FieldStaffRMList getFieldStaffRMList(int x) {
-
-      FieldStaffRMList fieldStaffRMList = new FieldStaffRMList();
-      int count = 0;
-      try {
-         Query query = em.createNativeQuery(SP_FS_SEARCH_LIST);
-         query.setParameter(1, 2);
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = query.getResultList();
-         if (result != null) {
-            int tempGoID = 0;
-            for (Object[] obj : result) {
-               /*
-                * 1 fieldStaffGold 2 fsGoldphoto 3 fsFirstName 4 fsLastName 5
-                * phone 6 city 7 zipCode 8 stateName 9 active 10 email 11
-                * seasonName 12 seasonStatus 13 fsHierarchyGold 14
-                * fsHierarchyGoldphoto 15 fieldStaffType 16 fsHierarchyFirstName
-                * 17 fsHierarchyLastName
-                */
-               int goId = Integer.valueOf(String.valueOf(obj[0]));
-               if (tempGoID != goId) {
-                  FieldStaffRM fsrm = new FieldStaffRM();
-                  fsrm.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-                  fsrm.setFsPic(String.valueOf(obj[1]));
-                  fsrm.setFirstName(String.valueOf(obj[2]));
-                  fsrm.setLastName(String.valueOf(obj[3]));
-                  fsrm.setPhone(String.valueOf(obj[4]));
-                  fsrm.setCity(String.valueOf(obj[5]));
-                  fsrm.setZip(String.valueOf(obj[6]));
-                  fsrm.setState(String.valueOf(obj[7]));
-                  if (obj[8] != null)
-                     fsrm.setActive(Boolean.valueOf(String.valueOf(obj[7])));
-                  fsrm.setEmail(String.valueOf(obj[8]));
-                  count++;
-                  fieldStaffRMList.getFieldStaffRms().add(fsrm);
-               }
-
-               RMSeasonContact rmSc = new RMSeasonContact();
-               rmSc.setSeasonName(String.valueOf(obj[10]));
-               rmSc.setFieldStaffType(String.valueOf(obj[14]));
-               rmSc.setSeasonStatus(String.valueOf(obj[11]));
-
-               com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact cont = new com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact();
-               cont.setFirstName(String.valueOf(obj[15]));
-               cont.setLastName(String.valueOf(obj[16]));
-               cont.setGoId(String.valueOf(obj[12]));
-               cont.setPicture(String.valueOf(obj[13]));
-               rmSc.setFieldStaffDetail(cont);
-               if (fieldStaffRMList.getFieldStaffRms() != null && !fieldStaffRMList.getFieldStaffRms().isEmpty())
-                  fieldStaffRMList.getFieldStaffRms().get(fieldStaffRMList.getFieldStaffRms().size() - 1).getRmSeasonContacts().add(rmSc);
-               else if (fieldStaffRMList.getFieldStaffRms().isEmpty()) {
-                  fieldStaffRMList.getFieldStaffRms().get(0).getRmSeasonContacts().add(rmSc);
-               }
-               tempGoID = goId;
-            }
-         } else {
-            fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
-         }
-         fieldStaffRMList.setCount(count);
-         fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (Exception e) {
-         fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
-               messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
-         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
-         e.printStackTrace();
-      }
-      return fieldStaffRMList;
-   }
+   // parameter:go id
+   private static final String SP_FS_SEASONS = "CALL SPFieldStaffSeasonsList (?)";
+   // parameter:parameter:go id, season id and department program id
+   private static final String SP_FS_SEASON_CONTACTS = "CALL SPFieldStaffHeirarchy (?,?,?)";
 
    @Override
+   @Transactional(readOnly = true)
+   @SuppressWarnings("unchecked")
    public FieldStaffLCList getFieldStaffLCList() {
       int count = 0;
       FieldStaffLCList fieldStaffLCList = new FieldStaffLCList();
       try {
-         Query query = em.createNativeQuery(SP_FS_SEARCH_LIST);
-         query.setParameter(1, 1);
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = query.getResultList();
-         if (result != null) {
-            for (Object[] obj : result) {
-               FieldStaffLC fslc = new FieldStaffLC();
-               if (String.valueOf(obj[0]) != null)
-                  fslc.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-               fslc.setFsPic(String.valueOf(obj[1]));
-               fslc.setFirstName(String.valueOf(obj[2]));
-               fslc.setLastName(String.valueOf(obj[3]));
-               fslc.setPhone(String.valueOf(obj[4]));
-               fslc.setCity(String.valueOf(obj[5]));
-               fslc.setZip(String.valueOf(obj[6]));
-               fslc.setState(String.valueOf(obj[7]));
-               if (String.valueOf(obj[7]) != null)
-                  fslc.setActive(Boolean.valueOf(String.valueOf(obj[8])));
-               fslc.setEmail(String.valueOf(obj[9]));
-               fieldStaffLCList.getFieldStaffLcs().add(fslc);
+         Query searchFSQuery = entityManager.createNativeQuery(SP_FS_SEARCH_LIST);
+         searchFSQuery.setParameter(1, CCIConstants.LOCAL_COORDINATOR);
+         List<Object[]> fsList = searchFSQuery.getResultList();
+         if (fsList == null || fsList.isEmpty()) {
+            throw new CcighgoException("no local coordinators found");
+         }
+         List<FieldStaffLC> fieldStaffLcsList = new ArrayList<FieldStaffLC>();
+         List<LCSeasonContact> lcSeasonContactsList = new ArrayList<LCSeasonContact>();
+         for (Object[] fs : fsList) {
+            FieldStaffLC fieldStaffLc = new FieldStaffLC();
+            // create record only if go id is not null
+            if (String.valueOf(fs[0]) != null) {
+               int fsGoId = Integer.valueOf(fs[0].toString());
+               // SP position 0: GoId
+               fieldStaffLc.setGoId(fsGoId);
+               // SP position 1: field staff picture
+               fieldStaffLc.setPicture(fs[1] != null ? fs[1].toString() : CCIConstants.EMPTY);
+               // SP position 2: first name of field staff
+               fieldStaffLc.setFirstName(fs[2] != null ? fs[2].toString() : CCIConstants.EMPTY);
+               // SP position 3: last name of field staff
+               fieldStaffLc.setLastName(fs[3] != null ? fs[3].toString() : CCIConstants.EMPTY);
+               // SP position 4: contact number
+               fieldStaffLc.setPhone(fs[4] != null ? fs[4].toString() : CCIConstants.EMPTY);
+               // SP position 5: city of field staff
+               fieldStaffLc.setCity(fs[5] != null ? fs[5].toString() : CCIConstants.EMPTY);
+               // SP position 6: zip/postal code of field staff
+               fieldStaffLc.setZip(fs[6] != null ? fs[6].toString() : CCIConstants.EMPTY);
+               // SP position 7: state of field staff
+               fieldStaffLc.setState(fs[7] != null ? fs[7].toString() : CCIConstants.EMPTY);
+               // SP position 8: is field staff active?
+               fieldStaffLc.setActive(Boolean.valueOf(fs[8].toString()).equals(Boolean.TRUE) ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               // SP position 9: status of the field staff
+               fieldStaffLc.setFsStatus(fs[9] != null ? fs[9].toString() : CCIConstants.EMPTY);
                count++;
-            }
-
-            if (fieldStaffLCList.getFieldStaffLcs() != null && !fieldStaffLCList.getFieldStaffLcs().isEmpty())
-               for (FieldStaffLC fs : fieldStaffLCList.getFieldStaffLcs()) {
-                  Query query2 = em.createNativeQuery(SP_FS_SEARCH_Hierarchy);
-                  query2.setParameter(1, fs.getGoId());
-                  List<Object[]> result1 = query2.getResultList();
-                  if (result1 != null) {
-                     for (Object[] obj : result1) {
-                        // SELECT
-                        // fsGoId,firstName,lastName,fsType,photo,season
-                        // FROM FSHierarchy;
-                        LCSeasonContact lcSeasonContact = new LCSeasonContact();
-                        Contact cont = new Contact();
-                        cont.setGoId(String.valueOf(obj[0]));
-                        cont.setFirstName(String.valueOf(obj[1]));
-                        cont.setLastName(String.valueOf(obj[2]));
-                        lcSeasonContact.setFieldStaffType(String.valueOf(obj[3]));
-                        cont.setPicture(String.valueOf(obj[4]));
-                        lcSeasonContact.setFieldStaffDetail(cont);
-
-                        lcSeasonContact.setSeasonName(String.valueOf(obj[5]));
-                        // lcSeasonContact.setSeasonStatus(String.valueOf(obj[11]));
-                        fs.getLcSeasonContacts().add(lcSeasonContact);
+               /**
+                * Fetch the seasons for field staff based on go id
+                */
+               Query searchFSSeasonsQuery = entityManager.createNativeQuery(SP_FS_SEASONS);
+               searchFSSeasonsQuery.setParameter(1, fsGoId);
+               List<Object[]> fsSeasonsList = searchFSSeasonsQuery.getResultList();
+               if (fsSeasonsList != null && !(fsList.isEmpty())) {
+                  for (Object[] fsSeason : fsSeasonsList) {
+                     if (fsSeason[1] != null && fsSeason[2] != null) {
+                        LCSeasonContact seasonContact = new LCSeasonContact();
+                        int seasonId = Integer.valueOf(fsSeason[1].toString());
+                        int departmentProgrammId = Integer.valueOf(fsSeason[2].toString());
+                        Contact areaCoordinator = new Contact();
+                        Contact regionalManager = new Contact();
+                        Contact regionalDirector = new Contact();
+                        Contact executiveRegionalDirector = new Contact();
+                        seasonContact.setSeasonId(seasonId);
+                        seasonContact.setSeasonProgramId(departmentProgrammId);
+                        seasonContact.setSeasonName(fsSeason[3].toString());
+                        seasonContact.setSeasonStatus(fsSeason[6].toString());
+                        /**
+                         * Fetch season contacts based on go id , season id and
+                         * department program id
+                         */
+                        Query searchFSSeasonContactsQuery = entityManager.createNativeQuery(SP_FS_SEASON_CONTACTS);
+                        searchFSSeasonContactsQuery.setParameter(1, fsGoId);
+                        searchFSSeasonContactsQuery.setParameter(2, seasonId);
+                        searchFSSeasonContactsQuery.setParameter(3, departmentProgrammId);
+                        List<Object[]> fsSeasonContactList = searchFSSeasonContactsQuery.getResultList();
+                        if (fsSeasonContactList != null && !(fsSeasonContactList.isEmpty())) {
+                           for (Object[] contact : fsSeasonContactList) {
+                              if (contact[4] != null) {
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.AC)) {
+                                    areaCoordinator.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    areaCoordinator.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    areaCoordinator.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.RM)) {
+                                    regionalManager.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    regionalManager.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    regionalManager.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.RD)) {
+                                    regionalDirector.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    regionalDirector.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    regionalDirector.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.ERD)) {
+                                    executiveRegionalDirector.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                              }
+                           }
+                        }
+                        seasonContact.setAreaCoordinator(areaCoordinator);
+                        seasonContact.setRegionalManager(regionalManager);
+                        seasonContact.setRegionalDirector(regionalDirector);
+                        seasonContact.setExecutiveRegionalDirector(executiveRegionalDirector);
+                        lcSeasonContactsList.add(seasonContact);
+                        fieldStaffLc.getLcSeasonContacts().addAll(lcSeasonContactsList);
                      }
                   }
                }
-         } else {
-            fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            }
+            fieldStaffLcsList.add(fieldStaffLc);
          }
          fieldStaffLCList.setCount(count);
+         fieldStaffLCList.getFieldStaffLcs().addAll(fieldStaffLcsList);
          fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
-               messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
-         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
-         e.printStackTrace();
+         fieldStaffLCList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
       }
       return fieldStaffLCList;
    }
 
    @Override
+   @Transactional(readOnly = true)
+   @SuppressWarnings("unchecked")
    public FieldStaffRMList getFieldStaffRMList() {
       int count = 0;
       FieldStaffRMList fieldStaffRMList = new FieldStaffRMList();
       try {
-         Query query = em.createNativeQuery(SP_FS_SEARCH_LIST);
-         query.setParameter(1, 2);
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = query.getResultList();
-         if (result != null) {
-            for (Object[] obj : result) {
-               FieldStaffRM fslc = new FieldStaffRM();
-               if (String.valueOf(obj[0]) != null)
-                  fslc.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-               fslc.setFsPic(String.valueOf(obj[1]));
-               fslc.setFirstName(String.valueOf(obj[2]));
-               fslc.setLastName(String.valueOf(obj[3]));
-               fslc.setPhone(String.valueOf(obj[4]));
-               fslc.setCity(String.valueOf(obj[5]));
-               fslc.setZip(String.valueOf(obj[6]));
-               fslc.setState(String.valueOf(obj[7]));
-               if (String.valueOf(obj[7]) != null)
-                  fslc.setActive(Boolean.valueOf(String.valueOf(obj[8])));
-               fslc.setEmail(String.valueOf(obj[9]));
+         Query searchFSQuery = entityManager.createNativeQuery(SP_FS_SEARCH_LIST);
+         searchFSQuery.setParameter(1, CCIConstants.REGIONAL_MANAGER);
+         List<Object[]> fsList = searchFSQuery.getResultList();
+         if (fsList == null || fsList.isEmpty()) {
+            throw new CcighgoException("no regional managers found");
+         }
+         List<FieldStaffRM> fieldStaffRmsList = new ArrayList<FieldStaffRM>();
+         List<RMSeasonContact> rmSeasonContactsList = new ArrayList<RMSeasonContact>();
+         for (Object[] fs : fsList) {
+            FieldStaffRM fieldStaffRm = new FieldStaffRM();
+            // create record only if go id is not null
+            if (String.valueOf(fs[0]) != null) {
+               int fsGoId = Integer.valueOf(fs[0].toString());
+               // SP position 0: GoId
+               fieldStaffRm.setGoId(fsGoId);
+               // SP position 1: field staff picture
+               fieldStaffRm.setPicture(fs[1] != null ? fs[1].toString() : CCIConstants.EMPTY);
+               // SP position 2: first name of field staff
+               fieldStaffRm.setFirstName(fs[2] != null ? fs[2].toString() : CCIConstants.EMPTY);
+               // SP position 3: last name of field staff
+               fieldStaffRm.setLastName(fs[3] != null ? fs[3].toString() : CCIConstants.EMPTY);
+               // SP position 4: contact number
+               fieldStaffRm.setPhone(fs[4] != null ? fs[4].toString() : CCIConstants.EMPTY);
+               // SP position 5: city of field staff
+               fieldStaffRm.setCity(fs[5] != null ? fs[5].toString() : CCIConstants.EMPTY);
+               // SP position 6: zip/postal code of field staff
+               fieldStaffRm.setZip(fs[6] != null ? fs[6].toString() : CCIConstants.EMPTY);
+               // SP position 7: state of field staff
+               fieldStaffRm.setState(fs[7] != null ? fs[7].toString() : CCIConstants.EMPTY);
+               // SP position 8: is field staff active?
+               fieldStaffRm.setActive(Boolean.valueOf(fs[8].toString()).equals(Boolean.TRUE) ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               // SP position 9: status of the field staff
+               fieldStaffRm.setFsStatus(fs[9] != null ? fs[9].toString() : CCIConstants.EMPTY);
                count++;
-               fieldStaffRMList.getFieldStaffRms().add(fslc);
-            }
-
-            if (fieldStaffRMList.getFieldStaffRms() != null && !fieldStaffRMList.getFieldStaffRms().isEmpty())
-               for (FieldStaffRM fs : fieldStaffRMList.getFieldStaffRms()) {
-                  Query query2 = em.createNativeQuery(SP_FS_SEARCH_Hierarchy);
-                  query2.setParameter(1, fs.getGoId());
-                  List<Object[]> result1 = query2.getResultList();
-                  if (result1 != null) {
-                     for (Object[] obj : result1) {
-                        // SELECT
-                        // fsGoId,firstName,lastName,fsType,photo,season
-                        // FROM FSHierarchy;
-                        RMSeasonContact lcSeasonContact = new RMSeasonContact();
-                        com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact cont = new com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact();
-                        cont.setGoId(String.valueOf(obj[0]));
-                        cont.setFirstName(String.valueOf(obj[1]));
-                        cont.setLastName(String.valueOf(obj[2]));
-                        lcSeasonContact.setFieldStaffType(String.valueOf(obj[3]));
-                        cont.setPicture(String.valueOf(obj[4]));
-                        lcSeasonContact.setFieldStaffDetail(cont);
-
-                        lcSeasonContact.setSeasonName(String.valueOf(obj[5]));
-                        // lcSeasonContact.setSeasonStatus(String.valueOf(obj[11]));
-                        fs.getRmSeasonContacts().add(lcSeasonContact);
+               /**
+                * Fetch the seasons for field staff based on go id
+                */
+               Query searchFSSeasonsQuery = entityManager.createNativeQuery(SP_FS_SEASONS);
+               searchFSSeasonsQuery.setParameter(1, fsGoId);
+               List<Object[]> fsSeasonsList = searchFSSeasonsQuery.getResultList();
+               if (fsSeasonsList != null && !(fsList.isEmpty())) {
+                  for (Object[] fsSeason : fsSeasonsList) {
+                     if (fsSeason[1] != null && fsSeason[2] != null) {
+                        RMSeasonContact seasonContact = new RMSeasonContact();
+                        int seasonId = Integer.valueOf(fsSeason[1].toString());
+                        int departmentProgrammId = Integer.valueOf(fsSeason[2].toString());
+                        com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact regionalDirector = new com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact();
+                        com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact executiveRegionalDirector = new com.ccighgo.service.transport.fieldstaff.beans.rmlist.Contact();
+                        seasonContact.setSeasonId(seasonId);
+                        seasonContact.setSeasonProgramId(departmentProgrammId);
+                        seasonContact.setSeasonName(fsSeason[3].toString());
+                        seasonContact.setSeasonStatus(fsSeason[6].toString());
+                        /**
+                         * Fetch season contacts based on go id , season id and
+                         * department program id
+                         */
+                        Query searchFSSeasonContactsQuery = entityManager.createNativeQuery(SP_FS_SEASON_CONTACTS);
+                        searchFSSeasonContactsQuery.setParameter(1, fsGoId);
+                        searchFSSeasonContactsQuery.setParameter(2, seasonId);
+                        searchFSSeasonContactsQuery.setParameter(3, departmentProgrammId);
+                        List<Object[]> fsSeasonContactList = searchFSSeasonContactsQuery.getResultList();
+                        if (fsSeasonContactList != null && !(fsSeasonContactList.isEmpty())) {
+                           for (Object[] contact : fsSeasonContactList) {
+                              if (contact[4] != null) {
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.RD)) {
+                                    regionalDirector.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    regionalDirector.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    regionalDirector.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.ERD)) {
+                                    executiveRegionalDirector.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                              }
+                           }
+                        }
+                        seasonContact.setRegionalDirector(regionalDirector);
+                        seasonContact.setExecutiveRegionalDirector(executiveRegionalDirector);
+                        rmSeasonContactsList.add(seasonContact);
+                        fieldStaffRm.getRmSeasonContacts().addAll(rmSeasonContactsList);
                      }
                   }
                }
-         } else {
-            fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            }
+            fieldStaffRmsList.add(fieldStaffRm);
          }
          fieldStaffRMList.setCount(count);
+         fieldStaffRMList.getFieldStaffRms().addAll(fieldStaffRmsList);
          fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(),
-               messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST)));
-         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_LIST));
-         e.printStackTrace();
+         fieldStaffRMList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
       }
       return fieldStaffRMList;
    }
 
    @Override
+   @Transactional(readOnly = true)
+   @SuppressWarnings("unchecked")
    public FieldStaffACList getFieldStaffACList() {
       int count = 0;
       FieldStaffACList acList = new FieldStaffACList();
       try {
-         Query query = em.createNativeQuery(SP_FS_SEARCH_LIST);
-         query.setParameter(1, AREA_COORDINATOR);
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = query.getResultList();
-         if (result == null) {
-            throw new CcighgoException("no records found");
+         Query searchFSQuery = entityManager.createNativeQuery(SP_FS_SEARCH_LIST);
+         searchFSQuery.setParameter(1, CCIConstants.AREA_COORDINATOR);
+         List<Object[]> fsList = searchFSQuery.getResultList();
+         if (fsList == null || fsList.isEmpty()) {
+            throw new CcighgoException("no area coordinators found");
          }
-         for (Object[] obj : result) {
-            FieldStaffAC fsac = new FieldStaffAC();
-            count++;
-            fsac.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-            fsac.setFsPic(String.valueOf(obj[1]));
-            fsac.setFirstName(String.valueOf(obj[2]));
-            fsac.setLastName(String.valueOf(obj[3]));
-            fsac.setPhone(String.valueOf(obj[4]));
-            fsac.setCity(String.valueOf(obj[5]));
-            fsac.setZip(String.valueOf(obj[6]));
-            fsac.setState(String.valueOf(obj[7]));
-            if (String.valueOf(obj[8]) != null)
-               fsac.setActive(Boolean.valueOf(String.valueOf(obj[8])));
-            fsac.setEmail(String.valueOf(obj[9]));
-            acList.getFieldStaffAcs().add(fsac);
-         }
-         if (acList.getFieldStaffAcs() != null && !acList.getFieldStaffAcs().isEmpty()) {
-            for (FieldStaffAC ac : acList.getFieldStaffAcs()) {
-               Query query2 = em.createNativeQuery(SP_FS_SEARCH_Hierarchy);
-               query2.setParameter(1, ac.getGoId());
-               List<Object[]> result1 = query2.getResultList();
-               if (result1 != null) {
-                  for (Object[] obj : result1) {
-                     ACSeasonContact acSeasonContact = new ACSeasonContact();
-                     com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact cont = new com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact();
-                     cont.setGoId(String.valueOf(obj[0]));
-                     cont.setFirstName(String.valueOf(obj[1]));
-                     cont.setLastName(String.valueOf(obj[2]));
-                     acSeasonContact.setFieldStaffType(String.valueOf(obj[3]));
-                     cont.setPicture(String.valueOf(obj[4]));
-                     acSeasonContact.setFieldStaffDetail(cont);
-                     acSeasonContact.setSeasonName(String.valueOf(obj[5]));
-                     ac.getAcSeasonContacts().add(acSeasonContact);
+         List<FieldStaffAC> fieldStaffAcsList = new ArrayList<FieldStaffAC>();
+         List<ACSeasonContact> acSeasonContactsList = new ArrayList<ACSeasonContact>();
+         for (Object[] fs : fsList) {
+            FieldStaffAC fieldStaffAc = new FieldStaffAC();
+            // create record only if go id is not null
+            if (String.valueOf(fs[0]) != null) {
+               int fsGoId = Integer.valueOf(fs[0].toString());
+               // SP position 0: GoId
+               fieldStaffAc.setGoId(fsGoId);
+               // SP position 1: field staff picture
+               fieldStaffAc.setPicture(fs[1] != null ? fs[1].toString() : CCIConstants.EMPTY);
+               // SP position 2: first name of field staff
+               fieldStaffAc.setFirstName(fs[2] != null ? fs[2].toString() : CCIConstants.EMPTY);
+               // SP position 3: last name of field staff
+               fieldStaffAc.setLastName(fs[3] != null ? fs[3].toString() : CCIConstants.EMPTY);
+               // SP position 4: contact number
+               fieldStaffAc.setPhone(fs[4] != null ? fs[4].toString() : CCIConstants.EMPTY);
+               // SP position 5: city of field staff
+               fieldStaffAc.setCity(fs[5] != null ? fs[5].toString() : CCIConstants.EMPTY);
+               // SP position 6: zip/postal code of field staff
+               fieldStaffAc.setZip(fs[6] != null ? fs[6].toString() : CCIConstants.EMPTY);
+               // SP position 7: state of field staff
+               fieldStaffAc.setState(fs[7] != null ? fs[7].toString() : CCIConstants.EMPTY);
+               // SP position 8: is field staff active?
+               fieldStaffAc.setActive(Boolean.valueOf(fs[8].toString()).equals(Boolean.TRUE) ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               // SP position 9: status of the field staff
+               fieldStaffAc.setFsStatus(fs[9] != null ? fs[9].toString() : CCIConstants.EMPTY);
+               count++;
+               /**
+                * Fetch the seasons for field staff based on go id
+                */
+               Query searchFSSeasonsQuery = entityManager.createNativeQuery(SP_FS_SEASONS);
+               searchFSSeasonsQuery.setParameter(1, fsGoId);
+               List<Object[]> fsSeasonsList = searchFSSeasonsQuery.getResultList();
+               if (fsSeasonsList != null && !(fsList.isEmpty())) {
+                  for (Object[] fsSeason : fsSeasonsList) {
+                     if (fsSeason[1] != null && fsSeason[2] != null) {
+                        ACSeasonContact seasonContact = new ACSeasonContact();
+                        int seasonId = Integer.valueOf(fsSeason[1].toString());
+                        int departmentProgrammId = Integer.valueOf(fsSeason[2].toString());
+                        com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact regionalManager = new com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact();
+                        com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact regionalDirector = new com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact();
+                        com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact executiveRegionalDirector = new com.ccighgo.service.transport.fieldstaff.beans.aclist.Contact();
+                        seasonContact.setSeasonId(seasonId);
+                        seasonContact.setSeasonProgramId(departmentProgrammId);
+                        seasonContact.setSeasonName(fsSeason[3].toString());
+                        seasonContact.setSeasonStatus(fsSeason[6].toString());
+                        /**
+                         * Fetch season contacts based on go id , season id and
+                         * department program id
+                         */
+                        Query searchFSSeasonContactsQuery = entityManager.createNativeQuery(SP_FS_SEASON_CONTACTS);
+                        searchFSSeasonContactsQuery.setParameter(1, fsGoId);
+                        searchFSSeasonContactsQuery.setParameter(2, seasonId);
+                        searchFSSeasonContactsQuery.setParameter(3, departmentProgrammId);
+                        List<Object[]> fsSeasonContactList = searchFSSeasonContactsQuery.getResultList();
+                        if (fsSeasonContactList != null && !(fsSeasonContactList.isEmpty())) {
+                           for (Object[] contact : fsSeasonContactList) {
+                              if (contact[4] != null) {
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.RM)) {
+                                    regionalManager.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    regionalManager.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    regionalManager.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.RD)) {
+                                    regionalDirector.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    regionalDirector.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    regionalDirector.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.ERD)) {
+                                    executiveRegionalDirector.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                              }
+                           }
+                        }
+                        seasonContact.setExecutiveRegionalDirector(executiveRegionalDirector);
+                        acSeasonContactsList.add(seasonContact);
+                        fieldStaffAc.getAcSeasonContacts().addAll(acSeasonContactsList);
+                     }
                   }
                }
             }
+            fieldStaffAcsList.add(fieldStaffAc);
          }
          acList.setCount(count);
+         acList.getFieldStaffAcs().addAll(fieldStaffAcsList);
          acList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -401,55 +398,94 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
    }
 
    @Override
+   @Transactional(readOnly = true)
+   @SuppressWarnings("unchecked")
    public FieldStaffRDList getFieldStaffRDList() {
       int count = 0;
       FieldStaffRDList rdList = new FieldStaffRDList();
       try {
-         Query query = em.createNativeQuery(SP_FS_SEARCH_LIST);
-         query.setParameter(1, REGIONAL_DIRECTOR);
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = query.getResultList();
-         if (result == null) {
-            throw new CcighgoException("no records found");
+         Query searchFSQuery = entityManager.createNativeQuery(SP_FS_SEARCH_LIST);
+         searchFSQuery.setParameter(1, CCIConstants.REGIONAL_DIRECTOR);
+         List<Object[]> fsList = searchFSQuery.getResultList();
+         if (fsList == null || fsList.isEmpty()) {
+            throw new CcighgoException("no regional directors found");
          }
-         for (Object[] obj : result) {
-            FieldStaffRD fsrd = new FieldStaffRD();
-            count++;
-            fsrd.setGoId(Integer.valueOf(String.valueOf(obj[0])));
-            fsrd.setFsPic(String.valueOf(obj[1]));
-            fsrd.setFirstName(String.valueOf(obj[2]));
-            fsrd.setLastName(String.valueOf(obj[3]));
-            fsrd.setPhone(String.valueOf(obj[4]));
-            fsrd.setCity(String.valueOf(obj[5]));
-            fsrd.setZip(String.valueOf(obj[6]));
-            fsrd.setState(String.valueOf(obj[7]));
-            if (String.valueOf(obj[8]) != null)
-               fsrd.setActive(Boolean.valueOf(String.valueOf(obj[8])));
-            fsrd.setEmail(String.valueOf(obj[9]));
-            rdList.getFieldStaffRds().add(fsrd);
-         }
-         if (rdList.getFieldStaffRds() != null && !rdList.getFieldStaffRds().isEmpty()) {
-            for (FieldStaffRD rd : rdList.getFieldStaffRds()) {
-               Query query2 = em.createNativeQuery(SP_FS_SEARCH_Hierarchy);
-               query2.setParameter(1, rd.getGoId());
-               List<Object[]> result1 = query2.getResultList();
-               if (result1 != null) {
-                  for (Object[] obj : result1) {
-                     RDSeasonContact rdSeasonContact = new RDSeasonContact();
-                     com.ccighgo.service.transport.fieldstaff.beans.rdlist.Contact cont = new com.ccighgo.service.transport.fieldstaff.beans.rdlist.Contact();
-                     cont.setGoId(String.valueOf(obj[0]));
-                     cont.setFirstName(String.valueOf(obj[1]));
-                     cont.setLastName(String.valueOf(obj[2]));
-                     rdSeasonContact.setFieldStaffType(String.valueOf(obj[3]));
-                     cont.setPicture(String.valueOf(obj[4]));
-                     rdSeasonContact.setFieldStaffDetail(cont);
-                     rdSeasonContact.setSeasonName(String.valueOf(obj[5]));
-                     rd.getRdSeasonContacts().add(rdSeasonContact);
+         List<FieldStaffRD> fieldStaffRdsList = new ArrayList<FieldStaffRD>();
+         List<RDSeasonContact> rdSeasonContactsList = new ArrayList<RDSeasonContact>();
+         for (Object[] fs : fsList) {
+            FieldStaffRD fieldStaffRd = new FieldStaffRD();
+            // create record only if go id is not null
+            if (String.valueOf(fs[0]) != null) {
+               int fsGoId = Integer.valueOf(fs[0].toString());
+               // SP position 0: GoId
+               fieldStaffRd.setGoId(fsGoId);
+               // SP position 1: field staff picture
+               fieldStaffRd.setPicture(fs[1] != null ? fs[1].toString() : CCIConstants.EMPTY);
+               // SP position 2: first name of field staff
+               fieldStaffRd.setFirstName(fs[2] != null ? fs[2].toString() : CCIConstants.EMPTY);
+               // SP position 3: last name of field staff
+               fieldStaffRd.setLastName(fs[3] != null ? fs[3].toString() : CCIConstants.EMPTY);
+               // SP position 4: contact number
+               fieldStaffRd.setPhone(fs[4] != null ? fs[4].toString() : CCIConstants.EMPTY);
+               // SP position 5: city of field staff
+               fieldStaffRd.setCity(fs[5] != null ? fs[5].toString() : CCIConstants.EMPTY);
+               // SP position 6: zip/postal code of field staff
+               fieldStaffRd.setZip(fs[6] != null ? fs[6].toString() : CCIConstants.EMPTY);
+               // SP position 7: state of field staff
+               fieldStaffRd.setState(fs[7] != null ? fs[7].toString() : CCIConstants.EMPTY);
+               // SP position 8: is field staff active?
+               fieldStaffRd.setActive(Boolean.valueOf(fs[8].toString()).equals(Boolean.TRUE) ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               // SP position 9: status of the field staff
+               fieldStaffRd.setFsStatus(fs[9] != null ? fs[9].toString() : CCIConstants.EMPTY);
+               count++;
+               /**
+                * Fetch the seasons for field staff based on go id
+                */
+               Query searchFSSeasonsQuery = entityManager.createNativeQuery(SP_FS_SEASONS);
+               searchFSSeasonsQuery.setParameter(1, fsGoId);
+               List<Object[]> fsSeasonsList = searchFSSeasonsQuery.getResultList();
+               if (fsSeasonsList != null && !(fsList.isEmpty())) {
+                  for (Object[] fsSeason : fsSeasonsList) {
+                     if (fsSeason[1] != null && fsSeason[2] != null) {
+                        RDSeasonContact seasonContact = new RDSeasonContact();
+                        int seasonId = Integer.valueOf(fsSeason[1].toString());
+                        int departmentProgrammId = Integer.valueOf(fsSeason[2].toString());
+                        com.ccighgo.service.transport.fieldstaff.beans.rdlist.Contact executiveRegionalDirector = new com.ccighgo.service.transport.fieldstaff.beans.rdlist.Contact();
+                        seasonContact.setSeasonId(seasonId);
+                        seasonContact.setSeasonProgramId(departmentProgrammId);
+                        seasonContact.setSeasonName(fsSeason[3].toString());
+                        seasonContact.setSeasonStatus(fsSeason[6].toString());
+                        /**
+                         * Fetch season contacts based on go id , season id and
+                         * department program id
+                         */
+                        Query searchFSSeasonContactsQuery = entityManager.createNativeQuery(SP_FS_SEASON_CONTACTS);
+                        searchFSSeasonContactsQuery.setParameter(1, fsGoId);
+                        searchFSSeasonContactsQuery.setParameter(2, seasonId);
+                        searchFSSeasonContactsQuery.setParameter(3, departmentProgrammId);
+                        List<Object[]> fsSeasonContactList = searchFSSeasonContactsQuery.getResultList();
+                        if (fsSeasonContactList != null && !(fsSeasonContactList.isEmpty())) {
+                           for (Object[] contact : fsSeasonContactList) {
+                              if (contact[4] != null) {
+                                 if (String.valueOf(contact[4]).equals(CCIConstants.ERD)) {
+                                    executiveRegionalDirector.setPicture(contact[1] != null ? contact[1].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setFirstName(contact[2] != null ? contact[2].toString() : CCIConstants.EMPTY);
+                                    executiveRegionalDirector.setLastName(contact[3] != null ? contact[3].toString() : CCIConstants.EMPTY);
+                                 }
+                              }
+                           }
+                        }
+                        seasonContact.setExecutiveRegionalDirector(executiveRegionalDirector);
+                        rdSeasonContactsList.add(seasonContact);
+                        fieldStaffRd.getRdSeasonContacts().addAll(rdSeasonContactsList);
+                     }
                   }
                }
             }
+            fieldStaffRdsList.add(fieldStaffRd);
          }
          rdList.setCount(count);
+         rdList.getFieldStaffRds().addAll(fieldStaffRdsList);
          rdList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
