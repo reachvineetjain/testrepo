@@ -22,57 +22,41 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
-	private int cciStaffUserId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer cciStaffUserId;
 
-	@Column(nullable=false, length=64)
 	private String cciAdminGuid;
 
-	@Column(length=50)
 	private String city;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(length=15)
 	private String emergencyPhone;
 
-	@Column(nullable=false, length=30)
 	private String firstName;
 
-	@Column(length=100)
 	private String homeAddressLineOne;
 
-	@Column(length=100)
 	private String homeAddressLineTwo;
 
-	@Column(nullable=false, length=30)
 	private String lastName;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=10)
 	private String phoneExtension;
 
-	@Column(length=300)
 	private String photo;
 
-	@Column(length=15)
 	private String primaryPhone;
 
-	@Column(length=20)
 	private String sevisId;
 
 	private Integer supervisorId;
 
-	@Column(length=50)
 	private String zip;
 
 	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate
@@ -84,7 +68,8 @@ public class CCIStaffUser implements Serializable {
 	private List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates;
 
 	//bi-directional many-to-one association to AdminWorkQueueTypeAggregate
-	@OneToMany(mappedBy="ccistaffUser")
+	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
 
 	//bi-directional many-to-one association to CCIStaffUserNote
@@ -130,6 +115,10 @@ public class CCIStaffUser implements Serializable {
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<FieldStaff> fieldStaffs;
 
+	//bi-directional many-to-one association to Partner
+	@OneToMany(mappedBy="ccistaffUser")
+	private List<Partner> partners;
+
 	//bi-directional many-to-one association to PartnerMessage
 	@OneToMany(mappedBy="ccistaffUser")
 	private List<PartnerMessage> partnerMessages;
@@ -157,11 +146,11 @@ public class CCIStaffUser implements Serializable {
 	public CCIStaffUser() {
 	}
 
-	public int getCciStaffUserId() {
+	public Integer getCciStaffUserId() {
 		return this.cciStaffUserId;
 	}
 
-	public void setCciStaffUserId(int cciStaffUserId) {
+	public void setCciStaffUserId(Integer cciStaffUserId) {
 		this.cciStaffUserId = cciStaffUserId;
 	}
 
@@ -507,6 +496,28 @@ public class CCIStaffUser implements Serializable {
 		fieldStaff.setCcistaffUser(null);
 
 		return fieldStaff;
+	}
+
+	public List<Partner> getPartners() {
+		return this.partners;
+	}
+
+	public void setPartners(List<Partner> partners) {
+		this.partners = partners;
+	}
+
+	public Partner addPartner(Partner partner) {
+		getPartners().add(partner);
+		partner.setCcistaffUser(this);
+
+		return partner;
+	}
+
+	public Partner removePartner(Partner partner) {
+		getPartners().remove(partner);
+		partner.setCcistaffUser(null);
+
+		return partner;
 	}
 
 	public List<PartnerMessage> getPartnerMessages() {

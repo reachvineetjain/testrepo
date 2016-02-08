@@ -67,6 +67,8 @@
          <bean id="sevisBatch" class="com.ccighgo.service.rest.sevis.SevisBatch" />
          <bean id="fSDetails" class="com.ccighgo.service.rest.fieldstaff.network.details.FSDetails" />
          <bean id="hFApplicationProcess" class="com.ccighgo.service.rest.hf.participant.application.process.HFApplicationProcess" />
+         <bean id="hfParticipantApplicationSeasons" class="com.ccighgo.service.rest.hf.participant.application.season.HfParticipantApplicationSeasons" />
+         
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />

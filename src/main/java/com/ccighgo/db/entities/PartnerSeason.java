@@ -12,14 +12,12 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="PartnerSeason")
 @NamedQuery(name="PartnerSeason.findAll", query="SELECT p FROM PartnerSeason p")
 public class PartnerSeason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonId;
 
 	private Byte active;
@@ -36,10 +34,8 @@ public class PartnerSeason implements Serializable {
 
 	private Integer contractScheduleId;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -50,27 +46,20 @@ public class PartnerSeason implements Serializable {
 
 	private Byte disableAddParticipant;
 
-	@Column(length=2000)
 	private String exceptionComments;
 
-	@Column(length=200)
 	private String insuranceCarrierName;
 
-	@Column(length=50)
 	private String insurancePhoneNumber;
 
-	@Column(length=100)
 	private String insurancePolicyNumber;
 
 	private Byte insuranceProvidedByCCI;
 
-	@Column(nullable=false)
 	private Byte isSignedContract;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Temporal(TemporalType.TIMESTAMP)

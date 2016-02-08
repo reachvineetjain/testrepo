@@ -16,15 +16,13 @@ public class StateAction implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer stateActionId;
 
-	@Column(length=50)
 	private String action;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="stateTypeId", nullable=false)
+	@JoinColumn(name="stateTypeId")
 	private StateType stateType;
 
 	public StateAction() {

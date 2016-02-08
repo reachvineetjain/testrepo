@@ -31,6 +31,7 @@
                <xsd:element name="partnerCountry" type="pdl:PartnerCountry" minOccurs="1" maxOccurs="1" />
                <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="canHaveSubpartners" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="multiCountrySender" type="xsd:boolean" minOccurs="1" maxOccurs="1" />               
                <xsd:element name="generalContact" type="pdl:CCIContact" minOccurs="1" maxOccurs="1" />
                <xsd:element name="programContacts" type="pdl:ProgramContacts" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="sendLogin" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
@@ -68,6 +69,7 @@
       <xsd:sequence>
       	 <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="cciUserId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="eligible" type="xsd:byte" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

@@ -10,14 +10,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="HostFamilyNote")
 @NamedQuery(name="HostFamilyNote.findAll", query="SELECT h FROM HostFamilyNote h")
 public class HostFamilyNote implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyNoteId;
 
 	private Integer createdBy;

@@ -1,5 +1,6 @@
 package com.ccighgo.service.component.fieldstaffs.participant;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,6 +21,7 @@ import com.ccighgo.service.transport.fieldstaff.beans.placement.adminerdplacemen
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.adminerdmyplacement.AdminMyPlacement;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.adminerdmyplacement.AdminMyPlacements;
 import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
 
 @Component
 public class AdminERDParticipantImp implements AdminERDParticipantInterface {
@@ -35,7 +37,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
    @Autowired
    MessageUtils messageUtil;
 
-   private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?)";
+   private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?,?)";
    private static final String SP_FS_PLACEMENT_LIST = "CALL SPFieldStaffParticipantListing(?,?,?)";
    private static final int ALL_PARTICIPANT_FLAG = 1;
    private static final int MY_TEAM_PARTICIPANT_FLAG = 0;
@@ -43,7 +45,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
    private static final int MY_TEAM_PLACEMENT_FLAG = 1;
 
    @Override
-   public AdminERDParticipants getAll(String goId) {
+   public AdminERDParticipants getAll(String goId, String catagories) {
       LOGGER.info("goid: " + goId);
       AdminERDParticipants erdParticipants = new AdminERDParticipants();
       if (goId != null)
@@ -51,7 +53,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
             query.setParameter(2, ALL_PARTICIPANT_FLAG);
-
+            query.setParameter(3, catagories);
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result != null) {
@@ -69,7 +71,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   esp.setCountry(String.valueOf(obj[4]));
                   esp.setProgram(String.valueOf(obj[5]));
                   esp.setGender(String.valueOf(obj[6]));
-                  esp.setApprovedDate(String.valueOf(obj[7]));
+                  Date dateformat=(Date)obj[7];                 
+                  esp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));
                   esp.setLC(String.valueOf(obj[8]));
                   esp.setRD(String.valueOf(obj[9]));
                   esp.setHS(String.valueOf(obj[10]));
@@ -91,7 +94,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
    }
 
    @Override
-   public AdminERDParticipants getMyTeam(String goId) {
+   public AdminERDParticipants getMyTeam(String goId, String catagories) {
       LOGGER.info("goid: " + goId);
       AdminERDParticipants erdParticipants = new AdminERDParticipants();
       if (goId != null)
@@ -99,7 +102,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             Query query = em.createNativeQuery(SP_FS_PARTICIPANT);
             query.setParameter(1, Integer.valueOf(goId));
             query.setParameter(2, MY_TEAM_PARTICIPANT_FLAG);
-
+            query.setParameter(3, catagories);
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result == null) {
@@ -121,7 +124,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   fsp.setCountry(String.valueOf(obj[4]));
                   fsp.setProgram(String.valueOf(obj[5]));
                   fsp.setGender(String.valueOf(obj[6]));
-                  fsp.setApprovedDate(String.valueOf(obj[7]));
+                  Date dateformat=(Date)obj[7];                 
+                  fsp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));                 
                   fsp.setLC(String.valueOf(obj[8]));
                   fsp.setRD(String.valueOf(obj[9]));
                   fsp.setHS(String.valueOf(obj[10]));
@@ -171,7 +175,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             placement.setCountry(String.valueOf(obj[4]));
             placement.setSeason(String.valueOf(obj[5]));
             placement.setProgram(String.valueOf(obj[6]));
-            placement.setParticipantStatus(String.valueOf(obj[7]));
+            placement.setStatus(String.valueOf(obj[7]));
             placement.setHolds(String.valueOf(obj[8]));
             placement.setPicUrl(String.valueOf(obj[9]));
             placement.setFlagUrl(String.valueOf(obj[9]));
@@ -214,13 +218,13 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             placement.setGoId(String.valueOf(obj[0]));
             placement.setFieldstaffFirstName(String.valueOf(obj[1]));
             placement.setFieldstaffLastName(String.valueOf(obj[2]));
-            placement.setPaxFirstName(String.valueOf(obj[3]));
-            placement.setPaxLastName(String.valueOf(obj[4]));
+            placement.setFirstName(String.valueOf(obj[3]));
+            placement.setLastName(String.valueOf(obj[4]));
             placement.setPartner(String.valueOf(obj[5]));
-            placement.setCountryName(String.valueOf(obj[6]));
-            placement.setSeasonName(String.valueOf(obj[7]));
+            placement.setCountry(String.valueOf(obj[6]));
+            placement.setSeason(String.valueOf(obj[7]));
             placement.setProgram(String.valueOf(obj[8]));
-            placement.setFieldStaffStatus(String.valueOf(obj[9]));
+            placement.setStatus(String.valueOf(obj[9]));
             placement.setHolds(String.valueOf(obj[10]));
             placement.setPaxPhoto(String.valueOf(obj[11]));
             eRDPlacements.getPlacements().add(placement);

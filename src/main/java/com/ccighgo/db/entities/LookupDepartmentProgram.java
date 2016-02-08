@@ -18,25 +18,18 @@ public class LookupDepartmentProgram implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer lookupDepartmentProgramId;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(length=100)
 	private String description;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=50)
 	private String programName;
 
 	//bi-directional many-to-one association to AdminQuickStatsType
@@ -93,7 +86,7 @@ public class LookupDepartmentProgram implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId", nullable=false)
+	@JoinColumn(name="departmentId")
 	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to PartnerHelpOptionProgram

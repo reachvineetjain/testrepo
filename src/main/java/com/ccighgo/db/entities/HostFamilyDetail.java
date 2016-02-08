@@ -10,14 +10,12 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="HostFamilyDetail")
 @NamedQuery(name="HostFamilyDetail.findAll", query="SELECT h FROM HostFamilyDetail h")
 public class HostFamilyDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyDetailsId;
 
 	private Byte active;
@@ -43,6 +41,10 @@ public class HostFamilyDetail implements Serializable {
 	@Lob
 	private String crimeConvictionDetails;
 
+	private String descPaxDietaryRestrictions;
+
+	private String describeDietaryRestrictions;
+
 	private Integer dietaryRestrictions;
 
 	private Byte disability;
@@ -50,46 +52,41 @@ public class HostFamilyDetail implements Serializable {
 	@Lob
 	private String disabilityDetails;
 
-	@Column(length=50)
 	private String drinkAlcohol;
 
 	@Lob
 	private String familyMembers;
 
-	@Column(length=50)
 	private String familySmoker;
 
 	@Lob
 	private String governmentAssistanceMembers;
 
-	@Column(length=50)
 	private String hasAutoInsurance;
 
-	private byte illness;
+	private Byte illness;
 
 	@Lob
 	private String illnessDetails;
 
-	@Column(length=30)
 	private String incomeRange;
 
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
+	private String otherReligiousDetails;
+
 	private Byte participantFollowDiet;
 
-	@Column(length=50)
 	private String preferStudentJoins;
 
 	private Integer problemWithReligiousDifference;
 
 	private Byte receiveGovernmentAssistance;
 
-	@Column(length=30)
 	private String religiousAffiliation;
 
-	@Column(length=30)
 	private String religiousAttendance;
 
 	@Lob
@@ -197,6 +194,22 @@ public class HostFamilyDetail implements Serializable {
 		this.crimeConvictionDetails = crimeConvictionDetails;
 	}
 
+	public String getDescPaxDietaryRestrictions() {
+		return this.descPaxDietaryRestrictions;
+	}
+
+	public void setDescPaxDietaryRestrictions(String descPaxDietaryRestrictions) {
+		this.descPaxDietaryRestrictions = descPaxDietaryRestrictions;
+	}
+
+	public String getDescribeDietaryRestrictions() {
+		return this.describeDietaryRestrictions;
+	}
+
+	public void setDescribeDietaryRestrictions(String describeDietaryRestrictions) {
+		this.describeDietaryRestrictions = describeDietaryRestrictions;
+	}
+
 	public Integer getDietaryRestrictions() {
 		return this.dietaryRestrictions;
 	}
@@ -261,11 +274,11 @@ public class HostFamilyDetail implements Serializable {
 		this.hasAutoInsurance = hasAutoInsurance;
 	}
 
-	public byte getIllness() {
+	public Byte getIllness() {
 		return this.illness;
 	}
 
-	public void setIllness(byte illness) {
+	public void setIllness(Byte illness) {
 		this.illness = illness;
 	}
 
@@ -299,6 +312,14 @@ public class HostFamilyDetail implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public String getOtherReligiousDetails() {
+		return this.otherReligiousDetails;
+	}
+
+	public void setOtherReligiousDetails(String otherReligiousDetails) {
+		this.otherReligiousDetails = otherReligiousDetails;
 	}
 
 	public Byte getParticipantFollowDiet() {

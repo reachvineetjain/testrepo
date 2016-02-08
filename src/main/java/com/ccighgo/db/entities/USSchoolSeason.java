@@ -10,36 +10,31 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="USSchoolSeason")
 @NamedQuery(name="USSchoolSeason.findAll", query="SELECT u FROM USSchoolSeason u")
 public class USSchoolSeason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer usSchoolSeasonId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date schoolEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date schoolStartDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date secondSemStartDate;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
+	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to USSchool
 	@ManyToOne
-	@JoinColumn(name="usSchoolId", nullable=false)
+	@JoinColumn(name="usSchoolId")
 	private USSchool usschool;
 
 	public USSchoolSeason() {

@@ -10,23 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="ParticipantStatus")
 @NamedQuery(name="ParticipantStatus.findAll", query="SELECT p FROM ParticipantStatus p")
 public class ParticipantStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer participantStatusId;
 
 	private Byte active;
 
-	private byte isApplicationStatus;
+	private Byte isApplicationStatus;
 
 	private Byte isPlacementStatus;
 
-	@Column(nullable=false, length=50)
 	private String participantStatusName;
 
 	//bi-directional many-to-one association to Participant
@@ -52,11 +49,11 @@ public class ParticipantStatus implements Serializable {
 		this.active = active;
 	}
 
-	public byte getIsApplicationStatus() {
+	public Byte getIsApplicationStatus() {
 		return this.isApplicationStatus;
 	}
 
-	public void setIsApplicationStatus(byte isApplicationStatus) {
+	public void setIsApplicationStatus(Byte isApplicationStatus) {
 		this.isApplicationStatus = isApplicationStatus;
 	}
 

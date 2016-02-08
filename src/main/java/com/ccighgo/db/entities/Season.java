@@ -16,35 +16,26 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="Season")
 @NamedQuery(name="Season.findAll", query="SELECT s FROM Season s")
 public class Season implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer seasonId;
 
-	@Column(length=50)
 	private String clonedSeasonName;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=50)
 	private String seasonFullName;
 
-	@Column(nullable=false, length=50)
 	private String seasonName;
 
 	//bi-directional many-to-one association to FieldStaffAnnouncement
@@ -99,12 +90,12 @@ public class Season implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId", nullable=false)
+	@JoinColumn(name="departmentId")
 	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="seasonStatusId", nullable=false)
+	@JoinColumn(name="seasonStatusId")
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonCAPDetail

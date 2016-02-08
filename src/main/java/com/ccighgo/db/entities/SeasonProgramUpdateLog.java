@@ -10,20 +10,16 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="SeasonProgramUpdateLog")
 @NamedQuery(name="SeasonProgramUpdateLog.findAll", query="SELECT s FROM SeasonProgramUpdateLog s")
 public class SeasonProgramUpdateLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer updateProgramLogId;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Lob

@@ -23,6 +23,7 @@
                <xsd:element name="ErdDashboardPoints" type="pdl:ErdDashboardPoints" />
                <xsd:element name="ErdDashboardTitles" type="pdl:ErdDashboardTitles" />
                <xsd:element name="account" type="pdl:ErdDashboardAccount"/>
+               <xsd:element name="announcements" type="pdl:ErdDashboardAnnouncements" minOccurs="1" maxOccurs="unbounded"/>
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
@@ -82,6 +83,14 @@
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fieldStaffType" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="ErdDashboardAnnouncements">
+      <xsd:sequence>
+         <xsd:element name="announcement" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

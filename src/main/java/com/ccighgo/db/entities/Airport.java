@@ -10,29 +10,22 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="Airport")
 @NamedQuery(name="Airport.findAll", query="SELECT a FROM Airport a")
 public class Airport implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer airportId;
 
-	@Column(nullable=false)
 	private Byte active;
 
-	@Column(nullable=false, length=50)
 	private String airportCity;
 
-	@Column(nullable=false, length=5)
 	private String airportCode;
 
-	@Column(nullable=false, length=50)
 	private String airportName;
 
-	@Column(nullable=false)
 	private Byte isInternational;
 
 	//bi-directional many-to-one association to HostFamilyAirport

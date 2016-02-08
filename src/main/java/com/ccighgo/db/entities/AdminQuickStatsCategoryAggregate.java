@@ -10,25 +10,20 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="AdminQuickStatsCategoryAggregate")
 @NamedQuery(name="AdminQuickStatsCategoryAggregate.findAll", query="SELECT a FROM AdminQuickStatsCategoryAggregate a")
 public class AdminQuickStatsCategoryAggregate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer adminQSCategoryAggregateId;
 
 	private Integer adminQSCategoryAggregate;
 
-	@Column(length=50)
 	private String adminQSCategoryName;
 
-	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
-	@Column(length=50)
 	private String status;
 
 	//bi-directional many-to-one association to AdminQuickStatsCategory

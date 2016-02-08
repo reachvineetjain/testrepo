@@ -10,20 +10,16 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="StateProcess")
 @NamedQuery(name="StateProcess.findAll", query="SELECT s FROM StateProcess s")
 public class StateProcess implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer stateProcessId;
 
-	@Column(length=50)
 	private String stateProcessName;
 
-	@Column(length=50)
 	private String workQueue;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueType

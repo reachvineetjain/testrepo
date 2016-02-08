@@ -9,22 +9,19 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="HostFamilyDocument")
 @NamedQuery(name="HostFamilyDocument.findAll", query="SELECT h FROM HostFamilyDocument h")
 public class HostFamilyDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyDocumentId;
 
 	private Byte approvedByCCI;
 
-	@Column(length=1000)
 	private String description;
 
-	private byte rejectedByCCI;
+	private Byte rejectedByCCI;
 
 	private Byte submittedToCCI;
 
@@ -65,11 +62,11 @@ public class HostFamilyDocument implements Serializable {
 		this.description = description;
 	}
 
-	public byte getRejectedByCCI() {
+	public Byte getRejectedByCCI() {
 		return this.rejectedByCCI;
 	}
 
-	public void setRejectedByCCI(byte rejectedByCCI) {
+	public void setRejectedByCCI(Byte rejectedByCCI) {
 		this.rejectedByCCI = rejectedByCCI;
 	}
 

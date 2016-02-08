@@ -43,7 +43,7 @@ public interface FieldStaffSeasonService {
    /**
     * @return
     */
-   public FieldStaffStatusList getFieldStaffStatusList();
+   public FieldStaffStatusList getFieldStaffStatusList(Byte fsSeasonStatus);
 
    /**
     * @return
