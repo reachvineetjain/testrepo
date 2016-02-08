@@ -530,14 +530,7 @@ CREATE TABLE IF NOT EXISTS `CCIStaffUserNotes`(
   PRIMARY KEY (`seasonStatusId`)
 );
 
--- -----------------------------------------------------------------------------------------------------------------
--- Table cci_gh_go.FieldStaffAgreement
--- -----------------------------------------------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `FieldStaffAgreement` (
-  `fieldStaffAgreementId` INT(3) NOT NULL ,
-  `agreementName` VARCHAR(50) NOT NULL,
-   PRIMARY KEY (`fieldStaffAgreementId`)
-);
+
 
 -- -----------------------------------------------------------------------------------------------------------------
 -- Table cci_gh_go.PaymentSchedule
@@ -1572,68 +1565,6 @@ CREATE TABLE IF NOT EXISTS `SeasonGeographyConfiguration` (
     ON UPDATE NO ACTION
 );
 
--- -----------------------------------------------------
--- Table `FieldStaffType`
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `FieldStaffType` (
-  `fieldStaffTypeId` INT NOT NULL AUTO_INCREMENT,
-  `fieldStaffTypeCode` VARCHAR(10),
-  `fieldStaffType` VARCHAR(50),
-  PRIMARY KEY (`fieldStaffTypeId`)
- );
- 
-  -- -----------------------------------------------------
--- Table `FieldStaff`
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `FieldStaff` (
-  `fieldStaffId` INT NOT NULL AUTO_INCREMENT,
-  `fieldStaffTypeId` INT,
-  `firstName` VARCHAR(50),
-  `lastName` VARCHAR(50),
-  `photo` VARCHAR(100),
-   PRIMARY KEY (`fieldStaffId`),
-   CONSTRAINT `FK_FieldStaff_FieldStaffType`
-    FOREIGN KEY (`fieldStaffTypeId`)
-    REFERENCES `FieldStaffType` (`fieldStaffTypeId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION   
-);
-
-
--- -----------------------------------------------------
--- Table `FieldStaffLeadershipSeason`
--- ----------------------------------------------------- 
- CREATE TABLE IF NOT EXISTS `FieldStaffLeadershipSeason` (
-  `fieldStaffLeadershipSeasonId` INT NOT NULL AUTO_INCREMENT,
-  `fieldStaffId` INT,
-  `seasonId` INT,
-  `seasonGeographyConfigurationId` INT,
-  `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `createdBy` INT(11) NOT NULL,
-  `modifiedOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `modifiedBy` INT(11) NOT NULL,
-  PRIMARY KEY (`fieldStaffLeadershipSeasonId`),
-  INDEX `FK_FieldStaffLeadershipSeason_Season_idx` (`seasonId` ASC),
-  INDEX `FK_FieldStaffLeadershipSeason_FieldStaff_idx` (`fieldStaffId` ASC),
-  INDEX `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration_idx` (`seasonGeographyConfigurationId` ASC),
-  CONSTRAINT `FK_FieldStaffLeadershipSeason_Season`
-    FOREIGN KEY (`seasonId`)
-    REFERENCES `Season` (`seasonId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_FieldStaffLeadershipSeason_FieldStaff`
-    FOREIGN KEY (`fieldStaffId`)
-    REFERENCES `FieldStaff`(`fieldStaffId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,    
-  CONSTRAINT `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration`
-    FOREIGN KEY (`seasonGeographyConfigurationId`)
-    REFERENCES `SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-);
 
 -- -----------------------------------------------------
 -- Table `FieldStaffLCSeason`
@@ -1676,19 +1607,7 @@ CREATE TABLE IF NOT EXISTS `FieldStaffLCSeason` (
     ON UPDATE NO ACTION
 );
 
--- -----------------------------------------------------
--- Table `HostFamily`
--- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS  `HostFamily` (
-  `hostFamilyGoId` INT NOT NULL,
-  `hostFamilyStatusId` INT(3) NULL,
-  PRIMARY KEY (`hostFamilyGoId`),
-  CONSTRAINT `FK_HostFamily_GoIdSequence`
-    FOREIGN KEY (`hostFamilyGoId`)
-    REFERENCES `GoIdSequence` (`goId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
 -- Table `HostFamilyPermissions`
@@ -3285,3 +3204,1827 @@ CREATE TABLE `WorkQueueHistory` (
   ON DELETE NO ACTION 
   ON UPDATE NO ACTION  
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+-- -----------------------------------------------------
+-- Table `FieldStaffStatus`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffStatus` ;
+CREATE TABLE `FieldStaffStatus` (
+  `fieldStaffStatusId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffStatusName` varchar(50) NOT NULL,
+  `isSeasonStatus` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffStatusId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffType`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffType` ;
+CREATE TABLE `FieldStaffType` (
+  `fieldStaffTypeId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffTypeName` varchar(45) DEFAULT NULL,
+  `fieldStaffTypeCode` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffTypeId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaff`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaff` ;
+CREATE TABLE `FieldStaff` (
+  `fieldStaffGoId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffTypeId` int(11) DEFAULT NULL,
+  `photo` varchar(300) DEFAULT NULL,
+  `salutationId` int(11) DEFAULT NULL,
+  `ERDId` int(11) DEFAULT NULL,
+  `RDId` int(11) DEFAULT NULL,
+  `RMId` int(11) DEFAULT NULL,
+  `firstName` varchar(50) DEFAULT NULL,
+  `lastName` varchar(50) DEFAULT NULL,
+  `mailingAddress1` varchar(100) DEFAULT NULL,
+  `mailingAddress2` varchar(100) DEFAULT NULL,
+  `mailingCity` varchar(100) DEFAULT NULL,
+  `mailingStateId` int(3) DEFAULT NULL,
+  `mailingZipCode` varchar(25) DEFAULT NULL,
+  `currentAddress1` varchar(100) DEFAULT NULL,
+  `currentAddress2` varchar(100) DEFAULT NULL,
+  `currentCity` varchar(100) DEFAULT NULL,
+  `currentStateId` int(3) DEFAULT NULL,
+  `currentZipCode` varchar(25) DEFAULT NULL,
+  `phone` varchar(25) DEFAULT NULL,
+  `tollFreePhone` varchar(25) DEFAULT NULL,
+  `workPhone` varchar(25) DEFAULT NULL,
+  `cellPhone` varchar(25) DEFAULT NULL,
+  `fax` varchar(25) DEFAULT NULL,
+  `emergencyPhone` varchar(25) DEFAULT NULL,
+  `bestTimeToCall` varchar(50) DEFAULT NULL,
+  `whereToCall` varchar(50) DEFAULT NULL,
+  `ssNumber` varchar(15) DEFAULT NULL,
+  `selfDescription` longtext,
+  `communityDescription` longtext,
+  `areaHighSchools` longtext,
+  `fieldStaffStatusId` int(3) DEFAULT NULL,
+  `agreeToTerms` tinyint(1) DEFAULT '0',
+  `residesAlone` tinyint(1) DEFAULT '0',
+  `cciStaffUserId` int(11) DEFAULT NULL,
+  `backgroundCheckPassed` int(11) DEFAULT NULL,
+  `backgroundCheckDate` datetime DEFAULT NULL,
+  `reasonForRejection` tinyint(1) DEFAULT '0',
+  `comments` longtext,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `receiveEmails` tinyint(1) DEFAULT '0',
+  `reasonsForApplying` longtext,
+  `hasBeenARBefore` int(11) DEFAULT NULL,
+  `pastARExperience` longtext,
+  `isCurrentlyAR` int(11) DEFAULT NULL,
+  `hasHostedBefore` int(11) DEFAULT NULL,
+  `pastHostingDetails` longtext,
+  `pastHostingOverview` longtext,
+  `internationalExperienceDetails` longtext,
+  `teenagerExperienceDetails` longtext,
+  `birthDate` datetime DEFAULT NULL,
+  `genderId` int(3) DEFAULT NULL,
+  `voLastSlideViewed` int(11) DEFAULT NULL,
+  `voCompletionDate` datetime DEFAULT NULL,
+  `currentSeasonId` int(11) DEFAULT NULL,
+  `submittedDate` datetime DEFAULT NULL,
+  `approvedDate` datetime DEFAULT NULL,
+  `approvedBy` int(11) DEFAULT NULL,
+  `isBlacklisted` tinyint(1) DEFAULT '0',
+  `isDoNotContact` tinyint(1) DEFAULT '0',
+  `dateDOSCertTestTaken` datetime DEFAULT NULL,
+  `canPresentGrantPax` tinyint(1) DEFAULT NULL,
+  `childServicesContact` int(11) DEFAULT NULL,
+  `childServicesContactDetails` longtext,
+  `dateW9FormReceived` datetime DEFAULT NULL,
+  `crime` int(11) DEFAULT NULL,
+  `crimeDetails` longtext,
+  `agreementNoticeSent` tinyint(1) DEFAULT '0',
+  `originalStartDate` datetime DEFAULT NULL,
+  `totalPlacementsAuto` int(11) DEFAULT NULL,
+  `totalPlacementsManual` int(11) DEFAULT NULL,
+  `currentCommunityVolunteer` tinyint(1) DEFAULT '0',
+  `currentCommunityVolunteerDetails` longtext,
+  `fieldStaffWillingToHostId` int(11) DEFAULT NULL,
+  `interestedInLocalCoordinatorForYear` int(11) DEFAULT NULL,
+  `interestedInLocalCoordinatorForSummer` int(11) DEFAULT NULL,
+  `hostFamilyApplicationStarted` tinyint(1) DEFAULT '0',
+  `bestNumberHome` tinyint(1) DEFAULT '0',
+  `bestNumberWork` tinyint(1) DEFAULT '0',
+  `bestNumberCell` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`fieldStaffGoId`),
+  KEY `FK_FieldStaff_FieldStaffType` (`fieldStaffTypeId`),
+  KEY `FK_FieldStaff_FieldStaffStatus` (`fieldStaffStatusId`),
+  KEY `FK_FieldStaff_LookupUSStates` (`mailingStateId`),
+  KEY `FK_FieldStaff_LookupUSStates1` (`currentStateId`),
+  KEY `FK_FieldStaff_CCIStaffUsers` (`cciStaffUserId`),
+  KEY `FK_FieldStaff_LookupGender` (`genderId`),
+  KEY `FK_FieldStaff_Salutation` (`salutationId`),
+  CONSTRAINT `FK_FieldStaff_CCIStaffUsers` FOREIGN KEY (`cciStaffUserId`) REFERENCES `CCIStaffUsers` (`cciStaffUserId`),
+  CONSTRAINT `FK_FieldStaff_FieldStaffStatus` FOREIGN KEY (`fieldStaffStatusId`) REFERENCES `FieldStaffStatus` (`fieldStaffStatusId`),
+  CONSTRAINT `FK_FieldStaff_FieldStaffType` FOREIGN KEY (`fieldStaffTypeId`) REFERENCES `FieldStaffType` (`fieldStaffTypeId`),
+  CONSTRAINT `FK_FieldStaff_GoIdSequence` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `GoIdSequence` (`goId`),
+  CONSTRAINT `FK_FieldStaff_LookupGender` FOREIGN KEY (`genderId`) REFERENCES `LookupGender` (`genderId`),
+  CONSTRAINT `FK_FieldStaff_LookupUSStates` FOREIGN KEY (`mailingStateId`) REFERENCES `LookupUSStates` (`usStatesId`),
+  CONSTRAINT `FK_FieldStaff_LookupUSStates1` FOREIGN KEY (`currentStateId`) REFERENCES `LookupUSStates` (`usStatesId`),
+  CONSTRAINT `FK_FieldStaff_Salutation` FOREIGN KEY (`salutationId`) REFERENCES `Salutation` (`salutationId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffAgreement`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffAgreement` ;
+CREATE TABLE `FieldStaffAgreement` (
+  `fieldStaffAgreementId` int(11) NOT NULL AUTO_INCREMENT,
+  `agreementName` varchar(50) DEFAULT NULL,
+  `agreementHTML` longtext,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`fieldStaffAgreementId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffAnnouncement`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffAnnouncement` ;
+CREATE TABLE `FieldStaffAnnouncement` (
+  `fieldStaffAnnouncementId` int(11) NOT NULL AUTO_INCREMENT,
+  `announcement` longtext,
+  `title` varchar(250) DEFAULT NULL,
+  `seasonId` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '0',
+  `archived` tinyint(1) DEFAULT '0',
+  `showERD` tinyint(1) DEFAULT '0',
+  `showRD` tinyint(1) DEFAULT '0',
+  `showRM` tinyint(1) DEFAULT '0',
+  `showLC` tinyint(1) DEFAULT '0',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `departmentProgramId` int(11) DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffAnnouncementId`),
+  KEY `FK_FieldStaffAnnouncement_Season` (`seasonId`),
+  KEY `FK_FieldStaffAnnouncement_DepartmentPrograms` (`departmentProgramId`),
+  KEY `FK_FieldStaffAnnouncement_FieldStaff` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FieldStaffAnnouncement_DepartmentPrograms` FOREIGN KEY (`departmentProgramId`) REFERENCES `DepartmentPrograms` (`departmentProgramId`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffAnnouncement_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffAnnouncement_Season` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffDocument`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffDocument` ;
+CREATE TABLE `FieldStaffDocument` (
+  `fieldStaffDocumentId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `documentInformationId` int(11) DEFAULT NULL,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`fieldStaffDocumentId`),
+  KEY `FK_FieldStaffDocument_FieldStaff_idx` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffDocument_DocumentInformation` (`documentInformationId`),
+  CONSTRAINT `FK_FieldStaffDocument_DocumentInformation` FOREIGN KEY (`documentInformationId`) REFERENCES `DocumentInformation` (`documentInformationId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffDocument_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffFamilyMember`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffFamilyMember` ;
+CREATE TABLE `FieldStaffFamilyMember` (
+  `fieldStaffFamilyMemberId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `firstName` varchar(100) DEFAULT NULL,
+  `lastName` varchar(100) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `genderId` int(11) DEFAULT NULL,
+  `relationship` varchar(100) DEFAULT NULL,
+  `livingAtHome` tinyint(1) DEFAULT '0',
+  `backgroundCheckPassed` int(11) DEFAULT NULL,
+  `backgroundCheckDate` datetime DEFAULT NULL,
+  `reasonForRejection` tinyint(1) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '0',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffFamilyMemberId`),
+  KEY `FK_FieldStaffFamilyMember_FieldStaff_idx` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffFamilyMember_LookupGender` (`genderId`),
+  CONSTRAINT `FK_FieldStaffFamilyMember_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffFamilyMember_LookupGender` FOREIGN KEY (`genderId`) REFERENCES `LookupGender` (`genderId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffHistory`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffHistory` ;
+CREATE TABLE `FieldStaffHistory` (
+  `fieldStaffHistoryId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `oldFieldStaffTypeId` int(11) DEFAULT NULL,
+  `newFieldStffTypeId` int(11) DEFAULT NULL,
+  `changeDate` datetime DEFAULT NULL,
+  `seasonId` int(11) DEFAULT NULL,
+  `departmentProgramId` int(11) DEFAULT NULL,
+  `erdId` int(11) DEFAULT NULL,
+  `rdId` int(11) DEFAULT NULL,
+  `rmId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffHistoryId`),
+  KEY `FK_FieldStaffHistory_FieldStaff` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffHistory_Season` (`seasonId`),
+  KEY `FK_FieldStaffHistory_DepartmentProgram` (`departmentProgramId`),
+  CONSTRAINT `FK_FieldStaffHistory_DepartmentProgram` FOREIGN KEY (`departmentProgramId`) REFERENCES `DepartmentPrograms` (`departmentProgramId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffHistory_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffHistory_Season` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffLeadershipSeason`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffLeadershipSeason` ;
+CREATE TABLE `FieldStaffLeadershipSeason` (
+  `fieldStaffLeadershipSeasonId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `seasonId` int(11) DEFAULT NULL,
+  `seasonGeographyConfigurationId` int(11) DEFAULT NULL,
+  `createdBy` int(11) DEFAULT NULL,
+  `createdOn` datetime DEFAULT NULL,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `modifiedOn` datetime DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffLeadershipSeasonId`),
+  KEY `FK_FieldStaffLeadershipSeason_FieldStaff_idx` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffLeadershipSeason_Season` (`seasonId`),
+  KEY `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`),
+  CONSTRAINT `FK_FieldStaffLeadershipSeason_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLeadershipSeason_Season` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffLeadershipSeason_SeasonGeographyConfiguration` FOREIGN KEY (`seasonGeographyConfigurationId`) REFERENCES `SeasonGeographyConfiguration` (`seasonGeographyConfigurationId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffNoteTopics`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffNoteTopics` ;
+CREATE TABLE `FieldStaffNoteTopics` (
+  `fieldStaffNoteTopicsId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffNoteTopicName` varchar(50) DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `isPublic` tinyint(1) DEFAULT '0',
+  `title` varchar(50) DEFAULT NULL,
+  `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffNoteTopicsId`),
+  KEY `FK_FieldStaffNoteTopics_FieldStaff` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FieldStaffNoteTopics_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffNote`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffNote` ;
+CREATE TABLE `FieldStaffNote` (
+  `fieldStaffNoteId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffNoteTopicsId` int(11) DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `fieldStaffNote` longtext,
+  `hasRead` tinyint(1) DEFAULT '0',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`fieldStaffNoteId`),
+  KEY `FK_FieldStaffNote_FieldStaff_idx` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffNote_FieldStaffNoteTopics` (`fieldStaffNoteTopicsId`),
+  CONSTRAINT `FK_FieldStaffNote_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffNote_FieldStaffNoteTopics` FOREIGN KEY (`fieldStaffNoteTopicsId`) REFERENCES `FieldStaffNoteTopics` (`fieldStaffNoteTopicsId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffParticipant`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffParticipant` ;
+CREATE TABLE `FieldStaffParticipant` (
+  `fieldStaffParticipantId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `participantGoId` int(11) DEFAULT NULL,
+  `holdRequested` tinyint(1) DEFAULT '0',
+  `holdRequestedDate` datetime DEFAULT NULL,
+  `holdExpirationDate` datetime DEFAULT NULL,
+  `holdExpirationWarningDate` datetime DEFAULT NULL,
+  `startDate` datetime DEFAULT NULL,
+  `endDate` datetime DEFAULT NULL,
+  `adjustedEndDate` datetime DEFAULT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `isDirectPlacement` tinyint(1) DEFAULT '0',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`fieldStaffParticipantId`),
+  KEY `FK_FieldStaffParticipant_FieldStaff_idx` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffParticipant_Participants` (`participantGoId`),
+  CONSTRAINT `FK_FieldStaffParticipant_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffParticipant_Participants` FOREIGN KEY (`participantGoId`) REFERENCES `Participants` (`participantGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffPermissions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffPermissions` ;
+CREATE TABLE `FieldStaffPermissions` (
+  `fieldStaffPermissionsId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffPermissionsId`),
+  KEY `FK_FieldStaffPermission_FieldStaff_idx` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FieldStaffPermission_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffQuickStatsType`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffQuickStatsType` ;
+CREATE TABLE `FieldStaffQuickStatsType` (
+  `fieldStaffQSTypeId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffQSTypeName` varchar(50) DEFAULT NULL,
+  `lookupDepartmentProgramId` int(3) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffQSTypeId`),
+  KEY `FK_FieldStaffQSType_LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FieldStaffQSType_LookupDepartmentPrograms` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffQuickStatsCategoryAggregate`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffQuickStatsCategories` ;
+CREATE TABLE `FieldStaffQuickStatsCategories` (
+  `fieldStaffQSCategoryId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffQSCategoryName` varchar(50) DEFAULT NULL,
+  `fieldStaffQSTypeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffQSCategoryId`),
+  KEY `FK_FSQuickStatsCategories_FSQuickStatsType` (`fieldStaffQSTypeId`),
+  CONSTRAINT `FK_FSQuickStatsCategories_FSQuickStatsType` FOREIGN KEY (`fieldStaffQSTypeId`) REFERENCES `FieldStaffQuickStatsType` (`fieldStaffQSTypeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffQuickStatsCategoryAggregate`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffQuickStatsCategoryAggregate` ;
+CREATE TABLE `FieldStaffQuickStatsCategoryAggregate` (
+  `fieldStaffQSCategoryAggregateId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffQSCategoryId` int(11) DEFAULT NULL,
+  `fieldStaffQSCategoryName` varchar(50) DEFAULT NULL,
+  `fieldStaffQSTypeId` int(11) DEFAULT NULL,
+  `fieldStaffQSCategoryAggregate` int(11) DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `lookupDepartmentProgramId` int(11) DEFAULT NULL,
+  `modifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fieldStaffQSCategoryAggregateId`),
+  KEY `FK_FSQSCategoryAggregate_FSQSCategories` (`fieldStaffQSCategoryId`),
+  KEY `FK_FSQSCategoryAggregate_FSQSType` (`fieldStaffQSTypeId`),
+  KEY `FK_FSQSCategoryAggregate_FieldStaff` (`fieldStaffGoId`),
+  KEY `FK_FSQSCategoryAggregate_LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FSQSCategoryAggregate_FSQSCategories` FOREIGN KEY (`fieldStaffQSCategoryId`) REFERENCES `FieldStaffQuickStatsCategories` (`fieldStaffQSCategoryId`),
+  CONSTRAINT `FK_FSQSCategoryAggregate_FSQSType` FOREIGN KEY (`fieldStaffQSTypeId`) REFERENCES `FieldStaffQuickStatsType` (`fieldStaffQSTypeId`),
+  CONSTRAINT `FK_FSQSCategoryAggregate_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FSQSCategoryAggregate_LookupDepartmentPrograms` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- -----------------------------------------------------
+-- Table `FieldStaffQuickStatsTypeAggregate`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffQuickStatsTypeAggregate` ;
+CREATE TABLE `FieldStaffQuickStatsTypeAggregate` (
+  `fieldStaffQSTypeAggregateId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffQSTypeId` int(11) DEFAULT NULL,
+  `fieldStaffQSTypeName` varchar(50) DEFAULT NULL,
+  `fieldStaffQSTypeAggregate` int(11) DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `lookupDepartmentProgramId` int(11) DEFAULT NULL,
+  `modifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fieldStaffQSTypeAggregateId`),
+  KEY `FK_FSQSTypeAggregate_FieldStaffQSType` (`fieldStaffQSTypeId`),
+  KEY `FK_FSQSTypeAggregate_FieldStaff` (`fieldStaffGoId`),
+  KEY `FK_FSQSTypeAggregate_LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FSQSTypeAggregate_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FSQSTypeAggregate_FieldStaffQSType` FOREIGN KEY (`fieldStaffQSTypeId`) REFERENCES `FieldStaffQuickStatsType` (`fieldStaffQSTypeId`),
+  CONSTRAINT `FK_FSQSTypeAggregate_LookupDepartmentPrograms` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffReferences`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffReferences` ;
+CREATE TABLE `FieldStaffReferences` (
+  `feldStaffReferencesId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `firstName` varchar(50) DEFAULT NULL,
+  `lastName` varchar(45) DEFAULT NULL,
+  `streetAddress` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `stateId` int(11) DEFAULT NULL,
+  `zipCode` varchar(25) DEFAULT NULL,
+  `phone` varchar(25) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `relationshipToApplicant` varchar(100) DEFAULT NULL,
+  `monthsKnown` int(11) DEFAULT NULL,
+  `yearsKnown` int(11) DEFAULT NULL,
+  `knownFamilyMethod` varchar(50) DEFAULT NULL,
+  `ownChildSupervised` int(11) DEFAULT NULL,
+  `ownChildReasons` longtext,
+  `objectivityRating` varchar(20) DEFAULT NULL,
+  `warmthRating` varchar(20) DEFAULT NULL,
+  `maturityRating` varchar(20) DEFAULT NULL,
+  `flexibilityRating` varchar(20) DEFAULT NULL,
+  `teenRating` varchar(20) DEFAULT NULL,
+  `communityRating` varchar(20) DEFAULT NULL,
+  `comments` longtext,
+  `dateOfReference` datetime DEFAULT NULL,
+  `needsPhoneCall` tinyint(1) DEFAULT '0',
+  `submitted` tinyint(1) DEFAULT '0',
+  `approved` tinyint(1) DEFAULT '0',
+  `rejected` tinyint(1) DEFAULT '0',
+  `emailSent` tinyint(1) DEFAULT '0',
+  `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modifiedBy` int(11) DEFAULT NULL,
+  PRIMARY KEY (`feldStaffReferencesId`),
+  KEY `FK_FieldStaffReferences_FieldStaff_idx` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffReferences_LookupUSStates` (`stateId`),
+  CONSTRAINT `FK_FieldStaffReferences_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffReferences_LookupUSStates` FOREIGN KEY (`stateId`) REFERENCES `LookupUSStates` (`usStatesId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffSeason`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffSeason` ;
+CREATE TABLE `FieldStaffSeason` (
+  `filedStaffSeasonId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `fieldStaffSeasonStatusId` int(11) DEFAULT NULL,
+  `seasonId` int(11) DEFAULT NULL,
+  `departmentProgramId` int(11) DEFAULT NULL,
+  `paymentScheduleId` int(11) DEFAULT NULL,
+  `defaultMonitoringStipendId` int(11) DEFAULT NULL,
+  `agreeToTerms` tinyint(1) DEFAULT '0',
+  `signature` varchar(100) DEFAULT NULL,
+  `signedDate` datetime DEFAULT NULL,
+  `canRepresentGrantPax` tinyint(1) DEFAULT '0',
+  `isRecruiterLC` tinyint(1) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '0',
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` int(11) DEFAULT NULL,
+  PRIMARY KEY (`filedStaffSeasonId`),
+  KEY `FK_FiledStaffSeason_FieldStaff_idx` (`fieldStaffGoId`),
+  KEY `FK_FiledStaffSeason_Season` (`seasonId`),
+  KEY `FK_FiledStaffSeason_DeptProgram` (`departmentProgramId`),
+  KEY `FK_FiledStaffSeason_PaymentSchedule` (`paymentScheduleId`),
+  KEY `FK_FiledStaffSeason_FieldStaffStatus` (`fieldStaffSeasonStatusId`),
+  CONSTRAINT `FK_FiledStaffSeason_DeptProgram` FOREIGN KEY (`departmentProgramId`) REFERENCES `DepartmentPrograms` (`departmentProgramId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FiledStaffSeason_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FiledStaffSeason_FieldStaffStatus` FOREIGN KEY (`fieldStaffSeasonStatusId`) REFERENCES `FieldStaffStatus` (`fieldStaffStatusId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FiledStaffSeason_PaymentSchedule` FOREIGN KEY (`paymentScheduleId`) REFERENCES `PaymentSchedule` (`paymentScheduleId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FiledStaffSeason_Season` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffSeasonDocument`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffSeasonDocument` ;
+CREATE TABLE `FieldStaffSeasonDocument` (
+  `fieldStaffSeasonDocumentId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffSeasonId` int(11) DEFAULT NULL,
+  `documentInformationId` int(11) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `submittedToCCI` tinyint(1) DEFAULT '0',
+  `approvedByCCI` tinyint(1) DEFAULT '0',
+  `rejectionMessage` varchar(150) DEFAULT NULL,
+  `approvedDate` datetime DEFAULT NULL,
+  `submittedDate` datetime DEFAULT NULL,
+  `createdOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` int(11) DEFAULT NULL,
+  `modfiedOn` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`fieldStaffSeasonDocumentId`),
+  KEY `FK_FieldStaffSeasonDocument_FieldStaffSeason_idx` (`fieldStaffSeasonId`),
+  KEY `FK_FieldStaffLSeasonDocument_DocumentInformation` (`documentInformationId`),
+  CONSTRAINT `FK_FieldStaffLSeasonDocument_DocumentInformation` FOREIGN KEY (`documentInformationId`) REFERENCES `DocumentInformation` (`documentInformationId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FieldStaffSeasonDocument_FieldStaffSeason` FOREIGN KEY (`fieldStaffSeasonId`) REFERENCES `FieldStaffSeason` (`filedStaffSeasonId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffWorkQueueType`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffWorkQueueType` ;
+CREATE TABLE `FieldStaffWorkQueueType` (
+  `fieldStaffWQTypeId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffWQTypeName` varchar(50) DEFAULT NULL,
+  `lookupDepartmentProgramId` int(11) DEFAULT NULL,
+  `stateProcessId` int(11) DEFAULT NULL,
+  `displayWQTypeName` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffWQTypeId`),
+  KEY `FK_FieldStaffWQType_LookupDepartment` (`lookupDepartmentProgramId`),
+  KEY `FK_FieldStaffWQType_StateProcess` (`stateProcessId`),
+  CONSTRAINT `FK_FieldStaffWQType_LookupDepartment` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FieldStaffWQType_StateProcess` FOREIGN KEY (`stateProcessId`) REFERENCES `StateProcess` (`stateProcessId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffWorkQueueCategories`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffWorkQueueCategories` ;
+CREATE TABLE `FieldStaffWorkQueueCategories` (
+  `fieldStaffWQCategoryId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffWQCategoryName` varchar(50) DEFAULT NULL,
+  `fieldStaffWQTypeId` int(11) NOT NULL,
+  PRIMARY KEY (`fieldStaffWQCategoryId`),
+  KEY `FK_FSWorkQueueCategories_FSWorkQueueType_idx` (`fieldStaffWQTypeId`),
+  CONSTRAINT `FK_FSWorkQueueCategories_FSWorkQueueType` FOREIGN KEY (`fieldStaffWQTypeId`) REFERENCES `FieldStaffWorkQueueType` (`fieldStaffWQTypeId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `FieldStaffWorkQueue`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffWorkQueue` ;
+CREATE TABLE `FieldStaffWorkQueue` (
+  `fieldStaffWQId` int(11) NOT NULL AUTO_INCREMENT,
+  `createdDate` datetime DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `seasonId` int(11) DEFAULT NULL,
+  `departmentProgramId` int(3) DEFAULT NULL,
+  `fieldStaffWQTypeId` int(11) DEFAULT NULL,
+  `fieldStaffWQCategoryId` int(11) DEFAULT NULL,
+  `stateTypeId` int(11) DEFAULT NULL,
+  `lookupDepartmentProgramId` int(3) DEFAULT NULL,
+  `targetGoId` int(11) DEFAULT NULL,
+  `targetRoleType` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`fieldStaffWQId`),
+  KEY `FK_FieldStaffWQ_FieldStaff` (`fieldStaffGoId`),
+  KEY `FK_FieldStaffWQ_Season` (`seasonId`),
+  KEY `FK_FieldStaffWQ_DepartmentProgram` (`departmentProgramId`),
+  KEY `FK_FieldStaffWQ_FieldStaffWQType` (`fieldStaffWQTypeId`),
+  KEY `FK_FieldStaffWQ_FieldStaffWQCategory` (`fieldStaffWQCategoryId`),
+  KEY `FK_FieldStaffWQ_StateType` (`stateTypeId`),
+  KEY `FK_FieldStaffWQ_LookupDepartmentPRogram` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FieldStaffWQ_DepartmentProgram` FOREIGN KEY (`departmentProgramId`) REFERENCES `DepartmentPrograms` (`departmentProgramId`),
+  CONSTRAINT `FK_FieldStaffWQ_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FieldStaffWQ_FieldStaffWQCategory` FOREIGN KEY (`fieldStaffWQCategoryId`) REFERENCES `FieldStaffWorkQueueCategories` (`fieldStaffWQCategoryId`),
+  CONSTRAINT `FK_FieldStaffWQ_FieldStaffWQType` FOREIGN KEY (`fieldStaffWQTypeId`) REFERENCES `FieldStaffWorkQueueType` (`fieldStaffWQTypeId`),
+  CONSTRAINT `FK_FieldStaffWQ_LookupDepartmentPRogram` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FieldStaffWQ_Season` FOREIGN KEY (`seasonId`) REFERENCES `Season` (`seasonId`),
+  CONSTRAINT `FK_FieldStaffrWQ_StateType` FOREIGN KEY (`stateTypeId`) REFERENCES `StateTypes` (`stateTypeId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+
+-- -----------------------------------------------------
+-- Table `FieldStaffWorkQueueCategoryAggregate`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffWorkQueueCategoryAggregate` ;
+CREATE TABLE `FieldStaffWorkQueueCategoryAggregate` (
+  `fieldStaffWQCategoryAggregateId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffWQCategoryId` int(11) DEFAULT NULL,
+  `fieldStaffWQTypeId` int(11) DEFAULT NULL,
+  `fieldStaffWQCategoryName` varchar(50) DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `lookupDepartmentProgramId` int(11) DEFAULT NULL,
+  `fieldStaffWQCategoryAggregate` int(11) DEFAULT NULL,
+  `modifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fieldStaffWQCategoryAggregateId`),
+  KEY `FK_FSWQCategoryAggregate_FSWQCategory` (`fieldStaffWQCategoryId`),
+  KEY `FK_FSWQCategoryAggregate_FSWQType` (`fieldStaffWQTypeId`),
+  KEY `FK_FSWQCategoryAggregate_FieldStaff` (`fieldStaffGoId`),
+  KEY `FK_FSWQCategoryAggregate_LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FSWQCategoryAggregate_FSWQCategory` FOREIGN KEY (`fieldStaffWQCategoryId`) REFERENCES `FieldStaffWorkQueueCategories` (`fieldStaffWQCategoryId`),
+  CONSTRAINT `FK_FSWQCategoryAggregate_FSWorkQueueType` FOREIGN KEY (`fieldStaffWQTypeId`) REFERENCES `FieldStaffWorkQueueType` (`fieldStaffWQTypeId`),
+  CONSTRAINT `FK_FSWQCategoryAggregate_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FSWQCategoryAggregate_LookupDepartmentPrograms` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+
+-- -----------------------------------------------------
+-- Table `FieldStaffWorkQueueTypeAggregate`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `FieldStaffWorkQueueTypeAggregate` ;
+CREATE TABLE `FieldStaffWorkQueueTypeAggregate` (
+  `fieldStaffWQTypeAggregateId` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldStaffWQTypeId` int(11) DEFAULT NULL,
+  `fieldStaffWQTypeName` varchar(50) DEFAULT NULL,
+  `fieldStaffGoId` int(11) DEFAULT NULL,
+  `lookupDepartmentProgramId` int(11) DEFAULT NULL,
+  `fieldStaffWQTypeAggregate` int(11) DEFAULT NULL,
+  `modifiedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fieldStaffWQTypeAggregateId`),
+  KEY `FK_FSWQTypeAggregate_FSWorkQueueType` (`fieldStaffWQTypeId`),
+  KEY `FK_FSWQTypeAggregate_FieldStaff` (`fieldStaffGoId`),
+  KEY `FK_FSWQTypeAggregate_LookupDepartmentPrograms` (`lookupDepartmentProgramId`),
+  CONSTRAINT `FK_FSWQTypeAggregate_FSWorkQueueType` FOREIGN KEY (`fieldStaffWQTypeId`) REFERENCES `FieldStaffWorkQueueType` (`fieldStaffWQTypeId`),
+  CONSTRAINT `FK_FSWQTypeAggregate_FieldStaff` FOREIGN KEY (`fieldStaffGoId`) REFERENCES `FieldStaff` (`fieldStaffGoId`),
+  CONSTRAINT `FK_FSWQTypeAggregate_LookupDepartmentPrograms` FOREIGN KEY (`lookupDepartmentProgramId`) REFERENCES `LookupDepartmentPrograms` (`lookupDepartmentProgramId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `HostFamilyStatus`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyStatus` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyStatus` (
+  `hostFamilyStatusId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilyStatusName` VARCHAR(50) NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `isSeasonStatus` TINYINT(1) NULL DEFAULT 0,
+  `isParticipantStatus` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyStatusId`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `HostFamily`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamily` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamily` (
+  `hostFamilyGoId` INT NOT NULL,
+  `hostFamilyStatusId` INT NULL,
+  `firstName` VARCHAR(50) NULL,
+  `lastName` VARCHAR(50) NULL,
+  `phone` VARCHAR(25) NULL,
+  `mailingAddress1` VARCHAR(50) NULL,
+  `mailingAddress2` VARCHAR(50) NULL,
+  `mailingCity` VARCHAR(50) NULL,
+  `mailingStateId` INT NULL,
+  `mailingZipCode` VARCHAR(25) NULL,
+  `physicalAddress1` VARCHAR(50) NULL,
+  `physicalAddress2` VARCHAR(50) NULL,
+  `physicalCity` VARCHAR(50) NULL,
+  `physicalStateId` INT NULL,
+  `physicalCountryId` INT NULL,
+  `physicalZipCode` VARCHAR(25) NULL,
+  `currentSeasonId` INT NULL,
+  `receiveEmails` TINYINT(1) NULL DEFAULT 0,
+  `isBlacklisted` TINYINT(1) NULL DEFAULT 0,
+  `isDoNotContact` TINYINT(1) NULL DEFAULT 0,
+  `isNotQuilified` TINYINT(1) NULL DEFAULT 0,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `liveAlone` TINYINT(1) NULL DEFAULT 0,
+  `hasHomeBusiness` TINYINT(1) NULL DEFAULT 0,
+  `homeBusinessType` TEXT NULL,
+  `skipIntroScreen` TINYINT(1) NULL DEFAULT 0,
+  `mailingAddressSameAsCurrentAddress` TINYINT(1) NULL DEFAULT 0,
+  `haveAHomePhone` TINYINT(1) NULL,
+  `homePhone` VARCHAR(25) NULL,
+  `bestContactNumberToReach` VARCHAR(50) NULL,
+  `bestWayToReachYou` VARCHAR(50) NULL,
+  `emergencyContact` VARCHAR(100) NULL,
+  `emergencyPhone` VARCHAR(25) NULL,
+  PRIMARY KEY (`hostFamilyGoId`),
+  INDEX `FK_HostFamily_HostFamilyStatus_idx` (`hostFamilyStatusId` ASC),
+  CONSTRAINT `FK_HostFamily_HostFamilyStatus`
+    FOREIGN KEY (`hostFamilyStatusId`)
+    REFERENCES `HostFamilyStatus` (`hostFamilyStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamily_GoIdSequence`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `GoIdSequence` (`goId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamily_LookupUSStates`
+    FOREIGN KEY (`mailingStateId`)
+    REFERENCES `LookupUSStates` (`usStatesId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamily_LookupUSStates1`
+    FOREIGN KEY (`physicalStateId`)
+    REFERENCES `LookupUSStates` (`usStatesId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamily_LookupCountries`
+    FOREIGN KEY (`physicalCountryId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamily_Season`
+    FOREIGN KEY (`currentSeasonId`)
+    REFERENCES `Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Airport`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Airport` ;
+
+CREATE TABLE IF NOT EXISTS `Airport` (
+  `airportid` INT NOT NULL AUTO_INCREMENT,
+  `airportName` VARCHAR(50) NOT NULL,
+  `airportCity` VARCHAR(50) NOT NULL,
+  `airportCode` VARCHAR(5) NOT NULL,
+  `active` TINYINT(1) NOT NULL,
+  `isInternational` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`airportid`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyAirport`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyAirport` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyAirport` (
+  `hostFamilyAirportId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilyGoId` INT NULL,
+  `airportId` INT NULL,
+  `distanceToAirport` INT NULL,
+  `createdBy` INT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `active` TINYINT(1) NULL,
+  PRIMARY KEY (`hostFamilyAirportId`),
+  INDEX `FK_HostFamilyAirport_HostFamily_idx` (`hostFamilyGoId` ASC),
+  INDEX `FK_HostFamilyAirport_Airport_idx` (`airportId` ASC),
+  CONSTRAINT `FK_HostFamilyAirport_HostFamily`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyAirport_Airport`
+    FOREIGN KEY (`airportId`)
+    REFERENCES `Airport` (`airportid`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyAnnouncement`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyAnnouncement` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyAnnouncement` (
+  `hostFamilyAnnouncementId` INT NOT NULL AUTO_INCREMENT,
+  `announcement` TEXT NULL,
+  `title` VARCHAR(300) NULL,
+  `seasonId` INT NULL,
+  `departmentProgramId` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `archived` TINYINT(1) NULL DEFAULT 0,
+  `currentlyHosting` TINYINT(1) NULL DEFAULT 0,
+  `unplaced` TINYINT(1) NULL DEFAULT 0,
+  `createdBy` INT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  PRIMARY KEY (`hostFamilyAnnouncementId`),
+    CONSTRAINT `FK_HostFamilyAnnouncement_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+    CONSTRAINT `FK_HostFamilyAnnouncement_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilySeason`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilySeason` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilySeason` (
+  `hostFamilySeasonId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilyGoId` INT NULL,
+  `seasonId` INT NULL,
+  `departmentProgramId` INT NULL,
+  `hostFamilySeasonStatusId` INT NULL,
+  `areaRepresentativeId` INT NULL,
+  `regionalManagerId` INT NULL,
+  `regionalDirectorId` INT NULL,
+  `paymentScheduleId` INT NULL,
+  `learnAboutCCIMethod` TEXT NULL,
+  `localNewspaperName` TEXT NULL,
+  `recommendHost` INT NULL,
+  `hostRecommendationsName` VARCHAR(100) NULL,
+  `hostRecommendationsPhone` VARCHAR(100) NULL,
+  `agreeToTerms` TINYINT(1) NULL,
+  `signature` VARCHAR(100) NULL,
+  `rejectionReason` TEXT NULL,
+  `hasNoChildren` TINYINT(1) NULL DEFAULT 0,
+  `createdOn` DATETIME NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `applicationSubmittedDate` DATETIME NULL,
+  `applicationApprovedDate` DATETIME NULL,
+  `isDoublePlacement` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilySeasonId`),
+  INDEX `FK_HostFamilySeason_HostFamily_idx` (`hostFamilyGoId` ASC),
+  INDEX `FK_HostFamilySeason_HostFamilyStatus_idx` (`hostFamilySeasonStatusId` ASC),
+  CONSTRAINT `FK_HostFamilySeason_HostFamily`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilySeason_HostFamilyStatus`
+    FOREIGN KEY (`hostFamilySeasonStatusId`)
+    REFERENCES `HostFamilyStatus` (`hostFamilyStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilySeason_Season`
+    FOREIGN KEY (`seasonId`)
+    REFERENCES `Season` (`seasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilySeason_DepartmentPrograms`
+    FOREIGN KEY (`departmentProgramId`)
+    REFERENCES `DepartmentPrograms` (`departmentProgramId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilySeason_PaymentSchedule`
+    FOREIGN KEY (`paymentScheduleId`)
+    REFERENCES `PaymentSchedule` (`paymentScheduleId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyCommunity`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyCommunity` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyCommunity` (
+  `hostFamilyCommunityId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `population` VARCHAR(50) NULL,
+  `cityWebsite` VARCHAR(50) NULL,
+  `nearestCity` VARCHAR(50) NULL,
+  `cityPopulation` VARCHAR(50) NULL,
+  `distanceFromCity` VARCHAR(50) NULL,
+  `usRegion` VARCHAR(50) NULL,
+  `placesOfInterest` TEXT NULL,
+  `areasToAvoid` TEXT NULL,
+  `volunteeringOpportunitiesCommunity` TEXT NULL,
+  `schoolTravelMethod` VARCHAR(100) NULL,
+  `distanceToSchool` VARCHAR(50) NULL,
+  `transportationToActivities` TINYINT(1) NULL DEFAULT 0,
+  `transportationToActivitiesDetails` TEXT NULL,
+  `childrenEnrolled` TEXT NULL,
+  `childrenActivities` TEXT NULL,
+  `contactedByCoach` TINYINT(1) NULL DEFAULT 0,
+  `contactByCoachDetails` TEXT NULL,
+  `parentIsTeacher` TINYINT(1) NULL DEFAULT 0,
+  `parentIsTeacherDetails` TEXT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `communityDetails` TEXT NULL,
+  `involvedInVolunteerService` TINYINT(1) NULL DEFAULT 0,
+  `involvedInVolunteerServiceDetails` TEXT NULL,
+  PRIMARY KEY (`hostFamilyCommunityId`),
+  INDEX `FK_HostFamilyCommunity_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyCommunity_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyDetail`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyDetail` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyDetail` (
+  `hostFamilyDetailsId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `familyMembers` TEXT NULL,
+  `adaptCircumtances` TEXT NULL,
+  `houseHoldActivity` VARCHAR(25) NULL,
+  `typicalWeekday` TEXT NULL,
+  `typicalWeekend` TEXT NULL,
+  `specialWeekend` TEXT NULL,
+  `religiousAffiliation` VARCHAR(30) NULL,
+  `otherReligiousDetails` VARCHAR(100) NULL,
+  `religiousAttendance` VARCHAR(30) NULL,
+  `preferStudentJoins` VARCHAR(50) NULL,
+  `problemWithReligiousDifference` TINYINT(1) NULL,
+  `agreeToServeMeals` TINYINT(1) NULL,
+  `dietaryRestrictions` TINYINT(1) NULL,
+  `describeDietaryRestrictions` VARCHAR(50) NULL,
+  `participantFollowDiet` TINYINT(1) NULL,
+  `descPaxDietaryRestrictions` VARCHAR(50) NULL,
+  `comfortableHostingDiet` TINYINT(1) NULL,
+  `hasAutoInsurance` VARCHAR(50) NULL,
+  `familySmoker` VARCHAR(50) NULL,
+  `drinkAlcohol` VARCHAR(50) NULL,
+  `illness` TINYINT(1) NULL,
+  `illnessDetails` TEXT NULL,
+  `disability` TINYINT(1) NULL,
+  `disabilityDetails` TEXT NULL,
+  `crimeConviction` TINYINT(1) NULL,
+  `crimeConvictionDetails` TEXT NULL,
+  `childServicesContact` TINYINT(1) NULL,
+  `childServicesContactDetails` TEXT NULL,
+  `incomeRange` VARCHAR(30) NULL,
+  `receiveGovernmentAssistance` TINYINT(1) NULL,
+  `governmentAssistanceMembers` TEXT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL,
+  PRIMARY KEY (`hostFamilyDetailsId`),
+  INDEX `FK_HostFamilyDetails_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyDetails_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyHome`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyHome` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyHome` (
+  `hostFamilyHomeId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `homeType` VARCHAR(30) NULL,
+  `homeLocation` VARCHAR(30) NULL,
+  `homeDescription` TEXT NULL,
+  `sharesBedroom` TINYINT(1) NULL DEFAULT 0,
+  `sharesBedroomWith` VARCHAR(50) NULL,
+  `sharingBedroomGenderId` INT NULL,
+  `sharingAge` INT(3) NULL,
+  `sharingOther` VARCHAR(50) NULL,
+  `extraFacilities` TEXT NULL,
+  `isStudentsRoomBasement` TINYINT(1) NULL DEFAULT 0,
+  `exitBasement` TINYINT(1) NULL,
+  `studentHomeNeighbourhood` TEXT NULL,
+  `residenceSiteFunctioningBusiness` TINYINT(1) NULL,
+  `specifyTypeOfBusiness` VARCHAR(25) NULL,
+  `otherTypeOfBusiness` VARCHAR(50) NULL,
+  `utilities` TEXT NULL,
+  `specialFeaturesInHome` VARCHAR(50) NULL,
+  `amenities` TEXT NULL,
+  `hostingReason` TEXT NULL,
+  `hopeToLearn` TEXT NULL,
+  `extraActivities` TEXT NULL,
+  `localCoordinatorOther` TINYINT(1) NULL,
+  `localCoordinatorDetails` TEXT NULL,
+  `hostedOther` TINYINT(1) NULL,
+  `hostedOtherDetails` TEXT NULL,
+  `isLocalCordinator` TINYINT(1) NULL,
+  `localCoordinatorCCI` INT NULL,
+  `createdOn` DATETIME NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyHomeId`),
+  INDEX `FK_HostFamilyHome_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyHome_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyHome_LookupGender`
+    FOREIGN KEY (`sharingBedroomGenderId`)
+    REFERENCES `LookupGender` (`genderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+/*
+-- -----------------------------------------------------
+-- Table `HostFamilyEmployment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyEmployment` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyEmployment` (
+  `hostFamilyEmploymentId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `hostFamilyMemberFirstName` VARCHAR(100) NULL,
+  `hostFamilyMemberLastName` VARCHAR(100) NULL,
+  `employerName` VARCHAR(100) NULL,
+  `jobTitle` VARCHAR(100) NULL,
+  `contactName` VARCHAR(100) NULL,
+  `phoneNumber` VARCHAR(100) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `residenceSiteFunctioningBusiness` TINYINT(1) NULL DEFAULT 0,
+  `specifyTypeOfBusiness` VARCHAR(50) NULL,
+  PRIMARY KEY (`hostFamilyEmploymentId`),
+  INDEX `FK_HostFamilyEmployment_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyEmployment_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+*/
+-- -----------------------------------------------------
+-- Table `HostFamilyInterview`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyInterview` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyInterview` (
+  `hostFamilyInterviewId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `reasonsForHosting` TEXT NULL,
+  `childrenFeelingsAboutHosting` TEXT NULL,
+  `roomSharedWithDescription` TEXT NULL,
+  `hasFamilyHostedBefore` INT NULL,
+  `previousHostingDescription` TEXT NULL,
+  `financialSituation` TEXT NULL,
+  `homeCondition` TEXT NULL,
+  `religiousBackground` TEXT NULL,
+  `discussedPlacement` INT NULL,
+  `interviewDate` DATETIME NULL,
+  `interviewIsAtHome` TINYINT(1) NULL DEFAULT 0,
+  `hostingCommitment` TINYINT(1) NULL,
+  `isStarted` TINYINT(1) NULL,
+  `isCompleted` TINYINT(1) NULL,
+  `createdBy` INT NULL,
+  `createdOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  PRIMARY KEY (`hostFamilyInterviewId`),
+  INDEX `FK_HostFamilyInterview_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyInterview_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyLookup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyLookup` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyLookup` (
+  `hostFamilyLookUpId` INT NOT NULL AUTO_INCREMENT,
+  `displayValue` VARCHAR(50) NULL,
+  `displayType` VARCHAR(50) NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyLookUpId`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Relationship`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Relationship` ;
+
+CREATE TABLE IF NOT EXISTS `Relationship` (
+  `relationshipId` INT NOT NULL AUTO_INCREMENT,
+  `relationshipType` VARCHAR(25) NULL,
+  PRIMARY KEY (`relationshipId`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyMember`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyMember` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyMember` (
+  `hostFamilyMemberId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `firstName` VARCHAR(50) NULL,
+  `lastName` VARCHAR(50) NULL,
+  `birthDate` DATETIME NULL,
+  `genderId` INT NULL,
+  `relationshipId` INT NULL,
+  `interests` TEXT NULL,
+  `isHostParent` TINYINT(1) NULL,
+  `educationLevel` VARCHAR(50) NULL,
+  `communityInvolvement` TEXT NULL,
+  `employed` TINYINT(1) NULL DEFAULT 0,
+  `jobTitle` VARCHAR(100) NULL,
+  `contactName` VARCHAR(100) NULL,
+  `phone` VARCHAR(100) NULL,
+  `isFamilyChild` TINYINT(1) NULL,
+  `livingAtHome` TINYINT(1) NULL DEFAULT 0,
+  `isSingleAdult` TINYINT(1) NULL,
+  `residencyTime` VARCHAR(20) NULL,
+  `backGroundCheckPassed` TINYINT(1) NULL DEFAULT 0,
+  `backGroundCheckDate` DATETIME NULL,
+  `backGroundCheckSubmitted` TINYINT(1) NULL DEFAULT 0,
+  `backGroundCheckReportUrl` VARCHAR(200) NULL,
+  `reasonForRejection` TINYINT(1) NULL DEFAULT 0,
+  `createdOn` DATETIME NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyMemberId`),
+  INDEX `FK_HostFamilyMember_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  INDEX `FK_HostFamilyMember_Relationship_idx` (`relationshipId` ASC),
+  CONSTRAINT `FK_HostFamilyMember_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyMember_Relationship`
+    FOREIGN KEY (`relationshipId`)
+    REFERENCES `Relationship` (`relationshipId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyMember_LookupGender`
+    FOREIGN KEY (`genderId`)
+    REFERENCES `LookupGender` (`genderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyNote`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyNote` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyNote` (
+  `hostFamilyNoteId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilyGoId` INT NULL,
+  `hostFamilyNoteTopicsId` INT NULL,
+  `note` TEXT NULL,
+  `hasRead` TINYINT(1) NULL,
+  `createdBy` INT NULL,
+  `createdOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  PRIMARY KEY (`hostFamilyNoteId`),
+  INDEX `FK_HostFamilyNote_HostFamily_idx` (`hostFamilyGoId` ASC),
+  CONSTRAINT `FK_HostFamilyNote_HostFamily`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT FK_HostFamilyNote_HostFamilyNoteTopics
+	FOREIGN KEY (hostFamilyNoteTopicsId)
+	REFERENCES HostFamilyNoteTopics (hostFamilyNoteTopicsId)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `MoveReason`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `MoveReason` ;
+
+CREATE TABLE IF NOT EXISTS `MoveReason` (
+  `moveReasonId` INT NOT NULL AUTO_INCREMENT,
+  `moveReasonName` VARCHAR(100) NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `changeHomeCode` VARCHAR(2) NULL,
+  `reasonDescription` VARCHAR(500) NULL,
+  PRIMARY KEY (`moveReasonId`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyParticipant`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyParticipant` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyParticipant` (
+  `hostFamilyParticipantId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `participantGoId` INT NULL,
+  `hostFamilyInterested` INT NULL,
+  `hostFamilyScore` INT NULL,
+  `hostFamilyParticipantStatusId` INT NULL,
+  `showToParticipant` TINYINT(1) NULL DEFAULT 0,
+  `uploadPermissionFormLater` TINYINT(1) NULL DEFAULT 0,
+  `uploadPermissionLaterReason` TEXT NULL,
+  `usHighSchoolId` INT NULL,
+  `permissionFormFileName` VARCHAR(100) NULL,
+  `permissionFormFilePath` VARCHAR(100) NULL,
+  `permissionFormName` VARCHAR(50) NULL,
+  `participantPayableId` INT NULL,
+  `approvedDate` DATETIME NULL,
+  `movedDate` DATETIME NULL,
+  `moveReasonId` INT NULL,
+  `moveExplanation` TEXT NULL,
+  `rejectionMessage` TEXT NULL,
+  `movingParticipant` TINYINT(1) NULL DEFAULT 0,
+  `createdOn` DATETIME NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `preferredDepartureDate` DATETIME NULL,
+  `preferredArrivalDate` DATETIME NULL,
+  `isWelcomeFamily` TINYINT(1) NULL DEFAULT 0,
+  `isWelcomeFamilyChangedDate` DATETIME NULL,
+  `hidePlacement` TINYINT(1) NULL DEFAULT 0,
+  `uploadPermissionLaterExpectedDate` DATETIME NULL,
+  `partnerApprovalDate` DATETIME NULL,
+  `partnerRejectionMessage` TEXT NULL,
+  `secondVisitLCId` INT NULL,
+  `isRecruiterLCLeadId` INT NULL,
+  `isRecruiterLCLead` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyParticipantId`),
+  INDEX `FK_HostFamilyParticipant_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  INDEX `FK_HostFamilyParticipant_HFPaxStatus_idx` (`hostFamilyParticipantStatusId` ASC),
+  INDEX `FK_HostFamilyParticipant_MoveReason_idx` (`moveReasonId` ASC),
+  CONSTRAINT `FK_HostFamilyParticipant_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyParticipant_HFPaxStatus`
+    FOREIGN KEY (`hostFamilyParticipantStatusId`)
+    REFERENCES `HostFamilyStatus` (`hostFamilyStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyParticipant_MoveReason`
+    FOREIGN KEY (`moveReasonId`)
+    REFERENCES `MoveReason` (`moveReasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyParticipant_Participants`
+    FOREIGN KEY (`participantGoId`)
+    REFERENCES `Participants` (`participantGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyParticipant_USSchool`
+    FOREIGN KEY (`usHighSchoolId`)
+    REFERENCES `USSchool` (`usSchoolId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+ /*,CONSTRAINT `FK_HostFamilyParticipant_ParticipantPayable`
+    FOREIGN KEY (`participantPayableId`)
+    REFERENCES `ParticipantPayable` (`participantPayableId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION*/)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyParticipantHistory`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyParticipantHistory` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyParticipantHistory` (
+  `hostFamilyParticipantHistoryId` INT NOT NULL AUTO_INCREMENT,
+  `participantGoId` INT NULL,
+  `hostFamilySeasonId` INT NULL,
+  `hostFamilyGoId` INT NULL,
+  `hostFamilyName` VARCHAR(50) NULL,
+  `localCoordinatorId` INT NULL,
+  `localCoordinatorName` VARCHAR(50) NULL,
+  `beginDate` DATETIME NULL,
+  `endDate` DATETIME NULL,
+  `createdOn` DATETIME NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyParticipantHistoryId`),
+  INDEX `FK_HostFamilyParticipantHistory_HostFamily_idx` (`hostFamilyGoId` ASC),
+  INDEX `FK_HostFamilyParticipantHistory_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyParticipantHistory_HostFamily`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyParticipantHistory_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyParticipantHistory_Participants`
+    FOREIGN KEY (`participantGoId`)
+    REFERENCES `Participants` (`participantGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyParticipantHistory_FieldStaff`
+    FOREIGN KEY (`localCoordinatorId`)
+    REFERENCES `FieldStaff` (`fieldStaffGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyReference`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyReference` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyReference` (
+  `hostFamilyReferenceId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `dateOfReference` DATETIME NULL,
+  `firstName` VARCHAR(100) NULL,
+  `lastName` VARCHAR(100) NULL,
+  `address` VARCHAR(100) NULL,
+  `city` VARCHAR(50) NULL,
+  `usStatesId` INT NULL,
+  `zipCode` VARCHAR(30) NULL,
+  `phone` VARCHAR(30) NULL,
+  `relationship` VARCHAR(50) NULL,
+  `personNotRelatedToBlood` TINYINT(1) NULL DEFAULT 0,
+  `interestVariety` VARCHAR(30) NULL,
+  `communityInvolvement` VARCHAR(30) NULL,
+  `lengthKnownQuantity` VARCHAR(50) NULL,
+  `lengthKnown` VARCHAR(50) NULL,
+  `knownFamilyMethod` VARCHAR(30) NULL,
+  `allowOwnChildStay` INT NULL,
+  `ownChildStayReasons` TEXT NULL,
+  `positiveExperiences` VARCHAR(30) NULL,
+  `stability` VARCHAR(30) NULL,
+  `closeness` VARCHAR(30) NULL,
+  `flexibility` VARCHAR(30) NULL,
+  `internationalAwareness` VARCHAR(50) NULL,
+  `comments` TEXT NULL,
+  `completionMethod` VARCHAR(50) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `visitFrequency` VARCHAR(100) NULL,
+  `lastVisit` VARCHAR(100) NULL,
+  `additionalSupport` INT NULL,
+  `supportExplanation` TEXT NULL,
+  `communityTies` TEXT NULL,
+  PRIMARY KEY (`hostFamilyReferenceId`),
+  INDEX `FK_HostFamilyReference_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyReference_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyReference_LookupUSStates`
+    FOREIGN KEY (`usStatesId`)
+    REFERENCES `LookupUSStates` (`usStatesId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilySeasonNoteTopics`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilySeasonNoteTopics` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilySeasonNoteTopics` (
+  `hostFamilySeasonNoteTopicsId` INT NOT NULL AUTO_INCREMENT,
+  `topicName` VARCHAR(50) NULL,
+  `hostFamilySeasonId` INT NULL,
+  `isPublic` TINYINT(1) NULL DEFAULT 0,
+  `title` VARCHAR(50) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  PRIMARY KEY (`hostFamilySeasonNoteTopicsId`),
+  INDEX `FK_HostFamilySeasonNoteTopic_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilySeasonNoteTopic_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilySeasonNote`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilySeasonNote` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilySeasonNote` (
+  `hostFamilySeasonNoteId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `hostFamilySeasonNoteTopicsId` INT NULL,
+  `note` TEXT NULL,
+  `hasRead` TINYINT(1) NULL,
+  `createdBy` INT NULL,
+  `createdOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  PRIMARY KEY (`hostFamilySeasonNoteId`),
+  INDEX `FK_HostFamilySeasonNote_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  INDEX `FK_HostFamilySeasonNote_HostFamilySeasonNoteTopics_idx` (`hostFamilySeasonNoteTopicsId` ASC),
+  CONSTRAINT `FK_HostFamilySeasonNote_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilySeasonNote_HostFamilySeasonNoteTopics`
+    FOREIGN KEY (`hostFamilySeasonNoteTopicsId`)
+    REFERENCES `HostFamilySeasonNoteTopics` (`hostFamilySeasonNoteTopicsId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyDocument`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyDocument` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyDocument` (
+  `hostFamilyDocumentId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `documentInformationId` INT NULL,
+  `description` VARCHAR(1000) NULL,
+  `submittedToCCI` TINYINT(1) NULL,
+  `approvedByCCI` TINYINT(1) NULL,
+  `rejectedByCCI` TINYINT(1) NULL,
+  PRIMARY KEY (`hostFamilyDocumentId`),
+  INDEX `FK_HostFamilyDocument_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyDocument_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyDocument_DocumentInformation`
+    FOREIGN KEY (`documentInformationId`)
+    REFERENCES `DocumentInformation` (`documentInformationId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyInquiry`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyInquiry` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyInquiry` (
+  `HostFamilyInquiryId` INT NOT NULL,
+  `hostFamilyGoId` INT NULL,
+  `firstName` VARCHAR(50) NULL,
+  `lastName` VARCHAR(50) NULL,
+  `address` VARCHAR(50) NULL,
+  `currentCity` VARCHAR(50) NULL,
+  `currentState` VARCHAR(50) NULL,
+  `zipCode` VARCHAR(30) NULL,
+  `emailAddress` VARCHAR(45) NULL,
+  `preferredPhoneNumber` VARCHAR(20) NULL,
+  `optionalPhoneNumber` VARCHAR(20) NULL,
+  `heardAboutCCIThrough` VARCHAR(50) NULL,
+  `friendRelative` VARCHAR(50) NULL,
+  `cciHostFamily` VARCHAR(50) NULL,
+  `submittedOn` DATETIME NULL,
+  `18YearsOrOlder` TINYINT(1) NULL,
+  `nearestLargeCityOrMetroArea` VARCHAR(50) NULL,
+  `localPublicHighSchool` VARCHAR(50) NULL,
+  `cityTownHighSchoolLocated` VARCHAR(50) NULL,
+  `interestedStudentFrom` VARCHAR(50) NULL,
+  `requestedLocalCoordinator` VARCHAR(50) NULL,
+  `previousHostingExperience` VARCHAR(50) NULL,
+  `followUpDate` DATETIME NULL,
+  `leadStatusId` INT NULL,
+  `website` VARCHAR(50) NULL,
+  `cciComments` TEXT NULL,
+  PRIMARY KEY (`HostFamilyInquiryId`),
+  INDEX `FK_HostFamilyInquiry_HostFamilyStatus_idx` (`leadStatusId` ASC),
+  CONSTRAINT `FK_HostFamilyInquiry_HostFamily`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyInquiry_HostFamilyStatus`
+    FOREIGN KEY (`leadStatusId`)
+    REFERENCES `HostFamilyStatus` (`hostFamilyStatusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyPhotosType`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyPhotosType` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyPhotosType` (
+  `hostFamilyPhotoTypeId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilyPhotoTypeName` VARCHAR(50) NULL,
+  PRIMARY KEY (`hostFamilyPhotoTypeId`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyPhotos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyPhotos` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyPhotos` (
+  `hostFamilyPhotoId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `fileName` VARCHAR(50) NULL,
+  `filePath` VARCHAR(50) NULL,
+  `photoName` VARCHAR(50) NULL,
+  `hostFamilyPhotoTypeId` INT NOT NULL,
+  `photoTitle` VARCHAR(50) NULL,
+  `description` VARCHAR(100) NULL,
+  `createdOn` DATETIME NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` DATETIME NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL DEFAULT 0,
+  `submittedToCCI` TINYINT(1) NULL DEFAULT 0,
+  `approvedByCCI` TINYINT(1) NULL DEFAULT 0,
+  `rejectedByCCI` TINYINT(1) NULL DEFAULT 0,
+  `default` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyPhotoId`),
+  INDEX `FK_HostFamilyPhotos_HostFamilyPhotosType_idx` (`hostFamilyPhotoTypeId` ASC),
+  CONSTRAINT `FK_HostFamilyPhotos_HostFamilyPhotosType`
+    FOREIGN KEY (`hostFamilyPhotoTypeId`)
+    REFERENCES `HostFamilyPhotosType` (`hostFamilyPhotoTypeId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HostFamilyPhotos_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyPet`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyPet` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyPet` (
+  `hostFamilyPetId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `animalType` VARCHAR(25) NULL,
+  `number` INT NULL,
+  `additionalInformation` VARCHAR(50) NULL,
+  `isIndoor` TINYINT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`hostFamilyPetId`),
+  INDEX `FK_HostFamilyPet_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyPet_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyPotentialReference`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyPotentialReference` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyPotentialReference` (
+  `hostFamilyPotentialReference` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilyGoId` INT NULL,
+  `referenceFirstName` VARCHAR(50) NULL,
+  `referenceLastName` VARCHAR(50) NULL,
+  `referenceReason` VARCHAR(150) NULL,
+  `referencePhone` VARCHAR(30) NULL,
+  `referenceEmail` VARCHAR(50) NULL,
+  `referenceMailingAddress` VARCHAR(50) NULL,
+  `referenceStreetAddress` VARCHAR(50) NULL,
+  `referenceCity` VARCHAR(20) NULL,
+  `referenceStateOrRegion` VARCHAR(50) NULL,
+  `referenceZipCode` VARCHAR(10) NULL,
+  `referenceCountryId` INT NULL,
+  `firstName` VARCHAR(50) NULL,
+  `lastName` VARCHAR(50) NULL,
+  `userTypeId` INT NULL,
+  `email` VARCHAR(50) NULL,
+  `mailingAddress` VARCHAR(50) NULL,
+  `streetAddress` VARCHAR(50) NULL,
+  `city` VARCHAR(20) NULL,
+  `stateOrRegion` VARCHAR(50) NULL,
+  `zipCode` VARCHAR(10) NULL,
+  `counrtyId` INT NULL,
+  `lcName` VARCHAR(50) NULL,
+  `cretatedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` INT NULL,
+  PRIMARY KEY (`hostFamilyPotentialReference`),
+  INDEX `FK_HFPotentialReference_HostFamily_idx` (`hostFamilyGoId` ASC),
+  CONSTRAINT `FK_HFPotentialReference_HostFamily`
+    FOREIGN KEY (`hostFamilyGoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HFPotentialReference_LookupCountries`
+    FOREIGN KEY (`referenceCountryId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HFPotentialReference_LookupCountries1`
+    FOREIGN KEY (`counrtyId`)
+    REFERENCES `LookupCountries` (`countryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_HFPotentialReference_UserType`
+    FOREIGN KEY (`userTypeId`)
+    REFERENCES `UserType` (`userTypeId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyContactHistory`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyContactHistory` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyContactHistory` (
+  `hostFamilyContactHistoryId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `praposedContactDate` DATETIME NULL,
+  `contactMode` VARCHAR(25) NULL,
+  `agenda` VARCHAR(50) NULL,
+  `praposedTime` VARCHAR(50) NULL,
+  `duration` VARCHAR(50) NULL,
+  `notes` VARCHAR(100) NULL,
+  `isDone` TINYINT(1) NULL,
+  PRIMARY KEY (`hostFamilyContactHistoryId`),
+  INDEX `FK_HostFamilyContactHistory_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyContactHistory_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyEvaluation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyEvaluation` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyEvaluation` (
+  `hostFamilyEvaluationId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `participantGoId` INT NULL,
+  `relationship` VARCHAR(50) NULL,
+  `relationshipComments` VARCHAR(100) NULL,
+  `relationshipScale` INT NULL,
+  `communicationEffort` INT NULL,
+  `effortToAdopt` INT NULL,
+  `interestInFamily` INT NULL,
+  `effortForHygiene` INT NULL,
+  `additionalComments` VARCHAR(100) NULL,
+  `familyActivityParticipation` VARCHAR(50) NULL,
+  `behaviorProblems` TINYINT(1) NULL,
+  `academicProblems` TINYINT(1) NULL,
+  `contactWithFieldStaff` INT NULL,
+  `problems` VARCHAR(1000) NULL,
+  `evaluationMonth` VARCHAR(15) NULL,
+  `submittedToCCI` TINYINT(1) NULL,
+  `approvedByCCI` TINYINT(1) NULL,
+  `showToPartner` TINYINT(1) NULL,
+  `submittedDate` DATETIME NULL,
+  `approvedDate` DATETIME NULL,
+  `fieldStaffGoId` INT NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL,
+  PRIMARY KEY (`hostFamilyEvaluationId`),
+  INDEX `FK_HostFamilyEvaluation_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyEvaluation_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+   CONSTRAINT `FK_HostFamilyEvaluation_Participants`
+    FOREIGN KEY (`participantGoId`)
+    REFERENCES `Participants` (`participantGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+     CONSTRAINT `FK_HostFamilyEvaluation_FieldStaff`
+    FOREIGN KEY (`fieldStaffGoId`)
+    REFERENCES `FieldStaff` (`fieldStaffGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyFinalEvaluation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyFinalEvaluation` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyFinalEvaluation` (
+  `hostFamilyFinalEvaluationId` INT NOT NULL AUTO_INCREMENT,
+  `hostFamilySeasonId` INT NULL,
+  `participantGoId` INT NULL,
+  `overallExperience` VARCHAR(10) NULL,
+  `participantFlexibility` VARCHAR(10) NULL,
+  `participantCompatibility` VARCHAR(10) NULL,
+  `fieldStaffHelpfulness` VARCHAR(10) NULL,
+  `materialQuality` VARCHAR(10) NULL,
+  `insuranceQuality` VARCHAR(10) NULL,
+  `didChores` TINYINT(1) NULL,
+  `followedRules` TINYINT(1) NULL,
+  `followedHygiene` TINYINT(1) NULL,
+  `didWellAcademically` TINYINT(1) NULL,
+  `didExtraCurriculars` TINYINT(1) NULL,
+  `relatedToUSStudents` TINYINT(1) NULL,
+  `adequateOrientation` TINYINT(1) NULL,
+  `problem` VARCHAR(1000) NULL,
+  `problemHandledBy` VARCHAR(100) NULL,
+  `overallExpectations` VARCHAR(1000) NULL,
+  `adviceForHostFamilies` VARCHAR(1000) NULL,
+  `recommendCCI` TINYINT(1) NULL,
+  `submittedToCCI` TINYINT(1) NULL,
+  `approvedByCCI` TINYINT(1) NULL,
+  `showToPartner` TINYINT(1) NULL,
+  `submittedDate` DATETIME NULL,
+  `approvedDate` DATETIME NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  `active` TINYINT(1) NULL,
+  PRIMARY KEY (`hostFamilyFinalEvaluationId`),
+  INDEX `FK_HostFamilyFinalEvaluation_HostFamilySeason_idx` (`hostFamilySeasonId` ASC),
+  CONSTRAINT `FK_HostFamilyFinalEvaluation_HostFamilySeason`
+    FOREIGN KEY (`hostFamilySeasonId`)
+    REFERENCES `HostFamilySeason` (`hostFamilySeasonId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+    CONSTRAINT `FK_HostFamilyFinalEvaluation_Participants`
+    FOREIGN KEY (`participantGoId`)
+    REFERENCES `Participants` (`participantGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `HostFamilyNoteTopics`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `HostFamilyNoteTopics` ;
+
+CREATE TABLE IF NOT EXISTS `HostFamilyNoteTopics` (
+  `hostFamilyNoteTopicsId` INT NOT NULL AUTO_INCREMENT,
+  `topicName` VARCHAR(50) NULL,
+  `hostFamilygoId` INT NULL,
+  `isPublic` TINYINT(1) NULL,
+  `title` VARCHAR(50) NULL,
+  `createdOn` TIMESTAMP NULL,
+  `createdBy` INT NULL,
+  `modifiedOn` TIMESTAMP NULL,
+  `modifiedBy` INT NULL,
+  PRIMARY KEY (`hostFamilyNoteTopicsId`),
+  INDEX `FK_HostFamilyNoteTopics_HostFamily_idx` (`hostFamilygoId` ASC),
+  CONSTRAINT `FK_HostFamilyNoteTopics_HostFamily`
+    FOREIGN KEY (`hostFamilygoId`)
+    REFERENCES `HostFamily` (`hostFamilyGoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+

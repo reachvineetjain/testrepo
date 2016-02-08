@@ -157,6 +157,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          newPartner.setAcronym(partner.getAcronym());
          newPartner.setEmail(partner.getGeneralEmail());
          newPartner.setCanHaveSubPartner(partner.isCanHaveSubpartners() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         newPartner.setMultiCountrySender(partner.isMultiCountrySender()?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          // initializing all flags to false
          newPartner.setReceiveAYPMails(CCIConstants.INACTIVE);
          newPartner.setSubscribeToCCINewsletter(CCIConstants.INACTIVE);
