@@ -1,7 +1,5 @@
 package com.ccighgo.service.components.sevis.data;
 
-import static com.ccighgo.service.components.sevis.common.SevisUtils.generateBatchId;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +46,7 @@ public class UpdateEVProgramShortenBatchDataService implements IEVBatchDataServi
 		evs.forEach(ev -> ev.setProgram(
 				createProgramShorten(true, SevisUtils.convert(LocalDate.now()), "Remarks", EVCompletionCodeType.APED)));
 
-		String batchId = generateBatchId("fName", "lName");
+		String batchId = SevisUtils.createBatchId();
 		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
 		batch.getUpdateEV().getExchangeVisitor().addAll(evs);
 

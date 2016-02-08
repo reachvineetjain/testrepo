@@ -26,6 +26,7 @@ import com.ccighgo.service.components.sevis.data.UpdateEVFinancialInfoBatchDataS
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramAmendDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramEditSubjectBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramExtentionBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateEVProgramShortenBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVSOAEditBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVSoaAddBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVStatusInvalidBatchDataService;
@@ -34,6 +35,7 @@ import com.ccighgo.service.components.sevis.data.UpdateEVTIPPBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVUpdateHousingBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVValidateHousingBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateStudentDependentReprintBatchDataService;
+import com.ccighgo.service.components.sevis.data.UpdateStudentProgramExtentionBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateStudentProgramShortenBatchDataService;
 import com.ccighgo.service.components.sevis.log.SevisLogProcessor;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -182,12 +184,15 @@ public class SevisBatch {
 		// Update.EV.Program.Extension
 		// Update.Student.Program.Extension
 
-		// return sevisBatchService.updateStudentProgramExtension(batchParam,
-		// servletContext);
-
-		UpdateEVProgramExtentionBatchDataService dataService = getServiceBean(
-				UpdateEVProgramExtentionBatchDataService.class);
-		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+		// EV
+//		UpdateEVProgramExtentionBatchDataService dataService = getServiceBean(
+//				UpdateEVProgramExtentionBatchDataService.class);
+//		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
+		
+		// Student
+		UpdateStudentProgramExtentionBatchDataService dataService = getServiceBean(
+				UpdateStudentProgramExtentionBatchDataService.class);
+		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
 	}
 
 	@POST
@@ -198,12 +203,15 @@ public class SevisBatch {
 
 		// Update.EV.Program.Shorten
 		// Update.Student.Program.Shorten
+		
+		// EV
+		UpdateEVProgramShortenBatchDataService dataService = getServiceBean(UpdateEVProgramShortenBatchDataService.class);
+		return evBatchGenerator.createBatch(batchParam, dataService, servletContext);
 
-		// return sevisBatchService.updateEVProgramShorten(batchParam,
-		// servletContext);
-		UpdateStudentProgramShortenBatchDataService dataService = getServiceBean(
-				UpdateStudentProgramShortenBatchDataService.class);
-		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
+		// Student
+//		UpdateStudentProgramShortenBatchDataService dataService = getServiceBean(
+//				UpdateStudentProgramShortenBatchDataService.class);		
+//		return stuBatchGenerator.createBatch(batchParam, dataService, servletContext);
 
 	}
 	
