@@ -88,8 +88,8 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                season.setSeasonId(obj[1] != null ? Integer.valueOf(obj[1].toString()) : 0);
                season.setDepartmentProgramId(obj[2] != null ? Integer.valueOf(obj[2].toString()) : 0);
                season.setProgramName(obj[3] != null ? obj[3].toString() : SPACE);
-               season.setStartDate(obj[4] != null ? DateUtils.getFormattedStringDate(obj[4].toString()) : SPACE);
-               season.setEndDate(obj[5] != null ? DateUtils.getFormattedStringDate(obj[5].toString()) : SPACE);
+               season.setStartDate(obj[4] != null ? DateUtils.getUSFormatDate(obj[4].toString()) : SPACE);
+               season.setEndDate(obj[5] != null ? DateUtils.getUSFormatDate(obj[5].toString()) : SPACE);
                season.setStatus(obj[6] != null ? obj[6].toString() : SPACE);
                season.setFieldStaffStatus(obj[7] != null ? obj[7].toString() : SPACE);
                season.setDepartmentId(obj[8] != null ? Integer.valueOf(obj[8].toString()) : 0);
