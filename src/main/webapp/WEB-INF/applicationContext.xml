@@ -13,8 +13,8 @@
    <context:component-scan base-package="com.ccighgo" />
 
    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" autowire-candidate="true">
-      <property name="basename">
-         <value>/META-INF/ccighgomessages</value>
+      <property name="basenames">
+         <value>/META-INF/ccighgomessages,/sevis/errormessages,/sevis/schema</value>
       </property>
    </bean>
 

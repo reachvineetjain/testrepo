@@ -68,6 +68,7 @@
             /services/fsl/details/**=anon
             /services/erddashboard/**=anon
             /services/push/notification/**=anon
+            /services/sevis/**=anon
             /services/fieldstaffs/list/**=anon
             /services/hf/application/**=anon
             /services/**=authc

@@ -34,4 +34,6 @@ public interface ParticipantRepository  extends JpaRepository<Participant, Integ
    
    @Query(value="SELECT count(*) FROM Participants p INNER JOIN ParticipantStatus ps ON p.participantStatusId = ps.participantStatusId WHERE partnerGoId = ?1 AND seasonId = ?2 AND departmentProgramId = 1 AND guaranteed = 1 AND departmentProgramOptionId=3", nativeQuery=true)
    Integer getGurantF1JanParticipantCount(Integer partnerGoId, Integer seasonId);
+   
+   public List<Participant> findByParticipantGoIdIn(List<Integer> participantIds);
 }
