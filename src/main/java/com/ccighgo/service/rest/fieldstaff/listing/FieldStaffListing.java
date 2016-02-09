@@ -3,6 +3,7 @@
  */
 package com.ccighgo.service.rest.fieldstaff.listing;
 
+import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,10 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaff.listing.FieldStaffListingInterface;
-import com.ccighgo.service.transport.fieldstaff.beans.aclist.FieldStaffACList;
-import com.ccighgo.service.transport.fieldstaff.beans.lclist.FieldStaffLCList;
-import com.ccighgo.service.transport.fieldstaff.beans.rdlist.FieldStaffRDList;
-import com.ccighgo.service.transport.fieldstaff.beans.rmlist.FieldStaffRMList;
+import com.ccighgo.service.transport.fieldstaff.beans.ac.season.contacts.FSACSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.fslist.FieldStaffList;
+import com.ccighgo.service.transport.fieldstaff.beans.fstypes.FieldStaffTypes;
+import com.ccighgo.service.transport.fieldstaff.beans.lc.season.contacts.FSLCSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.rd.season.contacts.FSRDSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.rm.season.contacts.FSRMSeasonContacts;
 
 /**
  * @author ravi
@@ -32,35 +35,52 @@ public class FieldStaffListing {
    @Autowired FieldStaffListingInterface fieldStaffListingInterface;
    
    @GET
-   @Path("lcs")
+   @Path("{typeId}/page")
    @Produces("application/json")
-   public FieldStaffLCList getFieldStaffLCList(){
-      LOGGER.info("calling FieldStaffListing.getFieldStaffLCList ");
-      return fieldStaffListingInterface.getFieldStaffLCList();
+   public FieldStaffList getFieldStaffList(@PathParam("typeId") String typeId){
+      LOGGER.info("calling FieldStaffListing.getFieldStaffList ");
+      return fieldStaffListingInterface.getFieldStaffList(typeId);
    }
    
    @GET
-   @Path("rms")
+   @Path("types")
    @Produces("application/json")
-   public FieldStaffRMList getFieldStaffRMList(){
-      LOGGER.info("calling FieldStaffListing.getFieldStaffLCList ");
-      return fieldStaffListingInterface.getFieldStaffRMList();
+   public FieldStaffTypes getFieldStaffTypes(){
+      LOGGER.info("calling FieldStaffListing.getFieldStaffTypes ");
+      return fieldStaffListingInterface.getFieldStaffTypes();
    }
    
    @GET
-   @Path("acs")
+   @Path("lc/{goId}")
    @Produces("application/json")
-   public FieldStaffACList getFieldStaffACList(){
-      LOGGER.info("calling FieldStaffListing.getFieldStaffLCList ");
-      return fieldStaffListingInterface.getFieldStaffACList();
+   public FSLCSeasonContacts getFSLCSeasonContacts(@PathParam("goId") String goId){
+      LOGGER.info("calling FieldStaffListing.getFSLCSeasonContacts ");
+      return fieldStaffListingInterface.getFSLCSeasonContacts(goId);
    }
    
    @GET
-   @Path("rds")
+   @Path("ac/{goId}")
    @Produces("application/json")
-   public FieldStaffRDList getFieldStaffRDList(){
-      LOGGER.info("calling FieldStaffListing.getFieldStaffLCList ");
-      return fieldStaffListingInterface.getFieldStaffRDList();
+   public FSACSeasonContacts getFSACSeasonContacts(@PathParam("goId") String goId){
+      LOGGER.info("calling FieldStaffListing.getFSACSeasonContacts ");
+      return fieldStaffListingInterface.getFSACSeasonContacts(goId);
    }
+   
+   @GET
+   @Path("rd/{goId}")
+   @Produces("application/json")
+   public FSRDSeasonContacts getFSRDSeasonContacts(@PathParam("goId") String goId){
+      LOGGER.info("calling FieldStaffListing.getFSRDSeasonContacts ");
+      return fieldStaffListingInterface.getFSRDSeasonContacts(goId);
+   }
+   
+   @GET
+   @Path("rm/{goId}")
+   @Produces("application/json")
+   public FSRMSeasonContacts getFSRMSeasonContacts(@PathParam("goId") String goId){
+      LOGGER.info("calling FieldStaffListing.getFSRMSeasonContacts ");
+      return fieldStaffListingInterface.getFSRMSeasonContacts(goId);
+   }
+   
 
 }
