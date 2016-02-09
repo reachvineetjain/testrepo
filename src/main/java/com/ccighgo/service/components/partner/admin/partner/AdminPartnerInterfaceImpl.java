@@ -162,7 +162,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          newPartner.setReceiveAYPMails(CCIConstants.INACTIVE);
          newPartner.setSubscribeToCCINewsletter(CCIConstants.INACTIVE);
          newPartner.setHasSubPartners(CCIConstants.INACTIVE);
-         newPartner.setMultiCountrySender(CCIConstants.INACTIVE);
+         //newPartner.setMultiCountrySender(CCIConstants.INACTIVE);
          newPartner.setIsSubPartner(CCIConstants.INACTIVE);
          newPartner.setPayGreenheartDirectly(CCIConstants.INACTIVE);
          newPartner.setDeliverDSForms(CCIConstants.INACTIVE);

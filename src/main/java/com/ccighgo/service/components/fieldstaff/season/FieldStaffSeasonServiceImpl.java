@@ -88,8 +88,8 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                season.setSeasonId(obj[1] != null ? Integer.valueOf(obj[1].toString()) : 0);
                season.setDepartmentProgramId(obj[2] != null ? Integer.valueOf(obj[2].toString()) : 0);
                season.setProgramName(obj[3] != null ? obj[3].toString() : SPACE);
-               season.setStartDate(obj[4] != null ? DateUtils.getFormattedStringDate(obj[4].toString()) : SPACE);
-               season.setEndDate(obj[5] != null ? DateUtils.getFormattedStringDate(obj[5].toString()) : SPACE);
+               season.setStartDate(obj[4] != null ? DateUtils.getUSFormatDate(obj[4].toString()) : SPACE);
+               season.setEndDate(obj[5] != null ? DateUtils.getUSFormatDate(obj[5].toString()) : SPACE);
                season.setStatus(obj[6] != null ? obj[6].toString() : SPACE);
                season.setFieldStaffStatus(obj[7] != null ? obj[7].toString() : SPACE);
                season.setDepartmentId(obj[8] != null ? Integer.valueOf(obj[8].toString()) : 0);
@@ -178,31 +178,37 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          fsSeason.setSeasonStatus(seasonStatus);
          fsSeason.setPaymentSchedule(paymentSchedule);
          fsSeason.setDefaultMonitoringStipend(defaultMonitoringStipend);
+         String erdName=SPACE;
+         String rdName=SPACE;
+         String rmName=SPACE;
 
          Query query = entityManager.createNativeQuery(SP_FS_SEASON_HIERARCHY);
          query.setParameter(1, Integer.valueOf(fieldStaffGoId));
-         query.setParameter(2, some_value);
-         query.setParameter(3, some_value);
+         query.setParameter(2, season.getSeason().getSeasonId());
+         query.setParameter(3, season.getDepartmentProgram().getDepartmentProgramId());
          List<Object[]> results = query.getResultList();
          if (results != null && results.size() > 0) {
             for (Object[] obj : results) {
                if (obj[4] != null && obj[4].toString().equals(ERD)) {
                   if (obj[2] != null && obj[3] != null) {
-                     fsSeason.setErd(obj[2].toString() + SPACE + obj[3].toString());
-                  }
+                     erdName=obj[2].toString() + SPACE + obj[3].toString();
+                  } 
                }
                if (obj[4] != null && obj[4].toString().equals(RD)) {
                   if (obj[2] != null && obj[3] != null) {
-                     fsSeason.setRd(obj[2].toString() + SPACE + obj[3].toString());
+                     rdName=obj[2].toString() + SPACE + obj[3].toString();
                   }
                }
                if (obj[4] != null && obj[4].toString().equals(RM)) {
                   if (obj[2] != null && obj[3] != null) {
-                     fsSeason.setRm(obj[2].toString() + SPACE + obj[3].toString());
+                     rmName=obj[2].toString() + SPACE + obj[3].toString();
                   }
                }
             }
          }
+         fsSeason.setErd(erdName);
+         fsSeason.setRd(rdName);
+         fsSeason.setRm(rmName);
          fsSeason.setRecruiterLC(season.getIsRecruiterLC().equals(CCIConstants.ACTIVE) ? true : false);
          fsSeason.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -263,6 +269,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
    }
 
    @Override
+   @Transactional
    public FieldStaffAdminSeasonDetails updateFieldStaffAdminSeasonDetails(FieldStaffAdminSeasonDetails details) {
       FieldStaffAdminSeasonDetails updatedObject = new FieldStaffAdminSeasonDetails();
       try {
@@ -281,8 +288,9 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          }
          fsSeason.setAgreeToTerms(details.isAgreementSigned() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fsSeason.setIsRecruiterLC(details.isRecruiterLC() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         fsSeason.setCanRepresentGrantPax(details.isCanPresentGrantsParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fsSeason = fieldStaffSeasonRepository.saveAndFlush(fsSeason);
-         updatedObject = getFSSeasonDetails(String.valueOf(fsSeason.getFiledStaffSeasonId()), String.valueOf(fsSeason.getFiledStaffSeasonId()));
+         updatedObject = details;
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {

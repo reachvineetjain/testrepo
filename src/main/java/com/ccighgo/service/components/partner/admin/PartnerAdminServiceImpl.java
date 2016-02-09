@@ -318,15 +318,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					}
 					additional.setProgramsYouLikeToParticipate(st.toString());
 				}
+				if(partnerAgentInquiry.getCurrentlySendingParticipantToUS()!=null)
 				additional.setSendPartnersToUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
+				if(partnerAgentInquiry.getCurrentlySendingParticipantToUS()!=null)
 				additional.setIsYourOrganizationSendingParticipantstoUSA(partnerAgentInquiry.getCurrentlySendingParticipantToUS() == 1);
+				if(partnerAgentInquiry.getAmbassadorScholershipParticipants()!=null)
 				additional.setLikeToKnowMoreAboutAmbassadorScholarship(partnerAgentInquiry.getAmbassadorScholershipParticipants() == 1);
+				if(partnerAgentInquiry.getBusinessYears()!=null)
 				additional.setYearsInBusiness(Integer.parseInt(partnerAgentInquiry.getBusinessYears()));
+				if(partnerAgentInquiry.getHowDidYouHearAboutCCI()!=null)
 				additional.setHearAboutUsFrom(partnerAgentInquiry.getHowDidYouHearAboutCCI());
+				if(partnerAgentInquiry.getCurrentlyOfferingPrograms()!=null)
 				additional.setDescribeProgramsOrganizationOffers(partnerAgentInquiry.getCurrentlyOfferingPrograms());
-
+				if(partnerAgentInquiry.getHighSchoolAbroad()!=null)
 				additional.setInterestedInHighSchoolAbroad(partnerAgentInquiry.getHighSchoolAbroad() == 1);
+				if(partnerAgentInquiry.getTeachAbroad()!=null)
 				additional.setInterestedInTeachAbroad(partnerAgentInquiry.getTeachAbroad() == 1);
+				if(partnerAgentInquiry.getVolunteerAbroad()!=null)
 				additional.setInterestedInVolunteerAbroad(partnerAgentInquiry.getVolunteerAbroad() == 1);
 
 				// additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
