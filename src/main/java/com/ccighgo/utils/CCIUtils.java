@@ -5,7 +5,10 @@ package com.ccighgo.utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -83,5 +86,19 @@ public class CCIUtils {
       }
       return url;
    }
+    
+    public static String getNameString(String input) {
+       if(input!=null){
+          if(input.contains(";")){
+             String[] output = input.split(";");
+             return output[0];
+          }
+          else{
+             return input;
+          }
+       }else{
+          return "";
+       }
+    }
 
 }
