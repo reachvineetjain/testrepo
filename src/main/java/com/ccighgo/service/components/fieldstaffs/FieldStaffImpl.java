@@ -1,5 +1,6 @@
 package com.ccighgo.service.components.fieldstaffs;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffStatus;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LoginHistory;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
@@ -147,10 +149,22 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setCellPhone(fs.getCellPhone());
          fsd.setTollFreeNumber(fs.getTollFreePhone());
          fsd.setFax(fs.getFax());
-         fsd.setStates("");
+         fsd.setStates("");// TODO
+         fsd.setRegion("");// TODO
+         fsd.setSuperRegion("");// TODO
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
          fsd.setUserName(login.getLoginName());
          fsd.setEmail(login.getEmail());
+         Timestamp ts = null;
+         List<LoginHistory> loginHistory = login.getLoginHistories();
+         if (loginHistory != null && loginHistory.size() > 0) {
+            ts = loginHistory.get(0).getLoggedOn();
+            for (LoginHistory lh : loginHistory) {
+               if (ts.after(lh.getLoggedOn()))
+                  ts = lh.getLoggedOn();
+            }
+         }
+         fieldStaffOverview.setLastLoginDate(ts != null ? DateUtils.getTimeStamp(ts) : CCIConstants.EMPTY_DATA);
          fsd.setOriginalStartDate(DateUtils.getMMddyyDate(fs.getOriginalStartDate()));
          fsd.setTotalPlacementManual(fs.getTotalPlacementsManual());
          
@@ -160,21 +174,26 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setBestNumberCell(fs.getBestNumberCell() == CCIConstants.ACTIVE);
          fsd.setBestNumberHome(fs.getBestNumberHome() == CCIConstants.ACTIVE);
          fsd.setBestNumberWork(fs.getBestNumberWork() == CCIConstants.ACTIVE);
-
-         fsd.setDateApplSubmitted(DateUtils.getMMddyyDate(fs.getSubmittedDate()));
-         fsd.setDateApplApproved(DateUtils.getMMddyyDate(fs.getApprovedDate()));
-         fsd.setDateDOSTestTaken(DateUtils.getMMddyyDate(fs.getDateDOSCertTestTaken()));
-         fsd.setDateW9Recieved(DateUtils.getMMddyyDate(fs.getDateW9FormReceived()));
-         UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fs.getApprovedBy());
-         if (userInformation != null)
-            fsd.setApprovedBy(userInformation.getUserName());
-
+         fsd.setOriginalStartDate(fs.getOriginalStartDate() != null ? DateUtils.getMMddyyDate(fs.getOriginalStartDate()) : CCIConstants.EMPTY_DATA);
+         fsd.setDateApplSubmitted(fs.getSubmittedDate() != null ? DateUtils.getMMddyyDate(fs.getSubmittedDate()) : CCIConstants.EMPTY_DATA);
+         fsd.setDateApplApproved(fs.getApprovedDate() != null ? DateUtils.getMMddyyDate(fs.getApprovedDate()) : CCIConstants.EMPTY_DATA);
+         fsd.setDateDOSTestTaken(fs.getDateDOSCertTestTaken() != null ? DateUtils.getMMddyyDate(fs.getDateDOSCertTestTaken()) : CCIConstants.EMPTY_DATA);
+         fsd.setDateW9Recieved(fs.getDateW9FormReceived() != null ? DateUtils.getMMddyyDate(fs.getDateW9FormReceived()) : CCIConstants.EMPTY_DATA);
+         if (fs.getApprovedBy() != null) {
+            UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fs.getApprovedBy());
+            if (userInformation != null)
+               fsd.setApprovedBy(userInformation.getUserName());
+            else
+               fsd.setApprovedBy(CCIConstants.EMPTY_DATA);
+         } else
+            fsd.setApprovedBy(CCIConstants.EMPTY_DATA);
          com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus fscs = new com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffStatus();
-         fscs.setFsStatusValue(fs.getFieldStaffStatus().getFieldStaffStatusName());
+         if (fs.getFieldStaffStatus() != null)
+            fscs.setFsStatusValue(fs.getFieldStaffStatus().getFieldStaffStatusName());
+         fscs.setFsStatusId(fs.getFieldStaffStatus().getFieldStaffStatusId());
          fieldStaffOverview.setActive(login.getActive() == CCIConstants.ACTIVE);
          fieldStaffOverview.setFieldStaffDetails(fsd);
          fieldStaffOverview.setFieldStaffStatus(fscs);
-         fieldStaffOverview.setLastLoginDate("");
          fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
