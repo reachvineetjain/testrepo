@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TransactionLogType xmlns:table="http://www.ice.gov/xmlschema/sevisbatch/alpha/Table" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SevisTransLog.xsd">
+	<BatchHeader>
+		<BatchID>BatchID</BatchID>
+		<OrgID>OrgID</OrgID>
+	</BatchHeader>
+	<BatchDetail status="true" system="ALPHA">
+		<Upload dateTimeStamp="2001-12-31T12:00:00" resultCode="S0001">
+			<FileName>FileName</FileName>
+		</Upload>
+		<Process dateTimeStamp="2001-12-31T12:00:00" resultCode="S0001">
+			<RecordCount>
+				<Success>0</Success>
+				<Failure>1</Failure>
+				<Total>1</Total>
+			</RecordCount>
+			<Record requestID="1" sevisID="N0000000000" userID="AAAAAAAAAA">
+				<UserDefinedA>UsrDefineA</UserDefinedA>
+				<UserDefinedB>UsrDefineB</UserDefinedB>
+				<ProcessDate>2001-12-31T12:00:00</ProcessDate>
+				<Result status="true">
+					<ErrorCode>S0000</ErrorCode>
+					<ErrorMessage>Success</ErrorMessage>
+				</Result>
+				<SiteOfActivity>
+					<ProvidedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</ProvidedAddress>
+					<CorrectedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</CorrectedAddress>
+					<AddressResult>S0001</AddressResult>
+					<AddressMessage>AddressMessage</AddressMessage>
+					<SiteId>SiteId</SiteId>
+					<SiteName>Name</SiteName>
+					<Phase>
+						<PhaseId>1</PhaseId>
+						<PhaseName>PhaseName</PhaseName>
+					</Phase>
+				</SiteOfActivity>
+				<Dependent dependentSevisID="N0000000000">
+					<UserDefinedA>UsrDefineA</UserDefinedA>
+					<UserDefinedB>UsrDefineB</UserDefinedB>
+				</Dependent>
+				<Employer>
+					<EmployerName>EmployerName</EmployerName>
+					<StartDate>2001-01-01</StartDate>
+					<ProvidedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</ProvidedAddress>
+					<CorrectedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</CorrectedAddress>
+					<AddressResult>S0001</AddressResult>
+					<AddressMessage>AddressMessage</AddressMessage>
+				</Employer>
+				<PhysicalProvidedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</PhysicalProvidedAddress>
+				<PhysicalCorrectedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</PhysicalCorrectedAddress>
+				<PhysicalAddressResult>S0001</PhysicalAddressResult>
+				<PhysicalAddressMessage>PhysicalAddressMessage</PhysicalAddressMessage>
+				<MailingProvidedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</MailingProvidedAddress>
+				<MailingCorrectedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</MailingCorrectedAddress>
+				<MailingAddressResult>S0001</MailingAddressResult>
+				<MailingAddressMessage>MailingAddressMessage</MailingAddressMessage>
+			</Record>
+
+			<Record requestID="1" sevisID="N0000000000" userID="AAAAAAAAAA">
+				<UserDefinedA>UsrDefineA</UserDefinedA>
+				<UserDefinedB>UsrDefineB</UserDefinedB>
+				<ProcessDate>2001-12-31T12:00:00</ProcessDate>
+				<Result status="true">
+					<ErrorCode>S0001</ErrorCode>
+					<ErrorMessage>General upload/download failure</ErrorMessage>
+				</Result>
+				<SiteOfActivity>
+					<ProvidedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</ProvidedAddress>
+					<CorrectedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</CorrectedAddress>
+					<AddressResult>S0001</AddressResult>
+					<AddressMessage>AddressMessage</AddressMessage>
+					<SiteId>SiteId</SiteId>
+					<SiteName>Name</SiteName>
+					<Phase>
+						<PhaseId>1</PhaseId>
+						<PhaseName>PhaseName</PhaseName>
+					</Phase>
+				</SiteOfActivity>
+				<Dependent dependentSevisID="N0000000000">
+					<UserDefinedA>UsrDefineA</UserDefinedA>
+					<UserDefinedB>UsrDefineB</UserDefinedB>
+				</Dependent>
+				<Employer>
+					<EmployerName>EmployerName</EmployerName>
+					<StartDate>2001-01-01</StartDate>
+					<ProvidedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</ProvidedAddress>
+					<CorrectedAddress>
+						<Address1>Address1</Address1>
+						<PostalCode>60169</PostalCode>
+					</CorrectedAddress>
+					<AddressResult>S0001</AddressResult>
+					<AddressMessage>AddressMessage</AddressMessage>
+				</Employer>
+				<PhysicalProvidedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</PhysicalProvidedAddress>
+				<PhysicalCorrectedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</PhysicalCorrectedAddress>
+				<PhysicalAddressResult>S0001</PhysicalAddressResult>
+				<PhysicalAddressMessage>PhysicalAddressMessage</PhysicalAddressMessage>
+				<MailingProvidedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</MailingProvidedAddress>
+				<MailingCorrectedAddress>
+					<Address1>Address1</Address1>
+					<PostalCode>60169</PostalCode>
+				</MailingCorrectedAddress>
+				<MailingAddressResult>S0001</MailingAddressResult>
+				<MailingAddressMessage>MailingAddressMessage</MailingAddressMessage>
+			</Record>
+		</Process>
+		<Download resultCode="S0001" />
+	</BatchDetail>
+</TransactionLogType>
