@@ -278,8 +278,8 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                contact.setErdLastName(obj[4] != null ? CCIUtils.getNameString(obj[4].toString()) : CCIConstants.EMPTY);
                contact.setRdFirstName(obj[5] != null ? CCIUtils.getNameString(obj[5].toString()) : CCIConstants.EMPTY);
                contact.setRdLastName(obj[6] != null ? CCIUtils.getNameString(obj[6].toString()) : CCIConstants.EMPTY);
-               contact.setErdPicture(obj[9] != null ? obj[9].toString() : CCIConstants.EMPTY);
-               contact.setRdPicture(obj[10] != null ? obj[10].toString() : CCIConstants.EMPTY);
+               contact.setErdPicture(obj[7] != null ? obj[7].toString() : CCIConstants.EMPTY);
+               contact.setRdPicture(obj[8] != null ? obj[8].toString() : CCIConstants.EMPTY);
                fsrmSeasonContactsList.add(contact);
             }
             fsrmSeasonContacts.getFSRMSeasonContacts().addAll(fsrmSeasonContactsList);
