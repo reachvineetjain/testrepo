@@ -5,10 +5,12 @@ package com.ccighgo.service.components.fieldstaff.listing;
 
 import org.springframework.stereotype.Service;
 
-import com.ccighgo.service.transport.fieldstaff.beans.aclist.FieldStaffACList;
-import com.ccighgo.service.transport.fieldstaff.beans.lclist.FieldStaffLCList;
-import com.ccighgo.service.transport.fieldstaff.beans.rdlist.FieldStaffRDList;
-import com.ccighgo.service.transport.fieldstaff.beans.rmlist.FieldStaffRMList;
+import com.ccighgo.service.transport.fieldstaff.beans.ac.season.contacts.FSACSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.fslist.FieldStaffList;
+import com.ccighgo.service.transport.fieldstaff.beans.fstypes.FieldStaffTypes;
+import com.ccighgo.service.transport.fieldstaff.beans.lc.season.contacts.FSLCSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.rd.season.contacts.FSRDSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.rm.season.contacts.FSRMSeasonContacts;
 
 /**
  * @author ravi
@@ -18,23 +20,38 @@ import com.ccighgo.service.transport.fieldstaff.beans.rmlist.FieldStaffRMList;
 public interface FieldStaffListingInterface {
 
    /**
+    * @param typeId
     * @return
     */
-   public FieldStaffLCList getFieldStaffLCList();
+   public FieldStaffList getFieldStaffList(String typeId);
 
    /**
     * @return
     */
-   public FieldStaffRMList getFieldStaffRMList();
+   public FieldStaffTypes getFieldStaffTypes();
    
    /**
+    * @param goId
     * @return
     */
-   public FieldStaffACList getFieldStaffACList();
-   
+   public FSLCSeasonContacts getFSLCSeasonContacts(String goId);
+
    /**
+    * @param goId
     * @return
     */
-   public FieldStaffRDList getFieldStaffRDList();
+   public FSACSeasonContacts getFSACSeasonContacts(String goId);
+
+   /**
+    * @param goId
+    * @return
+    */
+   public FSRDSeasonContacts getFSRDSeasonContacts(String goId);
+
+   /**
+    * @param goId
+    * @return
+    */
+   public FSRMSeasonContacts getFSRMSeasonContacts(String goId);
 
 }
