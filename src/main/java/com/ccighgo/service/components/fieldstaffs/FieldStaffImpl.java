@@ -228,7 +228,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fs.setWorkPhone(fieldStaffDetail.getWorkPhone());
          fs.setTollFreePhone(fieldStaffDetail.getTollFreeNumber());
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
-         login.setEmail(fieldStaffDetail.getUserName());
+         login.setLoginName(fieldStaffDetail.getUserName());
          login.setEmail(fieldStaffDetail.getEmail());
          loginRepository.saveAndFlush(login);
 
