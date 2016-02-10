@@ -392,12 +392,12 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
 					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 			}else{
-				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
-						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
+						messageUtil.getMessage(CCIConstants.NO_RECORD)));
 			}
 		} else {
-			pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
-					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
+					messageUtil.getMessage(CCIConstants.NO_RECORD)));
 		}
 	} catch (Exception e) {
 		ExceptionUtil.logException(e, LOGGER);
