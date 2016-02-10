@@ -145,6 +145,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setRole(fs.getFieldStaffType().getFieldStaffTypeCode());
          if (fs.getSalutation() != null)
             fsd.setSalutation(fs.getSalutation().getSalutationName());
+         fsd.setWorkPhone(fs.getWorkPhone());
          fsd.setHomePhone(fs.getPhone());
          fsd.setCellPhone(fs.getCellPhone());
          fsd.setTollFreeNumber(fs.getTollFreePhone());
@@ -224,7 +225,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fs.setPhone(fieldStaffDetail.getHomePhone());
          fs.setCellPhone(fieldStaffDetail.getCellPhone());
          fs.setFax(fieldStaffDetail.getFax());
-
+         fs.setWorkPhone(fieldStaffDetail.getWorkPhone());
+         fs.setTollFreePhone(fieldStaffDetail.getTollFreeNumber());
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
          login.setEmail(fieldStaffDetail.getUserName());
          login.setEmail(fieldStaffDetail.getEmail());
