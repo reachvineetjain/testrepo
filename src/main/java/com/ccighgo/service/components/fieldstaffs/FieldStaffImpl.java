@@ -399,7 +399,7 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 			}
 		} else {
-			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
+			pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
 					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 		}
 	} catch (Exception e) {
