@@ -141,7 +141,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setFsGoId(fs.getFieldStaffGoId());
          fsd.setFirstName(fs.getFirstName());
          fsd.setLastName(fs.getLastName());
-         fsd.setPicUrl(fs.getPhoto());
+         fsd.setPicUrl(fs.getPhoto() != null ? fs.getPhoto() : CCIConstants.EMPTY);
          fsd.setRole(fs.getFieldStaffType().getFieldStaffTypeCode());
          if (fs.getSalutation() != null)
             fsd.setSalutation(fs.getSalutation().getSalutationName());
@@ -220,6 +220,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
          fs.setFirstName(fieldStaffDetail.getFirstName());
          fs.setLastName(fieldStaffDetail.getLastName());
+         fs.setPhoto(fieldStaffDetail.getPicUrl());
          fs.setPhone(fieldStaffDetail.getHomePhone());
          fs.setCellPhone(fieldStaffDetail.getCellPhone());
          fs.setFax(fieldStaffDetail.getFax());
