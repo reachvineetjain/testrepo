@@ -368,8 +368,13 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 	AdminFieldStaffHostFamily pwqa = new AdminFieldStaffHostFamily();
 	try {
 		@SuppressWarnings("unchecked")
-		List<Object[]> result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
+		List<Object[]> result = null ;
+		try{
+		result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
 				.setParameter("flagId", flagId).setParameter("category", category).getResultList();
+		} catch (Exception e) {
+		}
+		
 		if (result != null) {
 			if(!result.isEmpty()){
 			for (Object[] wq : result) {
