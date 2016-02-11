@@ -14,7 +14,7 @@
 		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus,
         ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,MyPlacements,MyFieldStaffLeadership,AdminERDPlacement,ERDPlacement,FieldStaffNetwork,ERDPlacementParticipants,
         AdminERDParticipant,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList,HFApplicationUploadPhotos,HFParticipantSeasonList,ERDMyAccount,FieldStaffList,FieldStaffTypes,
-		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts" />
+		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -1556,6 +1556,14 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/fieldstaff/FSRDSeasonContacts.xsd" />
+		</java>
+	</target>
+
+	<target name="FSERDSeasons">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FSERDSeasons.xsd" />
 		</java>
 	</target>
 
