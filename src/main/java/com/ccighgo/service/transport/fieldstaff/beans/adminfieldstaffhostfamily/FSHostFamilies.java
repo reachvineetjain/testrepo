@@ -50,7 +50,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "email",
     "localCoordinator",
     "seasons",
-    "applicationStatus"
+    "applicationStatus",
+    "photo"
 })
 public class FSHostFamilies
     extends Response
@@ -71,6 +72,9 @@ public class FSHostFamilies
     protected String seasons;
     @XmlElement(required = true)
     protected String applicationStatus;
+    @XmlElement(required = true)
+    protected String photo;
+    
 
     /**
      * Gets the value of the goId property.
@@ -256,4 +260,13 @@ public class FSHostFamilies
         this.applicationStatus = value;
     }
 
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+    
 }

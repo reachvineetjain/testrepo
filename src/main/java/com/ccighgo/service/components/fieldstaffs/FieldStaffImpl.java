@@ -389,7 +389,8 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 				pd.setLocalCoordinator(String.valueOf(wq[4]));
 				pd.setSeasons(String.valueOf(wq[5]));
 				pd.setApplicationStatus(String.valueOf(wq[6]));
-				
+				pd.setPhone(String.valueOf(wq[7]));
+				pd.setPhoto(String.valueOf(wq[8]));
 				pwqa.getHostFamilies().add(pd);
 			}
 			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
