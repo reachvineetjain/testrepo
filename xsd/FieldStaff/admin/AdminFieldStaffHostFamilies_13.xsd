@@ -32,6 +32,7 @@
                <xsd:element name="localCoordinator" type="xsd:string" />
                <xsd:element name="seasons" type="xsd:string" />
                <xsd:element name="applicationStatus" type="xsd:string" />
+               <xsd:element name="photo" type="xsd:string" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
