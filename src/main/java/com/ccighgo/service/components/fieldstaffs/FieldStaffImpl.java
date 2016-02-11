@@ -371,8 +371,13 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 	AdminFieldStaffHostFamily pwqa = new AdminFieldStaffHostFamily();
 	try {
 		@SuppressWarnings("unchecked")
-		List<Object[]> result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
+		List<Object[]> result = null ;
+		try{
+		result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
 				.setParameter("flagId", flagId).setParameter("category", category).getResultList();
+		} catch (Exception e) {
+		}
+		
 		if (result != null) {
 			if(!result.isEmpty()){
 			for (Object[] wq : result) {
@@ -390,12 +395,12 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
 					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 			}else{
-				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
-						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
+						messageUtil.getMessage(CCIConstants.NO_RECORD)));
 			}
 		} else {
 			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
-					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+					messageUtil.getMessage(CCIConstants.NO_RECORD)));
 		}
 	} catch (Exception e) {
 		ExceptionUtil.logException(e, LOGGER);
