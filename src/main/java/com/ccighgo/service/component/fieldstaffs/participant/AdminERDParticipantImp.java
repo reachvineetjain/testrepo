@@ -76,6 +76,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   esp.setLC(String.valueOf(obj[8]));
                   esp.setRD(String.valueOf(obj[9]));
                   esp.setHS(String.valueOf(obj[10]));
+                  esp.setPicUrl(String.valueOf(obj[11]));
                   erdParticipants.getParticipants().add(esp);
                }
             } else {
@@ -129,6 +130,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   fsp.setLC(String.valueOf(obj[8]));
                   fsp.setRD(String.valueOf(obj[9]));
                   fsp.setHS(String.valueOf(obj[10]));
+                  fsp.setPicUrl(String.valueOf(obj[11]));
                   erdParticipants.getParticipants().add(fsp);
                }
             }
