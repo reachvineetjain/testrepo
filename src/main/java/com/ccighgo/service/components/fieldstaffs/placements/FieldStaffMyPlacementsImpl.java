@@ -39,7 +39,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    CommonComponentUtils componentUtils;
 
    private static final String SP_FS_PLACEMENT_LIST = "CALL SPFieldStaffParticipantListing(?,?,?)";
-   private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?)";
+   private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?,?)";
    private static final int MY_PLACEMENT_FLAG = 0;
    private static final int MY_TEAM_PLACEMENT_FLAG = 1;
    private static final int PARTICIPANT_FLAG = 2;
