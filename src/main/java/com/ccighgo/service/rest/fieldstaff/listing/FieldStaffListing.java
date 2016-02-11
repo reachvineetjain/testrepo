@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.fieldstaff.listing.FieldStaffListingInterface;
 import com.ccighgo.service.transport.fieldstaff.beans.ac.season.contacts.FSACSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.erd.seasons.FSERDSeasons;
 import com.ccighgo.service.transport.fieldstaff.beans.fslist.FieldStaffList;
 import com.ccighgo.service.transport.fieldstaff.beans.fstypes.FieldStaffTypes;
 import com.ccighgo.service.transport.fieldstaff.beans.lc.season.contacts.FSLCSeasonContacts;
@@ -80,6 +81,14 @@ public class FieldStaffListing {
    public FSRMSeasonContacts getFSRMSeasonContacts(@PathParam("goId") String goId){
       LOGGER.info("calling FieldStaffListing.getFSRMSeasonContacts ");
       return fieldStaffListingInterface.getFSRMSeasonContacts(goId);
+   }
+   
+   @GET
+   @Path("erd/{goId}")
+   @Produces("application/json")
+   public FSERDSeasons getERDSeasons(@PathParam("goId") String goId){
+      LOGGER.info("calling FieldStaffListing.getFSRMSeasonContacts ");
+      return fieldStaffListingInterface.getERDSeasons(goId);
    }
    
 
