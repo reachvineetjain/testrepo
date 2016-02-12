@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -72,6 +73,9 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @Autowired SalutationRepository salutationRepository;
 	@PersistenceContext
 	EntityManager em;
+  
+   private static final String FIELD_STAFF_REGION_SP="call SPFieldStaffRegionList(?)";
+   
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
       AddedFieldStaff addedFieldStaff = new AddedFieldStaff();
@@ -141,17 +145,39 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setFsGoId(fs.getFieldStaffGoId());
          fsd.setFirstName(fs.getFirstName());
          fsd.setLastName(fs.getLastName());
-         fsd.setPicUrl(fs.getPhoto());
+         fsd.setPicUrl(fs.getPhoto() != null ? fs.getPhoto() : CCIConstants.EMPTY);
          fsd.setRole(fs.getFieldStaffType().getFieldStaffTypeCode());
          if (fs.getSalutation() != null)
             fsd.setSalutation(fs.getSalutation().getSalutationName());
+         fsd.setWorkPhone(fs.getWorkPhone());
          fsd.setHomePhone(fs.getPhone());
          fsd.setCellPhone(fs.getCellPhone());
          fsd.setTollFreeNumber(fs.getTollFreePhone());
          fsd.setFax(fs.getFax());
-         fsd.setStates("");// TODO
-         fsd.setRegion("");// TODO
-         fsd.setSuperRegion("");// TODO
+         Query query = em.createNativeQuery(FIELD_STAFF_REGION_SP);
+         query.setParameter(1, fs.getFieldStaffGoId());
+
+         fsd.setStates(CCIConstants.EMPTY);
+         fsd.setRegion(CCIConstants.EMPTY);
+         fsd.setSuperRegion(CCIConstants.EMPTY);
+
+         @SuppressWarnings("rawtypes")
+         List resultList = null;
+         try {
+            resultList = query.getResultList();
+         } catch (Exception e) {
+         }
+         if (resultList != null && !resultList.isEmpty()) {
+
+            @SuppressWarnings("unchecked")
+            List<Object[]> s = resultList;
+            if (s != null) {
+               Object[] result = s.get(0);
+               fsd.setSuperRegion(result[0] != null ? result[0].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setRegion(result[1] != null ? result[1].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setStates(result[2] != null ? result[2].toString() : CCIConstants.EMPTY_DATA);
+            }
+         }
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
          fsd.setUserName(login.getLoginName());
          fsd.setEmail(login.getEmail());
@@ -216,16 +242,18 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));            
             return response;
          }
-         fs.setFieldStaffType(fieldStaffTypeRepository.findByFieldStaffTypeCode(fieldStaffDetail.getRole()));
-         fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
+         if (fieldStaffDetail.getSalutation() != null)
+            fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
          fs.setFirstName(fieldStaffDetail.getFirstName());
          fs.setLastName(fieldStaffDetail.getLastName());
+         fs.setPhoto(fieldStaffDetail.getPicUrl());
          fs.setPhone(fieldStaffDetail.getHomePhone());
          fs.setCellPhone(fieldStaffDetail.getCellPhone());
          fs.setFax(fieldStaffDetail.getFax());
-
+         fs.setWorkPhone(fieldStaffDetail.getWorkPhone());
+         fs.setTollFreePhone(fieldStaffDetail.getTollFreeNumber());
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
-         login.setEmail(fieldStaffDetail.getUserName());
+         login.setLoginName(fieldStaffDetail.getUserName());
          login.setEmail(fieldStaffDetail.getEmail());
          loginRepository.saveAndFlush(login);
 
@@ -234,13 +262,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             fs.setFieldStaffStatus(fieldStaffStatus);
          fs.setBestNumberHome(fieldStaffDetail.isBestNumberHome() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fs.setBestNumberWork(fieldStaffDetail.isBestNumberWork() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         fs.setBestNumberCell(fieldStaffDetail.isBestNumberCell() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         fs.setOriginalStartDate(DateUtils.getDateFromString(fieldStaffDetail.getOriginalStartDate()));
-         fs.setTotalPlacementsManual(fieldStaffDetail.getTotalPlacementManual());
-         fs.setSubmittedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplSubmitted()));
-         fs.setApprovedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplApproved()));
-         fs.setDateDOSCertTestTaken(DateUtils.getDateFromString(fieldStaffDetail.getDateDOSTestTaken()));
-         fs.setDateW9FormReceived(DateUtils.getDateFromString(fieldStaffDetail.getDateW9Recieved()));
+         fs.setBestNumberCell(fieldStaffDetail.isBestNumberCell() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);        
          fs.setModifiedBy(fieldStaffDetail.getLoginId());
          fieldStaffRepository.saveAndFlush(fs);
 
@@ -368,8 +390,13 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 	AdminFieldStaffHostFamily pwqa = new AdminFieldStaffHostFamily();
 	try {
 		@SuppressWarnings("unchecked")
-		List<Object[]> result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
+		List<Object[]> result = null ;
+		try{
+		result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
 				.setParameter("flagId", flagId).setParameter("category", category).getResultList();
+		} catch (Exception e) {
+		}
+		
 		if (result != null) {
 			if(!result.isEmpty()){
 			for (Object[] wq : result) {
@@ -381,18 +408,19 @@ public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId,
 				pd.setLocalCoordinator(String.valueOf(wq[4]));
 				pd.setSeasons(String.valueOf(wq[5]));
 				pd.setApplicationStatus(String.valueOf(wq[6]));
-				
+				pd.setPhone(String.valueOf(wq[7]));
+				pd.setPhoto(String.valueOf(wq[8]));
 				pwqa.getHostFamilies().add(pd);
 			}
 			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
 					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 			}else{
-				pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
-						messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+				pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
+						messageUtil.getMessage(CCIConstants.NO_RECORD)));
 			}
 		} else {
 			pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
-					messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+					messageUtil.getMessage(CCIConstants.NO_RECORD)));
 		}
 	} catch (Exception e) {
 		ExceptionUtil.logException(e, LOGGER);

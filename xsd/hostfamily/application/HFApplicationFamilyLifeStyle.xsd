@@ -21,6 +21,8 @@
                <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="familyDescription" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="thingsStudentNeedsToAdaptWith" type="xsd:string" minOccurs="1" maxOccurs="1"  />
+               
+               
                <xsd:element name="familyDay" type="pu:HFFamilyDayDetails" minOccurs="1" maxOccurs="1"  />
                <xsd:element name="religious" type="pu:HFFamilyReligious" minOccurs="1" maxOccurs="1"  />
                <xsd:element name="dieTrayRestriction" type="pu:HFDieTrayRestriction" minOccurs="1" maxOccurs="1"  />

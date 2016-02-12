@@ -17,7 +17,7 @@ public class SevisLogProcessor implements ISevisLogProcessor {
 	public Response processLog(File xmlFile) {
 		// test log file
 		TransactionLogType log = SevisUtils
-				.unmarshalSevisLog(new File("C:\\git\\CCIGHGO\\xsd\\sevisbatch\\gov\\SevisTransLog.xml"));
+				.unmarshalSevisLog(new File("C:\\Users\\CreoDeveloper\\git\\CCIGHGO\\xsd\\sevisbatch\\gov\\SevisTransLog.xml"));
 
 		SevisLogUtils logUtils = new SevisLogUtils(log);
 		System.out.println("Total participants processed = " + logUtils.getTotalRecords().size());
@@ -40,4 +40,9 @@ public class SevisLogProcessor implements ISevisLogProcessor {
 		return new Response();
 	}
 
+	public static void main(String[] args) {
+		SevisLogProcessor s = new SevisLogProcessor();
+		s.processLog(null);
+		System.out.println();
+	}
 }

@@ -71,6 +71,7 @@
             /services/sevis/**=anon
             /services/fieldstaffs/list/**=anon
             /services/hf/application/**=anon
+            /services/GenericUpdateLog/**=anon
             /services/**=authc
          </value>
       </property>
