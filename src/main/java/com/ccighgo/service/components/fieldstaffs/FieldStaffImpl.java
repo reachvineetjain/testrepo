@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -72,6 +73,9 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @Autowired SalutationRepository salutationRepository;
 	@PersistenceContext
 	EntityManager em;
+  
+   private static final String FIELD_STAFF_REGION_SP="call SPFieldStaffRegionList(?)";
+   
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
       AddedFieldStaff addedFieldStaff = new AddedFieldStaff();
@@ -150,9 +154,30 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setCellPhone(fs.getCellPhone());
          fsd.setTollFreeNumber(fs.getTollFreePhone());
          fsd.setFax(fs.getFax());
-         fsd.setStates("");// TODO
-         fsd.setRegion("");// TODO
-         fsd.setSuperRegion("");// TODO
+         Query query = em.createNativeQuery(FIELD_STAFF_REGION_SP);
+         query.setParameter(1, fs.getFieldStaffGoId());
+
+         fsd.setStates(CCIConstants.EMPTY);
+         fsd.setRegion(CCIConstants.EMPTY);
+         fsd.setSuperRegion(CCIConstants.EMPTY);
+
+         @SuppressWarnings("rawtypes")
+         List resultList = null;
+         try {
+            resultList = query.getResultList();
+         } catch (Exception e) {
+         }
+         if (resultList != null && !resultList.isEmpty()) {
+
+            @SuppressWarnings("unchecked")
+            List<Object[]> s = resultList;
+            if (s != null) {
+               Object[] result = s.get(0);
+               fsd.setStates(result[0] != null ? result[0].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setRegion(result[1] != null ? result[1].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setSuperRegion(result[2] != null ? result[2].toString() : CCIConstants.EMPTY_DATA);
+            }
+         }
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
          fsd.setUserName(login.getLoginName());
          fsd.setEmail(login.getEmail());
