@@ -173,9 +173,9 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             List<Object[]> s = resultList;
             if (s != null) {
                Object[] result = s.get(0);
-               fsd.setStates(result[0] != null ? result[0].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setSuperRegion(result[0] != null ? result[0].toString() : CCIConstants.EMPTY_DATA);
                fsd.setRegion(result[1] != null ? result[1].toString() : CCIConstants.EMPTY_DATA);
-               fsd.setSuperRegion(result[2] != null ? result[2].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setStates(result[2] != null ? result[2].toString() : CCIConstants.EMPTY_DATA);
             }
          }
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
