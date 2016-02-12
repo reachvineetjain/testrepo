@@ -242,8 +242,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));            
             return response;
          }
-         fs.setFieldStaffType(fieldStaffTypeRepository.findByFieldStaffTypeCode(fieldStaffDetail.getRole()));
-         fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
+         if (fieldStaffDetail.getSalutation() != null)
+            fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
          fs.setFirstName(fieldStaffDetail.getFirstName());
          fs.setLastName(fieldStaffDetail.getLastName());
          fs.setPhoto(fieldStaffDetail.getPicUrl());
@@ -262,13 +262,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             fs.setFieldStaffStatus(fieldStaffStatus);
          fs.setBestNumberHome(fieldStaffDetail.isBestNumberHome() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fs.setBestNumberWork(fieldStaffDetail.isBestNumberWork() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         fs.setBestNumberCell(fieldStaffDetail.isBestNumberCell() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         fs.setOriginalStartDate(DateUtils.getDateFromString(fieldStaffDetail.getOriginalStartDate()));
-         fs.setTotalPlacementsManual(fieldStaffDetail.getTotalPlacementManual());
-         fs.setSubmittedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplSubmitted()));
-         fs.setApprovedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplApproved()));
-         fs.setDateDOSCertTestTaken(DateUtils.getDateFromString(fieldStaffDetail.getDateDOSTestTaken()));
-         fs.setDateW9FormReceived(DateUtils.getDateFromString(fieldStaffDetail.getDateW9Recieved()));
+         fs.setBestNumberCell(fieldStaffDetail.isBestNumberCell() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);        
          fs.setModifiedBy(fieldStaffDetail.getLoginId());
          fieldStaffRepository.saveAndFlush(fs);
 
