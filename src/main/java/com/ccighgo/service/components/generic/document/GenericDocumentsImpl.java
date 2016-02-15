@@ -676,8 +676,11 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
    public Response deleteFieldStaffDocument(int fieldStaffDocumentId) {
       Response response = new Response();
       try {
-         fieldStaffDocumentRepository.delete(fieldStaffDocumentId);
-         documentInformationRepository.delete(fieldStaffDocumentId);
+    	  
+    	  FieldStaffDocument res = fieldStaffDocumentRepository.findOne(fieldStaffDocumentId);
+    	  fieldStaffDocumentRepository.delete(fieldStaffDocumentId);
+    	  if(res.getDocumentInformation()!=null)
+    	  documentInformationRepository.delete(res.getDocumentInformation());
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
