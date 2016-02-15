@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MyFieldStaff", propOrder = {
     "goId",
+    "photo",
     "firstName",
     "lastName",
     "email",
@@ -56,6 +57,8 @@ import javax.xml.bind.annotation.XmlType;
 public class MyFieldStaff {
 
     protected int goId;
+    @XmlElement(required = true)
+    protected String photo;
     @XmlElement(required = true)
     protected String firstName;
     @XmlElement(required = true)
@@ -87,6 +90,30 @@ public class MyFieldStaff {
      */
     public void setGoId(int value) {
         this.goId = value;
+    }
+    
+    /**
+     * Gets the value of the photo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPhoto() {
+        return photo;
+    }
+
+    /**
+     * Sets the value of the photo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPhoto(String value) {
+        this.photo = value;
     }
 
     /**
