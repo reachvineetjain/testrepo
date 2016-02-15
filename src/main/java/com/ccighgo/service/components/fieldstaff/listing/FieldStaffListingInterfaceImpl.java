@@ -26,6 +26,8 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.transport.fieldstaff.beans.ac.season.contacts.FSACSeasonContact;
 import com.ccighgo.service.transport.fieldstaff.beans.ac.season.contacts.FSACSeasonContacts;
+import com.ccighgo.service.transport.fieldstaff.beans.erd.seasons.FSERDSeason;
+import com.ccighgo.service.transport.fieldstaff.beans.erd.seasons.FSERDSeasons;
 import com.ccighgo.service.transport.fieldstaff.beans.fslist.FieldStaff;
 import com.ccighgo.service.transport.fieldstaff.beans.fslist.FieldStaffList;
 import com.ccighgo.service.transport.fieldstaff.beans.fstypes.FieldStaffTypes;
@@ -101,8 +103,10 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                fieldStaff.setState(fs[7] != null ? fs[7].toString() : CCIConstants.EMPTY);
                // SP position 8: is field staff active?
                fieldStaff.setActive(Boolean.valueOf(fs[8].toString()).equals(Boolean.TRUE) ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-               // SP position 9: status of the field staff
-               fieldStaff.setFsStatus(fs[9] != null ? fs[9].toString() : CCIConstants.EMPTY);
+               // SP position 9: email
+               fieldStaff.setEmail(fs[9] != null ? fs[9].toString() : CCIConstants.EMPTY);
+               // SP position 10: status of the field staff
+               fieldStaff.setFsStatus(fs[10] != null ? fs[10].toString() : CCIConstants.EMPTY);
                fieldStaffs.add(fieldStaff);
                count++;
             }
@@ -295,4 +299,34 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
       }
       return fsrmSeasonContacts;
    }
+
+	@Override
+	public FSERDSeasons getERDSeasons(String goId) {
+		FSERDSeasons erdSeasons = new FSERDSeasons();
+	     try {
+	        Query searchFSQuery = entityManager.createNativeQuery(SP_FS_SEASON_HIERARCHY);
+	        searchFSQuery.setParameter(1, Integer.valueOf(goId));
+	        List<Object[]> seasonContactList = searchFSQuery.getResultList();
+	        if (seasonContactList != null) {
+	           List<FSERDSeason> erdSeasonList = new ArrayList<FSERDSeason>();
+	           for (Object[] obj : seasonContactList) {
+	        	   FSERDSeason season = new FSERDSeason();
+	        	   season.setSeasonId(obj[0] != null ? Integer.valueOf(obj[0].toString()) : CCIConstants.INACTIVE);
+	        	   season.setSeasonName(obj[2] != null ? obj[2].toString() : CCIConstants.EMPTY);
+	        	   season.setSeasonStatus(obj[3] != null ? obj[3].toString() : CCIConstants.EMPTY);
+	        	   erdSeasonList.add(season);
+	           }
+	           erdSeasons.getFSERDSeasons().addAll(erdSeasonList);
+	           erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+	                 messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+	        } else {
+	        	erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+	                 messageUtil.getMessage(CCIConstants.NO_RECORD)));
+	        }
+	     } catch (Exception e) {
+	    	 erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+	        LOGGER.error(e.getMessage());
+	     }
+	     return erdSeasons;
+	}
 }

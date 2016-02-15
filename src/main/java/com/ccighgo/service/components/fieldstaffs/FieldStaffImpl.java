@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -72,6 +73,9 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @Autowired SalutationRepository salutationRepository;
 	@PersistenceContext
 	EntityManager em;
+  
+   private static final String FIELD_STAFF_REGION_SP="call SPFieldStaffRegionList(?)";
+   
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
       AddedFieldStaff addedFieldStaff = new AddedFieldStaff();
@@ -150,9 +154,30 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fsd.setCellPhone(fs.getCellPhone());
          fsd.setTollFreeNumber(fs.getTollFreePhone());
          fsd.setFax(fs.getFax());
-         fsd.setStates("");// TODO
-         fsd.setRegion("");// TODO
-         fsd.setSuperRegion("");// TODO
+         Query query = em.createNativeQuery(FIELD_STAFF_REGION_SP);
+         query.setParameter(1, fs.getFieldStaffGoId());
+
+         fsd.setStates(CCIConstants.EMPTY);
+         fsd.setRegion(CCIConstants.EMPTY);
+         fsd.setSuperRegion(CCIConstants.EMPTY);
+
+         @SuppressWarnings("rawtypes")
+         List resultList = null;
+         try {
+            resultList = query.getResultList();
+         } catch (Exception e) {
+         }
+         if (resultList != null && !resultList.isEmpty()) {
+
+            @SuppressWarnings("unchecked")
+            List<Object[]> s = resultList;
+            if (s != null) {
+               Object[] result = s.get(0);
+               fsd.setSuperRegion(result[0] != null ? result[0].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setRegion(result[1] != null ? result[1].toString() : CCIConstants.EMPTY_DATA);
+               fsd.setStates(result[2] != null ? result[2].toString() : CCIConstants.EMPTY_DATA);
+            }
+         }
          Login login = loginRepository.findByGoId(fs.getGoIdSequence());
          fsd.setUserName(login.getLoginName());
          fsd.setEmail(login.getEmail());
@@ -217,8 +242,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));            
             return response;
          }
-         fs.setFieldStaffType(fieldStaffTypeRepository.findByFieldStaffTypeCode(fieldStaffDetail.getRole()));
-         fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
+         if (fieldStaffDetail.getSalutation() != null)
+            fs.setSalutation(salutationRepository.findBySalutationName(fieldStaffDetail.getSalutation()));
          fs.setFirstName(fieldStaffDetail.getFirstName());
          fs.setLastName(fieldStaffDetail.getLastName());
          fs.setPhoto(fieldStaffDetail.getPicUrl());
@@ -237,13 +262,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             fs.setFieldStaffStatus(fieldStaffStatus);
          fs.setBestNumberHome(fieldStaffDetail.isBestNumberHome() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fs.setBestNumberWork(fieldStaffDetail.isBestNumberWork() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         fs.setBestNumberCell(fieldStaffDetail.isBestNumberCell() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         fs.setOriginalStartDate(DateUtils.getDateFromString(fieldStaffDetail.getOriginalStartDate()));
-         fs.setTotalPlacementsManual(fieldStaffDetail.getTotalPlacementManual());
-         fs.setSubmittedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplSubmitted()));
-         fs.setApprovedDate(DateUtils.getDateFromString(fieldStaffDetail.getDateApplApproved()));
-         fs.setDateDOSCertTestTaken(DateUtils.getDateFromString(fieldStaffDetail.getDateDOSTestTaken()));
-         fs.setDateW9FormReceived(DateUtils.getDateFromString(fieldStaffDetail.getDateW9Recieved()));
+         fs.setBestNumberCell(fieldStaffDetail.isBestNumberCell() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);        
          fs.setModifiedBy(fieldStaffDetail.getLoginId());
          fieldStaffRepository.saveAndFlush(fs);
 

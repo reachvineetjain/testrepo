@@ -68,6 +68,7 @@
          <bean id="fSDetails" class="com.ccighgo.service.rest.fieldstaff.network.details.FSDetails" />
          <bean id="hFApplicationProcess" class="com.ccighgo.service.rest.hf.participant.application.process.HFApplicationProcess" />
          <bean id="hfParticipantApplicationSeasons" class="com.ccighgo.service.rest.hf.participant.application.season.HfParticipantApplicationSeasons" />
+         <bean id="GenericUpdateLogs" class="com.ccighgo.service.rest.genericupdatelog.GenericUpdateLogs" />
          
       </jaxrs:serviceBeans>
       <jaxrs:providers>
