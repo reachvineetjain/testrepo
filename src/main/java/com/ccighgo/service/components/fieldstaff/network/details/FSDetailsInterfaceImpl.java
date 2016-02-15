@@ -72,6 +72,7 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface{
                staff.setSeason(obj[6] != null ? obj[6].toString() : EMPTY);
                staff.setType(obj[7] != null ? obj[7].toString() : EMPTY);
                staff.setProgram(obj[8] != null ? obj[8].toString() : EMPTY);
+               staff.setPhoto(obj[9] != null ? obj[9].toString() : EMPTY);
                myFieldStaffs.add(staff);
                count++;
             }
@@ -123,6 +124,7 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface{
                fslNetwork.setSeasonStatus(obj[10] != null ? obj[10].toString() : EMPTY);
                fslNetwork.setDateSubmittedToCCI(obj[11] != null ? DateUtils.getFormattedStringDate(obj[11].toString()) : EMPTY);
                fslNetwork.setSeasons(obj[10] != null ? obj[10].toString() : EMPTY);
+               fslNetwork.setPhoto(obj[13] != null ? obj[13].toString() : EMPTY);
                fslNetworks.add(fslNetwork);
                count++;
             }
