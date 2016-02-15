@@ -29,6 +29,7 @@ import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quicklink
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatscategory.FieldStaffDashboardQuickStatsCategory;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.quickstatstitles.FieldStaffDashboardQuickStatsTitles;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author sinshaw.demisse
@@ -193,4 +194,18 @@ public class FieldStaffs {
    public AdminFieldStaffHostFamily  getAllHostFamilies(@PathParam("fieldStaffId") String fieldStaffId,@PathParam("category") String category) {
       return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),1,category);
    }
+   
+   @GET
+   @Path("changeApplicationStatus/{goId}/{newStatus}/{note}")
+   @Produces("application/json")
+   public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus, @PathParam("note") String note) {
+      return fieldStaffsInterface.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus,note);
+   }
+   @GET
+   @Path("updateFieldStaffApplicationFollowUpDate/{goId}/{followUpdate}")
+   @Produces("application/json")
+   public WSDefaultResponse updatePartnerApplicationFollowUpDate(@PathParam("goId") String goId, @PathParam("followUpdate") String followUpdate) {
+      return fieldStaffsInterface.updateFieldStaffApplicationFollowUpDate(Integer.parseInt(goId), followUpdate);
+   }
+   
 }

@@ -16,6 +16,7 @@ import com.ccighgo.service.transport.fieldstaff.beans.pendingapplication.Pending
 import com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff.AddedFieldStaff;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.applicationstats.FieldStaffDashboardApplicationStats;
 import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.programstats.FieldStaffDashboardProgramStats;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author sinshaw.demisse
@@ -64,4 +65,8 @@ public interface FieldStaffsInterface {
    public FieldStaffDashboardProgramStats getFSProgramStats(int categotyId);
 
    public FSAddedSchool getAddedSchools(int fieldStaffId);
+
+public WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
+
+public WSDefaultResponse updateFieldStaffApplicationFollowUpDate(int parseInt, String followUpdate);
 }
