@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/addedschools" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/addedschools" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.added.schools" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="AddedSchools" type="pu:AddedSchools" />
+
+   <xsd:complexType name="AddedSchools">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="addedSchools" type="pu:School" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="School">
+      <xsd:sequence>
+         <xsd:element name="schoolId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="schoolName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="state" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contactFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contactLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contactEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>
+
