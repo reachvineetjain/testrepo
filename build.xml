@@ -14,7 +14,7 @@
 		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus,
         ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,MyPlacements,MyFieldStaffLeadership,AdminERDPlacement,ERDPlacement,FieldStaffNetwork,ERDPlacementParticipants,
         AdminERDParticipant,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList,HFApplicationUploadPhotos,HFParticipantSeasonList,ERDMyAccount,FieldStaffList,FieldStaffTypes,
-		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric" />
+		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric,PartnerRecruitmentAdmin" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -860,6 +860,15 @@
 	<!--*************************************************  Add AdminViewForPartnerInquiry  *************************************************-->
 
 	<target name="AdminViewForPartnerInquiry">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/AdminViewForPartnerInquiryData.xsd" />
+		</java>
+	</target>
+
+
+	<target name="PartnerRecruitmentAdmin">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
