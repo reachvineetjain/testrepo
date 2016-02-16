@@ -1,6 +1,6 @@
 DELIMITER $$
 
-USE `cci_gh_go_dev`$$
+USE `cci_gh_go_qa`$$
 
 DROP PROCEDURE IF EXISTS `SPFieldStaffHostFamilyList`$$
 
@@ -14,48 +14,58 @@ BEGIN
         SET @fsearch = flag;
         SET @categoryName = category;
         
-        IF ((@fsearch = 1) && (@categoryName IS NOT NULL)) THEN        -- MyHostFamilies
+        IF ((@fsearch = 1) && (@categoryName IS NOT NULL)) THEN        
         
                SELECT hf.`hostFamilyGoId` AS GoId,
                       CONCAT(hf.`firstName`,' ',hf.`lastName`) AS NAME,
-                      CONCAT(hf.`mailingAddress`,' ',' '/*,ls.`stateName`*/,' ',hf.`mailingCity`,' ',hf.`mailingZipCode`) AS Address,
+                     '7466 SW 150th, Augusta,KS67010 ' AS Address,
                       l.email,
                       'Josef Mcde' AS LocalCordinator,
-                      'AYP - J1' /*psv.programName*/ AS Seasons,
-                      hfs.`hostFamilyStatusName` AS ApplicationStatus
+                      'AYP 2016-2017 J1HS'  AS Seasons,
+                      hfs.`hostFamilyStatusName` AS ApplicationStatus,
+                      hf.phone,
+                      'https://s3.amazonaws.com/%2Fccighgodocs-dev%2Fpartner/profile-1450399222670.jpg' AS photo
                FROM `HostFamily` hf 
                INNER JOIN `HostFamilyStatus` hfs ON hfs.`hostFamilyStatusId` = hf.`hostFamilyStatusId`
                INNER JOIN `Login` l ON l.goId = hf.hostFamilyGoId;
-           --    INNER JOIN `LookupUSStates` ls ON ls.`usStatesId` = hf.`mailingStateId`
-           --   INNER JOIN `HostFamilySeason` hfss ON hfss.hostFamilyGoId = hf.hostFamilyGoId
-           --    INNER JOIN `ProgramSeasons` psv ON psv.seasonId = hfss.seasonId AND psv.departmentProgramId = hfss.departmentProgramId
-           --    INNER JOIN `FieldStaffSeason` fss ON fss.seasonId = hfss.seasonId AND fss.departmentProgramId = hfss.departmentProgramId
-           --    INNER JOIN `FieldStaff` fs ON fs.fieldStaffGoId = fss.fieldStaffGoId AND fs.`fieldStaffTypeId` = 1
-           --    INNER JOIN `FieldStaffSeason` fs1 ON fss.seasonId = fs1.seasonId AND fss.departmentProgramId = fs1.departmentProgramId
-           --    WHERE fs1.`fieldStaffGoId` = @goId;
+           
          
         END IF;
         
-        IF ((@fsearch = 0) && (@categoryName IS NULL)) THEN       -- AllHostFamilies
+        IF ((@fsearch = 0) && (@categoryName IS NULL)) THEN       
         
                SELECT hf.`hostFamilyGoId` AS GoId,
                       CONCAT(hf.`firstName`,' ',hf.`lastName`) AS NAME,
-                      CONCAT(hf.`mailingAddress`,' ',' '/*,ls.`stateName`*/,' ',hf.`mailingCity`,' ',hf.`mailingZipCode`) AS Address,
-                      hf.`phone` AS phone,
-                      hfs.`hostFamilyStatusName` AS STATUS,
+                      CONCAT(hf.`mailingAddress1`,' ',hf.`mailingAddress2` ,' ',hf.`mailingCity`,' ',hf.`mailingZipCode`) AS Address,
                       l.email,
                       'Stain Lc' AS localCordinator,
-                      'Eve Moertin'/*GROUP_CONCAT(p.`firstName`,' ',p.`lastName`)*/ AS Participants,
-                      'AYP - J1' /*psv.programName */ AS Seasons       
+                      'AYP 2016-2017 J1HS'  AS Seasons,
+                       hfs.`hostFamilyStatusName` AS ApplicationStatus,
+                      hf.`phone` AS phone,
+                      'https://s3.amazonaws.com/%2Fccighgodocs-dev%2Fpartner/profile-1450399222670.jpg' AS photo,
+                      'Eve Moertin' AS Participants       
                FROM `HostFamily` hf
                INNER JOIN `HostFamilyStatus` hfs ON hfs.`hostFamilyStatusId` = hf.`hostFamilyStatusId`
                INNER JOIN `Login` l ON l.goId = hf.hostFamilyGoId
                INNER JOIN `LookupUSStates` ls ON ls.`usStatesId` = hf.`mailingStateId`;
-            --   INNER JOIN `HostFamilySeason` hfss ON hfss.hostFamilyGoId = hf.hostFamilyGoId
-            --   INNER JOIN `ProgramSeasons` psv ON psv.seasonId = hfss.seasonId AND psv.departmentProgramId = hfss.departmentProgramId
-            --   INNER JOIN `FieldStaffSeason` fss ON fss.seasonId = hfss.seasonId AND fss.departmentProgramId = hfss.departmentProgramId
-            --   INNER JOIN `FieldStaff` fs ON fss.fieldStaffGoId = fs.fieldStaffGoId AND fs.`fieldStaffTypeId` = 1
-            --   INNER JOIN `Participants` p ON p.seasonId = hfss.seasonId AND p.departmentProgramId = hfss.departmentProgramId;
+            
+         ELSE    
+            
+            SELECT hf.`hostFamilyGoId` AS GoId,
+                      CONCAT(hf.`firstName`,' ',hf.`lastName`) AS NAME,
+                      CONCAT(hf.`mailingAddress1`,' ',hf.`mailingAddress2` ,' ',hf.`mailingCity`,' ',hf.`mailingZipCode`) AS Address,
+		      l.email,	
+		      'Stain Lc' AS localCordinator,
+		      'AYP 2016-2017 J1HS'  AS Seasons,
+                      hfs.`hostFamilyStatusName` AS ApplicationStatus,
+                      hf.`phone` AS phone,
+                      'https://s3.amazonaws.com/%2Fccighgodocs-dev%2Fpartner/profile-1450399222670.jpg' AS photo,
+                      'Eve Moertin' AS Participants       
+               FROM `HostFamily` hf
+               INNER JOIN `HostFamilyStatus` hfs ON hfs.`hostFamilyStatusId` = hf.`hostFamilyStatusId`
+               INNER JOIN `Login` l ON l.goId = hf.hostFamilyGoId
+               INNER JOIN `LookupUSStates` ls ON ls.`usStatesId` = hf.`mailingStateId`;
+            
                
          END IF;
     END$$
