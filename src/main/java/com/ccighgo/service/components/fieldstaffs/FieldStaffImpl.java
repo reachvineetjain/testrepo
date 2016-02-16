@@ -267,6 +267,12 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 			fs.setFax(fieldStaffDetail.getFax());
 			fs.setWorkPhone(fieldStaffDetail.getWorkPhone());
 			fs.setTollFreePhone(fieldStaffDetail.getTollFreeNumber());
+			fs.setOriginalStartDate(DateUtils.getMMddyyDateFromString(fieldStaffDetail.getOriginalStartDate()));
+         fs.setSubmittedDate(DateUtils.getMMddyyDateFromString(fieldStaffDetail.getDateApplSubmitted()));
+         fs.setApprovedDate((DateUtils.getMMddyyDateFromString(fieldStaffDetail.getDateApplApproved())));
+         fs.setDateDOSCertTestTaken(DateUtils.getMMddyyDateFromString(fieldStaffDetail.getDateDOSTestTaken()));
+         fs.setDateW9FormReceived(DateUtils.getMMddyyDateFromString(fieldStaffDetail.getDateW9Recieved()));
+         fs.setTotalPlacementsManual(fieldStaffDetail.getTotalPlacementManual());       
 			Login login = loginRepository.findByGoId(fs.getGoIdSequence());
 			login.setLoginName(fieldStaffDetail.getUserName());
 			login.setEmail(fieldStaffDetail.getEmail());
