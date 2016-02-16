@@ -544,23 +544,20 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
 
          try {
-            if (partnerPrograms != null) {
-               for (PartnerProgram partnerProgram : partnerPrograms) {
-                  AdminPartnerProgramsElgibilityAndCCIContact contact = new AdminPartnerProgramsElgibilityAndCCIContact();
-                  contact.setCciContactProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
-                  contact.setMarked(partnerProgram.getIsEligible() == CCIConstants.ACTIVE ? true : false);
-                  contact.setProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
-                  if (partnerProgram.getCcistaffUser() != null) {
-                     CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
-                     cciContact.setUserName(partnerProgram.getCcistaffUser().getFirstName());
-                     if (partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null && !partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().isEmpty())
-                        cciContact.setRole(partnerProgram.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
-                     cciContact.setImageUrl(partnerProgram.getCcistaffUser().getPhoto());
-                     contact.setCciContact(cciContact);
-                     pwt.getProgramEligibilityAndCCIContact().add(contact);
-                  }
-               }
-            }
+        	 if (partnerPrograms != null) {
+                 for (PartnerProgram partnerProgram : partnerPrograms) {
+                    AdminPartnerProgramsElgibilityAndCCIContact contact = new AdminPartnerProgramsElgibilityAndCCIContact();
+                    contact.setCciContactProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
+                    contact.setMarked(partnerProgram.getIsEligible() == CCIConstants.ACTIVE ? true : false);
+                    contact.setProgramId(String.valueOf(partnerProgram.getPartnerProgramId()));
+                    if (partnerProgram.getCcistaffUser() != null) {
+                       CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
+                       cciContact.setCciUserId(String.valueOf(partnerProgram.getCcistaffUser().getCciStaffUserId()));                                         
+                       contact.setCciContact(cciContact);
+                       pwt.getProgramEligibilityAndCCIContact().add(contact);
+                    }
+                 }
+              }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
