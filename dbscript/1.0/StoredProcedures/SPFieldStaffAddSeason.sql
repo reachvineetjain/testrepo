@@ -1,6 +1,6 @@
 DELIMITER $$
 
-USE `cci_gh_go_qa`$$
+USE `cci_gh_go`$$
 
 DROP PROCEDURE IF EXISTS `SPFieldStaffAddSeason`$$
 
