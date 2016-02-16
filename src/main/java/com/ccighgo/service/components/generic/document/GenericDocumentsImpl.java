@@ -566,10 +566,10 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
                doc.setDocName(di.getDocumentName());
                doc.setFileName(di.getFileName());
             }
-            // TODO
-            doc.setDescription("");
+            
+            doc.setDescription(fsd.getDescription() != null ? fsd.getDescription() : CCIConstants.EMPTY_DATA);
             doc.setFieldStaffGoId(fsd.getFieldStaff().getFieldStaffGoId());
-            doc.setActive(CCIConstants.ACTIVE==fsd.getActive());
+            doc.setActive(CCIConstants.ACTIVE == fsd.getActive());
             UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(fsd.getDocumentInformation().getCreatedBy());
             if (userInformation != null) {
                com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser documentUploadUser = new com.ccighgo.service.transport.generic.beans.documents.fieldstaff.DocumentUploadUser();
@@ -615,6 +615,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
          fieldstaffDocument.setCreatedBy(fieldStaffGenericDocument.getLoginId());
          fieldstaffDocument.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          fieldstaffDocument.setModifiedBy(fieldStaffGenericDocument.getLoginId());
+         fieldstaffDocument.setDescription(fieldStaffGenericDocument.getDescription());
          fieldstaffDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          fieldstaffDocument.setActive(CCIConstants.ACTIVE);
          fieldStaffDocumentRepository.saveAndFlush(fieldstaffDocument);
@@ -654,6 +655,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
          DocumentInformation di = documentInformationRepository.saveAndFlush(documentInformation);
          fieldstaffDocument.setFieldStaff(fieldstaff);
          fieldstaffDocument.setDocumentInformation(di);
+         fieldstaffDocument.setDescription(fieldStaffGenericDocuments.getDescription());
          fieldstaffDocument.setModifiedBy(fieldStaffGenericDocuments.getLoginId());
          fieldstaffDocument.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          fieldstaffDocument.setActive(CCIConstants.ACTIVE);
@@ -674,8 +676,11 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
    public Response deleteFieldStaffDocument(int fieldStaffDocumentId) {
       Response response = new Response();
       try {
-         fieldStaffDocumentRepository.delete(fieldStaffDocumentId);
-         documentInformationRepository.delete(fieldStaffDocumentId);
+    	  
+    	  FieldStaffDocument res = fieldStaffDocumentRepository.findOne(fieldStaffDocumentId);
+    	  fieldStaffDocumentRepository.delete(fieldStaffDocumentId);
+    	  if(res.getDocumentInformation()!=null)
+    	  documentInformationRepository.delete(res.getDocumentInformation());
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_DELETED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {

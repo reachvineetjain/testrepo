@@ -27,6 +27,8 @@ public class FieldStaffDocument implements Serializable {
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
+	
+	private String description;
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
@@ -104,5 +106,13 @@ public class FieldStaffDocument implements Serializable {
 	public void setFieldStaff(FieldStaff fieldStaff) {
 		this.fieldStaff = fieldStaff;
 	}
+
+   public String getDescription() {
+      return description;
+   }
+
+   public void setDescription(String description) {
+      this.description = description;
+   }
 
 }
