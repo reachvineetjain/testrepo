@@ -188,7 +188,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          pUser.setSalutation(salutationRepositotry.findOne(partner.getSalutation().getSalutationId()));
          pUser.setFirstName(partner.getFirstName());
          pUser.setLastName(partner.getLastName());
-         pUser.setActive(CCIConstants.ACTIVE);
+         pUser.setActive(login.getActive());
          pUser.setIsPrimary(CCIConstants.ACTIVE);
          pUser = partnerUserRepository.saveAndFlush(pUser);
          
