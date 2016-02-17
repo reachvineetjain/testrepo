@@ -551,9 +551,9 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
       FieldStaffGenericDocuments documents = new FieldStaffGenericDocuments();
       try {
          List<FieldStaffDocument> fieldStaffDocuments = fieldStaffDocumentRepository.getFieldStaffDocumentsByFieldStaffGoId(fieldStaffGoId);
-         if (fieldStaffDocuments == null) {
+         if (fieldStaffDocuments == null || fieldStaffDocuments.size()<=0) {
             documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_NOT_FOUND.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+                  messageUtil.getMessage(GenericMessageConstants.FAILED_TO_FETCH_GENERIC_DOCUMENT)));
             return documents;
          }
          for (FieldStaffDocument fsd : fieldStaffDocuments) {

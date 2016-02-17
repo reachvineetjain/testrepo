@@ -84,8 +84,8 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
       {
       List<FieldStaffNoteTopic> topics = fieldStaffNoteTopicRepository.listTopicsByFieldStaffId(fieldStaffGoId);
       if (topics == null || topics.size()<=0) {
-         fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
-               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE)));
+         fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_FETCH_GENERIC_NOTE)));
          return fieldStaffTopics;
       }
       for (FieldStaffNoteTopic t : topics) {
