@@ -11,30 +11,29 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="HostFamily")
 @NamedQuery(name="HostFamily.findAll", query="SELECT h FROM HostFamily h")
 public class HostFamily implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer hostFamilyGoId;
+	@Column(unique=true, nullable=false)
+	private int hostFamilyGoId;
 
 	private Byte active;
-
-	private String bestContactNumberToReach;
-
-	private String bestWayToReachYou;
 
 	private Integer createdBy;
 
 	private Timestamp createdOn;
 
-	private Integer currentSeasonId;
-
+	@Column(length=100)
 	private String emergencyContact;
 
+	@Column(length=25)
 	private String emergencyPhone;
 
+	@Column(length=50)
 	private String firstName;
 
 	private Byte hasHomeBusiness;
@@ -44,7 +43,8 @@ public class HostFamily implements Serializable {
 	@Lob
 	private String homeBusinessType;
 
-	private Byte homePhone;
+	@Column(length=25)
+	private String homePhone;
 
 	private Byte isBlacklisted;
 
@@ -52,35 +52,47 @@ public class HostFamily implements Serializable {
 
 	private Byte isNotQuilified;
 
+	@Column(length=50)
 	private String lastName;
 
 	private Byte liveAlone;
 
-	private String mailingAddress1;
-
-	private String mailingAddress2;
+	@Column(length=50)
+	private String mailingAddress;
 
 	private Byte mailingAddressSameAsCurrentAddress;
 
+	@Column(length=50)
 	private String mailingCity;
 
+	@Column(length=25)
 	private String mailingZipCode;
 
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
+	@Column(length=30)
 	private String phone;
 
-	private String physicalAddress1;
+	@Column(length=50)
+	private String physicalAddress;
 
-	private String physicalAddress2;
-
+	@Column(length=50)
 	private String physicalCity;
 
-	private Integer physicalCountryId;
-
+	@Column(length=25)
 	private String physicalZipCode;
+
+	private Byte preferredContactMethodEmail;
+
+	private Byte preferredContactMethodPhone;
+
+	@Column(length=50)
+	private String preferredEmail;
+
+	@Column(length=50)
+	private String preferredPhone;
 
 	private Byte receiveEmails;
 
@@ -99,7 +111,12 @@ public class HostFamily implements Serializable {
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
 	@JoinColumn(name="physicalStateId", insertable=false, updatable=false)
-	private LookupCountry lookupCountry;
+	private LookupCountry lookupCountry1;
+
+	//bi-directional many-to-one association to LookupCountry
+	@ManyToOne
+	@JoinColumn(name="physicalCountryId")
+	private LookupCountry lookupCountry2;
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
@@ -111,9 +128,22 @@ public class HostFamily implements Serializable {
 	@JoinColumn(name="physicalStateId", insertable=false, updatable=false)
 	private LookupUSState lookupUsstate2;
 
+	//bi-directional many-to-one association to Season
+	@ManyToOne
+	@JoinColumn(name="currentSeasonId")
+	private Season season;
+
 	//bi-directional many-to-one association to HostFamilyAirport
 	@OneToMany(mappedBy="hostFamily")
 	private List<HostFamilyAirport> hostFamilyAirports;
+
+	//bi-directional many-to-one association to HostFamilyAnnouncement
+	@OneToMany(mappedBy="hostFamily")
+	private List<HostFamilyAnnouncement> hostFamilyAnnouncements;
+
+	//bi-directional many-to-one association to HostFamilyAnnouncementResult
+	@OneToMany(mappedBy="hostFamily")
+	private List<HostFamilyAnnouncementResult> hostFamilyAnnouncementResults;
 
 	//bi-directional many-to-one association to HostFamilyInquiry
 	@OneToMany(mappedBy="hostFamily")
@@ -122,6 +152,10 @@ public class HostFamily implements Serializable {
 	//bi-directional many-to-one association to HostFamilyNote
 	@OneToMany(mappedBy="hostFamily")
 	private List<HostFamilyNote> hostFamilyNotes;
+
+	//bi-directional many-to-one association to HostFamilyNoteTopic
+	@OneToMany(mappedBy="hostFamily")
+	private List<HostFamilyNoteTopic> hostFamilyNoteTopics;
 
 	//bi-directional many-to-one association to HostFamilyParticipantHistory
 	@OneToMany(mappedBy="hostFamily")
@@ -139,14 +173,18 @@ public class HostFamily implements Serializable {
 	@OneToMany(mappedBy="hostFamily")
 	private List<HostFamilySeason> hostFamilySeasons;
 
+	//bi-directional many-to-one association to HostFamilyUpdateLog
+	@OneToMany(mappedBy="hostFamily")
+	private List<HostFamilyUpdateLog> hostFamilyUpdateLogs;
+
 	public HostFamily() {
 	}
 
-	public Integer getHostFamilyGoId() {
+	public int getHostFamilyGoId() {
 		return this.hostFamilyGoId;
 	}
 
-	public void setHostFamilyGoId(Integer hostFamilyGoId) {
+	public void setHostFamilyGoId(int hostFamilyGoId) {
 		this.hostFamilyGoId = hostFamilyGoId;
 	}
 
@@ -156,22 +194,6 @@ public class HostFamily implements Serializable {
 
 	public void setActive(Byte active) {
 		this.active = active;
-	}
-
-	public String getBestContactNumberToReach() {
-		return this.bestContactNumberToReach;
-	}
-
-	public void setBestContactNumberToReach(String bestContactNumberToReach) {
-		this.bestContactNumberToReach = bestContactNumberToReach;
-	}
-
-	public String getBestWayToReachYou() {
-		return this.bestWayToReachYou;
-	}
-
-	public void setBestWayToReachYou(String bestWayToReachYou) {
-		this.bestWayToReachYou = bestWayToReachYou;
 	}
 
 	public Integer getCreatedBy() {
@@ -188,14 +210,6 @@ public class HostFamily implements Serializable {
 
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
-	}
-
-	public Integer getCurrentSeasonId() {
-		return this.currentSeasonId;
-	}
-
-	public void setCurrentSeasonId(Integer currentSeasonId) {
-		this.currentSeasonId = currentSeasonId;
 	}
 
 	public String getEmergencyContact() {
@@ -246,11 +260,11 @@ public class HostFamily implements Serializable {
 		this.homeBusinessType = homeBusinessType;
 	}
 
-	public Byte getHomePhone() {
+	public String getHomePhone() {
 		return this.homePhone;
 	}
 
-	public void setHomePhone(Byte homePhone) {
+	public void setHomePhone(String homePhone) {
 		this.homePhone = homePhone;
 	}
 
@@ -294,20 +308,12 @@ public class HostFamily implements Serializable {
 		this.liveAlone = liveAlone;
 	}
 
-	public String getMailingAddress1() {
-		return this.mailingAddress1;
+	public String getMailingAddress() {
+		return this.mailingAddress;
 	}
 
-	public void setMailingAddress1(String mailingAddress1) {
-		this.mailingAddress1 = mailingAddress1;
-	}
-
-	public String getMailingAddress2() {
-		return this.mailingAddress2;
-	}
-
-	public void setMailingAddress2(String mailingAddress2) {
-		this.mailingAddress2 = mailingAddress2;
+	public void setMailingAddress(String mailingAddress) {
+		this.mailingAddress = mailingAddress;
 	}
 
 	public Byte getMailingAddressSameAsCurrentAddress() {
@@ -358,20 +364,12 @@ public class HostFamily implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getPhysicalAddress1() {
-		return this.physicalAddress1;
+	public String getPhysicalAddress() {
+		return this.physicalAddress;
 	}
 
-	public void setPhysicalAddress1(String physicalAddress1) {
-		this.physicalAddress1 = physicalAddress1;
-	}
-
-	public String getPhysicalAddress2() {
-		return this.physicalAddress2;
-	}
-
-	public void setPhysicalAddress2(String physicalAddress2) {
-		this.physicalAddress2 = physicalAddress2;
+	public void setPhysicalAddress(String physicalAddress) {
+		this.physicalAddress = physicalAddress;
 	}
 
 	public String getPhysicalCity() {
@@ -382,20 +380,44 @@ public class HostFamily implements Serializable {
 		this.physicalCity = physicalCity;
 	}
 
-	public Integer getPhysicalCountryId() {
-		return this.physicalCountryId;
-	}
-
-	public void setPhysicalCountryId(Integer physicalCountryId) {
-		this.physicalCountryId = physicalCountryId;
-	}
-
 	public String getPhysicalZipCode() {
 		return this.physicalZipCode;
 	}
 
 	public void setPhysicalZipCode(String physicalZipCode) {
 		this.physicalZipCode = physicalZipCode;
+	}
+
+	public Byte getPreferredContactMethodEmail() {
+		return this.preferredContactMethodEmail;
+	}
+
+	public void setPreferredContactMethodEmail(Byte preferredContactMethodEmail) {
+		this.preferredContactMethodEmail = preferredContactMethodEmail;
+	}
+
+	public Byte getPreferredContactMethodPhone() {
+		return this.preferredContactMethodPhone;
+	}
+
+	public void setPreferredContactMethodPhone(Byte preferredContactMethodPhone) {
+		this.preferredContactMethodPhone = preferredContactMethodPhone;
+	}
+
+	public String getPreferredEmail() {
+		return this.preferredEmail;
+	}
+
+	public void setPreferredEmail(String preferredEmail) {
+		this.preferredEmail = preferredEmail;
+	}
+
+	public String getPreferredPhone() {
+		return this.preferredPhone;
+	}
+
+	public void setPreferredPhone(String preferredPhone) {
+		this.preferredPhone = preferredPhone;
 	}
 
 	public Byte getReceiveEmails() {
@@ -430,12 +452,20 @@ public class HostFamily implements Serializable {
 		this.hostFamilyStatus = hostFamilyStatus;
 	}
 
-	public LookupCountry getLookupCountry() {
-		return this.lookupCountry;
+	public LookupCountry getLookupCountry1() {
+		return this.lookupCountry1;
 	}
 
-	public void setLookupCountry(LookupCountry lookupCountry) {
-		this.lookupCountry = lookupCountry;
+	public void setLookupCountry1(LookupCountry lookupCountry1) {
+		this.lookupCountry1 = lookupCountry1;
+	}
+
+	public LookupCountry getLookupCountry2() {
+		return this.lookupCountry2;
+	}
+
+	public void setLookupCountry2(LookupCountry lookupCountry2) {
+		this.lookupCountry2 = lookupCountry2;
 	}
 
 	public LookupUSState getLookupUsstate1() {
@@ -452,6 +482,14 @@ public class HostFamily implements Serializable {
 
 	public void setLookupUsstate2(LookupUSState lookupUsstate2) {
 		this.lookupUsstate2 = lookupUsstate2;
+	}
+
+	public Season getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 	public List<HostFamilyAirport> getHostFamilyAirports() {
@@ -474,6 +512,50 @@ public class HostFamily implements Serializable {
 		hostFamilyAirport.setHostFamily(null);
 
 		return hostFamilyAirport;
+	}
+
+	public List<HostFamilyAnnouncement> getHostFamilyAnnouncements() {
+		return this.hostFamilyAnnouncements;
+	}
+
+	public void setHostFamilyAnnouncements(List<HostFamilyAnnouncement> hostFamilyAnnouncements) {
+		this.hostFamilyAnnouncements = hostFamilyAnnouncements;
+	}
+
+	public HostFamilyAnnouncement addHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+		getHostFamilyAnnouncements().add(hostFamilyAnnouncement);
+		hostFamilyAnnouncement.setHostFamily(this);
+
+		return hostFamilyAnnouncement;
+	}
+
+	public HostFamilyAnnouncement removeHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+		getHostFamilyAnnouncements().remove(hostFamilyAnnouncement);
+		hostFamilyAnnouncement.setHostFamily(null);
+
+		return hostFamilyAnnouncement;
+	}
+
+	public List<HostFamilyAnnouncementResult> getHostFamilyAnnouncementResults() {
+		return this.hostFamilyAnnouncementResults;
+	}
+
+	public void setHostFamilyAnnouncementResults(List<HostFamilyAnnouncementResult> hostFamilyAnnouncementResults) {
+		this.hostFamilyAnnouncementResults = hostFamilyAnnouncementResults;
+	}
+
+	public HostFamilyAnnouncementResult addHostFamilyAnnouncementResult(HostFamilyAnnouncementResult hostFamilyAnnouncementResult) {
+		getHostFamilyAnnouncementResults().add(hostFamilyAnnouncementResult);
+		hostFamilyAnnouncementResult.setHostFamily(this);
+
+		return hostFamilyAnnouncementResult;
+	}
+
+	public HostFamilyAnnouncementResult removeHostFamilyAnnouncementResult(HostFamilyAnnouncementResult hostFamilyAnnouncementResult) {
+		getHostFamilyAnnouncementResults().remove(hostFamilyAnnouncementResult);
+		hostFamilyAnnouncementResult.setHostFamily(null);
+
+		return hostFamilyAnnouncementResult;
 	}
 
 	public List<HostFamilyInquiry> getHostFamilyInquiries() {
@@ -518,6 +600,28 @@ public class HostFamily implements Serializable {
 		hostFamilyNote.setHostFamily(null);
 
 		return hostFamilyNote;
+	}
+
+	public List<HostFamilyNoteTopic> getHostFamilyNoteTopics() {
+		return this.hostFamilyNoteTopics;
+	}
+
+	public void setHostFamilyNoteTopics(List<HostFamilyNoteTopic> hostFamilyNoteTopics) {
+		this.hostFamilyNoteTopics = hostFamilyNoteTopics;
+	}
+
+	public HostFamilyNoteTopic addHostFamilyNoteTopic(HostFamilyNoteTopic hostFamilyNoteTopic) {
+		getHostFamilyNoteTopics().add(hostFamilyNoteTopic);
+		hostFamilyNoteTopic.setHostFamily(this);
+
+		return hostFamilyNoteTopic;
+	}
+
+	public HostFamilyNoteTopic removeHostFamilyNoteTopic(HostFamilyNoteTopic hostFamilyNoteTopic) {
+		getHostFamilyNoteTopics().remove(hostFamilyNoteTopic);
+		hostFamilyNoteTopic.setHostFamily(null);
+
+		return hostFamilyNoteTopic;
 	}
 
 	public List<HostFamilyParticipantHistory> getHostFamilyParticipantHistories() {
@@ -606,6 +710,28 @@ public class HostFamily implements Serializable {
 		hostFamilySeason.setHostFamily(null);
 
 		return hostFamilySeason;
+	}
+
+	public List<HostFamilyUpdateLog> getHostFamilyUpdateLogs() {
+		return this.hostFamilyUpdateLogs;
+	}
+
+	public void setHostFamilyUpdateLogs(List<HostFamilyUpdateLog> hostFamilyUpdateLogs) {
+		this.hostFamilyUpdateLogs = hostFamilyUpdateLogs;
+	}
+
+	public HostFamilyUpdateLog addHostFamilyUpdateLog(HostFamilyUpdateLog hostFamilyUpdateLog) {
+		getHostFamilyUpdateLogs().add(hostFamilyUpdateLog);
+		hostFamilyUpdateLog.setHostFamily(this);
+
+		return hostFamilyUpdateLog;
+	}
+
+	public HostFamilyUpdateLog removeHostFamilyUpdateLog(HostFamilyUpdateLog hostFamilyUpdateLog) {
+		getHostFamilyUpdateLogs().remove(hostFamilyUpdateLog);
+		hostFamilyUpdateLog.setHostFamily(null);
+
+		return hostFamilyUpdateLog;
 	}
 
 }

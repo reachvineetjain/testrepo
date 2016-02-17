@@ -10,36 +10,47 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="PartnerUser")
 @NamedQuery(name="PartnerUser.findAll", query="SELECT p FROM PartnerUser p")
 public class PartnerUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerUserId;
 
 	private Byte active;
 
+	@Column(length=150)
 	private String emergencyPhone;
 
+	@Column(length=150)
 	private String fax;
 
+	@Column(length=150)
 	private String firstName;
 
 	private Byte isPrimary;
 
+	@Column(length=150)
 	private String lastName;
 
+	@Column(length=150)
 	private String phone;
 
+	@Column(length=300)
 	private String photo;
 
 	private Byte recieveNotificationEmails;
 
+	@Column(length=150)
 	private String skypeId;
 
+	@Column(length=150)
 	private String title;
 
+	@Column(length=50)
 	private String website;
 
 	//bi-directional many-to-one association to PartnerPermission

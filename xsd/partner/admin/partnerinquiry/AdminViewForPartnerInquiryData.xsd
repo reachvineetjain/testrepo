@@ -27,6 +27,7 @@
                <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="detail" type="adminViewForPartnerInquiryData:AdminPartnerRecruitmentScreeningDetail" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lastLoginDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />               
                <xsd:element name="programEligibilityAndCCIContact" type="adminViewForPartnerInquiryData:AdminPartnerProgramsElgibilityAndCCIContact" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="hspSettings" type="adminViewForPartnerInquiryData:AdminPartnerHspSettings" minOccurs="1" maxOccurs="1" />
 			   <xsd:element name="offices" type="adminViewForPartnerInquiryData:PartnerRecruitmentAdminScreeningOffices" minOccurs="1" maxOccurs="unbounded" />
@@ -61,7 +62,7 @@
 	   
 	   <xsd:complexType name="AdminPartnerProgramsElgibilityAndCCIContact">
 	            <xsd:sequence>
-	               <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="programId" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="marked" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="cciContact" type="adminViewForPartnerInquiryData:CCIInquiryFormPerson" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="cciContactProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -73,6 +74,7 @@
 	               <xsd:element name="imageUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	               <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	               <xsd:element name="cciUserId" type="xsd:string" minOccurs="1" maxOccurs="1" />
 	             </xsd:sequence>
 	   </xsd:complexType>
 	   

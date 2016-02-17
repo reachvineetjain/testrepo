@@ -17,30 +17,41 @@ public class PartnerAgentInquiry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerAgentInquiriesId;
 
+	@Column(length=150)
 	private String adressLineOne;
 
+	@Column(length=150)
 	private String adressLineTwo;
 
 	private Byte ambassadorScholershipParticipants;
 
+	@Column(length=250)
 	private String businessName;
 
+	@Column(length=50)
 	private String businessYears;
 
+	@Column(length=30)
 	private String city;
 
+	@Column(length=250)
 	private String companyName;
 
+	@Column(length=300)
 	private String countryFlag;
 
+	@Column(length=150)
 	private String currentlyOfferingPrograms;
 
 	private Byte currentlySendingParticipantToUS;
 
+	@Column(length=50)
 	private String email;
 
+	@Column(length=50)
 	private String firstName;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -48,20 +59,25 @@ public class PartnerAgentInquiry implements Serializable {
 
 	private Byte highSchoolAbroad;
 
+	@Column(length=100)
 	private String howDidYouHearAboutCCI;
 
+	@Column(length=50)
 	private String lastName;
 
+	@Column(length=300)
 	private String logo;
 
 	private Byte other;
 
 	private Byte participantsForHomeCountry;
 
+	@Column(length=25)
 	private String phone;
 
 	private Integer rating;
 
+	@Column(length=30)
 	private String state;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -71,6 +87,7 @@ public class PartnerAgentInquiry implements Serializable {
 
 	private Byte volunteerAbroad;
 
+	@Column(length=50)
 	private String website;
 
 	//bi-directional many-to-one association to LookupCountry

@@ -10,18 +10,22 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="AdminWorkQueue")
 @NamedQuery(name="AdminWorkQueue.findAll", query="SELECT a FROM AdminWorkQueue a")
 public class AdminWorkQueue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer adminWQId;
 
+	@Column(length=45)
 	private String cciStaaffUserRole;
 
 	private Integer cciStaffUserGoId;
 
+	@Column(nullable=false)
 	private Timestamp createdDate;
 
 	private Integer departmentProgramId;
@@ -35,16 +39,17 @@ public class AdminWorkQueue implements Serializable {
 
 	private Integer targetGoId;
 
+	@Column(length=45)
 	private String targetRoleType;
 
 	//bi-directional many-to-one association to AdminWorkQueueCategory
 	@ManyToOne
-	@JoinColumn(name="adminWQCategoryId")
+	@JoinColumn(name="adminWQCategoryId", nullable=false)
 	private AdminWorkQueueCategory adminWorkQueueCategory;
 
 	//bi-directional many-to-one association to AdminWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="adminWQTypeId")
+	@JoinColumn(name="adminWQTypeId", nullable=false)
 	private AdminWorkQueueType adminWorkQueueType;
 
 	//bi-directional many-to-one association to StateType

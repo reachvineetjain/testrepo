@@ -10,12 +10,14 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="HostFamilyAnnouncement")
 @NamedQuery(name="HostFamilyAnnouncement.findAll", query="SELECT h FROM HostFamilyAnnouncement h")
 public class HostFamilyAnnouncement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyAnnouncementId;
 
 	private Byte active;
@@ -35,6 +37,7 @@ public class HostFamilyAnnouncement implements Serializable {
 
 	private Timestamp modifiedOn;
 
+	@Column(length=300)
 	private String title;
 
 	private Byte unplaced;
@@ -43,6 +46,11 @@ public class HostFamilyAnnouncement implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="departmentProgramId")
 	private DepartmentProgram departmentProgram;
+
+	//bi-directional many-to-one association to HostFamily
+	@ManyToOne
+	@JoinColumn(name="hostFamilyGoId")
+	private HostFamily hostFamily;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
@@ -146,6 +154,14 @@ public class HostFamilyAnnouncement implements Serializable {
 
 	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
 		this.departmentProgram = departmentProgram;
+	}
+
+	public HostFamily getHostFamily() {
+		return this.hostFamily;
+	}
+
+	public void setHostFamily(HostFamily hostFamily) {
+		this.hostFamily = hostFamily;
 	}
 
 	public Season getSeason() {

@@ -11,31 +11,39 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="SeasonWPConfiguration")
 @NamedQuery(name="SeasonWPConfiguration.findAll", query="SELECT s FROM SeasonWPConfiguration s")
 public class SeasonWPConfiguration implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer seasonWPConfigurationId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	private Date seasonEndDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	private Date seasonStartDate;
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public SeasonWPConfiguration() {

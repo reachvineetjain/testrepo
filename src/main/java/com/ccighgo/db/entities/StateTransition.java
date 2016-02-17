@@ -16,20 +16,23 @@ public class StateTransition implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer stateTransitionId;
 
+	@Column(length=45)
 	private String fromRoletype;
 
+	@Column(length=45)
 	private String toRoleType;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="fromStateTypeId")
+	@JoinColumn(name="fromStateTypeId", nullable=false)
 	private StateType stateType1;
 
 	//bi-directional many-to-one association to StateType
 	@ManyToOne
-	@JoinColumn(name="toStateTypeId")
+	@JoinColumn(name="toStateTypeId", nullable=false)
 	private StateType stateType2;
 
 	public StateTransition() {

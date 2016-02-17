@@ -10,20 +10,24 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="PartnerHelpOptionProgram")
 @NamedQuery(name="PartnerHelpOptionProgram.findAll", query="SELECT p FROM PartnerHelpOptionProgram p")
 public class PartnerHelpOptionProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerHelpOptionProgramId;
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	private Integer partnerHelpOptionId;

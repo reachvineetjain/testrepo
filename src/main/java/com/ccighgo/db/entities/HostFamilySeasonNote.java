@@ -10,18 +10,22 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="HostFamilySeasonNote")
 @NamedQuery(name="HostFamilySeasonNote.findAll", query="SELECT h FROM HostFamilySeasonNote h")
 public class HostFamilySeasonNote implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilySeasonNoteId;
 
 	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
+
+	private Byte hasRead;
 
 	private Integer modifiedBy;
 
@@ -35,6 +39,11 @@ public class HostFamilySeasonNote implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="hostFamilySeasonId")
 	private HostFamilySeason hostFamilySeason;
+
+	//bi-directional many-to-one association to HostFamilySeasonNoteTopic
+	@ManyToOne
+	@JoinColumn(name="hostFamilySeasonNoteTopicsId")
+	private HostFamilySeasonNoteTopic hostFamilySeasonNoteTopic;
 
 	public HostFamilySeasonNote() {
 	}
@@ -61,6 +70,14 @@ public class HostFamilySeasonNote implements Serializable {
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public Byte getHasRead() {
+		return this.hasRead;
+	}
+
+	public void setHasRead(Byte hasRead) {
+		this.hasRead = hasRead;
 	}
 
 	public Integer getModifiedBy() {
@@ -93,6 +110,14 @@ public class HostFamilySeasonNote implements Serializable {
 
 	public void setHostFamilySeason(HostFamilySeason hostFamilySeason) {
 		this.hostFamilySeason = hostFamilySeason;
+	}
+
+	public HostFamilySeasonNoteTopic getHostFamilySeasonNoteTopic() {
+		return this.hostFamilySeasonNoteTopic;
+	}
+
+	public void setHostFamilySeasonNoteTopic(HostFamilySeasonNoteTopic hostFamilySeasonNoteTopic) {
+		this.hostFamilySeasonNoteTopic = hostFamilySeasonNoteTopic;
 	}
 
 }
