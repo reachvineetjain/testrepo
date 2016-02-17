@@ -18,10 +18,13 @@ public class PartnerNote implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerNotesId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -29,8 +32,10 @@ public class PartnerNote implements Serializable {
 
 	private Byte hasRead;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	@Lob

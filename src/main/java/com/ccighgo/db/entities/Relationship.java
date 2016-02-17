@@ -2,7 +2,6 @@ package com.ccighgo.db.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -10,19 +9,18 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Relationship")
 @NamedQuery(name="Relationship.findAll", query="SELECT r FROM Relationship r")
 public class Relationship implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer relationshipId;
 
+	@Column(length=25)
 	private String relationshipType;
-
-	//bi-directional many-to-one association to HostFamilyMember
-	@OneToMany(mappedBy="relationship")
-	private List<HostFamilyMember> hostFamilyMembers;
 
 	public Relationship() {
 	}
@@ -41,28 +39,6 @@ public class Relationship implements Serializable {
 
 	public void setRelationshipType(String relationshipType) {
 		this.relationshipType = relationshipType;
-	}
-
-	public List<HostFamilyMember> getHostFamilyMembers() {
-		return this.hostFamilyMembers;
-	}
-
-	public void setHostFamilyMembers(List<HostFamilyMember> hostFamilyMembers) {
-		this.hostFamilyMembers = hostFamilyMembers;
-	}
-
-	public HostFamilyMember addHostFamilyMember(HostFamilyMember hostFamilyMember) {
-		getHostFamilyMembers().add(hostFamilyMember);
-		hostFamilyMember.setRelationship(this);
-
-		return hostFamilyMember;
-	}
-
-	public HostFamilyMember removeHostFamilyMember(HostFamilyMember hostFamilyMember) {
-		getHostFamilyMembers().remove(hostFamilyMember);
-		hostFamilyMember.setRelationship(null);
-
-		return hostFamilyMember;
 	}
 
 }

@@ -18,16 +18,22 @@ public class DepartmentResourceGroup implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer departmentResourceGroupId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(nullable=false, length=50)
 	private String resourceGroupName;
 
 	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
@@ -40,7 +46,7 @@ public class DepartmentResourceGroup implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId")
+	@JoinColumn(name="departmentId", nullable=false)
 	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to ResourcePermission

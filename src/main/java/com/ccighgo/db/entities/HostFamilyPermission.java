@@ -16,6 +16,7 @@ public class HostFamilyPermission implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPermissionsId;
 
 	//bi-directional many-to-one association to HostFamily

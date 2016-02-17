@@ -16,24 +16,32 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Region")
 @NamedQuery(name="Region.findAll", query="SELECT r FROM Region r")
 public class Region implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer regionId;
 
+	@Column(nullable=false)
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(nullable=false, length=50)
 	private String regionName;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration

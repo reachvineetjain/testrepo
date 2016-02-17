@@ -10,62 +10,80 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="HostFamilyInquiry")
 @NamedQuery(name="HostFamilyInquiry.findAll", query="SELECT h FROM HostFamilyInquiry h")
 public class HostFamilyInquiry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyInquiryId;
 
 	@Column(name="18YearsOrOlder")
 	private Byte _8YearsOrOlder;
 
+	@Column(length=50)
 	private String address;
 
 	@Lob
 	private String cciComments;
 
+	@Column(length=50)
 	private String cciHostFamily;
 
+	@Column(length=50)
 	private String cityTownHighSchoolLocated;
 
+	@Column(length=50)
 	private String currentCity;
 
-	private String currentState;
-
+	@Column(length=50)
 	private String emailAddress;
 
+	@Column(length=50)
 	private String firstName;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date followUpDate;
 
+	@Column(length=50)
 	private String friendRelative;
 
+	@Column(length=50)
 	private String heardAboutCCIThrough;
 
+	@Column(length=50)
 	private String interestedStudentFrom;
 
+	@Column(length=50)
 	private String lastName;
 
+	@Column(length=50)
 	private String localPublicHighSchool;
 
+	@Column(length=50)
 	private String nearestLargeCityOrMetroArea;
 
+	@Column(length=20)
 	private String optionalPhoneNumber;
 
+	@Column(length=20)
 	private String preferredPhoneNumber;
 
+	@Column(length=50)
 	private String previousHostingExperience;
 
+	@Column(length=50)
 	private String requestedLocalCoordinator;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date submittedOn;
 
+	@Column(length=50)
 	private String website;
 
+	@Column(length=30)
 	private String zipCode;
 
 	//bi-directional many-to-one association to HostFamily
@@ -77,6 +95,11 @@ public class HostFamilyInquiry implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="leadStatusId")
 	private HostFamilyStatus hostFamilyStatus;
+
+	//bi-directional many-to-one association to LookupUSState
+	@ManyToOne
+	@JoinColumn(name="currentState")
+	private LookupUSState lookupUsstate;
 
 	public HostFamilyInquiry() {
 	}
@@ -135,14 +158,6 @@ public class HostFamilyInquiry implements Serializable {
 
 	public void setCurrentCity(String currentCity) {
 		this.currentCity = currentCity;
-	}
-
-	public String getCurrentState() {
-		return this.currentState;
-	}
-
-	public void setCurrentState(String currentState) {
-		this.currentState = currentState;
 	}
 
 	public String getEmailAddress() {
@@ -287,6 +302,14 @@ public class HostFamilyInquiry implements Serializable {
 
 	public void setHostFamilyStatus(HostFamilyStatus hostFamilyStatus) {
 		this.hostFamilyStatus = hostFamilyStatus;
+	}
+
+	public LookupUSState getLookupUsstate() {
+		return this.lookupUsstate;
+	}
+
+	public void setLookupUsstate(LookupUSState lookupUsstate) {
+		this.lookupUsstate = lookupUsstate;
 	}
 
 }

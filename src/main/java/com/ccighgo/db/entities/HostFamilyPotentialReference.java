@@ -10,58 +10,70 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="HostFamilyPotentialReference")
 @NamedQuery(name="HostFamilyPotentialReference.findAll", query="SELECT h FROM HostFamilyPotentialReference h")
 public class HostFamilyPotentialReference implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPotentialReference;
 
+	@Column(length=20)
 	private String city;
 
 	private Integer createdBy;
 
 	private Timestamp cretatedOn;
 
+	@Column(length=50)
 	private String email;
 
+	@Column(length=50)
 	private String firstName;
 
+	@Column(length=50)
 	private String lastName;
 
-	private String lcName;
-
+	@Column(length=50)
 	private String mailingAddress;
 
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
+	@Column(length=20)
 	private String referenceCity;
 
+	@Column(length=50)
 	private String referenceEmail;
 
+	@Column(length=50)
 	private String referenceFirstName;
 
+	@Column(length=50)
 	private String referenceLastName;
 
+	@Column(length=50)
 	private String referenceMailingAddress;
 
+	@Column(length=30)
 	private String referencePhone;
 
+	@Column(length=150)
 	private String referenceReason;
 
-	private String referenceStateOrRegion;
-
+	@Column(length=50)
 	private String referenceStreetAddress;
 
+	@Column(length=10)
 	private String referenceZipCode;
 
-	private String stateOrRegion;
-
+	@Column(length=50)
 	private String streetAddress;
 
+	@Column(length=10)
 	private String zipCode;
 
 	//bi-directional many-to-one association to HostFamily
@@ -69,15 +81,15 @@ public class HostFamilyPotentialReference implements Serializable {
 	@JoinColumn(name="hostFamilyGoId")
 	private HostFamily hostFamily;
 
-	//bi-directional many-to-one association to LookupCountry
+	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="referenceCountryId")
-	private LookupCountry lookupCountry1;
+	@JoinColumn(name="referenceStateId")
+	private LookupUSState lookupUsstate1;
 
-	//bi-directional many-to-one association to LookupCountry
+	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="counrtyId")
-	private LookupCountry lookupCountry2;
+	@JoinColumn(name="stateId")
+	private LookupUSState lookupUsstate2;
 
 	//bi-directional many-to-one association to UserType
 	@ManyToOne
@@ -141,14 +153,6 @@ public class HostFamilyPotentialReference implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getLcName() {
-		return this.lcName;
-	}
-
-	public void setLcName(String lcName) {
-		this.lcName = lcName;
 	}
 
 	public String getMailingAddress() {
@@ -231,14 +235,6 @@ public class HostFamilyPotentialReference implements Serializable {
 		this.referenceReason = referenceReason;
 	}
 
-	public String getReferenceStateOrRegion() {
-		return this.referenceStateOrRegion;
-	}
-
-	public void setReferenceStateOrRegion(String referenceStateOrRegion) {
-		this.referenceStateOrRegion = referenceStateOrRegion;
-	}
-
 	public String getReferenceStreetAddress() {
 		return this.referenceStreetAddress;
 	}
@@ -253,14 +249,6 @@ public class HostFamilyPotentialReference implements Serializable {
 
 	public void setReferenceZipCode(String referenceZipCode) {
 		this.referenceZipCode = referenceZipCode;
-	}
-
-	public String getStateOrRegion() {
-		return this.stateOrRegion;
-	}
-
-	public void setStateOrRegion(String stateOrRegion) {
-		this.stateOrRegion = stateOrRegion;
 	}
 
 	public String getStreetAddress() {
@@ -287,20 +275,20 @@ public class HostFamilyPotentialReference implements Serializable {
 		this.hostFamily = hostFamily;
 	}
 
-	public LookupCountry getLookupCountry1() {
-		return this.lookupCountry1;
+	public LookupUSState getLookupUsstate1() {
+		return this.lookupUsstate1;
 	}
 
-	public void setLookupCountry1(LookupCountry lookupCountry1) {
-		this.lookupCountry1 = lookupCountry1;
+	public void setLookupUsstate1(LookupUSState lookupUsstate1) {
+		this.lookupUsstate1 = lookupUsstate1;
 	}
 
-	public LookupCountry getLookupCountry2() {
-		return this.lookupCountry2;
+	public LookupUSState getLookupUsstate2() {
+		return this.lookupUsstate2;
 	}
 
-	public void setLookupCountry2(LookupCountry lookupCountry2) {
-		this.lookupCountry2 = lookupCountry2;
+	public void setLookupUsstate2(LookupUSState lookupUsstate2) {
+		this.lookupUsstate2 = lookupUsstate2;
 	}
 
 	public UserType getUserType() {

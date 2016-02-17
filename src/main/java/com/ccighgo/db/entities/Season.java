@@ -16,27 +16,44 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Season")
 @NamedQuery(name="Season.findAll", query="SELECT s FROM Season s")
 public class Season implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer seasonId;
 
+	@Column(length=50)
 	private String clonedSeasonName;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(nullable=false, length=50)
 	private String seasonFullName;
 
+	@Column(nullable=false, length=50)
 	private String seasonName;
+
+	//bi-directional many-to-one association to AnnouncementInformation
+	@OneToMany(mappedBy="season")
+	private List<AnnouncementInformation> announcementInformations;
+
+	//bi-directional many-to-one association to AnnouncementInformationHistory
+	@OneToMany(mappedBy="season")
+	private List<AnnouncementInformationHistory> announcementInformationHistories;
 
 	//bi-directional many-to-one association to FieldStaffAnnouncement
 	@OneToMany(mappedBy="season")
@@ -59,6 +76,10 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
    @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+
+	//bi-directional many-to-one association to HostFamily
+	@OneToMany(mappedBy="season")
+	private List<HostFamily> hostFamilies;
 
 	//bi-directional many-to-one association to HostFamilyAnnouncement
 	@OneToMany(mappedBy="season")
@@ -90,12 +111,12 @@ public class Season implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId")
+	@JoinColumn(name="departmentId", nullable=false)
 	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to SeasonStatus
 	@ManyToOne
-	@JoinColumn(name="seasonStatusId")
+	@JoinColumn(name="seasonStatusId", nullable=false)
 	private SeasonStatus seasonStatus;
 
 	//bi-directional many-to-one association to SeasonCAPDetail
@@ -294,6 +315,50 @@ public class Season implements Serializable {
 		this.seasonName = seasonName;
 	}
 
+	public List<AnnouncementInformation> getAnnouncementInformations() {
+		return this.announcementInformations;
+	}
+
+	public void setAnnouncementInformations(List<AnnouncementInformation> announcementInformations) {
+		this.announcementInformations = announcementInformations;
+	}
+
+	public AnnouncementInformation addAnnouncementInformation(AnnouncementInformation announcementInformation) {
+		getAnnouncementInformations().add(announcementInformation);
+		announcementInformation.setSeason(this);
+
+		return announcementInformation;
+	}
+
+	public AnnouncementInformation removeAnnouncementInformation(AnnouncementInformation announcementInformation) {
+		getAnnouncementInformations().remove(announcementInformation);
+		announcementInformation.setSeason(null);
+
+		return announcementInformation;
+	}
+
+	public List<AnnouncementInformationHistory> getAnnouncementInformationHistories() {
+		return this.announcementInformationHistories;
+	}
+
+	public void setAnnouncementInformationHistories(List<AnnouncementInformationHistory> announcementInformationHistories) {
+		this.announcementInformationHistories = announcementInformationHistories;
+	}
+
+	public AnnouncementInformationHistory addAnnouncementInformationHistory(AnnouncementInformationHistory announcementInformationHistory) {
+		getAnnouncementInformationHistories().add(announcementInformationHistory);
+		announcementInformationHistory.setSeason(this);
+
+		return announcementInformationHistory;
+	}
+
+	public AnnouncementInformationHistory removeAnnouncementInformationHistory(AnnouncementInformationHistory announcementInformationHistory) {
+		getAnnouncementInformationHistories().remove(announcementInformationHistory);
+		announcementInformationHistory.setSeason(null);
+
+		return announcementInformationHistory;
+	}
+
 	public List<FieldStaffAnnouncement> getFieldStaffAnnouncements() {
 		return this.fieldStaffAnnouncements;
 	}
@@ -402,6 +467,28 @@ public class Season implements Serializable {
 		fieldStaffWorkQueue.setSeason(null);
 
 		return fieldStaffWorkQueue;
+	}
+
+	public List<HostFamily> getHostFamilies() {
+		return this.hostFamilies;
+	}
+
+	public void setHostFamilies(List<HostFamily> hostFamilies) {
+		this.hostFamilies = hostFamilies;
+	}
+
+	public HostFamily addHostFamily(HostFamily hostFamily) {
+		getHostFamilies().add(hostFamily);
+		hostFamily.setSeason(this);
+
+		return hostFamily;
+	}
+
+	public HostFamily removeHostFamily(HostFamily hostFamily) {
+		getHostFamilies().remove(hostFamily);
+		hostFamily.setSeason(null);
+
+		return hostFamily;
 	}
 
 	public List<HostFamilyAnnouncement> getHostFamilyAnnouncements() {

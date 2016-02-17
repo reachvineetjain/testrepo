@@ -11,24 +11,31 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="SuperRegion")
 @NamedQuery(name="SuperRegion.findAll", query="SELECT s FROM SuperRegion s")
 public class SuperRegion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer superRegionId;
 
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(length=50)
 	private String superRegionName;
 
 	//bi-directional many-to-one association to SeasonGeographyConfiguration

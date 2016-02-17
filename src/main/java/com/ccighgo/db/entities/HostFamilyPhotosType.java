@@ -10,14 +10,17 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="HostFamilyPhotosType")
 @NamedQuery(name="HostFamilyPhotosType.findAll", query="SELECT h FROM HostFamilyPhotosType h")
 public class HostFamilyPhotosType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPhotoTypeId;
 
+	@Column(length=50)
 	private String hostFamilyPhotoTypeName;
 
 	//bi-directional many-to-one association to HostFamilyPhoto
