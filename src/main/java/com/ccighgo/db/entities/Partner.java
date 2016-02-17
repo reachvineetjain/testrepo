@@ -16,56 +16,43 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="Partner")
 @NamedQuery(name="Partner.findAll", query="SELECT p FROM Partner p")
 public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(unique=true, nullable=false)
+	@Id	
 	private Integer partnerGoId;
 
-	@Column(length=150)
 	private String acronym;
 
-	@Column(length=150)
 	private String addressLineOne;
 
-	@Column(length=150)
 	private String addressLineTwo;
 
-	@Column(length=1000)
 	private String billingNotes;
 
 	private Byte canHaveSubPartner;
 
-	@Column(length=50)
 	private String city;
 
-	@Column(length=250)
 	private String companyName;
 
-	@Column(length=2000)
 	private String contactNotes;
 
-	@Column(length=50)
 	private String contractSigner;
 
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer dandBNumber;
 
 	private Byte deliverDSForms;
 
-	@Column(length=100)
 	private String email;
 
 	private Byte hasSubPartners;
 
-	@Column(length=100)
 	private String invoiceMail;
 
 	private Byte isSubPartner;
@@ -76,7 +63,6 @@ public class Partner implements Serializable {
 
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	private Byte multiCountrySender;
@@ -95,42 +81,32 @@ public class Partner implements Serializable {
 
 	private Byte participantTranscriptRequired;
 
-	@Column(length=64)
 	private String partnerGuid;
 
-	@Column(length=300)
 	private String partnerLogo;
 
 	private Byte payGreenheartDirectly;
 
-	@Column(length=150)
 	private String physicalAddressLineOne;
 
-	@Column(length=150)
 	private String physicalAddressLineTwo;
 
-	@Column(length=50)
 	private String physicalCity;
 
-	@Column(length=50)
 	private String physicalstate;
 
-	@Column(length=15)
 	private String physicalZipcode;
 
-	@Column(length=40)
 	private String quickbooksCode;
 
 	private Byte receiveAYPMails;
 
-	@Column(length=50)
 	private String state;
 
 	private Byte subscribeToCCINewsletter;
 
 	private Byte unguaranteedFormRequired;
 
-	@Column(length=15)
 	private String zipcode;
 
 	//bi-directional many-to-one association to Participant
@@ -140,6 +116,11 @@ public class Partner implements Serializable {
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="partner2")
 	private List<Participant> participants2;
+
+	//bi-directional many-to-one association to CCIStaffUser
+	@ManyToOne
+	@JoinColumn(name="cciGeneralContact")
+	private CCIStaffUser ccistaffUser;
 
 	//bi-directional one-to-one association to GoIdSequence
 	@OneToOne
@@ -630,6 +611,14 @@ public class Partner implements Serializable {
 		participants2.setPartner2(null);
 
 		return participants2;
+	}
+
+	public CCIStaffUser getCcistaffUser() {
+		return this.ccistaffUser;
+	}
+
+	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+		this.ccistaffUser = ccistaffUser;
 	}
 
 	public GoIdSequence getGoIdSequence() {

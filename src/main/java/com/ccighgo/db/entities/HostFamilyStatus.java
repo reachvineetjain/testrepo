@@ -10,19 +10,16 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="HostFamilyStatus")
 @NamedQuery(name="HostFamilyStatus.findAll", query="SELECT h FROM HostFamilyStatus h")
 public class HostFamilyStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyStatusId;
 
 	private Byte active;
 
-	@Column(length=50)
 	private String hostFamilyStatusName;
 
 	private Byte isParticipantStatus;

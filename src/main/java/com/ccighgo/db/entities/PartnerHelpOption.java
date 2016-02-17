@@ -11,29 +11,24 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="PartnerHelpOption")
 @NamedQuery(name="PartnerHelpOption.findAll", query="SELECT p FROM PartnerHelpOption p")
 public class PartnerHelpOption implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerHelpOptionId;
 
 	private Byte active;
 
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(length=50)
 	private String partnerHelpOptionName;
 
 	//bi-directional many-to-one association to PartnerHelpRequest

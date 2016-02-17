@@ -10,20 +10,16 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="FieldStaffWorkQueueType")
 @NamedQuery(name="FieldStaffWorkQueueType.findAll", query="SELECT f FROM FieldStaffWorkQueueType f")
 public class FieldStaffWorkQueueType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffWQTypeId;
 
-	@Column(length=50)
 	private String displayWQTypeName;
 
-	@Column(length=50)
 	private String fieldStaffWQTypeName;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueue

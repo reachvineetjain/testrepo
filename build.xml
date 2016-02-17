@@ -10,9 +10,11 @@
 		PartnerIHPDashboard,PartnerCAPDashboard,PartnerWnTDashboard,AddNewPartnerOffice,PartnerAdminSeasonsList,PartnerAdminSeasonApplicationList,PartnerAdminJ1SeasonDetails,
 		PartnerAdminF1SeasonDetails,PartnerUserDetails, PartnerUserOffices,PartnerGenericNote,PartnerGenericDeleteNote,PartnerGenericTopic,GenericSeasonsDocuments,GenericPartnerDocument,
 		PartnerStatus,PartnerSeasonDocumentParameters,PartnerAdminIHPSeasonDetails,GenericPartnerSeasonContracts,AdminAddPartner,PartnerSeasonIHPDetail,CCIUsersList,AddedPartners,
-		LeadPartners,PartnerStatusAsPattern,FieldStaffLCList,FieldStaffRMList,FieldStaffSeasons,FieldSatffOverview, AddedFieldStaff,GenericFieldStaffNoteTopic,FieldStaffApplication,
+		LeadPartners,PartnerStatusAsPattern,FieldStaffSeasons,FieldSatffOverview, AddedFieldStaff,GenericFieldStaffNoteTopic,FieldStaffApplication,
 		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus,
-        FieldStaffParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,ErdDashboardType,ErdDashboardCategories,MyPlacements" />
+        ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,MyPlacements,MyFieldStaffLeadership,AdminERDPlacement,ERDPlacement,FieldStaffNetwork,ERDPlacementParticipants,
+        AdminERDParticipant,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList,HFApplicationUploadPhotos,HFParticipantSeasonList,ERDMyAccount,FieldStaffList,FieldStaffTypes,
+		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric,PartnerRecruitmentAdmin" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -865,6 +867,15 @@
 		</java>
 	</target>
 
+
+	<target name="PartnerRecruitmentAdmin">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/partner/admin/partnerinquiry/AdminViewForPartnerInquiryData.xsd" />
+		</java>
+	</target>
+
 	<!--*************************************************  Add AdminViewForPartnerInquiry  *************************************************-->
 
 	<target name="AgentViewForPartnerInquiry">
@@ -1214,27 +1225,7 @@
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/FieldSatffOverview.xsd" />
-		</java>
-	</target>
-
-	<!--*******Field staff local coordinator listing**********-->
-
-	<target name="FieldStaffLCList">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/FieldStaffLCList.xsd" />
-		</java>
-	</target>
-
-	<!--*******Field staff regional manager listing**********-->
-
-	<target name="FieldStaffRMList">
-		<java classname="com.sun.tools.internal.xjc.XJCFacade">
-			<arg value="-d" />
-			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/FieldStaffRMList.xsd" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffOverview.xsd" />
 		</java>
 	</target>
 
@@ -1299,19 +1290,19 @@
 		</java>
 	</target>
 
-	<target name="ErdDashboardType">
+	<target name="ErdDashboard">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboardType.xsd" />
+			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboard.xsd" />
 		</java>
 	</target>
 
-	<target name="ErdDashboardCategories">
+	<target name="ERDMyAccount">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/erddashboard/ErdDashboardCategories.xsd" />
+			<arg value="${xsd.dir}/fieldstaff/erddashboard/ERDMyAccount.xsd" />
 		</java>
 	</target>
 
@@ -1331,6 +1322,38 @@
 		</java>
 	</target>
 
+	<target name="AdminERDPlacement">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/placements/AdminERDPlacement.xsd" />
+		</java>
+	</target>
+
+	<target name="AdminERDMyPlacements">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/placements/AdminERDMyPlacements.xsd" />
+		</java>
+	</target>
+
+	<target name="ERDPlacement">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/placements/ERDPlacement.xsd" />
+		</java>
+	</target>
+
+	<target name="ERDPlacementParticipants">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/placements/ERDPlacementParticipants.xsd" />
+		</java>
+	</target>
+
 	<target name="PartnerSeasonStatus">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
@@ -1339,14 +1362,23 @@
 		</java>
 	</target>
 
-	<target name="FieldStaffParticipants">
+	<target name="ERDParticipants">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
-			<arg value="${xsd.dir}/fieldstaff/FieldStaffParticipants.xsd" />
+			<arg value="${xsd.dir}/fieldstaff/monitoring/ERDParticipants.xsd" />
 		</java>
 	</target>
-<target name="MyFieldStaffLeadershipList">
+
+	<target name="AdminERDParticipant">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/monitoring/AdminERDParticipant.xsd" />
+		</java>
+	</target>
+
+	<target name="MyFieldStaffLeadershipList">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
 			<arg value="${java.dir}" />
@@ -1361,22 +1393,195 @@
 			<arg value="${xsd.dir}/fieldstaff/FieldStaffNetworkList.xsd" />
 		</java>
 	</target>
-	
+
 	<!-- Field Staff Page 2  -->
+
 	<target name="FieldStaffAdminDashboardPendingApplications">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/Fieldstaff/admin/PendingApplications_category_Application_type.xsd" />
-			</java>
-		</target>
-	<!-- Field Staff  Page 13 -->
-	<target name="FieldStaffAdmin_HostFamilies">
-				<java classname="com.sun.tools.internal.xjc.XJCFacade">
-					<arg value="-d" />
-					<arg value="${java.dir}" />
-					<arg value="${xsd.dir}/Fieldstaff/admin/AdminFieldStaffHostFamilies_13.xsd" />
-				</java>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/admin/PendingApplications_category_Application_type.xsd" />
+		</java>
 	</target>
-		
+	<!-- Field Staff  Page 13 -->
+
+	<target name="FieldStaffAdmin_HostFamilies">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/admin/AdminFieldStaffHostFamilies_13.xsd" />
+		</java>
+	</target>
+	<!-- FS  -->
+	<target name="FS_AllHostFamily">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_AllHostFamily_7.xsd" />
+		</java>
+	</target>
+	<target name="FS_MyHostFamily">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_MyHostFamily_7.xsd" />
+		</java>
+	</target>
+	<target name="FS_AddedSchools">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_AddedSchools_8.xsd" />
+		</java>
+	</target>
+	<target name="FS_AddNewSchool">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/normalFieldStaff/FS_AddNewSchool_8.xsd" />
+		</java>
+	</target>
+
+	<target name="MyFieldStaffLeadership">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/MyFieldStaffLeadership.xsd" />
+		</java>
+	</target>
+
+	<target name="FieldStaffNetwork">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffNetwork.xsd" />
+		</java>
+	</target>
+
+	<target name="FieldStaffAdminSeasonDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffAdminSeasonDetails.xsd" />
+		</java>
+	</target>
+
+	<target name="FieldStaffStatusList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffStatusList.xsd" />
+		</java>
+	</target>
+
+	<target name="PaymentScheduleList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/PaymentScheduleList.xsd" />
+		</java>
+	</target>
+
+	<!--  Application Stats -->
+
+	<target name="FS Admin Application Stats ">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/dashboard/stats/ApplicationStats.xsd" />
+		</java>
+	</target>
+
+	<target name="FS Admin Program Stats ">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/dashboard/stats/ProgramStats.xsd" />
+		</java>
+	</target>
+
+	<!-- Host family application process-->
+
+	<target name="HFApplicationUploadPhotos">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFApplicationUploadPhotos.xsd" />
+		</java>
+	</target>
+
+	<target name="HFParticipantSeasonList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/seasons/HFParticipantSeasonList.xsd" />
+		</java>
+	</target>
+
+	<!--*******Field staff listing**********-->
+
+	<target name="FieldStaffList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffList.xsd" />
+		</java>
+	</target>
+
+	<target name="FieldStaffTypes">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FieldStaffTypes.xsd" />
+		</java>
+	</target>
+
+	<target name="FSLCSeasonContacts">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FSLCSeasonContacts.xsd" />
+		</java>
+	</target>
+
+	<target name="FSACSeasonContacts">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FSACSeasonContacts.xsd" />
+		</java>
+	</target>
+
+	<target name="FSRMSeasonContacts">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FSRMSeasonContacts.xsd" />
+		</java>
+	</target>
+
+	<target name="FSRDSeasonContacts">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FSRDSeasonContacts.xsd" />
+		</java>
+	</target>
+
+	<target name="FSERDSeasons">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/fieldstaff/FSERDSeasons.xsd" />
+		</java>
+	</target>
+
+	<target name="UpdateLogGeneric">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/updatelog/UpdateLogGeneric.xsd" />
+		</java>
+	</target>
+
 </project>

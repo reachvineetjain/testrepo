@@ -17,10 +17,8 @@ public class PartnerWorkQueueCategory implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerWQCategoryId;
 
-	@Column(length=50)
 	private String partnerWQCategoryName;
 
 	//bi-directional many-to-one association to PartnerWorkQueue
@@ -29,7 +27,7 @@ public class PartnerWorkQueueCategory implements Serializable {
 
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="partnerWQTypeId", nullable=false)
+	@JoinColumn(name="partnerWQTypeId")
 	private PartnerWorkQueueType partnerWorkQueueType;
 
 	//bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate

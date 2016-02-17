@@ -16,7 +16,6 @@ public class FieldStaffPermission implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer fieldStaffPermissionsId;
 
 	//bi-directional many-to-one association to FieldStaff

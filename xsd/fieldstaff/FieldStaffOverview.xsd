@@ -5,7 +5,7 @@
    <xsd:annotation>
       <xsd:appinfo>
          <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.fieldstaff.fieldstaffoverview" />
+            <jaxb:package name="com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview" />
          </jaxb:schemaBindings>
       </xsd:appinfo>
    </xsd:annotation>
@@ -19,7 +19,7 @@
             <xsd:sequence>
                <xsd:element name="lastLoginDate" type="xsd:string" />
                <xsd:element name="fieldStaffStatus" type="cd:FieldStaffStatus" />
-               <xsd:element name="active" type="xsd:int" />
+               <xsd:element name="active" type="xsd:boolean" />
                <xsd:element name="fieldStaffDetails" type="cd:FieldStaffDetails" />
                <xsd:element name="documents" type="cd:Documents" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
@@ -40,8 +40,8 @@
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="picUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="role" type="cd:Role" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="salutation" type="cd:Salutation" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="homePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="workPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="cellPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -54,7 +54,7 @@
          <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="superRegion" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="region" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="states" type="cd:State" minOccurs="0" maxOccurs="unbounded" />
+         <xsd:element name="states" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="originalStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="totalPlacementManual" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="totalPlacementCalculated" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -64,6 +64,8 @@
          <xsd:element name="dateDOSTestTaken" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="dateW9Recieved" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="approvedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="fieldStaffStatus" type="xsd:string" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
    </xsd:complexType>
    

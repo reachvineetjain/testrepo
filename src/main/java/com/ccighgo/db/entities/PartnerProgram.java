@@ -10,14 +10,12 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="PartnerProgram")
 @NamedQuery(name="PartnerProgram.findAll", query="SELECT p FROM PartnerProgram p")
 public class PartnerProgram implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerProgramId;
 
 	private Byte hasApplied;

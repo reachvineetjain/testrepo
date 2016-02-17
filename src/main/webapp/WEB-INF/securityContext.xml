@@ -62,13 +62,17 @@
             /services/fs/list/**=anon
             /services/fs/season/**=anon
             /services/fieldstaffgenericnote/**=anon
-             /services/fieldstaff/participant/**=anon
-             /services/fieldstaff/placement/**=anon
+            /services/fieldstaff/participant/**=anon
+            /services/fieldstaff/placement/**=anon
             /services/fieldstaff/**=anon
             /services/fsl/details/**=anon
             /services/erddashboard/**=anon
+            /services/push/notification/**=anon
+            /services/sevis/**=anon
+            /services/fieldstaffs/list/**=anon
+            /services/hf/application/**=anon
+            /services/GenericUpdateLog/**=anon
             /services/**=authc
-            /notify/**=anon
          </value>
       </property>
    </bean>

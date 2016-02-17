@@ -10,14 +10,12 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="GoIdSequence")
 @NamedQuery(name="GoIdSequence.findAll", query="SELECT g FROM GoIdSequence g")
 public class GoIdSequence implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer goId;
 
 	//bi-directional one-to-one association to CCIStaffUser

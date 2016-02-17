@@ -23,25 +23,18 @@ public class DepartmentProgram implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer departmentProgramId;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(length=100)
 	private String description;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=50)
 	private String programName;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
@@ -51,8 +44,12 @@ public class DepartmentProgram implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId", nullable=false)
+	@JoinColumn(name="departmentId")
 	private LookupDepartment lookupDepartment;
+
+	//bi-directional many-to-one association to FieldStaffAnnouncement
+	@OneToMany(mappedBy="departmentProgram")
+	private List<FieldStaffAnnouncement> fieldStaffAnnouncements;
 
 	//bi-directional many-to-one association to FieldStaffHistory
 	@OneToMany(mappedBy="departmentProgram")
@@ -189,6 +186,28 @@ public class DepartmentProgram implements Serializable {
 
 	public void setLookupDepartment(LookupDepartment lookupDepartment) {
 		this.lookupDepartment = lookupDepartment;
+	}
+
+	public List<FieldStaffAnnouncement> getFieldStaffAnnouncements() {
+		return this.fieldStaffAnnouncements;
+	}
+
+	public void setFieldStaffAnnouncements(List<FieldStaffAnnouncement> fieldStaffAnnouncements) {
+		this.fieldStaffAnnouncements = fieldStaffAnnouncements;
+	}
+
+	public FieldStaffAnnouncement addFieldStaffAnnouncement(FieldStaffAnnouncement fieldStaffAnnouncement) {
+		getFieldStaffAnnouncements().add(fieldStaffAnnouncement);
+		fieldStaffAnnouncement.setDepartmentProgram(this);
+
+		return fieldStaffAnnouncement;
+	}
+
+	public FieldStaffAnnouncement removeFieldStaffAnnouncement(FieldStaffAnnouncement fieldStaffAnnouncement) {
+		getFieldStaffAnnouncements().remove(fieldStaffAnnouncement);
+		fieldStaffAnnouncement.setDepartmentProgram(null);
+
+		return fieldStaffAnnouncement;
 	}
 
 	public List<FieldStaffHistory> getFieldStaffHistories() {

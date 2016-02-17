@@ -1,7 +1,9 @@
 package com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard;
 
-import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardcategories.ErdDashboardCategories;
-import com.ccighgo.service.transport.partner.beans.fieldstaffdashboard.erddashboardtype.ErdDashboardTypes;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 
 /**
  * @author sinshaw.demisse
@@ -13,11 +15,11 @@ public interface FieldStaffDashboardInterface {
     * @param programId
     * @return ErdDashboardTypes
     */
-   ErdDashboardTypes getErdDashboardWorkQueuesType(String programId);
+   ErdDashboard getErdDashboardWorkQueues(String fieldStaffGoId);
 
    /**
-    * @param typeId
-    * @return ErdDashboardCategories
+    * @param fsGoId
+    * @return ErdMyAccount
     */
-   ErdDashboardCategories getErdDashboardWorkQueuesCategories(String typeId);
+   ErdMyAccount getMyAccountDetail(String fsGoId); 
 }

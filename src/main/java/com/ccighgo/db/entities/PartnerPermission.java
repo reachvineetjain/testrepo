@@ -16,7 +16,6 @@ public class PartnerPermission implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer partnerPermissionsId;
 
 	private Byte capAccountingInsurance;
@@ -111,7 +110,7 @@ public class PartnerPermission implements Serializable {
 
 	//bi-directional many-to-one association to PartnerUser
 	@ManyToOne
-	@JoinColumn(name="partnerUserId", nullable=false)
+	@JoinColumn(name="partnerUserId")
 	private PartnerUser partnerUser;
 
 	public PartnerPermission() {

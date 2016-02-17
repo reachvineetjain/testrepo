@@ -18,16 +18,12 @@ public class CCIStaffUsersResourcePermission implements Serializable {
 	@EmbeddedId
 	private CCIStaffUsersResourcePermissionPK id;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffUser
@@ -37,12 +33,12 @@ public class CCIStaffUsersResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
-	@JoinColumn(name="departmentResourceGroupId", nullable=false)
+	@JoinColumn(name="departmentResourceGroupId")
 	private DepartmentResourceGroup departmentResourceGroup;
 
 	//bi-directional many-to-one association to ResourceAction
 	@ManyToOne
-	@JoinColumn(name="resourceActionId", nullable=false)
+	@JoinColumn(name="resourceActionId")
 	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to ResourcePermission

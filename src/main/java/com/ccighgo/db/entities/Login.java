@@ -11,46 +11,35 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="Login")
 @NamedQuery(name="Login.findAll", query="SELECT l FROM Login l")
 public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer loginId;
 
-	@Column(nullable=false)
 	private Byte active;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false, length=50)
 	private String email;
 
-	@Column(nullable=false, length=200)
 	private String keyValue;
 
-	@Column(nullable=false, length=50)
 	private String loginName;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=100)
 	private String password;
 
 	//bi-directional many-to-one association to GoIdSequence
 	@ManyToOne
-	@JoinColumn(name="goId", nullable=false)
+	@JoinColumn(name="goId")
 	private GoIdSequence goIdSequence;
 
 	//bi-directional many-to-one association to LoginHistory

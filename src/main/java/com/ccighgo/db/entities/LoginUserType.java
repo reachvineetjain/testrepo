@@ -10,42 +10,34 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="LoginUserType")
 @NamedQuery(name="LoginUserType.findAll", query="SELECT l FROM LoginUserType l")
 public class LoginUserType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer loginUserTypeId;
 
-	@Column(nullable=false)
 	private Byte active;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false)
 	private Byte defaultUserType;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginId", nullable=false)
+	@JoinColumn(name="loginId")
 	private Login login;
 
 	//bi-directional many-to-one association to UserType
 	@ManyToOne
-	@JoinColumn(name="userTypeId", nullable=false)
+	@JoinColumn(name="userTypeId")
 	private UserType userType;
 
 	public LoginUserType() {

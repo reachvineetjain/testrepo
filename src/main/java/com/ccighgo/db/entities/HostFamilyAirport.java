@@ -10,14 +10,12 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="HostFamilyAirport")
 @NamedQuery(name="HostFamilyAirport.findAll", query="SELECT h FROM HostFamilyAirport h")
 public class HostFamilyAirport implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyAirportId;
 
 	private Byte active;
@@ -25,6 +23,8 @@ public class HostFamilyAirport implements Serializable {
 	private Integer createdBy;
 
 	private Timestamp createdOn;
+
+	private Integer distanceToAirport;
 
 	private Integer modifiedBy;
 
@@ -73,6 +73,14 @@ public class HostFamilyAirport implements Serializable {
 
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public Integer getDistanceToAirport() {
+		return this.distanceToAirport;
+	}
+
+	public void setDistanceToAirport(Integer distanceToAirport) {
+		this.distanceToAirport = distanceToAirport;
 	}
 
 	public Integer getModifiedBy() {

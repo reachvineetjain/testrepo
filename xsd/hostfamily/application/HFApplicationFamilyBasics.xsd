@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfappfamilydetails" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfappfamilydetails" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.hostfamily.beans.application.familydetails" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="HFApplicationFamilyDetails" type="pu:HFApplicationFamilyDetails" />
+
+
+<xsd:complexType name="HFApplicationFamilyDetails">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="singleHost" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="photo" type="pu:Photo" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="adults" type="pu:HFAdultDetails" minOccurs="1" maxOccurs="unbounded"  />
+               <xsd:element name="contactInfo" type="pu:HFContactInfo" minOccurs="1" maxOccurs="unbounded"  />
+               <xsd:element name="physicalAddress" type="pu:HFPhysicalAddress" minOccurs="1" maxOccurs="unbounded"  />
+               <xsd:element name="mailingAddress" type="pu:HFMailingAddress" minOccurs="1" maxOccurs="unbounded"  />
+               
+               <xsd:element name="airports" type="pu:HFAirport" minOccurs="1" maxOccurs="unbounded"  />
+               <xsd:element name="children" type="pu:HFChildren" minOccurs="1" maxOccurs="unbounded"  />
+               <xsd:element name="pets" type="pu:HFPets" minOccurs="1" maxOccurs="unbounded"  />
+               
+               <xsd:element name="isTheirChildrenUnder18LivesAtHome" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   
+   <xsd:complexType name="HFPets">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="animalType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="number" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="indoorOrOutdoor" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="additionalInfo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="HFChildren">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fistname" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastname" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="gender" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="livingAtHome" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="activitiesOrInterests" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="educationLevel" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="communityInvolvment" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   
+   
+    <xsd:complexType name="HFAirport">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="airport" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="distanceToNearestAirport" type="xsd:int" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   
+   
+       <xsd:complexType name="HFMailingAddress">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="address1" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="address2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stateOrProvince" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />      
+         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+    <xsd:complexType name="HFPhysicalAddress">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="address1" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="address2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stateOrProvince" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />      
+         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   
+      <xsd:complexType name="HFContactInfo">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="haveHomePhoneOrLandline" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="bestContactNumberToReach" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contactEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="emergencyContactPerson" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="emergencyPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="bestWayToReachHome" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      
+         
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="HFAdultDetails">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="relationship" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="birthdate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="isHostParent" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="personalPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="activitiesOrInterests" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="educationLevel" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="communityInvolvement" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="singleAdultWithnoRelatedByBloodOrMarrageOrAdoptionLivingHome" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="livesOutsideOfHomePartTime" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="employed" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="employer" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="jobTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="contactName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="jobPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         
+         <xsd:element name="otherEmployer" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="otherJobTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="otherContactName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="otherJobPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         
+      </xsd:sequence>
+   </xsd:complexType>
+
+
+   <xsd:complexType name="Photo">
+      <xsd:sequence>
+         <xsd:element name="photoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>
+

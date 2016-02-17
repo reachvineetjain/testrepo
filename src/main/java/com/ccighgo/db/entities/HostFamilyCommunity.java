@@ -10,14 +10,12 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="HostFamilyCommunity")
 @NamedQuery(name="HostFamilyCommunity.findAll", query="SELECT h FROM HostFamilyCommunity h")
 public class HostFamilyCommunity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyCommunityId;
 
 	private Byte active;
@@ -31,14 +29,15 @@ public class HostFamilyCommunity implements Serializable {
 	@Lob
 	private String childrenEnrolled;
 
-	@Column(length=50)
 	private String cityPopulation;
 
-	@Column(length=50)
 	private String cityWebsite;
 
 	@Lob
 	private String communityDetails;
+
+	@Lob
+	private String contactByCoachDetails;
 
 	private Byte contactedByCoach;
 
@@ -46,10 +45,8 @@ public class HostFamilyCommunity implements Serializable {
 
 	private Timestamp createdOn;
 
-	@Column(length=50)
 	private String distanceFromCity;
 
-	@Column(length=50)
 	private String distanceToSchool;
 
 	private Byte involvedInVolunteerService;
@@ -61,18 +58,18 @@ public class HostFamilyCommunity implements Serializable {
 
 	private Timestamp modifiedOn;
 
-	@Column(length=50)
 	private String nearestCity;
 
 	private Byte parentIsTeacher;
 
 	@Lob
+	private String parentIsTeacherDetails;
+
+	@Lob
 	private String placesOfInterest;
 
-	@Column(length=50)
 	private String population;
 
-	@Column(length=100)
 	private String schoolTravelMethod;
 
 	private Byte transportationToActivities;
@@ -80,7 +77,6 @@ public class HostFamilyCommunity implements Serializable {
 	@Lob
 	private String transportationToActivitiesDetails;
 
-	@Column(length=50)
 	private String usRegion;
 
 	@Lob
@@ -156,6 +152,14 @@ public class HostFamilyCommunity implements Serializable {
 
 	public void setCommunityDetails(String communityDetails) {
 		this.communityDetails = communityDetails;
+	}
+
+	public String getContactByCoachDetails() {
+		return this.contactByCoachDetails;
+	}
+
+	public void setContactByCoachDetails(String contactByCoachDetails) {
+		this.contactByCoachDetails = contactByCoachDetails;
 	}
 
 	public Byte getContactedByCoach() {
@@ -244,6 +248,14 @@ public class HostFamilyCommunity implements Serializable {
 
 	public void setParentIsTeacher(Byte parentIsTeacher) {
 		this.parentIsTeacher = parentIsTeacher;
+	}
+
+	public String getParentIsTeacherDetails() {
+		return this.parentIsTeacherDetails;
+	}
+
+	public void setParentIsTeacherDetails(String parentIsTeacherDetails) {
+		this.parentIsTeacherDetails = parentIsTeacherDetails;
 	}
 
 	public String getPlacesOfInterest() {

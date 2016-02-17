@@ -19,16 +19,16 @@
       <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermission</class>
       <class>com.ccighgo.db.entities.CCIStaffRolesDefaultResourcePermissionPK</class>
       <class>com.ccighgo.db.entities.CCIStaffRolesDepartment</class>
+      <class>com.ccighgo.db.entities.CCIStaffUser</class>
       <class>com.ccighgo.db.entities.CCIStaffUserNote</class>
       <class>com.ccighgo.db.entities.CCIStaffUserProgram</class>
       <class>com.ccighgo.db.entities.CCIStaffUserProgramPK</class>
-      <class>com.ccighgo.db.entities.CCIStaffUser</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersCCIStaffRolePK</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermission</class>
       <class>com.ccighgo.db.entities.CCIStaffUsersResourcePermissionPK</class>
-      <class>com.ccighgo.db.entities.DepartmentProgramOption</class>
       <class>com.ccighgo.db.entities.DepartmentProgram</class>
+      <class>com.ccighgo.db.entities.DepartmentProgramOption</class>
       <class>com.ccighgo.db.entities.DepartmentResourceGroup</class>
       <class>com.ccighgo.db.entities.DocumentCategoryProcess</class>
       <class>com.ccighgo.db.entities.DocumentInformation</class>
@@ -67,20 +67,23 @@
       <class>com.ccighgo.db.entities.HostFamilyAirport</class>
       <class>com.ccighgo.db.entities.HostFamilyAnnouncement</class>
       <class>com.ccighgo.db.entities.HostFamilyCommunity</class>
+      <class>com.ccighgo.db.entities.HostFamilyContactHistory</class>
       <class>com.ccighgo.db.entities.HostFamilyDetail</class>
       <class>com.ccighgo.db.entities.HostFamilyDocument</class>
-      <class>com.ccighgo.db.entities.HostFamilyEmployment</class>
       <class>com.ccighgo.db.entities.HostFamilyHome</class>
       <class>com.ccighgo.db.entities.HostFamilyInquiry</class>
       <class>com.ccighgo.db.entities.HostFamilyInterview</class>
       <class>com.ccighgo.db.entities.HostFamilyLookup</class>
       <class>com.ccighgo.db.entities.HostFamilyMember</class>
+      <class>com.ccighgo.db.entities.HostFamilyMileageCheck</class>
       <class>com.ccighgo.db.entities.HostFamilyNote</class>
       <class>com.ccighgo.db.entities.HostFamilyParticipant</class>
       <class>com.ccighgo.db.entities.HostFamilyParticipantHistory</class>
       <class>com.ccighgo.db.entities.HostFamilyPermission</class>
+      <class>com.ccighgo.db.entities.HostFamilyPet</class>
       <class>com.ccighgo.db.entities.HostFamilyPhoto</class>
       <class>com.ccighgo.db.entities.HostFamilyPhotosType</class>
+      <class>com.ccighgo.db.entities.HostFamilyPotentialReference</class>
       <class>com.ccighgo.db.entities.HostFamilyReference</class>
       <class>com.ccighgo.db.entities.HostFamilySeason</class>
       <class>com.ccighgo.db.entities.HostFamilySeasonNote</class>
@@ -89,14 +92,14 @@
       <class>com.ccighgo.db.entities.LoginHistory</class>
       <class>com.ccighgo.db.entities.LoginUserType</class>
       <class>com.ccighgo.db.entities.LookupCountry</class>
-      <class>com.ccighgo.db.entities.LookupDepartmentProgram</class>
       <class>com.ccighgo.db.entities.LookupDepartment</class>
+      <class>com.ccighgo.db.entities.LookupDepartmentProgram</class>
       <class>com.ccighgo.db.entities.LookupGender</class>
       <class>com.ccighgo.db.entities.LookupUSState</class>
       <class>com.ccighgo.db.entities.MoveReason</class>
+      <class>com.ccighgo.db.entities.Participant</class>
       <class>com.ccighgo.db.entities.ParticipantPermission</class>
       <class>com.ccighgo.db.entities.ParticipantStatus</class>
-      <class>com.ccighgo.db.entities.Participant</class>
       <class>com.ccighgo.db.entities.Partner</class>
       <class>com.ccighgo.db.entities.PartnerAgentInquiry</class>
       <class>com.ccighgo.db.entities.PartnerAnnouncement</class>
@@ -105,9 +108,9 @@
       <class>com.ccighgo.db.entities.PartnerHelpOptionProgram</class>
       <class>com.ccighgo.db.entities.PartnerHelpRequest</class>
       <class>com.ccighgo.db.entities.PartnerMessage</class>
+      <class>com.ccighgo.db.entities.PartnerNote</class>
       <class>com.ccighgo.db.entities.PartnerNoteTag</class>
       <class>com.ccighgo.db.entities.PartnerNoteTopic</class>
-      <class>com.ccighgo.db.entities.PartnerNote</class>
       <class>com.ccighgo.db.entities.PartnerOffice</class>
       <class>com.ccighgo.db.entities.PartnerOfficeType</class>
       <class>com.ccighgo.db.entities.PartnerPermission</class>
@@ -134,17 +137,20 @@
       <class>com.ccighgo.db.entities.PaymentSchedule</class>
       <class>com.ccighgo.db.entities.Region</class>
       <class>com.ccighgo.db.entities.RegionIHP</class>
+      <class>com.ccighgo.db.entities.Relationship</class>
       <class>com.ccighgo.db.entities.ResourceAction</class>
       <class>com.ccighgo.db.entities.ResourcePermission</class>
       <class>com.ccighgo.db.entities.Salutation</class>
       <class>com.ccighgo.db.entities.Season</class>
+      <class>com.ccighgo.db.entities.SeasonACList</class>
       <class>com.ccighgo.db.entities.SeasonCAPDetail</class>
       <class>com.ccighgo.db.entities.SeasonDepartmentDocument</class>
       <class>com.ccighgo.db.entities.SeasonDepartmentNote</class>
       <class>com.ccighgo.db.entities.SeasonDepartmentUpdateLog</class>
+      <class>com.ccighgo.db.entities.SeasonERDList</class>
       <class>com.ccighgo.db.entities.SeasonF1Detail</class>
-      <class>com.ccighgo.db.entities.SeasonGHTConfiguration</class>
       <class>com.ccighgo.db.entities.SeasonGeographyConfiguration</class>
+      <class>com.ccighgo.db.entities.SeasonGHTConfiguration</class>
       <class>com.ccighgo.db.entities.SeasonHSADetail</class>
       <class>com.ccighgo.db.entities.SeasonHSPAllocation</class>
       <class>com.ccighgo.db.entities.SeasonHSPConfiguration</class>
@@ -156,26 +162,28 @@
       <class>com.ccighgo.db.entities.SeasonProgramDocument</class>
       <class>com.ccighgo.db.entities.SeasonProgramNote</class>
       <class>com.ccighgo.db.entities.SeasonProgramUpdateLog</class>
+      <class>com.ccighgo.db.entities.SeasonRDList</class>
+      <class>com.ccighgo.db.entities.SeasonRMList</class>
       <class>com.ccighgo.db.entities.SeasonStatus</class>
       <class>com.ccighgo.db.entities.SeasonTADetail</class>
       <class>com.ccighgo.db.entities.SeasonVADetail</class>
       <class>com.ccighgo.db.entities.SeasonWADetail</class>
-      <class>com.ccighgo.db.entities.SeasonWPAllocation</class>
-      <class>com.ccighgo.db.entities.SeasonWPConfiguration</class>
       <class>com.ccighgo.db.entities.SeasonWnTSpringDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTSummerDetail</class>
       <class>com.ccighgo.db.entities.SeasonWnTWinterDetail</class>
+      <class>com.ccighgo.db.entities.SeasonWPAllocation</class>
+      <class>com.ccighgo.db.entities.SeasonWPConfiguration</class>
       <class>com.ccighgo.db.entities.StateAction</class>
       <class>com.ccighgo.db.entities.StateProcess</class>
       <class>com.ccighgo.db.entities.StateTransition</class>
-      <class>com.ccighgo.db.entities.StateTypeResourcePermission</class>
       <class>com.ccighgo.db.entities.StateType</class>
+      <class>com.ccighgo.db.entities.StateTypeResourcePermission</class>
       <class>com.ccighgo.db.entities.SuperRegion</class>
+      <class>com.ccighgo.db.entities.UserType</class>
       <class>com.ccighgo.db.entities.USSchool</class>
       <class>com.ccighgo.db.entities.USSchoolSeason</class>
-      <class>com.ccighgo.db.entities.UserType</class>
       <properties>
-        <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
+         <property name="connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" />
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
          <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cci_gh_go_prod?autoReconnect=true" />
          <property name="javax.persistence.jdbc.user" value="creomobile" />
@@ -187,7 +195,7 @@
          <property name="hibernate.c3p0.max_size" value="100" />
          <property name="hibernate.c3p0.acquireIncrement " value="5" />
          <property name="hibernate.c3p0.max_statements" value="100" />
-         <property name="hibernate.c3p0.timeout" value="100"/>
+         <property name="hibernate.c3p0.timeout" value="100" />
          <property name="hibernate.enable_lazy_load_no_trans" value="true" />
       </properties>
    </persistence-unit>

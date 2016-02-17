@@ -84,8 +84,8 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
       {
       List<FieldStaffNoteTopic> topics = fieldStaffNoteTopicRepository.listTopicsByFieldStaffId(fieldStaffGoId);
       if (topics == null || topics.size()<=0) {
-         fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
-               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE)));
+         fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_FETCH_GENERIC_NOTE)));
          return fieldStaffTopics;
       }
       for (FieldStaffNoteTopic t : topics) {
@@ -183,6 +183,34 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_FIELD_STAFF_NOTE.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE));
+      }
+      return response;
+   }
+
+   @Override
+   public FieldStaffTopic addNewTopic(FieldStaffTopic fieldStaffTopic) {
+      FieldStaffTopic response = new FieldStaffTopic();
+      try {     
+      FieldStaffNoteTopic fieldStaffNoteTopic = new FieldStaffNoteTopic();
+      FieldStaff fs = fieldStaffRepository.findOne(fieldStaffTopic.getFieldStaffGoId());
+      fieldStaffNoteTopic.setFieldStaff(fs);
+      fieldStaffNoteTopic.setTitle(fieldStaffTopic.getTitle());
+      fieldStaffNoteTopic.setFieldStaffNoteTopicName(fieldStaffTopic.getFieldStaffNoteTopicName());
+      fieldStaffNoteTopic.setCreatedBy(fieldStaffTopic.getLoginId());
+      fieldStaffNoteTopic.setModifiedBy(fieldStaffTopic.getLoginId());
+      fieldStaffNoteTopic.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      fieldStaffNoteTopic.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+      fieldStaffNoteTopic.setIsPublic(fieldStaffTopic.isPublic() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+      FieldStaffNoteTopic res= fieldStaffNoteTopicRepository.saveAndFlush(fieldStaffNoteTopic);
+      response.setFieldStaffNoteTopicId(res.getFieldStaffNoteTopicsId());
+      response.setTitle(res.getTitle());
+      response.setFieldStaffNoteTopicName(res.getFieldStaffNoteTopicName());
+      response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
+            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_TOPIC.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC));
       }
       return response;
    }

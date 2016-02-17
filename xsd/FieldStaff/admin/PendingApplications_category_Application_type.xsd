@@ -24,8 +24,10 @@
       <xsd:complexContent>
          <xsd:extension base="common:Response">
             <xsd:sequence>
+            <xsd:element name="fieldStaffGoId" type="xsd:int" />
                <xsd:element name="applicantId" type="xsd:int" />
                <xsd:element name="role" type="xsd:string" />
+               <xsd:element name="statusName" type="xsd:string" />
                <xsd:element name="firstName" type="xsd:string" />
                <xsd:element name="lastName" type="xsd:string" />
                <xsd:element name="phone" type="xsd:string" />

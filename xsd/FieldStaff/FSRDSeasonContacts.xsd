@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/fsrdContacts" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/fsrdContacts" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.rd.season.contacts" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="FSRDSeasonContacts" type="pu:FSRDSeasonContacts" />
+
+   <xsd:complexType name="FSRDSeasonContacts">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="fSRDSeasonContacts" type="pu:FSRDSeasonContact" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="FSRDSeasonContact">
+      <xsd:sequence>
+         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="erdPicture" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="erdFirstName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="erdLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

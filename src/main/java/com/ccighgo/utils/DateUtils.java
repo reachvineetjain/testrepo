@@ -85,6 +85,23 @@ public class DateUtils {
       }
       return date;
    }
+   
+   /**
+    * Method takes input as date and converts into String date in MM-DD-YY format
+    * 
+    * @param inputDate
+    * @return
+    */
+   public static String getUSDate(Date inputDate) {
+      String date = null;
+      try {
+         if (inputDate != null)
+            date = DateFormatUtils.format(inputDate, CCIConstants.MM_DD_YY, Locale.US);
+      } catch (CcighgoException e) {
+         ExceptionUtil.logException(e, logger);
+      }
+      return date;
+   }
 
    /**
     * Method takes input as date and converts into String date in MM-DD-YY hh:mm:ss format
@@ -197,5 +214,15 @@ public class DateUtils {
             ExceptionUtil.logException(e, logger);
          }
       return date;
+   }
+   
+   public static String getFormattedStringDate(String date){
+      Date dt = getDateFromString(date);
+      return getMMddyyDate(dt);
+   }
+   
+   public static String getUSFormatDate(String date){
+      Date dt = getDateFromString(date);
+      return getUSDate(dt);
    }
 }

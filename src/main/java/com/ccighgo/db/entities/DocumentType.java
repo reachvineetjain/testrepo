@@ -10,17 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="DocumentType")
 @NamedQuery(name="DocumentType.findAll", query="SELECT d FROM DocumentType d")
 public class DocumentType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer documentTypeId;
 
-	@Column(nullable=false, length=50)
 	private String documentTypeName;
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess

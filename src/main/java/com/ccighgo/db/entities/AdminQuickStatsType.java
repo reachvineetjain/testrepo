@@ -10,17 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="AdminQuickStatsType")
 @NamedQuery(name="AdminQuickStatsType.findAll", query="SELECT a FROM AdminQuickStatsType a")
 public class AdminQuickStatsType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer adminQSTypeId;
 
-	@Column(length=50)
 	private String adminQSTypeName;
 
 	//bi-directional many-to-one association to AdminQuickStatsCategory

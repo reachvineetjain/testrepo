@@ -17,10 +17,7 @@ public class HostFamilyPhoto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPhotoId;
-
-	private Byte active;
 
 	private Byte approvedByCCI;
 
@@ -32,24 +29,21 @@ public class HostFamilyPhoto implements Serializable {
 	@Column(name="default")
 	private Byte default_;
 
-	@Column(length=100)
 	private String description;
 
-	@Column(length=50)
 	private String fileName;
 
-	@Column(length=50)
 	private String filePath;
+
+	private Byte isGeneral;
 
 	private Integer modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
 
-	@Column(length=50)
 	private String photoName;
 
-	@Column(length=50)
 	private String photoTitle;
 
 	private Byte rejectedByCCI;
@@ -58,7 +52,7 @@ public class HostFamilyPhoto implements Serializable {
 
 	//bi-directional many-to-one association to HostFamilyPhotosType
 	@ManyToOne
-	@JoinColumn(name="hostFamilyPhotoTypeId", nullable=false)
+	@JoinColumn(name="hostFamilyPhotoTypeId")
 	private HostFamilyPhotosType hostFamilyPhotosType;
 
 	//bi-directional many-to-one association to HostFamilySeason
@@ -75,14 +69,6 @@ public class HostFamilyPhoto implements Serializable {
 
 	public void setHostFamilyPhotoId(Integer hostFamilyPhotoId) {
 		this.hostFamilyPhotoId = hostFamilyPhotoId;
-	}
-
-	public Byte getActive() {
-		return this.active;
-	}
-
-	public void setActive(Byte active) {
-		this.active = active;
 	}
 
 	public Byte getApprovedByCCI() {
@@ -139,6 +125,14 @@ public class HostFamilyPhoto implements Serializable {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public Byte getIsGeneral() {
+		return this.isGeneral;
+	}
+
+	public void setIsGeneral(Byte isGeneral) {
+		this.isGeneral = isGeneral;
 	}
 
 	public Integer getModifiedBy() {

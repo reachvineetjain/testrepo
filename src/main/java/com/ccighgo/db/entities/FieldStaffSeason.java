@@ -12,14 +12,12 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="FieldStaffSeason")
 @NamedQuery(name="FieldStaffSeason.findAll", query="SELECT f FROM FieldStaffSeason f")
 public class FieldStaffSeason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer filedStaffSeasonId;
 
 	private Byte active;
@@ -40,7 +38,6 @@ public class FieldStaffSeason implements Serializable {
 
 	private Timestamp modifiedOn;
 
-	@Column(length=100)
 	private String signature;
 
 	@Temporal(TemporalType.TIMESTAMP)

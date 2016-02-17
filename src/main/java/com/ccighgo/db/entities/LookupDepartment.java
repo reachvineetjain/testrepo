@@ -23,31 +23,22 @@ public class LookupDepartment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer departmentId;
 
-	@Column(length=10)
 	private String acronym;
 
-	@Column(nullable=false)
 	private Byte active;
 
-	@Column(nullable=false)
 	private Integer createdBy;
 
-	@Column(nullable=false)
 	private Timestamp createdOn;
 
-	@Column(nullable=false, length=50)
 	private String departmentName;
 
-	@Column(nullable=false)
 	private Byte isVisibleToSeason;
 
-	@Column(nullable=false)
 	private Integer modifiedBy;
 
-	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment

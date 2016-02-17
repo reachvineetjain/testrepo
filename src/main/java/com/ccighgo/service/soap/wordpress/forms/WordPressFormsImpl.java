@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
+import com.ccighgo.db.entities.HostFamilyInquiry;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
@@ -22,6 +23,7 @@ import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
+import com.ccighgo.jpa.repositories.HostFamilyInquiryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
@@ -34,6 +36,7 @@ import com.ccighgo.service.transport.partner.beans.admin.add.partner.ProgramCont
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;
+import com.ccighgo.service.transport.seasons.beans.soapservice.ParticipantsInfo;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 
@@ -63,7 +66,8 @@ public class WordPressFormsImpl implements IWordPressForms {
 	PartnerStatusRepository partnerStatusRepository;
 	@Autowired
 	EntityManager entityManager;
-
+	@Autowired
+	HostFamilyInquiryRepository hostFamilyInquiryRepository;
 	private static final String SP_UPDATING_ADMIN_WORK_QUEUE = "CALL SPAdminWQPartnerApplicationSubmitted(?)";
 
 	@Transactional
@@ -114,16 +118,18 @@ public class WordPressFormsImpl implements IWordPressForms {
 				partnerAgentInquiry.setCity(InternationalPartners.getCity());
 				partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
 				partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-//				if(InternationalPartners.getHearedAboutUs()!=null){
-//					String [] val = InternationalPartners.getHearedAboutUs().split("\\|");
-//					if(val!=null && val.length >1){
-//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-//						partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-//					}
-//					else{
-//						partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-//					}
-//				}
+				// if(InternationalPartners.getHearedAboutUs()!=null){
+				// String [] val =
+				// InternationalPartners.getHearedAboutUs().split("\\|");
+				// if(val!=null && val.length >1){
+				// partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+				// partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE
+				// : CCIConstants.INACTIVE);
+				// }
+				// else{
+				// partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
+				// }
+				// }
 				partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
 				partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
 				partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
@@ -296,7 +302,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 		System.out.println("address2 : " + internationalPartners.getAddress2());
 		System.out.println("city :" + internationalPartners.getCity());
 		System.out.println("country : " + internationalPartners.getValueOfCountry());
-System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarship());
+		System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarship());
 		System.out.println("description OF programs :" + internationalPartners.getDescriptionOfPrograms());
 		System.out.println("Email: " + internationalPartners.getEmail());
 		System.out.println("first Name: " + internationalPartners.getFirstName());
@@ -324,49 +330,69 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 	@Override
 	public String GenerateNewHostFamily(HostFamilyData HostFamilyData) {
 		try {
-			LOGGER.info("Generate New Host Family");
-
-			System.out.println("Generate New Host Family");
-
+			printDataCommingFromService(HostFamilyData);
+			LOGGER.info("Inquiry HostFamily Is Called !!d!");
+			System.out.println("Inquiry HostFamily Is Called !!!");
 			if (HostFamilyData != null) {
-				System.out.println("FName :" + HostFamilyData.getFirstName());
-				System.out.println("LName :" + HostFamilyData.getLastName());
-				System.out.println("Email :" + HostFamilyData.getEmail());
-				System.out.println("City :" + HostFamilyData.getCity());
-				System.out.println("State : " + HostFamilyData.getState());
-				System.out.println("PostalCode : "+ HostFamilyData.getPostalCode());
-				System.out.println("PreferredPhone: "+ HostFamilyData.getPreferredPhone());
-				System.out.println("OptionalPhone : "+ HostFamilyData.getOptionalPhone());
-				System.out.println("Email : "+ HostFamilyData.getEmail());
-				System.out.println("Students : "+ HostFamilyData.getStudents());
-				System.out.println("Comments : "+ HostFamilyData.getComments());
-				
+				Login user = loginRepository.findByEmail(HostFamilyData.getEmail());
+				HostFamilyInquiry pa = hostFamilyInquiryRepository.findByEmail(HostFamilyData.getEmail());
+				if (user != null) {
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
+					System.out.println(message);
+					return message;
+				}
+				if (pa != null) {
+					String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [HostFamilyInquiry Table ]";
+					System.out.println(message);
+					return message;
+				}
 
+				pa = new HostFamilyInquiry();
+				pa.setAddress(HostFamilyData.getAddress());
+				pa.setCciComments(HostFamilyData.getComments());
+				pa.setCurrentCity(HostFamilyData.getCity());
+				pa.setCurrentState(HostFamilyData.getState());
+				pa.setFirstName(HostFamilyData.getFirstName());
+				pa.setEmailAddress(HostFamilyData.getEmail());
+				pa.setLastName(HostFamilyData.getLastName());
+				pa.setZipCode(HostFamilyData.getPostalCode());
+				pa.setPreferredPhoneNumber(HostFamilyData.getPreferredPhone());
+				pa.setOptionalPhoneNumber(HostFamilyData.getOptionalPhone());
+
+				GoIdSequence goIdSequence = new GoIdSequence();
+				goIdSequence = goIdSequenceRepository.save(goIdSequence);
+				System.out.println("GoID : " + goIdSequence.getGoId());
+				pa.setHostFamilyInquiryId(goIdSequence.getGoId());
+				hostFamilyInquiryRepository.saveAndFlush(pa);
 			}
-			if (HostFamilyData.getEmail().equalsIgnoreCase("success@gmail.com")) {
-				String string = "200:Success";
-				System.out.println(string);
-				return string;
-			} else if (HostFamilyData.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-				String string = "400:Duplicate Row";
-				System.out.println(string);
-				return string;
-			} else if (HostFamilyData.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-				String string = "500:Failed To Process Record ! Contact Admin";
-				System.out.println(string);
-				return string;
-			} else {
-				String string = "300:Missing Information";
-				System.out.println(string);
-				return string;
-			}
+			return "200:Success";
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);
 			String string = "700:Internal Error";
 			System.out.println(string);
 			return string;
 		}
+	}
 
+	private void printDataCommingFromService(HostFamilyData HostFamilyData) {
+		LOGGER.info("Generate New Host Family");
+
+		System.out.println("Generate New Host Family");
+
+		if (HostFamilyData != null) {
+			System.out.println("FName :" + HostFamilyData.getFirstName());
+			System.out.println("LName :" + HostFamilyData.getLastName());
+			System.out.println("Email :" + HostFamilyData.getEmail());
+			System.out.println("City :" + HostFamilyData.getCity());
+			System.out.println("State : " + HostFamilyData.getState());
+			System.out.println("PostalCode : " + HostFamilyData.getPostalCode());
+			System.out.println("PreferredPhone: " + HostFamilyData.getPreferredPhone());
+			System.out.println("OptionalPhone : " + HostFamilyData.getOptionalPhone());
+			System.out.println("Email : " + HostFamilyData.getEmail());
+			System.out.println("Students : " + HostFamilyData.getStudents());
+			System.out.println("Comments : " + HostFamilyData.getComments());
+
+		}
 	}
 
 	@Override
@@ -469,5 +495,27 @@ System.out.println("Ambassdor : " + internationalPartners.getAmbassadorScholarsh
 
 	public static void main(String[] args) {
 		System.out.println("www.google.com".replaceAll("^www\\.", ""));
+	}
+
+	@Override
+	public List<ParticipantsInfo> participantList() {
+		List<ParticipantsInfo> participantInfo = new ArrayList<ParticipantsInfo>();
+		try {
+			for (int i = 0; i < 20; i++) {
+				ParticipantsInfo p = new ParticipantsInfo();
+				p.setAge(25+i);
+				p.setBiography("Konrad enjoys fishing. He says he can fish for hours without even catching anything. He likes how relaxing it is to sit and wait for a bite. His favorite sport is tennis. He takes lessons every week, and plays in the Summer with his Father. Konrad also likes to play golf and read science fiction books like The Magician’s Guild or The Maze Runner. Konrad is very friendly, mature, and reliable. His dream is to study in the U.S. Konrad does have a severe allergy to cats, and a medium allergy to dogs."+(i+1));
+				p.setGender(i%2==0? "male":"female");
+				p.setID(34+i);
+				p.setInterests("Exercise/Sports, Reading/Writing"+(i+1));
+				p.setName("Konrad"+(i+1));
+				p.setNationality(i%2==0?"en":"fr");
+				p.setProgramStart("Fall 2016");
+				participantInfo.add(p);
+			}
+		} catch (Exception e) {
+			ExceptionUtil.logException(e, LOGGER);
+		}
+		return participantInfo;
 	}
 }

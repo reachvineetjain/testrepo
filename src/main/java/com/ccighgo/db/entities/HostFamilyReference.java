@@ -11,41 +11,34 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="HostFamilyReference")
 @NamedQuery(name="HostFamilyReference.findAll", query="SELECT h FROM HostFamilyReference h")
 public class HostFamilyReference implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private Integer hostFamilyReferenceId;
 
 	private Byte active;
 
 	private Integer additionalSupport;
 
-	@Column(length=100)
 	private String address;
 
 	private Integer allowOwnChildStay;
 
-	@Column(length=50)
 	private String city;
 
-	@Column(length=30)
 	private String closeness;
 
 	@Lob
 	private String comments;
 
-	@Column(length=30)
 	private String communityInvolvement;
 
 	@Lob
 	private String communityTies;
 
-	@Column(length=50)
 	private String completionMethod;
 
 	private Integer createdBy;
@@ -55,31 +48,22 @@ public class HostFamilyReference implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOfReference;
 
-	@Column(length=100)
 	private String firstName;
 
-	@Column(length=30)
 	private String flexibility;
 
-	@Column(length=30)
 	private String interestVariety;
 
-	@Column(length=50)
 	private String internationalAwareness;
 
-	@Column(length=30)
 	private String knownFamilyMethod;
 
-	@Column(length=100)
 	private String lastName;
 
-	@Column(length=100)
 	private String lastVisit;
 
-	@Column(length=50)
 	private String lengthKnown;
 
-	@Column(length=50)
 	private String lengthKnownQuantity;
 
 	private Integer modifiedBy;
@@ -89,25 +73,21 @@ public class HostFamilyReference implements Serializable {
 	@Lob
 	private String ownChildStayReasons;
 
-	@Column(length=30)
+	private Byte personNotRelatedToBlood;
+
 	private String phone;
 
-	@Column(length=30)
 	private String positiveExperiences;
 
-	@Column(length=50)
 	private String relationship;
 
-	@Column(length=30)
 	private String stability;
 
 	@Lob
 	private String supportExplanation;
 
-	@Column(length=100)
 	private String visitFrequency;
 
-	@Column(length=30)
 	private String zipCode;
 
 	//bi-directional many-to-one association to HostFamilySeason
@@ -329,6 +309,14 @@ public class HostFamilyReference implements Serializable {
 
 	public void setOwnChildStayReasons(String ownChildStayReasons) {
 		this.ownChildStayReasons = ownChildStayReasons;
+	}
+
+	public Byte getPersonNotRelatedToBlood() {
+		return this.personNotRelatedToBlood;
+	}
+
+	public void setPersonNotRelatedToBlood(Byte personNotRelatedToBlood) {
+		this.personNotRelatedToBlood = personNotRelatedToBlood;
 	}
 
 	public String getPhone() {
