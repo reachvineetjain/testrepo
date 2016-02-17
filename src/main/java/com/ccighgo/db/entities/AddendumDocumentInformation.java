@@ -11,24 +11,31 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="AddendumDocumentInformation")
 @NamedQuery(name="AddendumDocumentInformation.findAll", query="SELECT a FROM AddendumDocumentInformation a")
 public class AddendumDocumentInformation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer addendumDocumentInformationId;
 
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(length=50)
 	private String documentName;
 
+	@Column(length=50)
 	private String fileName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
@@ -36,11 +43,12 @@ public class AddendumDocumentInformation implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
 
+	@Column(length=1000)
 	private String url;
 
 	//bi-directional many-to-one association to DocumentInformation
 	@ManyToOne
-	@JoinColumn(name="documentInformationId")
+	@JoinColumn(name="documentInformationId", nullable=false)
 	private DocumentInformation documentInformation;
 
 	public AddendumDocumentInformation() {

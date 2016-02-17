@@ -16,8 +16,10 @@ public class PartnerUserRole implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerUserRoleId;
 
+	@Column(length=50)
 	private String partnerUserRoleName;
 
 	//bi-directional many-to-one association to PartnerUser

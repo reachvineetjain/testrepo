@@ -10,20 +10,24 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="HostFamilyHome")
 @NamedQuery(name="HostFamilyHome.findAll", query="SELECT h FROM HostFamilyHome h")
 public class HostFamilyHome implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyHomeId;
 
 	private Byte active;
 
-	@Lob
+	@Column(length=1000)
 	private String amenities;
 
-	private String confirmStudentAdditionalAmenities;
+	private Integer bathroomNumber;
+
+	private Integer bedroomNumber;
 
 	private Integer createdBy;
 
@@ -32,46 +36,37 @@ public class HostFamilyHome implements Serializable {
 
 	private Byte exitBasement;
 
-	private Byte exitOutOfBasement;
-
-	@Lob
-	private String expectedResponsibilities;
-
-	@Lob
+	@Column(length=1000)
 	private String extraActivities;
 
-	@Lob
+	@Column(length=1000)
 	private String extraFacilities;
 
-	@Lob
+	@Column(length=1000)
 	private String homeDescription;
 
+	@Column(length=30)
 	private String homeLocation;
 
+	@Column(length=30)
 	private String homeType;
 
-	@Lob
+	@Column(length=1000)
 	private String hopeToLearn;
 
 	private Integer hostedOther;
 
-	@Lob
+	@Column(length=100)
 	private String hostedOtherDetails;
 
-	@Lob
+	@Column(length=1000)
 	private String hostingReason;
 
-	private String houseHoldActivity;
-
-	private Byte isLocalCordinator;
+	private Byte interestedForTwoStudents;
 
 	private Byte isStudentsRoomBasement;
 
-	private String languageSpoken;
-
-	private Integer localCoordinatorCCI;
-
-	@Lob
+	@Column(length=100)
 	private String localCoordinatorDetails;
 
 	private Integer localCoordinatorOther;
@@ -81,34 +76,42 @@ public class HostFamilyHome implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
 
+	@Column(length=50)
 	private String otherTypeOfBusiness;
 
 	private Byte residenceSiteFunctioningBusiness;
 
 	private Byte sharesBedroom;
 
+	@Column(length=50)
 	private String sharesBedroomWith;
 
 	private Integer sharingAge;
 
-	private Integer sharingBedroomGenderId;
-
-	private String sharingOther;
-
+	@Column(length=100)
 	private String specialFeaturesInHome;
 
+	@Column(length=25)
 	private String specifyTypeOfBusiness;
 
 	@Lob
 	private String studentHomeNeighbourhood;
 
-	@Lob
+	@Column(length=1000)
+	private String studentsResponsibilities;
+
+	@Column(length=1000)
 	private String utilities;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
 	@JoinColumn(name="hostFamilySeasonId")
 	private HostFamilySeason hostFamilySeason;
+
+	//bi-directional many-to-one association to LookupGender
+	@ManyToOne
+	@JoinColumn(name="sharingBedroomGenderId")
+	private LookupGender lookupGender;
 
 	public HostFamilyHome() {
 	}
@@ -137,12 +140,20 @@ public class HostFamilyHome implements Serializable {
 		this.amenities = amenities;
 	}
 
-	public String getConfirmStudentAdditionalAmenities() {
-		return this.confirmStudentAdditionalAmenities;
+	public Integer getBathroomNumber() {
+		return this.bathroomNumber;
 	}
 
-	public void setConfirmStudentAdditionalAmenities(String confirmStudentAdditionalAmenities) {
-		this.confirmStudentAdditionalAmenities = confirmStudentAdditionalAmenities;
+	public void setBathroomNumber(Integer bathroomNumber) {
+		this.bathroomNumber = bathroomNumber;
+	}
+
+	public Integer getBedroomNumber() {
+		return this.bedroomNumber;
+	}
+
+	public void setBedroomNumber(Integer bedroomNumber) {
+		this.bedroomNumber = bedroomNumber;
 	}
 
 	public Integer getCreatedBy() {
@@ -167,22 +178,6 @@ public class HostFamilyHome implements Serializable {
 
 	public void setExitBasement(Byte exitBasement) {
 		this.exitBasement = exitBasement;
-	}
-
-	public Byte getExitOutOfBasement() {
-		return this.exitOutOfBasement;
-	}
-
-	public void setExitOutOfBasement(Byte exitOutOfBasement) {
-		this.exitOutOfBasement = exitOutOfBasement;
-	}
-
-	public String getExpectedResponsibilities() {
-		return this.expectedResponsibilities;
-	}
-
-	public void setExpectedResponsibilities(String expectedResponsibilities) {
-		this.expectedResponsibilities = expectedResponsibilities;
 	}
 
 	public String getExtraActivities() {
@@ -257,20 +252,12 @@ public class HostFamilyHome implements Serializable {
 		this.hostingReason = hostingReason;
 	}
 
-	public String getHouseHoldActivity() {
-		return this.houseHoldActivity;
+	public Byte getInterestedForTwoStudents() {
+		return this.interestedForTwoStudents;
 	}
 
-	public void setHouseHoldActivity(String houseHoldActivity) {
-		this.houseHoldActivity = houseHoldActivity;
-	}
-
-	public Byte getIsLocalCordinator() {
-		return this.isLocalCordinator;
-	}
-
-	public void setIsLocalCordinator(Byte isLocalCordinator) {
-		this.isLocalCordinator = isLocalCordinator;
+	public void setInterestedForTwoStudents(Byte interestedForTwoStudents) {
+		this.interestedForTwoStudents = interestedForTwoStudents;
 	}
 
 	public Byte getIsStudentsRoomBasement() {
@@ -279,22 +266,6 @@ public class HostFamilyHome implements Serializable {
 
 	public void setIsStudentsRoomBasement(Byte isStudentsRoomBasement) {
 		this.isStudentsRoomBasement = isStudentsRoomBasement;
-	}
-
-	public String getLanguageSpoken() {
-		return this.languageSpoken;
-	}
-
-	public void setLanguageSpoken(String languageSpoken) {
-		this.languageSpoken = languageSpoken;
-	}
-
-	public Integer getLocalCoordinatorCCI() {
-		return this.localCoordinatorCCI;
-	}
-
-	public void setLocalCoordinatorCCI(Integer localCoordinatorCCI) {
-		this.localCoordinatorCCI = localCoordinatorCCI;
 	}
 
 	public String getLocalCoordinatorDetails() {
@@ -369,22 +340,6 @@ public class HostFamilyHome implements Serializable {
 		this.sharingAge = sharingAge;
 	}
 
-	public Integer getSharingBedroomGenderId() {
-		return this.sharingBedroomGenderId;
-	}
-
-	public void setSharingBedroomGenderId(Integer sharingBedroomGenderId) {
-		this.sharingBedroomGenderId = sharingBedroomGenderId;
-	}
-
-	public String getSharingOther() {
-		return this.sharingOther;
-	}
-
-	public void setSharingOther(String sharingOther) {
-		this.sharingOther = sharingOther;
-	}
-
 	public String getSpecialFeaturesInHome() {
 		return this.specialFeaturesInHome;
 	}
@@ -409,6 +364,14 @@ public class HostFamilyHome implements Serializable {
 		this.studentHomeNeighbourhood = studentHomeNeighbourhood;
 	}
 
+	public String getStudentsResponsibilities() {
+		return this.studentsResponsibilities;
+	}
+
+	public void setStudentsResponsibilities(String studentsResponsibilities) {
+		this.studentsResponsibilities = studentsResponsibilities;
+	}
+
 	public String getUtilities() {
 		return this.utilities;
 	}
@@ -423,6 +386,14 @@ public class HostFamilyHome implements Serializable {
 
 	public void setHostFamilySeason(HostFamilySeason hostFamilySeason) {
 		this.hostFamilySeason = hostFamilySeason;
+	}
+
+	public LookupGender getLookupGender() {
+		return this.lookupGender;
+	}
+
+	public void setLookupGender(LookupGender lookupGender) {
+		this.lookupGender = lookupGender;
 	}
 
 }

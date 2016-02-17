@@ -10,12 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="ParticipantStatus")
 @NamedQuery(name="ParticipantStatus.findAll", query="SELECT p FROM ParticipantStatus p")
 public class ParticipantStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer participantStatusId;
 
 	private Byte active;
@@ -24,6 +26,7 @@ public class ParticipantStatus implements Serializable {
 
 	private Byte isPlacementStatus;
 
+	@Column(nullable=false, length=50)
 	private String participantStatusName;
 
 	//bi-directional many-to-one association to Participant

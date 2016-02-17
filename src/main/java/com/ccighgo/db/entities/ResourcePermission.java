@@ -18,20 +18,28 @@ public class ResourcePermission implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer resourcePermissionId;
 
+	@Column(nullable=false)
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(length=200)
 	private String resourceDescription;
 
+	@Column(nullable=false, length=50)
 	private String resourceName;
 
 	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
@@ -44,12 +52,12 @@ public class ResourcePermission implements Serializable {
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
-	@JoinColumn(name="departmentResourceGroupId")
+	@JoinColumn(name="departmentResourceGroupId", nullable=false)
 	private DepartmentResourceGroup departmentResourceGroup;
 
 	//bi-directional many-to-one association to ResourceAction
 	@ManyToOne
-	@JoinColumn(name="resourceActionID")
+	@JoinColumn(name="resourceActionID", nullable=false)
 	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to StateTypeResourcePermission

@@ -17,10 +17,13 @@ public class LookupUSState implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer usStatesId;
 
+	@Column(nullable=false, length=5)
 	private String stateCode;
 
+	@Column(nullable=false, length=50)
 	private String stateName;
 
 	//bi-directional many-to-one association to CCIStaffUser
@@ -46,6 +49,18 @@ public class LookupUSState implements Serializable {
 	//bi-directional many-to-one association to HostFamily
 	@OneToMany(mappedBy="lookupUsstate2")
 	private List<HostFamily> hostFamilies2;
+
+	//bi-directional many-to-one association to HostFamilyInquiry
+	@OneToMany(mappedBy="lookupUsstate")
+	private List<HostFamilyInquiry> hostFamilyInquiries;
+
+	//bi-directional many-to-one association to HostFamilyPotentialReference
+	@OneToMany(mappedBy="lookupUsstate1")
+	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences1;
+
+	//bi-directional many-to-one association to HostFamilyPotentialReference
+	@OneToMany(mappedBy="lookupUsstate2")
+	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences2;
 
 	//bi-directional many-to-one association to HostFamilyReference
 	@OneToMany(mappedBy="lookupUsstate")
@@ -216,6 +231,72 @@ public class LookupUSState implements Serializable {
 		hostFamilies2.setLookupUsstate2(null);
 
 		return hostFamilies2;
+	}
+
+	public List<HostFamilyInquiry> getHostFamilyInquiries() {
+		return this.hostFamilyInquiries;
+	}
+
+	public void setHostFamilyInquiries(List<HostFamilyInquiry> hostFamilyInquiries) {
+		this.hostFamilyInquiries = hostFamilyInquiries;
+	}
+
+	public HostFamilyInquiry addHostFamilyInquiry(HostFamilyInquiry hostFamilyInquiry) {
+		getHostFamilyInquiries().add(hostFamilyInquiry);
+		hostFamilyInquiry.setLookupUsstate(this);
+
+		return hostFamilyInquiry;
+	}
+
+	public HostFamilyInquiry removeHostFamilyInquiry(HostFamilyInquiry hostFamilyInquiry) {
+		getHostFamilyInquiries().remove(hostFamilyInquiry);
+		hostFamilyInquiry.setLookupUsstate(null);
+
+		return hostFamilyInquiry;
+	}
+
+	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences1() {
+		return this.hostFamilyPotentialReferences1;
+	}
+
+	public void setHostFamilyPotentialReferences1(List<HostFamilyPotentialReference> hostFamilyPotentialReferences1) {
+		this.hostFamilyPotentialReferences1 = hostFamilyPotentialReferences1;
+	}
+
+	public HostFamilyPotentialReference addHostFamilyPotentialReferences1(HostFamilyPotentialReference hostFamilyPotentialReferences1) {
+		getHostFamilyPotentialReferences1().add(hostFamilyPotentialReferences1);
+		hostFamilyPotentialReferences1.setLookupUsstate1(this);
+
+		return hostFamilyPotentialReferences1;
+	}
+
+	public HostFamilyPotentialReference removeHostFamilyPotentialReferences1(HostFamilyPotentialReference hostFamilyPotentialReferences1) {
+		getHostFamilyPotentialReferences1().remove(hostFamilyPotentialReferences1);
+		hostFamilyPotentialReferences1.setLookupUsstate1(null);
+
+		return hostFamilyPotentialReferences1;
+	}
+
+	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences2() {
+		return this.hostFamilyPotentialReferences2;
+	}
+
+	public void setHostFamilyPotentialReferences2(List<HostFamilyPotentialReference> hostFamilyPotentialReferences2) {
+		this.hostFamilyPotentialReferences2 = hostFamilyPotentialReferences2;
+	}
+
+	public HostFamilyPotentialReference addHostFamilyPotentialReferences2(HostFamilyPotentialReference hostFamilyPotentialReferences2) {
+		getHostFamilyPotentialReferences2().add(hostFamilyPotentialReferences2);
+		hostFamilyPotentialReferences2.setLookupUsstate2(this);
+
+		return hostFamilyPotentialReferences2;
+	}
+
+	public HostFamilyPotentialReference removeHostFamilyPotentialReferences2(HostFamilyPotentialReference hostFamilyPotentialReferences2) {
+		getHostFamilyPotentialReferences2().remove(hostFamilyPotentialReferences2);
+		hostFamilyPotentialReferences2.setLookupUsstate2(null);
+
+		return hostFamilyPotentialReferences2;
 	}
 
 	public List<HostFamilyReference> getHostFamilyReferences() {

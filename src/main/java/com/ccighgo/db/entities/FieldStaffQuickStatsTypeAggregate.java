@@ -10,18 +10,22 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="FieldStaffQuickStatsTypeAggregate")
 @NamedQuery(name="FieldStaffQuickStatsTypeAggregate.findAll", query="SELECT f FROM FieldStaffQuickStatsTypeAggregate f")
 public class FieldStaffQuickStatsTypeAggregate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer fieldStaffQSTypeAggregateId;
 
 	private Integer fieldStaffQSTypeAggregate;
 
+	@Column(length=50)
 	private String fieldStaffQSTypeName;
 
+	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
 	//bi-directional many-to-one association to FieldStaff

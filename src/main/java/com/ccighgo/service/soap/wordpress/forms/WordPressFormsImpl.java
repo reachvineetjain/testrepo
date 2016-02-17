@@ -351,7 +351,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 				pa.setAddress(HostFamilyData.getAddress());
 				pa.setCciComments(HostFamilyData.getComments());
 				pa.setCurrentCity(HostFamilyData.getCity());
-				pa.setCurrentState(HostFamilyData.getState());
+				//TODO pa.setCurrentState(HostFamilyData.getState());
 				pa.setFirstName(HostFamilyData.getFirstName());
 				pa.setEmailAddress(HostFamilyData.getEmail());
 				pa.setLastName(HostFamilyData.getLastName());

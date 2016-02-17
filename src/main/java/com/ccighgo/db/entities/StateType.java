@@ -17,6 +17,7 @@ public class StateType implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer stateTypeId;
 
 	private Byte isLastStep;
@@ -27,10 +28,12 @@ public class StateType implements Serializable {
 
 	private Byte isVisibleToPartner;
 
+	@Column(length=45)
 	private String stateName;
 
 	private Integer workQueueCategoryId;
 
+	@Column(length=50)
 	private String workQueueRoleType;
 
 	private Integer workQueueTypeId;

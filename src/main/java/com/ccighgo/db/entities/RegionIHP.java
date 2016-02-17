@@ -11,24 +11,31 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="RegionIHP")
 @NamedQuery(name="RegionIHP.findAll", query="SELECT r FROM RegionIHP r")
 public class RegionIHP implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer regionIHPId;
 
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(length=45)
 	private String regionName;
 
 	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication

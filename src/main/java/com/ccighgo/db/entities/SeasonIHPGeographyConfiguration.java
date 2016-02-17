@@ -10,20 +10,26 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="SeasonIHPGeographyConfiguration")
 @NamedQuery(name="SeasonIHPGeographyConfiguration.findAll", query="SELECT s FROM SeasonIHPGeographyConfiguration s")
 public class SeasonIHPGeographyConfiguration implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer seasonIHPGeographyConfigurationId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to LookupUSState
