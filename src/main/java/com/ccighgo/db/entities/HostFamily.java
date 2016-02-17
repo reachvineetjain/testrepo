@@ -110,7 +110,7 @@ public class HostFamily implements Serializable {
 
 	//bi-directional many-to-one association to LookupCountry
 	@ManyToOne
-	@JoinColumn(name="physicalStateId")
+	@JoinColumn(name="physicalStateId", insertable=false, updatable=false)
 	private LookupCountry lookupCountry1;
 
 	//bi-directional many-to-one association to LookupCountry
@@ -125,7 +125,7 @@ public class HostFamily implements Serializable {
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="physicalStateId")
+	@JoinColumn(name="physicalStateId", insertable=false, updatable=false)
 	private LookupUSState lookupUsstate2;
 
 	//bi-directional many-to-one association to Season
