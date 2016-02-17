@@ -278,7 +278,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 			login.setEmail(fieldStaffDetail.getEmail());
 			loginRepository.saveAndFlush(login);
 
-			FieldStaffStatus fieldStaffStatus = fieldStaffStatusRepository.getByFieldStaffStatusName(fieldStaffDetail.getFieldStaffStatus());
+			FieldStaffStatus fieldStaffStatus = fieldStaffStatusRepository.getByFieldStaffStatusId(fieldStaffDetail.getFieldStaffStatusId());
 			if (fieldStaffStatus != null)
 				fs.setFieldStaffStatus(fieldStaffStatus);
 			fs.setBestNumberHome(fieldStaffDetail.isBestNumberHome() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);

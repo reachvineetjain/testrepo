@@ -20,4 +20,7 @@ public interface FieldStaffStatusRepository extends JpaRepository<FieldStaffStat
    
    @Query("SELECT s FROM FieldStaffStatus s WHERE s.isSeasonStatus = ?1")
    List<FieldStaffStatus> getByFieldStaffBySeasonStatus(Byte seasonStatus);
+   
+   @Query("SELECT s FROM FieldStaffStatus s WHERE s.fieldStaffStatusId = ?1")
+   FieldStaffStatus getByFieldStaffStatusId(Integer StatusId);
 }
