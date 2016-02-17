@@ -657,8 +657,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				subPartnerDetails.setPhysicalAddressLineTwo(subPartnersPhysicalAddress.getPhysicalAddress2());
 				subPartnerDetails.setPhysicalCity(subPartnersPhysicalAddress.getPhysicalAddressCity());
 				subPartnerDetails.setPhysicalstate(subPartnersPhysicalAddress.getPhysicalAddressStateOrProvince());
-				subPartnerDetails.setPhysicalZipcode(subPartnersPhysicalAddress.getPhysicalAddressZipCode());
-
+				subPartnerDetails.setPhysicalZipcode(subPartnersPhysicalAddress.getPhysicalAddressZipCode());		
 				if (subPartnersPhysicalAddress.getPhysicalAddressCountry() != null) {
 					LookupCountry subPartnerCountry1 = countryRepository.findByCountryName(subPartnersPhysicalAddress.getPhysicalAddressCountry().getCountryName());
 					subPartnerDetails.setLookupCountry1(subPartnerCountry1);
@@ -670,6 +669,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				subPartnerDetails.setAddressLineTwo(subPartnersMailingAddress.getMailingAddress2());
 				subPartnerDetails.setCity(subPartnersMailingAddress.getMailingAddressCity());
 				subPartnerDetails.setState(subPartnersMailingAddress.getMailingAddressStateOrProvince());
+				subPartnerDetails.setZipcode(subPartnersMailingAddress.getMailingAddressZipCode());
 				subPartnerDetails.setCreatedBy(subPartner.getLoginId());
 				subPartnerDetails.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
 				subPartnerDetails.setModifiedBy(subPartner.getLoginId());
@@ -707,6 +707,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 				partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
 				partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
 				partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+				partnerContact.setFax(subPartnerPrimaryContact.getFax());
 				if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
 					partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
 				partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());

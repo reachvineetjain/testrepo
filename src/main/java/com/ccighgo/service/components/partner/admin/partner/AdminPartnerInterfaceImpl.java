@@ -179,6 +179,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          newPartner.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          newPartner.setModifiedBy(partner.getLoginId());
          newPartner.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         newPartner.setCcistaffUser(cciStaffUsersRepository.findOne(partner.getGeneralContact().getCciUserId()));
          newPartner = partnerRepository.saveAndFlush(newPartner);
 
          PartnerUser pUser = new PartnerUser();
@@ -187,13 +188,16 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          pUser.setSalutation(salutationRepositotry.findOne(partner.getSalutation().getSalutationId()));
          pUser.setFirstName(partner.getFirstName());
          pUser.setLastName(partner.getLastName());
-         pUser.setActive(CCIConstants.ACTIVE);
+         pUser.setActive(login.getActive());
          pUser.setIsPrimary(CCIConstants.ACTIVE);
          pUser = partnerUserRepository.saveAndFlush(pUser);
          
          PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
          reviewStatus.setPartner(newPartner);
-         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(4));
+         //set the default partnerLeadStatus to Valid
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
+         //set the partnerAgentStatusId to Pending
+         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(PENDING_STATUS));
          CCIStaffUser cciUser = null;
          Login cciLogin = loginRepository.findOne(partner.getLoginId());
          if(cciLogin!=null){
@@ -285,8 +289,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                String status = null;
                List<PartnerReviewStatus> partnerReviewStatuses = p.getPartnerReviewStatuses();
                if (partnerReviewStatuses != null && !partnerReviewStatuses.isEmpty()) {
-                  if (partnerReviewStatuses.get(0).getPartnerStatus1() != null) {
-                     status = partnerReviewStatuses.get(0).getPartnerStatus1().getPartnerStatusName();
+                  if (partnerReviewStatuses.get(0).getPartnerStatus2() != null) {
+                     status = partnerReviewStatuses.get(0).getPartnerStatus2().getPartnerStatusName();
                   }
                }
                ap.setStatus(status);

@@ -48,15 +48,18 @@ public class SevisBatch {
 
 	@Context
 	ServletContext servletContext;
-	
+	// student
 	@Autowired StuBatchGenerator stuBatchGenerator;
+	//exchange visitor
 	@Autowired EVBatchGenerator evBatchGenerator;
+	// when we submit batch file they will return log file --> this is for processing !
 	@Autowired SevisLogProcessor logProcessor;
 
 	@GET
 	@Path("process/log")
 	@Produces("application/json")
 	public Response processLog() {
+		// we are using static code for the file location
 		return logProcessor.processLog(null); // test only, pass xml
 														// file URI or ....
 	}

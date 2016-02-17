@@ -47,4 +47,5 @@ public static final String EXCEPTION_FS_ADMIN_HOST_FAMILY = "exception.fetching.
 public static final String EXCEPTION_FS_ADMIN_APPLICATION_STATS = "exception.fetching.fieldstaff.application.stats";
 public static final String EXCEPTION_FS_ADMIN_PROGRAM_STATS = "exception.fetching.fieldstaff.program.stats";
 public static final String EXCEPTION_FS_ADMIN_ADDED_SCHOOL = "exception.fetching.fieldstaff.addedschool";
+public static final String EXCEPTION_UPDATEING_FIELDSTAFF_REQUEST_STATUS = "exception.updating.fieldstaff.request.status";
 }
