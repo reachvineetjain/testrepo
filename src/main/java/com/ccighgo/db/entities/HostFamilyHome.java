@@ -54,7 +54,7 @@ public class HostFamilyHome implements Serializable {
 	@Column(length=1000)
 	private String hopeToLearn;
 
-	private Integer hostedOther;
+	private Byte hostedOther;
 
 	@Column(length=100)
 	private String hostedOtherDetails;
@@ -69,7 +69,7 @@ public class HostFamilyHome implements Serializable {
 	@Column(length=100)
 	private String localCoordinatorDetails;
 
-	private Integer localCoordinatorOther;
+	private Byte localCoordinatorOther;
 
 	private Integer modifiedBy;
 
@@ -228,11 +228,11 @@ public class HostFamilyHome implements Serializable {
 		this.hopeToLearn = hopeToLearn;
 	}
 
-	public Integer getHostedOther() {
+	public Byte getHostedOther() {
 		return this.hostedOther;
 	}
 
-	public void setHostedOther(Integer hostedOther) {
+	public void setHostedOther(Byte hostedOther) {
 		this.hostedOther = hostedOther;
 	}
 
@@ -276,11 +276,11 @@ public class HostFamilyHome implements Serializable {
 		this.localCoordinatorDetails = localCoordinatorDetails;
 	}
 
-	public Integer getLocalCoordinatorOther() {
+	public Byte getLocalCoordinatorOther() {
 		return this.localCoordinatorOther;
 	}
 
-	public void setLocalCoordinatorOther(Integer localCoordinatorOther) {
+	public void setLocalCoordinatorOther(Byte localCoordinatorOther) {
 		this.localCoordinatorOther = localCoordinatorOther;
 	}
 

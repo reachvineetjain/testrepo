@@ -6,15 +6,18 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.hostfamily.beans.application.whyhost;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the com.ccighgo.service.transport.common.response.beans package. 
+ * generated in the com.ccighgo.service.transport.hostfamily.beans.application.whyhost package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -28,44 +31,30 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _WhyHost_QNAME = new QName("http://www.ccighgo.com/whyhost", "WhyHost");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ccighgo.service.transport.common.response.beans
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.ccighgo.service.transport.hostfamily.beans.application.whyhost
      * 
      */
     public ObjectFactory() {
     }
 
     /**
-     * Create an instance of {@link Response }
+     * Create an instance of {@link WhyHost }
      * 
      */
-    public Response createResponse() {
-        return new Response();
+    public WhyHost createWhyHost() {
+        return new WhyHost();
     }
 
     /**
-     * Create an instance of {@link Status }
+     * Create an instance of {@link JAXBElement }{@code <}{@link WhyHost }{@code >}}
      * 
      */
-    public Status createStatus() {
-        return new Status();
-    }
-
-    /**
-     * Create an instance of {@link Header }
-     * 
-     */
-    public Header createHeader() {
-        return new Header();
-    }
-
-    /**
-     * Create an instance of {@link Message }
-     * 
-     */
-    public Message createMessage() {
-        return new Message();
+    @XmlElementDecl(namespace = "http://www.ccighgo.com/whyhost", name = "WhyHost")
+    public JAXBElement<WhyHost> createWhyHost(WhyHost value) {
+        return new JAXBElement<WhyHost>(_WhyHost_QNAME, WhyHost.class, null, value);
     }
 
 }
