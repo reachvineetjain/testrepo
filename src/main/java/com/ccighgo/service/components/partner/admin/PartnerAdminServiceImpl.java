@@ -549,13 +549,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                     AdminPartnerProgramsElgibilityAndCCIContact contact = new AdminPartnerProgramsElgibilityAndCCIContact();
                     contact.setCciContactProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
                     contact.setMarked(partnerProgram.getIsEligible() == CCIConstants.ACTIVE ? true : false);
-                    contact.setProgramId(String.valueOf(partnerProgram.getPartnerProgramId()));
+                    contact.setProgramId((partnerProgram.getPartnerProgramId()));
                     if (partnerProgram.getCcistaffUser() != null) {
                        CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
-                       cciContact.setCciUserId(String.valueOf(partnerProgram.getCcistaffUser().getCciStaffUserId()));                                         
+                       cciContact.setCciUserId((partnerProgram.getCcistaffUser().getCciStaffUserId()));                                         
                        contact.setCciContact(cciContact);
-                       pwt.getProgramEligibilityAndCCIContact().add(contact);
-                    }
+                        }
+                    pwt.getProgramEligibilityAndCCIContact().add(contact);
                  }
               }
          } catch (Exception e) {
