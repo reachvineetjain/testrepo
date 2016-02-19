@@ -1,13 +1,13 @@
 DELIMITER $$
 
-USE `cci_gh_go_dev`$$
+USE `cci_gh_go`$$
 
 DROP PROCEDURE IF EXISTS `SPFieldStaffSchoolList`$$
 
 CREATE DEFINER=`madhavi`@`%` PROCEDURE `SPFieldStaffSchoolList`(IN fieldStaffId INT)
 BEGIN
     
-                       SELECT 1 /*us.`usSchoolId`*/ AS SchoolId,
+                       SELECT 1  AS SchoolId,
                               'Governer Thomas Schoo' AS SchoolName,
                               'Fredrick' AS SchoolCity,
                               'MD' AS SchoolState,
@@ -16,8 +16,8 @@ BEGIN
                               'sss@ss.ss' AS ContactEmail
            
                        FROM `USSchool` us;
-   --                    inner join `USSchoolSeason` uss on uss.`usSchoolId` = us.`usSchoolId`
-    --                   inner join `ProgramSeasons` ps on ps.seasonId = uss.seasonId 
+   
+    
     END$$
 
 DELIMITER ;
