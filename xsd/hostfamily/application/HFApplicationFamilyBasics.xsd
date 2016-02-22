@@ -22,9 +22,9 @@
                <xsd:element name="singleHost" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photo" type="pu:Photo" minOccurs="1" maxOccurs="1" />
                <xsd:element name="adults" type="pu:HFAdultDetails" minOccurs="1" maxOccurs="unbounded"  />
-               <xsd:element name="contactInfo" type="pu:HFContactInfo" minOccurs="1" maxOccurs="unbounded"  />
-               <xsd:element name="physicalAddress" type="pu:HFPhysicalAddress" minOccurs="1" maxOccurs="unbounded"  />
-               <xsd:element name="mailingAddress" type="pu:HFMailingAddress" minOccurs="1" maxOccurs="unbounded"  />
+               <xsd:element name="contactInfo" type="pu:HFContactInfo" minOccurs="1" maxOccurs="1"  />
+               <xsd:element name="physicalAddress" type="pu:HFPhysicalAddress" minOccurs="1" maxOccurs="1"  />
+               <xsd:element name="mailingAddress" type="pu:HFMailingAddress" minOccurs="1" maxOccurs="1"  />
                
                <xsd:element name="airports" type="pu:HFAirport" minOccurs="1" maxOccurs="unbounded"  />
                <xsd:element name="children" type="pu:HFChildren" minOccurs="1" maxOccurs="unbounded"  />
@@ -51,7 +51,7 @@
          <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="fistname" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastname" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="gender" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="genderId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="livingAtHome" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="activitiesOrInterests" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="educationLevel" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -74,10 +74,11 @@
        <xsd:complexType name="HFMailingAddress">
       <xsd:sequence>
          <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="address1" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="sameAsPhysicalAddress" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="address1" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="address2" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stateOrProvince" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />      
          
       </xsd:sequence>
@@ -86,10 +87,10 @@
     <xsd:complexType name="HFPhysicalAddress">
       <xsd:sequence>
          <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="address1" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="address1" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="address2" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stateOrProvince" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="stateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />      
          
       </xsd:sequence>
@@ -102,6 +103,8 @@
          <xsd:element name="haveHomePhoneOrLandline" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="bestContactNumberToReach" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        <xsd:element name="preferPhone" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+        <xsd:element name="preferEmail" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="contactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="contactEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="emergencyContactPerson" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -119,7 +122,7 @@
          <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="birthdate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="genderId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="isHostParent" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="personalPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -127,7 +130,8 @@
          <xsd:element name="educationLevel" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="communityInvolvement" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="singleAdultWithnoRelatedByBloodOrMarrageOrAdoptionLivingHome" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="livesOutsideOfHomePartTime" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="livesinsideOfHomePartTime" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+          <xsd:element name="livingInsideHomeExplanation" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="employed" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="employer" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="jobTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />

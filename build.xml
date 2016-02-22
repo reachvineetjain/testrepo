@@ -1583,5 +1583,22 @@
 			<arg value="${xsd.dir}/updatelog/UpdateLogGeneric.xsd" />
 		</java>
 	</target>
+	<target name="HostFamilyHome">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/hostfamily/application/HFHomePage.xsd" />
+			</java>
+		</target>
+	
+	
+	
+	<target name="FamilyBasics">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/hostfamily/application/HFApplicationFamilyBasics.xsd" />
+			</java>
+		</target>
 
 </project>

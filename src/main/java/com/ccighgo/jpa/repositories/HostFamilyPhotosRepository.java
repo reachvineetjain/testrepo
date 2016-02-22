@@ -15,4 +15,6 @@ import com.ccighgo.db.entities.HostFamilyPhoto;
 @Repository
 public interface HostFamilyPhotosRepository extends JpaRepository<HostFamilyPhoto, Integer> {
 
+	HostFamilyPhoto getHFPhoto(int goId);
+
 }

@@ -4,6 +4,7 @@
 package com.ccighgo.service.rest.hf.participant.application.process;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -14,7 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi/ahmed
@@ -37,5 +41,22 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos for goId {} and seasonId {}", goId, seasonId);
       return hfApplication.uploadHFPhotos(goId, seasonId, hfApplicationUploadPhotos);
    }
+   @GET
+   @Path("hfHomepage/{goId}/{loginId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFHomePage getHostFamilyHome(@PathParam("goId") String goId,@PathParam("loginId") String loginId) {
+      return hfApplication.getHostFamilyHome(goId,loginId);
+   }
+
+   @POST
+   @Path("hfSaveOrUpdateBasicData")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse saveOrUpdateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+      return hfApplication.saveOrUpdateFamilyBasicData(hfApplicationFamilyDetails);
+   }
+   
+   
 
 }
