@@ -34,4 +34,15 @@ public interface GenericUpdateLogInterface {
     * @return
     */
    GenericUpdateLogs getPartnerUpdateLogs(String goId);
+   
+   /**
+    * @param goId
+    * @return
+    */
+   GenericUpdateLogs getHostFamilyUpdateLogs(String goId);
+   /**
+    * @param genericUpdateLog
+    * @return
+    */
+   Response addHostFamilyUpdateLogs(GenericUpdateLog genericUpdateLog);
 }
