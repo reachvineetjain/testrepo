@@ -5,6 +5,7 @@ package com.ccighgo.service.components.hf.participant.application.process;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 
@@ -39,11 +40,21 @@ public interface HFApplication {
    /**
     * Service used to upload host family photos for application process
     * 
-    * @param goId
-    * @param seasonId
     * @param hfApplicationUploadPhotos
     * @return
     */
-   public HFApplicationUploadPhotos uploadHFPhotos(String goId, String seasonId, HFApplicationUploadPhotos hfApplicationUploadPhotos);
+   public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos);
+
+   /**
+    * @param photoId
+    * @return
+    */
+   public Response deletePhoto(String photoId);
+
+   /**
+    * @param hfSeasonId
+    * @return
+    */
+   public HFApplicationUploadPhotos getHFPhotos(String hfSeasonId);
 
 }
