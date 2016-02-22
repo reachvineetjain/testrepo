@@ -3,26 +3,36 @@
  */
 package com.ccighgo.service.components.hf.participant.application.process;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.HostFamilyHome;
+import com.ccighgo.db.entities.HostFamilyPhoto;
 import com.ccighgo.db.entities.HostFamilySeasonCategory;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.HostFamilyHomeRepository;
+import com.ccighgo.jpa.repositories.HostFamilyPhotosRepository;
+import com.ccighgo.jpa.repositories.HostFamilyPhotosTypeRepository;
 import com.ccighgo.jpa.repositories.HostFamilySeasonCategoryRepository;
 import com.ccighgo.jpa.repositories.HostFamilySeasonRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
+import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
+import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photos;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
@@ -44,6 +54,8 @@ public class HFApplicationImpl implements HFApplication {
    @Autowired HostFamilyHomeRepository hostFamilyHomeRepository;
    @Autowired HostFamilySeasonRepository hostFamilySeasonRepository;
    @Autowired HostFamilySeasonCategoryRepository hostFamilySeasonCategoryRepository;
+   @Autowired HostFamilyPhotosRepository hostFamilyPhotosRepository;
+   @Autowired HostFamilyPhotosTypeRepository hostFamilyPhotosTypeRepository;
 
    @Override
    @Transactional
@@ -168,7 +180,7 @@ public class HFApplicationImpl implements HFApplication {
    }
 
    @Override
-   public HFApplicationUploadPhotos uploadHFPhotos(String goId, String seasonId, HFApplicationUploadPhotos hfApplicationUploadPhotos) {
+   public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
       HFApplicationUploadPhotos updatedObject = new HFApplicationUploadPhotos();
       try {
          if (hfApplicationUploadPhotos == null) {
@@ -177,18 +189,99 @@ public class HFApplicationImpl implements HFApplication {
          if (hfApplicationUploadPhotos.getLoginId() == 0 || hfApplicationUploadPhotos.getLoginId() < 0) {
             throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
          }
-         if (goId == null || Integer.valueOf(goId) == 0 || Integer.valueOf(goId) < 0) {
-            throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_HF_GOID));
+         if (hfApplicationUploadPhotos.getHfSeasonId() == 0 || hfApplicationUploadPhotos.getHfSeasonId() < 0) {
+            throw new CcighgoException("season information is required to save photos");
          }
-         if (seasonId == null || Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
-            throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_HF_SEASONID));
+         List<HostFamilyPhoto> hostFamilyPhotoList = new ArrayList<HostFamilyPhoto>();
+         if(hfApplicationUploadPhotos.getPhotos()!=null){
+            for(Photo ph:hfApplicationUploadPhotos.getPhotos().getPhotos()){
+               HostFamilyPhoto hfPhoto = new HostFamilyPhoto();
+               hfPhoto.setHostFamilySeason(hostFamilySeasonRepository.findOne(hfApplicationUploadPhotos.getHfSeasonId()));
+               hfPhoto.setHostFamilyPhotosType(hostFamilyPhotosTypeRepository.findOne(ph.getType().getTypeId()));
+               hfPhoto.setFileName(ph.getName());
+               hfPhoto.setFilePath(ph.getPhotoUrl());
+               hfPhoto.setPhotoName(ph.getName());
+               hfPhoto.setDescription(ph.getDescription()!=null?ph.getDescription():"");
+               hfPhoto.setIsOptional("0");
+               hfPhoto.setCreatedBy(hfApplicationUploadPhotos.getLoginId());
+               hfPhoto.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hfPhoto.setActive(CCIConstants.ACTIVE);
+               hfPhoto.setSubmittedToCCI(CCIConstants.INACTIVE);
+               hfPhoto.setApprovedByCCI(CCIConstants.INACTIVE);
+               hfPhoto.setRejectedByCCI(CCIConstants.INACTIVE);
+               hostFamilyPhotoList.add(hfPhoto);
+            }
          }
-
+         if(hfApplicationUploadPhotos.getOptionalPhotos()!=null){
+            for(Photo ph:hfApplicationUploadPhotos.getOptionalPhotos().getPhotos()){
+               HostFamilyPhoto hfPhoto = new HostFamilyPhoto();
+               hfPhoto.setHostFamilySeason(hostFamilySeasonRepository.findOne(hfApplicationUploadPhotos.getHfSeasonId()));
+               hfPhoto.setHostFamilyPhotosType(hostFamilyPhotosTypeRepository.findOne(ph.getType().getTypeId()));
+               hfPhoto.setFileName(ph.getName());
+               hfPhoto.setFilePath(ph.getPhotoUrl());
+               hfPhoto.setPhotoName(ph.getName());
+               hfPhoto.setDescription(ph.getDescription()!=null?ph.getDescription():"");
+               hfPhoto.setIsOptional("1");
+               hfPhoto.setCreatedBy(hfApplicationUploadPhotos.getLoginId());
+               hfPhoto.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hfPhoto.setActive(CCIConstants.ACTIVE);
+               hfPhoto.setSubmittedToCCI(CCIConstants.INACTIVE);
+               hfPhoto.setApprovedByCCI(CCIConstants.INACTIVE);
+               hfPhoto.setRejectedByCCI(CCIConstants.INACTIVE);
+               hostFamilyPhotoList.add(hfPhoto);
+            }
+         }
+         hostFamilyPhotosRepository.save(hostFamilyPhotoList);
+         hostFamilyPhotosRepository.flush();
+         updatedObject=hfApplicationUploadPhotos;
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return updatedObject;
+   }
+   
+   @Override
+   public HFApplicationUploadPhotos getHFPhotos(String hfSeasonId) {
+      HFApplicationUploadPhotos photoList = new HFApplicationUploadPhotos();
+      try{
+         if (hfSeasonId == null) {
+            throw new CcighgoException("invalid search parameters");
+         }
+         List<HostFamilyPhoto> hfPhotos = hostFamilyPhotosRepository.findPhotosBySeasonId(Integer.valueOf(hfSeasonId));
+         if(hfPhotos!=null){
+            
+            
+         }else{
+            photoList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      }catch (CcighgoException e) {
+         photoList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return photoList;
+   }
+
+   @Override
+   @Transactional
+   @Modifying
+   public Response deletePhoto(String photoId) {
+     Response resp = new Response();
+     try{
+        if (photoId == null) {
+           throw new CcighgoException("invalid photo id");
+        }
+        hostFamilyPhotosRepository.delete(Integer.valueOf(photoId));
+        resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+              messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+     }catch (CcighgoException e) {
+        resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), "error deleting photo"));
+        LOGGER.error(e.getMessage());
+     }
+      return resp;
    }
 
 }

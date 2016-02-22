@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 
@@ -42,7 +43,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("get/whyhost/{hostFamilyHomeId}/{hfSeasonId}/{applicationCategoryId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
       LOGGER.info("Calling service HFApplicationProcess.getWhyHost for hfSeasonId {}", hfSeasonId);
@@ -59,11 +59,30 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("upload/photo/{goId}/{seasonId}")
+   @Path("upload/photo")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFApplicationUploadPhotos uploadHFPhotos(@PathParam("goId") String goId, @PathParam("seasonId") String seasonId, HFApplicationUploadPhotos hfApplicationUploadPhotos) {
-      LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos for goId {} and seasonId {}", goId, seasonId);
-      return hfApplication.uploadHFPhotos(goId, seasonId, hfApplicationUploadPhotos);
+   public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
+      LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
+      return hfApplication.uploadHFPhotos(hfApplicationUploadPhotos);
    }
+   
+   @GET
+   @Path("get/pictures/{hfSeasonId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFApplicationUploadPhotos getHFPhotos(@PathParam("hfSeasonId") String hfSeasonId) {
+      LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
+      return hfApplication.getHFPhotos(hfSeasonId);
+   }
+   
+   @GET
+   @Path("delete/photo/{photoId}")
+   @Produces("application/json")
+   public Response deletePhoto(@PathParam("photoId") String photoId) {
+      LOGGER.info("Calling service HFApplicationProcess.deletePhoto for photoId {}", photoId);
+      return hfApplication.deletePhoto(photoId);
+   }
+   
+   
 }
