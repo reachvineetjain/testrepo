@@ -70,4 +70,22 @@ public class GenericUpdateLogs {
       return genericUpdateLogInterface.getPartnerUpdateLogs(goId);
    }
 
+   @POST
+   @Path("/add/hostfamilylog")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public Response addHostFamilyUpdateLog(GenericUpdateLog genericUpdateLog)
+   {
+      return genericUpdateLogInterface.addHostFamilyUpdateLogs(genericUpdateLog);
+   }
+
+   @GET
+   @Path("view/hostfamilylog/{goId}")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getHostFamilyUpdateLogs(@PathParam("goId")String goId)
+   {
+      return genericUpdateLogInterface.getHostFamilyUpdateLogs(goId);
+   }
+   
 }

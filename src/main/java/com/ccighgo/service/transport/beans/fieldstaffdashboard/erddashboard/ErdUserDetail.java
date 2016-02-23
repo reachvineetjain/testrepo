@@ -15,20 +15,20 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ErdDashboardAccount complex type.
+ * <p>Java class for ErdUserDetail complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ErdDashboardAccount">
+ * &lt;complexType name="ErdUserDetail">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="goId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="fieldStaffType" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="userName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="photoUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,17 +38,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ErdDashboardAccount", propOrder = {
-    "goId",
+@XmlType(name = "ErdUserDetail", propOrder = {
     "firstName",
     "lastName",
     "email",
-    "fieldStaffType"
+    "userName",
+    "photoUrl"
 })
-public class ErdDashboardAccount {
+public class ErdUserDetail {
 
-    @XmlElement(required = true)
-    protected String goId;
     @XmlElement(required = true)
     protected String firstName;
     @XmlElement(required = true)
@@ -56,31 +54,9 @@ public class ErdDashboardAccount {
     @XmlElement(required = true)
     protected String email;
     @XmlElement(required = true)
-    protected String fieldStaffType;
-
-    /**
-     * Gets the value of the goId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGoId() {
-        return goId;
-    }
-
-    /**
-     * Sets the value of the goId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGoId(String value) {
-        this.goId = value;
-    }
+    protected String userName;
+    @XmlElement(required = true)
+    protected String photoUrl;
 
     /**
      * Gets the value of the firstName property.
@@ -155,27 +131,51 @@ public class ErdDashboardAccount {
     }
 
     /**
-     * Gets the value of the fieldStaffType property.
+     * Gets the value of the userName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getFieldStaffType() {
-        return fieldStaffType;
+    public String getUserName() {
+        return userName;
     }
 
     /**
-     * Sets the value of the fieldStaffType property.
+     * Sets the value of the userName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setFieldStaffType(String value) {
-        this.fieldStaffType = value;
+    public void setUserName(String value) {
+        this.userName = value;
+    }
+
+    /**
+     * Gets the value of the photoUrl property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    /**
+     * Sets the value of the photoUrl property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPhotoUrl(String value) {
+        this.photoUrl = value;
     }
 
 }
