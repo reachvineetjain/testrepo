@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffUpdateLog;
@@ -88,6 +89,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
    }
 
    @Override
+   @Transactional
    public Response addFieldStaffUpdateLog(GenericUpdateLog genericUpdateLog) {
       Response response = new Response();
       try {
@@ -109,6 +111,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
    }
 
    @Override
+   @Transactional
    public Response addPartnerUpdateLog(GenericUpdateLog genericUpdateLog) {
       Response response = new Response();
       try {
@@ -196,6 +199,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
    }
 
    @Override
+   @Transactional
    public Response addHostFamilyUpdateLogs(GenericUpdateLog genericUpdateLog) {
       Response response = new Response();
       try {
