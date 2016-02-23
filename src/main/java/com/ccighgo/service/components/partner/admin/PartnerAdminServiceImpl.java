@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.partner.admin;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -2387,10 +2388,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 						seasonsForPartnersDetails.setSeasonId(Integer.valueOf(String.valueOf(dt[0])));
 					if (dt[2] != null)
 						seasonsForPartnersDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
-					seasonsForPartnersDetails.setStartDate(String.valueOf(dt[3]));
-					seasonsForPartnersDetails.setEndDate(String.valueOf(dt[4]));
-					seasonsForPartnersDetails.setAppDeadlineDate(String.valueOf(dt[5]));
-
+					java.util.Date startDate = (java.util.Date) dt[3];
+					java.util.Date endDate = (java.util.Date) dt[4];
+					java.util.Date appDeadlineDate = (java.util.Date) dt[5];
+					seasonsForPartnersDetails.setStartDate(DateUtils.getMMddYyyyString(startDate));
+					seasonsForPartnersDetails.setEndDate(DateUtils.getMMddYyyyString(endDate));
+					seasonsForPartnersDetails.setAppDeadlineDate(DateUtils.getMMddYyyyString(appDeadlineDate));
 					seasons.getDetails().add(seasonsForPartnersDetails);
 				}
 			}
