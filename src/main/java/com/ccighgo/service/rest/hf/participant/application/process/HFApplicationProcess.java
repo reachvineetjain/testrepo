@@ -81,7 +81,7 @@ public class HFApplicationProcess {
    @Path("hfSaveOrUpdateBasicData")
    @Consumes("application/json")
    @Produces("application/json")
-   public WSDefaultResponse saveOrUpdateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
    }
 }
