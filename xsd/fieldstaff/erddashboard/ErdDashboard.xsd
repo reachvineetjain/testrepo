@@ -17,16 +17,17 @@
 
    <xsd:complexType name="ErdDashboard">
       <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="ErdDashboardTypes" type="pdl:ErdDashboardTypes" />
-               <xsd:element name="ErdDashboardPoints" type="pdl:ErdDashboardPoints" />
-               <xsd:element name="ErdDashboardTitles" type="pdl:ErdDashboardTitles" />
-               <xsd:element name="account" type="pdl:ErdDashboardAccount"/>
-               <xsd:element name="announcements" type="pdl:ErdDashboardAnnouncements" minOccurs="1" maxOccurs="unbounded"/>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
+   <xsd:extension base="common:Response">
+      <xsd:sequence>
+         <xsd:element name="ErdDashboardTypes" type="pdl:ErdDashboardTypes" />
+         <xsd:element name="ErdDashboardPoints" type="pdl:ErdDashboardPoints" />
+         <xsd:element name="ErdDashboardTitles" type="pdl:ErdDashboardTitles" />
+         <xsd:element name="account" type="pdl:ErdDashboardAccount" />
+         <xsd:element name="announcements" type="pdl:ErdDashboardAnnouncements" minOccurs="1" maxOccurs="unbounded" />
+         <xsd:element name="user" type="pdl:ErdUserDetail" />
+      </xsd:sequence>
+   </xsd:extension>
+</xsd:complexContent>
    </xsd:complexType>
    <xsd:complexType name="ErdDashboardTypes">
       <xsd:sequence>
@@ -94,4 +95,13 @@
       </xsd:sequence>
    </xsd:complexType>
 
+   <xsd:complexType name="ErdUserDetail">
+      <xsd:sequence>
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
 </xsd:schema>
