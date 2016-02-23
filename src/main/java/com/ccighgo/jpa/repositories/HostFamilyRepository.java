@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +10,6 @@ import com.ccighgo.db.entities.HostFamily;
  *
  */
 @Repository
-public interface HostFamilyRepository extends JpaRepository<HostFamily, Integer> {
-   
+public interface HostFamilyRepository extends JpaRepository<HostFamily, Integer>{
+
 }

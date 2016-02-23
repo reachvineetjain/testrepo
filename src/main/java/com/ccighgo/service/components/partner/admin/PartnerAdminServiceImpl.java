@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.partner.admin;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +117,6 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOv
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
-import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipantDetails;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartners;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartnersDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
@@ -2388,6 +2388,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 						seasonsForPartnersDetails.setSeasonId(Integer.valueOf(String.valueOf(dt[0])));
 					if (dt[2] != null)
 						seasonsForPartnersDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
+					java.util.Date startDate = (java.util.Date) dt[3];
+					java.util.Date endDate = (java.util.Date) dt[4];
+					java.util.Date appDeadlineDate = (java.util.Date) dt[5];
+					seasonsForPartnersDetails.setStartDate(DateUtils.getMMddYyyyString(startDate));
+					seasonsForPartnersDetails.setEndDate(DateUtils.getMMddYyyyString(endDate));
+					seasonsForPartnersDetails.setAppDeadlineDate(DateUtils.getMMddYyyyString(appDeadlineDate));
 					seasons.getDetails().add(seasonsForPartnersDetails);
 				}
 			}

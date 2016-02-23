@@ -34,6 +34,7 @@ import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdD
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardCategorieDetails;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardType;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardTypes;
+import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdUserDetail;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
@@ -99,7 +100,15 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                   erdAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
                erdDashboard.getAnnouncements().add(erdAnn);
             }
-         
+         ErdUserDetail erdUserDetail = new ErdUserDetail();
+         FieldStaff fs = fieldStaffRepository.findOne(Integer.valueOf(fieldStaffGoId));
+         Login login = loginRepository.findByGoId(fs.getGoIdSequence());
+         erdUserDetail.setFirstName(fs.getFirstName());
+         erdUserDetail.setLastName(fs.getLastName());
+         erdUserDetail.setEmail(login.getEmail());
+         erdUserDetail.setUserName(login.getLoginName());
+         erdUserDetail.setPhotoUrl(fs.getPhoto());
+         erdDashboard.setUser(erdUserDetail);
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
