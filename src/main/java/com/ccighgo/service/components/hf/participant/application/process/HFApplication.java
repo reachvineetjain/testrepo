@@ -5,6 +5,7 @@ package com.ccighgo.service.components.hf.participant.application.process;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
@@ -66,7 +67,7 @@ public interface HFApplication {
     * @param loginId
     * @return
     */
-   public HFHomePage getHostFamilyHome(String goId, String loginId);
+   public HFHomePage getHostFamilyHome(HomePageParam hpp );
 
    /**
     * 

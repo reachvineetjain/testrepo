@@ -19,6 +19,7 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="singleHost" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photo" type="pu:Photo" minOccurs="1" maxOccurs="1" />
                <xsd:element name="adults" type="pu:HFAdultDetails" minOccurs="1" maxOccurs="unbounded"  />
@@ -39,7 +40,7 @@
    <xsd:complexType name="HFPets">
       <xsd:sequence>
          <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="animalType" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="typeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="number" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="indoor" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="outDoor" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
@@ -65,8 +66,10 @@
     <xsd:complexType name="HFAirport">
       <xsd:sequence>
          <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="airportId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="airport" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="distanceToNearestAirport" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         
       </xsd:sequence>
    </xsd:complexType>
    
@@ -151,6 +154,7 @@
    <xsd:complexType name="Photo">
       <xsd:sequence>
          <xsd:element name="photoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+             <xsd:element name="typeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />

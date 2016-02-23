@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
@@ -86,12 +87,12 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.deletePhoto for photoId {}", photoId);
       return hfApplication.deletePhoto(photoId);
    }
-   @GET
-   @Path("hfHomepage/{goId}/{loginId}")
+   @POST
+   @Path("hfHomepage")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFHomePage getHostFamilyHome(@PathParam("goId") String goId,@PathParam("loginId") String loginId) {
-      return hfApplication.getHostFamilyHome(goId,loginId);
+   public HFHomePage getHostFamilyHome(HomePageParam hpp) {
+      return hfApplication.getHostFamilyHome(hpp);
    }
 
    @POST
