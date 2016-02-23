@@ -116,7 +116,6 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOv
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
-import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipantDetails;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartners;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartnersDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
@@ -2388,6 +2387,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 						seasonsForPartnersDetails.setSeasonId(Integer.valueOf(String.valueOf(dt[0])));
 					if (dt[2] != null)
 						seasonsForPartnersDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
+					seasonsForPartnersDetails.setStartDate(String.valueOf(dt[3]));
+					seasonsForPartnersDetails.setEndDate(String.valueOf(dt[4]));
+					seasonsForPartnersDetails.setAppDeadlineDate(String.valueOf(dt[5]));
+
 					seasons.getDetails().add(seasonsForPartnersDetails);
 				}
 			}
