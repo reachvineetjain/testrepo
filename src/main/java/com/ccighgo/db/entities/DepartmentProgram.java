@@ -23,19 +23,34 @@ public class DepartmentProgram implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer departmentProgramId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(length=100)
 	private String description;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(nullable=false, length=50)
 	private String programName;
+
+	//bi-directional many-to-one association to AnnouncementInformation
+	@OneToMany(mappedBy="departmentProgram")
+	private List<AnnouncementInformation> announcementInformations;
+
+	//bi-directional many-to-one association to AnnouncementInformationHistory
+	@OneToMany(mappedBy="departmentProgram")
+	private List<AnnouncementInformationHistory> announcementInformationHistories;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
 	@OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
@@ -44,7 +59,7 @@ public class DepartmentProgram implements Serializable {
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId")
+	@JoinColumn(name="departmentId", nullable=false)
 	private LookupDepartment lookupDepartment;
 
 	//bi-directional many-to-one association to FieldStaffAnnouncement
@@ -156,6 +171,50 @@ public class DepartmentProgram implements Serializable {
 
 	public void setProgramName(String programName) {
 		this.programName = programName;
+	}
+
+	public List<AnnouncementInformation> getAnnouncementInformations() {
+		return this.announcementInformations;
+	}
+
+	public void setAnnouncementInformations(List<AnnouncementInformation> announcementInformations) {
+		this.announcementInformations = announcementInformations;
+	}
+
+	public AnnouncementInformation addAnnouncementInformation(AnnouncementInformation announcementInformation) {
+		getAnnouncementInformations().add(announcementInformation);
+		announcementInformation.setDepartmentProgram(this);
+
+		return announcementInformation;
+	}
+
+	public AnnouncementInformation removeAnnouncementInformation(AnnouncementInformation announcementInformation) {
+		getAnnouncementInformations().remove(announcementInformation);
+		announcementInformation.setDepartmentProgram(null);
+
+		return announcementInformation;
+	}
+
+	public List<AnnouncementInformationHistory> getAnnouncementInformationHistories() {
+		return this.announcementInformationHistories;
+	}
+
+	public void setAnnouncementInformationHistories(List<AnnouncementInformationHistory> announcementInformationHistories) {
+		this.announcementInformationHistories = announcementInformationHistories;
+	}
+
+	public AnnouncementInformationHistory addAnnouncementInformationHistory(AnnouncementInformationHistory announcementInformationHistory) {
+		getAnnouncementInformationHistories().add(announcementInformationHistory);
+		announcementInformationHistory.setDepartmentProgram(this);
+
+		return announcementInformationHistory;
+	}
+
+	public AnnouncementInformationHistory removeAnnouncementInformationHistory(AnnouncementInformationHistory announcementInformationHistory) {
+		getAnnouncementInformationHistories().remove(announcementInformationHistory);
+		announcementInformationHistory.setDepartmentProgram(null);
+
+		return announcementInformationHistory;
 	}
 
 	public List<DepartmentProgramOption> getDepartmentProgramOptions() {

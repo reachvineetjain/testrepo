@@ -12,10 +12,10 @@ public class CCIStaffRolesDefaultResourcePermissionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(insertable=false, updatable=false)
+	@Column(insertable=false, updatable=false, unique=true, nullable=false)
 	private Integer cciStaffRolesDepartmentId;
 
-	@Column(insertable=false, updatable=false)
+	@Column(insertable=false, updatable=false, unique=true, nullable=false)
 	private Integer resourcePermissionId;
 
 	public CCIStaffRolesDefaultResourcePermissionPK() {
@@ -47,8 +47,8 @@ public class CCIStaffRolesDefaultResourcePermissionPK implements Serializable {
 	}
 
 	public int hashCode() {
-		final Integer prime = 31;
-		Integer hash = 17;
+		final int prime = 31;
+		int hash = 17;
 		hash = hash * prime + this.cciStaffRolesDepartmentId;
 		hash = hash * prime + this.resourcePermissionId;
 		

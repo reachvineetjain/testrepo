@@ -17,11 +17,13 @@ public class PartnerMessage implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerInquiryMessageId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
 
+	@Column(length=1000)
 	private String partnerInquiryMessage;
 
 	//bi-directional many-to-one association to CCIStaffUser

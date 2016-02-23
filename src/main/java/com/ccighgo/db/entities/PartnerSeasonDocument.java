@@ -9,12 +9,14 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="PartnerSeasonDocument")
 @NamedQuery(name="PartnerSeasonDocument.findAll", query="SELECT p FROM PartnerSeasonDocument p")
 public class PartnerSeasonDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonDocumentId;
 
 	@Lob

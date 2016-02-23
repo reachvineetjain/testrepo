@@ -16,43 +16,56 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="Partner")
 @NamedQuery(name="Partner.findAll", query="SELECT p FROM Partner p")
 public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id	
+	@Id
+	@Column(unique=true, nullable=false)
 	private Integer partnerGoId;
 
+	@Column(length=150)
 	private String acronym;
 
+	@Column(length=150)
 	private String addressLineOne;
 
+	@Column(length=150)
 	private String addressLineTwo;
 
+	@Column(length=1000)
 	private String billingNotes;
 
 	private Byte canHaveSubPartner;
 
+	@Column(length=50)
 	private String city;
 
+	@Column(length=250)
 	private String companyName;
 
+	@Column(length=2000)
 	private String contactNotes;
 
+	@Column(length=50)
 	private String contractSigner;
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer dandBNumber;
 
 	private Byte deliverDSForms;
 
+	@Column(length=100)
 	private String email;
 
 	private Byte hasSubPartners;
 
+	@Column(length=100)
 	private String invoiceMail;
 
 	private Byte isSubPartner;
@@ -63,6 +76,7 @@ public class Partner implements Serializable {
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	private Byte multiCountrySender;
@@ -81,32 +95,42 @@ public class Partner implements Serializable {
 
 	private Byte participantTranscriptRequired;
 
+	@Column(length=64)
 	private String partnerGuid;
 
+	@Column(length=300)
 	private String partnerLogo;
 
 	private Byte payGreenheartDirectly;
 
+	@Column(length=150)
 	private String physicalAddressLineOne;
 
+	@Column(length=150)
 	private String physicalAddressLineTwo;
 
+	@Column(length=50)
 	private String physicalCity;
 
+	@Column(length=50)
 	private String physicalstate;
 
+	@Column(length=15)
 	private String physicalZipcode;
 
+	@Column(length=40)
 	private String quickbooksCode;
 
 	private Byte receiveAYPMails;
 
+	@Column(length=50)
 	private String state;
 
 	private Byte subscribeToCCINewsletter;
 
 	private Byte unguaranteedFormRequired;
 
+	@Column(length=15)
 	private String zipcode;
 
 	//bi-directional many-to-one association to Participant
@@ -144,6 +168,10 @@ public class Partner implements Serializable {
 	//bi-directional many-to-one association to PartnerAnnouncement
 	@OneToMany(mappedBy="partner")
 	private List<PartnerAnnouncement> partnerAnnouncements;
+
+	//bi-directional many-to-one association to PartnerAnnouncementResult
+	@OneToMany(mappedBy="partner")
+	private List<PartnerAnnouncementResult> partnerAnnouncementResults;
 
 	//bi-directional many-to-one association to PartnerDocument
 	@OneToMany(mappedBy="partner")
@@ -196,6 +224,10 @@ public class Partner implements Serializable {
 	//bi-directional many-to-one association to PartnerSeason
 	@OneToMany(mappedBy="partner")
 	private List<PartnerSeason> partnerSeasons;
+
+	//bi-directional many-to-one association to PartnerUpdateLog
+	@OneToMany(mappedBy="partner")
+	private List<PartnerUpdateLog> partnerUpdateLogs;
 
 	//bi-directional many-to-one association to PartnerUser
 	@OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
@@ -689,6 +721,28 @@ public class Partner implements Serializable {
 		return partnerAnnouncement;
 	}
 
+	public List<PartnerAnnouncementResult> getPartnerAnnouncementResults() {
+		return this.partnerAnnouncementResults;
+	}
+
+	public void setPartnerAnnouncementResults(List<PartnerAnnouncementResult> partnerAnnouncementResults) {
+		this.partnerAnnouncementResults = partnerAnnouncementResults;
+	}
+
+	public PartnerAnnouncementResult addPartnerAnnouncementResult(PartnerAnnouncementResult partnerAnnouncementResult) {
+		getPartnerAnnouncementResults().add(partnerAnnouncementResult);
+		partnerAnnouncementResult.setPartner(this);
+
+		return partnerAnnouncementResult;
+	}
+
+	public PartnerAnnouncementResult removePartnerAnnouncementResult(PartnerAnnouncementResult partnerAnnouncementResult) {
+		getPartnerAnnouncementResults().remove(partnerAnnouncementResult);
+		partnerAnnouncementResult.setPartner(null);
+
+		return partnerAnnouncementResult;
+	}
+
 	public List<PartnerDocument> getPartnerDocuments() {
 		return this.partnerDocuments;
 	}
@@ -973,6 +1027,28 @@ public class Partner implements Serializable {
 		partnerSeason.setPartner(null);
 
 		return partnerSeason;
+	}
+
+	public List<PartnerUpdateLog> getPartnerUpdateLogs() {
+		return this.partnerUpdateLogs;
+	}
+
+	public void setPartnerUpdateLogs(List<PartnerUpdateLog> partnerUpdateLogs) {
+		this.partnerUpdateLogs = partnerUpdateLogs;
+	}
+
+	public PartnerUpdateLog addPartnerUpdateLog(PartnerUpdateLog partnerUpdateLog) {
+		getPartnerUpdateLogs().add(partnerUpdateLog);
+		partnerUpdateLog.setPartner(this);
+
+		return partnerUpdateLog;
+	}
+
+	public PartnerUpdateLog removePartnerUpdateLog(PartnerUpdateLog partnerUpdateLog) {
+		getPartnerUpdateLogs().remove(partnerUpdateLog);
+		partnerUpdateLog.setPartner(null);
+
+		return partnerUpdateLog;
 	}
 
 	public List<PartnerUser> getPartnerUsers() {

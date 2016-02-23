@@ -10,12 +10,14 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="HostFamilyAirport")
 @NamedQuery(name="HostFamilyAirport.findAll", query="SELECT h FROM HostFamilyAirport h")
 public class HostFamilyAirport implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyAirportId;
 
 	private Byte active;

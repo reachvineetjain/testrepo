@@ -9,18 +9,22 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="HostFamilyLookup")
 @NamedQuery(name="HostFamilyLookup.findAll", query="SELECT h FROM HostFamilyLookup h")
 public class HostFamilyLookup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyLookUpId;
 
 	private Byte active;
 
+	@Column(length=50)
 	private String displayType;
 
+	@Column(length=50)
 	private String displayValue;
 
 	public HostFamilyLookup() {

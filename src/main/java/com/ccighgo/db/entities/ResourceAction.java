@@ -18,20 +18,28 @@ public class ResourceAction implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer resourceActionId;
 
+	@Column(nullable=false)
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(nullable=false, length=50)
 	private String resourceAction;
 
+	@Column(nullable=false)
 	private Byte visibleToUser;
 
 	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission

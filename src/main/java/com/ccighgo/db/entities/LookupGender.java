@@ -10,14 +10,17 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="LookupGender")
 @NamedQuery(name="LookupGender.findAll", query="SELECT l FROM LookupGender l")
 public class LookupGender implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer genderId;
 
+	@Column(nullable=false, length=1)
 	private String genderName;
 
 	//bi-directional many-to-one association to CCIStaffUser
@@ -31,6 +34,10 @@ public class LookupGender implements Serializable {
 	//bi-directional many-to-one association to FieldStaffFamilyMember
 	@OneToMany(mappedBy="lookupGender")
 	private List<FieldStaffFamilyMember> fieldStaffFamilyMembers;
+
+	//bi-directional many-to-one association to HostFamilyHome
+	@OneToMany(mappedBy="lookupGender")
+	private List<HostFamilyHome> hostFamilyHomes;
 
 	//bi-directional many-to-one association to HostFamilyMember
 	@OneToMany(mappedBy="lookupGender")
@@ -127,6 +134,28 @@ public class LookupGender implements Serializable {
 		fieldStaffFamilyMember.setLookupGender(null);
 
 		return fieldStaffFamilyMember;
+	}
+
+	public List<HostFamilyHome> getHostFamilyHomes() {
+		return this.hostFamilyHomes;
+	}
+
+	public void setHostFamilyHomes(List<HostFamilyHome> hostFamilyHomes) {
+		this.hostFamilyHomes = hostFamilyHomes;
+	}
+
+	public HostFamilyHome addHostFamilyHome(HostFamilyHome hostFamilyHome) {
+		getHostFamilyHomes().add(hostFamilyHome);
+		hostFamilyHome.setLookupGender(this);
+
+		return hostFamilyHome;
+	}
+
+	public HostFamilyHome removeHostFamilyHome(HostFamilyHome hostFamilyHome) {
+		getHostFamilyHomes().remove(hostFamilyHome);
+		hostFamilyHome.setLookupGender(null);
+
+		return hostFamilyHome;
 	}
 
 	public List<HostFamilyMember> getHostFamilyMembers() {

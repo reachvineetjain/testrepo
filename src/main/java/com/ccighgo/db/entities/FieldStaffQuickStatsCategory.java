@@ -17,8 +17,10 @@ public class FieldStaffQuickStatsCategory implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer fieldStaffQSCategoryId;
 
+	@Column(length=50)
 	private String fieldStaffQSCategoryName;
 
 	//bi-directional many-to-one association to FieldStaffQuickStatsType

@@ -1,6 +1,6 @@
 DELIMITER $$
 
-USE `cci_gh_go_dev`$$
+USE `cci_gh_go`$$
 
 DROP PROCEDURE IF EXISTS `SPFieldStaffParticipantListing`$$
 
@@ -14,7 +14,7 @@ BEGIN
        SET @fsFlag = flag;
        SET @typeId = (SELECT fieldStaffTypeId FROM `FieldStaff` WHERE fieldStaffGoId = @fsGoId); 
         
-        IF (@fsFlag = 0) THEN -- for My Participants
+        IF (@fsFlag = 0) THEN 
                   
                   SELECT fp.`participantGoId` AS participantGoId,
                          p.`firstName` AS firstName,
@@ -25,8 +25,8 @@ BEGIN
                          dp.`programName` AS Programs,
                          ps.`participantStatusName`,
                          fp.`holdRequested`,
-                         'photo' AS photo,
-                         'countryFlag' AS countryFlag
+                         '' AS photo,
+                         '' AS countryFlag
                          
                   FROM `FieldStaffParticipant` fp
                   INNER JOIN `Participants` p ON fp.`participantGoId` = p.`participantGoId`
@@ -39,7 +39,7 @@ BEGIN
                   
          END IF;
          
-         IF (@fsFlag = 1) THEN -- for My Teams Participants
+         IF (@fsFlag = 1) THEN 
          
            CASE @typeId 
            
@@ -56,7 +56,7 @@ BEGIN
                          dp.`programName` AS Programs,
                          ps.`participantStatusName` AS STATUS,
                          fp.`holdRequested` AS Holds,
-                         'photo' AS paxPhoto 
+                         '' AS paxPhoto 
                   FROM `FieldStaffParticipant` fp
                   INNER JOIN `Participants` p ON fp.`participantGoId` = p.`participantGoId`
                   INNER JOIN `Partner` pp ON pp.`partnerGoId` = p.`partnerGoId`
@@ -80,7 +80,7 @@ BEGIN
                          dp.`programName` AS Programs,
                          ps.`participantStatusName` AS STATUS,
                          fp.`holdRequested` AS Holds,
-                         'photo' AS paxPhoto
+                         '' AS paxPhoto
                   FROM `FieldStaffParticipant` fp
                   INNER JOIN `Participants` p ON fp.`participantGoId` = p.`participantGoId`
                   INNER JOIN `Partner` pp ON pp.`partnerGoId` = p.`partnerGoId`
@@ -104,7 +104,7 @@ BEGIN
                         dp.`programName` AS Programs,
                         ps.`participantStatusName` AS STATUS,
                         fp.`holdRequested` AS Holds,
-                        'photo' AS paxPhoto
+                        '' AS paxPhoto
                   FROM `FieldStaffParticipant` fp
                   INNER JOIN `Participants` p ON fp.`participantGoId` = p.`participantGoId`
                   INNER JOIN `Partner` pp ON pp.`partnerGoId` = p.`partnerGoId`
@@ -127,7 +127,7 @@ BEGIN
                          dp.`programName` AS Programs,
                          ps.`participantStatusName` AS STATUS,
                          fp.`holdRequested` AS Holds,
-                         'photo' AS paxPhoto
+                         '' AS paxPhoto
                   FROM `FieldStaffParticipant` fp
                   INNER JOIN `Participants` p ON fp.`participantGoId` = p.`participantGoId`
                   INNER JOIN `Partner` pp ON pp.`partnerGoId` = p.`partnerGoId`
@@ -147,7 +147,7 @@ BEGIN
            
         END IF;   
         
-        IF (@fsFlag = 2) THEN        -- Participants
+        IF (@fsFlag = 2) THEN        
 		
 		SELECT participantGoId,
 			firstName,
@@ -158,7 +158,7 @@ BEGIN
 			'Lori' AS ERD,
 			CURRENT_DATE AS approvedOn,
 			'placed' AS STATUS,
-			'photo' AS photo,
+			'' AS photo,
 			'waitList' AS waitList
 			FROM Participants;
 	END IF;

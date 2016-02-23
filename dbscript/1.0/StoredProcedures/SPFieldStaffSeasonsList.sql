@@ -1,6 +1,6 @@
 DELIMITER $$
 
-USE `cci_gh_go_dev`$$
+USE `cci_gh_go`$$
 
 DROP PROCEDURE IF EXISTS `SPFieldStaffSeasonsList`$$
 
@@ -10,29 +10,21 @@ BEGIN
 	DECLARE typeId INT;
 	
 	SET @fGoId = fieldStaffId;
-	SET @typeId = (SELECT fieldStaffTypeId FROM `FieldStaff` WHERE fieldStaffGoId = @fGoId);
 	
-	IF @typeId IN (5,2,3) THEN
-		SELECT ps.programName AS seasonName,ps.`startDate` AS StartDate,ps.`endDate` AS EndDate,ss.status AS seasonStatus,fs.fieldStaffStatusName AS FieldStaffStatus
+	SELECT fsl.filedStaffSeasonId AS fieldStaffSeasonId,fsl.seasonId,fsl.departmentProgramId,ps.programName AS seasonName,ps.`startDate` AS StartDate,ps.`endDate` AS EndDate,ss.status AS seasonStatus,fss.fieldStaffStatusName AS FieldStaffStatus,
+		ld.departmentId,dp.programName,fst.fieldStaffTypeName,ld.acronym
 		FROM `ProgramSeasons` ps
 		INNER JOIN SeasonStatus ss ON  ps.programStatusId = ss.seasonStatusId
 		INNER JOIN `FieldStaffSeason` fsl ON ps.`seasonId` = fsl.`seasonId` AND ps.departmentProgramId = fsl.departmentProgramId
-		INNER JOIN `FieldStaffLeadershipSeason` fsls ON fsls.seasonId = fsl.seasonId AND fsls.fieldStaffGoId = fsl.fieldStaffGoId		
-		INNER JOIN `FieldStaffStatus` fs ON fs.fieldStaffStatusId = fsl.fieldStaffSeasonStatusId	
-		WHERE fsls.`fieldStaffGoId` = @fGoId; 
+		INNER JOIN `FieldStaff` fs ON  fs.fieldStaffGoId = fsl.fieldStaffGoId		
+		INNER JOIN `FieldStaffStatus` fss ON fss.fieldStaffStatusId = fsl.fieldStaffSeasonStatusId
+		INNER JOIN Season s ON fsl.seasonId = s.seasonId AND ps.seasonId = s.seasonId	
+		INNER JOIN LookupDepartments ld ON ld.departmentId = s.departmentId
+		INNER JOIN FieldStaffType fst ON fst.fieldStaffTypeId = fs.fieldStaffTypeId
+		INNER JOIN DepartmentPrograms dp ON ld.departmentId = dp.departmentId AND ps.departmentProgramId = dp.departmentProgramId
+		WHERE fs.`fieldStaffGoId` = @fGoId AND fsl.active = 1
+		GROUP BY fsl.seasonId,fsl.departmentProgramId;
                              
-	END IF;
-	
-	IF @typeId IN (4,1) THEN
-		
-		SELECT ps.programName AS seasonName,ps.`startDate` AS StartDate,ps.`endDate` AS EndDate,ss.status AS seasonStatus,fs.fieldStaffStatusName AS FieldStaffStatus
-		FROM `ProgramSeasons` ps
-		INNER JOIN SeasonStatus ss ON  ps.programStatusId = ss.seasonStatusId
-		INNER JOIN `FieldStaffSeason` fsl ON ps.`seasonId` = fsl.`seasonId` AND ps.departmentProgramId = fsl.departmentProgramId
-		INNER JOIN FieldStaff f ON f.fieldStaffGoId = fsl.fieldStaffGoId AND f.fieldStaffTypeId IN (1,4)
-		WHERE fsl.`fieldStaffGoId` = @fGoId;
-                             
-	END IF; 
 END$$
 
 DELIMITER ;
