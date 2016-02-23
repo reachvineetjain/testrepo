@@ -10,14 +10,17 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="DocumentCategoryProcess")
 @NamedQuery(name="DocumentCategoryProcess.findAll", query="SELECT d FROM DocumentCategoryProcess d")
 public class DocumentCategoryProcess implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer documentCategoryProcessId;
 
+	@Column(nullable=false, length=50)
 	private String documentCategoryProcessName;
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess

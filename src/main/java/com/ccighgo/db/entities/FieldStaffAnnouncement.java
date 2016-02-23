@@ -10,12 +10,14 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="FieldStaffAnnouncement")
 @NamedQuery(name="FieldStaffAnnouncement.findAll", query="SELECT f FROM FieldStaffAnnouncement f")
 public class FieldStaffAnnouncement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer fieldStaffAnnouncementId;
 
 	private Byte active;
@@ -41,6 +43,7 @@ public class FieldStaffAnnouncement implements Serializable {
 
 	private Byte showRM;
 
+	@Column(length=250)
 	private String title;
 
 	//bi-directional many-to-one association to DepartmentProgram

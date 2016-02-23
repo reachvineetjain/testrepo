@@ -10,27 +10,34 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="HostFamilyContactHistory")
 @NamedQuery(name="HostFamilyContactHistory.findAll", query="SELECT h FROM HostFamilyContactHistory h")
 public class HostFamilyContactHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyContactHistoryId;
 
+	@Column(length=50)
 	private String agenda;
 
+	@Column(length=25)
 	private String contactMode;
 
+	@Column(length=50)
 	private String duration;
 
 	private Byte isDone;
 
+	@Column(length=100)
 	private String notes;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date praposedContactDate;
 
+	@Column(length=50)
 	private String praposedTime;
 
 	//bi-directional many-to-one association to HostFamilySeason

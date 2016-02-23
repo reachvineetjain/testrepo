@@ -1,6 +1,6 @@
 DELIMITER $$
 
-USE `cci_gh_go_dev`$$
+USE `cci_gh_go`$$
 
 DROP PROCEDURE IF EXISTS `SPFieldStaffAddSeason`$$
 
@@ -9,21 +9,8 @@ BEGIN
 	DECLARE goId INT;
 	DECLARE typeId,fslscount,fsnscount INT;
 	SET @goId = fieldStaffId;
-	/*-- SET @typeId = (SELECT fieldStaffTypeId FROM `FieldStaff` WHERE fieldStaffGoId = @goId);
-	-- IF @typeId IN (5,2,3) THEN
-		
-		SET @scount = (SELECT COUNT(*) FROM `FieldStaffSeason` WHERE fieldStaffGoId = @goId);
-		
-		IF (@scount = 0) THEN
-		
-			SELECT psv.seasonId,psv.departmentProgramId,psv.ProgramName AS SeasonName,st.status AS SeasonStatus FROM ProgramSeasons psv
-			INNER JOIN `SeasonStatus` st ON psv.programStatusId = seasonStatusId
-			WHERE psv.seasonId NOT IN (SELECT fsld.seasonId FROM  `FieldStaffSeason` fsld 
-					        fsld.seasonId = psv.seasonId AND fsld.departmentProgramId = psv.departmentProgramId
-			AND fsl.fieldStaffGoId = @goId) AND psv.startDate > CURRENT_TIMESTAMP AND psv.departmentProgramId IN (1,2);
-		 END IF;
-		*/
-	-- ELSEIF @typeId IN (1,4) THEN
+	
+	
 		
 		SET @fsnscount = (SELECT COUNT(*) FROM `FieldStaffSeason` WHERE fieldStaffGoId = @goId);
 		

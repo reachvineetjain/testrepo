@@ -17,7 +17,10 @@ public class HostFamilyPhoto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPhotoId;
+
+	private Byte active;
 
 	private Byte approvedByCCI;
 
@@ -26,25 +29,25 @@ public class HostFamilyPhoto implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
 
-	@Column(name="default")
-	private Byte default_;
-
+	@Column(length=1000)
 	private String description;
 
+	@Column(length=50)
 	private String fileName;
 
+	@Column(length=50)
 	private String filePath;
 
-	private Byte isGeneral;
+	@Column(length=45)
+	private String isOptional;
 
 	private Integer modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
 
+	@Column(length=50)
 	private String photoName;
-
-	private String photoTitle;
 
 	private Byte rejectedByCCI;
 
@@ -52,7 +55,7 @@ public class HostFamilyPhoto implements Serializable {
 
 	//bi-directional many-to-one association to HostFamilyPhotosType
 	@ManyToOne
-	@JoinColumn(name="hostFamilyPhotoTypeId")
+	@JoinColumn(name="hostFamilyPhotoTypeId", nullable=false)
 	private HostFamilyPhotosType hostFamilyPhotosType;
 
 	//bi-directional many-to-one association to HostFamilySeason
@@ -69,6 +72,14 @@ public class HostFamilyPhoto implements Serializable {
 
 	public void setHostFamilyPhotoId(Integer hostFamilyPhotoId) {
 		this.hostFamilyPhotoId = hostFamilyPhotoId;
+	}
+
+	public Byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(Byte active) {
+		this.active = active;
 	}
 
 	public Byte getApprovedByCCI() {
@@ -95,14 +106,6 @@ public class HostFamilyPhoto implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Byte getDefault_() {
-		return this.default_;
-	}
-
-	public void setDefault_(Byte default_) {
-		this.default_ = default_;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
@@ -127,12 +130,12 @@ public class HostFamilyPhoto implements Serializable {
 		this.filePath = filePath;
 	}
 
-	public Byte getIsGeneral() {
-		return this.isGeneral;
+	public String getIsOptional() {
+		return this.isOptional;
 	}
 
-	public void setIsGeneral(Byte isGeneral) {
-		this.isGeneral = isGeneral;
+	public void setIsOptional(String isOptional) {
+		this.isOptional = isOptional;
 	}
 
 	public Integer getModifiedBy() {
@@ -157,14 +160,6 @@ public class HostFamilyPhoto implements Serializable {
 
 	public void setPhotoName(String photoName) {
 		this.photoName = photoName;
-	}
-
-	public String getPhotoTitle() {
-		return this.photoTitle;
-	}
-
-	public void setPhotoTitle(String photoTitle) {
-		this.photoTitle = photoTitle;
 	}
 
 	public Byte getRejectedByCCI() {

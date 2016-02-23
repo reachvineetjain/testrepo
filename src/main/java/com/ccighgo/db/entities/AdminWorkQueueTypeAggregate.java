@@ -10,18 +10,22 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="AdminWorkQueueTypeAggregate")
 @NamedQuery(name="AdminWorkQueueTypeAggregate.findAll", query="SELECT a FROM AdminWorkQueueTypeAggregate a")
 public class AdminWorkQueueTypeAggregate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer adminWQTypeAggregateId;
 
 	private Integer adminWQTypeAggregate;
 
+	@Column(length=50)
 	private String adminWQTypeName;
 
+	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
 	//bi-directional many-to-one association to AdminWorkQueueType

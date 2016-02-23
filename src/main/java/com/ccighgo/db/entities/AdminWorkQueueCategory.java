@@ -17,10 +17,13 @@ public class AdminWorkQueueCategory implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer adminWorkQueueCategoryId;
 
+	@Column(length=45)
 	private String adminWorkQueueCategoryName;
 
+	@Column(length=45)
 	private String roleType;
 
 	//bi-directional many-to-one association to AdminWorkQueue
@@ -29,7 +32,7 @@ public class AdminWorkQueueCategory implements Serializable {
 
 	//bi-directional many-to-one association to AdminWorkQueueType
 	@ManyToOne
-	@JoinColumn(name="adminWQTypeId")
+	@JoinColumn(name="adminWQTypeId", nullable=false)
 	private AdminWorkQueueType adminWorkQueueType;
 
 	//bi-directional many-to-one association to AdminWorkQueueCategoryAggregate

@@ -3,12 +3,7 @@
  */
 package com.ccighgo.utils;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -99,6 +94,11 @@ public class CCIUtils {
        }else{
           return "";
        }
+    }
+    
+    public static Double getFormFilledPercentage(Integer totalFields, Integer filledOnes){
+       Double filledPercentage = (double) ((filledOnes/totalFields)*100);
+       return filledPercentage;
     }
 
 }

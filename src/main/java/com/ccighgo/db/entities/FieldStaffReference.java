@@ -18,46 +18,58 @@ public class FieldStaffReference implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer feldStaffReferencesId;
 
 	private Byte approved;
 
+	@Column(length=100)
 	private String city;
 
 	@Lob
 	private String comments;
 
+	@Column(length=20)
 	private String communityRating;
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOfReference;
 
+	@Column(length=100)
 	private String email;
 
 	private Byte emailSent;
 
+	@Column(length=50)
 	private String firstName;
 
+	@Column(length=20)
 	private String flexibilityRating;
 
+	@Column(length=50)
 	private String knownFamilyMethod;
 
+	@Column(length=45)
 	private String lastName;
 
+	@Column(length=20)
 	private String maturityRating;
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	private Integer monthsKnown;
 
 	private Byte needsPhoneCall;
 
+	@Column(length=20)
 	private String objectivityRating;
 
 	@Lob
@@ -65,22 +77,28 @@ public class FieldStaffReference implements Serializable {
 
 	private Integer ownChildSupervised;
 
+	@Column(length=25)
 	private String phone;
 
 	private Byte rejected;
 
+	@Column(length=100)
 	private String relationshipToApplicant;
 
+	@Column(length=100)
 	private String streetAddress;
 
 	private Byte submitted;
 
+	@Column(length=20)
 	private String teenRating;
 
+	@Column(length=20)
 	private String warmthRating;
 
 	private Integer yearsKnown;
 
+	@Column(length=25)
 	private String zipCode;
 
 	//bi-directional many-to-one association to FieldStaff

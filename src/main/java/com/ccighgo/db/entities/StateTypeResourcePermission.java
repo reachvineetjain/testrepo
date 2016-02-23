@@ -9,12 +9,14 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="StateTypeResourcePermission")
 @NamedQuery(name="StateTypeResourcePermission.findAll", query="SELECT s FROM StateTypeResourcePermission s")
 public class StateTypeResourcePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer stateTypeRPId;
 
 	//bi-directional many-to-one association to LookupDepartmentProgram

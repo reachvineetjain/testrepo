@@ -10,32 +10,38 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="PartnerAnnouncement")
 @NamedQuery(name="PartnerAnnouncement.findAll", query="SELECT p FROM PartnerAnnouncement p")
 public class PartnerAnnouncement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerAnnouncementId;
 
 	private Byte active;
 
 	@Lob
+	@Column(nullable=false)
 	private String announcement;
 
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(nullable=false, length=250)
 	private String title;
 
 	//bi-directional many-to-one association to DepartmentProgram
 	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
+	@JoinColumn(name="departmentProgramId", nullable=false)
 	private DepartmentProgram departmentProgram;
 
 	//bi-directional many-to-one association to Partner
@@ -45,7 +51,7 @@ public class PartnerAnnouncement implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	public PartnerAnnouncement() {
