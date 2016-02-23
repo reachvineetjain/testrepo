@@ -65,7 +65,6 @@
          <xsd:element name="dateW9Recieved" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="approvedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
-         <xsd:element name="fieldStaffStatus" type="xsd:string" minOccurs="1" maxOccurs="1"/>
          <xsd:element name="fieldStaffStatusId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
       </xsd:sequence>
    </xsd:complexType>
