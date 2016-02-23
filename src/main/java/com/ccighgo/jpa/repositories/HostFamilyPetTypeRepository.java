@@ -1,15 +1,18 @@
+/**
+ * 
+ */
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ccighgo.db.entities.HostFamily;
+import com.ccighgo.db.entities.HostFamilyPetType;
 
 /**
- * @author Ahmed Abdelmaaboud
+ * @author Ahmed
  *
  */
 @Repository
-public interface HostFamilyRepository extends JpaRepository<HostFamily, Integer>{
+public interface HostFamilyPetTypeRepository extends JpaRepository<HostFamilyPetType, Integer> {
 
 }

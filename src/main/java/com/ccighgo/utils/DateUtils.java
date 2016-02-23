@@ -225,4 +225,16 @@ public class DateUtils {
       Date dt = getDateFromString(date);
       return getUSDate(dt);
    }
+   
+   public static Date getMMddyyDateForHostFamily(String inputString) {
+	      Date date = null;
+	      DateFormat format = new SimpleDateFormat(CCIConstants.MM_DD_YY, Locale.US);
+	      try {
+	         if (inputString != null && !inputString.trim().isEmpty())
+	            date = format.parse(inputString);
+	      } catch (ParseException e) {
+	         ExceptionUtil.logException(e, logger);
+	      }
+	      return date;
+	   }
 }

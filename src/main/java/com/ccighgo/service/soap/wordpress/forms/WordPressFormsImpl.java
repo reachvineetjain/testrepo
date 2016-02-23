@@ -368,7 +368,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 			return "200:Success";
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);
-			String string = "700:Internal Error";
+			String string = "700:Internal Error:700:" + e.getMessage();
 			System.out.println(string);
 			return string;
 		}
@@ -427,7 +427,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 			}
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);
-			String string = "700:Internal Error";
+			String string = "700:Internal Error:700:" + e.getMessage();
 			System.out.println(string);
 			return string;
 		}
