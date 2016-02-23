@@ -13,20 +13,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.Airport;
 import com.ccighgo.db.entities.FieldStaffAnnouncement;
 import com.ccighgo.db.entities.HostFamily;
+import com.ccighgo.db.entities.HostFamilyAirport;
 import com.ccighgo.db.entities.HostFamilyAnnouncement;
 import com.ccighgo.db.entities.HostFamilyMember;
+import com.ccighgo.db.entities.HostFamilyPet;
+import com.ccighgo.db.entities.HostFamilyPetType;
 import com.ccighgo.db.entities.HostFamilyPhoto;
 import com.ccighgo.db.entities.HostFamilySeasonCategory;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.AirportRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
+import com.ccighgo.jpa.repositories.HostFamilyAirportRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAnnouncementRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAnnouncementResultRepository;
 import com.ccighgo.jpa.repositories.HostFamilyMemberRepository;
+import com.ccighgo.jpa.repositories.HostFamilyPetRepository;
+import com.ccighgo.jpa.repositories.HostFamilyPetTypeRepository;
 import com.ccighgo.jpa.repositories.HostFamilyPhotosRepository;
 import com.ccighgo.jpa.repositories.HostFamilyRepository;
 import com.ccighgo.jpa.repositories.HostFamilySeasonCategoryRepository;
@@ -36,12 +44,15 @@ import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardAnnouncements;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAdultDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAirport;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFPets;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFAnnouncements;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckList;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckListStages;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
+import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -78,6 +89,16 @@ public class HFApplicationImpl implements HFApplication {
 
 	@Autowired
 	HostFamilyRepository hostFamilyRepository;
+	@Autowired
+	AirportRepository airportRepository;
+	@Autowired
+	HostFamilyAirport hostFamilyAirport;
+	@Autowired
+	HostFamilyPetTypeRepository hostFamilyPetTypeRepository;
+	@Autowired
+	HostFamilyPetRepository hostFamilyPetRepository;
+	@Autowired
+	HostFamilyAirportRepository hostFamilyAirportRepository;
 
 	@Override
 	public HFApplicationUploadPhotos uploadHFPhotos(String goId, String seasonId, HFApplicationUploadPhotos hfApplicationUploadPhotos) {
@@ -132,7 +153,7 @@ public class HFApplicationImpl implements HFApplication {
 			applicationChecklist.setPercentage("50");
 			applicationChecklist.setPhotoUrl(hfp.getPhotoName());
 			// TODO
-			List<HostFamilySeasonCategory> hfsc = hfSeasonCategoryRepository.getHFSeasonCategory(1);
+			List<HostFamilySeasonCategory> hfsc = hfSeasonCategoryRepository.getHFSeasonCategoryBySeasonId(1);
 			hp.setApplicationCheckList(applicationChecklist);
 			for (HostFamilySeasonCategory hostFamilySeasonCategory : hfsc) {
 				HFApplicationCheckListStages stage = new HFApplicationCheckListStages();
@@ -149,7 +170,7 @@ public class HFApplicationImpl implements HFApplication {
 	}
 
 	@Override
-	public WSDefaultResponse saveOrUpdateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+	public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
 		WSDefaultResponse hp = new WSDefaultResponse();
 		try {
 
@@ -160,12 +181,11 @@ public class HFApplicationImpl implements HFApplication {
 				f.setDescription(hfApplicationFamilyDetails.getPhoto().getDescription());
 				f.setFileName(hfApplicationFamilyDetails.getPhoto().getName());
 				f.setFilePath(hfApplicationFamilyDetails.getPhoto().getPhotoUrl());
-
 			}
 
 			// HOstFamilly Member
 			List<HostFamilyMember> listOfMembers = new ArrayList<HostFamilyMember>();
- 			for (HFAdultDetails member : hfApplicationFamilyDetails.getAdults()) {
+			for (HFAdultDetails member : hfApplicationFamilyDetails.getAdults()) {
 				HostFamilyMember hfm = new HostFamilyMember();
 				hfm.setIsSingleAdult(hfApplicationFamilyDetails.isSingleHost() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 				hfm.setFirstName(member.getFirstName());
@@ -196,45 +216,90 @@ public class HFApplicationImpl implements HFApplication {
 					hfm.setPhone2(member.getOtherJobPhone());
 				listOfMembers.add(hfm);
 			}
- 			if(!listOfMembers.isEmpty())
- 				hfMemberRepository.save(listOfMembers);
+			if (!listOfMembers.isEmpty())
+				hfMemberRepository.save(listOfMembers);
 
 			// contact Information
 			HostFamily hf = new HostFamily();
-			hf.setHaveAHomePhone(hfApplicationFamilyDetails.getContactInfo().isHaveHomePhoneOrLandline()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hf.setHaveAHomePhone(hfApplicationFamilyDetails.getContactInfo().isHaveHomePhoneOrLandline() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hf.setHomePhone(hfApplicationFamilyDetails.getContactInfo().getPhone());
-			hf.setPreferredContactMethodEmail(hfApplicationFamilyDetails.getContactInfo().isPreferEmail()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
-			hf.setPreferredContactMethodPhone(hfApplicationFamilyDetails.getContactInfo().isPreferPhone()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hf.setPreferredContactMethodEmail(hfApplicationFamilyDetails.getContactInfo().isPreferEmail() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+			hf.setPreferredContactMethodPhone(hfApplicationFamilyDetails.getContactInfo().isPreferPhone() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hf.setPreferredEmail(hfApplicationFamilyDetails.getContactInfo().getContactEmail());
 			hf.setPreferredPhone(hfApplicationFamilyDetails.getContactInfo().getContactPhone());
 			hf.setEmergencyContact(hfApplicationFamilyDetails.getContactInfo().getEmergencyContactPerson());
 			hf.setEmergencyPhone(hfApplicationFamilyDetails.getContactInfo().getEmergencyPhone());
-			
+
 			// Physical Address
 			hf.setPhysicalAddress(hfApplicationFamilyDetails.getPhysicalAddress().getAddress1());
 			hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
 			hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
-			LookupUSState physicalAddressState=stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
-			hf.setLookupUsstate1(physicalAddressState);			
+			LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
+			hf.setLookupUsstate1(physicalAddressState);
 
 			// mailing address
-			hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
 			hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
 			hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
-			LookupUSState mailingAddressState=stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
+			LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
 			hf.setLookupUsstate2(mailingAddressState);
 
 			hostFamilyRepository.saveAndFlush(hf);
 			// Airport
 
+			List<HostFamilyAirport> airports = new ArrayList<HostFamilyAirport>();
+			for (HFAirport aps : hfApplicationFamilyDetails.getAirports()) {
+				HostFamilyAirport hfa = new HostFamilyAirport();
+				hfa.setHostFamily(hf);
+				Airport airport = new Airport();
+				// TODO Fetching the airport
+				hfa.setAirport(airport);
+				hfa.setDistanceToAirport(aps.getDistanceToNearestAirport());
+
+			}
+			if (!airports.isEmpty())
+				hostFamilyAirportRepository.save(airports);
+			
 			// Pets
+			List<HostFamilyPet> pets = new ArrayList<HostFamilyPet>();
+			for (HFPets pts : hfApplicationFamilyDetails.getPets()) {
+				HostFamilyPet hfp = new HostFamilyPet();
+				// TODO fetch petType by name
+				HostFamilyPetType hostFamilyPetType = hostFamilyPetTypeRepository.findOne(1);
+				hfp.setHostFamilyPetType(hostFamilyPetType);
+				hfp.setIsIndoor(pts.isIndoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+				hfp.setIsOutdoor(pts.isOutDoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+				hfp.setNumber(pts.getNumber());
+				// TODO get HostFamilySeason
+				// hfp.setHostFamilySeason(hostFamilySeason);
+			}
+			if (!pets.isEmpty())
+				hostFamilyPetRepository.save(pets);
 
 		} catch (CcighgoException e) {
 			hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_HOME_PAGE.getValue(), e.getMessage()));
 			LOGGER.error(e.getMessage());
 		}
 		return hp;
+	}
+
+	@Override
+	public WhyHost createWhyHost(String applicationCategoryId, WhyHost whyHost) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WhyHost getWhyHost(String hfHomeId, String hfSeasonId, String applicationCategoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WhyHost updateWhyHost(String applicationCategoryId, WhyHost whyHost) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

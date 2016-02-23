@@ -206,25 +206,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          SeasonGeographyConfiguration seasonGeographicConfigRow = seasonGeographyConfigurationRepository.findOne(assignedERDToSuperRegion.getSeasonGeographyConfigurationId());
-
-         if (seasonGeographicConfigRow != null) {
-            seasonGeographyConfigurationRepository.delete(seasonGeographicConfigRow.getSeasonGeographyConfigurationId());
-         }
-
          Season season = seasonRepository.findOne(assignedERDToSuperRegion.getSeasonId());
-         FieldStaff fieldStaff = fieldStaffRepository.findOne(assignedERDToSuperRegion.getNewFieldStaffId());
-         SuperRegion superRegion = superRegionRepository.findOne(assignedERDToSuperRegion.getSuperRegionId());
-         seasonGeographicConfigRow = new SeasonGeographyConfiguration();
-         seasonGeographicConfigRow.setCreatedBy(1);
-         seasonGeographicConfigRow.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-         seasonGeographicConfigRow.setLookupUsstate(null);
-         seasonGeographicConfigRow.setRegion(null);
-         seasonGeographicConfigRow.setSeason(season);
-         seasonGeographicConfigRow.setModifiedBy(1);
-         seasonGeographicConfigRow.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-         seasonGeographicConfigRow.setSuperRegion(superRegion);
-
-         seasonGeographyConfigurationRepository.save(seasonGeographicConfigRow);
+         FieldStaff fieldStaff = fieldStaffRepository.findOne(assignedERDToSuperRegion.getNewFieldStaffId());      
 
          FieldStaffLeadershipSeason fieldStaffLeadershipSeason = fieldStaffLeadershipSeasonRepository.findOne(assignedERDToSuperRegion.getFieldStaffLeadershipSeasonId());
          if (fieldStaffLeadershipSeason != null) {

@@ -1,6 +1,6 @@
 package com.ccighgo.service.rest.genericupdatelog;
 
-import java.util.List;
+
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -34,11 +34,11 @@ public class GenericUpdateLogs {
     * @return list of GenericUpdateLog
     */
    @GET
-   @Path("/view/{goId}")
+   @Path("view/fieldsatfflog/{goId}")
    @Produces("application/json")
    @Consumes("application/json")
-   public List<GenericUpdateLog> getGenericUpdateLogs(@PathParam("goId") String goId) {
-      return genericUpdateLogInterface.getGenericUpdateLogs(goId);
+   public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getGenericUpdateLogs(@PathParam("goId") String goId) {
+      return genericUpdateLogInterface.getFieldStaffUpdateLogs(goId);
    }
 
    /**
@@ -46,11 +46,28 @@ public class GenericUpdateLogs {
     * @return response object
     */
    @POST
-   @Path("/add")
+   @Path("/add/fieldsatfflog")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response AddUpdateLog(GenericUpdateLog genericUpdateLog) {
-      return genericUpdateLogInterface.AddUpdateLog(genericUpdateLog);
+   public Response AddFieldstaffUpdateLog(GenericUpdateLog genericUpdateLog) {
+      return genericUpdateLogInterface.addFieldStaffUpdateLog(genericUpdateLog);
+   }
+   @POST
+   @Path("/add/partnerlog")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public Response addPartnerUpdateLog(GenericUpdateLog genericUpdateLog)
+   {
+      return genericUpdateLogInterface.addPartnerUpdateLog(genericUpdateLog);
+   }
+
+   @GET
+   @Path("view/partnerlog/{goId}")
+   @Produces("application/json")
+   @Consumes("application/json")
+   public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getPartnerUpdateLogs(@PathParam("goId")String goId)
+   {
+      return genericUpdateLogInterface.getPartnerUpdateLogs(goId);
    }
 
 }

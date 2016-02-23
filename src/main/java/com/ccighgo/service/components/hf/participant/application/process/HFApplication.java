@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
+import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -17,6 +18,27 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Service
 public interface HFApplication {
 
+   /**
+    * @param hfSeasonId
+    * @param whyHost
+    * @return
+    */
+   public WhyHost createWhyHost(String applicationCategoryId, WhyHost whyHost);
+
+   /**
+    * @param hfSeasonId
+    * @return
+    */
+   public WhyHost getWhyHost(String hfHomeId, String hfSeasonId, String applicationCategoryId);
+
+   /**
+    * @param hfHomeId
+    * @param applicationCategoryId
+    * @param whyHost
+    * @return
+    */
+   public WhyHost updateWhyHost(String applicationCategoryId, WhyHost whyHost);
+   
    /**
     * Service used to upload host family photos for application process
     * 
@@ -35,6 +57,11 @@ public interface HFApplication {
     */
    public HFHomePage getHostFamilyHome(String goId, String loginId);
 
-public WSDefaultResponse saveOrUpdateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
+   /**
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
 
 }

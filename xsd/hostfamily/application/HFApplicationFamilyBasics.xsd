@@ -41,7 +41,8 @@
          <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="animalType" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="number" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="indoorOrOutdoor" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="indoor" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="outDoor" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="additionalInfo" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
