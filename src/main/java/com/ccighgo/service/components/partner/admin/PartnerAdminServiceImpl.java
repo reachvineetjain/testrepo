@@ -4,7 +4,6 @@
 package com.ccighgo.service.components.partner.admin;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +64,7 @@ import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueTypeRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUsersCCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
@@ -497,6 +497,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 				}
 				if (partnerLogin != null && detail.getUsername() != null)
 					partnerLogin.setLoginName(detail.getUsername());
+
 			} catch (Exception e) {
 				ExceptionUtil.logException(e, logger);
 			}
@@ -2389,11 +2390,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 					if (dt[2] != null)
 						seasonsForPartnersDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
 					java.util.Date startDate = (java.util.Date) dt[3];
-					java.util.Date endDate = (java.util.Date) dt[4];
-					java.util.Date appDeadlineDate = (java.util.Date) dt[5];
+					java.util.Date appDeadlineDate = (java.util.Date) dt[4];
+					java.util.Date endDate = (java.util.Date) dt[5];
 					seasonsForPartnersDetails.setStartDate(DateUtils.getMMddYyyyString(startDate));
-					seasonsForPartnersDetails.setEndDate(DateUtils.getMMddYyyyString(endDate));
 					seasonsForPartnersDetails.setAppDeadlineDate(DateUtils.getMMddYyyyString(appDeadlineDate));
+					seasonsForPartnersDetails.setEndDate(DateUtils.getMMddYyyyString(endDate));
+
 					seasons.getDetails().add(seasonsForPartnersDetails);
 				}
 			}
