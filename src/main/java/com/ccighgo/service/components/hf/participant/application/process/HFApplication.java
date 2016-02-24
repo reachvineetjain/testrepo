@@ -5,9 +5,13 @@ package com.ccighgo.service.components.hf.participant.application.process;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi/ahmed
@@ -56,5 +60,20 @@ public interface HFApplication {
     * @return
     */
    public HFApplicationUploadPhotos getHFPhotos(String hfSeasonId);
+
+   /**
+    * Service to fetch HF Home Page Sections
+    * @param goId
+    * @param loginId
+    * @return
+    */
+   public HFHomePage getHostFamilyHome(HomePageParam hpp );
+
+   /**
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
 
 }

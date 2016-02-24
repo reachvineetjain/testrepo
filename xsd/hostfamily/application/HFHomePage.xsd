@@ -19,7 +19,7 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="announcements" type="pu:HFAnnouncements" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="announcements" type="pu:HFAnnouncements" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="applicationCheckList" type="pu:HFApplicationCheckList" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
@@ -37,7 +37,7 @@
 
    <xsd:complexType name="HFApplicationCheckList">
       <xsd:sequence>
-         <xsd:element name="applicantName" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="applicantName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="percentage" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="stages" type="pu:HFApplicationCheckListStages"  maxOccurs="unbounded" />
@@ -46,7 +46,7 @@
    
    <xsd:complexType name="HFApplicationCheckListStages">
       <xsd:sequence>
-         <xsd:element name="category" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="category" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
