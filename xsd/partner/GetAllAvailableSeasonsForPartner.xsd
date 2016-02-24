@@ -37,10 +37,11 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="startDate" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
-			<xsd:element name="endDate" type="xsd:string" minOccurs="1"
-				maxOccurs="1" />
 			<xsd:element name="appDeadlineDate" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="endDate" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+
 		</xsd:sequence>
 	</xsd:complexType>
 
