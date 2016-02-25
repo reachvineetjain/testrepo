@@ -2124,7 +2124,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                ps.setPartnerSeasonAppDeadlineDate(DateUtils.getDateFromString(data.getAppDeadlineDate()));
                ps.setPartnerSeasonEndDate(DateUtils.getDateFromString((data.getEndDate())));
 
-               ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
+               ps.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.APPROVED_STATUS));
                ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
                ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
                ps.setQuestionaireRequired(CCIConstants.INACTIVE);

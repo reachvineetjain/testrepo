@@ -235,6 +235,7 @@ public class CCIConstants {
    public static final Integer APPL_J1 = 1;
    public static final Integer APPL_F1 = 3;
    public static final Integer APPL_IHP = 5;
+   public static final Integer APPROVED_STATUS = 5;
 
    public static final String SUBMITTED = "Submitted";
    public static final String PARTNER_REVIEW = "Partner Review";
