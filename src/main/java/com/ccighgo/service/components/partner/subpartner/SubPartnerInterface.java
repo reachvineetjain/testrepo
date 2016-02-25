@@ -32,4 +32,6 @@ public interface SubPartnerInterface {
    public WSDefaultResponse addSubPartnerScreenNote(SubPartnerScreeningNotes noteDetail)  ;
    public AllSalutations getAllSalutation();
    public WSDefaultResponse updatePartnerStatus(String goId, String loginId,String status);
+   public WSDefaultResponse deleteSubPartner(String goId);
+   
 }
