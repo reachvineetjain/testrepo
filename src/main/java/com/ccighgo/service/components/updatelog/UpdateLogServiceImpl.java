@@ -233,6 +233,8 @@ public class UpdateLogServiceImpl implements UpdateLogServiceInterface {
       Season season = seasonRepository.findOne(seasonProgramUpdateLog.getSeasonId());
       seasonProgramUpdateLogEntity.setSeason(season);
       seasonProgramUpdateLogEntity.setUpdateLogObject(seasonProgramUpdateLog.getUpdateLogObject());
+//      seasonProgramUpdateLogEntity.setModifiedBy(seasonProgramUpdateLog.getLoginId());
+//      seasonProgramUpdateLogEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
       seasonProgramUpdateLogRepository.saveAndFlush(seasonProgramUpdateLogEntity);
       return viewSeasonProgramLog(CCIConstants.HSP_J1_HS_ID + "", seasonProgramUpdateLog.getSeasonId() + "");
    }

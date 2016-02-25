@@ -570,7 +570,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 			}
 			subPartnerDetails.setPartnerGoId(goIdSequence.getGoId());
 			partnerRepository.saveAndFlush(subPartnerDetails);
-
+			responce.setGoId(goIdSequence.getGoId());
 			try {
 				PartnerUser partnerContact = null;
 				if (subPartnerPrimaryContact != null) {
