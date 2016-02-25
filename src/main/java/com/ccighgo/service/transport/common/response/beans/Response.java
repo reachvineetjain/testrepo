@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 
 
 /**
@@ -42,7 +42,7 @@ import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdD
     "status"
 })
 @XmlSeeAlso({
-    ErdDashboard.class
+    HFApplicationFamilyLifeStyle.class
 })
 public class Response {
 

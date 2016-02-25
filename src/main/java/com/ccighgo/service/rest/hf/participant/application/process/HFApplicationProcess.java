@@ -18,6 +18,7 @@ import com.ccighgo.service.components.hf.participant.application.process.HFAppli
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
@@ -96,11 +97,22 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("hfSaveOrUpdateBasicData")
+   @Path("hfSaveBasicData")
    @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
    }
+   
+   
+   @POST
+   @Path("hfSaveFamilyLifeStyle")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+      return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
+   }
+   
+   
    
 }

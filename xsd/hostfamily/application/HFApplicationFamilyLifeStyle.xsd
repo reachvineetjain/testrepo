@@ -19,9 +19,15 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="familyDescription" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="thingsStudentNeedsToAdaptWith" type="xsd:string" minOccurs="1" maxOccurs="1"  />
                
+                <xsd:element name="anyOneHasSeriousIllness" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="illnessExplanation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="anyOneHaveDisability" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="disabilityExplanation" type="xsd:string" minOccurs="1" maxOccurs="1" />    
+         
                
                <xsd:element name="familyDay" type="pu:HFFamilyDayDetails" minOccurs="1" maxOccurs="1"  />
                <xsd:element name="religious" type="pu:HFFamilyReligious" minOccurs="1" maxOccurs="1"  />
@@ -36,8 +42,8 @@
    <xsd:complexType name="HFFamilyDayDetails">
       <xsd:sequence>
          <xsd:element name="household" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="typicalWeekendAtHome1" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="typicalWeekendAtHome2" type="xsd:string" minOccurs="1" maxOccurs="1" />         
+         <xsd:element name="typicalWeekdayAtHome" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="typicalWeekendAtHome" type="xsd:string" minOccurs="1" maxOccurs="1" />         
          <xsd:element name="favouriteThingsToDoAsFamily" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
@@ -49,10 +55,10 @@
          <xsd:element name="oftenAttendReligiousMeetings" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="preferedTheStudentJoinYou" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="diffecultyHostingPersonWithDifferentReligious" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="inviteStudentForReligiousExperience" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+
       </xsd:sequence>
    </xsd:complexType>
-   
-   
    
     <xsd:complexType name="HFDieTrayRestriction">
       <xsd:sequence>
@@ -69,15 +75,13 @@
    
        <xsd:complexType name="HFMiscLifeStyle">
       <xsd:sequence>
-         <xsd:element name="haveAutoInsurranceForAllCarsYouHave" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="haveAutoInsurranceForAllCarsYouHave" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="anyOneIsSmokingInyourFamily" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="whereSmoking" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
          <xsd:element name="anyOneDrinkAlcoholic" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="anyOneHasSeriousIllness" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="illnessExplanation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="anyOneHaveDisability" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="disabilityExplanation" type="xsd:string" minOccurs="1" maxOccurs="1" />    
+        
          <xsd:element name="anyOneConvictedInCrime" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="convictedInCrimeDesc" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="anyOneInProtectiveServiceAgency" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="childInProtectiveServiceExplanation" type="xsd:string" minOccurs="1" maxOccurs="1" />
          
