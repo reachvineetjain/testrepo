@@ -588,7 +588,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          partnerUser.setPartner(subPartnerDetails);
          partnerUser.setLogin(login);
          partnerUserRepository.saveAndFlush(partnerUser);
-
+         responce.setGoId(goIdSequence.getGoId());
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
