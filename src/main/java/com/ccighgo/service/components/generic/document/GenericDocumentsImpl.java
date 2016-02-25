@@ -584,6 +584,7 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
          documents.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
+         e.printStackTrace();
          documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.VIEW_GENERIC_DOCUMENT.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_DOCUMENT)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_ADD_GENERIC_DOCUMENT));
