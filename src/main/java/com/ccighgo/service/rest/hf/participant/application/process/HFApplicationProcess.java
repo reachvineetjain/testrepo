@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
@@ -33,86 +35,118 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Consumes("application/json")
 public class HFApplicationProcess {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(HFApplicationProcess.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(HFApplicationProcess.class);
 
-   @Autowired HFApplication hfApplication;
+	@Autowired
+	HFApplication hfApplication;
 
-   @POST
-   @Path("create/whyhost/{applicationCategoryId}")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public WhyHost createWhyHost( @PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
-      LOGGER.info("Calling service HFApplicationProcess.createWhyHost for hfSeasonId {}", whyHost.getSeasonId());
-      return hfApplication.createWhyHost(applicationCategoryId, whyHost);
-   }
+	@POST
+	@Path("create/whyhost/{applicationCategoryId}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public WhyHost createWhyHost(@PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
+		LOGGER.info("Calling service HFApplicationProcess.createWhyHost for hfSeasonId {}", whyHost.getSeasonId());
+		return hfApplication.createWhyHost(applicationCategoryId, whyHost);
+	}
 
-   @GET
-   @Path("get/whyhost/{hostFamilyHomeId}/{hfSeasonId}/{applicationCategoryId}")
-   @Produces("application/json")
-   public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
-      LOGGER.info("Calling service HFApplicationProcess.getWhyHost for hfSeasonId {}", hfSeasonId);
-      return hfApplication.getWhyHost(hostFamilyHomeId, hfSeasonId, applicationCategoryId);
-   }
-   
-   @POST
-   @Path("update/whyhost/{applicationCategoryId}")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public WhyHost updateWhyHost(@PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
-      LOGGER.info("Calling service HFApplicationProcess.updateWhyHost for hfHomeId {}", whyHost.getHostFamilyHomeId());
-      return hfApplication.updateWhyHost(applicationCategoryId,whyHost);
-   }
+	@GET
+	@Path("get/whyhost/{hostFamilyHomeId}/{hfSeasonId}/{applicationCategoryId}")
+	@Produces("application/json")
+	public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
+		LOGGER.info("Calling service HFApplicationProcess.getWhyHost for hfSeasonId {}", hfSeasonId);
+		return hfApplication.getWhyHost(hostFamilyHomeId, hfSeasonId, applicationCategoryId);
+	}
 
-   @POST
-   @Path("upload/photo")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
-      LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
-      return hfApplication.uploadHFPhotos(hfApplicationUploadPhotos);
-   }
-   
-   @GET
-   @Path("get/pictures/{hfSeasonId}")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public HFApplicationUploadPhotos getHFPhotos(@PathParam("hfSeasonId") String hfSeasonId) {
-      LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
-      return hfApplication.getHFPhotos(hfSeasonId);
-   }
-   
-   @GET
-   @Path("delete/photo/{photoId}")
-   @Produces("application/json")
-   public Response deletePhoto(@PathParam("photoId") String photoId) {
-      LOGGER.info("Calling service HFApplicationProcess.deletePhoto for photoId {}", photoId);
-      return hfApplication.deletePhoto(photoId);
-   }
-   @POST
-   @Path("hfHomepage")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public HFHomePage getHostFamilyHome(HomePageParam hpp) {
-      return hfApplication.getHostFamilyHome(hpp);
-   }
+	@POST
+	@Path("update/whyhost/{applicationCategoryId}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public WhyHost updateWhyHost(@PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
+		LOGGER.info("Calling service HFApplicationProcess.updateWhyHost for hfHomeId {}", whyHost.getHostFamilyHomeId());
+		return hfApplication.updateWhyHost(applicationCategoryId, whyHost);
+	}
 
-   @POST
-   @Path("hfSaveBasicData")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
-      return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
-   }
-   
-   
-   @POST
-   @Path("hfSaveFamilyLifeStyle")
-   @Consumes("application/json")
-   @Produces("application/json")
-   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
-      return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
-   }
-   
-   
-   
+	@POST
+	@Path("upload/photo")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
+		LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
+		return hfApplication.uploadHFPhotos(hfApplicationUploadPhotos);
+	}
+
+	@GET
+	@Path("get/pictures/{hfSeasonId}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public HFApplicationUploadPhotos getHFPhotos(@PathParam("hfSeasonId") String hfSeasonId) {
+		LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
+		return hfApplication.getHFPhotos(hfSeasonId);
+	}
+
+	@GET
+	@Path("delete/photo/{photoId}")
+	@Produces("application/json")
+	public Response deletePhoto(@PathParam("photoId") String photoId) {
+		LOGGER.info("Calling service HFApplicationProcess.deletePhoto for photoId {}", photoId);
+		return hfApplication.deletePhoto(photoId);
+	}
+
+	@POST
+	@Path("hfHomepage")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public HFHomePage getHostFamilyHome(HomePageParam hpp) {
+		return hfApplication.getHostFamilyHome(hpp);
+	}
+
+	@POST
+	@Path("hfSaveBasicData")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+		return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
+	}
+
+	@POST
+	@Path("hfSaveFamilyLifeStyle")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+		return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
+	}
+	
+	@POST
+	@Path("hfUpdateBasicData")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public WSDefaultResponse updateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+		return hfApplication.updateFamilyBasicData(hfApplicationFamilyDetails);
+	}
+
+	@POST
+	@Path("hfupdateFamilyLifeStyle")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public WSDefaultResponse updateFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+		return hfApplication.updateFamilyLifeStyleData(hfApplicationFamilyDetails);
+	}
+	
+
+	@POST
+	@Path("fetchFamilyLifeStyle")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam) {
+		return hfApplication.fetchFamilyLifeStyle(familyStylePageParam);
+	}
+
+	@POST
+	@Path("fetchBasicData")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam) {
+		return hfApplication.fetchBasicData(familyBasicsPageParam);
+	}
+
 }

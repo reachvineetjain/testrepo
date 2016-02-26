@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,13 +52,22 @@ import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAdultDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAirport;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFContactInfo;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFPets;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFPhysicalAddress;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFDieTrayRestriction;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFamilyDayDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFamilyReligious;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFinancialResource;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFMiscLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFAnnouncements;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckList;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckListStages;
@@ -125,6 +135,16 @@ public class HFApplicationImpl implements HFApplication {
 
 	@Autowired
 	HostFamilyDetailRepository hostFamilyDetailRepository;
+
+	@Autowired
+	EntityManager em;
+
+	private static final String SP_HF_FAMILY_BASIC_DATA = "CALL SPHostFamilyApplicationFamilyBasics(?,?,?) ";
+	private static final String SP_HF_FAMILY_BASIC_CONTACT_INFORMATION = "CALL SPHostFamilyApplicationContactInformation(?,?,?)";
+	private static final String SP_HF_FAMILY_BASIC_AIRPORTS = "CALL SPHostFamilyApplicationAirport(?,?,?) ";
+	private static final String SP_HF_FAMILY_BASIC_PETS = "CALL SPHostFamilyApplicationPets(?,?,?) ";
+
+	private static final String SP_HF_LIFE_STYLE = "CALL SPHostFamilyApplicationLifeStyle(?,?,?)";
 
 	@Override
 	@Transactional
@@ -356,16 +376,17 @@ public class HFApplicationImpl implements HFApplication {
 			if (hpp.getLoginId() == 0 || hpp.getLoginId() < 0) {
 				throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
 			}
-			// 	Waiting for SP From Phani
-//			List<HostFamilyAnnouncement> announcements = hfAnnouncementRepository.findAll();
-//			if (announcements != null)
-//				for (HostFamilyAnnouncement ann : announcements) {
-//					HFAnnouncements announcement = new HFAnnouncements();
-//					announcement.setHfAnnouncement(ann.getAnnouncement());
-//					if (ann.getCreatedOn() != null)
-//						announcement.setAnnouncementDate(DateUtils.getTimestamp(ann.getCreatedOn()));
-//					hp.getAnnouncements().add(announcement);
-//			}
+			// Waiting for SP From Phani
+			// List<HostFamilyAnnouncement> announcements =
+			// hfAnnouncementRepository.findAll();
+			// if (announcements != null)
+			// for (HostFamilyAnnouncement ann : announcements) {
+			// HFAnnouncements announcement = new HFAnnouncements();
+			// announcement.setHfAnnouncement(ann.getAnnouncement());
+			// if (ann.getCreatedOn() != null)
+			// announcement.setAnnouncementDate(DateUtils.getTimestamp(ann.getCreatedOn()));
+			// hp.getAnnouncements().add(announcement);
+			// }
 			HFApplicationCheckList applicationChecklist = new HFApplicationCheckList();
 			// TODO
 			HostFamilyPhoto hfp = hfPhotosRepository.getHFPhoto(2);
@@ -538,9 +559,9 @@ public class HFApplicationImpl implements HFApplication {
 			// Household members
 			HostFamilyDetail hfd = new HostFamilyDetail();
 			hfd.setFamilyMemberDescription(hfApplicationFamilyDetails.getFamilyDescription());
-			hfd.setIllness(hfApplicationFamilyDetails.isAnyOneHasSeriousIllness()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hfd.setIllness(hfApplicationFamilyDetails.isAnyOneHasSeriousIllness() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hfd.setIllnessDetails(hfApplicationFamilyDetails.getIllnessExplanation());
-			hfd.setDisability(hfApplicationFamilyDetails.isAnyOneHaveDisability()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hfd.setDisability(hfApplicationFamilyDetails.isAnyOneHaveDisability() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hfd.setDisabilityDetails(hfApplicationFamilyDetails.getDisabilityExplanation());
 			hfd.setAdaptCircumtances(hfApplicationFamilyDetails.getThingsStudentNeedsToAdaptWith());
 
@@ -549,36 +570,36 @@ public class HFApplicationImpl implements HFApplication {
 			hfd.setTypicalWeekday(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekdayAtHome());
 			hfd.setTypicalWeekend(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekendAtHome());
 			hfd.setFavouriteWeekend(hfApplicationFamilyDetails.getFamilyDay().getFavouriteThingsToDoAsFamily());
-		
+
 			// Religion
 			hfd.setReligiousAffiliation(hfApplicationFamilyDetails.getReligious().getReligious());
 			hfd.setOtherReligiousDetails(hfApplicationFamilyDetails.getReligious().getExplanation());
 			hfd.setReligiousAttendance(hfApplicationFamilyDetails.getReligious().getOftenAttendReligiousMeetings());
 			hfd.setPreferStudentJoins(hfApplicationFamilyDetails.getReligious().getPreferedTheStudentJoinYou());
-			hfd.setInviteStudentForReligiousExperience(hfApplicationFamilyDetails.getReligious().isInviteStudentForReligiousExperience()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
-			hfd.setProblemWithReligiousDifference(hfApplicationFamilyDetails.getReligious().isDiffecultyHostingPersonWithDifferentReligious()?1:0);
-			
+			hfd.setInviteStudentForReligiousExperience(hfApplicationFamilyDetails.getReligious().isInviteStudentForReligiousExperience() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+			hfd.setProblemWithReligiousDifference(hfApplicationFamilyDetails.getReligious().isDiffecultyHostingPersonWithDifferentReligious() ? 1 : 0);
+
 			// Diet
-			hfd.setAgreeToServeMeals(hfApplicationFamilyDetails.getDieTrayRestriction().isProvideStudentWithThreeMeals()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
-			hfd.setDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction()?1:0);
+			hfd.setAgreeToServeMeals(hfApplicationFamilyDetails.getDieTrayRestriction().isProvideStudentWithThreeMeals() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+			hfd.setDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? 1 : 0);
 			hfd.setDescribeDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getDietrayRestrictionExplanation());
-			hfd.setParticipantFollowDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hfd.setParticipantFollowDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hfd.setDescPaxDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getStudentFollowDietrayRestrictionExplanation());
-			hfd.setComfortableHostingDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isHostStudentWhoFollowDietrayRestriction()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
-			
+			hfd.setComfortableHostingDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isHostStudentWhoFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+
 			// Miscellaneous
 			hfd.setHasAutoInsurance(hfApplicationFamilyDetails.getMiscLifeStyle().getHaveAutoInsurranceForAllCarsYouHave());
-			hfd.setFamilySmoker(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneIsSmokingInyourFamily()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hfd.setFamilySmoker(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneIsSmokingInyourFamily() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hfd.setFamilySmokingPlace(hfApplicationFamilyDetails.getMiscLifeStyle().getWhereSmoking());
 			hfd.setDrinkAlcohol(hfApplicationFamilyDetails.getMiscLifeStyle().getAnyOneDrinkAlcoholic());
-			hfd.setCrimeConviction(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneConvictedInCrime()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hfd.setCrimeConviction(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneConvictedInCrime() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hfd.setCrimeConvictionDetails(hfApplicationFamilyDetails.getMiscLifeStyle().getConvictedInCrimeDesc());
-			hfd.setChildServicesContact(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneInProtectiveServiceAgency()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hfd.setChildServicesContact(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneInProtectiveServiceAgency() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hfd.setChildServicesContactDetails(hfApplicationFamilyDetails.getMiscLifeStyle().getChildInProtectiveServiceExplanation());
 
 			// Financial
 			hfd.setIncomeRange(hfApplicationFamilyDetails.getFinancialResources().getTotalHouseHoldIncome());
-			hfd.setReceivePublicAssistance(hfApplicationFamilyDetails.getFinancialResources().isAnyOneReceivePublicAssistant()?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+			hfd.setReceivePublicAssistance(hfApplicationFamilyDetails.getFinancialResources().isAnyOneReceivePublicAssistant() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 			hfd.setPublicAssistanceExplanation(hfApplicationFamilyDetails.getFinancialResources().getPublicAssistantExplanation());
 
 			hostFamilyDetailRepository.saveAndFlush(hfd);
@@ -588,7 +609,205 @@ public class HFApplicationImpl implements HFApplication {
 			LOGGER.error(e.getMessage());
 		}
 		return hp;
+	}
 
+	@Override
+	public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam) {
+		HFApplicationFamilyLifeStyle hfl = new HFApplicationFamilyLifeStyle();
+		try {
+			Query query = em.createNativeQuery(SP_HF_LIFE_STYLE);
+			query.setParameter(1, familyStylePageParam.getHostFamilyId() == 0 ? null : familyStylePageParam.getHostFamilyId());
+			query.setParameter(2, familyStylePageParam.getSeasonId() == 0 ? null : familyStylePageParam.getSeasonId());
+			query.setParameter(3, familyStylePageParam.getDeptProgramId() == 0 ? null : familyStylePageParam.getDeptProgramId());
+			@SuppressWarnings("unchecked")
+			List<Object[]> result = query.getResultList();
+			if (result != null) {
+				for (Object[] obj : result) {
+					hfl.setFamilyDescription(String.valueOf(obj[0]));
+					hfl.setAnyOneHasSeriousIllness((boolean) obj[1]);
+					hfl.setIllnessExplanation(String.valueOf(obj[2]));
+					hfl.setAnyOneHaveDisability((boolean) obj[3]);
+					hfl.setDisabilityExplanation(String.valueOf(obj[4]));
+					hfl.setThingsStudentNeedsToAdaptWith(String.valueOf(obj[5]));
+
+					HFFamilyDayDetails familyDay = new HFFamilyDayDetails();
+					familyDay.setHousehold(String.valueOf(obj[6]));
+					familyDay.setTypicalWeekdayAtHome(String.valueOf(obj[7]));
+					familyDay.setTypicalWeekendAtHome(String.valueOf(obj[8]));
+					familyDay.setFavouriteThingsToDoAsFamily(String.valueOf(obj[9]));
+
+					hfl.setFamilyDay(familyDay);
+					HFFamilyReligious religious = new HFFamilyReligious();
+
+					religious.setReligious(String.valueOf(obj[10]));
+					religious.setExplanation(String.valueOf(obj[11]));
+					religious.setOftenAttendReligiousMeetings(String.valueOf(obj[12]));
+					religious.setPreferedTheStudentJoinYou(String.valueOf(obj[13]));
+					religious.setInviteStudentForReligiousExperience((boolean) obj[14]);
+					religious.setDiffecultyHostingPersonWithDifferentReligious((boolean) obj[15]);
+
+					hfl.setReligious(religious);
+					HFDieTrayRestriction diet = new HFDieTrayRestriction();
+					diet.setProvideStudentWithThreeMeals((boolean) obj[16]);
+					diet.setFollowDietrayRestriction((boolean) obj[17]);
+					diet.setDietrayRestrictionExplanation(String.valueOf(obj[18]));
+					diet.setExpectStudentFollowDietrayRestriction((boolean) obj[19]);
+					diet.setStudentFollowDietrayRestrictionExplanation(String.valueOf(obj[20]));
+					diet.setHostStudentWhoFollowDietrayRestriction((boolean) obj[21]);
+
+					hfl.setDieTrayRestriction(diet);
+					HFMiscLifeStyle m = new HFMiscLifeStyle();
+
+					m.setHaveAutoInsurranceForAllCarsYouHave(String.valueOf(obj[22]));
+					m.setAnyOneIsSmokingInyourFamily((boolean) obj[23]);
+					m.setWhereSmoking(String.valueOf(obj[24]));
+					m.setAnyOneDrinkAlcoholic(String.valueOf(obj[25]));
+					m.setAnyOneConvictedInCrime((boolean) obj[26]);
+					m.setConvictedInCrimeDesc(String.valueOf(obj[27]));
+					m.setAnyOneInProtectiveServiceAgency((boolean) obj[28]);
+					m.setChildInProtectiveServiceExplanation(String.valueOf(obj[29]));
+
+					hfl.setMiscLifeStyle(m);
+					HFFinancialResource f = new HFFinancialResource();
+					f.setTotalHouseHoldIncome(String.valueOf(obj[30]));
+					f.setAnyOneReceivePublicAssistant((boolean) obj[31]);
+					f.setPublicAssistantExplanation(String.valueOf(obj[32]));
+
+					hfl.setFinancialResources(f);
+					break;
+				}
+				hfl.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+			} else {
+				hfl.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+			}
+
+		} catch (CcighgoException e) {
+			hfl.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_LIFE_STYLE.getValue(), e.getMessage()));
+			LOGGER.error(e.getMessage());
+		}
+		return hfl;
+	}
+
+	@Override
+	public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam) {
+		HFApplicationFamilyDetails hfbs = new HFApplicationFamilyDetails();
+		try {
+			Query query = em.createNativeQuery(SP_HF_FAMILY_BASIC_DATA);
+			query.setParameter(1, familyBasicsPageParam.getHostfamilyId() == 0 ? null : familyBasicsPageParam.getHostfamilyId());
+			query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
+			query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
+			@SuppressWarnings("unchecked")
+			List<Object[]> result = query.getResultList();
+			if (result != null) {
+				for (Object[] obj : result) {
+					HFAdultDetails adult = new HFAdultDetails();
+					com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
+					photo.setPhotoUrl(String.valueOf(obj[0]));
+					hfbs.setPhoto(photo);
+					hfbs.setSingleHost((boolean)obj[1]);
+					adult.setRelationship(String.valueOf(obj[2]));
+	                adult.setFirstName(String.valueOf(obj[3]));
+	                adult.setLastName(String.valueOf(obj[4]));
+	                adult.setIsHostParent((boolean) obj[5]);
+	                adult.setEmail(String.valueOf(obj[6]));
+	                adult.setPersonalPhone(String.valueOf(obj[7]));
+	                adult.setBirthdate(String.valueOf(obj[8]));
+	                adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
+	                adult.setEducationLevel(String.valueOf(obj[10]));
+	                adult.setLivesinsideOfHomePartTime( (boolean)obj[11]);
+	                adult.setLivingInsideHomeExplanation(String.valueOf(obj[12]));
+	                adult.setCommunityInvolvement(String.valueOf(obj[13]));
+	                adult.setActivitiesOrInterests(String.valueOf(obj[14]));
+	                adult.setEmployed(String.valueOf(obj[15]));
+	                adult.setEmployer(String.valueOf(obj[16]));
+	                adult.setJobTitle(String.valueOf(obj[17]));
+	                adult.setContactName(String.valueOf(obj[18]));
+	                adult.setJobPhone(String.valueOf(obj[19]));
+	                adult.setHasAnotherJob((boolean)obj[20]);
+	                adult.setOtherEmployer(String.valueOf(obj[21]));
+	                adult.setOtherJobTitle(String.valueOf(obj[22]));
+	                adult.setContactName(String.valueOf(obj[23]));
+	                adult.setOtherJobPhone(String.valueOf(obj[24]));
+	                hfbs.getAdults().add(adult);
+				}
+			}
+
+			query = em.createNativeQuery(SP_HF_FAMILY_BASIC_CONTACT_INFORMATION);
+			query.setParameter(1, familyBasicsPageParam.getHostfamilyId() == 0 ? null : familyBasicsPageParam.getHostfamilyId());
+			query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
+			query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
+
+			result = query.getResultList();
+			if (result != null) {
+				for (Object[] obj : result) {
+					HFContactInfo info = new HFContactInfo();
+					info.setHaveHomePhoneOrLandline((boolean)obj[0]);
+					info.setPhone(String.valueOf(obj[1]));
+                    info.setPreferPhone((boolean)obj[2]);
+                    info.setPreferEmail((boolean)obj[3]);
+                    info.setContactPhone(String.valueOf(obj[4]));
+                    info.setContactEmail(String.valueOf(obj[5]));
+                    info.setEmergencyContactPerson(String.valueOf(obj[6]));
+                    info.setEmergencyPhone(String.valueOf(obj[7]));
+                    
+                    hfbs.setContactInfo(info);
+                    
+                    HFPhysicalAddress paddress = new HFPhysicalAddress();
+                    paddress.setAddress1(String.valueOf(obj[8]));
+                    paddress.setCity(String.valueOf(obj[9]));
+//                    paddress.setStateId(value);  // we need state Id obj[10]
+//                    us1.`stateName` AS physicalState,
+                    paddress.setZipCode(String.valueOf(obj[11]));
+                    
+//                    hf.`mailingAddress`,
+//                    hf.`mailingCity`,
+//                    us2.`stateName` as mailingState,
+//                    hf.`mailingZipCode`,
+//                    hf.`mailingAddressSameAsCurrentAddress`
+                    
+                    
+				}
+			}
+
+			query = em.createNativeQuery(SP_HF_FAMILY_BASIC_AIRPORTS);
+			query.setParameter(1, familyBasicsPageParam.getHostfamilyId() == 0 ? null : familyBasicsPageParam.getHostfamilyId());
+			query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
+			query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
+			result = query.getResultList();
+			if (result != null) {
+				for (Object[] obj : result) {
+
+				}
+			}
+
+			query = em.createNativeQuery(SP_HF_FAMILY_BASIC_PETS);
+			query.setParameter(1, familyBasicsPageParam.getHostfamilyId() == 0 ? null : familyBasicsPageParam.getHostfamilyId());
+			query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
+			query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
+			result = query.getResultList();
+			if (result != null) {
+				for (Object[] obj : result) {
+
+				}
+			}
+
+		} catch (CcighgoException e) {
+			hfbs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_BASIC_DATA.getValue(), e.getMessage()));
+			LOGGER.error(e.getMessage());
+		}
+		return hfbs;
+	}
+
+	@Override
+	public WSDefaultResponse updateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WSDefaultResponse updateFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
