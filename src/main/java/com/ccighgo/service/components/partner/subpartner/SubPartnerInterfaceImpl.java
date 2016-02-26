@@ -569,6 +569,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
                partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
                partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+               partnerContact.setFax(subPartnerPrimaryContact.getFax());
                if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
                   partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
                partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
