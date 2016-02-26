@@ -71,6 +71,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
       erdDashboard.setEmail(login.getEmail());
       erdDashboard.setUserName(login.getLoginName());
       erdDashboard.setPhotoUrl(fs.getPhoto());
+      erdDashboard.setFsRole(fs.getFieldStaffType().getFieldStaffTypeName());
       ErdDashboardTypes erdDashboardTypes = new ErdDashboardTypes();
       try {
          List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes = fieldStaffWorkQueueTypeRepository.findAll();
