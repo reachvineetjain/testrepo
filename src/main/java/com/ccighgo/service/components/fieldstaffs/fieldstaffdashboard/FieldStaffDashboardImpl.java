@@ -43,29 +43,35 @@ import com.ccighgo.utils.DateUtils;
 public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
 
    private static final Logger LOGGER = Logger.getLogger(FieldStaffDashboardInterface.class);
-   @Autowired
-   FieldStaffWorkQueueTypeRepository fieldStaffWorkQueueTypeRepository;
-   @Autowired
-   FieldStaffWorkQueueTypeAggregateRepository fieldStaffWorkQueueTypeAggregateRepository;
-   @Autowired
-   FieldStaffWorkQueueCategoryAggregateRepository fieldStaffWorkQueueCategoryAggregateRepository;
-   @Autowired
-   FieldStaffWorkQueueCategoriesRepository fieldStaffWorkQueueCategoriesRepository;
-   @Autowired
-   FieldStaffRepository fieldStaffRepository;
-   @Autowired
-   LoginRepository loginRepository;
-   @Autowired
-   FieldStaffAnnouncementRepository fieldStaffAnnouncementRepository;
-   @Autowired
-   CommonComponentUtils componentUtils;
-   @Autowired
-   MessageUtils messageUtil;
+   @Autowired FieldStaffWorkQueueTypeRepository fieldStaffWorkQueueTypeRepository;
+   @Autowired FieldStaffWorkQueueTypeAggregateRepository fieldStaffWorkQueueTypeAggregateRepository;
+   @Autowired FieldStaffWorkQueueCategoryAggregateRepository fieldStaffWorkQueueCategoryAggregateRepository;
+   @Autowired FieldStaffWorkQueueCategoriesRepository fieldStaffWorkQueueCategoriesRepository;
+   @Autowired FieldStaffRepository fieldStaffRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired FieldStaffAnnouncementRepository fieldStaffAnnouncementRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
 
    @Override
    public ErdDashboard getErdDashboardWorkQueues(String fieldStaffGoId) {
 
       ErdDashboard erdDashboard = new ErdDashboard();
+      if (fieldStaffGoId == null || fieldStaffGoId.isEmpty() == true) {
+         erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_FIELD_STAFF_ID.getValue(),
+               messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID)));
+         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID));
+         return erdDashboard;
+      }
+      FieldStaff fs = fieldStaffRepository.findOne(Integer.valueOf(fieldStaffGoId));
+      Login login = loginRepository.findByGoId(fs.getGoIdSequence());
+      erdDashboard.setGoId(Integer.valueOf(fieldStaffGoId));
+      erdDashboard.setFirstName(fs.getFirstName());
+      erdDashboard.setLastName(fs.getLastName());
+      erdDashboard.setEmail(login.getEmail());
+      erdDashboard.setUserName(login.getLoginName());
+      erdDashboard.setPhotoUrl(fs.getPhoto());
+      erdDashboard.setFsRole(fs.getFieldStaffType().getFieldStaffTypeName());
       ErdDashboardTypes erdDashboardTypes = new ErdDashboardTypes();
       try {
          List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes = fieldStaffWorkQueueTypeRepository.findAll();
@@ -90,7 +96,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                erdDashboardTypes.getTypes().add(t);
             }
          erdDashboard.setErdDashboardTypes(erdDashboardTypes);
-         
+
          List<FieldStaffAnnouncement> announcements = fieldStaffAnnouncementRepository.getERDStaffAnnouncements();
          if (announcements != null)
             for (FieldStaffAnnouncement ann : announcements) {
@@ -100,15 +106,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                   erdAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
                erdDashboard.getAnnouncements().add(erdAnn);
             }
-         ErdUserDetail erdUserDetail = new ErdUserDetail();
-         FieldStaff fs = fieldStaffRepository.findOne(Integer.valueOf(fieldStaffGoId));
-         Login login = loginRepository.findByGoId(fs.getGoIdSequence());
-         erdUserDetail.setFirstName(fs.getFirstName());
-         erdUserDetail.setLastName(fs.getLastName());
-         erdUserDetail.setEmail(login.getEmail());
-         erdUserDetail.setUserName(login.getLoginName());
-         erdUserDetail.setPhotoUrl(fs.getPhoto());
-         erdDashboard.setUser(erdUserDetail);
+
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -145,7 +143,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
          pi.setMallingAddress2(fs.getMailingAddress2());
          pi.setMallingCity(fs.getMailingCity());
          pi.setMallingZip(fs.getMailingZipCode());
-         pi.setMallingState(fs.getLookupUsstate1().getStateName()); 
+         pi.setMallingState(fs.getLookupUsstate1().getStateName());
          erdMyAccount.setPersonalInfo(pi);
          erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

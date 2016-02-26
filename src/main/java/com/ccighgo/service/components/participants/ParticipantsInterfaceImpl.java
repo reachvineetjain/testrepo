@@ -300,7 +300,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 						participantRepository.saveAndFlush(participant);
 						p.setAdded(true);
 					} catch (Exception e) {
+					   e.printStackTrace();
 						ExceptionUtil.logException(e, logger);
+						newManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+			               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+						return newManualParticipant;
+						
 					}
 				}
 			}
@@ -310,6 +315,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 			newManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
 					messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
 			ExceptionUtil.logException(e, logger);
+			e.printStackTrace();
 		}
 		return newManualParticipant;
 	}

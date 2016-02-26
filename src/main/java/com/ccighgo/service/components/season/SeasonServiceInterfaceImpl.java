@@ -205,15 +205,15 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          int seasonId = -1;
          if (seasonBean.getSeasonName() == null) {
             returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_SEASON_NAME.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_CREATE_SEASON_NAME));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_CREATE_SEASON_NAME));
+                  messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_NAME));
+            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_NAME));
             return returnObject;
          }
          Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
          if (season != null) {
             returnObject = setSeasonBeanStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASON_DETAILS.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_DETAILS));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASON_DETAILS));
+                  messageUtil.getMessage(SeasonMessageConstants.DUPLICATED_SEASON_NAME));
+            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.DUPLICATED_SEASON_NAME));
             return returnObject;
          }
 
@@ -4646,7 +4646,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public SeasonHspStpIhpDetails getIHPDetails(String seasonProgramId) {
       SeasonHspStpIhpDetails seasonHspStpIhpDetails = null;
       try {
-         if (Integer.valueOf(seasonProgramId) == 0 || Integer.valueOf(seasonProgramId) < 0) {
+         if (seasonProgramId == null  || seasonProgramId.isEmpty() || Integer.valueOf(seasonProgramId) == 0 || Integer.valueOf(seasonProgramId) < 0) {
             seasonHspStpIhpDetails = setSeasonHspStpIhpDetailsStatus(seasonHspStpIhpDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
                   ErrorCode.INVALID_PROGRAM_ID.getValue(), messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
             LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));

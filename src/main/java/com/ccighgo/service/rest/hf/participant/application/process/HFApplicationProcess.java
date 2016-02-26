@@ -18,8 +18,11 @@ import com.ccighgo.service.components.hf.participant.application.process.HFAppli
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
+import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -96,11 +99,57 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("hfSaveOrUpdateBasicData")
+   @Path("hfSaveBasicData")
    @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
    }
+   
+   
+   @POST
+   @Path("hfSaveFamilyLifeStyle")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+      return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
+   }
+   
+   
+   @POST
+   @Path("create/hf/reference/{applicationCategoryId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HostFamilyReferences createHFReference(@PathParam("applicationCategoryId") String applicationCategoryId,HostFamilyReferences hostFamilyReferences) {
+      LOGGER.info("Calling service HFApplicationProcess.createHFReference");
+      return hfApplication.createHFReference(applicationCategoryId,hostFamilyReferences);
+   }
+   
+   @POST
+   @Path("update/hf/reference/{applicationCategoryId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HostFamilyReferences updateHFReference(@PathParam("applicationCategoryId") String applicationCategoryId,HostFamilyReferences hostFamilyReferences) {
+      LOGGER.info("Calling service HFApplicationProcess.createHFReference");
+      return hfApplication.updateHFReference(applicationCategoryId,hostFamilyReferences);
+   }
+   
+   @GET
+   @Path("update/hf/reference/{hfSeasonId}/{applicationCategoryId}")
+   @Produces("application/json")
+   public HostFamilyReferences getHFReference(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
+      LOGGER.info("Calling service HFApplicationProcess.getHFReference");
+      return hfApplication.getHFReference(hfSeasonId,applicationCategoryId);
+   }
+   
+   @POST
+   @Path("potential/reference/")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public Response addPotentialReference(PotentialHostFamily potentialHostFmaily) {
+      LOGGER.info("Calling service HFApplicationProcess.addPotentialReference");
+      return hfApplication.addPotentialReference(potentialHostFmaily);
+   }
+   
    
 }

@@ -19,12 +19,18 @@
       <xsd:complexContent>
    <xsd:extension base="common:Response">
       <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />         
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1"/>      
+         <xsd:element name="fsRole" type="xsd:string" minOccurs="1" maxOccurs="1"/>
          <xsd:element name="ErdDashboardTypes" type="pdl:ErdDashboardTypes" />
          <xsd:element name="ErdDashboardPoints" type="pdl:ErdDashboardPoints" />
          <xsd:element name="ErdDashboardTitles" type="pdl:ErdDashboardTitles" />
          <xsd:element name="account" type="pdl:ErdDashboardAccount" />
-         <xsd:element name="announcements" type="pdl:ErdDashboardAnnouncements" minOccurs="1" maxOccurs="unbounded" />
-         <xsd:element name="user" type="pdl:ErdUserDetail" />
+         <xsd:element name="announcements" type="pdl:ErdDashboardAnnouncements" minOccurs="1" maxOccurs="unbounded" />         
       </xsd:sequence>
    </xsd:extension>
 </xsd:complexContent>
@@ -95,13 +101,4 @@
       </xsd:sequence>
    </xsd:complexType>
 
-   <xsd:complexType name="ErdUserDetail">
-      <xsd:sequence>
-         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1"/>
-      </xsd:sequence>
-   </xsd:complexType>
 </xsd:schema>
