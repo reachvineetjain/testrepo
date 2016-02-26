@@ -33,6 +33,7 @@ import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.RegionIHP;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonStatus;
+import com.ccighgo.db.entities.UserType;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.CCIStaffRolesRepository;
@@ -92,6 +93,7 @@ import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.DepartmentProgram;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.service.transport.utility.beans.usertypes.UserTypes;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.PasswordUtil;
@@ -901,5 +903,27 @@ public class UtilityServicesImpl implements UtilityServices {
          LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
       }
       return status;
+   }
+
+   @Override
+   public UserTypes getUserTypes() {
+      UserTypes userTypes = new UserTypes();
+      try{
+         List<UserType> userTypeDBList = userTypeRepository.findAll();
+         List<com.ccighgo.service.transport.utility.beans.usertypes.UserType> userTypeLst = new ArrayList<com.ccighgo.service.transport.utility.beans.usertypes.UserType>();
+         for(UserType ut:userTypeDBList){
+            com.ccighgo.service.transport.utility.beans.usertypes.UserType userType = new com.ccighgo.service.transport.utility.beans.usertypes.UserType();
+            userType.setUserTypeId(ut.getUserTypeId());
+            userType.setUserType(ut.getUserTypeName());
+            userTypeLst.add(userType);
+         }
+         userTypes.getUserTypes().addAll(userTypeLst);
+         userTypes.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      }catch (CcighgoException e) {
+         userTypes.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+      }
+      return userTypes;
    }
 }

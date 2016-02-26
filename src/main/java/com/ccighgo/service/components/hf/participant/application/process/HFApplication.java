@@ -11,6 +11,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
+import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -41,7 +43,7 @@ public interface HFApplication {
     * @return
     */
    public WhyHost updateWhyHost(String applicationCategoryId, WhyHost whyHost);
-   
+
    /**
     * Service used to upload host family photos for application process
     * 
@@ -83,5 +85,32 @@ public interface HFApplication {
     * @return
     */
    public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+
+ /**
+    * @param potentialHostFmaily
+    * @return
+    */
+   public Response addPotentialReference(PotentialHostFamily potentialHostFmaily);
+
+   /**
+    * @param hostFamilyReferences
+    * @return
+    */
+   public HostFamilyReferences createHFReference(String applicationCategoryId, HostFamilyReferences hostFamilyReferences);
+
+   /**
+    * @param applicationCategoryId
+    * @param hostFamilyReferences
+    * @return
+    */
+   public HostFamilyReferences updateHFReference(String applicationCategoryId, HostFamilyReferences hostFamilyReferences);
+
+   /**
+    * @param hfSeasonId
+    * @param applicationCategoryId
+    * @return
+    */
+   public HostFamilyReferences getHFReference(String hfSeasonId, String applicationCategoryId);
+
 
 }
