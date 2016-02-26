@@ -15,16 +15,35 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.Airport;
+import com.ccighgo.db.entities.HostFamily;
+import com.ccighgo.db.entities.HostFamilyAirport;
+import com.ccighgo.db.entities.HostFamilyDetail;
 import com.ccighgo.db.entities.HostFamilyGeneralQuestion;
 import com.ccighgo.db.entities.HostFamilyHome;
+import com.ccighgo.db.entities.HostFamilyMember;
+import com.ccighgo.db.entities.HostFamilyPet;
+import com.ccighgo.db.entities.HostFamilyPetType;
 import com.ccighgo.db.entities.HostFamilyPhoto;
 import com.ccighgo.db.entities.HostFamilyPotentialReference;
 import com.ccighgo.db.entities.HostFamilyReference;
+import com.ccighgo.db.entities.HostFamilySeason;
 import com.ccighgo.db.entities.HostFamilySeasonCategory;
+import com.ccighgo.db.entities.LookupGender;
+import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.AirportRepository;
+import com.ccighgo.jpa.repositories.GenderRepository;
+import com.ccighgo.jpa.repositories.HostFamilyAirportRepository;
+import com.ccighgo.jpa.repositories.HostFamilyAnnouncementRepository;
+import com.ccighgo.jpa.repositories.HostFamilyAnnouncementResultRepository;
+import com.ccighgo.jpa.repositories.HostFamilyDetailRepository;
 import com.ccighgo.jpa.repositories.HostFamilyGeneralQuestionRepository;
 import com.ccighgo.jpa.repositories.HostFamilyHomeRepository;
+import com.ccighgo.jpa.repositories.HostFamilyMemberRepository;
+import com.ccighgo.jpa.repositories.HostFamilyPetRepository;
+import com.ccighgo.jpa.repositories.HostFamilyPetTypeRepository;
 import com.ccighgo.jpa.repositories.HostFamilyPhotosRepository;
 import com.ccighgo.jpa.repositories.HostFamilyPhotosTypeRepository;
 import com.ccighgo.jpa.repositories.HostFamilyPotentialReferenceRepository;
@@ -38,7 +57,16 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
+import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAdultDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAirport;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFPets;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckList;
+import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckListStages;
+import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photos;
@@ -48,6 +76,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.references.Ref
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
+import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi
@@ -74,7 +104,18 @@ public class HFApplicationImpl implements HFApplication {
    @Autowired HostFamilyPotentialReferenceRepository hostFamilyPotentialReferenceRepository;
    @Autowired HostFamilyGeneralQuestionRepository hostFamilyGeneralQuestionRepository;
    @Autowired HostFamilyReferenceRepository hostFamilyReferenceRepository;
-
+   @Autowired HostFamilyAnnouncementRepository hfAnnouncementRepository;
+   @Autowired HostFamilyAnnouncementResultRepository hfAnnouncementResultRepository;
+   @Autowired HostFamilyMemberRepository hfMemberRepository;
+   @Autowired HostFamilyPhotosRepository hfPhotosRepository;
+   @Autowired HostFamilySeasonCategoryRepository hfSeasonCategoryRepository;
+   @Autowired GenderRepository genderRepository;
+   @Autowired AirportRepository airportRepository;
+   @Autowired HostFamilyPetTypeRepository hostFamilyPetTypeRepository;
+   @Autowired HostFamilyPetRepository hostFamilyPetRepository;
+   @Autowired HostFamilyAirportRepository hostFamilyAirportRepository;
+   @Autowired HostFamilyDetailRepository hostFamilyDetailRepository;
+   
    @Override
    @Transactional
    public WhyHost createWhyHost(String applicationCategoryId, WhyHost whyHost) {
@@ -328,6 +369,256 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return resp;
+   }
+
+   // Pending SP from Phani
+   @Override
+   public HFHomePage getHostFamilyHome(HomePageParam hpp) {
+      HFHomePage hp = new HFHomePage();
+      try {
+         if (hpp.getHfGoId() == 0 || hpp.getHfGoId() < 0) {
+            throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_HF_GOID));
+         }
+         if (hpp.getLoginId() == 0 || hpp.getLoginId() < 0) {
+            throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
+         }
+         // Waiting for SP From Phani
+         // List<HostFamilyAnnouncement> announcements =
+         // hfAnnouncementRepository.findAll();
+         // if (announcements != null)
+         // for (HostFamilyAnnouncement ann : announcements) {
+         // HFAnnouncements announcement = new HFAnnouncements();
+         // announcement.setHfAnnouncement(ann.getAnnouncement());
+         // if (ann.getCreatedOn() != null)
+         // announcement.setAnnouncementDate(DateUtils.getTimestamp(ann.getCreatedOn()));
+         // hp.getAnnouncements().add(announcement);
+         // }
+         HFApplicationCheckList applicationChecklist = new HFApplicationCheckList();
+         // TODO
+         HostFamilyPhoto hfp = hfPhotosRepository.getHFPhoto(2);
+         // TODO
+         HostFamilyMember hfm = hfMemberRepository.getHFMember(1);
+         applicationChecklist.setApplicantName(hfm.getFirstName());
+         applicationChecklist.setPercentage("50");
+         applicationChecklist.setPhotoUrl(hfp.getPhotoName());
+         // TODO
+         List<HostFamilySeasonCategory> hfsc = hfSeasonCategoryRepository.getHFSeasonCategoryBySeasonId(1);
+         hp.setApplicationCheckList(applicationChecklist);
+         for (HostFamilySeasonCategory hostFamilySeasonCategory : hfsc) {
+            HFApplicationCheckListStages stage = new HFApplicationCheckListStages();
+            stage.setCategory(hostFamilySeasonCategory.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+            stage.setStatus(hostFamilySeasonCategory.getStatus() == CCIConstants.ACTIVE ? "Completed" : "Not completed");
+            applicationChecklist.getStages().add(stage);
+         }
+
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_HOME_PAGE.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
+   @Transactional
+   @Override
+   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+      WSDefaultResponse hp = new WSDefaultResponse();
+      try {
+         if (hfApplicationFamilyDetails.getLoginId() > 0) {
+            throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
+         }
+         if (hfApplicationFamilyDetails.getSeasonId() > 0) {
+            throw new CcighgoException("NO Season ID");
+         }
+         // add photo
+         HostFamilySeason season = hostFamilySeasonRepository.findOne(hfApplicationFamilyDetails.getSeasonId());
+         if (hfApplicationFamilyDetails.getPhoto() != null) {
+            HostFamilyPhoto hfPhoto = new HostFamilyPhoto();
+            hfPhoto.setHostFamilySeason(season);
+            hfPhoto.setHostFamilyPhotosType(hostFamilyPhotosTypeRepository.findOne(hfApplicationFamilyDetails.getPhoto().getTypeId()));
+            hfPhoto.setFileName(hfApplicationFamilyDetails.getPhoto().getName());
+            hfPhoto.setFilePath(hfApplicationFamilyDetails.getPhoto().getPhotoUrl());
+            hfPhoto.setPhotoName(hfApplicationFamilyDetails.getPhoto().getName());
+            hfPhoto.setDescription(hfApplicationFamilyDetails.getPhoto().getDescription());
+            hfPhoto.setIsOptional(CCIConstants.INACTIVE);
+            hfPhoto.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
+            hfPhoto.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            hfPhoto.setActive(CCIConstants.ACTIVE);
+            hfPhoto.setSubmittedToCCI(CCIConstants.INACTIVE);
+            hfPhoto.setApprovedByCCI(CCIConstants.INACTIVE);
+            hfPhoto.setRejectedByCCI(CCIConstants.INACTIVE);
+            hostFamilyPhotosRepository.saveAndFlush(hfPhoto);
+         }
+
+         // HOstFamilly Member
+         List<HostFamilyMember> listOfMembers = new ArrayList<HostFamilyMember>();
+         for (HFAdultDetails member : hfApplicationFamilyDetails.getAdults()) {
+            HostFamilyMember hfm = new HostFamilyMember();
+            hfm.setIsSingleAdult(hfApplicationFamilyDetails.isSingleHost() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfm.setFirstName(member.getFirstName());
+            hfm.setLastName(member.getLastName());
+            hfm.setIsHostParent(member.isIsHostParent() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfm.setMemberEmail(member.getEmail());
+            hfm.setMemberPhone(member.getPersonalPhone());
+            hfm.setBirthDate(DateUtils.getMMddyyDateForHostFamily(member.getBirthdate()));
+            LookupGender gender = genderRepository.findOne(member.getGenderId());
+            hfm.setLookupGender(gender);
+            hfm.setEducationLevel(member.getEducationLevel());
+            hfm.setLivingAtHome(member.isLivesinsideOfHomePartTime() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfm.setLivingAtHomeExplanation(member.getLivingInsideHomeExplanation());
+            hfm.setCommunityInvolvement(member.getCommunityInvolvement());
+            hfm.setInterests(member.getActivitiesOrInterests());
+            hfm.setEmployed(member.getEmployed());
+            hfm.setEmployer1(member.getEmployer());
+            hfm.setJobTitle1(member.getJobTitle());
+            hfm.setContactName1(member.getContactName());
+            hfm.setPhone1(member.getJobPhone());
+            if (member.getOtherEmployer() != null)
+               hfm.setEmployer2(member.getOtherEmployer());
+            if (member.getOtherJobTitle() != null)
+               hfm.setJobTitle2(member.getOtherJobTitle());
+            if (member.getOtherContactName() != null)
+               hfm.setContactName2(member.getOtherContactName());
+            if (member.getOtherJobPhone() != null)
+               hfm.setPhone2(member.getOtherJobPhone());
+            hfm.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
+            hfm.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            listOfMembers.add(hfm);
+         }
+         if (!listOfMembers.isEmpty())
+            hfMemberRepository.save(listOfMembers);
+
+         // contact Information
+         HostFamily hf = new HostFamily();
+         hf.setHaveAHomePhone(hfApplicationFamilyDetails.getContactInfo().isHaveHomePhoneOrLandline() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hf.setHomePhone(hfApplicationFamilyDetails.getContactInfo().getPhone());
+         hf.setPreferredContactMethodEmail(hfApplicationFamilyDetails.getContactInfo().isPreferEmail() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hf.setPreferredContactMethodPhone(hfApplicationFamilyDetails.getContactInfo().isPreferPhone() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hf.setPreferredEmail(hfApplicationFamilyDetails.getContactInfo().getContactEmail());
+         hf.setPreferredPhone(hfApplicationFamilyDetails.getContactInfo().getContactPhone());
+         hf.setEmergencyContact(hfApplicationFamilyDetails.getContactInfo().getEmergencyContactPerson());
+         hf.setEmergencyPhone(hfApplicationFamilyDetails.getContactInfo().getEmergencyPhone());
+         // Physical Address
+         hf.setPhysicalAddress(hfApplicationFamilyDetails.getPhysicalAddress().getAddress1());
+         hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
+         hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
+         LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
+         hf.setLookupUsstate1(physicalAddressState);
+         // mailing address
+         hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
+         hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
+         hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
+         LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
+         hf.setLookupUsstate2(mailingAddressState);
+
+         hf.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
+         hf.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         hostFamilyRepository.saveAndFlush(hf);
+
+         // Airport
+         List<HostFamilyAirport> airports = new ArrayList<HostFamilyAirport>();
+         for (HFAirport aps : hfApplicationFamilyDetails.getAirports()) {
+            HostFamilyAirport hfa = new HostFamilyAirport();
+            hfa.setHostFamily(hf);
+            Airport airport = airportRepository.findOne(aps.getAirportId());
+            hfa.setAirport(airport);
+            hfa.setDistanceToAirport(aps.getDistanceToNearestAirport());
+            hfa.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
+            hfa.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         }
+         if (!airports.isEmpty())
+            hostFamilyAirportRepository.save(airports);
+
+         // Pets
+         List<HostFamilyPet> pets = new ArrayList<HostFamilyPet>();
+         for (HFPets pts : hfApplicationFamilyDetails.getPets()) {
+            HostFamilyPet hfp = new HostFamilyPet();
+            HostFamilyPetType hostFamilyPetType = hostFamilyPetTypeRepository.findOne(pts.getTypeId());
+            hfp.setHostFamilyPetType(hostFamilyPetType);
+            hfp.setIsIndoor(pts.isIndoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfp.setIsOutdoor(pts.isOutDoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfp.setNumber(pts.getNumber());
+            hfp.setHostFamilySeason(season);
+            hfp.setAdditionalInformation(pts.getAdditionalInfo());
+         }
+         if (!pets.isEmpty())
+            hostFamilyPetRepository.save(pets);
+
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_BASIC_DATA.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
+   @Override
+   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+      WSDefaultResponse hp = new WSDefaultResponse();
+      try {
+         if (hfApplicationFamilyDetails.getLoginId() > 0) {
+            throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
+         }
+         if (hfApplicationFamilyDetails.getSeasonId() > 0) {
+            throw new CcighgoException("NO Season ID");
+         }
+         // Household members
+         HostFamilyDetail hfd = new HostFamilyDetail();
+         hfd.setFamilyMemberDescription(hfApplicationFamilyDetails.getFamilyDescription());
+         hfd.setIllness(hfApplicationFamilyDetails.isAnyOneHasSeriousIllness() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setIllnessDetails(hfApplicationFamilyDetails.getIllnessExplanation());
+         hfd.setDisability(hfApplicationFamilyDetails.isAnyOneHaveDisability() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setDisabilityDetails(hfApplicationFamilyDetails.getDisabilityExplanation());
+         hfd.setAdaptCircumtances(hfApplicationFamilyDetails.getThingsStudentNeedsToAdaptWith());
+
+         // dayIn The life of The Family
+         hfd.setHouseHoldType(hfApplicationFamilyDetails.getFamilyDay().getHousehold());
+         hfd.setTypicalWeekday(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekdayAtHome());
+         hfd.setTypicalWeekend(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekendAtHome());
+         hfd.setFavouriteWeekend(hfApplicationFamilyDetails.getFamilyDay().getFavouriteThingsToDoAsFamily());
+
+         // Religion
+         hfd.setReligiousAffiliation(hfApplicationFamilyDetails.getReligious().getReligious());
+         hfd.setOtherReligiousDetails(hfApplicationFamilyDetails.getReligious().getExplanation());
+         hfd.setReligiousAttendance(hfApplicationFamilyDetails.getReligious().getOftenAttendReligiousMeetings());
+         hfd.setPreferStudentJoins(hfApplicationFamilyDetails.getReligious().getPreferedTheStudentJoinYou());
+         hfd.setInviteStudentForReligiousExperience(hfApplicationFamilyDetails.getReligious().isInviteStudentForReligiousExperience() ? CCIConstants.TRUE_BYTE
+               : CCIConstants.FALSE_BYTE);
+         hfd.setProblemWithReligiousDifference(hfApplicationFamilyDetails.getReligious().isDiffecultyHostingPersonWithDifferentReligious() ? 1 : 0);
+
+         // Diet
+         hfd.setAgreeToServeMeals(hfApplicationFamilyDetails.getDieTrayRestriction().isProvideStudentWithThreeMeals() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? 1 : 0);
+         hfd.setDescribeDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getDietrayRestrictionExplanation());
+         hfd.setParticipantFollowDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setDescPaxDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getStudentFollowDietrayRestrictionExplanation());
+         hfd.setComfortableHostingDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isHostStudentWhoFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE
+               : CCIConstants.FALSE_BYTE);
+
+         // Miscellaneous
+         hfd.setHasAutoInsurance(hfApplicationFamilyDetails.getMiscLifeStyle().getHaveAutoInsurranceForAllCarsYouHave());
+         hfd.setFamilySmoker(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneIsSmokingInyourFamily() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setFamilySmokingPlace(hfApplicationFamilyDetails.getMiscLifeStyle().getWhereSmoking());
+         hfd.setDrinkAlcohol(hfApplicationFamilyDetails.getMiscLifeStyle().getAnyOneDrinkAlcoholic());
+         hfd.setCrimeConviction(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneConvictedInCrime() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setCrimeConvictionDetails(hfApplicationFamilyDetails.getMiscLifeStyle().getConvictedInCrimeDesc());
+         hfd.setChildServicesContact(hfApplicationFamilyDetails.getMiscLifeStyle().isAnyOneInProtectiveServiceAgency() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setChildServicesContactDetails(hfApplicationFamilyDetails.getMiscLifeStyle().getChildInProtectiveServiceExplanation());
+
+         // Financial
+         hfd.setIncomeRange(hfApplicationFamilyDetails.getFinancialResources().getTotalHouseHoldIncome());
+         hfd.setReceivePublicAssistance(hfApplicationFamilyDetails.getFinancialResources().isAnyOneReceivePublicAssistant() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setPublicAssistanceExplanation(hfApplicationFamilyDetails.getFinancialResources().getPublicAssistantExplanation());
+
+         hostFamilyDetailRepository.saveAndFlush(hfd);
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_LIFE_STYLE.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
    }
 
    @Override

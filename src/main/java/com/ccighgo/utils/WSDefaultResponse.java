@@ -7,7 +7,7 @@ public class WSDefaultResponse extends Response {
 
    protected NoteUserCreator createdBy;
    private Integer topicOfNotesId;
-
+   private int goId;
    
    public NoteUserCreator getCreatedBy() {
       return createdBy;
@@ -23,6 +23,14 @@ public class WSDefaultResponse extends Response {
 
    public void setTopicOfNotesId(Integer topicOfNotesId) {
       this.topicOfNotesId = topicOfNotesId;
+   }
+
+   public int getGoId() {
+      return goId;
+   }
+
+   public void setGoId(int goId) {
+      this.goId = goId;
    }
 
 }

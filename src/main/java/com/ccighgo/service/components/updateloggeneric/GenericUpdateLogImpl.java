@@ -5,14 +5,19 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.FieldStaff;
 import com.ccighgo.db.entities.FieldStaffUpdateLog;
+import com.ccighgo.db.entities.HostFamily;
+import com.ccighgo.db.entities.HostFamilyUpdateLog;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerUpdateLog;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffUpdateLogRepository;
+import com.ccighgo.jpa.repositories.HostFamilyRepository;
+import com.ccighgo.jpa.repositories.HostFamilyUpdateLogRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerUpdateLogRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
@@ -43,6 +48,11 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
    PartnerUpdateLogRepository partnerUpdateLogRepository;
    @Autowired
    PartnerRepository partnerRepository;
+   @Autowired
+   HostFamilyUpdateLogRepository hostFamilyUpdateLogRepository;
+   @Autowired
+   HostFamilyRepository hostFamilyRepository;
+
    private static final Logger LOGGER = Logger.getLogger(GenericUpdateLogImpl.class);
 
    @Override
@@ -79,6 +89,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
    }
 
    @Override
+   @Transactional
    public Response addFieldStaffUpdateLog(GenericUpdateLog genericUpdateLog) {
       Response response = new Response();
       try {
@@ -100,6 +111,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
    }
 
    @Override
+   @Transactional
    public Response addPartnerUpdateLog(GenericUpdateLog genericUpdateLog) {
       Response response = new Response();
       try {
@@ -152,6 +164,60 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
          LOGGER.error(messageUtil.getMessage(UpdateLogGenericMessageConstants.ERROR_GETTING_GENERIC_UPDATE_LOG));
       }
       return genericUpdateLogs;
+   }
+
+   @Override
+   public GenericUpdateLogs getHostFamilyUpdateLogs(String goId) {
+      GenericUpdateLogs genericUpdateLogs = new GenericUpdateLogs();
+      try {
+         if (goId == null || goId == "") {
+            genericUpdateLogs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.INVALID_GO_ID.getValue(),
+                  messageUtil.getMessage(UpdateLogGenericMessageConstants.INVALID_GO_ID)));
+            return genericUpdateLogs;
+         }
+         List<HostFamilyUpdateLog> hsLogs = hostFamilyUpdateLogRepository.getHostFamilyUpdateLogByHsGoId(Integer.valueOf(goId));
+         for (HostFamilyUpdateLog hsLog : hsLogs) {
+            GenericUpdateLog genericUpdateLog = new GenericUpdateLog();
+            UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(hsLog.getCreatedBy());
+            if (userInformation != null)
+               genericUpdateLog.setCreatedBy(userInformation.getUserName());
+            if (hsLog.getCreatedOn() != null)
+               genericUpdateLog.setCreatedOn(DateUtils.getDateAndTime(hsLog.getCreatedOn()));
+            genericUpdateLog.setUpdateLogObject(hsLog.getUpdateLogObject());
+            genericUpdateLog.setGoId(hsLog.getHostFamily().getHostFamilyGoId());
+            genericUpdateLogs.getUpdateLogs().add(genericUpdateLog);
+         }
+         genericUpdateLogs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GENERIC_UPDATE_LOG_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (Exception e) {
+         genericUpdateLogs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.GENERIC_UPDATE_LOG_CODE.getValue(),
+               messageUtil.getMessage(UpdateLogGenericMessageConstants.ERROR_GETTING_GENERIC_UPDATE_LOG)));
+         LOGGER.error(messageUtil.getMessage(UpdateLogGenericMessageConstants.ERROR_GETTING_GENERIC_UPDATE_LOG));
+      }
+      return genericUpdateLogs;
+   }
+
+   @Override
+   @Transactional
+   public Response addHostFamilyUpdateLogs(GenericUpdateLog genericUpdateLog) {
+      Response response = new Response();
+      try {
+         HostFamilyUpdateLog HostFamilyUpdateLog = new HostFamilyUpdateLog();
+         HostFamilyUpdateLog.setCreatedBy(genericUpdateLog.getLoginId());
+         HostFamilyUpdateLog.setCreatedOn(DateUtils.getMMddyyDateFromString(genericUpdateLog.getCreatedOn()));
+         HostFamily partner = hostFamilyRepository.findOne(genericUpdateLog.getGoId());
+         HostFamilyUpdateLog.setHostFamily(partner);
+         HostFamilyUpdateLog.setUpdateLogObject(genericUpdateLog.getUpdateLogObject());
+         hostFamilyUpdateLogRepository.saveAndFlush(HostFamilyUpdateLog);
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GENERIC_UPDATE_LOG_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.GENERIC_UPDATE_LOG_CODE.getValue(),
+               messageUtil.getMessage(UpdateLogGenericMessageConstants.ERROR_ADDING_GENERIC_UPDATE_LOG)));
+         LOGGER.error(messageUtil.getMessage(UpdateLogGenericMessageConstants.ERROR_ADDING_GENERIC_UPDATE_LOG));
+      }
+      return response;
    }
 
 }

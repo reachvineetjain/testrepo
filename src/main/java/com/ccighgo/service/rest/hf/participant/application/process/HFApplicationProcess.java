@@ -15,11 +15,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi/ahmed
@@ -85,6 +90,31 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.deletePhoto for photoId {}", photoId);
       return hfApplication.deletePhoto(photoId);
    }
+   @POST
+   @Path("hfHomepage")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFHomePage getHostFamilyHome(HomePageParam hpp) {
+      return hfApplication.getHostFamilyHome(hpp);
+   }
+
+   @POST
+   @Path("hfSaveBasicData")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+      return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
+   }
+   
+   
+   @POST
+   @Path("hfSaveFamilyLifeStyle")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+      return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
+   }
+   
    
    @POST
    @Path("create/hf/reference/{applicationCategoryId}")

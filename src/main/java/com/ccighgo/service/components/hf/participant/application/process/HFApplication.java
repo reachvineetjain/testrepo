@@ -5,11 +5,16 @@ package com.ccighgo.service.components.hf.participant.application.process;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.utils.WSDefaultResponse;
 
 /**
  * @author ravi/ahmed
@@ -60,6 +65,28 @@ public interface HFApplication {
    public HFApplicationUploadPhotos getHFPhotos(String hfSeasonId);
 
    /**
+    * Service to fetch HF Home Page Sections
+    * @param goId
+    * @param loginId
+    * @return
+    */
+   public HFHomePage getHostFamilyHome(HomePageParam hpp );
+
+   /**
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
+
+   /**
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+
+ /**
     * @param potentialHostFmaily
     * @return
     */
@@ -84,5 +111,6 @@ public interface HFApplication {
     * @return
     */
    public HostFamilyReferences getHFReference(String hfSeasonId, String applicationCategoryId);
+
 
 }

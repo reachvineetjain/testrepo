@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
