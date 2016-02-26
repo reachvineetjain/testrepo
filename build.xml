@@ -14,7 +14,8 @@
 		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus,
         ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,MyPlacements,MyFieldStaffLeadership,AdminERDPlacement,ERDPlacement,FieldStaffNetwork,ERDPlacementParticipants,
         AdminERDParticipant,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList,HFApplicationUploadPhotos,HFParticipantSeasonList,ERDMyAccount,FieldStaffList,FieldStaffTypes,
-		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric,PartnerRecruitmentAdmin,WhyHost" />
+		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric,PartnerRecruitmentAdmin,WhyHost,HostFamilyReferences,PotentialHostFamily,
+		UserTypes" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -1589,6 +1590,30 @@
 			<arg value="-d" />
 			<arg value="${java.dir}" />
 			<arg value="${xsd.dir}/hostfamily/application/WhyHost.xsd" />
+		</java>
+	</target>
+
+	<target name="HostFamilyReferences">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HostFamilyReferences.xsd" />
+		</java>
+	</target>
+
+	<target name="PotentialHostFamily">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/PotentialHostFamily.xsd" />
+		</java>
+	</target>
+
+	<target name="UserTypes">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/UserTypes.xsd" />
 		</java>
 	</target>
 

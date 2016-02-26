@@ -29,6 +29,7 @@ import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.service.transport.utility.beans.usertypes.UserTypes;
 
 /**
  * 
@@ -193,4 +194,6 @@ public interface UtilityServices {
     * @return
     */
    public PartnerStatuses getPartnerStatus();
+
+   public UserTypes getUserTypes();
 }
