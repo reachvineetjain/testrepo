@@ -18,6 +18,8 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.fieldstaff.details.listing.FieldStaffLeadershipDetailsInterfaceImpl;
+import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.categories.FieldStaffCategories;
+import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.categories.FieldStaffCategoriesList;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.leadership.details.MyFieldStaff;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.leadership.details.MyFieldStaffLeadership;
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.network.FSLNetwork;
@@ -30,8 +32,8 @@ import com.ccighgo.utils.DateUtils;
  *
  */
 @Component
-public class FSDetailsInterfaceImpl implements FSDetailsInterface{
-   
+public class FSDetailsInterfaceImpl implements FSDetailsInterface {
+
    @Autowired MessageUtils messageUtil;
    @Autowired CommonComponentUtils componentUtils;
    @Autowired EntityManager entityManager;
@@ -39,6 +41,8 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface{
    private static final Logger LOGGER = Logger.getLogger(FieldStaffLeadershipDetailsInterfaceImpl.class);
 
    private static final String SP_FSL_DETAILS_LIST = "call SPFieldStaffFSLAndNetworkListing(?,?)";
+   private static final String SP_FSL_PLACEMENT_CATEGORIES_LIST = "call SPFSLPlacementCategoriesCount(?,?)";
+
    private static final String EMPTY = "";
    private static final Integer FIELD_STAFF_LIST = 0;
    private static final Integer FIELD_STAFF_NETWORK_LIST = 1;
@@ -92,7 +96,7 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface{
 
    @Override
    public FieldStaffNetwork getFieldStaffNetworkList(String fsGoId) {
-      LOGGER.info("fsGoId: "+fsGoId);
+      LOGGER.info("fsGoId: " + fsGoId);
       FieldStaffNetwork networkList = new FieldStaffNetwork();
       try {
          if (fsGoId == null || Integer.valueOf(fsGoId) == 0 || Integer.valueOf(fsGoId) < 0) {
@@ -143,5 +147,44 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface{
       return networkList;
    }
 
+   @Override
+   public FieldStaffCategoriesList getFieldStaffCategoriesList(String fsGoId, Integer placementFlag) {
+      LOGGER.info("fsGoId: " + fsGoId + " flag:" + placementFlag);
+
+      FieldStaffCategoriesList fsCategoriesList = new FieldStaffCategoriesList();
+
+      try {
+         if (fsGoId == null || Integer.valueOf(fsGoId) == 0 || Integer.valueOf(fsGoId) < 0) {
+            throw new CcighgoException("Invalid Field Staff ID");
+         }
+
+         Query query = entityManager.createNativeQuery(SP_FSL_PLACEMENT_CATEGORIES_LIST);
+         query.setParameter(1, Integer.valueOf(fsGoId));
+         query.setParameter(2, placementFlag);
+         @SuppressWarnings("unchecked")
+         List<Object[]> results = query.getResultList();
+
+         // 0:Categories, 1:Count,
+         if (results != null && results.size() > 0) {
+            for (Object[] obj : results) {
+               FieldStaffCategories categories = new FieldStaffCategories();
+               categories.setCategoryName(obj[0] != null ? obj[0].toString() : EMPTY);
+               categories.setCount(obj[1] != null ? Integer.valueOf(obj[1].toString()) : CCIConstants.INACTIVE);
+               fsCategoriesList.getFieldStaffCategories().add(categories);
+            }
+            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+
+      } catch (Exception e) {
+         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+
+      return fsCategoriesList;
+   }
 
 }
