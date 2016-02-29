@@ -3,8 +3,6 @@
  */
 package com.ccighgo.service.components.fieldstaff.network.details;
 
-import javax.ws.rs.PathParam;
-
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.categories.FieldStaffCategoriesList;
@@ -22,6 +20,10 @@ public interface FSDetailsInterface {
 
    FieldStaffNetwork getFieldStaffNetworkList(String fsGoId);
 
-   FieldStaffCategoriesList getFieldStaffCategoriesList(String fsGoId, Integer placementFlag);
+   FieldStaffCategoriesList getFieldStaffPlacementCategoriesList(String fsGoId, Integer placementFlag);
+
+   FieldStaffCategoriesList getFieldStaffMonitoringCategoriesList(String fsGoId, Integer placementFlag);
+
+   FieldStaffCategoriesList getFieldStaffNetworkCategoriesList(String fsGoId);
 
 }
