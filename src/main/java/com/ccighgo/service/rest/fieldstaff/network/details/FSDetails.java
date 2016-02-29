@@ -63,8 +63,21 @@ public class FSDetails {
    @GET
    @Path("placement/categories/{fsGoId}/{placementFlag}")
    @Produces("application/json")
-   public FieldStaffCategoriesList getFieldStaffCategoriesList(@PathParam("fsGoId") String fsGoId, @PathParam("placementFlag") Integer placementFlag) {
-      return fsDetailsInterface.getFieldStaffCategoriesList(fsGoId, placementFlag);
+   public FieldStaffCategoriesList getFieldStaffPlacementCategoriesList(@PathParam("fsGoId") String fsGoId, @PathParam("placementFlag") Integer placementFlag) {
+      return fsDetailsInterface.getFieldStaffPlacementCategoriesList(fsGoId, placementFlag);
    }
 
+   @GET
+   @Path("monitoring/categories/{fsGoId}/{monitoringFlag}")
+   @Produces("application/json")
+   public FieldStaffCategoriesList getFieldStaffMonitoringCategoriesList(@PathParam("fsGoId") String fsGoId, @PathParam("monitoringFlag") Integer monitoringFlag) {
+      return fsDetailsInterface.getFieldStaffMonitoringCategoriesList(fsGoId, monitoringFlag);
+   }
+
+   @GET
+   @Path("networking/categories/{fsGoId}")
+   @Produces("application/json")
+   public FieldStaffCategoriesList getFieldStaffNetworkCategoriesList(@PathParam("fsGoId") String fsGoId) {
+      return fsDetailsInterface.getFieldStaffNetworkCategoriesList(fsGoId);
+   }
 }
