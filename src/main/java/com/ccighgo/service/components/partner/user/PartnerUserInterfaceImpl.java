@@ -95,6 +95,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   puser.setPartnerUserPhotoUrl(user.getPhoto());
                   puser.setPartnerUserFirstName(user.getFirstName());
                   puser.setPartnerUserLastName(user.getLastName());
+                  puser.setIsPrimary(user.getIsPrimary() == CCIConstants.ACTIVE );
                   puser.setPartnerUserLoginName(user.getLogin().getLoginName());
                   if (user.getLogin() != null)
                      puser.setPartnerUserEmail(user.getLogin().getEmail());
@@ -209,6 +210,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUserDetails.setUserActiveStatus(partnerUser.getActive() == CCIConstants.ACTIVE ? 1 : 0);
             partnerUserDetails.setUserFirstName(partnerUser.getFirstName());
             partnerUserDetails.setUserLastName(partnerUser.getLastName());
+            partnerUserDetails.setIsPrimary(partnerUser.getIsPrimary() == CCIConstants.ACTIVE);
             // salutation
             UserSalutation salutation = new UserSalutation();
             salutation.setSalutationId(partnerUser.getSalutation().getSalutationId());
