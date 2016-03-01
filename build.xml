@@ -1615,5 +1615,22 @@
 				<arg value="${xsd.dir}/hostfamily/application/HFApplicationFamilyLifeStyle.xsd" />
 			</java>
 		</target>
+	<target name="House Description">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/hostfamily/application/HFHouseDescriptionPage.xsd" />
+			</java>
+		</target>
 
+	<target name="CommunityAndSchool">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/hostfamily/application/HFCoummunityAndSchoolPage.xsd" />
+				</java>
+			</target>
+
+	
+	
 </project>
