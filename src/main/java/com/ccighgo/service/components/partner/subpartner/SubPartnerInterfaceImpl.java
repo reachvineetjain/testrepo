@@ -526,7 +526,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             ExceptionUtil.logException(e, LOGGER);
             LOGGER.error(e.getMessage());
          }
-
+         subPartnerDetails.setMailingAddressIsSameAsPhysicalAdress(subPartner.isMailingAddressIsSameAsPhysicalAdress() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          SubPartnersPhysicalAddress subPartnersPhysicalAddress = subPartner.getSubPartnerPhysicalAddress();
          if (subPartnersPhysicalAddress != null) {
             subPartnerDetails.setPhysicalAddressLineOne(subPartnersPhysicalAddress.getPhysicalAddress1());
@@ -576,6 +576,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
                partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
                partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+               partnerContact.setFax(subPartnerPrimaryContact.getFax());
                if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
                   partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
                partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());

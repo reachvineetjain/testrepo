@@ -38,8 +38,7 @@ public class HostFamilyPhoto implements Serializable {
 	@Column(length=50)
 	private String filePath;
 
-	@Column(length=45)
-	private String isOptional;
+	private Byte isOptional;
 
 	private Integer modifiedBy;
 
@@ -130,11 +129,11 @@ public class HostFamilyPhoto implements Serializable {
 		this.filePath = filePath;
 	}
 
-	public String getIsOptional() {
+	public Byte getIsOptional() {
 		return this.isOptional;
 	}
 
-	public void setIsOptional(String isOptional) {
+	public void setIsOptional(Byte isOptional) {
 		this.isOptional = isOptional;
 	}
 

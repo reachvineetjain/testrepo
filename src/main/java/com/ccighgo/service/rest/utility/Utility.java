@@ -35,6 +35,7 @@ import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.service.transport.utility.beans.usertypes.UserTypes;
 
 /**
  * <h1>Utility Services</h1> The Utility class is the REST service front of all common drop-down lists in the user
@@ -308,5 +309,12 @@ public class Utility {
    @Produces("application/json")
    public PartnerStatuses getPartnerStatus(){
       return utilityServices.getPartnerStatus();
+   }
+   
+   @GET
+   @Path("usertypes")
+   @Produces("application/json")
+   public UserTypes getUserTypes(){
+      return utilityServices.getUserTypes();
    }
 }
