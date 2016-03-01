@@ -1,5 +1,8 @@
 package com.ccighgo.service.components.updateloggeneric;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -95,7 +98,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
       try {
          FieldStaffUpdateLog fieldStaffUpdateLog = new FieldStaffUpdateLog();
          fieldStaffUpdateLog.setCreatedBy(genericUpdateLog.getLoginId());
-         fieldStaffUpdateLog.setCreatedOn(DateUtils.getMMddyyDateFromString(genericUpdateLog.getCreatedOn()));
+         fieldStaffUpdateLog.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          FieldStaff fs = fieldStaffRepository.findOne(genericUpdateLog.getGoId());
          fieldStaffUpdateLog.setFieldStaff(fs);
          fieldStaffUpdateLog.setUpdateLogObject(genericUpdateLog.getUpdateLogObject());
@@ -103,6 +106,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
          response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GENERIC_UPDATE_LOG_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
+         e.printStackTrace();
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.GENERIC_UPDATE_LOG_CODE.getValue(),
                messageUtil.getMessage(UpdateLogGenericMessageConstants.ERROR_ADDING_GENERIC_UPDATE_LOG)));
          LOGGER.error(messageUtil.getMessage(UpdateLogGenericMessageConstants.ERROR_ADDING_GENERIC_UPDATE_LOG));
@@ -117,7 +121,7 @@ public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
       try {
          PartnerUpdateLog partnerUpdateLog = new PartnerUpdateLog();
          partnerUpdateLog.setCreatedBy(genericUpdateLog.getLoginId());
-         partnerUpdateLog.setCreatedOn(DateUtils.getMMddyyDateFromString(genericUpdateLog.getCreatedOn()));
+         partnerUpdateLog.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          Partner partner = partnerRepository.findOne(genericUpdateLog.getGoId());
          partnerUpdateLog.setPartner(partner);
          partnerUpdateLog.setUpdateLogObject(genericUpdateLog.getUpdateLogObject());
