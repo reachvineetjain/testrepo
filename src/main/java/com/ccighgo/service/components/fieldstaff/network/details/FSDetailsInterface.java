@@ -25,5 +25,7 @@ public interface FSDetailsInterface {
    FieldStaffCategoriesList getFieldStaffMonitoringCategoriesList(String fsGoId, Integer placementFlag);
 
    FieldStaffCategoriesList getFieldStaffNetworkCategoriesList(String fsGoId);
+   
+   FieldStaffCategoriesList getFieldStaffHfCategoriesList(String fsGoId);
 
 }
