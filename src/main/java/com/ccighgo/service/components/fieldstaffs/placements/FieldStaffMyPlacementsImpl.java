@@ -45,6 +45,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    private static final int PARTICIPANT_FLAG = 2;
    private static final int ALL_PARTICIPANT_FLAG = 1;
    private static final int MY_TEAM_PARTICIPANT_FLAG = 0;
+   private static final String FS_PARTICIPANT_CATEGORIES_NULL =null;
 
    @Override
    public MyPlacements getERDMyPlacement(String goId, String catagories) {
@@ -142,14 +143,14 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    }
 
    @Override
-   public ERDPlacementParticipants getERDPlacementParticipant(String goId, String catagories) {
+   public ERDPlacementParticipants getERDPlacementParticipant(String goId) {
 
       ERDPlacementParticipants eRDPlacementParticipants = new ERDPlacementParticipants();
       try {
          Query query = em.createNativeQuery(SP_FS_PLACEMENT_LIST);
          query.setParameter(1, goId);
          query.setParameter(2, PARTICIPANT_FLAG);
-         query.setParameter(3, catagories);
+         query.setParameter(3, FS_PARTICIPANT_CATEGORIES_NULL);
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
          if (result == null) {

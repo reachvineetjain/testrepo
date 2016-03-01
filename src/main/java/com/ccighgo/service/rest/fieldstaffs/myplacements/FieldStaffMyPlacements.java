@@ -47,12 +47,12 @@ public class FieldStaffMyPlacements {
    }
    
    @GET
-   @Path("/participant/{goid}/{catagories}")
+   @Path("/participant/{goId}")
    @Produces("application/json")
-   public ERDPlacementParticipants getERDPlacementParticipant(@PathParam("goid")String goId, @PathParam("catagories")String catagories){
+   public ERDPlacementParticipants getERDPlacementParticipant(@PathParam("goId")String goId){
      
       LOGGER.info("call fieldStaffMyPlacementsInterface.getERDPlacementParticipant");
-      return fieldStaffMyPlacementsInterface.getERDPlacementParticipant(goId, catagories);
+      return fieldStaffMyPlacementsInterface.getERDPlacementParticipant(goId);
    }
    
    @GET
