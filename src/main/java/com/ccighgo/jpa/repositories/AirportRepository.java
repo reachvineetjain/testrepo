@@ -4,6 +4,7 @@
 package com.ccighgo.jpa.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.Airport;
@@ -15,5 +16,8 @@ import com.ccighgo.db.entities.HostFamilyAirport;
  */
 @Repository
 public interface AirportRepository extends JpaRepository<Airport, Integer> {
+	
+	@Query("select d from Airport d where d.airportName = ?1 ")
+	Airport getAirportByName(String airportName);
 
 }

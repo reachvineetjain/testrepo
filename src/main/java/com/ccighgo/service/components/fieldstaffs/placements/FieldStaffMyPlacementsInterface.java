@@ -25,7 +25,7 @@ public interface FieldStaffMyPlacementsInterface {
     * @param catagories
     * @return
     */
-   ERDPlacementParticipants getERDPlacementParticipant(String goId, String catagories);
+   ERDPlacementParticipants getERDPlacementParticipant(String goId);
    
    /**
     * @param goId

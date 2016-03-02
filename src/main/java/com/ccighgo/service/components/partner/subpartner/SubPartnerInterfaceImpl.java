@@ -100,9 +100,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired CountryRepository countryRepository;
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
 
-   public static final Integer PENDING_STATUS = 4;
+   public static final Integer APPROVED_STATUS =5;
    public static final Integer VALID = 11;
-   public static final String DELETED_STATUS = "Deleted";
+   public static final Integer DELETED_STATUS =13;
 
    @Override
    @Transactional
@@ -119,7 +119,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartnerDetails.setCount(subPartnerList.size());
          for (Partner subPartner : subPartnerList) {
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(subPartner.getPartnerGoId());
-            if (!reviewStatus.getPartnerStatus2().getPartnerStatusName().equals(DELETED_STATUS)) {
+            if (!(reviewStatus.getPartnerStatus2().getPartnerStatusId() == DELETED_STATUS)) {
                SubPartners sp = new SubPartners();
                sp.setSubPartnerId(subPartner.getPartnerGoId());
                if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
@@ -526,7 +526,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             ExceptionUtil.logException(e, LOGGER);
             LOGGER.error(e.getMessage());
          }
-
+         subPartnerDetails.setMailingAddressIsSameAsPhysicalAdress(subPartner.isMailingAddressIsSameAsPhysicalAdress() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          SubPartnersPhysicalAddress subPartnersPhysicalAddress = subPartner.getSubPartnerPhysicalAddress();
          if (subPartnersPhysicalAddress != null) {
             subPartnerDetails.setPhysicalAddressLineOne(subPartnersPhysicalAddress.getPhysicalAddress1());
@@ -546,6 +546,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerDetails.setAddressLineTwo(subPartnersMailingAddress.getMailingAddress2());
             subPartnerDetails.setCity(subPartnersMailingAddress.getMailingAddressCity());
             subPartnerDetails.setState(subPartnersMailingAddress.getMailingAddressStateOrProvince());
+            subPartnerDetails.setZipcode(subPartnersMailingAddress.getMailingAddressZipCode());
             subPartnerDetails.setCreatedBy(subPartner.getLoginId());
             subPartnerDetails.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             subPartnerDetails.setModifiedBy(subPartner.getLoginId());
@@ -576,6 +577,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
                partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
                partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+               partnerContact.setFax(subPartnerPrimaryContact.getFax());
                if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
                   partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
                partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
@@ -600,8 +602,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          reviewStatus.setPartner(subPartnerDetails);
          // set the default partnerLeadStatus to Valid
          reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
-         // set the partnerAgentStatusId to Pending
-         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(PENDING_STATUS));
+         // set the partnerAgentStatusId to Approved i.e in case of Sub partner
+         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(APPROVED_STATUS));
          partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
          responce.setGoId(goIdSequence.getGoId());
@@ -797,8 +799,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (goId != null) {
             Partner partner = partnerRepository.findOne(Integer.valueOf(goId));
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(partner.getPartnerGoId());
-            PartnerStatus partnerStatus2 = reviewStatus.getPartnerStatus2();
-            partnerStatus2.setPartnerStatusName(DELETED_STATUS);
+            reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(DELETED_STATUS));
             partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
          } else {

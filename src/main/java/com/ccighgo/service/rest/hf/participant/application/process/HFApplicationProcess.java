@@ -15,10 +15,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
+import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescription;
+import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
@@ -43,7 +50,7 @@ public class HFApplicationProcess {
    @Path("create/whyhost/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public WhyHost createWhyHost( @PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
+   public WhyHost createWhyHost(@PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
       LOGGER.info("Calling service HFApplicationProcess.createWhyHost for hfSeasonId {}", whyHost.getSeasonId());
       return hfApplication.createWhyHost(applicationCategoryId, whyHost);
    }
@@ -51,18 +58,19 @@ public class HFApplicationProcess {
    @GET
    @Path("get/whyhost/{hostFamilyHomeId}/{hfSeasonId}/{applicationCategoryId}")
    @Produces("application/json")
-   public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
+   public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId,
+         @PathParam("applicationCategoryId") String applicationCategoryId) {
       LOGGER.info("Calling service HFApplicationProcess.getWhyHost for hfSeasonId {}", hfSeasonId);
       return hfApplication.getWhyHost(hostFamilyHomeId, hfSeasonId, applicationCategoryId);
    }
-   
+
    @POST
    @Path("update/whyhost/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
    public WhyHost updateWhyHost(@PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
       LOGGER.info("Calling service HFApplicationProcess.updateWhyHost for hfHomeId {}", whyHost.getHostFamilyHomeId());
-      return hfApplication.updateWhyHost(applicationCategoryId,whyHost);
+      return hfApplication.updateWhyHost(applicationCategoryId, whyHost);
    }
 
    @POST
@@ -73,7 +81,7 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
       return hfApplication.uploadHFPhotos(hfApplicationUploadPhotos);
    }
-   
+
    @GET
    @Path("get/pictures/{hfSeasonId}")
    @Consumes("application/json")
@@ -82,7 +90,7 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
       return hfApplication.getHFPhotos(hfSeasonId);
    }
-   
+
    @GET
    @Path("delete/photo/{photoId}")
    @Produces("application/json")
@@ -90,6 +98,7 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.deletePhoto for photoId {}", photoId);
       return hfApplication.deletePhoto(photoId);
    }
+
    @POST
    @Path("hfHomepage")
    @Consumes("application/json")
@@ -105,8 +114,7 @@ public class HFApplicationProcess {
    public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
    }
-   
-   
+
    @POST
    @Path("hfSaveFamilyLifeStyle")
    @Consumes("application/json")
@@ -114,34 +122,33 @@ public class HFApplicationProcess {
    public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
       return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
    }
-   
-   
+
    @POST
    @Path("create/hf/reference/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public HostFamilyReferences createHFReference(@PathParam("applicationCategoryId") String applicationCategoryId,HostFamilyReferences hostFamilyReferences) {
+   public HostFamilyReferences createHFReference(@PathParam("applicationCategoryId") String applicationCategoryId, HostFamilyReferences hostFamilyReferences) {
       LOGGER.info("Calling service HFApplicationProcess.createHFReference");
-      return hfApplication.createHFReference(applicationCategoryId,hostFamilyReferences);
+      return hfApplication.createHFReference(applicationCategoryId, hostFamilyReferences);
    }
-   
+
    @POST
    @Path("update/hf/reference/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public HostFamilyReferences updateHFReference(@PathParam("applicationCategoryId") String applicationCategoryId,HostFamilyReferences hostFamilyReferences) {
+   public HostFamilyReferences updateHFReference(@PathParam("applicationCategoryId") String applicationCategoryId, HostFamilyReferences hostFamilyReferences) {
       LOGGER.info("Calling service HFApplicationProcess.createHFReference");
-      return hfApplication.updateHFReference(applicationCategoryId,hostFamilyReferences);
+      return hfApplication.updateHFReference(applicationCategoryId, hostFamilyReferences);
    }
-   
+
    @GET
-   @Path("update/hf/reference/{hfSeasonId}/{applicationCategoryId}")
+   @Path("get/hf/reference/{hfSeasonId}/{applicationCategoryId}")
    @Produces("application/json")
    public HostFamilyReferences getHFReference(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
       LOGGER.info("Calling service HFApplicationProcess.getHFReference");
-      return hfApplication.getHFReference(hfSeasonId,applicationCategoryId);
+      return hfApplication.getHFReference(hfSeasonId, applicationCategoryId);
    }
-   
+
    @POST
    @Path("potential/reference/")
    @Consumes("application/json")
@@ -150,6 +157,53 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.addPotentialReference");
       return hfApplication.addPotentialReference(potentialHostFmaily);
    }
-   
-   
+
+   @POST
+   @Path("fetchFamilyLifeStyle")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam) {
+      return hfApplication.fetchFamilyLifeStyle(familyStylePageParam);
+   }
+
+   @POST
+   @Path("fetchBasicData")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam) {
+      return hfApplication.fetchBasicData(familyBasicsPageParam);
+   }
+
+   @POST
+   @Path("createHFHouseDescription")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse createHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
+      return hfApplication.createHFHouseDescription(descriptionPage);
+   }
+
+   @POST
+   @Path("fetchHFHouseDescription")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam) {
+      return hfApplication.fetchHFHouseDescription(descriptionPageParam);
+   }
+
+   @POST
+   @Path("createHFCoummnityAndSchool")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
+      return hfApplication.createHFCoummnityAndSchool(communityAndSchoolPage);
+   }
+
+   @POST
+   @Path("fetchHFCoummnityAndSchool")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam) {
+      return hfApplication.fetchHFCoummnityAndSchool(descriptionPageParam);
+   }
+
 }
