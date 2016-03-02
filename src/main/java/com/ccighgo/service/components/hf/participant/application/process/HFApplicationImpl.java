@@ -524,17 +524,17 @@ public class HFApplicationImpl implements HFApplication {
                com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                photo.setPhotoUrl(String.valueOf(obj[0]));
                hfbs.setPhoto(photo);
-               hfbs.setSingleHost((boolean) obj[1]);
+               hfbs.setSingleHost(Boolean.valueOf(String.valueOf(obj[1])));
                adult.setRelationship(String.valueOf(obj[2]));
                adult.setFirstName(String.valueOf(obj[3]));
                adult.setLastName(String.valueOf(obj[4]));
-               adult.setIsHostParent((boolean) obj[5]);
+               adult.setIsHostParent(Boolean.valueOf(String.valueOf(obj[5])));
                adult.setEmail(String.valueOf(obj[6]));
                adult.setPersonalPhone(String.valueOf(obj[7]));
                adult.setBirthdate(String.valueOf(obj[8]));
                adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
                adult.setEducationLevel(String.valueOf(obj[10]));
-               adult.setLivesinsideOfHomePartTime((boolean) obj[11]);
+               adult.setLivesinsideOfHomePartTime(Boolean.valueOf(String.valueOf(obj[11])));
                adult.setLivingInsideHomeExplanation(String.valueOf(obj[12]));
                adult.setCommunityInvolvement(String.valueOf(obj[13]));
                adult.setActivitiesOrInterests(String.valueOf(obj[14]));
@@ -543,11 +543,16 @@ public class HFApplicationImpl implements HFApplication {
                adult.setJobTitle(String.valueOf(obj[17]));
                adult.setContactName(String.valueOf(obj[18]));
                adult.setJobPhone(String.valueOf(obj[19]));
-               adult.setHasAnotherJob((boolean) obj[20]);
-               adult.setOtherEmployer(String.valueOf(obj[21]));
-               adult.setOtherJobTitle(String.valueOf(obj[22]));
-               adult.setContactName(String.valueOf(obj[23]));
-               adult.setOtherJobPhone(String.valueOf(obj[24]));
+               if (obj[20] != null) {
+                  Boolean valueOf = Boolean.valueOf(String.valueOf(obj[20]));
+                  if (valueOf) {
+                     adult.setHasAnotherJob(valueOf);
+                     adult.setOtherEmployer(String.valueOf(obj[21]));
+                     adult.setOtherJobTitle(String.valueOf(obj[22]));
+                     adult.setContactName(String.valueOf(obj[23]));
+                     adult.setOtherJobPhone(String.valueOf(obj[24]));
+                  }
+               }
                hfbs.getAdults().add(adult);
             }
          }
@@ -561,10 +566,10 @@ public class HFApplicationImpl implements HFApplication {
          if (result != null) {
             for (Object[] obj : result) {
                HFContactInfo info = new HFContactInfo();
-               info.setHaveHomePhoneOrLandline((boolean) obj[0]);
+               info.setHaveHomePhoneOrLandline(Boolean.valueOf(String.valueOf(obj[0])));
                info.setPhone(String.valueOf(obj[1]));
-               info.setPreferPhone((boolean) obj[2]);
-               info.setPreferEmail((boolean) obj[3]);
+               info.setPreferPhone(Boolean.valueOf(String.valueOf(obj[2])));
+               info.setPreferEmail(Boolean.valueOf(String.valueOf(obj[3])));
                info.setContactPhone(String.valueOf(obj[4]));
                info.setContactEmail(String.valueOf(obj[5]));
                info.setEmergencyContactPerson(String.valueOf(obj[6]));
@@ -584,15 +589,16 @@ public class HFApplicationImpl implements HFApplication {
 
                // hf.`mailingAddress`,
                HFMailingAddress mailAddress = new HFMailingAddress();
+               mailAddress.setAddress1(String.valueOf(obj[12]));
                // hf.`mailingCity`,
-               mailAddress.setCity(String.valueOf(obj[12]));
+               mailAddress.setCity(String.valueOf(obj[13]));
                // us2.`stateName` as mailingState,
-               st = stateRepository.getStateByName(String.valueOf(obj[13]));
+               st = stateRepository.getStateByName(String.valueOf(obj[14]));
                mailAddress.setStateId(st.getUsStatesId());
                // hf.`mailingZipCode`,
-               mailAddress.setZipCode(String.valueOf(obj[14]));
+               mailAddress.setZipCode(String.valueOf(obj[15]));
                // hf.`mailingAddressSameAsCurrentAddress`
-               mailAddress.setSameAsPhysicalAddress(Boolean.valueOf(String.valueOf(obj[15])));
+               mailAddress.setSameAsPhysicalAddress(Boolean.valueOf(String.valueOf(obj[16])));
                hfbs.setMailingAddress(mailAddress);
             }
          }
@@ -606,8 +612,8 @@ public class HFApplicationImpl implements HFApplication {
             for (Object[] obj : result) {
                HFAirport airport = new HFAirport();
                // a.`airportName`,
-               Airport a = airportRepository.getAirportByName(String.valueOf(obj[0]));
-               airport.setAirportId(a.getAirportId());
+               List<Airport> a = airportRepository.getAirportByName(String.valueOf(obj[0]));
+               airport.setAirportId(a.get(0).getAirportId());
                // hfa.`distanceToAirport`
                airport.setDistanceToNearestAirport(Integer.valueOf(String.valueOf(obj[1])));
                hfbs.getAirports().add(airport);
@@ -636,7 +642,6 @@ public class HFApplicationImpl implements HFApplication {
                hfbs.getPets().add(pet);
             }
          }
-
       } catch (CcighgoException e) {
          hfbs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_BASIC_DATA.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -840,7 +845,7 @@ public class HFApplicationImpl implements HFApplication {
                // hfc.`schoolTravelMethod`,
                l.setStudentWillGotoSchoolBy(String.valueOf(obj[0]));
                // hfc.`distanceToSchool`,
-               l.setDistanceBetweenSchoolAndHome(Integer.valueOf(String.valueOf(obj[1])));
+               l.setDistanceBetweenSchoolAndHome(String.valueOf(String.valueOf(obj[1])));
                // hfc.`transportationToActivities`,
                l.setProvideSpecialTransformation(Boolean.valueOf(String.valueOf(obj[2])));
                // hfc.`transportationToActivitiesDetails`,
