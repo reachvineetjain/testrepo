@@ -15,10 +15,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
+import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescription;
+import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
@@ -149,6 +156,54 @@ public class HFApplicationProcess {
    public Response addPotentialReference(PotentialHostFamily potentialHostFmaily) {
       LOGGER.info("Calling service HFApplicationProcess.addPotentialReference");
       return hfApplication.addPotentialReference(potentialHostFmaily);
+   }
+
+   @POST
+   @Path("fetchFamilyLifeStyle")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam) {
+      return hfApplication.fetchFamilyLifeStyle(familyStylePageParam);
+   }
+
+   @POST
+   @Path("fetchBasicData")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam) {
+      return hfApplication.fetchBasicData(familyBasicsPageParam);
+   }
+
+   @POST
+   @Path("createHFHouseDescription")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse createHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
+      return hfApplication.createHFHouseDescription(descriptionPage);
+   }
+
+   @POST
+   @Path("fetchHFHouseDescription")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam) {
+      return hfApplication.fetchHFHouseDescription(descriptionPageParam);
+   }
+
+   @POST
+   @Path("createHFCoummnityAndSchool")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
+      return hfApplication.createHFCoummnityAndSchool(communityAndSchoolPage);
+   }
+
+   @POST
+   @Path("fetchHFCoummnityAndSchool")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam) {
+      return hfApplication.fetchHFCoummnityAndSchool(descriptionPageParam);
    }
 
 }
