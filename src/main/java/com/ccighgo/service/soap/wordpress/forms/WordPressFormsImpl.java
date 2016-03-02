@@ -365,7 +365,7 @@ public class WordPressFormsImpl implements IWordPressForms {
 				pa.setHostFamilyInquiryId(goIdSequence.getGoId());
 				hostFamilyInquiryRepository.saveAndFlush(pa);
 			}
-			return "200:Success";
+			return "200:Success:200:Success";
 		} catch (Exception e) {
 			ExceptionUtil.logException(e, LOGGER);
 			String string = "700:Internal Error:700:" + e.getMessage();
