@@ -546,6 +546,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerDetails.setAddressLineTwo(subPartnersMailingAddress.getMailingAddress2());
             subPartnerDetails.setCity(subPartnersMailingAddress.getMailingAddressCity());
             subPartnerDetails.setState(subPartnersMailingAddress.getMailingAddressStateOrProvince());
+            subPartnerDetails.setZipcode(subPartnersMailingAddress.getMailingAddressZipCode());
             subPartnerDetails.setCreatedBy(subPartner.getLoginId());
             subPartnerDetails.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             subPartnerDetails.setModifiedBy(subPartner.getLoginId());
