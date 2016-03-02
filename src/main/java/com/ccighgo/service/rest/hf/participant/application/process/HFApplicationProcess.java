@@ -206,4 +206,21 @@ public class HFApplicationProcess {
       return hfApplication.fetchHFCoummnityAndSchool(descriptionPageParam);
    }
 
+   // / update
+   @POST
+   @Path("updateFamilyBasicData")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse updateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+      return hfApplication.updateFamilyBasicData(hfApplicationFamilyDetails);
+   }
+
+   @POST
+   @Path("updateFamilyLifeStyleData")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse updateFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+      return hfApplication.updateFamilyLifeStyleData(hfApplicationFamilyDetails);
+   }
+
 }
