@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -25,6 +26,7 @@ import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
@@ -96,6 +98,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
    @Autowired PartnerUserRepository partnerUserRepository;
    @Autowired CountryRepository countryRepository;
+   @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
+
+   public static final Integer PENDING_STATUS = 4;
+   public static final Integer VALID = 11;
+   public static final String DELETED_STATUS = "Deleted";
 
    @Override
    @Transactional
@@ -111,8 +118,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          }
          subPartnerDetails.setCount(subPartnerList.size());
          for (Partner subPartner : subPartnerList) {
-            Login loginSubPartner = loginRepository.findByGoId(subPartner.getGoIdSequence());
-            if (loginSubPartner.getActive() == CCIConstants.ACTIVE) {
+            PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(subPartner.getPartnerGoId());
+            if (!reviewStatus.getPartnerStatus2().getPartnerStatusName().equals(DELETED_STATUS)) {
                SubPartners sp = new SubPartners();
                sp.setSubPartnerId(subPartner.getPartnerGoId());
                if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
@@ -482,7 +489,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          Login login = new Login();
          try {
             subPartnerDetails.setParentPartnerGoId(Integer.parseInt(subPartner.getGoId()));
-            subPartnerDetails.setIsSubPartner((byte) 1);
+            subPartnerDetails.setIsSubPartner(CCIConstants.ACTIVE);
 
             List<Login> loginList = new ArrayList<Login>();
             goIdSequence = goIdSequenceRepository.saveAndFlush(goIdSequence);
@@ -519,7 +526,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             ExceptionUtil.logException(e, LOGGER);
             LOGGER.error(e.getMessage());
          }
-
+         subPartnerDetails.setMailingAddressIsSameAsPhysicalAdress(subPartner.isMailingAddressIsSameAsPhysicalAdress() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          SubPartnersPhysicalAddress subPartnersPhysicalAddress = subPartner.getSubPartnerPhysicalAddress();
          if (subPartnersPhysicalAddress != null) {
             subPartnerDetails.setPhysicalAddressLineOne(subPartnersPhysicalAddress.getPhysicalAddress1());
@@ -569,6 +576,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
                partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
                partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+               partnerContact.setFax(subPartnerPrimaryContact.getFax());
                if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
                   partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
                partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
@@ -589,6 +597,15 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          partnerUser.setLogin(login);
          partnerUserRepository.saveAndFlush(partnerUser);
 
+         PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
+         reviewStatus.setPartner(subPartnerDetails);
+         // set the default partnerLeadStatus to Valid
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
+         // set the partnerAgentStatusId to Pending
+         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(PENDING_STATUS));
+         partnerReviewStatusRepository.saveAndFlush(reviewStatus);
+
+         responce.setGoId(goIdSequence.getGoId());
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
@@ -779,14 +796,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          if (goId != null) {
-            GoIdSequence partnerGoId = goIdSequenceRepository.findOne(Integer.valueOf(goId));
-            List<Login> login = loginRepository.findAllByGoId(partnerGoId);
-            if (login != null) {
-               for (Login log : login) {
-                  log.setActive(CCIConstants.INACTIVE);
-               }
-               loginRepository.save(login);
-            }
+            Partner partner = partnerRepository.findOne(Integer.valueOf(goId));
+            PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(partner.getPartnerGoId());
+            PartnerStatus partnerStatus2 = reviewStatus.getPartnerStatus2();
+            partnerStatus2.setPartnerStatusName(DELETED_STATUS);
+            partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
          } else {
             wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_CHANGE_HAPPEN.getValue(),
@@ -802,5 +816,4 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
       return wsDefaultResponse;
    }
-
 }

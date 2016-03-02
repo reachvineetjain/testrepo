@@ -17,6 +17,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityand
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
+import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -26,6 +28,7 @@ import com.ccighgo.utils.WSDefaultResponse;
  */
 @Service
 public interface HFApplication {
+
 
 	/**
 	 * @param hfSeasonId
@@ -112,5 +115,32 @@ public interface HFApplication {
 	public WSDefaultResponse createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
 
 	public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam);
+
+ /**
+    * @param potentialHostFmaily
+    * @return
+    */
+   public Response addPotentialReference(PotentialHostFamily potentialHostFmaily);
+
+   /**
+    * @param hostFamilyReferences
+    * @return
+    */
+   public HostFamilyReferences createHFReference(String applicationCategoryId, HostFamilyReferences hostFamilyReferences);
+
+   /**
+    * @param applicationCategoryId
+    * @param hostFamilyReferences
+    * @return
+    */
+   public HostFamilyReferences updateHFReference(String applicationCategoryId, HostFamilyReferences hostFamilyReferences);
+
+   /**
+    * @param hfSeasonId
+    * @param applicationCategoryId
+    * @return
+    */
+   public HostFamilyReferences getHFReference(String hfSeasonId, String applicationCategoryId);
+
 
 }

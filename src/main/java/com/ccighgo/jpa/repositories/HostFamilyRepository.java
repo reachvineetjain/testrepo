@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 import com.ccighgo.db.entities.HostFamily;
 
 /**
- * @author Ahmed Abdelmaaboud
+ * @author ravi
  *
  */
 @Repository
-public interface HostFamilyRepository extends JpaRepository<HostFamily, Integer>{
+public interface HostFamilyRepository extends JpaRepository<HostFamily, Integer> {
 
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfreferences" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfreferences" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.hostfamily.beans.application.references" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="HostFamilyReferences" type="pu:HostFamilyReferences" />
+
+   <xsd:complexType name="HostFamilyReferences">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostFamilyGenQuestionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="secondReferenceRelatedToFirst" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="references" type="pu:Reference" minOccurs="0" maxOccurs="unbounded" />
+               <xsd:element name="previouslyHosted" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="internet" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="otherWebsites" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="community" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="event" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="magazine" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="otherCommunity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="Reference">
+      <xsd:sequence>
+         <xsd:element name="hostFamilyReferenceId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="street" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="state" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="zip" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="relationshipToFamily" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="bloodRelated" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

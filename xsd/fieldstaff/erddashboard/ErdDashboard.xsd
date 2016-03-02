@@ -24,7 +24,8 @@
          <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="photoUrl" type="xsd:string" minOccurs="0" maxOccurs="1"/>      
+         <xsd:element name="fsRole" type="xsd:string" minOccurs="1" maxOccurs="1"/>
          <xsd:element name="ErdDashboardTypes" type="pdl:ErdDashboardTypes" />
          <xsd:element name="ErdDashboardPoints" type="pdl:ErdDashboardPoints" />
          <xsd:element name="ErdDashboardTitles" type="pdl:ErdDashboardTitles" />
