@@ -183,7 +183,7 @@ public class FieldStaffs {
 //   Ex: CALL SPFieldStaffHostFamilyList(50001,1);
    
    @GET
-   @Path("myHostFamilies/{fieldStaffId}")
+   @Path("myHostFamilies/{fieldStaffId}/{category}")
    @Produces("application/json")
    public AdminFieldStaffHostFamily  getMyHostFamilies(@PathParam("fieldStaffId") String fieldStaffId) {
       return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),0,null);
@@ -193,6 +193,13 @@ public class FieldStaffs {
    @Produces("application/json")
    public AdminFieldStaffHostFamily  getAllHostFamilies(@PathParam("fieldStaffId") String fieldStaffId,@PathParam("category") String category) {
       return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),1,category);
+   }
+   
+   @GET
+   @Path("allHostFamilies/{fieldStaffId}")
+   @Produces("application/json")
+   public AdminFieldStaffHostFamily  getAllHostFamiliesAll(@PathParam("fieldStaffId") String fieldStaffId) {
+      return fieldStaffsInterface.getAllHostFamiliesAll(Integer.parseInt(fieldStaffId));
    }
    
    @GET
