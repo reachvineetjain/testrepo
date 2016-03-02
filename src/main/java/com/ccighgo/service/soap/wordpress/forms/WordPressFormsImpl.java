@@ -413,21 +413,32 @@ public class WordPressFormsImpl implements IWordPressForms {
             System.out.println("Email :" + AreaRepresentativeData.getEmail());
             System.out.println("City :" + AreaRepresentativeData.getCity());
             System.out.println("State : " + AreaRepresentativeData.getState());
+            System.out.println("Postal Code : " + AreaRepresentativeData.getPostalCode());
+            System.out.println("Home Phone : " + AreaRepresentativeData.getHomePhone());
+            System.out.println("workPhone : " + AreaRepresentativeData.getWorkPhone());
+            System.out.println("comments : " + AreaRepresentativeData.getComments());
+            System.out.println("HoomeAddress : " + AreaRepresentativeData.getHomeAddress());
+            System.out.println("interestedINlocalCoForSumm : " + AreaRepresentativeData.getInterestedInLocalCoordinatorForSummer());
+            System.out.println("INterestedInLocalCoForYear : " + AreaRepresentativeData.getInterestedInLocalCoordinatorForYear());
+            System.out.println("current Community Volunteer: " + AreaRepresentativeData.isCurrentCommunityVolunteer());
+            System.out.println("currentCommunityVolunteer Details : " + AreaRepresentativeData.getCurrentCommunityVolunteerDetails());
+            System.out.println("FieldStaffWIlling to host: " + AreaRepresentativeData.getFieldStaffWillingToHost());
+
          }
          if (AreaRepresentativeData.getEmail().equalsIgnoreCase("success@gmail.com")) {
-            String string = "200:Success";
+            String string = "200:Success:200:Success";
             System.out.println(string);
             return string;
          } else if (AreaRepresentativeData.getEmail().equalsIgnoreCase("duplicate@gmail.com")) {
-            String string = "400:Duplicate Row";
+            String string = "400:Duplicate Row:400:Duplicate Row";
             System.out.println(string);
             return string;
          } else if (AreaRepresentativeData.getEmail().equalsIgnoreCase("failed@gmail.com")) {
-            String string = "500:Failed To Process Record ! Contact Admin";
+            String string = "500:Failed To Process Record ! Contact Admin:500:Failed To Process Record ! Contact Admin";
             System.out.println(string);
             return string;
          } else {
-            String string = "300:Missing Information";
+            String string = "300:Missing Information:300:Missing Information";
             System.out.println(string);
             return string;
          }
