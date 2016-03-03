@@ -175,11 +175,11 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("createHFHouseDescription")
+   @Path("hfSaveHouseDescription")
    @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse createHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
-      return hfApplication.createHFHouseDescription(descriptionPage);
+      return hfApplication.saveHFHouseDescription(descriptionPage);
    }
 
    @POST
@@ -191,11 +191,11 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("createHFCoummnityAndSchool")
+   @Path("hfSaveCoummnityAndSchoolDetails")
    @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
-      return hfApplication.createHFCoummnityAndSchool(communityAndSchoolPage);
+      return hfApplication.saveHFCoummnityAndSchool(communityAndSchoolPage);
    }
 
    @POST

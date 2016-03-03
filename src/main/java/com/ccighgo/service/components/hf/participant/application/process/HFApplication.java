@@ -29,94 +29,96 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Service
 public interface HFApplication {
 
+   /**
+    * @param hfSeasonId
+    * @param whyHost
+    * @return
+    */
+   public WhyHost createWhyHost(String applicationCategoryId, WhyHost whyHost);
 
-	/**
-	 * @param hfSeasonId
-	 * @param whyHost
-	 * @return
-	 */
-	public WhyHost createWhyHost(String applicationCategoryId, WhyHost whyHost);
+   /**
+    * @param hfSeasonId
+    * @return
+    */
+   public WhyHost getWhyHost(String hfHomeId, String hfSeasonId, String applicationCategoryId);
 
-	/**
-	 * @param hfSeasonId
-	 * @return
-	 */
-	public WhyHost getWhyHost(String hfHomeId, String hfSeasonId, String applicationCategoryId);
+   /**
+    * @param hfHomeId
+    * @param applicationCategoryId
+    * @param whyHost
+    * @return
+    */
+   public WhyHost updateWhyHost(String applicationCategoryId, WhyHost whyHost);
 
-	/**
-	 * @param hfHomeId
-	 * @param applicationCategoryId
-	 * @param whyHost
-	 * @return
-	 */
-	public WhyHost updateWhyHost(String applicationCategoryId, WhyHost whyHost);
+   /**
+    * Service used to upload host family photos for application process
+    * 
+    * @param hfApplicationUploadPhotos
+    * @return
+    */
+   public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos);
 
-	/**
-	 * Service used to upload host family photos for application process
-	 * 
-	 * @param hfApplicationUploadPhotos
-	 * @return
-	 */
-	public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos);
+   /**
+    * @param photoId
+    * @return
+    */
+   public Response deletePhoto(String photoId);
 
-	/**
-	 * @param photoId
-	 * @return
-	 */
-	public Response deletePhoto(String photoId);
+   /**
+    * @param hfSeasonId
+    * @return
+    */
+   public HFApplicationUploadPhotos getHFPhotos(String hfSeasonId);
 
-	/**
-	 * @param hfSeasonId
-	 * @return
-	 */
-	public HFApplicationUploadPhotos getHFPhotos(String hfSeasonId);
+   /**
+    * Service to fetch HF Home Page Sections
+    * 
+    * @param goId
+    * @param loginId
+    * @return
+    */
+   public HFHomePage getHostFamilyHome(HomePageParam hpp);
 
-	/**
-	 * Service to fetch HF Home Page Sections
-	 * 
-	 * @param goId
-	 * @param loginId
-	 * @return
-	 */
-	public HFHomePage getHostFamilyHome(HomePageParam hpp);
+   /**
+    * persist family basic data
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
 
-	/**
-	 *  persist family basic data
-	 * @param hfApplicationFamilyDetails
-	 * @return
-	 */
-	public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
+   /**
+    * persist family details including life style
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
 
-	/**
-	 *  persist family details including life style
-	 * @param hfApplicationFamilyDetails
-	 * @return
-	 */
-	public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+   /**
+    * fetch family style data
+    * 
+    * @param familyStylePageParam
+    * @return
+    */
+   public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam);
 
-	/**
-	 *  fetch family style data
-	 * @param familyStylePageParam
-	 * @return
-	 */
-	public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam);
+   /**
+    * 
+    * @param familyBasicsPageParam
+    * @return
+    */
+   public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
 
-	/**
-	 * 
-	 * @param familyBasicsPageParam
-	 * @return
-	 */
-	public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
+   public WSDefaultResponse saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
 
-	public WSDefaultResponse createHFHouseDescription(HFHomeDescriptionPage descriptionPage);
+   public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
 
-	public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
+   public WSDefaultResponse saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
 
-	public WSDefaultResponse createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
+   public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam);
 
-	public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam);
-
- /**
+   /**
     * @param potentialHostFmaily
     * @return
     */
@@ -141,6 +143,5 @@ public interface HFApplication {
     * @return
     */
    public HostFamilyReferences getHFReference(String hfSeasonId, String applicationCategoryId);
-
 
 }
