@@ -13,7 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
+import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.AdminFieldStaffHostFamily;
+import com.ccighgo.service.transport.fieldstaff.beans.adminfieldstaffhostfamily.FSHostFamilies;
 
 
 /**
@@ -42,7 +43,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityand
     "status"
 })
 @XmlSeeAlso({
-    HFCommunityAndSchoolPage.class
+    AdminFieldStaffHostFamily.class,
+    FSHostFamilies.class
 })
 public class Response {
 
