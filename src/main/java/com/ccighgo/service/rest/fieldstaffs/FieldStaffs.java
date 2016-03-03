@@ -143,7 +143,7 @@ public class FieldStaffs {
    @GET
    @Path("hostFamilies/{fieldStaffId}/{flagId}/{category}")
    @Produces("application/json")
-   public AdminFieldStaffHostFamily getFSHostFamilies(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("flagId") String flagId, @PathParam("category") String category) {
+   public AdminFieldStaffHostFamily getAdminFSHostFamilies(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("flagId") String flagId, @PathParam("category") String category) {
       return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId), Integer.parseInt(flagId), category);
    }
 
