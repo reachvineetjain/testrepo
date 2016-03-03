@@ -78,8 +78,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @PersistenceContext EntityManager em;
 
    private static final String FIELD_STAFF_REGION_SP = "call SPFieldStaffRegionList(?)";
-   private static final int FS_HF_CATEGORIES_FLAG = 0;
-   private static final String FS_HF_CATEGORIES_NULL = null;
 
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
@@ -392,47 +390,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL));
-      }
-      return pwqa;
-   }
-
-   @Override
-   public AdminFieldStaffHostFamily getAllHostFamiliesAll(int fieldStaffId) {
-      AdminFieldStaffHostFamily pwqa = new AdminFieldStaffHostFamily();
-      try {
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
-               .setParameter("flagId", FS_HF_CATEGORIES_FLAG).setParameter("category", FS_HF_CATEGORIES_NULL).getResultList();
-         if (result != null) {
-            if (!result.isEmpty()) {
-               for (Object[] wq : result) {
-                  FSHostFamilies pd = new FSHostFamilies();
-                  pd.setGoId(Integer.valueOf(String.valueOf(wq[0])));
-                  pd.setName(String.valueOf(wq[1]));
-                  pd.setAddress(String.valueOf(wq[2]));
-                  pd.setEmail(String.valueOf(wq[3]));
-                  pd.setLocalCoordinator(String.valueOf(wq[4]));
-                  pd.setSeasons(String.valueOf(wq[5]));
-                  pd.setApplicationStatus(String.valueOf(wq[6]));
-                  pd.setPhone(String.valueOf(wq[7]));
-                  pd.setPhoto(String.valueOf(wq[8]));
-                  pwqa.getHostFamilies().add(pd);
-               }
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
-                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-            } else {
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
-            }
-         } else {
-            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, LOGGER);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_HOST_FAMILY.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY)));
-         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY));
       }
       return pwqa;
    }

@@ -61,9 +61,8 @@ public class FieldStaffs {
 
    @POST
    @Path("/update/")
-   public Response updateFieldStaffDetail(FieldStaffDetails fieldStaffDetail)
-   {
-    return fieldStaffsInterface.updateFieldStaffDetail(fieldStaffDetail);  
+   public Response updateFieldStaffDetail(FieldStaffDetails fieldStaffDetail) {
+      return fieldStaffsInterface.updateFieldStaffDetail(fieldStaffDetail);
    }
 
    @GET
@@ -71,6 +70,7 @@ public class FieldStaffs {
    public Response updateFieldStaffStatus(@PathParam("fsGoId") String fsgoId, @PathParam("loginId") String loginId, @PathParam("statusId") String statusId) {
       return fieldStaffsInterface.updateFieldStaffStatus(fsgoId, loginId, statusId);
    }
+
    @GET
    @Path("/statuses")
    @Produces("application/json")
@@ -114,38 +114,39 @@ public class FieldStaffs {
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
       return null;
    }
+
    @GET
    @Path("PendingApplication/{typeId}/{categoryId}/{cciStaffUserId}/{roleType}")
    @Produces("application/json")
    public PendingApplication getFSPendingApplication(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
-      return fieldStaffsInterface.getFSPendingApplication(Integer.parseInt(typeId),Integer.parseInt(categoryId),Integer.parseInt(staffUserId),roleType) ;
+      return fieldStaffsInterface.getFSPendingApplication(Integer.parseInt(typeId), Integer.parseInt(categoryId), Integer.parseInt(staffUserId), roleType);
    }
-   
-   //Statistics
-   //Application Stats
+
+   // Statistics
+   // Application Stats
    @GET
    @Path("applicationStats/{typeId}/{categoryId}/")
    @Produces("application/json")
    public FieldStaffDashboardApplicationStats getFSApplicationStats(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId) {
-	   return fieldStaffsInterface.getFSApplicationStats(Integer.parseInt(typeId),Integer.parseInt(categoryId)); 
+      return fieldStaffsInterface.getFSApplicationStats(Integer.parseInt(typeId), Integer.parseInt(categoryId));
    }
+
    @GET
    @Path("programStats/{categoryId}/")
    @Produces("application/json")
-   public FieldStaffDashboardProgramStats getFSProgramStats( @PathParam("categoryId") String categoryId) {
-	   return fieldStaffsInterface.getFSProgramStats(Integer.parseInt(categoryId)); 
+   public FieldStaffDashboardProgramStats getFSProgramStats(@PathParam("categoryId") String categoryId) {
+      return fieldStaffsInterface.getFSProgramStats(Integer.parseInt(categoryId));
    }
-   
-   
-   //Page 13
+
+   // Page 13
    @GET
    @Path("hostFamilies/{fieldStaffId}/{flagId}/{category}")
    @Produces("application/json")
    public AdminFieldStaffHostFamily getFSHostFamilies(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("flagId") String flagId, @PathParam("category") String category) {
-	   return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),Integer.parseInt(flagId),category);
+      return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId), Integer.parseInt(flagId), category);
    }
-   
+
    /**
     * @param partnerUserId
     * @return
@@ -156,63 +157,72 @@ public class FieldStaffs {
    public Response resetPassword(@PathParam("goId") String goId) {
       return fieldStaffsInterface.resetPassword(goId, request);
    }
-   
+
    /**
     * Normal Field Staff Page 7,8 screens
     */
-   
+
    // 8
-   //Schools (Page 8 of CCI_VD_3_ERD_flow_WIP3.pdf):
-   
-//   CALL SPFieldStaffSchoolList (fieldStaffId);
-//   Ex: CALL SPFieldStaffSchoolList (50000);
-   
+   // Schools (Page 8 of CCI_VD_3_ERD_flow_WIP3.pdf):
+
+   // CALL SPFieldStaffSchoolList (fieldStaffId);
+   // Ex: CALL SPFieldStaffSchoolList (50000);
+
    @GET
    @Path("addedSchools/{fieldStaffId}")
    @Produces("application/json")
    public FSAddedSchool getAddedSchools(@PathParam("fieldStaffId") String fieldStaffId) {
       return fieldStaffsInterface.getAddedSchools(Integer.parseInt(fieldStaffId));
    }
-   
-//   Page 7 My HostFamilies:  CALL SPFieldStaffHostFamilyList(fieldStaffId INT,flag INT);
-//   
-//   Ex: CALL SPFieldStaffHostFamilyList(50001,0);
-//    
-//   Page 7 HostFamilies : CALL SPFieldStaffHostFamilyList(fieldStaffId INT,flag INT);
-//    
-//   Ex: CALL SPFieldStaffHostFamilyList(50001,1);
-   
+
+   // Page 7 My HostFamilies: CALL SPFieldStaffHostFamilyList(fieldStaffId
+   // INT,flag INT);
+   //
+   // Ex: CALL SPFieldStaffHostFamilyList(50001,0);
+   //
+   // Page 7 HostFamilies : CALL SPFieldStaffHostFamilyList(fieldStaffId
+   // INT,flag INT);
+   //
+   // Ex: CALL SPFieldStaffHostFamilyList(50001,1);
+
    @GET
    @Path("myHostFamilies/{fieldStaffId}/{category}")
    @Produces("application/json")
-   public AdminFieldStaffHostFamily  getMyHostFamilies(@PathParam("fieldStaffId") String fieldStaffId) {
-      return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),0,null);
+   public AdminFieldStaffHostFamily getFSMyHostFamilies(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("category") String category) {
+      /*
+       * For MyHostFamily tab, flag is 1 and categories should not null. Changes
+       * are made to call the common stored procedure i.e
+       * SPFieldStaffHostFamilyList
+       */
+      int myHfFlag = 1;
+      return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId), myHfFlag, category);
    }
-   @GET
-   @Path("allHostFamilies/{fieldStaffId}/{category}")
-   @Produces("application/json")
-   public AdminFieldStaffHostFamily  getAllHostFamilies(@PathParam("fieldStaffId") String fieldStaffId,@PathParam("category") String category) {
-      return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId),1,category);
-   }
-   
+
    @GET
    @Path("allHostFamilies/{fieldStaffId}")
    @Produces("application/json")
-   public AdminFieldStaffHostFamily  getAllHostFamiliesAll(@PathParam("fieldStaffId") String fieldStaffId) {
-      return fieldStaffsInterface.getAllHostFamiliesAll(Integer.parseInt(fieldStaffId));
+   public AdminFieldStaffHostFamily getFSAllHostFamilies(@PathParam("fieldStaffId") String fieldStaffId) {
+      /*
+       * For HostFamily tab flag is 0 and category should be null Changes are
+       * made to call the common stored procedure i.e SPFieldStaffHostFamilyList
+       */
+      int allFsFlag = 0;
+      String category = null;
+      return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId), allFsFlag, category);
    }
-   
+
    @GET
    @Path("changeApplicationStatus/{goId}/{newStatus}/{note}")
    @Produces("application/json")
    public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus, @PathParam("note") String note) {
-      return fieldStaffsInterface.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus,note);
+      return fieldStaffsInterface.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus, note);
    }
+
    @GET
    @Path("updateFieldStaffApplicationFollowUpDate/{goId}/{followUpdate}")
    @Produces("application/json")
    public WSDefaultResponse updatePartnerApplicationFollowUpDate(@PathParam("goId") String goId, @PathParam("followUpdate") String followUpdate) {
       return fieldStaffsInterface.updateFieldStaffApplicationFollowUpDate(Integer.parseInt(goId), followUpdate);
    }
-   
+
 }
