@@ -110,11 +110,11 @@ public interface HFApplication {
     */
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
 
-   public WSDefaultResponse createHFHouseDescription(HFHomeDescriptionPage descriptionPage);
+   public WSDefaultResponse saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
 
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
 
-   public WSDefaultResponse createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
+   public WSDefaultResponse saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
 
    public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam);
 
@@ -143,9 +143,5 @@ public interface HFApplication {
     * @return
     */
    public HostFamilyReferences getHFReference(String hfSeasonId, String applicationCategoryId);
-
-   public WSDefaultResponse updateFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
-
-   public WSDefaultResponse updateFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
 
 }

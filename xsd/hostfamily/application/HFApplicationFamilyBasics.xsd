@@ -20,6 +20,7 @@
             <xsd:sequence>
                <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="hostFamilyId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="singleHost" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photo" type="pu:Photo" minOccurs="1" maxOccurs="1" />
@@ -72,6 +73,7 @@
          <xsd:element name="airportId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="airport" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="distanceToNearestAirport" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
          
       </xsd:sequence>
    </xsd:complexType>
@@ -155,10 +157,11 @@
       <xsd:sequence>
          <xsd:element name="photoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
              <xsd:element name="typeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="filePath" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="photoName" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="isOptional" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 
