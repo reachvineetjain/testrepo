@@ -99,7 +99,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   puser.setPartnerUserLoginName(user.getLogin().getLoginName());
                   if (user.getLogin() != null)
                      puser.setPartnerUserEmail(user.getLogin().getEmail());
-                  puser.setPartnerUserStatus(user.getActive() == CCIConstants.ACTIVE ? 1 : 0);
+                     puser.setPartnerUserStatus(user.getLogin().getActive()== CCIConstants.ACTIVE ? 1 : 0);
                   partnerUsersUIList.add(puser);
                }
                partnerUsers.getPartnerUsers().addAll(partnerUsersUIList);
@@ -139,7 +139,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
             Login login = partnerUser.getLogin();
             if (Integer.valueOf(statusVal) == 1) {
-               partnerUser.setActive(CCIConstants.ACTIVE);
+               partnerUser.setActive(login.getActive());
                login.setActive(CCIConstants.ACTIVE);
             }
             if (Integer.valueOf(statusVal) == 0) {
