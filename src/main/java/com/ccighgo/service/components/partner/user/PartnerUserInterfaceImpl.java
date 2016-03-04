@@ -95,19 +95,19 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   puser.setPartnerUserPhotoUrl(user.getPhoto());
                   puser.setPartnerUserFirstName(user.getFirstName());
                   puser.setPartnerUserLastName(user.getLastName());
-                  puser.setIsPrimary(user.getIsPrimary() == CCIConstants.ACTIVE );
+                  puser.setIsPrimary(user.getIsPrimary() == CCIConstants.ACTIVE);
                   puser.setPartnerUserLoginName(user.getLogin().getLoginName());
                   if (user.getLogin() != null)
                      puser.setPartnerUserEmail(user.getLogin().getEmail());
-                     puser.setPartnerUserStatus(user.getLogin().getActive()== CCIConstants.ACTIVE ? 1 : 0);
+                  puser.setPartnerUserStatus(user.getLogin().getActive() == CCIConstants.ACTIVE ? 1 : 0);
                   partnerUsersUIList.add(puser);
                }
                partnerUsers.getPartnerUsers().addAll(partnerUsersUIList);
                partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               partnerUsers.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
                LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
             }
          } catch (CcighgoException e) {
@@ -139,7 +139,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
             Login login = partnerUser.getLogin();
             if (Integer.valueOf(statusVal) == 1) {
-               partnerUser.setActive(login.getActive());
+               partnerUser.setActive(CCIConstants.ACTIVE);
                login.setActive(CCIConstants.ACTIVE);
             }
             if (Integer.valueOf(statusVal) == 0) {
@@ -180,8 +180,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                      "An email has been sent to address " + "\'" + partnerUser.getLogin().getEmail() + "\'" + " for login name " + "\'" + partnerUser.getLogin().getLoginName()
                            + "\'" + " with instructions to reset password"));
             } else {
-               response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               response.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
                LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
             }
          } catch (CcighgoException e) {
