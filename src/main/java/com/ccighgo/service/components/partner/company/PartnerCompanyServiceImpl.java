@@ -149,7 +149,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 					partOffice.setOfficeAddressCountry(officeAddressCountry);
 					partOffice.setOfficePhone(pOffice.getPhoneNumber());
 					partOffice.setOfficeFax(pOffice.getFaxNumber());
-					partOffice.setOfficeEmail(pOffice.getPartner().getEmail());
+					partOffice.setOfficeEmail(pOffice.getEmail());
 					partOffice.setOfficeWebsite(pOffice.getWebsite());
 					if (pOffice.getPartnerOfficeType().getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
 						partOffice.setIsPrimary(true);
@@ -377,6 +377,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
 				partnerOffice.setLookupCountry(countryRepository.findOne(newPartnerOffice.getOfficeAddressCountry().getOfficeAddressCountryId()));
 				partnerOffice.setPhoneNumber(newPartnerOffice.getOfficePhone());
 				partnerOffice.setPostalCode(newPartnerOffice.getZipCode());
+				partnerOffice.setEmail(newPartnerOffice.getOfficeEmail());
 				partnerOffice.setWebsite(newPartnerOffice.getOfficeWebsite());
 				partnerOffice.setPartnerOfficeType(newPartnerOffice.isIsPrimary() ? partnerOfficeTypeRepository.findOne(1) : partnerOfficeTypeRepository.findOne(3));
 				partnerOfficeRepository.saveAndFlush(partnerOffice);
