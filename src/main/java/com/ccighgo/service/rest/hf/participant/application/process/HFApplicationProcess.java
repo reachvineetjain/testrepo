@@ -18,8 +18,10 @@ import com.ccighgo.service.components.hf.participant.application.process.HFAppli
 import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFPetsList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
@@ -217,20 +219,21 @@ public class HFApplicationProcess {
    public HFBackgroundCheck getHFBackgroundDetails(@PathParam("hfSeasonId") String hfSeasonId) {
       return hfApplication.getHFBackgroundDetails(hfSeasonId);
    }
-   
+
    @GET
    @Path("progress/{hfSeasonId}")
    @Produces("application/json")
    public HFApplicationProgress getHFApplicationProgress(@PathParam("hfSeasonId") String hfSeasonId) {
       return hfApplication.getHFApplicationProgress(hfSeasonId);
    }
-   
+
    @POST
    @Path("submit")
    @Produces("application/json")
    public Response submitApplication(HFSubmitApplication application) {
       return hfApplication.submitApplication(application);
    }
+
    @POST
    @Path("changeProfilePic")
    @Consumes("application/json")
@@ -238,4 +241,37 @@ public class HFApplicationProcess {
    public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
       return hfApplication.changeProfilePicture(param);
    }
+
+   @GET
+   @Path("airportList")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFAirportList hfAirportList() {
+      return hfApplication.hfAirportList();
+   }
+
+   @GET
+   @Path("removeHostFamilyAirport/{hfAirportId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse removeHostFamilyAirport(@PathParam("hfAirportId") String hfAirportId) {
+      return hfApplication.removeHostFamilyAirport(Integer.valueOf(hfAirportId));
+   }
+
+   @GET
+   @Path("removeHostFamilyPet/{hfPetId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse removeHostFamilyPet(@PathParam("hfPetId") String hfPetId) {
+      return hfApplication.removeHostFamilyPet(Integer.parseInt(hfPetId));
+   }
+
+   @GET
+   @Path("removeHostFamilyAdult/{hfAdultId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse removeHostFamilyAdult(@PathParam("hfAdultId") String hfAdultId) {
+      return hfApplication.removeHostFamilyAdult(Integer.parseInt(hfAdultId));
+   }
+
 }

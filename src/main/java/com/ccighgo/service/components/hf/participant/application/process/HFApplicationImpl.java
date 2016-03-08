@@ -65,6 +65,8 @@ import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageC
 import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportData;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
@@ -1600,7 +1602,8 @@ public class HFApplicationImpl implements HFApplication {
       }
       return resp;
    }
- public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
+
+   public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
       WSDefaultResponse hp = new WSDefaultResponse();
       try {
          HostFamily hf = hostFamilyRepository.findOne(param.getHostFamilyGoId());
@@ -1613,5 +1616,70 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hp;
-	}
+   }
+
+   @Override
+   public HFAirportList hfAirportList() {
+      HFAirportList hp = new HFAirportList();
+      try {
+         List<Airport> airports = airportRepository.findAll();
+         for (Airport airport : airports) {
+            HFAirportData a = new HFAirportData();
+            a.setAirportCity(airport.getAirportCity());
+            a.setAirportCode(airport.getAirportCode());
+            a.setAirportName(airport.getAirportName());
+            a.setInternational(airport.getIsInternational() == CCIConstants.TRUE_BYTE);
+            hp.getAirportInfo().add(a);
+         }
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
+   @Override
+   public WSDefaultResponse removeHostFamilyAirport(int airportId) {
+      WSDefaultResponse hp = new WSDefaultResponse();
+      try {
+         hostFamilyAirportRepository.delete(airportId);
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
+   @Override
+   public WSDefaultResponse removeHostFamilyPet(int petId) {
+      WSDefaultResponse hp = new WSDefaultResponse();
+      try {
+         hostFamilyPetRepository.delete(petId);
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
+   @Override
+   public WSDefaultResponse removeHostFamilyAdult(int adultId) {
+      WSDefaultResponse hp = new WSDefaultResponse();
+      try {
+         hfMemberRepository.delete(adultId);
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
 }

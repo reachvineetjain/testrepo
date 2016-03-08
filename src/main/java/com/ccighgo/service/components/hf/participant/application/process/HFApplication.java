@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFPetsList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
@@ -173,5 +175,18 @@ public interface HFApplication {
     * @return
     */
    public Response submitApplication(HFSubmitApplication application);
+
+   /**
+    * 
+    * @param goId
+    * @return
+    */
+   public HFAirportList hfAirportList();
+
+   public WSDefaultResponse removeHostFamilyAirport(int hfAirportId);
+
+   public WSDefaultResponse removeHostFamilyPet(int hfPetId);
+
+   public WSDefaultResponse removeHostFamilyAdult(int hfAdultId);
 
 }
