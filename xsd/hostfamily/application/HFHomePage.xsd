@@ -19,6 +19,11 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="applicantName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostfamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostFamilyGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="announcements" type="pu:HFAnnouncements" minOccurs="1" maxOccurs="unbounded" />
                <xsd:element name="applicationCheckList" type="pu:HFApplicationCheckList" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
@@ -48,6 +53,8 @@
       <xsd:sequence>
          <xsd:element name="category" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		 <xsd:element name="hostFamilyApplicationCategoriesId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+		      
       </xsd:sequence>
    </xsd:complexType>
 </xsd:schema>
