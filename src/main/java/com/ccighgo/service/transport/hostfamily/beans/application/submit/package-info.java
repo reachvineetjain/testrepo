@@ -5,5 +5,5 @@
 // Generated on: 2016.03.08 at 03:18:28 PM CST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/common")
-package com.ccighgo.service.transport.common.response.beans;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/hfsubmit")
+package com.ccighgo.service.transport.hostfamily.beans.application.submit;

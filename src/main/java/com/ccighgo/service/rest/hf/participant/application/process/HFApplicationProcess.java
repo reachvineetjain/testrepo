@@ -21,15 +21,19 @@ import com.ccighgo.service.components.hf.participant.application.process.util.HF
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescription;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
+import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -204,6 +208,27 @@ public class HFApplicationProcess {
    @Produces("application/json")
    public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam) {
       return hfApplication.fetchHFCoummnityAndSchool(descriptionPageParam);
+   }
+
+   @GET
+   @Path("background/details/{hfSeasonId}")
+   @Produces("application/json")
+   public HFBackgroundCheck getHFBackgroundDetails(@PathParam("hfSeasonId") String hfSeasonId) {
+      return hfApplication.getHFBackgroundDetails(hfSeasonId);
+   }
+   
+   @GET
+   @Path("progress/{hfSeasonId}")
+   @Produces("application/json")
+   public HFApplicationProgress getHFApplicationProgress(@PathParam("hfSeasonId") String hfSeasonId) {
+      return hfApplication.getHFApplicationProgress(hfSeasonId);
+   }
+   
+   @POST
+   @Path("submit")
+   @Produces("application/json")
+   public Response submitApplication(HFSubmitApplication application) {
+      return hfApplication.submitApplication(application);
    }
 
 }

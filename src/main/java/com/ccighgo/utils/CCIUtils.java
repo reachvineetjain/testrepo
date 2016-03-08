@@ -97,7 +97,7 @@ public class CCIUtils {
     }
     
     public static Double getFormFilledPercentage(Integer totalFields, Integer filledOnes){
-       Double filledPercentage = (double) ((filledOnes/totalFields)*100);
+       Double filledPercentage = (double) (filledOnes*100.0d)/totalFields;
        return filledPercentage;
     }
 
