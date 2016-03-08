@@ -838,7 +838,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             return usr;
          }
          CCIStaffUser cciStaffUser = cciUsersRepository.findOne(user.getCciUserId());
-         if (cciStaffUser.equals(null)) {
+         if (cciStaffUser == null) {
             user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));

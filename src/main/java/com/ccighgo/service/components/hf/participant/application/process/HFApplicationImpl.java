@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ccighgo.db.entities.Airport;
 import com.ccighgo.db.entities.HostFamily;
 import com.ccighgo.db.entities.HostFamilyAirport;
-import com.ccighgo.db.entities.HostFamilyAnnouncement;
+import com.ccighgo.db.entities.HostFamilyBackground;
 import com.ccighgo.db.entities.HostFamilyCommunity;
 import com.ccighgo.db.entities.HostFamilyDetail;
 import com.ccighgo.db.entities.HostFamilyGeneralQuestion;
@@ -41,6 +41,7 @@ import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAirportRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAnnouncementRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAnnouncementResultRepository;
+import com.ccighgo.jpa.repositories.HostFamilyBackgroundRepository;
 import com.ccighgo.jpa.repositories.HostFamilyCommunityRepository;
 import com.ccighgo.jpa.repositories.HostFamilyDetailRepository;
 import com.ccighgo.jpa.repositories.HostFamilyGeneralQuestionRepository;
@@ -68,6 +69,8 @@ import com.ccighgo.service.components.hf.participant.application.process.util.HF
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
+import com.ccighgo.service.transport.hostfamily.beans.application.background.check.Member;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAdultDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAirport;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
@@ -86,16 +89,17 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityand
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFSchoolLife;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescription;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
-import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFAnnouncements;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckList;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckListStages;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
-import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
+import com.ccighgo.service.transport.hostfamily.beans.application.progress.Progress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.Reference;
+import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
@@ -140,6 +144,7 @@ public class HFApplicationImpl implements HFApplication {
    @Autowired HostFamilyPotentialReferenceRepository hostFamilyPotentialReferenceRepository;
    @Autowired HostFamilyGeneralQuestionRepository hostFamilyGeneralQuestionRepository;
    @Autowired HostFamilyReferenceRepository hostFamilyReferenceRepository;
+   @Autowired HostFamilyBackgroundRepository hostFamilyBackgroundRepository;
 
    @Autowired EntityManager em;
 
@@ -153,6 +158,9 @@ public class HFApplicationImpl implements HFApplication {
    private static final String SP_HF_HOME = "CALL SPHostFamilyApplicationHome(?,?,?)";
    private static final String SP_HF_COMMUNITY = "CALL SPHostFamilyApplicationCommunity(?,?,?)";
    private static final String SP_HF_SCHOOL_LIFE = "CALL SPHostFamilyApplicationSchoolLife (?,?,?)";
+
+   private static final String COMPLETED = "Completed";
+   private static final String NOT_COMPLETED = "Not Completed";
 
    @Override
    @Transactional
@@ -1423,7 +1431,176 @@ public class HFApplicationImpl implements HFApplication {
    }
 
    @Override
-   public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
+   @Transactional(readOnly = true)
+   public HFBackgroundCheck getHFBackgroundDetails(String hfSeasonId) {
+      HFBackgroundCheck backgroundCheck = new HFBackgroundCheck();
+      try {
+         if (hfSeasonId == null) {
+            throw new CcighgoException("invalid search parameters");
+         }
+         List<HostFamilyBackground> hfBackground = hostFamilyBackgroundRepository.getBySeasonId(Integer.valueOf(hfSeasonId));
+         int noOfMembers = 0;
+         int completed = 0;
+         if (hfBackground != null && hfBackground.size() > 0) {
+            noOfMembers = hfBackground.size();
+            List<Member> members = new ArrayList<Member>();
+            for (HostFamilyBackground hfb : hfBackground) {
+               Member m = new Member();
+               m.setFirstName(hfb.getFirstName());
+               m.setLastName(hfb.getLastName());
+               m.setBirthDate(DateUtils.getUSDate(hfb.getBirthDate()));
+               m.setRelationship(hfb.getRelationshipToHostParent());
+               m.setBackgroundCheckStatus(hfb.getStatus().equals(CCIConstants.ACTIVE) ? COMPLETED : NOT_COMPLETED);
+               if (hfb.getStatus().equals(CCIConstants.ACTIVE)) {
+                  completed += 1;
+               }
+               m.setDateCheckedByCCI(DateUtils.getUSDate(hfb.getDateCheckedByCCI()));
+               members.add(m);
+            }
+            // percent complete calculated based on how many members completed
+            // background check over total number of members.
+            if (noOfMembers > 0 && completed > 0) {
+               backgroundCheck.setPercentUpdate(CCIUtils.getFormFilledPercentage(noOfMembers, completed));
+            } else {
+               backgroundCheck.setPercentUpdate(new Double(0));
+            }
+            backgroundCheck.setHfSeasonId(Integer.valueOf(hfSeasonId));
+            backgroundCheck.getMembers().addAll(members);
+            backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (CcighgoException e) {
+         backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return backgroundCheck;
+   }
+
+   @Override
+   @Transactional(readOnly = true)
+   public HFApplicationProgress getHFApplicationProgress(String hfSeasonId) {
+      HFApplicationProgress appProgress = new HFApplicationProgress();
+      try {
+         if (hfSeasonId == null) {
+            throw new CcighgoException("invalid search parameters");
+         }
+         List<HostFamilySeasonCategory> categoriesList = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonId(Integer.valueOf(hfSeasonId));
+         if (categoriesList != null) {
+            appProgress.setHfSeasonId(Integer.valueOf(hfSeasonId));
+            for (HostFamilySeasonCategory cat : categoriesList) {
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.FAMILY_BASICS) {
+                  Progress familyBasics = new Progress();
+                  familyBasics.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  familyBasics.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  familyBasics.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setFamilyBasics(familyBasics);
+               }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.FAMILY_LIFESTYLE) {
+                  Progress familyLifeStyle = new Progress();
+                  familyLifeStyle.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  familyLifeStyle.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  familyLifeStyle.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setFamilyLifeStyle(familyLifeStyle);
+               }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.HOUSE_HOME) {
+                  Progress houseAndHome = new Progress();
+                  houseAndHome.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  houseAndHome.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  houseAndHome.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setHouseAndHome(houseAndHome);
+               }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.COMMUNITY) {
+                  Progress communityAndSchool = new Progress();
+                  communityAndSchool.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  communityAndSchool.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  communityAndSchool.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setCommunityAndSchool(communityAndSchool);
+               }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.WHY_HOST) {
+                  Progress whyHost = new Progress();
+                  whyHost.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  whyHost.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  whyHost.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setWhyHost(whyHost);
+               }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.PHOTO_ALBUM) {
+                  Progress photoAlbum = new Progress();
+                  photoAlbum.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  photoAlbum.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  photoAlbum.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setPhotoAlbum(photoAlbum);
+               }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.REFRENCES) {
+                  Progress references = new Progress();
+                  references.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  references.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  references.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setReferences(references);
+               }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.BG_CHECK) {
+                  Progress backgroundCheck = new Progress();
+                  backgroundCheck.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  backgroundCheck.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  List<HostFamilyBackground> hfBackground = hostFamilyBackgroundRepository.getBySeasonId(Integer.valueOf(hfSeasonId));
+                  int noOfMembers = 0;
+                  int completed = 0;
+                  if (hfBackground != null && hfBackground.size() > 0) {
+                     noOfMembers = hfBackground.size();
+                     for (HostFamilyBackground hfb : hfBackground) {
+                        if (hfb.getStatus().equals(CCIConstants.ACTIVE)) {
+                           completed += 1;
+                        }
+                     }
+                     if (noOfMembers > 0 && completed > 0) {
+                        backgroundCheck.setPercentFilled(CCIUtils.getFormFilledPercentage(noOfMembers, completed));
+                     } else {
+                        backgroundCheck.setPercentFilled(new Double(0));
+                     }
+                  }
+                  appProgress.setReferences(backgroundCheck);
+               }
+            }
+            appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (CcighgoException e) {
+         appProgress.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return appProgress;
+   }
+
+   @Override
+   @Transactional
+   public Response submitApplication(HFSubmitApplication application) {
+      Response resp = new Response();
+      try {
+         if (application.getSignature() == null) {
+            throw new CcighgoException("signature is mandatory");
+         }
+         HostFamilySeason hfSeason = hostFamilySeasonRepository.findOne(application.getSeasonId());
+         if (hfSeason != null) {
+            hfSeason.setSignature(application.getSignature());
+            hfSeason.setModifiedBy(application.getLoginId());
+            hostFamilySeasonRepository.saveAndFlush(hfSeason);
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), "no records found to update"));
+         }
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return resp;
+   }
+ public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
       WSDefaultResponse hp = new WSDefaultResponse();
       try {
          HostFamily hf = hostFamilyRepository.findOne(param.getHostFamilyGoId());
@@ -1436,5 +1613,5 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hp;
-   }
+	}
 }

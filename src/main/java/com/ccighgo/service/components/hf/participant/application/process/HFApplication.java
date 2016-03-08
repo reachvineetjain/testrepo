@@ -12,6 +12,7 @@ import com.ccighgo.service.components.hf.participant.application.process.util.HF
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
@@ -19,7 +20,9 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescrip
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
+import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -152,5 +155,23 @@ public interface HFApplication {
     * @return
     */
    public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param);
+
+   /**
+    * @param hfSeasonId
+    * @return
+    */
+   public HFBackgroundCheck getHFBackgroundDetails(String hfSeasonId);
+
+   /**
+    * @param hfSeasonId
+    * @return
+    */
+   public HFApplicationProgress getHFApplicationProgress(String hfSeasonId);
+
+   /**
+    * @param hfSeasonId
+    * @return
+    */
+   public Response submitApplication(HFSubmitApplication application);
 
 }
