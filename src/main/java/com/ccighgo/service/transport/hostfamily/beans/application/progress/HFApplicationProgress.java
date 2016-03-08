@@ -66,6 +66,8 @@ public class HFApplicationProgress
     @XmlElement(required = true)
     protected Progress communityAndSchool;
     @XmlElement(required = true)
+    protected Progress whyHost;
+    @XmlElement(required = true)
     protected Progress photoAlbum;
     @XmlElement(required = true)
     protected Progress references;
@@ -182,6 +184,30 @@ public class HFApplicationProgress
      */
     public void setCommunityAndSchool(Progress value) {
         this.communityAndSchool = value;
+    }
+    
+    /**
+     * Gets the value of the whyHost property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Progress }
+     *     
+     */
+    public Progress getWhyHost() {
+        return whyHost;
+    }
+
+    /**
+     * Sets the value of the whyHost property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Progress }
+     *     
+     */
+    public void setWhyHost(Progress value) {
+        this.whyHost = value;
     }
 
     /**
