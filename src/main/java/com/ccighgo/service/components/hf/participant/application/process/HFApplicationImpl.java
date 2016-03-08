@@ -62,6 +62,7 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
+import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
@@ -415,6 +416,11 @@ public class HFApplicationImpl implements HFApplication {
                if (stage.getStatus().equalsIgnoreCase("true"))
                   completedCategoriesCount++;
                applicationChecklist.setPhotoUrl(String.valueOf(obj[3]));
+               hp.setHostfamilySeasonId(Integer.valueOf(String.valueOf(obj[4])));
+               hp.setSeasonId(Integer.valueOf(String.valueOf(obj[5])));
+               hp.setDepartmentProgramId(Integer.valueOf(String.valueOf(obj[6])));
+               hp.setHostFamilyGoId(Integer.valueOf(String.valueOf(obj[7])));
+               stage.setHostFamilyApplicationCategoriesId(Integer.valueOf(String.valueOf(obj[8])));
                applicationChecklist.getStages().add(stage);
                size++;
             }
@@ -1594,4 +1600,18 @@ public class HFApplicationImpl implements HFApplication {
       }
       return resp;
    }
+ public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
+      WSDefaultResponse hp = new WSDefaultResponse();
+      try {
+         HostFamily hf = hostFamilyRepository.findOne(param.getHostFamilyGoId());
+         hf.setPhoto(param.getPhotoUrl());
+         hostFamilyRepository.saveAndFlush(hf);
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+	}
 }

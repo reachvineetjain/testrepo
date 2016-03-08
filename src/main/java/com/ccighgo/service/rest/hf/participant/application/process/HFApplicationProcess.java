@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.hf.participant.application.process.HFApplication;
+import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
@@ -230,5 +231,11 @@ public class HFApplicationProcess {
    public Response submitApplication(HFSubmitApplication application) {
       return hfApplication.submitApplication(application);
    }
-
+   @POST
+   @Path("changeProfilePic")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
+      return hfApplication.changeProfilePicture(param);
+   }
 }

@@ -5,6 +5,7 @@ package com.ccighgo.service.components.hf.participant.application.process;
 
 import org.springframework.stereotype.Service;
 
+import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
@@ -146,6 +147,14 @@ public interface HFApplication {
     * @return
     */
    public HostFamilyReferences getHFReference(String hfSeasonId, String applicationCategoryId);
+
+   /**
+    * 
+    * @param goId
+    * @param picUrl2
+    * @return
+    */
+   public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param);
 
    /**
     * @param hfSeasonId
