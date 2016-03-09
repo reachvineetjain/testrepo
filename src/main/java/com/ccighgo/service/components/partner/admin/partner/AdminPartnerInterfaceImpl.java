@@ -288,6 +288,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                // partner status
                String status = null;
                List<PartnerReviewStatus> partnerReviewStatuses = p.getPartnerReviewStatuses();
+               if (!(prs.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
                if (partnerReviewStatuses != null && !partnerReviewStatuses.isEmpty()) {
                   if (partnerReviewStatuses.get(0).getPartnerStatus2() != null) {
                      status = partnerReviewStatuses.get(0).getPartnerStatus2().getPartnerStatusName();
@@ -311,6 +312,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          addedPartners.getAddedPartners().addAll(addedPartnersList);
          addedPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
       } catch (CcighgoException e) {
          addedPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());

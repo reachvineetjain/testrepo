@@ -102,7 +102,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
    public static final Integer APPROVED_STATUS = 5;
    public static final Integer VALID = 11;
-   public static final Integer DELETED_STATUS = 13;
 
    @Override
    @Transactional
@@ -119,7 +118,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartnerDetails.setCount(subPartnerList.size());
          for (Partner subPartner : subPartnerList) {
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(subPartner.getPartnerGoId());
-            if (!(reviewStatus.getPartnerStatus2().getPartnerStatusId() == DELETED_STATUS)) {
+            if (!(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
                SubPartners sp = new SubPartners();
                sp.setSubPartnerId(subPartner.getPartnerGoId());
                if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
@@ -799,7 +798,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (goId != null) {
             Partner partner = partnerRepository.findOne(Integer.valueOf(goId));
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(partner.getPartnerGoId());
-            reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(DELETED_STATUS));
+            reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.DELETED_STATUS));
             partnerReviewStatusRepository.saveAndFlush(reviewStatus);
             Login login = loginRepository.findByGoId(partner.getGoIdSequence());
             login.setActive(CCIConstants.INACTIVE);
