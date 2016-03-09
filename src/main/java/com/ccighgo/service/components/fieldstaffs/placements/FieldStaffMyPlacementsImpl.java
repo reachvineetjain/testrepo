@@ -75,7 +75,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
                placement.setParticipantStatus(String.valueOf(obj[7]));
                placement.setHolds(String.valueOf(obj[8]));
                placement.setPicUrl(String.valueOf(obj[9]));
-               placement.setFlagUrl(String.valueOf(obj[9]));
+               placement.setFlagUrl(String.valueOf(obj[10]));
                myPlacements.getTypes().add(placement);
             }
             myPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),

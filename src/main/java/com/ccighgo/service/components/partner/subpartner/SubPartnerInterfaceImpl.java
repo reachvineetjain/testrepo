@@ -100,9 +100,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired CountryRepository countryRepository;
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
 
-   public static final Integer APPROVED_STATUS =5;
+   public static final Integer APPROVED_STATUS = 5;
    public static final Integer VALID = 11;
-   public static final Integer DELETED_STATUS =13;
 
    @Override
    @Transactional
@@ -119,7 +118,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartnerDetails.setCount(subPartnerList.size());
          for (Partner subPartner : subPartnerList) {
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(subPartner.getPartnerGoId());
-            if (!(reviewStatus.getPartnerStatus2().getPartnerStatusId() == DELETED_STATUS)) {
+            if (!(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
                SubPartners sp = new SubPartners();
                sp.setSubPartnerId(subPartner.getPartnerGoId());
                if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
@@ -607,8 +606,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
          responce.setGoId(goIdSequence.getGoId());
-         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_SUB_PARTNER.getValue(),
                messageUtil.getMessage(SubPartnerMessageConstants.FAILED_CREATE_SUB_PARTNER)));
@@ -718,8 +717,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerUserRepository.saveAndFlush(partnerContact);
          }
 
-         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_SUB_PARTNER.getValue(),
                messageUtil.getMessage(SubPartnerMessageConstants.FAILED_UPDATE_SUB_PARTNER)));
@@ -744,8 +743,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          else
-            as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            as.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          as.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCH_SALUTATION.getValue(),
@@ -799,8 +798,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (goId != null) {
             Partner partner = partnerRepository.findOne(Integer.valueOf(goId));
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(partner.getPartnerGoId());
-            reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(DELETED_STATUS));
+            reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.DELETED_STATUS));
             partnerReviewStatusRepository.saveAndFlush(reviewStatus);
+            Login login = loginRepository.findByGoId(partner.getGoIdSequence());
+            login.setActive(CCIConstants.INACTIVE);
+            loginRepository.save(login);
 
          } else {
             wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_CHANGE_HAPPEN.getValue(),

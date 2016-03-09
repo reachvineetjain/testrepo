@@ -58,9 +58,7 @@ public interface FieldStaffsInterface {
 
    public PendingApplication getFSPendingApplication(int parseInt, int parseInt2, int parseInt3, String roleType);
 
-   public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId, String category);
-
-   public AdminFieldStaffHostFamily getAllHostFamiliesAll(int fieldStaffId);
+   public AdminFieldStaffHostFamily getFSHostFamilies(int fieldStaffId, int flagId, String category); 
 
    public FieldStaffDashboardApplicationStats getFSApplicationStats(int typeId, int categoryId);
 

@@ -30,6 +30,7 @@
             <xsd:sequence>
                <xsd:element name="superRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="superRegionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="AssignedERDStaff" type="assignedsuperregion:AssignedERDStaff" minOccurs="0" maxOccurs="unbounded" />
             </xsd:sequence>
    </xsd:complexType>

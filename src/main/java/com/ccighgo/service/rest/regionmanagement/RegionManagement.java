@@ -25,9 +25,11 @@ import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
  * <p>
  * Rest service interface exposes list of services for Season Region management.
  * <P>
- * See {@link com.ccighgo.service.components.regionmanagement.RegionManagementServices} for service interface injected
- * for business logic and {@link com.ccighgo.service.components.regionmanagement.RegionManagementServicesImpl} for
- * actual business logic.
+ * See
+ * {@link com.ccighgo.service.components.regionmanagement.RegionManagementServices}
+ * for service interface injected for business logic and
+ * {@link com.ccighgo.service.components.regionmanagement.RegionManagementServicesImpl}
+ * for actual business logic.
  * </p>
  * 
  * @see com.ccighgo.service.components.regionmanagement.RegionManagementServices
@@ -43,8 +45,7 @@ public class RegionManagement {
 
    private static final Logger LOGGER = Logger.getLogger(RegionManagement.class);
 
-   @Autowired
-   RegionManagementServices regionManagementServices;
+   @Autowired RegionManagementServices regionManagementServices;
 
    @GET
    @Path("ping/region/{input}")
@@ -55,8 +56,9 @@ public class RegionManagement {
    }
 
    /**
-    * REST Service to get the region management details for the season. Service returns JSON object containing list of
-    * super regions and regions and states contained within or returns empty object if details not found.
+    * REST Service to get the region management details for the season. Service
+    * returns JSON object containing list of super regions and regions and
+    * states contained within or returns empty object if details not found.
     * 
     * @param seasonId
     * @return RegionManagementDetails JSON object
@@ -222,7 +224,7 @@ public class RegionManagement {
       LOGGER.debug("Calling 'moveRegions' moving region and adding it to different super region");
       return regionManagementServices.moveRegions(mvRegions);
    }
-   
+
    /**
     * @param superRegionId
     * @param seasonId
@@ -231,11 +233,10 @@ public class RegionManagement {
    @GET
    @Path("delete/state/{seasonId}/{superRegionId}/{regionId}/{stateId}")
    @Produces("application/json")
-   public DeleteRequest deleteState(@PathParam("seasonId") String seasonId, @PathParam("superRegionId") String superRegionId, @PathParam("regionId") String regionId,@PathParam("stateId") String stateId) {
+   public DeleteRequest deleteState(@PathParam("seasonId") String seasonId, @PathParam("superRegionId") String superRegionId, @PathParam("regionId") String regionId,
+         @PathParam("stateId") String stateId) {
       LOGGER.debug("Calling 'deleteState'");
-      return regionManagementServices.deleteState(seasonId, superRegionId, regionId,stateId);
+      return regionManagementServices.deleteState(seasonId, superRegionId, regionId, stateId);
    }
 
-   
-   
 }

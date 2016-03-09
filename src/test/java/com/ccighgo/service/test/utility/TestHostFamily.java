@@ -16,8 +16,8 @@ import com.ccighgo.jpa.repositories.HostFamilyInquiryRepository;
  * @author CreoDeveloper
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("applicationContext.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("applicationContext.xml")
 public class TestHostFamily {
 
 	@Autowired 
@@ -25,7 +25,7 @@ public class TestHostFamily {
 	@Autowired
 	GoIdSequenceRepository goIdSequenceRepository;
 	
-	@Test
+	//@Test
 	public void test() {
 		HostFamilyInquiry pa = new HostFamilyInquiry();
 		pa.setAddress("819 somerset ");
