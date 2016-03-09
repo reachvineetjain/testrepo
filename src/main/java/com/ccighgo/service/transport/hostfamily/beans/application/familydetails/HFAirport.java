@@ -5,7 +5,6 @@
 // Generated on: 2016.03.03 at 12:48:06 PM CST 
 //
 
-
 package com.ccighgo.service.transport.hostfamily.beans.application.familydetails;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for HFAirport complex type.
+ * <p>
+ * Java class for HFAirport complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="HFAirport">
@@ -38,108 +39,107 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HFAirport", propOrder = {
-    "hostFamilyAirportId",
-    "airportId",
-    "airport",
-    "distanceToNearestAirport",
-    "city"
-})
+@XmlType(name = "HFAirport", propOrder = { "hostFamilyAirportId", "airportId", "airport", "distanceToNearestAirport", "city", "airportName" })
 public class HFAirport {
 
-    protected int hostFamilyAirportId;
-    protected int airportId;
-    protected boolean airport;
-    protected int distanceToNearestAirport;
-    @XmlElement(required = true)
-    protected String city;
+   protected int hostFamilyAirportId;
+   protected int airportId;
+   protected boolean airport;
+   protected int distanceToNearestAirport;
+   @XmlElement(required = true) protected String city;
+   private String airportName;
 
-    /**
-     * Gets the value of the hostFamilyAirportId property.
-     * 
-     */
-    public int getHostFamilyAirportId() {
-        return hostFamilyAirportId;
-    }
+   /**
+    * Gets the value of the hostFamilyAirportId property.
+    * 
+    */
+   public int getHostFamilyAirportId() {
+      return hostFamilyAirportId;
+   }
 
-    /**
-     * Sets the value of the hostFamilyAirportId property.
-     * 
-     */
-    public void setHostFamilyAirportId(int value) {
-        this.hostFamilyAirportId = value;
-    }
+   /**
+    * Sets the value of the hostFamilyAirportId property.
+    * 
+    */
+   public void setHostFamilyAirportId(int value) {
+      this.hostFamilyAirportId = value;
+   }
 
-    /**
-     * Gets the value of the airportId property.
-     * 
-     */
-    public int getAirportId() {
-        return airportId;
-    }
+   /**
+    * Gets the value of the airportId property.
+    * 
+    */
+   public int getAirportId() {
+      return airportId;
+   }
 
-    /**
-     * Sets the value of the airportId property.
-     * 
-     */
-    public void setAirportId(int value) {
-        this.airportId = value;
-    }
+   /**
+    * Sets the value of the airportId property.
+    * 
+    */
+   public void setAirportId(int value) {
+      this.airportId = value;
+   }
 
-    /**
-     * Gets the value of the airport property.
-     * 
-     */
-    public boolean isAirport() {
-        return airport;
-    }
+   /**
+    * Gets the value of the airport property.
+    * 
+    */
+   public boolean isAirport() {
+      return airport;
+   }
 
-    /**
-     * Sets the value of the airport property.
-     * 
-     */
-    public void setAirport(boolean value) {
-        this.airport = value;
-    }
+   /**
+    * Sets the value of the airport property.
+    * 
+    */
+   public void setAirport(boolean value) {
+      this.airport = value;
+   }
 
-    /**
-     * Gets the value of the distanceToNearestAirport property.
-     * 
-     */
-    public int getDistanceToNearestAirport() {
-        return distanceToNearestAirport;
-    }
+   /**
+    * Gets the value of the distanceToNearestAirport property.
+    * 
+    */
+   public int getDistanceToNearestAirport() {
+      return distanceToNearestAirport;
+   }
 
-    /**
-     * Sets the value of the distanceToNearestAirport property.
-     * 
-     */
-    public void setDistanceToNearestAirport(int value) {
-        this.distanceToNearestAirport = value;
-    }
+   /**
+    * Sets the value of the distanceToNearestAirport property.
+    * 
+    */
+   public void setDistanceToNearestAirport(int value) {
+      this.distanceToNearestAirport = value;
+   }
 
-    /**
-     * Gets the value of the city property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCity() {
-        return city;
-    }
+   /**
+    * Gets the value of the city property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getCity() {
+      return city;
+   }
 
-    /**
-     * Sets the value of the city property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCity(String value) {
-        this.city = value;
-    }
+   /**
+    * Sets the value of the city property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setCity(String value) {
+      this.city = value;
+   }
+
+   public String getAirportName() {
+      return airportName;
+   }
+
+   public void setAirportName(String airportName) {
+      this.airportName = airportName;
+   }
 
 }
