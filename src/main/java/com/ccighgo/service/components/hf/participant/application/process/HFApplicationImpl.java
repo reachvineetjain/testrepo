@@ -643,6 +643,9 @@ public class HFApplicationImpl implements HFApplication {
                // hfa.`distanceToAirport`
                airport.setDistanceToNearestAirport(Integer.valueOf(String.valueOf(obj[1])));
                airport.setHostFamilyAirportId(Integer.valueOf(String.valueOf(obj[2])));
+               HostFamilyAirport h = hostFamilyAirportRepository.findOne(airport.getHostFamilyAirportId());
+               airport.setAirportId(h.getAirport().getAirportId());
+
                // airport.set
                hfbs.getAirports().add(airport);
             }
