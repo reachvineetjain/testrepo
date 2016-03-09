@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/fslnet" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/fslnet" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.fieldstaff.network" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="FieldStaffNetwork" type="pu:FieldStaffNetwork" />
+
+   <xsd:complexType name="FieldStaffNetwork">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="fslNetworks" type="pu:FSLNetwork" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="FSLNetwork">
+      <xsd:sequence>
+         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="state" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="type" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="homePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="dateOfInquiry" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="dateSubmittedToCCI" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasons" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>
+
