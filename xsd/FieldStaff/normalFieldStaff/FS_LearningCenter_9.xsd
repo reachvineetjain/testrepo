@@ -1,0 +1,50 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/learningcenter" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/learningcenter"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.learningcenter" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+   <xsd:complexType name="FSLearningCenter">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="urls" type="cd:FSLearningCenterDetails" maxOccurs="unbounded" />
+               <xsd:element name="inspirationVideos" type="cd:FSLearningCenterInspirationVideos" maxOccurs="unbounded" />
+               <xsd:element name="books" type="cd:FSLearningCenterBooks" maxOccurs="unbounded" />
+               <xsd:element name="cciGreenHeartConferences" type="cd:FSLearningCenterCCIGreenHeartConferencecs" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="FSLearningCenterDetails">
+            <xsd:sequence>
+               <xsd:element name="urlValue" type="xsd:string" />
+               <xsd:element name="urlName" type="xsd:string" />
+            </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="FSLearningCenterInspirationVideos">
+            <xsd:sequence>
+               <xsd:element name="urlValue" type="xsd:string" />
+               <xsd:element name="urlName" type="xsd:string" />
+            </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="FSLearningCenterBooks">
+            <xsd:sequence>
+               <xsd:element name="urlValue" type="xsd:string" />
+               <xsd:element name="urlName" type="xsd:string" />
+            </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="FSLearningCenterCCIGreenHeartConferencecs">
+            <xsd:sequence>
+               <xsd:element name="urlValue" type="xsd:string" />
+               <xsd:element name="urlName" type="xsd:string" />
+            </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

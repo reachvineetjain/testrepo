@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/fsrmContacts" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/fsrmContacts" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.rm.season.contacts" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="FSRMSeasonContacts" type="pu:FSRMSeasonContacts" />
+
+   <xsd:complexType name="FSRMSeasonContacts">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="fSRMSeasonContacts" type="pu:FSRMSeasonContact" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="FSRMSeasonContact">
+      <xsd:sequence>
+         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="rdPicture" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="rdFirstName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="rdLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="erdPicture" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="erdFirstName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="erdLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>
+
