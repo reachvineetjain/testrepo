@@ -637,7 +637,9 @@ public class HFApplicationImpl implements HFApplication {
                // a.`airportName`,
                // List<Airport> a =
                // airportRepository.getAirportByName(String.valueOf(obj[0]));
-               airport.setCity(String.valueOf(obj[0]));
+               // airport.set
+               airport.setAirportName(String.valueOf(obj[0]));
+               airport.setCity(String.valueOf(obj[3]));
                // hfa.`distanceToAirport`
                airport.setDistanceToNearestAirport(Integer.valueOf(String.valueOf(obj[1])));
                airport.setHostFamilyAirportId(Integer.valueOf(String.valueOf(obj[2])));
@@ -1629,6 +1631,7 @@ public class HFApplicationImpl implements HFApplication {
             a.setAirportCode(airport.getAirportCode());
             a.setAirportName(airport.getAirportName());
             a.setInternational(airport.getIsInternational() == CCIConstants.TRUE_BYTE);
+            a.setAirportId(airport.getAirportId());
             hp.getAirportInfo().add(a);
          }
          hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
