@@ -38,7 +38,13 @@ public interface FieldStaffLeadershipSeasonRepository extends JpaRepository<Fiel
 
    @Query("SELECT DISTINCT s.fieldStaffLeadershipSeasonId FROM FieldStaffLeadershipSeason s WHERE s.fieldStaff.fieldStaffGoId =?1 AND  s.season.seasonId = ?2 AND  s.seasonGeographyConfiguration.seasonGeographyConfigurationId =?3")
    Integer findRowByStaffIdAndSeasonIdAndSeasonGeographicId(Integer oldFieldStaffId, Integer seasonId, Integer seasonGeographyConfigurationId);
-   @Query("SELECT s.seasonGeographyConfiguration FROM FieldStaffLeadershipSeason s WHERE s.fieldStaff.fieldStaffGoId =?1" )
-   List<SeasonGeographyConfiguration>  findByFieldStaffGoId(int i);
+
+   @Query("SELECT s.seasonGeographyConfiguration FROM FieldStaffLeadershipSeason s WHERE s.fieldStaff.fieldStaffGoId =?1")
+   List<SeasonGeographyConfiguration> findByFieldStaffGoId(int i);
+   
+   @Modifying
+   @Query(value = "DELETE s FROM FieldStaffLeadershipSeason s where s.seasonGeographyConfigurationId =?1", nativeQuery = true)
+   void deleteRowBySeasonGeographyConfigurationId(Integer seasonGeographicConfigRow);
+
 
 }
