@@ -18,6 +18,8 @@ import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
+import com.ccighgo.jpa.repositories.FieldStaffSeasonRepository;
 import com.ccighgo.jpa.repositories.RegionRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
@@ -54,6 +56,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    @Autowired CommonComponentUtils componentUtils;
    @Autowired MessageUtils messageUtil;
    @Autowired StateRepository stateRepository;
+   @Autowired FieldStaffLeadershipSeasonRepository fieldStaffLeadershipSeasonRepository;
 
    @Override
    @Transactional(readOnly = true)
@@ -274,21 +277,28 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return request;
       }
       try {
+         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findByIdSuperRegionIdAndSeasonId(Integer.valueOf(superRegionId),
+               Integer.valueOf(seasonId));
+         for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
+            fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
+         }
          seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
          seasonGeographyConfigurationRepository.flush();
-         // Bugzilla 341: change request: If a Super Region is deleted from a season and that Super Region is not
-         // associated to any other season; then it should be removed from the SR lookup table.
+         // Bugzilla 341: change request: If a Super Region is deleted from a
+         // season and that Super Region is not
+         // associated to any other season; then it should be removed from the
+         // SR lookup table.
          boolean superRegionAssociated = false;
          List<Integer> distinctIds = seasonGeographyConfigurationRepository.findDistinctSeasons();
-         if(distinctIds!=null){
-            for(int id:distinctIds){
+         if (distinctIds != null) {
+            for (int id : distinctIds) {
                SeasonGeographyConfiguration config = seasonGeographyConfigurationRepository.findOne(id);
-               if(config.getSeason()!=null){
+               if (config.getSeason() != null) {
                   superRegionAssociated = true;
                }
             }
          }
-         if(!superRegionAssociated){
+         if (!superRegionAssociated) {
             superRegionRepository.delete(Integer.valueOf(superRegionId));
          }
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
