@@ -1577,7 +1577,6 @@ public class HFApplicationImpl implements HFApplication {
                   references.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   references.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
                   Double refCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
-                  System.out.println(refCompletion);
                   if (refCompletion.equals(new Double(100.0))) {
                      isReferenceComplete = true;
                   }
