@@ -275,5 +275,7 @@ public class CCIConstants {
    public static final int PHOTO_ALBUM = 6;
    public static final int REFRENCES = 7;
    public static final int BG_CHECK = 8;
+   public static final int SUBMIT_APPLICATION = 9;
+   
 
 }
