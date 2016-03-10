@@ -18,15 +18,7 @@
          <xsd:extension base="common:Response">
             <xsd:sequence>
                <xsd:element name="hfSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="familyBasics" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="familyLifeStyle" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="houseAndHome" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="communityAndSchool" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-                <xsd:element name="whyHost" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="photoAlbum" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="references" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="backgroundCheck" type="pu:Progress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="submitApplication" type="pu:Progress" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="sections" type="pu:Progress" minOccurs="0" maxOccurs="unbounded" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
