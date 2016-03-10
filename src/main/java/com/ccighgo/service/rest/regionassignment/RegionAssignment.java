@@ -111,7 +111,7 @@ public class RegionAssignment {
    @Path("assign/rdFieldStaff")
    @Produces("application/json")
    public WSDefaultResponse assignRDFieldStaffToRegion(AssignedRDToRegion assignedRDsToRegion) {
-      LOGGER.debug("fun : assignRDFieldStaffToState");
+      LOGGER.debug("fun : assignRDFieldStaffToRegion");
       return regionAssignmentServices.assignRDFieldStaffToRegion(assignedRDsToRegion);
    }
 
