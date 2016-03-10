@@ -26,6 +26,7 @@
                <xsd:element name="photoAlbum" type="pu:Progress" minOccurs="1" maxOccurs="1" />
                <xsd:element name="references" type="pu:Progress" minOccurs="1" maxOccurs="1" />
                <xsd:element name="backgroundCheck" type="pu:Progress" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="submitApplication" type="pu:Progress" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>

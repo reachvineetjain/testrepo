@@ -1570,13 +1570,22 @@ public class HFApplicationImpl implements HFApplication {
                   }
                   appProgress.setBackgroundCheck(backgroundCheck);
                }
+               if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.SUBMIT_APPLICATION) {
+                  Progress submitApplication = new Progress();
+                  submitApplication.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
+                  submitApplication.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  submitApplication.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
+                  appProgress.setSubmitApplication(submitApplication);
+               }
+               
             }
             appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         } else {
+              } else {
             appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
+         
       } catch (CcighgoException e) {
          appProgress.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
