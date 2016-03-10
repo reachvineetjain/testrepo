@@ -1496,65 +1496,101 @@ public class HFApplicationImpl implements HFApplication {
          }
          List<HostFamilySeasonCategory> categoriesList = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonId(Integer.valueOf(hfSeasonId));
          if (categoriesList != null) {
-            appProgress.setHfSeasonId(Integer.valueOf(hfSeasonId));
+            List<Progress> sectionList = new ArrayList<Progress>();
+            boolean isFamilyBasicComplete = false;
+            boolean isFamilyLifeStyleComplete = false;
+            boolean isHouseHomeComplete = false;
+            boolean isCommunityComplete = false;
+            boolean isWhyHostComplete = false;
+            boolean isPhotoAlbumComplete = false;
+            boolean isReferenceComplete = false;
+            boolean isBackgroundComplete = false;
             for (HostFamilySeasonCategory cat : categoriesList) {
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.FAMILY_BASICS) {
                   Progress familyBasics = new Progress();
                   familyBasics.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   familyBasics.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  familyBasics.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setFamilyBasics(familyBasics);
+                  Double fmBasicCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
+                  if (fmBasicCompletion.equals(new Double(100.0))) {
+                     isFamilyBasicComplete = true;
+                  }
+                  familyBasics.setPercentFilled(fmBasicCompletion);
+                  sectionList.add(familyBasics);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.FAMILY_LIFESTYLE) {
                   Progress familyLifeStyle = new Progress();
                   familyLifeStyle.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   familyLifeStyle.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  familyLifeStyle.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setFamilyLifeStyle(familyLifeStyle);
+                  Double fmLfsCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
+                  if (fmLfsCompletion.equals(new Double(100.0))) {
+                     isFamilyLifeStyleComplete = true;
+                  }
+                  familyLifeStyle.setPercentFilled(fmLfsCompletion);
+                  sectionList.add(familyLifeStyle);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.HOUSE_HOME) {
                   Progress houseAndHome = new Progress();
                   houseAndHome.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   houseAndHome.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  houseAndHome.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setHouseAndHome(houseAndHome);
+                  Double hhCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
+                  if (hhCompletion.equals(new Double(100.0))) {
+                     isHouseHomeComplete = true;
+                  }
+                  houseAndHome.setPercentFilled(hhCompletion);
+                  sectionList.add(houseAndHome);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.COMMUNITY) {
                   Progress communityAndSchool = new Progress();
                   communityAndSchool.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   communityAndSchool.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  communityAndSchool.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setCommunityAndSchool(communityAndSchool);
+                  Double communityCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
+                  if (communityCompletion.equals(new Double(100.0))) {
+                     isCommunityComplete = true;
+                  }
+                  communityAndSchool.setPercentFilled(communityCompletion);
+                  sectionList.add(communityAndSchool);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.WHY_HOST) {
                   Progress whyHost = new Progress();
                   whyHost.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   whyHost.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  whyHost.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setWhyHost(whyHost);
+                  Double whyHostCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
+                  if (whyHostCompletion.equals(new Double(100.0))) {
+                     isWhyHostComplete = true;
+                  }
+                  whyHost.setPercentFilled(whyHostCompletion);
+                  sectionList.add(whyHost);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.PHOTO_ALBUM) {
                   Progress photoAlbum = new Progress();
                   photoAlbum.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   photoAlbum.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  photoAlbum.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setPhotoAlbum(photoAlbum);
+                  Double photoAlbumCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
+                  if (photoAlbumCompletion.equals(new Double(100.0))) {
+                     isPhotoAlbumComplete = true;
+                  }
+                  photoAlbum.setPercentFilled(photoAlbumCompletion);
+                  sectionList.add(photoAlbum);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.REFRENCES) {
                   Progress references = new Progress();
                   references.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   references.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  references.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setReferences(references);
+                  Double refCompletion = CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields());
+                  if (refCompletion.equals(new Double(100.0))) {
+                     isReferenceComplete = true;
+                  }
+                  references.setPercentFilled(refCompletion);
+                  sectionList.add(references);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.BG_CHECK) {
                   Progress backgroundCheck = new Progress();
                   backgroundCheck.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   backgroundCheck.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  backgroundCheck.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
                   List<HostFamilyBackground> hfBackground = hostFamilyBackgroundRepository.getBySeasonId(Integer.valueOf(hfSeasonId));
                   int noOfMembers = 0;
                   int completed = 0;
+                  Double bgCheck = new Double(0);
                   if (hfBackground != null && hfBackground.size() > 0) {
                      noOfMembers = hfBackground.size();
                      for (HostFamilyBackground hfb : hfBackground) {
@@ -1563,29 +1599,37 @@ public class HFApplicationImpl implements HFApplication {
                         }
                      }
                      if (noOfMembers > 0 && completed > 0) {
-                        backgroundCheck.setPercentFilled(CCIUtils.getFormFilledPercentage(noOfMembers, completed));
-                     } else {
-                        backgroundCheck.setPercentFilled(new Double(0));
+                        bgCheck = CCIUtils.getFormFilledPercentage(noOfMembers, completed);
                      }
+                     if (bgCheck.equals(new Double(100.0))) {
+                        isBackgroundComplete = true;
+                     }
+                     backgroundCheck.setPercentFilled(bgCheck);
                   }
-                  appProgress.setBackgroundCheck(backgroundCheck);
+                  sectionList.add(backgroundCheck);
                }
                if (cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId() == CCIConstants.SUBMIT_APPLICATION) {
                   Progress submitApplication = new Progress();
                   submitApplication.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   submitApplication.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
-                  submitApplication.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
-                  appProgress.setSubmitApplication(submitApplication);
+                  if (isFamilyBasicComplete && isFamilyLifeStyleComplete && isHouseHomeComplete && isCommunityComplete && isWhyHostComplete && isPhotoAlbumComplete
+                        && isReferenceComplete && isBackgroundComplete) {
+                     submitApplication.setPercentFilled(new Double(100.0));
+                  } else {
+                     submitApplication.setPercentFilled(new Double(0));
+                  }
+                  sectionList.add(submitApplication);
                }
-               
             }
+            appProgress.setHfSeasonId(Integer.valueOf(hfSeasonId));
+            appProgress.getSections().addAll(sectionList);
             appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-              } else {
+         } else {
             appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         
+
       } catch (CcighgoException e) {
          appProgress.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
