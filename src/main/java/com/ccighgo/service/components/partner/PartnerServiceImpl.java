@@ -805,6 +805,7 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
                         PartnerIHPProgram prg = new PartnerIHPProgram();
                         prg.setProgramName(partSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
+                        prg.setApplicationDeadlineDate(DateUtils.getMMddyyDate((partSeason.getPartnerSeasonAppDeadlineDate())));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonStatus().getStatus());
                         partnerIHPProgramsList.add(prg);
                      }
