@@ -266,6 +266,11 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                if (region != null) {
                   rd.setRegionId(region.getRegionId());
                   rd.setRegionName(region.getRegionName());
+
+                  SeasonGeographyConfiguration configurations = seasonGeographyConfigurationRepository.findRegionRowBySuperRegionIdRegionIdSeasonId(superRegionId,
+                        region.getRegionId(), seasonId);
+                  rd.setSeasonGeographyConfigurationId(configurations.getSeasonGeographyConfigurationId());
+                  
                   List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findAllFieldStaffBySeasonIdSuperRegionIdRegionIdAndFieldStaffType(seasonId,
                         superRegionId, region.getRegionId(), CCIConstants.FieldStaffTypeCode_RD);
                   if (assignedUsers != null) {
@@ -426,6 +431,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   sInfo.setStateCode(state.getStateCode());
                   sInfo.setStateName(state.getStateName());
                   sInfo.setStateId(state.getUsStatesId());
+
+                  SeasonGeographyConfiguration configurations = seasonGeographyConfigurationRepository.findStateRowBySuperRegionIdRegionIdStateIdSeasonId(superRegionId, regionId,
+                        state.getUsStatesId(), seasonId);
+                  sInfo.setSeasonGeographyConfigurationId(configurations.getSeasonGeographyConfigurationId());
 
                   List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonIdSuperRegionIdRegionIdAndStateId(seasonId,
                         superRegionId, regionId, state.getUsStatesId());
