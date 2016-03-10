@@ -22,6 +22,7 @@
                <xsd:element name="familyLifeStyle" type="pu:Progress" minOccurs="1" maxOccurs="1" />
                <xsd:element name="houseAndHome" type="pu:Progress" minOccurs="1" maxOccurs="1" />
                <xsd:element name="communityAndSchool" type="pu:Progress" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="whyHost" type="pu:Progress" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photoAlbum" type="pu:Progress" minOccurs="1" maxOccurs="1" />
                <xsd:element name="references" type="pu:Progress" minOccurs="1" maxOccurs="1" />
                <xsd:element name="backgroundCheck" type="pu:Progress" minOccurs="1" maxOccurs="1" />

@@ -1551,6 +1551,7 @@ public class HFApplicationImpl implements HFApplication {
                   Progress backgroundCheck = new Progress();
                   backgroundCheck.setCategoryId(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoriesId());
                   backgroundCheck.setCategoryName(cat.getHostFamilyApplicationCategory().getHostFamilyApplicationCategoryName());
+                  backgroundCheck.setPercentFilled(CCIUtils.getFormFilledPercentage(cat.getTotalMandatoryFields(), cat.getFilledMandatoryFields()));
                   List<HostFamilyBackground> hfBackground = hostFamilyBackgroundRepository.getBySeasonId(Integer.valueOf(hfSeasonId));
                   int noOfMembers = 0;
                   int completed = 0;
@@ -1567,7 +1568,7 @@ public class HFApplicationImpl implements HFApplication {
                         backgroundCheck.setPercentFilled(new Double(0));
                      }
                   }
-                  appProgress.setReferences(backgroundCheck);
+                  appProgress.setBackgroundCheck(backgroundCheck);
                }
             }
             appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
