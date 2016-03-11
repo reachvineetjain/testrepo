@@ -20,7 +20,7 @@
                <xsd:sequence>
                   <xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="partnerSeasonAnnouncement" type="psd:PartnerSeasonAnnouncements" minOccurs="0" maxOccurs="unbounded" />
+                  <xsd:element name="announcements" type="psd:PartnerSeasonAnnouncements" minOccurs="0" maxOccurs="unbounded" />
                   <xsd:element name="partnerSeasonStatus" type="psd:PartnerSeasonStatus" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="seasonStatus" type="psd:SeasonStatus" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerActiveSeason" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
@@ -43,8 +43,8 @@
    <xsd:complexType name="PartnerSeasonAnnouncements">
       <xsd:sequence>
          <xsd:sequence>
-            <xsd:element name="partnerSeasonAnnouncement" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="announcementDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="announcement" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
          </xsd:sequence>
       </xsd:sequence>
    </xsd:complexType>

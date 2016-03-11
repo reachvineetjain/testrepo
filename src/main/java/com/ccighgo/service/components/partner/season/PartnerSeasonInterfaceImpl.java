@@ -277,9 +277,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      && seasonDetail.getSeason().getSeasonId().equals(announcement.getSeason().getSeasonId())
                      && seasonDetail.getDepartmentProgram().getDepartmentProgramId().equals(announcement.getDepartmentProgram().getDepartmentProgramId())) {
                   PartnerSeasonAnnouncements seasonAnnouncement = new PartnerSeasonAnnouncements();
-                  seasonAnnouncement.setPartnerSeasonAnnouncement(announcement.getAnnouncement());
-                  seasonAnnouncement.setAnnouncementDate(DateUtils.getMMddyyDate(announcement.getCreatedOn()));
-                  partnersSeasonDetails.getPartnerSeasonAnnouncement().add(seasonAnnouncement);
+                  seasonAnnouncement.setAnnouncement(announcement.getAnnouncement());
+                  seasonAnnouncement.setTimestamp(String.valueOf(announcement.getCreatedOn()));
+                  partnersSeasonDetails.getAnnouncements().add(seasonAnnouncement);
                }
             }
          }
