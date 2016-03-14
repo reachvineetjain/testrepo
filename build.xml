@@ -1689,5 +1689,13 @@
 			<arg value="${xsd.dir}/hostfamily/application/HFSubmitApplication.xsd" />
 		</java>
 	</target>
+	
+	<target name="HFMembers">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/hostfamily/application/HFMembers.xsd" />
+			</java>
+	</target>
 
 </project>
