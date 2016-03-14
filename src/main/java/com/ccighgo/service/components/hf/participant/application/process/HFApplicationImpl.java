@@ -96,6 +96,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApp
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
+import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.PhotoType;
+import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.Progress;
@@ -312,6 +314,8 @@ public class HFApplicationImpl implements HFApplication {
                hfPhoto.setIsOptional(CCIConstants.INACTIVE);
                hfPhoto.setCreatedBy(hfApplicationUploadPhotos.getLoginId());
                hfPhoto.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hfPhoto.setModifiedBy(hfApplicationUploadPhotos.getLoginId());
+               hfPhoto.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                hfPhoto.setActive(CCIConstants.ACTIVE);
                hfPhoto.setSubmittedToCCI(CCIConstants.INACTIVE);
                hfPhoto.setApprovedByCCI(CCIConstants.INACTIVE);
@@ -331,6 +335,8 @@ public class HFApplicationImpl implements HFApplication {
                hfPhoto.setIsOptional(CCIConstants.ACTIVE);
                hfPhoto.setCreatedBy(hfApplicationUploadPhotos.getLoginId());
                hfPhoto.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hfPhoto.setModifiedBy(hfApplicationUploadPhotos.getLoginId());
+               hfPhoto.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                hfPhoto.setActive(CCIConstants.ACTIVE);
                hfPhoto.setSubmittedToCCI(CCIConstants.INACTIVE);
                hfPhoto.setApprovedByCCI(CCIConstants.INACTIVE);
@@ -359,7 +365,51 @@ public class HFApplicationImpl implements HFApplication {
          }
          List<HostFamilyPhoto> hfPhotos = hostFamilyPhotosRepository.findPhotosBySeasonId(Integer.valueOf(hfSeasonId));
          if (hfPhotos != null) {
-
+           // photoList.setPercentUpdate(value);
+            List<Photo> familyPhotos = new ArrayList<Photo>();
+            List<Photo> optionalPhotoList = new ArrayList<Photo>();
+            Photos photos = new Photos();
+            Photos optionalPhotos = new Photos();
+            int phCount = 0;
+            int ophCount = 0;
+            for(HostFamilyPhoto ph:hfPhotos){
+               if(ph.getIsOptional().equals(CCIConstants.ACTIVE)){
+                  Photo op = new Photo();
+                  op.setPhotoId(ph.getHostFamilyPhotoId());
+                  op.setName(ph.getPhotoName());
+                  op.setDescription(ph.getDescription()!=null?ph.getDescription():"");
+                  op.setPhotoUrl(ph.getFilePath());
+                  PhotoType type = new PhotoType();
+                  type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
+                  type.setType(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeName());
+                  op.setType(type);
+                  op.setOptional(true);
+                  ophCount+=1;
+                  optionalPhotoList.add(op);
+               }else{
+                  Photo p = new Photo();
+                  p.setPhotoId(ph.getHostFamilyPhotoId());
+                  p.setName(ph.getPhotoName());
+                  p.setDescription(ph.getDescription()!=null?ph.getDescription():"");
+                  p.setPhotoUrl(ph.getFilePath());
+                  PhotoType type = new PhotoType();
+                  type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
+                  type.setType(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeName());
+                  p.setType(type);
+                  p.setOptional(false);
+                  phCount+=1;
+                  familyPhotos.add(p);
+               }
+            }
+            photos.getPhotos().addAll(familyPhotos);
+            photos.setCount(phCount);
+            optionalPhotos.getPhotos().addAll(optionalPhotoList);
+            optionalPhotos.setCount(ophCount);
+            photoList.setHfSeasonId(Integer.valueOf(hfSeasonId));
+            photoList.setPhotos(photos);
+            photoList.setOptionalPhotos(optionalPhotos);
+            photoList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             photoList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
