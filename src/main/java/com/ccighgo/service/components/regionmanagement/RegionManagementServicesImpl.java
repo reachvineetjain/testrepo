@@ -466,6 +466,11 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return request;
       }
       try {
+         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findRegionByIdSuperRegionRegionAndSeasonId(Integer.valueOf(superRegionId),
+               Integer.valueOf(regionId), Integer.valueOf(seasonId));
+         for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
+            fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
+         }
          seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId), Integer.valueOf(regionId));
          seasonGeographyConfigurationRepository.flush();
          request.setObjectName(RegionManagementMessageConstants.REGION);
@@ -721,6 +726,11 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return request;
       }
       try {
+         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findStateRowByIdSuperRegionIdRegionIdStateIdSeasonId(Integer.valueOf(superRegionId),
+               Integer.valueOf(regionId),Integer.valueOf(stateId), Integer.valueOf(seasonId));
+         for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
+            fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
+         }
          seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegIdAndStateId(Integer.valueOf(seasonId), Integer.valueOf(superRegionId), Integer.valueOf(regionId),
                Integer.valueOf(stateId));
          seasonGeographyConfigurationRepository.flush();
