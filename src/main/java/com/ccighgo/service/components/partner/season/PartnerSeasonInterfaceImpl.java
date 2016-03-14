@@ -273,13 +273,13 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          com.ccighgo.db.entities.PartnerSeason seasonDetail = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
          if (seasonDetail.getPartner().getPartnerAnnouncements() != null && seasonDetail.getPartner().getPartnerAnnouncements().size() > 0) {
             for (PartnerAnnouncement announcement : seasonDetail.getPartner().getPartnerAnnouncements()) {
-               if (seasonDetail.getPartner().getPartnerGoId() == announcement.getPartner().getPartnerGoId()
-                     && seasonDetail.getSeason().getSeasonId() == announcement.getSeason().getSeasonId()
-                     && seasonDetail.getDepartmentProgram().getDepartmentProgramId() == announcement.getDepartmentProgram().getDepartmentProgramId()) {
+               if (seasonDetail.getPartner().getPartnerGoId().equals(announcement.getPartner().getPartnerGoId())
+                     && seasonDetail.getSeason().getSeasonId().equals(announcement.getSeason().getSeasonId())
+                     && seasonDetail.getDepartmentProgram().getDepartmentProgramId().equals(announcement.getDepartmentProgram().getDepartmentProgramId())) {
                   PartnerSeasonAnnouncements seasonAnnouncement = new PartnerSeasonAnnouncements();
-                  seasonAnnouncement.setPartnerSeasonAnnouncement(announcement.getAnnouncement());
-                  seasonAnnouncement.setAnnouncementDate(DateUtils.getMMddyyDate(announcement.getCreatedOn()));
-                  partnersSeasonDetails.getPartnerSeasonAnnouncement().add(seasonAnnouncement);
+                  seasonAnnouncement.setAnnouncement(announcement.getAnnouncement());
+                  seasonAnnouncement.setTimestamp(String.valueOf(announcement.getCreatedOn()));
+                  partnersSeasonDetails.getAnnouncements().add(seasonAnnouncement);
                }
             }
          }
