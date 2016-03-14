@@ -86,6 +86,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyl
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFamilyReligious;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFinancialResource;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFMiscLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFSchoolLife;
@@ -724,6 +725,8 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setUtilities(descriptionPage.getDescription().getUtilities());
          hfd.setSpecialFeaturesInHome(descriptionPage.getDescription().getSpecialFeatureInyourHome());
          hfd.setAmenities(descriptionPage.getDescription().getAmenities());
+         hfd.setHostedOther(CCIConstants.FALSE_BYTE);
+         hfd.setLocalCoordinatorOther(CCIConstants.FALSE_BYTE);
 
          hostFamilyHomeRepository.saveAndFlush(hfd);
          hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -1679,6 +1682,20 @@ public class HFApplicationImpl implements HFApplication {
       WSDefaultResponse hp = new WSDefaultResponse();
       try {
          hfMemberRepository.delete(adultId);
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
+   @Override
+   public HFFamilyMember getHFMembers(Integer hfId, Integer seasonId, Integer programId) {
+      HFFamilyMember hp = new HFFamilyMember();
+      try {
+         List<HostFamilyMember> members = hfMemberRepository.getHFMember(hfId, seasonId, programId);
          hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
