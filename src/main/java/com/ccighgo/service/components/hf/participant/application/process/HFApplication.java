@@ -100,7 +100,7 @@ public interface HFApplication {
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
 
    /**
     * fetch family style data
@@ -117,7 +117,7 @@ public interface HFApplication {
     */
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
 
-   public WSDefaultResponse saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
+   public HFHomeDescriptionPage saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
 
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
 

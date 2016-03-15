@@ -42,6 +42,9 @@
             <xsd:element name="placesAndEventsMightInterestTheStudent" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="areasToBeAvoidedInTheNeighbourhood" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="volunteeringOpportunitiesInTheCommunity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilyCommunityId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           
           </xsd:sequence>
       </xsd:sequence>
    </xsd:complexType>
@@ -58,6 +61,8 @@
             <xsd:element name="contactedCoatchForParticularAthleticAbility" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
             <xsd:element name="althleticAbilityDetails" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="anyMemberTeachOrCoachAtSchool" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+        <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilySchoolLifeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
        </xsd:sequence>
       </xsd:sequence>
    </xsd:complexType>
