@@ -28,6 +28,7 @@
                <xsd:element name="contactInfo" type="pu:HFContactInfo" minOccurs="1" maxOccurs="1"  />
                <xsd:element name="physicalAddress" type="pu:HFPhysicalAddress" minOccurs="1" maxOccurs="1"  />
                <xsd:element name="mailingAddress" type="pu:HFMailingAddress" minOccurs="1" maxOccurs="1"  />
+                              <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                
                <xsd:element name="airports" type="pu:HFAirport" minOccurs="1" maxOccurs="unbounded"  />
                <xsd:element name="children" type="pu:HFChildren" minOccurs="1" maxOccurs="unbounded"  />

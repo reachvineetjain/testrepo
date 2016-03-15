@@ -559,7 +559,8 @@ public class HFApplicationImpl implements HFApplication {
                f.setTotalHouseHoldIncome(String.valueOf(obj[30]));
                f.setAnyOneReceivePublicAssistant((boolean) obj[31]);
                f.setPublicAssistantExplanation(String.valueOf(obj[32]));
-
+               hfl.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[33])));
+               hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[34])));
                hfl.setFinancialResources(f);
                break;
             }
@@ -738,8 +739,8 @@ public class HFApplicationImpl implements HFApplication {
 
    @Override
    @Transactional
-   public WSDefaultResponse saveHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
-      WSDefaultResponse hp = new WSDefaultResponse();
+   public HFHomeDescriptionPage saveHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
+      HFHomeDescriptionPage hp = new HFHomeDescriptionPage();
       try {
          if (descriptionPage.getLoginId() <= 0) {
             throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
@@ -780,8 +781,16 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setLocalCoordinatorOther(CCIConstants.FALSE_BYTE);
 
          hostFamilyHomeRepository.saveAndFlush(hfd);
-         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
+         // CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+         HFHomeDescriptionPageParam param = new HFHomeDescriptionPageParam();
+         param.setDeptProgramId(descriptionPage.getProgramId());
+         param.setHostFamilyId(descriptionPage.getHostFamilyHomeId());
+         param.setLoginId(descriptionPage.getLoginId());
+         param.setSeasonId(descriptionPage.getSeasonId());
+         hp = fetchHFHouseDescription(param);
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SAVE_HF_HOUSE_DESCRIPTION.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -846,6 +855,9 @@ public class HFApplicationImpl implements HFApplication {
                // hfh.amenities AS amenities
                hd.setAmenities(String.valueOf(obj[21]));
                hfbs.setDescription(hd);
+               hfbs.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[22])));
+               hfbs.setHostFamilyHomeId(Integer.valueOf(String.valueOf(obj[23])));
+
                break;
             }
          }
@@ -939,6 +951,8 @@ public class HFApplicationImpl implements HFApplication {
                c.setAreasToBeAvoidedInTheNeighbourhood(String.valueOf(obj[7]));
                // hfc.`volunteeringOpportunitiesCommunity`
                c.setVolunteeringOpportunitiesInTheCommunity(String.valueOf(obj[8]));
+               c.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[9])));
+               c.setHostFamilyCommunityId(Integer.valueOf(String.valueOf(obj[10])));
                break;
             }
             hfbs.setCommunity(c);
@@ -967,6 +981,8 @@ public class HFApplicationImpl implements HFApplication {
                l.setContactedCoatchForParticularAthleticAbility(Boolean.valueOf(String.valueOf(obj[6])));
                // hfc.`parentIsTeacher`
                l.setAnyMemberTeachOrCoachAtSchool(Boolean.valueOf(String.valueOf(obj[7])));
+               l.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[8])));
+               l.setHostFamilySchoolLifeId(Integer.valueOf(String.valueOf(obj[9])));
                break;
             }
             hfbs.setSchoolLife(l);
@@ -1150,8 +1166,8 @@ public class HFApplicationImpl implements HFApplication {
 
    @Transactional
    @Override
-   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
-      WSDefaultResponse hp = new WSDefaultResponse();
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+      HFApplicationFamilyLifeStyle hp = new HFApplicationFamilyLifeStyle();
       try {
          if (hfApplicationFamilyDetails.getLoginId() <= 0) {
             throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
@@ -1218,8 +1234,16 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setPublicAssistanceExplanation(hfApplicationFamilyDetails.getFinancialResources().getPublicAssistantExplanation());
 
          hostFamilyDetailRepository.saveAndFlush(hfd);
-         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
+         // CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+         FamilyStylePageParam param = new FamilyStylePageParam();
+         param.setDeptProgramId(hfApplicationFamilyDetails.getProgramId());
+         param.setHostFamilyId(hfApplicationFamilyDetails.getHostFamilyId());
+         param.setLoginId(hfApplicationFamilyDetails.getLoginId());
+         param.setSeasonId(hfApplicationFamilyDetails.getSeasonId());
+         hp = fetchFamilyLifeStyle(param);
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SAVE_HF_LIFE_STYLE.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1744,7 +1768,7 @@ public class HFApplicationImpl implements HFApplication {
    public HFAirportList hfAirportList() {
       HFAirportList hp = new HFAirportList();
       try {
-         List<Airport> airports = airportRepository.findAll();
+         List<Airport> airports = airportRepository.getAirportInUSA();
          for (Airport airport : airports) {
             HFAirportData a = new HFAirportData();
             a.setAirportCity(airport.getAirportCity());

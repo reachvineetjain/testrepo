@@ -125,7 +125,7 @@ public class HFApplicationProcess {
    @Path("hfSaveFamilyLifeStyle")
    @Consumes("application/json")
    @Produces("application/json")
-   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
       return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
    }
 
@@ -184,7 +184,7 @@ public class HFApplicationProcess {
    @Path("hfSaveHouseDescription")
    @Consumes("application/json")
    @Produces("application/json")
-   public WSDefaultResponse createHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
+   public HFHomeDescriptionPage createHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
       return hfApplication.saveHFHouseDescription(descriptionPage);
    }
 
