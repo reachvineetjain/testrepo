@@ -21,15 +21,14 @@ import com.ccighgo.service.components.hf.participant.application.process.util.Fa
 import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
-import com.ccighgo.service.components.hf.participant.application.process.util.HFPetsList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
-import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescription;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
@@ -272,6 +271,14 @@ public class HFApplicationProcess {
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAdult(@PathParam("hfAdultId") String hfAdultId) {
       return hfApplication.removeHostFamilyAdult(Integer.parseInt(hfAdultId));
+   }
+
+   @GET
+   @Path("getHFMembers/{hfId}/seasonId/programId")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFFamilyMember getHFMembers(@PathParam("hfId") Integer hfId, @PathParam("seasonId") Integer seasonId, @PathParam("programId") Integer programId) {
+      return hfApplication.getHFMembers(hfId, seasonId, programId);
    }
 
 }

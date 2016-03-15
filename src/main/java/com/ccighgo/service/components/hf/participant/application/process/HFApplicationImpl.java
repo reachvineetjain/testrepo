@@ -86,6 +86,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyl
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFamilyReligious;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFinancialResource;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFMiscLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFSchoolLife;
@@ -96,6 +97,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApp
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
+import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.PhotoType;
+import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.Progress;
@@ -312,6 +315,8 @@ public class HFApplicationImpl implements HFApplication {
                hfPhoto.setIsOptional(CCIConstants.INACTIVE);
                hfPhoto.setCreatedBy(hfApplicationUploadPhotos.getLoginId());
                hfPhoto.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hfPhoto.setModifiedBy(hfApplicationUploadPhotos.getLoginId());
+               hfPhoto.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                hfPhoto.setActive(CCIConstants.ACTIVE);
                hfPhoto.setSubmittedToCCI(CCIConstants.INACTIVE);
                hfPhoto.setApprovedByCCI(CCIConstants.INACTIVE);
@@ -331,6 +336,8 @@ public class HFApplicationImpl implements HFApplication {
                hfPhoto.setIsOptional(CCIConstants.ACTIVE);
                hfPhoto.setCreatedBy(hfApplicationUploadPhotos.getLoginId());
                hfPhoto.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hfPhoto.setModifiedBy(hfApplicationUploadPhotos.getLoginId());
+               hfPhoto.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                hfPhoto.setActive(CCIConstants.ACTIVE);
                hfPhoto.setSubmittedToCCI(CCIConstants.INACTIVE);
                hfPhoto.setApprovedByCCI(CCIConstants.INACTIVE);
@@ -359,7 +366,51 @@ public class HFApplicationImpl implements HFApplication {
          }
          List<HostFamilyPhoto> hfPhotos = hostFamilyPhotosRepository.findPhotosBySeasonId(Integer.valueOf(hfSeasonId));
          if (hfPhotos != null) {
-
+            // photoList.setPercentUpdate(value);
+            List<Photo> familyPhotos = new ArrayList<Photo>();
+            List<Photo> optionalPhotoList = new ArrayList<Photo>();
+            Photos photos = new Photos();
+            Photos optionalPhotos = new Photos();
+            int phCount = 0;
+            int ophCount = 0;
+            for (HostFamilyPhoto ph : hfPhotos) {
+               if (ph.getIsOptional().equals(CCIConstants.ACTIVE)) {
+                  Photo op = new Photo();
+                  op.setPhotoId(ph.getHostFamilyPhotoId());
+                  op.setName(ph.getPhotoName());
+                  op.setDescription(ph.getDescription() != null ? ph.getDescription() : "");
+                  op.setPhotoUrl(ph.getFilePath());
+                  PhotoType type = new PhotoType();
+                  type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
+                  type.setType(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeName());
+                  op.setType(type);
+                  op.setOptional(true);
+                  ophCount += 1;
+                  optionalPhotoList.add(op);
+               } else {
+                  Photo p = new Photo();
+                  p.setPhotoId(ph.getHostFamilyPhotoId());
+                  p.setName(ph.getPhotoName());
+                  p.setDescription(ph.getDescription() != null ? ph.getDescription() : "");
+                  p.setPhotoUrl(ph.getFilePath());
+                  PhotoType type = new PhotoType();
+                  type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
+                  type.setType(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeName());
+                  p.setType(type);
+                  p.setOptional(false);
+                  phCount += 1;
+                  familyPhotos.add(p);
+               }
+            }
+            photos.getPhotos().addAll(familyPhotos);
+            photos.setCount(phCount);
+            optionalPhotos.getPhotos().addAll(optionalPhotoList);
+            optionalPhotos.setCount(ophCount);
+            photoList.setHfSeasonId(Integer.valueOf(hfSeasonId));
+            photoList.setPhotos(photos);
+            photoList.setOptionalPhotos(optionalPhotos);
+            photoList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             photoList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
@@ -724,6 +775,8 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setUtilities(descriptionPage.getDescription().getUtilities());
          hfd.setSpecialFeaturesInHome(descriptionPage.getDescription().getSpecialFeatureInyourHome());
          hfd.setAmenities(descriptionPage.getDescription().getAmenities());
+         hfd.setHostedOther(CCIConstants.FALSE_BYTE);
+         hfd.setLocalCoordinatorOther(CCIConstants.FALSE_BYTE);
 
          hostFamilyHomeRepository.saveAndFlush(hfd);
          hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -1002,11 +1055,12 @@ public class HFApplicationImpl implements HFApplication {
             }
             hfm.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
             hfm.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            hfm.setHostFamilySeason(season);
-            listOfMembers.add(hfm);
+            // hfm.setHostFamilySeason(season);
+            // listOfMembers.add(hfm);
+            hfMemberRepository.saveAndFlush(hfm);
          }
-         if (!listOfMembers.isEmpty())
-            hfMemberRepository.save(listOfMembers);
+         // if (!listOfMembers.isEmpty())
+         // hfMemberRepository.save(listOfMembers);
 
          // contact Information
          HostFamily hf = hostFamilyRepository.findOne(hfApplicationFamilyDetails.getHostFamilyId());
@@ -1051,10 +1105,11 @@ public class HFApplicationImpl implements HFApplication {
             hfa.setDistanceToAirport(aps.getDistanceToNearestAirport());
             hfa.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
             hfa.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            airports.add(hfa);
+            // airports.add(hfa);
+            hostFamilyAirportRepository.saveAndFlush(hfa);
          }
-         if (!airports.isEmpty())
-            hostFamilyAirportRepository.save(airports);
+         // if (!airports.isEmpty())
+         // hostFamilyAirportRepository.save(airports);
 
          // Pets
          List<HostFamilyPet> pets = new ArrayList<HostFamilyPet>();
@@ -1069,12 +1124,13 @@ public class HFApplicationImpl implements HFApplication {
             hfp.setIsIndoor(pts.isIndoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
             hfp.setIsOutdoor(pts.isOutDoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
             hfp.setNumber(pts.getNumber());
-            hfp.setHostFamilySeason(season);
+            // hfp.setHostFamilySeason(season);
             hfp.setAdditionalInformation(pts.getAdditionalInfo());
-            pets.add(hfp);
+            // pets.add(hfp);
+            hostFamilyPetRepository.saveAndFlush(hfp);
          }
-         if (!pets.isEmpty())
-            hostFamilyPetRepository.save(pets);
+         // if (!pets.isEmpty())
+         // hostFamilyPetRepository.save(pets);
 
          hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1733,6 +1789,20 @@ public class HFApplicationImpl implements HFApplication {
       WSDefaultResponse hp = new WSDefaultResponse();
       try {
          hfMemberRepository.delete(adultId);
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hp;
+   }
+
+   @Override
+   public HFFamilyMember getHFMembers(Integer hfId, Integer seasonId, Integer programId) {
+      HFFamilyMember hp = new HFFamilyMember();
+      try {
+         List<HostFamilyMember> members = hfMemberRepository.getHFMember(hfId, seasonId, programId);
          hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
