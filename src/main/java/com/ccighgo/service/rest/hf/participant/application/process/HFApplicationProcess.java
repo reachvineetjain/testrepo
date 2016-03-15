@@ -117,7 +117,7 @@ public class HFApplicationProcess {
    @Path("hfSaveBasicData")
    @Consumes("application/json")
    @Produces("application/json")
-   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
    }
 
@@ -274,11 +274,11 @@ public class HFApplicationProcess {
    }
 
    @GET
-   @Path("getHFMembers/{hfId}/seasonId/programId")
+   @Path("getHFMembers/{seasonId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFFamilyMember getHFMembers(@PathParam("hfId") Integer hfId, @PathParam("seasonId") Integer seasonId, @PathParam("programId") Integer programId) {
-      return hfApplication.getHFMembers(hfId, seasonId, programId);
+   public HFFamilyMember getHFMembers(@PathParam("seasonId") Integer seasonId) {
+      return hfApplication.getHFMembers(seasonId);
    }
 
 }

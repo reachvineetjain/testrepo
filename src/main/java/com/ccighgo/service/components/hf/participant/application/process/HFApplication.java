@@ -92,7 +92,7 @@ public interface HFApplication {
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
+   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
 
    /**
     * persist family details including life style
@@ -190,6 +190,6 @@ public interface HFApplication {
 
    public WSDefaultResponse removeHostFamilyAdult(int hfAdultId);
 
-   public HFFamilyMember getHFMembers(Integer hfId, Integer seasonId, Integer programId);
+   public HFFamilyMember getHFMembers(Integer seasonId);
 
 }
