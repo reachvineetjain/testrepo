@@ -87,6 +87,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyl
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFinancialResource;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFMiscLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMemberDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFSchoolLife;
@@ -689,8 +690,8 @@ public class HFApplicationImpl implements HFApplication {
                // List<Airport> a =
                // airportRepository.getAirportByName(String.valueOf(obj[0]));
                // airport.set
-               airport.setAirportName(String.valueOf(obj[0]));
-               airport.setCity(String.valueOf(obj[3]));
+               // airport.setAirportName(String.valueOf(obj[0]));
+               airport.setCity(String.valueOf(obj[0]));
                // hfa.`distanceToAirport`
                airport.setDistanceToNearestAirport(Integer.valueOf(String.valueOf(obj[1])));
                airport.setHostFamilyAirportId(Integer.valueOf(String.valueOf(obj[2])));
@@ -981,8 +982,8 @@ public class HFApplicationImpl implements HFApplication {
 
    @Transactional
    @Override
-   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
-      WSDefaultResponse hp = new WSDefaultResponse();
+   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+      HFApplicationFamilyDetails hp = new HFApplicationFamilyDetails();
       try {
          if (hfApplicationFamilyDetails.getLoginId() <= 0) {
             throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
@@ -1055,7 +1056,8 @@ public class HFApplicationImpl implements HFApplication {
             }
             hfm.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
             hfm.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-            // hfm.setHostFamilySeason(season);
+            hfm.setHostFamilySeason(season);
+
             // listOfMembers.add(hfm);
             hfMemberRepository.saveAndFlush(hfm);
          }
@@ -1124,7 +1126,7 @@ public class HFApplicationImpl implements HFApplication {
             hfp.setIsIndoor(pts.isIndoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
             hfp.setIsOutdoor(pts.isOutDoor() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
             hfp.setNumber(pts.getNumber());
-            // hfp.setHostFamilySeason(season);
+            hfp.setHostFamilySeason(season);
             hfp.setAdditionalInformation(pts.getAdditionalInfo());
             // pets.add(hfp);
             hostFamilyPetRepository.saveAndFlush(hfp);
@@ -1132,8 +1134,13 @@ public class HFApplicationImpl implements HFApplication {
          // if (!pets.isEmpty())
          // hostFamilyPetRepository.save(pets);
 
-         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         FamilyBasicsPageParam familyBasicsPageParam = new FamilyBasicsPageParam();
+         familyBasicsPageParam.setDepartmentProgramId(hfApplicationFamilyDetails.getProgramId());
+         familyBasicsPageParam.setHostfamilyId(hfApplicationFamilyDetails.getHostFamilyId());
+         familyBasicsPageParam.setSeasonId(hfApplicationFamilyDetails.getSeasonId());
+         familyBasicsPageParam.setLoginId(hfApplicationFamilyDetails.getLoginId());
+         hp = fetchBasicData(familyBasicsPageParam);
+
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SAVE_HF_BASIC_DATA.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1799,14 +1806,23 @@ public class HFApplicationImpl implements HFApplication {
    }
 
    @Override
-   public HFFamilyMember getHFMembers(Integer hfId, Integer seasonId, Integer programId) {
+   public HFFamilyMember getHFMembers(Integer seasonId) {
       HFFamilyMember hp = new HFFamilyMember();
       try {
-         List<HostFamilyMember> members = hfMemberRepository.getHFMember(hfId, seasonId, programId);
+         List<HostFamilyMember> members = hfMemberRepository.getHFMember(seasonId);
+         if (members != null) {
+            for (HostFamilyMember hostFamilyMember : members) {
+               HFFamilyMemberDetails d = new HFFamilyMemberDetails();
+               d.setFirstName(hostFamilyMember.getFirstName());
+               d.setLastName(hostFamilyMember.getLastName());
+               d.setHostfamilyMemberId(hostFamilyMember.getHostFamilyMemberId());
+               hp.getFamilyMembers().add(d);
+            }
+         }
          hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_FETCHING_DATA.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return hp;
