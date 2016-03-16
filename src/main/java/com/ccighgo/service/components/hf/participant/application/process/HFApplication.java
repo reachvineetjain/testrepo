@@ -30,6 +30,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApp
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -244,5 +245,13 @@ public interface HFApplication {
     * @return
     */
    public HFSeasonList getSeasonList(Integer hostFamilyGoId);
+
+   /**
+    * 
+    * @param valueOf
+    * @param category
+    * @return
+    */
+   public HFPresentedParticipantList getPresentedParticipant(Integer valueOf, String category);
 
 }

@@ -116,6 +116,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.references.Hos
 import com.ccighgo.service.transport.hostfamily.beans.application.references.Reference;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.DateUtils;
@@ -174,6 +176,7 @@ public class HFApplicationImpl implements HFApplication {
    private static final String SP_HF_COMMUNITY = "CALL SPHostFamilyApplicationCommunity(?,?,?)";
    private static final String SP_HF_SCHOOL_LIFE = "CALL SPHostFamilyApplicationSchoolLife (?,?,?)";
    private static final String SP_HF_SEASON_LIST = "CALL SPHostFamilySeasonList (?)";
+   private static final String SP_HF_PARTICIPANT_LIST = "CALL SPHostFamilyParticipantList (?,?)";
 
    private static final String COMPLETED = "Completed";
    private static final String NOT_COMPLETED = "Not Completed";
@@ -1964,4 +1967,43 @@ public class HFApplicationImpl implements HFApplication {
       return hfs;
    }
 
+   @Override
+   public HFPresentedParticipantList getPresentedParticipant(Integer hostFamilyGoId, String category) {
+      HFPresentedParticipantList hfs = new HFPresentedParticipantList();
+      try {
+         Query query = em.createNativeQuery(SP_HF_PARTICIPANT_LIST);
+         query.setParameter(1, hostFamilyGoId);
+         query.setParameter(2, category);
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = query.getResultList();
+         if (result != null) {
+            for (Object[] obj : result) {
+               ParticipantDetails details = new ParticipantDetails();
+               details.setPhoto(String.valueOf(obj[0]));
+               details.setFirstName(String.valueOf(obj[1]));
+               details.setLastName(String.valueOf(obj[2]));
+               details.setParticipantGoId(String.valueOf(obj[3]));
+               details.setRanking(Integer.valueOf(String.valueOf(obj[4])));
+               details.setProgram(String.valueOf(obj[5]));
+               details.setProgramOption(String.valueOf(obj[6]));
+               details.setProgramStartDate(String.valueOf(obj[7]));
+               details.setProgramEndDate(String.valueOf(obj[8]));
+               details.setAge(String.valueOf(obj[9]));
+               details.setCountryId(String.valueOf(obj[10]));
+               details.setCountryName(String.valueOf(obj[11]));
+               details.setCountryFlag(String.valueOf(obj[12]));
+               details.setGenderId(String.valueOf(obj[13]));
+               details.setGender(String.valueOf(obj[14]));
+               hfs.getParticipants().add(details);
+            }
+         }
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (CcighgoException e) {
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfs;
+   }
 }
