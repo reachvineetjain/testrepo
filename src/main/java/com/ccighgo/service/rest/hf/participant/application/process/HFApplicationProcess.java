@@ -34,6 +34,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescrip
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
@@ -63,12 +64,11 @@ public class HFApplicationProcess {
    }
 
    @GET
-   @Path("get/whyhost/{hostFamilyHomeId}/{hfSeasonId}/{applicationCategoryId}")
+   @Path("get/whyhost/{hfSeasonId}/{applicationCategoryId}")
    @Produces("application/json")
-   public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId,
-         @PathParam("applicationCategoryId") String applicationCategoryId) {
+   public WhyHost getWhyHost(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
       LOGGER.info("Calling service HFApplicationProcess.getWhyHost for hfSeasonId {}", hfSeasonId);
-      return hfApplication.getWhyHost(hostFamilyHomeId, hfSeasonId, applicationCategoryId);
+      return hfApplication.getWhyHost(hfSeasonId, applicationCategoryId);
    }
 
    @POST
@@ -91,7 +91,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("get/pictures/{hfSeasonId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public HFApplicationUploadPhotos getHFPhotos(@PathParam("hfSeasonId") String hfSeasonId) {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
@@ -229,6 +228,7 @@ public class HFApplicationProcess {
 
    @POST
    @Path("submit")
+   @Consumes("application/json")
    @Produces("application/json")
    public Response submitApplication(HFSubmitApplication application) {
       return hfApplication.submitApplication(application);
@@ -244,7 +244,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("airportList")
-   @Consumes("application/json")
    @Produces("application/json")
    public HFAirportList hfAirportList() {
       return hfApplication.hfAirportList();
@@ -252,7 +251,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("removeHostFamilyAirport/{hfAirportId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAirport(@PathParam("hfAirportId") String hfAirportId) {
       return hfApplication.removeHostFamilyAirport(Integer.valueOf(hfAirportId));
@@ -260,7 +258,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("removeHostFamilyPet/{hfPetId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyPet(@PathParam("hfPetId") String hfPetId) {
       return hfApplication.removeHostFamilyPet(Integer.parseInt(hfPetId));
@@ -268,15 +265,20 @@ public class HFApplicationProcess {
 
    @GET
    @Path("removeHostFamilyAdult/{hfAdultId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAdult(@PathParam("hfAdultId") String hfAdultId) {
       return hfApplication.removeHostFamilyAdult(Integer.parseInt(hfAdultId));
    }
 
    @GET
+   @Path("view/profile/{hfSeasonId}/{loginId}")
+   @Produces("application/json")
+   public HFProfile viewHFProfile(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
+      return hfApplication.viewHFProfile(Integer.parseInt(hfSeasonId),Integer.parseInt(loginId));
+   }
+   
+   @GET
    @Path("getHFMembers/{seasonId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public HFFamilyMember getHFMembers(@PathParam("seasonId") Integer seasonId) {
       return hfApplication.getHFMembers(seasonId);
@@ -284,7 +286,6 @@ public class HFApplicationProcess {
    
    @GET
    @Path("getHFDetails/{hostfamilySeasonId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public HostFamilyMembers getHFDetails(@PathParam("hostfamilySeasonId") Integer hostfamilySeasonId){
       return hfApplication.getHFDetails(hostfamilySeasonId);      
