@@ -981,8 +981,8 @@ public class HFApplicationImpl implements HFApplication {
                l.setContactedCoatchForParticularAthleticAbility(Boolean.valueOf(String.valueOf(obj[6])));
                // hfc.`parentIsTeacher`
                l.setAnyMemberTeachOrCoachAtSchool(Boolean.valueOf(String.valueOf(obj[7])));
-               l.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[8])));
-               l.setHostFamilySchoolLifeId(Integer.valueOf(String.valueOf(obj[9])));
+               l.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[11])));
+               l.setHostFamilySchoolLifeId(Integer.valueOf(String.valueOf(obj[12])));
                break;
             }
             hfbs.setSchoolLife(l);
