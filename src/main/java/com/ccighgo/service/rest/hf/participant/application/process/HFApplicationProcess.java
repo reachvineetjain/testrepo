@@ -27,6 +27,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.background.che
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.HostFamilyMembers;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
@@ -279,6 +280,14 @@ public class HFApplicationProcess {
    @Produces("application/json")
    public HFFamilyMember getHFMembers(@PathParam("seasonId") Integer seasonId) {
       return hfApplication.getHFMembers(seasonId);
+   }
+   
+   @GET
+   @Path("getHFDetails/{hostfamilySeasonId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HostFamilyMembers getHFDetails(@PathParam("hostfamilySeasonId") Integer hostfamilySeasonId){
+      return hfApplication.getHFDetails(hostfamilySeasonId);      
    }
 
 }

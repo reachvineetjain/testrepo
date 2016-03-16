@@ -18,6 +18,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.background.che
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.HostFamilyMembers;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
@@ -191,5 +192,7 @@ public interface HFApplication {
    public WSDefaultResponse removeHostFamilyAdult(int hfAdultId);
 
    public HFFamilyMember getHFMembers(Integer seasonId);
+   
+   public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId);
 
 }
