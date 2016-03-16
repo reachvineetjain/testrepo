@@ -17,6 +17,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFApplicationFamilyDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.HostFamilyMembers;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
@@ -92,7 +94,7 @@ public interface HFApplication {
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
+   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
 
    /**
     * persist family details including life style
@@ -100,7 +102,7 @@ public interface HFApplication {
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
 
    /**
     * fetch family style data
@@ -117,12 +119,28 @@ public interface HFApplication {
     */
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
 
-   public WSDefaultResponse saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
+   /**
+    * @param descriptionPage
+    * @return
+    */
+   public HFHomeDescriptionPage saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
 
+   /**
+    * @param descriptionPageParam
+    * @return
+    */
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
 
+   /**
+    * @param communityAndSchoolPage
+    * @return
+    */
    public WSDefaultResponse saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
 
+   /**
+    * @param descriptionPageParam
+    * @return
+    */
    public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam);
 
    /**
@@ -152,7 +170,6 @@ public interface HFApplication {
    public HostFamilyReferences getHFReference(String hfSeasonId, String applicationCategoryId);
 
    /**
-    * 
     * @param goId
     * @param picUrl2
     * @return
@@ -184,10 +201,22 @@ public interface HFApplication {
     */
    public HFAirportList hfAirportList();
 
+   /**
+    * @param hfAirportId
+    * @return
+    */
    public WSDefaultResponse removeHostFamilyAirport(int hfAirportId);
 
+   /**
+    * @param hfPetId
+    * @return
+    */
    public WSDefaultResponse removeHostFamilyPet(int hfPetId);
 
+   /**
+    * @param hfAdultId
+    * @return
+    */
    public WSDefaultResponse removeHostFamilyAdult(int hfAdultId);
 
    /**
@@ -195,5 +224,17 @@ public interface HFApplication {
     * @return
     */
    public HFProfile viewHFProfile(int hfSeasonId, int loginId);
+   
+   /**
+    * @param seasonId
+    * @return
+    */
+   public HFFamilyMember getHFMembers(Integer seasonId);
+   
+   /**
+    * @param hostfamilySeasonId
+    * @return
+    */
+   public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId);
 
 }
