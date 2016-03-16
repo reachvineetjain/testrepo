@@ -15,7 +15,7 @@
         ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,MyPlacements,MyFieldStaffLeadership,AdminERDPlacement,ERDPlacement,FieldStaffNetwork,ERDPlacementParticipants,
         AdminERDParticipant,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList,HFApplicationUploadPhotos,HFParticipantSeasonList,ERDMyAccount,FieldStaffList,FieldStaffTypes,
 		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric,PartnerRecruitmentAdmin,WhyHost,HostFamilyReferences,PotentialHostFamily,
-		UserTypes,FieldStaffCategoriesList,HFBackgroundCheck,HFApplicationProgress,HFSubmitApplication" />
+		UserTypes,FieldStaffCategoriesList,HFBackgroundCheck,HFApplicationProgress,HFSubmitApplication,HFMembers,HostFamilyMembers" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -1695,6 +1695,14 @@
 				<arg value="-d" />
 				<arg value="${java.dir}" />
 				<arg value="${xsd.dir}/hostfamily/application/HFMembers.xsd" />
+			</java>
+	</target>
+	
+	<target name="HostFamilyMembers">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/hostfamily/application/HostFamilyMembers.xsd" />
 			</java>
 	</target>
 

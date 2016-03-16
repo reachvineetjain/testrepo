@@ -4,11 +4,14 @@
 package com.ccighgo.service.components.hf.participant.application.process;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +91,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyl
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFMiscLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
 import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMemberDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.HostFamilyMemberDetails;
+import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.HostFamilyMembers;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFSchoolLife;
@@ -1850,6 +1855,34 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hp;
+   }
+   
+   @Override
+   public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId) {
+      HostFamilyMembers hfM = new HostFamilyMembers();
+      try{
+         List<HostFamilyMember> members = hfMemberRepository.getHFMember(hostfamilySeasonId);
+         for(HostFamilyMember hf:members){
+            HostFamilyMemberDetails hfMD = new HostFamilyMemberDetails();
+            hfMD.setName(hf.getFirstName() + " " + hf.getLastName());
+            hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
+            hfMD.setGenderId(hf.getLookupGender().getGenderId());
+            hfMD.setGender(hf.getLookupGender().getGenderName());
+            DateTime d1 = new DateTime(hf.getBirthDate().getTime());
+            DateTime d2 = new DateTime(new Date().getTime());
+            Years age = Years.yearsBetween(d1,d2);
+            hfMD.setAge(age.getYears());
+            hfM.getFamilyMembers().add(hfMD);
+         }
+         
+         hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         
+      }catch (CcighgoException e) {
+           hfM.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
+           LOGGER.error(e.getMessage());
+        }
+      return hfM;
    }
 
 }

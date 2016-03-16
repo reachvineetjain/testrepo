@@ -563,9 +563,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                details.setParticipantlastName(participant.getLastName());
                if (participant.getPhoto() != null)
                   details.setParticipantPicUrl(participant.getPhoto());
-               if (participant.getDepartmentProgramOption() != null) {
-                  details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
-                  details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+               if (participant.getDepartmentProgram() != null) {
+                  details.setParticipantProgramName(participant.getDepartmentProgram().getProgramName());
                }
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
                String programName = participant.getDepartmentProgram().getProgramName();

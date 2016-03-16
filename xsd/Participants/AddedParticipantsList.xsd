@@ -33,8 +33,7 @@
          <xsd:element name="participantPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
 		<xsd:element name="participantSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantSeasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
- 		<xsd:element name="participantProgramOptionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="participantProgramOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="participantProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
           <xsd:element name="participantEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="participantEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
