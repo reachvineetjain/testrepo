@@ -72,6 +72,8 @@ import com.ccighgo.service.components.hf.participant.application.process.util.HF
 import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonDetails;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
@@ -171,6 +173,7 @@ public class HFApplicationImpl implements HFApplication {
    private static final String SP_HF_HOME = "CALL SPHostFamilyApplicationHome(?,?,?)";
    private static final String SP_HF_COMMUNITY = "CALL SPHostFamilyApplicationCommunity(?,?,?)";
    private static final String SP_HF_SCHOOL_LIFE = "CALL SPHostFamilyApplicationSchoolLife (?,?,?)";
+   private static final String SP_HF_SEASON_LIST = "CALL SPHostFamilySeasonList (?)";
 
    private static final String COMPLETED = "Completed";
    private static final String NOT_COMPLETED = "Not Completed";
@@ -1837,14 +1840,13 @@ public class HFApplicationImpl implements HFApplication {
    }
 
    @Override
-   @Transactional(readOnly=true)
+   @Transactional(readOnly = true)
    public HFProfile viewHFProfile(int hfSeasonId, int loginId) {
       HFProfile hfProfile = new HFProfile();
-      try{
+      try {
          HostFamily hostFamily = hostFamilyRepository.findBySeasonId(hfSeasonId);
-         if(hostFamily!=null){
-            
-            
+         if (hostFamily != null) {
+
             hfProfile.setPrimaryPhone(hostFamily.getPhone());
             hfProfile.setFirstName(hostFamily.getFirstName());
             hfProfile.setLastName(hostFamily.getLastName());
@@ -1854,7 +1856,7 @@ public class HFApplicationImpl implements HFApplication {
             hfProfile.setPhysicalAddress(hostFamily.getPhysicalAddress());
             hfProfile.setPhysicalCity(hostFamily.getPhysicalCity());
             HFState pState = new HFState();
-            if(hostFamily.getLookupUsstate2()!=null){
+            if (hostFamily.getLookupUsstate2() != null) {
                pState.setHfStateId(hostFamily.getLookupUsstate2().getUsStatesId());
                pState.setHfState(hostFamily.getLookupUsstate2().getStateName());
             }
@@ -1863,26 +1865,26 @@ public class HFApplicationImpl implements HFApplication {
             hfProfile.setMailingAddress(hostFamily.getMailingAddress());
             hfProfile.setMailingCity(hostFamily.getMailingCity());
             HFState mState = new HFState();
-            if(hostFamily.getLookupUsstate1()!=null){
+            if (hostFamily.getLookupUsstate1() != null) {
                mState.setHfStateId(hostFamily.getLookupUsstate2().getUsStatesId());
                mState.setHfState(hostFamily.getLookupUsstate2().getStateName());
             }
             hfProfile.setMailingState(mState);
             hfProfile.setMailingZip(hostFamily.getMailingZipCode());
-            hfProfile.setRecieveEmail(hostFamily.getReceiveEmails().equals(CCIConstants.ACTIVE)?true:false);
+            hfProfile.setRecieveEmail(hostFamily.getReceiveEmails().equals(CCIConstants.ACTIVE) ? true : false);
             hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         }else{
+         } else {
             hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD))); 
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-      }catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          hfProfile.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return hfProfile;
    }
-   
+
    public HFFamilyMember getHFMembers(Integer seasonId) {
       HFFamilyMember hp = new HFFamilyMember();
       try {
@@ -1904,13 +1906,13 @@ public class HFApplicationImpl implements HFApplication {
       }
       return hp;
    }
-   
+
    @Override
    public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId) {
       HostFamilyMembers hfM = new HostFamilyMembers();
-      try{
+      try {
          List<HostFamilyMember> members = hfMemberRepository.getHFMember(hostfamilySeasonId);
-         for(HostFamilyMember hf:members){
+         for (HostFamilyMember hf : members) {
             HostFamilyMemberDetails hfMD = new HostFamilyMemberDetails();
             hfMD.setName(hf.getFirstName() + " " + hf.getLastName());
             hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
@@ -1918,19 +1920,48 @@ public class HFApplicationImpl implements HFApplication {
             hfMD.setGender(hf.getLookupGender().getGenderName());
             DateTime d1 = new DateTime(hf.getBirthDate().getTime());
             DateTime d2 = new DateTime(new Date().getTime());
-            Years age = Years.yearsBetween(d1,d2);
+            Years age = Years.yearsBetween(d1, d2);
             hfMD.setAge(age.getYears());
             hfM.getFamilyMembers().add(hfMD);
          }
-         
+
          hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         
-      }catch (CcighgoException e) {
-           hfM.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
-           LOGGER.error(e.getMessage());
-        }
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (CcighgoException e) {
+         hfM.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
       return hfM;
+   }
+
+   @Override
+   public HFSeasonList getSeasonList(Integer hostFamilyGoId) {
+      HFSeasonList hfs = new HFSeasonList();
+      try {
+
+         Query query = em.createNativeQuery(SP_HF_SEASON_LIST);
+         query.setParameter(1, hostFamilyGoId);
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = query.getResultList();
+         if (result != null) {
+            for (Object[] obj : result) {
+               HFSeasonDetails detail = new HFSeasonDetails();
+               detail.setSeasonName(String.valueOf(obj[0]));
+               detail.setSeasonId(Integer.valueOf(String.valueOf(obj[1])));
+               detail.setDepartmentProgramId(Integer.valueOf(String.valueOf(obj[2])));
+               detail.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[3])));
+               hfs.getSeasonDetails().add(detail);
+            }
+         }
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (CcighgoException e) {
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfs;
    }
 
 }

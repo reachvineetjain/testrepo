@@ -12,6 +12,7 @@ import com.ccighgo.service.components.hf.participant.application.process.util.HF
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFPetsList;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
@@ -224,17 +225,24 @@ public interface HFApplication {
     * @return
     */
    public HFProfile viewHFProfile(int hfSeasonId, int loginId);
-   
+
    /**
     * @param seasonId
     * @return
     */
    public HFFamilyMember getHFMembers(Integer seasonId);
-   
+
    /**
     * @param hostfamilySeasonId
     * @return
     */
    public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId);
+
+   /**
+    * 
+    * @param hostFamilyGoId
+    * @return
+    */
+   public HFSeasonList getSeasonList(Integer hostFamilyGoId);
 
 }

@@ -21,6 +21,7 @@ import com.ccighgo.service.components.hf.participant.application.process.util.Fa
 import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
@@ -274,21 +275,30 @@ public class HFApplicationProcess {
    @Path("view/profile/{hfSeasonId}/{loginId}")
    @Produces("application/json")
    public HFProfile viewHFProfile(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
-      return hfApplication.viewHFProfile(Integer.parseInt(hfSeasonId),Integer.parseInt(loginId));
+      return hfApplication.viewHFProfile(Integer.parseInt(hfSeasonId), Integer.parseInt(loginId));
    }
-   
+
    @GET
    @Path("getHFMembers/{seasonId}")
    @Produces("application/json")
    public HFFamilyMember getHFMembers(@PathParam("seasonId") Integer seasonId) {
       return hfApplication.getHFMembers(seasonId);
    }
-   
+
    @GET
    @Path("getHFDetails/{hostfamilySeasonId}")
    @Produces("application/json")
-   public HostFamilyMembers getHFDetails(@PathParam("hostfamilySeasonId") Integer hostfamilySeasonId){
-      return hfApplication.getHFDetails(hostfamilySeasonId);      
+   public HostFamilyMembers getHFDetails(@PathParam("hostfamilySeasonId") Integer hostfamilySeasonId) {
+      return hfApplication.getHFDetails(hostfamilySeasonId);
+   }
+
+   // ///// part 2
+
+   @GET
+   @Path("getSeasonList/{hostFamilyGoId}")
+   @Produces("application/json")
+   public HFSeasonList getSeasonList(@PathParam("hostFamilyGoId") String hostFamilyGoId) {
+      return hfApplication.getSeasonList(Integer.valueOf(hostFamilyGoId));
    }
 
 }
