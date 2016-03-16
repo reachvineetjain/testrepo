@@ -31,6 +31,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescrip
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
@@ -60,12 +61,11 @@ public class HFApplicationProcess {
    }
 
    @GET
-   @Path("get/whyhost/{hostFamilyHomeId}/{hfSeasonId}/{applicationCategoryId}")
+   @Path("get/whyhost/{hfSeasonId}/{applicationCategoryId}")
    @Produces("application/json")
-   public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId,
-         @PathParam("applicationCategoryId") String applicationCategoryId) {
+   public WhyHost getWhyHost(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
       LOGGER.info("Calling service HFApplicationProcess.getWhyHost for hfSeasonId {}", hfSeasonId);
-      return hfApplication.getWhyHost(hostFamilyHomeId, hfSeasonId, applicationCategoryId);
+      return hfApplication.getWhyHost(hfSeasonId, applicationCategoryId);
    }
 
    @POST
@@ -269,6 +269,13 @@ public class HFApplicationProcess {
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAdult(@PathParam("hfAdultId") String hfAdultId) {
       return hfApplication.removeHostFamilyAdult(Integer.parseInt(hfAdultId));
+   }
+
+   @GET
+   @Path("view/profile/{hfSeasonId}/{loginId}")
+   @Produces("application/json")
+   public HFProfile viewHFProfile(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
+      return hfApplication.viewHFProfile(Integer.parseInt(hfSeasonId),Integer.parseInt(loginId));
    }
 
 }

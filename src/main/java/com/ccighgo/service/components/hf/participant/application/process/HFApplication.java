@@ -22,6 +22,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescrip
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
@@ -46,7 +47,7 @@ public interface HFApplication {
     * @param hfSeasonId
     * @return
     */
-   public WhyHost getWhyHost(String hfHomeId, String hfSeasonId, String applicationCategoryId);
+   public WhyHost getWhyHost(String hfSeasonId, String applicationCategoryId);
 
    /**
     * @param hfHomeId
@@ -188,5 +189,11 @@ public interface HFApplication {
    public WSDefaultResponse removeHostFamilyPet(int hfPetId);
 
    public WSDefaultResponse removeHostFamilyAdult(int hfAdultId);
+
+   /**
+    * @param parseInt
+    * @return
+    */
+   public HFProfile viewHFProfile(int hfSeasonId, int loginId);
 
 }

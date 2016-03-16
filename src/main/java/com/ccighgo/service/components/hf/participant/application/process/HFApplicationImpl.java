@@ -99,6 +99,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.P
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.PhotoType;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFState;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.Progress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
@@ -196,7 +198,7 @@ public class HFApplicationImpl implements HFApplication {
          hfHome.setModifiedBy(whyHost.getLoginId());
          hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
-         updatedObject = getWhyHost(String.valueOf(hfHome.getHostFamilyHomeId()), String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
+         updatedObject = getWhyHost(String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
@@ -208,13 +210,13 @@ public class HFApplicationImpl implements HFApplication {
 
    @Override
    @Transactional(readOnly = true)
-   public WhyHost getWhyHost(String hfHomeId, String hfSeasonId, String applicationCategoryId) {
+   public WhyHost getWhyHost(String hfSeasonId, String applicationCategoryId) {
       WhyHost whyHost = new WhyHost();
       try {
-         if (hfHomeId == null || hfSeasonId == null || applicationCategoryId == null) {
+         if (hfSeasonId == null || applicationCategoryId == null) {
             throw new CcighgoException("invalid search parameters");
          }
-         HostFamilyHome hfHome = hostFamilyHomeRepository.getHFHomebyIdAndSeasonId(Integer.valueOf(hfHomeId), Integer.valueOf(hfSeasonId));
+         HostFamilyHome hfHome = hostFamilyHomeRepository.getHFHomebyIdAndSeasonId(Integer.valueOf(hfSeasonId));
          HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(Integer.valueOf(hfSeasonId),
                Integer.valueOf(applicationCategoryId));
          if (hfHome != null && hostFamilySeasonCategory != null) {
@@ -274,7 +276,7 @@ public class HFApplicationImpl implements HFApplication {
             hfHome.setModifiedBy(whyHost.getLoginId());
             hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
-            updatedObject = getWhyHost(String.valueOf(hfHome.getHostFamilyHomeId()), String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
+            updatedObject = getWhyHost(String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
             updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
@@ -1790,6 +1792,53 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hp;
+   }
+
+   @Override
+   @Transactional(readOnly=true)
+   public HFProfile viewHFProfile(int hfSeasonId, int loginId) {
+      HFProfile hfProfile = new HFProfile();
+      try{
+         HostFamily hostFamily = hostFamilyRepository.findBySeasonId(hfSeasonId);
+         if(hostFamily!=null){
+            
+            
+            hfProfile.setPrimaryPhone(hostFamily.getPhone());
+            hfProfile.setFirstName(hostFamily.getFirstName());
+            hfProfile.setLastName(hostFamily.getLastName());
+            hfProfile.setEmail(hostFamily.getPreferredEmail());
+            hfProfile.setEmergencyPhone(hostFamily.getEmergencyPhone());
+            hfProfile.setEmergencyContact(hostFamily.getEmergencyContact());
+            hfProfile.setPhysicalAddress(hostFamily.getPhysicalAddress());
+            hfProfile.setPhysicalCity(hostFamily.getPhysicalCity());
+            HFState pState = new HFState();
+            if(hostFamily.getLookupUsstate2()!=null){
+               pState.setHfStateId(hostFamily.getLookupUsstate2().getUsStatesId());
+               pState.setHfState(hostFamily.getLookupUsstate2().getStateName());
+            }
+            hfProfile.setPhysicalState(pState);
+            hfProfile.setPhysicalZip(hostFamily.getPhysicalZipCode());
+            hfProfile.setMailingAddress(hostFamily.getMailingAddress());
+            hfProfile.setMailingCity(hostFamily.getMailingCity());
+            HFState mState = new HFState();
+            if(hostFamily.getLookupUsstate1()!=null){
+               mState.setHfStateId(hostFamily.getLookupUsstate2().getUsStatesId());
+               mState.setHfState(hostFamily.getLookupUsstate2().getStateName());
+            }
+            hfProfile.setMailingState(mState);
+            hfProfile.setMailingZip(hostFamily.getMailingZipCode());
+            hfProfile.setRecieveEmail(hostFamily.getReceiveEmails().equals(CCIConstants.ACTIVE)?true:false);
+            hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }else{
+            hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD))); 
+         }
+      }catch (CcighgoException e) {
+         hfProfile.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfProfile;
    }
 
 }
