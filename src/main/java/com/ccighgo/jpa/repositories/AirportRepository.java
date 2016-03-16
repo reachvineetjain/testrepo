@@ -22,4 +22,7 @@ public interface AirportRepository extends JpaRepository<Airport, Integer> {
    @Query("select d from Airport d where d.airportName = ?1 ")
    List<Airport> getAirportByName(String airportName);
 
+   @Query("select d from Airport d where d.isInternational=0")
+   List<Airport> getAirportInUSA();
+
 }

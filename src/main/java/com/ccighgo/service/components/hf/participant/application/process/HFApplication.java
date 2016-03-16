@@ -92,7 +92,7 @@ public interface HFApplication {
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public WSDefaultResponse saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
+   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
 
    /**
     * persist family details including life style
@@ -100,7 +100,7 @@ public interface HFApplication {
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public WSDefaultResponse saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
 
    /**
     * fetch family style data
@@ -117,7 +117,7 @@ public interface HFApplication {
     */
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
 
-   public WSDefaultResponse saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
+   public HFHomeDescriptionPage saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
 
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
 
@@ -190,6 +190,6 @@ public interface HFApplication {
 
    public WSDefaultResponse removeHostFamilyAdult(int hfAdultId);
 
-   public HFFamilyMember getHFMembers(Integer hfId, Integer seasonId, Integer programId);
+   public HFFamilyMember getHFMembers(Integer seasonId);
 
 }

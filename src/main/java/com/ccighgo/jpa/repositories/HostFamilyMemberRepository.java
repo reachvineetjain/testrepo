@@ -19,9 +19,7 @@ import com.ccighgo.db.entities.HostFamilyMember;
 @Repository
 public interface HostFamilyMemberRepository extends JpaRepository<HostFamilyMember, Integer> {
 
-   @Query("SELECT h FROM HostFamilyMember h ")
-   HostFamilyMember getHFMember(int goId);
+   @Query("SELECT h FROM HostFamilyMember h where h.hostFamilySeason.hostFamilySeasonId=?1 ")
+   List<HostFamilyMember> getHFMember(int seasonId);
 
-   @Query("SELECT h FROM HostFamilyMember h ")
-   List<HostFamilyMember> getHFMember(int hfId, int seasonId, int programId);
 }
