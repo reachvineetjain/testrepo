@@ -1,0 +1,40 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/hostfamilymembers"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hostfamilymembers"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.hostfamily.beans.application.familymembers" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+	<xsd:element name="HostFamilyMembers" type="pu:HostFamilyMembers" />
+
+
+	<xsd:complexType name="HostFamilyMembers">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="familyMembers" type="pu:HostFamilyMemberDetails"	minOccurs="1" maxOccurs="unbounded" />
+
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="HostFamilyMemberDetails">
+		<xsd:sequence>
+			<xsd:element name="hostfamilyMemberId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="name" type="xsd:string"	minOccurs="1" maxOccurs="1" />
+			<xsd:element name="genderId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="age" type="xsd:int" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>
