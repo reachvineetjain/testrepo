@@ -179,7 +179,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          newPartner.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          newPartner.setModifiedBy(partner.getLoginId());
          newPartner.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         newPartner.setCcistaffUser(cciStaffUsersRepository.findOne(partner.getGeneralContact().getCciUserId()));
+         if(partner.getGeneralContact() != null)
+            newPartner.setCcistaffUser(cciStaffUsersRepository.findOne(partner.getGeneralContact().getCciUserId()));
          newPartner = partnerRepository.saveAndFlush(newPartner);
 
          PartnerUser pUser = new PartnerUser();
