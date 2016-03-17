@@ -641,6 +641,8 @@ public class HFApplicationImpl implements HFApplication {
                adult.setHostfamilyMemberId(Integer.valueOf(String.valueOf(obj[26])));
                hfbs.getAdults().add(adult);
             }
+         } else {
+            hfbs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
          query = em.createNativeQuery(SP_HF_FAMILY_BASIC_CONTACT_INFORMATION);
@@ -923,7 +925,12 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setContactACoach(communityAndSchoolPage.getSchoolLife().isContactedCoatchForParticularAthleticAbility() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          hfd.setContactByCoachDetails(communityAndSchoolPage.getSchoolLife().getAlthleticAbilityDetails());
          hfd.setParentIsTeacher(communityAndSchoolPage.getSchoolLife().isAnyMemberTeachOrCoachAtSchool() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
-
+         // hfd.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
+         // hfd.setCreatedOn(new
+         // java.sql.Timestamp(System.currentTimeMillis()));
+         // hfd.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
+         // hfd.setCreatedOn(new
+         // java.sql.Timestamp(System.currentTimeMillis()));
          hostFamilyCommunityRepository.saveAndFlush(hfd);
          HFCommunityAndSchoolPageParam descriptionPageParam = new HFCommunityAndSchoolPageParam();
          descriptionPageParam.setDeptProgramId(communityAndSchoolPage.getProgramId());
@@ -1082,6 +1089,7 @@ public class HFApplicationImpl implements HFApplication {
             hfm.setContactName1(member.getContactName());
             hfm.setPhone1(member.getJobPhone());
             if (member.isHasAnotherJob()) {
+               hfm.setHaveAnotherJob(CCIConstants.TRUE_BYTE);
                if (member.getOtherEmployer() != null)
                   hfm.setEmployer2(member.getOtherEmployer());
                if (member.getOtherJobTitle() != null)
@@ -1964,9 +1972,11 @@ public class HFApplicationImpl implements HFApplication {
                detail.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[3])));
                hfs.getSeasonDetails().add(detail);
             }
+            hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            hfs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (CcighgoException e) {
          hfs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
@@ -2004,9 +2014,11 @@ public class HFApplicationImpl implements HFApplication {
                details.setGender(String.valueOf(obj[14]));
                hfs.getParticipants().add(details);
             }
+            hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            hfs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (CcighgoException e) {
          hfs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
