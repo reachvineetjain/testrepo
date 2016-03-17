@@ -473,7 +473,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(3, hpp.getDepartmentProgramId() == 0 ? null : hpp.getDepartmentProgramId());
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             int size = 0, completedCategoriesCount = 0;
             for (Object[] obj : result) {
                HFApplicationCheckListStages stage = new HFApplicationCheckListStages();
@@ -521,7 +521,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(3, familyStylePageParam.getDeptProgramId() == 0 ? null : familyStylePageParam.getDeptProgramId());
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                hfl.setFamilyDescription(String.valueOf(obj[0]));
                hfl.setAnyOneHasSeriousIllness((boolean) obj[1]);
@@ -602,7 +602,7 @@ public class HFApplicationImpl implements HFApplication {
          hfbs.setHostFamilyId(familyBasicsPageParam.getHostfamilyId());
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                HFAdultDetails adult = new HFAdultDetails();
                com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
@@ -651,7 +651,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
 
          result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                HFContactInfo info = new HFContactInfo();
                info.setHaveHomePhoneOrLandline(Boolean.valueOf(String.valueOf(obj[0])));
@@ -700,7 +700,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
          query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
          result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                HFAirport airport = new HFAirport();
                // a.`airportName`,
@@ -725,7 +725,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
          query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
          result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                HFPets pet = new HFPets();
                // hfpt.`hostFamilyPetTypeName`,
@@ -824,7 +824,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(3, descriptionPageParam.getDeptProgramId() == 0 ? null : descriptionPageParam.getDeptProgramId());
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                // ps.programName as seasonName, obj[0]
                HFHomeDescription hd = new HFHomeDescription();
@@ -958,7 +958,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(3, descriptionPageParam.getDeptProgramId() == 0 ? null : descriptionPageParam.getDeptProgramId());
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             HFCommunity c = new HFCommunity();
             for (Object[] obj : result) {
                // hfc.`population`,
@@ -990,7 +990,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(2, descriptionPageParam.getSeasonId() == 0 ? null : descriptionPageParam.getSeasonId());
          query.setParameter(3, descriptionPageParam.getDeptProgramId() == 0 ? null : descriptionPageParam.getDeptProgramId());
          result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             HFSchoolLife l = new HFSchoolLife();
             for (Object[] obj : result) {
                // hfc.`schoolTravelMethod`,
@@ -1963,7 +1963,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(1, hostFamilyGoId);
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                HFSeasonDetails detail = new HFSeasonDetails();
                detail.setSeasonName(String.valueOf(obj[0]));
@@ -1994,7 +1994,7 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(2, category);
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
-         if (result != null) {
+         if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                ParticipantDetails details = new ParticipantDetails();
                details.setPhoto(String.valueOf(obj[0]));
