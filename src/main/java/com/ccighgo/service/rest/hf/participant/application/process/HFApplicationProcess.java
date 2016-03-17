@@ -21,6 +21,7 @@ import com.ccighgo.service.components.hf.participant.application.process.util.Fa
 import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
@@ -28,16 +29,17 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.familymember.HFFamilyMember;
 import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.HostFamilyMembers;
-import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunity;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -63,12 +65,11 @@ public class HFApplicationProcess {
    }
 
    @GET
-   @Path("get/whyhost/{hostFamilyHomeId}/{hfSeasonId}/{applicationCategoryId}")
+   @Path("get/whyhost/{hfSeasonId}/{applicationCategoryId}")
    @Produces("application/json")
-   public WhyHost getWhyHost(@PathParam("hostFamilyHomeId") String hostFamilyHomeId, @PathParam("hfSeasonId") String hfSeasonId,
-         @PathParam("applicationCategoryId") String applicationCategoryId) {
+   public WhyHost getWhyHost(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("applicationCategoryId") String applicationCategoryId) {
       LOGGER.info("Calling service HFApplicationProcess.getWhyHost for hfSeasonId {}", hfSeasonId);
-      return hfApplication.getWhyHost(hostFamilyHomeId, hfSeasonId, applicationCategoryId);
+      return hfApplication.getWhyHost(hfSeasonId, applicationCategoryId);
    }
 
    @POST
@@ -91,7 +92,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("get/pictures/{hfSeasonId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public HFApplicationUploadPhotos getHFPhotos(@PathParam("hfSeasonId") String hfSeasonId) {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
@@ -229,6 +229,7 @@ public class HFApplicationProcess {
 
    @POST
    @Path("submit")
+   @Consumes("application/json")
    @Produces("application/json")
    public Response submitApplication(HFSubmitApplication application) {
       return hfApplication.submitApplication(application);
@@ -244,7 +245,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("airportList")
-   @Consumes("application/json")
    @Produces("application/json")
    public HFAirportList hfAirportList() {
       return hfApplication.hfAirportList();
@@ -252,7 +252,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("removeHostFamilyAirport/{hfAirportId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAirport(@PathParam("hfAirportId") String hfAirportId) {
       return hfApplication.removeHostFamilyAirport(Integer.valueOf(hfAirportId));
@@ -260,7 +259,6 @@ public class HFApplicationProcess {
 
    @GET
    @Path("removeHostFamilyPet/{hfPetId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyPet(@PathParam("hfPetId") String hfPetId) {
       return hfApplication.removeHostFamilyPet(Integer.parseInt(hfPetId));
@@ -268,26 +266,60 @@ public class HFApplicationProcess {
 
    @GET
    @Path("removeHostFamilyAdult/{hfAdultId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAdult(@PathParam("hfAdultId") String hfAdultId) {
       return hfApplication.removeHostFamilyAdult(Integer.parseInt(hfAdultId));
    }
 
    @GET
+   @Path("view/profile/{hfSeasonId}/{loginId}")
+   @Produces("application/json")
+   public HFProfile viewHFProfile(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
+      return hfApplication.viewHFProfile(Integer.parseInt(hfSeasonId), Integer.parseInt(loginId));
+   }
+
+   @GET
    @Path("getHFMembers/{seasonId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public HFFamilyMember getHFMembers(@PathParam("seasonId") Integer seasonId) {
       return hfApplication.getHFMembers(seasonId);
    }
-   
+
    @GET
    @Path("getHFDetails/{hostfamilySeasonId}")
-   @Consumes("application/json")
    @Produces("application/json")
-   public HostFamilyMembers getHFDetails(@PathParam("hostfamilySeasonId") Integer hostfamilySeasonId){
-      return hfApplication.getHFDetails(hostfamilySeasonId);      
+   public HostFamilyMembers getHFDetails(@PathParam("hostfamilySeasonId") Integer hostfamilySeasonId) {
+      return hfApplication.getHFDetails(hostfamilySeasonId);
+   }
+
+   // ///// part 2
+
+   @GET
+   @Path("getSeasonList/{hostFamilyGoId}")
+   @Produces("application/json")
+   public HFSeasonList getSeasonList(@PathParam("hostFamilyGoId") String hostFamilyGoId) {
+      return hfApplication.getSeasonList(Integer.valueOf(hostFamilyGoId));
+   }
+
+   @GET
+   @Path("getPresentedParticipant/{hostFamilyGoId}/{category}")
+   @Produces("application/json")
+   public HFPresentedParticipantList getPresentedParticipant(@PathParam("hostFamilyGoId") String hostFamilyGoId, @PathParam("category") String category) {
+      return hfApplication.getPresentedParticipant(Integer.valueOf(hostFamilyGoId), category);
+   }
+
+   @GET
+   @Path("getPlacedParticipant/{hostFamilyGoId}/{category}")
+   @Produces("application/json")
+   public HFPresentedParticipantList getPlacedParticipant(@PathParam("hostFamilyGoId") String hostFamilyGoId, @PathParam("category") String category) {
+      return hfApplication.getPresentedParticipant(Integer.valueOf(hostFamilyGoId), category);
+   }
+
+   @GET
+   @Path("getParticipantHistory/{hostFamilyGoId}/{category}")
+   @Produces("application/json")
+   public HFPresentedParticipantList getParticipantHistory(@PathParam("hostFamilyGoId") String hostFamilyGoId, @PathParam("category") String category) {
+      return hfApplication.getPresentedParticipant(Integer.valueOf(hostFamilyGoId), category);
    }
 
 }

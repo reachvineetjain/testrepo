@@ -72,6 +72,8 @@ import com.ccighgo.service.components.hf.participant.application.process.util.HF
 import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonDetails;
+import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.hostfamily.beans.application.background.check.HFBackgroundCheck;
@@ -106,12 +108,16 @@ import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.P
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.PhotoType;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFState;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.Progress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.Reference;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.DateUtils;
@@ -169,6 +175,8 @@ public class HFApplicationImpl implements HFApplication {
    private static final String SP_HF_HOME = "CALL SPHostFamilyApplicationHome(?,?,?)";
    private static final String SP_HF_COMMUNITY = "CALL SPHostFamilyApplicationCommunity(?,?,?)";
    private static final String SP_HF_SCHOOL_LIFE = "CALL SPHostFamilyApplicationSchoolLife (?,?,?)";
+   private static final String SP_HF_SEASON_LIST = "CALL SPHostFamilySeasonList (?)";
+   private static final String SP_HF_PARTICIPANT_LIST = "CALL SPHostFamilyParticipantList (?,?)";
 
    private static final String COMPLETED = "Completed";
    private static final String NOT_COMPLETED = "Not Completed";
@@ -203,7 +211,7 @@ public class HFApplicationImpl implements HFApplication {
          hfHome.setModifiedBy(whyHost.getLoginId());
          hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
-         updatedObject = getWhyHost(String.valueOf(hfHome.getHostFamilyHomeId()), String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
+         updatedObject = getWhyHost(String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
@@ -215,13 +223,13 @@ public class HFApplicationImpl implements HFApplication {
 
    @Override
    @Transactional(readOnly = true)
-   public WhyHost getWhyHost(String hfHomeId, String hfSeasonId, String applicationCategoryId) {
+   public WhyHost getWhyHost(String hfSeasonId, String applicationCategoryId) {
       WhyHost whyHost = new WhyHost();
       try {
-         if (hfHomeId == null || hfSeasonId == null || applicationCategoryId == null) {
+         if (hfSeasonId == null || applicationCategoryId == null) {
             throw new CcighgoException("invalid search parameters");
          }
-         HostFamilyHome hfHome = hostFamilyHomeRepository.getHFHomebyIdAndSeasonId(Integer.valueOf(hfHomeId), Integer.valueOf(hfSeasonId));
+         HostFamilyHome hfHome = hostFamilyHomeRepository.getHFHomebyIdAndSeasonId(Integer.valueOf(hfSeasonId));
          HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(Integer.valueOf(hfSeasonId),
                Integer.valueOf(applicationCategoryId));
          if (hfHome != null && hostFamilySeasonCategory != null) {
@@ -281,7 +289,7 @@ public class HFApplicationImpl implements HFApplication {
             hfHome.setModifiedBy(whyHost.getLoginId());
             hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
-            updatedObject = getWhyHost(String.valueOf(hfHome.getHostFamilyHomeId()), String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
+            updatedObject = getWhyHost(String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
             updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
@@ -527,18 +535,17 @@ public class HFApplicationImpl implements HFApplication {
                familyDay.setTypicalWeekdayAtHome(String.valueOf(obj[7]));
                familyDay.setTypicalWeekendAtHome(String.valueOf(obj[8]));
                familyDay.setFavouriteThingsToDoAsFamily(String.valueOf(obj[9]));
-
                hfl.setFamilyDay(familyDay);
+               
                HFFamilyReligious religious = new HFFamilyReligious();
-
                religious.setReligious(String.valueOf(obj[10]));
                religious.setExplanation(String.valueOf(obj[11]));
                religious.setOftenAttendReligiousMeetings(String.valueOf(obj[12]));
                religious.setPreferedTheStudentJoinYou(String.valueOf(obj[13]));
                religious.setInviteStudentForReligiousExperience((boolean) obj[14]);
                religious.setDiffecultyHostingPersonWithDifferentReligious((boolean) obj[15]);
-
                hfl.setReligious(religious);
+               
                HFDieTrayRestriction diet = new HFDieTrayRestriction();
                diet.setProvideStudentWithThreeMeals((boolean) obj[16]);
                diet.setFollowDietrayRestriction((boolean) obj[17]);
@@ -546,10 +553,9 @@ public class HFApplicationImpl implements HFApplication {
                diet.setExpectStudentFollowDietrayRestriction((boolean) obj[19]);
                diet.setStudentFollowDietrayRestrictionExplanation(String.valueOf(obj[20]));
                diet.setHostStudentWhoFollowDietrayRestriction((boolean) obj[21]);
-
                hfl.setDieTrayRestriction(diet);
+               
                HFMiscLifeStyle m = new HFMiscLifeStyle();
-
                m.setHaveAutoInsurranceForAllCarsYouHave(String.valueOf(obj[22]));
                m.setAnyOneIsSmokingInyourFamily((boolean) obj[23]);
                m.setWhereSmoking(String.valueOf(obj[24]));
@@ -558,15 +564,18 @@ public class HFApplicationImpl implements HFApplication {
                m.setConvictedInCrimeDesc(String.valueOf(obj[27]));
                m.setAnyOneInProtectiveServiceAgency((boolean) obj[28]);
                m.setChildInProtectiveServiceExplanation(String.valueOf(obj[29]));
-
                hfl.setMiscLifeStyle(m);
+               
                HFFinancialResource f = new HFFinancialResource();
                f.setTotalHouseHoldIncome(String.valueOf(obj[30]));
                f.setAnyOneReceivePublicAssistant((boolean) obj[31]);
                f.setPublicAssistantExplanation(String.valueOf(obj[32]));
-               hfl.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[33])));
-               hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[34])));
                hfl.setFinancialResources(f);
+               
+               hfl.setSeasonId(Integer.valueOf(String.valueOf(obj[33])));
+               hfl.setProgramId(Integer.valueOf(String.valueOf(obj[34])));
+               hfl.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[35])));
+               hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[36])));               
                break;
             }
             hfl.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -986,8 +995,8 @@ public class HFApplicationImpl implements HFApplication {
                l.setContactedCoatchForParticularAthleticAbility(Boolean.valueOf(String.valueOf(obj[6])));
                // hfc.`parentIsTeacher`
                l.setAnyMemberTeachOrCoachAtSchool(Boolean.valueOf(String.valueOf(obj[7])));
-               l.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[8])));
-               l.setHostFamilySchoolLifeId(Integer.valueOf(String.valueOf(obj[9])));
+               l.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[11])));
+               l.setHostFamilySchoolLifeId(Integer.valueOf(String.valueOf(obj[12])));
                break;
             }
             hfbs.setSchoolLife(l);
@@ -1835,6 +1844,51 @@ public class HFApplicationImpl implements HFApplication {
    }
 
    @Override
+   @Transactional(readOnly = true)
+   public HFProfile viewHFProfile(int hfSeasonId, int loginId) {
+      HFProfile hfProfile = new HFProfile();
+      try {
+         HostFamily hostFamily = hostFamilyRepository.findBySeasonId(hfSeasonId);
+         if (hostFamily != null) {
+
+            hfProfile.setPrimaryPhone(hostFamily.getPhone());
+            hfProfile.setFirstName(hostFamily.getFirstName());
+            hfProfile.setLastName(hostFamily.getLastName());
+            hfProfile.setEmail(hostFamily.getPreferredEmail());
+            hfProfile.setEmergencyPhone(hostFamily.getEmergencyPhone());
+            hfProfile.setEmergencyContact(hostFamily.getEmergencyContact());
+            hfProfile.setPhysicalAddress(hostFamily.getPhysicalAddress());
+            hfProfile.setPhysicalCity(hostFamily.getPhysicalCity());
+            HFState pState = new HFState();
+            if (hostFamily.getLookupUsstate2() != null) {
+               pState.setHfStateId(hostFamily.getLookupUsstate2().getUsStatesId());
+               pState.setHfState(hostFamily.getLookupUsstate2().getStateName());
+            }
+            hfProfile.setPhysicalState(pState);
+            hfProfile.setPhysicalZip(hostFamily.getPhysicalZipCode());
+            hfProfile.setMailingAddress(hostFamily.getMailingAddress());
+            hfProfile.setMailingCity(hostFamily.getMailingCity());
+            HFState mState = new HFState();
+            if (hostFamily.getLookupUsstate1() != null) {
+               mState.setHfStateId(hostFamily.getLookupUsstate2().getUsStatesId());
+               mState.setHfState(hostFamily.getLookupUsstate2().getStateName());
+            }
+            hfProfile.setMailingState(mState);
+            hfProfile.setMailingZip(hostFamily.getMailingZipCode());
+            hfProfile.setRecieveEmail(hostFamily.getReceiveEmails().equals(CCIConstants.ACTIVE) ? true : false);
+            hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (CcighgoException e) {
+         hfProfile.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfProfile;
+   }
+
    public HFFamilyMember getHFMembers(Integer seasonId) {
       HFFamilyMember hp = new HFFamilyMember();
       try {
@@ -1856,13 +1910,13 @@ public class HFApplicationImpl implements HFApplication {
       }
       return hp;
    }
-   
+
    @Override
    public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId) {
       HostFamilyMembers hfM = new HostFamilyMembers();
-      try{
+      try {
          List<HostFamilyMember> members = hfMemberRepository.getHFMember(hostfamilySeasonId);
-         for(HostFamilyMember hf:members){
+         for (HostFamilyMember hf : members) {
             HostFamilyMemberDetails hfMD = new HostFamilyMemberDetails();
             hfMD.setName(hf.getFirstName() + " " + hf.getLastName());
             hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
@@ -1870,19 +1924,87 @@ public class HFApplicationImpl implements HFApplication {
             hfMD.setGender(hf.getLookupGender().getGenderName());
             DateTime d1 = new DateTime(hf.getBirthDate().getTime());
             DateTime d2 = new DateTime(new Date().getTime());
-            Years age = Years.yearsBetween(d1,d2);
+            Years age = Years.yearsBetween(d1, d2);
             hfMD.setAge(age.getYears());
             hfM.getFamilyMembers().add(hfMD);
          }
-         
+
          hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-         
-      }catch (CcighgoException e) {
-           hfM.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
-           LOGGER.error(e.getMessage());
-        }
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (CcighgoException e) {
+         hfM.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
       return hfM;
    }
 
+   @Override
+   public HFSeasonList getSeasonList(Integer hostFamilyGoId) {
+      HFSeasonList hfs = new HFSeasonList();
+      try {
+
+         Query query = em.createNativeQuery(SP_HF_SEASON_LIST);
+         query.setParameter(1, hostFamilyGoId);
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = query.getResultList();
+         if (result != null) {
+            for (Object[] obj : result) {
+               HFSeasonDetails detail = new HFSeasonDetails();
+               detail.setSeasonName(String.valueOf(obj[0]));
+               detail.setSeasonId(Integer.valueOf(String.valueOf(obj[1])));
+               detail.setDepartmentProgramId(Integer.valueOf(String.valueOf(obj[2])));
+               detail.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[3])));
+               hfs.getSeasonDetails().add(detail);
+            }
+         }
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (CcighgoException e) {
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfs;
+   }
+
+   @Override
+   public HFPresentedParticipantList getPresentedParticipant(Integer hostFamilyGoId, String category) {
+      HFPresentedParticipantList hfs = new HFPresentedParticipantList();
+      try {
+         Query query = em.createNativeQuery(SP_HF_PARTICIPANT_LIST);
+         query.setParameter(1, hostFamilyGoId);
+         query.setParameter(2, category);
+         @SuppressWarnings("unchecked")
+         List<Object[]> result = query.getResultList();
+         if (result != null) {
+            for (Object[] obj : result) {
+               ParticipantDetails details = new ParticipantDetails();
+               details.setPhoto(String.valueOf(obj[0]));
+               details.setFirstName(String.valueOf(obj[1]));
+               details.setLastName(String.valueOf(obj[2]));
+               details.setParticipantGoId(String.valueOf(obj[3]));
+               details.setRanking(Integer.valueOf(String.valueOf(obj[4])));
+               details.setProgram(String.valueOf(obj[5]));
+               details.setProgramOption(String.valueOf(obj[6]));
+               details.setProgramStartDate(String.valueOf(obj[7]));
+               details.setProgramEndDate(String.valueOf(obj[8]));
+               details.setAge(String.valueOf(obj[9]));
+               details.setCountryId(String.valueOf(obj[10]));
+               details.setCountryName(String.valueOf(obj[11]));
+               details.setCountryFlag(String.valueOf(obj[12]));
+               details.setGenderId(String.valueOf(obj[13]));
+               details.setGender(String.valueOf(obj[14]));
+               hfs.getParticipants().add(details);
+            }
+         }
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+
+      } catch (CcighgoException e) {
+         hfs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfs;
+   }
 }
