@@ -252,8 +252,9 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             throw new CcighgoException("No Active partners found.");
          }
          addedPartners.setCount(partnerReviewStatusList.size());
-         List<AddedPartner> addedPartnersList = new ArrayList<AddedPartner>();
+         
          for (PartnerReviewStatus prs : partnerReviewStatusList) {
+            List<AddedPartner> addedPartnersList = new ArrayList<AddedPartner>();
             Partner p = partnerRepository.findOne(prs.getPartner().getPartnerGoId());
             PartnerUser puser = null;
             List<PartnerUser> partnerUserList = p.getPartnerUsers();
