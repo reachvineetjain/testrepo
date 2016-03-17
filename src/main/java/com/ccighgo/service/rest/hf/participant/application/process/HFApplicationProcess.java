@@ -201,7 +201,7 @@ public class HFApplicationProcess {
    @Path("hfSaveCoummnityAndSchoolDetails")
    @Consumes("application/json")
    @Produces("application/json")
-   public WSDefaultResponse createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
+   public HFCommunityAndSchoolPage createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
       return hfApplication.saveHFCoummnityAndSchool(communityAndSchoolPage);
    }
 
