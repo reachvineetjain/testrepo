@@ -643,6 +643,7 @@ public class HFApplicationImpl implements HFApplication {
             }
          } else {
             hfbs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            return;
          }
 
          query = em.createNativeQuery(SP_HF_FAMILY_BASIC_CONTACT_INFORMATION);
