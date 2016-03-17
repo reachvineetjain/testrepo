@@ -1775,8 +1775,15 @@
 			<java classname="com.sun.tools.internal.xjc.XJCFacade">
 				<arg value="-d" />
 				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/hostfamily/application_part2/page3/ParticipantsLeadList.xsd" />
+				<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsLeadList.xsd" />
 			</java>
 	</target>
+	<target name="HfParticipantDetail">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsDetail.xsd" />
+				</java>
+		</target>
 
 </project>

@@ -116,6 +116,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.references.Hos
 import com.ccighgo.service.transport.hostfamily.beans.application.references.Reference;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
 import com.ccighgo.utils.CCIConstants;
@@ -633,7 +635,7 @@ public class HFApplicationImpl implements HFApplication {
                      adult.setHasAnotherJob(valueOf);
                      adult.setOtherEmployer(String.valueOf(obj[21]));
                      adult.setOtherJobTitle(String.valueOf(obj[22]));
-                     adult.setContactName(String.valueOf(obj[23]));
+                     adult.setOtherContactName(String.valueOf(obj[23]));
                      adult.setOtherJobPhone(String.valueOf(obj[24]));
                   }
                }
@@ -1989,8 +1991,8 @@ public class HFApplicationImpl implements HFApplication {
    }
 
    @Override
-   public HFPresentedParticipantList getPresentedParticipant(Integer hostFamilyGoId, String category) {
-      HFPresentedParticipantList hfs = new HFPresentedParticipantList();
+   public HFParticipantList getParticipantsList(Integer hostFamilyGoId, String category) {
+      HFParticipantList hfs = new HFParticipantList();
       try {
          Query query = em.createNativeQuery(SP_HF_PARTICIPANT_LIST);
          query.setParameter(1, hostFamilyGoId);
@@ -2028,5 +2030,11 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hfs;
+   }
+
+   @Override
+   public HFParticipantDetail getParticipantDetail(Integer valueOf) {
+      // TODO Auto-generated method stub
+      return null;
    }
 }
