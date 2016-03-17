@@ -536,7 +536,7 @@ public class HFApplicationImpl implements HFApplication {
                familyDay.setTypicalWeekendAtHome(String.valueOf(obj[8]));
                familyDay.setFavouriteThingsToDoAsFamily(String.valueOf(obj[9]));
                hfl.setFamilyDay(familyDay);
-               
+
                HFFamilyReligious religious = new HFFamilyReligious();
                religious.setReligious(String.valueOf(obj[10]));
                religious.setExplanation(String.valueOf(obj[11]));
@@ -545,7 +545,7 @@ public class HFApplicationImpl implements HFApplication {
                religious.setInviteStudentForReligiousExperience((boolean) obj[14]);
                religious.setDiffecultyHostingPersonWithDifferentReligious((boolean) obj[15]);
                hfl.setReligious(religious);
-               
+
                HFDieTrayRestriction diet = new HFDieTrayRestriction();
                diet.setProvideStudentWithThreeMeals((boolean) obj[16]);
                diet.setFollowDietrayRestriction((boolean) obj[17]);
@@ -554,7 +554,7 @@ public class HFApplicationImpl implements HFApplication {
                diet.setStudentFollowDietrayRestrictionExplanation(String.valueOf(obj[20]));
                diet.setHostStudentWhoFollowDietrayRestriction((boolean) obj[21]);
                hfl.setDieTrayRestriction(diet);
-               
+
                HFMiscLifeStyle m = new HFMiscLifeStyle();
                m.setHaveAutoInsurranceForAllCarsYouHave(String.valueOf(obj[22]));
                m.setAnyOneIsSmokingInyourFamily((boolean) obj[23]);
@@ -565,17 +565,17 @@ public class HFApplicationImpl implements HFApplication {
                m.setAnyOneInProtectiveServiceAgency((boolean) obj[28]);
                m.setChildInProtectiveServiceExplanation(String.valueOf(obj[29]));
                hfl.setMiscLifeStyle(m);
-               
+
                HFFinancialResource f = new HFFinancialResource();
                f.setTotalHouseHoldIncome(String.valueOf(obj[30]));
                f.setAnyOneReceivePublicAssistant((boolean) obj[31]);
                f.setPublicAssistantExplanation(String.valueOf(obj[32]));
                hfl.setFinancialResources(f);
-               
+
                hfl.setSeasonId(Integer.valueOf(String.valueOf(obj[33])));
                hfl.setProgramId(Integer.valueOf(String.valueOf(obj[34])));
                hfl.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[35])));
-               hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[36])));               
+               hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[36])));
                break;
             }
             hfl.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -888,8 +888,8 @@ public class HFApplicationImpl implements HFApplication {
 
    @Override
    @Transactional
-   public WSDefaultResponse saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
-      WSDefaultResponse hp = new WSDefaultResponse();
+   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
+      HFCommunityAndSchoolPage hp = new HFCommunityAndSchoolPage();
       try {
          if (communityAndSchoolPage.getLoginId() <= 0) {
             throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_OR_NULL_LOGIN_ID));
@@ -925,8 +925,15 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setParentIsTeacher(communityAndSchoolPage.getSchoolLife().isAnyMemberTeachOrCoachAtSchool() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
 
          hostFamilyCommunityRepository.saveAndFlush(hfd);
-         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         HFCommunityAndSchoolPageParam descriptionPageParam = new HFCommunityAndSchoolPageParam();
+         descriptionPageParam.setDeptProgramId(communityAndSchoolPage.getProgramId());
+         descriptionPageParam.setHostFamilyId(communityAndSchoolPage.getHostFamilyId());
+         descriptionPageParam.setLoginId(communityAndSchoolPage.getLoginId());
+         descriptionPageParam.setSeasonId(communityAndSchoolPage.getSeasonId());
+         // hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
+         // CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hp = fetchHFCoummnityAndSchool(descriptionPageParam);
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SAVE_HF_COMMUNITY_AND_SCHOOL.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());

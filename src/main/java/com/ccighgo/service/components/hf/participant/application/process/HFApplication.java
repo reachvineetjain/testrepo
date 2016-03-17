@@ -137,7 +137,7 @@ public interface HFApplication {
     * @param communityAndSchoolPage
     * @return
     */
-   public WSDefaultResponse saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
+   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
 
    /**
     * @param descriptionPageParam
