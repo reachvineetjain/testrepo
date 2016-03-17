@@ -60,7 +60,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public WhyHost createWhyHost(@PathParam("applicationCategoryId") String applicationCategoryId, WhyHost whyHost) {
-      LOGGER.info("Calling service HFApplicationProcess.createWhyHost for hfSeasonId {}", whyHost.getSeasonId());
+      LOGGER.info("Calling service HFApplicationProcess.createWhyHost for hfSeasonId {}", whyHost.getHostfamilySeasonId());
       return hfApplication.createWhyHost(applicationCategoryId, whyHost);
    }
 
