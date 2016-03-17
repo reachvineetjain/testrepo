@@ -30,6 +30,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApp
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
+import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -252,6 +254,13 @@ public interface HFApplication {
     * @param category
     * @return
     */
-   public HFPresentedParticipantList getPresentedParticipant(Integer valueOf, String category);
+   public HFParticipantList getParticipantsList(Integer valueOf, String category);
+
+   /**
+    * 
+    * @param valueOf
+    * @return
+    */
+   public HFParticipantDetail getParticipantDetail(Integer valueOf);
 
 }
