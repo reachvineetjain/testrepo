@@ -535,18 +535,17 @@ public class HFApplicationImpl implements HFApplication {
                familyDay.setTypicalWeekdayAtHome(String.valueOf(obj[7]));
                familyDay.setTypicalWeekendAtHome(String.valueOf(obj[8]));
                familyDay.setFavouriteThingsToDoAsFamily(String.valueOf(obj[9]));
-
                hfl.setFamilyDay(familyDay);
+               
                HFFamilyReligious religious = new HFFamilyReligious();
-
                religious.setReligious(String.valueOf(obj[10]));
                religious.setExplanation(String.valueOf(obj[11]));
                religious.setOftenAttendReligiousMeetings(String.valueOf(obj[12]));
                religious.setPreferedTheStudentJoinYou(String.valueOf(obj[13]));
                religious.setInviteStudentForReligiousExperience((boolean) obj[14]);
                religious.setDiffecultyHostingPersonWithDifferentReligious((boolean) obj[15]);
-
                hfl.setReligious(religious);
+               
                HFDieTrayRestriction diet = new HFDieTrayRestriction();
                diet.setProvideStudentWithThreeMeals((boolean) obj[16]);
                diet.setFollowDietrayRestriction((boolean) obj[17]);
@@ -554,10 +553,9 @@ public class HFApplicationImpl implements HFApplication {
                diet.setExpectStudentFollowDietrayRestriction((boolean) obj[19]);
                diet.setStudentFollowDietrayRestrictionExplanation(String.valueOf(obj[20]));
                diet.setHostStudentWhoFollowDietrayRestriction((boolean) obj[21]);
-
                hfl.setDieTrayRestriction(diet);
+               
                HFMiscLifeStyle m = new HFMiscLifeStyle();
-
                m.setHaveAutoInsurranceForAllCarsYouHave(String.valueOf(obj[22]));
                m.setAnyOneIsSmokingInyourFamily((boolean) obj[23]);
                m.setWhereSmoking(String.valueOf(obj[24]));
@@ -566,15 +564,18 @@ public class HFApplicationImpl implements HFApplication {
                m.setConvictedInCrimeDesc(String.valueOf(obj[27]));
                m.setAnyOneInProtectiveServiceAgency((boolean) obj[28]);
                m.setChildInProtectiveServiceExplanation(String.valueOf(obj[29]));
-
                hfl.setMiscLifeStyle(m);
+               
                HFFinancialResource f = new HFFinancialResource();
                f.setTotalHouseHoldIncome(String.valueOf(obj[30]));
                f.setAnyOneReceivePublicAssistant((boolean) obj[31]);
                f.setPublicAssistantExplanation(String.valueOf(obj[32]));
-               hfl.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[33])));
-               hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[34])));
                hfl.setFinancialResources(f);
+               
+               hfl.setSeasonId(Integer.valueOf(String.valueOf(obj[33])));
+               hfl.setProgramId(Integer.valueOf(String.valueOf(obj[34])));
+               hfl.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[35])));
+               hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[36])));               
                break;
             }
             hfl.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
