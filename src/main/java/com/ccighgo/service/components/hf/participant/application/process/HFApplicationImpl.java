@@ -982,6 +982,7 @@ public class HFApplicationImpl implements HFApplication {
                c.setVolunteeringOpportunitiesInTheCommunity(String.valueOf(obj[8]));
                c.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[11])));
                c.setHostFamilyCommunityId(Integer.valueOf(String.valueOf(obj[12])));
+               hfbs.setHostFamilyCommunityId(Integer.valueOf(String.valueOf(obj[12])));
                break;
             }
             hfbs.setCommunity(c);
@@ -1012,6 +1013,7 @@ public class HFApplicationImpl implements HFApplication {
                l.setAnyMemberTeachOrCoachAtSchool(Boolean.valueOf(String.valueOf(obj[7])));
                l.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[11])));
                l.setHostFamilySchoolLifeId(Integer.valueOf(String.valueOf(obj[12])));
+               hfbs.setHostFamilyCommunityId(Integer.valueOf(String.valueOf(obj[12])));
                break;
             }
             hfbs.setSchoolLife(l);
