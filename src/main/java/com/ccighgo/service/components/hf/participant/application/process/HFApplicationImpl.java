@@ -192,7 +192,7 @@ public class HFApplicationImpl implements HFApplication {
          if (whyHost.getFieldsFilled() == 0 || whyHost.getFieldsFilled() < 0) {
             throw new CcighgoException("number of fields filled is mandatory to create the record");
          }
-         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(whyHost.getSeasonId(),
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(whyHost.getHostfamilySeasonId(),
                Integer.valueOf(applicationCategoryId));
          hostFamilySeasonCategory.setFilledMandatoryFields(whyHost.getFieldsFilled());
          hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
@@ -205,13 +205,13 @@ public class HFApplicationImpl implements HFApplication {
          hfHome.setHostedOther(whyHost.isHaveYouHostedForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          hfHome.setHostedOtherDetails(whyHost.getIfYesForWhomAndHowManyYears());
          hfHome.setStudentsResponsibilities(whyHost.getFamilyExpectationOnStudentResponsibility());
-         hfHome.setHostFamilySeason(hostFamilySeasonRepository.findOne(whyHost.getSeasonId()));
+         hfHome.setHostFamilySeason(hostFamilySeasonRepository.findOne(whyHost.getHostfamilySeasonId()));
          hfHome.setCreatedBy(whyHost.getLoginId());
          hfHome.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          hfHome.setModifiedBy(whyHost.getLoginId());
          hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
-         updatedObject = getWhyHost(String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
+         updatedObject = getWhyHost(String.valueOf(whyHost.getHostfamilySeasonId()), applicationCategoryId);
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
@@ -234,7 +234,7 @@ public class HFApplicationImpl implements HFApplication {
                Integer.valueOf(applicationCategoryId));
          if (hfHome != null && hostFamilySeasonCategory != null) {
             whyHost.setGoId(hfHome.getHostFamilySeason().getHostFamily().getHostFamilyGoId());
-            whyHost.setSeasonId(hfHome.getHostFamilySeason().getHostFamilySeasonId());
+            whyHost.setHostfamilySeasonId(hfHome.getHostFamilySeason().getHostFamilySeasonId());
             whyHost.setHostFamilyHomeId(hfHome.getHostFamilyHomeId());
             whyHost.setWhyFamilyInterestedInHosting(hfHome.getHostingReason());
             whyHost.setAspectsOfAmericanCultureYouWillShare(hfHome.getHopeToLearn());
@@ -274,7 +274,7 @@ public class HFApplicationImpl implements HFApplication {
          }
          HostFamilyHome hfHome = hostFamilyHomeRepository.findOne(whyHost.getHostFamilyHomeId());
          if (hfHome != null) {
-            HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(whyHost.getSeasonId(),
+            HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(whyHost.getHostfamilySeasonId(),
                   Integer.valueOf(applicationCategoryId));
             hostFamilySeasonCategory.setFilledMandatoryFields(whyHost.getFieldsFilled());
             hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
@@ -289,7 +289,7 @@ public class HFApplicationImpl implements HFApplication {
             hfHome.setModifiedBy(whyHost.getLoginId());
             hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
-            updatedObject = getWhyHost(String.valueOf(whyHost.getSeasonId()), applicationCategoryId);
+            updatedObject = getWhyHost(String.valueOf(whyHost.getHostfamilySeasonId()), applicationCategoryId);
             updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
