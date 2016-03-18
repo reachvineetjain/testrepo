@@ -92,8 +92,8 @@
    <xsd:complexType name="PartnerJ1HSProgram">
       <xsd:sequence>
          <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="secondSemDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
+         <xsd:element name="secondSemDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
          <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="allocationStats" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="allocation" type="pdl:J1HSAllocation" minOccurs="1" maxOccurs="1" />

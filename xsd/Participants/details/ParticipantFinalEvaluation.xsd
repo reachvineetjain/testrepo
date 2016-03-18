@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partfinaleval" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:p="http://www.ccighgo.com/partfinaleval" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.participant.beans.finalevaluation" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="ParticipantFinalEvaluation" type="p:ParticipantFinalEvaluation" />
+
+   <xsd:complexType name="ParticipantFinalEvaluation">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hfSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="participantId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="overallExperience" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="participantFlexibility" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="participantCompatibility" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="lcHelpfulness" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="qualityOfMaterials" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="suggestionsImprovment" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="insuranceQuality" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="studentFulfillFamilyChores" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="studentFulfillHygiene" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="studentFulfillComments" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="wellAtSchoolAcademically" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="wellAtSchoolUSRelationship" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="recieveAdequateOrientation" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="anyProblemDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="howProblemHandled" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="expectationsMetComments" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="adviceToOtherHF" type="xsd:string" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="canUseForMarketing" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="willRecommendCCI" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+</xsd:schema>

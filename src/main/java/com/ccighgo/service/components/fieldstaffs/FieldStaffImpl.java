@@ -78,8 +78,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    @PersistenceContext EntityManager em;
 
    private static final String FIELD_STAFF_REGION_SP = "call SPFieldStaffRegionList(?)";
-   private static final int FS_HF_CATEGORIES_FLAG = 0;
-   private static final String FS_HF_CATEGORIES_NULL = null;
+   private static final int FS_FLAG_ALL_HF = 0;
+   private static final String FS_CAT_ALL_HF = null;
 
    @Override
    public AddedFieldStaff getAddedFieldStaffByType(String fieldStaffTypeCode) {
@@ -397,47 +397,6 @@ public class FieldStaffImpl implements FieldStaffsInterface {
    }
 
    @Override
-   public AdminFieldStaffHostFamily getAllHostFamiliesAll(int fieldStaffId) {
-      AdminFieldStaffHostFamily pwqa = new AdminFieldStaffHostFamily();
-      try {
-         @SuppressWarnings("unchecked")
-         List<Object[]> result = em.createNativeQuery("call SPFieldStaffHostFamilyList(:fieldStaffId,:flagId,:category)").setParameter("fieldStaffId", fieldStaffId)
-               .setParameter("flagId", FS_HF_CATEGORIES_FLAG).setParameter("category", FS_HF_CATEGORIES_NULL).getResultList();
-         if (result != null) {
-            if (!result.isEmpty()) {
-               for (Object[] wq : result) {
-                  FSHostFamilies pd = new FSHostFamilies();
-                  pd.setGoId(Integer.valueOf(String.valueOf(wq[0])));
-                  pd.setName(String.valueOf(wq[1]));
-                  pd.setAddress(String.valueOf(wq[2]));
-                  pd.setEmail(String.valueOf(wq[3]));
-                  pd.setLocalCoordinator(String.valueOf(wq[4]));
-                  pd.setSeasons(String.valueOf(wq[5]));
-                  pd.setApplicationStatus(String.valueOf(wq[6]));
-                  pd.setPhone(String.valueOf(wq[7]));
-                  pd.setPhoto(String.valueOf(wq[8]));
-                  pwqa.getHostFamilies().add(pd);
-               }
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
-                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-            } else {
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
-            }
-         } else {
-            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, LOGGER);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_HOST_FAMILY.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY)));
-         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY));
-      }
-      return pwqa;
-   }
-
-   @Override
    public FieldStaffDashboardApplicationStats getFSApplicationStats(int typeId, int categoryId) {
       FieldStaffDashboardApplicationStats pwqa = new FieldStaffDashboardApplicationStats();
       try {
@@ -626,15 +585,39 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             if (!result.isEmpty()) {
                for (Object[] wq : result) {
                   FSHostFamilies pd = new FSHostFamilies();
+                  /*
+                   * The Result Set values
+                   * 0.GoId,1.firstName,2.lastName,3.Address
+                   * ,4.email,5.localCordinator,6.Seasons,
+                   * 7.ApplicationStatus,8.
+                   * phone,9.photo,10.Participants,11.PhysicalCity
+                   * ,12.physicalStatusId,13.physicalZipCode.
+                   */
                   pd.setGoId(Integer.valueOf(String.valueOf(wq[0])));
-                  pd.setName(String.valueOf(wq[1]));
-                  pd.setAddress(String.valueOf(wq[2]));
-                  pd.setEmail(String.valueOf(wq[3]));
-                  pd.setLocalCoordinator(String.valueOf(wq[4]));
-                  pd.setSeasons(String.valueOf(wq[5]));
-                  pd.setApplicationStatus(String.valueOf(wq[6]));
-                  pd.setPhone(String.valueOf(wq[7]));
-                  pd.setPhoto(String.valueOf(wq[8]));
+                  pd.setFirstName(String.valueOf(wq[1]));
+                  pd.setLastName(String.valueOf(wq[2]));
+                  pd.setAddress(String.valueOf(wq[3]));
+                  pd.setEmail(String.valueOf(wq[4]));
+                  pd.setLocalCoordinator(String.valueOf(wq[5]));
+                  pd.setSeasons(String.valueOf(wq[6]));
+                  pd.setApplicationStatus(String.valueOf(wq[7]));
+                  pd.setPhone(String.valueOf(wq[8]));
+                  pd.setPhoto(String.valueOf(wq[9]));
+                  // set the additional Participants field in case of ERD view
+                  // -AllHostFamilies
+                  // i.e result of the CALL
+                  // `SPFieldStaffHostFamilyList`(50000,0,NULL);
+                  if (flagId == FS_FLAG_ALL_HF && category == FS_CAT_ALL_HF) {
+                     pd.setParticipants(String.valueOf(wq[10]));
+                     pd.setCity(String.valueOf(wq[11]));
+                     pd.setState(String.valueOf(wq[12]));
+                     pd.setZipCode(String.valueOf(wq[13]));
+                  } else {
+                     pd.setCity(String.valueOf(wq[10]));
+                     pd.setState(String.valueOf(wq[11]));
+                     pd.setZipCode(String.valueOf(wq[12]));
+                  }
+
                   pwqa.getHostFamilies().add(pd);
                }
                pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),

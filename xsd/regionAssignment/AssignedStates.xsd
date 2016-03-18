@@ -33,6 +33,7 @@
                <xsd:element name="stateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="stateCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="stateName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />               
                <xsd:element name="AssignedStateStaff" type="assignedstates:AssignedStateStaff" minOccurs="0" maxOccurs="unbounded" />
             </xsd:sequence>
    </xsd:complexType>

@@ -236,6 +236,7 @@ public class CCIConstants {
    public static final Integer APPL_F1 = 3;
    public static final Integer APPL_IHP = 5;
    public static final Integer APPROVED_STATUS = 5;
+   public static final Integer DELETED_STATUS = 13;
 
    public static final String SUBMITTED = "Submitted";
    public static final String PARTNER_REVIEW = "Partner Review";
@@ -265,5 +266,16 @@ public class CCIConstants {
    public static final String RD = "Regional Director";
    public static final String AC = "Area Coordinator";
    public static final String ERD = "Executive Regional Director";
+   
+   public static final int FAMILY_BASICS = 1;
+   public static final int FAMILY_LIFESTYLE = 2;
+   public static final int HOUSE_HOME = 3;
+   public static final int COMMUNITY = 4;
+   public static final int WHY_HOST = 5;
+   public static final int PHOTO_ALBUM = 6;
+   public static final int REFRENCES = 7;
+   public static final int BG_CHECK = 8;
+   public static final int SUBMIT_APPLICATION = 9;
+   
 
 }

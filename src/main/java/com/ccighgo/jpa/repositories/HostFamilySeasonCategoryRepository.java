@@ -17,9 +17,10 @@ import com.ccighgo.db.entities.HostFamilySeasonCategory;
  */
 @Repository
 public interface HostFamilySeasonCategoryRepository extends JpaRepository<HostFamilySeasonCategory, Integer> {
-   
+
    @Query("SELECT h FROM HostFamilySeasonCategory h WHERE h.hostFamilySeason.hostFamilySeasonId= ?1 AND h.hostFamilyApplicationCategory.hostFamilyApplicationCategoriesId = ?2")
    public HostFamilySeasonCategory getHFSeasonCategoryBySeasonIdAndCategoryId(Integer hfSeasonId, Integer hfSeasonCategoryId);
+
    @Query("SELECT h FROM HostFamilySeasonCategory h WHERE h.hostFamilySeason.hostFamilySeasonId= ?1")
    public List<HostFamilySeasonCategory> getHFSeasonCategoryBySeasonId(Integer hfSeasonId);
 }

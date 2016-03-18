@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.fieldstaff.season;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -88,8 +89,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                season.setSeasonId(obj[1] != null ? Integer.valueOf(obj[1].toString()) : 0);
                season.setDepartmentProgramId(obj[2] != null ? Integer.valueOf(obj[2].toString()) : 0);
                season.setProgramName(obj[3] != null ? obj[3].toString() : SPACE);
-               season.setStartDate(obj[4] != null ? DateUtils.getUSFormatDate(obj[4].toString()) : SPACE);
-               season.setEndDate(obj[5] != null ? DateUtils.getUSFormatDate(obj[5].toString()) : SPACE);
+               Date startDate=(Date)obj[4];
+               Date endDate=(Date)obj[5];               
+               season.setStartDate(startDate != null ? DateUtils.getMMddYyyyString(startDate) : SPACE);
+               season.setEndDate(endDate != null ? DateUtils.getMMddYyyyString(endDate) : SPACE);
                season.setStatus(obj[6] != null ? obj[6].toString() : SPACE);
                season.setFieldStaffStatus(obj[7] != null ? obj[7].toString() : SPACE);
                season.setDepartmentId(obj[8] != null ? Integer.valueOf(obj[8].toString()) : 0);

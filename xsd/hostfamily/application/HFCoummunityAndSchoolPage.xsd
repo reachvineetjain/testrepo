@@ -20,7 +20,9 @@
             <xsd:sequence>
                <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostFamilyId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostFamilyCommunityId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="community" type="pu:HFCommunity" minOccurs="1" maxOccurs="1" />
                <xsd:element name="schoolLife" type="pu:HFSchoolLife" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
@@ -35,11 +37,14 @@
             <xsd:element name="cityOrTownWebSite" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="nearestMajorCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="populationOfNearestCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="distanceFromCity" type="xsd:int" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="distanceFromCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="uniqueAboutYourCommunity" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="placesAndEventsMightInterestTheStudent" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="areasToBeAvoidedInTheNeighbourhood" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="volunteeringOpportunitiesInTheCommunity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilyCommunityId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           
           </xsd:sequence>
       </xsd:sequence>
    </xsd:complexType>
@@ -56,6 +61,8 @@
             <xsd:element name="contactedCoatchForParticularAthleticAbility" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
             <xsd:element name="althleticAbilityDetails" type="xsd:string" minOccurs="1" maxOccurs="1" />
             <xsd:element name="anyMemberTeachOrCoachAtSchool" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+        <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilySchoolLifeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
        </xsd:sequence>
       </xsd:sequence>
    </xsd:complexType>

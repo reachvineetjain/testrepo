@@ -21,7 +21,6 @@
                <xsd:element name="hfSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="hfDetails" type="pu:HFDetail" minOccurs="1" maxOccurs="1" />
                <xsd:element name="photos" type="pu:Photos" minOccurs="1" maxOccurs="1" />
                <xsd:element name="optionalPhotos" type="pu:Photos" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
@@ -29,21 +28,9 @@
       </xsd:complexContent>
    </xsd:complexType>
 
-   <xsd:complexType name="HFDetail">
-      <xsd:sequence>
-         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="hfPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="birthDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
    <xsd:complexType name="Photos">
       <xsd:sequence>
-         <xsd:element name="count" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
          <xsd:element name="photos" type="pu:Photo" minOccurs="0" maxOccurs="unbounded" />
       </xsd:sequence>
    </xsd:complexType>

@@ -55,11 +55,17 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    public void deleteRegionByIdSeasonIdAndSupRegId(Integer superRegionId, Integer seasonId, Integer regionId);
 
    @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId = ?2")
-   List<SeasonGeographyConfiguration> findBySuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
+   public List<SeasonGeographyConfiguration> findBySuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
+
+   @Query("SELECT s.seasonGeographyConfigurationId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId = ?2")
+   public List<Integer> findByIdSuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
 
    @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId = ?2 AND s.season.seasonId = ?3")
    public List<SeasonGeographyConfiguration> findRegionBySuperRegionRegionAndSeasonId(Integer superRegionId, Integer regionId, Integer seasonId);
 
+   @Query("SELECT s.seasonGeographyConfigurationId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId = ?2 AND s.season.seasonId = ?3")
+   public List<Integer> findRegionByIdSuperRegionRegionAndSeasonId(Integer superRegionId, Integer regionId, Integer seasonId);
+   
    @Query("SELECT DISTINCT s.region.regionId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1  AND s.season.seasonId = ?2 ")
    public List<Integer> findDistinctRegionsBySuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
 
@@ -84,6 +90,9 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    @Query("SELECT DISTINCT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId =?2 AND s.lookupUsstate.usStatesId =?3 AND s.season.seasonId = ?4 ")
    public SeasonGeographyConfiguration findStateRowBySuperRegionIdRegionIdStateIdSeasonId(Integer superRegionId, Integer regionId, Integer stateId, Integer seasonId);
 
+   @Query("SELECT s.seasonGeographyConfigurationId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.region.regionId =?2 AND s.lookupUsstate.usStatesId =?3 AND s.season.seasonId = ?4 ")
+   public List<Integer> findStateRowByIdSuperRegionIdRegionIdStateIdSeasonId(Integer superRegionId, Integer regionId, Integer stateId, Integer seasonId);
+   
    @Query("SELECT DISTINCT s.superRegion.superRegionId FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
    public List<Integer> findDistinctSuperRegionsBySeasonIdRM(Integer seasonId);
 
@@ -92,11 +101,11 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
 
    @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.season.seasonId = ?1")
    public List<SeasonGeographyConfiguration> findPreviousRecordsByMaxSeeasonId(Integer seasonId);
-   
+
    @Modifying
    @Query(value = "DELETE s FROM SeasonGeographyConfiguration s WHERE s.seasonId = ?1 AND s.superRegionId = ?2 AND s.regionId = ?3 AND s.usStatesId = ?4", nativeQuery = true)
    public void deleteRegionByIdSeasonIdAndSupRegIdAndStateId(Integer seasonId, Integer superRegionId, Integer regionId, Integer stateId);
-   
+
    @Query("SELECT DISTINCT s.seasonGeographyConfigurationId FROM SeasonGeographyConfiguration s")
    public List<Integer> findDistinctSeasons();
 
