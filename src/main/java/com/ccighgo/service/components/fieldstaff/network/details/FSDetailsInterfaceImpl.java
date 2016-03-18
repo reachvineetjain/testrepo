@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.fieldstaff.network.details;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -126,10 +127,12 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface {
                fslNetwork.setType(obj[5] != null ? obj[5].toString() : EMPTY);
                fslNetwork.setHomePhone(obj[6] != null ? obj[6].toString() : EMPTY);
                fslNetwork.setEmail(obj[7] != null ? obj[7].toString() : EMPTY);
-               fslNetwork.setDateOfInquiry(obj[8] != null ? DateUtils.getFormattedStringDate(obj[8].toString()) : EMPTY);
+               Date DateOfInquiry=(Date)obj[8];
+               Date DateSubmittedToCCI=(Date)obj[11];           
+               fslNetwork.setDateOfInquiry(obj[8] != null ? DateUtils.getMMddYyyyString(DateOfInquiry) : EMPTY);
                fslNetwork.setStatus(obj[9] != null ? obj[9].toString() : EMPTY);
                fslNetwork.setSeasonStatus(obj[10] != null ? obj[10].toString() : EMPTY);
-               fslNetwork.setDateSubmittedToCCI(obj[11] != null ? DateUtils.getFormattedStringDate(obj[11].toString()) : EMPTY);
+               fslNetwork.setDateSubmittedToCCI(obj[11] != null ? DateUtils.getMMddYyyyString(DateSubmittedToCCI) : EMPTY);
                fslNetwork.setSeasons(obj[10] != null ? obj[10].toString() : EMPTY);
                fslNetwork.setPhoto(obj[13] != null ? obj[13].toString() : EMPTY);
                fslNetworks.add(fslNetwork);
