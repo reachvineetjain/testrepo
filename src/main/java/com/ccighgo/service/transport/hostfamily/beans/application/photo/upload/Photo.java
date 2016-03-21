@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Photo", propOrder = {
     "photoId",
     "photoUrl",
+    "title",
     "name",
     "type",
     "description",
@@ -52,6 +53,8 @@ public class Photo {
     protected int photoId;
     @XmlElement(required = true)
     protected String photoUrl;
+    @XmlElement(required = true)
+    protected String title;
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
@@ -98,6 +101,30 @@ public class Photo {
      */
     public void setPhotoUrl(String value) {
         this.photoUrl = value;
+    }
+    
+    /**
+     * Gets the value of the title property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Sets the value of the title property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTitle(String value) {
+        this.title = value;
     }
 
     /**
