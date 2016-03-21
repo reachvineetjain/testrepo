@@ -806,7 +806,7 @@ public class HFApplicationImpl implements HFApplication {
 
          HFHomeDescriptionPageParam param = new HFHomeDescriptionPageParam();
          param.setDeptProgramId(descriptionPage.getProgramId());
-         param.setHostFamilyId(descriptionPage.getHostFamilyHomeId());
+         param.setHostFamilyId(descriptionPage.getHostFamilyId());
          param.setLoginId(descriptionPage.getLoginId());
          param.setSeasonId(descriptionPage.getSeasonId());
          hp = fetchHFHouseDescription(param);
