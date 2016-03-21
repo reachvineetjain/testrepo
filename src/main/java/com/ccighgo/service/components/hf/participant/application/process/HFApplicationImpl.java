@@ -561,7 +561,8 @@ public class HFApplicationImpl implements HFApplication {
             int size = 0, completedCategoriesCount = 0;
             for (Object[] obj : result) {
                HFApplicationCheckListStages stage = new HFApplicationCheckListStages();
-               applicationChecklist.setApplicantName(String.valueOf(obj[0]));
+               String hostFamilyName = String.valueOf(obj[0]);
+               applicationChecklist.setApplicantName(hostFamilyName.equalsIgnoreCase("null") ? "" : hostFamilyName);
                stage.setCategory(String.valueOf(obj[1]));
                stage.setStatus(String.valueOf(obj[2]));
                if (stage.getStatus().equalsIgnoreCase("true"))
