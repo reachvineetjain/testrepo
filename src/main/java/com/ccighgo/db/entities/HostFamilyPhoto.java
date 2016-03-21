@@ -19,6 +19,9 @@ public class HostFamilyPhoto implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPhotoId;
+	
+	@Column(length=50)
+   private String title;
 
 	private Byte active;
 
@@ -72,6 +75,14 @@ public class HostFamilyPhoto implements Serializable {
 	public void setHostFamilyPhotoId(Integer hostFamilyPhotoId) {
 		this.hostFamilyPhotoId = hostFamilyPhotoId;
 	}
+	
+	public String getTitle() {
+      return this.title;
+   }
+
+   public void setTitle(String title) {
+      this.title = title;
+   }
 
 	public Byte getActive() {
 		return this.active;
