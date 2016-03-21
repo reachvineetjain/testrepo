@@ -604,13 +604,14 @@ public class HFApplicationImpl implements HFApplication {
          hfbs.setHostFamilyId(familyBasicsPageParam.getHostfamilyId());
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
+         boolean singleHost = false;
          if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                HFAdultDetails adult = new HFAdultDetails();
                com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                photo.setFilePath(String.valueOf(obj[0]));
                hfbs.setPhoto(photo);
-               hfbs.setSingleHost(Boolean.valueOf(String.valueOf(obj[1])));
+               singleHost |= Boolean.valueOf(String.valueOf(obj[1]));
                adult.setRelationship(String.valueOf(obj[2]));
                adult.setFirstName(String.valueOf(obj[3]));
                adult.setLastName(String.valueOf(obj[4]));
@@ -643,6 +644,7 @@ public class HFApplicationImpl implements HFApplication {
                adult.setHostfamilyMemberId(Integer.valueOf(String.valueOf(obj[26])));
                hfbs.getAdults().add(adult);
             }
+            hfbs.setSingleHost(singleHost);
          } else {
             hfbs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return hfbs;
