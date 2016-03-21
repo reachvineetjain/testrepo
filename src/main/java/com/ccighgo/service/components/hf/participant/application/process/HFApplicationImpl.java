@@ -1129,14 +1129,14 @@ public class HFApplicationImpl implements HFApplication {
          hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
          hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
          LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
-         hf.setLookupUsstate1(physicalAddressState);
+         hf.setLookupUsstate2(physicalAddressState);
          // mailing address
          hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
          hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
          hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
          LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
-         hf.setLookupUsstate2(mailingAddressState);
+         hf.setLookupUsstate1(mailingAddressState);
 
          hf.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
          hf.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
