@@ -888,7 +888,7 @@ public class HFApplicationImpl implements HFApplication {
 
          HFHomeDescriptionPageParam param = new HFHomeDescriptionPageParam();
          param.setDeptProgramId(descriptionPage.getProgramId());
-         param.setHostFamilyId(descriptionPage.getHostFamilyHomeId());
+         param.setHostFamilyId(descriptionPage.getHostFamilyId());
          param.setLoginId(descriptionPage.getLoginId());
          param.setSeasonId(descriptionPage.getSeasonId());
          hp = fetchHFHouseDescription(param);
@@ -1211,14 +1211,14 @@ public class HFApplicationImpl implements HFApplication {
          hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
          hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
          LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
-         hf.setLookupUsstate1(physicalAddressState);
+         hf.setLookupUsstate2(physicalAddressState);
          // mailing address
          hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
          hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
          hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
          LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
-         hf.setLookupUsstate2(mailingAddressState);
+         hf.setLookupUsstate1(mailingAddressState);
 
          hf.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
          hf.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -2017,22 +2017,29 @@ public class HFApplicationImpl implements HFApplication {
    public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId) {
       HostFamilyMembers hfM = new HostFamilyMembers();
       try {
-         List<HostFamilyMember> members = hfMemberRepository.getHFMember(hostfamilySeasonId);
-         for (HostFamilyMember hf : members) {
-            HostFamilyMemberDetails hfMD = new HostFamilyMemberDetails();
-            hfMD.setName(hf.getFirstName() + " " + hf.getLastName());
-            hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
-            hfMD.setGenderId(hf.getLookupGender().getGenderId());
-            hfMD.setGender(hf.getLookupGender().getGenderName());
-            DateTime d1 = new DateTime(hf.getBirthDate().getTime());
-            DateTime d2 = new DateTime(new Date().getTime());
-            Years age = Years.yearsBetween(d1, d2);
-            hfMD.setAge(age.getYears());
-            hfM.getFamilyMembers().add(hfMD);
+         if (hostfamilySeasonId == null) {
+            throw new CcighgoException("Id of Host family is required to fetch details.");
          }
 
-         hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         List<HostFamilyMember> members = hfMemberRepository.getHFMember(hostfamilySeasonId);
+         if (members != null && members.size() != 0) {
+            for (HostFamilyMember hf : members) {
+               HostFamilyMemberDetails hfMD = new HostFamilyMemberDetails();
+               hfMD.setName(hf.getFirstName() + " " + hf.getLastName());
+               hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
+               hfMD.setGenderId(hf.getLookupGender().getGenderId());
+               hfMD.setGender(hf.getLookupGender().getGenderName());
+               DateTime d1 = new DateTime(hf.getBirthDate().getTime());
+               DateTime d2 = new DateTime(new Date().getTime());
+               Years age = Years.yearsBetween(d1, d2);
+               hfMD.setAge(age.getYears());
+               hfM.getFamilyMembers().add(hfMD);
+            }
+            hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
 
       } catch (CcighgoException e) {
          hfM.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
