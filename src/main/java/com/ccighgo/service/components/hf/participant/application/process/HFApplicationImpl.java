@@ -324,10 +324,10 @@ public class HFApplicationImpl implements HFApplication {
             hfPhoto.setHostFamilySeason(hostFamilySeasonRepository.findOne(hfSeasonId));
             HostFamilyPhotosType type = hostFamilyPhotosTypeRepository.findOne(i);
             hfPhoto.setHostFamilyPhotosType(type);
-            hfPhoto.setFileName(null);
-            hfPhoto.setFilePath(null);
-            hfPhoto.setPhotoName(null);
-            hfPhoto.setDescription(null);
+            hfPhoto.setFileName("");
+            hfPhoto.setFilePath("");
+            hfPhoto.setPhotoName("");
+            hfPhoto.setDescription("");
             hfPhoto.setTitle(type.getHostFamilyPhotoTypeName());
             hfPhoto.setIsOptional(CCIConstants.INACTIVE);
             hfPhoto.setCreatedBy(loginId);
@@ -475,6 +475,7 @@ public class HFApplicationImpl implements HFApplication {
                   Photo p = new Photo();
                   p.setPhotoId(ph.getHostFamilyPhotoId());
                   p.setName(ph.getPhotoName());
+                  p.setTitle(ph.getTitle());
                   p.setDescription(ph.getDescription() != null ? ph.getDescription() : "");
                   p.setPhotoUrl(ph.getFilePath() != null ? ph.getFilePath() : "");
                   PhotoType type = new PhotoType();
