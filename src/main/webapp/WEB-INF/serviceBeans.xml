@@ -69,7 +69,7 @@
          <bean id="hFApplicationProcess" class="com.ccighgo.service.rest.hf.participant.application.process.HFApplicationProcess" />
          <bean id="hfParticipantApplicationSeasons" class="com.ccighgo.service.rest.hf.participant.application.season.HfParticipantApplicationSeasons" />
          <bean id="GenericUpdateLogs" class="com.ccighgo.service.rest.genericupdatelog.GenericUpdateLogs" />
-         
+         <bean id="greenheartclub" class="com.ccighgo.service.rest.greenheartclub.GreenHeartClub" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />
