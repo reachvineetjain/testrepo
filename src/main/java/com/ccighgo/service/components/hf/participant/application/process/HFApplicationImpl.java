@@ -305,21 +305,21 @@ public class HFApplicationImpl implements HFApplication {
       }
       return updatedObject;
    }
-   
+
    @Override
    @Transactional
    public HFApplicationUploadPhotos hfCreateMandatoryPhotos(Integer hfSeasonId, Integer loginId) {
       HFApplicationUploadPhotos uploadObject = new HFApplicationUploadPhotos();
-      try{
-         if(hfSeasonId==null || hfSeasonId==0){
+      try {
+         if (hfSeasonId == null || hfSeasonId == 0) {
             throw new CcighgoException("invalid host family season");
          }
-         if(loginId==null || loginId==0){
+         if (loginId == null || loginId == 0) {
             throw new CcighgoException("invalid login details");
          }
          List<HostFamilyPhoto> uploadList = new ArrayList<HostFamilyPhoto>();
-         //id 2 - 6 are mandatory photos
-         for(int i=2; i<=6;i++){
+         // id 2 - 6 are mandatory photos
+         for (int i = 2; i <= 6; i++) {
             HostFamilyPhoto hfPhoto = new HostFamilyPhoto();
             hfPhoto.setHostFamilySeason(hostFamilySeasonRepository.findOne(hfSeasonId));
             HostFamilyPhotosType type = hostFamilyPhotosTypeRepository.findOne(i);
@@ -345,7 +345,7 @@ public class HFApplicationImpl implements HFApplication {
          uploadObject = getHFPhotos(String.valueOf(hfSeasonId));
          uploadObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      }catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          uploadObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
@@ -368,8 +368,8 @@ public class HFApplicationImpl implements HFApplication {
          List<HostFamilyPhoto> hostFamilyPhotoList = hostFamilyPhotosRepository.findPhotosBySeasonId(hfApplicationUploadPhotos.getHfSeasonId());
          if (hfApplicationUploadPhotos.getPhotos() != null) {
             for (Photo ph : hfApplicationUploadPhotos.getPhotos().getPhotos()) {
-               for(HostFamilyPhoto hfp:hostFamilyPhotoList){
-                  if(ph.getPhotoId()==hfp.getHostFamilyPhotoId()){
+               for (HostFamilyPhoto hfp : hostFamilyPhotoList) {
+                  if (ph.getPhotoId() == hfp.getHostFamilyPhotoId()) {
                      hfp.setFileName(ph.getName());
                      hfp.setFilePath(ph.getPhotoUrl());
                      hfp.setPhotoName(ph.getName());
@@ -390,10 +390,10 @@ public class HFApplicationImpl implements HFApplication {
       }
       return updatedObject;
    }
-   
+
    @Override
    @Transactional
-   public HFApplicationUploadPhotos uploadOptionalHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos){
+   public HFApplicationUploadPhotos uploadOptionalHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
       HFApplicationUploadPhotos updatedObject = new HFApplicationUploadPhotos();
       try {
          if (hfApplicationUploadPhotos == null) {
@@ -437,7 +437,7 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return updatedObject;
-      
+
    }
 
    @Override
@@ -462,7 +462,7 @@ public class HFApplicationImpl implements HFApplication {
                   op.setPhotoId(ph.getHostFamilyPhotoId());
                   op.setName(ph.getPhotoName());
                   op.setDescription(ph.getDescription() != null ? ph.getDescription() : "");
-                  op.setPhotoUrl(ph.getFilePath());
+                  op.setPhotoUrl(ph.getFilePath() != null ? ph.getFilePath() : "");
                   op.setTitle(ph.getTitle());
                   PhotoType type = new PhotoType();
                   type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
@@ -476,7 +476,7 @@ public class HFApplicationImpl implements HFApplication {
                   p.setPhotoId(ph.getHostFamilyPhotoId());
                   p.setName(ph.getPhotoName());
                   p.setDescription(ph.getDescription() != null ? ph.getDescription() : "");
-                  p.setPhotoUrl(ph.getFilePath());
+                  p.setPhotoUrl(ph.getFilePath() != null ? ph.getFilePath() : "");
                   PhotoType type = new PhotoType();
                   type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
                   type.setType(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeName());
