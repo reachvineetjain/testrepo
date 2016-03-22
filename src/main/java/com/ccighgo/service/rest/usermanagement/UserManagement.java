@@ -233,7 +233,7 @@ public class UserManagement {
      */
     @GET
     @Path("default/{roleId}/{departmentId}/permission")
-    @Consumes("application/json")
+    @Produces("application/json")
     public Departments getDefaultPermissionsbyUserRole(@PathParam("roleId") String roleId,@PathParam("departmentId")String departmentId) {
         return userMgmtServices.getDefaultPermissionsbyRole(roleId,departmentId);
     }
@@ -247,7 +247,7 @@ public class UserManagement {
      */
     @GET
     @Path("reset/auth/{id}")
-    @Consumes("application/json")
+    @Produces("application/json")
     public User resetPassword(@PathParam("id") String id) {
         return userMgmtServices.resetPassword(id);
     }
@@ -260,8 +260,7 @@ public class UserManagement {
      */
     @GET
     @Path("note/{id}")
-    @Consumes("application/json")
-    
+    @Produces("application/json")    
     public List<UserNotes> getUserNotesById(@PathParam("id") String id){
        return userMgmtServices.getUserNotesById(id);
     }
@@ -291,7 +290,6 @@ public class UserManagement {
     
     @GET
     @Path("resourceaction/")
-    @Consumes("application/json")
     @Produces("application/json")
     public List<StaffUserDefaultPermissionGroupOptions> getResourceAction(){
        return userMgmtServices.getResourceAction();

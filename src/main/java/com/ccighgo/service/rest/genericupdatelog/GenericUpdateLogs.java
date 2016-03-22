@@ -36,7 +36,6 @@ public class GenericUpdateLogs {
    @GET
    @Path("view/fieldsatfflog/{goId}")
    @Produces("application/json")
-   @Consumes("application/json")
    public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getGenericUpdateLogs(@PathParam("goId") String goId) {
       return genericUpdateLogInterface.getFieldStaffUpdateLogs(goId);
    }
@@ -64,7 +63,6 @@ public class GenericUpdateLogs {
    @GET
    @Path("view/partnerlog/{goId}")
    @Produces("application/json")
-   @Consumes("application/json")
    public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getPartnerUpdateLogs(@PathParam("goId")String goId)
    {
       return genericUpdateLogInterface.getPartnerUpdateLogs(goId);
@@ -82,7 +80,6 @@ public class GenericUpdateLogs {
    @GET
    @Path("view/hostfamilylog/{goId}")
    @Produces("application/json")
-   @Consumes("application/json")
    public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getHostFamilyUpdateLogs(@PathParam("goId")String goId)
    {
       return genericUpdateLogInterface.getHostFamilyUpdateLogs(goId);
