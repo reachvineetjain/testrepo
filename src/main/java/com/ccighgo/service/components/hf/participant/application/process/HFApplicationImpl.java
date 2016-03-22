@@ -521,10 +521,10 @@ public class HFApplicationImpl implements HFApplication {
          }
          if(optional==0){
            HostFamilyPhoto photo = hostFamilyPhotosRepository.findOne(photoId) ;
-           photo.setFileName(null);
-           photo.setFilePath(null);
-           photo.setPhotoName(null);
-           photo.setDescription(null);
+           photo.setFileName("");
+           photo.setFilePath("");
+           photo.setPhotoName("");
+           photo.setDescription("");
            photo.setModifiedBy(loginId);
            photo.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
            hostFamilyPhotosRepository.saveAndFlush(photo);
