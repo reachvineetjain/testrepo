@@ -15,10 +15,7 @@ import java.util.List;
 public class HostFamily implements Serializable {
    private static final long serialVersionUID = 1L;
 
-   @Id 
-   @GeneratedValue(strategy = GenerationType.IDENTITY) 
-   @Column(unique = true, nullable = false) 
-   private int hostFamilyGoId;
+   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(unique = true, nullable = false) private int hostFamilyGoId;
 
    private Byte active;
 
@@ -26,14 +23,11 @@ public class HostFamily implements Serializable {
 
    private Timestamp createdOn;
 
-   @Column(length = 100) 
-   private String emergencyContact;
+   @Column(length = 100) private String emergencyContact;
 
-   @Column(length = 25) 
-   private String emergencyPhone;
+   @Column(length = 25) private String emergencyPhone;
 
-   @Column(length = 50) 
-   private String firstName;
+   @Column(length = 50) private String firstName;
 
    private Byte hasHomeBusiness;
 
@@ -41,8 +35,7 @@ public class HostFamily implements Serializable {
 
    @Lob private String homeBusinessType;
 
-   @Column(length = 25) 
-   private String homePhone;
+   @Column(length = 25) private String homePhone;
 
    private Byte isBlacklisted;
 
@@ -50,47 +43,37 @@ public class HostFamily implements Serializable {
 
    private Byte isNotQuilified;
 
-   @Column(length = 50) 
-   private String lastName;
+   @Column(length = 50) private String lastName;
 
    private Byte liveAlone;
 
-   @Column(length = 50) 
-   private String mailingAddress;
+   @Column(length = 50) private String mailingAddress;
 
    private Byte mailingAddressSameAsCurrentAddress;
 
-   @Column(length = 50) 
-   private String mailingCity;
+   @Column(length = 50) private String mailingCity;
 
-   @Column(length = 25) 
-   private String mailingZipCode;
+   @Column(length = 25) private String mailingZipCode;
 
    private Integer modifiedBy;
 
    private Timestamp modifiedOn;
 
-   @Column(length = 30) 
-   private String phone;
+   @Column(length = 30) private String phone;
 
-   @Column(length = 50) 
-   private String physicalAddress;
+   @Column(length = 50) private String physicalAddress;
 
-   @Column(length = 50) 
-   private String physicalCity;
+   @Column(length = 50) private String physicalCity;
 
-   @Column(length = 25) 
-   private String physicalZipCode;
+   @Column(length = 25) private String physicalZipCode;
 
    private Byte preferredContactMethodEmail;
 
    private Byte preferredContactMethodPhone;
 
-   @Column(length = 50) 
-   private String preferredEmail;
+   @Column(length = 50) private String preferredEmail;
 
-   @Column(length = 50) 
-   private String preferredPhone;
+   @Column(length = 50) private String preferredPhone;
 
    private Byte receiveEmails;
 
@@ -98,83 +81,58 @@ public class HostFamily implements Serializable {
    private String photo;
 
    // bi-directional one-to-one association to GoIdSequence
-   @OneToOne 
-   @JoinColumn(name = "hostFamilyGoId", nullable = false, insertable = false, updatable = false) 
-   private GoIdSequence goIdSequence;
+   @OneToOne @JoinColumn(name = "hostFamilyGoId", nullable = false, insertable = false, updatable = false) private GoIdSequence goIdSequence;
 
    // bi-directional many-to-one association to HostFamilyStatus
-   @ManyToOne 
-   @JoinColumn(name = "hostFamilyStatusId") 
-   private HostFamilyStatus hostFamilyStatus;
+   @ManyToOne @JoinColumn(name = "hostFamilyStatusId") private HostFamilyStatus hostFamilyStatus;
 
    // bi-directional many-to-one association to LookupCountry
-   @ManyToOne 
-   @JoinColumn(name = "physicalStateId", insertable = false, updatable = false) 
-   private LookupCountry lookupCountry1;
+   @ManyToOne @JoinColumn(name = "physicalStateId", insertable = false, updatable = false) private LookupCountry lookupCountry1;
 
    // bi-directional many-to-one association to LookupCountry
-   @ManyToOne 
-   @JoinColumn(name = "physicalCountryId") 
-   private LookupCountry lookupCountry2;
+   @ManyToOne @JoinColumn(name = "physicalCountryId") private LookupCountry lookupCountry2;
 
    // bi-directional many-to-one association to LookupUSState
-   @ManyToOne 
-   @JoinColumn(name = "mailingStateId") 
-   private LookupUSState lookupUsstate1;
+   @ManyToOne @JoinColumn(name = "mailingStateId") private LookupUSState lookupUsstate1;
 
    // bi-directional many-to-one association to LookupUSState
-   @ManyToOne 
-   @JoinColumn(name = "physicalStateId", insertable = false, updatable = false) 
-   private LookupUSState lookupUsstate2;
+   @ManyToOne @JoinColumn(name = "physicalStateId") private LookupUSState lookupUsstate2;
 
    // bi-directional many-to-one association to Season
-   @ManyToOne 
-   @JoinColumn(name = "currentSeasonId") 
-   private Season season;
+   @ManyToOne @JoinColumn(name = "currentSeasonId") private Season season;
 
    // bi-directional many-to-one association to HostFamilyAirport
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyAirport> hostFamilyAirports;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyAirport> hostFamilyAirports;
 
    // bi-directional many-to-one association to HostFamilyAnnouncement
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyAnnouncement> hostFamilyAnnouncements;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyAnnouncement> hostFamilyAnnouncements;
 
    // bi-directional many-to-one association to HostFamilyAnnouncementResult
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyAnnouncementResult> hostFamilyAnnouncementResults;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyAnnouncementResult> hostFamilyAnnouncementResults;
 
    // bi-directional many-to-one association to HostFamilyInquiry
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyInquiry> hostFamilyInquiries;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyInquiry> hostFamilyInquiries;
 
    // bi-directional many-to-one association to HostFamilyNote
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyNote> hostFamilyNotes;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyNote> hostFamilyNotes;
 
    // bi-directional many-to-one association to HostFamilyNoteTopic
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyNoteTopic> hostFamilyNoteTopics;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyNoteTopic> hostFamilyNoteTopics;
 
    // bi-directional many-to-one association to HostFamilyParticipantHistory
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
 
    // bi-directional many-to-one association to HostFamilyPermission
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyPermission> hostFamilyPermissions;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyPermission> hostFamilyPermissions;
 
    // bi-directional many-to-one association to HostFamilyPotentialReference
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
 
    // bi-directional many-to-one association to HostFamilySeason
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilySeason> hostFamilySeasons;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilySeason> hostFamilySeasons;
 
    // bi-directional many-to-one association to HostFamilyUpdateLog
-   @OneToMany(mappedBy = "hostFamily") 
-   private List<HostFamilyUpdateLog> hostFamilyUpdateLogs;
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyUpdateLog> hostFamilyUpdateLogs;
 
    public HostFamily() {
    }

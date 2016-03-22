@@ -305,21 +305,21 @@ public class HFApplicationImpl implements HFApplication {
       }
       return updatedObject;
    }
-   
+
    @Override
    @Transactional
    public HFApplicationUploadPhotos hfCreateMandatoryPhotos(Integer hfSeasonId, Integer loginId) {
       HFApplicationUploadPhotos uploadObject = new HFApplicationUploadPhotos();
-      try{
-         if(hfSeasonId==null || hfSeasonId==0){
+      try {
+         if (hfSeasonId == null || hfSeasonId == 0) {
             throw new CcighgoException("invalid host family season");
          }
-         if(loginId==null || loginId==0){
+         if (loginId == null || loginId == 0) {
             throw new CcighgoException("invalid login details");
          }
          List<HostFamilyPhoto> uploadList = new ArrayList<HostFamilyPhoto>();
-         //id 2 - 6 are mandatory photos
-         for(int i=2; i<=6;i++){
+         // id 2 - 6 are mandatory photos
+         for (int i = 2; i <= 6; i++) {
             HostFamilyPhoto hfPhoto = new HostFamilyPhoto();
             hfPhoto.setHostFamilySeason(hostFamilySeasonRepository.findOne(hfSeasonId));
             HostFamilyPhotosType type = hostFamilyPhotosTypeRepository.findOne(i);
@@ -345,7 +345,7 @@ public class HFApplicationImpl implements HFApplication {
          uploadObject = getHFPhotos(String.valueOf(hfSeasonId));
          uploadObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      }catch (CcighgoException e) {
+      } catch (CcighgoException e) {
          uploadObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
@@ -368,8 +368,8 @@ public class HFApplicationImpl implements HFApplication {
          List<HostFamilyPhoto> hostFamilyPhotoList = hostFamilyPhotosRepository.findPhotosBySeasonId(hfApplicationUploadPhotos.getHfSeasonId());
          if (hfApplicationUploadPhotos.getPhotos() != null) {
             for (Photo ph : hfApplicationUploadPhotos.getPhotos().getPhotos()) {
-               for(HostFamilyPhoto hfp:hostFamilyPhotoList){
-                  if(ph.getPhotoId()==hfp.getHostFamilyPhotoId()){
+               for (HostFamilyPhoto hfp : hostFamilyPhotoList) {
+                  if (ph.getPhotoId() == hfp.getHostFamilyPhotoId()) {
                      hfp.setFileName(ph.getName());
                      hfp.setFilePath(ph.getPhotoUrl());
                      hfp.setPhotoName(ph.getName());
@@ -390,10 +390,10 @@ public class HFApplicationImpl implements HFApplication {
       }
       return updatedObject;
    }
-   
+
    @Override
    @Transactional
-   public HFApplicationUploadPhotos uploadOptionalHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos){
+   public HFApplicationUploadPhotos uploadOptionalHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
       HFApplicationUploadPhotos updatedObject = new HFApplicationUploadPhotos();
       try {
          if (hfApplicationUploadPhotos == null) {
@@ -437,7 +437,7 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return updatedObject;
-      
+
    }
 
    @Override
@@ -462,7 +462,7 @@ public class HFApplicationImpl implements HFApplication {
                   op.setPhotoId(ph.getHostFamilyPhotoId());
                   op.setName(ph.getPhotoName());
                   op.setDescription(ph.getDescription() != null ? ph.getDescription() : "");
-                  op.setPhotoUrl(ph.getFilePath());
+                  op.setPhotoUrl(ph.getFilePath() != null ? ph.getFilePath() : "");
                   op.setTitle(ph.getTitle());
                   PhotoType type = new PhotoType();
                   type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
@@ -477,7 +477,7 @@ public class HFApplicationImpl implements HFApplication {
                   p.setName(ph.getPhotoName());
                   p.setTitle(ph.getTitle());
                   p.setDescription(ph.getDescription() != null ? ph.getDescription() : "");
-                  p.setPhotoUrl(ph.getFilePath());
+                  p.setPhotoUrl(ph.getFilePath() != null ? ph.getFilePath() : "");
                   PhotoType type = new PhotoType();
                   type.setTypeId(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeId());
                   type.setType(ph.getHostFamilyPhotosType().getHostFamilyPhotoTypeName());
@@ -562,7 +562,8 @@ public class HFApplicationImpl implements HFApplication {
             int size = 0, completedCategoriesCount = 0;
             for (Object[] obj : result) {
                HFApplicationCheckListStages stage = new HFApplicationCheckListStages();
-               applicationChecklist.setApplicantName(String.valueOf(obj[0]));
+               String hostFamilyName = String.valueOf(obj[0]);
+               applicationChecklist.setApplicantName(hostFamilyName.equalsIgnoreCase("null") ? "" : hostFamilyName);
                stage.setCategory(String.valueOf(obj[1]));
                stage.setStatus(String.valueOf(obj[2]));
                if (stage.getStatus().equalsIgnoreCase("true"))
@@ -687,13 +688,14 @@ public class HFApplicationImpl implements HFApplication {
          hfbs.setHostFamilyId(familyBasicsPageParam.getHostfamilyId());
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
+         boolean singleHost = false;
          if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
                HFAdultDetails adult = new HFAdultDetails();
                com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                photo.setFilePath(String.valueOf(obj[0]));
                hfbs.setPhoto(photo);
-               hfbs.setSingleHost(Boolean.valueOf(String.valueOf(obj[1])));
+               singleHost |= Boolean.valueOf(String.valueOf(obj[1]));
                adult.setRelationship(String.valueOf(obj[2]));
                adult.setFirstName(String.valueOf(obj[3]));
                adult.setLastName(String.valueOf(obj[4]));
@@ -726,6 +728,7 @@ public class HFApplicationImpl implements HFApplication {
                adult.setHostfamilyMemberId(Integer.valueOf(String.valueOf(obj[26])));
                hfbs.getAdults().add(adult);
             }
+            hfbs.setSingleHost(singleHost);
          } else {
             hfbs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return hfbs;

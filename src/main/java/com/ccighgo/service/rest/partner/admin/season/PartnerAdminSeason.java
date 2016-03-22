@@ -200,7 +200,6 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("delete/document/{partnerSeasonDocumentId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public Response deleteAdminSeasonDocument(@PathParam("partnerSeasonDocumentId") String partnerSeasonDocumentId) {
       return partnerAdminSeasonInterface.deleteAdminSeasonDocument(partnerSeasonDocumentId);
@@ -212,7 +211,6 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("delete/operating/agreement/{partnerSeasonContractId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public Response deleteAdminSeasonAgreement(@PathParam("partnerSeasonContractId") String partnerSeasonContractId) {
       return partnerAdminSeasonInterface.deleteAdminSeasonAgreement(partnerSeasonContractId);
@@ -223,7 +221,6 @@ public class PartnerAdminSeason {
     */
    @GET
    @Path("status/list")
-   @Consumes("application/json")
    @Produces("application/json")
    public PartnerSeasonStatus getPartnerSeasonStatuses() {
       return partnerAdminSeasonInterface.getPartnerSeasonStatuses();
