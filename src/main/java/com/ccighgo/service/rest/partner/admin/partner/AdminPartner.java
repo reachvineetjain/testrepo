@@ -56,7 +56,6 @@ public class AdminPartner {
     */
    @GET
    @Path("added/partner/list/")
-   @Consumes("application/json")
    @Produces("application/json")
    public AddedPartners getAddedPartnerList() {
       return adminPartnerInterface.getAddedPartnerList();
@@ -111,7 +110,6 @@ public class AdminPartner {
     */
    @GET
    @Path("lead/partner/list/")
-   @Consumes("application/json")
    @Produces("application/json")
    public LeadPartners getLeadPartnerList() {
       return adminPartnerInterface.getLeadPartnerList();

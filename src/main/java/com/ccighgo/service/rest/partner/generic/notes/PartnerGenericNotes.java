@@ -67,7 +67,6 @@ public class PartnerGenericNotes {
    @GET
    @Path("view/{partnerId}")
    @Produces("application/json")
-   @Consumes("application/json")
    public Topics viewTopics(@PathParam("partnerId") String partnerId) {
       return partnerGenericNoteInterface.viewTopics(Integer.parseInt(partnerId));
    }

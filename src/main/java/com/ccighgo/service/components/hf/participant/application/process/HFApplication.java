@@ -69,13 +69,13 @@ public interface HFApplication {
     * @param hfApplicationUploadPhotos
     * @return
     */
-   public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos);
+   public HFApplicationUploadPhotos uploadHFMandatoryPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos);
 
    /**
     * @param photoId
     * @return
     */
-   public Response deletePhoto(String photoId);
+   public Response deletePhoto(Integer photoId, Integer optional, Integer loginId);
 
    /**
     * @param hfSeasonId
@@ -262,5 +262,18 @@ public interface HFApplication {
     * @return
     */
    public HFParticipantDetail getParticipantDetail(Integer valueOf);
+
+   /**
+    * @param hfSeasonId
+    * @param loginId
+    * @return
+    */
+   public HFApplicationUploadPhotos hfCreateMandatoryPhotos(Integer hfSeasonId, Integer loginId);
+
+   /**
+    * @param hfApplicationUploadPhotos
+    * @return
+    */
+   public HFApplicationUploadPhotos uploadOptionalHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos);
 
 }
