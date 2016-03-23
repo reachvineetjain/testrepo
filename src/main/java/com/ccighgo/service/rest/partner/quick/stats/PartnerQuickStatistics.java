@@ -25,6 +25,7 @@ import com.ccighgo.service.transport.partner.beans.partnerquickstats.PartnerQuic
 @Consumes("application/json")
 public class PartnerQuickStatistics {
    
+   @SuppressWarnings("unused")
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerQuickStatistics.class);
    
    @Autowired PartnerQuickStatsInterface partnerQuickStatsInterface;

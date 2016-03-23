@@ -25,6 +25,7 @@ import com.ccighgo.service.transport.partner.beans.partneruser.PartnerWorkQueue;
 @Consumes("application/json")
 public class PartnerWorkQueues {
    
+   @SuppressWarnings("unused")
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerWorkQueues.class);
    
    @Autowired PartnerWorkQueueInterface partnerWorkQueueInterface;
