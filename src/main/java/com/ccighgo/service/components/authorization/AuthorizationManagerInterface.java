@@ -9,7 +9,6 @@ import com.ccighgo.service.auth.beans.Auth;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 
 /**

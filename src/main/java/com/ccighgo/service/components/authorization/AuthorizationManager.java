@@ -7,8 +7,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,17 +23,12 @@ import com.ccighgo.service.auth.beans.LoginType;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.AuthConstants;
-import com.ccighgo.service.components.errormessages.constants.PartnerSeasonMessageConstants;
 import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FieldStaffDashboardInterface;
 import com.ccighgo.service.components.partner.PartnerService;
 import com.ccighgo.service.components.usermanagment.UserManagementService;
-import com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerLeadViewForPartnerInquiryData.PartnerRecruitmentLead;
 import com.ccighgo.service.transport.partner.beans.partnerdashboard.PartnerDashboard;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDashboardSections;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerDetails;
-import com.ccighgo.service.transport.partner.beans.partnerdetails.PartnerPrograms;
 import com.ccighgo.service.transport.usermanagement.beans.user.User;
 import com.ccighgo.utils.CCIConstants;
 

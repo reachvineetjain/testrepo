@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ccighgo.service.components.partner;
 
 import java.util.ArrayList;
@@ -137,8 +134,8 @@ public class PartnerServiceImpl implements PartnerService {
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
                partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
                partnerDashboard.setIsSubpartner(partner.getIsSubPartner().equals(CCIConstants.ACTIVE) ? true : false);
-               if(partner.getCanHaveSubPartner()!=null){
-                  partnerDashboard.setCanHaveSubpartners(partner.getCanHaveSubPartner().equals(CCIConstants.ACTIVE)?true : false);
+               if (partner.getCanHaveSubPartner() != null) {
+                  partnerDashboard.setCanHaveSubpartners(partner.getCanHaveSubPartner().equals(CCIConstants.ACTIVE) ? true : false);
                }
                List<PartnerUser> partnerUsers = partner.getPartnerUsers();
                for (PartnerUser pu : partnerUsers) {
@@ -333,8 +330,10 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerJ1HSCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIJ1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIJ1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " Contact");
-                   if(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
-                     cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if (partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
+                        && partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
@@ -519,7 +518,7 @@ public class PartnerServiceImpl implements PartnerService {
                f1Dashboard.setPartnerLogo(partner.getPartnerLogo());
 
                // announcements
-                List<PartnerF1Announcement> partnerF1Announcements = new ArrayList<PartnerF1Announcement>();
+               List<PartnerF1Announcement> partnerF1Announcements = new ArrayList<PartnerF1Announcement>();
                if (partner.getPartnerAnnouncements() != null && !(partner.getPartnerAnnouncements().isEmpty())) {
                   for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
                      if (ann.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
@@ -539,8 +538,10 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerF1CCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIF1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIF1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " Contact");
-                  if(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
-                     cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if (partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
+                        && partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
@@ -721,8 +722,10 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerIHPCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIIHPContact.getCcistaffUser().getFirstName() + " " + partnerCCIIHPContact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " Contact");
-                  if(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
-                     cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if (partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
+                        && partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
