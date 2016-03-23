@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ccighgo.service.components.fieldstaff.season;
 
 import org.springframework.stereotype.Service;
