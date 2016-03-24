@@ -40,3 +40,5 @@ id_file
 ccighgo.fs
 target
 /.tern-project
+*.pmd
+reports/pmd-report.txt

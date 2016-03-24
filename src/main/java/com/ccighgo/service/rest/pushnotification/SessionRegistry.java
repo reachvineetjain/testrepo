@@ -42,8 +42,6 @@ public enum SessionRegistry {
 		Preconditions.checkNotNull(session);
 		Preconditions.checkNotNull(uid);
 		Preconditions.checkArgument(!uid.isEmpty());
-		
-		System.out.println("Adding new session for :: " + uid + " :: " + session.getId());
 		LOGGER.info("New websocket connection opened for " + uid + ", sessionId = " + session.getId());
 		sessionIdMap.put(session.getId(), uid);
 		sessions.put(uid, session);
@@ -60,7 +58,5 @@ public enum SessionRegistry {
 		} else {
 			LOGGER.info("Could not remove WebSocket session. uid N/A for sessionId = " + session.getId());
 		}
-		
-		System.out.println("Session removed for :: " + uid + " :: " + session.getId());
 	}
 }
