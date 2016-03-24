@@ -19,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ccighgo.exception.PushNotificationException;
-import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.rest.authorization.Authorization;
 @Path("/notification/")
 // annotation to create socket

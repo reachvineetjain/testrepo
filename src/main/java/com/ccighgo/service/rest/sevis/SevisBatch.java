@@ -25,7 +25,6 @@ import com.ccighgo.service.components.sevis.data.UpdateEVDependentEndStatusBatch
 import com.ccighgo.service.components.sevis.data.UpdateEVFinancialInfoBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramAmendDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramEditSubjectBatchDataService;
-import com.ccighgo.service.components.sevis.data.UpdateEVProgramExtentionBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVProgramShortenBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVSOAEditBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateEVSoaAddBatchDataService;
@@ -36,7 +35,6 @@ import com.ccighgo.service.components.sevis.data.UpdateEVUpdateHousingBatchDataS
 import com.ccighgo.service.components.sevis.data.UpdateEVValidateHousingBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateStudentDependentReprintBatchDataService;
 import com.ccighgo.service.components.sevis.data.UpdateStudentProgramExtentionBatchDataService;
-import com.ccighgo.service.components.sevis.data.UpdateStudentProgramShortenBatchDataService;
 import com.ccighgo.service.components.sevis.log.SevisLogProcessor;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.sevis.BatchParam;
