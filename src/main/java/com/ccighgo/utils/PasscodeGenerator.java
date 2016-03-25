@@ -37,8 +37,7 @@ public class PasscodeGenerator {
 
    private static Integer getNextIndex(Random random, Integer length, char[] passcode) {
       Integer index = random.nextInt(length);
-      while (passcode[index = random.nextInt(length)] != 0)
-         ;
+      while (passcode[index = random.nextInt(length)] != 0);
       return index;
    }
 }

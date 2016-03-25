@@ -3,13 +3,10 @@
  */
 package com.ccighgo.service.components.utility;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +28,6 @@ import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.db.entities.PartnerNoteTag;
 import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.db.entities.RegionIHP;
-import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.db.entities.UserType;
 import com.ccighgo.exception.CcighgoException;
@@ -57,15 +53,11 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
-import com.ccighgo.service.components.errormessages.constants.SeasonMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
-import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUser;
 import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
@@ -95,7 +87,6 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
 import com.ccighgo.service.transport.utility.beans.usertypes.UserTypes;
 import com.ccighgo.utils.CCIConstants;
-import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 
@@ -132,12 +123,12 @@ public class UtilityServicesImpl implements UtilityServices {
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
-      final Pageable page= new PageRequest(0, 350, Direction.ASC, "countryName");
+      final Pageable page = new PageRequest(0, 350, Direction.ASC, "countryName");
       Page<LookupCountry> countriesDbList = countryRepository.findAll(page);
       com.ccighgo.service.transport.utility.beans.country.Countries countries = null;
       List<com.ccighgo.service.transport.utility.beans.country.Country> countriesFrontList = null;
       try {
-         if (countriesDbList!=null) {
+         if (countriesDbList != null) {
             countries = new com.ccighgo.service.transport.utility.beans.country.Countries();
             countriesFrontList = new ArrayList<com.ccighgo.service.transport.utility.beans.country.Country>();
             for (LookupCountry c : countriesDbList) {
@@ -651,8 +642,8 @@ public class UtilityServicesImpl implements UtilityServices {
          Login loginUser = null;
          if (req.getEmail() != null) {
             loginUser = loginRepository.findByEmail(req.getEmail());
-         }  
-         if (loginUser==null && req.getUsername() != null) {
+         }
+         if (loginUser == null && req.getUsername() != null) {
             loginUser = loginRepository.findByLoginName(req.getUsername().toLowerCase());
          }
          if (loginUser != null) {
@@ -908,10 +899,10 @@ public class UtilityServicesImpl implements UtilityServices {
    @Override
    public UserTypes getUserTypes() {
       UserTypes userTypes = new UserTypes();
-      try{
+      try {
          List<UserType> userTypeDBList = userTypeRepository.findAll();
          List<com.ccighgo.service.transport.utility.beans.usertypes.UserType> userTypeLst = new ArrayList<com.ccighgo.service.transport.utility.beans.usertypes.UserType>();
-         for(UserType ut:userTypeDBList){
+         for (UserType ut : userTypeDBList) {
             com.ccighgo.service.transport.utility.beans.usertypes.UserType userType = new com.ccighgo.service.transport.utility.beans.usertypes.UserType();
             userType.setUserTypeId(ut.getUserTypeId());
             userType.setUserType(ut.getUserTypeName());
@@ -920,8 +911,9 @@ public class UtilityServicesImpl implements UtilityServices {
          userTypes.getUserTypes().addAll(userTypeLst);
          userTypes.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      }catch (CcighgoException e) {
-         userTypes.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+      } catch (CcighgoException e) {
+         userTypes
+               .setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
       }
       return userTypes;

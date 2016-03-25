@@ -2,7 +2,6 @@ package com.ccighgo.service.rest.fieldstaffs;
 
 import java.util.List;
 
-import javax.print.attribute.standard.Fidelity;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -143,7 +142,8 @@ public class FieldStaffs {
    @GET
    @Path("hostFamilies/{fieldStaffId}/{flagId}/{category}")
    @Produces("application/json")
-   public AdminFieldStaffHostFamily getAdminFSHostFamilies(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("flagId") String flagId, @PathParam("category") String category) {
+   public AdminFieldStaffHostFamily getAdminFSHostFamilies(@PathParam("fieldStaffId") String fieldStaffId, @PathParam("flagId") String flagId,
+         @PathParam("category") String category) {
       return fieldStaffsInterface.getFSHostFamilies(Integer.parseInt(fieldStaffId), Integer.parseInt(flagId), category);
    }
 

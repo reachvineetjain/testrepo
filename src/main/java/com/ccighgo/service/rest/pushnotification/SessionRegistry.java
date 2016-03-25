@@ -11,52 +11,51 @@ import org.apache.log4j.Logger;
 import com.google.common.base.Preconditions;
 
 public enum SessionRegistry {
-	INSTANCE;
-	
-	private static final Logger LOGGER = Logger.getLogger(SessionRegistry.class);
+   INSTANCE;
 
-	// uid -> Session
-	private final Map<String, Session> sessions;
+   private static final Logger LOGGER = Logger.getLogger(SessionRegistry.class);
 
-	// sessionId -> uid
-	private final Map<String, String> sessionIdMap;
+   // uid -> Session
+   private final Map<String, Session> sessions;
 
-	private SessionRegistry() {
-		sessions = Collections.synchronizedMap(new HashMap<>());
-		sessionIdMap = Collections.synchronizedMap(new HashMap<>());
-	}
+   // sessionId -> uid
+   private final Map<String, String> sessionIdMap;
 
-	public Map<String, Session> getSessions() {
-		return Collections.unmodifiableMap(sessions);
-	}
+   private SessionRegistry() {
+      sessions = Collections.synchronizedMap(new HashMap<>());
+      sessionIdMap = Collections.synchronizedMap(new HashMap<>());
+   }
 
-	public Session getClientSession(String uid) {
-		if(sessions.containsKey(uid)) {
-			return sessions.get(uid);
-		}
-		LOGGER.error("WebSocket session N/A for " + uid);
-		throw new RuntimeException("Key " + uid + "N/A.");
-	}
+   public Map<String, Session> getSessions() {
+      return Collections.unmodifiableMap(sessions);
+   }
 
-	public void addSession(String uid, Session session) {
-		Preconditions.checkNotNull(session);
-		Preconditions.checkNotNull(uid);
-		Preconditions.checkArgument(!uid.isEmpty());
-		LOGGER.info("New websocket connection opened for " + uid + ", sessionId = " + session.getId());
-		sessionIdMap.put(session.getId(), uid);
-		sessions.put(uid, session);
-	}
+   public Session getClientSession(String uid) {
+      if (sessions.containsKey(uid)) {
+         return sessions.get(uid);
+      }
+      LOGGER.error("WebSocket session N/A for " + uid);
+      throw new RuntimeException("Key " + uid + "N/A.");
+   }
 
-	public void removeSession(Session session) {
-		Preconditions.checkNotNull(session);
-		
-		String uid = sessionIdMap.get(session.getId());
-		if(uid != null && !uid.isEmpty()) {
-			sessions.remove(uid);
-			sessionIdMap.remove(session.getId());
-			LOGGER.info("WebSocket session removed for " + uid + ", sessionId = " + session.getId());
-		} else {
-			LOGGER.info("Could not remove WebSocket session. uid N/A for sessionId = " + session.getId());
-		}
-	}
+   public void addSession(String uid, Session session) {
+      Preconditions.checkNotNull(session);
+      Preconditions.checkNotNull(uid);
+      Preconditions.checkArgument(!uid.isEmpty());
+      LOGGER.info("New websocket connection opened for " + uid + ", sessionId = " + session.getId());
+      sessionIdMap.put(session.getId(), uid);
+      sessions.put(uid, session);
+   }
+
+   public void removeSession(Session session) {
+      Preconditions.checkNotNull(session);
+      String uid = sessionIdMap.get(session.getId());
+      if (uid != null && !uid.isEmpty()) {
+         sessions.remove(uid);
+         sessionIdMap.remove(session.getId());
+         LOGGER.info("WebSocket session removed for " + uid + ", sessionId = " + session.getId());
+      } else {
+         LOGGER.info("Could not remove WebSocket session. uid N/A for sessionId = " + session.getId());
+      }
+   }
 }

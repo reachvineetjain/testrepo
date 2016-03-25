@@ -21,6 +21,10 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ccighgo.utils.CCIConstants;
 
+/**
+ * @author ravi
+ *
+ */
 @Component
 public class FileUtilInterfaceImpl implements FileUtilInterface {
 
@@ -30,10 +34,8 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
    private static final String CLONE_KEY = "cloned/";
    private static final String UPLOAD_KEY = "ccighodocs/";
    private static final Date URL_EXPIRATION_DATE = new Date(Long.MAX_VALUE);
-   private static final String CLONE_URL_PREFIX = "https://ccighgo.s3.amazonaws.com/";
    private static final String AWS_BUCKET_ID = "AKIAJSQRJVZU4FSC3OZQ";
    private static final String AWS_BUCKET_KEY = "+Yme9uyeCz3WjVdGVTk+b2UckLRm+cDaaUXVkkl+";
-   
 
    @Override
    public String cloneUploadedFile(String filePath) {
@@ -42,15 +44,15 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
       } catch (Exception e) {
          e.printStackTrace();
       }
-      if(filePath==null || filePath.isEmpty()){
-        //throw exception
+      if (filePath == null || filePath.isEmpty()) {
+         // throw exception
       }
       String returnUrl = null;
       if (filePath.startsWith(CCIConstants.HTTP) || filePath.startsWith(CCIConstants.HTTPS) || filePath.startsWith(CCIConstants.FTP)) {
          returnUrl = filePath;
       } else {
          returnUrl = uploadFileToS3(filePath, CLONE_KEY);
-         LOGGER.info("file cloned successfully in s3 bucket: "+AWS_BUCKET_NAME+", in directory: "+CLONE_KEY+"for url: "+returnUrl);
+         LOGGER.info("file cloned successfully in s3 bucket: " + AWS_BUCKET_NAME + ", in directory: " + CLONE_KEY + "for url: " + returnUrl);
       }
       return returnUrl;
    }
@@ -62,22 +64,22 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
       } catch (Exception e) {
          e.printStackTrace();
       }
-      if(filePath==null || filePath.isEmpty()){
-         //throw exception
+      if (filePath == null || filePath.isEmpty()) {
+         // throw exception
       }
       String returnUrl = null;
       if (filePath.startsWith(CCIConstants.HTTP) || filePath.startsWith(CCIConstants.HTTPS) || filePath.startsWith(CCIConstants.FTP)) {
          returnUrl = filePath;
       } else {
          returnUrl = uploadFileToS3(filePath, UPLOAD_KEY);
-         LOGGER.info("file uploaded successfully in s3 bucket: "+AWS_BUCKET_NAME+", in directory: "+UPLOAD_KEY+" for url: "+returnUrl);
+         LOGGER.info("file uploaded successfully in s3 bucket: " + AWS_BUCKET_NAME + ", in directory: " + UPLOAD_KEY + " for url: " + returnUrl);
       }
       return returnUrl;
    }
 
    public String uploadFileToS3(String filePath, String keyPath) {
       try {
-         LOGGER.info("filePath: " + filePath+"keyPath "+keyPath);
+         LOGGER.info("filePath: " + filePath + "keyPath " + keyPath);
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -94,7 +96,8 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
          URL s3Url = s3Client.generatePresignedUrl(AWS_BUCKET_NAME, key, URL_EXPIRATION_DATE);
          // s3Url will be something like
          // https://ccighgo.s3.amazonaws.com/godoc/desert.jpg?AWSAccessKeyId=AKIAJSQRJVZU4FSC3OZQ&Expires=9223372036854775&Signature=eDYpT6htv9v1HPFDp0wH%2Bofm7bY%3D
-         // so splitting and saving url as https://ccighgo.s3.amazonaws.com/godoc/desert.jpg
+         // so splitting and saving url as
+         // https://ccighgo.s3.amazonaws.com/godoc/desert.jpg
          String[] url = s3Url.toExternalForm().split("\\?");
          clonedUrl = url[0];
       } catch (AmazonServiceException ase) {

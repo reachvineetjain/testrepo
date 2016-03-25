@@ -2,12 +2,9 @@ package com.ccighgo.service.components.backgroundcheck;
 
 import java.io.StringWriter;
 
-
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -46,7 +43,6 @@ import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Appl
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;
 import com.ccighgo.utils.ExceptionUtil;
 import com.google.gson.Gson;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 @Component
 public class BackgroundServiceImpl implements BackgroundServiceInterface {
@@ -55,9 +51,8 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    @Override
    public ScreenResponse requestScreen(ScreenRequest screenRequest) {
       try {
-         if(screenRequest!=null)
-         LOGGER.info("partnerInfo: "+screenRequest.getPartnerInfo()+            
-               "account: "+screenRequest.getAccount());
+         if (screenRequest != null)
+            LOGGER.info("partnerInfo: " + screenRequest.getPartnerInfo() + "account: " + screenRequest.getAccount());
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -91,9 +86,8 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
 
    private void parseResult(JSONObject xmlJSONObj, ScreenResponse screenResponse) {
       try {
-         if(screenResponse!=null)
-         LOGGER.info("dateTime: "+screenResponse.getDateTime()+" responseCode: "+screenResponse.getResponseCode()
-               +" account "+screenResponse.getAccount());
+         if (screenResponse != null)
+            LOGGER.info("dateTime: " + screenResponse.getDateTime() + " responseCode: " + screenResponse.getResponseCode() + " account " + screenResponse.getAccount());
       } catch (Exception e) {
          e.printStackTrace();
       }

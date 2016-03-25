@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.apache.taglibs.standard.lang.jstl.OrOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -460,7 +459,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                application.setDepartmentProgramId(Integer.valueOf(obj[2].toString()));
                application.setAcronym(obj[3].toString());
                application.setDeptProgramName(obj[4].toString());
-               //application.setDeptName(obj[5].toString());
+               // application.setDeptName(obj[5].toString());
                application.setStartDate(obj[5].toString());
                application.setEndDate(obj[6].toString());
                application.setAppDeadlineDate(obj[7].toString());

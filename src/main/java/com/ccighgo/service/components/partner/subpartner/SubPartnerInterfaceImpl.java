@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -212,7 +211,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             subPartnerCountryStatus.setSubPartnerCountryCode(subPartner.getLookupCountry1().getCountryCode());
             subPartnerDetail.setSubPartnerCountryStatus(subPartnerCountryStatus);
 
-            SubPartnerStatus subPartnerStatus = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus();
             List<SubPartnerSeasons> subPartnerSeasonsList = new ArrayList<SubPartnerSeasons>();
             if (subPartner.getPartnerSeasons() != null && subPartner.getPartnerSeasons().size() > 0) {
                for (PartnerSeason partnerSeason : subPartner.getPartnerSeasons()) {
@@ -225,7 +223,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
             subPartnerDetail.getSubPartnerSeasons().addAll(subPartnerSeasonsList);
             subPartnerDetails.getSubPartnerDetails().add(subPartnerDetail);
-            if (subPartnerDetails.getSubPartnerDetails() == null && subPartnerDetails.getSubPartnerDetails().isEmpty()) {
+            if (subPartnerDetails.getSubPartnerDetails() == null || subPartnerDetails.getSubPartnerDetails().isEmpty()) {
                subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.NO_RECORD));
             } else
@@ -606,8 +604,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
          responce.setGoId(goIdSequence.getGoId());
-         responce.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_SUB_PARTNER.getValue(),
                messageUtil.getMessage(SubPartnerMessageConstants.FAILED_CREATE_SUB_PARTNER)));
@@ -717,8 +715,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerUserRepository.saveAndFlush(partnerContact);
          }
 
-         responce.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_SUB_PARTNER.getValue(),
                messageUtil.getMessage(SubPartnerMessageConstants.FAILED_UPDATE_SUB_PARTNER)));
@@ -743,8 +741,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          else
-            as.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          as.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCH_SALUTATION.getValue(),

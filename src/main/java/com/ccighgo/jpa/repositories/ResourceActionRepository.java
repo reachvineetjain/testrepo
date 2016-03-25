@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.ResourceAction;
-import com.ccighgo.db.entities.Season;
 
 /**
  * @author ravimishra
@@ -18,7 +17,7 @@ import com.ccighgo.db.entities.Season;
  */
 @Repository
 public interface ResourceActionRepository extends JpaRepository<ResourceAction, Integer> {
-   
+
    @Query("select r from ResourceAction r")
    List<ResourceAction> getAllResourceAction();
 

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.FieldStaffType;
-import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
@@ -300,33 +299,33 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
       return fsrmSeasonContacts;
    }
 
-	@Override
-	public FSERDSeasons getERDSeasons(String goId) {
-		FSERDSeasons erdSeasons = new FSERDSeasons();
-	     try {
-	        Query searchFSQuery = entityManager.createNativeQuery(SP_FS_SEASON_HIERARCHY);
-	        searchFSQuery.setParameter(1, Integer.valueOf(goId));
-	        List<Object[]> seasonContactList = searchFSQuery.getResultList();
-	        if (seasonContactList != null) {
-	           List<FSERDSeason> erdSeasonList = new ArrayList<FSERDSeason>();
-	           for (Object[] obj : seasonContactList) {
-	        	   FSERDSeason season = new FSERDSeason();
-	        	   season.setSeasonId(obj[0] != null ? Integer.valueOf(obj[0].toString()) : CCIConstants.INACTIVE);
-	        	   season.setSeasonName(obj[2] != null ? obj[2].toString() : CCIConstants.EMPTY);
-	        	   season.setSeasonStatus(obj[3] != null ? obj[3].toString() : CCIConstants.EMPTY);
-	        	   erdSeasonList.add(season);
-	           }
-	           erdSeasons.getFSERDSeasons().addAll(erdSeasonList);
-	           erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
-	                 messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-	        } else {
-	        	erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-	                 messageUtil.getMessage(CCIConstants.NO_RECORD)));
-	        }
-	     } catch (Exception e) {
-	    	 erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
-	        LOGGER.error(e.getMessage());
-	     }
-	     return erdSeasons;
-	}
+   @Override
+   public FSERDSeasons getERDSeasons(String goId) {
+      FSERDSeasons erdSeasons = new FSERDSeasons();
+      try {
+         Query searchFSQuery = entityManager.createNativeQuery(SP_FS_SEASON_HIERARCHY);
+         searchFSQuery.setParameter(1, Integer.valueOf(goId));
+         List<Object[]> seasonContactList = searchFSQuery.getResultList();
+         if (seasonContactList != null) {
+            List<FSERDSeason> erdSeasonList = new ArrayList<FSERDSeason>();
+            for (Object[] obj : seasonContactList) {
+               FSERDSeason season = new FSERDSeason();
+               season.setSeasonId(obj[0] != null ? Integer.valueOf(obj[0].toString()) : CCIConstants.INACTIVE);
+               season.setSeasonName(obj[2] != null ? obj[2].toString() : CCIConstants.EMPTY);
+               season.setSeasonStatus(obj[3] != null ? obj[3].toString() : CCIConstants.EMPTY);
+               erdSeasonList.add(season);
+            }
+            erdSeasons.getFSERDSeasons().addAll(erdSeasonList);
+            erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (Exception e) {
+         erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return erdSeasons;
+   }
 }

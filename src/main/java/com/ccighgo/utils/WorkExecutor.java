@@ -13,31 +13,32 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class WorkExecutor {
-	private ExecutorService executor;
-	private int maxThreads = 100;
-	
-	public int getMaxThreads() {
-		return maxThreads;
-	}
+   private ExecutorService executor;
+   private int maxThreads = 100;
 
-	public void setMaxThreads(int maxThreads) {
-		this.maxThreads = maxThreads;
-	}
+   public int getMaxThreads() {
+      return maxThreads;
+   }
 
-	public WorkExecutor(){
-	}
-	
-	public void init(){
-		LOGGER.debug("Initializing executor with max {} threads", maxThreads);
-		executor = Executors.newFixedThreadPool(maxThreads);
-	}
-	
-	public void submit(Runnable task){
-		executor.execute(task);
-	}
-	
-	public void shutdown(){
-		executor.shutdown();
-	}
-	private static final Logger LOGGER = LoggerFactory.getLogger(WorkExecutor.class);
+   public void setMaxThreads(int maxThreads) {
+      this.maxThreads = maxThreads;
+   }
+
+   public WorkExecutor() {
+   }
+
+   public void init() {
+      LOGGER.debug("Initializing executor with max {} threads", maxThreads);
+      executor = Executors.newFixedThreadPool(maxThreads);
+   }
+
+   public void submit(Runnable task) {
+      executor.execute(task);
+   }
+
+   public void shutdown() {
+      executor.shutdown();
+   }
+
+   private static final Logger LOGGER = LoggerFactory.getLogger(WorkExecutor.class);
 }

@@ -27,7 +27,6 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 @Produces("application/json")
 @Consumes("application/json")
 public class Authorization {
-   private static final Logger LOGGER = LoggerFactory.getLogger(Authorization.class);
 
    @Autowired AuthorizationManagerInterface authorizationManager;
 
@@ -57,6 +56,10 @@ public class Authorization {
       return authorizationManager.getPartnerDashboard(partnerGoId);
    }
 
+   /**
+    * @param partnerGoId
+    * @return
+    */
    @GET
    @Path("partneragent/{partnerGoId}")
    @Produces("application/json")
@@ -64,6 +67,10 @@ public class Authorization {
       return authorizationManager.getPartnerAgentDashboard(Integer.parseInt(partnerGoId));
    }
 
+   /**
+    * @param goId
+    * @return
+    */
    @GET
    @Path("fs/{goId}")
    @Produces("application/json")
