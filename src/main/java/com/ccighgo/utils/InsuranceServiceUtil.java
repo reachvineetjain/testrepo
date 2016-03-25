@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -141,22 +140,24 @@ public class InsuranceServiceUtil {
          urlParameters.add(new BasicNameValuePair("Participant[homeCountryName]", participant.getHomeCountryName()));
          urlParameters.add(new BasicNameValuePair("Participant[start_date]", participant.getStart_date()));
          urlParameters.add(new BasicNameValuePair("Participant[end_date]", participant.getEnd_date()));
-         urlParameters.add(new BasicNameValuePair("Participant[plan_id]", participant.getPlan_id()+""));
+         urlParameters.add(new BasicNameValuePair("Participant[plan_id]", participant.getPlan_id() + ""));
          urlParameters.add(new BasicNameValuePair("Participant[us_citizen]", participant.getUs_citizen()));
          urlParameters.add(new BasicNameValuePair("Participant[us_destination]", participant.getUs_destination()));
-         urlParameters.add(new BasicNameValuePair("Participant[home_country_id]", participant.getHome_country_id()+""));
-         
-         
-         
-         
-         // urlParameters.add(new BasicNameValuePair("address1", participant.getAddress1()));
-         // urlParameters.add(new BasicNameValuePair("city", participant.getCity()));
-         // urlParameters.add(new BasicNameValuePair("email", participant.getEmail()));
-         // urlParameters.add(new BasicNameValuePair("first_name", participant.getFirst_name()));
+         urlParameters.add(new BasicNameValuePair("Participant[home_country_id]", participant.getHome_country_id() + ""));
+
+         // urlParameters.add(new BasicNameValuePair("address1",
+         // participant.getAddress1()));
+         // urlParameters.add(new BasicNameValuePair("city",
+         // participant.getCity()));
+         // urlParameters.add(new BasicNameValuePair("email",
+         // participant.getEmail()));
+         // urlParameters.add(new BasicNameValuePair("first_name",
+         // participant.getFirst_name()));
          // System.out.println("JSON OBject : " + json);
          // post.getParams().setParameter("key", TOKEN_KEY);
          // post.getParams().setParameter("user", USERNAME);
-         // post.getParams().setParameter("participant", getParticipantQuery(participant));
+         // post.getParams().setParameter("participant",
+         // getParticipantQuery(participant));
          post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
          org.apache.http.HttpResponse response = client.execute(post);

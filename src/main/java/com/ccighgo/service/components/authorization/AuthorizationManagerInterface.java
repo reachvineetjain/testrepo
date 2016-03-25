@@ -19,7 +19,8 @@ import com.ccighgo.service.transport.usermanagement.beans.user.User;
 public interface AuthorizationManagerInterface {
 
    /**
-    * Once user is authenticated this service gets called to return user details based on the user type
+    * Once user is authenticated this service gets called to return user details
+    * based on the user type
     * 
     * @param userName
     * @return
@@ -27,8 +28,8 @@ public interface AuthorizationManagerInterface {
    public Auth getUserLogin(String userName);
 
    /**
-    * Subsequent service call to get CCI user details after authentication and identification of user type userId is
-    * GoId
+    * Subsequent service call to get CCI user details after authentication and
+    * identification of user type userId is GoId
     * 
     * @param userId
     * @return
@@ -36,8 +37,8 @@ public interface AuthorizationManagerInterface {
    public User getCCIUserDetails(String userId);
 
    /**
-    * Subsequent service call to get CCI user details after authentication and identification of user type userId is
-    * GoId
+    * Subsequent service call to get CCI user details after authentication and
+    * identification of user type userId is GoId
     * 
     * @param userId
     * @return

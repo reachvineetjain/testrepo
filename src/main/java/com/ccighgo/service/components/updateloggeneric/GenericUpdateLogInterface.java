@@ -1,7 +1,5 @@
 package com.ccighgo.service.components.updateloggeneric;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -34,12 +32,13 @@ public interface GenericUpdateLogInterface {
     * @return
     */
    GenericUpdateLogs getPartnerUpdateLogs(String goId);
-   
+
    /**
     * @param goId
     * @return
     */
    GenericUpdateLogs getHostFamilyUpdateLogs(String goId);
+
    /**
     * @param genericUpdateLog
     * @return

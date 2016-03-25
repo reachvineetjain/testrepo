@@ -33,7 +33,6 @@ public class CCIUtils {
     */
    public static String parseParameter(List<Integer> ls, String param){
       if(ls!=null && !(ls.isEmpty())){
-         //to check if list is initialized by default and has 0 at first position
          if(!(ls.get(0)==0)){
             StringBuffer sb = new StringBuffer();
             sb.append(CCIConstants.SINGLE_QUOTE);

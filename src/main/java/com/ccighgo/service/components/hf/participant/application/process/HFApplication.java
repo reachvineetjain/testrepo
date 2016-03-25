@@ -11,7 +11,6 @@ import com.ccighgo.service.components.hf.participant.application.process.util.Fa
 import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
-import com.ccighgo.service.components.hf.participant.application.process.util.HFPetsList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -32,7 +31,6 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
-import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**

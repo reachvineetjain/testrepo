@@ -41,7 +41,6 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
-import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -91,7 +90,7 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
       return hfApplication.uploadHFMandatoryPhotos(hfApplicationUploadPhotos);
    }
-   
+
    @POST
    @Path("upload/optional/photo")
    @Consumes("application/json")

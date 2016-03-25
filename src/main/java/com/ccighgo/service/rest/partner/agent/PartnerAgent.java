@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.agent.PartnerAgentInterface;
-import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplication;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentAddedSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSeasonDetails;

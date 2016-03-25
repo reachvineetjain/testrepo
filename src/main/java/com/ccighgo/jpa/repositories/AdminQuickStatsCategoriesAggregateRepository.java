@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.AdminQuickStatsCategoryAggregate;
-import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -20,10 +19,11 @@ import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 public interface AdminQuickStatsCategoriesAggregateRepository extends JpaRepository<AdminQuickStatsCategoryAggregate, Integer> {
 
    @Query("SELECT c FROM AdminQuickStatsCategoryAggregate c WHERE c.adminQuickStatsType.adminQSTypeId= ?1 AND c.adminQuickStatsCategory.adminQSCategoryId=?2")
-   AdminQuickStatsCategoryAggregate findAggregateValueForCategory(int quickStatsTypeId, Integer quickStatsCategoryId);
-      
+   public AdminQuickStatsCategoryAggregate findAggregateValueForCategory(int quickStatsTypeId, Integer quickStatsCategoryId);
+
    @Query("SELECT c FROM AdminQuickStatsCategoryAggregate c WHERE c.adminQuickStatsType.adminQSTypeId= ?1 AND c.adminQuickStatsCategory.adminQSCategoryId=?2")
-   List<AdminQuickStatsCategoryAggregate> findAllAggregateValueForCategory(int quickStatsTypeId, Integer quickStatsCategoryId);
+   public List<AdminQuickStatsCategoryAggregate> findAllAggregateValueForCategory(int quickStatsTypeId, Integer quickStatsCategoryId);
+
    @Query("SELECT c FROM AdminQuickStatsCategoryAggregate c WHERE  c.adminQuickStatsCategory.adminQSCategoryId=?1")
-   List<AdminQuickStatsCategoryAggregate> findAllAggregateValueForCategory(int categoryId);
+   public List<AdminQuickStatsCategoryAggregate> findAllAggregateValueForCategory(int categoryId);
 }

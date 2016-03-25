@@ -31,9 +31,10 @@ public interface IWordPressForms {
 
    @WebMethod
    Boolean IsLegalNameExist(@WebParam(name = "data") String LegalName);
+
    @WebMethod
    Boolean IsWebSiteExist(@WebParam(name = "data") String WebSite);
-   
+
    @WebMethod
    List<ParticipantsInfo> participantList();
 }

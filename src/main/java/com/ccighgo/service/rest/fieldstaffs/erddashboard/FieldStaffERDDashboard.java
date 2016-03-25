@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FieldStaffDashboardInterface;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
-import com.ccighgo.service.transport.common.response.beans.Response;
+
 /**
  * @author sinshaw.demisse
  *
@@ -23,31 +23,34 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @Consumes("application/json")
 public class FieldStaffERDDashboard {
 
-   @Autowired
-   FieldStaffDashboardInterface fieldStaffDashboardInterface;
+   @Autowired FieldStaffDashboardInterface fieldStaffDashboardInterface;
    @Context HttpServletRequest request;
-   
+
    @GET
    @Path("ping/{name}")
-  public String ping( @PathParam("name")String name)
-   {
+   public String ping(@PathParam("name") String name) {
       return name;
    }
 
    /**
+    * @param fieldStaffGoId
     * @return
     */
    @GET
    @Path("workQueue/{fieldStaffGoId}")
    @Produces("application/json")
-   public ErdDashboard getWorkQueuesType( @PathParam("fieldStaffGoId")String fieldStaffGoId) {
+   public ErdDashboard getWorkQueuesType(@PathParam("fieldStaffGoId") String fieldStaffGoId) {
       return fieldStaffDashboardInterface.getErdDashboardWorkQueues(fieldStaffGoId);
    }
-   
+
+   /**
+    * @param fsGoId
+    * @return
+    */
    @GET
    @Path("myaccount/{fsGoId}")
    @Produces("application/json")
-   public ErdMyAccount getMyAccountDetail(@PathParam("fsGoId")String fsGoId) {
-     return fieldStaffDashboardInterface.getMyAccountDetail(fsGoId);
+   public ErdMyAccount getMyAccountDetail(@PathParam("fsGoId") String fsGoId) {
+      return fieldStaffDashboardInterface.getMyAccountDetail(fsGoId);
    }
 }

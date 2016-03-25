@@ -1,8 +1,5 @@
 package com.ccighgo.service.components.updateloggeneric;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -37,24 +34,15 @@ import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 @Component
 public class GenericUpdateLogImpl implements GenericUpdateLogInterface {
 
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   CommonComponentUtils componentUtils;
-   @Autowired
-   FieldStaffUpdateLogRepository fieldStaffUpdateLogRepository;
-   @Autowired
-   ReusedFunctions reusedFunctions;
-   @Autowired
-   FieldStaffRepository fieldStaffRepository;
-   @Autowired
-   PartnerUpdateLogRepository partnerUpdateLogRepository;
-   @Autowired
-   PartnerRepository partnerRepository;
-   @Autowired
-   HostFamilyUpdateLogRepository hostFamilyUpdateLogRepository;
-   @Autowired
-   HostFamilyRepository hostFamilyRepository;
+   @Autowired MessageUtils messageUtil;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired FieldStaffUpdateLogRepository fieldStaffUpdateLogRepository;
+   @Autowired ReusedFunctions reusedFunctions;
+   @Autowired FieldStaffRepository fieldStaffRepository;
+   @Autowired PartnerUpdateLogRepository partnerUpdateLogRepository;
+   @Autowired PartnerRepository partnerRepository;
+   @Autowired HostFamilyUpdateLogRepository hostFamilyUpdateLogRepository;
+   @Autowired HostFamilyRepository hostFamilyRepository;
 
    private static final Logger LOGGER = Logger.getLogger(GenericUpdateLogImpl.class);
 

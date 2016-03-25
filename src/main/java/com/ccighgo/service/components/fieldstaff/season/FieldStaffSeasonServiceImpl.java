@@ -56,7 +56,6 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
    private static final String SP_FS_SEASON_LIST = "CALL SPFieldStaffSeasonsList(?)";
 
    private static final String SP_FS_SEASON_HIERARCHY = "CALL SPFieldStaffHeirarchy(?,?,?)";
-   private static final int some_value = 1;
    private static final String RD = "Regional Director";
    private static final String RM = "Regional Manager";
    private static final String ERD = "Executive Regional Director";
@@ -89,8 +88,8 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
                season.setSeasonId(obj[1] != null ? Integer.valueOf(obj[1].toString()) : 0);
                season.setDepartmentProgramId(obj[2] != null ? Integer.valueOf(obj[2].toString()) : 0);
                season.setProgramName(obj[3] != null ? obj[3].toString() : SPACE);
-               Date startDate=(Date)obj[4];
-               Date endDate=(Date)obj[5];               
+               Date startDate = (Date) obj[4];
+               Date endDate = (Date) obj[5];
                season.setStartDate(startDate != null ? DateUtils.getMMddYyyyString(startDate) : SPACE);
                season.setEndDate(endDate != null ? DateUtils.getMMddYyyyString(endDate) : SPACE);
                season.setStatus(obj[6] != null ? obj[6].toString() : SPACE);
@@ -181,9 +180,9 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          fsSeason.setSeasonStatus(seasonStatus);
          fsSeason.setPaymentSchedule(paymentSchedule);
          fsSeason.setDefaultMonitoringStipend(defaultMonitoringStipend);
-         String erdName=SPACE;
-         String rdName=SPACE;
-         String rmName=SPACE;
+         String erdName = SPACE;
+         String rdName = SPACE;
+         String rmName = SPACE;
 
          Query query = entityManager.createNativeQuery(SP_FS_SEASON_HIERARCHY);
          query.setParameter(1, Integer.valueOf(fieldStaffGoId));
@@ -194,17 +193,17 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
             for (Object[] obj : results) {
                if (obj[4] != null && obj[4].toString().equals(ERD)) {
                   if (obj[2] != null && obj[3] != null) {
-                     erdName=obj[2].toString() + SPACE + obj[3].toString();
-                  } 
+                     erdName = obj[2].toString() + SPACE + obj[3].toString();
+                  }
                }
                if (obj[4] != null && obj[4].toString().equals(RD)) {
                   if (obj[2] != null && obj[3] != null) {
-                     rdName=obj[2].toString() + SPACE + obj[3].toString();
+                     rdName = obj[2].toString() + SPACE + obj[3].toString();
                   }
                }
                if (obj[4] != null && obj[4].toString().equals(RM)) {
                   if (obj[2] != null && obj[3] != null) {
-                     rmName=obj[2].toString() + SPACE + obj[3].toString();
+                     rmName = obj[2].toString() + SPACE + obj[3].toString();
                   }
                }
             }

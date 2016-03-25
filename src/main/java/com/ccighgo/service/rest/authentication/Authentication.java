@@ -39,7 +39,6 @@ public class Authentication {
    @Path("logout")
    public void logout() {
       SecurityUtils.getSubject().logout();
-      System.out.println("User logged out");
    }
 
 }
