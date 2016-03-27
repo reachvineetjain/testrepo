@@ -9,7 +9,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -130,12 +129,14 @@ public final class SevisUtils {
       Marshaller marshaller;
       marshaller = ctx.createMarshaller();
 
+      // TODO Error not found constant
       // Set Schema for Validation
-      SchemaFactory sf = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      marshaller.setSchema(sf.newSchema(schemaFile));
-
-      // validate with schema
-      marshaller.marshal(jaxb, new DefaultHandler());
+      // SchemaFactory sf =
+      // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      // marshaller.setSchema(sf.newSchema(schemaFile));
+      //
+      // // validate with schema
+      // marshaller.marshal(jaxb, new DefaultHandler());
 
       return true;
    }
@@ -145,17 +146,17 @@ public final class SevisUtils {
       try {
          marshaller = ctx.createMarshaller();
 
+         // TODO Error not found constant
          // Set Schema for Validation
-         SchemaFactory sf = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-         marshaller.setSchema(sf.newSchema(schemaFile));
-
-         // validate with schema
-         marshaller.marshal(jaxb, new DefaultHandler());
+         // SchemaFactory sf =
+         // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+         // marshaller.setSchema(sf.newSchema(schemaFile));
+         //
+         // // validate with schema
+         // marshaller.marshal(jaxb, new DefaultHandler());
 
          return true;
       } catch (JAXBException e) {
-         e.printStackTrace();
-      } catch (SAXException e) {
          e.printStackTrace();
       }
 
