@@ -1,13 +1,10 @@
 package com.ccighgo.service.components.greenheartclub.utils;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class GHC_Response {
 
-   @SerializedName("code") @Expose private String code;
-   @SerializedName("message") @Expose private String message;
-   @SerializedName("data") @Expose private Data data;
+   private String code;
+   private String message;
+   private Data data;
 
    /**
     * 
