@@ -20,6 +20,7 @@ public interface HostFamilyPhotosRepository extends JpaRepository<HostFamilyPhot
    
    @Query("SELECT h FROM HostFamilyPhoto h WHERE h.hostFamilySeason.hostFamilySeasonId = ?1")
    List<HostFamilyPhoto> findPhotosBySeasonId(Integer hostFamilySeasonId);
+   
    @Query("SELECT h FROM HostFamilyPhoto h ")
 	HostFamilyPhoto getHFPhoto(int goId);
 

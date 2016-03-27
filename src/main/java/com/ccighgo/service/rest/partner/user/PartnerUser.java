@@ -12,7 +12,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,10 @@ import com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUsers;
  * <p>
  * Rest service interface exposes list of services for Partner User management.
  * <P>
- * See {@link com.ccighgo.service.components.partner.user.PartnerUserInterface} for service interface injected for
- * business logic and {@link com.ccighgo.service.components.partner.user.PartnerUserInterfaceImpl} for actual business
- * logic.
+ * See {@link com.ccighgo.service.components.partner.user.PartnerUserInterface}
+ * for service interface injected for business logic and
+ * {@link com.ccighgo.service.components.partner.user.PartnerUserInterfaceImpl}
+ * for actual business logic.
  * </p>
  * 
  * @see com.ccighgo.service.components.partner.user.PartnerUserInterface
@@ -64,7 +64,8 @@ public class PartnerUser {
    }
 
    /**
-    * REST service updates status of partner for the season as in active or inactive
+    * REST service updates status of partner for the season as in active or
+    * inactive
     * 
     * @param statusVal
     * @param partnerUserId

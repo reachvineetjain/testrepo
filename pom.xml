@@ -327,7 +327,13 @@
   <groupId>oauth.signpost</groupId>
   <artifactId>signpost-commonshttp4</artifactId>
   <version>1.2.1.1</version>
-</dependency>    
+</dependency>
+<dependency>
+	<groupId>javax.xml</groupId>
+	<artifactId>jaxp-api</artifactId>
+	<version>1.4.2</version>
+</dependency>
+    
     
    </dependencies>
 

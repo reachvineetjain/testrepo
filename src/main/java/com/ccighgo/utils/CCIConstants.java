@@ -1,7 +1,6 @@
 package com.ccighgo.utils;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 /**
  * This class is used to keep all constants to be used across application Add a
@@ -266,7 +265,7 @@ public class CCIConstants {
    public static final String RD = "Regional Director";
    public static final String AC = "Area Coordinator";
    public static final String ERD = "Executive Regional Director";
-   
+
    public static final int FAMILY_BASICS = 1;
    public static final int FAMILY_LIFESTYLE = 2;
    public static final int HOUSE_HOME = 3;
@@ -276,6 +275,5 @@ public class CCIConstants {
    public static final int REFRENCES = 7;
    public static final int BG_CHECK = 8;
    public static final int SUBMIT_APPLICATION = 9;
-   
 
 }

@@ -45,8 +45,6 @@ import com.ccighgo.utils.DateUtils;
 @Component
 public class PartnerAdminSeasonDetailsHelper {
 
-   private static final Logger LOGGER = Logger.getLogger(PartnerAdminSeasonDetailsHelper.class);
-
    @Autowired LoginRepository loginRepository;
    @Autowired PartnerNoteTopicRepository partnerNoteTopicRepository;
    @Autowired PartnerSeasonAllocationRepository partnerSeasonAllocationRepository;

@@ -1,5 +1,7 @@
 package com.ccighgo.service.components.sevis.common;
 
+import gov.ice.xmlschema.sevisbatch.log.TransactionLogType;
+
 import java.io.File;
 import java.io.StringWriter;
 import java.sql.Date;
@@ -7,7 +9,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -28,8 +29,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.ccighgo.service.component.serviceutils.ApplicationContextProvider;
 import com.google.common.base.Preconditions;
 
-import gov.ice.xmlschema.sevisbatch.log.TransactionLogType;
-
 public final class SevisUtils {
 
    static MessageSource msgSource = ApplicationContextProvider.getContext().getBean(MessageSource.class);
@@ -48,11 +47,6 @@ public final class SevisUtils {
 
    public static XMLGregorianCalendar convert(LocalDateTime date) {
       Preconditions.checkNotNull(date);
-
-      String reqPattern = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS"));
-      // GregorianCalendar gcal =
-      // GregorianCalendar.from(date.atZone(ZoneId.systemDefault()));
-
       try {
          XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(date.toString());
          return xcal;
@@ -63,7 +57,6 @@ public final class SevisUtils {
 
    public static XMLGregorianCalendar convert(Date sqlDate) {
       Preconditions.checkNotNull(sqlDate);
-
       GregorianCalendar c = new GregorianCalendar();
       c.setTime(sqlDate);
       try {
@@ -81,7 +74,6 @@ public final class SevisUtils {
       Preconditions.checkArgument(!fName.isEmpty());
       Preconditions.checkArgument(!lName.isEmpty());
 
-      long timeStamp = System.currentTimeMillis();
       String fNameInitial = fName.substring(0, 1).toUpperCase();
       String lNameInitial = lName.substring(0, 1).toUpperCase();
       // TODO generate ID
@@ -137,13 +129,14 @@ public final class SevisUtils {
       Marshaller marshaller;
       marshaller = ctx.createMarshaller();
 
-      // // Set Schema for Validation
+      // TODO Error not found constant
+      // Set Schema for Validation
       // SchemaFactory sf =
       // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
       // marshaller.setSchema(sf.newSchema(schemaFile));
-
-      // validate with schema
-      marshaller.marshal(jaxb, new DefaultHandler());
+      //
+      // // validate with schema
+      // marshaller.marshal(jaxb, new DefaultHandler());
 
       return true;
    }
@@ -153,13 +146,14 @@ public final class SevisUtils {
       try {
          marshaller = ctx.createMarshaller();
 
-         // // Set Schema for Validation
+         // TODO Error not found constant
+         // Set Schema for Validation
          // SchemaFactory sf =
          // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
          // marshaller.setSchema(sf.newSchema(schemaFile));
-
-         // validate with schema
-         marshaller.marshal(jaxb, new DefaultHandler());
+         //
+         // // validate with schema
+         // marshaller.marshal(jaxb, new DefaultHandler());
 
          return true;
       } catch (JAXBException e) {
@@ -182,7 +176,6 @@ public final class SevisUtils {
       Marshaller marshaller = ctx.createMarshaller();
       marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
       marshaller.marshal(jaxb, file);
-
       return true;
    }
 
@@ -209,7 +202,6 @@ public final class SevisUtils {
     */
    public static String marshalToString(JAXBContext ctx, Object jaxb) throws JAXBException {
       StringWriter sw = new StringWriter();
-
       Marshaller marshaller = ctx.createMarshaller();
       marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
       marshaller.marshal(jaxb, sw);

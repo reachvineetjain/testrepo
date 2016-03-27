@@ -59,7 +59,7 @@ public class PartnerCompany {
 
    @GET
    @Path("delete/office/{partnerOfficeId}")
-   @Consumes("application/json")
+   @Produces("application/json")
    public Response deletePartnerOffice( @PathParam("partnerOfficeId") String partnerOfficeId) {
       LOGGER.info("calling PartnerCompany.deletePartnerOffice");
       return partnerCompanyService.deletePartnerOffice(partnerOfficeId);

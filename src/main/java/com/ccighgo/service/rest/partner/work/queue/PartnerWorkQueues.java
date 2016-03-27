@@ -24,15 +24,15 @@ import com.ccighgo.service.transport.partner.beans.partneruser.PartnerWorkQueue;
 @Produces("application/json")
 @Consumes("application/json")
 public class PartnerWorkQueues {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerWorkQueues.class);
-   
+
    @Autowired PartnerWorkQueueInterface partnerWorkQueueInterface;
-   
+
    @GET
    @Path("get/queues/{partnerId}")
    @Produces("application/json")
-   public PartnerWorkQueue getPartnerWorkQueues(@PathParam("partnerId") String partnerId){
+   public PartnerWorkQueue getPartnerWorkQueues(@PathParam("partnerId") String partnerId) {
       return partnerWorkQueueInterface.getPartnerWorkQueues(partnerId);
    }
 

@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.admin.season.PartnerAdminSeasonInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
-import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 import com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerAdminF1SeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerAdminIHPSeasonDetails;
 import com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.Document;
@@ -97,7 +96,7 @@ public class PartnerAdminSeason {
    public PartnerAdminF1SeasonDetails getPartnerAdminF1Details(@PathParam("partnerGoId") String partnerGoId, @PathParam("partnerSeasonId") String partnerSeasonId) {
       return partnerAdminSeasonInterface.getPartnerAdminF1Details(partnerGoId, partnerSeasonId);
    }
-   
+
    /**
     * @param partnerGoId
     * @param partnerSeasonId
@@ -157,7 +156,7 @@ public class PartnerAdminSeason {
    public PartnerAdminF1SeasonDetails updateF1AdminSeason(PartnerAdminF1SeasonDetails partnerAdminF1SeasonDetails) {
       return partnerAdminSeasonInterface.updateF1AdminSeason(partnerAdminF1SeasonDetails);
    }
-   
+
    /**
     * @param partnerAdminIHPSeasonDetails
     * @return
@@ -181,7 +180,7 @@ public class PartnerAdminSeason {
    public Response addAdminSeasonDocument(@PathParam("loginId") String loginId, @PathParam("partnerSeasonId") String partnerSeasonId, Document doc) {
       return partnerAdminSeasonInterface.addAdminSeasonDocument(loginId, partnerSeasonId, doc);
    }
-   
+
    /**
     * @param partnerAdminJ1SeasonDetails
     * @return
@@ -193,37 +192,34 @@ public class PartnerAdminSeason {
    public Response addSeasonOperatingAgreement(@PathParam("loginId") String loginId, @PathParam("partnerSeasonId") String partnerSeasonId, OperatingAgreement contract) {
       return partnerAdminSeasonInterface.addSeasonOperatingAgreement(loginId, partnerSeasonId, contract);
    }
-   
+
    /**
     * @param partnerAdminJ1SeasonDetails
     * @return
     */
    @GET
    @Path("delete/document/{partnerSeasonDocumentId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public Response deleteAdminSeasonDocument(@PathParam("partnerSeasonDocumentId") String partnerSeasonDocumentId) {
       return partnerAdminSeasonInterface.deleteAdminSeasonDocument(partnerSeasonDocumentId);
    }
-   
+
    /**
     * @param partnerAdminJ1SeasonDetails
     * @return
     */
    @GET
    @Path("delete/operating/agreement/{partnerSeasonContractId}")
-   @Consumes("application/json")
    @Produces("application/json")
    public Response deleteAdminSeasonAgreement(@PathParam("partnerSeasonContractId") String partnerSeasonContractId) {
       return partnerAdminSeasonInterface.deleteAdminSeasonAgreement(partnerSeasonContractId);
    }
-   
+
    /**
     * @return
     */
    @GET
    @Path("status/list")
-   @Consumes("application/json")
    @Produces("application/json")
    public PartnerSeasonStatus getPartnerSeasonStatuses() {
       return partnerAdminSeasonInterface.getPartnerSeasonStatuses();

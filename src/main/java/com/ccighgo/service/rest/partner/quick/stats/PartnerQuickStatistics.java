@@ -24,15 +24,15 @@ import com.ccighgo.service.transport.partner.beans.partnerquickstats.PartnerQuic
 @Produces("application/json")
 @Consumes("application/json")
 public class PartnerQuickStatistics {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerQuickStatistics.class);
-   
+
    @Autowired PartnerQuickStatsInterface partnerQuickStatsInterface;
-   
+
    @GET
    @Path("get/stats/{partnerId}")
    @Produces("application/json")
-   public PartnerQuickStats getPartnerQuickStats(@PathParam("partnerId") String partnerId){
+   public PartnerQuickStats getPartnerQuickStats(@PathParam("partnerId") String partnerId) {
       return partnerQuickStatsInterface.getPartnerQuickStats(partnerId);
    }
 

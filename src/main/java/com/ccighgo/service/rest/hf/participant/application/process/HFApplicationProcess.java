@@ -41,7 +41,6 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
-import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -84,12 +83,21 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("upload/photo")
+   @Path("upload/mandatory/photo")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFApplicationUploadPhotos uploadHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
+   public HFApplicationUploadPhotos uploadHFMandatoryPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
-      return hfApplication.uploadHFPhotos(hfApplicationUploadPhotos);
+      return hfApplication.uploadHFMandatoryPhotos(hfApplicationUploadPhotos);
+   }
+
+   @POST
+   @Path("upload/optional/photo")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public HFApplicationUploadPhotos uploadOptionalHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos) {
+      LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
+      return hfApplication.uploadOptionalHFPhotos(hfApplicationUploadPhotos);
    }
 
    @GET
@@ -101,11 +109,11 @@ public class HFApplicationProcess {
    }
 
    @GET
-   @Path("delete/photo/{photoId}")
+   @Path("delete/photo/{photoId}/{optional}/{loginId}")
    @Produces("application/json")
-   public Response deletePhoto(@PathParam("photoId") String photoId) {
+   public Response deletePhoto(@PathParam("photoId") String photoId, @PathParam("optional") String optional, @PathParam("loginId") String loginId) {
       LOGGER.info("Calling service HFApplicationProcess.deletePhoto for photoId {}", photoId);
-      return hfApplication.deletePhoto(photoId);
+      return hfApplication.deletePhoto(Integer.parseInt(photoId), Integer.parseInt(optional), Integer.parseInt(loginId));
    }
 
    @POST
@@ -329,6 +337,13 @@ public class HFApplicationProcess {
    @Produces("application/json")
    public HFParticipantDetail getParticipantDetail(@PathParam("participantId") String participantId) {
       return hfApplication.getParticipantDetail(Integer.valueOf(participantId));
+   }
+
+   @GET
+   @Path("create/mandatory/photos/{hfSeasonId}/{loginId}")
+   @Produces("application/json")
+   public HFApplicationUploadPhotos hfCreateMandatoryPhotos(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
+      return hfApplication.hfCreateMandatoryPhotos(Integer.valueOf(hfSeasonId), Integer.valueOf(loginId));
    }
 
 }

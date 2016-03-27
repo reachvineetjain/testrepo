@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.component.partner.generic.PartnerGenericNoteInterface;
-import com.ccighgo.service.components.partnerinquiry.PartnerInquiryService;
 import com.ccighgo.service.transport.partner.beans.generic.deletenote.DeleteNote;
 import com.ccighgo.service.transport.partner.beans.generic.notes.ScreenNote;
 import com.ccighgo.service.transport.partner.beans.generic.topic.Topic;
@@ -33,8 +32,7 @@ public class PartnerGenericNotes {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerGenericNotes.class);
 
-   @Autowired
-   PartnerGenericNoteInterface partnerGenericNoteInterface;
+   @Autowired PartnerGenericNoteInterface partnerGenericNoteInterface;
 
    /**
     * @param note
@@ -67,16 +65,15 @@ public class PartnerGenericNotes {
    @GET
    @Path("view/{partnerId}")
    @Produces("application/json")
-   @Consumes("application/json")
    public Topics viewTopics(@PathParam("partnerId") String partnerId) {
       return partnerGenericNoteInterface.viewTopics(Integer.parseInt(partnerId));
    }
 
- /**
-  * 
-  * @param topic
-  * @return
-  */
+   /**
+    * 
+    * @param topic
+    * @return
+    */
    @POST
    @Path("tagTopic")
    @Produces("application/json")
@@ -84,7 +81,7 @@ public class PartnerGenericNotes {
    public WSDefaultResponse tagTopic(Topic topic) {
       return partnerGenericNoteInterface.tagTopic(topic);
    }
-   
+
    @POST
    @Path("createTopic")
    @Produces("application/json")
@@ -92,5 +89,5 @@ public class PartnerGenericNotes {
    public WSDefaultResponse createTopic(Topic topic) {
       return partnerGenericNoteInterface.createTopic(topic);
    }
-   
+
 }

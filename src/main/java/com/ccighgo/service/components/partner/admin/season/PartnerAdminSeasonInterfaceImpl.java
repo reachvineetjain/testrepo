@@ -21,7 +21,6 @@ import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerSeasonContract;
 import com.ccighgo.db.entities.PartnerSeasonDocument;
 import com.ccighgo.db.entities.PartnerStatus;
-import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
@@ -155,7 +154,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                      programName = ps.getSeason().getSeasonCapdetails().get(0).getProgramName();
                   }
                   PartnerSeasonStatus partnerSeasonStatus = new PartnerSeasonStatus();
-                 if(ps.getPartnerStatus1()!=null){
+                  if (ps.getPartnerStatus1() != null) {
                      partnerSeasonStatus.setSeasonStatusId(ps.getPartnerStatus1().getPartnerStatusId());
                      partnerSeasonStatus.setSeasonStatus(ps.getPartnerStatus1().getPartnerStatusName());
                      pas.setPartnerSeasonStatus(partnerSeasonStatus);
@@ -270,10 +269,10 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminJ1SeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonJ1details().get(0).getProgramName());
             // partner season status
             com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.PartnerSeasonStatus();
-            if(partnerSeason.getPartnerStatus1()!=null){
+            if (partnerSeason.getPartnerStatus1() != null) {
                partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
                partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
-               adminJ1SeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus); 
+               adminJ1SeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
             }
             // Season status
             com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.SeasonStatus seasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.j1season.detail.SeasonStatus();
@@ -338,7 +337,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminF1SeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonF1details().get(0).getProgramName());
             // partner season status
             com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.PartnerSeasonStatus();
-            if(partnerSeason.getPartnerStatus1()!=null){
+            if (partnerSeason.getPartnerStatus1() != null) {
                partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
                partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
                adminF1SeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);
@@ -407,7 +406,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
       } else {
          try {
             PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
-            partnerSeason.setActive(Integer.valueOf(statusVal)==1?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
+            partnerSeason.setActive(Integer.valueOf(statusVal) == 1 ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             partnerSeasonsRepository.saveAndFlush(partnerSeason);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -437,7 +436,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          return response;
       } else {
          try {
-             PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
+            PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(Integer.valueOf(partnerSeasonId));
             com.ccighgo.db.entities.PartnerStatus seasonStatus = partnerStatusRepository.findOne(Integer.valueOf(statusVal));
             partnerSeason.setPartnerStatus1(seasonStatus);
             partnerSeasonsRepository.saveAndFlush(partnerSeason);
@@ -799,7 +798,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminIHPSeasonDetails.setPartnerSeasonProgramName(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
             // partner season status
             com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus partnerSeasonStatus = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.PartnerSeasonStatus();
-            if(partnerSeason.getPartnerStatus1()!=null){
+            if (partnerSeason.getPartnerStatus1() != null) {
                partnerSeasonStatus.setPartnerSeasonStatusId(partnerSeason.getPartnerStatus1().getPartnerStatusId());
                partnerSeasonStatus.setPartnerSeasonStatus(partnerSeason.getPartnerStatus1().getPartnerStatusName());
                adminIHPSeasonDetails.setPartnerSeasonStatus(partnerSeasonStatus);

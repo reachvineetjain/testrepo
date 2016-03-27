@@ -33,7 +33,6 @@ public class GCIAPI {
 
    @GET
    @Path("ping/{pingValue}")
-   @Consumes("application/json")
    @Produces("application/json")
    public String ping(@PathParam("pingValue") String pingValue) {
       return pingValue;
