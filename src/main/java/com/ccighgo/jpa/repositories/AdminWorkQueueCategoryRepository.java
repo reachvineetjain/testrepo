@@ -20,5 +20,5 @@ public interface AdminWorkQueueCategoryRepository extends JpaRepository<AdminWor
 
    @Query("SELECT c FROM AdminWorkQueueCategory c where c.adminWorkQueueType.adminWQTypeId = ?1")
    List<AdminWorkQueueCategory> findAllCategoriesByTypeId(int adminWorkQueueTypeId);
-      
+
 }

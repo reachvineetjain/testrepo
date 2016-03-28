@@ -23,7 +23,7 @@ import com.ccighgo.utils.WSDefaultResponse;
  */
 @Service
 public interface ParticipantsInterface {
-   
+
    /**
     * Gets the list of activated participants for the given partner
     * 
@@ -31,7 +31,7 @@ public interface ParticipantsInterface {
     * @return
     */
    public ParticipantsActiveList getActiveParticipantsList(String partnerId);
-   
+
    /**
     * @param partnerId
     * @return
@@ -55,7 +55,7 @@ public interface ParticipantsInterface {
     * @return
     */
    public NewManualParticipant updateParticipant(NewManualParticipant participant);
-   
+
    /**
     * @return
     */
@@ -67,8 +67,8 @@ public interface ParticipantsInterface {
     * @param departmentProgramId
     * @return
     */
-   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId,int departmentProgramId);
-   
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(int partnerId, int seasonId, int departmentProgramId);
+
    /**
     * @param partnerId
     * @param seasonId
@@ -136,12 +136,11 @@ public interface ParticipantsInterface {
     * @return
     */
    public Response sendLogin(String participantGoId, HttpServletRequest request);
-   
+
    /**
     * @param partnerId
     * @return
     */
    public SeasonsForParticipants getAllAvailableSeasons2(String partnerId);
-
 
 }

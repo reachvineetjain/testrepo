@@ -21,7 +21,7 @@ import com.ccighgo.service.transport.partner.beans.partner.season.admin.applicat
  */
 @Service
 public interface PartnerAdminSeasonInterface {
-   
+
    /**
     * @param partnerGoId
     * @return
@@ -47,7 +47,7 @@ public interface PartnerAdminSeasonInterface {
     * @return
     */
    public PartnerAdminF1SeasonDetails getPartnerAdminF1Details(String partnerGoId, String partnerSeasonId);
-   
+
    /**
     * @param partnerGoId
     * @param partnerSeasonId
@@ -86,7 +86,7 @@ public interface PartnerAdminSeasonInterface {
     * @return
     */
    public PartnerAdminF1SeasonDetails updateF1AdminSeason(PartnerAdminF1SeasonDetails partnerAdminF1SeasonDetails);
-   
+
    /**
     * @param partnerAdminIHPSeasonDetails
     * @return

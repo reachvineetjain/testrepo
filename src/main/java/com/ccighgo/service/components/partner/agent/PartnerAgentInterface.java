@@ -10,16 +10,15 @@ import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSea
 
 @Service
 public interface PartnerAgentInterface {
-   
+
    public PartnerAgentAddedSeasons getAddedSeasons(String partnerGoId);
-   
-   
+
    public PartnerAgentSeasons getAllSeasons();
-   
+
    public PartnerAgentSeasons addSeasons(PartnerSeasonApplicationList partnerSeasonApplicationList);
-   
+
    public PartnerAgentSeasonDetails EditPartnerSeasons(PartnerAgentSeasonDetails partnerAgentSeasonDetails);
-   
+
    public PartnerAgentSeasonDetails viewPartnerSeason(String partnerSeasonId);
 
 }

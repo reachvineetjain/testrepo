@@ -119,8 +119,6 @@ public class UserManagementServiceImpl implements UserManagementService {
 
    @Autowired CCIStaffUsersRepository cciUsersRepository;
 
-   // @Autowired DepartmentProgramRepository departmentProgramRepository;
-
    @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
 
    @Autowired DepartmentResourceGroupRepository departmentResourceGroupRepository;
@@ -182,8 +180,8 @@ public class UserManagementServiceImpl implements UserManagementService {
          return cciUsers;
       }
       try {
-         Pageable page = new PageRequest(Integer.valueOf(pageNo != null ? pageNo : CCIConstants.DEFAULT_PAGE), Integer.valueOf(size != null ? size
-               : CCIConstants.DEFAULT_NO_OF_RECORDS_SIZE));
+         Pageable page = new PageRequest(Integer.valueOf(pageNo != null ? pageNo : CCIConstants.DEFAULT_PAGE),
+               Integer.valueOf(size != null ? size : CCIConstants.DEFAULT_NO_OF_RECORDS_SIZE));
          numberOfRecords = cciUsersRepository.count();
          cciUserDBList = cciUsersRepository.findAll(page);
       } catch (CcighgoException e) {
@@ -793,7 +791,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public User updateUserPermissions(User user) {
       User usr = null;
       try {
-         if (user.getCciUserId() == 0 || user.getCciUserId() < 0 || user==null) {
+         if (user.getCciUserId() == 0 || user.getCciUserId() < 0 || user == null) {
             user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
@@ -924,8 +922,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       try {
          List<DepartmentResourceGroup> departmentResourceGroupList = departmentResourceGroupRepository.findAll();
-         // List<Object[]> results =
-         // cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(roleId),Integer.valueOf(deptId));
          List<CCIStaffRolesDefaultResourcePermission> results = cciSaffDefaultPermissionRepository.getDefaultPermissions(Integer.valueOf(deptId), Integer.valueOf(roleId));
          if (results != null) {
             staffUserRolePermissions = new StaffUserRolePermissions();
@@ -1186,7 +1182,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             country.setCountryFlag(cciUser.getLookupCountry().getCountryFlag());
          }
       } catch (Exception e) {
-        
+
       }
       return country;
    }
@@ -1669,9 +1665,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       login.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       login.setGoIdSequence(goIdSequence);
       login.setEmail(user.getEmail());
-      // login.setUserTypeId(1);
       login = loginRepository.save(login);
-      // byte active = 1;
       loginList.add(login);
       goIdSequence.setLogins(loginList);
       cciUser.setGoIdSequence(goIdSequence);
@@ -1839,7 +1833,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserPermission.setCcistaffUser(cUser);
                cciUserPermission.setDepartmentResourceGroup(departmentResourceGroup);
                cciUserPermission.setResourcePermission(resourcePermission);
-               //if null set default view as 7
+               // if null set default view as 7
                cciUserPermission.setResourceAction(resourceAction != null ? resourceAction : resourceActionRepository.findOne(7));
                cciUserPermission.setCreatedBy(user.getLoginId());
                cciUserPermission.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));

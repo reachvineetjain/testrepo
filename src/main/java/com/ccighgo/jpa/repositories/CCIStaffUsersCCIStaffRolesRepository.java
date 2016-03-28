@@ -14,5 +14,5 @@ import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
  */
 @Repository
 public interface CCIStaffUsersCCIStaffRolesRepository extends JpaRepository<CCIStaffUsersCCIStaffRole, Integer> {
-   
+
 }

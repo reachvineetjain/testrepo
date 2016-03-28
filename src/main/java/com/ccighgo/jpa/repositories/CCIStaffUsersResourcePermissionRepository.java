@@ -18,7 +18,7 @@ import com.ccighgo.db.entities.CCIStaffUsersResourcePermission;
  */
 @Repository
 public interface CCIStaffUsersResourcePermissionRepository extends JpaRepository<CCIStaffUsersResourcePermission, Integer> {
-   
+
    @Query("SELECT c FROM CCIStaffUsersResourcePermission c where c.ccistaffUser = ?1")
    List<CCIStaffUsersResourcePermission> findAllPermissionsByCCIStaffUser(CCIStaffUser ccistaffUser);
 

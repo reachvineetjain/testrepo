@@ -36,7 +36,7 @@ public class EmailServiceImpl implements EmailService {
    @Autowired MessageUtils messageUtil;
 
    public void init() throws IOException {
-      
+
       mailProperties = new Properties();
       mailProperties.setProperty(UtilityServiceMessageConstants.MAIL_TRANSPORT_PROTOCOL, messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_TRANSPORT_PROTOCOL));
       mailProperties.setProperty(UtilityServiceMessageConstants.MAIL_AWS_USER, messageUtil.getMessage(UtilityServiceMessageConstants.MAIL_AWS_USER));

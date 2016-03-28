@@ -19,7 +19,7 @@ public interface FieldStaffRepository extends JpaRepository<FieldStaff, Integer>
 
    @Query("select fs from FieldStaff fs where fs.fieldStaffType.fieldStaffTypeId in (2,3,4)")
    List<FieldStaff> findAllStaffRatherERDorRD();
-   
+
    @Query("select fs from FieldStaff fs where fs.fieldStaffType.fieldStaffTypeCode = ?1")
    List<FieldStaff> findAllByFieldStaffType(String fieldStaffTypeCode);
 }

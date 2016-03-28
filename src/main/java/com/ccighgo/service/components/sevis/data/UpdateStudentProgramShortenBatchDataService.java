@@ -22,50 +22,43 @@ import gov.ice.xmlschema.sevisbatch.student.SEVISStudentBatchType.UpdateStudent.
 @Component
 public class UpdateStudentProgramShortenBatchDataService implements IStudentBatchDataService {
 
-	@Autowired
-	ParticipantRepository participantRepository;
+   @Autowired ParticipantRepository participantRepository;
 
-	@Override
-	public SEVISBatchCreateUpdateStudent fetchBatchData(BatchParam batchParam) {
+   @Override
+   public SEVISBatchCreateUpdateStudent fetchBatchData(BatchParam batchParam) {
 
-		// get EVs from DB
-		// @formatter:off
-		List<Integer> participantIds = batchParam.getParticipant()
-				.stream()
-				.map(p -> p.getParticipantGoId())
-				.collect(Collectors.toList());
-		// @formatter:on
+      // get EVs from DB
+      // @formatter:off
+      List<Integer> participantIds = batchParam.getParticipant().stream().map(p -> p.getParticipantGoId()).collect(Collectors.toList());
+      // @formatter:on
 
-		List<Participant> participants = participantRepository.findByParticipantGoIdIn(participantIds);
+      List<Participant> participants = participantRepository.findByParticipantGoIdIn(participantIds);
 
-		// @formatter:off
-		// map each participants into Student
-		List<Student> students = participants.stream()
-				.map(p -> createStudentForUpdate("N0000000000", "1", batchParam.getUserId()))
-				.collect(Collectors.toList());
-		// @formatter:on
+      // @formatter:off
+      // map each participants into Student
+      List<Student> students = participants.stream().map(p -> createStudentForUpdate("N0000000000", "1", batchParam.getUserId())).collect(Collectors.toList());
+      // @formatter:on
 
-		students.forEach(s -> s.setProgram(createProgramShorten(true, SevisUtils.convert(LocalDate.now()))));
+      students.forEach(s -> s.setProgram(createProgramShorten(true, SevisUtils.convert(LocalDate.now()))));
 
-		String batchId = SevisUtils.createBatchId();
-		SEVISBatchCreateUpdateStudent updateBatch = createUpdateStudentBatch(batchParam.getUserId(), "P-1-12345",
-				batchId);
-		updateBatch.getUpdateStudent().getStudent().addAll(students);
+      String batchId = SevisUtils.createBatchId();
+      SEVISBatchCreateUpdateStudent updateBatch = createUpdateStudentBatch(batchParam.getUserId(), "P-1-12345", batchId);
+      updateBatch.getUpdateStudent().getStudent().addAll(students);
 
-		return updateBatch;
-	}
+      return updateBatch;
+   }
 
-	private Program createProgramShorten(boolean printForm, XMLGregorianCalendar newPrgEndDate) {
-		Program program = new Program();
-		program.setShorten(createShorten(printForm, newPrgEndDate));
-		return program;
-	}
+   private Program createProgramShorten(boolean printForm, XMLGregorianCalendar newPrgEndDate) {
+      Program program = new Program();
+      program.setShorten(createShorten(printForm, newPrgEndDate));
+      return program;
+   }
 
-	private Shorten createShorten(boolean printForm, XMLGregorianCalendar newPrgEndDate) {
-		Shorten shorten = new Shorten();
-		shorten.setPrintForm(printForm);
-		shorten.setNewPrgEndDate(newPrgEndDate);
-		return shorten;
-	}
+   private Shorten createShorten(boolean printForm, XMLGregorianCalendar newPrgEndDate) {
+      Shorten shorten = new Shorten();
+      shorten.setPrintForm(printForm);
+      shorten.setNewPrgEndDate(newPrgEndDate);
+      return shorten;
+   }
 
 }

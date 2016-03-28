@@ -16,7 +16,7 @@ import com.ccighgo.db.entities.LookupGender;
 @Repository
 public interface GenderRepository extends JpaRepository<LookupGender, Integer> {
 
-	@Query("SELECT f FROM LookupGender f WHERE f.genderName =?1")
-	LookupGender findByName(String genderName);
+   @Query("SELECT f FROM LookupGender f WHERE f.genderName =?1")
+   LookupGender findByName(String genderName);
 
 }

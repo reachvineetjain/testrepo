@@ -20,7 +20,7 @@ public interface SeasonDepartmentNotesRepository extends JpaRepository<SeasonDep
 
    @Query("SELECT c FROM SeasonDepartmentNote c WHERE c.season.seasonId = ?1 ")
    List<SeasonDepartmentNote> findAllDepartmentNotesBySeasonId(int seasonId);
-   
+
    @Query("SELECT c FROM SeasonDepartmentNote c WHERE c.season.seasonId = ?1 ORDER BY c.createdOn DESC")
    List<SeasonDepartmentNote> findAllDepartmentNotesBySeasonIdDateDesc(int seasonId);
 }

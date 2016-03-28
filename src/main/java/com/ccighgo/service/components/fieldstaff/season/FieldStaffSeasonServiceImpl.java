@@ -56,9 +56,7 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
    private static final String SP_FS_SEASON_LIST = "CALL SPFieldStaffSeasonsList(?)";
 
    private static final String SP_FS_SEASON_HIERARCHY = "CALL SPFieldStaffHeirarchy(?,?,?)";
-   private static final String RD = "Regional Director";
-   private static final String RM = "Regional Manager";
-   private static final String ERD = "Executive Regional Director";
+
    private static final String SPACE = " ";
 
    @Override
@@ -128,8 +126,8 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          if (statusVal == null) {
             throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_SIGNNED_CONTRACT_VALUE));
          }
-         com.ccighgo.db.entities.FieldStaffSeason fieldStaffLeadershipSeasonDetail = fieldStaffSeasonRepository.getFslSeasonDetailByIdSeasonIdAndDeptPrgId(
-               Integer.valueOf(fslSeasonId), Integer.valueOf(seasonId), Integer.valueOf(deparmentProgramId));
+         com.ccighgo.db.entities.FieldStaffSeason fieldStaffLeadershipSeasonDetail = fieldStaffSeasonRepository
+               .getFslSeasonDetailByIdSeasonIdAndDeptPrgId(Integer.valueOf(fslSeasonId), Integer.valueOf(seasonId), Integer.valueOf(deparmentProgramId));
          if (fieldStaffLeadershipSeasonDetail == null) {
             throw new CcighgoException(messageUtil.getMessage(FieldStaffMessageConstants.NO_FSL_RECORD_FOUND_TO_UPDATE));
          }
@@ -191,17 +189,17 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          List<Object[]> results = query.getResultList();
          if (results != null && results.size() > 0) {
             for (Object[] obj : results) {
-               if (obj[4] != null && obj[4].toString().equals(ERD)) {
+               if (obj[4] != null && obj[4].toString().equals(CCIConstants.ERD)) {
                   if (obj[2] != null && obj[3] != null) {
                      erdName = obj[2].toString() + SPACE + obj[3].toString();
                   }
                }
-               if (obj[4] != null && obj[4].toString().equals(RD)) {
+               if (obj[4] != null && obj[4].toString().equals(CCIConstants.RD)) {
                   if (obj[2] != null && obj[3] != null) {
                      rdName = obj[2].toString() + SPACE + obj[3].toString();
                   }
                }
-               if (obj[4] != null && obj[4].toString().equals(RM)) {
+               if (obj[4] != null && obj[4].toString().equals(CCIConstants.RM)) {
                   if (obj[2] != null && obj[3] != null) {
                      rmName = obj[2].toString() + SPACE + obj[3].toString();
                   }

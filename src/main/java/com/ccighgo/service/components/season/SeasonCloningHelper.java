@@ -5,12 +5,8 @@ package com.ccighgo.service.components.season;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
@@ -482,7 +478,8 @@ public class SeasonCloningHelper {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-      //TODO documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
+      // TODO
+      // documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(loginId);
       documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       documentInformation.setModifiedBy(loginId);
@@ -520,7 +517,8 @@ public class SeasonCloningHelper {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-      //TODO documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
+      // TODO
+      // documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(loginId);
       documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       documentInformation.setModifiedBy(loginId);

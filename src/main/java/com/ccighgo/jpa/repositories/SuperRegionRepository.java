@@ -15,7 +15,7 @@ import com.ccighgo.db.entities.SuperRegion;
  */
 @Repository
 public interface SuperRegionRepository extends JpaRepository<SuperRegion, Integer> {
-   
+
    @Query("SELECT s FROM SuperRegion s WHERE s.superRegionName = ?1")
    public SuperRegion findByName(String name);
 

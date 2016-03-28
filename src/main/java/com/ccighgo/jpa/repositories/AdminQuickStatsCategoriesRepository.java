@@ -21,6 +21,4 @@ public interface AdminQuickStatsCategoriesRepository extends JpaRepository<Admin
    @Query("SELECT c FROM AdminQuickStatsCategory c WHERE c.adminQuickStatsType.adminQSTypeId= ?1")
    public List<AdminQuickStatsCategory> findAllCategoriesByTypeId(int quickStatsTypeID);
 
-   
-      
 }

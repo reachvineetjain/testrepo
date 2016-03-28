@@ -235,8 +235,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             adminSeasonApplicationList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            adminSeasonApplicationList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            adminSeasonApplicationList.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
@@ -517,8 +517,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             if (partnerSeason != null) {
                // update basic details
                partnerSeason.setQuestionaireRequired(partnerAdminJ1SeasonDetails.getPartnerSeasonDetails().isQuestionireRequired() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-               partnerSeason.setDisableAddParticipant(partnerAdminJ1SeasonDetails.getPartnerSeasonDetails().isDisableAddParticipants() ? CCIConstants.ACTIVE
-                     : CCIConstants.INACTIVE);
+               partnerSeason
+                     .setDisableAddParticipant(partnerAdminJ1SeasonDetails.getPartnerSeasonDetails().isDisableAddParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                partnerSeason.setCanCreateSubPartner(partnerAdminJ1SeasonDetails.getPartnerSeasonDetails().isCanCreateSubpartner() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                partnerSeason.setInsuranceCarrierName(partnerAdminJ1SeasonDetails.getPartnerSeasonDetails().getInsuranceCarrierName());
                partnerSeason.setInsurancePhoneNumber(partnerAdminJ1SeasonDetails.getPartnerSeasonDetails().getInsurancePhoneNumber());
@@ -556,8 +556,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               updatedObject.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             }
          } catch (CcighgoException e) {
             updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
@@ -583,8 +583,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             if (partnerSeason != null) {
                // update basic details
                partnerSeason.setQuestionaireRequired(partnerAdminF1SeasonDetails.getPartnerSeasonDetails().isQuestionireRequired() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-               partnerSeason.setDisableAddParticipant(partnerAdminF1SeasonDetails.getPartnerSeasonDetails().isDisableAddParticipants() ? CCIConstants.ACTIVE
-                     : CCIConstants.INACTIVE);
+               partnerSeason
+                     .setDisableAddParticipant(partnerAdminF1SeasonDetails.getPartnerSeasonDetails().isDisableAddParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                partnerSeason.setCanCreateSubPartner(partnerAdminF1SeasonDetails.getPartnerSeasonDetails().isCanCreateSubpartner() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                partnerSeason.setInsuranceCarrierName(partnerAdminF1SeasonDetails.getPartnerSeasonDetails().getInsuranceCarrierName());
                partnerSeason.setInsurancePhoneNumber(partnerAdminF1SeasonDetails.getPartnerSeasonDetails().getInsurancePhoneNumber());
@@ -620,8 +620,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               updatedObject.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             }
          } catch (CcighgoException e) {
             updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
@@ -637,8 +637,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    public Response addAdminSeasonDocument(String loginId, String partnerSeasonId, Document doc) {
       Response resp = new Response();
       if (loginId == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "cannot add document without login details"));
+         resp.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "cannot add document without login details"));
          LOGGER.error("cannot add document without login details");
          return resp;
       }
@@ -673,8 +673,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "error occured while adding document"));
+         resp.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "error occured while adding document"));
          LOGGER.error("error occured while adding document");
       }
       return resp;
@@ -685,8 +685,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    public Response addSeasonOperatingAgreement(String loginId, String partnerSeasonId, OperatingAgreement contract) {
       Response resp = new Response();
       if (loginId == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "cannot add document without login details"));
+         resp.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "cannot add document without login details"));
          LOGGER.error("cannot add document without login details");
          return resp;
       }
@@ -735,8 +735,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    public Response deleteAdminSeasonDocument(String partnerSeasonDocumentId) {
       Response resp = new Response();
       if (partnerSeasonDocumentId == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "partnerSeasonDocumentId is required"));
+         resp.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "partnerSeasonDocumentId is required"));
          LOGGER.error("cannot delete document without partnerSeasonDocumentId");
          return resp;
       }
@@ -745,8 +745,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "error occured while deleting document"));
+         resp.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "error occured while deleting document"));
          LOGGER.error("error occured while deleting document");
       }
       return resp;
@@ -758,8 +758,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    public Response deleteAdminSeasonAgreement(String partnerSeasonContractId) {
       Response resp = new Response();
       if (partnerSeasonContractId == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "partnerSeasonContractId is required"));
+         resp.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "partnerSeasonContractId is required"));
          LOGGER.error("cannot delete document without partnerSeasonContractId");
          return resp;
       }
@@ -768,8 +768,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "error occured while deleting document"));
+         resp.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "error occured while deleting document"));
          LOGGER.error("error occured while deleting document");
       }
       return resp;
@@ -853,8 +853,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
             PartnerSeason partnerSeason = partnerSeasonsRepository.findOne(partnerAdminIHPSeasonDetails.getPartnerSeasonId());
             if (partnerSeason != null) {
                partnerSeason.setQuestionaireRequired(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().isQuestionireRequired() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-               partnerSeason.setDisableAddParticipant(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().isDisableAddParticipants() ? CCIConstants.ACTIVE
-                     : CCIConstants.INACTIVE);
+               partnerSeason
+                     .setDisableAddParticipant(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().isDisableAddParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                partnerSeason.setCanCreateSubPartner(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().isCanCreateSubpartner() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                partnerSeason.setInsuranceCarrierName(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().getInsuranceCarrierName());
                partnerSeason.setInsurancePhoneNumber(partnerAdminIHPSeasonDetails.getPartnerSeasonDetails().getInsurancePhoneNumber());
@@ -863,8 +863,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               updatedObject.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             }
          } catch (CcighgoException e) {
             updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
@@ -893,8 +893,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (CcighgoException e) {
-         seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "error occured while getting status list"));
+         seasonStatusList.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "error occured while getting status list"));
       }
       return seasonStatusList;
    }

@@ -14,7 +14,7 @@ import com.ccighgo.db.entities.PartnerDocument;
  */
 @Repository
 public interface PartnerDocumentsRepository extends JpaRepository<PartnerDocument, Integer> {
-   
+
    @Query("SELECT l FROM PartnerDocument l where l.partner.partnerGoId = ?1")
    public List<PartnerDocument> findAllPartnerDocumentByPartnerId(int partnerId);
 

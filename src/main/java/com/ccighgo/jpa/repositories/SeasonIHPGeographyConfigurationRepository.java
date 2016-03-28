@@ -23,7 +23,7 @@ public interface SeasonIHPGeographyConfigurationRepository extends JpaRepository
 
    @Query("SELECT DISTINCT s.regionIhp.regionIHPId FROM SeasonIHPGeographyConfiguration s WHERE s.season.seasonId = ?1")
    public List<Integer> findDistinctRegionsBySeasonId(Integer seasonId);
-   
+
    @Query("SELECT s FROM SeasonIHPGeographyConfiguration s WHERE s.season.seasonId = ?1")
    public List<SeasonIHPGeographyConfiguration> findPreviousRecordsByMaxSeeasonId(Integer seasonId);
 

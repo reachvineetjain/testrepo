@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
 import javax.servlet.ServletContext;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -20,12 +19,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.validation.SchemaFactory;
-
 import org.springframework.context.MessageSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
 import com.ccighgo.service.component.serviceutils.ApplicationContextProvider;
 import com.google.common.base.Preconditions;
 

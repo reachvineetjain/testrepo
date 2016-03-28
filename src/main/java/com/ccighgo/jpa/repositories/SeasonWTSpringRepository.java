@@ -15,7 +15,7 @@ import com.ccighgo.db.entities.SeasonWnTSpringDetail;
  */
 @Repository
 public interface SeasonWTSpringRepository extends JpaRepository<SeasonWnTSpringDetail, Integer> {
-   
+
    @Query("SELECT s FROM SeasonWnTSpringDetail s WHERE s.season.seasonId = ?1 ")
    public SeasonWnTSpringDetail findWASpringDetailsBySeasonId(Integer seasonId);
 

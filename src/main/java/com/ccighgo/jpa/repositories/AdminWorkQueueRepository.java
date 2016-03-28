@@ -14,5 +14,5 @@ import com.ccighgo.db.entities.AdminWorkQueue;
  */
 @Repository
 public interface AdminWorkQueueRepository extends JpaRepository<AdminWorkQueue, Integer> {
-    
+
 }

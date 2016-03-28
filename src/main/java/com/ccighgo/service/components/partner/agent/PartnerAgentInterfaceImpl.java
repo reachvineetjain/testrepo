@@ -326,8 +326,8 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
       for (com.ccighgo.db.entities.PartnerSeasonContract partnerSeasonContractentity : PartnerSeasonContractDBList) {
          PartnerSeasonContract partnerSeasonContract = new PartnerSeasonContract();
          /*
-          * partnerSeasonContract.setActive(partnerSeasonContractentity.getActive
-          * ());
+          * partnerSeasonContract.setActive(partnerSeasonContractentity.
+          * getActive ());
           * partnerSeasonContract.setDisplayName(partnerSeasonContractentity
           * .getDisplayName());
           * partnerSeasonContract.setFileName(partnerSeasonContractentity
@@ -415,7 +415,8 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
       return partnerAgentSeasons;
    }
 
-   private PartnerAgentAddedSeasons setPartnerAgentAddedSeasonsStatus(PartnerAgentAddedSeasons partnerAgentAddedSeasons, String code, String type, int serviceCode, String message) {
+   private PartnerAgentAddedSeasons setPartnerAgentAddedSeasonsStatus(PartnerAgentAddedSeasons partnerAgentAddedSeasons, String code, String type, int serviceCode,
+         String message) {
       if (partnerAgentAddedSeasons == null)
          partnerAgentAddedSeasons = new PartnerAgentAddedSeasons();
       partnerAgentAddedSeasons.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
