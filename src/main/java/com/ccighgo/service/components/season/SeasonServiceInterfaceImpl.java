@@ -245,30 +245,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return returnObject;
    }
 
-   @Transactional
-   private int createSeasonLogic(SeasonBean seasonBean) {
-      int seasonId = -1;
-      try {
-         if (seasonBean.getSeasonName() != null) {
-            Season season = seasonRepository.findBySeasonName(seasonBean.getSeasonName());
-            if (season != null) {
-               LOGGER.error("season with same name already exists");
-            } else {
-               Season seasonEntity = new Season();
-               seasonServiceImplUtil.convertSeasonBeanToSeasonEntity(seasonBean, seasonEntity, false);
-               seasonEntity = seasonRepository.saveAndFlush(seasonEntity);
-               seasonServiceImplUtil.createSeasonConfiguration(seasonBean, seasonEntity);
-               seasonServiceImplUtil.createSeasonDepartmentNotes(seasonBean, seasonEntity);
-               seasonServiceImplUtil.createSeasonPrograms(seasonEntity, seasonBean);
-               seasonId = seasonEntity.getSeasonId();
-            }
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, LOGGER);
-      }
-      return seasonId;
-   }
-
    @Override
    @Transactional
    public DeleteRequest deleteSeason(String id) {

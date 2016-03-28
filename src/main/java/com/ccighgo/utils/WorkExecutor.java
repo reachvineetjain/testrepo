@@ -24,9 +24,6 @@ public class WorkExecutor {
       this.maxThreads = maxThreads;
    }
 
-   public WorkExecutor() {
-   }
-
    public void init() {
       LOGGER.debug("Initializing executor with max {} threads", maxThreads);
       executor = Executors.newFixedThreadPool(maxThreads);

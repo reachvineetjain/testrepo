@@ -214,8 +214,8 @@ public class HFApplicationImpl implements HFApplication {
          hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
          updatedObject = getWhyHost(String.valueOf(whyHost.getHostfamilySeasonId()), applicationCategoryId);
-         updatedObject.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -247,11 +247,11 @@ public class HFApplicationImpl implements HFApplication {
             whyHost.setIfYesForWhomAndHowManyYears(hfHome.getHostedOtherDetails());
             whyHost.setFamilyExpectationOnStudentResponsibility(hfHome.getStudentsResponsibilities());
             whyHost.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
-            whyHost.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            whyHost.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            whyHost.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            whyHost.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
          whyHost.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
@@ -292,11 +292,11 @@ public class HFApplicationImpl implements HFApplication {
             hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
             updatedObject = getWhyHost(String.valueOf(whyHost.getHostfamilySeasonId()), applicationCategoryId);
-            updatedObject.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            updatedObject.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
@@ -342,8 +342,8 @@ public class HFApplicationImpl implements HFApplication {
          hostFamilyPhotosRepository.save(uploadList);
          hostFamilyPhotosRepository.flush();
          uploadObject = getHFPhotos(String.valueOf(hfSeasonId));
-         uploadObject.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         uploadObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          uploadObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_DETAILS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -381,8 +381,8 @@ public class HFApplicationImpl implements HFApplication {
             }
          }
          updatedObject = getHFPhotos(String.valueOf(hfApplicationUploadPhotos.getHfSeasonId()));
-         updatedObject.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -429,8 +429,8 @@ public class HFApplicationImpl implements HFApplication {
          hostFamilyPhotosRepository.save(hostFamilyPhotoList);
          hostFamilyPhotosRepository.flush();
          updatedObject = getHFPhotos(String.valueOf(hfApplicationUploadPhotos.getHfSeasonId()));
-         updatedObject.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -493,11 +493,11 @@ public class HFApplicationImpl implements HFApplication {
             photoList.setHfSeasonId(Integer.valueOf(hfSeasonId));
             photoList.setPhotos(photos);
             photoList.setOptionalPhotos(optionalPhotos);
-            photoList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            photoList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            photoList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            photoList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
          photoList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
@@ -530,8 +530,8 @@ public class HFApplicationImpl implements HFApplication {
          } else {
             throw new CcighgoException("optional type is required to delete");
          }
-         resp.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -581,8 +581,8 @@ public class HFApplicationImpl implements HFApplication {
             else
                applicationChecklist.setPercentage(0 + "");
 
-            hp.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             hp.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
@@ -663,8 +663,8 @@ public class HFApplicationImpl implements HFApplication {
                hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[36])));
                break;
             }
-            hfl.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            hfl.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             hfl.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
@@ -729,8 +729,7 @@ public class HFApplicationImpl implements HFApplication {
             }
             hfbs.setSingleHost(singleHost);
          } else {
-            hfbs.setStatus(
-                  componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            hfbs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return hfbs;
          }
 
@@ -833,8 +832,8 @@ public class HFApplicationImpl implements HFApplication {
                hfbs.getPets().add(pet);
             }
          }
-         hfbs.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hfbs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hfbs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_BASIC_DATA.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -967,8 +966,8 @@ public class HFApplicationImpl implements HFApplication {
             }
          }
 
-         hfbs.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hfbs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (CcighgoException e) {
          hfbs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_HOUSE_DESCRIPTION.getValue(), e.getMessage()));
@@ -1106,8 +1105,8 @@ public class HFApplicationImpl implements HFApplication {
             }
             hfbs.setSchoolLife(l);
          }
-         hfbs.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hfbs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hfbs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_HF_COMMUNITY_AND_SCHOOL.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1153,7 +1152,6 @@ public class HFApplicationImpl implements HFApplication {
          }
 
          // HOstFamilly Member
-         List<HostFamilyMember> listOfMembers = new ArrayList<HostFamilyMember>();
          for (HFAdultDetails member : hfApplicationFamilyDetails.getAdults()) {
             HostFamilyMember hfm = new HostFamilyMember();
             if (member.getHostfamilyMemberId() > 0)
@@ -1229,7 +1227,6 @@ public class HFApplicationImpl implements HFApplication {
          hostFamilyRepository.saveAndFlush(hf);
 
          // Airport
-         List<HostFamilyAirport> airports = new ArrayList<HostFamilyAirport>();
          for (HFAirport aps : hfApplicationFamilyDetails.getAirports()) {
             HostFamilyAirport hfa = new HostFamilyAirport();
             if (aps.getHostFamilyAirportId() > 0)
@@ -1250,7 +1247,6 @@ public class HFApplicationImpl implements HFApplication {
          // hostFamilyAirportRepository.save(airports);
 
          // Pets
-         List<HostFamilyPet> pets = new ArrayList<HostFamilyPet>();
          for (HFPets pts : hfApplicationFamilyDetails.getPets()) {
             HostFamilyPet hfp = new HostFamilyPet();
             if (pts.getHostFamilyPetId() > 0)
@@ -1325,8 +1321,8 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setOtherReligiousDetails(hfApplicationFamilyDetails.getReligious().getExplanation());
          hfd.setReligiousAttendance(hfApplicationFamilyDetails.getReligious().getOftenAttendReligiousMeetings());
          hfd.setPreferStudentJoins(hfApplicationFamilyDetails.getReligious().getPreferedTheStudentJoinYou());
-         hfd.setInviteStudentForReligiousExperience(
-               hfApplicationFamilyDetails.getReligious().isInviteStudentForReligiousExperience() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setInviteStudentForReligiousExperience(hfApplicationFamilyDetails.getReligious().isInviteStudentForReligiousExperience() ? CCIConstants.TRUE_BYTE
+               : CCIConstants.FALSE_BYTE);
          hfd.setProblemWithReligiousDifference(hfApplicationFamilyDetails.getReligious().isDiffecultyHostingPersonWithDifferentReligious() ? 1 : 0);
 
          // Diet
@@ -1335,8 +1331,8 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setDescribeDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getDietrayRestrictionExplanation());
          hfd.setParticipantFollowDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          hfd.setDescPaxDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getStudentFollowDietrayRestrictionExplanation());
-         hfd.setComfortableHostingDiet(
-               hfApplicationFamilyDetails.getDieTrayRestriction().isHostStudentWhoFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+         hfd.setComfortableHostingDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isHostStudentWhoFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE
+               : CCIConstants.FALSE_BYTE);
 
          // Miscellaneous
          hfd.setHasAutoInsurance(hfApplicationFamilyDetails.getMiscLifeStyle().getHaveAutoInsurranceForAllCarsYouHave());
@@ -1411,8 +1407,8 @@ public class HFApplicationImpl implements HFApplication {
          potentialReference.setModifiedBy(potentialHostFmaily.getLoginId());
          potentialReference.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          hostFamilyPotentialReferenceRepository.saveAndFlush(potentialReference);
-         response.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1492,8 +1488,8 @@ public class HFApplicationImpl implements HFApplication {
          questions.setCommunityOthers(hostFamilyReferences.getOtherCommunity());
          hostFamilyGeneralQuestionRepository.saveAndFlush(questions);
          hfReferences = getHFReference(String.valueOf(hostFamilyReferences.getSeasonId()), applicationCategoryId);
-         hfReferences.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hfReferences.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hfReferences.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1562,12 +1558,12 @@ public class HFApplicationImpl implements HFApplication {
                upadatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               upadatedObject
-                     .setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), "no question details found to update"));
+               upadatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                     "no question details found to update"));
             }
          } else {
-            upadatedObject
-                  .setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), "no reference details found to update"));
+            upadatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  "no reference details found to update"));
          }
       } catch (CcighgoException e) {
          upadatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
@@ -1635,8 +1631,8 @@ public class HFApplicationImpl implements HFApplication {
             hfReferences
                   .setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
          }
-         hfReferences.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hfReferences.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hfReferences.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1680,11 +1676,11 @@ public class HFApplicationImpl implements HFApplication {
             }
             backgroundCheck.setHfSeasonId(Integer.valueOf(hfSeasonId));
             backgroundCheck.getMembers().addAll(members);
-            backgroundCheck.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            backgroundCheck.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
          backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
@@ -1830,11 +1826,11 @@ public class HFApplicationImpl implements HFApplication {
             }
             appProgress.setHfSeasonId(Integer.valueOf(hfSeasonId));
             appProgress.getSections().addAll(sectionList);
-            appProgress.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            appProgress.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            appProgress.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
       } catch (CcighgoException e) {
@@ -1857,8 +1853,8 @@ public class HFApplicationImpl implements HFApplication {
             hfSeason.setSignature(application.getSignature());
             hfSeason.setModifiedBy(application.getLoginId());
             hostFamilySeasonRepository.saveAndFlush(hfSeason);
-            resp.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), "no records found to update"));
          }
@@ -1875,8 +1871,8 @@ public class HFApplicationImpl implements HFApplication {
          HostFamily hf = hostFamilyRepository.findOne(param.getHostFamilyGoId());
          hf.setPhoto(param.getPhotoUrl());
          hostFamilyRepository.saveAndFlush(hf);
-         hp.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1898,8 +1894,8 @@ public class HFApplicationImpl implements HFApplication {
             a.setAirportId(airport.getAirportId());
             hp.getAirportInfo().add(a);
          }
-         hp.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1912,8 +1908,8 @@ public class HFApplicationImpl implements HFApplication {
       WSDefaultResponse hp = new WSDefaultResponse();
       try {
          hostFamilyAirportRepository.delete(airportId);
-         hp.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1926,8 +1922,8 @@ public class HFApplicationImpl implements HFApplication {
       WSDefaultResponse hp = new WSDefaultResponse();
       try {
          hostFamilyPetRepository.delete(petId);
-         hp.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1940,8 +1936,8 @@ public class HFApplicationImpl implements HFApplication {
       WSDefaultResponse hp = new WSDefaultResponse();
       try {
          hfMemberRepository.delete(adultId);
-         hp.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -1982,11 +1978,11 @@ public class HFApplicationImpl implements HFApplication {
             hfProfile.setMailingState(mState);
             hfProfile.setMailingZip(hostFamily.getMailingZipCode());
             hfProfile.setRecieveEmail(hostFamily.getReceiveEmails().equals(CCIConstants.ACTIVE) ? true : false);
-            hfProfile.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            hfProfile.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            hfProfile.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
          hfProfile.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PROFILE_PHOTO.getValue(), e.getMessage()));
@@ -2008,8 +2004,8 @@ public class HFApplicationImpl implements HFApplication {
                hp.getFamilyMembers().add(d);
             }
          }
-         hp.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          hp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_FETCHING_DATA.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -2039,8 +2035,8 @@ public class HFApplicationImpl implements HFApplication {
                hfMD.setAge(age.getYears());
                hfM.getFamilyMembers().add(hfMD);
             }
-            hfM.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
@@ -2070,8 +2066,8 @@ public class HFApplicationImpl implements HFApplication {
                detail.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[3])));
                hfs.getSeasonDetails().add(detail);
             }
-            hfs.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             hfs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
@@ -2112,8 +2108,8 @@ public class HFApplicationImpl implements HFApplication {
                details.setGender(String.valueOf(obj[14]));
                hfs.getParticipants().add(details);
             }
-            hfs.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            hfs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             hfs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }

@@ -15,8 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import org.apache.log4j.Logger;
-
 import com.ccighgo.service.transport.common.response.beans.Response;
 
 @Path("/push/notification/")
@@ -24,7 +22,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @ServerEndpoint("/notify/{uid}")
 public class NotificationServer {
 
-   private static final Logger LOGGER = Logger.getLogger(NotificationServer.class);
+   // private static final Logger LOGGER =
+   // Logger.getLogger(NotificationServer.class);
 
    /**
     * @OnOpen allows us to intercept the creation of a new session. The session

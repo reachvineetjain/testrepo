@@ -17,7 +17,6 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ccighgo.utils.CCIConstants;
 
@@ -91,7 +90,6 @@ public class FileUtilInterfaceImpl implements FileUtilInterface {
          s3Client.setRegion(region);
          File inputFile = new File(filePath);
          String key = keyPath + inputFile.getName();
-         ObjectMetadata metadata = new ObjectMetadata();
          s3Client.putObject(new PutObjectRequest(AWS_BUCKET_NAME, key, inputFile).withCannedAcl(CannedAccessControlList.PublicRead));
          URL s3Url = s3Client.generatePresignedUrl(AWS_BUCKET_NAME, key, URL_EXPIRATION_DATE);
          // s3Url will be something like

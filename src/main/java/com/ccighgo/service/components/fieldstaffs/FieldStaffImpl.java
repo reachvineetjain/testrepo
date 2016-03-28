@@ -168,6 +168,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          try {
             resultList = query.getResultList();
          } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
          }
          if (resultList != null && !resultList.isEmpty()) {
 
@@ -222,8 +223,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fieldStaffOverview.setActive(login.getActive() == CCIConstants.ACTIVE);
          fieldStaffOverview.setFieldStaffDetails(fsd);
          fieldStaffOverview.setFieldStaffStatus(fscs);
-         fieldStaffOverview.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          e.printStackTrace();
          fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_DETAILE.getValue(),
@@ -240,8 +241,8 @@ public class FieldStaffImpl implements FieldStaffsInterface {
       try {
          FieldStaff fs = fieldStaffRepository.findOne(fieldStaffDetail.getFsGoId());
          if (fs == null) {
-            response.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return response;
          }
          if (fieldStaffDetail.getSalutation() != null)
@@ -274,12 +275,12 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fs.setModifiedBy(fieldStaffDetail.getLoginId());
          fieldStaffRepository.saveAndFlush(fs);
 
-         response.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         response.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
       return response;
@@ -317,12 +318,12 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   + formResetURL(request).concat(login.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
                   + "<p>CCI Greenheart.</p>";
             emailingService.send(login.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
-            response
-                  .setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(), "An email has been sent to address "
-                        + "\'" + login.getEmail() + "\'" + " for login name " + "\'" + login.getLoginName() + "\'" + " with instructions to reset password"));
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  "An email has been sent to address " + "\'" + login.getEmail() + "\'" + " for login name " + "\'" + login.getLoginName() + "\'"
+                        + " with instructions to reset password"));
          } else {
-            response.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
@@ -523,12 +524,12 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          login.setActive(status);
          login.setModifiedBy(Integer.valueOf(loginId));
          loginRepository.saveAndFlush(login);
-         response.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         response.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
       return response;

@@ -5,6 +5,8 @@
    <exclude-pattern>.*/com/ccighgo/db/entities/.*</exclude-pattern>
    <exclude-pattern>.*/com/ccighgo/service/auth/beans/.*</exclude-pattern>  
    <exclude-pattern>.*/com/ccighgo/service/transport/.*</exclude-pattern>
+   <exclude-pattern>.*/com/ccighgo/service/components/gciapi/.*</exclude-pattern>
+   <exclude-pattern>.*/com/ccighgo/service/test/utility/.*</exclude-pattern>
    <exclude-pattern>.*/gov/ice/xmlschema/.*</exclude-pattern>
    <rule ref="rulesets/java/basic.xml/DoubleCheckedLocking"/>
    <rule ref="rulesets/vm/basic.xml/EmptyIfStmt"/>

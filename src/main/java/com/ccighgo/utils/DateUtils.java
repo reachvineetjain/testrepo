@@ -56,7 +56,7 @@ public class DateUtils {
          }
       return date;
    }
-   public static Date getMysqlDateFromString_FormatwithSlash(String endDate) {
+   public static Date getMysqlDateFromStringFormatwithSlash(String endDate) {
 	      DateFormat format = new SimpleDateFormat(CCIConstants.MYSQL_DATE_FORMAT_SLASH, Locale.US);
 	      Date date = null;
 	      if (endDate != null && !endDate.trim().isEmpty())
@@ -204,7 +204,7 @@ public class DateUtils {
       return null;
    }
 
-   public static Date getDateFromString_followUpdate(String newFollowUpDate) {
+   public static Date getDateFromStringFollowUpdate(String newFollowUpDate) {
       DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
       Date date = null;
       if (newFollowUpDate != null && !newFollowUpDate.trim().isEmpty())

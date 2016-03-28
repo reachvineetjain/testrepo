@@ -332,8 +332,8 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " Contact");
                   if (partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
                         && partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
-                     cciContact
-                           .setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
@@ -437,34 +437,34 @@ public class PartnerServiceImpl implements PartnerService {
                            int augStartGuarnteedParticipantsDenominator = 0;
                            int janStartGuarnteedParticipantsDenominator = 0;
                            for (PartnerSeasonAllocation psa : j1Allocations) {
-                              if (psa.getDepartmentProgramOption() != null) {
-                                 if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                                       augStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1AugParticipantCount(partner.getPartnerGoId(),
-                                             partSeason.getSeason().getSeasonId());
-                                       totalUnGuarantNumerator += augStartUnGuarnteedParticipantsNumerator;
-                                       augStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
-                                       totalUnGuarantDenominator += augStartUnGuarnteedParticipantsDenominator > 0 ? augStartUnGuarnteedParticipantsDenominator : 0;
-                                       augStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1AugParticipantCount(partner.getPartnerGoId(),
-                                             partSeason.getSeason().getSeasonId());
-                                       totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
-                                       augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
-                                    }
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                                       janStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1JanParticipantCount(partner.getPartnerGoId(),
-                                             partSeason.getSeason().getSeasonId());
-                                       totalUnGuarantNumerator += janStartUnGuarnteedParticipantsNumerator;
-                                       janStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
-                                       totalUnGuarantDenominator += janStartUnGuarnteedParticipantsDenominator > 0 ? janStartUnGuarnteedParticipantsDenominator : 0;
-                                       janStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1JanParticipantCount(partner.getPartnerGoId(),
-                                             partSeason.getSeason().getSeasonId());
-                                       totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
-                                       janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
-                                    }
+                              if (psa.getDepartmentProgramOption() != null
+                                    && psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
+                                    augStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason
+                                          .getSeason().getSeasonId());
+                                    totalUnGuarantNumerator += augStartUnGuarnteedParticipantsNumerator;
+                                    augStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
+                                    totalUnGuarantDenominator += augStartUnGuarnteedParticipantsDenominator > 0 ? augStartUnGuarnteedParticipantsDenominator : 0;
+                                    augStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
+                                    augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
+                                 }
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                                    janStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason
+                                          .getSeason().getSeasonId());
+                                    totalUnGuarantNumerator += janStartUnGuarnteedParticipantsNumerator;
+                                    janStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
+                                    totalUnGuarantDenominator += janStartUnGuarnteedParticipantsDenominator > 0 ? janStartUnGuarnteedParticipantsDenominator : 0;
+                                    janStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
+                                    janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
                                  }
                               }
+
                            }
                            allocation.setAugStartUnguaranteedNumerator(augStartUnGuarnteedParticipantsNumerator);
                            allocation.setJanStartUnguaranteedNumerator(janStartUnGuarnteedParticipantsNumerator);
@@ -540,8 +540,8 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " Contact");
                   if (partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
                         && partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
-                     cciContact
-                           .setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
@@ -638,25 +638,25 @@ public class PartnerServiceImpl implements PartnerService {
                            int augStartGuarnteedParticipantsDenominator = 0;
                            int janStartGuarnteedParticipantsDenominator = 0;
                            for (PartnerSeasonAllocation psa : f1Allocations) {
-                              if (psa.getDepartmentProgramOption() != null) {
-                                 if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-                                       augStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1AugParticipantCount(partner.getPartnerGoId(),
-                                             partSeason.getSeason().getSeasonId());
-                                       totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
-                                       augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
+                              if (psa.getDepartmentProgramOption() != null
+                                    && psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
+                                    augStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1AugParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
+                                    augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
 
-                                    }
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-                                       janStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1JanParticipantCount(partner.getPartnerGoId(),
-                                             partSeason.getSeason().getSeasonId());
-                                       totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
-                                       janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
-                                    }
+                                 }
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+                                    janStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1JanParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
+                                    janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
                                  }
                               }
+
                            }
                            allocation.setAugStartGuaranteedNumerator(augStartGuarnteedParticipantsNumerator);
                            allocation.setJanStartGuaranteedNumerator(janStartGuarnteedParticipantsNumerator);
@@ -724,8 +724,8 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " Contact");
                   if (partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
                         && partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
-                     cciContact
-                           .setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
@@ -764,8 +764,8 @@ public class PartnerServiceImpl implements PartnerService {
                ihpDashboard.getPartnerWorkQueueTypes().addAll(partnerWorkQueueTypesList);
                // Statistics
                com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerStatistics partnerStatistics = null;
-               List<PartnerQuickStatsCategoryAggregate> partnerStatsDetails = partnerQuickStatsCategoryAggregateRepository.getStats(CCIConstants.APPL_IHP, partner.getPartnerGoId(),
-                     CCIConstants.HSP_STP_IHP_ID);
+               List<PartnerQuickStatsCategoryAggregate> partnerStatsDetails = partnerQuickStatsCategoryAggregateRepository.getStats(CCIConstants.APPL_IHP,
+                     partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
                if (partnerStatsDetails != null && partnerStatsDetails.size() > 0) {
                   partnerStatistics = new com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerStatistics();
                   List<com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats> statList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerihpdetails.PartnerApplicationStats>();
@@ -872,10 +872,9 @@ public class PartnerServiceImpl implements PartnerService {
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-            if (partnerReviewStatus != null) {
-               if (partnerReviewStatus.getPartnerStatus1() != null)
-                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
-            }
+            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1() != null)
+               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
+
          } catch (Exception e) {
             ExceptionUtil.logException(e, LOGGER);
          }

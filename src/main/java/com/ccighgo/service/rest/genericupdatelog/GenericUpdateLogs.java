@@ -45,7 +45,7 @@ public class GenericUpdateLogs {
    @Path("/add/fieldsatfflog")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response AddFieldstaffUpdateLog(GenericUpdateLog genericUpdateLog) {
+   public Response addFieldstaffUpdateLog(GenericUpdateLog genericUpdateLog) {
       return genericUpdateLogInterface.addFieldStaffUpdateLog(genericUpdateLog);
    }
 

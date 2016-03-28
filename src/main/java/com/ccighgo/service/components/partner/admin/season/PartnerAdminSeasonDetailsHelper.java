@@ -109,25 +109,25 @@ public class PartnerAdminSeasonDetailsHelper {
          int augStartGuarnteedParticipants = 0;
          int janStartGuarnteedParticipants = 0;
          for (PartnerSeasonAllocation allocation : partnerSeasonAllocationList) {
-            if (allocation.getDepartmentProgramOption() != null) {
-               if (allocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
-                  if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                     augStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                     departmentProgramOptionJANFYId = CCIConstants.AUGUST_FY_J1_ID;
-                     totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
-                     augStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
-                     totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
+            if (allocation.getDepartmentProgramOption() != null
+                  && allocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+               if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
+                  augStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
+                  departmentProgramOptionJANFYId = CCIConstants.AUGUST_FY_J1_ID;
+                  totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
+                  augStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
+                  totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
 
-                  }
-                  if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                     janStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                     departmentProgramOptionAUGFYId = CCIConstants.JANUARY_FY_J1_ID;
-                     totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
-                     janStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
-                     totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
-                  }
+               }
+               if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                  janStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
+                  departmentProgramOptionAUGFYId = CCIConstants.JANUARY_FY_J1_ID;
+                  totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
+                  janStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
+                  totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
                }
             }
+
          }
          programAllocations.setSeasonId(partnerSeason.getSeason().getSeasonId());
          programAllocations.setSeasonProgramId(partnerSeason.getSeason().getSeasonJ1details().get(0).getSeasonJ1DetailsId());
@@ -364,25 +364,25 @@ public class PartnerAdminSeasonDetailsHelper {
          int augStartGuarnteedParticipants = 0;
          int janStartGuarnteedParticipants = 0;
          for (PartnerSeasonAllocation allocation : partnerSeasonAllocationList) {
-            if (allocation.getDepartmentProgramOption() != null) {
-               if (allocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
-                  if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-                     augStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                     departmentProgramOptionJANFYId = CCIConstants.AUGUST_FY_F1_ID;
-                     totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
-                     augStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
-                     totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
+            if (allocation.getDepartmentProgramOption() != null
+                  && allocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+               if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
+                  augStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
+                  departmentProgramOptionJANFYId = CCIConstants.AUGUST_FY_F1_ID;
+                  totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
+                  augStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
+                  totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
 
-                  }
-                  if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-                     janStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                     departmentProgramOptionAUGFYId = CCIConstants.JANUARY_FY_F1_ID;
-                     totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
-                     janStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
-                     totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
-                  }
+               }
+               if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+                  janStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
+                  departmentProgramOptionAUGFYId = CCIConstants.JANUARY_FY_F1_ID;
+                  totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
+                  janStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
+                  totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
                }
             }
+
          }
          programAllocations.setSeasonId(partnerSeason.getSeason().getSeasonId());
          programAllocations.setSeasonProgramId(partnerSeason.getSeason().getSeasonF1details().get(0).getSeasonF1DetailsId());

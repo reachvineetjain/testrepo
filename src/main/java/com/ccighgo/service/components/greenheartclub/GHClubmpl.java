@@ -1,6 +1,5 @@
 package com.ccighgo.service.components.greenheartclub;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,7 @@ import com.ccighgo.service.components.greenheartclub.utils.GHC_Response;
 @Component
 public class GHClubmpl implements GHClub {
 
-   private static final Logger LOGGER = Logger.getLogger(GHClubmpl.class);
+   // private static final Logger LOGGER = Logger.getLogger(GHClubmpl.class);
 
    private final String TEST_READ_URL = "https://gcidev.wpengine.com/api/v2/test/read";
    private final String READ_PRIVATE_URL = "https://gcidev.wpengine.com/api/v2/test/read/private";

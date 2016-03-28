@@ -160,8 +160,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerPrimaryContact.setPrimaryContactPhone(pUser.getPhone());
             partnerPrimaryContact.setPrimaryContactEmergencyPhone(pUser.getEmergencyPhone());
             partnerPrimaryContact.setPrimaryContactFax(pUser.getFax());
-            partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(
-                  pUser.getRecieveNotificationEmails() != null ? (pUser.getRecieveNotificationEmails().equals(CCIConstants.ACTIVE) ? true : false) : false);
+            partnerPrimaryContact.setPrimaryContactShouldRecieveCCINotification(pUser.getRecieveNotificationEmails() != null ? (pUser.getRecieveNotificationEmails().equals(
+                  CCIConstants.ACTIVE) ? true : false) : false);
             partnerPrimaryContact.setPrimaryContactSkypeId(pUser.getSkypeId());
             partnerPrimaryContact.setPrimaryContactWebsite(pUser.getWebsite());
             partnerCompanyDetail.setPartnerPrimaryContact(partnerPrimaryContact);
@@ -274,8 +274,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                pUser.setPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactPhone());
                pUser.setEmergencyPhone(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactEmergencyPhone());
                pUser.setFax(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactFax());
-               pUser.setRecieveNotificationEmails(
-                     partnerCompanyDetail.getPartnerPrimaryContact().isPrimaryContactShouldRecieveCCINotification() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               pUser.setRecieveNotificationEmails(partnerCompanyDetail.getPartnerPrimaryContact().isPrimaryContactShouldRecieveCCINotification() ? CCIConstants.ACTIVE
+                     : CCIConstants.INACTIVE);
                pUser.setSkypeId(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactSkypeId());
                pUser.setWebsite(partnerCompanyDetail.getPartnerPrimaryContact().getPrimaryContactWebsite());
                partnerUserRepository.saveAndFlush(pUser);
@@ -296,8 +296,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partner.setPhysicalCity(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getCity());
                partner.setPhysicalZipcode(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getZipCode());
                partner.setPhysicalstate(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressState().getPartnerAddressStateName());
-               partner.setLookupCountry2(countryRepository
-                     .findOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressCountry().getPartnerAddressCountryId()));
+               partner.setLookupCountry2(countryRepository.findOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressCountry()
+                     .getPartnerAddressCountryId()));
                // mailing address
                partner.setMailingAddressIsSameAsPhysicalAdress(partnerCompanyDetail.isPartnerMailingAddressSame() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                if (partnerCompanyDetail.isPartnerMailingAddressSame()) {
@@ -306,23 +306,23 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   partner.setCity(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getCity());
                   partner.setZipcode(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getZipCode());
                   partner.setState(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressState().getPartnerAddressStateName());
-                  partner.setLookupCountry1(countryRepository
-                        .findOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressCountry().getPartnerAddressCountryId()));
+                  partner.setLookupCountry1(countryRepository.findOne(partnerCompanyDetail.getPartnerPhysicalAddress().getPartnerPhysicalAddress().getPartnerAddressCountry()
+                        .getPartnerAddressCountryId()));
                } else {
                   partner.setAddressLineOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineOne());
                   partner.setAddressLineTwo(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getAddressLineTwo());
                   partner.setCity(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getCity());
                   partner.setZipcode(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getZipCode());
                   partner.setState(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getPartnerAddressState().getPartnerAddressStateName());
-                  partner.setLookupCountry1(countryRepository
-                        .findOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getPartnerAddressCountry().getPartnerAddressCountryId()));
+                  partner.setLookupCountry1(countryRepository.findOne(partnerCompanyDetail.getPartnerMailingAddress().getPartnerMailingAddress().getPartnerAddressCountry()
+                        .getPartnerAddressCountryId()));
                }
                partnerRepository.saveAndFlush(partner);
                updatedObject = getPartnerCompanyDetails(String.valueOf(partner.getPartnerGoId()));
             }
          } else {
-            updatedObject.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
@@ -409,16 +409,15 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   break;
                }
             }
-            if (partnerMainOffice != null) {
-               if (Integer.valueOf(partnerOfficeId) == partnerMainOffice.getPartnerOfficeId()) {
-                  throw new CcighgoException("The office you were trying to delete is marked as primary office. "
-                        + "Please dissociate the users from this office and mark any other office of your choice as primary first");
-               }
+            if (partnerMainOffice != null && Integer.valueOf(partnerOfficeId) == partnerMainOffice.getPartnerOfficeId()) {
+               throw new CcighgoException("The office you were trying to delete is marked as primary office. "
+                     + "Please dissociate the users from this office and mark any other office of your choice as primary first");
             }
+
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(partner.getPartnerGoId(), Integer.valueOf(partnerOfficeId));
             if (!(partnerUserList.isEmpty())) {
-               throw new CcighgoException(
-                     "The office you were trying to delete has users associated. " + "Please dissociate the users from this office from User tab and then try deleting later.");
+               throw new CcighgoException("The office you were trying to delete has users associated. "
+                     + "Please dissociate the users from this office from User tab and then try deleting later.");
             } else {
                partnerOfficeRepository.delete(partnerOffice.getPartnerOfficeId());
                resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),

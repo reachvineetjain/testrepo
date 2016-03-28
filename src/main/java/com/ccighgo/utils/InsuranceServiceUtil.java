@@ -25,7 +25,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 
 import com.ccighgo.service.transport.seasons.beans.insuranceparticipant.Participant;
-import com.google.gson.Gson;
 
 public class InsuranceServiceUtil {
 
@@ -50,19 +49,16 @@ public class InsuranceServiceUtil {
    public static final String TOKEN_VALUE = "b8e60fbe86629f745b018a21b0b3f192";
    public static final String USERNAME = "tushad.mehta@creospan.com";
    public static final String PASSWORD = "Pgm7n-8DUWH9GNz";
-   private static final String AUTH_SCOPT_HOST = "api.calltrackingmetrics.com";
-   private static final int AUTH_SCOPT_PORT = 443;
 
    public static void main(String[] args) {
       InsuranceServiceUtil.callInsuranceService(URL_FIND_ALL_PLANS);
 
    }
 
-   public static String callInsuranceService_backup(String URL) {
+   public static String callInsuranceServiceBackup(String URL) {
       ResponseHandler<String> handler = new BasicResponseHandler();
       String authResponse = null;
       try {
-         long time = System.currentTimeMillis();
          CredentialsProvider provider = new BasicCredentialsProvider();
          UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(USERNAME, PASSWORD);
          provider.setCredentials(AuthScope.ANY, credentials);
@@ -73,8 +69,6 @@ public class InsuranceServiceUtil {
          httppost.setHeader("Authorization", TOKEN_KEY + " " + TOKEN_VALUE);
 
          authResponse = httpclient.execute(httppost, handler);
-         System.out.println(authResponse);
-         System.out.println("time " + (System.currentTimeMillis() - time));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }
@@ -120,7 +114,6 @@ public class InsuranceServiceUtil {
          long time = System.currentTimeMillis();
          HttpClient client = HttpClientBuilder.create().build();
          HttpPost post = new HttpPost(URL);
-         Gson gson = new Gson();
          // add header
          post.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 
