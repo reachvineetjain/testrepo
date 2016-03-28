@@ -34,6 +34,7 @@ public class NotificationServer {
    @OnOpen
    public void onOpen(@PathParam("uid") String uid, Session session) {
       SessionRegistry.INSTANCE.addSession(uid, session);
+
       try {
          session.getBasicRemote().sendText("Connection Established");
       } catch (IOException ex) {
@@ -48,6 +49,7 @@ public class NotificationServer {
     */
    @OnMessage
    public void onMessage(String message, Session session) {
+
       try {
          session.getBasicRemote().sendText(message);
       } catch (IOException ex) {
@@ -67,6 +69,7 @@ public class NotificationServer {
 
    // @Scheduled(fixedDelay = 10000)
    public void execute() {
+
       Collection<Session> peers = SessionRegistry.INSTANCE.getSessions().values();
       Notifications.broadcastMessage("$$ Notification from server $$", peers);
    }
