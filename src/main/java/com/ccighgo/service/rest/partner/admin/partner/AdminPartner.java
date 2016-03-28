@@ -34,8 +34,6 @@ import com.ccighgo.service.transport.partner.beans.partner.season.application.Pa
 @Consumes("application/json")
 public class AdminPartner {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(AdminPartner.class);
-
    @Context HttpServletRequest request;
 
    @Autowired AdminPartnerInterface adminPartnerInterface;
@@ -157,6 +155,6 @@ public class AdminPartner {
    @Path("sendlogin/{partnerGoId}/{loginVal}/{loginId}")
    @Produces("application/json")
    public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal, @PathParam("loginId") String loginId) {
-      return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal,loginId, request);
+      return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal, loginId, request);
    }
 }

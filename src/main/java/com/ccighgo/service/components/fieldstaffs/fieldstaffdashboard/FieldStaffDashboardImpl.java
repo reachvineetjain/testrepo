@@ -2,8 +2,6 @@ package com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,13 +27,10 @@ import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageC
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ERDPersonalInfo;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
-import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardAnnouncements;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardCategorieDetails;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardType;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardTypes;
-import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdUserDetail;
-import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 

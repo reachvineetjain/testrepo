@@ -1,7 +1,6 @@
 package com.ccighgo.service.soap.wordpress.forms;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.HostFamilyInquiry;
-import com.ccighgo.db.entities.HostFamilyParticipant;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupCountry;
-import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
 import com.ccighgo.db.entities.PartnerProgram;
@@ -36,7 +33,6 @@ import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
 import com.ccighgo.jpa.repositories.PartnerStatusRepository;
 import com.ccighgo.jpa.repositories.SalutationRepository;
-import com.ccighgo.service.transport.partner.beans.admin.add.partner.ProgramContacts;
 import com.ccighgo.service.transport.seasons.beans.soapservice.AreaRepresentativeData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.HostFamilyData;
 import com.ccighgo.service.transport.seasons.beans.soapservice.InternationalPartners;

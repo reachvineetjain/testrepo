@@ -119,7 +119,6 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
-import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
@@ -513,22 +512,22 @@ public class HFApplicationImpl implements HFApplication {
    public Response deletePhoto(Integer photoId, Integer optional, Integer loginId) {
       Response resp = new Response();
       try {
-         if (photoId == null || optional==null || loginId ==null) {
+         if (photoId == null || optional == null || loginId == null) {
             throw new CcighgoException("invalid parameters, cannot delete photo");
          }
-         if(optional==1){
-            hostFamilyPhotosRepository.delete(Integer.valueOf(photoId)); 
+         if (optional == 1) {
+            hostFamilyPhotosRepository.delete(Integer.valueOf(photoId));
          }
-         if(optional==0){
-           HostFamilyPhoto photo = hostFamilyPhotosRepository.findOne(photoId) ;
-           photo.setFileName("");
-           photo.setFilePath("");
-           photo.setPhotoName("");
-           photo.setDescription("");
-           photo.setModifiedBy(loginId);
-           photo.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-           hostFamilyPhotosRepository.saveAndFlush(photo);
-         }else{
+         if (optional == 0) {
+            HostFamilyPhoto photo = hostFamilyPhotosRepository.findOne(photoId);
+            photo.setFileName("");
+            photo.setFilePath("");
+            photo.setPhotoName("");
+            photo.setDescription("");
+            photo.setModifiedBy(loginId);
+            photo.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            hostFamilyPhotosRepository.saveAndFlush(photo);
+         } else {
             throw new CcighgoException("optional type is required to delete");
          }
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -2130,5 +2129,5 @@ public class HFApplicationImpl implements HFApplication {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
 }

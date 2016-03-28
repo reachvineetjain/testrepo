@@ -3,10 +3,7 @@ package com.ccighgo.service.components.hf.participant.application.process.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-
 import com.ccighgo.service.transport.common.response.beans.Response;
-import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFAirport;
 
 public class HFAirportList extends Response {
 
@@ -20,7 +17,7 @@ public class HFAirportList extends Response {
    }
 
    public void setAirportInfo(List<HFAirportData> airportInfo) {
-      airportInfo = airportInfo;
+      this.airportInfo = airportInfo;
    }
 
 }

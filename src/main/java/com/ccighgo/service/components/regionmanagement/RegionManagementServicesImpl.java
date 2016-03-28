@@ -19,7 +19,6 @@ import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
-import com.ccighgo.jpa.repositories.FieldStaffSeasonRepository;
 import com.ccighgo.jpa.repositories.RegionRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;

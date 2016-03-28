@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.AdminQuickStatsTypeAggregate;
-import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -18,6 +17,6 @@ import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 public interface AdminQuickStatsTypeAggregateRepository extends JpaRepository<AdminQuickStatsTypeAggregate, Integer> {
 
    @Query("SELECT c FROM AdminQuickStatsTypeAggregate c WHERE c.adminQuickStatsType.adminQSTypeId= ?1")
-   AdminQuickStatsTypeAggregate findTypeAggregateValueByAdminTypeId(Integer adminQSTypeId);
+   public AdminQuickStatsTypeAggregate findTypeAggregateValueByAdminTypeId(Integer adminQSTypeId);
   
 }
