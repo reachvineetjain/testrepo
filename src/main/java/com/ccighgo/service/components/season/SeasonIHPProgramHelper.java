@@ -189,32 +189,32 @@ public class SeasonIHPProgramHelper {
             if (seasonIHPDetail.getSplitPlacementPending() != null && seasonIHPDetail.getSplitPlacementPending() > 0) {
                ihpProgramConfiguration.setSplitPlacementInPending(String.valueOf(seasonIHPDetail.getSplitPlacementPending()));
             }
-            if (seasonIHPDetail.getStopAcceptingApps() == 0 || seasonIHPDetail.getStopAcceptingApps() == 1) {
+            if (seasonIHPDetail.getStopAcceptingApps() == CCIConstants.INACTIVE || seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE) {
                ihpProgramConfiguration.setStopAcceptingApplications(seasonIHPDetail.getStopAcceptingApps() == CCIConstants.ACTIVE ? true : false);
             }
-            if (seasonIHPDetail.getStopAcceptingAppsStandardIHP() == 0 || seasonIHPDetail.getStopAcceptingAppsStandardIHP() == 1) {
+            if (seasonIHPDetail.getStopAcceptingAppsStandardIHP() == CCIConstants.INACTIVE || seasonIHPDetail.getStopAcceptingAppsStandardIHP() == CCIConstants.ACTIVE) {
                ihpProgramConfiguration.setStopAcceptingIhpStandardSettings(seasonIHPDetail.getStopAcceptingAppsStandardIHP() == CCIConstants.ACTIVE ? true : false);
             }
-            if (seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == 0 || seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == 1) {
+            if (seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.INACTIVE || seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.ACTIVE) {
                ihpProgramConfiguration.setStopAcceptingVolunteerHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsVolunteerHomestay() == CCIConstants.ACTIVE ? true : false);
             }
-            if (seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == 0 || seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == 1) {
+            if (seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.INACTIVE || seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.ACTIVE) {
                ihpProgramConfiguration.setStopAcceptingLanguageBuddyApplications(seasonIHPDetail.getStopAcceptingAppsLanguageBuddy() == CCIConstants.ACTIVE ? true : false);
             }
-            if (seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == 0 || seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == 1) {
+            if (seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.INACTIVE || seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE) {
                ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
             }
-            if (seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == 0 || seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == 1) {
+            if (seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.INACTIVE || seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE) {
                ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
             }
-            if (seasonIHPDetail.getStopAcceptingAppsByGender() == 0 || seasonIHPDetail.getStopAcceptingAppsByGender() == 1) {
+            if (seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.INACTIVE || seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE) {
                ihpProgramConfiguration.setStopAcceptingApplicationByGender(seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE ? true : false);
             }
 
             // set gender
             LookupGender gender = seasonIHPDetail.getLookupGender();
             if (gender != null) {
-               if (gender.getGenderId() == 1 || gender.getGenderId() == 2) {
+               if (gender.getGenderId() == CCIConstants.MALE || gender.getGenderId() == CCIConstants.FEMALE) {
                   ihpProgramConfiguration.setGenderId(gender.getGenderId());
                   ihpProgramConfiguration.setGenderCode(gender.getGenderName());
                } else {
@@ -423,11 +423,11 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(ihpProgramConfiguration.isStopAcceptingHolidayHomeStayApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(ihpProgramConfiguration.isStopAcceptingHighSchoolApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsByGender(ihpProgramConfiguration.isStopAcceptingApplicationByGender() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            if (ihpProgramConfiguration.getGenderId() > 0 && (ihpProgramConfiguration.getGenderId() == 1 || ihpProgramConfiguration.getGenderId() == 2)) {
+            if (ihpProgramConfiguration.getGenderId() > 0 && (ihpProgramConfiguration.getGenderId() == CCIConstants.MALE || ihpProgramConfiguration.getGenderId() == CCIConstants.FEMALE)) {
                LookupGender gender = genderRepository.findOne(ihpProgramConfiguration.getGenderId());
                seasonIHPDetail.setLookupGender(gender);
             } else {
-               LookupGender gender = genderRepository.findOne(3);// gender id 3 is undefined
+               LookupGender gender = genderRepository.findOne(CCIConstants.GENDER_UNDEFINED);// gender id 3 is undefined
                seasonIHPDetail.setLookupGender(gender);
             }
             if (ihpProgramConfiguration.getStopAcceptingApplicationByRegion() != null) {
