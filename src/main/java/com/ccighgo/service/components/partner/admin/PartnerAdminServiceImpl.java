@@ -149,7 +149,6 @@ import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.WSDefaultResponse;
-import com.google.gson.Gson;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -448,7 +447,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                program.setLookupDepartmentProgram(lookupDepartmentProgramRepository.findDepartmentProgramByProgramName(contact.getCciContactProgramName()));
                program.setPartner(partner);
                program.setHasApplied(CCIConstants.ACTIVE);
-               program.setIsEligible(contact.isMarked() == true ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               program.setIsEligible(contact.isMarked() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                partnerProgramsList.add(program);
             }
             partnerProgramRepository.save(partnerProgramsList);
@@ -510,12 +509,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             pwt.setActive(partnerLogin.getActive() != null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-            if (partnerReviewStatus != null) {
-               // if (partnerReviewStatus.getPartnerStatus1() != null)
-               // pwt.setActive(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName().equalsIgnoreCase("Valid"));
-               if (partnerReviewStatus.getPartnerStatus2() != null)
-                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
-            }
+            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus2() != null)
+               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -685,8 +680,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                pwt.getWorkQueueType().add(newType);
             }
          }
-         pwt.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_TYPE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_TYPE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_TYPE.getValue(),
@@ -957,9 +952,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
                nrd.setNoteTopicRoll(String.valueOf(dr[14]));
                nrd.setNoteRoll(String.valueOf(dr[15]));
-               System.out.println(dr[10]);
                nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
-               System.out.println(DateUtils.getMysqlDateFromString(String.valueOf(dr[10])));
                nr.getNotesReview().add(nrd);
             }
             nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
@@ -983,7 +976,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
-         partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString_followUpdate(newFollowUpDate));
+         partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromStringFollowUpdate(newFollowUpDate));
          partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1018,13 +1011,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Override
    public WSDefaultResponse addNoteToPartnerApplication(int goId, String noteValue) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
-      try {
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
-         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
-      }
+      // TODO check the functionality of this Service
       return wsDefaultResponse;
    }
 
@@ -1065,8 +1052,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             for (AdminQuickStatsType adminQuickStatsType : quickStatsRepo) {
                PartnerAdminDashboardQuickStatsTitlesDetails details = new PartnerAdminDashboardQuickStatsTitlesDetails();
                details.setTitle(adminQuickStatsType.getAdminQSTypeName());
-               AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate = adminQuickStatsTypeAggregateRepository
-                     .findTypeAggregateValueByAdminTypeId(adminQuickStatsType.getAdminQSTypeId());
+               AdminQuickStatsTypeAggregate adminQuickStatsTypeAggregate = adminQuickStatsTypeAggregateRepository.findTypeAggregateValueByAdminTypeId(adminQuickStatsType
+                     .getAdminQSTypeId());
                if (adminQuickStatsTypeAggregate != null) {
                   details.setNum(adminQuickStatsTypeAggregate.getAdminQSTypeAggregate());
                }
@@ -1097,8 +1084,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partnerAdminDashboardQuickStatsCategory.setStatus(adminQuickStatsCategoryAggregate.getStatus());
                pwt.getQuickStatsDetail().add(partnerAdminDashboardQuickStatsCategory);
             }
-            pwt.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_QUICK_STATS_CATEGORY.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1782,9 +1769,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
          PartnerSeason partnerSeason = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(SeasonId, ProgramId, PartnerGoId);
          if (partnerSeason.getAppSecSemDeadlineFollowupDate() != null)
-            partnerSeason.setAppSecSemDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+            partnerSeason.setAppSecSemDeadlineFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          else
-            partnerSeason.setAppDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+            partnerSeason.setAppDeadlineFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          partnerSeasonsRepository.saveAndFlush(partnerSeason);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1804,7 +1791,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
 
          PartnerSeasonAllocation partnerSeasonAllocation = partnerSeasonAllocationRepository.findOne(partnerSeasonAllocationId);
-         partnerSeasonAllocation.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerSeasonAllocation.setFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          partnerSeasonAllocationRepository.saveAndFlush(partnerSeasonAllocation);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1822,7 +1809,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerNote partnerNote = partnerNoteRepository.findOne(partnerNotesId);
-         partnerNote.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerNote.setFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          partnerNoteRepository.saveAndFlush(partnerNote);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1989,11 +1976,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   }
             }
          }
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
@@ -2105,11 +2092,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   }
             }
          }
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
@@ -2166,20 +2153,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return wsDefaultResponse;
    }
 
-   public static void main(String[] args) {
-      Gson gson = new Gson();
-      AssignSeasonToSubPartner a = new AssignSeasonToSubPartner();
-      a.setLoginId(333);
-      a.setSubPartner(333);
-      List<AssignedSeasonData> ll = new ArrayList<AssignedSeasonData>();
-      ll.add(new AssignedSeasonData(33, 44));
-      ll.add(new AssignedSeasonData(33, 44));
-      ll.add(new AssignedSeasonData(33, 44));
-      ll.add(new AssignedSeasonData(33, 44));
-      a.setAssignedSeasonData(ll);
-      System.out.println(gson.toJson(a));
-   }
-
    @Override
    public SeasonsForPartners getAllAvailableSeasons2(String partnerId) {
       SeasonsForPartners seasons = new SeasonsForPartners();
@@ -2205,11 +2178,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                seasons.getDetails().add(seasonsForPartnersDetails);
             }
          }
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;

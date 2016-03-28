@@ -54,9 +54,9 @@ public class PartnerAgent {
    @POST
    @Path("edit-partner-seasons")
    @Produces("application/json")
-   public PartnerAgentSeasonDetails EditPartnerSeasons(PartnerAgentSeasonDetails partnerAgentSeasonDetails) {
+   public PartnerAgentSeasonDetails editPartnerSeasons(PartnerAgentSeasonDetails partnerAgentSeasonDetails) {
       LOGGER.debug("calling PartnerAgent.EditPartnerSeasons");
-      return partnerAgentInterface.EditPartnerSeasons(partnerAgentSeasonDetails);
+      return partnerAgentInterface.editPartnerSeasons(partnerAgentSeasonDetails);
    }
    
    @GET

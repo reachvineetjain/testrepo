@@ -1,7 +1,6 @@
 package com.ccighgo.service.components.sevis.data;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.TIPP;
 
 import org.springframework.stereotype.Component;
 

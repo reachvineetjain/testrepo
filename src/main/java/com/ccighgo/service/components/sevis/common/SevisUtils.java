@@ -121,39 +121,41 @@ public final class SevisUtils {
     * @throws SAXException
     */
    public static boolean validate(JAXBContext ctx, Object jaxb, File schemaFile) throws JAXBException, SAXException {
-      Marshaller marshaller;
-      marshaller = ctx.createMarshaller();
-
-      // TODO Error not found constant
-      // Set Schema for Validation
-      // SchemaFactory sf =
-      // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      // marshaller.setSchema(sf.newSchema(schemaFile));
+      // Marshaller marshaller;
+      // marshaller = ctx.createMarshaller();
       //
-      // // validate with schema
-      // marshaller.marshal(jaxb, new DefaultHandler());
+      // // TODO Error not found constant
+      // // Set Schema for Validation
+      // // SchemaFactory sf =
+      // //
+      // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      // // marshaller.setSchema(sf.newSchema(schemaFile));
+      // //
+      // // // validate with schema
+      // // marshaller.marshal(jaxb, new DefaultHandler());
 
       return true;
    }
 
    public static boolean validateJaxb(JAXBContext ctx, Object jaxb, File schemaFile) {
-      Marshaller marshaller;
-      try {
-         marshaller = ctx.createMarshaller();
-
-         // TODO Error not found constant
-         // Set Schema for Validation
-         // SchemaFactory sf =
-         // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-         // marshaller.setSchema(sf.newSchema(schemaFile));
-         //
-         // // validate with schema
-         // marshaller.marshal(jaxb, new DefaultHandler());
-
-         return true;
-      } catch (JAXBException e) {
-         e.printStackTrace();
-      }
+      // Marshaller marshaller;
+      // try {
+      // marshaller = ctx.createMarshaller();
+      //
+      // // TODO Error not found constant
+      // // Set Schema for Validation
+      // // SchemaFactory sf =
+      // //
+      // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      // // marshaller.setSchema(sf.newSchema(schemaFile));
+      // //
+      // // // validate with schema
+      // // marshaller.marshal(jaxb, new DefaultHandler());
+      //
+      // return true;
+      // } catch (JAXBException e) {
+      // e.printStackTrace();
+      // }
 
       return false;
    }

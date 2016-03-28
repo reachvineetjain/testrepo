@@ -164,12 +164,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                aPart.setParticipantGuranteed(participant.getGuaranteed() != 0);
                participantsActiveList.getParticipants().add(aPart);
             }
-            participantsActiveList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            participantsActiveList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
-         participantsActiveList.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         participantsActiveList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return participantsActiveList;
@@ -207,12 +207,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
             lead.setParticipantProgramOption(participantProgramOption);
             participantsLeadList.getParticipants().add(lead);
          }
-         participantsLeadList.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         participantsLeadList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
-         participantsLeadList.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         participantsLeadList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return participantsLeadList;
@@ -271,8 +271,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   participant.setSeason(season);
                   Partner partner = partnerRepository.findOne(p.getPartnerId());
                   if (season != null && partner != null) {
-                     PartnerSeason ps = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(season.getSeasonId(), p.getDepartmentId(),
-                           partner.getGoIdSequence().getGoId());
+                     PartnerSeason ps = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(season.getSeasonId(), p.getDepartmentId(), partner
+                           .getGoIdSequence().getGoId());
                      if (ps != null) {
                         participant.setStartDate(ps.getPartnerSeasonStartDate());
                         participant.setEndDate(ps.getPartnerSeasonEndDate());
@@ -293,11 +293,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                }
             }
          }
-         newManualParticipant.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         newManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         newManualParticipant.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         newManualParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
          e.printStackTrace();
       }
@@ -305,13 +305,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    private NewManualParticipant getParticipantEntity(Participant participant) {
-      NewManualParticipant NewManualParticipant = new NewManualParticipant();
-      try {
-
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      return NewManualParticipant;
+      return null;
    }
 
    @Override
@@ -320,11 +314,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       try {
          Participant participant = participantRepository.findOne(participantId);
          editedParticipant = getParticipantEntity(participant);
-         editedParticipant.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         editedParticipant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         editedParticipant.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         editedParticipant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return editedParticipant;
@@ -332,17 +326,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
    @Override
    public NewManualParticipant updateParticipant(NewManualParticipant participant) {
-      try {
-         // participantRepository.saveAndFlush(getParticipantEntity(participant));
-         // participant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
-         // CCIConstants.TYPE_INFO,
-         // ErrorCode.DEFAULT_CODE.getValue(),
-         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (Exception e) {
-         participant.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         ExceptionUtil.logException(e, logger);
-      }
+
       return participant;
    }
 
@@ -452,11 +436,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   }
             }
          }
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
@@ -474,11 +458,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
             details.setProgramOptionId(o.getDepartmentProgramOptionId());
             programOptionsForParticipants.getDetails().add(details);
          }
-         programOptionsForParticipants.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         programOptionsForParticipants.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return programOptionsForParticipants;
@@ -503,11 +487,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                }
             }
          }
-         programOptionsForParticipants.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         programOptionsForParticipants.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         programOptionsForParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return programOptionsForParticipants;
@@ -606,9 +590,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                      if (participant.getSeason().getSeasonVadetails() != null && !participant.getSeason().getSeasonVadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonVadetails().get(0).getProgramName());
 
-                  } else if (participant.getSeason().getSeasonIhpdetails() != null && programName.equalsIgnoreCase(CCIConstants.HSP_STP_IHP)) {
-                     if (participant.getSeason().getSeasonIhpdetails() != null && !participant.getSeason().getSeasonIhpdetails().isEmpty())
-                        details.setParticipantSeasonName(participant.getSeason().getSeasonIhpdetails().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonIhpdetails() != null && programName.equalsIgnoreCase(CCIConstants.HSP_STP_IHP)
+                        && participant.getSeason().getSeasonIhpdetails() != null && !participant.getSeason().getSeasonIhpdetails().isEmpty()) {
+                     details.setParticipantSeasonName(participant.getSeason().getSeasonIhpdetails().get(0).getProgramName());
                   }
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
@@ -624,12 +608,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
                addedParticipants.getParticipants().add(details);
             }
-            addedParticipants.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
-         addedParticipants.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return addedParticipants;
@@ -648,11 +632,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                subPartners.getDetails().add(details);
             }
          }
-         subPartners.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         subPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         subPartners.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         subPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return subPartners;
@@ -762,8 +746,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                         "An email has been sent to address " + "\'" + participantLogin.getEmail() + "\'" + " for login name " + "\'" + participantLogin.getLoginName() + "\'"
                               + " with instructions to reset password"));
                } else {
-                  response.setStatus(
-                        componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                        messageUtil.getMessage(CCIConstants.NO_RECORD)));
                   logger.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
                }
             }
@@ -892,11 +876,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   }
             }
          }
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
@@ -922,8 +906,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   "An email has been sent to address " + "\'" + participantLoginData.getEmail() + "\'" + " for login name " + "\'" + participantLoginData.getLoginName() + "\'"
                         + " with instructions to reset password"));
          } else {
-            response.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             logger.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
@@ -952,11 +936,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
             }
          }
 
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(
-               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;

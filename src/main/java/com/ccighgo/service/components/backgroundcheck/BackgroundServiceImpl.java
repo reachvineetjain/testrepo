@@ -3,7 +3,6 @@ package com.ccighgo.service.components.backgroundcheck;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 
 import org.apache.http.HttpEntity;
@@ -62,7 +61,6 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          HttpPost post = new HttpPost("https://www.rhrtest.com/BatchScreensXML.cfm");
          StringWriter sw = new StringWriter();
          ObjectFactory objectFactory = new ObjectFactory();
-         JAXBElement<ScreenRequest> sRequest = objectFactory.createScreenRequest(screenRequest);
          Marshaller jaxbMarshaller = JAXBContext.newInstance(ScreenRequest.class).createMarshaller();
          jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
          jaxbMarshaller.marshal(objectFactory.createScreenRequest(screenRequest), sw);
@@ -89,31 +87,36 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          if (screenResponse != null)
             LOGGER.info("dateTime: " + screenResponse.getDateTime() + " responseCode: " + screenResponse.getResponseCode() + " account " + screenResponse.getAccount());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       JSONObject screenResObject = xmlJSONObj.getJSONObject("ScreenResponse");
       JSONObject jsonAccountObject = screenResObject.getJSONObject("Account");
       try {
          screenResponse.setDateTime(String.valueOf(screenResObject.get("DateTime")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
 
       try {
          screenResponse.setResponseCode(String.valueOf(screenResObject.get("ResponseCode")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       Account account = new Account();
       try {
          account.setAcctNbr(String.valueOf(jsonAccountObject.get("AcctNbr")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          account.setBatchNo(String.valueOf(jsonAccountObject.get("BatchNo")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          account.setResponseCode(String.valueOf(jsonAccountObject.get("ResponseCode")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          JSONArray applicants = jsonAccountObject.getJSONArray("Applicant");
@@ -126,29 +129,36 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
                   try {
                      applicant.setApplicantID(String.valueOf(applicantJsonObject.get("ApplicantID")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setErrorMessage(String.valueOf(applicantJsonObject.get("ErrorMessage")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setFileNo(String.valueOf(applicantJsonObject.get("FileNo")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setFileURL(String.valueOf(applicantJsonObject.get("FileURL")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setResponseCode(String.valueOf(applicantJsonObject.get("ResponseCode")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   account.getApplicant().add(applicant);
                }
             } catch (Exception e) {
+               LOGGER.error(e.getMessage(), e);
             }
          }
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
 
       screenResponse.setAccount(account);

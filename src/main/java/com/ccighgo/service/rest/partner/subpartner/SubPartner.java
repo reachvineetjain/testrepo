@@ -57,9 +57,9 @@ public class SubPartner {
    @POST
    @Path("update")
    @Produces("application/json")
-   public WSDefaultResponse UpdateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner) {
+   public WSDefaultResponse updateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner) {
       LOGGER.debug("calling SubPartner.updateSubPartner", subPartner);
-      return subPartnerInterface.UpdateSubPartnerDetail(subPartner);
+      return subPartnerInterface.updateSubPartnerDetail(subPartner);
    }
 
    @GET

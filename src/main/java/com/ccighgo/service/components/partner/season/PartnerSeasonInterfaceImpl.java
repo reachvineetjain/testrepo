@@ -248,8 +248,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             partnerSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            partnerSeasons.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            partnerSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
@@ -338,79 +338,71 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (partnerSeasonAllocationList != null) {
             for (PartnerSeasonAllocation unGuaranteedAllocation : partnerSeasonAllocationList) {
 
-               if (unGuaranteedAllocation.getDepartmentProgramOption() != null) {
-                  if (unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
-                     if (unGuaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                        programAllocations.setAugustStartMaxguaranteedParticipants(unGuaranteedAllocation.getMaxGuaranteedPax());
-                        programAllocations.setAugustStartRequestedMaxguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxGuaranteedPax());
+               if (unGuaranteedAllocation.getDepartmentProgramOption() != null
+                     && unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+                  if (unGuaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
+                     programAllocations.setAugustStartMaxguaranteedParticipants(unGuaranteedAllocation.getMaxGuaranteedPax());
+                     programAllocations.setAugustStartRequestedMaxguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxGuaranteedPax());
 
-                        programAllocations.setAugustStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
-                        programAllocations.setAugustStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
-                        programAllocations.setAugustStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
-                        if (unGuaranteedAllocation.getPartnerStatus() != null)
-                           programAllocations.setAugustStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
-                        if (unGuaranteedAllocation.getPartnerSeason().getPartner() != null && unGuaranteedAllocation.getDepartmentProgramOption() != null
-                              && unGuaranteedAllocation.getDepartmentProgramOption() != null) {
-                           programAllocations.setAugustStartAcceptedParticipants(
-                                 partnerStoredProcedure.PartnerSeasonAcceptedPax(unGuaranteedAllocation.getPartnerSeason().getPartner().getPartnerGoId(),
-                                       Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId(),
-                                       unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
-                           programAllocations.setAugustStartUnderCCIReview(
-                                 partnerStoredProcedure.PartnerSeasonCCIReviewPax(unGuaranteedAllocation.getPartnerSeason().getPartner().getPartnerGoId(),
-                                       Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId(),
-                                       unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
-                           programAllocations
-                                 .setAugustStartOpenings(partnerStoredProcedure.PartnerSeasonPaxOpenings(unGuaranteedAllocation.getPartnerSeason().getPartner().getPartnerGoId(),
-                                       Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId(),
-                                       unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
-                        }
-                        programAllocations.setTotalMaxguaranteedParticipants(
-                              programAllocations.getTotalMaxguaranteedParticipants() + programAllocations.getAugustStartMaxguaranteedParticipants());
-                        programAllocations.setTotalMaxUnguaranteedParticipants(
-                              programAllocations.getTotalMaxUnguaranteedParticipants() + programAllocations.getAugustStartMaxUnguaranteedParticipants());
-                        unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId();
-                        programAllocations
-                              .setTotalAcceptedParticipants(programAllocations.getTotalAcceptedParticipants() + programAllocations.getAugustStartAcceptedParticipants());
-                        programAllocations.setTotalUnderCCIReview(programAllocations.getTotalUnderCCIReview() + programAllocations.getAugustStartUnderCCIReview());
-                        programAllocations.setTotalOpenings(programAllocations.getJanuaryStartOpenings() + programAllocations.getAugustStartOpenings());
-
+                     programAllocations.setAugustStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
+                     programAllocations.setAugustStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
+                     programAllocations.setAugustStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
+                     if (unGuaranteedAllocation.getPartnerStatus() != null)
+                        programAllocations.setAugustStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
+                     if (unGuaranteedAllocation.getPartnerSeason().getPartner() != null && unGuaranteedAllocation.getDepartmentProgramOption() != null
+                           && unGuaranteedAllocation.getDepartmentProgramOption() != null) {
+                        programAllocations.setAugustStartAcceptedParticipants(partnerStoredProcedure.partnerSeasonAcceptedPax(unGuaranteedAllocation.getPartnerSeason()
+                              .getPartner().getPartnerGoId(), Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram()
+                              .getDepartmentProgramId(), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
+                        programAllocations.setAugustStartUnderCCIReview(partnerStoredProcedure.partnerSeasonCCIReviewPax(unGuaranteedAllocation.getPartnerSeason().getPartner()
+                              .getPartnerGoId(), Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram()
+                              .getDepartmentProgramId(), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
+                        programAllocations.setAugustStartOpenings(partnerStoredProcedure.partnerSeasonPaxOpenings(unGuaranteedAllocation.getPartnerSeason().getPartner()
+                              .getPartnerGoId(), Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram()
+                              .getDepartmentProgramId(), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
                      }
-                     if (unGuaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                        programAllocations.setJanuaryStartMaxguaranteedParticipants(unGuaranteedAllocation.getMaxGuaranteedPax());
-                        programAllocations.setJanuaryStartRequestedMaxguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxGuaranteedPax());
-                        programAllocations.setJanStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
-                        programAllocations.setJanuaryStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
-                        programAllocations.setJanuaryStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
-                        if (unGuaranteedAllocation.getPartnerStatus() != null)
-                           programAllocations.setJanuaryStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
+                     programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
+                           + programAllocations.getAugustStartMaxguaranteedParticipants());
+                     programAllocations.setTotalMaxUnguaranteedParticipants(programAllocations.getTotalMaxUnguaranteedParticipants()
+                           + programAllocations.getAugustStartMaxUnguaranteedParticipants());
+                     unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId();
+                     programAllocations.setTotalAcceptedParticipants(programAllocations.getTotalAcceptedParticipants() + programAllocations.getAugustStartAcceptedParticipants());
+                     programAllocations.setTotalUnderCCIReview(programAllocations.getTotalUnderCCIReview() + programAllocations.getAugustStartUnderCCIReview());
+                     programAllocations.setTotalOpenings(programAllocations.getJanuaryStartOpenings() + programAllocations.getAugustStartOpenings());
 
-                        if (unGuaranteedAllocation.getPartnerSeason().getPartner() != null && unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram() != null
-                              && unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram() != null) {
-                           programAllocations.setJanuaryStartAcceptedParticipants(
-                                 partnerStoredProcedure.PartnerSeasonAcceptedPax(unGuaranteedAllocation.getPartnerSeason().getPartner().getPartnerGoId(),
-                                       Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId(),
-                                       unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
-                           programAllocations.setJanuaryStartUnderCCIReview(
-                                 partnerStoredProcedure.PartnerSeasonCCIReviewPax(unGuaranteedAllocation.getPartnerSeason().getPartner().getPartnerGoId(),
-                                       Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId(),
-                                       unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
-                           programAllocations
-                                 .setJanuaryStartOpenings(partnerStoredProcedure.PartnerSeasonPaxOpenings(unGuaranteedAllocation.getPartnerSeason().getPartner().getPartnerGoId(),
-                                       Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId(),
-                                       unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
-                        }
+                  }
+                  if (unGuaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                     programAllocations.setJanuaryStartMaxguaranteedParticipants(unGuaranteedAllocation.getMaxGuaranteedPax());
+                     programAllocations.setJanuaryStartRequestedMaxguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxGuaranteedPax());
+                     programAllocations.setJanStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
+                     programAllocations.setJanuaryStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
+                     programAllocations.setJanuaryStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
+                     if (unGuaranteedAllocation.getPartnerStatus() != null)
+                        programAllocations.setJanuaryStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
 
-                        programAllocations.setTotalMaxguaranteedParticipants(
-                              programAllocations.getTotalMaxguaranteedParticipants() + programAllocations.getJanuaryStartMaxguaranteedParticipants());
-                        programAllocations.setTotalMaxUnguaranteedParticipants(
-                              programAllocations.getTotalMaxUnguaranteedParticipants() + programAllocations.getJanuaryStartMaxUnguaranteedParticipants());
-                        programAllocations
-                              .setTotalAcceptedParticipants(programAllocations.getTotalAcceptedParticipants() + programAllocations.getJanuaryStartAcceptedParticipants());
-                        programAllocations.setTotalUnderCCIReview(programAllocations.getTotalUnderCCIReview() + programAllocations.getJanuaryStartUnderCCIReview());
-                        programAllocations.setTotalOpenings(programAllocations.getJanuaryStartOpenings() + programAllocations.getJanuaryStartOpenings());
+                     if (unGuaranteedAllocation.getPartnerSeason().getPartner() != null && unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram() != null
+                           && unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram() != null) {
+                        programAllocations.setJanuaryStartAcceptedParticipants(partnerStoredProcedure.partnerSeasonAcceptedPax(unGuaranteedAllocation.getPartnerSeason()
+                              .getPartner().getPartnerGoId(), Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram()
+                              .getDepartmentProgramId(), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
+                        programAllocations.setJanuaryStartUnderCCIReview(partnerStoredProcedure.partnerSeasonCCIReviewPax(unGuaranteedAllocation.getPartnerSeason().getPartner()
+                              .getPartnerGoId(), Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram()
+                              .getDepartmentProgramId(), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
+                        programAllocations.setJanuaryStartOpenings(partnerStoredProcedure.partnerSeasonPaxOpenings(unGuaranteedAllocation.getPartnerSeason().getPartner()
+                              .getPartnerGoId(), Integer.valueOf(partnerSeasonId), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram()
+                              .getDepartmentProgramId(), unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgramOptionId()));
                      }
+
+                     programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
+                           + programAllocations.getJanuaryStartMaxguaranteedParticipants());
+                     programAllocations.setTotalMaxUnguaranteedParticipants(programAllocations.getTotalMaxUnguaranteedParticipants()
+                           + programAllocations.getJanuaryStartMaxUnguaranteedParticipants());
+                     programAllocations.setTotalAcceptedParticipants(programAllocations.getTotalAcceptedParticipants() + programAllocations.getJanuaryStartAcceptedParticipants());
+                     programAllocations.setTotalUnderCCIReview(programAllocations.getTotalUnderCCIReview() + programAllocations.getJanuaryStartUnderCCIReview());
+                     programAllocations.setTotalOpenings(programAllocations.getJanuaryStartOpenings() + programAllocations.getJanuaryStartOpenings());
                   }
                }
+
             }
             partnersSeasonDetails.setProgramAllocations(programAllocations);
          }
@@ -426,8 +418,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
 
-         com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper
-               .getJ1Notes(String.valueOf(seasonDetail.getPartner().getPartnerGoId()));
+         com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getJ1Notes(String.valueOf(seasonDetail.getPartner()
+               .getPartnerGoId()));
          partnersSeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
          partnersSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -474,8 +466,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             partnerSeasonApplicationList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            partnerSeasonApplicationList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            partnerSeasonApplicationList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
@@ -565,31 +557,30 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (partnerSeasonAllocationList != null) {
 
             for (PartnerSeasonAllocation guaranteedAllocation : partnerSeasonAllocationList) {
-               if (guaranteedAllocation.getDepartmentProgramOption() != null) {
-                  if (guaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
-                     if (guaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-                        programAllocations.setAugustStartMaxguaranteedParticipants(guaranteedAllocation.getMaxGuaranteedPax());
-                        programAllocations.setAugustStartRequestedMaxguaranteedParticipants(guaranteedAllocation.getRequestedMaxGuaranteedPax());
+               if (guaranteedAllocation.getDepartmentProgramOption() != null
+                     && guaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                  if (guaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
+                     programAllocations.setAugustStartMaxguaranteedParticipants(guaranteedAllocation.getMaxGuaranteedPax());
+                     programAllocations.setAugustStartRequestedMaxguaranteedParticipants(guaranteedAllocation.getRequestedMaxGuaranteedPax());
 
-                        programAllocations.setAugustStartAllocationId(guaranteedAllocation.getPartnerSeasonAllocationId());
-                        if (guaranteedAllocation.getPartnerStatus() != null)
-                           programAllocations.setAugustStartStatus(guaranteedAllocation.getPartnerStatus().getPartnerStatusName());
+                     programAllocations.setAugustStartAllocationId(guaranteedAllocation.getPartnerSeasonAllocationId());
+                     if (guaranteedAllocation.getPartnerStatus() != null)
+                        programAllocations.setAugustStartStatus(guaranteedAllocation.getPartnerStatus().getPartnerStatusName());
 
-                        programAllocations.setTotalMaxguaranteedParticipants(
-                              programAllocations.getTotalMaxguaranteedParticipants() + programAllocations.getAugustStartMaxguaranteedParticipants());
+                     programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
+                           + programAllocations.getAugustStartMaxguaranteedParticipants());
 
-                     }
-                     if (guaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-                        programAllocations.setJanuaryStartMaxguaranteedParticipants(guaranteedAllocation.getMaxGuaranteedPax());
-                        programAllocations.setJanuaryStartRequestedMaxguaranteedParticipants(guaranteedAllocation.getRequestedMaxGuaranteedPax());
-                        programAllocations.setJanStartAllocationId(guaranteedAllocation.getPartnerSeasonAllocationId());
-                        if (guaranteedAllocation.getPartnerStatus() != null)
-                           programAllocations.setJanuaryStartStatus(guaranteedAllocation.getPartnerStatus().getPartnerStatusName());
+                  }
+                  if (guaranteedAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+                     programAllocations.setJanuaryStartMaxguaranteedParticipants(guaranteedAllocation.getMaxGuaranteedPax());
+                     programAllocations.setJanuaryStartRequestedMaxguaranteedParticipants(guaranteedAllocation.getRequestedMaxGuaranteedPax());
+                     programAllocations.setJanStartAllocationId(guaranteedAllocation.getPartnerSeasonAllocationId());
+                     if (guaranteedAllocation.getPartnerStatus() != null)
+                        programAllocations.setJanuaryStartStatus(guaranteedAllocation.getPartnerStatus().getPartnerStatusName());
 
-                        programAllocations.setTotalMaxguaranteedParticipants(
-                              programAllocations.getTotalMaxguaranteedParticipants() + programAllocations.getJanuaryStartMaxguaranteedParticipants());
+                     programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
+                           + programAllocations.getJanuaryStartMaxguaranteedParticipants());
 
-                     }
                   }
                }
             }
@@ -607,8 +598,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
 
-         com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.NoteTopics partnerSeasonNotes = partnerSeasonHelper
-               .getF1ProgramNotes(String.valueOf(seasonDetail.getPartner().getPartnerGoId()));
+         com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getF1ProgramNotes(String.valueOf(seasonDetail
+               .getPartner().getPartnerGoId()));
          partnersSeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
 
          partnersSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
@@ -804,15 +795,15 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
          partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
 
-         com.ccighgo.service.transport.partner.beans.partnerseasonihpdetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper
-               .getIHPProgramNotes(String.valueOf(seasonDetail.getPartner().getPartnerGoId()));
+         com.ccighgo.service.transport.partner.beans.partnerseasonihpdetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getIHPProgramNotes(String.valueOf(seasonDetail
+               .getPartner().getPartnerGoId()));
          partnersSeasonDetails.setPartnerSeasonNotes(partnerSeasonNotes);
 
          partnersSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         partnersSeasonDetails
-               .setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), "error getting ihp details"));
+         partnersSeasonDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+               "error getting ihp details"));
          LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
       }
       return partnersSeasonDetails;

@@ -7,9 +7,6 @@ public class HFAirportData {
    public boolean isInternational;
    private int airportId;
 
-   public HFAirportData() {
-   }
-
    public String getAirportCity() {
       return airportCity;
    }

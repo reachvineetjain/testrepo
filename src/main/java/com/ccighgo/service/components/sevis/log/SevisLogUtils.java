@@ -40,7 +40,7 @@ public class SevisLogUtils {
    }
 
    public boolean isAllWell() {
-      return sevisLog != null && sevisLog.getBatchDetail().isStatus() == true;
+      return sevisLog != null && sevisLog.getBatchDetail().isStatus();
    }
 
    public boolean isUploadSuccess() {

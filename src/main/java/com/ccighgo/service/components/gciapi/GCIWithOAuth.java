@@ -42,8 +42,9 @@ public class GCIWithOAuth {
 
    public static void main(String[] args) {
       GCIWithOAuth d = new GCIWithOAuth();
-      System.out.println(d.readPrivate("https://gcidev.wpengine.com/api/v2/test/read"));
-      System.out.println(d.testCreate("https://gcidev.wpengine.com/api/v2/test/test/create", "mido"));
+      // System.out.println(d.readPrivate("https://gcidev.wpengine.com/api/v2/test/read"));
+      // System.out.println(d.testCreate("https://gcidev.wpengine.com/api/v2/test/test/create",
+      // "mido"));
    }
 
    public String testCreate(final String TEST_CREATE_SERVICE, String title) {

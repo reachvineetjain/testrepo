@@ -81,13 +81,13 @@ public class HostFamily implements Serializable {
    private String photo;
 
    // bi-directional one-to-one association to GoIdSequence
-   @OneToOne @JoinColumn(name = "hostFamilyGoId", nullable = false, insertable = false, updatable = false) private GoIdSequence goIdSequence;
+   @OneToOne @JoinColumn(name = "hostFamilyGoId", nullable = false) private GoIdSequence goIdSequence;
 
    // bi-directional many-to-one association to HostFamilyStatus
    @ManyToOne @JoinColumn(name = "hostFamilyStatusId") private HostFamilyStatus hostFamilyStatus;
 
    // bi-directional many-to-one association to LookupCountry
-   @ManyToOne @JoinColumn(name = "physicalStateId", insertable = false, updatable = false) private LookupCountry lookupCountry1;
+   @ManyToOne @JoinColumn(name = "physicalStateId") private LookupCountry lookupCountry1;
 
    // bi-directional many-to-one association to LookupCountry
    @ManyToOne @JoinColumn(name = "physicalCountryId") private LookupCountry lookupCountry2;

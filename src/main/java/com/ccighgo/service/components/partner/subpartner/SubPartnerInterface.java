@@ -39,7 +39,7 @@ public interface SubPartnerInterface {
     * @param subPartner
     * @return
     */
-   public WSDefaultResponse UpdateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner);
+   public WSDefaultResponse updateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner);
 
    /**
     * @param subPartner
