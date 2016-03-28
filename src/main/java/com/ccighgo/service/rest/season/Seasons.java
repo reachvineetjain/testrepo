@@ -61,8 +61,7 @@ public class Seasons {
 
    private static final Logger LOGGER = Logger.getLogger(Seasons.class);
 
-   @Autowired
-   SeasonServiceInterface seasonServices;
+   @Autowired SeasonServiceInterface seasonServices;
 
    @GET
    @Path("ping/{input}")

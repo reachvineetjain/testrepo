@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ccighgo.db.entities.PartnerUser;
 
-
 /**
  * @author ravi
  *
@@ -21,13 +20,14 @@ public interface PartnerUserRepository extends JpaRepository<PartnerUser, Intege
 
    @Query("SELECT p FROM PartnerUser p WHERE p.partner.partnerGoId=?1")
    List<PartnerUser> findByPartnerGoId(Integer partnerId);
-   
+
    @Query("SELECT p.partnerUserId FROM PartnerUser p WHERE p.firstName like %?1% or p.lastName like %?2% or  p.login.loginName like %?3% or p.active = ?4 ")
-   List<Object> searchPartnerUser(String firstName, String lastName , /*String email,*/ String userName ,byte active);
-   
+   List<Object> searchPartnerUser(String firstName, String lastName,
+         /* String email, */ String userName, byte active);
+
    @Query("SELECT p FROM PartnerUser p WHERE p.partner.partnerGoId=?2 AND p.login.loginId=?1 ")
    PartnerUser findByPartnerGoIdAndLoginId(Integer createdBy, Integer goId);
-   
+
    @Query("SELECT p FROM PartnerUser p WHERE p.partner.partnerGoId = ?1 AND p.partnerOffice.partnerOfficeId = ?2")
    public List<PartnerUser> findPartnerUserByPartnerIdAndOfficceId(Integer goId, Integer officeId);
 

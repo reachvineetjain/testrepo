@@ -99,9 +99,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired CountryRepository countryRepository;
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
 
-   public static final Integer APPROVED_STATUS = 5;
-   public static final Integer VALID = 11;
-
    @Override
    @Transactional
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -598,14 +595,14 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
          reviewStatus.setPartner(subPartnerDetails);
          // set the default partnerLeadStatus to Valid
-         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.VALID));
          // set the partnerAgentStatusId to Approved i.e in case of Sub partner
-         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(APPROVED_STATUS));
+         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.APPROVED_STATUS));
          partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
          responce.setGoId(goIdSequence.getGoId());
-         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_SUB_PARTNER.getValue(),
                messageUtil.getMessage(SubPartnerMessageConstants.FAILED_CREATE_SUB_PARTNER)));
@@ -715,8 +712,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerUserRepository.saveAndFlush(partnerContact);
          }
 
-         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_SUB_PARTNER.getValue(),
                messageUtil.getMessage(SubPartnerMessageConstants.FAILED_UPDATE_SUB_PARTNER)));
@@ -741,8 +738,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          else
-            as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            as.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          as.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCH_SALUTATION.getValue(),

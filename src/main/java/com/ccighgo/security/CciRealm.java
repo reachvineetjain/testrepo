@@ -46,8 +46,10 @@ public class CciRealm extends AuthorizingRealm {
    }
 
    /**
-    * Here is where we pick up the role of the user from the repository and ask Shiro to carry it for us. This role of
-    * the user can be requested any where in the application like <code> SecurityUtils.getSubject().hasRole() </code>
+    * Here is where we pick up the role of the user from the repository and ask
+    * Shiro to carry it for us. This role of the user can be requested any where
+    * in the application like
+    * <code> SecurityUtils.getSubject().hasRole() </code>
     */
    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
       if (principals.fromRealm(getName()) != null && principals.fromRealm(getName()).size() > 0) {

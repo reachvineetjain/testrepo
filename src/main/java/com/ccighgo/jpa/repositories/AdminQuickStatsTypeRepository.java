@@ -14,5 +14,5 @@ import com.ccighgo.db.entities.AdminQuickStatsType;
  */
 @Repository
 public interface AdminQuickStatsTypeRepository extends JpaRepository<AdminQuickStatsType, Integer> {
-   
+
 }

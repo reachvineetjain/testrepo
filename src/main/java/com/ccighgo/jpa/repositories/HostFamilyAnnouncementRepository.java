@@ -14,5 +14,5 @@ import com.ccighgo.db.entities.HostFamilyAnnouncement;
  */
 @Repository
 public interface HostFamilyAnnouncementRepository extends JpaRepository<HostFamilyAnnouncement, Integer> {
-   
+
 }

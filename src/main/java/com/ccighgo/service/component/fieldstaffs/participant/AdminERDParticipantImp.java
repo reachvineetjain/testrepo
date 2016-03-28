@@ -28,14 +28,11 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
 
    private static final Logger LOGGER = Logger.getLogger(AdminERDParticipantImp.class);
 
-   @Autowired
-   EntityManager em;
+   @Autowired EntityManager em;
 
-   @Autowired
-   CommonComponentUtils componentUtils;
+   @Autowired CommonComponentUtils componentUtils;
 
-   @Autowired
-   MessageUtils messageUtil;
+   @Autowired MessageUtils messageUtil;
 
    private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?,?)";
    private static final String SP_FS_PLACEMENT_LIST = "CALL SPFieldStaffParticipantListing(?,?,?)";
@@ -71,7 +68,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   esp.setCountry(String.valueOf(obj[4]));
                   esp.setProgram(String.valueOf(obj[5]));
                   esp.setGender(String.valueOf(obj[6]));
-                  Date dateformat=(Date)obj[7];                 
+                  Date dateformat = (Date) obj[7];
                   esp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));
                   esp.setLC(String.valueOf(obj[8]));
                   esp.setRD(String.valueOf(obj[9]));
@@ -80,8 +77,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   erdParticipants.getParticipants().add(esp);
                }
             } else {
-               erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               erdParticipants.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             }
             erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -107,8 +104,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result == null) {
-               erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               erdParticipants.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             } else {
                for (Object[] obj : result) {
                   /*
@@ -125,8 +122,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   fsp.setCountry(String.valueOf(obj[4]));
                   fsp.setProgram(String.valueOf(obj[5]));
                   fsp.setGender(String.valueOf(obj[6]));
-                  Date dateformat=(Date)obj[7];                 
-                  fsp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));                 
+                  Date dateformat = (Date) obj[7];
+                  fsp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));
                   fsp.setLC(String.valueOf(obj[8]));
                   fsp.setRD(String.valueOf(obj[9]));
                   fsp.setHS(String.valueOf(obj[10]));
@@ -159,8 +156,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
          if (result == null) {
-            myPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            myPlacements.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return myPlacements;
          }
          for (Object[] obj : result) {
@@ -183,8 +180,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             placement.setFlagUrl(String.valueOf(obj[9]));
             myPlacements.getTypes().add(placement);
          }
-         myPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         myPlacements.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          e.printStackTrace();
          myPlacements.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_PLACEMENT.getValue(),
@@ -206,8 +203,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
          if (result == null) {
-            eRDPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            eRDPlacements.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return eRDPlacements;
          }
          for (Object[] obj : result) {
@@ -231,8 +228,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             placement.setPaxPhoto(String.valueOf(obj[11]));
             eRDPlacements.getPlacements().add(placement);
          }
-         eRDPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         eRDPlacements.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          e.printStackTrace();
          eRDPlacements.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_PLACEMENT.getValue(),

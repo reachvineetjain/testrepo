@@ -9,4 +9,3 @@ import com.ccighgo.db.entities.CCIStaffUserNote;
 public interface CCIStaffUserNoteRepository extends JpaRepository<CCIStaffUserNote, Integer> {
 
 }
-

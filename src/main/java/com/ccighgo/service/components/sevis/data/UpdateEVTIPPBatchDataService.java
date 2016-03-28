@@ -19,9 +19,4 @@ public class UpdateEVTIPPBatchDataService implements IEVBatchDataService {
       return null;
    }
 
-   private TIPP createTIPP() {
-      TIPP tipp = new TIPP();
-      return tipp;
-   }
-
 }

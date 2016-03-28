@@ -15,14 +15,13 @@ import com.ccighgo.service.transport.partner.beans.partnerseasonf1detail.Partner
 import com.ccighgo.service.transport.partner.beans.partnerseasonihpdetail.PartnerSeasonIHPDetail;
 import com.ccighgo.utils.WSDefaultResponse;
 
-
 /**
  * @author ravi
  *
  */
 @Service
 public interface PartnerSeasonInterface {
-   
+
    /**
     * @param partnerId
     * @return
@@ -46,7 +45,7 @@ public interface PartnerSeasonInterface {
     * @return
     */
    public PartnerSeasonF1Detail viewF1PartnerSeason(String partnerSeasonId);
-   
+
    /**
     * @param partnerSeasonApplicationList
     * @return

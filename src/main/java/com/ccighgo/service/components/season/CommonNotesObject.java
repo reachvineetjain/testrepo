@@ -7,6 +7,7 @@ public class CommonNotesObject {
    private Integer departmentProgramId;
    private List<String> notes;
    private int loginId;
+
    public Integer getSeasonId() {
       return seasonId;
    }

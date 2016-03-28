@@ -12,7 +12,7 @@ import com.ccighgo.db.entities.HostFamily;
  */
 @Repository
 public interface HostFamilyRepository extends JpaRepository<HostFamily, Integer> {
-   
+
    @Query("SELECT h FROM HostFamily h WHERE h.season.seasonId = ?1")
    public HostFamily findBySeasonId(Integer seasonId);
 

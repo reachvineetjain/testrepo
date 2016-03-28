@@ -22,10 +22,10 @@ import com.ccighgo.utils.DateUtils;
 
 @Component
 public class PartnerSeasonHelper {
-   
+
    @Autowired LoginRepository loginRepository;
    @Autowired PartnerNoteTopicRepository partnerNoteTopicRepository;
-   
+
    /**
     * Method returns note topics and notes associated with j1 program
     * 
@@ -89,7 +89,7 @@ public class PartnerSeasonHelper {
       }
       return partnerSeasonNotes;
    }
-   
+
    /**
     * @param partnerGoId
     * @return
@@ -213,7 +213,5 @@ public class PartnerSeasonHelper {
       }
       return partnerSeasonNotes;
    }
-
-
 
 }

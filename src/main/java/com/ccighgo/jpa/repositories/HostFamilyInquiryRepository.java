@@ -8,9 +8,8 @@ import com.ccighgo.db.entities.HostFamilyInquiry;
 
 @Repository
 public interface HostFamilyInquiryRepository extends JpaRepository<HostFamilyInquiry, Integer> {
-   
-	@Query("SELECT p FROM HostFamilyInquiry p WHERE p.emailAddress =?1")
-	public HostFamilyInquiry findByEmail(String email);
+
+   @Query("SELECT p FROM HostFamilyInquiry p WHERE p.emailAddress =?1")
+   public HostFamilyInquiry findByEmail(String email);
 
 }
-

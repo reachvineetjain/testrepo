@@ -16,5 +16,5 @@ public interface SeasonJ1DetailsRepository extends JpaRepository<SeasonJ1Detail,
 
    @Query("SELECT s FROM SeasonJ1Detail s WHERE s.season.seasonId = ?1 ")
    public SeasonJ1Detail findJ1DetailsBySeasonId(Integer seasonId);
-   
+
 }

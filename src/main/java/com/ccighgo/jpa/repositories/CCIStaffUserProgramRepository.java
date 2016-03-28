@@ -18,7 +18,7 @@ import com.ccighgo.db.entities.CCIStaffUserProgram;
  */
 @Repository
 public interface CCIStaffUserProgramRepository extends JpaRepository<CCIStaffUserProgram, Integer> {
-   
+
    @Query("SELECT c FROM CCIStaffUserProgram c WHERE c.ccistaffUser = ?1")
    public List<CCIStaffUserProgram> findAllProgramsByUser(CCIStaffUser ccistaffUser);
 

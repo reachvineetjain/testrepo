@@ -28,8 +28,7 @@ import com.ccighgo.service.transport.seasons.beans.gciapi.GCIAPI_UserExist_Param
 public class GCIAPI {
 
    public static final Logger LOGGER = Logger.getLogger(GCIAPI.class);
-   @Autowired
-   IGCIAPI gciApi;
+   @Autowired IGCIAPI gciApi;
 
    @GET
    @Path("ping/{pingValue}")

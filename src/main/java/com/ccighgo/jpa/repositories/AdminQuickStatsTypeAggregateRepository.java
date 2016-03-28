@@ -18,5 +18,5 @@ public interface AdminQuickStatsTypeAggregateRepository extends JpaRepository<Ad
 
    @Query("SELECT c FROM AdminQuickStatsTypeAggregate c WHERE c.adminQuickStatsType.adminQSTypeId= ?1")
    public AdminQuickStatsTypeAggregate findTypeAggregateValueByAdminTypeId(Integer adminQSTypeId);
-  
+
 }

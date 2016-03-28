@@ -5,12 +5,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 public class InsuranceResponse {
-   @XmlElement(required = true)
-   protected String statusCode;
-   @XmlElement(required = true)
-   protected String success;
-   @XmlElement(required = true)
-   protected List<Response> response;
+   @XmlElement(required = true) protected String statusCode;
+   @XmlElement(required = true) protected String success;
+   @XmlElement(required = true) protected List<Response> response;
 
    public String getStatusCode() {
       return statusCode;

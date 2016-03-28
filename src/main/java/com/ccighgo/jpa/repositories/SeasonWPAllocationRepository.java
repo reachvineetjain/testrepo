@@ -15,7 +15,7 @@ import com.ccighgo.db.entities.SeasonWPAllocation;
  */
 @Repository
 public interface SeasonWPAllocationRepository extends JpaRepository<SeasonWPAllocation, Integer> {
-   
+
    @Query("SELECT s FROM SeasonWPAllocation s WHERE s.season.seasonId = ?1")
    public List<SeasonWPAllocation> findSeasonWPAllocationBySeasonId(Integer seasonId);
 

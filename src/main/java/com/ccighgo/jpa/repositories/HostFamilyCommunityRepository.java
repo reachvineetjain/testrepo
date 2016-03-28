@@ -10,6 +10,6 @@ import com.ccighgo.db.entities.HostFamilyCommunity;
  *
  */
 @Repository
-public interface HostFamilyCommunityRepository extends JpaRepository<HostFamilyCommunity, Integer>{
+public interface HostFamilyCommunityRepository extends JpaRepository<HostFamilyCommunity, Integer> {
 
 }

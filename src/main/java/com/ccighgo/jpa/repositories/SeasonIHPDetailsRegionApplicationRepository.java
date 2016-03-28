@@ -17,7 +17,7 @@ import com.ccighgo.db.entities.SeasonIHPDetailsRegionApplication;
  */
 @Repository
 public interface SeasonIHPDetailsRegionApplicationRepository extends JpaRepository<SeasonIHPDetailsRegionApplication, Integer> {
-   
+
    @Query("SELECT s FROM SeasonIHPDetailsRegionApplication s WHERE s.seasonIhpdetail.seasonIHPDetailsId = ?1")
    List<SeasonIHPDetailsRegionApplication> findBySeasonIHPId(Integer ihpId);
 

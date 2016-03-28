@@ -75,16 +75,16 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                ErdDashboardType t = new ErdDashboardType();
                t.setTypeId(type.getFieldStaffWQTypeId());
                t.setType(type.getFieldStaffWQTypeName());
-               FieldStaffWorkQueueTypeAggregate aggregate = fieldStaffWorkQueueTypeAggregateRepository.getTypeAggregate(Integer.valueOf(fieldStaffGoId), type
-                     .getLookupDepartmentProgram().getLookupDepartmentProgramId(), type.getFieldStaffWQTypeId());
+               FieldStaffWorkQueueTypeAggregate aggregate = fieldStaffWorkQueueTypeAggregateRepository.getTypeAggregate(Integer.valueOf(fieldStaffGoId),
+                     type.getLookupDepartmentProgram().getLookupDepartmentProgramId(), type.getFieldStaffWQTypeId());
                t.setNumber(aggregate.getFieldStaffWQTypeAggregate().toString());
                List<FieldStaffWorkQueueCategory> FieldStaffWorkQueueCategories = fieldStaffWorkQueueCategoriesRepository.findAllCategoriesByTypeId(type.getFieldStaffWQTypeId());
                for (FieldStaffWorkQueueCategory catagory : FieldStaffWorkQueueCategories) {
                   ErdDashboardCategorieDetails details = new ErdDashboardCategorieDetails();
                   details.setCategorieId(catagory.getFieldStaffWQCategoryId());
                   details.setCategorie(catagory.getFieldStaffWQCategoryName());
-                  FieldStaffWorkQueueCategoryAggregate catAggregate = fieldStaffWorkQueueCategoryAggregateRepository.getCategoryAggregate(Integer.valueOf(fieldStaffGoId), catagory
-                        .getFieldStaffWorkQueueType().getLookupDepartmentProgram().getLookupDepartmentProgramId(), catagory.getFieldStaffWQCategoryId());
+                  FieldStaffWorkQueueCategoryAggregate catAggregate = fieldStaffWorkQueueCategoryAggregateRepository.getCategoryAggregate(Integer.valueOf(fieldStaffGoId),
+                        catagory.getFieldStaffWorkQueueType().getLookupDepartmentProgram().getLookupDepartmentProgramId(), catagory.getFieldStaffWQCategoryId());
                   details.setNumber(catAggregate.getFieldStaffWQCategoryAggregate().toString());
                   t.getCategories().add(details);
                }
@@ -102,8 +102,8 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                erdDashboard.getAnnouncements().add(erdAnn);
             }
 
-         erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         erdDashboard.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          e.printStackTrace();
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_DASHBOARD.getValue(),
@@ -140,11 +140,11 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
          pi.setMallingZip(fs.getMailingZipCode());
          pi.setMallingState(fs.getLookupUsstate1().getStateName());
          erdMyAccount.setPersonalInfo(pi);
-         erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         erdMyAccount.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         erdMyAccount.setStatus(
+               componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          LOGGER.error(CCIConstants.SERVICE_FAILURE);
       }
       return erdMyAccount;

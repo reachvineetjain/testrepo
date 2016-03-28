@@ -39,14 +39,14 @@ public class CciAuthenticationFilter extends AuthenticatingFilter {
       }
       LOGGER.trace("exit validateAuthData");
    }
-   
+
    @Override
    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-       HttpServletRequest httpRequest = WebUtils.toHttp(request);
-       if ("OPTIONS".equals(httpRequest.getMethod())) {
-           return true;
-       }
-       return super.isAccessAllowed(request, response, mappedValue);
+      HttpServletRequest httpRequest = WebUtils.toHttp(request);
+      if ("OPTIONS".equals(httpRequest.getMethod())) {
+         return true;
+      }
+      return super.isAccessAllowed(request, response, mappedValue);
    }
 
    @Override
