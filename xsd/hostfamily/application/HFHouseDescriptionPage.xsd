@@ -25,6 +25,8 @@
                <xsd:element name="hostFamilyHomeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="description" type="pu:HFHomeDescription" minOccurs="1" maxOccurs="1" />
                <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>

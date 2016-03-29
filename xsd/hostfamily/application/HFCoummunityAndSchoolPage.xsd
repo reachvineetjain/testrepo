@@ -25,6 +25,8 @@
                <xsd:element name="hostFamilyCommunityId" type="xsd:int" minOccurs="1" maxOccurs="1" />
                <xsd:element name="community" type="pu:HFCommunity" minOccurs="1" maxOccurs="1" />
                <xsd:element name="schoolLife" type="pu:HFSchoolLife" minOccurs="1" maxOccurs="1" />
+             <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>

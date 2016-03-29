@@ -35,6 +35,8 @@
                <xsd:element name="pets" type="pu:HFPets" minOccurs="1" maxOccurs="unbounded"  />
                
                <xsd:element name="isTheirChildrenUnder18LivesAtHome" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+             <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>

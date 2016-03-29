@@ -38,6 +38,9 @@
                <xsd:element name="dieTrayRestriction" type="pu:HFDieTrayRestriction" minOccurs="1" maxOccurs="1"  />
                <xsd:element name="miscLifeStyle" type="pu:HFMiscLifeStyle" minOccurs="1" maxOccurs="1"  />
                <xsd:element name="financialResources" type="pu:HFFinancialResource" minOccurs="1" maxOccurs="1"  />
+            <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
+               
             </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
