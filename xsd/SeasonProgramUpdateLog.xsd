@@ -6,23 +6,31 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.seasonprogramupdatelog" />
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.seasonprogramupdatelog" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 		<xsd:documentation></xsd:documentation>
 	</xsd:annotation>
 
-	<xsd:element name="SeasonProgramUpdateLog" type="seasonprogramupdate:SeasonProgramUpdateLog"></xsd:element>
-	
+	<xsd:element name="SeasonProgramUpdateLog"
+		type="seasonprogramupdate:SeasonProgramUpdateLog"></xsd:element>
+
 	<xsd:complexType name="SeasonProgramUpdateLog">
 		<xsd:sequence>
-			 <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-			 <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-			 <xsd:element name="updateLogObject" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-			 <xsd:element name="modifiedBy" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-			 <xsd:element name="modifiedOn" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-             <xsd:element name="loginId" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="departmentProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1"></xsd:element>
+			<xsd:element name="updateLogObject" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="modifiedBy" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="modifiedOn" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="loginId" type="xsd:int" minOccurs="0"
+				maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
-  
+
 </xsd:schema>

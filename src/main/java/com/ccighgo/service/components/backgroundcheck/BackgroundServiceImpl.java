@@ -71,7 +71,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          post.setEntity(entity);
          HttpResponse response = client.execute(post);
          String responseString = new BasicResponseHandler().handleResponse(response);
-         System.out.println(responseString);
+         LOGGER.info(responseString);
          JSONObject xmlJSONObj = XML.toJSONObject(responseString);
          ScreenResponse screenResponse = new ScreenResponse();
          parseResult(xmlJSONObj, screenResponse);
@@ -175,8 +175,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
       // jsonString = gson.toJson(el); //
       ScreenResponse result = gson.fromJson(x, ScreenResponse.class);
 
-      // System.out.println(jsonString);
-      System.out.println(result.getDateTime());
+      LOGGER.info(result.getDateTime());
 
    }
 
@@ -279,18 +278,15 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    @Override
    public String sendReport(BackgroundReports backgroundReports) {
       try {
-
-         System.out.println("--------------- Background Report -----------------");
          if (backgroundReports.getUserId() != null) {
-            System.out.println(" User ID : " + backgroundReports.getUserId());
-            System.out.println(" Account Name :" + backgroundReports.getAccount());
+            LOGGER.info(" User ID : " + backgroundReports.getUserId());
+            LOGGER.info(" Account Name :" + backgroundReports.getAccount());
             if (backgroundReports.getBackgroundReportPackage() != null) {
-               System.out.println(" Type : " + backgroundReports.getBackgroundReportPackage().getType());
+               LOGGER.info(" Type : " + backgroundReports.getBackgroundReportPackage().getType());
                if (backgroundReports.getBackgroundReportPackage().getScreeningStatus() != null)
-                  System.out.println("Order Status : " + backgroundReports.getBackgroundReportPackage().getScreeningStatus().getOrderStatus());
+                  LOGGER.info("Order Status : " + backgroundReports.getBackgroundReportPackage().getScreeningStatus().getOrderStatus());
             }
          }
-         System.out.println("---------------------End Of Background Report----------------------------");
          return "200 : Received !";
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);

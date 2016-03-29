@@ -26,7 +26,7 @@ public class UserManager {
       }
    }
 
-   private void validateRequired(String name, Date value) throws ValidationException {
+   public void validateRequired(String name, Date value) throws ValidationException {
       if (value == null) {
          throw new ValidationException(ErrorCode.MISSING_REQUIRED_VALUE, "The parameter '" + name + "' is required");
       }

@@ -29,8 +29,8 @@ import com.ccighgo.utils.WSDefaultResponse;
  * <h1>PartnerSeason</h1> The PartnerSeason class is the REST service front of
  * all partner season actions in the user interface.
  * <p>
- * The class uses JAX-RX api provided by Apache CXF for RESTful web services @link
- * http://cxf.apache.org/ *
+ * The class uses JAX-RX api provided by Apache CXF for RESTful web
+ * services @link http://cxf.apache.org/ *
  *
  * @author ravi
  * 

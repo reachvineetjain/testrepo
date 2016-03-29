@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/addedfieldstaff" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/addedfieldstaff"
-   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/addedfieldstaff"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/addedfieldstaff"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.fieldstaff.addedfieldstaff" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="AddedFieldStaff" type="cd:AddedFieldStaff" />
+	<xsd:element name="AddedFieldStaff" type="cd:AddedFieldStaff" />
 
-   <xsd:complexType name="AddedFieldStaff">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="fieldStaffs" type="cd:FieldStaff" minOccurs="1" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="AddedFieldStaff">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="fieldStaffs" type="cd:FieldStaff"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="FieldStaff">
-      <xsd:sequence>
-         <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="imageURL" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="state" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="zip" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasons" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="fieldStaffStatus" type="xsd:string" minOccurs="1" maxOccurs="1"/>
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="FieldStaff">
+		<xsd:sequence>
+			<xsd:element name="goId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="firstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lastName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="imageURL" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="phone" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="email" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="city" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="state" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="zip" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="active" type="xsd:boolean" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasons" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="fieldStaffStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>

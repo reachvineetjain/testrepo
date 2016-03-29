@@ -57,10 +57,10 @@ public class EmailNotifications {
    static void sendEmail(Session session, MimeMessage msg) throws NoSuchProviderException, MessagingException {
       Transport transport = session.getTransport();
       try {
-         System.out.println("Attempting to send an email through the Amazon SES SMTP interface...");
+         logger.info("Attempting to send an email through the Amazon SES SMTP interface...");
          transport.connect(EmailConfiguration.HOST, EmailConfiguration.SMTP_USERNAME, EmailConfiguration.SMTP_PASSWORD);
          transport.sendMessage(msg, msg.getAllRecipients());
-         System.out.println("Email sent!");
+         logger.info("Email sent!");
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
       } finally {

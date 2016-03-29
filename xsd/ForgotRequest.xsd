@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/resetreq" xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
-   attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:fr="http://www.ccighgo.com/resetreq">
+<xsd:schema targetNamespace="http://www.ccighgo.com/resetreq"
+	xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
+	attributeFormDefault="unqualified" jaxb:version="2.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:fr="http://www.ccighgo.com/resetreq">
 
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.utility.beans.forgot.request" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-      <xsd:documentation></xsd:documentation>
-   </xsd:annotation>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.utility.beans.forgot.request" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
 
-   <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
-   <xsd:element name="ForgotRequest" type="fr:ForgotRequest"></xsd:element>
+	<xsd:element name="ForgotRequest" type="fr:ForgotRequest"></xsd:element>
 
-   <xsd:complexType name="ForgotRequest">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="username" type="xsd:string" maxOccurs="1" minOccurs="1" />
-               <xsd:element name="email" type="xsd:string" maxOccurs="1" minOccurs="1" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="ForgotRequest">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="username" type="xsd:string"
+						maxOccurs="1" minOccurs="1" />
+					<xsd:element name="email" type="xsd:string" maxOccurs="1"
+						minOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 </xsd:schema>
 

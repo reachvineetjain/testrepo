@@ -1,35 +1,39 @@
-<xsd:schema targetNamespace="http://www.ccighgo.com/allhostfamily" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/allhostfamily"
-   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.allhostfamily" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
-   <xsd:complexType name="AllHostFamilyForFieldStaff">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="allHostFamily" type="cd:AllHostFamilyForFieldStaffDetail" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="AllHostFamilyForFieldStaffDetail">
-            <xsd:sequence>
-               <xsd:element name="hfGoId" type="xsd:int" />
-               <xsd:element name="category" type="xsd:string" />
-               <xsd:element name="address" type="xsd:string" />
-               <xsd:element name="phone" type="xsd:string" />
-               <xsd:element name="status" type="xsd:string" />
-               <xsd:element name="email	" type="xsd:string" />
-               <xsd:element name="localCoordinatorName" type="xsd:string" />
-               <xsd:element name="localCoordinatorId" type="xsd:int" />
-               <xsd:element name="participants" type="xsd:string" />
-               <xsd:element name="seasons" type="xsd:string" />
-            </xsd:sequence>
-   </xsd:complexType>
+<xsd:schema targetNamespace="http://www.ccighgo.com/allhostfamily"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/allhostfamily"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.fieldstaff.beans.allhostfamily" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+	<xsd:complexType name="AllHostFamilyForFieldStaff">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="allHostFamily" type="cd:AllHostFamilyForFieldStaffDetail"
+						maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AllHostFamilyForFieldStaffDetail">
+		<xsd:sequence>
+			<xsd:element name="hfGoId" type="xsd:int" />
+			<xsd:element name="category" type="xsd:string" />
+			<xsd:element name="address" type="xsd:string" />
+			<xsd:element name="phone" type="xsd:string" />
+			<xsd:element name="status" type="xsd:string" />
+			<xsd:element name="email	" type="xsd:string" />
+			<xsd:element name="localCoordinatorName" type="xsd:string" />
+			<xsd:element name="localCoordinatorId" type="xsd:int" />
+			<xsd:element name="participants" type="xsd:string" />
+			<xsd:element name="seasons" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>

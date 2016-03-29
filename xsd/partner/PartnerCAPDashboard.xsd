@@ -1,92 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/partnercap" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partnercap" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partnercapdetails" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnercap"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/partnercap"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.partnercapdetails" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerCAPDashboard" type="pdl:PartnerCAPDashboard" />
+	<xsd:element name="PartnerCAPDashboard" type="pdl:PartnerCAPDashboard" />
 
-   <xsd:complexType name="PartnerCAPDashboard">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerLogo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerCompany" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerAnnouncements" type="pdl:PartnerCAPAnnouncement" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="cciContact" type="pdl:PartnerCAPCCIContact" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="partnerWorkQueueTypes" type="pdl:PartnerCAPWorkQueueType" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="partnerQuickLinks" type="xsd:string" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="partnerQuickStatTypes" type="pdl:PartnerCAPQuickStatType" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="partnerCAPPrograms" type="pdl:PartnerCAPProgram" minOccurs="1" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPDashboard">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="partnerGoId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerLogo" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerCompany" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerAnnouncements" type="pdl:PartnerCAPAnnouncement"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="cciContact" type="pdl:PartnerCAPCCIContact"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="partnerWorkQueueTypes" type="pdl:PartnerCAPWorkQueueType"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="partnerQuickLinks" type="xsd:string"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="partnerQuickStatTypes" type="pdl:PartnerCAPQuickStatType"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="partnerCAPPrograms" type="pdl:PartnerCAPProgram"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCAPAnnouncement">
-      <xsd:sequence>
-         <xsd:element name="announcement" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPAnnouncement">
+		<xsd:sequence>
+			<xsd:element name="announcement" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="timestamp" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCAPCCIContact">
-      <xsd:sequence>
-         <xsd:element name="partnerProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCCIContactImageUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCCIContactName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCCIContactDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCCIContactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCCIContactExtentionNo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPCCIContact">
+		<xsd:sequence>
+			<xsd:element name="partnerProgramName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCCIContactImageUrl" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCCIContactName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCCIContactDesignation" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCCIContactPhone" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCCIContactExtentionNo" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCAPWorkQueueType">
-      <xsd:sequence>
-         <xsd:element name="partnerWorkQueueTypeName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerWorkQueueTypeNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerWorkQueueCategories" type="pdl:PartnerCAPWorkQueueCategory" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPWorkQueueType">
+		<xsd:sequence>
+			<xsd:element name="partnerWorkQueueTypeName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerWorkQueueTypeNo" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerWorkQueueCategories" type="pdl:PartnerCAPWorkQueueCategory"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCAPWorkQueueCategory">
-      <xsd:sequence>
-         <xsd:element name="partnerWorkQueueCategoryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerWorkQueueCategoryNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerWorkQueueCategoryUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPWorkQueueCategory">
+		<xsd:sequence>
+			<xsd:element name="partnerWorkQueueCategoryName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerWorkQueueCategoryNo" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerWorkQueueCategoryUrl" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCAPQuickStatType">
-      <xsd:sequence>
-         <xsd:element name="partnerQuickStatTypeName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatTypeNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatCategories" type="pdl:PartnerCAPQuickStatCategory" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPQuickStatType">
+		<xsd:sequence>
+			<xsd:element name="partnerQuickStatTypeName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerQuickStatTypeNo" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerQuickStatCategories" type="pdl:PartnerCAPQuickStatCategory"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCAPQuickStatCategory">
-      <xsd:sequence>
-         <xsd:element name="partnerQuickStatCategoryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatCategoryNo" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerQuickStatCategoryUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPQuickStatCategory">
+		<xsd:sequence>
+			<xsd:element name="partnerQuickStatCategoryName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerQuickStatCategoryNo" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerQuickStatCategoryUrl" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCAPProgram">
-      <xsd:sequence>
-         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="secondSemDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCAPProgram">
+		<xsd:sequence>
+			<xsd:element name="programName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="applicationDeadlineDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="secondSemDeadlineDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>

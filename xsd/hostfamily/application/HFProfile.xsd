@@ -1,49 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/hfprofile" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfprofile" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.hostfamily.beans.application.profile" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfprofile"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfprofile"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.hostfamily.beans.application.profile" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="HFProfile" type="pu:HFProfile" />
+	<xsd:element name="HFProfile" type="pu:HFProfile" />
 
-   <xsd:complexType name="HFProfile">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="hfSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="primaryPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="emergencyPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="emergencyContact" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="physicalAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="physicalCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="physicalState" type="pu:HFState" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="physicalZip" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="mailingAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="mailingCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="mailingState" type="pu:HFState" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="mailingZip" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="recieveEmail" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="HFProfile">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="hfSeasonId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="firstName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="lastName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="primaryPhone" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="email" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="emergencyPhone" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="emergencyContact" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="physicalAddress" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="physicalCity" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="physicalState" type="pu:HFState"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="physicalZip" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="mailingAddress" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="mailingCity" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="mailingState" type="pu:HFState"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="mailingZip" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="userName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="recieveEmail" type="xsd:boolean"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="HFState">
-      <xsd:sequence>
-         <xsd:element name="hfStateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="hfState" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="HFState">
+		<xsd:sequence>
+			<xsd:element name="hfStateId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="hfState" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>
 

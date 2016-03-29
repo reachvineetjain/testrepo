@@ -18,11 +18,11 @@ import com.ccighgo.service.transport.fieldstaff.beans.myfieldstaff.leadership.de
 @Produces("application/json")
 @Consumes("application/json")
 public class FieldStaffLeadershipDetails {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(FieldStaffLeadershipDetails.class);
-   
+
    @Autowired FieldStaffLeadershipDetailsInterface fieldStaffLeadershipDetailsInterface;
-   
+
    /**
     * @param fsGoId
     * @return
@@ -34,7 +34,7 @@ public class FieldStaffLeadershipDetails {
       LOGGER.info("calling FieldStaffLeadershipDetails.getMyFieldStaffLeadershipList ");
       return fieldStaffLeadershipDetailsInterface.getMyFieldStaffLeadershipList(fsGoId);
    }
-   
+
    /**
     * @param fsGoId
     * @return

@@ -1,59 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/fsladminseason" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/fsladminseason" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.season.details" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/fsladminseason"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/fsladminseason"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.fieldstaff.beans.season.details" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="FieldStaffAdminSeasonDetails" type="pu:FieldStaffAdminSeasonDetails" />
+	<xsd:element name="FieldStaffAdminSeasonDetails" type="pu:FieldStaffAdminSeasonDetails" />
 
-   <xsd:complexType name="FieldStaffAdminSeasonDetails">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="fsSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="agreementSigned" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="hostFamilyStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="seasonStatus" type="pu:SeasonStatus" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="paymentSchedule" type="pu:PaymentSchedule" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="defaultMonitoringStipend" type="pu:DefaultMonitoringStipend" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="erd" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="rd" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="rm" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="canPresentGrantsParticipants" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="isRecruiterLC" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="FieldStaffAdminSeasonDetails">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="fsSeasonId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="agreementSigned" type="xsd:boolean"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="hostFamilyStatus" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="seasonStatus" type="pu:SeasonStatus"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="paymentSchedule" type="pu:PaymentSchedule"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="defaultMonitoringStipend" type="pu:DefaultMonitoringStipend"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="erd" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="rd" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="rm" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="canPresentGrantsParticipants" type="xsd:boolean"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="isRecruiterLC" type="xsd:boolean"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="SeasonStatus">
-      <xsd:sequence>
-         <xsd:element name="seasonStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="SeasonStatus">
+		<xsd:sequence>
+			<xsd:element name="seasonStatusId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PaymentSchedule">
-      <xsd:sequence>
-         <xsd:element name="paymentScheduleId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="paymentSchedule" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PaymentSchedule">
+		<xsd:sequence>
+			<xsd:element name="paymentScheduleId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="paymentSchedule" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="DefaultMonitoringStipend">
-      <xsd:sequence>
-         <xsd:element name="defaultMonitoringStipendId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="defaultMonitoringStipend" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="DefaultMonitoringStipend">
+		<xsd:sequence>
+			<xsd:element name="defaultMonitoringStipendId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="defaultMonitoringStipend" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>
 
