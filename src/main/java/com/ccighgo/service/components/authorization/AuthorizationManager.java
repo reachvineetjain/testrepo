@@ -92,9 +92,8 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                   if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTICPANT_USER)) {
                      lt.setUserDetailUrl("/authorize/ptcpnt/");
                   }
-                  if (loginUsrType.getUserType() != null)
-                     if (loginUsrType.getUserType().getUserTypeId() != null)
-                        lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
+                  if (loginUsrType.getUserType() != null && loginUsrType.getUserType().getUserTypeId() != null)
+                     lt.setLoginTypeId(loginUsrType.getUserType().getUserTypeId());
                   lt.setLoginType(loginUsrType.getUserType().getUserTypeName());
                   if (loginUsrType.getUserType() != null)
                      lt.setDefault(loginUsrType.getDefaultUserType() == 0 ? false : true);

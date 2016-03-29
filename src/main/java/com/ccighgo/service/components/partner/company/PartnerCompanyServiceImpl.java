@@ -409,12 +409,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   break;
                }
             }
-            if (partnerMainOffice != null) {
-               if (Integer.valueOf(partnerOfficeId) == partnerMainOffice.getPartnerOfficeId()) {
-                  throw new CcighgoException("The office you were trying to delete is marked as primary office. "
-                        + "Please dissociate the users from this office and mark any other office of your choice as primary first");
-               }
+            if (partnerMainOffice != null && Integer.valueOf(partnerOfficeId) == partnerMainOffice.getPartnerOfficeId()) {
+               throw new CcighgoException("The office you were trying to delete is marked as primary office. "
+                     + "Please dissociate the users from this office and mark any other office of your choice as primary first");
             }
+
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(partner.getPartnerGoId(), Integer.valueOf(partnerOfficeId));
             if (!(partnerUserList.isEmpty())) {
                throw new CcighgoException("The office you were trying to delete has users associated. "

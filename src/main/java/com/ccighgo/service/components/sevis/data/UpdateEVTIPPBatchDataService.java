@@ -1,7 +1,6 @@
 package com.ccighgo.service.components.sevis.data;
 
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.TIPP;
 
 import org.springframework.stereotype.Component;
 
@@ -17,11 +16,6 @@ public class UpdateEVTIPPBatchDataService implements IEVBatchDataService {
       // choices
       // which one?
       return null;
-   }
-
-   private TIPP createTIPP() {
-      TIPP tipp = new TIPP();
-      return tipp;
    }
 
 }

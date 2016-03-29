@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/sevisbatch" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:sb="http://www.ccighgo.com/sevisbatch"
+<xsd:schema targetNamespace="http://www.ccighgo.com/sevisbatch"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:sb="http://www.ccighgo.com/sevisbatch"
 	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -17,14 +19,20 @@
 		<xsd:complexContent>
 			<xsd:extension base="common:Response">
 				<xsd:sequence>
-					<xsd:element name="batchType" type="sb:BatchType" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="userId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="seasonId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="partnerGoId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="participant" minOccurs="1" maxOccurs="unbounded">
+					<xsd:element name="batchType" type="sb:BatchType"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="userId" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="seasonId" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerGoId" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="participant" minOccurs="1"
+						maxOccurs="unbounded">
 						<xsd:complexType>
 							<xsd:sequence>
-								<xsd:element name="participantGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+								<xsd:element name="participantGoId" type="xsd:int"
+									minOccurs="1" maxOccurs="1" />
 							</xsd:sequence>
 						</xsd:complexType>
 					</xsd:element>
@@ -35,7 +43,7 @@
 
 	<xsd:simpleType name="BatchType">
 		<xsd:restriction base="xsd:string">
-		
+
 			<!-- New Student -->
 			<xsd:enumeration value="Create.Student" />
 
@@ -44,7 +52,8 @@
 			<xsd:enumeration value="Update.EV.Validate.usAddress" />
 
 			<!-- Validation Site Of Activity -->
-			<!-- There is no validate event for SOA. SOA is EV specific. Available SOA update events are - Add, Delete, Edit -->
+			<!-- There is no validate event for SOA. SOA is EV specific. Available 
+				SOA update events are - Add, Delete, Edit -->
 			<!-- What's SOA validation ??? -->
 
 			<!-- Payment -->

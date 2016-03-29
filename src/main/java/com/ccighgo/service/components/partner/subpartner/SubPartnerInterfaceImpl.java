@@ -99,9 +99,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired CountryRepository countryRepository;
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
 
-   public static final Integer APPROVED_STATUS = 5;
-   public static final Integer VALID = 11;
-
    @Override
    @Transactional
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -138,11 +135,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                PartnerUser partnerUser = new PartnerUser();
                if (partnerUsers != null && partnerUsers.size() > 0) {
                   for (PartnerUser puser : partnerUsers) {
-                     if (puser.getPartner() != null)
-                        if (puser.getPartner().getPartnerGoId() == subPartner.getGoIdSequence().getGoId()) {
-                           partnerUser = puser;
-                           break;
-                        }
+                     if (puser.getPartner() != null && puser.getPartner().getPartnerGoId() == subPartner.getGoIdSequence().getGoId()) {
+                        partnerUser = puser;
+                        break;
+                     }
                   }
                   Login login = partnerUser.getLogin();
                   if (login != null) {
@@ -156,19 +152,18 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                List<SubPartnerSeasons> subPartnerSeasonsList = new ArrayList<SubPartnerSeasons>();
                if (subPartner.getPartnerSeasons() != null && subPartner.getPartnerSeasons().size() > 0) {
                   for (PartnerSeason partnerSeason : subPartner.getPartnerSeasons()) {
-                     if (partnerSeason.getPartnerStatus1() != null)
-                        if (partnerSeason.getPartnerStatus1().getPartnerStatusId() == 5) {
-                           SubPartnerSeasons SubPartnerSeasons = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons();
-                           SubPartnerSeasons.setSubPartnerSeasonId(partnerSeason.getPartnerSeasonId());
-                           SubPartnerSeasons.setSubPartnerSeasonProgramId(partnerSeason.getSeason().getSeasonId());
-                           SubPartnerSeasons.setSubPartnerSeasonProgram(partnerSeason.getSeason().getSeasonName());
-                           subPartnerSeasonsList.add(SubPartnerSeasons);
-                        }
+                     if (partnerSeason.getPartnerStatus1() != null && partnerSeason.getPartnerStatus1().getPartnerStatusId() == 5) {
+                        SubPartnerSeasons SubPartnerSeasons = new com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerSeasons();
+                        SubPartnerSeasons.setSubPartnerSeasonId(partnerSeason.getPartnerSeasonId());
+                        SubPartnerSeasons.setSubPartnerSeasonProgramId(partnerSeason.getSeason().getSeasonId());
+                        SubPartnerSeasons.setSubPartnerSeasonProgram(partnerSeason.getSeason().getSeasonName());
+                        subPartnerSeasonsList.add(SubPartnerSeasons);
+                     }
                   }
                }
                sp.getSubPartnerSeasons().addAll(subPartnerSeasonsList);
                subPartnerDetails.getSubPartners().add(sp);
-               if (subPartnerDetails.getSubPartners() == null && subPartnerDetails.getSubPartners().isEmpty())
+               if (subPartnerDetails.getSubPartners() == null || subPartnerDetails.getSubPartners().isEmpty())
                   subPartnerDetails = setSubPartnerDetailsStatus(subPartnerDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
                         messageUtil.getMessage(CCIConstants.NO_RECORD));
                else
@@ -274,11 +269,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
             for (PartnerUser puser : partnerUsers) {
-               if (puser.getPartner() != null)
-                  if (puser.getPartner().getPartnerGoId().equals(Integer.valueOf(subPartnerId))) {
-                     partnerUser = puser;
-                     break;
-                  }
+               if (puser.getPartner() != null && puser.getPartner().getPartnerGoId().equals(Integer.valueOf(subPartnerId))) {
+                  partnerUser = puser;
+                  break;
+               }
             }
             Login login = partnerUser.getLogin();
             if (login != null) {
@@ -325,7 +319,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   if (partnerContact.getRecieveNotificationEmails() != null)
                      subPartnerPrimaryContact.setReciveNotificationemailfromcc(partnerContact.getRecieveNotificationEmails() == CCIConstants.ACTIVE ? true : false);
                } catch (Exception e) {
-                  System.out.println("partner Contact 'Receive Notification Emails flag' error ");
+                  LOGGER.error(e.getMessage(), e);
                }
                subPartnerPrimaryContact.setSkypeId(partnerContact.getSkypeId());
                subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
@@ -598,9 +592,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
          reviewStatus.setPartner(subPartnerDetails);
          // set the default partnerLeadStatus to Valid
-         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(VALID));
+         reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.VALID));
          // set the partnerAgentStatusId to Approved i.e in case of Sub partner
-         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(APPROVED_STATUS));
+         reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.APPROVED_STATUS));
          partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
          responce.setGoId(goIdSequence.getGoId());
@@ -616,7 +610,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
    @Override
    @Transactional
-   public WSDefaultResponse UpdateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner) {
+   public WSDefaultResponse updateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner) {
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          Partner subPartnerDetails = partnerRepository.findOne(Integer.parseInt(subPartner.getGoId()));
@@ -636,11 +630,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
             for (PartnerUser puser : partnerUsers) {
-               if (puser.getPartner() != null)
-                  if (puser.getPartner().getPartnerGoId() == Integer.valueOf(subPartner.getGoId())) {
-                     partnerUser = puser;
-                     break;
-                  }
+               if (puser.getPartner() != null && puser.getPartner().getPartnerGoId() == Integer.valueOf(subPartner.getGoId())) {
+                  partnerUser = puser;
+                  break;
+               }
             }
             Login login = partnerUser.getLogin();
             if (login != null) {
@@ -737,7 +730,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                sl.setSalutationValue(salutation.getSalutationName());
                as.getSalutationList().add(sl);
             }
-         if (as.getSalutationList() == null && as.getSalutationList().isEmpty())
+         if (as.getSalutationList() != null && !as.getSalutationList().isEmpty())
             as.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_SALUTATION.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          else
@@ -761,11 +754,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
             for (PartnerUser puser : partnerUsers) {
-               if (puser.getPartner() != null)
-                  if (puser.getPartner().getPartnerGoId().equals(Integer.valueOf(goId))) {
-                     partnerUser = puser;
-                     break;
-                  }
+               if (puser.getPartner() != null && puser.getPartner().getPartnerGoId().equals(Integer.valueOf(goId))) {
+                  partnerUser = puser;
+                  break;
+               }
             }
             Login login = partnerUser.getLogin();
             if (login != null) {

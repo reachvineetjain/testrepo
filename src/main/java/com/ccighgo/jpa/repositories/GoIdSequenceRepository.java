@@ -7,6 +7,5 @@ import com.ccighgo.db.entities.GoIdSequence;
 
 @Repository
 public interface GoIdSequenceRepository extends JpaRepository<GoIdSequence, Integer> {
-   
-   
+
 }

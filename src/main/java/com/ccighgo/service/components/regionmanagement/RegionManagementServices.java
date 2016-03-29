@@ -20,8 +20,8 @@ import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 public interface RegionManagementServices {
 
    /**
-    * Method gets complete list of super regions, regions belonging to super region and states belonging to each region
-    * for the season
+    * Method gets complete list of super regions, regions belonging to super
+    * region and states belonging to each region for the season
     * 
     * @param seasonId
     * @return RegionManagementDetails JSON object

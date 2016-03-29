@@ -15,9 +15,6 @@ public class ContextFinalizer implements ServletContextListener {
 
    private static final Logger LOGGER = Logger.getLogger(ContextFinalizer.class);
 
-   public void contextInitialized(ServletContextEvent sce) {
-   }
-
    public void contextDestroyed(ServletContextEvent sce) {
       Enumeration<Driver> drivers = DriverManager.getDrivers();
       Driver d = null;
@@ -38,6 +35,11 @@ public class ContextFinalizer implements ServletContextListener {
             }
          }
       }
+   }
+
+   @Override
+   public void contextInitialized(ServletContextEvent arg0) {
+
    }
 
 }

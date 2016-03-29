@@ -41,10 +41,8 @@ public class CallingServiceTest {
          String password = "Vpmpj4v7EpbrDW";
 
          String authString = name + ":" + password;
-         System.out.println("auth string: " + authString);
          byte[] authEncBytes = Base64.encodeBase64(authString.getBytes());
          String authStringEnc = new String(authEncBytes);
-         System.out.println("Base64 encoded auth string: " + authStringEnc);
 
          URL url = new URL(webPage);
          URLConnection urlConnection = url.openConnection();
@@ -58,11 +56,7 @@ public class CallingServiceTest {
          while ((numCharsRead = isr.read(charArray)) > 0) {
             sb.append(charArray, 0, numCharsRead);
          }
-         String result = sb.toString();
 
-         System.out.println("*** BEGIN ***");
-         System.out.println(result);
-         System.out.println("*** END ***");
       } catch (MalformedURLException e) {
          e.printStackTrace();
       } catch (IOException e) {
@@ -71,7 +65,6 @@ public class CallingServiceTest {
    }
 
    public static String callService(String URL) throws IOException {
-      long time = System.currentTimeMillis();
       CredentialsProvider provider = new BasicCredentialsProvider();
       provider.setCredentials(new AuthScope("api.calltrackingmetrics.com", 443), new UsernamePasswordCredentials(USERNAME, PASSWORD));
       HttpClient httpclient = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
@@ -83,12 +76,10 @@ public class CallingServiceTest {
       httppost.setHeader("user", USERNAME);
       ResponseHandler<String> handler = new BasicResponseHandler();
       String authResponse = httpclient.execute(httppost, handler);
-      System.out.println("time " + (System.currentTimeMillis() - time));
       return authResponse;
    }
 
    public void getFormData2(String URL) throws IOException {
-      HttpClient httpclient = HttpClients.createDefault();
       HttpPost httppost = new HttpPost("http://www.envisageglobalinsurance.com/admin/api/ApiPlan/findPlanParticipants/id/83");
 
       // Request parameters and other properties.
@@ -97,10 +88,6 @@ public class CallingServiceTest {
       params.add(new BasicNameValuePair("password", PASSWORD));
       params.add(new BasicNameValuePair("key", TOKEN_VALUE));
       httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-
-      ResponseHandler<String> handler = new BasicResponseHandler();
-      String authResponse = httpclient.execute(httppost, handler);
-      System.out.println(authResponse);
 
    }
 

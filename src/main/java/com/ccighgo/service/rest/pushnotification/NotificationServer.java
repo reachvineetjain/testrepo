@@ -15,8 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import org.apache.log4j.Logger;
-
 import com.ccighgo.service.transport.common.response.beans.Response;
 
 @Path("/push/notification/")
@@ -24,7 +22,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @ServerEndpoint("/notify/{uid}")
 public class NotificationServer {
 
-   private static final Logger LOGGER = Logger.getLogger(NotificationServer.class);
+   // private static final Logger LOGGER =
+   // Logger.getLogger(NotificationServer.class);
 
    /**
     * @OnOpen allows us to intercept the creation of a new session. The session
@@ -34,6 +33,7 @@ public class NotificationServer {
    @OnOpen
    public void onOpen(@PathParam("uid") String uid, Session session) {
       SessionRegistry.INSTANCE.addSession(uid, session);
+
       try {
          session.getBasicRemote().sendText("Connection Established");
       } catch (IOException ex) {
@@ -48,6 +48,7 @@ public class NotificationServer {
     */
    @OnMessage
    public void onMessage(String message, Session session) {
+
       try {
          session.getBasicRemote().sendText(message);
       } catch (IOException ex) {
@@ -67,6 +68,7 @@ public class NotificationServer {
 
    // @Scheduled(fixedDelay = 10000)
    public void execute() {
+
       Collection<Session> peers = SessionRegistry.INSTANCE.getSessions().values();
       Notifications.broadcastMessage("$$ Notification from server $$", peers);
    }

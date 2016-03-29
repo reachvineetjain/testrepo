@@ -17,16 +17,16 @@ import com.ccighgo.service.components.authorization.AuthorizationManagerInterfac
  */
 @Component
 public class AuthenticationServiceImpl implements AuthenticationService {
-   
+
    @Autowired AuthorizationManagerInterface authorizationManager;
 
-	@Override
-	public Auth login() {
-		String userName = SecurityUtils.getSubject().getPrincipal().toString();
-		LOGGER.info("User with login name :"+userName+" attempting login");
+   @Override
+   public Auth login() {
+      String userName = SecurityUtils.getSubject().getPrincipal().toString();
+      LOGGER.info("User with login name :" + userName + " attempting login");
       return authorizationManager.getUserLogin(userName);
-	}
-	
-	private static final Logger LOGGER = Logger.getLogger(AuthenticationServiceImpl.class);
+   }
+
+   private static final Logger LOGGER = Logger.getLogger(AuthenticationServiceImpl.class);
 
 }

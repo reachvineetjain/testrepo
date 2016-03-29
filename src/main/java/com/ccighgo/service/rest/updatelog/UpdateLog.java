@@ -20,8 +20,7 @@ import com.ccighgo.service.transport.seasons.beans.seasonprogramupdatelog.Season
 @Consumes("application/json")
 public class UpdateLog {
 
-   @Autowired
-   UpdateLogServiceInterface updateLogServiceInterface;
+   @Autowired UpdateLogServiceInterface updateLogServiceInterface;
 
    @GET
    @Path("view/log/seasondepartment/{seasonId}")

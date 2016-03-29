@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.ccighgo.db.entities.HostFamilyUpdateLog;
 
 @Repository
-public interface HostFamilyUpdateLogRepository extends JpaRepository<HostFamilyUpdateLog, Integer>{
+public interface HostFamilyUpdateLogRepository extends JpaRepository<HostFamilyUpdateLog, Integer> {
 
    @Query("SELECT f FROM HostFamilyUpdateLog f WHERE f.hostFamily.hostFamilyGoId = ?1")
    List<HostFamilyUpdateLog> getHostFamilyUpdateLogByHsGoId(int fsGoId);

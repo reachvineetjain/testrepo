@@ -168,6 +168,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          try {
             resultList = query.getResultList();
          } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
          }
          if (resultList != null && !resultList.isEmpty()) {
 

@@ -134,10 +134,6 @@ public class CreateNewEVBatchDataService implements IEVBatchDataService {
       return new JAXBElement<T>(new QName("", uriLocalPart), klass, data);
    }
 
-   private <T> JAXBElement<T> wrapAsJaxb(T data, Class<T> klass, String namespaceUri, String uriLocalPart) {
-      return new JAXBElement<T>(new QName(namespaceUri, uriLocalPart), klass, data);
-   }
-
    private JAXBElement<NonImgBioType> createBio() {
       NonImgBioType bio = new NonImgBioType();
 

@@ -13,7 +13,7 @@ import com.ccighgo.db.entities.SeasonLSDetail;
  */
 @Repository
 public interface SeasonLSDetailsRepository extends JpaRepository<SeasonLSDetail, Integer> {
-	@Query("select s from SeasonLSDetail s  where s.season.seasonId = ?1 ")
-	SeasonLSDetail findGHTLSBySeasonId(int parseInt);
+   @Query("select s from SeasonLSDetail s  where s.season.seasonId = ?1 ")
+   SeasonLSDetail findGHTLSBySeasonId(int parseInt);
 
 }

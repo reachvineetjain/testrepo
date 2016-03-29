@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/sevisbatchdetails" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:sb="http://www.ccighgo.com/sevisbatchdetails"
+<xsd:schema targetNamespace="http://www.ccighgo.com/sevisbatchdetails"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:sb="http://www.ccighgo.com/sevisbatchdetails"
 	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -17,17 +19,28 @@
 		<xsd:complexContent>
 			<xsd:extension base="common:Response">
 				<xsd:sequence>
-					<xsd:element name="batchId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="batchType" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="batchStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="exportedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="importedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="createCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="updateCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="program" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="fileUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="batchId" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="batchType" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="batchStatus" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="createdOn" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="createdBy" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="exportedOn" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="importedOn" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="createCount" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="updateCount" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="program" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="fileUrl" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

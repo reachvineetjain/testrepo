@@ -9,10 +9,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
 import javax.servlet.ServletContext;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -21,12 +19,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.validation.SchemaFactory;
-
 import org.springframework.context.MessageSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
 import com.ccighgo.service.component.serviceutils.ApplicationContextProvider;
 import com.google.common.base.Preconditions;
 
@@ -127,37 +121,41 @@ public final class SevisUtils {
     * @throws SAXException
     */
    public static boolean validate(JAXBContext ctx, Object jaxb, File schemaFile) throws JAXBException, SAXException {
-      Marshaller marshaller;
-      marshaller = ctx.createMarshaller();
-
-      // Set Schema for Validation
-      SchemaFactory sf = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      marshaller.setSchema(sf.newSchema(schemaFile));
-
-      // validate with schema
-      marshaller.marshal(jaxb, new DefaultHandler());
+      // Marshaller marshaller;
+      // marshaller = ctx.createMarshaller();
+      //
+      // // TODO Error not found constant
+      // // Set Schema for Validation
+      // // SchemaFactory sf =
+      // //
+      // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      // // marshaller.setSchema(sf.newSchema(schemaFile));
+      // //
+      // // // validate with schema
+      // // marshaller.marshal(jaxb, new DefaultHandler());
 
       return true;
    }
 
    public static boolean validateJaxb(JAXBContext ctx, Object jaxb, File schemaFile) {
-      Marshaller marshaller;
-      try {
-         marshaller = ctx.createMarshaller();
-
-         // Set Schema for Validation
-         SchemaFactory sf = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-         marshaller.setSchema(sf.newSchema(schemaFile));
-
-         // validate with schema
-         marshaller.marshal(jaxb, new DefaultHandler());
-
-         return true;
-      } catch (JAXBException e) {
-         e.printStackTrace();
-      } catch (SAXException e) {
-         e.printStackTrace();
-      }
+      // Marshaller marshaller;
+      // try {
+      // marshaller = ctx.createMarshaller();
+      //
+      // // TODO Error not found constant
+      // // Set Schema for Validation
+      // // SchemaFactory sf =
+      // //
+      // SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      // // marshaller.setSchema(sf.newSchema(schemaFile));
+      // //
+      // // // validate with schema
+      // // marshaller.marshal(jaxb, new DefaultHandler());
+      //
+      // return true;
+      // } catch (JAXBException e) {
+      // e.printStackTrace();
+      // }
 
       return false;
    }

@@ -22,6 +22,5 @@ public interface PartnerInquiryService {
    void updateAdminScreenPartner();
 
    PartnerRecruitmentAdmin getAdminScreenForPartner();
-   
 
 }

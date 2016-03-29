@@ -20,12 +20,13 @@ import com.ccighgo.utils.ExceptionUtil;
 public class GCIAPIImpl implements IGCIAPI {
 
    private static final Logger LOGGER = Logger.getLogger(GCIAPIImpl.class);
+   private String READ_PRIVATE_SERVICE = "https://gcidev.wpengine.com/api/v2/test/read/private";
 
    @Override
    public GCIAPI_Response addUser(GCIAPI_AddUser_Param userParam) {
       try {
-         if(userParam!=null)
-         LOGGER.info(userParam.toString());
+         if (userParam != null)
+            LOGGER.info(userParam.toString());
       } catch (Exception e) {
          e.printStackTrace();
       }

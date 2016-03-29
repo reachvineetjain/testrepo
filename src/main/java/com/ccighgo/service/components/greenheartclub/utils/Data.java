@@ -1,13 +1,10 @@
 package com.ccighgo.service.components.greenheartclub.utils;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class Data {
 
-   @SerializedName("status") @Expose private Integer status;
-   @SerializedName("count") @Expose private Integer count;
-   @SerializedName("debug") @Expose private String debug;
+   private Integer status;
+   private Integer count;
+   private String debug;
 
    /**
     * 

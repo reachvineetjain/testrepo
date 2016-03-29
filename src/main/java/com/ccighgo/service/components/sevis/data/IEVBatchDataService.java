@@ -11,82 +11,81 @@ import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV;
 import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor;
 
 @Service
-public interface IEVBatchDataService
-		extends IBatchDataService<SEVISBatchCreateUpdateEV> {
+public interface IEVBatchDataService extends IBatchDataService<SEVISBatchCreateUpdateEV> {
 
-	/**
-	 * Creates EV with minimal attributes for updates.
-	 * 
-	 * @param userId
-	 * @param sevisId
-	 * @param requestId
-	 * @return {@link ExchangeVisitor}
-	 */
-	default ExchangeVisitor createExchangeVisitor(String userId, String sevisId, String requestId) {
-		Preconditions.checkArgument(userId != null && !userId.isEmpty());
-		Preconditions.checkArgument(sevisId != null && !sevisId.isEmpty());
-		Preconditions.checkArgument(requestId != null && !requestId.isEmpty());
+   /**
+    * Creates EV with minimal attributes for updates.
+    * 
+    * @param userId
+    * @param sevisId
+    * @param requestId
+    * @return {@link ExchangeVisitor}
+    */
+   default ExchangeVisitor createExchangeVisitor(String userId, String sevisId, String requestId) {
+      Preconditions.checkArgument(userId != null && !userId.isEmpty());
+      Preconditions.checkArgument(sevisId != null && !sevisId.isEmpty());
+      Preconditions.checkArgument(requestId != null && !requestId.isEmpty());
 
-		ExchangeVisitor ev = new ExchangeVisitor();
-		ev.setSevisID(sevisId);
-		ev.setRequestID(requestId);
-		ev.setUserID(userId);
-		return ev;
-	}
+      ExchangeVisitor ev = new ExchangeVisitor();
+      ev.setSevisID(sevisId);
+      ev.setRequestID(requestId);
+      ev.setUserID(userId);
+      return ev;
+   }
 
-	/**
-	 * Creates Update.EV batch with minimal required attributes.
-	 * 
-	 * @param userId
-	 * @param orgId
-	 * @param batchId
-	 * @return {@link SEVISBatchCreateUpdateEV}
-	 */
-	default SEVISBatchCreateUpdateEV createUpdateEVBatch(String userId, String orgId, String batchId) {
+   /**
+    * Creates Update.EV batch with minimal required attributes.
+    * 
+    * @param userId
+    * @param orgId
+    * @param batchId
+    * @return {@link SEVISBatchCreateUpdateEV}
+    */
+   default SEVISBatchCreateUpdateEV createUpdateEVBatch(String userId, String orgId, String batchId) {
 
-		SEVISBatchCreateUpdateEV batch = createEVBatch(userId, orgId, batchId);
-		UpdateEV updateEv = new UpdateEV();
-		batch.setUpdateEV(updateEv);
+      SEVISBatchCreateUpdateEV batch = createEVBatch(userId, orgId, batchId);
+      UpdateEV updateEv = new UpdateEV();
+      batch.setUpdateEV(updateEv);
 
-		return batch;
-	}
+      return batch;
+   }
 
-	/**
-	 * Creates Create.EV batch with minimal required attributes.
-	 * 
-	 * @param userId
-	 * @param orgId
-	 * @param batchId
-	 * @return
-	 */
-	default SEVISBatchCreateUpdateEV createCreateEVBatch(String userId, String orgId, String batchId) {
+   /**
+    * Creates Create.EV batch with minimal required attributes.
+    * 
+    * @param userId
+    * @param orgId
+    * @param batchId
+    * @return
+    */
+   default SEVISBatchCreateUpdateEV createCreateEVBatch(String userId, String orgId, String batchId) {
 
-		SEVISBatchCreateUpdateEV batch = createEVBatch(userId, orgId, batchId);
-		CreateEV createEV = new CreateEV();
-		batch.setCreateEV(createEV);
+      SEVISBatchCreateUpdateEV batch = createEVBatch(userId, orgId, batchId);
+      CreateEV createEV = new CreateEV();
+      batch.setCreateEV(createEV);
 
-		return batch;
-	}
+      return batch;
+   }
 
-	default SEVISBatchCreateUpdateEV createEVBatch(String userId, String orgId, String batchId) {
+   default SEVISBatchCreateUpdateEV createEVBatch(String userId, String orgId, String batchId) {
 
-		Preconditions.checkArgument(userId != null && !userId.isEmpty());
-		Preconditions.checkArgument(orgId != null && !orgId.isEmpty());
-		Preconditions.checkArgument(batchId != null && !batchId.isEmpty());
+      Preconditions.checkArgument(userId != null && !userId.isEmpty());
+      Preconditions.checkArgument(orgId != null && !orgId.isEmpty());
+      Preconditions.checkArgument(batchId != null && !batchId.isEmpty());
 
-		SEVISBatchCreateUpdateEV batch = new SEVISBatchCreateUpdateEV();
-		batch.setUserID(userId);
+      SEVISBatchCreateUpdateEV batch = new SEVISBatchCreateUpdateEV();
+      batch.setUserID(userId);
 
-		BatchHeaderType headerType = new BatchHeaderType();
+      BatchHeaderType headerType = new BatchHeaderType();
 
-		headerType.setBatchID(batchId);
+      headerType.setBatchID(batchId);
 
-		// school code
-		headerType.setOrgID(orgId);
+      // school code
+      headerType.setOrgID(orgId);
 
-		batch.setBatchHeader(headerType);
+      batch.setBatchHeader(headerType);
 
-		return batch;
-	}
+      return batch;
+   }
 
 }

@@ -151,6 +151,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                               try {
                                  superRegionsERDs.getAssignedERDStaffs().remove(assignedERDStaff);
                               } catch (Exception e) {
+                                 LOGGER.error(e.getMessage(), e);
                               }
                         }
 
@@ -342,6 +343,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                                     }
                                  }
                               } catch (Exception e) {
+                                 LOGGER.error(e.getMessage(), e);
                               }
                            } else {
                               for (int i = 0; i < regionsRDs.getAssignedRDStaffs().size(); i++) {
@@ -416,7 +418,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
                StateInfo sInfo = new StateInfo();
 
-               // LookupUSState state = stateRepository.findOne(sId);
                if (state != null) {
                   sInfo.setStateCode(state.getStateCode());
                   sInfo.setStateName(state.getStateName());

@@ -5,8 +5,6 @@ package com.ccighgo.service.test.utility;
 
 import java.util.Locale;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -15,20 +13,17 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  *
  */
 
-
 public class TestMessageResources {
 
-	//@Test
-	public void test() {
-		// fail("Not yet implemented");
+   // @Test
+   public void test() {
+      // fail("Not yet implemented");
 
-		ApplicationContext context =new FileSystemXmlApplicationContext(
-		        "src/main/webapp/WEB-INF/applicationContext.xml");
+      ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/applicationContext.xml");
 
-		String name = context.getMessage("login.err.user.notexist", new Object[] { 28,
-				"creoSpan.com" }, Locale.US);
-		System.out.println(name);
+      String name = context.getMessage("login.err.user.notexist", new Object[] { 28, "creoSpan.com" }, Locale.US);
+      System.out.println(name);
 
-	}
+   }
 
 }

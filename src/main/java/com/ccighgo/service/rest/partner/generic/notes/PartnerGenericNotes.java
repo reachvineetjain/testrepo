@@ -10,8 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.component.partner.generic.PartnerGenericNoteInterface;
@@ -29,8 +27,6 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Produces("application/json")
 @Consumes("application/json")
 public class PartnerGenericNotes {
-
-   private static final Logger LOGGER = LoggerFactory.getLogger(PartnerGenericNotes.class);
 
    @Autowired PartnerGenericNoteInterface partnerGenericNoteInterface;
 

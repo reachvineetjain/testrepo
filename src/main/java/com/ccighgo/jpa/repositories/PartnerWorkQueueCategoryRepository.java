@@ -17,7 +17,7 @@ import com.ccighgo.db.entities.PartnerWorkQueueCategory;
  */
 @Repository
 public interface PartnerWorkQueueCategoryRepository extends JpaRepository<PartnerWorkQueueCategory, Integer> {
-   
+
    @Query("SELECT p FROM PartnerWorkQueueCategory p WHERE p.partnerWorkQueueType.partnerWQTypeId = ?1")
    public List<PartnerWorkQueueCategory> getWorkQueueCategoryForType(Integer typeId);
 

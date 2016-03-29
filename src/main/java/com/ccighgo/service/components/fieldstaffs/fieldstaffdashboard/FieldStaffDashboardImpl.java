@@ -52,7 +52,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
    public ErdDashboard getErdDashboardWorkQueues(String fieldStaffGoId) {
 
       ErdDashboard erdDashboard = new ErdDashboard();
-      if (fieldStaffGoId == null || fieldStaffGoId.isEmpty() == true) {
+      if (fieldStaffGoId == null || fieldStaffGoId.isEmpty()) {
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_FIELD_STAFF_ID.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID)));
          LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID));

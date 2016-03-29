@@ -19,18 +19,22 @@ public class SevisLogProcessor implements ISevisLogProcessor {
       TransactionLogType log = SevisUtils.unmarshalSevisLog(new File("C:\\Users\\CreoDeveloper\\git\\CCIGHGO\\xsd\\sevisbatch\\gov\\SevisTransLog.xml"));
 
       SevisLogUtils logUtils = new SevisLogUtils(log);
-      System.out.println("Total participants processed = " + logUtils.getTotalRecords().size());
-      System.out.println("Processing failed participants = " + logUtils.getFailedRecords().size());
+      // System.out.println("Total participants processed = " +
+      // logUtils.getTotalRecords().size());
+      // System.out.println("Processing failed participants = " +
+      // logUtils.getFailedRecords().size());
 
       for (Record r : logUtils.getFailedRecords()) {
-         System.out.println("failed participant sevis = " + r.getRequestID());
-         System.out.println("Error = " + r.getResult().getErrorMessage());
+         // System.out.println("failed participant sevis = " +
+         // r.getRequestID());
+         // System.out.println("Error = " + r.getResult().getErrorMessage());
       }
 
       for (Record r : logUtils.getSuccessRecords()) {
-         System.out.println("New participant sevis id = " + r.getSevisID());
-         System.out.println("Any Dependents? = " + r.getDependent().size());
-         System.out.println("Dependent sevis id = " + r.getDependent().get(0).getDependentSevisID());
+         // System.out.println("New participant sevis id = " + r.getSevisID());
+         // System.out.println("Any Dependents? = " + r.getDependent().size());
+         // System.out.println("Dependent sevis id = " +
+         // r.getDependent().get(0).getDependentSevisID());
       }
 
       // TODO convert log JAXB into appropriate format required for front.
@@ -42,6 +46,5 @@ public class SevisLogProcessor implements ISevisLogProcessor {
    public static void main(String[] args) {
       SevisLogProcessor s = new SevisLogProcessor();
       s.processLog(null);
-      System.out.println();
    }
 }

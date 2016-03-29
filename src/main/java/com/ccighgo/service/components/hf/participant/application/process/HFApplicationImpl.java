@@ -1152,7 +1152,6 @@ public class HFApplicationImpl implements HFApplication {
          }
 
          // HOstFamilly Member
-         List<HostFamilyMember> listOfMembers = new ArrayList<HostFamilyMember>();
          for (HFAdultDetails member : hfApplicationFamilyDetails.getAdults()) {
             HostFamilyMember hfm = new HostFamilyMember();
             if (member.getHostfamilyMemberId() > 0)
@@ -1228,7 +1227,6 @@ public class HFApplicationImpl implements HFApplication {
          hostFamilyRepository.saveAndFlush(hf);
 
          // Airport
-         List<HostFamilyAirport> airports = new ArrayList<HostFamilyAirport>();
          for (HFAirport aps : hfApplicationFamilyDetails.getAirports()) {
             HostFamilyAirport hfa = new HostFamilyAirport();
             if (aps.getHostFamilyAirportId() > 0)
@@ -1249,7 +1247,6 @@ public class HFApplicationImpl implements HFApplication {
          // hostFamilyAirportRepository.save(airports);
 
          // Pets
-         List<HostFamilyPet> pets = new ArrayList<HostFamilyPet>();
          for (HFPets pts : hfApplicationFamilyDetails.getPets()) {
             HostFamilyPet hfp = new HostFamilyPet();
             if (pts.getHostFamilyPetId() > 0)

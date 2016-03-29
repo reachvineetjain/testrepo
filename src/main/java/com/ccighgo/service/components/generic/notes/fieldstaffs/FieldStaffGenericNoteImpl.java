@@ -100,7 +100,6 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
                      note.setFieldStaffNoteId(n.getFieldStaffNoteId());
                      note.setFieldStaffGoId(n.getFieldStaff().getFieldStaffGoId());
                      note.setFieldStaffNoteTopicId(n.getFieldStaffNoteTopic().getFieldStaffNoteTopicsId());
-                     ;
                      note.setNoteValue(n.getFieldStaffNote());
                      note.setRead(n.getHasRead() == CCIConstants.ACTIVE);
                      note.setCreatedOn(DateUtils.getDateAndTime(n.getCreatedOn()));

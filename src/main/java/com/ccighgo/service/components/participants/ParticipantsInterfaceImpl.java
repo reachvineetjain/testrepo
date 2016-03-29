@@ -305,13 +305,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    private NewManualParticipant getParticipantEntity(Participant participant) {
-      NewManualParticipant NewManualParticipant = new NewManualParticipant();
-      try {
-
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      return NewManualParticipant;
+      return null;
    }
 
    @Override
@@ -332,17 +326,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 
    @Override
    public NewManualParticipant updateParticipant(NewManualParticipant participant) {
-      try {
-         // participantRepository.saveAndFlush(getParticipantEntity(participant));
-         // participant.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
-         // CCIConstants.TYPE_INFO,
-         // ErrorCode.DEFAULT_CODE.getValue(),
-         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      } catch (Exception e) {
-         participant.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         ExceptionUtil.logException(e, logger);
-      }
+
       return participant;
    }
 
@@ -606,9 +590,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                      if (participant.getSeason().getSeasonVadetails() != null && !participant.getSeason().getSeasonVadetails().isEmpty())
                         details.setParticipantSeasonName(participant.getSeason().getSeasonVadetails().get(0).getProgramName());
 
-                  } else if (participant.getSeason().getSeasonIhpdetails() != null && programName.equalsIgnoreCase(CCIConstants.HSP_STP_IHP)) {
-                     if (participant.getSeason().getSeasonIhpdetails() != null && !participant.getSeason().getSeasonIhpdetails().isEmpty())
-                        details.setParticipantSeasonName(participant.getSeason().getSeasonIhpdetails().get(0).getProgramName());
+                  } else if (participant.getSeason().getSeasonIhpdetails() != null && programName.equalsIgnoreCase(CCIConstants.HSP_STP_IHP)
+                        && participant.getSeason().getSeasonIhpdetails() != null && !participant.getSeason().getSeasonIhpdetails().isEmpty()) {
+                     details.setParticipantSeasonName(participant.getSeason().getSeasonIhpdetails().get(0).getProgramName());
                   }
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);

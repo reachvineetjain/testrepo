@@ -20,8 +20,7 @@ import com.ccighgo.service.transport.seasons.beans.cciresources.CCIResources_Tes
 @Consumes("application/json")
 public class CCIResources {
 
-   @Autowired
-   ICCIResources cciResources;
+   @Autowired ICCIResources cciResources;
    private static final Logger LOGGER = Logger.getLogger(CCIResources.class);
 
    @GET

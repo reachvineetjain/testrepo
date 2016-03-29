@@ -13,7 +13,7 @@ import com.ccighgo.db.entities.SeasonWPConfiguration;
  */
 @Repository
 public interface SeasonWPConfigurationRepository extends JpaRepository<SeasonWPConfiguration, Integer> {
-   
+
    @Query("SELECT s FROM SeasonWPConfiguration s WHERE s.season.seasonId = ?1 ")
    SeasonWPConfiguration getSeasonWPConfigurationBySeasonId(Integer seasonId);
 
