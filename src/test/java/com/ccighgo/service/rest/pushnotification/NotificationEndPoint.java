@@ -21,7 +21,8 @@ public class NotificationEndPoint {
    @OnOpen
    public void onOpen(Session session) {
       this.session = session;
-      // System.out.println("NotificationEndPoint :: onOpen :: Connected to Push Notification Server");
+      // System.out.println("NotificationEndPoint :: onOpen :: Connected to Push
+      // Notification Server");
 
    }
 

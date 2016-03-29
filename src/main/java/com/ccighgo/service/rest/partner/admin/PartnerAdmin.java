@@ -236,7 +236,9 @@ public class PartnerAdmin {
       return partnerAdminService.updatePartnerInquiryLeadData(partnerRecruitmentAdminLead);
    }
 
-   /***************************************** partial Updates ********************/
+   /*****************************************
+    * partial Updates
+    ********************/
    /*
     * Partner Documents
     */

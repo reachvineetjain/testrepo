@@ -21,20 +21,18 @@ import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerAgentSea
 @Produces("application/json")
 @Consumes("application/json")
 public class PartnerAgent {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerAgent.class);
-   @Autowired
-   PartnerAgentInterface partnerAgentInterface;
-   
+   @Autowired PartnerAgentInterface partnerAgentInterface;
+
    @GET
    @Path("get-added-seasons/{partnerGoId}")
    @Produces("application/json")
    public PartnerAgentAddedSeasons getAddedSeasons(@PathParam("partnerGoId") String partnerGoId) {
       LOGGER.debug("calling PartnerAgent.getAddedSeasons");
-       return partnerAgentInterface.getAddedSeasons(partnerGoId);
+      return partnerAgentInterface.getAddedSeasons(partnerGoId);
    }
-   
-   
+
    @GET
    @Path("season")
    @Produces("application/json")
@@ -42,7 +40,7 @@ public class PartnerAgent {
       LOGGER.debug("calling PartnerAgent.getAllSeasons");
       return partnerAgentInterface.getAllSeasons();
    }
-   
+
    @POST
    @Path("add-seasons")
    @Produces("application/json")
@@ -50,7 +48,7 @@ public class PartnerAgent {
       LOGGER.debug("calling PartnerAgent.addSeasons");
       return partnerAgentInterface.addSeasons(partnerSeasonApplicationList);
    }
-   
+
    @POST
    @Path("edit-partner-seasons")
    @Produces("application/json")
@@ -58,7 +56,7 @@ public class PartnerAgent {
       LOGGER.debug("calling PartnerAgent.EditPartnerSeasons");
       return partnerAgentInterface.editPartnerSeasons(partnerAgentSeasonDetails);
    }
-   
+
    @GET
    @Path("view-partner-season-detail/{partnerSeasonId}")
    @Produces("application/json")

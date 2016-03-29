@@ -34,8 +34,9 @@ public class PartnerInquiry {
    @Path("ping/{input}")
    @Produces("text/plain")
    public String ping(@PathParam("input") String input) {
-       return input;
+      return input;
    }
+
    @GET
    @Path("get/partnerForAgentScreen")
    @Produces("application/json")
@@ -43,7 +44,7 @@ public class PartnerInquiry {
       LOGGER.debug("Calling getAgentScreenForPartner");
       return partnerInquiryService.getAgentScreenForPartner();
    }
-   
+
    @POST
    @Path("update/partnerForAgentScreen")
    @Consumes("application/json")
@@ -51,27 +52,26 @@ public class PartnerInquiry {
       LOGGER.debug("Calling updateAgentScreenPartner");
       partnerInquiryService.updateAgentScreenPartner();
    }
-   
-//   @POST
-//   @Path("add/partnerNoteByAgent")
-//   @Consumes("application/json")
-//   @Produces("application/json")
-//   public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes) {
-//      return seasonServices.addSeasonDepartmentNote(seasonDepartmentNotes);
-//   }
-//
-//   @POST
-//   @Path("add/partnerNoteByAdmin")
-//   @Consumes("application/json")
-//   @Produces("application/json")
-//   public SeasonDepartmentDocument addSeasonDepartmentDoc(SeasonDepartmentDocument seasonDepartmentDocument) {
-//      return seasonServices.addSeasonDepartmentDoc(seasonDepartmentDocument);
-//   }
-   
-   
-   
-   
-   
+
+   // @POST
+   // @Path("add/partnerNoteByAgent")
+   // @Consumes("application/json")
+   // @Produces("application/json")
+   // public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes
+   // seasonDepartmentNotes) {
+   // return seasonServices.addSeasonDepartmentNote(seasonDepartmentNotes);
+   // }
+   //
+   // @POST
+   // @Path("add/partnerNoteByAdmin")
+   // @Consumes("application/json")
+   // @Produces("application/json")
+   // public SeasonDepartmentDocument
+   // addSeasonDepartmentDoc(SeasonDepartmentDocument seasonDepartmentDocument)
+   // {
+   // return seasonServices.addSeasonDepartmentDoc(seasonDepartmentDocument);
+   // }
+
    @GET
    @Path("get/partnerForAdminScreen")
    @Produces("application/json")
@@ -79,7 +79,7 @@ public class PartnerInquiry {
       LOGGER.debug("Calling getAdminScreenForPartner");
       return partnerInquiryService.getAdminScreenForPartner();
    }
-   
+
    @POST
    @Path("update/partnerForAgentScreen")
    @Consumes("application/json")
@@ -87,6 +87,5 @@ public class PartnerInquiry {
       LOGGER.debug("Calling updateAdminScreenPartner");
       partnerInquiryService.updateAdminScreenPartner();
    }
-   
-   
+
 }

@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/erdstoregion" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:erdstoregion="http://www.ccighgo.com/erdstoregion" xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
-   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+<xsd:schema targetNamespace="http://www.ccighgo.com/erdstoregion"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:erdstoregion="http://www.ccighgo.com/erdstoregion"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
 
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.season.beans.assignerdstosuperregion" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-      <xsd:documentation></xsd:documentation>
-   </xsd:annotation>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.season.beans.assignerdstosuperregion" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
 
-   <xsd:element name="AssignedERDsToSuperRegion" type="erdstoregion:AssignedERDToSuperRegion"></xsd:element>
+	<xsd:element name="AssignedERDsToSuperRegion" type="erdstoregion:AssignedERDToSuperRegion"></xsd:element>
 
-   <xsd:complexType name="AssignedERDToSuperRegion">
-            <xsd:sequence>
-               <xsd:element name="oldFieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="newFieldStaffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="superRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
-               <xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
-               
-               </xsd:sequence>  
-  </xsd:complexType>
+	<xsd:complexType name="AssignedERDToSuperRegion">
+		<xsd:sequence>
+			<xsd:element name="oldFieldStaffId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="newFieldStaffId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="superRegionId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonGeographyConfigurationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
 
- 
+		</xsd:sequence>
+	</xsd:complexType>
+
+
 
 </xsd:schema>

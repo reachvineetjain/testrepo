@@ -12,7 +12,7 @@ public class ValidationException extends CcighgoException {
 	}
 
 	public ErrorCode getErrorCode() {
-		return errorCode;
-	}
+      return errorCode;
+   }
 
 }

@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 public class CustomJSONProvider extends JacksonJaxbJsonProvider {
 
    /*
-    * Jettison provided by cxf as default had issues in creating JSON when list has only one element. Changed provider
-    * to Jackson but Jackson has its own issues in missing root element while creating JSON, so had to override default
-    * settings.
+    * Jettison provided by cxf as default had issues in creating JSON when list
+    * has only one element. Changed provider to Jackson but Jackson has its own
+    * issues in missing root element while creating JSON, so had to override
+    * default settings.
     */
    public CustomJSONProvider() {
       ObjectMapper mapper = new ObjectMapper();

@@ -1,58 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/hfappphotos" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfappphotos" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.hostfamily.beans.application.photo.upload" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfappphotos"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfappphotos"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.hostfamily.beans.application.photo.upload" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="HFApplicationUploadPhotos" type="pu:HFApplicationUploadPhotos" />
+	<xsd:element name="HFApplicationUploadPhotos" type="pu:HFApplicationUploadPhotos" />
 
-   <xsd:complexType name="HFApplicationUploadPhotos">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="hfSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="photos" type="pu:Photos" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="optionalPhotos" type="pu:Photos" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="HFApplicationUploadPhotos">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="loginId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="hfSeasonId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="fieldsFilled" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="percentUpdate" type="xsd:double"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="photos" type="pu:Photos" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="optionalPhotos" type="pu:Photos"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="Photos">
-      <xsd:sequence>
-         <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="photos" type="pu:Photo" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="Photos">
+		<xsd:sequence>
+			<xsd:element name="count" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="photos" type="pu:Photo" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="Photo">
-      <xsd:sequence>
-         <xsd:element name="photoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="type" type="pu:PhotoType" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="optional" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="PhotoType">
-      <xsd:sequence>
-         <xsd:element name="typeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="Type" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="Photo">
+		<xsd:sequence>
+			<xsd:element name="photoId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="photoUrl" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="title" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
+			<xsd:element name="name" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="type" type="pu:PhotoType" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="description" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="optional" type="xsd:boolean"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PhotoType">
+		<xsd:sequence>
+			<xsd:element name="typeId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="Type" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>
 

@@ -1,69 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/userdepartment" xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
-    attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-    xmlns:usd="http://www.ccighgo.com/userdepartment">
+<xsd:schema targetNamespace="http://www.ccighgo.com/userdepartment"
+	xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
+	attributeFormDefault="unqualified" jaxb:version="2.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:usd="http://www.ccighgo.com/userdepartment">
 
-    <xsd:annotation>
-        <xsd:appinfo>
-            <jaxb:schemaBindings>
-                <jaxb:package name="com.ccighgo.service.transport.utility.beans.userdepartment" />
-            </jaxb:schemaBindings>
-        </xsd:appinfo>
-        <xsd:documentation></xsd:documentation>
-    </xsd:annotation>
-    
-    <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
-    
-    <xsd:element name="UserDepartments" type="usd:UserDepartments"></xsd:element>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.utility.beans.userdepartment" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
 
-    <xsd:complexType name="UserDepartments">
-    <xsd:complexContent>
-		<xsd:extension base="common:Response">
-        <xsd:sequence>
-            <xsd:element name="userDepartment" type="usd:UserDepartment" minOccurs="1" maxOccurs="unbounded" />
-        </xsd:sequence>
-        </xsd:extension>
-	</xsd:complexContent>
-    </xsd:complexType>
+	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
-    <xsd:complexType name="UserDepartment">
-    <xsd:complexContent>
-		<xsd:extension base="common:Response">
-        <xsd:sequence>
-            <xsd:element name="id" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="acronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="isActive" type="xsd:boolean" maxOccurs="1" minOccurs="1" />
-            <xsd:element name="departmentProgram" type="usd:DepartmentProgram" minOccurs="0" maxOccurs="unbounded" />
-            <xsd:element name="departmentFunction" type="usd:DepartmentFunction" minOccurs="0" maxOccurs="unbounded" />
-        </xsd:sequence>
-        </xsd:extension>
-	</xsd:complexContent>
-    </xsd:complexType>
-    
-    <xsd:complexType name="DepartmentProgram">
-    <xsd:complexContent>
-		<xsd:extension base="common:Response">
-        <xsd:sequence>
-            <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="programDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
-        </xsd:sequence>
-        </xsd:extension>
-	</xsd:complexContent>
-    </xsd:complexType>
-    
-    <xsd:complexType name="DepartmentFunction">
-    <xsd:complexContent>
-		<xsd:extension base="common:Response">
-        <xsd:sequence>
-            <xsd:element name="departmentFunctionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="functionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="functionDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
-        </xsd:sequence>
-        </xsd:extension>
-	</xsd:complexContent>
-    </xsd:complexType>
+	<xsd:element name="UserDepartments" type="usd:UserDepartments"></xsd:element>
+
+	<xsd:complexType name="UserDepartments">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="userDepartment" type="usd:UserDepartment"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="UserDepartment">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="id" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="acronym" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="departmentName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="isActive" type="xsd:boolean"
+						maxOccurs="1" minOccurs="1" />
+					<xsd:element name="departmentProgram" type="usd:DepartmentProgram"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="departmentFunction" type="usd:DepartmentFunction"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="DepartmentProgram">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="departmentProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="programName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="programDescription" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="DepartmentFunction">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="departmentFunctionId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="functionName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="functionDescription" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 </xsd:schema>
 

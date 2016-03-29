@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/fsstatuslist" xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
-   attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:prg="http://www.ccighgo.com/fsstatuslist">
+<xsd:schema targetNamespace="http://www.ccighgo.com/fsstatuslist"
+	xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
+	attributeFormDefault="unqualified" jaxb:version="2.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:prg="http://www.ccighgo.com/fsstatuslist">
 
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.utility.beans.fs.status.list" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-      <xsd:documentation></xsd:documentation>
-   </xsd:annotation>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.utility.beans.fs.status.list" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
 
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="FieldStaffStatusList" type="prg:FieldStaffStatusList"></xsd:element>
+	<xsd:element name="FieldStaffStatusList" type="prg:FieldStaffStatusList"></xsd:element>
 
-   <xsd:complexType name="FieldStaffStatusList">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="fieldStaffStatuses" type="prg:FieldStaffStatus" minOccurs="1" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="FieldStaffStatusList">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="fieldStaffStatuses" type="prg:FieldStaffStatus"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="FieldStaffStatus">
-      <xsd:sequence>
-         <xsd:element name="fieldStaffStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="fieldStaffStatus" type="xsd:string" maxOccurs="1" minOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="FieldStaffStatus">
+		<xsd:sequence>
+			<xsd:element name="fieldStaffStatusId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="fieldStaffStatus" type="xsd:string"
+				maxOccurs="1" minOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>
 

@@ -51,7 +51,6 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
    @Autowired EntityManager entityManager;
    @Autowired MessageUtils messageUtil;
    @Autowired CommonComponentUtils componentUtils;
-
    @Autowired FieldStaffRepository fieldStaffRepository;
    @Autowired FieldStaffTypeRepository fieldStaffTypeRepository;
    @Autowired LoginRepository loginRepository;

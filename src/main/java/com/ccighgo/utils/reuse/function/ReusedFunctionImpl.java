@@ -19,12 +19,9 @@ import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 @Component
 public class ReusedFunctionImpl implements ReusedFunctions {
 
-   @Autowired
-   LoginRepository loginRepository;
-   @Autowired
-   CCIStaffUsersRepository cciStaffUsersRepository;
-   @Autowired
-   PartnerUserRepository partnerUserRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
+   @Autowired PartnerUserRepository partnerUserRepository;
    private static final Logger LOGGER = Logger.getLogger(ReusedFunctionImpl.class);
 
    @Override

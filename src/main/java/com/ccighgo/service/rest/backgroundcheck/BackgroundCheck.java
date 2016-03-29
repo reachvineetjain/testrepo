@@ -21,8 +21,7 @@ public class BackgroundCheck {
 
    private static final Logger LOGGER = Logger.getLogger(BackgroundCheck.class);
 
-   @Autowired
-   BackgroundServiceInterface backgroundServiceInterface;
+   @Autowired BackgroundServiceInterface backgroundServiceInterface;
 
    @POST
    @Path("requestScreen")
@@ -36,16 +35,16 @@ public class BackgroundCheck {
    @GET
    @Path("applyNow")
    @Produces("application/xml")
-    public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
+   public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
       LOGGER.debug("Calling func: applyNow");
       return backgroundServiceInterface.applyNow();
    }
-   
+
    @POST
    @Path("sendReport")
    @Produces("application/xml")
    @Consumes("application/xml")
-    public String sendReport(BackgroundReports backgroundReports) {
+   public String sendReport(BackgroundReports backgroundReports) {
       LOGGER.debug("Calling func: sendReport");
       return backgroundServiceInterface.sendReport(backgroundReports);
    }

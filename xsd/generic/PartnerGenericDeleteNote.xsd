@@ -11,11 +11,11 @@
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>
-	
+
 	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
-	
+
 	<xsd:element name="noteDelete" type="cd:deleteNote" />
-	
+
 	<xsd:complexType name="deleteNote">
 		<xsd:complexContent>
 			<xsd:extension base="common:Response">
