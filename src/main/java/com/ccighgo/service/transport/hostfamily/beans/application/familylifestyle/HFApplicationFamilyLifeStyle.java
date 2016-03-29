@@ -5,7 +5,6 @@
 // Generated on: 2016.03.15 at 04:13:26 PM CDT 
 //
 
-
 package com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import com.ccighgo.service.transport.common.response.beans.Response;
 
-
 /**
- * <p>Java class for HFApplicationFamilyLifeStyle complex type.
+ * <p>
+ * Java class for HFApplicationFamilyLifeStyle complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="HFApplicationFamilyLifeStyle">
@@ -51,398 +52,362 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HFApplicationFamilyLifeStyle", propOrder = {
-    "loginId",
-    "seasonId",
-    "programId",
-    "hostFamilyId",
-    "hostFamilyDetailsId",
-    "familyDescription",
-    "thingsStudentNeedsToAdaptWith",
-    "hostFamilySeasonId",
-    "anyOneHasSeriousIllness",
-    "illnessExplanation",
-    "anyOneHaveDisability",
-    "disabilityExplanation",
-    "familyDay",
-    "religious",
-    "dieTrayRestriction",
-    "miscLifeStyle",
-    "financialResources"
-})
-public class HFApplicationFamilyLifeStyle
-    extends Response
-{
+@XmlType(name = "HFApplicationFamilyLifeStyle", propOrder = { "loginId", "seasonId", "programId", "hostFamilyId", "hostFamilyDetailsId", "familyDescription",
+      "thingsStudentNeedsToAdaptWith", "hostFamilySeasonId", "anyOneHasSeriousIllness", "illnessExplanation", "anyOneHaveDisability", "disabilityExplanation", "familyDay",
+      "religious", "dieTrayRestriction", "miscLifeStyle", "financialResources" })
+public class HFApplicationFamilyLifeStyle extends Response {
 
-    protected int loginId;
-    protected int seasonId;
-    protected int programId;
-    protected int hostFamilyId;
-    protected int hostFamilyDetailsId;
-    @XmlElement(required = true)
-    protected String familyDescription;
-    @XmlElement(required = true)
-    protected String thingsStudentNeedsToAdaptWith;
-    protected int hostFamilySeasonId;
-    protected boolean anyOneHasSeriousIllness;
-    @XmlElement(required = true)
-    protected String illnessExplanation;
-    protected boolean anyOneHaveDisability;
-    @XmlElement(required = true)
-    protected String disabilityExplanation;
-    @XmlElement(required = true)
-    protected HFFamilyDayDetails familyDay;
-    @XmlElement(required = true)
-    protected HFFamilyReligious religious;
-    @XmlElement(required = true)
-    protected HFDieTrayRestriction dieTrayRestriction;
-    @XmlElement(required = true)
-    protected HFMiscLifeStyle miscLifeStyle;
-    @XmlElement(required = true)
-    protected HFFinancialResource financialResources;
+   protected int loginId;
+   protected int seasonId;
+   protected int programId;
+   protected int hostFamilyId;
+   protected int hostFamilyDetailsId;
+   protected int fieldsFilled;
+   protected double percentUpdate;
+   @XmlElement(required = true) protected String familyDescription;
+   @XmlElement(required = true) protected String thingsStudentNeedsToAdaptWith;
+   protected int hostFamilySeasonId;
+   protected boolean anyOneHasSeriousIllness;
+   @XmlElement(required = true) protected String illnessExplanation;
+   protected boolean anyOneHaveDisability;
+   @XmlElement(required = true) protected String disabilityExplanation;
+   @XmlElement(required = true) protected HFFamilyDayDetails familyDay;
+   @XmlElement(required = true) protected HFFamilyReligious religious;
+   @XmlElement(required = true) protected HFDieTrayRestriction dieTrayRestriction;
+   @XmlElement(required = true) protected HFMiscLifeStyle miscLifeStyle;
+   @XmlElement(required = true) protected HFFinancialResource financialResources;
 
-    /**
-     * Gets the value of the loginId property.
-     * 
-     */
-    public int getLoginId() {
-        return loginId;
-    }
+   /**
+    * Gets the value of the loginId property.
+    * 
+    */
+   public int getLoginId() {
+      return loginId;
+   }
 
-    /**
-     * Sets the value of the loginId property.
-     * 
-     */
-    public void setLoginId(int value) {
-        this.loginId = value;
-    }
+   /**
+    * Sets the value of the loginId property.
+    * 
+    */
+   public void setLoginId(int value) {
+      this.loginId = value;
+   }
 
-    /**
-     * Gets the value of the seasonId property.
-     * 
-     */
-    public int getSeasonId() {
-        return seasonId;
-    }
+   /**
+    * Gets the value of the seasonId property.
+    * 
+    */
+   public int getSeasonId() {
+      return seasonId;
+   }
 
-    /**
-     * Sets the value of the seasonId property.
-     * 
-     */
-    public void setSeasonId(int value) {
-        this.seasonId = value;
-    }
+   /**
+    * Sets the value of the seasonId property.
+    * 
+    */
+   public void setSeasonId(int value) {
+      this.seasonId = value;
+   }
 
-    /**
-     * Gets the value of the programId property.
-     * 
-     */
-    public int getProgramId() {
-        return programId;
-    }
+   /**
+    * Gets the value of the programId property.
+    * 
+    */
+   public int getProgramId() {
+      return programId;
+   }
 
-    /**
-     * Sets the value of the programId property.
-     * 
-     */
-    public void setProgramId(int value) {
-        this.programId = value;
-    }
+   /**
+    * Sets the value of the programId property.
+    * 
+    */
+   public void setProgramId(int value) {
+      this.programId = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilyId property.
-     * 
-     */
-    public int getHostFamilyId() {
-        return hostFamilyId;
-    }
+   /**
+    * Gets the value of the hostFamilyId property.
+    * 
+    */
+   public int getHostFamilyId() {
+      return hostFamilyId;
+   }
 
-    /**
-     * Sets the value of the hostFamilyId property.
-     * 
-     */
-    public void setHostFamilyId(int value) {
-        this.hostFamilyId = value;
-    }
+   /**
+    * Sets the value of the hostFamilyId property.
+    * 
+    */
+   public void setHostFamilyId(int value) {
+      this.hostFamilyId = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilyDetailsId property.
-     * 
-     */
-    public int getHostFamilyDetailsId() {
-        return hostFamilyDetailsId;
-    }
+   /**
+    * Gets the value of the hostFamilyDetailsId property.
+    * 
+    */
+   public int getHostFamilyDetailsId() {
+      return hostFamilyDetailsId;
+   }
 
-    /**
-     * Sets the value of the hostFamilyDetailsId property.
-     * 
-     */
-    public void setHostFamilyDetailsId(int value) {
-        this.hostFamilyDetailsId = value;
-    }
+   /**
+    * Sets the value of the hostFamilyDetailsId property.
+    * 
+    */
+   public void setHostFamilyDetailsId(int value) {
+      this.hostFamilyDetailsId = value;
+   }
 
-    /**
-     * Gets the value of the familyDescription property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFamilyDescription() {
-        return familyDescription;
-    }
+   /**
+    * Gets the value of the familyDescription property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getFamilyDescription() {
+      return familyDescription;
+   }
 
-    /**
-     * Sets the value of the familyDescription property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFamilyDescription(String value) {
-        this.familyDescription = value;
-    }
+   /**
+    * Sets the value of the familyDescription property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setFamilyDescription(String value) {
+      this.familyDescription = value;
+   }
 
-    /**
-     * Gets the value of the thingsStudentNeedsToAdaptWith property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getThingsStudentNeedsToAdaptWith() {
-        return thingsStudentNeedsToAdaptWith;
-    }
+   /**
+    * Gets the value of the thingsStudentNeedsToAdaptWith property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getThingsStudentNeedsToAdaptWith() {
+      return thingsStudentNeedsToAdaptWith;
+   }
 
-    /**
-     * Sets the value of the thingsStudentNeedsToAdaptWith property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setThingsStudentNeedsToAdaptWith(String value) {
-        this.thingsStudentNeedsToAdaptWith = value;
-    }
+   /**
+    * Sets the value of the thingsStudentNeedsToAdaptWith property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setThingsStudentNeedsToAdaptWith(String value) {
+      this.thingsStudentNeedsToAdaptWith = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilySeasonId property.
-     * 
-     */
-    public int getHostFamilySeasonId() {
-        return hostFamilySeasonId;
-    }
+   /**
+    * Gets the value of the hostFamilySeasonId property.
+    * 
+    */
+   public int getHostFamilySeasonId() {
+      return hostFamilySeasonId;
+   }
 
-    /**
-     * Sets the value of the hostFamilySeasonId property.
-     * 
-     */
-    public void setHostFamilySeasonId(int value) {
-        this.hostFamilySeasonId = value;
-    }
+   /**
+    * Sets the value of the hostFamilySeasonId property.
+    * 
+    */
+   public void setHostFamilySeasonId(int value) {
+      this.hostFamilySeasonId = value;
+   }
 
-    /**
-     * Gets the value of the anyOneHasSeriousIllness property.
-     * 
-     */
-    public boolean isAnyOneHasSeriousIllness() {
-        return anyOneHasSeriousIllness;
-    }
+   /**
+    * Gets the value of the anyOneHasSeriousIllness property.
+    * 
+    */
+   public boolean isAnyOneHasSeriousIllness() {
+      return anyOneHasSeriousIllness;
+   }
 
-    /**
-     * Sets the value of the anyOneHasSeriousIllness property.
-     * 
-     */
-    public void setAnyOneHasSeriousIllness(boolean value) {
-        this.anyOneHasSeriousIllness = value;
-    }
+   /**
+    * Sets the value of the anyOneHasSeriousIllness property.
+    * 
+    */
+   public void setAnyOneHasSeriousIllness(boolean value) {
+      this.anyOneHasSeriousIllness = value;
+   }
 
-    /**
-     * Gets the value of the illnessExplanation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIllnessExplanation() {
-        return illnessExplanation;
-    }
+   /**
+    * Gets the value of the illnessExplanation property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getIllnessExplanation() {
+      return illnessExplanation;
+   }
 
-    /**
-     * Sets the value of the illnessExplanation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIllnessExplanation(String value) {
-        this.illnessExplanation = value;
-    }
+   /**
+    * Sets the value of the illnessExplanation property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setIllnessExplanation(String value) {
+      this.illnessExplanation = value;
+   }
 
-    /**
-     * Gets the value of the anyOneHaveDisability property.
-     * 
-     */
-    public boolean isAnyOneHaveDisability() {
-        return anyOneHaveDisability;
-    }
+   /**
+    * Gets the value of the anyOneHaveDisability property.
+    * 
+    */
+   public boolean isAnyOneHaveDisability() {
+      return anyOneHaveDisability;
+   }
 
-    /**
-     * Sets the value of the anyOneHaveDisability property.
-     * 
-     */
-    public void setAnyOneHaveDisability(boolean value) {
-        this.anyOneHaveDisability = value;
-    }
+   /**
+    * Sets the value of the anyOneHaveDisability property.
+    * 
+    */
+   public void setAnyOneHaveDisability(boolean value) {
+      this.anyOneHaveDisability = value;
+   }
 
-    /**
-     * Gets the value of the disabilityExplanation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDisabilityExplanation() {
-        return disabilityExplanation;
-    }
+   /**
+    * Gets the value of the disabilityExplanation property.
+    * 
+    * @return possible object is {@link String }
+    * 
+    */
+   public String getDisabilityExplanation() {
+      return disabilityExplanation;
+   }
 
-    /**
-     * Sets the value of the disabilityExplanation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDisabilityExplanation(String value) {
-        this.disabilityExplanation = value;
-    }
+   /**
+    * Sets the value of the disabilityExplanation property.
+    * 
+    * @param value
+    *           allowed object is {@link String }
+    * 
+    */
+   public void setDisabilityExplanation(String value) {
+      this.disabilityExplanation = value;
+   }
 
-    /**
-     * Gets the value of the familyDay property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFFamilyDayDetails }
-     *     
-     */
-    public HFFamilyDayDetails getFamilyDay() {
-        return familyDay;
-    }
+   /**
+    * Gets the value of the familyDay property.
+    * 
+    * @return possible object is {@link HFFamilyDayDetails }
+    * 
+    */
+   public HFFamilyDayDetails getFamilyDay() {
+      return familyDay;
+   }
 
-    /**
-     * Sets the value of the familyDay property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFFamilyDayDetails }
-     *     
-     */
-    public void setFamilyDay(HFFamilyDayDetails value) {
-        this.familyDay = value;
-    }
+   /**
+    * Sets the value of the familyDay property.
+    * 
+    * @param value
+    *           allowed object is {@link HFFamilyDayDetails }
+    * 
+    */
+   public void setFamilyDay(HFFamilyDayDetails value) {
+      this.familyDay = value;
+   }
 
-    /**
-     * Gets the value of the religious property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFFamilyReligious }
-     *     
-     */
-    public HFFamilyReligious getReligious() {
-        return religious;
-    }
+   /**
+    * Gets the value of the religious property.
+    * 
+    * @return possible object is {@link HFFamilyReligious }
+    * 
+    */
+   public HFFamilyReligious getReligious() {
+      return religious;
+   }
 
-    /**
-     * Sets the value of the religious property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFFamilyReligious }
-     *     
-     */
-    public void setReligious(HFFamilyReligious value) {
-        this.religious = value;
-    }
+   /**
+    * Sets the value of the religious property.
+    * 
+    * @param value
+    *           allowed object is {@link HFFamilyReligious }
+    * 
+    */
+   public void setReligious(HFFamilyReligious value) {
+      this.religious = value;
+   }
 
-    /**
-     * Gets the value of the dieTrayRestriction property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFDieTrayRestriction }
-     *     
-     */
-    public HFDieTrayRestriction getDieTrayRestriction() {
-        return dieTrayRestriction;
-    }
+   /**
+    * Gets the value of the dieTrayRestriction property.
+    * 
+    * @return possible object is {@link HFDieTrayRestriction }
+    * 
+    */
+   public HFDieTrayRestriction getDieTrayRestriction() {
+      return dieTrayRestriction;
+   }
 
-    /**
-     * Sets the value of the dieTrayRestriction property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFDieTrayRestriction }
-     *     
-     */
-    public void setDieTrayRestriction(HFDieTrayRestriction value) {
-        this.dieTrayRestriction = value;
-    }
+   /**
+    * Sets the value of the dieTrayRestriction property.
+    * 
+    * @param value
+    *           allowed object is {@link HFDieTrayRestriction }
+    * 
+    */
+   public void setDieTrayRestriction(HFDieTrayRestriction value) {
+      this.dieTrayRestriction = value;
+   }
 
-    /**
-     * Gets the value of the miscLifeStyle property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFMiscLifeStyle }
-     *     
-     */
-    public HFMiscLifeStyle getMiscLifeStyle() {
-        return miscLifeStyle;
-    }
+   /**
+    * Gets the value of the miscLifeStyle property.
+    * 
+    * @return possible object is {@link HFMiscLifeStyle }
+    * 
+    */
+   public HFMiscLifeStyle getMiscLifeStyle() {
+      return miscLifeStyle;
+   }
 
-    /**
-     * Sets the value of the miscLifeStyle property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFMiscLifeStyle }
-     *     
-     */
-    public void setMiscLifeStyle(HFMiscLifeStyle value) {
-        this.miscLifeStyle = value;
-    }
+   /**
+    * Sets the value of the miscLifeStyle property.
+    * 
+    * @param value
+    *           allowed object is {@link HFMiscLifeStyle }
+    * 
+    */
+   public void setMiscLifeStyle(HFMiscLifeStyle value) {
+      this.miscLifeStyle = value;
+   }
 
-    /**
-     * Gets the value of the financialResources property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFFinancialResource }
-     *     
-     */
-    public HFFinancialResource getFinancialResources() {
-        return financialResources;
-    }
+   /**
+    * Gets the value of the financialResources property.
+    * 
+    * @return possible object is {@link HFFinancialResource }
+    * 
+    */
+   public HFFinancialResource getFinancialResources() {
+      return financialResources;
+   }
 
-    /**
-     * Sets the value of the financialResources property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFFinancialResource }
-     *     
-     */
-    public void setFinancialResources(HFFinancialResource value) {
-        this.financialResources = value;
-    }
+   /**
+    * Sets the value of the financialResources property.
+    * 
+    * @param value
+    *           allowed object is {@link HFFinancialResource }
+    * 
+    */
+   public void setFinancialResources(HFFinancialResource value) {
+      this.financialResources = value;
+   }
+
+   public int getFieldsFilled() {
+      return fieldsFilled;
+   }
+
+   public void setFieldsFilled(int fieldsFilled) {
+      this.fieldsFilled = fieldsFilled;
+   }
+
+   public double getPercentUpdate() {
+      return percentUpdate;
+   }
+
+   public void setPercentUpdate(double percentUpdate) {
+      this.percentUpdate = percentUpdate;
+   }
 
 }

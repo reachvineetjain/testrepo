@@ -6,6 +6,7 @@ public class FamilyBasicsPageParam {
    private int hostfamilyId;
    private int loginId;
    private int departmentProgramId;
+   private int applicationCategoryId;
 
    public int getSeasonId() {
       return seasonId;
@@ -37,6 +38,14 @@ public class FamilyBasicsPageParam {
 
    public void setDepartmentProgramId(int departmentProgramId) {
       this.departmentProgramId = departmentProgramId;
+   }
+
+   public int getApplicationCategoryId() {
+      return applicationCategoryId;
+   }
+
+   public void setApplicationCategoryId(int applicationCategoryId) {
+      this.applicationCategoryId = applicationCategoryId;
    }
 
 }
