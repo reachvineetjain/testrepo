@@ -39,8 +39,7 @@ public class RegionAssignment {
 
    private static final Logger LOGGER = Logger.getLogger(RegionAssignment.class);
 
-   @Autowired
-   RegionAssignmentServices regionAssignmentServices;
+   @Autowired RegionAssignmentServices regionAssignmentServices;
 
    @GET
    @Path("ping/regionAssignment/{input}")

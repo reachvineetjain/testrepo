@@ -33,8 +33,10 @@
 							minOccurs="0" maxOccurs="1" />
 						<xsd:element name="subPartnerMailingAddress" type="cd:SubPartnersMailingAddress"
 							minOccurs="0" maxOccurs="1" />
-                       <xsd:element name="loginId" type="xsd:int" minOccurs="0" maxOccurs="1"/>
-                       <xsd:element name="mailingAddressIsSameAsPhysicalAdress" type="xsd:boolean"/>
+						<xsd:element name="loginId" type="xsd:int" minOccurs="0"
+							maxOccurs="1" />
+						<xsd:element name="mailingAddressIsSameAsPhysicalAdress"
+							type="xsd:boolean" />
 					</xsd:sequence>
 				</xsd:sequence>
 			</xsd:extension>
@@ -49,8 +51,8 @@
 					<xsd:element name="agencyName" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="needsPartnerReview" type="xsd:boolean" />
-					<xsd:element name="recivevisaforms" type="xsd:boolean"/>
-					<xsd:element name="payGreenHeartDirectly" type="xsd:boolean"/>
+					<xsd:element name="recivevisaforms" type="xsd:boolean" />
+					<xsd:element name="payGreenHeartDirectly" type="xsd:boolean" />
 					<xsd:element name="username" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="password" type="xsd:string"
@@ -140,13 +142,13 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
-	
+
 	<xsd:complexType name="Salutation">
 		<xsd:sequence>
 			<xsd:element name="salutationId" type="xsd:int" />
 			<xsd:element name="salutationName" type="xsd:string" />
 		</xsd:sequence>
 	</xsd:complexType>
-	
-	
+
+
 </xsd:schema>

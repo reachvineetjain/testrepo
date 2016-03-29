@@ -1061,6 +1061,10 @@ public class HFApplicationImpl implements HFApplication {
    public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam) {
       HFCommunityAndSchoolPage hfbs = new HFCommunityAndSchoolPage();
       try {
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               Integer.valueOf(descriptionPageParam.getSeasonId()), descriptionPageParam.getApplicationCategoryId());
+         hfbs.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
+
          Query query = em.createNativeQuery(SP_HF_COMMUNITY);
          query.setParameter(1, descriptionPageParam.getHostFamilyId() == 0 ? null : descriptionPageParam.getHostFamilyId());
          query.setParameter(2, descriptionPageParam.getSeasonId() == 0 ? null : descriptionPageParam.getSeasonId());

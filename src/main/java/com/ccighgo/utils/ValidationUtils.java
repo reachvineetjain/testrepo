@@ -34,7 +34,7 @@ public class ValidationUtils {
       if (seasonId == null || (!seasonId.isEmpty() && Integer.valueOf(seasonId) == 0)) {
          throw new ValidationException(ErrorCode.INVALID_SEASON_ID, "season id missing or zero");
       }
-      if(seasonId!=null && Integer.valueOf(seasonId)==-1){
+      if (seasonId != null && Integer.valueOf(seasonId) == -1) {
          throw new ValidationException(ErrorCode.DUPLICATE_SEASON_NAME, "season with same name already exists, please select different name");
       }
       return true;

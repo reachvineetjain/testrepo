@@ -20,7 +20,8 @@
 		<xsd:complexContent>
 			<xsd:extension base="common:Response">
 				<xsd:sequence>
-					<xsd:element name="familyMembers" type="pu:HostFamilyMemberDetails"	minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="familyMembers" type="pu:HostFamilyMemberDetails"
+						minOccurs="1" maxOccurs="unbounded" />
 
 				</xsd:sequence>
 			</xsd:extension>
@@ -29,11 +30,16 @@
 
 	<xsd:complexType name="HostFamilyMemberDetails">
 		<xsd:sequence>
-			<xsd:element name="hostfamilyMemberId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-			<xsd:element name="name" type="xsd:string"	minOccurs="1" maxOccurs="1" />
-			<xsd:element name="genderId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-			<xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
-			<xsd:element name="age" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="hostfamilyMemberId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="name" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="genderId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="gender" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="age" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 

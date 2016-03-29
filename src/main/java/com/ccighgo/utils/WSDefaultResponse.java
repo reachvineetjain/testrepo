@@ -8,7 +8,7 @@ public class WSDefaultResponse extends Response {
    protected NoteUserCreator createdBy;
    private Integer topicOfNotesId;
    private int goId;
-   
+
    public NoteUserCreator getCreatedBy() {
       return createdBy;
    }

@@ -2,52 +2,82 @@
 <xsd:schema targetNamespace="http://www.ccighgo.com/insuranceparticipant"
 	elementFormDefault="unqualified" attributeFormDefault="unqualified"
 	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:insuranceparticipant="http://www.ccighgo.com/insuranceparticipant">
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:insuranceparticipant="http://www.ccighgo.com/insuranceparticipant">
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.insuranceparticipant" />
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.insuranceparticipant" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 		<xsd:documentation></xsd:documentation>
 	</xsd:annotation>
 
-	<xsd:element name="InsuranceParticipant" type="insuranceparticipant:InsuranceParticipant"></xsd:element>
-	
+	<xsd:element name="InsuranceParticipant"
+		type="insuranceparticipant:InsuranceParticipant"></xsd:element>
+
 	<xsd:complexType name="InsuranceParticipant">
 		<xsd:sequence>
-		 <xsd:element name="first_name" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="middle_name" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="last_name" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="address1" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="address2" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="city" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="state_id" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="stateName" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="country_id" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="countryName" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="zip" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="home_country_id" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="homeCountryName" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="dob" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="tele" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="email" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="secondaryEmail" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="gender" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="us_citizen" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="us_destination" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="sports_rider" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 
-		 <xsd:element name="plan_id" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-		 <xsd:element name="trip_can" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="first_name" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="middle_name" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="last_name" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="address1" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="address2" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="city" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="state_id" type="xsd:int" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="stateName" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="country_id" type="xsd:int" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="countryName" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="zip" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="home_country_id" type="xsd:int"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="homeCountryName" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="dob" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="tele" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="email" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="secondaryEmail" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="gender" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="us_citizen" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="us_destination" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="sports_rider" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
 
-		 <xsd:element name="start_date" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="end_date" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="labelList" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="internal_id" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="plan_id" type="xsd:int" minOccurs="1"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="trip_can" type="xsd:int" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+
+			<xsd:element name="start_date" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="end_date" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="labelList" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="internal_id" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
 
 
 		</xsd:sequence>
 	</xsd:complexType>
-  
+
 </xsd:schema>

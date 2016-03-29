@@ -244,8 +244,6 @@ public class CCIConstants {
    public static final Integer VALID = 11;
    public static final Integer INVALID = 12;
    public static final Integer DELETED_STATUS = 13;
-   
-   
 
    public static final String SUBMITTED = "Submitted";
    public static final String PARTNER_REVIEW = "Partner Review";
@@ -285,10 +283,9 @@ public class CCIConstants {
    public static final int REFRENCES = 7;
    public static final int BG_CHECK = 8;
    public static final int SUBMIT_APPLICATION = 9;
-   
+
    public static final int MALE = 1;
    public static final int FEMALE = 2;
    public static final int GENDER_UNDEFINED = 3;
-   
 
 }

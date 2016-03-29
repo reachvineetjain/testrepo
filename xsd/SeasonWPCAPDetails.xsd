@@ -1,146 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/seasonwpcapdetails" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:common="http://www.ccighgo.com/common"
-   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasonwpcapdetails="http://www.ccighgo.com/seasonwpcapdetails">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-      <xsd:documentation></xsd:documentation>
-   </xsd:annotation>
-   <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasonwpcapdetails"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	xmlns:common="http://www.ccighgo.com/common" jaxb:version="2.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:seasonwpcapdetails="http://www.ccighgo.com/seasonwpcapdetails">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
-   <xsd:element name="SeasonWPCAPDetails" type="seasonwpcapdetails:SeasonWPCAPDetails"></xsd:element>
+	<xsd:element name="SeasonWPCAPDetails" type="seasonwpcapdetails:SeasonWPCAPDetails"></xsd:element>
 
-   <xsd:complexType name="SeasonWPCAPDetails">
-    <xsd:complexContent>
-	<xsd:extension base="common:Response">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="details" type="seasonwpcapdetails:WPCAPBasicDetails" minOccurs="0" maxOccurs="1"></xsd:element>
-         <xsd:element name="internshipDetails" type="seasonwpcapdetails:WPCAPInternshipDetails" minOccurs="0" maxOccurs="1"></xsd:element>
-         <xsd:element name="traineeDetails" type="seasonwpcapdetails:WPCAPTraineeDetails" minOccurs="0" maxOccurs="1"></xsd:element>
-         <xsd:element name="generalSettings" type="seasonwpcapdetails:WPCAPGeneralSettings" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="programAllocations" type="seasonwpcapdetails:WPCAPProgramAllocations" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="documents" type="seasonwpcapdetails:SeasonWPCAPDocuments" minOccurs="0" maxOccurs="unbounded" />
-         <xsd:element name="notes" type="seasonwpcapdetails:SeasonWPCAPNotes" minOccurs="0" maxOccurs="unbounded" />
-         <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
-      </xsd:sequence>
-      </xsd:extension>
-	</xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="SeasonWPCAPDetails">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="seasonProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="departmentProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="details"
+						type="seasonwpcapdetails:WPCAPBasicDetails" minOccurs="0"
+						maxOccurs="1"></xsd:element>
+					<xsd:element name="internshipDetails"
+						type="seasonwpcapdetails:WPCAPInternshipDetails" minOccurs="0"
+						maxOccurs="1"></xsd:element>
+					<xsd:element name="traineeDetails"
+						type="seasonwpcapdetails:WPCAPTraineeDetails" minOccurs="0"
+						maxOccurs="1"></xsd:element>
+					<xsd:element name="generalSettings"
+						type="seasonwpcapdetails:WPCAPGeneralSettings" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="programAllocations"
+						type="seasonwpcapdetails:WPCAPProgramAllocations" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="documents"
+						type="seasonwpcapdetails:SeasonWPCAPDocuments" minOccurs="0"
+						maxOccurs="unbounded" />
+					<xsd:element name="notes" type="seasonwpcapdetails:SeasonWPCAPNotes"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="loginId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="WPCAPBasicDetails">
-    <xsd:complexContent>
-	<xsd:extension base="common:Response">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="programName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="programStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="programStatusValue" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-       </xsd:extension>
-	</xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="WPCAPBasicDetails">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="seasonProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="programName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="programStatusId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="programStatusValue" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="WPCAPInternshipDetails">
-    <xsd:complexContent>
-	<xsd:extension base="common:Response">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-      </xsd:sequence>
-    </xsd:extension>
-	</xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="WPCAPInternshipDetails">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="seasonProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="startDate" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="endDate" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="applicationDeadlineDate" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 
-   <xsd:complexType name="WPCAPTraineeDetails">
-   <xsd:complexContent>
-	<xsd:extension base="common:Response">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="startDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="endDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="applicationDeadlineDate" type="xsd:string" minOccurs="0" maxOccurs="1" />
-      </xsd:sequence>
-     </xsd:extension>
-	</xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="WPCAPTraineeDetails">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="seasonProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="startDate" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="endDate" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="applicationDeadlineDate" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="WPCAPGeneralSettings">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="WPCAPGeneralSettings">
+		<xsd:sequence>
+			<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="WPCAPProgramAllocations">
-   <xsd:complexContent>
-	<xsd:extension base="common:Response">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+	<xsd:complexType name="WPCAPProgramAllocations">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="seasonProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
 
-         <xsd:element name="internshipMaximumParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="internshipExpectedParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="internshipAcceptedParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="internshipPendingVerification" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="internshipCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="internshipRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="internshipMaximumParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="internshipExpectedParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="internshipAcceptedParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="internshipPendingVerification" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="internshipCCIReview" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="internshipRemainingParticipants"
+						type="xsd:int" minOccurs="0" maxOccurs="1" />
 
-         <xsd:element name="traineeMaximumParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="traineeExpectedParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="traineeAcceptedParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="traineePendingVerification" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="traineeCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="traineeRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="traineeMaximumParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="traineeExpectedParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="traineeAcceptedParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="traineePendingVerification" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="traineeCCIReview" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="traineeRemainingParticipants" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
 
-         <xsd:element name="totalMaximumParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalExpectedParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalAcceptedParticipant" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalPendingVerification" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalCCIReview" type="xsd:int" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="totalRemainingParticipants" type="xsd:int" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="totalMaximumParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="totalExpectedParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="totalAcceptedParticipant" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="totalPendingVerification" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="totalCCIReview" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="totalRemainingParticipants" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
 
-      </xsd:sequence>
-      </xsd:extension>
-	</xsd:complexContent>
-   </xsd:complexType>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="SeasonWPCAPDocuments">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="fileType" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="uploadedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="SeasonWPCAPDocuments">
+		<xsd:sequence>
+			<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="departmentProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="docType" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="fileType" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="fileName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="docName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="docUrl" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="uploadDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="uploadedBy" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="active" type="xsd:boolean" minOccurs="1"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="SeasonWPCAPNotes">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="noteValue" type="xsd:string" minOccurs="0" maxOccurs="1" />
-         <xsd:element name="createdOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="SeasonWPCAPNotes">
+		<xsd:sequence>
+			<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="departmentProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="noteValue" type="xsd:string"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="createdOn" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="createdBy" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>

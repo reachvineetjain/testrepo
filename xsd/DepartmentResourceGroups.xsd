@@ -44,7 +44,7 @@
 				minOccurs="1" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
-		
+
 	<xsd:complexType name="ResourcePermissionTO">
 		<xsd:sequence>
 			<xsd:element name="resourcePermissionId" type="xsd:int"

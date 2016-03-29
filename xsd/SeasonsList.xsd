@@ -1,59 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/seasons" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasons="http://www.ccighgo.com/seasons" xmlns:common="http://www.ccighgo.com/common">
+<xsd:schema targetNamespace="http://www.ccighgo.com/seasons"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:seasons="http://www.ccighgo.com/seasons"
+	xmlns:common="http://www.ccighgo.com/common">
 
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.seasons.beans.seasonslist" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-      <xsd:documentation></xsd:documentation>
-   </xsd:annotation>
- 	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.seasonslist" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
-   <xsd:element name="SeasonsList" type="seasons:SeasonsList"></xsd:element>
+	<xsd:element name="SeasonsList" type="seasons:SeasonsList"></xsd:element>
 
-   <xsd:complexType name="SeasonsList"> 
-   <xsd:complexContent>
-     <xsd:extension base="common:Response">
-      <xsd:sequence>
-         <xsd:element name="recordCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasons" type="seasons:SeasonListObject" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-       </xsd:extension>
-    </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="SeasonsList">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="recordCount" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="seasons" type="seasons:SeasonListObject"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="SeasonListObject">
-      <xsd:sequence>
-         <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="startDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="endDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="programStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="programStatusValue" type="xsd:string" minOccurs="1" maxOccurs="1" />
-		 <xsd:element name="seasonHSPConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1"></xsd:element>
-         <xsd:element name="department" type="seasons:DepartmentObject" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonPrograms" type="seasons:ProgramSeason" minOccurs="1" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="SeasonListObject">
+		<xsd:sequence>
+			<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="startDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="endDate" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="programStatusId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="programStatusValue" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonHSPConfigurationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1"></xsd:element>
+			<xsd:element name="department" type="seasons:DepartmentObject"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonPrograms" type="seasons:ProgramSeason"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="ProgramSeason">
-      <xsd:sequence>
-         <xsd:element name="seasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonProgramUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="DepartmentObject">
-      <xsd:sequence>
-         <xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="departmentCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="ProgramSeason">
+		<xsd:sequence>
+			<xsd:element name="seasonProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonProgramName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonProgramUrl" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DepartmentObject">
+		<xsd:sequence>
+			<xsd:element name="departmentId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="departmentName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="departmentCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>
 

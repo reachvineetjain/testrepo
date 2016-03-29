@@ -1,183 +1,266 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/partnerseasondetail" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:psd="http://www.ccighgo.com/partnerseasondetail"
-   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.partnerseasondetail" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnerseasondetail"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:psd="http://www.ccighgo.com/partnerseasondetail"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.partnerseasondetail" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerSeasonDetail" type="psd:PartnerSeasonDetail" />
+	<xsd:element name="PartnerSeasonDetail" type="psd:PartnerSeasonDetail" />
 
-   <xsd:complexType name="PartnerSeasonDetail">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:sequence>
-                  <xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="partnerSeasonProgramName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="announcements" type="psd:PartnerSeasonAnnouncements" minOccurs="0" maxOccurs="unbounded" />
-                  <xsd:element name="partnerSeasonStatus" type="psd:PartnerSeasonStatus" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="seasonStatus" type="psd:SeasonStatus" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="partnerActiveSeason" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="partnerDepartment" type="psd:PartnerDepartment" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="partnerProgram" type="psd:PartnerProgram" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="partnerHLSeason" type="psd:PartnerHLSeason" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="insuranceProvidedBy" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="sevisFeesPaidBy" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="seasonStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="seasonEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="applicationDeadlineDatesAllocations" type="psd:ApplicationDeadlilneDatesAllocations" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="programAllocations" type="psd:PartnerSeasonJ1HSProgramAllocations" minOccurs="1" maxOccurs="1" />
-                  <xsd:element name="partnerSeasonNotes" type="psd:NoteTopics" minOccurs="1" maxOccurs="1" />
-               </xsd:sequence>
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerSeasonDetail">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:sequence>
+						<xsd:element name="partnerSeasonId" type="xsd:int"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="partnerSeasonProgramName" type="xsd:string"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="announcements" type="psd:PartnerSeasonAnnouncements"
+							minOccurs="0" maxOccurs="unbounded" />
+						<xsd:element name="partnerSeasonStatus" type="psd:PartnerSeasonStatus"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="seasonStatus" type="psd:SeasonStatus"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="partnerActiveSeason" type="xsd:boolean"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="partnerDepartment" type="psd:PartnerDepartment"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="partnerProgram" type="psd:PartnerProgram"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="partnerHLSeason" type="psd:PartnerHLSeason"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="insuranceProvidedBy" type="xsd:boolean"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="sevisFeesPaidBy" type="xsd:boolean"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="seasonStartDate" type="xsd:string"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="seasonEndDate" type="xsd:string"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="applicationDeadlineDatesAllocations"
+							type="psd:ApplicationDeadlilneDatesAllocations" minOccurs="1"
+							maxOccurs="1" />
+						<xsd:element name="programAllocations"
+							type="psd:PartnerSeasonJ1HSProgramAllocations" minOccurs="1"
+							maxOccurs="1" />
+						<xsd:element name="partnerSeasonNotes" type="psd:NoteTopics"
+							minOccurs="1" maxOccurs="1" />
+					</xsd:sequence>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerSeasonAnnouncements">
-      <xsd:sequence>
-         <xsd:sequence>
-            <xsd:element name="announcement" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         </xsd:sequence>
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerSeasonAnnouncements">
+		<xsd:sequence>
+			<xsd:sequence>
+				<xsd:element name="announcement" type="xsd:string"
+					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="timestamp" type="xsd:string"
+					minOccurs="1" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="SeasonStatus">
-      <xsd:sequence>
-         <xsd:element name="seasonStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="seasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="SeasonStatus">
+		<xsd:sequence>
+			<xsd:element name="seasonStatusId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
- <xsd:complexType name="PartnerSeasonStatus">
-      <xsd:sequence>
-         <xsd:element name="partnerSeasonStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerSeasonStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="PartnerDepartment">
-      <xsd:sequence>
-         <xsd:element name="partnerSeasonDepartmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerSeasonDepartmentCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerSeasonDepartmentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerSeasonStatus">
+		<xsd:sequence>
+			<xsd:element name="partnerSeasonStatusId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerSeasonStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PartnerDepartment">
+		<xsd:sequence>
+			<xsd:element name="partnerSeasonDepartmentId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerSeasonDepartmentCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerSeasonDepartmentName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerProgram">
-      <xsd:sequence>
-         <xsd:element name="partnerProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerProgram" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerProgram">
+		<xsd:sequence>
+			<xsd:element name="partnerProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerProgram" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerHLSeason">
-      <xsd:sequence>
-         <xsd:element name="partnerHLSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerHLSeasonName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-
-
-   <xsd:complexType name="ApplicationDeadlilneDatesAllocations">
-      <xsd:sequence>
-			<xsd:element name="augStartDeadlineDateRequested" type="xsd:string" minOccurs="1" maxOccurs="1" />
-    	    <xsd:element name="augStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-    	    <xsd:element name="augStartDeadlineStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-    	    
-      		<xsd:element name="janStartDeadlineDateRequested" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="janStartDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="janStartDeadlineStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-
-
-   <xsd:complexType name="PartnerSeasonJ1HSProgramAllocations">
-      <xsd:sequence>
-          <xsd:element name="janStartAllocationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartAllocationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartMaxUnguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartRequestedMaxUnguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartMaxguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartRequestedMaxguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartAcceptedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartUnderCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartOpenings" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="augustStartStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        
-        
-         <xsd:element name="januaryStartMaxUnguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartRequestedMaxUnguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartMaxguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartRequestedMaxguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartAcceptedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartUnderCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartOpenings" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="januaryStartStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-        
-         <xsd:element name="totalMaxUnguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalMaxguaranteedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalAcceptedParticipants" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalUnderCCIReview" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="totalOpenings" type="xsd:int" minOccurs="1" maxOccurs="1" />
-
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerHLSeason">
+		<xsd:sequence>
+			<xsd:element name="partnerHLSeasonId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerHLSeasonName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 
-   
-   <xsd:complexType name="NoteTopics">
-      <xsd:sequence>
-         <xsd:element name="topicCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="topicList" type="psd:Topic" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
 
-   <xsd:complexType name="Topic">
-      <xsd:sequence>
-         <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="topicTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="creator" type="psd:Creator" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="addedOn" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="privacy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="noteTags" type="psd:NoteTags" minOccurs="0" maxOccurs="unbounded" />
-         <xsd:element name="notesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="notes" type="psd:Note" minOccurs="1" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="NoteTags">
-      <xsd:sequence>
-         <xsd:element name="noteTagId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="noteTag" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="Note">
-      <xsd:sequence>
-         <xsd:element name="noteId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="topicId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="timestamp" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="creator" type="psd:Creator" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="note" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="Creator">
-      <xsd:sequence>
-         <xsd:element name="createdBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="createdByPicUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="designation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   
+	<xsd:complexType name="ApplicationDeadlilneDatesAllocations">
+		<xsd:sequence>
+			<xsd:element name="augStartDeadlineDateRequested" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augStartDeadlineDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augStartDeadlineStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+
+			<xsd:element name="janStartDeadlineDateRequested" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="janStartDeadlineDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="janStartDeadlineStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="PartnerSeasonJ1HSProgramAllocations">
+		<xsd:sequence>
+			<xsd:element name="janStartAllocationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartAllocationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartMaxUnguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartRequestedMaxUnguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartMaxguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartRequestedMaxguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartAcceptedParticipants" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartUnderCCIReview" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartOpenings" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="augustStartStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+
+
+			<xsd:element name="januaryStartMaxUnguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="januaryStartRequestedMaxUnguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="januaryStartMaxguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="januaryStartRequestedMaxguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="januaryStartAcceptedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="januaryStartUnderCCIReview" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="januaryStartOpenings" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="januaryStartStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+
+			<xsd:element name="totalMaxUnguaranteedParticipants"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="totalMaxguaranteedParticipants" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="totalAcceptedParticipants" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="totalUnderCCIReview" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="totalOpenings" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+
+	<xsd:complexType name="NoteTopics">
+		<xsd:sequence>
+			<xsd:element name="topicCount" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="topicList" type="psd:Topic" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Topic">
+		<xsd:sequence>
+			<xsd:element name="topicId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="topicTitle" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="creator" type="psd:Creator" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="addedOn" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="privacy" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="noteTags" type="psd:NoteTags"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="notesCount" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="notes" type="psd:Note" minOccurs="1"
+				maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="NoteTags">
+		<xsd:sequence>
+			<xsd:element name="noteTagId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="noteTag" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Note">
+		<xsd:sequence>
+			<xsd:element name="noteId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="topicId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="timestamp" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="creator" type="psd:Creator" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="note" type="xsd:string" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Creator">
+		<xsd:sequence>
+			<xsd:element name="createdBy" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="createdByPicUrl" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="designation" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
 
 </xsd:schema>

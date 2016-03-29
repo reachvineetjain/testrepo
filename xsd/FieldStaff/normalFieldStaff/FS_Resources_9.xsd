@@ -1,28 +1,32 @@
-<xsd:schema targetNamespace="http://www.ccighgo.com/resources" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/resources"
-   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.fieldstaff.beans.resources" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
-   <xsd:complexType name="FSResources">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="urls" type="cd:FSResourcesDetails" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="FSResourcesDetails">
-            <xsd:sequence>
-               <xsd:element name="urlValue" type="xsd:string" />
-               <xsd:element name="urlName" type="xsd:string" />
-            </xsd:sequence>
-   </xsd:complexType>
-   
+<xsd:schema targetNamespace="http://www.ccighgo.com/resources"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/resources"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.fieldstaff.beans.resources" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+	<xsd:complexType name="FSResources">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="urls" type="cd:FSResourcesDetails"
+						maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FSResourcesDetails">
+		<xsd:sequence>
+			<xsd:element name="urlValue" type="xsd:string" />
+			<xsd:element name="urlName" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
 </xsd:schema>

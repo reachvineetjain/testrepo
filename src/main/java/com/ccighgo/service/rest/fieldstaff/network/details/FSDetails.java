@@ -80,7 +80,7 @@ public class FSDetails {
    public FieldStaffCategoriesList getFieldStaffNetworkCategoriesList(@PathParam("fsGoId") String fsGoId) {
       return fsDetailsInterface.getFieldStaffNetworkCategoriesList(fsGoId);
    }
-   
+
    @GET
    @Path("hf/categories/{fsGoId}")
    @Produces("application/json")

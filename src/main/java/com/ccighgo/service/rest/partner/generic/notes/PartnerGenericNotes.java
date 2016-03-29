@@ -28,9 +28,6 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Consumes("application/json")
 public class PartnerGenericNotes {
 
-   // private static final Logger LOGGER =
-   // LoggerFactory.getLogger(PartnerGenericNotes.class);
-
    @Autowired PartnerGenericNoteInterface partnerGenericNoteInterface;
 
    /**

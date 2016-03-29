@@ -46,6 +46,5 @@ public class SevisLogProcessor implements ISevisLogProcessor {
    public static void main(String[] args) {
       SevisLogProcessor s = new SevisLogProcessor();
       s.processLog(null);
-      // System.out.println();
    }
 }

@@ -1,143 +1,209 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/companydetail" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pcd="http://www.ccighgo.com/companydetail" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.companydetail" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/companydetail"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pcd="http://www.ccighgo.com/companydetail"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.companydetail" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerCompanyDetail" type="pcd:PartnerCompanyDetail" />
+	<xsd:element name="PartnerCompanyDetail" type="pcd:PartnerCompanyDetail" />
 
-   <xsd:complexType name="PartnerCompanyDetail">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerCompanyNameHeader" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerCompanyStatus" type="pcd:PartnerCompanyStatus" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerCompanyDetails" type="pcd:PartnerCompanyDetails" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerPrimaryContact" type="pcd:PartnerPrimaryContact" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerPhysicalAddress" type="pcd:PartnerPhysicalAddress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerMailingAddressSame" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-               <xsd:element name="partnerMailingAddress" type="pcd:PartnerMailingAddress" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerOfficesCount" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerOffices" type="pcd:PartnerOffice" minOccurs="1" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCompanyDetail">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="partnerGoId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerCompanyNameHeader" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerCompanyStatus" type="pcd:PartnerCompanyStatus"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerCompanyDetails" type="pcd:PartnerCompanyDetails"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerPrimaryContact" type="pcd:PartnerPrimaryContact"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerPhysicalAddress" type="pcd:PartnerPhysicalAddress"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerMailingAddressSame" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="partnerMailingAddress" type="pcd:PartnerMailingAddress"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerOfficesCount" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="partnerOffices" type="pcd:PartnerOffice"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCompanyStatus">
-      <xsd:sequence>
-         <xsd:element name="partnerCompanyStatuId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCompanyStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCompanyStatus">
+		<xsd:sequence>
+			<xsd:element name="partnerCompanyStatuId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCompanyStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerCompanyDetails">
-      <xsd:sequence>
-         <xsd:element name="partnerCompanyLogoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCompanyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerCompanyAcronym" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="CCIAccountingDesignation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="dAndBNumber" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="personToSignContract" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subscribeCCINewsletter" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="recieveHSPNotificationEmails" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="generalEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerCompanyDetails">
+		<xsd:sequence>
+			<xsd:element name="partnerCompanyLogoUrl" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCompanyName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerCompanyAcronym" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="CCIAccountingDesignation" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="dAndBNumber" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="personToSignContract" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subscribeCCINewsletter" type="xsd:boolean"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="recieveHSPNotificationEmails" type="xsd:boolean"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="generalEmail" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="userName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerPrimaryContact">
-      <xsd:sequence>
-         <xsd:element name="primaryContactSalutation" type="pcd:PrimaryContactSalutation" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactTitle" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactEmergencyPhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactFax" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactShouldRecieveCCINotification" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactSkypeId" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="primaryContactWebsite" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerPrimaryContact">
+		<xsd:sequence>
+			<xsd:element name="primaryContactSalutation" type="pcd:PrimaryContactSalutation"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactTitle" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactFirstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactLastName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactEmail" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactPhone" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactEmergencyPhone" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactFax" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactShouldRecieveCCINotification"
+				type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactSkypeId" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="primaryContactWebsite" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PrimaryContactSalutation">
-      <xsd:sequence>
-         <xsd:element name="salutationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="salutation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PrimaryContactSalutation">
+		<xsd:sequence>
+			<xsd:element name="salutationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="salutation" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerPhysicalAddress">
-      <xsd:sequence>
-         <xsd:element name="partnerPhysicalAddress" type="pcd:PartnerAddress" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerPhysicalAddress">
+		<xsd:sequence>
+			<xsd:element name="partnerPhysicalAddress" type="pcd:PartnerAddress"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerMailingAddress">
-      <xsd:sequence>
-         <xsd:element name="partnerMailingAddress" type="pcd:PartnerAddress" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerMailingAddress">
+		<xsd:sequence>
+			<xsd:element name="partnerMailingAddress" type="pcd:PartnerAddress"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerAddress">
-      <xsd:sequence>
-         <xsd:element name="addressLineOne" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="addressLineTwo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerAddressState" type="pcd:PartnerAddressState" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerAddressCountry" type="pcd:PartnerAddressCountry" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerAddress">
+		<xsd:sequence>
+			<xsd:element name="addressLineOne" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="addressLineTwo" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="city" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="partnerAddressState" type="pcd:PartnerAddressState"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="zipCode" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="partnerAddressCountry" type="pcd:PartnerAddressCountry"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerAddressState">
-      <xsd:sequence>
-         <xsd:element name="partnerAddressStateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerAddressStateISOCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerAddressStateName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerAddressState">
+		<xsd:sequence>
+			<xsd:element name="partnerAddressStateId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerAddressStateISOCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerAddressStateName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerAddressCountry">
-      <xsd:sequence>
-         <xsd:element name="partnerAddressCountryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerAddressCountryISOCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerAddressCountryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerAddressCountry">
+		<xsd:sequence>
+			<xsd:element name="partnerAddressCountryId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerAddressCountryISOCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerAddressCountryName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="PartnerOffice">
-      <xsd:sequence>
-         <xsd:element name="isPrimary" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="partnerOfficeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeAddressLineOne" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeAddressLineTwo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeAddressCountry" type="pcd:OfficeAddressCountry" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officePhone" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeFax" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeWebsite" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-    <xsd:complexType name="OfficeAddressCountry">
-      <xsd:sequence>
-         <xsd:element name="officeAddressCountryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeAddressCountryISOCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="officeAddressCountryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerOffice">
+		<xsd:sequence>
+			<xsd:element name="isPrimary" type="xsd:boolean"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerOfficeId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressLineOne" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressLineTwo" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="city" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="zipCode" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="officeAddressCountry" type="pcd:OfficeAddressCountry"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officePhone" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeFax" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeEmail" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeWebsite" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="OfficeAddressCountry">
+		<xsd:sequence>
+			<xsd:element name="officeAddressCountryId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressCountryISOCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressCountryName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>

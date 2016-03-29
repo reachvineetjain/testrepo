@@ -6,22 +6,28 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.insurancecountries" />
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.insurancecountries" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 		<xsd:documentation></xsd:documentation>
 	</xsd:annotation>
 
 	<xsd:element name="InsuranceCountries" type="insurancecountries:InsuranceCountries"></xsd:element>
-	
+
 	<xsd:complexType name="InsuranceCountries">
 		<xsd:sequence>
-		 <xsd:element name="RegionID" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="CountryID" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Region" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Code" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="ADM1Code" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="RegionID" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="CountryID" type="xsd:string"
+				minOccurs="1" maxOccurs="1"></xsd:element>
+			<xsd:element name="Region" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="Code" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="ADM1Code" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
-  
+
 </xsd:schema>

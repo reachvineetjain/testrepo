@@ -87,7 +87,7 @@ public class HostFamily implements Serializable {
    @ManyToOne @JoinColumn(name = "hostFamilyStatusId") private HostFamilyStatus hostFamilyStatus;
 
    // bi-directional many-to-one association to LookupCountry
-   @ManyToOne @JoinColumn(name = "physicalStateId") private LookupCountry lookupCountry1;
+   @ManyToOne @JoinColumn(name = "mailingCountryId") private LookupCountry lookupCountry1;
 
    // bi-directional many-to-one association to LookupCountry
    @ManyToOne @JoinColumn(name = "physicalCountryId") private LookupCountry lookupCountry2;
