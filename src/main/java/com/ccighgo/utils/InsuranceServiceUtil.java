@@ -58,7 +58,7 @@ public class InsuranceServiceUtil {
 
    }
 
-   public static String callInsuranceService_backup(String URL) {
+   public static String callInsuranceServiceBackup(String URL) {
       ResponseHandler<String> handler = new BasicResponseHandler();
       String authResponse = null;
       try {
@@ -73,8 +73,8 @@ public class InsuranceServiceUtil {
          httppost.setHeader("Authorization", TOKEN_KEY + " " + TOKEN_VALUE);
 
          authResponse = httpclient.execute(httppost, handler);
-         System.out.println(authResponse);
-         System.out.println("time " + (System.currentTimeMillis() - time));
+         LOGGER.info(authResponse);
+         LOGGER.info("time " + (System.currentTimeMillis() - time));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
       }

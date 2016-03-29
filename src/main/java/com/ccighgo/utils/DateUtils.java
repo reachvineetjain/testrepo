@@ -56,7 +56,7 @@ public class DateUtils {
          }
       return date;
    }
-   public static Date getMysqlDateFromString_FormatwithSlash(String endDate) {
+   public static Date getMysqlDateFromStringFormatwithSlash(String endDate) {
 	      DateFormat format = new SimpleDateFormat(CCIConstants.MYSQL_DATE_FORMAT_SLASH, Locale.US);
 	      Date date = null;
 	      if (endDate != null && !endDate.trim().isEmpty())
