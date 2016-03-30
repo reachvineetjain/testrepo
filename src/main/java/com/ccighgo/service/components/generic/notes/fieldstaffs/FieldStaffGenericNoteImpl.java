@@ -29,26 +29,15 @@ import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
 
 @Component
 public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(GenericDocumentsInterface.class);;
 
-   @Autowired
-   CommonComponentUtils componentUtils;
-
-   @Autowired
-   MessageUtils messageUtil;
-
-   @Autowired
-   FieldStaffNoteTopicRepository fieldStaffNoteTopicRepository;
-
-   @Autowired
-   FieldStaffRepository fieldStaffRepository;
-
-   @Autowired
-   FieldStaffNoteRepository fieldStaffNoteRepository;
-
-   @Autowired
-   ReusedFunctions reusedFunctions;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired FieldStaffNoteTopicRepository fieldStaffNoteTopicRepository;
+   @Autowired FieldStaffRepository fieldStaffRepository;
+   @Autowired FieldStaffNoteRepository fieldStaffNoteRepository;
+   @Autowired ReusedFunctions reusedFunctions;
 
    @Override
    public Response addNotes(FieldStaffNote note) {
@@ -80,64 +69,61 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
    public FieldStaffTopics viewTopics(int fieldStaffGoId) {
 
       FieldStaffTopics fieldStaffTopics = new FieldStaffTopics();
-      try
-      {
-      List<FieldStaffNoteTopic> topics = fieldStaffNoteTopicRepository.listTopicsByFieldStaffId(fieldStaffGoId);
-      if (topics == null || topics.size()<=0) {
-         fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
-               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_FETCH_GENERIC_NOTE)));
-         return fieldStaffTopics;
-      }
-      for (FieldStaffNoteTopic t : topics) {
-         FieldStaffTopic topic = new FieldStaffTopic();
-         topic.setFieldStaffNoteTopicId(t.getFieldStaffNoteTopicsId());
-         topic.setFieldStaffNoteTopicName(t.getFieldStaffNoteTopicName());
-         topic.setFieldStaffGoId(t.getFieldStaff().getFieldStaffGoId());
-         topic.setPublic(t.getIsPublic() == CCIConstants.ACTIVE);
-         topic.setTitle(t.getTitle());
-         UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(t.getCreatedBy());
-         if (userInformation != null) {
-            UploadedByUser user = new UploadedByUser();
-            user.setPhotoUrl(userInformation.getPhotoUrl());
-            user.setRole(userInformation.getRole());
-            user.setUserName(userInformation.getUserName());
-            topic.setUploadBy(user);
+      try {
+         List<FieldStaffNoteTopic> topics = fieldStaffNoteTopicRepository.listTopicsByFieldStaffId(fieldStaffGoId);
+         if (topics == null || topics.size() <= 0) {
+            fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
+                  messageUtil.getMessage(GenericMessageConstants.FAILED_TO_FETCH_GENERIC_NOTE)));
+            return fieldStaffTopics;
          }
-         topic.setCreatedOn(DateUtils.getDateAndTime(t.getCreatedOn()));
-         List<com.ccighgo.db.entities.FieldStaffNote> notes = t.getFieldStaffNotes();
-         if (notes != null) {
-            for (com.ccighgo.db.entities.FieldStaffNote n : notes) {
-               FieldStaffNote note = new FieldStaffNote();
-               if(n.getFieldStaff()!=null)
-               {
-               note.setFieldStaffNoteId(n.getFieldStaffNoteId());
-               note.setFieldStaffGoId(n.getFieldStaff().getFieldStaffGoId());
-               note.setFieldStaffNoteTopicId(n.getFieldStaffNoteTopic().getFieldStaffNoteTopicsId());;
-               note.setNoteValue(n.getFieldStaffNote());
-               note.setRead(n.getHasRead() == CCIConstants.ACTIVE);
-               note.setCreatedOn(DateUtils.getDateAndTime(n.getCreatedOn()));
-               }
-               UserInformationOfCreatedBy userInfo = reusedFunctions.getPartnerCreatedByInformation(n.getCreatedBy());
-               if (userInfo != null) {
-                  UploadedByUser user = new UploadedByUser();
-                  user.setPhotoUrl(userInfo.getPhotoUrl());
-                  user.setRole(userInfo.getRole());
-                  user.setUserName(userInfo.getUserName());
-                  note.setUploadBy(user);
-               }
-               topic.getFieldStaffNotes().add(note);
+         for (FieldStaffNoteTopic t : topics) {
+            FieldStaffTopic topic = new FieldStaffTopic();
+            topic.setFieldStaffNoteTopicId(t.getFieldStaffNoteTopicsId());
+            topic.setFieldStaffNoteTopicName(t.getFieldStaffNoteTopicName());
+            topic.setFieldStaffGoId(t.getFieldStaff().getFieldStaffGoId());
+            topic.setPublic(t.getIsPublic() == CCIConstants.ACTIVE);
+            topic.setTitle(t.getTitle());
+            UserInformationOfCreatedBy userInformation = reusedFunctions.getPartnerCreatedByInformation(t.getCreatedBy());
+            if (userInformation != null) {
+               UploadedByUser user = new UploadedByUser();
+               user.setPhotoUrl(userInformation.getPhotoUrl());
+               user.setRole(userInformation.getRole());
+               user.setUserName(userInformation.getUserName());
+               topic.setUploadBy(user);
             }
+            topic.setCreatedOn(DateUtils.getDateAndTime(t.getCreatedOn()));
+            List<com.ccighgo.db.entities.FieldStaffNote> notes = t.getFieldStaffNotes();
+            if (notes != null) {
+               for (com.ccighgo.db.entities.FieldStaffNote n : notes) {
+                  FieldStaffNote note = new FieldStaffNote();
+                  if (n.getFieldStaff() != null) {
+                     note.setFieldStaffNoteId(n.getFieldStaffNoteId());
+                     note.setFieldStaffGoId(n.getFieldStaff().getFieldStaffGoId());
+                     note.setFieldStaffNoteTopicId(n.getFieldStaffNoteTopic().getFieldStaffNoteTopicsId());
+                     note.setNoteValue(n.getFieldStaffNote());
+                     note.setRead(n.getHasRead() == CCIConstants.ACTIVE);
+                     note.setCreatedOn(DateUtils.getDateAndTime(n.getCreatedOn()));
+                  }
+                  UserInformationOfCreatedBy userInfo = reusedFunctions.getPartnerCreatedByInformation(n.getCreatedBy());
+                  if (userInfo != null) {
+                     UploadedByUser user = new UploadedByUser();
+                     user.setPhotoUrl(userInfo.getPhotoUrl());
+                     user.setRole(userInfo.getRole());
+                     user.setUserName(userInfo.getUserName());
+                     note.setUploadBy(user);
+                  }
+                  topic.getFieldStaffNotes().add(note);
+               }
+            }
+            fieldStaffTopics.getTopics().add(topic);
          }
-         fieldStaffTopics.getTopics().add(topic);
-      }
-      fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      }catch(Exception e)
-      {
+         fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
          fieldStaffTopics.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.VIEW_FIELD_STAFF_NOTE.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE));
-         
+
       }
       return fieldStaffTopics;
    }
@@ -172,14 +158,12 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
    @Override
    public Response removeNote(int noteId) {
       Response response = new Response();
-      try
-      {
-      fieldStaffNoteRepository.delete(noteId);
-      fieldStaffNoteRepository.flush();
-      response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DELETE_FIELD_STAFF_NOTE.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-      }catch(Exception e)
-      {
+      try {
+         fieldStaffNoteRepository.delete(noteId);
+         fieldStaffNoteRepository.flush();
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DELETE_FIELD_STAFF_NOTE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_FIELD_STAFF_NOTE.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE));
@@ -190,23 +174,23 @@ public class FieldStaffGenericNoteImpl implements FieldStaffGenericNoteInterface
    @Override
    public FieldStaffTopic addNewTopic(FieldStaffTopic fieldStaffTopic) {
       FieldStaffTopic response = new FieldStaffTopic();
-      try {     
-      FieldStaffNoteTopic fieldStaffNoteTopic = new FieldStaffNoteTopic();
-      FieldStaff fs = fieldStaffRepository.findOne(fieldStaffTopic.getFieldStaffGoId());
-      fieldStaffNoteTopic.setFieldStaff(fs);
-      fieldStaffNoteTopic.setTitle(fieldStaffTopic.getTitle());
-      fieldStaffNoteTopic.setFieldStaffNoteTopicName(fieldStaffTopic.getFieldStaffNoteTopicName());
-      fieldStaffNoteTopic.setCreatedBy(fieldStaffTopic.getLoginId());
-      fieldStaffNoteTopic.setModifiedBy(fieldStaffTopic.getLoginId());
-      fieldStaffNoteTopic.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      fieldStaffNoteTopic.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-      fieldStaffNoteTopic.setIsPublic(fieldStaffTopic.isPublic() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-      FieldStaffNoteTopic res= fieldStaffNoteTopicRepository.saveAndFlush(fieldStaffNoteTopic);
-      response.setFieldStaffNoteTopicId(res.getFieldStaffNoteTopicsId());
-      response.setTitle(res.getTitle());
-      response.setFieldStaffNoteTopicName(res.getFieldStaffNoteTopicName());
-      response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
-            messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      try {
+         FieldStaffNoteTopic fieldStaffNoteTopic = new FieldStaffNoteTopic();
+         FieldStaff fs = fieldStaffRepository.findOne(fieldStaffTopic.getFieldStaffGoId());
+         fieldStaffNoteTopic.setFieldStaff(fs);
+         fieldStaffNoteTopic.setTitle(fieldStaffTopic.getTitle());
+         fieldStaffNoteTopic.setFieldStaffNoteTopicName(fieldStaffTopic.getFieldStaffNoteTopicName());
+         fieldStaffNoteTopic.setCreatedBy(fieldStaffTopic.getLoginId());
+         fieldStaffNoteTopic.setModifiedBy(fieldStaffTopic.getLoginId());
+         fieldStaffNoteTopic.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         fieldStaffNoteTopic.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+         fieldStaffNoteTopic.setIsPublic(fieldStaffTopic.isPublic() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+         FieldStaffNoteTopic res = fieldStaffNoteTopicRepository.saveAndFlush(fieldStaffNoteTopic);
+         response.setFieldStaffNoteTopicId(res.getFieldStaffNoteTopicsId());
+         response.setTitle(res.getTitle());
+         response.setFieldStaffNoteTopicName(res.getFieldStaffNoteTopicName());
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_TOPIC.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC)));

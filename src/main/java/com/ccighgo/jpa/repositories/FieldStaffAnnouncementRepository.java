@@ -11,7 +11,7 @@ import com.ccighgo.utils.CCIConstants;
 
 @Repository
 public interface FieldStaffAnnouncementRepository extends JpaRepository<FieldStaffAnnouncement, Integer> {
-   
+
    @Query("SELECT a FROM FieldStaffAnnouncement a WHERE a.showERD = " + CCIConstants.ACTIVE)
    List<FieldStaffAnnouncement> getERDStaffAnnouncements();
 

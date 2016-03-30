@@ -19,9 +19,6 @@ import com.ccighgo.db.entities.FieldStaffLeadershipSeason;
 import com.ccighgo.db.entities.FieldStaffStatus;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginHistory;
-import com.ccighgo.db.entities.PartnerAgentInquiry;
-import com.ccighgo.db.entities.PartnerReviewStatus;
-import com.ccighgo.db.entities.PartnerStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
@@ -171,6 +168,7 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          try {
             resultList = query.getResultList();
          } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
          }
          if (resultList != null && !resultList.isEmpty()) {
 

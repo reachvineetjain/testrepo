@@ -1,84 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/assignedstates" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:assignedstates="http://www.ccighgo.com/assignedstates" xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
-   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+<xsd:schema targetNamespace="http://www.ccighgo.com/assignedstates"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:assignedstates="http://www.ccighgo.com/assignedstates"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
 
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.season.beans.assignedstates" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-      <xsd:documentation></xsd:documentation>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.season.beans.assignedstates" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
-   <xsd:element name="AssignedStateInfo" type="assignedstates:AssignedStateInfo"></xsd:element>
+	<xsd:element name="AssignedStateInfo" type="assignedstates:AssignedStateInfo"></xsd:element>
 
-   <xsd:complexType name="AssignedStateInfo">
-      <xsd:complexContent>
-         <xsd:extension  base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="superRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="regionId" type="xsd:int" minOccurs="1" maxOccurs="1" />               
-               <xsd:element name="StateInfo" type="assignedstates:StateInfo" minOccurs="1" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="AssignedStateInfo">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="superRegionId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="regionId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="StateInfo" type="assignedstates:StateInfo"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="StateInfo">
-            <xsd:sequence>
-               <xsd:element name="stateId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="stateCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="stateName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />               
-               <xsd:element name="AssignedStateStaff" type="assignedstates:AssignedStateStaff" minOccurs="0" maxOccurs="unbounded" />
-            </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="StateInfo">
+		<xsd:sequence>
+			<xsd:element name="stateId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="stateCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="stateName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonGeographyConfigurationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="AssignedStateStaff" type="assignedstates:AssignedStateStaff"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="AssignedStateStaff">
-            <xsd:sequence>
-               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="assignedTo" type="assignedstates:AssignedToStaff" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="reportTo" type="assignedstates:ReportToStaff" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="photo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="assignedArea" type="assignedstates:RegionAssignedArea" minOccurs="1" maxOccurs="unbounded" />
-			   <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-			   <xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
-            </xsd:sequence>
-   </xsd:complexType>
-   
-  <xsd:complexType name="AssignedToStaff">
-            <xsd:sequence>
-               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="photo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="seasonGeographyConfigurationId" type="xsd:integer" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-   </xsd:complexType>
-   
-    <xsd:complexType name="ReportToStaff">
-            <xsd:sequence>
-               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="photo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                              <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="RegionAssignedArea">
-            <xsd:sequence>
-               <xsd:element name="stateCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="regionArea" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="AssignedStateStaff">
+		<xsd:sequence>
+			<xsd:element name="staffId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="role" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="assignedTo" type="assignedstates:AssignedToStaff"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="reportTo" type="assignedstates:ReportToStaff"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="firstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lastName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="photo" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="assignedArea" type="assignedstates:RegionAssignedArea"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xsd:element name="seasonGeographyConfigurationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="AssignedToStaff">
+		<xsd:sequence>
+			<xsd:element name="staffId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="role" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="firstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lastName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="photo" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonGeographyConfigurationId" type="xsd:integer"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ReportToStaff">
+		<xsd:sequence>
+			<xsd:element name="staffId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="role" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="firstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lastName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="photo" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonGeographyConfigurationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RegionAssignedArea">
+		<xsd:sequence>
+			<xsd:element name="stateCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="regionArea" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>

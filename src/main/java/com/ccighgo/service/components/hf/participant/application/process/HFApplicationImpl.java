@@ -119,7 +119,6 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
-import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
@@ -513,22 +512,22 @@ public class HFApplicationImpl implements HFApplication {
    public Response deletePhoto(Integer photoId, Integer optional, Integer loginId) {
       Response resp = new Response();
       try {
-         if (photoId == null || optional==null || loginId ==null) {
+         if (photoId == null || optional == null || loginId == null) {
             throw new CcighgoException("invalid parameters, cannot delete photo");
          }
-         if(optional==1){
-            hostFamilyPhotosRepository.delete(Integer.valueOf(photoId)); 
+         if (optional == 1) {
+            hostFamilyPhotosRepository.delete(Integer.valueOf(photoId));
          }
-         if(optional==0){
-           HostFamilyPhoto photo = hostFamilyPhotosRepository.findOne(photoId) ;
-           photo.setFileName("");
-           photo.setFilePath("");
-           photo.setPhotoName("");
-           photo.setDescription("");
-           photo.setModifiedBy(loginId);
-           photo.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-           hostFamilyPhotosRepository.saveAndFlush(photo);
-         }else{
+         if (optional == 0) {
+            HostFamilyPhoto photo = hostFamilyPhotosRepository.findOne(photoId);
+            photo.setFileName("");
+            photo.setFilePath("");
+            photo.setPhotoName("");
+            photo.setDescription("");
+            photo.setModifiedBy(loginId);
+            photo.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            hostFamilyPhotosRepository.saveAndFlush(photo);
+         } else {
             throw new CcighgoException("optional type is required to delete");
          }
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -601,6 +600,9 @@ public class HFApplicationImpl implements HFApplication {
    public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam) {
       HFApplicationFamilyLifeStyle hfl = new HFApplicationFamilyLifeStyle();
       try {
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               Integer.valueOf(familyStylePageParam.getSeasonId()), familyStylePageParam.getApplicationCategoryId());
+
          Query query = em.createNativeQuery(SP_HF_LIFE_STYLE);
          query.setParameter(1, familyStylePageParam.getHostFamilyId() == 0 ? null : familyStylePageParam.getHostFamilyId());
          query.setParameter(2, familyStylePageParam.getSeasonId() == 0 ? null : familyStylePageParam.getSeasonId());
@@ -662,6 +664,8 @@ public class HFApplicationImpl implements HFApplication {
                hfl.setProgramId(Integer.valueOf(String.valueOf(obj[34])));
                hfl.setHostFamilySeasonId(Integer.valueOf(String.valueOf(obj[35])));
                hfl.setHostFamilyDetailsId(Integer.valueOf(String.valueOf(obj[36])));
+               if (hostFamilySeasonCategory != null)
+                  hfl.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
                break;
             }
             hfl.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -681,6 +685,10 @@ public class HFApplicationImpl implements HFApplication {
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam) {
       HFApplicationFamilyDetails hfbs = new HFApplicationFamilyDetails();
       try {
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               Integer.valueOf(familyBasicsPageParam.getSeasonId()), familyBasicsPageParam.getApplicationCategoryId());
+         if (hostFamilySeasonCategory != null)
+            hfbs.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
          Query query = em.createNativeQuery(SP_HF_FAMILY_BASIC_DATA);
          query.setParameter(1, familyBasicsPageParam.getHostfamilyId() == 0 ? null : familyBasicsPageParam.getHostfamilyId());
          query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
@@ -691,42 +699,46 @@ public class HFApplicationImpl implements HFApplication {
          boolean singleHost = false;
          if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
-               HFAdultDetails adult = new HFAdultDetails();
-               com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
-               photo.setFilePath(String.valueOf(obj[0]));
-               hfbs.setPhoto(photo);
-               singleHost |= Boolean.valueOf(String.valueOf(obj[1]));
-               adult.setRelationship(String.valueOf(obj[2]));
-               adult.setFirstName(String.valueOf(obj[3]));
-               adult.setLastName(String.valueOf(obj[4]));
-               adult.setIsHostParent(Boolean.valueOf(String.valueOf(obj[5])));
-               adult.setEmail(String.valueOf(obj[6]));
-               adult.setPersonalPhone(String.valueOf(obj[7]));
-               adult.setBirthdate(String.valueOf(obj[8]));
-               adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
-               adult.setEducationLevel(String.valueOf(obj[10]));
-               adult.setLivesinsideOfHomePartTime(Boolean.valueOf(String.valueOf(obj[11])));
-               adult.setLivingInsideHomeExplanation(String.valueOf(obj[12]));
-               adult.setCommunityInvolvement(String.valueOf(obj[13]));
-               adult.setActivitiesOrInterests(String.valueOf(obj[14]));
-               adult.setEmployed(String.valueOf(obj[15]));
-               adult.setEmployer(String.valueOf(obj[16]));
-               adult.setJobTitle(String.valueOf(obj[17]));
-               adult.setContactName(String.valueOf(obj[18]));
-               adult.setJobPhone(String.valueOf(obj[19]));
-               if (obj[20] != null) {
-                  Boolean valueOf = Boolean.valueOf(String.valueOf(obj[20]));
-                  if (valueOf) {
-                     adult.setHasAnotherJob(valueOf);
-                     adult.setOtherEmployer(String.valueOf(obj[21]));
-                     adult.setOtherJobTitle(String.valueOf(obj[22]));
-                     adult.setOtherContactName(String.valueOf(obj[23]));
-                     adult.setOtherJobPhone(String.valueOf(obj[24]));
+               try {
+                  HFAdultDetails adult = new HFAdultDetails();
+                  com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
+                  photo.setFilePath(String.valueOf(obj[0]));
+                  hfbs.setPhoto(photo);
+                  singleHost |= Boolean.valueOf(String.valueOf(obj[1]));
+                  adult.setRelationship(String.valueOf(obj[2]));
+                  adult.setFirstName(String.valueOf(obj[3]));
+                  adult.setLastName(String.valueOf(obj[4]));
+                  adult.setIsHostParent(Boolean.valueOf(String.valueOf(obj[5])));
+                  adult.setEmail(String.valueOf(obj[6]));
+                  adult.setPersonalPhone(String.valueOf(obj[7]));
+                  adult.setBirthdate(String.valueOf(obj[8]));
+                  adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
+                  adult.setEducationLevel(String.valueOf(obj[10]));
+                  adult.setLivesinsideOfHomePartTime(Boolean.valueOf(String.valueOf(obj[11])));
+                  adult.setLivingInsideHomeExplanation(String.valueOf(obj[12]));
+                  adult.setCommunityInvolvement(String.valueOf(obj[13]));
+                  adult.setActivitiesOrInterests(String.valueOf(obj[14]));
+                  adult.setEmployed(String.valueOf(obj[15]));
+                  adult.setEmployer(String.valueOf(obj[16]));
+                  adult.setJobTitle(String.valueOf(obj[17]));
+                  adult.setContactName(String.valueOf(obj[18]));
+                  adult.setJobPhone(String.valueOf(obj[19]));
+                  if (obj[20] != null) {
+                     Boolean valueOf = Boolean.valueOf(String.valueOf(obj[20]));
+                     if (valueOf) {
+                        adult.setHasAnotherJob(valueOf);
+                        adult.setOtherEmployer(String.valueOf(obj[21]));
+                        adult.setOtherJobTitle(String.valueOf(obj[22]));
+                        adult.setOtherContactName(String.valueOf(obj[23]));
+                        adult.setOtherJobPhone(String.valueOf(obj[24]));
+                     }
                   }
+                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
+                  adult.setHostfamilyMemberId(Integer.valueOf(String.valueOf(obj[26])));
+                  hfbs.getAdults().add(adult);
+               } catch (Exception e) {
+                  LOGGER.error(e.getMessage());
                }
-               photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
-               adult.setHostfamilyMemberId(Integer.valueOf(String.valueOf(obj[26])));
-               hfbs.getAdults().add(adult);
             }
             hfbs.setSingleHost(singleHost);
          } else {
@@ -742,45 +754,50 @@ public class HFApplicationImpl implements HFApplication {
          result = query.getResultList();
          if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
-               HFContactInfo info = new HFContactInfo();
-               info.setHaveHomePhoneOrLandline(Boolean.valueOf(String.valueOf(obj[0])));
-               info.setPhone(String.valueOf(obj[1]));
-               info.setPreferPhone(Boolean.valueOf(String.valueOf(obj[2])));
-               info.setPreferEmail(Boolean.valueOf(String.valueOf(obj[3])));
-               info.setContactPhone(String.valueOf(obj[4]));
-               info.setContactEmail(String.valueOf(obj[5]));
-               info.setEmergencyContactPerson(String.valueOf(obj[6]));
-               info.setEmergencyPhone(String.valueOf(obj[7]));
+               try {
+                  HFContactInfo info = new HFContactInfo();
+                  info.setHaveHomePhoneOrLandline(Boolean.valueOf(String.valueOf(obj[0])));
+                  info.setPhone(String.valueOf(obj[1]));
+                  info.setPreferPhone(Boolean.valueOf(String.valueOf(obj[2])));
+                  info.setPreferEmail(Boolean.valueOf(String.valueOf(obj[3])));
+                  info.setContactPhone(String.valueOf(obj[4]));
+                  info.setContactEmail(String.valueOf(obj[5]));
+                  info.setEmergencyContactPerson(String.valueOf(obj[6]));
+                  info.setEmergencyPhone(String.valueOf(obj[7]));
 
-               hfbs.setContactInfo(info);
+                  hfbs.setContactInfo(info);
 
-               HFPhysicalAddress paddress = new HFPhysicalAddress();
-               paddress.setAddress1(String.valueOf(obj[8]));
-               paddress.setCity(String.valueOf(obj[9]));
-               // us1.`stateName` AS physicalState,
-               // LookupUSState st =
-               // stateRepository.getStateByName(String.valueOf(obj[10]));
-               paddress.setStateId(Integer.parseInt(String.valueOf(obj[10]))); // we
-                                                                               // need
-                                                                               // state
-                                                                               // Id
-               // obj[10]
-               paddress.setZipCode(String.valueOf(obj[11]));
-               hfbs.setPhysicalAddress(paddress);
+                  HFPhysicalAddress paddress = new HFPhysicalAddress();
+                  paddress.setAddress1(String.valueOf(obj[8]));
+                  paddress.setCity(String.valueOf(obj[9]));
+                  // us1.`stateName` AS physicalState,
+                  // LookupUSState st =
+                  // stateRepository.getStateByName(String.valueOf(obj[10]));
+                  paddress.setStateId(Integer.parseInt(String.valueOf(obj[10]))); // we
+                                                                                  // need
+                                                                                  // state
+                                                                                  // Id
+                  // obj[10]
+                  paddress.setZipCode(String.valueOf(obj[11]));
+                  hfbs.setPhysicalAddress(paddress);
 
-               // hf.`mailingAddress`,
-               HFMailingAddress mailAddress = new HFMailingAddress();
-               mailAddress.setAddress1(String.valueOf(obj[12]));
-               // hf.`mailingCity`,
-               mailAddress.setCity(String.valueOf(obj[13]));
-               // us2.`stateName` as mailingState,
-               // st = stateRepository.getStateByName(String.valueOf(obj[14]));
-               mailAddress.setStateId(Integer.valueOf(String.valueOf(obj[14])));
-               // hf.`mailingZipCode`,
-               mailAddress.setZipCode(String.valueOf(obj[15]));
-               // hf.`mailingAddressSameAsCurrentAddress`
-               mailAddress.setSameAsPhysicalAddress(Boolean.valueOf(String.valueOf(obj[16])));
-               hfbs.setMailingAddress(mailAddress);
+                  // hf.`mailingAddress`,
+                  HFMailingAddress mailAddress = new HFMailingAddress();
+                  mailAddress.setAddress1(String.valueOf(obj[12]));
+                  // hf.`mailingCity`,
+                  mailAddress.setCity(String.valueOf(obj[13]));
+                  // us2.`stateName` as mailingState,
+                  // st =
+                  // stateRepository.getStateByName(String.valueOf(obj[14]));
+                  mailAddress.setStateId(Integer.valueOf(String.valueOf(obj[14])));
+                  // hf.`mailingZipCode`,
+                  mailAddress.setZipCode(String.valueOf(obj[15]));
+                  // hf.`mailingAddressSameAsCurrentAddress`
+                  mailAddress.setSameAsPhysicalAddress(Boolean.valueOf(String.valueOf(obj[16])));
+                  hfbs.setMailingAddress(mailAddress);
+               } catch (Exception e) {
+                  LOGGER.error(e.getMessage());
+               }
             }
          }
 
@@ -791,21 +808,25 @@ public class HFApplicationImpl implements HFApplication {
          result = query.getResultList();
          if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
-               HFAirport airport = new HFAirport();
-               // a.`airportName`,
-               // List<Airport> a =
-               // airportRepository.getAirportByName(String.valueOf(obj[0]));
-               // airport.set
-               // airport.setAirportName(String.valueOf(obj[0]));
-               airport.setCity(String.valueOf(obj[0]));
-               // hfa.`distanceToAirport`
-               airport.setDistanceToNearestAirport(Integer.valueOf(String.valueOf(obj[1])));
-               airport.setHostFamilyAirportId(Integer.valueOf(String.valueOf(obj[2])));
-               HostFamilyAirport h = hostFamilyAirportRepository.findOne(airport.getHostFamilyAirportId());
-               airport.setAirportId(h.getAirport().getAirportId());
+               try {
+                  HFAirport airport = new HFAirport();
+                  // a.`airportName`,
+                  // List<Airport> a =
+                  // airportRepository.getAirportByName(String.valueOf(obj[0]));
+                  // airport.set
+                  // airport.setAirportName(String.valueOf(obj[0]));
+                  airport.setCity(String.valueOf(obj[0]));
+                  // hfa.`distanceToAirport`
+                  airport.setDistanceToNearestAirport(Integer.valueOf(String.valueOf(obj[1])));
+                  airport.setHostFamilyAirportId(Integer.valueOf(String.valueOf(obj[2])));
+                  HostFamilyAirport h = hostFamilyAirportRepository.findOne(airport.getHostFamilyAirportId());
+                  airport.setAirportId(h.getAirport().getAirportId());
 
-               // airport.set
-               hfbs.getAirports().add(airport);
+                  // airport.set
+                  hfbs.getAirports().add(airport);
+               } catch (Exception e) {
+                  LOGGER.error(e.getMessage());
+               }
             }
          }
 
@@ -816,21 +837,25 @@ public class HFApplicationImpl implements HFApplication {
          result = query.getResultList();
          if (result != null && !result.isEmpty()) {
             for (Object[] obj : result) {
-               HFPets pet = new HFPets();
-               // hfpt.`hostFamilyPetTypeName`,
-               // HostFamilyPetType p =
-               // hostFamilyPetTypeRepository.findPetByName(String.valueOf(obj[0]));
-               pet.setTypeId(Integer.valueOf(String.valueOf(obj[0])));
-               // hfp.`number`,
-               pet.setNumber(Integer.valueOf(String.valueOf(obj[1])));
-               // hfp.`isIndoor`,
-               pet.setIndoor(Boolean.valueOf(String.valueOf(obj[2])));
-               // hfp.`isOutdoor`,
-               pet.setOutDoor(Boolean.valueOf(String.valueOf(obj[3])));
-               // hfp.`additionalInformation`
-               pet.setAdditionalInfo(String.valueOf(obj[4]));
-               pet.setHostFamilyPetId(Integer.valueOf(String.valueOf(obj[5])));
-               hfbs.getPets().add(pet);
+               try {
+                  HFPets pet = new HFPets();
+                  // hfpt.`hostFamilyPetTypeName`,
+                  // HostFamilyPetType p =
+                  // hostFamilyPetTypeRepository.findPetByName(String.valueOf(obj[0]));
+                  pet.setTypeId(Integer.valueOf(String.valueOf(obj[0])));
+                  // hfp.`number`,
+                  pet.setNumber(Integer.valueOf(String.valueOf(obj[1])));
+                  // hfp.`isIndoor`,
+                  pet.setIndoor(Boolean.valueOf(String.valueOf(obj[2])));
+                  // hfp.`isOutdoor`,
+                  pet.setOutDoor(Boolean.valueOf(String.valueOf(obj[3])));
+                  // hfp.`additionalInformation`
+                  pet.setAdditionalInfo(String.valueOf(obj[4]));
+                  pet.setHostFamilyPetId(Integer.valueOf(String.valueOf(obj[5])));
+                  hfbs.getPets().add(pet);
+               } catch (Exception e) {
+                  LOGGER.error(e.getMessage());
+               }
             }
          }
          hfbs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -844,7 +869,7 @@ public class HFApplicationImpl implements HFApplication {
 
    @Override
    @Transactional
-   public HFHomeDescriptionPage saveHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
+   public HFHomeDescriptionPage saveHFHouseDescription(String applicationCategoryId, HFHomeDescriptionPage descriptionPage) {
       HFHomeDescriptionPage hp = new HFHomeDescriptionPage();
       try {
          if (descriptionPage.getLoginId() <= 0) {
@@ -852,6 +877,12 @@ public class HFApplicationImpl implements HFApplication {
          }
          if (descriptionPage.getSeasonId() <= 0) {
             throw new CcighgoException("NO Season ID");
+         }
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(descriptionPage.getHostFamilySeasonId(),
+               Integer.valueOf(applicationCategoryId));
+         if (hostFamilySeasonCategory != null) {
+            hostFamilySeasonCategory.setFilledMandatoryFields(descriptionPage.getFieldsFilled());
+            hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
          }
          HostFamilySeason season = hostFamilySeasonRepository.getSeason(descriptionPage.getSeasonId(), descriptionPage.getProgramId(), descriptionPage.getHostFamilyId());
          HostFamilyHome hfd = new HostFamilyHome();
@@ -907,6 +938,11 @@ public class HFApplicationImpl implements HFApplication {
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam) {
       HFHomeDescriptionPage hfbs = new HFHomeDescriptionPage();
       try {
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               Integer.valueOf(descriptionPageParam.getSeasonId()), descriptionPageParam.getApplicationCategoryId());
+         if (hostFamilySeasonCategory != null)
+            hfbs.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
+
          Query query = em.createNativeQuery(SP_HF_HOME);
          query.setParameter(1, descriptionPageParam.getHostFamilyId() == 0 ? null : descriptionPageParam.getHostFamilyId());
          query.setParameter(2, descriptionPageParam.getSeasonId() == 0 ? null : descriptionPageParam.getSeasonId());
@@ -979,7 +1015,7 @@ public class HFApplicationImpl implements HFApplication {
 
    @Override
    @Transactional
-   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
+   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(String applicationCategoryId, HFCommunityAndSchoolPage communityAndSchoolPage) {
       HFCommunityAndSchoolPage hp = new HFCommunityAndSchoolPage();
       try {
          if (communityAndSchoolPage.getLoginId() <= 0) {
@@ -987,6 +1023,12 @@ public class HFApplicationImpl implements HFApplication {
          }
          if (communityAndSchoolPage.getSeasonId() <= 0) {
             throw new CcighgoException("NO Season ID");
+         }
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(communityAndSchoolPage.getSeasonId(),
+               Integer.valueOf(applicationCategoryId));
+         if (hostFamilySeasonCategory != null) {
+            hostFamilySeasonCategory.setFilledMandatoryFields(communityAndSchoolPage.getFieldsFilled());
+            hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
          }
          HostFamilySeason season = hostFamilySeasonRepository.getSeason(communityAndSchoolPage.getSeasonId(), communityAndSchoolPage.getProgramId(),
                communityAndSchoolPage.getHostFamilyId());
@@ -1041,6 +1083,11 @@ public class HFApplicationImpl implements HFApplication {
    public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam) {
       HFCommunityAndSchoolPage hfbs = new HFCommunityAndSchoolPage();
       try {
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               Integer.valueOf(descriptionPageParam.getSeasonId()), descriptionPageParam.getApplicationCategoryId());
+         if (hostFamilySeasonCategory != null)
+            hfbs.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
+
          Query query = em.createNativeQuery(SP_HF_COMMUNITY);
          query.setParameter(1, descriptionPageParam.getHostFamilyId() == 0 ? null : descriptionPageParam.getHostFamilyId());
          query.setParameter(2, descriptionPageParam.getSeasonId() == 0 ? null : descriptionPageParam.getSeasonId());
@@ -1117,7 +1164,7 @@ public class HFApplicationImpl implements HFApplication {
 
    @Transactional
    @Override
-   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+   public HFApplicationFamilyDetails saveFamilyBasicData(String applicationCategoryId, HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       HFApplicationFamilyDetails hp = new HFApplicationFamilyDetails();
       try {
          if (hfApplicationFamilyDetails.getLoginId() <= 0) {
@@ -1125,6 +1172,12 @@ public class HFApplicationImpl implements HFApplication {
          }
          if (hfApplicationFamilyDetails.getSeasonId() <= 0) {
             throw new CcighgoException("NO Season ID");
+         }
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               hfApplicationFamilyDetails.getSeasonId(), Integer.valueOf(applicationCategoryId));
+         if (hostFamilySeasonCategory != null) {
+            hostFamilySeasonCategory.setFilledMandatoryFields(hfApplicationFamilyDetails.getFieldsFilled());
+            hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
          }
          // add photo
          HostFamilySeason season = hostFamilySeasonRepository.getSeason(hfApplicationFamilyDetails.getSeasonId(), hfApplicationFamilyDetails.getProgramId(),
@@ -1153,7 +1206,6 @@ public class HFApplicationImpl implements HFApplication {
          }
 
          // HOstFamilly Member
-         List<HostFamilyMember> listOfMembers = new ArrayList<HostFamilyMember>();
          for (HFAdultDetails member : hfApplicationFamilyDetails.getAdults()) {
             HostFamilyMember hfm = new HostFamilyMember();
             if (member.getHostfamilyMemberId() > 0)
@@ -1229,7 +1281,6 @@ public class HFApplicationImpl implements HFApplication {
          hostFamilyRepository.saveAndFlush(hf);
 
          // Airport
-         List<HostFamilyAirport> airports = new ArrayList<HostFamilyAirport>();
          for (HFAirport aps : hfApplicationFamilyDetails.getAirports()) {
             HostFamilyAirport hfa = new HostFamilyAirport();
             if (aps.getHostFamilyAirportId() > 0)
@@ -1250,7 +1301,6 @@ public class HFApplicationImpl implements HFApplication {
          // hostFamilyAirportRepository.save(airports);
 
          // Pets
-         List<HostFamilyPet> pets = new ArrayList<HostFamilyPet>();
          for (HFPets pts : hfApplicationFamilyDetails.getPets()) {
             HostFamilyPet hfp = new HostFamilyPet();
             if (pts.getHostFamilyPetId() > 0)
@@ -1286,7 +1336,7 @@ public class HFApplicationImpl implements HFApplication {
 
    @Transactional
    @Override
-   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(String applicationCategoryId, HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
       HFApplicationFamilyLifeStyle hp = new HFApplicationFamilyLifeStyle();
       try {
          if (hfApplicationFamilyDetails.getLoginId() <= 0) {
@@ -1294,6 +1344,12 @@ public class HFApplicationImpl implements HFApplication {
          }
          if (hfApplicationFamilyDetails.getSeasonId() <= 0) {
             throw new CcighgoException("NO Season ID");
+         }
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               hfApplicationFamilyDetails.getSeasonId(), Integer.valueOf(applicationCategoryId));
+         if (hostFamilySeasonCategory != null) {
+            hostFamilySeasonCategory.setFilledMandatoryFields(hfApplicationFamilyDetails.getFieldsFilled());
+            hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
          }
          HostFamilySeason season = hostFamilySeasonRepository.getSeason(hfApplicationFamilyDetails.getSeasonId(), hfApplicationFamilyDetails.getProgramId(),
                hfApplicationFamilyDetails.getHostFamilyId());
@@ -2130,5 +2186,5 @@ public class HFApplicationImpl implements HFApplication {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
 }

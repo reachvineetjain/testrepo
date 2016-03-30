@@ -1,7 +1,5 @@
 package com.ccighgo.service.rest.genericupdatelog;
 
-
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,8 +18,7 @@ import com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpd
 @Consumes("application/json")
 public class GenericUpdateLogs {
 
-   @Autowired
-   GenericUpdateLogInterface genericUpdateLogInterface;
+   @Autowired GenericUpdateLogInterface genericUpdateLogInterface;
 
    @GET
    @Path("ping/{name}")
@@ -48,23 +45,22 @@ public class GenericUpdateLogs {
    @Path("/add/fieldsatfflog")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response AddFieldstaffUpdateLog(GenericUpdateLog genericUpdateLog) {
+   public Response addFieldstaffUpdateLog(GenericUpdateLog genericUpdateLog) {
       return genericUpdateLogInterface.addFieldStaffUpdateLog(genericUpdateLog);
    }
+
    @POST
    @Path("/add/partnerlog")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response addPartnerUpdateLog(GenericUpdateLog genericUpdateLog)
-   {
+   public Response addPartnerUpdateLog(GenericUpdateLog genericUpdateLog) {
       return genericUpdateLogInterface.addPartnerUpdateLog(genericUpdateLog);
    }
 
    @GET
    @Path("view/partnerlog/{goId}")
    @Produces("application/json")
-   public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getPartnerUpdateLogs(@PathParam("goId")String goId)
-   {
+   public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getPartnerUpdateLogs(@PathParam("goId") String goId) {
       return genericUpdateLogInterface.getPartnerUpdateLogs(goId);
    }
 
@@ -72,17 +68,15 @@ public class GenericUpdateLogs {
    @Path("/add/hostfamilylog")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response addHostFamilyUpdateLog(GenericUpdateLog genericUpdateLog)
-   {
+   public Response addHostFamilyUpdateLog(GenericUpdateLog genericUpdateLog) {
       return genericUpdateLogInterface.addHostFamilyUpdateLogs(genericUpdateLog);
    }
 
    @GET
    @Path("view/hostfamilylog/{goId}")
    @Produces("application/json")
-   public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getHostFamilyUpdateLogs(@PathParam("goId")String goId)
-   {
+   public com.ccighgo.service.transport.updatelog.beans.genericupdatelog.GenericUpdateLogs getHostFamilyUpdateLogs(@PathParam("goId") String goId) {
       return genericUpdateLogInterface.getHostFamilyUpdateLogs(goId);
    }
-   
+
 }

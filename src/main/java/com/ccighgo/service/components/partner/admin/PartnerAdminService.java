@@ -3,8 +3,6 @@
  */
 package com.ccighgo.service.components.partner.admin;
 
-import javax.ws.rs.PathParam;
-
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminleadviewforpartnerinquirydata.PartnerRecruitmentAdminLead;
@@ -29,7 +27,6 @@ import com.ccighgo.service.transport.partner.beans.partnernotesreview.AdminPartn
 import com.ccighgo.service.transport.partner.beans.partnerstatusaspattern.PartnerStatusAsPatterns;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplications;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuesubmittedapplications.AdminPartnerWorkQueueSubmittedApplicationsDetail;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 import com.ccighgo.service.transport.partner.beans.requestchangeinallocation.AdminPartnerWorkQueueRequestChangeInAllocation;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
@@ -42,88 +39,277 @@ import com.ccighgo.utils.WSDefaultResponse;
 @Service
 public interface PartnerAdminService {
 
-   WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus);
+   /**
+    * @param goId
+    * @param newStatus
+    * @return
+    */
+   public WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus);
 
-   WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String followUpdate);
+   /**
+    * @param goId
+    * @param followUpdate
+    * @return
+    */
+   public WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String followUpdate);
 
-   AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType);
+   /**
+    * @param typeId
+    * @param categoryId
+    * @param staffUserId
+    * @param roleType
+    * @return
+    */
+   public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType);
 
-   AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(int typeId, int categoryId, int staffUserId, String roleType);
+   /**
+    * @param typeId
+    * @param categoryId
+    * @param staffUserId
+    * @param roleType
+    * @return
+    */
+   public AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(int typeId, int categoryId, int staffUserId, String roleType);
 
-   AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(int typeId, int categoryId, int staffUserId, String roleType);
+   /**
+    * @param typeId
+    * @param categoryId
+    * @param staffUserId
+    * @param roleType
+    * @return
+    */
+   public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(int typeId, int categoryId, int staffUserId, String roleType);
 
-   AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(int typeId, int categoryId, int staffUserId, String roleType);
+   /**
+    * @param typeId
+    * @param categoryId
+    * @param staffUserId
+    * @param roleType
+    * @return
+    */
+   public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(int typeId, int categoryId, int staffUserId, String roleType);
 
-   AdminPartnerWorkQueueType getWorkQueueType(String roleType);
+   /**
+    * @param roleType
+    * @return
+    */
+   public AdminPartnerWorkQueueType getWorkQueueType(String roleType);
 
-   AdminPartnerWorkQueueCategory getWorkQueueCategory(int typeId, int userId);
+   /**
+    * @param typeId
+    * @param userId
+    * @return
+    */
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(int typeId, int userId);
 
-   PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int agentId);
+   /**
+    * @param agentId
+    * @return
+    */
+   public PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int agentId);
 
-   PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int parseInt);
+   /**
+    * @param parseInt
+    * @return
+    */
+   public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int parseInt);
 
-   PartnerRecruitmentAdmin updatePartnerInquiryOverViewData(PartnerRecruitmentAdmin partnerAdmin);
+   /**
+    * @param partnerAdmin
+    * @return
+    */
+   public PartnerRecruitmentAdmin updatePartnerInquiryOverViewData(PartnerRecruitmentAdmin partnerAdmin);
 
-   PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead partnerRecruitmentAdminLead);
+   /**
+    * @param partnerRecruitmentAdminLead
+    * @return
+    */
+   public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead partnerRecruitmentAdminLead);
 
-   PartnerAdminDashboardQuickLinks getQuickLinks();
+   /**
+    * @return
+    */
+   public PartnerAdminDashboardQuickLinks getQuickLinks();
 
-   PartnerAdminDashboardQuickStatsTitles getQuickStatsTitle();
+   /**
+    * @return
+    */
+   public PartnerAdminDashboardQuickStatsTitles getQuickStatsTitle();
 
-   PartnerAdminDashboardQuickStatsCategory getApplicationQuickStatsCategory(int quickStatsTypeID, int categoryId);
+   /**
+    * @param quickStatsTypeID
+    * @param categoryId
+    * @return
+    */
+   public PartnerAdminDashboardQuickStatsCategory getApplicationQuickStatsCategory(int quickStatsTypeID, int categoryId);
 
-   PartnerAdminDashboardBenchmarks getBenchmark();
+   /**
+    * @return
+    */
+   public PartnerAdminDashboardBenchmarks getBenchmark();
 
-   WSDefaultResponse addNoteToPartnerApplication(int parseInt, String noteValue);
+   /**
+    * @param parseInt
+    * @param noteValue
+    * @return
+    */
+   public WSDefaultResponse addNoteToPartnerApplication(int parseInt, String noteValue);
 
-   WSDefaultResponse getNotesOfPartnerApplication(int parseInt);
+   /**
+    * @param parseInt
+    * @return
+    */
+   public WSDefaultResponse getNotesOfPartnerApplication(int parseInt);
 
-   PartnerAdminOverviewDocuments addNewPartnerInquiryDocument(PartnerAdminOverviewDocumentsDetails document);
+   /**
+    * @param document
+    * @return
+    */
+   public PartnerAdminOverviewDocuments addNewPartnerInquiryDocument(PartnerAdminOverviewDocumentsDetails document);
 
-   PartnerAdminOverviewDocuments removeNewPartnerInquiryDocument(PartnerAdminOverviewDeletedDocuments deletedItems);
+   /**
+    * @param deletedItems
+    * @return
+    */
+   public PartnerAdminOverviewDocuments removeNewPartnerInquiryDocument(PartnerAdminOverviewDeletedDocuments deletedItems);
 
-   PartnerAdminOverviewOffices addNewPartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails);
+   /**
+    * @param officesDetails
+    * @return
+    */
+   public PartnerAdminOverviewOffices addNewPartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails);
 
-   PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails);
+   /**
+    * @param officesDetails
+    * @return
+    */
+   public PartnerAdminOverviewOffices updatePartnerInquiryOffice(PartnerAdminOverviewOfficesDetails officesDetails);
 
-   PartnerAdminOverviewOffices removeNewPartnerInquiryOffice(PartnerAdminOverviewDeletedOffices deletedItems);
+   /**
+    * @param deletedItems
+    * @return
+    */
+   public PartnerAdminOverviewOffices removeNewPartnerInquiryOffice(PartnerAdminOverviewDeletedOffices deletedItems);
 
-   PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails);
+   /**
+    * @param contactsDetails
+    * @return
+    */
+   public PartnerAdminOverviewContacts addNewPartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails);
 
-   PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails);
+   /**
+    * @param contactsDetails
+    * @return
+    */
+   public PartnerAdminOverviewContacts updatePartnerInquiryContact(PartnerAdminOverviewContactsDetails contactsDetails);
 
-   PartnerAdminOverviewContacts removeNewPartnerInquiryContact(PartnerAdminOverviewDeletedContacts deletedItems);
+   /**
+    * @param deletedItems
+    * @return
+    */
+   public PartnerAdminOverviewContacts removeNewPartnerInquiryContact(PartnerAdminOverviewDeletedContacts deletedItems);
 
-   PartnerAdminOverviewNotes addNewPartnerInquiryNote(PartnerAdminOverviewNotesDetails notesDetails);
+   /**
+    * @param notesDetails
+    * @return
+    */
+   public PartnerAdminOverviewNotes addNewPartnerInquiryNote(PartnerAdminOverviewNotesDetails notesDetails);
 
-   PartnerAdminOverviewReferenceCheck addNewPartnerInquiryReferenceCheck(PartnerAdminOverviewReferenceCheckDetails referenceChecksDetails);
+   /**
+    * @param referenceChecksDetails
+    * @return
+    */
+   public PartnerAdminOverviewReferenceCheck addNewPartnerInquiryReferenceCheck(PartnerAdminOverviewReferenceCheckDetails referenceChecksDetails);
 
-   PartnerAdminOverviewReferenceCheck removeNewPartnerInquiryReferenceCheck(PartnerAdminOverviewDeletedReferenceCheck deletedItems);
+   /**
+    * @param deletedItems
+    * @return
+    */
+   public PartnerAdminOverviewReferenceCheck removeNewPartnerInquiryReferenceCheck(PartnerAdminOverviewDeletedReferenceCheck deletedItems);
 
-   WSDefaultResponse sendLogin();
+   /**
+    * @return
+    */
+   public WSDefaultResponse sendLogin();
 
-   CCIUsers getAllCCIUsers();
+   /**
+    * @return
+    */
+   public CCIUsers getAllCCIUsers();
 
-   WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
+   /**
+    * @param parseInt
+    * @param newStatus
+    * @param note
+    * @return
+    */
+   public WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
 
-   WSDefaultResponse markNoteRead(String noteId, String loginId);
-   
-   PartnerStatusAsPatterns getPartnerStatusAsPattern();
+   /**
+    * @param noteId
+    * @param loginId
+    * @return
+    */
+   public WSDefaultResponse markNoteRead(String noteId, String loginId);
 
-   WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(int SeasonId, int ProgramId, int PartnerGoId, String followUpdate);
+   /**
+    * @return
+    */
+   public PartnerStatusAsPatterns getPartnerStatusAsPattern();
 
-   WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(int partnerSeasonAllocationId, String followUpdate);
+   /**
+    * @param SeasonId
+    * @param ProgramId
+    * @param PartnerGoId
+    * @param followUpdate
+    * @return
+    */
+   public WSDefaultResponse updatePartnerDeadLineChangeFollowUpDate(int SeasonId, int ProgramId, int PartnerGoId, String followUpdate);
 
-   WSDefaultResponse updatePartnerNotesReviewFollowUpDate(int partnerNotesId, String followUpdate);
+   /**
+    * @param partnerSeasonAllocationId
+    * @param followUpdate
+    * @return
+    */
+   public WSDefaultResponse updatePartnerAllocationChangeFollowUpDate(int partnerSeasonAllocationId, String followUpdate);
 
-   WSDefaultResponse assignSeasonToSubPartner(String seasonId, String subpartnerId, String departmentProgramId, String loginId);
+   /**
+    * @param partnerNotesId
+    * @param followUpdate
+    * @return
+    */
+   public WSDefaultResponse updatePartnerNotesReviewFollowUpDate(int partnerNotesId, String followUpdate);
 
-   SeasonsForPartners getAllAvailableSeasons();
+   /**
+    * @param seasonId
+    * @param subpartnerId
+    * @param departmentProgramId
+    * @param loginId
+    * @return
+    */
+   public WSDefaultResponse assignSeasonToSubPartner(String seasonId, String subpartnerId, String departmentProgramId, String loginId);
 
-   SeasonsForPartners getAllAvailableSeasons(String partnerId);
+   /**
+    * @return
+    */
+   public SeasonsForPartners getAllAvailableSeasons();
 
-   WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason);
-   
+   /**
+    * @param partnerId
+    * @return
+    */
+   public SeasonsForPartners getAllAvailableSeasons(String partnerId);
+
+   /**
+    * @param assignSubpartnerToSeason
+    * @return
+    */
+   public WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason);
+
+   /**
+    * @param partnerId
+    * @return
+    */
    public SeasonsForPartners getAllAvailableSeasons2(String partnerId);
 
 }

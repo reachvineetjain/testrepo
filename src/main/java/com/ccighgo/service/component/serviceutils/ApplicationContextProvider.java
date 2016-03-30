@@ -9,7 +9,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * Root application context provider. Returns context if already exists else initializes and returns one
+ * Root application context provider. Returns context if already exists else
+ * initializes and returns one
  * 
  * @author ravi
  *

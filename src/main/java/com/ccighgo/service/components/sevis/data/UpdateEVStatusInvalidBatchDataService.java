@@ -13,26 +13,26 @@ import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.Ex
 @Component
 public class UpdateEVStatusInvalidBatchDataService implements IEVBatchDataService {
 
-	@Override
-	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
-//		String batchId = generateBatchId("fName", "lName");
-		String batchId = SevisUtils.createBatchId();
-		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
+   @Override
+   public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
+      // String batchId = generateBatchId("fName", "lName");
+      String batchId = SevisUtils.createBatchId();
+      SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
 
-		ExchangeVisitor ev = createExchangeVisitor(batchParam.getUserId(), "N0000000000", "1");
-		ev.setStatus(createEndStatus("Remarks"));
+      ExchangeVisitor ev = createExchangeVisitor(batchParam.getUserId(), "N0000000000", "1");
+      ev.setStatus(createEndStatus("Remarks"));
 
-		batch.getUpdateEV().getExchangeVisitor().add(ev);
+      batch.getUpdateEV().getExchangeVisitor().add(ev);
 
-		return batch;
-	}
+      return batch;
+   }
 
-	private Status createEndStatus(String remarks) {
-		Status status = new Status();
-		Invalid invalid = new Invalid();
-		invalid.setRemarks(remarks);
-		status.setInvalid(invalid);
-		return status;
-	}
+   private Status createEndStatus(String remarks) {
+      Status status = new Status();
+      Invalid invalid = new Invalid();
+      invalid.setRemarks(remarks);
+      status.setInvalid(invalid);
+      return status;
+   }
 
 }

@@ -15,7 +15,7 @@ import com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess;
  */
 @Repository
 public interface DocumentTypeDocumentCategoryProcessRepository extends JpaRepository<DocumentTypeDocumentCategoryProcess, Integer> {
-   
+
    @Query("SELECT d FROM DocumentTypeDocumentCategoryProcess d WHERE d.documentType.documentTypeName = ?1")
    public DocumentTypeDocumentCategoryProcess findByDocumentType(String docType);
 

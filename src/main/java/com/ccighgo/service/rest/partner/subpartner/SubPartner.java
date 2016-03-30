@@ -12,17 +12,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
-import org.jboss.logging.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.subpartner.SubPartnerInterface;
-import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
 import com.ccighgo.service.transport.partner.beans.subpartner.PartnerSubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerDetails;
-import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerScreeningNotes;
 import com.ccighgo.utils.WSDefaultResponse;
 
@@ -60,9 +57,9 @@ public class SubPartner {
    @POST
    @Path("update")
    @Produces("application/json")
-   public WSDefaultResponse UpdateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner) {
+   public WSDefaultResponse updateSubPartnerDetail(com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerDetail subPartner) {
       LOGGER.debug("calling SubPartner.updateSubPartner", subPartner);
-      return subPartnerInterface.UpdateSubPartnerDetail(subPartner);
+      return subPartnerInterface.updateSubPartnerDetail(subPartner);
    }
 
    @GET

@@ -19,29 +19,31 @@ public interface FieldStaffMyPlacementsInterface {
     * @return
     */
    MyPlacements getERDMyPlacement(String goId, String catagories);
-   
+
    /**
     * @param goId
     * @param catagories
     * @return
     */
    ERDPlacementParticipants getERDPlacementParticipant(String goId);
-   
+
    /**
     * @param goId
     * @param catagories
     * @return
     */
-   ERDPlacements getERDPlacementMyTeamPlacement(String goId, String catagories); 
+   ERDPlacements getERDPlacementMyTeamPlacement(String goId, String catagories);
+
    /**
     * 
     * @return FieldStaffParticipants
     */
    public ERDParticipants getAllParticipant(String goId, String catagorie);
+
    /**
     * 
     * @param goId
     * @return FieldStaffParticipants
     */
-   public ERDParticipants getMyTeamParticipant(String goId,String catagorie);
+   public ERDParticipants getMyTeamParticipant(String goId, String catagorie);
 }

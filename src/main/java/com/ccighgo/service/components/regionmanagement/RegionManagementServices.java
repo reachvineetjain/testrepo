@@ -3,8 +3,6 @@
  */
 package com.ccighgo.service.components.regionmanagement;
 
-import javax.ws.rs.PathParam;
-
 import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
@@ -12,7 +10,6 @@ import com.ccighgo.service.transport.region.beans.mvregion.MoveRegions;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.Region;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.RegionManagementDetails;
 import com.ccighgo.service.transport.region.beans.regionmanagementdetails.SuperRegion;
-import com.ccighgo.service.transport.region.beans.regionsuperregion.RegionSuperRegionsMap;
 import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 
 /**
@@ -23,8 +20,8 @@ import com.ccighgo.service.transport.region.beans.stateregion.StateRegions;
 public interface RegionManagementServices {
 
    /**
-    * Method gets complete list of super regions, regions belonging to super region and states belonging to each region
-    * for the season
+    * Method gets complete list of super regions, regions belonging to super
+    * region and states belonging to each region for the season
     * 
     * @param seasonId
     * @return RegionManagementDetails JSON object

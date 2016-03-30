@@ -1,7 +1,6 @@
 package com.ccighgo.utils;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 /**
  * This class is used to keep all constants to be used across application Add a
@@ -211,8 +210,10 @@ public class CCIConstants {
    public static final Integer UNDEFINED_GENDER = 3;
 
    // Field Staff Code
-   public static final Integer FieldStaffTypeCode_ERD = 5;
+   public static final Integer FIELD_STAFF_LIST = 0;
+   public static final Integer FIELD_STAFF_NETWORK_LIST = 1;
    public static final Integer FieldStaffTypeCode_RD = 3;
+   public static final Integer FieldStaffTypeCode_ERD = 5;
    public static final String SERVICE_FAILURE = "service.failure";
    public static final String EQUAL = "=";
    public static final String BITWISE_AND = "&";
@@ -232,10 +233,16 @@ public class CCIConstants {
    public static final String SERVICE_URL_NDY = "Not Determined Yet";
 
    // Partner stats
+   public static final Integer SEND_LOGIN = 1;
    public static final Integer APPL_J1 = 1;
    public static final Integer APPL_F1 = 3;
+   public static final Integer BLACKLIST = 3;
+   public static final Integer PENDING_STATUS = 4;
    public static final Integer APPL_IHP = 5;
    public static final Integer APPROVED_STATUS = 5;
+   public static final Integer JUNK = 10;
+   public static final Integer VALID = 11;
+   public static final Integer INVALID = 12;
    public static final Integer DELETED_STATUS = 13;
 
    public static final String SUBMITTED = "Submitted";
@@ -266,7 +273,7 @@ public class CCIConstants {
    public static final String RD = "Regional Director";
    public static final String AC = "Area Coordinator";
    public static final String ERD = "Executive Regional Director";
-   
+
    public static final int FAMILY_BASICS = 1;
    public static final int FAMILY_LIFESTYLE = 2;
    public static final int HOUSE_HOME = 3;
@@ -276,6 +283,9 @@ public class CCIConstants {
    public static final int REFRENCES = 7;
    public static final int BG_CHECK = 8;
    public static final int SUBMIT_APPLICATION = 9;
-   
+
+   public static final int MALE = 1;
+   public static final int FEMALE = 2;
+   public static final int GENDER_UNDEFINED = 3;
 
 }

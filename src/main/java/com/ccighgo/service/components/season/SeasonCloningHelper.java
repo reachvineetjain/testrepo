@@ -3,16 +3,10 @@
  */
 package com.ccighgo.service.components.season;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.LookupDepartment;
 import com.ccighgo.db.entities.Season;
@@ -48,14 +42,9 @@ import com.ccighgo.utils.DateUtils;
 @Component
 public class SeasonCloningHelper {
 
-   private Logger LOGGER = LoggerFactory.getLogger(SeasonCloningHelper.class);
-
-   @Autowired
-   SeasonStatusRepository seasonStatusRepository;
-   @Autowired
-   DocumentInformationRepository documentInformationRepository;
-   @Autowired
-   FileUtilInterface fileUtilInterface;
+   @Autowired SeasonStatusRepository seasonStatusRepository;
+   @Autowired DocumentInformationRepository documentInformationRepository;
+   @Autowired FileUtilInterface fileUtilInterface;
 
    /**
     * Method returns deep copy of an existing season
@@ -136,26 +125,10 @@ public class SeasonCloningHelper {
          seasonJ1Detail.setFieldStaffAgreement(existingSeason.getSeasonJ1details().get(0).getFieldStaffAgreement());
          seasonJ1Detail.setPaymentSchedule(existingSeason.getSeasonJ1details().get(0).getPaymentSchedule());
          seasonJ1Detail.setActiveFullYearJanProgram(existingSeason.getSeasonJ1details().get(0).getActiveFullYearJanProgram());
-         //seasonJ1Detail.setAugFullYearStartDate(existingSeason.getSeasonJ1details().get(0).getAugFullYearStartDate());
-         //seasonJ1Detail.setAugFullYearEndDate(existingSeason.getSeasonJ1details().get(0).getAugFullYearEndDate());
-         //seasonJ1Detail.setAugFullYearAppDeadlineDate(existingSeason.getSeasonJ1details().get(0).getAugFullYearAppDeadlineDate());
          seasonJ1Detail.setFieldStaffHoldLength(existingSeason.getSeasonJ1details().get(0).getFieldStaffHoldLength());
-         //seasonJ1Detail.setFirstSemStartDate(existingSeason.getSeasonJ1details().get(0).getFirstSemStartDate());
-         //seasonJ1Detail.setFirstSemEndDate(existingSeason.getSeasonJ1details().get(0).getFirstSemEndDate());
-         //seasonJ1Detail.setFirstSemAppDeadlineDate(existingSeason.getSeasonJ1details().get(0).getFirstSemAppDeadlineDate());
-         //seasonJ1Detail.setFirstSemEarliestBirthDate(existingSeason.getSeasonJ1details().get(0).getFirstSemEarliestBirthDate());
-         //seasonJ1Detail.setFirstSemLatestBirthDate(existingSeason.getSeasonJ1details().get(0).getFirstSemLatestBirthDate());
          seasonJ1Detail.setHfInquiryDate(existingSeason.getSeasonJ1details().get(0).getHfInquiryDate());
          seasonJ1Detail.setHfReferences(existingSeason.getSeasonJ1details().get(0).getHfReferences());
          seasonJ1Detail.setHoursBeforeHoldExpirationWarning(existingSeason.getSeasonJ1details().get(0).getHoursBeforeHoldExpirationWarning());
-         //seasonJ1Detail.setJanFullYearAppDeadlineDate(existingSeason.getSeasonJ1details().get(0).getJanFullYearAppDeadlineDate());
-         //seasonJ1Detail.setJanFullYearEndDate(existingSeason.getSeasonJ1details().get(0).getJanFullYearEndDate());
-         //seasonJ1Detail.setJanFullYearStartDate(existingSeason.getSeasonJ1details().get(0).getJanFullYearStartDate());
-         //seasonJ1Detail.setSecondSemAppDeadlineDate(existingSeason.getSeasonJ1details().get(0).getSecondSemAppDeadlineDate());
-         //seasonJ1Detail.setSecondSemEarliestBirthDate(existingSeason.getSeasonJ1details().get(0).getSecondSemEarliestBirthDate());
-         //seasonJ1Detail.setSecondSemEndDate(existingSeason.getSeasonJ1details().get(0).getSecondSemEndDate());
-         //seasonJ1Detail.setSecondSemLatestBirthDate(existingSeason.getSeasonJ1details().get(0).getSecondSemLatestBirthDate());
-         //seasonJ1Detail.setSecondSemStartDate(existingSeason.getSeasonJ1details().get(0).getSecondSemStartDate());
          seasonJ1Detail.setShowAugFullYearToNewHF(existingSeason.getSeasonJ1details().get(0).getShowAugFullYearToNewHF());
          seasonJ1Detail.setShowFirstSemToNewHF(existingSeason.getSeasonJ1details().get(0).getShowFirstSemToNewHF());
          seasonJ1Detail.setShowGuaranteed(existingSeason.getSeasonJ1details().get(0).getShowGuaranteed());
@@ -189,25 +162,10 @@ public class SeasonCloningHelper {
          seasonF1Detail.setPaymentSchedule(existingSeason.getSeasonF1details().get(0).getPaymentSchedule());
          seasonF1Detail.setActiveFullYearJanProgram(existingSeason.getSeasonF1details().get(0).getActiveFullYearJanProgram());
          seasonF1Detail.setAllowFieldStaffToStartRenewalProcess(existingSeason.getSeasonF1details().get(0).getAllowFieldStaffToStartRenewalProcess());
-         //seasonF1Detail.setAugFullYearAppDeadlineDate(existingSeason.getSeasonF1details().get(0).getAugFullYearAppDeadlineDate());
-         //seasonF1Detail.setAugFullYearEndDate(existingSeason.getSeasonF1details().get(0).getAugFullYearEndDate());
-         //seasonF1Detail.setAugFullYearStartDate(existingSeason.getSeasonF1details().get(0).getAugFullYearStartDate());
-         //seasonF1Detail.setFirstSemAppDeadlineDate(existingSeason.getSeasonF1details().get(0).getFirstSemAppDeadlineDate());
-         //seasonF1Detail.setFirstSemEarliestBirthDate(existingSeason.getSeasonF1details().get(0).getFirstSemEarliestBirthDate());
-         //seasonF1Detail.setFirstSemEndDate(existingSeason.getSeasonF1details().get(0).getFirstSemEndDate());
-         //seasonF1Detail.setFirstSemLatestBirthDate(existingSeason.getSeasonF1details().get(0).getFirstSemLatestBirthDate());
-         //seasonF1Detail.setFirstSemStartDate(existingSeason.getSeasonF1details().get(0).getFirstSemStartDate());
          seasonF1Detail.setGreenHeartMargin(existingSeason.getSeasonF1details().get(0).getGreenHeartMargin());
          seasonF1Detail.setHfInquiryDate(existingSeason.getSeasonF1details().get(0).getHfInquiryDate());
          seasonF1Detail.setHfReferences(existingSeason.getSeasonF1details().get(0).getHfReferences());
          seasonF1Detail.setJanFullYearAppDeadlineDate(existingSeason.getSeasonF1details().get(0).getJanFullYearAppDeadlineDate());
-         //seasonF1Detail.setJanFullYearEndDate(existingSeason.getSeasonF1details().get(0).getJanFullYearEndDate());
-         //seasonF1Detail.setJanFullYearStartDate(existingSeason.getSeasonF1details().get(0).getJanFullYearStartDate());
-         //seasonF1Detail.setSecondSemAppDeadlineDate(existingSeason.getSeasonF1details().get(0).getSecondSemAppDeadlineDate());
-         //seasonF1Detail.setSecondSemEarliestBirthDate(existingSeason.getSeasonF1details().get(0).getSecondSemEarliestBirthDate());
-         //seasonF1Detail.setSecondSemEndDate(existingSeason.getSeasonF1details().get(0).getSecondSemEndDate());
-         //seasonF1Detail.setSecondSemLatestBirthDate(existingSeason.getSeasonF1details().get(0).getSecondSemLatestBirthDate());
-         //seasonF1Detail.setSecondSemStartDate(existingSeason.getSeasonF1details().get(0).getSecondSemStartDate());
          seasonF1Detail.setShowAugFullYearToNewHF(existingSeason.getSeasonF1details().get(0).getShowAugFullYearToNewHF());
          seasonF1Detail.setShowFirstSemToNewHF(existingSeason.getSeasonF1details().get(0).getShowFirstSemToNewHF());
          seasonF1Detail.setShowJanFullYearToNewHF(existingSeason.getSeasonF1details().get(0).getShowJanFullYearToNewHF());
@@ -230,8 +188,6 @@ public class SeasonCloningHelper {
          seasonIHPDetail.setSeason(clonedHSPSeason);
          seasonIHPDetail.setSeasonStatus(clonedHSPSeason.getSeasonStatus());
          seasonIHPDetail.setProgramName(clonedHSPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.HSP_STP_IHP);
-         //seasonIHPDetail.setStartDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonStartDate()));
-         //seasonIHPDetail.setEndDate(DateUtils.getMMddyyDateFromString(cloneSeason.getCloneSeasonEndDate()));
          seasonIHPDetail.setMaxParticipants(existingSeason.getSeasonIhpdetails().get(0).getMaxParticipants());
          seasonIHPDetail.setLcHoldTime(existingSeason.getSeasonIhpdetails().get(0).getLcHoldTime());
          seasonIHPDetail.setNumberOfLCToRequestHold(existingSeason.getSeasonIhpdetails().get(0).getNumberOfLCToRequestHold());
@@ -303,9 +259,6 @@ public class SeasonCloningHelper {
          seasonWnTSpringDetail.setSeason(clonedWPSeason);
          seasonWnTSpringDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
          seasonWnTSpringDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SPRING);
-         //seasonWnTSpringDetail.setApplicationDeadlineDate(existingSeason.getSeasonWnTspringDetails().get(0).getApplicationDeadlineDate());
-         //seasonWnTSpringDetail.setStartDate(existingSeason.getSeasonWnTspringDetails().get(0).getStartDate());
-         //seasonWnTSpringDetail.setEndDate(existingSeason.getSeasonWnTspringDetails().get(0).getEndDate());
          seasonWnTSpringDetail.setIsJobBoardOpen(existingSeason.getSeasonWnTspringDetails().get(0).getIsJobBoardOpen());
          seasonWnTSpringDetail.setMaxPendingJobApps(existingSeason.getSeasonWnTspringDetails().get(0).getMaxPendingJobApps());
          seasonWnTSpringDetail.setCreatedBy(loginId);
@@ -329,9 +282,6 @@ public class SeasonCloningHelper {
          seasonWnTSummerDetail.setSeason(clonedWPSeason);
          seasonWnTSummerDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
          seasonWnTSummerDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_SUMMER);
-         //seasonWnTSummerDetail.setApplicationDeadlineDate(existingSeason.getSeasonWnTsummerDetails().get(0).getApplicationDeadlineDate());
-         //seasonWnTSummerDetail.setStartDate(existingSeason.getSeasonWnTsummerDetails().get(0).getStartDate());
-         //seasonWnTSummerDetail.setEndDate(existingSeason.getSeasonWnTsummerDetails().get(0).getEndDate());
          seasonWnTSummerDetail.setIsJobBoardOpen(existingSeason.getSeasonWnTsummerDetails().get(0).getIsJobBoardOpen());
          seasonWnTSummerDetail.setMaxPendingJobApps(existingSeason.getSeasonWnTsummerDetails().get(0).getMaxPendingJobApps());
          seasonWnTSummerDetail.setCreatedBy(loginId);
@@ -354,9 +304,6 @@ public class SeasonCloningHelper {
          seasonWnTWinterDetail.setSeason(clonedWPSeason);
          seasonWnTWinterDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
          seasonWnTWinterDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_WINTER);
-         //seasonWnTWinterDetail.setApplicationDeadlineDate(existingSeason.getSeasonWnTwinterDetails().get(0).getApplicationDeadlineDate());
-         //seasonWnTWinterDetail.setStartDate(existingSeason.getSeasonWnTwinterDetails().get(0).getStartDate());
-         //seasonWnTWinterDetail.setEndDate(existingSeason.getSeasonWnTwinterDetails().get(0).getEndDate());
          seasonWnTWinterDetail.setIsJobBoardOpen(existingSeason.getSeasonWnTwinterDetails().get(0).getIsJobBoardOpen());
          seasonWnTWinterDetail.setMaxPendingJobApps(existingSeason.getSeasonWnTwinterDetails().get(0).getMaxPendingJobApps());
          seasonWnTWinterDetail.setCreatedBy(loginId);
@@ -379,12 +326,6 @@ public class SeasonCloningHelper {
          seasonCAPDetail.setSeason(clonedWPSeason);
          seasonCAPDetail.setSeasonStatus(clonedWPSeason.getSeasonStatus());
          seasonCAPDetail.setProgramName(clonedWPSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.WP_WT_CAP);
-         //seasonCAPDetail.setInternStartDate(existingSeason.getSeasonCapdetails().get(0).getInternStartDate());
-         //seasonCAPDetail.setInternEndDate(existingSeason.getSeasonCapdetails().get(0).getInternEndDate());
-         //seasonCAPDetail.setInternAppDeadlineDate(existingSeason.getSeasonCapdetails().get(0).getInternAppDeadlineDate());
-         //seasonCAPDetail.setTraineeAppDeadlineDate(existingSeason.getSeasonCapdetails().get(0).getTraineeAppDeadlineDate());
-         //seasonCAPDetail.setTraineeStartDate(existingSeason.getSeasonCapdetails().get(0).getTraineeStartDate());
-         //seasonCAPDetail.setTraineeEndDate(existingSeason.getSeasonCapdetails().get(0).getTraineeEndDate());
          seasonCAPDetail.setCreatedBy(loginId);
          seasonCAPDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonCAPDetail.setModifiedBy(loginId);
@@ -422,8 +363,6 @@ public class SeasonCloningHelper {
          seasonHSADetail.setSeason(clonedGHTSeason);
          seasonHSADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
          seasonHSADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_HS_ABRD);
-         //seasonHSADetail.setStartDate(existingSeason.getSeasonHsadetails().get(0).getStartDate());
-         //seasonHSADetail.setEndDate(existingSeason.getSeasonHsadetails().get(0).getEndDate());
          seasonHSADetail.setCreatedBy(loginId);
          seasonHSADetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonHSADetail.setModifiedBy(loginId);
@@ -444,8 +383,6 @@ public class SeasonCloningHelper {
          seasonLSDetail.setSeason(clonedGHTSeason);
          seasonLSDetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
          seasonLSDetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_LANG_SCL);
-         //seasonLSDetail.setStartDate(existingSeason.getSeasonLsdetails().get(0).getStartDate());
-         //seasonLSDetail.setEndDate(existingSeason.getSeasonLsdetails().get(0).getEndDate());
          seasonLSDetail.setCreatedBy(loginId);
          seasonLSDetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonLSDetail.setModifiedBy(loginId);
@@ -466,8 +403,6 @@ public class SeasonCloningHelper {
          seasonTADetail.setSeason(clonedGHTSeason);
          seasonTADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
          seasonTADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_TEACH_ABRD);
-         //seasonTADetail.setStartDate(existingSeason.getSeasonTadetails().get(0).getStartDate());
-         //seasonTADetail.setEndDate(existingSeason.getSeasonTadetails().get(0).getEndDate());
          seasonTADetail.setCreatedBy(loginId);
          seasonTADetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonTADetail.setModifiedBy(loginId);
@@ -481,15 +416,13 @@ public class SeasonCloningHelper {
     * @param clonedGHTSeason
     * @return
     */
-   public SeasonVADetail cloneGHTVAProgram(Season existingSeason, Season clonedGHTSeason,int loginId) {
+   public SeasonVADetail cloneGHTVAProgram(Season existingSeason, Season clonedGHTSeason, int loginId) {
       SeasonVADetail seasonVADetail = null;
       if (existingSeason.getSeasonVadetails() != null && existingSeason.getSeasonVadetails().size() > 0) {
          seasonVADetail = new SeasonVADetail();
          seasonVADetail.setSeason(clonedGHTSeason);
          seasonVADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
          seasonVADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_VOL_ABRD);
-         //seasonVADetail.setStartDate(existingSeason.getSeasonVadetails().get(0).getStartDate());
-         //seasonVADetail.setEndDate(existingSeason.getSeasonVadetails().get(0).getEndDate());
          seasonVADetail.setCreatedBy(loginId);
          seasonVADetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonVADetail.setModifiedBy(loginId);
@@ -510,8 +443,6 @@ public class SeasonCloningHelper {
          seasonWADetail.setSeason(clonedGHTSeason);
          seasonWADetail.setSeasonStatus(clonedGHTSeason.getSeasonStatus());
          seasonWADetail.setProgramName(clonedGHTSeason.getSeasonName() + CCIConstants.HYPHEN_SPACE + CCIConstants.GHT_WRK_ABRD);
-         //seasonWADetail.setStartDate(existingSeason.getSeasonWadetails().get(0).getStartDate());
-         //seasonWADetail.setEndDate(existingSeason.getSeasonWadetails().get(0).getEndDate());
          seasonWADetail.setCreatedBy(loginId);
          seasonWADetail.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          seasonWADetail.setModifiedBy(loginId);
@@ -529,7 +460,7 @@ public class SeasonCloningHelper {
       SeasonDepartmentDocument document = new SeasonDepartmentDocument();
       document.setActive(existingDoc.getActive());
       document.setSeason(clonedSeason);
-      document.setDocumentInformation(getDepartmentDocumentInformation(existingDoc,loginId));
+      document.setDocumentInformation(getDepartmentDocumentInformation(existingDoc, loginId));
       document.setCreatedBy(loginId);
       document.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       document.setModifiedBy(loginId);
@@ -547,7 +478,8 @@ public class SeasonCloningHelper {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-     // documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
+      // TODO
+      // documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(loginId);
       documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       documentInformation.setModifiedBy(loginId);
@@ -566,7 +498,7 @@ public class SeasonCloningHelper {
       sprgDoc.setActive(existingDoc.getActive());
       sprgDoc.setDepartmentProgram(existingDoc.getDepartmentProgram());
       sprgDoc.setSeason(clonedSeason);
-      sprgDoc.setDocumentInformation(getProgramDocumentInformation(existingDoc,loginId));
+      sprgDoc.setDocumentInformation(getProgramDocumentInformation(existingDoc, loginId));
       sprgDoc.setCreatedBy(loginId);
       sprgDoc.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       sprgDoc.setModifiedBy(loginId);
@@ -585,7 +517,8 @@ public class SeasonCloningHelper {
       documentInformation.setDocumentName(doc.getDocumentInformation().getDocumentName() != null ? doc.getDocumentInformation().getDocumentName() : null);
       documentInformation.setFileName(doc.getDocumentInformation().getFileName() != null ? doc.getDocumentInformation().getFileName() : null);
       documentInformation.setDocumentTypeDocumentCategoryProcess(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess());
-      //documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
+      // TODO
+      // documentInformation.setUrl(fileUtilInterface.cloneUploadedFile(doc.getDocumentInformation().getUrl()));
       documentInformation.setCreatedBy(loginId);
       documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
       documentInformation.setModifiedBy(loginId);

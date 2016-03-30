@@ -13,7 +13,6 @@ import com.ccighgo.db.entities.PartnerOfficeType;
 @Repository
 public interface PartnerOfficeTypeRepository extends JpaRepository<PartnerOfficeType, Integer> {
 
-
    PartnerOfficeType findByPartnerOfficeType(String type);
 
 }

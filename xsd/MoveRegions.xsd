@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/mvregion" xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
-    attributeFormDefault="unqualified" jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-    xmlns:mr="http://www.ccighgo.com/mvregion">
+<xsd:schema targetNamespace="http://www.ccighgo.com/mvregion"
+	xmlns:common="http://www.ccighgo.com/common" elementFormDefault="unqualified"
+	attributeFormDefault="unqualified" jaxb:version="2.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:mr="http://www.ccighgo.com/mvregion">
 
-    <xsd:annotation>
-        <xsd:appinfo>
-            <jaxb:schemaBindings>
-                <jaxb:package name="com.ccighgo.service.transport.region.beans.mvregion" />
-            </jaxb:schemaBindings>
-        </xsd:appinfo>
-        <xsd:documentation></xsd:documentation>
-    </xsd:annotation>
-    
-    <xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="com.ccighgo.service.transport.region.beans.mvregion" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
 
-    <xsd:element name="MoveRegions" type="mr:MoveRegions"></xsd:element>
+	<xsd:import schemaLocation="Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
-    <xsd:complexType name="MoveRegions">
-    <xsd:complexContent>
-        <xsd:extension base="common:Response">
-        <xsd:sequence>
-            <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="moveRegions" type="mr:MoveRegion" minOccurs="1" maxOccurs="unbounded" />
-        </xsd:sequence>
-        </xsd:extension>
-    </xsd:complexContent>
-    </xsd:complexType>
+	<xsd:element name="MoveRegions" type="mr:MoveRegions"></xsd:element>
 
-    <xsd:complexType name="MoveRegion">
-        <xsd:sequence>
-            <xsd:element name="regionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="existingSuperRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="newSuperRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-        </xsd:sequence>
-    </xsd:complexType>
+	<xsd:complexType name="MoveRegions">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="moveRegions" type="mr:MoveRegion"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="MoveRegion">
+		<xsd:sequence>
+			<xsd:element name="regionId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="existingSuperRegionId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="newSuperRegionId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>
 

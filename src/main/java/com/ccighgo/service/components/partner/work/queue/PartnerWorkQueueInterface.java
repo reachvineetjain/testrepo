@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.ccighgo.service.transport.partner.beans.partneruser.PartnerWorkQueue;
 
- 
 /**
  * @author ravi
  *

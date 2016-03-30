@@ -16,7 +16,7 @@ import com.ccighgo.db.entities.HostFamilyPetType;
 @Repository
 public interface HostFamilyPetTypeRepository extends JpaRepository<HostFamilyPetType, Integer> {
 
-	@Query("SELECT h FROM HostFamilyPetType h WHERE h.hostFamilyPetTypeName= ?1")
-	HostFamilyPetType findPetByName(String valueOf);
+   @Query("SELECT h FROM HostFamilyPetType h WHERE h.hostFamilyPetTypeName= ?1")
+   HostFamilyPetType findPetByName(String valueOf);
 
 }

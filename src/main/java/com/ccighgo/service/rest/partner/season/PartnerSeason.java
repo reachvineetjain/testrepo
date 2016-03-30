@@ -1,4 +1,3 @@
-
 /**
  * 
  */
@@ -19,7 +18,6 @@ import com.ccighgo.service.components.partner.season.PartnerSeasonInterface;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.newpartnerapplicationdeadlilne.NewPartnerApplicationDeadLineDate;
 import com.ccighgo.service.transport.partner.beans.newpartnerseasonallocationrequest.NewPartnerSeasonAllocationRequest;
-import com.ccighgo.service.transport.partner.beans.partner.season.admin.application.PartnerAdminSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasons;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.PartnerSeasonDetail;
@@ -31,8 +29,8 @@ import com.ccighgo.utils.WSDefaultResponse;
  * <h1>PartnerSeason</h1> The PartnerSeason class is the REST service front of
  * all partner season actions in the user interface.
  * <p>
- * The class uses JAX-RX api provided by Apache CXF for RESTful web services @link
- * http://cxf.apache.org/ *
+ * The class uses JAX-RX api provided by Apache CXF for RESTful web
+ * services @link http://cxf.apache.org/ *
  *
  * @author ravi
  * 
@@ -47,11 +45,11 @@ public class PartnerSeason {
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerSeason.class);
 
    @Autowired PartnerSeasonInterface partnerSeasonInterface;
-   
+
    /**
-    * The method {@code ping(@PathParam("input"))} returns user
-    * input string back. The purpose of the method is to test if PartnerSeason
-    * services are up and running
+    * The method {@code ping(@PathParam("input"))} returns user input string
+    * back. The purpose of the method is to test if PartnerSeason services are
+    * up and running
     * 
     * @param input
     * @return input string back as text
@@ -60,7 +58,7 @@ public class PartnerSeason {
    @Path("ping/{input}")
    @Produces("text/plain")
    public String ping(@PathParam("input") String input) {
-       return input;
+      return input;
    }
 
    /**
@@ -76,7 +74,7 @@ public class PartnerSeason {
       LOGGER.info("calling PartnerSeason.getPartnerSeasons for partner id {}", partnerId);
       return partnerSeasonInterface.getPartnerSeasons(partnerId);
    }
-   
+
    /**
     * Get details of partner J1HS season
     * 
@@ -91,7 +89,7 @@ public class PartnerSeason {
       LOGGER.debug("calling PartnerUser.viewPartnerSeason");
       return partnerSeasonInterface.viewJ1HSPartnerSeason(partnerSeasonId);
    }
-   
+
    /**
     * Get details of partner F1 season
     * 
@@ -106,7 +104,7 @@ public class PartnerSeason {
       LOGGER.debug("calling PartnerUser.viewPartnerSeason");
       return partnerSeasonInterface.viewF1PartnerSeason(partnerSeasonId);
    }
-   
+
    /**
     * Get details of partner IHP season
     * 
@@ -121,17 +119,17 @@ public class PartnerSeason {
       LOGGER.debug("calling PartnerUser.viewIHPPartnerSeason");
       return partnerSeasonInterface.viewIHPPartnerSeason(partnerSeasonId);
    }
-   
+
    /**
     * @param partnerId
     * @return
     */
    @GET
    @Path("apply/new/{partnerId}")
-   public PartnerSeasonApplicationList getPartnerSeasonApplicationList(@PathParam("partnerId") String partnerId){
+   public PartnerSeasonApplicationList getPartnerSeasonApplicationList(@PathParam("partnerId") String partnerId) {
       return partnerSeasonInterface.getPartnerSeasonApplicationList(partnerId);
    }
-   
+
    /**
     * @param partnerGoId
     * @return
@@ -142,15 +140,16 @@ public class PartnerSeason {
    public Response addNewSeasonsToPartner(PartnerSeasonApplicationList partnerSeasonApplicationList) {
       return partnerSeasonInterface.addNewSeasonsToPartner(partnerSeasonApplicationList);
    }
-   
+
    @POST
    @Path("createNewPartnerAllocationRequest")
-   public WSDefaultResponse createNewPartnerAllocationRequest(NewPartnerSeasonAllocationRequest newPartnerSeasonAllocationRequest){
+   public WSDefaultResponse createNewPartnerAllocationRequest(NewPartnerSeasonAllocationRequest newPartnerSeasonAllocationRequest) {
       return partnerSeasonInterface.createNewPartnerAllocationRequest(newPartnerSeasonAllocationRequest);
    }
+
    @POST
    @Path("createNewDeadlineDateRequest")
-   public WSDefaultResponse createNewDeadlineDateRequest(NewPartnerApplicationDeadLineDate newApplicationDeadlineDatesAllocations){
+   public WSDefaultResponse createNewDeadlineDateRequest(NewPartnerApplicationDeadLineDate newApplicationDeadlineDatesAllocations) {
       return partnerSeasonInterface.createNewDeadlineDateRequest(newApplicationDeadlineDatesAllocations);
    }
 }

@@ -31,12 +31,9 @@ import com.ccighgo.utils.CCIConstants;
 public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterface {
 
    private static final Logger LOGGER = Logger.getLogger(FieldStaffMyPlacementsInterface.class);
-   @Autowired
-   EntityManager em;
-   @Autowired
-   MessageUtils messageUtil;
-   @Autowired
-   CommonComponentUtils componentUtils;
+   @Autowired EntityManager em;
+   @Autowired MessageUtils messageUtil;
+   @Autowired CommonComponentUtils componentUtils;
 
    private static final String SP_FS_PLACEMENT_LIST = "CALL SPFieldStaffParticipantListing(?,?,?)";
    private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?,?)";
@@ -45,7 +42,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    private static final int PARTICIPANT_FLAG = 2;
    private static final int ALL_PARTICIPANT_FLAG = 1;
    private static final int MY_TEAM_PARTICIPANT_FLAG = 0;
-   private static final String FS_PARTICIPANT_CATEGORIES_NULL =null;
+   private static final String FS_PARTICIPANT_CATEGORIES_NULL = null;
 
    @Override
    public MyPlacements getERDMyPlacement(String goId, String catagories) {
@@ -81,8 +78,8 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
             myPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            myPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            myPlacements.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return myPlacements;
          }
       } catch (Exception e) {
@@ -129,8 +126,8 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
             eRDPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            eRDPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            eRDPlacements.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return eRDPlacements;
          }
       } catch (Exception e) {
@@ -154,8 +151,8 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
          if (result == null) {
-            eRDPlacementParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            eRDPlacementParticipants.setStatus(
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return eRDPlacementParticipants;
          }
          for (Object[] obj : result) {
@@ -177,8 +174,8 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
             participant.setWaitingList(String.valueOf(obj[10]));
             eRDPlacementParticipants.getParticipants().add(participant);
          }
-         eRDPlacementParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         eRDPlacementParticipants.setStatus(
+               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          eRDPlacementParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_PARTICIPANT.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PARTICIPANT)));
@@ -191,7 +188,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    /*
     * Monitoring
     */
-   public ERDParticipants getAllParticipant(String goId,String catagorie) {
+   public ERDParticipants getAllParticipant(String goId, String catagorie) {
       LOGGER.info("goid: " + goId);
       ERDParticipants erdParticipants = new ERDParticipants();
       if (goId != null)
@@ -224,8 +221,8 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
                   erdParticipants.getParticipants().add(esp);
                }
             } else {
-               erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               erdParticipants.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
                return erdParticipants;
             }
             erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
@@ -240,7 +237,7 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
    }
 
    @Override
-   public com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants getMyTeamParticipant(String goId,String catagorie) {
+   public com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants getMyTeamParticipant(String goId, String catagorie) {
       LOGGER.info("goid: " + goId);
       com.ccighgo.service.transport.fieldstaff.beans.erdparticipant.ERDParticipants erdParticipants = new ERDParticipants();
       if (goId != null)
@@ -252,8 +249,8 @@ public class FieldStaffMyPlacementsImpl implements FieldStaffMyPlacementsInterfa
             @SuppressWarnings("unchecked")
             List<Object[]> result = query.getResultList();
             if (result == null) {
-               erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
-                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               erdParticipants.setStatus(
+                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
                return erdParticipants;
             }
             for (Object[] obj : result) {

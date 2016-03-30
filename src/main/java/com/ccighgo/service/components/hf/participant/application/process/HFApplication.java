@@ -11,7 +11,6 @@ import com.ccighgo.service.components.hf.participant.application.process.util.Fa
 import com.ccighgo.service.components.hf.participant.application.process.util.HFAirportList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFCommunityAndSchoolPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFHomeDescriptionPageParam;
-import com.ccighgo.service.components.hf.participant.application.process.util.HFPetsList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HFSeasonList;
 import com.ccighgo.service.components.hf.participant.application.process.util.HomePageParam;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -32,7 +31,6 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
-import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -95,18 +93,22 @@ public interface HFApplication {
    /**
     * persist family basic data
     * 
-    * @param hfApplicationFamilyDetails
-    * @return
-    */
-   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
-
-   /**
-    * persist family details including life style
+    * @param applicationCategoryId
     * 
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+   public HFApplicationFamilyDetails saveFamilyBasicData(String applicationCategoryId, HFApplicationFamilyDetails hfApplicationFamilyDetails);
+
+   /**
+    * persist family details including life style
+    * 
+    * @param applicationCategoryId
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(String applicationCategoryId, HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
 
    /**
     * fetch family style data
@@ -124,10 +126,11 @@ public interface HFApplication {
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
 
    /**
+    * @param applicationCategoryId
     * @param descriptionPage
     * @return
     */
-   public HFHomeDescriptionPage saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
+   public HFHomeDescriptionPage saveHFHouseDescription(String applicationCategoryId, HFHomeDescriptionPage descriptionPage);
 
    /**
     * @param descriptionPageParam
@@ -136,10 +139,11 @@ public interface HFApplication {
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
 
    /**
+    * @param applicationCategoryId
     * @param communityAndSchoolPage
     * @return
     */
-   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
+   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(String applicationCategoryId, HFCommunityAndSchoolPage communityAndSchoolPage);
 
    /**
     * @param descriptionPageParam

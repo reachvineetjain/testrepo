@@ -41,7 +41,7 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="partnerUserLastName" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
-				<xsd:element name="isPrimary" type="xsd:boolean"
+			<xsd:element name="isPrimary" type="xsd:boolean"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="partnerUserLoginName" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />

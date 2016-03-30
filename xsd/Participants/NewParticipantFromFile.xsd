@@ -1,44 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/newparticipantfromfile" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pal="http://www.ccighgo.com/newparticipantfromfile"
-   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.participant.beans.newparticipantfromfile" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/newparticipantfromfile"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pal="http://www.ccighgo.com/newparticipantfromfile"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.participant.beans.newparticipantfromfile" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="NewParticipantFromFile" type="pal:NewParticipantFromFile" />
+	<xsd:element name="NewParticipantFromFile" type="pal:NewParticipantFromFile" />
 
-   <xsd:complexType name="NewParticipantFromFile">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-				<xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-	         	<xsd:element name="departmentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-	         	<xsd:element name="method" type="xsd:string" minOccurs="1" maxOccurs="1" />
-                <xsd:element name="details" type="pal:AddNewParticipantFromFile" minOccurs="0" maxOccurs="1" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   
-   <xsd:complexType name="AddNewParticipantFromFile">
-      <xsd:sequence>
-         <xsd:element name="subpartner" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="docType" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="fileType" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="fileName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="docName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="docUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="uploadDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="uploadedBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
- 
- 
+	<xsd:complexType name="NewParticipantFromFile">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="departmentId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="method" type="xsd:string" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="details" type="pal:AddNewParticipantFromFile"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="AddNewParticipantFromFile">
+		<xsd:sequence>
+			<xsd:element name="subpartner" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="docType" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="fileType" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="fileName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="docName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="docUrl" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="uploadDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="uploadedBy" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="active" type="xsd:boolean" minOccurs="1"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
 </xsd:schema>

@@ -10,7 +10,7 @@ public class PartnerStoredProcedure {
 	@PersistenceContext
 	EntityManager em;
 
-	public int PartnerSeasonAcceptedPax(int partnerId, int seasonId,
+	public int partnerSeasonAcceptedPax(int partnerId, int seasonId,
 			int depPgmId, int depPgmOptionId) {
 		Object result = em
 				.createNativeQuery(
@@ -26,7 +26,7 @@ public class PartnerStoredProcedure {
 		return 0;
 	}
 
-	public int PartnerSeasonPaxAllocated(int partnerId, int seasonId,
+	public int partnerSeasonPaxAllocated(int partnerId, int seasonId,
 			int depPgmId) {
 		Object result = em
 				.createNativeQuery(
@@ -40,7 +40,7 @@ public class PartnerStoredProcedure {
 		return 0;
 	}
 
-	public int PartnerSeasonCCIReviewPax(int partnerId, int seasonId,
+	public int partnerSeasonCCIReviewPax(int partnerId, int seasonId,
 			int depPgmId, int depPgmOptionId) {
 		Object result = em
 				.createNativeQuery(
@@ -55,7 +55,7 @@ public class PartnerStoredProcedure {
 			return Integer.valueOf(String.valueOf(result));
 		return 0;
 	}
-	public int PartnerSeasonPaxOpenings (int partnerId, int seasonId,
+	public int partnerSeasonPaxOpenings (int partnerId, int seasonId,
          int depPgmId, int depPgmOptionId) {
       Object result = em
             .createNativeQuery(

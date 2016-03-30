@@ -5,7 +5,6 @@
 // Generated on: 2016.03.15 at 04:13:28 PM CDT 
 //
 
-
 package com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import com.ccighgo.service.transport.common.response.beans.Response;
 
-
 /**
- * <p>Java class for HFHomeDescriptionPage complex type.
+ * <p>
+ * Java class for HFHomeDescriptionPage complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="HFHomeDescriptionPage">
@@ -41,146 +42,150 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HFHomeDescriptionPage", propOrder = {
-    "loginId",
-    "seasonId",
-    "programId",
-    "hostFamilyId",
-    "hostFamilyHomeId",
-    "description",
-    "hostFamilySeasonId"
-})
-public class HFHomeDescriptionPage
-    extends Response
-{
+@XmlType(name = "HFHomeDescriptionPage", propOrder = { "loginId", "seasonId", "programId", "hostFamilyId", "hostFamilyHomeId", "description", "hostFamilySeasonId" })
+public class HFHomeDescriptionPage extends Response {
 
-    protected int loginId;
-    protected int seasonId;
-    protected int programId;
-    protected int hostFamilyId;
-    protected int hostFamilyHomeId;
-    @XmlElement(required = true)
-    protected HFHomeDescription description;
-    protected int hostFamilySeasonId;
+   protected int loginId;
+   protected int seasonId;
+   protected int programId;
+   protected int hostFamilyId;
+   protected int hostFamilyHomeId;
+   protected int fieldsFilled;
+   protected double percentUpdate;
+   @XmlElement(required = true) protected HFHomeDescription description;
+   protected int hostFamilySeasonId;
 
-    /**
-     * Gets the value of the loginId property.
-     * 
-     */
-    public int getLoginId() {
-        return loginId;
-    }
+   /**
+    * Gets the value of the loginId property.
+    * 
+    */
+   public int getLoginId() {
+      return loginId;
+   }
 
-    /**
-     * Sets the value of the loginId property.
-     * 
-     */
-    public void setLoginId(int value) {
-        this.loginId = value;
-    }
+   /**
+    * Sets the value of the loginId property.
+    * 
+    */
+   public void setLoginId(int value) {
+      this.loginId = value;
+   }
 
-    /**
-     * Gets the value of the seasonId property.
-     * 
-     */
-    public int getSeasonId() {
-        return seasonId;
-    }
+   /**
+    * Gets the value of the seasonId property.
+    * 
+    */
+   public int getSeasonId() {
+      return seasonId;
+   }
 
-    /**
-     * Sets the value of the seasonId property.
-     * 
-     */
-    public void setSeasonId(int value) {
-        this.seasonId = value;
-    }
+   /**
+    * Sets the value of the seasonId property.
+    * 
+    */
+   public void setSeasonId(int value) {
+      this.seasonId = value;
+   }
 
-    /**
-     * Gets the value of the programId property.
-     * 
-     */
-    public int getProgramId() {
-        return programId;
-    }
+   /**
+    * Gets the value of the programId property.
+    * 
+    */
+   public int getProgramId() {
+      return programId;
+   }
 
-    /**
-     * Sets the value of the programId property.
-     * 
-     */
-    public void setProgramId(int value) {
-        this.programId = value;
-    }
+   /**
+    * Sets the value of the programId property.
+    * 
+    */
+   public void setProgramId(int value) {
+      this.programId = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilyId property.
-     * 
-     */
-    public int getHostFamilyId() {
-        return hostFamilyId;
-    }
+   /**
+    * Gets the value of the hostFamilyId property.
+    * 
+    */
+   public int getHostFamilyId() {
+      return hostFamilyId;
+   }
 
-    /**
-     * Sets the value of the hostFamilyId property.
-     * 
-     */
-    public void setHostFamilyId(int value) {
-        this.hostFamilyId = value;
-    }
+   /**
+    * Sets the value of the hostFamilyId property.
+    * 
+    */
+   public void setHostFamilyId(int value) {
+      this.hostFamilyId = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilyHomeId property.
-     * 
-     */
-    public int getHostFamilyHomeId() {
-        return hostFamilyHomeId;
-    }
+   /**
+    * Gets the value of the hostFamilyHomeId property.
+    * 
+    */
+   public int getHostFamilyHomeId() {
+      return hostFamilyHomeId;
+   }
 
-    /**
-     * Sets the value of the hostFamilyHomeId property.
-     * 
-     */
-    public void setHostFamilyHomeId(int value) {
-        this.hostFamilyHomeId = value;
-    }
+   /**
+    * Sets the value of the hostFamilyHomeId property.
+    * 
+    */
+   public void setHostFamilyHomeId(int value) {
+      this.hostFamilyHomeId = value;
+   }
 
-    /**
-     * Gets the value of the description property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFHomeDescription }
-     *     
-     */
-    public HFHomeDescription getDescription() {
-        return description;
-    }
+   /**
+    * Gets the value of the description property.
+    * 
+    * @return possible object is {@link HFHomeDescription }
+    * 
+    */
+   public HFHomeDescription getDescription() {
+      return description;
+   }
 
-    /**
-     * Sets the value of the description property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFHomeDescription }
-     *     
-     */
-    public void setDescription(HFHomeDescription value) {
-        this.description = value;
-    }
+   /**
+    * Sets the value of the description property.
+    * 
+    * @param value
+    *           allowed object is {@link HFHomeDescription }
+    * 
+    */
+   public void setDescription(HFHomeDescription value) {
+      this.description = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilySeasonId property.
-     * 
-     */
-    public int getHostFamilySeasonId() {
-        return hostFamilySeasonId;
-    }
+   /**
+    * Gets the value of the hostFamilySeasonId property.
+    * 
+    */
+   public int getHostFamilySeasonId() {
+      return hostFamilySeasonId;
+   }
 
-    /**
-     * Sets the value of the hostFamilySeasonId property.
-     * 
-     */
-    public void setHostFamilySeasonId(int value) {
-        this.hostFamilySeasonId = value;
-    }
+   /**
+    * Sets the value of the hostFamilySeasonId property.
+    * 
+    */
+   public void setHostFamilySeasonId(int value) {
+      this.hostFamilySeasonId = value;
+   }
+
+   public int getFieldsFilled() {
+      return fieldsFilled;
+   }
+
+   public void setFieldsFilled(int fieldsFilled) {
+      this.fieldsFilled = fieldsFilled;
+   }
+
+   public double getPercentUpdate() {
+      return percentUpdate;
+   }
+
+   public void setPercentUpdate(double percentUpdate) {
+      this.percentUpdate = percentUpdate;
+   }
 
 }

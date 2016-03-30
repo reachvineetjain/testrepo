@@ -35,8 +35,8 @@ import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.Gene
 @Consumes("application/json")
 public class GenericDocuments {
 
-   @Autowired
-   GenericDocumentsInterface genericDocumentsInterface;
+   @Autowired GenericDocumentsInterface genericDocumentsInterface;
+
    /**
     * @param partner
     *           ID
@@ -177,6 +177,7 @@ public class GenericDocuments {
    public WSDefaultResponse deleteSeasonContractDocument(@PathParam("seasonContractId") String seasonContractId) {
       return genericDocumentsInterface.deleteSeasonContractDocument(seasonContractId);
    }
+
    /**
     * @param fieldStaffGenericDocument
     * @return
@@ -185,11 +186,10 @@ public class GenericDocuments {
    @Path("addFieldStaffDocument")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response addFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocument) 
-   {
+   public Response addFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocument) {
       return genericDocumentsInterface.addFieldStaffDocument(fieldStaffGenericDocument);
    }
-   
+
    /**
     * @param fieldStaffGenericDocuments
     * @return
@@ -201,20 +201,18 @@ public class GenericDocuments {
    public Response updateFieldStaffDocument(FieldStaffGenericDocument fieldStaffGenericDocuments) {
       return genericDocumentsInterface.updateFieldStaffDocument(fieldStaffGenericDocuments);
    }
-   
+
    @GET
    @Path("deleteFieldStaffDocument/{fieldStaffDocumentId}")
    @Produces("application/json")
-   public Response deleteFieldStaffDocument(@PathParam("fieldStaffDocumentId")String fieldStaffDocumentId)
-   {
+   public Response deleteFieldStaffDocument(@PathParam("fieldStaffDocumentId") String fieldStaffDocumentId) {
       return genericDocumentsInterface.deleteFieldStaffDocument(Integer.valueOf(fieldStaffDocumentId));
    }
-   
+
    @GET
    @Path("viewFieldStaffDocument/{fieldStaffDocumentId}")
    @Produces("application/json")
-   public FieldStaffGenericDocuments viewFieldStaffDocument(@PathParam("fieldStaffDocumentId")String fieldStaffGoId)
-   {
+   public FieldStaffGenericDocuments viewFieldStaffDocument(@PathParam("fieldStaffDocumentId") String fieldStaffGoId) {
       return genericDocumentsInterface.viewFieldStaffDocument(Integer.valueOf(fieldStaffGoId));
    }
 }

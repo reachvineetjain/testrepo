@@ -5,7 +5,6 @@
 // Generated on: 2016.03.15 at 04:27:36 PM CDT 
 //
 
-
 package com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import com.ccighgo.service.transport.common.response.beans.Response;
 
-
 /**
- * <p>Java class for HFCommunityAndSchoolPage complex type.
+ * <p>
+ * Java class for HFCommunityAndSchoolPage complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="HFCommunityAndSchoolPage">
@@ -41,155 +42,155 @@ import com.ccighgo.service.transport.common.response.beans.Response;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HFCommunityAndSchoolPage", propOrder = {
-    "loginId",
-    "seasonId",
-    "programId",
-    "hostFamilyId",
-    "hostFamilyCommunityId",
-    "community",
-    "schoolLife"
-})
-public class HFCommunityAndSchoolPage
-    extends Response
-{
+@XmlType(name = "HFCommunityAndSchoolPage", propOrder = { "loginId", "seasonId", "programId", "hostFamilyId", "hostFamilyCommunityId", "community", "schoolLife" })
+public class HFCommunityAndSchoolPage extends Response {
 
-    protected int loginId;
-    protected int seasonId;
-    protected int programId;
-    protected int hostFamilyId;
-    protected int hostFamilyCommunityId;
-    @XmlElement(required = true)
-    protected HFCommunity community;
-    @XmlElement(required = true)
-    protected HFSchoolLife schoolLife;
+   protected int loginId;
+   protected int seasonId;
+   protected int programId;
+   protected int hostFamilyId;
+   protected int hostFamilyCommunityId;
+   protected int fieldsFilled;
+   protected double percentUpdate;
+   @XmlElement(required = true) protected HFCommunity community;
+   @XmlElement(required = true) protected HFSchoolLife schoolLife;
 
-    /**
-     * Gets the value of the loginId property.
-     * 
-     */
-    public int getLoginId() {
-        return loginId;
-    }
+   /**
+    * Gets the value of the loginId property.
+    * 
+    */
+   public int getLoginId() {
+      return loginId;
+   }
 
-    /**
-     * Sets the value of the loginId property.
-     * 
-     */
-    public void setLoginId(int value) {
-        this.loginId = value;
-    }
+   /**
+    * Sets the value of the loginId property.
+    * 
+    */
+   public void setLoginId(int value) {
+      this.loginId = value;
+   }
 
-    /**
-     * Gets the value of the seasonId property.
-     * 
-     */
-    public int getSeasonId() {
-        return seasonId;
-    }
+   /**
+    * Gets the value of the seasonId property.
+    * 
+    */
+   public int getSeasonId() {
+      return seasonId;
+   }
 
-    /**
-     * Sets the value of the seasonId property.
-     * 
-     */
-    public void setSeasonId(int value) {
-        this.seasonId = value;
-    }
+   /**
+    * Sets the value of the seasonId property.
+    * 
+    */
+   public void setSeasonId(int value) {
+      this.seasonId = value;
+   }
 
-    /**
-     * Gets the value of the programId property.
-     * 
-     */
-    public int getProgramId() {
-        return programId;
-    }
+   /**
+    * Gets the value of the programId property.
+    * 
+    */
+   public int getProgramId() {
+      return programId;
+   }
 
-    /**
-     * Sets the value of the programId property.
-     * 
-     */
-    public void setProgramId(int value) {
-        this.programId = value;
-    }
+   /**
+    * Sets the value of the programId property.
+    * 
+    */
+   public void setProgramId(int value) {
+      this.programId = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilyId property.
-     * 
-     */
-    public int getHostFamilyId() {
-        return hostFamilyId;
-    }
+   /**
+    * Gets the value of the hostFamilyId property.
+    * 
+    */
+   public int getHostFamilyId() {
+      return hostFamilyId;
+   }
 
-    /**
-     * Sets the value of the hostFamilyId property.
-     * 
-     */
-    public void setHostFamilyId(int value) {
-        this.hostFamilyId = value;
-    }
+   /**
+    * Sets the value of the hostFamilyId property.
+    * 
+    */
+   public void setHostFamilyId(int value) {
+      this.hostFamilyId = value;
+   }
 
-    /**
-     * Gets the value of the hostFamilyCommunityId property.
-     * 
-     */
-    public int getHostFamilyCommunityId() {
-        return hostFamilyCommunityId;
-    }
+   /**
+    * Gets the value of the hostFamilyCommunityId property.
+    * 
+    */
+   public int getHostFamilyCommunityId() {
+      return hostFamilyCommunityId;
+   }
 
-    /**
-     * Sets the value of the hostFamilyCommunityId property.
-     * 
-     */
-    public void setHostFamilyCommunityId(int value) {
-        this.hostFamilyCommunityId = value;
-    }
+   /**
+    * Sets the value of the hostFamilyCommunityId property.
+    * 
+    */
+   public void setHostFamilyCommunityId(int value) {
+      this.hostFamilyCommunityId = value;
+   }
 
-    /**
-     * Gets the value of the community property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFCommunity }
-     *     
-     */
-    public HFCommunity getCommunity() {
-        return community;
-    }
+   /**
+    * Gets the value of the community property.
+    * 
+    * @return possible object is {@link HFCommunity }
+    * 
+    */
+   public HFCommunity getCommunity() {
+      return community;
+   }
 
-    /**
-     * Sets the value of the community property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFCommunity }
-     *     
-     */
-    public void setCommunity(HFCommunity value) {
-        this.community = value;
-    }
+   /**
+    * Sets the value of the community property.
+    * 
+    * @param value
+    *           allowed object is {@link HFCommunity }
+    * 
+    */
+   public void setCommunity(HFCommunity value) {
+      this.community = value;
+   }
 
-    /**
-     * Gets the value of the schoolLife property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HFSchoolLife }
-     *     
-     */
-    public HFSchoolLife getSchoolLife() {
-        return schoolLife;
-    }
+   /**
+    * Gets the value of the schoolLife property.
+    * 
+    * @return possible object is {@link HFSchoolLife }
+    * 
+    */
+   public HFSchoolLife getSchoolLife() {
+      return schoolLife;
+   }
 
-    /**
-     * Sets the value of the schoolLife property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HFSchoolLife }
-     *     
-     */
-    public void setSchoolLife(HFSchoolLife value) {
-        this.schoolLife = value;
-    }
+   /**
+    * Sets the value of the schoolLife property.
+    * 
+    * @param value
+    *           allowed object is {@link HFSchoolLife }
+    * 
+    */
+   public void setSchoolLife(HFSchoolLife value) {
+      this.schoolLife = value;
+   }
+
+   public int getFieldsFilled() {
+      return fieldsFilled;
+   }
+
+   public void setFieldsFilled(int fieldsFilled) {
+      this.fieldsFilled = fieldsFilled;
+   }
+
+   public double getPercentUpdate() {
+      return percentUpdate;
+   }
+
+   public void setPercentUpdate(double percentUpdate) {
+      this.percentUpdate = percentUpdate;
+   }
 
 }

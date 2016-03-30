@@ -41,7 +41,6 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
-import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFPresentedParticipantList;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -91,7 +90,7 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.uploadHFPhotos");
       return hfApplication.uploadHFMandatoryPhotos(hfApplicationUploadPhotos);
    }
-   
+
    @POST
    @Path("upload/optional/photo")
    @Consumes("application/json")
@@ -126,19 +125,20 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("hfSaveBasicData")
+   @Path("hfSaveBasicData/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails) {
-      return hfApplication.saveFamilyBasicData(hfApplicationFamilyDetails);
+   public HFApplicationFamilyDetails saveFamilyBasicData(@PathParam("applicationCategoryId") String applicationCategoryId, HFApplicationFamilyDetails hfApplicationFamilyDetails) {
+      return hfApplication.saveFamilyBasicData(applicationCategoryId, hfApplicationFamilyDetails);
    }
 
    @POST
-   @Path("hfSaveFamilyLifeStyle")
+   @Path("hfSaveFamilyLifeStyle/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
-      return hfApplication.saveFamilyLifeStyleData(hfApplicationFamilyDetails);
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(@PathParam("applicationCategoryId") String applicationCategoryId,
+         HFApplicationFamilyLifeStyle hfApplicationFamilyDetails) {
+      return hfApplication.saveFamilyLifeStyleData(applicationCategoryId, hfApplicationFamilyDetails);
    }
 
    @POST
@@ -193,11 +193,11 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("hfSaveHouseDescription")
+   @Path("hfSaveHouseDescription/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFHomeDescriptionPage createHFHouseDescription(HFHomeDescriptionPage descriptionPage) {
-      return hfApplication.saveHFHouseDescription(descriptionPage);
+   public HFHomeDescriptionPage createHFHouseDescription(@PathParam("applicationCategoryId") String applicationCategoryId, HFHomeDescriptionPage descriptionPage) {
+      return hfApplication.saveHFHouseDescription(applicationCategoryId, descriptionPage);
    }
 
    @POST
@@ -209,11 +209,11 @@ public class HFApplicationProcess {
    }
 
    @POST
-   @Path("hfSaveCoummnityAndSchoolDetails")
+   @Path("hfSaveCoummnityAndSchoolDetails/{applicationCategoryId}")
    @Consumes("application/json")
    @Produces("application/json")
-   public HFCommunityAndSchoolPage createHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage) {
-      return hfApplication.saveHFCoummnityAndSchool(communityAndSchoolPage);
+   public HFCommunityAndSchoolPage createHFCoummnityAndSchool(@PathParam("applicationCategoryId") String applicationCategoryId, HFCommunityAndSchoolPage communityAndSchoolPage) {
+      return hfApplication.saveHFCoummnityAndSchool(applicationCategoryId, communityAndSchoolPage);
    }
 
    @POST

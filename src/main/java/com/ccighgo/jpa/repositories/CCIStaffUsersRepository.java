@@ -3,8 +3,6 @@
  */
 package com.ccighgo.jpa.repositories;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,7 +15,7 @@ import com.ccighgo.db.entities.CCIStaffUser;
  */
 @Repository
 public interface CCIStaffUsersRepository extends JpaRepository<CCIStaffUser, Integer> {
-   
+
    @Query("SELECT c FROM CCIStaffUser c WHERE c.cciAdminGuid = ?1")
-   public CCIStaffUser findByGUID(String cciAdminGuid);   
+   public CCIStaffUser findByGUID(String cciAdminGuid);
 }

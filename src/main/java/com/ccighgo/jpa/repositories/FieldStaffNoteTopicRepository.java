@@ -13,8 +13,8 @@ import com.ccighgo.db.entities.FieldStaffNoteTopic;
  *
  */
 @Repository
-public interface FieldStaffNoteTopicRepository extends JpaRepository<FieldStaffNoteTopic, Integer>{
-  
+public interface FieldStaffNoteTopicRepository extends JpaRepository<FieldStaffNoteTopic, Integer> {
+
    @Query("select t from FieldStaffNoteTopic t where t.fieldStaff.fieldStaffGoId = ?1")
    List<FieldStaffNoteTopic> listTopicsByFieldStaffId(int fieldStaffGoId);
 
