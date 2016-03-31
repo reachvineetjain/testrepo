@@ -170,6 +170,7 @@ public class Participants {
    @Path("reset/access/{participantGoId}")
    @Produces("application/json")
    public Response resetParticipantPassword(@PathParam("participantGoId") String participantGoId) {
+      LOGGER.info("calling Participants.resetParticipantPassword ");
       return participantsInterface.resetParticipantPassword(participantGoId, request);
    }
 
@@ -177,7 +178,7 @@ public class Participants {
    @Path("sendLogin/{participantGoId}")
    @Produces("application/json")
    public Response sendLogin(@PathParam("participantGoId") String participantGoId) {
+      LOGGER.info("calling Participants.sendLogin ");
       return participantsInterface.sendLogin(participantGoId, request);
    }
-
 }

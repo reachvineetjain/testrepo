@@ -1262,19 +1262,23 @@ public class HFApplicationImpl implements HFApplication {
          hf.setPreferredPhone(hfApplicationFamilyDetails.getContactInfo().getContactPhone());
          hf.setEmergencyContact(hfApplicationFamilyDetails.getContactInfo().getEmergencyContactPerson());
          hf.setEmergencyPhone(hfApplicationFamilyDetails.getContactInfo().getEmergencyPhone());
-         // Physical Address
-         hf.setPhysicalAddress(hfApplicationFamilyDetails.getPhysicalAddress().getAddress1());
-         hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
-         hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
-         LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
-         hf.setLookupUsstate2(physicalAddressState);
-         // mailing address
-         hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
-         hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
-         hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
-         hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
-         LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
-         hf.setLookupUsstate1(mailingAddressState);
+         if (hfApplicationFamilyDetails.getPhysicalAddress() != null) {
+            // Physical Address
+            hf.setPhysicalAddress(hfApplicationFamilyDetails.getPhysicalAddress().getAddress1());
+            hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
+            hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
+            LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
+            hf.setLookupUsstate2(physicalAddressState);
+         }
+         if (hfApplicationFamilyDetails.getMailingAddress() != null) {
+            // mailing address
+            hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
+            hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
+            hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
+            LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
+            hf.setLookupUsstate1(mailingAddressState);
+         }
 
          hf.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
          hf.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));

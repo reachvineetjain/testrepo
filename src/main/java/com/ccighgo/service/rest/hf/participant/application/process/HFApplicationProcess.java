@@ -181,6 +181,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public HFApplicationFamilyLifeStyle fetchFamilyLifeStyle(FamilyStylePageParam familyStylePageParam) {
+      LOGGER.info("Calling service HFApplicationProcess.fetchFamilyLifeStyle");
       return hfApplication.fetchFamilyLifeStyle(familyStylePageParam);
    }
 
@@ -189,6 +190,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam) {
+      LOGGER.info("Calling service HFApplicationProcess.fetchBasicData");
       return hfApplication.fetchBasicData(familyBasicsPageParam);
    }
 
@@ -197,6 +199,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public HFHomeDescriptionPage createHFHouseDescription(@PathParam("applicationCategoryId") String applicationCategoryId, HFHomeDescriptionPage descriptionPage) {
+      LOGGER.info("Calling service HFApplicationProcess.createHFHouseDescription");
       return hfApplication.saveHFHouseDescription(applicationCategoryId, descriptionPage);
    }
 
@@ -205,6 +208,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam) {
+      LOGGER.info("Calling service HFApplicationProcess.fetchHFHouseDescription");
       return hfApplication.fetchHFHouseDescription(descriptionPageParam);
    }
 
@@ -213,6 +217,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public HFCommunityAndSchoolPage createHFCoummnityAndSchool(@PathParam("applicationCategoryId") String applicationCategoryId, HFCommunityAndSchoolPage communityAndSchoolPage) {
+      LOGGER.info("Calling service HFApplicationProcess.createHFCoummnityAndSchool");
       return hfApplication.saveHFCoummnityAndSchool(applicationCategoryId, communityAndSchoolPage);
    }
 
@@ -221,6 +226,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public HFCommunityAndSchoolPage fetchHFCoummnityAndSchool(HFCommunityAndSchoolPageParam descriptionPageParam) {
+      LOGGER.info("Calling service HFApplicationProcess.fetchHFCoummnityAndSchool");
       return hfApplication.fetchHFCoummnityAndSchool(descriptionPageParam);
    }
 
@@ -228,6 +234,7 @@ public class HFApplicationProcess {
    @Path("background/details/{hfSeasonId}")
    @Produces("application/json")
    public HFBackgroundCheck getHFBackgroundDetails(@PathParam("hfSeasonId") String hfSeasonId) {
+      LOGGER.info("Calling service HFApplicationProcess.getHFBackgroundDetails");
       return hfApplication.getHFBackgroundDetails(hfSeasonId);
    }
 
@@ -235,6 +242,7 @@ public class HFApplicationProcess {
    @Path("progress/{hfSeasonId}")
    @Produces("application/json")
    public HFApplicationProgress getHFApplicationProgress(@PathParam("hfSeasonId") String hfSeasonId) {
+      LOGGER.info("Calling service HFApplicationProcess.getHFApplicationProgress");
       return hfApplication.getHFApplicationProgress(hfSeasonId);
    }
 
@@ -243,6 +251,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public Response submitApplication(HFSubmitApplication application) {
+      LOGGER.info("Calling service HFApplicationProcess.submitApplication");
       return hfApplication.submitApplication(application);
    }
 
@@ -251,6 +260,7 @@ public class HFApplicationProcess {
    @Consumes("application/json")
    @Produces("application/json")
    public WSDefaultResponse changeProfilePicture(ChangeHostFamilyProfilePicParam param) {
+      LOGGER.info("Calling service HFApplicationProcess.changeProfilePicture");
       return hfApplication.changeProfilePicture(param);
    }
 
@@ -258,6 +268,7 @@ public class HFApplicationProcess {
    @Path("airportList")
    @Produces("application/json")
    public HFAirportList hfAirportList() {
+      LOGGER.info("Calling service HFApplicationProcess.hfAirportList");
       return hfApplication.hfAirportList();
    }
 
@@ -265,6 +276,7 @@ public class HFApplicationProcess {
    @Path("removeHostFamilyAirport/{hfAirportId}")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAirport(@PathParam("hfAirportId") String hfAirportId) {
+      LOGGER.info("Calling service HFApplicationProcess.removeHostFamilyAirport");
       return hfApplication.removeHostFamilyAirport(Integer.valueOf(hfAirportId));
    }
 
@@ -272,6 +284,7 @@ public class HFApplicationProcess {
    @Path("removeHostFamilyPet/{hfPetId}")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyPet(@PathParam("hfPetId") String hfPetId) {
+      LOGGER.info("Calling service HFApplicationProcess.removeHostFamilyPet");
       return hfApplication.removeHostFamilyPet(Integer.parseInt(hfPetId));
    }
 
@@ -279,6 +292,7 @@ public class HFApplicationProcess {
    @Path("removeHostFamilyAdult/{hfAdultId}")
    @Produces("application/json")
    public WSDefaultResponse removeHostFamilyAdult(@PathParam("hfAdultId") String hfAdultId) {
+      LOGGER.info("Calling service HFApplicationProcess.removeHostFamilyAdult");
       return hfApplication.removeHostFamilyAdult(Integer.parseInt(hfAdultId));
    }
 
@@ -286,6 +300,7 @@ public class HFApplicationProcess {
    @Path("view/profile/{hfSeasonId}/{loginId}")
    @Produces("application/json")
    public HFProfile viewHFProfile(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
+      LOGGER.info("Calling service HFApplicationProcess.viewHFProfile");
       return hfApplication.viewHFProfile(Integer.parseInt(hfSeasonId), Integer.parseInt(loginId));
    }
 
@@ -293,6 +308,7 @@ public class HFApplicationProcess {
    @Path("getHFMembers/{seasonId}")
    @Produces("application/json")
    public HFFamilyMember getHFMembers(@PathParam("seasonId") Integer seasonId) {
+      LOGGER.info("Calling service HFApplicationProcess.getHFMembers");
       return hfApplication.getHFMembers(seasonId);
    }
 
@@ -300,6 +316,7 @@ public class HFApplicationProcess {
    @Path("getHFDetails/{hostfamilySeasonId}")
    @Produces("application/json")
    public HostFamilyMembers getHFDetails(@PathParam("hostfamilySeasonId") Integer hostfamilySeasonId) {
+      LOGGER.info("Calling service HFApplicationProcess.getHFDetails");
       return hfApplication.getHFDetails(hostfamilySeasonId);
    }
 
@@ -309,6 +326,7 @@ public class HFApplicationProcess {
    @Path("getSeasonList/{hostFamilyGoId}")
    @Produces("application/json")
    public HFSeasonList getSeasonList(@PathParam("hostFamilyGoId") String hostFamilyGoId) {
+      LOGGER.info("Calling service HFApplicationProcess.getSeasonList");
       return hfApplication.getSeasonList(Integer.valueOf(hostFamilyGoId));
    }
 
@@ -316,6 +334,7 @@ public class HFApplicationProcess {
    @Path("getPresentedParticipant/{hostFamilyGoId}/{category}")
    @Produces("application/json")
    public HFParticipantList getPresentedParticipant(@PathParam("hostFamilyGoId") String hostFamilyGoId, @PathParam("category") String category) {
+      LOGGER.info("Calling service HFApplicationProcess.getPresentedParticipant");
       return hfApplication.getParticipantsList(Integer.valueOf(hostFamilyGoId), category);
    }
 
@@ -323,6 +342,7 @@ public class HFApplicationProcess {
    @Path("getPlacedParticipant/{hostFamilyGoId}/{category}")
    @Produces("application/json")
    public HFParticipantList getPlacedParticipant(@PathParam("hostFamilyGoId") String hostFamilyGoId, @PathParam("category") String category) {
+      LOGGER.info("Calling service HFApplicationProcess.getPlacedParticipant");
       return hfApplication.getParticipantsList(Integer.valueOf(hostFamilyGoId), category);
    }
 
@@ -330,6 +350,7 @@ public class HFApplicationProcess {
    @Path("getParticipantHistory/{hostFamilyGoId}/{category}")
    @Produces("application/json")
    public HFParticipantList getParticipantHistory(@PathParam("hostFamilyGoId") String hostFamilyGoId, @PathParam("category") String category) {
+      LOGGER.info("Calling service HFApplicationProcess.getParticipantHistory");
       return hfApplication.getParticipantsList(Integer.valueOf(hostFamilyGoId), category);
    }
 
@@ -337,6 +358,7 @@ public class HFApplicationProcess {
    @Path("getParticipantDetail/{participantId}")
    @Produces("application/json")
    public HFParticipantDetail getParticipantDetail(@PathParam("participantId") String participantId) {
+      LOGGER.info("Calling service HFApplicationProcess.getParticipantDetail");
       return hfApplication.getParticipantDetail(Integer.valueOf(participantId));
    }
 
@@ -344,6 +366,7 @@ public class HFApplicationProcess {
    @Path("create/mandatory/photos/{hfSeasonId}/{loginId}")
    @Produces("application/json")
    public HFApplicationUploadPhotos hfCreateMandatoryPhotos(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
+      LOGGER.info("Calling service HFApplicationProcess.hfCreateMandatoryPhotos");
       return hfApplication.hfCreateMandatoryPhotos(Integer.valueOf(hfSeasonId), Integer.valueOf(loginId));
    }
 

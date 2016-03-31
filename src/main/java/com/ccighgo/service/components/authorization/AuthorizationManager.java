@@ -114,6 +114,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                messageUtil.getMessage(AuthConstants.LOGIN_FAILED)));
          LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_FAILED));
       }
+         
       return auth;
    }
 

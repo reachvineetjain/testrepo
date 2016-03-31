@@ -242,4 +242,16 @@ public class DateUtils {
       }
       return date;
    }
+
+   public static Date getDateFromString_bg_check(String dateOrderReceived) {
+      DateFormat format = new SimpleDateFormat(CCIConstants.MM_dd_yyy_T_H_M_S, Locale.US);
+      Date date = null;
+      if (dateOrderReceived != null && !dateOrderReceived.trim().isEmpty())
+         try {
+            date = format.parse(dateOrderReceived);
+         } catch (ParseException e) {
+            ExceptionUtil.logException(e, logger);
+         }
+      return date;
+   }
 }

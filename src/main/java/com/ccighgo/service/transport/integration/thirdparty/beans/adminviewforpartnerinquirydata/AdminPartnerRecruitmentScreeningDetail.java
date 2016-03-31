@@ -347,4 +347,5 @@ public class AdminPartnerRecruitmentScreeningDetail {
         this.acronym = value;
     }
 
+    
 }

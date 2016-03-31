@@ -60,7 +60,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
             LOGGER.info("noteId: " + note.getNoteId() + " noteValue: " + note.getNoteValue() + "_public: " + note.isPublic() + " createdOn: " + note.getCreatedOn() + " loginId: "
                   + note.getLoginId() + " topicId: " + note.getLoginId() + " partnerId: " + note.getPartnerId());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
@@ -90,8 +90,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
             wsDefaultResponse.setCreatedBy(noteCreator);
          }
 
-         wsDefaultResponse.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_CREATED.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_CREATED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -109,13 +109,13 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          if (deleteNote != null)
             LOGGER.info("noteId: " + deleteNote.getNoteId());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          partnerNoteRepository.delete(deleteNote.getNoteId());
-         responce.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_DELETED.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_DELETED.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -131,7 +131,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       try {
          LOGGER.info("partnerId: " + partnerId);
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       Topics topicsList = new Topics();
       try {
@@ -195,8 +195,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                topicsList.getTopics().add(tpc);
             }
          }
-         topicsList.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_VIEW.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         topicsList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_VIEW.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          topicsList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_VIEW_NOTE.getValue(),
@@ -212,11 +212,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          if (topic != null)
             LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic() + "goId: " + topic.getGoId() + "partnerNoteTopicId: "
                   + topic.getPartnerNoteTopicId() + "partnerNoteTopicName: " + topic.getPartnerNoteTopicName() + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
-                  + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit() + " meetingVisit: "
-                  + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee() + "wt: " + topic.isWT()
-                  + " createdBy: " + topic.getCreatedBy());
+                  + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit()
+                  + " meetingVisit: " + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee()
+                  + "wt: " + topic.isWT() + " createdBy: " + topic.getCreatedBy());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
@@ -259,8 +259,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          }
 
          partnerNoteTopicRepository.saveAndFlush(topicData);
-         responce.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_TOPIC_TAG.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_TOPIC_TAG.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
@@ -277,11 +277,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          if (topic != null)
             LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic() + "goId: " + topic.getGoId() + "partnerNoteTopicId: "
                   + topic.getPartnerNoteTopicId() + "partnerNoteTopicName: " + topic.getPartnerNoteTopicName() + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
-                  + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit() + " meetingVisit: "
-                  + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee() + "wt: " + topic.isWT()
-                  + " createdBy: " + topic.getCreatedBy());
+                  + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit()
+                  + " meetingVisit: " + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee()
+                  + "wt: " + topic.isWT() + " createdBy: " + topic.getCreatedBy());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
@@ -334,8 +334,8 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
          PartnerNoteTopic result = partnerNoteTopicRepository.saveAndFlush(topicData);
          responce.setTopicOfNotesId(result.getPartnerNoteTopicId());
-         responce.setStatus(
-               componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
