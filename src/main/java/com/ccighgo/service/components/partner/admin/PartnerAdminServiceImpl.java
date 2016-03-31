@@ -205,6 +205,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
+      logger.info("Go Id : " + goId);
       PartnerRecruitmentAdminLead pwt = new PartnerRecruitmentAdminLead();
       try {
          pwt.setGoId(goId);
@@ -212,7 +213,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          if (partnerAgentInquiry == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
-            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
             logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
             return pwt;
          }
@@ -314,14 +314,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return pwt;
    }
 
+   @Transactional
    @Override
    public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead pwt) {
       try {
+         if (pwt != null)
+            logger.info("updatePartnerInquiryLeadData :  GOID " + pwt.getGoId());
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(pwt.getGoId());
          if (partnerAgentInquiry == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATING__WOEKQUEUE_PARTNER_INQUIRY_LEAD.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE)));
-            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE));
             logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE));
             return pwt;
          }
@@ -483,6 +485,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int goId) {
+      logger.info("GOID : " + goId);
       PartnerRecruitmentAdmin pwt = new PartnerRecruitmentAdmin();
       try {
          pwt.setGoId(goId);
@@ -492,7 +495,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          if (partner == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL)));
-            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL));
             logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL));
             return pwt;
          }
@@ -669,6 +671,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueType getWorkQueueType(String roleType) {
+      logger.info("Role Type : " + roleType);
       AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
       try {
          List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByPartnerRole(roleType);
@@ -693,6 +696,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueCategory getWorkQueueCategory(int adminWorkQueueTypeId, int userId) {
+      logger.info("Admin WorkQueueTypeID : " + adminWorkQueueTypeId + "  UserId : " + userId);
       AdminPartnerWorkQueueCategory pwqc = new AdminPartnerWorkQueueCategory();
       try {
          List<AdminWorkQueueCategory> categories = adminWorkQueueCategoryRepository.findAllCategoriesByTypeId(adminWorkQueueTypeId);
@@ -734,6 +738,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType) {
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueSubmittedApplications pwqa = new AdminPartnerWorkQueueSubmittedApplications();
       try {
          // Admin work queue partner Search
@@ -789,6 +794,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(int typeId, int categoryId, int staffUserId, String roleType) {
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueDeadlineRequests adr = new AdminPartnerWorkQueueDeadlineRequests();
       try {
 
@@ -853,7 +859,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(int typeId, int categoryId, int staffUserId, String roleType) {
-
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueRequestChangeInAllocation rca = new AdminPartnerWorkQueueRequestChangeInAllocation();
       try {
          @SuppressWarnings("unchecked")
@@ -917,7 +923,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Override
    @Transactional
    public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(int typeId, int categoryId, int staffUserId, String roleType) {
-
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueNotesReview nr = new AdminPartnerWorkQueueNotesReview();
       try {
          @SuppressWarnings("unchecked")
@@ -973,6 +979,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String newFollowUpDate) {
+      logger.info("GoId : " + goId + " FollowUpdate : " + newFollowUpDate);
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
@@ -991,6 +998,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus) {
+      logger.info("GOID :" + goId + "  NewStatus : " + newStatus);
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(goId);

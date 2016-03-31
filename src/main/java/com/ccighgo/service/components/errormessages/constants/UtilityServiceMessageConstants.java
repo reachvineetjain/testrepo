@@ -26,5 +26,7 @@ public class UtilityServiceMessageConstants {
    public static final String RESET_PASSWORD_LINK_EXPIRED = "error.reset.password.link.expired";
    public static final String FAILED_GET_PROGRAMS_OPTIONS = "error.get.program.options";
    public static final String FAILED_GET_DOCUMENT_TYPES = "error.get.document.types";
+   public static final String ERROR_INSERTING_BACKGROUND_DATA = "error.inserting.background.data";
+   public static final String INSERTING_BACKGROUND_DATA_SUCCCESSFULLY = "info.inserting.backgroundcheck.data";
 
 }
