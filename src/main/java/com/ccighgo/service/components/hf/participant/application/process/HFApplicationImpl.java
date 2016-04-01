@@ -1044,7 +1044,7 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setNearestCityPopulation(communityAndSchoolPage.getCommunity().getPopulationOfNearestCity());
          hfd.setDistanceFromCity(communityAndSchoolPage.getCommunity().getDistanceFromCity() + "");
          hfd.setUniquenessAboutCommunity(communityAndSchoolPage.getCommunity().getUniqueAboutYourCommunity());
-         hfd.setPlacesOfInterest(communityAndSchoolPage.getCommunity().getPopulationOfNearestCity());
+         hfd.setPlacesOfInterest(communityAndSchoolPage.getCommunity().getPlacesAndEventsMightInterestTheStudent());
          hfd.setAreasToAvoid(communityAndSchoolPage.getCommunity().getAreasToBeAvoidedInTheNeighbourhood());
          hfd.setVolunteeringOpportunitiesCommunity(communityAndSchoolPage.getCommunity().getVolunteeringOpportunitiesInTheCommunity());
          hfd.setSchoolTravelMethod(communityAndSchoolPage.getSchoolLife().getStudentWillGotoSchoolBy());
