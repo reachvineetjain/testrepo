@@ -288,4 +288,6 @@ public class CCIConstants {
    public static final int FEMALE = 2;
    public static final int GENDER_UNDEFINED = 3;
 
+   public static final String MM_dd_yyy_T_H_M_S = "yyyy-MM-dd'T'HH:mm:ss";
+
 }

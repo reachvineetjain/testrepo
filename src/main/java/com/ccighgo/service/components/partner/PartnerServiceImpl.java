@@ -119,6 +119,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
+      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerDashboard partnerDashboard = new PartnerDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -275,8 +276,10 @@ public class PartnerServiceImpl implements PartnerService {
                   partnerDashboard.getUserProgramsAndPermissions().addAll(userProgramsAndPermissions);
 
                } else {
-                  // no programs found for this partner
+                  LOGGER.info("NO Partner Seasons Exist! ");
                }
+               partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_DASHBOARD.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                // no partner found with the goid provided
                partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
@@ -284,7 +287,6 @@ public class PartnerServiceImpl implements PartnerService {
                LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
             }
          } catch (CcighgoException e) {
-            // error getting partner details
             partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                   messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
             LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
@@ -295,6 +297,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerJ1HSDashboard getJ1HSDashboard(String partnerGoId) {
+      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerJ1HSDashboard j1hsDashboard = new PartnerJ1HSDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -486,6 +489,8 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                j1hsDashboard.getPartnerJ1HSPrograms().addAll(partnerJ1HSProgramsList);
+               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
@@ -503,6 +508,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerF1Dashboard getF1Dashboard(String partnerGoId) {
+      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerF1Dashboard f1Dashboard = new PartnerF1Dashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -671,6 +677,8 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                f1Dashboard.getPartnerF1Programs().addAll(partnerF1ProgramsList);
+               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
@@ -688,6 +696,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerIHPDashboard getIHPDashboard(String partnerGoId) {
+      LOGGER.info("partner goId : " + partnerGoId);
       PartnerIHPDashboard ihpDashboard = new PartnerIHPDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -815,6 +824,8 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                   ihpDashboard.getPartnerIHPPrograms().addAll(partnerIHPProgramsList);
                }
+               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
@@ -830,8 +841,10 @@ public class PartnerServiceImpl implements PartnerService {
       return ihpDashboard;
    }
 
+   // TODO
    @Override
    public PartnerCAPDashboard getWnTDashboard(String partnerGoId) {
+      LOGGER.info("partner goId : " + partnerGoId);
       PartnerCAPDashboard wntDashboard = new PartnerCAPDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          wntDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -844,6 +857,7 @@ public class PartnerServiceImpl implements PartnerService {
       return wntDashboard;
    }
 
+   // TODO
    @Override
    public PartnerWnTDashboard getCAPDashboard(String partnerGoId) {
       PartnerWnTDashboard capDashboard = new PartnerWnTDashboard();
@@ -860,6 +874,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerRecruitmentLead getPartnerInquiryLeadData(int goId) {
+      LOGGER.info("GOID: " + goId);
       PartnerRecruitmentLead pwt = new PartnerRecruitmentLead();
       try {
          pwt.setGoId(goId);

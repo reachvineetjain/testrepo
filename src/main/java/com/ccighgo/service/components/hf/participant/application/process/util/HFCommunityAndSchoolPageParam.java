@@ -6,6 +6,7 @@ public class HFCommunityAndSchoolPageParam {
    private int hostFamilyId;
    private int seasonId;
    private int deptProgramId;
+   private int applicationCategoryId;
 
    public int getLoginId() {
       return loginId;
@@ -37,6 +38,14 @@ public class HFCommunityAndSchoolPageParam {
 
    public void setDeptProgramId(int deptProgramId) {
       this.deptProgramId = deptProgramId;
+   }
+
+   public int getApplicationCategoryId() {
+      return applicationCategoryId;
+   }
+
+   public void setApplicationCategoryId(int applicationCategoryId) {
+      this.applicationCategoryId = applicationCategoryId;
    }
 
 }

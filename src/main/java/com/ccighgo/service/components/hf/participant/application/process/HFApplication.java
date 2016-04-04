@@ -93,18 +93,22 @@ public interface HFApplication {
    /**
     * persist family basic data
     * 
-    * @param hfApplicationFamilyDetails
-    * @return
-    */
-   public HFApplicationFamilyDetails saveFamilyBasicData(HFApplicationFamilyDetails hfApplicationFamilyDetails);
-
-   /**
-    * persist family details including life style
+    * @param applicationCategoryId
     * 
     * @param hfApplicationFamilyDetails
     * @return
     */
-   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
+   public HFApplicationFamilyDetails saveFamilyBasicData(String applicationCategoryId, HFApplicationFamilyDetails hfApplicationFamilyDetails);
+
+   /**
+    * persist family details including life style
+    * 
+    * @param applicationCategoryId
+    * 
+    * @param hfApplicationFamilyDetails
+    * @return
+    */
+   public HFApplicationFamilyLifeStyle saveFamilyLifeStyleData(String applicationCategoryId, HFApplicationFamilyLifeStyle hfApplicationFamilyDetails);
 
    /**
     * fetch family style data
@@ -122,10 +126,11 @@ public interface HFApplication {
    public HFApplicationFamilyDetails fetchBasicData(FamilyBasicsPageParam familyBasicsPageParam);
 
    /**
+    * @param applicationCategoryId
     * @param descriptionPage
     * @return
     */
-   public HFHomeDescriptionPage saveHFHouseDescription(HFHomeDescriptionPage descriptionPage);
+   public HFHomeDescriptionPage saveHFHouseDescription(String applicationCategoryId, HFHomeDescriptionPage descriptionPage);
 
    /**
     * @param descriptionPageParam
@@ -134,10 +139,11 @@ public interface HFApplication {
    public HFHomeDescriptionPage fetchHFHouseDescription(HFHomeDescriptionPageParam descriptionPageParam);
 
    /**
+    * @param applicationCategoryId
     * @param communityAndSchoolPage
     * @return
     */
-   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(HFCommunityAndSchoolPage communityAndSchoolPage);
+   public HFCommunityAndSchoolPage saveHFCoummnityAndSchool(String applicationCategoryId, HFCommunityAndSchoolPage communityAndSchoolPage);
 
    /**
     * @param descriptionPageParam

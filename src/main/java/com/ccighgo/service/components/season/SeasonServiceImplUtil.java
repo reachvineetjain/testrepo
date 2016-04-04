@@ -6,6 +6,9 @@ package com.ccighgo.service.components.season;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,6 @@ import com.ccighgo.db.entities.SeasonDepartmentDocument;
 import com.ccighgo.db.entities.SeasonDepartmentNote;
 import com.ccighgo.db.entities.SeasonF1Detail;
 import com.ccighgo.db.entities.SeasonGHTConfiguration;
-import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.db.entities.SeasonHSADetail;
 import com.ccighgo.db.entities.SeasonHSPAllocation;
 import com.ccighgo.db.entities.SeasonHSPConfiguration;
@@ -81,6 +83,8 @@ import com.ccighgo.jpa.repositories.SeasonWPConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSpringRepository;
 import com.ccighgo.jpa.repositories.SeasonWTSummerRepository;
 import com.ccighgo.jpa.repositories.SeasonWTWinterRepository;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection1Base;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection2Dates;
 import com.ccighgo.service.transport.season.beans.seasonghtdetails.GHTSection3Notes;
@@ -136,6 +140,7 @@ import com.ccighgo.utils.ValidationUtils;
 public class SeasonServiceImplUtil {
 
    private Logger logger = LoggerFactory.getLogger(SeasonServiceImplUtil.class);
+   private static final String SP_REGION_FS_ROLLOVER = "CALL SPRegionAndFSRollover(?)";
 
    @Autowired SeasonStatusRepository seasonStatusRepository;
    @Autowired DepartmentRepository departmentRepository;
@@ -172,6 +177,8 @@ public class SeasonServiceImplUtil {
    @Autowired SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
    @Autowired SeasonIHPGeographyConfigurationRepository seasonIHPGeographyConfigurationRepository;
    @Autowired SeasonGeographyConfigurationRepository seasonGeographyConfigurationRepository;
+   @Autowired MessageUtils messageUtil;
+   @Autowired EntityManager entityManager;
 
    /**
     * @param seasonBean
@@ -826,8 +833,8 @@ public class SeasonServiceImplUtil {
             allF1Details.setGreenHeartMargin(seasonHSPF1Details.getAccounting().getGreenHeartMargin());
          try {
             if (seasonHSPF1Details.getJanuaryStart2NdSemesterDetails() != null) {
-               allF1Details.setActiveFullYearJanProgram(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().isActivateFullYearProgram() ? CCIConstants.ACTIVE
-                     : CCIConstants.INACTIVE);
+               allF1Details
+                     .setActiveFullYearJanProgram(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().isActivateFullYearProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                allF1Details.setShowSecSemToNewHF(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().isShow2NdSemestertoNewHF() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                allF1Details.setSecondSemAppDeadlineDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getApplicationDeadlineDate()));
                allF1Details.setSecondSemEarliestBirthDate(DateUtils.getDateFromString(seasonHSPF1Details.getJanuaryStart2NdSemesterDetails().getEarliestBirthDate()));
@@ -872,8 +879,8 @@ public class SeasonServiceImplUtil {
          try {
             if (seasonHSPF1Details.getFieldSettings() != null) {
                allF1Details.setHfInquiryDate(DateUtils.getDateFromString(seasonHSPF1Details.getFieldSettings().getAddOrStartHFInquiriesDate()));
-               allF1Details.setAllowFieldStaffToStartRenewalProcess(seasonHSPF1Details.getFieldSettings().isAllowFSToStartRenewalProcess() ? CCIConstants.ACTIVE
-                     : CCIConstants.INACTIVE);
+               allF1Details
+                     .setAllowFieldStaffToStartRenewalProcess(seasonHSPF1Details.getFieldSettings().isAllowFSToStartRenewalProcess() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                // allF1Details.setLcPaymentScheduleId(seasonHSPF1Details.getFieldSettings().getDefaultLcPaymentSchedule());
                // allF1Details.setFsAgreementId(seasonHSPF1Details.getFieldSettings().getFsAgreement());
                allF1Details.setHfReferences(seasonHSPF1Details.getFieldSettings().getHfReferencesNo());
@@ -1003,7 +1010,8 @@ public class SeasonServiceImplUtil {
       return hspf1JanuaryStartFullYearDetail;
    }
 
-   public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(SeasonF1Detail allF1Details, HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails) {
+   public HSPF1AugustStart1StSemesterDetails updateF1AugStart1StSemesterDetails(SeasonF1Detail allF1Details,
+         HSPF1AugustStart1StSemesterDetails hspf1AugustStart1StSemesterDetails) {
       try {
          allF1Details.setFirstSemAppDeadlineDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getApplicationDeadlineDate()));
          allF1Details.setFirstSemEarliestBirthDate(DateUtils.getDateFromString(hspf1AugustStart1StSemesterDetails.getEarliestBirthDate()));
@@ -1077,7 +1085,7 @@ public class SeasonServiceImplUtil {
             createGHTTeachAbroad(seasonEntity, seasonBean);
          } else if (departmentName.equals(CCIConstants.DEPT_GREEN_HEART_TRANSFORMS)) {
          } else if (departmentName.equals(CCIConstants.DEPT_HIGH_SCHOOL_PROGRAMS)) {
-            createHSPRegionManagement(seasonEntity, seasonBean.getLoginId());
+            createHSPRegionManagement(seasonEntity.getSeasonId());
             createHSPF1Season(seasonEntity, seasonBean);
             createHSPJ1HSSeasonProgram(seasonBean, seasonEntity);
             createHSPIHPSeasonProgram(seasonBean, seasonEntity);
@@ -1093,31 +1101,17 @@ public class SeasonServiceImplUtil {
       }
    }
 
-   private void createHSPRegionManagement(Season seasonEntity, int loginId) {
-      Integer maxSeasonId = seasonGeographyConfigurationRepository.findMaxSeasonId();
-      if (maxSeasonId > 0) {
-         List<SeasonGeographyConfiguration> previousRecordsToCopy = seasonGeographyConfigurationRepository.findPreviousRecordsByMaxSeeasonId(maxSeasonId);
-         if (previousRecordsToCopy != null) {
-            List<SeasonGeographyConfiguration> newList = new ArrayList<SeasonGeographyConfiguration>();
-            for (SeasonGeographyConfiguration config : previousRecordsToCopy) {
-               SeasonGeographyConfiguration newConfig = new SeasonGeographyConfiguration();
-               if (config.getRegion() != null) {
-                  newConfig.setRegion(config.getRegion());
-               }
-               if (config.getLookupUsstate() != null) {
-                  newConfig.setLookupUsstate(config.getLookupUsstate());
-               }
-               newConfig.setSuperRegion(config.getSuperRegion());
-               newConfig.setCreatedBy(loginId);
-               newConfig.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               newConfig.setModifiedBy(loginId);
-               newConfig.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-               newConfig.setSeason(seasonEntity);
-               newList.add(newConfig);
-            }
-            seasonGeographyConfigurationRepository.save(newList);
-            seasonGeographyConfigurationRepository.flush();
-         }
+   private void createHSPRegionManagement(Integer newSeasonId) {
+      if (newSeasonId == 0 || newSeasonId < 0) {
+         throw new CcighgoException(messageUtil.getMessage(HostFamilyMessageConstants.INVALID_HF_GOID));
+      }
+      try {
+         logger.info("Calling the procedure to roll over the Region and Field Staff data");
+         Query seasonRegFsRollOver = entityManager.createNativeQuery(SP_REGION_FS_ROLLOVER);
+         seasonRegFsRollOver.setParameter(1, newSeasonId);
+         seasonRegFsRollOver.executeUpdate();
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
       }
    }
 
@@ -1565,7 +1559,8 @@ public class SeasonServiceImplUtil {
          j1hsFieldSettings.setFsHoldDayLength(String.valueOf(seasonJ1Detail.getFieldStaffHoldLength()));
          j1hsFieldSettings.setHoldExpirationWarning(String.valueOf(seasonJ1Detail.getHoursBeforeHoldExpirationWarning()));
          // j1hsFieldSettings.setDefaultLCPaymentSchedule(String.valueOf(seasonJ1Detail.getLcPaymentScheduleId()));
-         // j1hsFieldSettings.setFsAgreement("//TODO fs agreement is missing only id is present leaving it as it is");
+         // j1hsFieldSettings.setFsAgreement("//TODO fs agreement is missing
+         // only id is present leaving it as it is");
          j1hsFieldSettings.setHfReferences(String.valueOf(seasonJ1Detail.getHfReferences()));
          j1hsFieldSettings.setAddStartHFInquiriesDate(DateUtils.getMMddyyDate(seasonJ1Detail.getHfInquiryDate()));
          j1hsFieldSettings.setShowWelcomeFamilyModal(seasonJ1Detail.getShowWelcomeFamily() == CCIConstants.ACTIVE ? true : false);
@@ -2456,9 +2451,8 @@ public class SeasonServiceImplUtil {
 
          seasonWPDetails.setWpSectionOne(wpSectionOne);
          seasonWPDetails.getWpNotes().addAll(getWPWinterNotes(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId()));
-         seasonWPDetails.getWpDocuments().addAll(
-               getWPDocs(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId(), CCIConstants.WP_WT_WINTER,
-                     CCIConstants.WP_WT_WINTER_ID));
+         seasonWPDetails.getWpDocuments().addAll(getWPDocs(seasonWnTWinterDetail.getSeason().getSeasonId(), seasonWnTWinterDetail.getSeasonWnTWinterDetailsId(),
+               CCIConstants.WP_WT_WINTER, CCIConstants.WP_WT_WINTER_ID));
          seasonWPDetails.setWpProgramAllocations(getWPWinterAllocationDetails(seasonProgramId));
          // program allocations not complete
 
@@ -2735,11 +2729,11 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setSeasonProgramId(seasonWnTSummerDetail.getSeasonWnTSummerDetailsId());
          wpSectionOne.setStartDate(seasonWnTSummerDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getStartDate()) : null);
          wpSectionOne.setEndDate(seasonWnTSummerDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getEndDate()) : null);
-         wpSectionOne.setApplicationDeadlineDate(seasonWnTSummerDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail
-               .getApplicationDeadlineDate()) : null);
+         wpSectionOne.setApplicationDeadlineDate(
+               seasonWnTSummerDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSummerDetail.getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSummerDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
-         wpSectionOne.setMaxPendingJobAppls((seasonWnTSummerDetail.getMaxPendingJobApps() != null && seasonWnTSummerDetail.getMaxPendingJobApps() > 0) ? String
-               .valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : "0");
+         wpSectionOne.setMaxPendingJobAppls((seasonWnTSummerDetail.getMaxPendingJobApps() != null && seasonWnTSummerDetail.getMaxPendingJobApps() > 0)
+               ? String.valueOf(seasonWnTSummerDetail.getMaxPendingJobApps()) : "0");
          return wpSectionOne;
       } catch (Exception ex) {
          ExceptionUtil.logException(ex, logger);
@@ -2773,8 +2767,8 @@ public class SeasonServiceImplUtil {
       try {
          seasonWnTSummerDetail.setStartDate(wpSectionOne.getStartDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getStartDate()) : null);
          seasonWnTSummerDetail.setEndDate(wpSectionOne.getEndDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getEndDate()) : null);
-         seasonWnTSummerDetail.setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne
-               .getApplicationDeadlineDate()) : null);
+         seasonWnTSummerDetail
+               .setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getApplicationDeadlineDate()) : null);
          seasonWnTSummerDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          seasonWnTSummerDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
       } catch (Exception ex) {
@@ -2817,8 +2811,8 @@ public class SeasonServiceImplUtil {
          wpSectionOne.setSeasonProgramId(seasonWnTSpringDetail.getSeasonWnTSpringDetailsId());
          wpSectionOne.setStartDate(seasonWnTSpringDetail.getStartDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getStartDate()) : null);
          wpSectionOne.setEndDate(seasonWnTSpringDetail.getEndDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getEndDate()) : null);
-         wpSectionOne.setApplicationDeadlineDate(seasonWnTSpringDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail
-               .getApplicationDeadlineDate()) : null);
+         wpSectionOne.setApplicationDeadlineDate(
+               seasonWnTSpringDetail.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDate(seasonWnTSpringDetail.getApplicationDeadlineDate()) : null);
          wpSectionOne.setIsJobBoardOpen(seasonWnTSpringDetail.getIsJobBoardOpen() == CCIConstants.ACTIVE ? true : false);
          wpSectionOne.setMaxPendingJobAppls(seasonWnTSpringDetail.getMaxPendingJobApps() > 0 ? String.valueOf(seasonWnTSpringDetail.getMaxPendingJobApps()) : "0");
       } catch (Exception ex) {
@@ -2853,8 +2847,8 @@ public class SeasonServiceImplUtil {
       try {
          seasonWnTSpringDetail.setStartDate(wpSectionOne.getStartDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getStartDate()) : null);
          seasonWnTSpringDetail.setEndDate(wpSectionOne.getEndDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getEndDate()) : null);
-         seasonWnTSpringDetail.setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne
-               .getApplicationDeadlineDate()) : null);
+         seasonWnTSpringDetail
+               .setApplicationDeadlineDate(wpSectionOne.getApplicationDeadlineDate() != null ? DateUtils.getMMddyyDateFromString(wpSectionOne.getApplicationDeadlineDate()) : null);
          seasonWnTSpringDetail.setIsJobBoardOpen(wpSectionOne.isIsJobBoardOpen() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          seasonWnTSpringDetail.setMaxPendingJobApps(wpSectionOne.getMaxPendingJobAppls() != null ? Integer.valueOf(wpSectionOne.getMaxPendingJobAppls()) : null);
       } catch (Exception ex) {
