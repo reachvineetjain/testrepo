@@ -1162,7 +1162,6 @@ public class HFApplicationImpl implements HFApplication {
       return hfbs;
    }
 
-   @Transactional
    @Override
    public HFApplicationFamilyDetails saveFamilyBasicData(String applicationCategoryId, HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       HFApplicationFamilyDetails hp = new HFApplicationFamilyDetails();
