@@ -3513,7 +3513,7 @@ public class SeasonServiceImplUtil {
          int seasonId = allF1Details.getSeason().getSeasonId();
          List<HSPF1SeasonHspF1Notes> hspF1Notes = null;
          List<SeasonProgramNote> seasonProgramNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_F1_ID);
-         if (seasonProgramNotes != null && !seasonProgramNotes.isEmpty()) {
+         if (seasonProgramNotes != null ) {
             hspF1Notes = new ArrayList<HSPF1SeasonHspF1Notes>();
             for (SeasonProgramNote seasonProgramNote : seasonProgramNotes) {
                HSPF1SeasonHspF1Notes hspf1SeasonHspF1Note = new HSPF1SeasonHspF1Notes();
