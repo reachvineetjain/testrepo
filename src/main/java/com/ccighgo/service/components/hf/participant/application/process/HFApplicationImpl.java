@@ -1235,6 +1235,7 @@ public class HFApplicationImpl implements HFApplication {
             hfm.setEmployer1(member.getEmployer());
             hfm.setJobTitle1(member.getJobTitle());
             hfm.setContactName1(member.getContactName());
+            hfm.setRelationship(member.getRelationship());
             hfm.setPhone1(member.getJobPhone());
             if (member.isHasAnotherJob()) {
                hfm.setHaveAnotherJob(CCIConstants.TRUE_BYTE);
