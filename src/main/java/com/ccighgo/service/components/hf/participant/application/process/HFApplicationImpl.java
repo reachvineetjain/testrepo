@@ -711,6 +711,7 @@ public class HFApplicationImpl implements HFApplication {
                   photo.setFilePath(String.valueOf(obj[0]));
                   photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
                   photo.setTypeId(CCIConstants.ACTIVE);
+                  photo.setDescription(String.valueOf(obj[30]));
                   hfbs.setPhoto(photo);
                   singleHost |= Boolean.valueOf(String.valueOf(obj[1]));
                   adult.setRelationship(String.valueOf(obj[2]));
@@ -1197,9 +1198,7 @@ public class HFApplicationImpl implements HFApplication {
                hfPhoto = new HostFamilyPhoto();
             hfPhoto.setHostFamilySeason(season);
             hfPhoto.setHostFamilyPhotosType(hostFamilyPhotosTypeRepository.findOne(hfApplicationFamilyDetails.getPhoto().getTypeId()));
-            hfPhoto.setFileName(hfApplicationFamilyDetails.getPhoto().getFileName());
             hfPhoto.setFilePath(hfApplicationFamilyDetails.getPhoto().getFilePath());
-            hfPhoto.setPhotoName(hfApplicationFamilyDetails.getPhoto().getFileName());
             hfPhoto.setDescription(hfApplicationFamilyDetails.getPhoto().getDescription());
             hfPhoto.setIsOptional(CCIConstants.INACTIVE);
             hfPhoto.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
