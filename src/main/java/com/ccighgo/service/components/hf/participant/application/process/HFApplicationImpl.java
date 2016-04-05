@@ -1496,7 +1496,7 @@ public class HFApplicationImpl implements HFApplication {
          if (hostFamilyReferences.getSeasonId() == 0 || hostFamilyReferences.getSeasonId() < 0) {
             throw new CcighgoException("host family season is required");
          }
-         if (hfReferences.getReferences() == null) {
+         if (hostFamilyReferences.getReferences() == null) {
             throw new CcighgoException("cannot create record with empty objects");
          }
          if (hostFamilyReferences.getFieldsFilled() == 0 || hostFamilyReferences.getFieldsFilled() < 0) {
@@ -1506,7 +1506,7 @@ public class HFApplicationImpl implements HFApplication {
                Integer.valueOf(applicationCategoryId));
          hostFamilySeasonCategory.setFilledMandatoryFields(hostFamilyReferences.getFieldsFilled());
          hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
-         if (hfReferences.getReferences() == null) {
+         if (hostFamilyReferences.getReferences() == null) {
             // if null create empty records
             HostFamilyReference hRef1 = new HostFamilyReference();
             hRef1.setActive(CCIConstants.ACTIVE);
@@ -1668,23 +1668,27 @@ public class HFApplicationImpl implements HFApplication {
             hfReferences.setSecondReferenceRelatedToFirst(hfr.getSecondReferenceRelationtoFirst().equals(CCIConstants.ACTIVE) ? true : false);
             references.add(r);
          }
-         HostFamilyGeneralQuestion question = hostFamilyGeneralQuestionRepository.getBySeasonId(Integer.valueOf(hfSeasonId));
+         List<HostFamilyGeneralQuestion> questionList = hostFamilyGeneralQuestionRepository.getListBySeasonId(Integer.valueOf(hfSeasonId));
          HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(Integer.valueOf(hfSeasonId),
                Integer.valueOf(applicationCategoryId));
-         if (question != null) {
-            hfReferences.setGoId(question.getHostFamilySeason().getHostFamily().getHostFamilyGoId());
-            hfReferences.setSeasonId(question.getHostFamilySeason().getSeason().getSeasonId());
-            hfReferences.setHostFamilyGenQuestionId(question.getHostFamilyGeneralQuestionsId());
-            hfReferences.getReferences().addAll(references);
-            hfReferences.setPreviouslyHosted(question.getPreviousHostingWithCCI().equals(CCIConstants.ACTIVE) ? true : false);
-            hfReferences.setInternet(question.getInternet() != null ? question.getInternet() : CCIConstants.EMPTY);
-            hfReferences.setOtherWebsites(question.getInternetOthers() != null ? question.getInternetOthers() : CCIConstants.EMPTY);
-            hfReferences.setCommunity(question.getCommunity() != null ? question.getCommunity() : CCIConstants.EMPTY);
-            hfReferences.setEvent(question.getCommunityEvent() != null ? question.getCommunityEvent() : CCIConstants.EMPTY);
-            hfReferences.setMagazine(question.getCommunityMagazine() != null ? question.getCommunityMagazine() : CCIConstants.EMPTY);
-            hfReferences.setOtherCommunity(question.getCommunityOthers() != null ? question.getCommunityOthers() : CCIConstants.EMPTY);
-            hfReferences
-                  .setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
+         if (questionList != null) {
+            for (HostFamilyGeneralQuestion question : questionList) {
+               if (question.getHostFamilySeason().getHostFamilySeasonId().equals(Integer.valueOf(hfSeasonId))) {
+                  hfReferences.setGoId(question.getHostFamilySeason().getHostFamily().getHostFamilyGoId());
+                  hfReferences.setSeasonId(question.getHostFamilySeason().getSeason().getSeasonId());
+                  hfReferences.setHostFamilyGenQuestionId(question.getHostFamilyGeneralQuestionsId());
+                  hfReferences.getReferences().addAll(references);
+                  hfReferences.setPreviouslyHosted(question.getPreviousHostingWithCCI().equals(CCIConstants.ACTIVE) ? true : false);
+                  hfReferences.setInternet(question.getInternet() != null ? question.getInternet() : CCIConstants.EMPTY);
+                  hfReferences.setOtherWebsites(question.getInternetOthers() != null ? question.getInternetOthers() : CCIConstants.EMPTY);
+                  hfReferences.setCommunity(question.getCommunity() != null ? question.getCommunity() : CCIConstants.EMPTY);
+                  hfReferences.setEvent(question.getCommunityEvent() != null ? question.getCommunityEvent() : CCIConstants.EMPTY);
+                  hfReferences.setMagazine(question.getCommunityMagazine() != null ? question.getCommunityMagazine() : CCIConstants.EMPTY);
+                  hfReferences.setOtherCommunity(question.getCommunityOthers() != null ? question.getCommunityOthers() : CCIConstants.EMPTY);
+                  hfReferences.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(),
+                        hostFamilySeasonCategory.getFilledMandatoryFields()));
+               }
+            }
          } else {
             hfReferences.setGoId(0);
             hfReferences.setSeasonId(0);
