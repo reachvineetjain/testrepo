@@ -195,7 +195,7 @@ public class HFApplicationImpl implements HFApplication {
             throw new CcighgoException("number of fields filled is mandatory to create the record");
          }
          HostFamilyHome hfHomeExists = hostFamilyHomeRepository.getHFHomebyIdAndSeasonId(whyHost.getHostfamilySeasonId());
-         //an unnecessary check because we are super smart
+         // an unnecessary check because we are super smart
          if (hfHomeExists != null) {
             throw new CcighgoException("Record(s) already exist with specified season");
          } else {
@@ -1235,6 +1235,7 @@ public class HFApplicationImpl implements HFApplication {
             hfm.setEmployer1(member.getEmployer());
             hfm.setJobTitle1(member.getJobTitle());
             hfm.setContactName1(member.getContactName());
+            hfm.setRelationship(member.getRelationship());
             hfm.setPhone1(member.getJobPhone());
             if (member.isHasAnotherJob()) {
                hfm.setHaveAnotherJob(CCIConstants.TRUE_BYTE);
