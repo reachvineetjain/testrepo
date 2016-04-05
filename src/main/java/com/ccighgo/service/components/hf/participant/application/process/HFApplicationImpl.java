@@ -195,7 +195,7 @@ public class HFApplicationImpl implements HFApplication {
             throw new CcighgoException("number of fields filled is mandatory to create the record");
          }
          HostFamilyHome hfHomeExists = hostFamilyHomeRepository.getHFHomebyIdAndSeasonId(whyHost.getHostfamilySeasonId());
-         //an unnecessary check because we are super smart
+         // an unnecessary check because we are super smart
          if (hfHomeExists != null) {
             throw new CcighgoException("Record(s) already exist with specified season");
          } else {
@@ -709,6 +709,9 @@ public class HFApplicationImpl implements HFApplication {
                   HFAdultDetails adult = new HFAdultDetails();
                   com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                   photo.setFilePath(String.valueOf(obj[0]));
+                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
+                  photo.setTypeId(CCIConstants.ACTIVE);
+                  photo.setDescription(String.valueOf(obj[30]));
                   hfbs.setPhoto(photo);
                   singleHost |= Boolean.valueOf(String.valueOf(obj[1]));
                   adult.setRelationship(String.valueOf(obj[2]));
@@ -739,7 +742,6 @@ public class HFApplicationImpl implements HFApplication {
                         adult.setOtherJobPhone(String.valueOf(obj[24]));
                      }
                   }
-                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
                   adult.setHostfamilyMemberId(Integer.valueOf(String.valueOf(obj[26])));
                   hfbs.getAdults().add(adult);
                } catch (Exception e) {
@@ -1196,9 +1198,7 @@ public class HFApplicationImpl implements HFApplication {
                hfPhoto = new HostFamilyPhoto();
             hfPhoto.setHostFamilySeason(season);
             hfPhoto.setHostFamilyPhotosType(hostFamilyPhotosTypeRepository.findOne(hfApplicationFamilyDetails.getPhoto().getTypeId()));
-            hfPhoto.setFileName(hfApplicationFamilyDetails.getPhoto().getFileName());
             hfPhoto.setFilePath(hfApplicationFamilyDetails.getPhoto().getFilePath());
-            hfPhoto.setPhotoName(hfApplicationFamilyDetails.getPhoto().getFileName());
             hfPhoto.setDescription(hfApplicationFamilyDetails.getPhoto().getDescription());
             hfPhoto.setIsOptional(CCIConstants.INACTIVE);
             hfPhoto.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
