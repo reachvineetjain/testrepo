@@ -1235,6 +1235,7 @@ public class HFApplicationImpl implements HFApplication {
             hfm.setEmployer1(member.getEmployer());
             hfm.setJobTitle1(member.getJobTitle());
             hfm.setContactName1(member.getContactName());
+            hfm.setRelationship(member.getRelationship());
             hfm.setPhone1(member.getJobPhone());
             if (member.isHasAnotherJob()) {
                hfm.setHaveAnotherJob(CCIConstants.TRUE_BYTE);
@@ -1525,7 +1526,7 @@ public class HFApplicationImpl implements HFApplication {
             hRef2.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             hostFamilyReferenceRepository.saveAndFlush(hRef2);
          } else {
-            for (Reference ref : hfReferences.getReferences()) {
+            for (Reference ref : hostFamilyReferences.getReferences()) {
                HostFamilyReference hRef = new HostFamilyReference();
                hRef.setActive(CCIConstants.ACTIVE);
                hRef.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
@@ -1546,16 +1547,19 @@ public class HFApplicationImpl implements HFApplication {
                hostFamilyReferenceRepository.saveAndFlush(hRef);
             }
          }
-         HostFamilyGeneralQuestion questions = new HostFamilyGeneralQuestion();
-         questions.setPreviousHostingWithCCI(hostFamilyReferences.isPreviouslyHosted() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         questions.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
-         questions.setInternet(hostFamilyReferences.getInternet());
-         questions.setInternetOthers(hostFamilyReferences.getOtherWebsites());
-         questions.setCommunity(hostFamilyReferences.getCommunity());
-         questions.setCommunityEvent(hostFamilyReferences.getEvent());
-         questions.setCommunityMagazine(hostFamilyReferences.getMagazine());
-         questions.setCommunityOthers(hostFamilyReferences.getOtherCommunity());
-         hostFamilyGeneralQuestionRepository.saveAndFlush(questions);
+         HostFamilyGeneralQuestion exists = hostFamilyGeneralQuestionRepository.getBySeasonId(hostFamilyReferences.getSeasonId());
+         if(exists==null){
+        	 HostFamilyGeneralQuestion questions = new HostFamilyGeneralQuestion();
+             questions.setPreviousHostingWithCCI(hostFamilyReferences.isPreviouslyHosted() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+             questions.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
+             questions.setInternet(hostFamilyReferences.getInternet());
+             questions.setInternetOthers(hostFamilyReferences.getOtherWebsites());
+             questions.setCommunity(hostFamilyReferences.getCommunity());
+             questions.setCommunityEvent(hostFamilyReferences.getEvent());
+             questions.setCommunityMagazine(hostFamilyReferences.getMagazine());
+             questions.setCommunityOthers(hostFamilyReferences.getOtherCommunity());
+             hostFamilyGeneralQuestionRepository.saveAndFlush(questions); 
+         }
          hfReferences = getHFReference(String.valueOf(hostFamilyReferences.getSeasonId()), applicationCategoryId);
          hfReferences.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
