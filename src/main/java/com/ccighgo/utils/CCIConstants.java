@@ -273,6 +273,7 @@ public class CCIConstants {
    public static final String RD = "Regional Director";
    public static final String AC = "Area Coordinator";
    public static final String ERD = "Executive Regional Director";
+   public static final String NOT_ASSIGNED = "Not Assigned";
 
    public static final int FAMILY_BASICS = 1;
    public static final int FAMILY_LIFESTYLE = 2;
@@ -287,5 +288,7 @@ public class CCIConstants {
    public static final int MALE = 1;
    public static final int FEMALE = 2;
    public static final int GENDER_UNDEFINED = 3;
+
+   public static final String MM_dd_yyy_T_H_M_S = "yyyy-MM-dd'T'HH:mm:ss";
 
 }

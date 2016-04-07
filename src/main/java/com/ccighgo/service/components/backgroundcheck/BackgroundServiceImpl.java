@@ -16,9 +16,18 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.HostFamilyBackground;
+import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.HostFamilyBackgroundRepository;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.rest.backgroundcheck.BackgroundCheck;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage.PersonalData;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage.PersonalData.ContactMethod;
@@ -40,12 +49,20 @@ import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.Scree
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Account;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Applicant;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;
+import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.google.gson.Gson;
 
 @Component
 public class BackgroundServiceImpl implements BackgroundServiceInterface {
+   private static final String FAILED_STATUS = "300 : Failed";
    private static final Logger LOGGER = Logger.getLogger(BackgroundCheck.class);
+
+   @Autowired HostFamilyBackgroundRepository hostFamilyBackgroundRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   Gson f = new Gson();
 
    @Override
    public ScreenResponse requestScreen(ScreenRequest screenRequest) {
@@ -53,7 +70,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          if (screenRequest != null)
             LOGGER.info("partnerInfo: " + screenRequest.getPartnerInfo() + "account: " + screenRequest.getAccount());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          @SuppressWarnings("deprecation")
@@ -277,20 +294,54 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
 
    @Override
    public String sendReport(BackgroundReports backgroundReports) {
+      Response response = new Response();
       try {
-         if (backgroundReports.getUserId() != null) {
-            LOGGER.info(" User ID : " + backgroundReports.getUserId());
-            LOGGER.info(" Account Name :" + backgroundReports.getAccount());
-            if (backgroundReports.getBackgroundReportPackage() != null) {
-               LOGGER.info(" Type : " + backgroundReports.getBackgroundReportPackage().getType());
-               if (backgroundReports.getBackgroundReportPackage().getScreeningStatus() != null)
-                  LOGGER.info("Order Status : " + backgroundReports.getBackgroundReportPackage().getScreeningStatus().getOrderStatus());
+         HostFamilyBackground background = new HostFamilyBackground();
+         if (backgroundReports != null) {
+            if (background.getAccount() != null)
+               background.setAccount(background.getAccount());
+
+            background.setUserId(background.getUserId());
+            background.setPassword(background.getPassword());
+            // TODO remove this field from DB
+            background.setStatus(CCIConstants.TRUE_BYTE);
+            background.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            if (backgroundReports != null && backgroundReports.getBackgroundReportPackage() != null && backgroundReports.getBackgroundReportPackage().getScreeningStatus() != null)
+               for (com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports.BackgroundReportPackage.ScreeningStatus.AdditionalItems item : backgroundReports
+                     .getBackgroundReportPackage().getScreeningStatus().getAdditionalItems()) {
+                  if (item.getQualifier().equalsIgnoreCase("DateOrderClosed"))
+                     background.setDateOrderClosed(DateUtils.getDateFromString_bg_check(item.getText()));
+                  else if (item.getQualifier().equalsIgnoreCase("ResultStatus"))
+                     background.setResultStatus(item.getText());
+                  else if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
+                     background.setResultURL(item.getText());
+               }
+            if (backgroundReports != null && backgroundReports.getBackgroundReportPackage() != null
+                  && backgroundReports.getBackgroundReportPackage().getScreeningsSummary() != null) {
+               com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports.BackgroundReportPackage.ScreeningsSummary.AdditionalItems item = backgroundReports
+                     .getBackgroundReportPackage().getScreeningsSummary().getAdditionalItems();
+
+               if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
+                  background.setResultURL(item.getText());
             }
+            background.setDateOrderReceived(DateUtils.getDateFromString_bg_check(backgroundReports.getBackgroundReportPackage().getScreeningStatus().getDateOrderReceived()));
+
+            // background.setHostFamilyBackgroundId();
+            // background.setHostFamilySeason();
+            // background.setLastName(lastName);
+            // background.setRelationshipToHostParent(relationshipToHostParent);
+            // background.setStatus(status);
+
+            hostFamilyBackgroundRepository.saveAndFlush(background);
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.INSERTING_BACKGROUND_DATA_SUCCCESSFULLY.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.INSERTING_BACKGROUND_DATA_SUCCCESSFULLY)));
          }
-         return "200 : Received !";
       } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_INSERTING_BACKGROUND_DATA.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.ERROR_INSERTING_BACKGROUND_DATA)));
          ExceptionUtil.logException(e, LOGGER);
-         return "300 : Failed";
       }
+      return f.toJson(response);
+
    }
 }

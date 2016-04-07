@@ -194,28 +194,34 @@ public class HFApplicationImpl implements HFApplication {
          if (whyHost.getFieldsFilled() == 0 || whyHost.getFieldsFilled() < 0) {
             throw new CcighgoException("number of fields filled is mandatory to create the record");
          }
-         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(whyHost.getHostfamilySeasonId(),
-               Integer.valueOf(applicationCategoryId));
-         hostFamilySeasonCategory.setFilledMandatoryFields(whyHost.getFieldsFilled());
-         hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
-         HostFamilyHome hfHome = new HostFamilyHome();
-         hfHome.setHostingReason(whyHost.getWhyFamilyInterestedInHosting());
-         hfHome.setHopeToLearn(whyHost.getAspectsOfAmericanCultureYouWillShare());
-         hfHome.setExtraActivities(whyHost.getActivitiesPlanned());
-         hfHome.setLocalCoordinatorOther(whyHost.isWillYouBeWorkingasLCForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         hfHome.setLocalCoordinatorDetails(whyHost.getForWhomYouWillBeWorkingasLCForAnotherOrg());
-         hfHome.setHostedOther(whyHost.isHaveYouHostedForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         hfHome.setHostedOtherDetails(whyHost.getIfYesForWhomAndHowManyYears());
-         hfHome.setStudentsResponsibilities(whyHost.getFamilyExpectationOnStudentResponsibility());
-         hfHome.setHostFamilySeason(hostFamilySeasonRepository.findOne(whyHost.getHostfamilySeasonId()));
-         hfHome.setCreatedBy(whyHost.getLoginId());
-         hfHome.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         hfHome.setModifiedBy(whyHost.getLoginId());
-         hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
-         hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
-         updatedObject = getWhyHost(String.valueOf(whyHost.getHostfamilySeasonId()), applicationCategoryId);
-         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         HostFamilyHome hfHomeExists = hostFamilyHomeRepository.getHFHomebyIdAndSeasonId(whyHost.getHostfamilySeasonId());
+         // an unnecessary check because we are super smart
+         if (hfHomeExists != null) {
+            throw new CcighgoException("Record(s) already exist with specified season");
+         } else {
+            HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(whyHost.getHostfamilySeasonId(),
+                  Integer.valueOf(applicationCategoryId));
+            hostFamilySeasonCategory.setFilledMandatoryFields(whyHost.getFieldsFilled());
+            hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
+            HostFamilyHome hfHome = new HostFamilyHome();
+            hfHome.setHostingReason(whyHost.getWhyFamilyInterestedInHosting());
+            hfHome.setHopeToLearn(whyHost.getAspectsOfAmericanCultureYouWillShare());
+            hfHome.setExtraActivities(whyHost.getActivitiesPlanned());
+            hfHome.setLocalCoordinatorOther(whyHost.isWillYouBeWorkingasLCForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+            hfHome.setLocalCoordinatorDetails(whyHost.getForWhomYouWillBeWorkingasLCForAnotherOrg());
+            hfHome.setHostedOther(whyHost.isHaveYouHostedForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+            hfHome.setHostedOtherDetails(whyHost.getIfYesForWhomAndHowManyYears());
+            hfHome.setStudentsResponsibilities(whyHost.getFamilyExpectationOnStudentResponsibility());
+            hfHome.setHostFamilySeason(hostFamilySeasonRepository.findOne(whyHost.getHostfamilySeasonId()));
+            hfHome.setCreatedBy(whyHost.getLoginId());
+            hfHome.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            hfHome.setModifiedBy(whyHost.getLoginId());
+            hfHome.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            hfHome = hostFamilyHomeRepository.saveAndFlush(hfHome);
+            updatedObject = getWhyHost(String.valueOf(whyHost.getHostfamilySeasonId()), applicationCategoryId);
+            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
       } catch (CcighgoException e) {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
@@ -703,6 +709,9 @@ public class HFApplicationImpl implements HFApplication {
                   HFAdultDetails adult = new HFAdultDetails();
                   com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                   photo.setFilePath(String.valueOf(obj[0]));
+                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
+                  photo.setTypeId(CCIConstants.ACTIVE);
+                  photo.setDescription(String.valueOf(obj[30]));
                   hfbs.setPhoto(photo);
                   singleHost |= Boolean.valueOf(String.valueOf(obj[1]));
                   adult.setRelationship(String.valueOf(obj[2]));
@@ -733,7 +742,6 @@ public class HFApplicationImpl implements HFApplication {
                         adult.setOtherJobPhone(String.valueOf(obj[24]));
                      }
                   }
-                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
                   adult.setHostfamilyMemberId(Integer.valueOf(String.valueOf(obj[26])));
                   hfbs.getAdults().add(adult);
                } catch (Exception e) {
@@ -1044,7 +1052,7 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setNearestCityPopulation(communityAndSchoolPage.getCommunity().getPopulationOfNearestCity());
          hfd.setDistanceFromCity(communityAndSchoolPage.getCommunity().getDistanceFromCity() + "");
          hfd.setUniquenessAboutCommunity(communityAndSchoolPage.getCommunity().getUniqueAboutYourCommunity());
-         hfd.setPlacesOfInterest(communityAndSchoolPage.getCommunity().getPopulationOfNearestCity());
+         hfd.setPlacesOfInterest(communityAndSchoolPage.getCommunity().getPlacesAndEventsMightInterestTheStudent());
          hfd.setAreasToAvoid(communityAndSchoolPage.getCommunity().getAreasToBeAvoidedInTheNeighbourhood());
          hfd.setVolunteeringOpportunitiesCommunity(communityAndSchoolPage.getCommunity().getVolunteeringOpportunitiesInTheCommunity());
          hfd.setSchoolTravelMethod(communityAndSchoolPage.getSchoolLife().getStudentWillGotoSchoolBy());
@@ -1162,7 +1170,6 @@ public class HFApplicationImpl implements HFApplication {
       return hfbs;
    }
 
-   @Transactional
    @Override
    public HFApplicationFamilyDetails saveFamilyBasicData(String applicationCategoryId, HFApplicationFamilyDetails hfApplicationFamilyDetails) {
       HFApplicationFamilyDetails hp = new HFApplicationFamilyDetails();
@@ -1191,9 +1198,7 @@ public class HFApplicationImpl implements HFApplication {
                hfPhoto = new HostFamilyPhoto();
             hfPhoto.setHostFamilySeason(season);
             hfPhoto.setHostFamilyPhotosType(hostFamilyPhotosTypeRepository.findOne(hfApplicationFamilyDetails.getPhoto().getTypeId()));
-            hfPhoto.setFileName(hfApplicationFamilyDetails.getPhoto().getFileName());
             hfPhoto.setFilePath(hfApplicationFamilyDetails.getPhoto().getFilePath());
-            hfPhoto.setPhotoName(hfApplicationFamilyDetails.getPhoto().getFileName());
             hfPhoto.setDescription(hfApplicationFamilyDetails.getPhoto().getDescription());
             hfPhoto.setIsOptional(CCIConstants.INACTIVE);
             hfPhoto.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
@@ -1230,6 +1235,7 @@ public class HFApplicationImpl implements HFApplication {
             hfm.setEmployer1(member.getEmployer());
             hfm.setJobTitle1(member.getJobTitle());
             hfm.setContactName1(member.getContactName());
+            hfm.setRelationship(member.getRelationship());
             hfm.setPhone1(member.getJobPhone());
             if (member.isHasAnotherJob()) {
                hfm.setHaveAnotherJob(CCIConstants.TRUE_BYTE);
@@ -1262,19 +1268,23 @@ public class HFApplicationImpl implements HFApplication {
          hf.setPreferredPhone(hfApplicationFamilyDetails.getContactInfo().getContactPhone());
          hf.setEmergencyContact(hfApplicationFamilyDetails.getContactInfo().getEmergencyContactPerson());
          hf.setEmergencyPhone(hfApplicationFamilyDetails.getContactInfo().getEmergencyPhone());
-         // Physical Address
-         hf.setPhysicalAddress(hfApplicationFamilyDetails.getPhysicalAddress().getAddress1());
-         hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
-         hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
-         LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
-         hf.setLookupUsstate2(physicalAddressState);
-         // mailing address
-         hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
-         hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
-         hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
-         hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
-         LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
-         hf.setLookupUsstate1(mailingAddressState);
+         if (hfApplicationFamilyDetails.getPhysicalAddress() != null) {
+            // Physical Address
+            hf.setPhysicalAddress(hfApplicationFamilyDetails.getPhysicalAddress().getAddress1());
+            hf.setPhysicalCity(hfApplicationFamilyDetails.getPhysicalAddress().getCity());
+            hf.setPhysicalZipCode(hfApplicationFamilyDetails.getPhysicalAddress().getZipCode());
+            LookupUSState physicalAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getPhysicalAddress().getStateId());
+            hf.setLookupUsstate2(physicalAddressState);
+         }
+         if (hfApplicationFamilyDetails.getMailingAddress() != null) {
+            // mailing address
+            hf.setMailingAddressSameAsCurrentAddress(hfApplicationFamilyDetails.getMailingAddress().isSameAsPhysicalAddress() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hf.setMailingAddress(hfApplicationFamilyDetails.getMailingAddress().getAddress1());
+            hf.setMailingCity(hfApplicationFamilyDetails.getMailingAddress().getCity());
+            hf.setMailingZipCode(hfApplicationFamilyDetails.getMailingAddress().getZipCode());
+            LookupUSState mailingAddressState = stateRepository.findOne(hfApplicationFamilyDetails.getMailingAddress().getStateId());
+            hf.setLookupUsstate1(mailingAddressState);
+         }
 
          hf.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
          hf.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1487,7 +1497,7 @@ public class HFApplicationImpl implements HFApplication {
          if (hostFamilyReferences.getSeasonId() == 0 || hostFamilyReferences.getSeasonId() < 0) {
             throw new CcighgoException("host family season is required");
          }
-         if (hfReferences.getReferences() == null) {
+         if (hostFamilyReferences.getReferences() == null) {
             throw new CcighgoException("cannot create record with empty objects");
          }
          if (hostFamilyReferences.getFieldsFilled() == 0 || hostFamilyReferences.getFieldsFilled() < 0) {
@@ -1497,7 +1507,7 @@ public class HFApplicationImpl implements HFApplication {
                Integer.valueOf(applicationCategoryId));
          hostFamilySeasonCategory.setFilledMandatoryFields(hostFamilyReferences.getFieldsFilled());
          hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
-         if (hfReferences.getReferences() == null) {
+         if (hostFamilyReferences.getReferences() == null) {
             // if null create empty records
             HostFamilyReference hRef1 = new HostFamilyReference();
             hRef1.setActive(CCIConstants.ACTIVE);
@@ -1516,7 +1526,7 @@ public class HFApplicationImpl implements HFApplication {
             hRef2.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             hostFamilyReferenceRepository.saveAndFlush(hRef2);
          } else {
-            for (Reference ref : hfReferences.getReferences()) {
+            for (Reference ref : hostFamilyReferences.getReferences()) {
                HostFamilyReference hRef = new HostFamilyReference();
                hRef.setActive(CCIConstants.ACTIVE);
                hRef.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
@@ -1537,16 +1547,19 @@ public class HFApplicationImpl implements HFApplication {
                hostFamilyReferenceRepository.saveAndFlush(hRef);
             }
          }
-         HostFamilyGeneralQuestion questions = new HostFamilyGeneralQuestion();
-         questions.setPreviousHostingWithCCI(hostFamilyReferences.isPreviouslyHosted() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-         questions.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
-         questions.setInternet(hostFamilyReferences.getInternet());
-         questions.setInternetOthers(hostFamilyReferences.getOtherWebsites());
-         questions.setCommunity(hostFamilyReferences.getCommunity());
-         questions.setCommunityEvent(hostFamilyReferences.getEvent());
-         questions.setCommunityMagazine(hostFamilyReferences.getMagazine());
-         questions.setCommunityOthers(hostFamilyReferences.getOtherCommunity());
-         hostFamilyGeneralQuestionRepository.saveAndFlush(questions);
+         HostFamilyGeneralQuestion exists = hostFamilyGeneralQuestionRepository.getBySeasonId(hostFamilyReferences.getSeasonId());
+         if(exists==null){
+        	 HostFamilyGeneralQuestion questions = new HostFamilyGeneralQuestion();
+             questions.setPreviousHostingWithCCI(hostFamilyReferences.isPreviouslyHosted() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+             questions.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
+             questions.setInternet(hostFamilyReferences.getInternet());
+             questions.setInternetOthers(hostFamilyReferences.getOtherWebsites());
+             questions.setCommunity(hostFamilyReferences.getCommunity());
+             questions.setCommunityEvent(hostFamilyReferences.getEvent());
+             questions.setCommunityMagazine(hostFamilyReferences.getMagazine());
+             questions.setCommunityOthers(hostFamilyReferences.getOtherCommunity());
+             hostFamilyGeneralQuestionRepository.saveAndFlush(questions); 
+         }
          hfReferences = getHFReference(String.valueOf(hostFamilyReferences.getSeasonId()), applicationCategoryId);
          hfReferences.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1659,23 +1672,27 @@ public class HFApplicationImpl implements HFApplication {
             hfReferences.setSecondReferenceRelatedToFirst(hfr.getSecondReferenceRelationtoFirst().equals(CCIConstants.ACTIVE) ? true : false);
             references.add(r);
          }
-         HostFamilyGeneralQuestion question = hostFamilyGeneralQuestionRepository.getBySeasonId(Integer.valueOf(hfSeasonId));
+         List<HostFamilyGeneralQuestion> questionList = hostFamilyGeneralQuestionRepository.getListBySeasonId(Integer.valueOf(hfSeasonId));
          HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(Integer.valueOf(hfSeasonId),
                Integer.valueOf(applicationCategoryId));
-         if (question != null) {
-            hfReferences.setGoId(question.getHostFamilySeason().getHostFamily().getHostFamilyGoId());
-            hfReferences.setSeasonId(question.getHostFamilySeason().getSeason().getSeasonId());
-            hfReferences.setHostFamilyGenQuestionId(question.getHostFamilyGeneralQuestionsId());
-            hfReferences.getReferences().addAll(references);
-            hfReferences.setPreviouslyHosted(question.getPreviousHostingWithCCI().equals(CCIConstants.ACTIVE) ? true : false);
-            hfReferences.setInternet(question.getInternet() != null ? question.getInternet() : CCIConstants.EMPTY);
-            hfReferences.setOtherWebsites(question.getInternetOthers() != null ? question.getInternetOthers() : CCIConstants.EMPTY);
-            hfReferences.setCommunity(question.getCommunity() != null ? question.getCommunity() : CCIConstants.EMPTY);
-            hfReferences.setEvent(question.getCommunityEvent() != null ? question.getCommunityEvent() : CCIConstants.EMPTY);
-            hfReferences.setMagazine(question.getCommunityMagazine() != null ? question.getCommunityMagazine() : CCIConstants.EMPTY);
-            hfReferences.setOtherCommunity(question.getCommunityOthers() != null ? question.getCommunityOthers() : CCIConstants.EMPTY);
-            hfReferences
-                  .setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
+         if (questionList != null) {
+            for (HostFamilyGeneralQuestion question : questionList) {
+               if (question.getHostFamilySeason().getHostFamilySeasonId().equals(Integer.valueOf(hfSeasonId))) {
+                  hfReferences.setGoId(question.getHostFamilySeason().getHostFamily().getHostFamilyGoId());
+                  hfReferences.setSeasonId(question.getHostFamilySeason().getSeason().getSeasonId());
+                  hfReferences.setHostFamilyGenQuestionId(question.getHostFamilyGeneralQuestionsId());
+                  hfReferences.getReferences().addAll(references);
+                  hfReferences.setPreviouslyHosted(question.getPreviousHostingWithCCI().equals(CCIConstants.ACTIVE) ? true : false);
+                  hfReferences.setInternet(question.getInternet() != null ? question.getInternet() : CCIConstants.EMPTY);
+                  hfReferences.setOtherWebsites(question.getInternetOthers() != null ? question.getInternetOthers() : CCIConstants.EMPTY);
+                  hfReferences.setCommunity(question.getCommunity() != null ? question.getCommunity() : CCIConstants.EMPTY);
+                  hfReferences.setEvent(question.getCommunityEvent() != null ? question.getCommunityEvent() : CCIConstants.EMPTY);
+                  hfReferences.setMagazine(question.getCommunityMagazine() != null ? question.getCommunityMagazine() : CCIConstants.EMPTY);
+                  hfReferences.setOtherCommunity(question.getCommunityOthers() != null ? question.getCommunityOthers() : CCIConstants.EMPTY);
+                  hfReferences.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(),
+                        hostFamilySeasonCategory.getFilledMandatoryFields()));
+               }
+            }
          } else {
             hfReferences.setGoId(0);
             hfReferences.setSeasonId(0);
