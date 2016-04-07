@@ -167,7 +167,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             if (allERDs != null) {
                for (FieldStaff fieldStaff : allERDs) {
                   AssignedERDStaff assignedERDStaff = new AssignedERDStaff();
-                  assignedERDStaff.setAssignedSuperRegion("");
+                  assignedERDStaff.setAssignedSuperRegion(CCIConstants.NOT_ASSIGNED);
                   assignedERDStaff.setFirstName(fieldStaff.getFirstName());
                   assignedERDStaff.setLastName(fieldStaff.getLastName());
                   assignedERDStaff.setPhoto(fieldStaff.getPhoto());
@@ -324,11 +324,13 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedRDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffGoId());
                         assignedRDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
                         assignedRDStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
+
                         com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea regionAssignedArea = new com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea();
-                        regionAssignedArea.setRegionArea(region.getRegionName());
+                        regionAssignedArea.setRegionArea(region.getRegionName() != null ? region.getRegionName() : CCIConstants.EMPTY);
                         if (sgc.getLookupUsstate() != null)
-                           regionAssignedArea.setStateCode(sgc.getLookupUsstate().getStateCode());
+                           regionAssignedArea.setStateCode(sgc.getLookupUsstate().getStateCode() != null ? sgc.getLookupUsstate().getStateCode() : CCIConstants.EMPTY);
                         assignedRDStaff.getAssignedArea().add(regionAssignedArea);
+
                         if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffGoId()) == null) {
                            staffExist.put(fieldStaff.getFieldStaff().getFieldStaffGoId(), true);
                            if (regionId != null && regionId.equals(region.getRegionId()))
@@ -380,6 +382,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   assignedRDStaff.setLastName(fieldStaff.getLastName());
                   assignedRDStaff.setPhoto(fieldStaff.getPhoto());
                   assignedRDStaff.setStaffId(fieldStaff.getFieldStaffGoId());
+                  com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea regionAssignedArea = new com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea();
+                  regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
+                  regionAssignedArea.setStateCode(CCIConstants.NOT_ASSIGNED);
+                  assignedRDStaff.getAssignedArea().add(regionAssignedArea);
                   if (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
                      regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
                      staffExist.put(fieldStaff.getFieldStaffGoId(), true);
@@ -489,11 +495,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedStateStaff.setRole(fieldStaff.getFieldStaff().getFieldStaffType().getFieldStaffTypeName());
                         assignedStateStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
                         assignedStateStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
+
                         RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
-                        if (region != null)
-                           regionAssignedArea.setRegionArea(region.getRegionName());
-                        regionAssignedArea.setStateCode(state.getStateCode());
+                        regionAssignedArea.setRegionArea(region.getRegionName() != null ? region.getRegionName() : CCIConstants.NOT_ASSIGNED);
+                        regionAssignedArea.setStateCode(state.getStateCode() != null ? state.getStateCode() : CCIConstants.NOT_ASSIGNED);
                         assignedStateStaff.getAssignedArea().add(regionAssignedArea);
+
                         String staffIdAndStateCode = fieldStaff.getFieldStaff().getFieldStaffGoId() + "|" + state.getStateCode();
                         staff.put(fieldStaff.getFieldStaff().getFieldStaffGoId(), true);
                         if (!state.getUsStatesId().equals(stateId))
@@ -521,6 +528,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   assignedStateStaff.setPhoto(fieldStaff.getPhoto());
                   assignedStateStaff.setStaffId(fieldStaff.getFieldStaffGoId());
                   assignedStateStaff.setRole(fieldStaff.getFieldStaffType().getFieldStaffTypeName());
+                  RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
+                  regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
+                  regionAssignedArea.setStateCode(CCIConstants.NOT_ASSIGNED);
+                  assignedStateStaff.getAssignedArea().add(regionAssignedArea);
                   if (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
                      staffExist.put(fieldStaff.getFieldStaffGoId(), assignedStateStaff);
                   }
