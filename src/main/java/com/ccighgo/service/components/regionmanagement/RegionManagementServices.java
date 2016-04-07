@@ -40,6 +40,12 @@ public interface RegionManagementServices {
     * @return
     */
    public SuperRegion addSuperRegionToSeason(String seasonId, SuperRegion superRegion);
+   
+   /**
+    * @param superRegion
+    * @return
+    */
+   public SuperRegion addExistingSuperRegionToSeason(String seasonId, SuperRegion superRegion);
 
    /**
     * @param superRegion

@@ -96,6 +96,19 @@ public class RegionManagement {
       LOGGER.debug("Calling 'addSuperRegion'");
       return regionManagementServices.addSuperRegionToSeason(seasonId, superRegion);
    }
+   
+   /**
+    * @param superRegion
+    * @return newly added super region
+    */
+   @POST
+   @Path("add/existing/superregion/{seasonId}")
+   @Consumes("application/json")
+   @Produces("application/json")
+   public SuperRegion addExistingSuperRegionToSeason(@PathParam("seasonId") String seasonId, SuperRegion superRegion) {
+      LOGGER.debug("Calling 'addExistingSuperRegionToSeason' ");
+      return regionManagementServices.addExistingSuperRegionToSeason(seasonId, superRegion);
+   }
 
    /**
     * @param superRegion
