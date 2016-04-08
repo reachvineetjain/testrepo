@@ -18,9 +18,9 @@ public class PartnerAnnouncementResult implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int partnerAnnouncementResultsId;
+	private Integer partnerAnnouncementResultsId;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -46,19 +46,19 @@ public class PartnerAnnouncementResult implements Serializable {
 	public PartnerAnnouncementResult() {
 	}
 
-	public int getPartnerAnnouncementResultsId() {
+	public Integer getPartnerAnnouncementResultsId() {
 		return this.partnerAnnouncementResultsId;
 	}
 
-	public void setPartnerAnnouncementResultsId(int partnerAnnouncementResultsId) {
+	public void setPartnerAnnouncementResultsId(Integer partnerAnnouncementResultsId) {
 		this.partnerAnnouncementResultsId = partnerAnnouncementResultsId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 

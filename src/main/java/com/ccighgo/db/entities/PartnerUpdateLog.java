@@ -18,9 +18,9 @@ public class PartnerUpdateLog implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int partnerUpdateLogId;
+	private Integer partnerUpdateLogId;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -36,19 +36,19 @@ public class PartnerUpdateLog implements Serializable {
 	public PartnerUpdateLog() {
 	}
 
-	public int getPartnerUpdateLogId() {
+	public Integer getPartnerUpdateLogId() {
 		return this.partnerUpdateLogId;
 	}
 
-	public void setPartnerUpdateLogId(int partnerUpdateLogId) {
+	public void setPartnerUpdateLogId(Integer partnerUpdateLogId) {
 		this.partnerUpdateLogId = partnerUpdateLogId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 

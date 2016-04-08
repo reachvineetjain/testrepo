@@ -38,10 +38,6 @@ public class UserType implements Serializable {
 	@Column(nullable=false, length=50)
 	private String userTypeName;
 
-	//bi-directional many-to-one association to HostFamilyPotentialReference
-	@OneToMany(mappedBy="userType")
-	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
-
 	//bi-directional many-to-one association to LoginUserType
 	@OneToMany(mappedBy="userType")
 	private List<LoginUserType> loginUserTypes;
@@ -103,28 +99,6 @@ public class UserType implements Serializable {
 
 	public void setUserTypeName(String userTypeName) {
 		this.userTypeName = userTypeName;
-	}
-
-	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences() {
-		return this.hostFamilyPotentialReferences;
-	}
-
-	public void setHostFamilyPotentialReferences(List<HostFamilyPotentialReference> hostFamilyPotentialReferences) {
-		this.hostFamilyPotentialReferences = hostFamilyPotentialReferences;
-	}
-
-	public HostFamilyPotentialReference addHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
-		getHostFamilyPotentialReferences().add(hostFamilyPotentialReference);
-		hostFamilyPotentialReference.setUserType(this);
-
-		return hostFamilyPotentialReference;
-	}
-
-	public HostFamilyPotentialReference removeHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
-		getHostFamilyPotentialReferences().remove(hostFamilyPotentialReference);
-		hostFamilyPotentialReference.setUserType(null);
-
-		return hostFamilyPotentialReference;
 	}
 
 	public List<LoginUserType> getLoginUserTypes() {

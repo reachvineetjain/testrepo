@@ -1,12 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -53,8 +48,7 @@ public class DepartmentProgram implements Serializable {
 	private List<AnnouncementInformationHistory> announcementInformationHistories;
 
 	//bi-directional many-to-one association to DepartmentProgramOption
-	@OneToMany(mappedBy = "departmentProgram", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="departmentProgram")
 	private List<DepartmentProgramOption> departmentProgramOptions;
 
 	//bi-directional many-to-one association to LookupDepartment
@@ -85,6 +79,10 @@ public class DepartmentProgram implements Serializable {
 	//bi-directional many-to-one association to HostFamilySeason
 	@OneToMany(mappedBy="departmentProgram")
 	private List<HostFamilySeason> hostFamilySeasons;
+
+	//bi-directional many-to-one association to HostFamilyWorkQueue
+	@OneToMany(mappedBy="departmentProgram")
+	private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
 
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="departmentProgram")
@@ -377,6 +375,28 @@ public class DepartmentProgram implements Serializable {
 		hostFamilySeason.setDepartmentProgram(null);
 
 		return hostFamilySeason;
+	}
+
+	public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
+		return this.hostFamilyWorkQueues;
+	}
+
+	public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
+		this.hostFamilyWorkQueues = hostFamilyWorkQueues;
+	}
+
+	public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setDepartmentProgram(this);
+
+		return hostFamilyWorkQueue;
+	}
+
+	public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setDepartmentProgram(null);
+
+		return hostFamilyWorkQueue;
 	}
 
 	public List<Participant> getParticipants() {

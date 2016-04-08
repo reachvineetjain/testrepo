@@ -30,6 +30,10 @@ public class StateProcess implements Serializable {
 	@OneToMany(mappedBy="stateProcess")
 	private List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes;
 
+	//bi-directional many-to-one association to HostFamilyWorkQueueType
+	@OneToMany(mappedBy="stateProcess")
+	private List<HostFamilyWorkQueueType> hostFamilyWorkQueueTypes;
+
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@OneToMany(mappedBy="stateProcess")
 	private List<PartnerWorkQueueType> partnerWorkQueueTypes;
@@ -85,6 +89,28 @@ public class StateProcess implements Serializable {
 		fieldStaffWorkQueueType.setStateProcess(null);
 
 		return fieldStaffWorkQueueType;
+	}
+
+	public List<HostFamilyWorkQueueType> getHostFamilyWorkQueueTypes() {
+		return this.hostFamilyWorkQueueTypes;
+	}
+
+	public void setHostFamilyWorkQueueTypes(List<HostFamilyWorkQueueType> hostFamilyWorkQueueTypes) {
+		this.hostFamilyWorkQueueTypes = hostFamilyWorkQueueTypes;
+	}
+
+	public HostFamilyWorkQueueType addHostFamilyWorkQueueType(HostFamilyWorkQueueType hostFamilyWorkQueueType) {
+		getHostFamilyWorkQueueTypes().add(hostFamilyWorkQueueType);
+		hostFamilyWorkQueueType.setStateProcess(this);
+
+		return hostFamilyWorkQueueType;
+	}
+
+	public HostFamilyWorkQueueType removeHostFamilyWorkQueueType(HostFamilyWorkQueueType hostFamilyWorkQueueType) {
+		getHostFamilyWorkQueueTypes().remove(hostFamilyWorkQueueType);
+		hostFamilyWorkQueueType.setStateProcess(null);
+
+		return hostFamilyWorkQueueType;
 	}
 
 	public List<PartnerWorkQueueType> getPartnerWorkQueueTypes() {

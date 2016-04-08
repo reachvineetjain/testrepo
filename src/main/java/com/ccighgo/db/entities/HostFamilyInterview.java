@@ -28,12 +28,12 @@ public class HostFamilyInterview implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
 
-	private Integer discussedPlacement;
+	private Byte discussedPlacement;
 
 	@Lob
 	private String financialSituation;
 
-	private Integer hasFamilyHostedBefore;
+	private Byte hasFamilyHostedBefore;
 
 	@Lob
 	private String homeCondition;
@@ -106,11 +106,11 @@ public class HostFamilyInterview implements Serializable {
 		this.createdOn = createdOn;
 	}
 
-	public Integer getDiscussedPlacement() {
+	public Byte getDiscussedPlacement() {
 		return this.discussedPlacement;
 	}
 
-	public void setDiscussedPlacement(Integer discussedPlacement) {
+	public void setDiscussedPlacement(Byte discussedPlacement) {
 		this.discussedPlacement = discussedPlacement;
 	}
 
@@ -122,11 +122,11 @@ public class HostFamilyInterview implements Serializable {
 		this.financialSituation = financialSituation;
 	}
 
-	public Integer getHasFamilyHostedBefore() {
+	public Byte getHasFamilyHostedBefore() {
 		return this.hasFamilyHostedBefore;
 	}
 
-	public void setHasFamilyHostedBefore(Integer hasFamilyHostedBefore) {
+	public void setHasFamilyHostedBefore(Byte hasFamilyHostedBefore) {
 		this.hasFamilyHostedBefore = hasFamilyHostedBefore;
 	}
 

@@ -18,7 +18,7 @@ public class ResourceType implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int resourceTypeId;
+	private Integer resourceTypeId;
 
 	@Column(length=50)
 	private String displayName;
@@ -49,11 +49,11 @@ public class ResourceType implements Serializable {
 	public ResourceType() {
 	}
 
-	public int getResourceTypeId() {
+	public Integer getResourceTypeId() {
 		return this.resourceTypeId;
 	}
 
-	public void setResourceTypeId(int resourceTypeId) {
+	public void setResourceTypeId(Integer resourceTypeId) {
 		this.resourceTypeId = resourceTypeId;
 	}
 

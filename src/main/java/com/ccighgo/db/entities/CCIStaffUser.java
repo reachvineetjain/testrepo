@@ -1,12 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -22,6 +17,7 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer cciStaffUserId;
 
@@ -84,18 +80,15 @@ public class CCIStaffUser implements Serializable {
 	private List<AdminWorkQueueCategoryAggregate> adminWorkQueueCategoryAggregates;
 
 	//bi-directional many-to-one association to AdminWorkQueueTypeAggregate
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="ccistaffUser")
 	private List<AdminWorkQueueTypeAggregate> adminWorkQueueTypeAggregates;
 
 	//bi-directional many-to-one association to CCIStaffUserNote
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="ccistaffUser")
 	private List<CCIStaffUserNote> ccistaffUserNotes;
 
 	//bi-directional many-to-one association to CCIStaffUserProgram
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="ccistaffUser")
 	private List<CCIStaffUserProgram> ccistaffUserPrograms;
 
 	//bi-directional one-to-one association to GoIdSequence
@@ -119,8 +112,7 @@ public class CCIStaffUser implements Serializable {
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to CCIStaffUsersCCIStaffRole
-	@OneToMany(mappedBy = "ccistaffUser", fetch = FetchType.EAGER)
-   @Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy="ccistaffUser")
 	private List<CCIStaffUsersCCIStaffRole> ccistaffUsersCcistaffRoles;
 
 	//bi-directional many-to-one association to CCIStaffUsersResourcePermission
