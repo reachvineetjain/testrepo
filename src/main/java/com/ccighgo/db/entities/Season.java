@@ -89,6 +89,10 @@ public class Season implements Serializable {
 	@OneToMany(mappedBy="season")
 	private List<HostFamilySeason> hostFamilySeasons;
 
+	//bi-directional many-to-one association to HostFamilyWorkQueue
+	@OneToMany(mappedBy="season")
+	private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
+
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy = "season", fetch = FetchType.EAGER)
    @Fetch(value = FetchMode.SUBSELECT)
@@ -533,6 +537,28 @@ public class Season implements Serializable {
 		hostFamilySeason.setSeason(null);
 
 		return hostFamilySeason;
+	}
+
+	public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
+		return this.hostFamilyWorkQueues;
+	}
+
+	public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
+		this.hostFamilyWorkQueues = hostFamilyWorkQueues;
+	}
+
+	public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setSeason(this);
+
+		return hostFamilyWorkQueue;
+	}
+
+	public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setSeason(null);
+
+		return hostFamilyWorkQueue;
 	}
 
 	public List<Participant> getParticipants() {

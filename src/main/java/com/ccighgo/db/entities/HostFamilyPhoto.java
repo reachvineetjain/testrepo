@@ -19,9 +19,6 @@ public class HostFamilyPhoto implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPhotoId;
-	
-	@Column(length=50)
-   private String title;
 
 	private Byte active;
 
@@ -38,7 +35,7 @@ public class HostFamilyPhoto implements Serializable {
 	@Column(length=50)
 	private String fileName;
 
-	@Column(length=50)
+	@Column(length=200)
 	private String filePath;
 
 	private Byte isOptional;
@@ -54,6 +51,9 @@ public class HostFamilyPhoto implements Serializable {
 	private Byte rejectedByCCI;
 
 	private Byte submittedToCCI;
+
+	@Column(length=50)
+	private String title;
 
 	//bi-directional many-to-one association to HostFamilyPhotosType
 	@ManyToOne
@@ -75,14 +75,6 @@ public class HostFamilyPhoto implements Serializable {
 	public void setHostFamilyPhotoId(Integer hostFamilyPhotoId) {
 		this.hostFamilyPhotoId = hostFamilyPhotoId;
 	}
-	
-	public String getTitle() {
-      return this.title;
-   }
-
-   public void setTitle(String title) {
-      this.title = title;
-   }
 
 	public Byte getActive() {
 		return this.active;
@@ -186,6 +178,14 @@ public class HostFamilyPhoto implements Serializable {
 
 	public void setSubmittedToCCI(Byte submittedToCCI) {
 		this.submittedToCCI = submittedToCCI;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public HostFamilyPhotosType getHostFamilyPhotosType() {

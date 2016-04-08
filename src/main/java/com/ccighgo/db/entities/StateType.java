@@ -46,6 +46,10 @@ public class StateType implements Serializable {
 	@OneToMany(mappedBy="stateType")
 	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
 
+	//bi-directional many-to-one association to HostFamilyWorkQueue
+	@OneToMany(mappedBy="stateType")
+	private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
+
 	//bi-directional many-to-one association to PartnerWorkQueue
 	@OneToMany(mappedBy="stateType")
 	private List<PartnerWorkQueue> partnerWorkQueues;
@@ -188,6 +192,28 @@ public class StateType implements Serializable {
 		fieldStaffWorkQueue.setStateType(null);
 
 		return fieldStaffWorkQueue;
+	}
+
+	public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
+		return this.hostFamilyWorkQueues;
+	}
+
+	public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
+		this.hostFamilyWorkQueues = hostFamilyWorkQueues;
+	}
+
+	public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setStateType(this);
+
+		return hostFamilyWorkQueue;
+	}
+
+	public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setStateType(null);
+
+		return hostFamilyWorkQueue;
 	}
 
 	public List<PartnerWorkQueue> getPartnerWorkQueues() {

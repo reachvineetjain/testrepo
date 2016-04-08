@@ -86,6 +86,10 @@ public class DepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="departmentProgram")
 	private List<HostFamilySeason> hostFamilySeasons;
 
+	//bi-directional many-to-one association to HostFamilyWorkQueue
+	@OneToMany(mappedBy="departmentProgram")
+	private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
+
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="departmentProgram")
 	private List<Participant> participants;
@@ -377,6 +381,28 @@ public class DepartmentProgram implements Serializable {
 		hostFamilySeason.setDepartmentProgram(null);
 
 		return hostFamilySeason;
+	}
+
+	public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
+		return this.hostFamilyWorkQueues;
+	}
+
+	public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
+		this.hostFamilyWorkQueues = hostFamilyWorkQueues;
+	}
+
+	public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setDepartmentProgram(this);
+
+		return hostFamilyWorkQueue;
+	}
+
+	public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+		getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
+		hostFamilyWorkQueue.setDepartmentProgram(null);
+
+		return hostFamilyWorkQueue;
 	}
 
 	public List<Participant> getParticipants() {

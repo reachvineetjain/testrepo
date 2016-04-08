@@ -23,7 +23,7 @@ public class HostFamilyFinalEvaluation implements Serializable {
 
 	private Byte active;
 
-	private byte adequateOrientation;
+	private Byte adequateOrientation;
 
 	@Column(length=1000)
 	private String adviceForHostFamilies;
@@ -118,11 +118,11 @@ public class HostFamilyFinalEvaluation implements Serializable {
 		this.active = active;
 	}
 
-	public byte getAdequateOrientation() {
+	public Byte getAdequateOrientation() {
 		return this.adequateOrientation;
 	}
 
-	public void setAdequateOrientation(byte adequateOrientation) {
+	public void setAdequateOrientation(Byte adequateOrientation) {
 		this.adequateOrientation = adequateOrientation;
 	}
 

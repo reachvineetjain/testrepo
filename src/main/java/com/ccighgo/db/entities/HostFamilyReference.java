@@ -28,7 +28,7 @@ public class HostFamilyReference implements Serializable {
 	@Column(length=100)
 	private String address;
 
-	private Integer allowOwnChildStay;
+	private Byte allowOwnChildStay;
 
 	@Column(length=50)
 	private String city;
@@ -66,6 +66,8 @@ public class HostFamilyReference implements Serializable {
 
 	@Column(length=50)
 	private String internationalAwareness;
+
+	private Byte isThirdReferenceForSingleHost;
 
 	@Column(length=30)
 	private String knownFamilyMethod;
@@ -159,11 +161,11 @@ public class HostFamilyReference implements Serializable {
 		this.address = address;
 	}
 
-	public Integer getAllowOwnChildStay() {
+	public Byte getAllowOwnChildStay() {
 		return this.allowOwnChildStay;
 	}
 
-	public void setAllowOwnChildStay(Integer allowOwnChildStay) {
+	public void setAllowOwnChildStay(Byte allowOwnChildStay) {
 		this.allowOwnChildStay = allowOwnChildStay;
 	}
 
@@ -269,6 +271,14 @@ public class HostFamilyReference implements Serializable {
 
 	public void setInternationalAwareness(String internationalAwareness) {
 		this.internationalAwareness = internationalAwareness;
+	}
+
+	public Byte getIsThirdReferenceForSingleHost() {
+		return this.isThirdReferenceForSingleHost;
+	}
+
+	public void setIsThirdReferenceForSingleHost(Byte isThirdReferenceForSingleHost) {
+		this.isThirdReferenceForSingleHost = isThirdReferenceForSingleHost;
 	}
 
 	public String getKnownFamilyMethod() {

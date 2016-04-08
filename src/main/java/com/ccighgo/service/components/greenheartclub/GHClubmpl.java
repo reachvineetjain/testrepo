@@ -14,23 +14,26 @@ public class GHClubmpl implements GHClub {
 
    private static final Logger LOGGER = Logger.getLogger(GHClubmpl.class);
 
-   private final String TEST_READ_URL = "https://gcidev.wpengine.com/api/v2/test/read";
-   private final String READ_PRIVATE_URL = "https://gcidev.wpengine.com/api/v2/test/read/private";
-   private final String TEST_CREATE_URL = "https://gcidev.wpengine.com/api/v2/test/create";
-   private final String TEST_EDIT_URL = "https://gcidev.wpengine.com/api/v2/test/edit";
-   private final String TEST_DELETE_URL = "https://gcidev.wpengine.com/api/v2/test/delete";
+   public static final String TEST_READ_URL = "https://gcidev.wpengine.com/api/v2/test/read";
+   private static final String READ_PRIVATE_URL = "https://gcidev.wpengine.com/api/v2/test/read/private";
+   public static final String TEST_CREATE_URL = "https://gcidev.wpengine.com/api/v2/test/create";
+   public static final String TEST_EDIT_URL = "https://gcidev.wpengine.com/api/v2/test/edit";
+   public static final String TEST_DELETE_URL = "https://gcidev.wpengine.com/api/v2/test/delete";
 
-   private final String CREATE_USER = "https://gcidev.wpengine.com/api/v2/user/create";
-   private final String USER_EXIST = "https://gcidev.wpengine.com/api/v2/user/exists";
-   private final String CHECK_USER_EMAIL = "https://gcidev.wpengine.com/api/v2/user/check/email";
-   private final String CHECK_USERNAME = "https://gcidev.wpengine.com/api/v2/user/check/username";
-   private final String UPDATE_USER_ID = "https://gcidev.wpengine.com/api/v2/user/set/id";
-   private final String UPDATE_USER_PROGRAM = "https://gcidev.wpengine.com/api/v2/user/set/program";
+   public static final String CREATE_USER = "https://gcidev.wpengine.com/api/v2/user/create";
+   public static final String USER_EXIST = "https://gcidev.wpengine.com/api/v2/user/exists";
+   public static final String CHECK_USER_EMAIL = "https://gcidev.wpengine.com/api/v2/user/check/email";
+   public static final String CHECK_USERNAME = "https://gcidev.wpengine.com/api/v2/user/check/username";
+   public static final String UPDATE_USER_ID = "https://gcidev.wpengine.com/api/v2/user/set/id";
+   public static final String UPDATE_USER_PROGRAM = "https://gcidev.wpengine.com/api/v2/user/set/program";
 
-   private final String UPDATE_USER_NAME = "https://gcidev.wpengine.com/api/v2/user/set/username";
-   private final String UPDATE_USER_PASSWORD = "https://gcidev.wpengine.com/api/v2/user/set/password";
-   private final String UPDATE_USER_EMAIL = "https://gcidev.wpengine.com/api/v2/user/set/email";
-   private final String FETCH_USER = "https://gcidev.wpengine.com/api/v2/user/get";
+   public static final String UPDATE_USER_NAME = "https://gcidev.wpengine.com/api/v2/user/set/username";
+   public static final String UPDATE_USER_PASSWORD = "https://gcidev.wpengine.com/api/v2/user/set/password";
+   public static final String UPDATE_USER_EMAIL = "https://gcidev.wpengine.com/api/v2/user/set/email";
+   public static final String FETCH_USER = "https://gcidev.wpengine.com/api/v2/user/get";
+
+   public static final String FETCH_HOURS_BY_PARTICIPANT = "https://gcidev.wpengine.com/api/v2/hours/get/id";
+   public static final String FETCH_HOURS_BY_PROGRAM = "https://gcidev.wpengine.com/api/v2/hours/get/program";
 
    @Autowired GCIWithOAuth gciWithOAuth;
 

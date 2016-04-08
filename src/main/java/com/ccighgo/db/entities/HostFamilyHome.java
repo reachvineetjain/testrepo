@@ -54,6 +54,7 @@ public class HostFamilyHome implements Serializable {
 	@Column(length=1000)
 	private String hopeToLearn;
 
+	@Column(nullable=false)
 	private Byte hostedOther;
 
 	@Column(length=100)
@@ -69,6 +70,7 @@ public class HostFamilyHome implements Serializable {
 	@Column(length=100)
 	private String localCoordinatorDetails;
 
+	@Column(nullable=false)
 	private Byte localCoordinatorOther;
 
 	private Integer modifiedBy;
