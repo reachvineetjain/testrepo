@@ -1393,11 +1393,12 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setPreferStudentJoins(hfApplicationFamilyDetails.getReligious().getPreferedTheStudentJoinYou());
          hfd.setInviteStudentForReligiousExperience(hfApplicationFamilyDetails.getReligious().isInviteStudentForReligiousExperience() ? CCIConstants.TRUE_BYTE
                : CCIConstants.FALSE_BYTE);
-         hfd.setProblemWithReligiousDifference(hfApplicationFamilyDetails.getReligious().isDiffecultyHostingPersonWithDifferentReligious() ? 1 : 0);
+         hfd.setProblemWithReligiousDifference(hfApplicationFamilyDetails.getReligious().isDiffecultyHostingPersonWithDifferentReligious() ? CCIConstants.TRUE_BYTE
+               : CCIConstants.FALSE_BYTE);
 
          // Diet
          hfd.setAgreeToServeMeals(hfApplicationFamilyDetails.getDieTrayRestriction().isProvideStudentWithThreeMeals() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
-         hfd.setDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? 1 : 0);
+         hfd.setDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          hfd.setDescribeDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getDietrayRestrictionExplanation());
          hfd.setParticipantFollowDiet(hfApplicationFamilyDetails.getDieTrayRestriction().isFollowDietrayRestriction() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          hfd.setDescPaxDietaryRestrictions(hfApplicationFamilyDetails.getDieTrayRestriction().getStudentFollowDietrayRestrictionExplanation());
@@ -1465,7 +1466,7 @@ public class HFApplicationImpl implements HFApplication {
          potentialReference.setReferenceZipCode(potentialHostFmaily.getReferenceZip());
          potentialReference.setFirstName(potentialHostFmaily.getRefereeFirstName());
          potentialReference.setLastName(potentialHostFmaily.getRefereeLastName());
-         potentialReference.setUserType(userTypeRepository.findOne(potentialHostFmaily.getRefereeUserType()));
+         potentialReference.setRefereeType(potentialHostFmaily.getRefereeUserType() + "");
          potentialReference.setEmail(potentialHostFmaily.getRefereeEmail());
          potentialReference.setMailingAddress(potentialHostFmaily.getRefereeMailingAddress());
          potentialReference.setStreetAddress(potentialHostFmaily.getRefereeStreetAddress());
@@ -1548,17 +1549,17 @@ public class HFApplicationImpl implements HFApplication {
             }
          }
          HostFamilyGeneralQuestion exists = hostFamilyGeneralQuestionRepository.getBySeasonId(hostFamilyReferences.getSeasonId());
-         if(exists==null){
-        	 HostFamilyGeneralQuestion questions = new HostFamilyGeneralQuestion();
-             questions.setPreviousHostingWithCCI(hostFamilyReferences.isPreviouslyHosted() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-             questions.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
-             questions.setInternet(hostFamilyReferences.getInternet());
-             questions.setInternetOthers(hostFamilyReferences.getOtherWebsites());
-             questions.setCommunity(hostFamilyReferences.getCommunity());
-             questions.setCommunityEvent(hostFamilyReferences.getEvent());
-             questions.setCommunityMagazine(hostFamilyReferences.getMagazine());
-             questions.setCommunityOthers(hostFamilyReferences.getOtherCommunity());
-             hostFamilyGeneralQuestionRepository.saveAndFlush(questions); 
+         if (exists == null) {
+            HostFamilyGeneralQuestion questions = new HostFamilyGeneralQuestion();
+            questions.setPreviousHostingWithCCI(hostFamilyReferences.isPreviouslyHosted() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+            questions.setHostFamilySeason(hostFamilySeasonRepository.findOne(hostFamilyReferences.getSeasonId()));
+            questions.setInternet(hostFamilyReferences.getInternet());
+            questions.setInternetOthers(hostFamilyReferences.getOtherWebsites());
+            questions.setCommunity(hostFamilyReferences.getCommunity());
+            questions.setCommunityEvent(hostFamilyReferences.getEvent());
+            questions.setCommunityMagazine(hostFamilyReferences.getMagazine());
+            questions.setCommunityOthers(hostFamilyReferences.getOtherCommunity());
+            hostFamilyGeneralQuestionRepository.saveAndFlush(questions);
          }
          hfReferences = getHFReference(String.valueOf(hostFamilyReferences.getSeasonId()), applicationCategoryId);
          hfReferences.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),

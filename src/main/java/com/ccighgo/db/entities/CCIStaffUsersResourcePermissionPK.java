@@ -47,8 +47,8 @@ public class CCIStaffUsersResourcePermissionPK implements Serializable {
 	}
 
 	public int hashCode() {
-		final Integer prime = 31;
-		Integer hash = 17;
+		final int prime = 31;
+		int hash = 17;
 		hash = hash * prime + this.cciStaffUserId;
 		hash = hash * prime + this.resourcePermissionId;
 		

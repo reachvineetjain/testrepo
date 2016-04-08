@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -17,7 +22,6 @@ public class Partner implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer partnerGoId;
 
@@ -226,7 +230,8 @@ public class Partner implements Serializable {
 	private List<PartnerUpdateLog> partnerUpdateLogs;
 
 	//bi-directional many-to-one association to PartnerUser
-	@OneToMany(mappedBy="partner")
+	@OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerUser> partnerUsers;
 
 	//bi-directional many-to-one association to PartnerWorkQueue

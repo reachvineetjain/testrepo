@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -34,26 +39,27 @@ public class SeasonGeographyConfiguration implements Serializable {
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to FieldStaffLeadershipSeason
-	@OneToMany(mappedBy="seasonGeographyConfiguration")
+	@OneToMany(mappedBy = "seasonGeographyConfiguration", fetch = FetchType.LAZY,cascade = { CascadeType.REMOVE })
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<FieldStaffLeadershipSeason> fieldStaffLeadershipSeasons;
 
 	//bi-directional many-to-one association to LookupUSState
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="usStatesId")
 	private LookupUSState lookupUsstate;
 
 	//bi-directional many-to-one association to Region
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="regionId")
 	private Region region;
 
 	//bi-directional many-to-one association to Season
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="seasonId")
 	private Season season;
 
 	//bi-directional many-to-one association to SuperRegion
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="superRegionId")
 	private SuperRegion superRegion;
 
