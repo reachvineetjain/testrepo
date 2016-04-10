@@ -96,10 +96,10 @@ public class RegionManagement {
       LOGGER.debug("Calling 'addSuperRegion'");
       return regionManagementServices.addSuperRegionToSeason(seasonId, superRegion);
    }
-   
+
    /**
     * @param superRegion
-    * @return newly added super region
+    * @return add exisitng super region
     */
    @POST
    @Path("add/existing/superregion/{seasonId}")
