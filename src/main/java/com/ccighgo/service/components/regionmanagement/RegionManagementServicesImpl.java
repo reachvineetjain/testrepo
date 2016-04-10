@@ -339,16 +339,15 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          // associated to any other season; then it should be removed from the
          // SR lookup table.
          boolean superRegionAssociated = false;
-         List<Integer> distinctIds = seasonGeographyConfigurationRepository.findDistinctSeasons();
-         if (distinctIds != null) {
-            for (int id : distinctIds) {
-               SeasonGeographyConfiguration config = seasonGeographyConfigurationRepository.findOne(id);
-               if (config.getSeason() != null) {
-                  superRegionAssociated = true;
-               }
-            }
+         // Check that whether given Super region is not associated with other
+         // seasons
+         List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository.checkSuperRegionsAssociatedToOtherSeasons(Integer.valueOf(superRegionId),
+               Integer.valueOf(seasonId));
+         int count = list.size();
+         if (count == 0 || count < 0) {
+            superRegionAssociated = true;
          }
-         if (!superRegionAssociated) {
+         if (superRegionAssociated) {
             superRegionRepository.delete(Integer.valueOf(superRegionId));
          }
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
