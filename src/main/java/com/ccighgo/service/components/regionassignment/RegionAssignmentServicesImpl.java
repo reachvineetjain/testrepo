@@ -48,6 +48,8 @@ import com.ccighgo.utils.WSDefaultResponse;
 public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
    private static final Logger LOGGER = Logger.getLogger(RegionAssignmentServicesImpl.class);
+   private static final String NOT_ASSIGNED = "Not Assigned";
+
    @Autowired CommonComponentUtils componentUtils;
    @Autowired MessageUtils messageUtil;
    @Autowired SuperRegionRepository superRegionRepository;
@@ -134,7 +136,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   if (assignedUsers != null) {
                      for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
                         AssignedERDStaff assignedERDStaff = new AssignedERDStaff();
-                        assignedERDStaff.setAssignedSuperRegion(superRegion.getSuperRegionName() != null ? superRegion.getSuperRegionName() : CCIConstants.NOT_ASSIGNED);
+                        assignedERDStaff.setAssignedSuperRegion(superRegion.getSuperRegionName() != null ? superRegion.getSuperRegionName() : NOT_ASSIGNED);
                         assignedERDStaff.setFirstName(fieldStaff.getFieldStaff().getFirstName());
                         assignedERDStaff.setLastName(fieldStaff.getFieldStaff().getLastName());
                         assignedERDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
@@ -167,7 +169,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             if (allERDs != null) {
                for (FieldStaff fieldStaff : allERDs) {
                   AssignedERDStaff assignedERDStaff = new AssignedERDStaff();
-                  assignedERDStaff.setAssignedSuperRegion(CCIConstants.NOT_ASSIGNED);
+                  assignedERDStaff.setAssignedSuperRegion(NOT_ASSIGNED);
                   assignedERDStaff.setFirstName(fieldStaff.getFirstName());
                   assignedERDStaff.setLastName(fieldStaff.getLastName());
                   assignedERDStaff.setPhoto(fieldStaff.getPhoto());
@@ -328,7 +330,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea regionAssignedArea = new com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea();
                         if (region.getRegionName() == null && sgc.getLookupUsstate().getStateCode() == null) {
                            regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
-                           regionAssignedArea.setStateCode(CCIConstants.NOT_ASSIGNED);
+                           regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                         } else {
                            regionAssignedArea.setRegionArea(region.getRegionName());
                            if(sgc.getLookupUsstate()!= null)
@@ -389,7 +391,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   assignedRDStaff.setStaffId(fieldStaff.getFieldStaffGoId());
                   com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea regionAssignedArea = new com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea();
                   regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
-                  regionAssignedArea.setStateCode(CCIConstants.NOT_ASSIGNED);
+                  regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                   assignedRDStaff.getAssignedArea().add(regionAssignedArea);
                   if (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
                      regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
@@ -504,7 +506,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
                         if (region.getRegionName() == null && state.getStateCode() == null) {
                            regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
-                           regionAssignedArea.setStateCode(CCIConstants.NOT_ASSIGNED);
+                           regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                         } else {
                            regionAssignedArea.setRegionArea(region.getRegionName());
                            regionAssignedArea.setStateCode(state.getStateCode());
@@ -539,7 +541,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   assignedStateStaff.setRole(fieldStaff.getFieldStaffType().getFieldStaffTypeName());
                   RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
                   regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
-                  regionAssignedArea.setStateCode(CCIConstants.NOT_ASSIGNED);
+                  regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                   assignedStateStaff.getAssignedArea().add(regionAssignedArea);
                   if (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
                      staffExist.put(fieldStaff.getFieldStaffGoId(), assignedStateStaff);
