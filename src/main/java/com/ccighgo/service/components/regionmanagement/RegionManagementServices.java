@@ -89,6 +89,14 @@ public interface RegionManagementServices {
     * @return
     */
    public Region addRegion(String superRegionId, String seasonId, Region region);
+   
+   /**
+    * @param superRegionId
+    * @param seasonId
+    * @param region
+    * @return
+    */
+   public Region addExistingRegion(String superRegionId, String seasonId, Region region);
 
    /**
     * @param region
