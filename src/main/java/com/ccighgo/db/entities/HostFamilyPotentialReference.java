@@ -43,6 +43,9 @@ public class HostFamilyPotentialReference implements Serializable {
 
 	private Timestamp modifiedOn;
 
+	@Column(length=50)
+	private String refereeType;
+
 	@Column(length=20)
 	private String referenceCity;
 
@@ -90,11 +93,6 @@ public class HostFamilyPotentialReference implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="stateId")
 	private LookupUSState lookupUsstate2;
-
-	//bi-directional many-to-one association to UserType
-	@ManyToOne
-	@JoinColumn(name="userTypeId")
-	private UserType userType;
 
 	public HostFamilyPotentialReference() {
 	}
@@ -177,6 +175,14 @@ public class HostFamilyPotentialReference implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public String getRefereeType() {
+		return this.refereeType;
+	}
+
+	public void setRefereeType(String refereeType) {
+		this.refereeType = refereeType;
 	}
 
 	public String getReferenceCity() {
@@ -289,14 +295,6 @@ public class HostFamilyPotentialReference implements Serializable {
 
 	public void setLookupUsstate2(LookupUSState lookupUsstate2) {
 		this.lookupUsstate2 = lookupUsstate2;
-	}
-
-	public UserType getUserType() {
-		return this.userType;
-	}
-
-	public void setUserType(UserType userType) {
-		this.userType = userType;
 	}
 
 }

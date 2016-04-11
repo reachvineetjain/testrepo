@@ -273,7 +273,6 @@ public class CCIConstants {
    public static final String RD = "Regional Director";
    public static final String AC = "Area Coordinator";
    public static final String ERD = "Executive Regional Director";
-   public static final String NOT_ASSIGNED = "Not Assigned";
 
    public static final int FAMILY_BASICS = 1;
    public static final int FAMILY_LIFESTYLE = 2;

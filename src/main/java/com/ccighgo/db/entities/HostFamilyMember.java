@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -50,6 +51,8 @@ public class HostFamilyMember implements Serializable {
 
 	@Column(length=50)
 	private String employer2;
+
+	private Byte employmentType;
 
 	@Column(length=50)
 	private String firstName;
@@ -103,6 +106,10 @@ public class HostFamilyMember implements Serializable {
 
 	@Column(length=20)
 	private String residencyTime;
+
+	//bi-directional many-to-one association to HostFamilyBackground
+	@OneToMany(mappedBy="hostFamilyMember")
+	private List<HostFamilyBackground> hostFamilyBackgrounds;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
@@ -211,6 +218,14 @@ public class HostFamilyMember implements Serializable {
 
 	public void setEmployer2(String employer2) {
 		this.employer2 = employer2;
+	}
+
+	public Byte getEmploymentType() {
+		return this.employmentType;
+	}
+
+	public void setEmploymentType(Byte employmentType) {
+		this.employmentType = employmentType;
 	}
 
 	public String getFirstName() {
@@ -371,6 +386,28 @@ public class HostFamilyMember implements Serializable {
 
 	public void setResidencyTime(String residencyTime) {
 		this.residencyTime = residencyTime;
+	}
+
+	public List<HostFamilyBackground> getHostFamilyBackgrounds() {
+		return this.hostFamilyBackgrounds;
+	}
+
+	public void setHostFamilyBackgrounds(List<HostFamilyBackground> hostFamilyBackgrounds) {
+		this.hostFamilyBackgrounds = hostFamilyBackgrounds;
+	}
+
+	public HostFamilyBackground addHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+		getHostFamilyBackgrounds().add(hostFamilyBackground);
+		hostFamilyBackground.setHostFamilyMember(this);
+
+		return hostFamilyBackground;
+	}
+
+	public HostFamilyBackground removeHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+		getHostFamilyBackgrounds().remove(hostFamilyBackground);
+		hostFamilyBackground.setHostFamilyMember(null);
+
+		return hostFamilyBackground;
 	}
 
 	public HostFamilySeason getHostFamilySeason() {

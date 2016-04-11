@@ -15,7 +15,7 @@ import java.util.List;
 public class HostFamily implements Serializable {
    private static final long serialVersionUID = 1L;
 
-   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(unique = true, nullable = false) private int hostFamilyGoId;
+   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(unique = true, nullable = false) private Integer hostFamilyGoId;
 
    private Byte active;
 
@@ -61,6 +61,8 @@ public class HostFamily implements Serializable {
 
    @Column(length = 30) private String phone;
 
+   @Column(length = 200) private String photo;
+
    @Column(length = 50) private String physicalAddress;
 
    @Column(length = 50) private String physicalCity;
@@ -78,7 +80,6 @@ public class HostFamily implements Serializable {
    private Byte receiveEmails;
 
    private Byte skipIntroScreen;
-   private String photo;
 
    // bi-directional one-to-one association to GoIdSequence
    @OneToOne @JoinColumn(name = "hostFamilyGoId", nullable = false) private GoIdSequence goIdSequence;
@@ -110,6 +111,9 @@ public class HostFamily implements Serializable {
    // bi-directional many-to-one association to HostFamilyAnnouncementResult
    @OneToMany(mappedBy = "hostFamily") private List<HostFamilyAnnouncementResult> hostFamilyAnnouncementResults;
 
+   // bi-directional many-to-one association to HostFamilyBackground
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyBackground> hostFamilyBackgrounds;
+
    // bi-directional many-to-one association to HostFamilyInquiry
    @OneToMany(mappedBy = "hostFamily") private List<HostFamilyInquiry> hostFamilyInquiries;
 
@@ -128,20 +132,38 @@ public class HostFamily implements Serializable {
    // bi-directional many-to-one association to HostFamilyPotentialReference
    @OneToMany(mappedBy = "hostFamily") private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
 
+   // bi-directional many-to-one association to
+   // HostFamilyQuickStatsCategoryAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyQuickStatsCategoryAggregate> hostFamilyQuickStatsCategoryAggregates;
+
+   // bi-directional many-to-one association to
+   // HostFamilyQuickStatsTypeAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyQuickStatsTypeAggregate> hostFamilyQuickStatsTypeAggregates;
+
    // bi-directional many-to-one association to HostFamilySeason
    @OneToMany(mappedBy = "hostFamily") private List<HostFamilySeason> hostFamilySeasons;
 
    // bi-directional many-to-one association to HostFamilyUpdateLog
    @OneToMany(mappedBy = "hostFamily") private List<HostFamilyUpdateLog> hostFamilyUpdateLogs;
 
+   // bi-directional many-to-one association to HostFamilyWorkQueue
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
+
+   // bi-directional many-to-one association to
+   // HostFamilyWorkQueueCategoryAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyWorkQueueCategoryAggregate> hostFamilyWorkQueueCategoryAggregates;
+
+   // bi-directional many-to-one association to HostFamilyWorkQueueTypeAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyWorkQueueTypeAggregate> hostFamilyWorkQueueTypeAggregates;
+
    public HostFamily() {
    }
 
-   public int getHostFamilyGoId() {
+   public Integer getHostFamilyGoId() {
       return this.hostFamilyGoId;
    }
 
-   public void setHostFamilyGoId(int hostFamilyGoId) {
+   public void setHostFamilyGoId(Integer hostFamilyGoId) {
       this.hostFamilyGoId = hostFamilyGoId;
    }
 
@@ -319,6 +341,14 @@ public class HostFamily implements Serializable {
 
    public void setPhone(String phone) {
       this.phone = phone;
+   }
+
+   public String getPhoto() {
+      return this.photo;
+   }
+
+   public void setPhoto(String photo) {
+      this.photo = photo;
    }
 
    public String getPhysicalAddress() {
@@ -515,6 +545,28 @@ public class HostFamily implements Serializable {
       return hostFamilyAnnouncementResult;
    }
 
+   public List<HostFamilyBackground> getHostFamilyBackgrounds() {
+      return this.hostFamilyBackgrounds;
+   }
+
+   public void setHostFamilyBackgrounds(List<HostFamilyBackground> hostFamilyBackgrounds) {
+      this.hostFamilyBackgrounds = hostFamilyBackgrounds;
+   }
+
+   public HostFamilyBackground addHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+      getHostFamilyBackgrounds().add(hostFamilyBackground);
+      hostFamilyBackground.setHostFamily(this);
+
+      return hostFamilyBackground;
+   }
+
+   public HostFamilyBackground removeHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+      getHostFamilyBackgrounds().remove(hostFamilyBackground);
+      hostFamilyBackground.setHostFamily(null);
+
+      return hostFamilyBackground;
+   }
+
    public List<HostFamilyInquiry> getHostFamilyInquiries() {
       return this.hostFamilyInquiries;
    }
@@ -647,6 +699,50 @@ public class HostFamily implements Serializable {
       return hostFamilyPotentialReference;
    }
 
+   public List<HostFamilyQuickStatsCategoryAggregate> getHostFamilyQuickStatsCategoryAggregates() {
+      return this.hostFamilyQuickStatsCategoryAggregates;
+   }
+
+   public void setHostFamilyQuickStatsCategoryAggregates(List<HostFamilyQuickStatsCategoryAggregate> hostFamilyQuickStatsCategoryAggregates) {
+      this.hostFamilyQuickStatsCategoryAggregates = hostFamilyQuickStatsCategoryAggregates;
+   }
+
+   public HostFamilyQuickStatsCategoryAggregate addHostFamilyQuickStatsCategoryAggregate(HostFamilyQuickStatsCategoryAggregate hostFamilyQuickStatsCategoryAggregate) {
+      getHostFamilyQuickStatsCategoryAggregates().add(hostFamilyQuickStatsCategoryAggregate);
+      hostFamilyQuickStatsCategoryAggregate.setHostFamily(this);
+
+      return hostFamilyQuickStatsCategoryAggregate;
+   }
+
+   public HostFamilyQuickStatsCategoryAggregate removeHostFamilyQuickStatsCategoryAggregate(HostFamilyQuickStatsCategoryAggregate hostFamilyQuickStatsCategoryAggregate) {
+      getHostFamilyQuickStatsCategoryAggregates().remove(hostFamilyQuickStatsCategoryAggregate);
+      hostFamilyQuickStatsCategoryAggregate.setHostFamily(null);
+
+      return hostFamilyQuickStatsCategoryAggregate;
+   }
+
+   public List<HostFamilyQuickStatsTypeAggregate> getHostFamilyQuickStatsTypeAggregates() {
+      return this.hostFamilyQuickStatsTypeAggregates;
+   }
+
+   public void setHostFamilyQuickStatsTypeAggregates(List<HostFamilyQuickStatsTypeAggregate> hostFamilyQuickStatsTypeAggregates) {
+      this.hostFamilyQuickStatsTypeAggregates = hostFamilyQuickStatsTypeAggregates;
+   }
+
+   public HostFamilyQuickStatsTypeAggregate addHostFamilyQuickStatsTypeAggregate(HostFamilyQuickStatsTypeAggregate hostFamilyQuickStatsTypeAggregate) {
+      getHostFamilyQuickStatsTypeAggregates().add(hostFamilyQuickStatsTypeAggregate);
+      hostFamilyQuickStatsTypeAggregate.setHostFamily(this);
+
+      return hostFamilyQuickStatsTypeAggregate;
+   }
+
+   public HostFamilyQuickStatsTypeAggregate removeHostFamilyQuickStatsTypeAggregate(HostFamilyQuickStatsTypeAggregate hostFamilyQuickStatsTypeAggregate) {
+      getHostFamilyQuickStatsTypeAggregates().remove(hostFamilyQuickStatsTypeAggregate);
+      hostFamilyQuickStatsTypeAggregate.setHostFamily(null);
+
+      return hostFamilyQuickStatsTypeAggregate;
+   }
+
    public List<HostFamilySeason> getHostFamilySeasons() {
       return this.hostFamilySeasons;
    }
@@ -691,12 +787,70 @@ public class HostFamily implements Serializable {
       return hostFamilyUpdateLog;
    }
 
-   public String getPhoto() {
-      return photo;
+   public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
+      return this.hostFamilyWorkQueues;
    }
 
-   public void setPhoto(String photo) {
-      this.photo = photo;
+   public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
+      this.hostFamilyWorkQueues = hostFamilyWorkQueues;
+   }
+
+   public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+      getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
+      hostFamilyWorkQueue.setHostFamily(this);
+
+      return hostFamilyWorkQueue;
+   }
+
+   public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+      getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
+      hostFamilyWorkQueue.setHostFamily(null);
+
+      return hostFamilyWorkQueue;
+   }
+
+   public List<HostFamilyWorkQueueCategoryAggregate> getHostFamilyWorkQueueCategoryAggregates() {
+      return this.hostFamilyWorkQueueCategoryAggregates;
+   }
+
+   public void setHostFamilyWorkQueueCategoryAggregates(List<HostFamilyWorkQueueCategoryAggregate> hostFamilyWorkQueueCategoryAggregates) {
+      this.hostFamilyWorkQueueCategoryAggregates = hostFamilyWorkQueueCategoryAggregates;
+   }
+
+   public HostFamilyWorkQueueCategoryAggregate addHostFamilyWorkQueueCategoryAggregate(HostFamilyWorkQueueCategoryAggregate hostFamilyWorkQueueCategoryAggregate) {
+      getHostFamilyWorkQueueCategoryAggregates().add(hostFamilyWorkQueueCategoryAggregate);
+      hostFamilyWorkQueueCategoryAggregate.setHostFamily(this);
+
+      return hostFamilyWorkQueueCategoryAggregate;
+   }
+
+   public HostFamilyWorkQueueCategoryAggregate removeHostFamilyWorkQueueCategoryAggregate(HostFamilyWorkQueueCategoryAggregate hostFamilyWorkQueueCategoryAggregate) {
+      getHostFamilyWorkQueueCategoryAggregates().remove(hostFamilyWorkQueueCategoryAggregate);
+      hostFamilyWorkQueueCategoryAggregate.setHostFamily(null);
+
+      return hostFamilyWorkQueueCategoryAggregate;
+   }
+
+   public List<HostFamilyWorkQueueTypeAggregate> getHostFamilyWorkQueueTypeAggregates() {
+      return this.hostFamilyWorkQueueTypeAggregates;
+   }
+
+   public void setHostFamilyWorkQueueTypeAggregates(List<HostFamilyWorkQueueTypeAggregate> hostFamilyWorkQueueTypeAggregates) {
+      this.hostFamilyWorkQueueTypeAggregates = hostFamilyWorkQueueTypeAggregates;
+   }
+
+   public HostFamilyWorkQueueTypeAggregate addHostFamilyWorkQueueTypeAggregate(HostFamilyWorkQueueTypeAggregate hostFamilyWorkQueueTypeAggregate) {
+      getHostFamilyWorkQueueTypeAggregates().add(hostFamilyWorkQueueTypeAggregate);
+      hostFamilyWorkQueueTypeAggregate.setHostFamily(this);
+
+      return hostFamilyWorkQueueTypeAggregate;
+   }
+
+   public HostFamilyWorkQueueTypeAggregate removeHostFamilyWorkQueueTypeAggregate(HostFamilyWorkQueueTypeAggregate hostFamilyWorkQueueTypeAggregate) {
+      getHostFamilyWorkQueueTypeAggregates().remove(hostFamilyWorkQueueTypeAggregate);
+      hostFamilyWorkQueueTypeAggregate.setHostFamily(null);
+
+      return hostFamilyWorkQueueTypeAggregate;
    }
 
 }

@@ -4,171 +4,222 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
+
 /**
  * The persistent class for the HostFamilyBackground database table.
  * 
  */
 @Entity
-@Table(name = "HostFamilyBackground")
-@NamedQuery(name = "HostFamilyBackground.findAll", query = "SELECT h FROM HostFamilyBackground h")
+@Table(name="HostFamilyBackground")
+@NamedQuery(name="HostFamilyBackground.findAll", query="SELECT h FROM HostFamilyBackground h")
 public class HostFamilyBackground implements Serializable {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(unique = true, nullable = false) private Integer hostFamilyBackgroundId;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private Integer hostFamilyBackgroundId;
 
-   @Temporal(TemporalType.DATE) private Date birthDate;
+	@Column(length=100)
+	private String account;
 
-   @Temporal(TemporalType.TIMESTAMP) private Date createdOn;
+	@Temporal(TemporalType.DATE)
+	private Date birthDate;
 
-   @Temporal(TemporalType.DATE) private Date dateCheckedByCCI;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdOn;
 
-   @Column(length = 50) private String firstName;
+	@Temporal(TemporalType.DATE)
+	private Date dateCheckedByCCI;
 
-   @Column(length = 50) private String lastName;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateOrderClosed;
 
-   @Column(length = 50) private String relationshipToHostParent;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateOrderReceived;
 
-   private Byte status;
-   private String password;
-   private String account;
-   private Integer userId;
-   private String resultStatus;
-   private String resultURL;
-   @Temporal(TemporalType.DATE) private Date dateOrderReceived;
-   @Temporal(TemporalType.DATE) private Date dateOrderClosed;
+	@Column(length=50)
+	private String firstName;
 
-   // bi-directional many-to-one association to HostFamilySeason
-   @ManyToOne @JoinColumn(name = "hostFamilySeasonId") private HostFamilySeason hostFamilySeason;
+	@Column(length=50)
+	private String lastName;
 
-   public HostFamilyBackground() {
-   }
+	private short password;
 
-   public Integer getHostFamilyBackgroundId() {
-      return this.hostFamilyBackgroundId;
-   }
+	@Column(length=50)
+	private String relationshipToHostParent;
 
-   public void setHostFamilyBackgroundId(Integer hostFamilyBackgroundId) {
-      this.hostFamilyBackgroundId = hostFamilyBackgroundId;
-   }
+	@Column(nullable=false, length=100)
+	private String resultStatus;
 
-   public Date getBirthDate() {
-      return this.birthDate;
-   }
+	@Column(length=200)
+	private String resultURL;
 
-   public void setBirthDate(Date birthDate) {
-      this.birthDate = birthDate;
-   }
+	@Column(nullable=false)
+	private Byte status;
 
-   public Date getCreatedOn() {
-      return this.createdOn;
-   }
+	private Integer userId;
 
-   public void setCreatedOn(Date createdOn) {
-      this.createdOn = createdOn;
-   }
+	//bi-directional many-to-one association to HostFamily
+	@ManyToOne
+	@JoinColumn(name="hostFamilyGoId")
+	private HostFamily hostFamily;
 
-   public Date getDateCheckedByCCI() {
-      return this.dateCheckedByCCI;
-   }
+	//bi-directional many-to-one association to HostFamilyMember
+	@ManyToOne
+	@JoinColumn(name="hostFamilyMemberId")
+	private HostFamilyMember hostFamilyMember;
 
-   public void setDateCheckedByCCI(Date dateCheckedByCCI) {
-      this.dateCheckedByCCI = dateCheckedByCCI;
-   }
+	//bi-directional many-to-one association to HostFamilySeason
+	@ManyToOne
+	@JoinColumn(name="hostFamilySeasonId")
+	private HostFamilySeason hostFamilySeason;
 
-   public String getFirstName() {
-      return this.firstName;
-   }
+	public HostFamilyBackground() {
+	}
 
-   public void setFirstName(String firstName) {
-      this.firstName = firstName;
-   }
+	public Integer getHostFamilyBackgroundId() {
+		return this.hostFamilyBackgroundId;
+	}
 
-   public String getLastName() {
-      return this.lastName;
-   }
+	public void setHostFamilyBackgroundId(Integer hostFamilyBackgroundId) {
+		this.hostFamilyBackgroundId = hostFamilyBackgroundId;
+	}
 
-   public void setLastName(String lastName) {
-      this.lastName = lastName;
-   }
+	public String getAccount() {
+		return this.account;
+	}
 
-   public String getRelationshipToHostParent() {
-      return this.relationshipToHostParent;
-   }
+	public void setAccount(String account) {
+		this.account = account;
+	}
 
-   public void setRelationshipToHostParent(String relationshipToHostParent) {
-      this.relationshipToHostParent = relationshipToHostParent;
-   }
+	public Date getBirthDate() {
+		return this.birthDate;
+	}
 
-   public Byte getStatus() {
-      return this.status;
-   }
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
 
-   public void setStatus(Byte status) {
-      this.status = status;
-   }
+	public Date getCreatedOn() {
+		return this.createdOn;
+	}
 
-   public HostFamilySeason getHostFamilySeason() {
-      return this.hostFamilySeason;
-   }
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
 
-   public void setHostFamilySeason(HostFamilySeason hostFamilySeason) {
-      this.hostFamilySeason = hostFamilySeason;
-   }
+	public Date getDateCheckedByCCI() {
+		return this.dateCheckedByCCI;
+	}
 
-   public String getPassword() {
-      return password;
-   }
+	public void setDateCheckedByCCI(Date dateCheckedByCCI) {
+		this.dateCheckedByCCI = dateCheckedByCCI;
+	}
 
-   public void setPassword(String password) {
-      this.password = password;
-   }
+	public Date getDateOrderClosed() {
+		return this.dateOrderClosed;
+	}
 
-   public String getAccount() {
-      return account;
-   }
+	public void setDateOrderClosed(Date dateOrderClosed) {
+		this.dateOrderClosed = dateOrderClosed;
+	}
 
-   public void setAccount(String account) {
-      this.account = account;
-   }
+	public Date getDateOrderReceived() {
+		return this.dateOrderReceived;
+	}
 
-   public Integer getUserId() {
-      return userId;
-   }
+	public void setDateOrderReceived(Date dateOrderReceived) {
+		this.dateOrderReceived = dateOrderReceived;
+	}
 
-   public void setUserId(Integer userId) {
-      this.userId = userId;
-   }
+	public String getFirstName() {
+		return this.firstName;
+	}
 
-   public String getResultStatus() {
-      return resultStatus;
-   }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-   public void setResultStatus(String resultStatus) {
-      this.resultStatus = resultStatus;
-   }
+	public String getLastName() {
+		return this.lastName;
+	}
 
-   public String getResultURL() {
-      return resultURL;
-   }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-   public void setResultURL(String resultURL) {
-      this.resultURL = resultURL;
-   }
+	public short getPassword() {
+		return this.password;
+	}
 
-   public Date getDateOrderReceived() {
-      return dateOrderReceived;
-   }
+	public void setPassword(short password) {
+		this.password = password;
+	}
 
-   public void setDateOrderReceived(Date dateOrderReceived) {
-      this.dateOrderReceived = dateOrderReceived;
-   }
+	public String getRelationshipToHostParent() {
+		return this.relationshipToHostParent;
+	}
 
-   public Date getDateOrderClosed() {
-      return dateOrderClosed;
-   }
+	public void setRelationshipToHostParent(String relationshipToHostParent) {
+		this.relationshipToHostParent = relationshipToHostParent;
+	}
 
-   public void setDateOrderClosed(Date dateOrderClosed) {
-      this.dateOrderClosed = dateOrderClosed;
-   }
+	public String getResultStatus() {
+		return this.resultStatus;
+	}
+
+	public void setResultStatus(String resultStatus) {
+		this.resultStatus = resultStatus;
+	}
+
+	public String getResultURL() {
+		return this.resultURL;
+	}
+
+	public void setResultURL(String resultURL) {
+		this.resultURL = resultURL;
+	}
+
+	public Byte getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
+
+	public Integer getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public HostFamily getHostFamily() {
+		return this.hostFamily;
+	}
+
+	public void setHostFamily(HostFamily hostFamily) {
+		this.hostFamily = hostFamily;
+	}
+
+	public HostFamilyMember getHostFamilyMember() {
+		return this.hostFamilyMember;
+	}
+
+	public void setHostFamilyMember(HostFamilyMember hostFamilyMember) {
+		this.hostFamilyMember = hostFamilyMember;
+	}
+
+	public HostFamilySeason getHostFamilySeason() {
+		return this.hostFamilySeason;
+	}
+
+	public void setHostFamilySeason(HostFamilySeason hostFamilySeason) {
+		this.hostFamilySeason = hostFamilySeason;
+	}
 
 }

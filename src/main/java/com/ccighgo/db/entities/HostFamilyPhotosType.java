@@ -1,9 +1,7 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -24,7 +22,7 @@ public class HostFamilyPhotosType implements Serializable {
 
 	@Column(length=50)
 	private String hostFamilyPhotoTypeName;
-	
+
 	private Byte isOptional;
 
 	//bi-directional many-to-one association to HostFamilyPhoto
@@ -50,6 +48,14 @@ public class HostFamilyPhotosType implements Serializable {
 		this.hostFamilyPhotoTypeName = hostFamilyPhotoTypeName;
 	}
 
+	public Byte getIsOptional() {
+		return this.isOptional;
+	}
+
+	public void setIsOptional(Byte isOptional) {
+		this.isOptional = isOptional;
+	}
+
 	public List<HostFamilyPhoto> getHostFamilyPhotos() {
 		return this.hostFamilyPhotos;
 	}
@@ -71,13 +77,5 @@ public class HostFamilyPhotosType implements Serializable {
 
 		return hostFamilyPhoto;
 	}
-	
-	public Byte getIsOptional() {
-      return this.isOptional;
-   }
-
-   public void setIsOptional(Byte isOptional) {
-      this.isOptional = isOptional;
-   }
 
 }

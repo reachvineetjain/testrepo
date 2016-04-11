@@ -18,9 +18,9 @@ public class FieldStaffUpdateLog implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int fieldStaffUpdateLogId;
+	private Integer fieldStaffUpdateLogId;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -36,19 +36,19 @@ public class FieldStaffUpdateLog implements Serializable {
 	public FieldStaffUpdateLog() {
 	}
 
-	public int getFieldStaffUpdateLogId() {
+	public Integer getFieldStaffUpdateLogId() {
 		return this.fieldStaffUpdateLogId;
 	}
 
-	public void setFieldStaffUpdateLogId(int fieldStaffUpdateLogId) {
+	public void setFieldStaffUpdateLogId(Integer fieldStaffUpdateLogId) {
 		this.fieldStaffUpdateLogId = fieldStaffUpdateLogId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 

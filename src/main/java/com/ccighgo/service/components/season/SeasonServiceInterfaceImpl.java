@@ -4335,7 +4335,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    public SeasonDepartmentNotes addSeasonDepartmentNote(SeasonDepartmentNotes seasonDepartmentNotes) {
       SeasonDepartmentNotes returnObject = null;
       try {
-         if (seasonDepartmentNotes.getSeasonId() > 0 && seasonDepartmentNotes.getNoteValue() != null) {
+         if (seasonDepartmentNotes.getSeasonId() > 0) {
             SeasonDepartmentNote departmentNote = new SeasonDepartmentNote();
             departmentNote.setActive(CCIConstants.ACTIVE);
             departmentNote.setSeason(seasonRepository.findOne(seasonDepartmentNotes.getSeasonId()));

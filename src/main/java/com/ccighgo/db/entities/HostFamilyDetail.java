@@ -49,7 +49,7 @@ public class HostFamilyDetail implements Serializable {
 	@Column(length=100)
 	private String describeDietaryRestrictions;
 
-	private Integer dietaryRestrictions;
+	private Byte dietaryRestrictions;
 
 	private Byte disability;
 
@@ -98,7 +98,7 @@ public class HostFamilyDetail implements Serializable {
 	@Column(length=30)
 	private String preferStudentJoins;
 
-	private Integer problemWithReligiousDifference;
+	private Byte problemWithReligiousDifference;
 
 	@Column(length=1000)
 	private String publicAssistanceExplanation;
@@ -229,11 +229,11 @@ public class HostFamilyDetail implements Serializable {
 		this.describeDietaryRestrictions = describeDietaryRestrictions;
 	}
 
-	public Integer getDietaryRestrictions() {
+	public Byte getDietaryRestrictions() {
 		return this.dietaryRestrictions;
 	}
 
-	public void setDietaryRestrictions(Integer dietaryRestrictions) {
+	public void setDietaryRestrictions(Byte dietaryRestrictions) {
 		this.dietaryRestrictions = dietaryRestrictions;
 	}
 
@@ -381,11 +381,11 @@ public class HostFamilyDetail implements Serializable {
 		this.preferStudentJoins = preferStudentJoins;
 	}
 
-	public Integer getProblemWithReligiousDifference() {
+	public Byte getProblemWithReligiousDifference() {
 		return this.problemWithReligiousDifference;
 	}
 
-	public void setProblemWithReligiousDifference(Integer problemWithReligiousDifference) {
+	public void setProblemWithReligiousDifference(Byte problemWithReligiousDifference) {
 		this.problemWithReligiousDifference = problemWithReligiousDifference;
 	}
 

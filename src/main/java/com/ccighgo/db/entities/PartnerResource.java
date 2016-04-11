@@ -18,11 +18,11 @@ public class PartnerResource implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int partnerResourcesId;
+	private Integer partnerResourcesId;
 
-	private byte active;
+	private Byte active;
 
-	private int createdBy;
+	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -38,27 +38,27 @@ public class PartnerResource implements Serializable {
 	public PartnerResource() {
 	}
 
-	public int getPartnerResourcesId() {
+	public Integer getPartnerResourcesId() {
 		return this.partnerResourcesId;
 	}
 
-	public void setPartnerResourcesId(int partnerResourcesId) {
+	public void setPartnerResourcesId(Integer partnerResourcesId) {
 		this.partnerResourcesId = partnerResourcesId;
 	}
 
-	public byte getActive() {
+	public Byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
