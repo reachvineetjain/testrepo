@@ -59,6 +59,9 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
 
    @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId != ?2")
    public List<SeasonGeographyConfiguration> checkSuperRegionsAssociatedToOtherSeasons(Integer superRegionId, Integer seasonId);
+   
+   @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.region.regionId = ?1 AND s.season.seasonId != ?2")
+   public List<SeasonGeographyConfiguration> checkRegionsAssociatedToOtherSeasons(Integer superRegionId, Integer seasonId);
 
    @Query("SELECT s.seasonGeographyConfigurationId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId = ?2")
    public List<Integer> findByIdSuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);

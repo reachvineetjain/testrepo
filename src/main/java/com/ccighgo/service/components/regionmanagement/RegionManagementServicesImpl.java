@@ -579,6 +579,24 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          }
          seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId), Integer.valueOf(regionId));
          seasonGeographyConfigurationRepository.flush();
+
+         /*
+          * If Region is deleted from a season and Region is not associated to
+          * any other season; then it should be removed from the Region lookup
+          * table.
+          */
+         boolean regionAssociated = false;
+         // Check that whether given Super region is not associated with other
+         // seasons
+         List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository
+               .checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId), Integer.valueOf(seasonId));
+         int count = list.size();
+         if (count == 0 || count < 0) {
+            regionAssociated = true;
+         }
+         if (regionAssociated) {
+            regionRepository.delete(Integer.valueOf(regionId));
+         }
          request.setObjectName(RegionManagementMessageConstants.REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

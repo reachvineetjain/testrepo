@@ -159,7 +159,7 @@ public class RegionManagement {
       LOGGER.debug("Calling 'addRegion'");
       return regionManagementServices.addRegion(superRegionId, seasonId, region);
    }
-   
+
    @POST
    @Path("add/existing/{superRegionId}/{seasonId}")
    @Produces("application/json")
@@ -189,7 +189,7 @@ public class RegionManagement {
    @Path("delete/{regionId}/{superRegionId}/{seasonId}")
    @Produces("application/json")
    public DeleteRequest deleteRegion(@PathParam("regionId") String regionId, @PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId) {
-      LOGGER.debug("Calling 'deleteSuperRegion'");
+      LOGGER.debug("Calling 'deleteRegion'");
       return regionManagementServices.deleteRegion(regionId, superRegionId, seasonId);
    }
 
