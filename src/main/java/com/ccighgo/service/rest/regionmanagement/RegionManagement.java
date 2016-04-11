@@ -159,6 +159,14 @@ public class RegionManagement {
       LOGGER.debug("Calling 'addRegion'");
       return regionManagementServices.addRegion(superRegionId, seasonId, region);
    }
+   
+   @POST
+   @Path("add/existing/{superRegionId}/{seasonId}")
+   @Produces("application/json")
+   public Region addExistingRegion(@PathParam("superRegionId") String superRegionId, @PathParam("seasonId") String seasonId, Region region) {
+      LOGGER.debug("Calling 'addExistingRegion'");
+      return regionManagementServices.addExistingRegion(superRegionId, seasonId, region);
+   }
 
    /**
     * @param region
