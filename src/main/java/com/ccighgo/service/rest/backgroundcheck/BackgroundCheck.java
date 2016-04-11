@@ -41,6 +41,14 @@ public class BackgroundCheck {
       return backgroundServiceInterface.applyNow();
    }
 
+   @GET
+   @Path("applyNow/{hostFamilyId}/{hostFamilyMemberId}")
+   @Produces("application/xml")
+   public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow(String hostFamilyId, String hostFamilyMemberId) {
+      LOGGER.debug("Calling func: applyNow  HostFamilyId : " + hostFamilyId + "  HostFamilyMemberId : " + hostFamilyMemberId);
+      return backgroundServiceInterface.applyNow(Integer.parseInt(hostFamilyId), Integer.parseInt(hostFamilyMemberId));
+   }
+
    @POST
    @Path("sendReport")
    @Produces("application/xml")

@@ -1,7 +1,10 @@
 package com.ccighgo.service.components.backgroundcheck;
 
 import java.io.StringWriter;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
@@ -56,12 +59,18 @@ import com.google.gson.Gson;
 
 @Component
 public class BackgroundServiceImpl implements BackgroundServiceInterface {
+   private static final String USE_PERSONAL = "personal";
+   private static final String CREATE_APPLICANT_ACCOUNT = "CreateApplicantAccount";
+   private static final String CREDENTIAL_TYPE = "CCIGreen";
+   private static final String POST_BACK_URL = "http://52.2.191.63:8086/cci_gh_go/services/backgroundcheck/sendReport";
    private static final String FAILED_STATUS = "300 : Failed";
    private static final Logger LOGGER = Logger.getLogger(BackgroundCheck.class);
+   private static final String SP_BACKGROUND_CHECK_DATA = "CALL SPHostFamilyBackgroundCheckSubmit (?,?)";
 
    @Autowired HostFamilyBackgroundRepository hostFamilyBackgroundRepository;
    @Autowired CommonComponentUtils componentUtils;
    @Autowired MessageUtils messageUtil;
+   @Autowired EntityManager em;
    Gson f = new Gson();
 
    @Override
@@ -197,18 +206,60 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    }
 
    @Override
+   public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow(int hostFamilyId, int hostFamilyMemberId) {
+      com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
+
+      Query query = em.createNativeQuery(SP_BACKGROUND_CHECK_DATA);
+      query.setParameter(1, hostFamilyId);
+      query.setParameter(2, hostFamilyMemberId);
+      @SuppressWarnings("unchecked")
+      List<Object[]> result = query.getResultList();
+      if (result != null && !result.isEmpty()) {
+         for (Object[] obj : result) {
+            PostBackURL postBackURL = new PostBackURL();
+            postBackURL.setCredentialType(CREDENTIAL_TYPE);
+            postBackURL.setValue(POST_BACK_URL);
+            backgroundCheck.setPostBackURL(postBackURL);
+
+            BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
+            backgroundSearchPackage.setAction(CREATE_APPLICANT_ACCOUNT);
+            PersonalData personalData = new PersonalData();
+            DemographicDetail demographicDetail = new DemographicDetail();
+            demographicDetail.setDateOfBirth(String.valueOf(obj[4]));
+
+            PersonName personName1 = new PersonName();
+            personName1.setGivenName(String.valueOf(obj[2]));
+            personName1.setFamilyName(String.valueOf(obj[3]));
+            personalData.getPersonName().add(personName1);
+
+            ContactMethod contackMethod1 = new ContactMethod();
+            contackMethod1.setInternetEmailAddress("");
+            Telephone telephone = new Telephone();
+            telephone.setFormattedNumber(String.valueOf(obj[5]));
+            contackMethod1.setTelephone(telephone);
+            contackMethod1.setUse(USE_PERSONAL);
+            personalData.getContactMethod().add(contackMethod1);
+            backgroundSearchPackage.setPersonalData(personalData);
+            backgroundCheck.setBackgroundSearchPackage(backgroundSearchPackage);
+         }
+      }
+      return backgroundCheck;
+
+   }
+
+   @Override
    public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
       com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
       try {
          backgroundCheck.setAccount("0300S");
          backgroundCheck.setPackageNbr("1");
          PostBackURL postBackURL = new PostBackURL();
-         postBackURL.setCredentialType("CCIGreen");
-         postBackURL.setValue("http://52.2.191.63:8086/cci_gh_go/services/backgroundcheck/sendReport");
+         postBackURL.setCredentialType(CREDENTIAL_TYPE);
+         postBackURL.setValue(POST_BACK_URL);
          backgroundCheck.setPostBackURL(postBackURL);
 
          BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
-         backgroundSearchPackage.setAction("CreateApplicantAccount");
+         backgroundSearchPackage.setAction(CREATE_APPLICANT_ACCOUNT);
          ReferenceId referenceId = new ReferenceId();
          IdValue idValue = new IdValue();
          idValue.setName("AssignmentID");
@@ -267,7 +318,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Telephone telephone = new Telephone();
          telephone.setFormattedNumber("4192242462");
          contackMethod1.setTelephone(telephone);
-         contackMethod1.setUse("personal");
+         contackMethod1.setUse(USE_PERSONAL);
          personalData.getContactMethod().add(contackMethod1);
 
          ContactMethod contackMethod2 = new ContactMethod();
@@ -275,7 +326,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Telephone telephone1 = new Telephone();
          telephone1.setFormattedNumber("4192242462");
          contackMethod2.setTelephone(telephone1);
-         contackMethod2.setUse("personal");
+         contackMethod2.setUse(USE_PERSONAL);
          personalData.getContactMethod().add(contackMethod2);
 
          backgroundSearchPackage.setPersonalData(personalData);
