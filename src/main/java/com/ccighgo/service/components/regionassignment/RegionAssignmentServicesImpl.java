@@ -331,6 +331,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                            regionAssignedArea.setStateCode(CCIConstants.NOT_ASSIGNED);
                         } else {
                            regionAssignedArea.setRegionArea(region.getRegionName());
+                           if(sgc.getLookupUsstate()!= null)
                            regionAssignedArea.setStateCode(sgc.getLookupUsstate().getStateCode());
                         }
                         assignedRDStaff.getAssignedArea().add(regionAssignedArea);
