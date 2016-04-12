@@ -225,7 +225,8 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
             backgroundSearchPackage.setAction(CREATE_APPLICANT_ACCOUNT);
             PersonalData personalData = new PersonalData();
             DemographicDetail demographicDetail = new DemographicDetail();
-            demographicDetail.setDateOfBirth(String.valueOf(obj[4]));
+            demographicDetail.setDateOfBirth(DateUtils.getDateForBackgroundCheck(String.valueOf(obj[4])));
+            personalData.setDemographicDetail(demographicDetail);
 
             PersonName personName1 = new PersonName();
             personName1.setGivenName(String.valueOf(obj[2]));
