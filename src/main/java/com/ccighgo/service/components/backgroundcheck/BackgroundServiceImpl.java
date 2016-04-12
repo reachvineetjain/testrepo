@@ -66,6 +66,8 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    private static final String FAILED_STATUS = "300 : Failed";
    private static final Logger LOGGER = Logger.getLogger(BackgroundCheck.class);
    private static final String SP_BACKGROUND_CHECK_DATA = "CALL SPHostFamilyBackgroundCheckSubmit (?,?)";
+   private static final String ACCOUNT_NO = "11670S";
+   private static final String PACKAGE_NUM = "1";
 
    @Autowired HostFamilyBackgroundRepository hostFamilyBackgroundRepository;
    @Autowired CommonComponentUtils componentUtils;
@@ -209,6 +211,8 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow(int hostFamilyId, int hostFamilyMemberId) {
       com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
 
+      backgroundCheck.setAccount(ACCOUNT_NO);
+      backgroundCheck.setPackageNbr(PACKAGE_NUM);
       Query query = em.createNativeQuery(SP_BACKGROUND_CHECK_DATA);
       query.setParameter(1, hostFamilyId);
       query.setParameter(2, hostFamilyMemberId);
