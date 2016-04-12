@@ -30,6 +30,7 @@ public class CCIConstants {
    public static final String DATE_TIME = "MM/dd/yyyy HH:mm:ss";
    public static final String DATE_TIME2 = "MM/dd/yyyy HH:mm:ss";
    public static final String MM_dd_yyy = "MM-dd-yyyy";
+   public static final String YYYY_MM_DD = "yyyy/MM/dd";
 
    public static final String ALPHABETS_UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
    public static final String ALPHABETS_LOWER_CASE = "abcdefghijklmnopqrstuvwxyz";
@@ -289,5 +290,5 @@ public class CCIConstants {
    public static final int GENDER_UNDEFINED = 3;
 
    public static final String MM_dd_yyy_T_H_M_S = "yyyy-MM-dd'T'HH:mm:ss";
-
+   public static final String MM_dd_yyy_H_M_S = "yyyy-MM-dd HH:mm:ss";
 }

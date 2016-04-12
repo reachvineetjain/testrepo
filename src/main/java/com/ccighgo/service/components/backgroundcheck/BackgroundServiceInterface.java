@@ -16,4 +16,6 @@ public interface BackgroundServiceInterface {
 
    String sendReport(BackgroundReports backgroundReports);
 
+   BackgroundCheck applyNow(int hostFamilyId, int hostFamilyMemberId);
+
 }
